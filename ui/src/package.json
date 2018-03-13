@@ -1,6 +1,5 @@
 {
-  "name": "@k-int/erm-stripes",
-  "version": "1.0.0",
+  "name": "@olf/erm-stripes",
   "description": "Stripes app module for the ERM project",
   "main": "erm.min.js",
   "module": "src/index.js",

@@ -14,6 +14,6 @@ module.exports = {
   },
   modules: {
     '@folio/users': {},
-    '@ole/erm-stripes': {}
+    '@olf/erm-stripes': {}
   }
 };

@@ -28,7 +28,7 @@ const babelConf = {
 module.exports = [{
   entry: './src/index.js',
   output: {
-    path: path.resolve(__dirname, 'dist/@ole/erm-stripes'),
+    path: path.resolve(__dirname, 'dist/@olf/erm-stripes'),
     filename: 'erm.min.js',
     libraryTarget: 'commonjs2'
   },

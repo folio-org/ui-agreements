@@ -1,0 +1,22 @@
+doBuild = { version ->
+  dir ('ui') {
+    stage ('Build the module') {
+        // Just execute the yarn commands.
+        sh '''
+        yarn install
+        yarn build
+        '''
+    }
+    
+    stage ('Publish to NPM') {
+      dir ('dist/@olf/erm-stripes') {
+        if (version) {
+          sh "npm version ${version}"
+        }
+        sh 'npm publish'
+      }
+    }
+  }
+}
+
+this
