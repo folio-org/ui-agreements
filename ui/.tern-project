@@ -8,7 +8,7 @@
       
     },
     "eslint": {
-      "configFile": "/home/sosguthorpe/git/mod-resource-sharing/ui-stripes/.eslintrc.json"
+      "configFile": ".eslintrc.json"
     },
     "doc_comment": null,
     "node": {
