@@ -5,7 +5,7 @@
   "module": "src/index.js",
   "stripes": {
     "type": "app",
-    "displayName": "Electronic Resource Management",
+    "displayName": "OLF - ERM",
     "route":"/erm"
   },
   "license": "Apache-2.0"
