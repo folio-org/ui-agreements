@@ -1,0 +1,13 @@
+{
+  "name": "@k-int/erm-stripes",
+  "version": "1.0.0",
+  "description": "Stripes app module for the ERM project",
+  "main": "erm.min.js",
+  "module": "src/index.js",
+  "stripes": {
+    "type": "app",
+    "displayName": "Electronic Resource Management",
+    "route":"/erm"
+  },
+  "license": "Apache-2.0"
+}
