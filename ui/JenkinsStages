@@ -1,0 +1,15 @@
+stage ('Build the module') {
+  // Just execute the yarn commands.
+  sh '''
+    yarn install
+    yarn build
+  '''
+}
+
+stage ('Publish to NPM') {
+  dir ('dist/app-resource-sharing') {
+    sh '''
+      npm publish
+    '''
+  }
+}
