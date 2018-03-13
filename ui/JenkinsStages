@@ -1,15 +1,24 @@
-stage ('Build the module') {
-  // Just execute the yarn commands.
-  sh '''
-    yarn install
-    yarn build
-  '''
-}
+doBuild = { version ->
 
-stage ('Publish to NPM') {
-  dir ('dist/app-resource-sharing') {
+  stage ('Build the module') {
+    // Just execute the yarn commands.
     sh '''
-      npm publish
+      yarn install
+      yarn build
     '''
   }
+  
+  stage ('Publish to NPM') {
+    dir ('dist/app-resource-sharing') {
+    
+      if (version) {
+        
+        sh '''
+          npm publish
+        '''
+      }
+    }
+  }
 }
+
+this
