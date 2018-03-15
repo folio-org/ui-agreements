@@ -37,7 +37,10 @@ const options = {
     conf.output.hotUpdateMainFilename = 'hot/[hash].hot-update.json'
     
     conf.plugins.push(
-      new webpack.NamedModulesPlugin()
+      new webpack.NamedModulesPlugin(),
+      new DashboardPlugin({
+          minified: false,
+          gzip: false})
     )
     
     // Remove the loader rules we don't want/need. Should really filter using the loader type.
@@ -104,7 +107,7 @@ const options = {
                 postCssNesting(),
                 postCssCustomMedia(),
                 postCssMediaMinMax(),
-                postCssColorFunction(),
+                postCssColorFunction()
               ],
               sourceMap: true,
             },
@@ -132,15 +135,13 @@ const options = {
               plugins: function () {
                 return [
                   postCssImport(),
-                  require('postcss-url'),
                   autoprefixer(),
                   postCssCustomProperties(),
                   postCssCalc(),
                   postCssNesting(),
                   postCssCustomMedia(),
                   postCssMediaMinMax(),
-                  postCssColorFunction(),
-    //                require('postcss-prefixwrap')('.kint')
+                  postCssColorFunction()
                 ];
               },
               sourceMap: true,

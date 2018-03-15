@@ -13,24 +13,14 @@ The project is transpiled and bundled using [Babel](https://babeljs.io/) and [We
 - [Yarn](https://yarnpkg.com/lang/en/) is used as the dependency management.
 - [Gulp](https://gulpjs.com/) is used as the task runner for our project.
 
-## Building ##
+## Install dependencies ##
 Open a terminal in the `ui` sub directory of this project and issue the command:
 ```
 yarn install
 ```
 
 ## Running ##
-Currently there are 2 processes to get this project running in a development capacity.
-_NOTE_ Hot-loading isn't working at the moment but will be fixed once I introduce Gulp as a simple task runner. 
-
-### Start our module compilation as a plugable Stripes module.###
 Open a terminal in the `ui` sub directory of this project and issue the commands:
-```
-yarn watch
-```
-
-## Start stripes with our module included.###
-Open a second terminal in the `ui` sub directory of this project and issue the commands:
 ```
 yarn start
 ```

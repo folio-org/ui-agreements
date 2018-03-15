@@ -1,8 +1,7 @@
 {
   "license": "Apache-2.0",
   "scripts": {
-    "start": "gulp --gulpfile tasks",
-    "watch": "gulp watch --gulpfile tasks",
+    "start": "webpack-dashboard -- gulp --gulpfile tasks",
     "build": "webpack"
   },
   "publishConfig": {
