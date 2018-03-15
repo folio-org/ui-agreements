@@ -10,7 +10,8 @@ The project is transpiled and bundled using [Babel](https://babeljs.io/) and [We
 
 ## Prerequisites ##
 - [Node.js & NPM](https://docs.npmjs.com/getting-started/installing-node) are needed to build and run the project.
-- [Yarn](https://yarnpkg.com/lang/en/) is used as the dependency management. 
+- [Yarn](https://yarnpkg.com/lang/en/) is used as the dependency management.
+- [Gulp](https://gulpjs.com/) is used as the task runner for our project.
 
 ## Building ##
 Open a terminal in the `ui` sub directory of this project and issue the command:

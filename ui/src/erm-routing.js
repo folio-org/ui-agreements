@@ -1,11 +1,12 @@
-import React, {Component} from 'react';
-import Route from 'react-router-dom/Route';
-import Switch from 'react-router-dom/Switch';
-import Home from './home';
-import app from './lib/folio-stripes/app';
+import React, {Component} from 'react'
+import Route from 'react-router-dom/Route'
+import Switch from 'react-router-dom/Switch'
+import Home from './home'
+import app from './lib/folio-stripes/app'
+import { hot } from 'react-hot-loader'
 
-import * as mobx from 'mobx';
-const {observable, autorun, action} = mobx;
+import * as mobx from 'mobx'
+const {observable, autorun, action} = mobx
 
 class ERMRouting extends Component {
   
@@ -20,8 +21,8 @@ class ERMRouting extends Component {
         <h2>Uh-oh!</h2>
         <p>How did you get to <tt>{location.pathname}</tt>?</p>
       </div>
-    );
-  };
+    )
+  }
   
   render() {
     return (
@@ -31,8 +32,8 @@ class ERMRouting extends Component {
           <Route component={() => { NoMatch(); }} />
         </Switch>
       </div>
-    );
+    )
   }
-};
+}
 
-export default ERMRouting;
+export default hot(module)(ERMRouting)

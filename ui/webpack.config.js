@@ -1,3 +1,8 @@
+/**
+ * This webpack file is for the build process only. As it produces a stand alone module without
+ * that can be plugged into the stripes build process.
+ * 
+ */
 const path = require('path');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -68,8 +73,7 @@ module.exports = [{
                 require("postcss-nesting"),
                 require("postcss-custom-media"),
                 require("postcss-media-minmax"),
-                require("postcss-color-function"),
-//                require('postcss-prefixwrap')('.kint')
+                require("postcss-color-function")
               ];
             }
           }

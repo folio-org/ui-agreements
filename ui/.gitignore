@@ -5,3 +5,4 @@
 !.npmrc
 !.tern-project
 !.eslintrc.json
+/yarn-error.log

@@ -1,10 +1,10 @@
-import restful, { fetchBackend } from 'restful.js';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { observer } from 'mobx-react';
-import { observable, action, computed, runInAction } from 'mobx';
-import ReactTable from "react-table";
-import 'whatwg-fetch';
+import restful, { fetchBackend } from 'restful.js'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { observer } from 'mobx-react'
+import { observable, action, computed, runInAction } from 'mobx'
+import ReactTable from "react-table"
+import 'whatwg-fetch'
 
 @observer
 class ResourceBasedComponent extends Component {
@@ -23,7 +23,7 @@ class ResourceBasedComponent extends Component {
   @observable url
   @observable columns = [
     {
-      Header: "Name",
+      Header: "Names",
       accessor: "name"
     },
     {
@@ -31,7 +31,7 @@ class ResourceBasedComponent extends Component {
       accessor: "email"
     },
     {
-      Header: "Phone",
+      Header: "Phone Nu",
       accessor: "phone"
     },
   ]
@@ -44,13 +44,13 @@ class ResourceBasedComponent extends Component {
     return this.api.all(this.resourceType)
   }
   
-  @observable working = false;
+  @observable working = false
   
   @observable data
   
   @action.bound
   async fetchData() {
-    this.working = true;
+    this.working = true
     const remoteData = await this.dataContext.getAll()
     runInAction(() => {
       this.data = remoteData
@@ -61,15 +61,15 @@ class ResourceBasedComponent extends Component {
   @computed get rows() {
     if (this.data) {
       return this.data.body().map((entity) => {
-        return entity.data();
+        return entity.data()
       })
     }
     
-    return [];
+    return []
   }
   
   componentWillMount() {
-    this.fetchData();
+    this.fetchData()
   }
   
   render() {
@@ -92,8 +92,8 @@ class ResourceBasedComponent extends Component {
           </div>
         )
       }}</ReactTable>
-    );
+    )
   }
-};
+}
 
-export default ResourceBasedComponent;
+export default ResourceBasedComponent
