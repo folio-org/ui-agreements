@@ -1,8 +1,6 @@
-import restful, { fetchBackend } from 'restful.js'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { observable, action, computed, runInAction } from 'mobx'
-import 'whatwg-fetch'
 
 
 class ResourceBasedComponent extends Component {
@@ -20,29 +18,10 @@ class ResourceBasedComponent extends Component {
   
   @observable app
   @observable res
-  @computed get resourceType() {
-    return this.app.apiConfig.resources[this.res].baseUri.substring(1)
-  }
-  @computed get url() {
-    return this.app.apiConfig.root
-  }
   @observable working = false
   
-  @computed get api() {
-    return restful(this.url, fetchBackend(fetch)).addRequestInterceptor((config) => {
-      const { headers } = config
-
-      // just return modified arguments
-      return {
-        headers : Object.assign(headers, 
-          this.app.apiConfig.headers
-        )
-      }
-    })
-  }
-  
   @computed get dataContext() {
-    return this.api.all(this.resourceType)
+    return this.app.api.all(this.app.getResourceType(this.res))
   }
   
   @observable data

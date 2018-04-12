@@ -1,4 +1,6 @@
 import { observable, computed } from 'mobx'
+import restful, { fetchBackend } from 'restful.js'
+import 'whatwg-fetch'
 
 class App {
   @observable stripes = {}
@@ -11,15 +13,15 @@ class App {
         'X-Okapi-Tenant': this.okapi.tenant,
       },
       resources:{
-        SubscriptionAgreement:{
+        subscriptionagreement:{
           baseUri: "/sas",
           identifierProps: ["id"]
         },
-        RemoteKB:{
+        remotekb:{
           baseUri:"/kbs",
           identifierProps:["id"]
         },
-        Package: {
+        package: {
           baseUri: "/packages",
           identifierProps: ["id"]
         }
@@ -27,6 +29,28 @@ class App {
     }
     if (this.okapi.token) apiDescriptor.headers['X-Okapi-Token'] = this.okapi.token
     return apiDescriptor
+  }
+  
+  getResourceType = (theType) => (
+    this.apiConfig.resources[theType.toLowerCase()].baseUri.substring(1)
+  );
+
+  
+  @computed get url() {
+    return this.apiConfig.root
+  }
+  
+  @computed get api() {
+    return restful(this.url, fetchBackend(fetch)).addRequestInterceptor((config) => {
+      const { headers } = config
+
+      // just return modified arguments
+      return {
+        headers : Object.assign(headers, 
+          this.apiConfig.headers
+        )
+      }
+    })
   }
   
   hasPerm = (perm) => {
