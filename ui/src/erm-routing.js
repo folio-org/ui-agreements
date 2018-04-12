@@ -3,7 +3,6 @@ import Route from 'react-router-dom/Route'
 import Switch from 'react-router-dom/Switch'
 import Home from './home'
 import app from './lib/folio-stripes/app'
-import { hot } from 'react-hot-loader'
 
 import * as mobx from 'mobx'
 const {observable, autorun, action} = mobx
@@ -36,4 +35,4 @@ class ERMRouting extends Component {
   }
 }
 
-export default hot(module)(ERMRouting)
+export default ERMRouting
