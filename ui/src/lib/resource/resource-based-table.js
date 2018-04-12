@@ -55,7 +55,7 @@ class ResourceBasedTable extends ResourceBasedComponent {
         className="-striped -highlight"
           >{(state, makeTable, instance) => {
             
-            let results = state.data.length > 0 ? 'No results found' : `Showing ${state.data.length} results`
+            let results = state.data.length < 1 ? 'No results found' : `Showing ${state.data.length} results`
             
             return (
               <div>
