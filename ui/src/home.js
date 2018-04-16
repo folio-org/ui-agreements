@@ -5,6 +5,10 @@ import app from './lib/folio-stripes/app'
 import { hot } from 'react-hot-loader'
 import ResourceBasedTable from './lib/resource/resource-based-table'
 
+let formatters = {
+  date :cell => (cell.value ? new Date(cell.value).toLocaleDateString() : '')
+}
+
 let columns = [
   {
     Header: "Name",
@@ -18,17 +22,21 @@ let columns = [
       accessor: "agreementType.value"
     },{
       Header: "Start Date",
-      accessor: "startDate"
+      accessor: "startDate",
+      Cell: formatters.date
     },{
       Header: "End Date",
-      accessor: "endDate"
+      accessor: "endDate",
+      Cell: formatters.date
     }]
   },{
     Header: "Renewal Date",
-    accessor: "renewalDate" 
+    accessor: "renewalDate",
+    Cell: formatters.date
   },{
     Header: "Next Review Date",
-    accessor: "nextReviewDate" 
+    accessor: "nextReviewDate",
+    Cell: formatters.date
   }
 ]
 

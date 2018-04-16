@@ -25,12 +25,17 @@ class ResourceBasedComponent extends Component {
   }
   
   @observable data
+  
+  currentParams = {}
     
   @action.bound
   async fetchData(params) {
     this.working = true
     
-    const remoteData = await this.dataContext.then((dataContext) => (dataContext.getAll(params)))
+    // Always merge so we remember all params set in various places.
+    this.currentParams = Object.assign({}, this.currentParams, params)
+    
+    const remoteData = await this.dataContext.then((dataContext) => (dataContext.getAll(this.currentParams)))
     
     // The run in action ensures that the code within is executed after the await has finished, and within this context.
     runInAction(() => {
