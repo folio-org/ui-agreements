@@ -28,6 +28,7 @@
     "react-jsonschema-form": "^0.51.0",
     "react-string-replace": "^0.4.1",
     "react-table": "^6.8.0",
+    "reactstrap": "^5.0.0",
     "restful.js": "^0.9.6",
     "webpack": "^3",
     "webpack-dashboard": "^1.1.1",
