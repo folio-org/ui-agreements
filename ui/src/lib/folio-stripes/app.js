@@ -1,6 +1,5 @@
 import { observable, computed } from 'mobx'
 import restful, { fetchBackend } from 'restful.js'
-import 'whatwg-fetch'
 
 class App {
   @observable stripes = {}
