@@ -74,6 +74,46 @@ const options = {
         }
       },
     },{
+      test: /\.(scss)$/,
+      use: [
+        {
+          loader: 'style-loader',
+          options: {
+            sourceMap: true,
+          }
+        },
+        {
+          loader: 'css-loader',
+          options: {
+            sourceMap: true,
+          }
+        },
+        {
+          loader: 'postcss-loader',
+          options: {
+            plugins: function () {
+              return [
+                postCssImport(),
+                autoprefixer(),
+                postCssCustomProperties(),
+                postCssCalc(),
+                postCssNesting(),
+                postCssCustomMedia(),
+                postCssMediaMinMax(),
+                postCssColorFunction()
+              ];
+            },
+            sourceMap: true,
+          }
+        },
+        {
+          loader: 'sass-loader',
+          options: {
+            sourceMap: true,
+          }
+        }
+      ]
+    },{
       resource: {
         test: /^.*\.css/
       },
