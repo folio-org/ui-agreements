@@ -6,51 +6,70 @@ class App {
   @observable stripes = {}
   @computed get okapi () { return this.stripes.okapi }
   @computed get user () { return this.stripes.user.user }
+  
+  apiDescriptor = {}
   @computed get apiConfig () {
-    let apiDescriptor = {
+    Object.assign(this.apiDescriptor, {
       root: this.okapi.url,
       headers: {
         'X-Okapi-Tenant': this.okapi.tenant,
-      },
-      resources:{
-        subscriptionagreement:{
-          baseUri: "/sas",
-          identifierProps: ["id"]
-        },
-        remotekb:{
-          baseUri:"/kbs",
-          identifierProps:["id"]
-        },
-        package: {
-          baseUri: "/packages",
-          identifierProps: ["id"]
-        }
       }
-    }
-    if (this.okapi.token) apiDescriptor.headers['X-Okapi-Token'] = this.okapi.token
-    return apiDescriptor
+    })
+    if (this.okapi.token) this.apiDescriptor.headers['X-Okapi-Token'] = this.okapi.token
+    return this.apiDescriptor
   }
   
-  getResourceType = (theType) => (
-    this.apiConfig.resources[theType.toLowerCase()].baseUri.substring(1)
-  );
+  getResourceType = (theType) => {
+    
+    const me = this
+    
+    // New promise.
+    if (this.apiConfig.resources) {
+      return Promise.resolve(this.apiConfig.resources[theType.toLowerCase()].baseUri.substring(1))
+    } else {
+      
+      // Only access the descriptor directly in tis else stanza. Use .apiConfig everywhere else.
+      
+      // Need to fetch the config first.
+      return this.fetch (this.apiDescriptor.root + '/kiwt/config').then((response) => {
+        
+        return response.json()
+        
+      }).then((jsonData) => {
 
+        me.apiDescriptor.resources = {}
+        Object.keys(jsonData.resources).forEach((key) => {
+          me.apiDescriptor.resources[key.toLowerCase()] = jsonData.resources[key]
+        })
+        
+        return me.apiDescriptor.resources[theType.toLowerCase()].baseUri.substring(1)
+      })
+    }
+  }
+  
+  fetch = (url, conf) => {
+    
+    conf = conf || {headers: {}}
+    
+    if (!conf.headers) {
+      // Add a headers object
+      conf.headers = {}
+    }
+    
+    Object.keys(this.apiConfig.headers).forEach ((key) => {
+      conf.headers[key] = this.apiConfig.headers[key]
+    })
+    
+    // DO an internal fetch so append the headers.
+    return fetch(url, conf)
+  }
   
   @computed get url() {
     return this.apiConfig.root
   }
   
   @computed get api() {
-    return restful(this.url, fetchBackend(fetch)).addRequestInterceptor((config) => {
-      const { headers } = config
-
-      // just return modified arguments
-      return {
-        headers : Object.assign(headers, 
-          this.apiConfig.headers
-        )
-      }
-    })
+    return restful(this.url, fetchBackend(this.fetch))
   }
   
   hasPerm = (perm) => {

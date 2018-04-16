@@ -21,7 +21,7 @@ class ResourceBasedComponent extends Component {
   @observable working = false
   
   @computed get dataContext() {
-    return this.app.api.all(this.app.getResourceType(this.res))
+    return this.app.getResourceType(this.res).then((theType)=> (this.app.api.all(theType)))
   }
   
   @observable data
@@ -30,7 +30,7 @@ class ResourceBasedComponent extends Component {
   async fetchData(params) {
     this.working = true
     
-    const remoteData = await this.dataContext.getAll(params)
+    const remoteData = await this.dataContext.then((dataContext) => (dataContext.getAll(params)))
     
     // The run in action ensures that the code within is executed after the await has finished, and within this context.
     runInAction(() => {
