@@ -5,24 +5,29 @@ import { observable, action, computed, runInAction } from 'mobx'
 
 class ResourceBasedComponent extends Component {
   static PropTypes = {
-    resourceType: PropTypes.string.isRequired,
-    params: PropTypes.function,
+    resource: PropTypes.oneOf([
+      PropTypes.string,
+      PropTypes.object
+    ]).isRequired,
     app: PropTypes.object.isRequired
   }
   
   constructor (props) {
     super(props)
-    this.res = props.resourceType
     this.app = props.app
   }
   
-  @observable app
-  @observable res
-  @observable working = false
-  
-  @computed get dataContext() {
-    return this.app.getResourceType(this.res).then((theType)=> (this.app.api.all(theType)))
+  setDataContext( context ) {
+    if (typeof theType === 'string') {
+      dataContext = this.app.getResourceType(this.res).then((theType)=> (this.app.api.all(theType)))
+    } else {
+      dataContext = context
+    }
   }
+  
+  @observable app
+  @observable dataContext
+  @observable working = false
   
   @observable data
   
