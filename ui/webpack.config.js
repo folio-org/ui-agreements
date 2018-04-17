@@ -6,7 +6,6 @@
 const path = require('path');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-var DashboardPlugin = require('webpack-dashboard/plugin');
 var webpack = require('webpack');
 
 // Load in defaults and extend.

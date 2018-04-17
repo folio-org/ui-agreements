@@ -1,7 +1,6 @@
 const path = require('path')
 const stripesCoreServe  = require('@folio/stripes-core/webpack/serve')
 const stripesConfig  = require('../stripes.config')
-const DashboardPlugin  = require('webpack-dashboard/plugin')
 const webpack  = require('webpack')
 const stripesBabel = require ('@folio/stripes-core/webpack/babel-loader-rule')
 const reactHotLoader = require('react-hot-loader/babel')
@@ -37,10 +36,7 @@ const options = {
     conf.output.hotUpdateMainFilename = 'hot/[hash].hot-update.json'
     
     conf.plugins.push(
-      new webpack.NamedModulesPlugin(),
-      new DashboardPlugin({
-          minified: false,
-          gzip: false})
+      new webpack.NamedModulesPlugin()
     )
     
     // Remove the loader rules we don't want/need. Should really filter using the loader type.

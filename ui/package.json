@@ -1,8 +1,7 @@
 {
   "license": "Apache-2.0",
   "scripts": {
-    "start": "webpack-dashboard -- gulp --gulpfile tasks",
-    "start-nodash": "gulp --gulpfile tasks",
+    "start": "gulp --gulpfile tasks",
     "build": "webpack"
   },
   "publishConfig": {
@@ -35,7 +34,6 @@
     "restful.js": "^0.9.6",
     "sass-loader": "^7.0.1",
     "webpack": "^3",
-    "webpack-dashboard": "^1.1.1",
     "webpack-dev-server": "^3.1.1"
   }
 }
