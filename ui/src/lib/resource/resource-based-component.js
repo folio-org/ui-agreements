@@ -15,14 +15,14 @@ class ResourceBasedComponent extends Component {
   constructor (props) {
     super(props)
     this.app = props.app
-    setDataContext ( resource )
+    this.setDataContext ( props.resource )
   }
   
   setDataContext = ( context ) => {
-    if (typeof theType === 'string') {
-      dataContext = this.app.getResourceType(context).then((theType) => (this.app.api.all(theType)))
+    if (typeof context === 'string') {
+      this.dataContext = this.app.getResourceType(context).then((theType) => (this.app.api.all(theType)))
     } else {
-      dataContext = context
+      this.dataContext = context
     }
   }
   
