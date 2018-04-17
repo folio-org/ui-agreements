@@ -6,18 +6,14 @@ import Search from '../search'
 import {
   Collapse,
   Navbar,
-  NavbarToggler,
   Nav,
   NavItem,
   NavLink} from 'reactstrap';
 
-let toggle = observable(false)
 let isOpen = observable(false)
-
 
 export default observer((props) => (
   <Navbar light expand="md">
-    <NavbarToggler onClick={toggle.get()} />
     <Search md="3" xs="12" />
     <Collapse isOpen={isOpen.get()} navbar>
       <Nav className="ml-auto" navbar>
