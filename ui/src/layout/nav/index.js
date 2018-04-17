@@ -13,14 +13,14 @@ import {
 let isOpen = observable(false)
 
 export default observer((props) => (
-  <Navbar light expand="md">
-    <Search md="3" xs="12" />
-    <Collapse isOpen={isOpen.get()} navbar>
-      <Nav className="ml-auto" navbar>
+  <Navbar color="light" light expand="md" className="mb-4" >
+    <Search size="lg" className="rounded-left px-0 col-md-3 col-12" />
+    <Collapse isOpen={isOpen.get()} navbar >
+      <Nav className="ml-auto" navbar >
         <NavItem>
-          <NavLink href="/components/">Components</NavLink>
+          <NavLink href="#placeholder/">Placeholder</NavLink>
           </NavItem>
         </Nav>
-      </Collapse>
-   </Navbar>
+    </Collapse>
+  </Navbar>
  ))
