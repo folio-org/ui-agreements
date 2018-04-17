@@ -46,7 +46,7 @@ const Home = observer(() => {
       <Container fluid={true}>
         <Row>
           <Col md="3" xs="12" ><h2>Filters</h2></Col>
-          <Col md="9" xs="12" ><ResourceBasedTable resourceType="SubscriptionAgreement" columns={columns} app={app} /></Col>
+          <Col md="9" xs="12" ><ResourceBasedTable resource="SubscriptionAgreement" columns={columns} app={app} /></Col>
         </Row>
       </Container>
     </div>

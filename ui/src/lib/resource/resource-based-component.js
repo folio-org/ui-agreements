@@ -5,9 +5,9 @@ import { observable, action, computed, runInAction } from 'mobx'
 
 class ResourceBasedComponent extends Component {
   static PropTypes = {
-    resource: PropTypes.oneOf([
+    resource: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.object
+      PropTypes.instanceOf(Promise)
     ]).isRequired,
     app: PropTypes.object.isRequired
   }
@@ -15,11 +15,12 @@ class ResourceBasedComponent extends Component {
   constructor (props) {
     super(props)
     this.app = props.app
+    setDataContext ( resource )
   }
   
-  setDataContext( context ) {
+  setDataContext = ( context ) => {
     if (typeof theType === 'string') {
-      dataContext = this.app.getResourceType(this.res).then((theType)=> (this.app.api.all(theType)))
+      dataContext = this.app.getResourceType(context).then((theType) => (this.app.api.all(theType)))
     } else {
       dataContext = context
     }
@@ -40,7 +41,7 @@ class ResourceBasedComponent extends Component {
     // Always merge so we remember all params set in various places.
     this.currentParams = Object.assign({}, this.currentParams, params)
     
-    const remoteData = await this.dataContext.then((dataContext) => (dataContext.getAll(this.currentParams)))
+    const remoteData = await this.dataContext.then((dc) => (dc.getAll(this.currentParams)))
     
     // The run in action ensures that the code within is executed after the await has finished, and within this context.
     runInAction(() => {
