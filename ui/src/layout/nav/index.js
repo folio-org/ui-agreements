@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { observer } from 'mobx-react'
 import { observable } from 'mobx'
-import Search from '../search'
+import Search from './search'
 import {
   Collapse,
   Navbar,
@@ -13,8 +13,8 @@ import {
 let isOpen = observable(false)
 
 export default observer((props) => (
-  <Navbar color="light" light expand="lg" className="mb-4" >
-    <Search className="px-0 col-lg-3 col-12" />
+  <Navbar color="light" sticky='top' light expand="lg" className="mb-4" >
+    <Search app={props.app} className="px-0 col-lg-3 col-12" />
     <Collapse isOpen={isOpen.get()} navbar >
       <Nav className="ml-auto" navbar >
         <NavItem>

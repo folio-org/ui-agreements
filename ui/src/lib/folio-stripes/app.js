@@ -1,8 +1,13 @@
-import { observable, computed } from 'mobx'
+import { observable, computed, extendObservable } from 'mobx'
 import restful, { fetchBackend } from 'restful.js'
+import queryString from 'query-string'
 
 class App {
+  
   @observable stripes = {}
+  @observable appConfig = require('../../config').default
+  history
+  
   @computed get okapi () { return this.stripes.okapi }
   @computed get user () { return this.stripes.user.user }
   
@@ -68,7 +73,23 @@ class App {
   }
   
   @computed get api() {
-    return restful(this.url, fetchBackend(this.fetch))
+    
+    let app = this
+    
+    let api = restful(this.url, fetchBackend(this.fetch))
+    api.addRequestInterceptor((config) => {
+      
+      /**
+       * Restful js seems to encode the url parameter names.. Lets try and
+       * do that bit manually here.
+       */
+      const { params, url } = config
+      const encParams = app.queryString().stringify (params)
+
+      // just return modified arguments
+      return { params: null, url: `${url}${encParams ? '?' + encParams : ''}` }
+    })
+    return api
   }
   
   hasPerm = (perm) => {
@@ -77,6 +98,27 @@ class App {
   
   log = (message) => {
     this.stripes.logger.log('erm', message)
+  }
+  
+  queryString = () => ({
+      parse: (theString) => (queryString.parse(theString, this.appConfig.queryString)),
+      stringify: (object) => (queryString.stringify(object, this.appConfig.queryString))
+  })
+  
+  @computed get queryStringObject() {    
+    return this.queryString().parse( this.history.location.search )
+  }
+  
+  init = (props) => {
+    this.stripes = props.stripes
+    this.history = props.history
+    this.history.location = extendObservable(this.history.location, {search: this.history.location.search})
+  }
+  
+  addToQueryString = ( obj ) => {
+    let qs = this.queryStringObject
+    qs = Object.assign({}, qs, obj)
+    this.history.push({search: `?${this.queryString().stringify(qs)}` })
   }
 }
 export default new App()

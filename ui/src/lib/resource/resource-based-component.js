@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { observable, action, computed, runInAction } from 'mobx'
 
-
 class ResourceBasedComponent extends Component {
   static PropTypes = {
     resource: PropTypes.oneOfType([
@@ -26,22 +25,20 @@ class ResourceBasedComponent extends Component {
     }
   }
   
-  @observable app
+  @observable.shallow app
   @observable dataContext
   @observable working = false
   
   @observable data
-  
-  currentParams = {}
     
   @action.bound
   async fetchData(params) {
     this.working = true
     
-    // Always merge so we remember all params set in various places.
-    this.currentParams = Object.assign({}, this.currentParams, params)
+    // Default to using the query string params.
+    params = Object.assign({}, this.app.queryStringObject, params)
     
-    const remoteData = await this.dataContext.then((dc) => (dc.getAll(this.currentParams)))
+    const remoteData = await this.dataContext.then((dc) => (dc.getAll(params)))
     
     // The run in action ensures that the code within is executed after the await has finished, and within this context.
     runInAction(() => {

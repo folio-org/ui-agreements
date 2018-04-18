@@ -1,24 +1,28 @@
 import React from 'react'
-import ResourceBasedComponent from './resource-based-component'
 import PropTypes from 'prop-types'
 import { observer } from 'mobx-react'
 import { observable, action, computed, runInAction } from 'mobx'
 import { hot } from 'react-hot-loader'
-import ReactTable from "react-table"
+import ReactTable from 'react-table'
+
+import ResourceBasedComponent from './resource-based-component'
 
 @observer
 class ResourceBasedTable extends ResourceBasedComponent {
   
   static PropTypes = {
-    columns: PropTypes.arrayOf(PropTypes.object).isRequired
+    columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+    searchIn: PropTypes.arrayOf(PropTypes.string)
   }
   
   constructor (props) {
     super(props)
     this.columns = props.columns
+    this.searchIn = props.searchIn
   }
   
-  @observable columns = []
+  searchIn = []
+  columns = []
   
   @computed get rows() {
     if (this.data) {
@@ -29,16 +33,35 @@ class ResourceBasedTable extends ResourceBasedComponent {
     
     return []
   }
+  
+  lastUri = null
+  stopListening = null
+  componentWillMount() {
+    this.app.log(`Adding URL listener`)
+    this.app.history.listen((location, action) => {
+      this.fetchData({'match': this.searchIn})
+    })
+  }
+  
+  componentWillUnmount() {
+    if (this.stopListening) {
+      this.app.log(`Removing URL listener`)
+      stopListening()
+    }
+  }
 
   @action.bound
   fetchTableData(state) {
-    let params = {
-      perPage : state.pageSize,
-      page: state.page + 1
+    if (state) {
+      let params = {
+        perPage : state.pageSize,
+        page: state.page + 1
+      }
+      
+      // Default is to use query string params. Set them here.
+      this.app.addToQueryString(params)
     }
-    
-    super.fetchData(params)
-  }
+  }  
   
   render() {
     return (

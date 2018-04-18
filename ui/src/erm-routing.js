@@ -11,7 +11,7 @@ class ERMRouting extends Component {
   
   constructor (props) {
     super (props)
-    app.stripes = props.stripes
+    app.init (props)
   }
   
   NoMatch() {
@@ -27,7 +27,7 @@ class ERMRouting extends Component {
     return (
       <div className="erm" >
         <Switch >
-          <Route path={`${this.props.match.path}`} render={() => <Home/>} />
+          <Route history={this.props.history} path={`${this.props.match.path}`} render={() => <Home app={app} />} />
           <Route component={() => { NoMatch(); }} />
         </Switch>
       </div>
