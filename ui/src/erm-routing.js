@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import Route from 'react-router-dom/Route'
 import Switch from 'react-router-dom/Switch'
 import Home from './home'
+import Dash from './dash'
 import app from './lib/folio-stripes/app'
 
 import * as mobx from 'mobx'
@@ -27,6 +28,7 @@ class ERMRouting extends Component {
     return (
       <div className="erm" >
         <Switch >
+          <Route history={this.props.history} path="/dash" render={() => <Dash app={app} />} />
           <Route history={this.props.history} path={`${this.props.match.path}`} render={() => <Home app={app} />} />
           <Route component={() => { NoMatch(); }} />
         </Switch>
