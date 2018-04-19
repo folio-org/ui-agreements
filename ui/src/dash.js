@@ -17,7 +17,7 @@ const Dash = observer((props) => {
 
       <Container fluid={true}>
 	<Row>
-	  ERM Dashboard
+	  <Col sm="12"><h1>ERM Dashboard</h1></Col>
 	</Row>
 	<Row>
 	  <Col sm="3">
@@ -26,8 +26,12 @@ const Dash = observer((props) => {
 	      <CardHeader>Agreements</CardHeader>
 	      <CardBody>
 	        <CardText>
-	          You have <a href="/path/to/agreements">12 curerent agreements</a>
+	          You have <a href="/path/to/agreements">12 curerent agreements</a>. <br/>Workflows you can launch from here:
 	        </CardText>
+	          <ul>
+	            <li>Create a new empty agreement and add content later</li>
+	            <li>Search packages and create a draft, trial or live agreement</li>
+	          </ul>
 	      </CardBody>
 	    </Card>
 
@@ -53,6 +57,7 @@ const Dash = observer((props) => {
 	  </Col>
 
 	  <Col sm="3">
+
 	    <Card>
 	      <CardHeader>Subscribed Content</CardHeader>
 	      <CardBody>
@@ -63,6 +68,19 @@ const Dash = observer((props) => {
 	        </CardText>
 	      </CardBody>
 	    </Card>
+
+            <br/>
+
+	    <Card>
+	      <CardHeader>Content Issues</CardHeader>
+	      <CardBody>
+	        <CardText>
+	          There are currently no reported issues accessing
+	          electronic content. The world is happy.
+	        </CardText>
+	      </CardBody>
+	    </Card>
+
 
 	  </Col>
 
