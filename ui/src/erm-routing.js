@@ -25,11 +25,12 @@ class ERMRouting extends Component {
   }
   
   render() {
+    console.log("ERM ROUTING: %o",this.props);
     return (
       <div className="erm" >
         <Switch >
-          <Route history={this.props.history} path="/dash" render={() => <Dash app={app} />} />
-          <Route history={this.props.history} path={`${this.props.match.path}`} render={() => <Home app={app} />} />
+          <Route history={this.props.history} path="/erm/dash" render={() => <Dash app={app} />} />
+          <Route history={this.props.history} path="/erm" render={() => <Home app={app} />} />
           <Route component={() => { NoMatch(); }} />
         </Switch>
       </div>
