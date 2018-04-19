@@ -46,7 +46,8 @@ class ResourceBasedTable extends ResourceBasedComponent {
   componentWillUnmount() {
     if (this.stopListening) {
       this.app.log(`Removing URL listener`)
-      stopListening()
+      this.stopListening()
+      this.stopListeneing = null
     }
   }
 
