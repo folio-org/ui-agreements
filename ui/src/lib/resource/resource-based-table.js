@@ -38,7 +38,7 @@ class ResourceBasedTable extends ResourceBasedComponent {
   stopListening = null
   componentWillMount() {
     this.app.log(`Adding URL listener`)
-    this.app.history.listen((location, action) => {
+    this.stopListening = this.app.history.listen((location, action) => {
       this.fetchData({'match': this.searchIn})
     })
   }
