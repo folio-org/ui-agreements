@@ -7,6 +7,7 @@ import stringReplace from 'react-string-replace'
 import ResourceBasedTable from './lib/resource/resource-based-table'
 import {tableFormatters} from './lib/helpers'
 import Nav from './layout/nav'
+import { Link } from 'react-router-dom'
 
 import { Container, Card, CardImg, CardText, CardHeader, CardBody, CardTitle, CardSubtitle, Button, Row, Col } from 'reactstrap';
 
@@ -26,7 +27,7 @@ const Dash = observer((props) => {
 	      <CardHeader>Agreements</CardHeader>
 	      <CardBody>
 	        <CardText>
-	          You have <a href="/path/to/agreements">12 curerent agreements</a>. <br/>Workflows you can launch from here:
+	          You have <Link to="/erm/home">12 curerent agreements</Link>. <br/>Workflows you can launch from here:
 	        </CardText>
 	          <ul>
 	            <li>Create a new empty agreement and add content later</li>
