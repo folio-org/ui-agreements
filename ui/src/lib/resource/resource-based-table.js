@@ -47,7 +47,7 @@ class ResourceBasedTable extends ResourceBasedComponent {
     if (this.stopListening) {
       this.app.log(`Removing URL listener`)
       this.stopListening()
-      this.stopListeneing = null
+      this.stopListening = null
     }
   }
 
