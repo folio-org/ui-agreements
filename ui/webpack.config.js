@@ -8,6 +8,15 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 var webpack = require('webpack');
 
+const postCssImport = require('postcss-import')
+const autoprefixer = require('autoprefixer')
+const postCssCustomProperties = require('postcss-custom-properties')
+const postCssCalc = require('postcss-calc')
+const postCssNesting = require('postcss-nesting')
+const postCssCustomMedia = require('postcss-custom-media')
+const postCssMediaMinMax = require('postcss-media-minmax')
+const postCssColorFunction = require('postcss-color-function')
+
 // Load in defaults and extend.
 const babelConf = {
   cacheDirectory: true,
@@ -51,6 +60,46 @@ module.exports = [{
         options: babelConf
       },
     },{
+      test: /\.(scss)$/,
+      use: [
+        {
+          loader: 'style-loader',
+          options: {
+            sourceMap: true,
+          }
+        },
+        {
+          loader: 'css-loader',
+          options: {
+            sourceMap: true,
+          }
+        },
+        {
+          loader: 'postcss-loader',
+          options: {
+            plugins: function () {
+              return [
+                postCssImport(),
+                autoprefixer(),
+                postCssCustomProperties(),
+                postCssCalc(),
+                postCssNesting(),
+                postCssCustomMedia(),
+                postCssMediaMinMax(),
+                postCssColorFunction()
+              ];
+            },
+            sourceMap: true,
+          }
+        },
+        {
+          loader: 'sass-loader',
+          options: {
+            sourceMap: true,
+          }
+        }
+      ]
+    },{
       test: /\.css$/,
       use: [
         {
@@ -63,16 +112,15 @@ module.exports = [{
           loader: 'postcss-loader',
           options: {
             plugins: function () {
-              return [
-                require('postcss-import'),
-                require('postcss-url'),
-                require("autoprefixer"),
-                require("postcss-custom-properties"),
-                require("postcss-calc"),
-                require("postcss-nesting"),
-                require("postcss-custom-media"),
-                require("postcss-media-minmax"),
-                require("postcss-color-function")
+              return [                
+                postCssImport(),
+                autoprefixer(),
+                postCssCustomProperties(),
+                postCssCalc(),
+                postCssNesting(),
+                postCssCustomMedia(),
+                postCssMediaMinMax(),
+                postCssColorFunction()
               ];
             }
           }
