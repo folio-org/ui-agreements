@@ -99,7 +99,7 @@ const Dash = observer((props) => {
 	    <Card>
 	      <CardHeader>Licenses</CardHeader>
 	      <CardBody>
-	        <CardTitle>Your Licenses</CardTitle>
+	        <CardText>Your Licenses</CardText>
 	      </CardBody>
 	    </Card>
 
