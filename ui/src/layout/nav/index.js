@@ -18,7 +18,7 @@ export default observer((props) => (
     <Collapse isOpen={isOpen.get()} navbar >
       <Nav className="ml-auto" navbar >
         <NavItem>
-          <NavLink href="#placeholder/">Placeholder</NavLink>
+          <NavLink href="#placeholder/">Placeholder v0.0.4</NavLink>
           </NavItem>
         </Nav>
     </Collapse>
