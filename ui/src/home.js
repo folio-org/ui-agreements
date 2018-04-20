@@ -61,6 +61,14 @@ const Home = observer((props) => {
       Header: "Next Review Date",
       accessor: "nextReviewDate",
       Cell: tableFormatters.date
+    },
+    {
+      Header: "Local Reference",
+      accessor: "localReference"
+    },
+    {
+      Header: "Vendor Reference",
+      accessor: "vendorReference"
     }
   ]
   
