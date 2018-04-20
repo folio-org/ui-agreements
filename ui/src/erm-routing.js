@@ -25,7 +25,6 @@ class ERMRouting extends Component {
   }
   
   render() {
-    console.log("ERM ROUTING: %o",this.props);
     return (
       <div className="erm" >
         <Switch >

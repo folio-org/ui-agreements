@@ -4,7 +4,6 @@ import { observer } from 'mobx-react'
 import { hot } from 'react-hot-loader'
 import stringReplace from 'react-string-replace'
 
-import ResourceBasedTable from './lib/resource/resource-based-table'
 import {tableFormatters} from './lib/helpers'
 import Nav from './layout/nav'
 import { Link } from 'react-router-dom'
