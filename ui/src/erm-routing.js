@@ -29,13 +29,14 @@ class ERMRouting extends Component {
   render() {
     // Steve: Can you add a comment here explaining how the default route works here, or what mechanism
     // is in force that causes the Home page to be rendered. I can't make the NoMatch route work.
+    console.log("Here %o",this.props);
     return (
       <div className="erm" >
         <Switch >
-          <Route history={this.props.history} path="/erm" render={() => <Home app={app} />} />
           <Route history={this.props.history} path="/erm/platforms" render={() => <Platforms app={app} />} />
           <Route history={this.props.history} path="/erm/packages" render={() => <Packages app={app} />} />
           <Route history={this.props.history} path="/erm/dash" render={() => <Dash app={app} />} />
+          <Route history={this.props.history} path="/erm" render={() => <Home app={app} />} />
           <Route component={() => { NoMatch(); }} />
         </Switch>
       </div>
