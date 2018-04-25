@@ -5,6 +5,7 @@ import Home from './home'
 import Dash from './dash'
 import Packages from './packages'
 import Platforms from './platforms'
+import Content from './content'
 import app from './lib/folio-stripes/app'
 
 import * as mobx from 'mobx'
@@ -32,10 +33,11 @@ class ERMRouting extends Component {
     return (
       <div className="erm" >
         <Switch >
-          <Route history={this.props.history} path="/erm" render={() => <Home app={app} />} />
+          <Route history={this.props.history} path="/erm/content" render={() => <Content app={app} />} />
           <Route history={this.props.history} path="/erm/platforms" render={() => <Platforms app={app} />} />
           <Route history={this.props.history} path="/erm/packages" render={() => <Packages app={app} />} />
           <Route history={this.props.history} path="/erm/dash" render={() => <Dash app={app} />} />
+          <Route history={this.props.history} path="/erm" render={() => <Home app={app} />} />
           <Route component={() => { NoMatch(); }} />
         </Switch>
       </div>

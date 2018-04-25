@@ -92,7 +92,7 @@ const Dash = observer((props) => {
 	    <Card>
 	      <CardHeader>Packages</CardHeader>
 	      <CardBody>
-	        <CardText>You are currently selecting titles from 23 packages</CardText>
+	        <CardText>You are <Link to="/erm/packages">currently selecting titles from 2</Link> out of <Link to="/erm/packages">2 available packages</Link> packages</CardText>
 	      </CardBody>
 	    </Card>
 	  </Col>
