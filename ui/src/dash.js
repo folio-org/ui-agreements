@@ -20,6 +20,22 @@ const Dash = observer((props) => {
 	  <Col sm="12"><h1>ERM Dashboard</h1></Col>
 	</Row>
 	<Row>
+	  <Col sm="12">
+
+	    <Card>
+	      <CardHeader>Subscribed Content</CardHeader>
+	      <CardBody>
+	        <CardText>You have 12 current agreements which provide access to
+	                36455 individual electronic resources drawn from 123 packages.</CardText>
+	        <CardText>
+	          Search currently available e-resources: <input name="q" type="text"/>
+	        </CardText>
+	      </CardBody>
+	    </Card>
+
+	  </Col>
+	</Row>
+	<Row>
 	  <Col sm="3">
 
   	    <Card>
@@ -57,19 +73,6 @@ const Dash = observer((props) => {
 	  </Col>
 
 	  <Col sm="3">
-
-	    <Card>
-	      <CardHeader>Subscribed Content</CardHeader>
-	      <CardBody>
-	        <CardText>Your current agreements provide access to
-	                36455 individual electronic resources.</CardText>
-	        <CardText>
-	          Quick Search: <input name="q" type="text"/>
-	        </CardText>
-	      </CardBody>
-	    </Card>
-
-            <br/>
 
 	    <Card>
 	      <CardHeader>Content Issues</CardHeader>
