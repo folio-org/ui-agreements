@@ -6,7 +6,6 @@ import { Container, Row, Col } from 'reactstrap'
 
 import UrlParamResourceCrud from './lib/resource/url-param-resource-crud'
 import {tableFormatters, textHighlighter} from './lib/helpers'
-import Nav from './layout/nav'
 
 let searchIn = [
   'name',
@@ -50,19 +49,16 @@ const Home = observer((props) => {
   ]
   
   return (
-    <div>
-      <Nav app={props.app} />
-      <Container fluid={true}>
-        <Row>
-          <Col lg="3" xs="12" >
-            <div className="position-fixed" >
-              <h2>Filters</h2>
-            </div>
-          </Col>
-          <Col lg="9" xs="12" ><UrlParamResourceCrud resource="SubscriptionAgreement" fieldsToSearch={searchIn} columnDef={columns} app={props.app} /></Col>
-        </Row>
-      </Container>
-    </div>
+    <Container fluid={true}>
+      <Row>
+        <Col lg="3" xs="12" >
+          <div className="position-fixed" >
+            <h2>Filters</h2>
+          </div>
+        </Col>
+        <Col lg="9" xs="12" ><UrlParamResourceCrud resource="SubscriptionAgreement" fieldsToSearch={searchIn} columnDef={columns} app={props.app} /></Col>
+      </Row>
+    </Container>
   )
 })
 

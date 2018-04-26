@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import Route from 'react-router-dom/Route'
 import Switch from 'react-router-dom/Switch'
-import Home from './home'
+import Agreements from './agreements'
 import Dash from './dash'
 import app from './lib/folio-stripes/app'
+import Nav from './layout/nav'
 
 import * as mobx from 'mobx'
 const {observable, autorun, action} = mobx
@@ -25,11 +26,16 @@ class ERMRouting extends Component {
   }
   
   render() {
-    console.log("ERM ROUTING: %o",this.props);
+    app.log("routing %o",this.props)
+    
+    let {match} = this.props
+    
     return (
       <div className="erm" >
+        <Nav app={app} />
         <Switch >
-          <Route history={this.props.history} path="/erm" render={() => <Home app={app} />} />
+          <Route history={this.props.history} exact path={match.path} render={() => <Dash app={app} />} />
+          <Route history={this.props.history} path={match.path + '/agreements/:resourceId?'} render={() => <Agreements app={app} />} />
           <Route component={() => { NoMatch(); }} />
         </Switch>
       </div>

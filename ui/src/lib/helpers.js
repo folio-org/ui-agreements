@@ -24,14 +24,14 @@ let tableFormatters = {
 
 let textHighlighter = function ( find ) {
   return function ( findIn ) {
-  
-    // Return as is...
-    if (!findIn || findIn == '' || !find || find == '') return findIn
-    
+
     let toFind = find
     if (typeof toFind === 'function') {
       toFind = toFind()
     }
+    
+    // Return as is...
+    if (!findIn || findIn == '' || !toFind || toFind == '') return findIn
     
     let escSearchText = toFind.replace(/([.*+?^${}()|[\]\\])/g, '\\$1');
     let text = findIn

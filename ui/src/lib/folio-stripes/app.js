@@ -99,8 +99,8 @@ class App {
     return this.stripes.hasPerm (perm)
   }
   
-  log = (message) => {
-    this.stripes.logger.log('erm', message)
+  log = () => {
+    this.stripes.logger.log.call(this.stripes.logger, ['erm'].concat(...arguments))
   }
   
   queryString = () => ({
