@@ -22,7 +22,7 @@ const Dash = observer((props) => {
       	      <CardHeader>Agreements</CardHeader>
       	      <CardBody>
       	        <CardText>
-      	          You have <Link to="/erm/home">12 curerent agreements</Link>. <br/>Workflows you can launch from here:
+      	          You have <Link to="/erm">12 curerent agreements</Link>. <br/>Workflows you can launch from here:
       	        </CardText>
       	          <ul>
       	            <li>Create a new empty agreement and add content later</li>

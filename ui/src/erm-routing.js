@@ -32,12 +32,14 @@ class ERMRouting extends Component {
     
     return (
       <div className="erm" >
-        <Nav app={app} />
-        <Switch >
-          <Route history={this.props.history} exact path={match.path} render={() => <Dash app={app} />} />
-          <Route history={this.props.history} path={match.path + '/agreements/:resourceId?'} render={() => <Agreements app={app} />} />
-          <Route component={() => { NoMatch(); }} />
-        </Switch>
+        <Nav color="light" sticky="top" light expand="lg" />
+        <div className="pt-4" >
+          <Switch >
+            <Route history={this.props.history} exact path={match.path} render={() => <Dash app={app} />} />
+            <Route history={this.props.history} path={match.path + '/agreements/:resourceId?'} render={() => <Agreements app={app} />} />
+            <Route component={() => { NoMatch(); }} />
+          </Switch>
+       </div>
       </div>
     )
   }

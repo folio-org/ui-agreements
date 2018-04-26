@@ -3,6 +3,7 @@ import {observable} from 'mobx'
 import { observer } from 'mobx-react'
 import { hot } from 'react-hot-loader'
 import { Container, Row, Col } from 'reactstrap'
+import Search from './layout/search'
 
 import UrlParamResourceCrud from './lib/resource/url-param-resource-crud'
 import {tableFormatters, textHighlighter} from './lib/helpers'
@@ -12,7 +13,7 @@ let searchIn = [
   'agreementType.label'
 ]
 
-const Home = observer((props) => {
+const Agreements = observer((props) => {
   
   let highlighter = textHighlighter ( () => (props.app.queryStringObject.term))
 
@@ -51,15 +52,13 @@ const Home = observer((props) => {
   return (
     <Container fluid={true}>
       <Row>
-        <Col lg="3" xs="12" >
-          <div className="position-fixed" >
-            <h2>Filters</h2>
-          </div>
+        <Col lg="3" xs="12" className="position-fixed" >
+          <Search className="w-100" app={props.app} />
         </Col>
-        <Col lg="9" xs="12" ><UrlParamResourceCrud resource="SubscriptionAgreement" fieldsToSearch={searchIn} columnDef={columns} app={props.app} /></Col>
+        <Col lg={{size:9, offset:3}} xs="12"><UrlParamResourceCrud resource="SubscriptionAgreement" fieldsToSearch={searchIn} columnDef={columns} app={props.app} /></Col>
       </Row>
     </Container>
   )
 })
 
-export default hot(module)(Home)
+export default hot(module)(Agreements)
