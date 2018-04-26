@@ -3,47 +3,32 @@ import {observable} from 'mobx'
 import { observer } from 'mobx-react'
 import { hot } from 'react-hot-loader'
 import { Container, Row, Col } from 'reactstrap'
-import stringReplace from 'react-string-replace'
 
-import ResourceBasedTable from './lib/resource/resource-based-table'
-import {tableFormatters} from './lib/helpers'
+import UrlParamResourceCrud from './lib/resource/url-param-resource-crud'
+import {tableFormatters, textHighlighter} from './lib/helpers'
 import Nav from './layout/nav'
+
+let searchIn = [
+  'name',
+  'agreementType.label'
+]
 
 const Home = observer((props) => {
   
-  let stringHighlighter = (value) => {
-    
-    // Return as is...
-    const find = props.app.queryStringObject.term
-    if (!value || value == '' || !find || find == '') return value
-    
-    let escSearchText = find.replace(/([.*+?^${}()|[\]\\])/g, '\\$1');
-    let text = value
-    
-    text = stringReplace(text, new RegExp(`(${escSearchText})`, 'gi'), (match, i) => (
-      <strong key={i} style={{'borderBottom': '1px dotted', 'fontSize': '1.15rem'}}>{match}</strong>
-    ));
-    
-    return text
-  }
-  
-  let searchIn = [
-    'name',
-    'agreementType.value'
-  ]
+  let highlighter = textHighlighter ( props.app.queryStringObject.term )
 
   let columns = [
     {
       Header: "Name",
       id: 'name',
       accessor: d => ({name: d.name, id: d.id}),
-      Cell: tableFormatters.pipe( (cell) => (stringHighlighter(cell.value.name)), (previous, cell) => (<a href={`#${cell.value.id}`}>{previous}</a>) )
+      Cell: tableFormatters.pipe( (cell) => (highlighter(cell.value.name)), (previous, cell) => (<a href={`#${cell.value.id}`}>{previous}</a>) )
     },{
       Header: "Subscription",
       columns:[{
         Header: "Agreement Type",
-        accessor: "agreementType.value",
-        Cell: (cell) => (stringHighlighter(cell.value))
+        accessor: "agreementType.label",
+        Cell: (cell) => (highlighter(cell.value))
       },{
         Header: "Start Date",
         accessor: "startDate",
@@ -74,7 +59,7 @@ const Home = observer((props) => {
               <h2>Filters</h2>
             </div>
           </Col>
-          <Col lg="9" xs="12" ><ResourceBasedTable resource="SubscriptionAgreement" searchIn={searchIn} columns={columns} app={props.app} /></Col>
+          <Col lg="9" xs="12" ><UrlParamResourceCrud resource="SubscriptionAgreement" fieldsToSearch={searchIn} columnDef={columns} app={props.app} /></Col>
         </Row>
       </Container>
     </div>

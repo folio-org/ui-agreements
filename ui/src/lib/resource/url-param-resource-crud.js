@@ -8,21 +8,21 @@ import ReactTable from 'react-table'
 import ResourceBasedComponent from './resource-based-component'
 
 @observer
-class ResourceBasedTable extends ResourceBasedComponent {
+class UrlParamResourceCrud extends ResourceBasedComponent {
   
   static PropTypes = {
-    columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-    searchIn: PropTypes.arrayOf(PropTypes.string)
+    resourceName: PropTypes.string.isRequired,
+    fieldsToSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
+    columnDef: PropTypes.arrayOf(PropTypes.object).isRequired,
+//    routerMatch: PropTypes.object.isRequired
   }
-  
+
   constructor (props) {
     super(props)
-    this.columns = props.columns
-    this.searchIn = props.searchIn
+//    this.routerParams = props.routerMatch.params || {}
   }
   
-  searchIn = []
-  columns = []
+//  routerParams
   
   @computed get rows() {
     if (this.data) {
@@ -34,53 +34,63 @@ class ResourceBasedTable extends ResourceBasedComponent {
     return []
   }
   
-  lastUri = null
+  @action.bound
+  historyUpdateListener(location, action) {
+    let newPars = this.app.queryStringObject
+    this.fetchParams = Object.assign({}, newPars, { match: this.props.fieldsToSearch })
+  }
+  
   stopListening = null
   componentWillMount() {
-    this.app.log(`Adding URL listener`)
-    this.stopListening = this.app.history.listen((location, action) => {
-      this.fetchData({'match': this.searchIn})
+    this.app.log('Adding URL listener')
+    this.stopListening = this.app.addHistoryListener((location, action) => {
+      this.historyUpdateListener(location, action)
     })
   }
   
   componentWillUnmount() {
-    if (this.stopListening) {
-      this.app.log(`Removing URL listener`)
+    if ( typeof this.stopListening == 'function' ) {
+      this.app.log('Removing URL listener')
       this.stopListening()
       this.stopListening = null
     }
   }
-
-  @action.bound
+  
+  @computed get tableRows() {
+    if (this.data) {
+      return this.data.body().map((entity) => {
+        return entity.data()
+      })
+    }
+    
+    return []
+  }
+  
   fetchTableData(state) {
-    if (state) {
-      let params = {
+    if (this.app && state) {
+      let params = Object.assign({}, this.fetchParams, {
         perPage : state.pageSize,
         page: state.page + 1
-      }
-      
-      // Default is to use query string params. Set them here.
-      this.app.addToQueryString(params)
+      })
+      this.app.addToQueryString( params )
     }
-  }  
+  }
   
   render() {
     return (
       <ReactTable
-        columns={this.columns.slice()}
+        columns={this.props.columnDef.slice()}
         noDataText="No results found"
         manual // Forces table not to paginate or sort automatically, so we can handle it server-side
-        data={this.rows}
+        data={this.tableRows}
         pages={1} // Display the total number of pages
         loading={this.working} // Display the loading overlay when we need it
         onFetchData={this.fetchTableData} // Request new data when things change
-//        filterable
-        defaultPageSize={10}
+        defaultPageSize={this.fetchParams && this.fetchParams.perPage ? parseInt(this.fetchParams.perPage) : 10}
         className="-striped -highlight"
           >{(state, makeTable, instance) => {
             
             let results = state.data.length < 1 ? 'No results found' : `Showing ${state.data.length} results`
-            
             return (
               <div>
                 <h2>{results}</h2>
@@ -93,4 +103,13 @@ class ResourceBasedTable extends ResourceBasedComponent {
   }
 }
 
-export default hot(module)(ResourceBasedTable)
+
+let routerEntry = ( { router, ...comp } ) => (
+  ( { match } ) => (
+      <UrlParamResourceCrud {...comp} routerMatch={match} />
+  )
+)
+
+export { routerEntry }
+
+export default hot(module)(UrlParamResourceCrud)

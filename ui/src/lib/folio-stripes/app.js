@@ -1,19 +1,25 @@
-import { observable, computed, extendObservable } from 'mobx'
+import { observable, computed, trace, action, toJS } from 'mobx'
 import restful, { fetchBackend } from 'restful.js'
 import queryString from 'query-string'
+
+let history
 
 class App {
   
   @observable stripes = {}
   @observable appConfig = require('../../config').default
-  history
+  
+  get urlQueryString() {
+    return history.location.search || ''
+  }
   
   @computed get okapi () { return this.stripes.okapi }
   @computed get user () { return this.stripes.user.user }
   
-  apiDescriptor = {}
+  @observable apiDescriptor = {}
+  
   @computed get apiConfig () {
-    Object.assign(this.apiDescriptor, {
+    this.apiDescriptor = Object.assign({}, toJS(this.appConfig.api || {}), {
       root: this.okapi.url,
       headers: {
         'X-Okapi-Tenant': this.okapi.tenant,
@@ -35,16 +41,18 @@ class App {
       // Only access the descriptor directly in tis else stanza. Use .apiConfig everywhere else.
       
       // Need to fetch the config first.
-      return this.fetch (this.apiDescriptor.root + '/kiwt/config').then((response) => {
+      return this.fetch (this.apiConfig.root + '/kiwt/config').then((response) => {
         
         return response.json()
         
       }).then((jsonData) => {
 
-        me.apiDescriptor.resources = {}
+        let resources = {}
         Object.keys(jsonData.resources).forEach((key) => {
-          me.apiDescriptor.resources[key.toLowerCase()] = jsonData.resources[key]
+          resources[key.toLowerCase()] = jsonData.resources[key]
         })
+        
+        me.apiDescriptor.resources = resources
         
         return me.apiDescriptor.resources[theType.toLowerCase()].baseUri.substring(1)
       })
@@ -60,9 +68,8 @@ class App {
       conf.headers = {}
     }
     
-    Object.keys(this.apiConfig.headers).forEach ((key) => {
-      conf.headers[key] = this.apiConfig.headers[key]
-    })
+    // Merge the dereferenced headers.
+    Object.assign (conf.headers, toJS(this.apiConfig.headers))
     
     // DO an internal fetch so append the headers.
     return fetch(url, conf)
@@ -74,8 +81,6 @@ class App {
   
   @computed get api() {
     
-    let app = this
-    
     let api = restful(this.url, fetchBackend(this.fetch))
     api.addRequestInterceptor((config) => {
       
@@ -84,7 +89,7 @@ class App {
        * do that bit manually here.
        */
       const { params, url } = config
-      const encParams = app.queryString().stringify (params)
+      const encParams = this.queryString().stringify (params)
 
       // just return modified arguments
       return { params: null, url: `${url}${encParams ? '?' + encParams : ''}` }
@@ -105,20 +110,21 @@ class App {
       stringify: (object) => (queryString.stringify(object, this.appConfig.queryString))
   })
   
-  @computed get queryStringObject() {    
-    return this.queryString().parse( this.history.location.search )
+  get queryStringObject() {
+    return this.queryString().parse( this.urlQueryString )
   }
   
   init = (props) => {
     this.stripes = props.stripes
-    this.history = props.history
-    this.history.location = extendObservable(this.history.location, {search: this.history.location.search})
+    history = props.history
   }
   
   addToQueryString = ( obj ) => {
     let qs = this.queryStringObject
-    qs = Object.assign({}, qs, obj)
-    this.history.push({search: `?${this.queryString().stringify(qs)}` })
+    qs = Object.assign({}, toJS(qs), obj)
+    history.push({search: `?${this.queryString().stringify(qs)}` })
   }
+  
+  addHistoryListener = ( locationListener ) => ( history.listen ( locationListener ) )
 }
 export default new App()

@@ -1,3 +1,6 @@
+import React from 'react'
+import stringReplace from 'react-string-replace'
+
 let tableFormatters = {
   date : cell => (cell.value ? new Date(cell.value).toLocaleDateString() : ''),
   pipe: function() {
@@ -19,4 +22,21 @@ let tableFormatters = {
   } 
 }
 
-export {tableFormatters}
+let textHighlighter = function ( find ) {
+  return function ( findIn ) {
+  
+    // Return as is...
+    if (!findIn || findIn == '' || !find || find == '') return findIn
+    
+    let escSearchText = find.replace(/([.*+?^${}()|[\]\\])/g, '\\$1');
+    let text = findIn
+    
+    text = stringReplace(text, new RegExp(`(${escSearchText})`, 'gi'), (match, i) => (
+      <strong key={i} style={{'borderBottom': '1px dotted', 'fontSize': '1.15rem'}}>{match}</strong>
+    ));
+    
+    return text
+  }
+}
+
+export {tableFormatters, textHighlighter}
