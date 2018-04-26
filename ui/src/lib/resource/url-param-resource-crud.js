@@ -19,7 +19,7 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
 
   constructor (props) {
     super(props)
-//    this.routerParams = props.routerMatch.params || {}
+    this.updateParamsFromUrl()
   }
   
 //  routerParams
@@ -35,17 +35,15 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
   }
   
   @action.bound
-  historyUpdateListener(location, action) {
+  updateParamsFromUrl = () => {
     let newPars = this.app.queryStringObject
-    this.fetchParams = Object.assign({}, newPars, { match: this.props.fieldsToSearch })
+    this.fetchParams = Object.assign(this.fetchParams, newPars, { match: this.props.fieldsToSearch })
   }
   
   stopListening = null
   componentWillMount() {
     this.app.log('Adding URL listener')
-    this.stopListening = this.app.addHistoryListener((location, action) => {
-      this.historyUpdateListener(location, action)
-    })
+    this.stopListening = this.app.addHistoryListener(this.updateParamsFromUrl)
   }
   
   componentWillUnmount() {
@@ -89,7 +87,6 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
         defaultPageSize={this.fetchParams && this.fetchParams.perPage ? parseInt(this.fetchParams.perPage) : 10}
         className="-striped -highlight"
           >{(state, makeTable, instance) => {
-            
             let results = state.data.length < 1 ? 'No results found' : `Showing ${state.data.length} results`
             return (
               <div>

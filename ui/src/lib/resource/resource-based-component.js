@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { observable, autorun, action, runInAction, computed, trace, toJS } from 'mobx'
+import { observable, autorun, action, runInAction, computed, toJS } from 'mobx'
 
 class ResourceBasedComponent extends Component {
   
@@ -35,7 +35,6 @@ class ResourceBasedComponent extends Component {
   
   @computed
   get fetchParams () {
-    trace()
     return toJS(this.fPars)
   }
   
@@ -54,7 +53,6 @@ class ResourceBasedComponent extends Component {
    */
   @action.bound
   fetchData = autorun(async () => {
-    trace()
     
     // Ensure we take a local reference to the val we want to watch before the await below.
     // MobX will not pick up the variables usage within the await.

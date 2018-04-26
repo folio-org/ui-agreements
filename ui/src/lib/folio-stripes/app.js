@@ -1,17 +1,15 @@
-import { observable, computed, trace, action, toJS } from 'mobx'
+import { observable, computed, action, toJS } from 'mobx'
 import restful, { fetchBackend } from 'restful.js'
 import queryString from 'query-string'
 
 let history
+let lastLocationRef = null
+let qsObject = {}
 
 class App {
   
   @observable stripes = {}
   @observable appConfig = require('../../config').default
-  
-  get urlQueryString() {
-    return history.location.search || ''
-  }
   
   @computed get okapi () { return this.stripes.okapi }
   @computed get user () { return this.stripes.user.user }
@@ -111,7 +109,13 @@ class App {
   })
   
   get queryStringObject() {
-    return this.queryString().parse( this.urlQueryString )
+    let currentRef = history.location.key
+    if (currentRef !== lastLocationRef) {
+      qsObject =  this.queryString().parse( history.location.search )
+      lastLocationRef = currentRef
+    }
+    
+    return qsObject
   }
   
   init = (props) => {

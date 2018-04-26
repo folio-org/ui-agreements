@@ -15,7 +15,7 @@ let searchIn = [
 
 const Home = observer((props) => {
   
-  let highlighter = textHighlighter ( props.app.queryStringObject.term )
+  let highlighter = textHighlighter ( () => (props.app.queryStringObject.term))
 
   let columns = [
     {
