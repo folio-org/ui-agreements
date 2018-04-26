@@ -28,7 +28,12 @@ let textHighlighter = function ( find ) {
     // Return as is...
     if (!findIn || findIn == '' || !find || find == '') return findIn
     
-    let escSearchText = find.replace(/([.*+?^${}()|[\]\\])/g, '\\$1');
+    let toFind = find
+    if (typeof toFind === 'function') {
+      toFind = toFind()
+    }
+    
+    let escSearchText = toFind.replace(/([.*+?^${}()|[\]\\])/g, '\\$1');
     let text = findIn
     
     text = stringReplace(text, new RegExp(`(${escSearchText})`, 'gi'), (match, i) => (
