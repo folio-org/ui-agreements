@@ -26,13 +26,13 @@ class ERMRouting extends Component {
   }
   
   render() {
-    app.log("routing %o",this.props)
+    console.log("routing %o",this.props)
     
     let {match} = this.props
     
     return (
       <div className="erm" >
-        <Nav color="light" sticky="top" light expand="lg" />
+        <Nav color="light" sticky="top" light expand="lg" className='justify-content-center' location={this.props.location} />
         <div className="pt-4" >
           <Switch >
             <Route history={this.props.history} exact path={match.path} render={() => <Dash app={app} />} />

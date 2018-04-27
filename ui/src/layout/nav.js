@@ -12,16 +12,23 @@ import {
 
 let isOpen = observable(false)
 
-export default observer((props) => (
+export default observer(({location, ...props}) => (
   <Navbar {...props} >
-    <Collapse isOpen={isOpen.get()} navbar >
-      <Nav className="ml-auto" navbar >
-        <Route path='/erm/agreements' children={({ match }) => (
-          <NavItem active={match ? true : false} >
-            <NavLink active={match ? true : false} to='/erm/agreements' tag={Link} >Agreements</NavLink>
-          </NavItem>
-        )} />
-      </Nav>
-    </Collapse>
+    <Nav pills >
+      <Route location={location} path='/erm' exact children={({ match }) => {
+        let selected = !!match
+        let disabled = (match && match.isExact)
+        return (<NavItem>
+          <NavLink active={selected} disabled={disabled} to='/erm' tag={Link} >Dash</NavLink>
+        </NavItem>)
+      }} />
+      <Route location={location} path='/erm/agreements' children={({ match }) => {
+        let selected = !!match
+        let disabled = (match && match.isExact)
+        return (<NavItem>
+          <NavLink active={selected} disabled={disabled} disabled={disabled} to='/erm/agreements' tag={Link} >Agreements</NavLink>
+        </NavItem>)
+      }} />
+    </Nav>
   </Navbar>
  ))
