@@ -10,7 +10,7 @@ import ResourceBasedComponent from './resource-based-component'
 @observer
 class UrlParamResourceCrud extends ResourceBasedComponent {
   
-  static PropTypes = {
+  static propTypes = {
     resourceName: PropTypes.string.isRequired,
     fieldsToSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
     columnDef: PropTypes.arrayOf(PropTypes.object).isRequired,

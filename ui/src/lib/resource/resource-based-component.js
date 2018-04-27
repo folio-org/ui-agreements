@@ -4,7 +4,7 @@ import { observable, autorun, action, runInAction, computed, toJS } from 'mobx'
 
 class ResourceBasedComponent extends Component {
   
-  static PropTypes = {
+  static propTypes = {
     resource: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.instanceOf(Promise)
