@@ -13,12 +13,14 @@ const postCssCustomMedia = require('postcss-custom-media')
 const postCssMediaMinMax = require('postcss-media-minmax')
 const postCssColorFunction = require('postcss-color-function')
 
+const styleDir = path.resolve('scss');
+const sourceDir = path.resolve('src');
 const aliases = {
-  '@olf/erm-stripes' : path.resolve('src')
+  '@olf/erm-stripes' : sourceDir
 }
 
-const baselineModules = path.join(path.resolve('@k-int/stripes-baseline'), 'node_modules')
-const dist = path.resolve('dist')
+const baselineModules = path.join(path.resolve('@k-int/stripes-baseline'), 'node_modules');
+const dist = path.resolve('dist');
 const options = {
   webpackOverrides : (conf) => {
     
@@ -34,54 +36,48 @@ const options = {
     
     conf.output.hotUpdateChunkFilename = 'hot/[id].[hash].hot-update.js';
     conf.output.hotUpdateMainFilename = 'hot/[hash].hot-update.json';
-      
-    conf.plugins.concat(
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'erm',
-        minChunks(module) {
-          const context = module.context;
-          return context && context.indexOf('@olf') >= 0;
-        },
-      }),
+    
+    conf.plugins.push(
 
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'folio',
-        minChunks(module) {
-          const context = module.context;
-          return context && context.indexOf('@folio') >= 0;
-        },
-      }),
-
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        minChunks(module) {
-          const context = module.context;
-          return context && context.indexOf('node_modules') >= 0 && context.indexOf('@olf') < 0 && context.indexOf('@folio') < 0;
-        },
-      }),
-
-      // Asynchronous last.
+      // Multiple shared chunks into common asynchronous loadable chunk.
       new webpack.optimize.CommonsChunkPlugin({
         name: 'common',
+        minChunks: 2,
+        children: true,
+        async: true,
+      }),
+      
+      // Single chunked vendor code.
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'stripes',
         minChunks(module, count) {
-          return count > 1;
+          const context = module.context;
+          return count < 2 && context && context.indexOf('node_modules') >= 0 && context.indexOf('@olf');
         },
       }),
-
+      
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'olf-erm',
+        minChunks(module, count) {
+          const context = module.context;
+          return count < 2 && context && (context.indexOf('@olf') >= 0 || (context.indexOf(styleDir) >= 0 || context.indexOf(sourceDir) >= 0));
+        },
+      }),
+      
+      // Webpack manifest file into it's own chunk.
       new webpack.optimize.CommonsChunkPlugin({
         name: 'manifest',
+        minChunks: Infinity
       }),
       
       new webpack.NamedModulesPlugin()
     );
 
-    
-//    Object.assign (conf.output, {
-//      filename: '[name]-[hash].js',
-//      chunkFilename: 'bundle-[name]-[chunkhash].js',
-//    })
-    
-//    console.log ("Plugins list %o", conf.output);
+    // Add to the output directories
+    Object.assign (conf.output, {
+      filename: '[name]-[hash].js',
+      chunkFilename: 'bundle-[name]-[chunkhash].js',
+    });
     
     // Remove the loader rules we don't want/need. Should really filter using the loader type.
     // but as we use a fixed version of stripes we can do this.
