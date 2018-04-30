@@ -37,7 +37,7 @@ class ERMRouting extends Component {
           <Switch >
             <Route history={history} exact path={match.path} render={() => <Dash app={app} />} />
             <Route history={history} path={match.path + '/agreements/:resourceId?'} render={() => <Agreements app={app} />} />
-            <Route component={() => { NoMatch(); }} />
+            <Route component={() => { this.NoMatch(); }} />
           </Switch>
        </div>
       </div>

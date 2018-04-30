@@ -13,7 +13,7 @@ const RouterNavlink = ({location, to, exact, children, ...navLinkProps}) => {
     let selected = !!match
     let disabled = (match && match.isExact)
     return (<NavItem>
-      <RSNavLink active={selected} disabled={disabled} disabled={disabled} to='/erm/agreements' tag={Link} {...navLinkProps} >{children}</RSNavLink>
+      <RSNavLink active={selected} disabled={disabled} disabled={disabled} to={ to } tag={Link} {...navLinkProps} >{children}</RSNavLink>
     </NavItem>)
   }} />)
 }
@@ -27,7 +27,7 @@ RouterNavlink.propTypes = Object.assign({
 export default ({location, match, ...props}) => (
   <Navbar {...props} >
     <Nav pills >
-      <RouterNavlink location={location} to={match.path + '/dash'} exact >Dash</RouterNavlink>
+      <RouterNavlink location={location} to={match.path + '/'} exact >Dash</RouterNavlink>
       <RouterNavlink location={location} to={match.path + '/agreements'} >Agreements</RouterNavlink>
     </Nav>
   </Navbar>
