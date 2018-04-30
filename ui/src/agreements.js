@@ -55,7 +55,9 @@ const Agreements = observer((props) => {
         <Col lg="3" xs="12" className="position-fixed" >
           <Search className="w-100" app={props.app} />
         </Col>
-        <Col lg={{size:9, offset:3}} xs="12"><UrlParamResourceCrud resource="SubscriptionAgreement" fieldsToSearch={searchIn} columnDef={columns} app={props.app} /></Col>
+        <Col lg={{size:9, offset:3}} xs="12">
+          <UrlParamResourceCrud resource="SubscriptionAgreement" fieldsToSearch={searchIn} columnDef={columns} app={props.app} />" +
+        </Col>
       </Row>
     </Container>
   )

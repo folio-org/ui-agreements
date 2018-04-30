@@ -11,7 +11,7 @@ import ResourceBasedComponent from './resource-based-component'
 class UrlParamResourceCrud extends ResourceBasedComponent {
   
   static propTypes = {
-    resourceName: PropTypes.string.isRequired,
+    resource: PropTypes.string.isRequired,
     fieldsToSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
     columnDef: PropTypes.arrayOf(PropTypes.object).isRequired,
 //    routerMatch: PropTypes.object.isRequired

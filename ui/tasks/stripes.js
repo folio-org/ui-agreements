@@ -32,12 +32,56 @@ const options = {
       console.log(`Adding alias ${alias} ${thePath}.`);
     });
     
-    conf.output.hotUpdateChunkFilename = 'hot/[id].[hash].hot-update.js'
-    conf.output.hotUpdateMainFilename = 'hot/[hash].hot-update.json'
-    
-    conf.plugins.push(
+    conf.output.hotUpdateChunkFilename = 'hot/[id].[hash].hot-update.js';
+    conf.output.hotUpdateMainFilename = 'hot/[hash].hot-update.json';
+      
+    conf.plugins.concat(
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'erm',
+        minChunks(module) {
+          const context = module.context;
+          return context && context.indexOf('@olf') >= 0;
+        },
+      }),
+
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'folio',
+        minChunks(module) {
+          const context = module.context;
+          return context && context.indexOf('@folio') >= 0;
+        },
+      }),
+
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        minChunks(module) {
+          const context = module.context;
+          return context && context.indexOf('node_modules') >= 0 && context.indexOf('@olf') < 0 && context.indexOf('@folio') < 0;
+        },
+      }),
+
+      // Asynchronous last.
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'common',
+        minChunks(module, count) {
+          return count > 1;
+        },
+      }),
+
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'manifest',
+      }),
+      
       new webpack.NamedModulesPlugin()
-    )
+    );
+
+    
+//    Object.assign (conf.output, {
+//      filename: '[name]-[hash].js',
+//      chunkFilename: 'bundle-[name]-[chunkhash].js',
+//    })
+    
+//    console.log ("Plugins list %o", conf.output);
     
     // Remove the loader rules we don't want/need. Should really filter using the loader type.
     // but as we use a fixed version of stripes we can do this.
