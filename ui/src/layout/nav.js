@@ -27,7 +27,7 @@ RouterNavlink.propTypes = Object.assign({
 export default ({location, match, ...props}) => (
   <Navbar {...props} >
     <Nav pills >
-      <RouterNavlink location={location} to={match.path + '/'} exact >Dash</RouterNavlink>
+      <RouterNavlink location={location} to={match.path} exact >Dash</RouterNavlink>
       <RouterNavlink location={location} to={match.path + '/agreements'} >Agreements</RouterNavlink>
     </Nav>
   </Navbar>
