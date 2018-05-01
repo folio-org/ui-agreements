@@ -8,6 +8,19 @@ class App extends AppBase {
   
   @observable stripes = {}
   
+  @computed get okapi () { return this.stripes.okapi }
+  @computed get user () { return this.stripes.user.user }
+  @computed get apiConfig () {
+    this.apiDescriptor = Object.assign({}, toJS(this.appConfig.api || {}), {
+      root: this.okapi.url,
+      headers: {
+        'X-Okapi-Tenant': this.okapi.tenant,
+      }
+    })
+    if (this.okapi.token) this.apiDescriptor.headers['X-Okapi-Token'] = this.okapi.token
+    return this.apiDescriptor
+  }
+  
   init(props) {
     super.init(props)
     this.stripes = props.stripes
@@ -19,20 +32,6 @@ class App extends AppBase {
   
   log = () => {
     this.stripes.logger.log.call(this.stripes.logger, ['erm'].concat(...arguments))
-  }
-  
-  @computed get okapi () { return this.stripes.okapi }
-  @computed get user () { return this.stripes.user.user }
-  
-  @computed get apiConfig () {
-    this.apiDescriptor = Object.assign({}, toJS(this.appConfig.api || {}), {
-      root: this.okapi.url,
-      headers: {
-        'X-Okapi-Tenant': this.okapi.tenant,
-      }
-    })
-    if (this.okapi.token) this.apiDescriptor.headers['X-Okapi-Token'] = this.okapi.token
-    return this.apiDescriptor
   }
 }
 
