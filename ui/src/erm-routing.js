@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Route from 'react-router-dom/Route'
 import Switch from 'react-router-dom/Switch'
-import Agreements from './agreements'
+import Agreements from './modules/agreements'
 import Dash from './dash'
 import app from './lib/folio-stripes/app'
 import Nav from './layout/nav'

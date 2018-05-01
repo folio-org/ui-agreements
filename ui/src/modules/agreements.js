@@ -3,10 +3,10 @@ import {observable} from 'mobx'
 import { observer } from 'mobx-react'
 import { hot } from 'react-hot-loader'
 import { Container, Row, Col } from 'reactstrap'
-import Search from './layout/search'
+import Search from '../layout/search'
 
-import UrlParamResourceCrud from './lib/resource/url-param-resource-crud'
-import {tableFormatters, textHighlighter} from './lib/helpers'
+import UrlParamResourceCrud from '../lib/resource/url-param-resource-crud'
+import {tableFormatters, textHighlighter} from '../lib/helpers'
 
 let searchIn = [
   'name',
