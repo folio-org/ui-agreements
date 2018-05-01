@@ -64,9 +64,9 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
     return []
   }
   
-  fetchTableData(state) {
+  fetchTableData = (state) => {
     if (this.app && state) {
-      let params = Object.assign({}, this.fetchParams, {
+      let params = Object.assign({term : this.fetchParams.term}, {
         perPage : state.pageSize,
         page: state.page + 1
       })

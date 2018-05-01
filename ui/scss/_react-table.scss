@@ -2,11 +2,11 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba($black,0.1);
   
   &.-striped {
     .rt-tr.-odd {
-      background: rgba(0,0,0,0.03);
+      background: rgba($black,0.03);
     }
   }
   &.-highlight {
@@ -14,7 +14,7 @@
       .rt-tr {
         &:not(.-padRow) {
           &:hover {
-            background: rgba(0,0,0,0.05);
+            background: rgba($black,0.05);
           }
         }
       }
@@ -49,7 +49,7 @@
       padding: 5px 5px;
       line-height: normal;
       position: relative;
-      border-right: 1px solid rgba(0,0,0,0.05);
+      border-right: 1px solid rgba($black,0.05);
       transition: box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       box-shadow: inset 0 0 0 0 transparent;
       &:last-child {
@@ -57,11 +57,11 @@
       }
     
       &.-sort-asc {
-        box-shadow: inset 0 3px 0 0 rgba(0,0,0,0.6);
+        box-shadow: inset 0 3px 0 0 rgba($black,0.6);
       }
     
       &.-sort-desc {
-        box-shadow: inset 0 -3px 0 0 rgba(0,0,0,0.6);
+        box-shadow: inset 0 -3px 0 0 rgba($black,0.6);
       }
       &.-cursor-pointer {
         cursor: pointer;
@@ -88,7 +88,7 @@
         width: 0;
         position: absolute;
         pointer-events: none;
-        border-color: rgba(255,255,255,0);
+        border-color: $white;
         border-left-color: #fff;
         border-width: 8px;
         margin-top: -8px;
@@ -102,20 +102,20 @@
         width: 0;
         position: absolute;
         pointer-events: none;
-        border-color: rgba(102,102,102,0);
+        border-color: $gray-500;
         border-left-color: #f7f7f7;
         border-width: 10px;
         margin-top: -10px;
       }
     }
     &.-headerGroups {
-      background: rgba(0,0,0,0.03);
-      border-bottom: 1px solid rgba(0,0,0,0.05);
+      background: rgba($black,0.03);
+      border-bottom: 1px solid rgba($black,0.05);
     }
     &.-filters {
-      border-bottom: 1px solid rgba(0,0,0,0.05);
+      border-bottom: 1px solid rgba($black,0.05);
       input {
-        border: 1px solid rgba(0,0,0,0.1);
+        border: 1px solid rgba($black,0.1);
         background: #fff;
         padding: 5px 7px;
         font-size: inherit;
@@ -124,7 +124,7 @@
         outline: none;
       }
       select {
-        border: 1px solid rgba(0,0,0,0.1);
+        border: 1px solid rgba($black,0.1);
         background: #fff;
         padding: 5px 7px;
         font-size: inherit;
@@ -133,11 +133,11 @@
         outline: none;
       }
       .rt-th {
-        border-right: 1px solid rgba(0,0,0,0.02);
+        border-right: 1px solid rgba($black,0.02);
       }
     }
     &.-header {
-      box-shadow: 0 2px 15px 0px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 15px 0px rgba($black,0.15);
     }
   }
   .rt-tbody {
@@ -146,13 +146,13 @@
     flex-direction: column;
     overflow: auto;
     .rt-tr-group {
-      border-bottom: solid 1px rgba(0,0,0,0.05);
+      border-bottom: solid 1px rgba($black,0.05);
       &:last-child {
         border-bottom: 0;
       }
     }
     .rt-td {
-      border-right: 1px solid rgba(0,0,0,0.02);
+      border-right: 1px solid rgba($black,0.02);
       &:last-child {
         border-right: 0;
       }
@@ -205,7 +205,7 @@
       transform: translate(-50%, -50%) rotate(-90deg);
       border-left: 5.04px solid transparent;
       border-right: 5.04px solid transparent;
-      border-top: 7px solid rgba(0,0,0,0.8);
+      border-top: 7px solid rgba($black,0.8);
       transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       cursor: pointer;
     }
@@ -229,9 +229,9 @@
     flex: 1 0 auto;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 0px 15px 0px rgba(0,0,0,0.15);
+    box-shadow: 0 0px 15px 0px rgba($black,0.15);
     .rt-td {
-      border-right: 1px solid rgba(0,0,0,0.05);
+      border-right: 1px solid rgba($black,0.05);
       &:last-child {
         border-right: 0;
       }
@@ -244,10 +244,10 @@
     align-items: stretch;
     flex-wrap: wrap;
     padding: 3px;
-    box-shadow: 0 0px 15px 0px rgba(0,0,0,0.1);
-    border-top: 2px solid rgba(0,0,0,0.1);
+    box-shadow: 0 0px 15px 0px rgba($black,0.1);
+    border-top: 2px solid rgba($black,0.1);
     input {
-      border: 1px solid rgba(0,0,0,0.1);
+      border: 1px solid rgba($black,0.1);
       background: #fff;
       padding: 5px 7px;
       font-size: inherit;
@@ -256,7 +256,7 @@
       outline: none;
     }
     select {
-      border: 1px solid rgba(0,0,0,0.1);
+      border: 1px solid rgba($black,0.1);
       background: #fff;
       padding: 5px 7px;
       font-size: inherit;
@@ -273,14 +273,14 @@
       border-radius: 3px;
       padding: 6px;
       font-size: 1em;
-      color: rgba(0,0,0,0.6);
-      background: rgba(0,0,0,0.1);
+      color: rgba($black,0.6);
+      background: rgba($black,0.1);
       transition: all 0.1s ease;
       cursor: pointer;
       outline: none;
       &:not([disabled]) {
         &:hover {
-          background: rgba(0,0,0,0.3);
+          background: rgba($black,0.3);
           color: #fff;
         }
       }
@@ -329,12 +329,12 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(255,255,255,0.8);
+    background: rgba($white,0.8);
     transition: all 0.3s ease;
     z-index: 1;
     pointer-events: none;
     padding: 20px;
-    color: rgba(0,0,0,0.5);
+    color: rgba($black,0.5);
   }
   .-loading {
     display: block;
@@ -343,7 +343,7 @@
     right: 0;
     top: 0;
     bottom: 0;
-    background: rgba(255,255,255,0.8);
+    background: rgba($white,0.8);
     transition: all 0.3s ease;
     z-index: -1;
     opacity: 0;
@@ -356,7 +356,7 @@
       top: 50%;
       left: 0;
       font-size: 15px;
-      color: rgba(0,0,0,0.6);
+      color: rgba($black,0.6);
       transform: translateY(-52%);
       transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
