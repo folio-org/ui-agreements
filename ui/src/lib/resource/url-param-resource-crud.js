@@ -34,16 +34,24 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
     return []
   }
   
+  path = null
+  
   @action.bound
-  updateParamsFromUrl = () => {
-    let newPars = this.app.queryStringObject
-    this.fetchParams = Object.assign(this.fetchParams, newPars, { match: this.props.fieldsToSearch })
+  updateParamsFromUrl = (location) => {
+    if (!location || location.pathname == path) {
+      let newPars = this.app.queryStringObject
+      this.fetchParams = Object.assign({}, this.fetchParams, newPars, { match: this.props.fieldsToSearch })
+      if (location) {
+        this.path = location.pathname
+      } 
+    }
   }
   
   stopListening = null
-  componentWillMount() {
+  componentDidMount() {
     this.app.log('Adding URL listener')
     this.stopListening = this.app.addHistoryListener(this.updateParamsFromUrl)
+    this.path = null
   }
   
   componentWillUnmount() {
