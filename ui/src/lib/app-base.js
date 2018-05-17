@@ -12,6 +12,10 @@ class AppBase {
     history = props.history
   }
   
+  get allPerms() {
+    return []
+  }
+  
   hasPerm = (perm) => {
     return false
   }
@@ -27,7 +31,9 @@ class AppBase {
   @observable apiDescriptor = {}
   
   @computed get apiConfig () {
-    this.apiDescriptor = Object.assign({}, toJS(this.appConfig.api || {}))
+    if (!this.apiDescriptor) {
+      this.apiDescriptor = Object.assign({}, toJS(this.appConfig.api || {}))
+    }
     return this.apiDescriptor
   }
   
