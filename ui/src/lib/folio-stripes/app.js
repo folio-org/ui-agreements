@@ -8,7 +8,7 @@ const PERM_REGEX = /^(((module\.)?(@olf\/)?erm-stripes)|(olf-erm))\.(([^\.]*)\.?
  */
 class App extends AppBase {
   
-  stripes = {}
+  @observable stripes = {}
   
   @computed get okapi () { return this.stripes.okapi }
   @computed get user () { return this.stripes.user.user }
@@ -23,11 +23,9 @@ class App extends AppBase {
     return this.apiDescriptor
   }
   
-  init(props) {
-    super.init(props)
-    if (props.stripes != this.stripes) {
-      this.stripes = props.stripes
-    }
+  constructor(props) {
+    super(props)
+    this.stripes = props.stripes
   }
   
   @computed
@@ -65,8 +63,8 @@ class App extends AppBase {
             import(`../../modules/${modName}`).then(mod => {
               
               // ES6 module should get default.
-              let modClass = mod.default
-              if (modClass) {
+              let routes = mod.default
+              if (routes) {
               
                 // Use match groups to build a module entry.
                 let entry = theModules.get(modName)
@@ -74,7 +72,7 @@ class App extends AppBase {
                   entry = {
                     name: modName,
                     modPerms: [m[8]], // init as empty array.
-                    theClass: modClass
+                    routes: routes
                   }
                   
                   theModules.set(modName, entry)
@@ -82,10 +80,10 @@ class App extends AppBase {
                   entry.modPerms.push(m[8])
                 }
                 
-                this.log(`Loaded module ${modname}.`)
+                this.log(`Loaded module ${modName}.`)
               }
             }).catch(error => {
-              this.log(`Could not load module ${modName}. Ignoring.`)
+              this.log(`Could not load module ${modName}.`, error)
             });
           }
         }
@@ -105,10 +103,10 @@ class App extends AppBase {
     return this.stripes.hasPerm (perm)
   }
   
-  log = () => {
-    this.stripes.logger.log.apply(this.stripes.logger, ['erm'].concat(...arguments))
+  log = (...args) => {
+    this.stripes.logger.log.apply(this.stripes.logger, ['erm'].concat(...args))
   }
 }
 
-export default new App()
+export default App
 

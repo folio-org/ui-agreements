@@ -8,7 +8,7 @@ let qsObject = {}
 
 class AppBase {
   
-  init(props) {
+  constructor(props) {
     history = props.history
   }
   
@@ -20,8 +20,8 @@ class AppBase {
     return false
   }
   
-  log = () => {
-    window.console.log.call(window, ...arguments)
+  log = (...args) => {
+    window.console.log.call(window, ...args)
   }
   
   @observable appConfig = require('../config').default
