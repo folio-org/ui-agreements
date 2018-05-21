@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { observer } from 'mobx-react'
-import { observable, action, computed, runInAction } from 'mobx'
+import { observable, action, computed } from 'mobx'
 import { hot } from 'react-hot-loader'
 import ReactTable from 'react-table'
 
@@ -13,47 +13,39 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
   static propTypes = {
     resource: PropTypes.string.isRequired,
     fieldsToSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
-    columnDef: PropTypes.arrayOf(PropTypes.object).isRequired,
-//    routerMatch: PropTypes.object.isRequired
+    columnDef: PropTypes.arrayOf(PropTypes.object).isRequired
   }
 
   constructor (props) {
     super(props)
-    this.updateParamsFromUrl()
-  }
-  
-//  routerParams
-  
-  @computed get rows() {
-    if (this.data) {
-      return this.data.body().map((entity) => {
-        return entity.data()
-      })
-    }
-    
-    return []
   }
   
   path = null
   
+  @observable perPage = 10
+  @observable page = 1
+  
   @action.bound
   updateParamsFromUrl = (location) => {
-    if (!location || location.pathname == path) {
+    
+    if (!location || location.pathname == this.path) {
+      
       let newPars = this.app.queryStringObject
       this.fetchParams = Object.assign({}, this.fetchParams, newPars, { match: this.props.fieldsToSearch })
-      if (location) {
-        this.path = location.pathname
-      } 
     }
+    
+    if (this.fetchParams.perPage) {
+      this.perPage = this.fetchParams.perPage
+    }
+    
+    if (this.fetchParams.page) {
+      this.page = this.fetchParams.page
+    }
+    
+    this.path = (location || window.location).pathname
   }
   
   stopListening = null
-  componentDidMount() {
-    this.app.log('Adding URL listener')
-    this.stopListening = this.app.addHistoryListener(this.updateParamsFromUrl)
-    this.path = null
-  }
-  
   componentWillUnmount() {
     if ( typeof this.stopListening == 'function' ) {
       this.app.log('Removing URL listener')
@@ -73,12 +65,24 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
   }
   
   fetchTableData = (state) => {
-    if (this.app && state) {
-      let params = Object.assign({term : this.fetchParams.term}, {
-        perPage : state.pageSize,
-        page: state.page + 1
-      })
-      this.app.addToQueryString( params )
+    
+    if (typeof this.stopListening !== 'function') {
+
+      // We init data first.
+      this.updateParamsFromUrl()
+      this.app.log('Adding URL listener')
+      this.stopListening = this.app.addHistoryListener(this.updateParamsFromUrl)
+      
+    } else {
+      
+      // This is a table change not startup.
+      if (this.app && state) {
+        let params = Object.assign({term : this.fetchParams.term}, {
+          perPage : state.pageSize,
+          page: state.page + 1
+        })
+        this.app.addToQueryString( params )
+      }
     }
   }
   
@@ -92,7 +96,7 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
         pages={1} // Display the total number of pages
         loading={this.working} // Display the loading overlay when we need it
         onFetchData={this.fetchTableData} // Request new data when things change
-        defaultPageSize={this.fetchParams && this.fetchParams.perPage ? parseInt(this.fetchParams.perPage) : 10}
+        defaultPageSize={parseInt(this.perPage || 10)}
         className="-striped -highlight"
           >{(state, makeTable, instance) => {
             let results = state.data.length < 1 ? 'No results found' : `Showing ${state.data.length} results`

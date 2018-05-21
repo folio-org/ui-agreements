@@ -17,15 +17,17 @@ class ResourceBasedComponent extends Component {
     super(props)
     this.app = props.app
     this.setDataContext ( props.resource )
-    
-    this.fetchParams = props.fetchParams
+    if (props.fetchParams) {
+      this.fetchParams = props.fetchParams
+    }
   }
     
   @observable app
-  @observable dataContext
   @observable working = false
   @observable data
   @observable fPars = new Map()
+
+  dataContext
   
   set fetchParams (pars) {
     if (pars) {
@@ -53,7 +55,6 @@ class ResourceBasedComponent extends Component {
    */
   @action.bound
   fetchData = autorun(async () => {
-    
     // Ensure we take a local reference to the val we want to watch before the await below.
     // MobX will not pick up the variables usage within the await.
     let pars = this.fetchParams
@@ -68,7 +69,7 @@ class ResourceBasedComponent extends Component {
         this.working = false
       })
     }
-  }, {delay: 200})
+  })
 }
 
 export default ResourceBasedComponent

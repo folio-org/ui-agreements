@@ -42,10 +42,8 @@ class App extends AppBase {
       PERM_REGEX.test(item)
     )))
   }
-
   
-  @observable theModules = new Map()
-  
+  @observable theModules = new Map()  
 
   @computed
   get modules() {
@@ -83,6 +81,8 @@ class App extends AppBase {
                 } else {
                   entry.modPerms.push(m[8])
                 }
+                
+                this.log(`Loaded module ${modname}.`)
               }
             }).catch(error => {
               this.log(`Could not load module ${modName}. Ignoring.`)
@@ -106,7 +106,7 @@ class App extends AppBase {
   }
   
   log = () => {
-    console.log(...arguments)
+    this.stripes.logger.log.apply(this.stripes.logger, ['erm'].concat(...arguments))
   }
 }
 

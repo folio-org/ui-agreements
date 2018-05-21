@@ -1,4 +1,4 @@
-import { observable, computed, toJS } from 'mobx'
+import { observable, computed, toJS, action } from 'mobx'
 import restful, { fetchBackend } from 'restful.js'
 import queryString from 'query-string'
 
@@ -37,16 +37,16 @@ class AppBase {
     return this.apiDescriptor
   }
   
-  getResourceType = (theType) => {
-    
-    const me = this
+  @action.bound
+  getResourceType = async (theType) => {
     
     // New promise.
     if (this.apiConfig.resources) {
       return Promise.resolve(this.apiConfig.resources[theType.toLowerCase()].baseUri.substring(1))
     } else {
-      
-      // Only access the descriptor directly in tis else stanza. Use .apiConfig everywhere else.
+
+      const me = this
+      // Only access the descriptor directly in this else stanza. Use .apiConfig everywhere else.
       
       // Need to fetch the config first.
       return this.fetch (this.apiConfig.root + '/kiwt/config').then((response) => {

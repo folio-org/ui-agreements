@@ -9,21 +9,26 @@ import { observer } from 'mobx-react'
 import * as mobx from 'mobx'
 const {observable, computed, autorun, action} = mobx
 
+let theApp
+
 @observer
 class ERMRouting extends Component {
   
   constructor (props) {
     super (props)
-    app.init (props)
+    if (!theApp) {
+      theApp = app
+      theApp.init (props)
+    }
   }
     
   @computed
   get modules () {
     
     // Grab each module from the app.
-    let instProps = Object.assign({app: app}, this.props)
+    let instProps = Object.assign({app: theApp}, this.props)
     
-    return app.modules.values().map(entry => {
+    return theApp.modules.values().map(entry => {
       // Create an instance of the module class.
       let mod = new entry.theClass(instProps)
       return mod
@@ -60,7 +65,7 @@ class ERMRouting extends Component {
       Object.keys(routes).forEach( path => {
         let route = routes[path]
         let routeProps = Object.assign({key: `lazy-route-${count}`, path: match.path + path}, defaultRouterProps)
-        let componentProps = Object.assign({app: app}, this.props)
+        let componentProps = Object.assign({app: theApp}, this.props)
         
         // render or component
         if (typeof route.render === 'function') {
@@ -81,7 +86,7 @@ class ERMRouting extends Component {
         <Nav match={match} color="light" sticky="top" light expand="lg" className='justify-content-center' location={location} />
         <div className="pt-4" >
           <Switch >
-            <Route key="" history={history} exact path={match.path} render={() => <Dash app={app} />} />
+            <Route key="" history={history} exact path={match.path} render={() => <Dash app={theApp} />} />
             { moduleRoutes }
             <Route render={ this.NoMatch } />
           </Switch>
