@@ -3,9 +3,12 @@ import FaSearch from 'react-icons/lib/fa/search'
 import { Form, FormGroup, InputGroup, Input, InputGroupAddon, InputGroupText } from 'reactstrap'
 import {debounce} from 'lodash'
 
+import Filters from './filters.js'
+
 export default (props) => {
   let {
     app,
+    filters,
     ...otherProps
   } = props;
 
@@ -34,7 +37,7 @@ export default (props) => {
       </InputGroup>
     </FormGroup>
     <FormGroup tag="fieldset">
-      <legend>Filters</legend>
+      <Filters app={app} filters={filters} />
     </FormGroup>
   </Form>)
 }

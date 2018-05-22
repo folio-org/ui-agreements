@@ -15,9 +15,9 @@ let searchIn = [
 
 const Agreements = observer((props) => {
   
-  let highlighter = textHighlighter ( () => (props.app.queryStringObject.term))
+  const highlighter = textHighlighter ( () => (props.app.queryStringObject.term))
 
-  let columns = [
+  const columns = [
     {
       Header: "Name",
       id: 'name',
@@ -48,12 +48,28 @@ const Agreements = observer((props) => {
       Cell: tableFormatters.date
     }
   ]
+
+  const filterGroups = {
+    'agreementType.value' : {
+      text: 'Agreement Type',
+      filters: [{
+        text: 'Trial',
+        value: 'trial',
+        selected: false
+      },
+      {
+        text: 'Draft',
+        value: 'draft',
+        selected: false
+      }]
+    }
+  }
   
   return (
     <Container fluid={true}>
       <Row>
         <Col lg="3" xs="12" className="position-fixed" >
-          <Search className="w-100" app={props.app} />
+          <Search className="w-100" app={props.app} filters={filterGroups} />
         </Col>
         <Col lg={{size:9, offset:3}} xs="12">
           <UrlParamResourceCrud resource="SubscriptionAgreement" fieldsToSearch={searchIn} columnDef={columns} app={props.app} />
