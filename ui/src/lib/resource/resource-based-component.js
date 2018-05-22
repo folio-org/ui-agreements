@@ -29,18 +29,17 @@ class ResourceBasedComponent extends Component {
 
   dataContext
   
+  @computed
+  get fetchParams () {
+    return toJS(this.fPars)
+  }
+  
   set fetchParams (pars) {
     if (pars) {
       this.fPars.replace(pars)
     }
   }
   
-  @computed
-  get fetchParams () {
-    return toJS(this.fPars)
-  }
-  
-  @action.bound
   setDataContext( context ) {
     if (typeof context === 'string') {
       this.dataContext = this.app.getResourceType(context).then((theType) => (this.app.api.all(theType)))

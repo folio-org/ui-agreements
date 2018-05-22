@@ -20,11 +20,10 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
     super(props)
   }
   
-  path = null
-  
   @observable perPage = 10
   @observable page = 1
   
+  path = null
   @action.bound
   updateParamsFromUrl = (location) => {
     
@@ -34,12 +33,15 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
       this.fetchParams = Object.assign({}, this.fetchParams, newPars, { match: this.props.fieldsToSearch })
     }
     
+    let num
     if (this.fetchParams.perPage) {
-      this.perPage = this.fetchParams.perPage
+      num = parseInt(this.fetchParams.perPage)
+      this.perPage = (num === NaN ? 10 : num)
     }
     
     if (this.fetchParams.page) {
-      this.page = this.fetchParams.page
+      num = parseInt(this.fetchParams.page)
+      this.page = (num === NaN ? 10 : num)
     }
     
     this.path = (location || window.location).pathname
@@ -96,7 +98,7 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
         pages={1} // Display the total number of pages
         loading={this.working} // Display the loading overlay when we need it
         onFetchData={this.fetchTableData} // Request new data when things change
-        defaultPageSize={parseInt(this.perPage || 10)}
+        defaultPageSize={parseInt(this.perPage)}
         className="-striped -highlight"
           >{(state, makeTable, instance) => {
             let results = state.data.length < 1 ? 'No results found' : `Showing ${state.data.length} results`

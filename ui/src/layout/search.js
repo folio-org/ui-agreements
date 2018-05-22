@@ -18,10 +18,16 @@ export default (props) => {
     updateSearchTerm ( event.target.value )
   }
   
+  let handleKeyPress = (event) => {
+    if (event.which === 13 /* Enter */) {
+      event.preventDefault();
+    }
+  }
+  
   return (<Form {...otherProps} >
-    <FormGroup>
+    <FormGroup onKeyPress={handleKeyPress} >
       <InputGroup className='shadow' >
-        <Input onChange={handleSearchTerm} placeholder="Search" name="srch-term" id="srch-term" type="text" defaultValue={app.queryStringObject.term || ''} />
+        <Input onChange={handleSearchTerm} placeholder="Search" name="term" id="srch-term" type="text" defaultValue={app.queryStringObject.term || ''} />
         <InputGroupAddon addonType="append" >
           <InputGroupText> <FaSearch /> </InputGroupText>
         </InputGroupAddon>
