@@ -6,7 +6,12 @@ let history
 let lastLocationRef = null
 let qsObject = {}
 
+const KIWT_URI = '/kiwt'
+const KIWT_CONFIG = `${KIWT_URI}/config`
+const KIWT_SCHEMA = `${KIWT_CONFIG}/schema`
+
 class AppBase {
+  
   
   constructor(props) {
     history = props.history
@@ -38,7 +43,7 @@ class AppBase {
   }
   
   @action.bound
-  getResourceType = async (theType) => {
+  getResourceType = (theType) => {
     
     // New promise.
     if (this.apiConfig.resources) {
@@ -49,11 +54,7 @@ class AppBase {
       // Only access the descriptor directly in this else stanza. Use .apiConfig everywhere else.
       
       // Need to fetch the config first.
-      return this.fetch (this.apiConfig.root + '/kiwt/config').then((response) => {
-        
-        return response.json()
-        
-      }).then((jsonData) => {
+      return this.fetchJSON (this.apiConfig.root + KIWT_CONFIG).then((jsonData) => {
 
         let resources = {}
         Object.keys(jsonData.resources).forEach((key) => {
@@ -65,6 +66,14 @@ class AppBase {
         return me.apiDescriptor.resources[theType.toLowerCase()].baseUri.substring(1)
       })
     }
+  }
+  
+  @action.bound
+  getResourceSchema = (theType) => {
+    let schemaUrl = this.apiConfig.root + KIWT_SCHEMA + `/${theType.toLowerCase()}`
+    this.fetchJSON (schemaUrl).then((jsonData) => {
+      this.log (jsonData)
+    })
   }
   
   fetch = (url, conf) => {
@@ -81,6 +90,10 @@ class AppBase {
     
     // DO an internal fetch so append the headers.
     return fetch(url, conf)
+  }
+  
+  fetchJSON = (url, conf) => {
+    return this.fetch(url, conf).then( (response) => ( response.json() ))
   }
   
   @computed get url() {
@@ -106,8 +119,8 @@ class AppBase {
   }
   
   queryString = () => ({
-      parse: (theString) => (queryString.parse(theString, this.appConfig.queryString)),
-      stringify: (object) => (queryString.stringify(object, this.appConfig.queryString))
+    parse: (theString) => (queryString.parse(theString, this.appConfig.queryString)),
+    stringify: (object) => (queryString.stringify(object, this.appConfig.queryString))
   })
   
   get queryStringObject() {
@@ -126,7 +139,7 @@ class AppBase {
     history.push({search: `?${this.queryString().stringify(qs)}` })
   }
   
-  addHistoryListener = ( locationListener ) => ( history.listen ( locationListener ) )
+  addHistoryListener = ( locationListener ) => ( history.listen ( locationListener ) ) 
 }
 
 export default AppBase;

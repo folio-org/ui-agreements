@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import Route from 'react-router-dom/Route'
 import Switch from 'react-router-dom/Switch'
 import Dash from './dash'
-import Nav from './layout/nav'
+import Nav from './components/nav'
 
 import { observer } from 'mobx-react'
 import * as mobx from 'mobx'
