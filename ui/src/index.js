@@ -1,6 +1,6 @@
 import React from 'react'
 import { hot } from 'react-hot-loader'
-import ERMRouting from './routing'
+import Routing from './routing'
 import 'whatwg-fetch'
 import '../scss/styles.scss'
 
