@@ -114,13 +114,11 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
   }
 }
 
-
 let routerEntry = ( { router, ...comp } ) => (
   ( { match } ) => (
-      <UrlParamResourceCrud {...comp} routerMatch={match} />
+    <UrlParamResourceCrud {...comp} routerMatch={match} />
   )
 )
 
 export { routerEntry }
-
 export default hot(module)(UrlParamResourceCrud)

@@ -36,8 +36,6 @@ export default (props) => {
         </InputGroupAddon>
       </InputGroup>
     </FormGroup>
-    <FormGroup tag="fieldset">
-      <Filters app={app} filters={filters} />
-    </FormGroup>
+    <Filters app={app} filters={filters} />
   </Form>)
 }
