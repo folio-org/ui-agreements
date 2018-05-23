@@ -9,7 +9,7 @@ import * as mobx from 'mobx'
 const {observable, computed, autorun, action} = mobx
 
 @observer
-class ERMRouting extends Component {
+class Routing extends Component {
   
   @observable app
   
@@ -40,4 +40,4 @@ class ERMRouting extends Component {
   }
 }
 
-export default ERMRouting
+export default Routing
