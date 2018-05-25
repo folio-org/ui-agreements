@@ -16,7 +16,6 @@ class ResourceBasedComponent extends Component {
   constructor (props) {
     super(props)
     this.app = props.app
-    this.setDataContext ( props.resource )
     if (props.fetchParams) {
       this.fetchParams = props.fetchParams
     }
@@ -40,13 +39,24 @@ class ResourceBasedComponent extends Component {
     }
   }
   
+  componentWillMount() {
+    this.setDataContext ( this.props.resource )
+  }
+  
+  contextObjectCallback = (theType) => {
+    let co = this.app.api.all(theType)
+    return co
+  }
+  
   setDataContext( context ) {
     if (typeof context === 'string') {
-      this.dataContext = this.app.getResourceType(context).then((theType) => (this.app.api.all(theType)))
+      this.dataContext = this.app.getResourceType(context).then(this.contextObjectCallback)
     } else {
       this.dataContext = context
     }
   }
+  
+  remoteDataCallback = (dataContext, parameters) => (dataContext)
   
   /**
    * Async function short-hand for promise / callback notation.
@@ -60,15 +70,22 @@ class ResourceBasedComponent extends Component {
     
     if (this.dataContext) {
       this.working = true
-      const remoteData = await this.dataContext.then((dc) => (dc.getAll(pars)))
+      const remoteData = await this.dataContext.then(
+        (dataContext) => (this.remoteDataCallback(dataContext, pars))
+      )
       
       // The run in action ensures that the code within is executed after the await has finished, and within this context.
       runInAction(() => {
         this.data = remoteData
         this.working = false
+        this.onDataFetched()
       })
     }
   })
+  
+  onDataFetched() {
+    
+  }
 }
 
 export default ResourceBasedComponent

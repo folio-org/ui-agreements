@@ -14,7 +14,7 @@ import {
   Input} from 'reactstrap'
 
 let Filter = ({id, name, value, defaultChecked, filterClick, children, ...otherProps}) => (
-  <FormGroup key={id} {...otherProps} check >
+  <FormGroup {...otherProps} check >
     <Input id={id} value={value} onClick={(e) => {filterClick( name, value, e.target.checked )} } name={name} defaultChecked={defaultChecked} type="checkbox" />
     <Label for={id} check>{ children }</Label>
   </FormGroup>
@@ -25,11 +25,10 @@ const FilterGroup = observer(({ target, text, filters, expanded, filterClick, ..
     <CardHeader tag='h5' {...otherProps} >{ text }</CardHeader>
     <Collapse isOpen={!!expanded}> 
       <CardBody>
-        <Form>
-          {filters.map(({text, value, selected}, index) => (
-            <Filter id={`filter-${target}-${value}`} name={target} filterClick={filterClick} value={value} defaultChecked={selected}>{text}</Filter>
-          ))}
-        </Form>
+        {filters.map(({text, value, selected}, index) => {
+          let id = `filter-${target}-${value}`
+          return (<Filter key={id} id={id} name={target} filterClick={filterClick} value={value} defaultChecked={selected}>{text}</Filter>)
+        })}
       </CardBody>
     </Collapse>
   </Card>

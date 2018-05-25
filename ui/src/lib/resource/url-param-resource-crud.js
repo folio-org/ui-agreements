@@ -18,30 +18,46 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
 
   constructor (props) {
     super(props)
+    this.updateStateFromParams()
+  }
+  
+  @action.bound
+  updateStateFromParams = (urlPars) => {
+    urlPars = urlPars || this.app.queryStringObject
+    let num
+    if (urlPars.perPage) {
+      num = parseInt(urlPars.perPage)
+      this.perPage = (num === NaN ? 10 : num)
+    }    
+    if (urlPars.page) {
+      num = parseInt(urlPars.page)
+      this.page = (num === NaN ? 10 : num)
+    }
   }
   
   @observable perPage = 10
   @observable page = 1
+  @observable totalPages = 1
+  @observable total = 0
   
   path = null
   @action.bound
   updateParamsFromUrl = (location) => {
     
     if (!location || location.pathname == this.path) {
+
+      let urlPars = this.app.queryStringObject
+      this.updateStateFromParams(urlPars)
       
-      let newPars = this.app.queryStringObject
-      this.fetchParams = Object.assign({}, this.fetchParams, newPars, { match: this.props.fieldsToSearch })
-    }
-    
-    let num
-    if (this.fetchParams.perPage) {
-      num = parseInt(this.fetchParams.perPage)
-      this.perPage = (num === NaN ? 10 : num)
-    }
-    
-    if (this.fetchParams.page) {
-      num = parseInt(this.fetchParams.page)
-      this.page = (num === NaN ? 10 : num)
+      // Constant params to feed to the backend.
+      const constants = {
+        match: this.props.fieldsToSearch,
+        stats: true, // This asks the backend to supply search stats. Page, totals etc.
+        perPage: this.perPage,
+        page: this.page
+      }      
+      
+      this.fetchParams = Object.assign({}, this.fetchParams, urlPars, constants)
     }
     
     this.path = (location || window.location).pathname
@@ -56,14 +72,54 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
     }
   }
   
-  @computed get tableRows() {
+  @computed get responseData() {
     if (this.data) {
-      return this.data.body().map((entity) => {
-        return entity.data()
-      })
+      return this.data.body().data()
+    } 
+
+    return {}
+  }
+  
+  /**
+   * The results, although a collection come though as an object. With state information and the results as a property.
+   */
+  contextObjectCallback = (theType) => {
+    
+    let theTarget = this.app.api.custom(theType)
+    return theTarget
+  }
+  remoteDataCallback = (dataContext, parameters) => {
+    let results = dataContext.get(parameters)
+    return results
+  }
+  
+  onDataFetched() {
+    let num
+    if (this.responseData.perPage) {
+      num = parseInt(body.perPage)
+      this.perPage = (num === NaN ? 10 : num)
     }
     
-    return []
+    if (this.responseData.page) {
+      num = parseInt(this.responseData.page)
+      this.page = (num === NaN ? 1 : num)
+    }
+
+    if (this.responseData.totalPages) {
+      num = parseInt(this.responseData.totalPages)
+      this.totalPages = (num === NaN ? 1 : num)
+    }
+    
+    if (this.responseData.total) {
+      num = parseInt(this.responseData.total)
+      this.total = (num === NaN ? 0 : num)
+    }
+  }
+  
+  @computed get tableRows() {    
+    return this.responseData.results ? this.responseData.results.map((entity) => {
+      return entity
+    }) : []
   }
   
   fetchTableData = (state) => {
@@ -79,26 +135,38 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
       
       // This is a table change not startup.
       if (this.app && state) {
+        
         let params = Object.assign({term : this.fetchParams.term}, {
           perPage : state.pageSize,
-          page: state.page + 1
+          page: state.page + 1,
+          sort: state.sorted.map((sort => (`${sort.id};${sort.desc ? 'desc' : 'asc'}`)))
         })
+        
         this.app.addToQueryString( params )
       }
     }
   }
   
   render() {
+    
+    let paginate = this.totalPages > 1
+    let minRows = paginate ? undefined : (this.total < 1 ? 5 : this.total % this.perPage)
+    
     return (
       <ReactTable
         columns={this.props.columnDef.slice()}
         noDataText="No results found"
         manual // Forces table not to paginate or sort automatically, so we can handle it server-side
+        showPagination={paginate}
+        showPaginationTop={paginate}
+        showPaginationBottom={paginate}
+        showPageSizeOptions={paginate}
+        minRows={minRows}
         data={this.tableRows}
-        pages={1} // Display the total number of pages
+        pages={this.totalPages} // Display the total number of pages
+        defaultPageSize={this.perPage}
         loading={this.working} // Display the loading overlay when we need it
         onFetchData={this.fetchTableData} // Request new data when things change
-        defaultPageSize={parseInt(this.perPage)}
         className="-striped -highlight"
           >{(state, makeTable, instance) => {
             let results = state.data.length < 1 ? 'No results found' : `Showing ${state.data.length} results`
