@@ -52,16 +52,14 @@ const Agreements = observer((props) => {
   const filterGroups = {
     'agreementType.value' : {
       text: 'Agreement Type',
-      filters: [{
-        text: 'Trial',
-        value: 'trial',
-        selected: false
-      },
-      {
-        text: 'Draft',
-        value: 'draft',
-        selected: false
-      }]
+      filters: {
+        'trial': {
+          text: 'Trial'
+        },
+        'draft': {
+          text: 'Draft'
+        }
+      }
     }
   }
   

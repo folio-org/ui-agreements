@@ -13,7 +13,20 @@ import {
   Label,
   Input} from 'reactstrap'
 
-let Filter = ({id, name, value, defaultChecked, filterClick, children, ...otherProps}) => (
+
+const getFilters = (filters, target, filterClick) => {
+  let filterComponents = []
+  for (var value in filters) {
+    let fConf = filters[value]
+    let id = `filter-${target}-${value}`
+    filterComponents.push(
+      <Filter key={id} id={id} name={target} filterClick={filterClick} value={value} defaultChecked={!!fConf.selected}>{fConf.text}</Filter>
+    )
+  }
+  return filterComponents
+}  
+  
+const Filter = ({id, name, value, defaultChecked, filterClick, children, ...otherProps}) => (
   <FormGroup {...otherProps} check >
     <Input id={id} value={value} onClick={(e) => {filterClick( name, value, e.target.checked )} } name={name} defaultChecked={defaultChecked} type="checkbox" />
     <Label for={id} check>{ children }</Label>
@@ -25,10 +38,7 @@ const FilterGroup = observer(({ target, text, filters, expanded, filterClick, ..
     <CardHeader tag='h5' {...otherProps} >{ text }</CardHeader>
     <Collapse isOpen={!!expanded}> 
       <CardBody>
-        {filters.map(({text, value, selected}, index) => {
-          let id = `filter-${target}-${value}`
-          return (<Filter key={id} id={id} name={target} filterClick={filterClick} value={value} defaultChecked={selected}>{text}</Filter>)
-        })}
+        { getFilters(filters, target, filterClick) }
       </CardBody>
     </Collapse>
   </Card>

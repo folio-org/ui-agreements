@@ -51,13 +51,17 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
       
       // Constant params to feed to the backend.
       const constants = {
-        match: this.props.fieldsToSearch,
         stats: true, // This asks the backend to supply search stats. Page, totals etc.
         perPage: this.perPage,
         page: this.page
-      }      
+      }
       
-      this.fetchParams = Object.assign({}, this.fetchParams, urlPars, constants)
+      let newParams = Object.assign({}, this.fetchParams, urlPars, constants)
+      if (newParams.term) {
+        match: this.props.fieldsToSearch
+      }
+      
+      this.fetchParams = newParams
     }
     
     this.path = (location || window.location).pathname

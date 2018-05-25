@@ -6,8 +6,13 @@ import { hot } from 'react-hot-loader'
 import { fill } from 'lodash'
 import FilterGroup from './filter-group'
   
+// Case insensitive match
+const FILTER_COMPARATOR = '=i='
+const FILTER_GROUP_OPARATOR = '||'
+
 @observer
 class Filters extends Component {
+  
   @observable expanded = []
   @observable fgs = new Map()
   @observable activeFilters = new Map()
@@ -18,6 +23,46 @@ class Filters extends Component {
     this.fgs.replace( props.filters )
     this.expanded = fill(Array(this.fgs.size), true)
     this.app = props.app
+    
+    // Default filter values.
+    this.defaultFilterVals()
+  }
+  
+  @action.bound
+  defaultFilterVals = () => {
+
+    try {
+      // Grab the query string as an object
+      let vals = this.app.queryStringObject.filters
+      if (vals) {
+        
+        if (typeof vals === 'string') {
+          vals = [vals]
+        }
+        
+        vals.forEach(( filter ) => {
+          let entries = filter.split(FILTER_GROUP_OPARATOR)
+          if (entries) {
+            entries.forEach(( entry ) => {
+              let name_value = entry.split(FILTER_COMPARATOR)
+              
+              // Get from our filter list.
+              let theFilter = this.fgs.get(name_value[0])
+              if (theFilter) {
+              
+                // Set active filter map.
+                this.addActiveFilter(name_value[0], name_value[1], true)
+                
+                // Set in initial values map too.
+                theFilter.filters[name_value[1]].selected = true
+              }
+            })
+          }
+        })
+      }
+    } catch (e) {
+      this.app.log('Error parsing filters', e)
+    }
   }
   
   @action.bound
@@ -29,12 +74,13 @@ class Filters extends Component {
     filtersMap.entries().map((entry) => {
       let filterName = entry[0]
       let filterValues = entry[1]
-      return filterValues.map((item) => (`${filterName}=i=${item}`)).join('||')
+      return filterValues.map((item) => (`${filterName}${FILTER_COMPARATOR}${item}`)).join(FILTER_GROUP_OPARATOR)
     })
   )
   
+  
   @action.bound
-  filterClick = ( name, value, selected ) => {
+  addActiveFilter = (name, value, selected) => {
     let current = this.activeFilters.get(name)
     if (!current) {
       this.activeFilters.set(name, [])
@@ -53,12 +99,17 @@ class Filters extends Component {
 
       // Add to the query params here.
       this.activeFilters.set(name, current)
-      
-      // Just call the method that adds to the query params.
-      this.app.addToQueryString ( {filters: this.filterStringArray(this.activeFilters)} )
     }
     
     console.log({ name, value, selected })
+  }
+  
+  filterClick = ( name, value, selected ) => {
+    
+    this.addActiveFilter( name, value, selected )
+    
+    // Just call the method that adds to the query params.
+    this.app.addToQueryString ( {filters: this.filterStringArray(this.activeFilters)} )
   }
   
   render = () => (
