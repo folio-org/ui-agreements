@@ -6,7 +6,7 @@
   "stripes": {
     "type": "app",
     "displayName": "OLF - ERM",
-    "route":"/gbv-erm"
+    "route":"/olf-erm"
   },
   "license": "Apache-2.0"
 }
