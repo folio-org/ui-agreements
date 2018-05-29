@@ -2,6 +2,11 @@
   @import "~bootstrap/scss/functions";
   @import "variables/bootstrap";
   @import "~bootstrap/scss/bootstrap";
-  @import "react-table";
-  @import "toggle";
+  
+  // Library imports. Abtractions of reusable widgets.
+  @import "lib/react-table";
+  @import "lib/toggle";
+  
+  // Component import for styling individual parts of the screen.
+  @import "components/filters";
 }

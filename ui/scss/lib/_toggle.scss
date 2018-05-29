@@ -1,4 +1,6 @@
-$toggleHeight: 20px;
+$fontSizeRem: 1.1;
+$fontSize: $fontSizeRem * 1rem;
+$toggleHeight: floor(1.2 * ($fontSizeRem * 16)) * 1px;
 $toggleBGOn: theme-color('success');
 $toggleBGOff: $gray-200;
 $toggleBorder: $gray-500;
@@ -6,29 +8,32 @@ $toggleOn: $white;
 $toggleOff: $white;
 
 // Derrived properties.
-$toggleSwitch: floor($toggleHeight * 0.9);
-$offset: (($toggleSwitch - $toggleHeight) / 2);
-$toggleWidth: (2 * $toggleHeight);
+$toggleSwitch: $toggleHeight - 2px;
+$offset: floor(( $toggleHeight - $toggleSwitch) / 2);
+$toggleWidth: (2 * $toggleSwitch);
+$translation: ($toggleWidth - $toggleSwitch - $offset);
+$widgetHeight: max($toggleSwitch, $toggleHeight);
 
 .toggle {
   
   padding-left: 0;
-  padding-top: (0.5 * $toggleSwitch);
-  padding-bottom: (0.5 * $toggleSwitch);
+  padding-top: floor(0.25 * $widgetHeight);
+  padding-bottom: floor(0.25 * $widgetHeight);
+  font-size: $fontSize;
   position: relative;
   
   & > input[type="checkbox"] {
     opacity: 0;
     
     & ~ label {
-      display: block;
+      display: inline-block;
       position: relative;
-      line-height: $toggleHeight;
-      font-size: 1em;
+      line-height: $widgetHeight;
+      font-size: $fontSize;
       cursor: pointer;
       padding-left: ($toggleWidth + $toggleSwitch);
       
-      // Pseaudo element for background of toggle.
+      // Pseudo element for background of toggle.
       &:before {
         content: "";
         display: inline-block;
@@ -40,12 +45,11 @@ $toggleWidth: (2 * $toggleHeight);
         border: 1px solid $toggleBorder;
         border-radius: $toggleHeight / 2;
         cursor: pointer;
-        z-index: ($zindex-dropdown - 100);
-        box-shadow: inset 0 2px 2px rgba(invert($toggleBGOff), 0.24);
-        transition: all 0.3s linear;
+        box-shadow: inset 0 floor(0.05 * $toggleSwitch) floor(0.05 * $toggleSwitch) rgba(invert($toggleBGOff), 0.24);
+        transition: all 0.5s linear;
       }
     
-      // Pseaudo element for toggle switch.
+      // Pseudo element for toggle switch.
       &:after {
         content: "";
         display: inline-block;
@@ -53,21 +57,20 @@ $toggleWidth: (2 * $toggleHeight);
         cursor: pointer;
         width: $toggleSwitch;
         height: $toggleSwitch;
-        left: -($offset);
-        top: -($offset);
+        left: $offset + 1px;
+        top: $offset;
         border-radius: $toggleSwitch / 2;
         background: $toggleOff;
-        box-shadow: 2px 2px 3px rgba(invert($toggleOff), 0.24);
+        box-shadow: floor(0.15 * $toggleSwitch) floor(0.15 * $toggleSwitch) floor(0.3 * $toggleSwitch) rgba(invert($toggleOff), 0.24);
         transition: all .2s ease-in;
-        z-index: ($zindex-dropdown - 50);
       }
     }
     
     &:checked ~ label {
       &:after {
         background: $toggleOn;
-        transform: translatex($toggleHeight);
-        box-shadow: 2px 2px 3px rgba(invert($toggleOn), 0.24);
+        transform: translatex($translation);
+        box-shadow: floor(0.15 * $toggleSwitch) floor(0.15 * $toggleSwitch) floor(0.3 * $toggleSwitch) rgba(invert($toggleOn), 0.24);
       }
       &:before {
         background: $toggleBGOn;
