@@ -17,7 +17,7 @@ $toggleWidth: (2 * $toggleHeight);
   padding-bottom: (0.5 * $toggleSwitch);
   position: relative;
   
-  input[type="checkbox"] {
+  & > input[type="checkbox"] {
     opacity: 0;
     
     & ~ label {
