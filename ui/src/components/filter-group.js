@@ -20,7 +20,7 @@ const getFilters = (filters, target, filterClick) => {
     let fConf = filters[value]
     let id = `filter-${target}-${value}`
     filterComponents.push(
-      <Filter key={id} id={id} name={target} filterClick={filterClick} value={value} defaultChecked={!!fConf.selected}>{fConf.text}</Filter>
+      <Filter key={id} id={id} name={target} className="toggle" filterClick={filterClick} value={value} defaultChecked={!!fConf.selected}>{fConf.text}</Filter>
     )
   }
   return filterComponents
