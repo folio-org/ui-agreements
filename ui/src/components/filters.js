@@ -100,8 +100,6 @@ class Filters extends Component {
       // Add to the query params here.
       this.activeFilters.set(name, current)
     }
-    
-    console.log({ name, value, selected })
   }
   
   filterClick = ( name, value, selected ) => {

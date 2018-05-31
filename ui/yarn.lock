@@ -1385,7 +1385,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.2.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.2.0, babel-runtime@^6.20.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "http://npm.k-int.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   dependencies:
@@ -6019,7 +6019,7 @@ prop-types-extra@^1.0.1:
   dependencies:
     warning "^3.0.0"
 
-prop-types@^15.0.0, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
+prop-types@^15.0.0, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
   version "15.6.1"
   resolved "http://npm.k-int.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
   dependencies:
@@ -6411,7 +6411,7 @@ react-redux@^5.0.2:
     loose-envify "^1.1.0"
     prop-types "^15.6.0"
 
-react-router-dom@^4.0.0, react-router-dom@^4.1.1:
+react-router-dom@^4.0.0, react-router-dom@^4.1.1, react-router-dom@^4.2.2:
   version "4.2.2"
   resolved "http://npm.k-int.com/react-router-dom/-/react-router-dom-4.2.2.tgz#c8a81df3adc58bba8a76782e946cbd4eae649b8d"
   dependencies:
@@ -7850,6 +7850,29 @@ undertaker@^1.0.0:
     object.defaults "^1.0.0"
     object.reduce "^1.0.0"
     undertaker-registry "^1.0.0"
+
+uniforms-bootstrap4@^1.24.4:
+  version "1.24.4"
+  resolved "http://npm.k-int.com/uniforms-bootstrap4/-/uniforms-bootstrap4-1.24.4.tgz#2d2e17e391266e58b213bbe7e1fe8b2357bc073a"
+  dependencies:
+    babel-runtime "^6.20.0"
+    classnames "^2.2.5"
+    prop-types "^15.5.7"
+
+uniforms-unstyled@^1.24.4:
+  version "1.24.4"
+  resolved "http://npm.k-int.com/uniforms-unstyled/-/uniforms-unstyled-1.24.4.tgz#055d9a9270c879f3ccf0c1d70c9972cea671bfcd"
+  dependencies:
+    babel-runtime "^6.20.0"
+    prop-types "^15.5.7"
+
+uniforms@^1.24.4:
+  version "1.24.4"
+  resolved "http://npm.k-int.com/uniforms/-/uniforms-1.24.4.tgz#a48b5f91260f158aa4531dfcbf8ea05c5ed332c3"
+  dependencies:
+    babel-runtime "^6.20.0"
+    lodash "^4.0.0"
+    prop-types "^15.5.7"
 
 union-value@^1.0.0:
   version "1.0.0"

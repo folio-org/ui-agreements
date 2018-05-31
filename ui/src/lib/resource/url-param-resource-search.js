@@ -8,7 +8,7 @@ import ReactTable from 'react-table'
 import ResourceBasedComponent from './resource-based-component'
 
 @observer
-class UrlParamResourceCrud extends ResourceBasedComponent {
+class UrlParamResourceSearch extends ResourceBasedComponent {
   
   static propTypes = {
     resource: PropTypes.string.isRequired,
@@ -58,7 +58,7 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
       
       let newParams = Object.assign({}, this.fetchParams, urlPars, constants)
       if (newParams.term) {
-        match: this.props.fieldsToSearch
+        newParams.match = this.props.fieldsToSearch
       }
       
       this.fetchParams = newParams
@@ -186,11 +186,4 @@ class UrlParamResourceCrud extends ResourceBasedComponent {
   }
 }
 
-let routerEntry = ( { router, ...comp } ) => (
-  ( { match } ) => (
-    <UrlParamResourceCrud {...comp} routerMatch={match} />
-  )
-)
-
-export { routerEntry }
-export default hot(module)(UrlParamResourceCrud)
+export default hot(module)(UrlParamResourceSearch)

@@ -30,7 +30,7 @@ class Routing extends Component {
       <div className="erm" >
         <Nav match={match} color="light" sticky="top" light expand="lg" className='justify-content-center' location={location} />
         <div className="pt-4" >
-          <Switch >
+          <Switch>
             <Route history={history} exact path={match.path} render={() => <Dash app={this.app} />} />
             { mods }
           </Switch>

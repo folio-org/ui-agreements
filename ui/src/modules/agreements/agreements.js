@@ -5,7 +5,7 @@ import { hot } from 'react-hot-loader'
 import { Container, Row, Col } from 'reactstrap'
 import Search from '../../components/search'
 
-import UrlParamResourceCrud from '../../lib/resource/url-param-resource-crud'
+import UrlParamResourceSearch from '../../lib/resource/url-param-resource-search'
 import {tableFormatters, textHighlighter} from '../../lib/helpers'
 
 let searchIn = [
@@ -70,7 +70,7 @@ const Agreements = observer((props) => {
           <Search className="w-100" app={props.app} filters={filterGroups} />
         </Col>
         <Col lg={{size:9, offset:3}} xs="12">
-          <UrlParamResourceCrud resource="SubscriptionAgreement" fieldsToSearch={searchIn} columnDef={columns} app={props.app} />
+          <UrlParamResourceSearch resource="SubscriptionAgreement" fieldsToSearch={searchIn} columnDef={columns} app={props.app} />
         </Col>
       </Row>
     </Container>

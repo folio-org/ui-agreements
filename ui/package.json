@@ -29,11 +29,16 @@
     "react-hot-loader": "^4.2.0",
     "react-icons": "^2.2.7",
     "react-jsonschema-form": "^0.51.0",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
     "react-string-replace": "^0.4.1",
     "react-table": "^6.8.0",
     "reactstrap": "^5.0.0",
     "restful.js": "^0.9.6",
     "sass-loader": "^7.0.1",
+    "uniforms": "^1.24.4",
+    "uniforms-bootstrap4": "^1.24.4",
+    "uniforms-unstyled": "^1.24.4",
     "webpack": "^3",
     "webpack-dev-server": "^3.1.1"
   }
