@@ -28,7 +28,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
     if (urlPars.perPage) {
       num = parseInt(urlPars.perPage)
       this.perPage = (num === NaN ? 10 : num)
-    }    
+    }
     if (urlPars.page) {
       num = parseInt(urlPars.page)
       this.page = (num === NaN ? 10 : num)
@@ -118,6 +118,11 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
       num = parseInt(this.responseData.total)
       this.total = (num === NaN ? 0 : num)
     }
+
+    if (this.responseData.totalPages) {
+      num = parseInt(this.responseData.totalPages)
+      this.totalPages = (num === NaN ? 1 : num)
+    }
   }
   
   @computed get tableRows() {    
@@ -143,12 +148,17 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
         let params = Object.assign({term : this.fetchParams.term}, {
           perPage : state.pageSize,
           page: state.page + 1,
-          sort: state.sorted.map((sort => (`${sort.id};${sort.desc ? 'desc' : 'asc'}`)))
+          sort: this.sort.map((sort => (`${sort.id};${sort.desc ? 'desc' : 'asc'}`)))
         })
         
         this.app.addToQueryString( params )
       }
     }
+  }
+  
+  @action.bound
+  doSort = (newSorted, column, shiftKey) => {
+    
   }
   
   render() {

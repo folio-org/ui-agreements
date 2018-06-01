@@ -1,78 +1,158 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { hot } from 'react-hot-loader'
-import JSONSchemaForm from '../../lib/JSONSchemaForm'
+import JSONSchemaForm from '../../lib/forms/JSONSchemaForm'
+import { Row, Container } from 'reactstrap'
 
 const formSchema = {
   "$schema": "http://json-schema.org/schema#",
   "title": "Subscription Agreement",
-  "type": "object",
-  "required": ["name"],
-  "properties": {
-    "vendorReference": {
-      "type": "string"
-    },
-    "startDate": {
-      "format": "date-time",
-      "type": "string"
-    },
-    "renewalDate": {
-      "format": "date-time",
-      "type": "string"
-    },
-    "nextReviewDate": {
-      "format": "date-time",
-      "type": "string"
-    },
-    "items": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/AgreementLineItem"
+  "$ref": "#/definitions/SubscriptionAgreement",
+  "definitions": {
+    "SubscriptionAgreement": {
+      "id": "http://localhost:8080/kiwt/config/schema/embedded/SubscriptionAgreement",
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "vendorReference": {
+          "type": "string"
+        },
+        "startDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "renewalDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "nextReviewDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "oneOf": [{
+              "type": "string"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }, {
+              "$ref": "#/definitions/AgreementLineItem"
+            }]
+          }
+        },
+        "name": {
+          "type": "string"
+        },
+        "localReference": {
+          "type": "string"
+        },
+        "agreementType": {
+          "oneOf": [{
+            "type": "string"
+          }, {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          }, {
+            "$ref": "#/definitions/RefdataValue"
+          }]
+        },
+        "version": {
+          "type": "integer"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "endDate": {
+          "format": "date-time",
+          "type": "string"
+        }
       }
     },
-    "name": {
-      "type": "string"
-    },
-    "localReference": {
-      "type": "string"
-    },
-    "agreementType": {
-      "$ref": "#/definitions/RefdataValue"
-    },
-    "enabled": {
-      "type": "boolean"
-    },
-    "endDate": {
-      "format": "date-time",
-      "type": "string"
-    }
-  },
-  "definitions": {
     "AgreementLineItem": {
       "type": "object",
       "properties": {
         "pci": {
-          "$ref": "#/definitions/PackageContentItem"
+          "oneOf": [{
+            "type": "string"
+          }, {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          }, {
+            "$ref": "#/definitions/PackageContentItem"
+          }]
         },
         "activeTo": {
           "format": "date-time",
           "type": "string"
         },
+        "owner": {
+          "$ref": "#/definitions/SubscriptionAgreement"
+        },
         "activeFrom": {
           "format": "date-time",
           "type": "string"
         },
+        "version": {
+          "type": "integer"
+        },
         "coverage": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/HoldingsCoverage"
+            "oneOf": [{
+              "type": "string"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }, {
+              "$ref": "#/definitions/HoldingsCoverage"
+            }]
           }
         },
         "pti": {
-          "$ref": "#/definitions/PlatformTitleInstance"
+          "oneOf": [{
+            "type": "string"
+          }, {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          }, {
+            "$ref": "#/definitions/PlatformTitleInstance"
+          }]
         },
         "pkg": {
-          "$ref": "#/definitions/Package"
+          "oneOf": [{
+            "type": "string"
+          }, {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          }, {
+            "$ref": "#/definitions/Package"
+          }]
         },
         "enabled": {
           "type": "boolean"
@@ -101,10 +181,32 @@ const formSchema = {
           "type": "integer"
         },
         "pti": {
-          "$ref": "#/definitions/PlatformTitleInstance"
+          "oneOf": [{
+            "type": "string"
+          }, {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          }, {
+            "$ref": "#/definitions/PlatformTitleInstance"
+          }]
         },
         "pkg": {
-          "$ref": "#/definitions/Package"
+          "oneOf": [{
+            "type": "string"
+          }, {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          }, {
+            "$ref": "#/definitions/Package"
+          }]
         }
       }
     },
@@ -113,10 +215,32 @@ const formSchema = {
       "required": ["titleInstance", "platform"],
       "properties": {
         "titleInstance": {
-          "$ref": "#/definitions/TitleInstance"
+          "oneOf": [{
+            "type": "string"
+          }, {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          }, {
+            "$ref": "#/definitions/TitleInstance"
+          }]
         },
         "platform": {
-          "$ref": "#/definitions/Platform"
+          "oneOf": [{
+            "type": "string"
+          }, {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          }, {
+            "$ref": "#/definitions/Platform"
+          }]
         },
         "version": {
           "type": "integer"
@@ -136,7 +260,18 @@ const formSchema = {
         "identifiers": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/IdentifierOccurrence"
+            "oneOf": [{
+              "type": "string"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }, {
+              "$ref": "#/definitions/IdentifierOccurrence"
+            }]
           }
         }
       }
@@ -146,16 +281,49 @@ const formSchema = {
       "required": ["status", "identifier"],
       "properties": {
         "title": {
-          "$ref": "#/definitions/TitleInstance"
+          "oneOf": [{
+            "type": "string"
+          }, {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          }, {
+            "$ref": "#/definitions/TitleInstance"
+          }]
         },
         "status": {
-          "$ref": "#/definitions/RefdataValue"
+          "oneOf": [{
+            "type": "string"
+          }, {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          }, {
+            "$ref": "#/definitions/RefdataValue"
+          }]
         },
         "version": {
           "type": "integer"
         },
         "identifier": {
-          "$ref": "#/definitions/Identifier"
+          "oneOf": [{
+            "type": "string"
+          }, {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          }, {
+            "$ref": "#/definitions/Identifier"
+          }]
         }
       }
     },
@@ -171,7 +339,21 @@ const formSchema = {
           "minLength": 0
         },
         "owner": {
-          "$ref": "#/definitions/RefdataCategory"
+          "oneOf": [{
+            "type": "string"
+          }, {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          }, {
+            "$ref": "#/definitions/RefdataCategory"
+          }]
+        },
+        "version": {
+          "type": "integer"
         },
         "label": {
           "type": "string"
@@ -196,15 +378,40 @@ const formSchema = {
       "required": ["ns", "value"],
       "properties": {
         "ns": {
-          "$ref": "#/definitions/IdentifierNamespace"
+          "oneOf": [{
+            "type": "string"
+          }, {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          }, {
+            "$ref": "#/definitions/IdentifierNamespace"
+          }]
         },
         "value": {
           "type": "string"
         },
+        "version": {
+          "type": "integer"
+        },
         "occurrences": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/IdentifierOccurrence"
+            "oneOf": [{
+              "type": "string"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }, {
+              "$ref": "#/definitions/IdentifierOccurrence"
+            }]
           }
         }
       }
@@ -227,6 +434,9 @@ const formSchema = {
       "properties": {
         "name": {
           "type": "string"
+        },
+        "version": {
+          "type": "integer"
         }
       }
     },
@@ -258,13 +468,27 @@ const formSchema = {
           "type": "string"
         },
         "ali": {
-          "$ref": "#/definitions/AgreementLineItem"
+          "oneOf": [{
+            "type": "string"
+          }, {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
+          }, {
+            "$ref": "#/definitions/AgreementLineItem"
+          }]
         },
         "endIssue": {
           "type": "string"
         },
         "startVolume": {
           "type": "string"
+        },
+        "version": {
+          "type": "integer"
         },
         "endVolume": {
           "type": "string"
@@ -277,13 +501,19 @@ const formSchema = {
   }
 }
 
-const EditAgreement = ({ resourceId: {params : resourceId }}) => {
+const EditAgreement = ( {match: { params : {resourceId} }}) => {
   
   if (resourceId === 'new') {
     console.log(`${resourceId}`)
   }
   
-  return (<JSONSchemaForm schema={formSchema} onSubmit={doc => console.log(doc)} />)
+  return (
+    <Container fluid >
+      <Row>
+        <JSONSchemaForm grid="16" schema={formSchema} onSubmit={doc => console.log(doc)} />
+      </Row>
+    </Container>
+  )
 }
   
 export default hot(module)(EditAgreement)
