@@ -8400,6 +8400,10 @@ yargs@~3.10.0:
     decamelize "^1.0.0"
     window-size "0.1.0"
 
+yarn@^1.9.2:
+  version "1.9.2"
+  resolved "http://npm.k-int.com/yarn/-/yarn-1.9.2.tgz#7666c6db0fed8dc090ae0dce11a8a28b1d82e391"
+
 zen-observable-ts@^0.8.6:
   version "0.8.8"
   resolved "http://npm.k-int.com/zen-observable-ts/-/zen-observable-ts-0.8.8.tgz#1a586dc204fa5632a88057f879500e0d2ba06869"
