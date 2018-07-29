@@ -19,6 +19,7 @@ const Dash = observer((props) => {
 	<Row>
 	  <Col sm="12"><h1>ERM Dashboard</h1></Col>
 	</Row>
+
 	<Row>
 	  <Col sm="12">
 
@@ -35,6 +36,7 @@ const Dash = observer((props) => {
 
 	  </Col>
 	</Row>
+        &nbsp;
 	<Row>
 	  <Col sm="3">
 
