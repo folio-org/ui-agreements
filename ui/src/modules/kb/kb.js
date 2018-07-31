@@ -9,18 +9,23 @@ import UrlParamResourceSearch from '../../lib/resource/url-param-resource-search
 import {tableFormatters, textHighlighter} from '../../lib/helpers'
 
 
-const Kb = observer((props) => {
-  
+const Kb = observer(({onTest}) => {
+
   return (
     <Container fluid={true}>
       <Row>
         <Col lg="3" xs="12" className="position-fixed" >
           <h1>KB</h1>
-          <button className="btn btn-primary" onclick="this.handleTest()">Test</button>
+          <button className="btn btn-primary" onClick={onTest}>Test</button>
         </Col>
       </Row>
     </Container>
   )
 })
+
+Kb.propTypes = {
+    onTest: React.PropTypes.func
+};
+
 
 export default hot(module)(Kb)

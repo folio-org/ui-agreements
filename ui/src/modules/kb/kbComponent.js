@@ -25,9 +25,8 @@ class KbComponent extends React.Component {
   }
 
   render() {
-    console.log('wibble');
     return (
-      <Kb {...this.props} {...this.state} />
+      <Kb onTest={this.handleTest}/>
     )
   }
 }
