@@ -16,7 +16,7 @@ const Kb = observer((props) => {
       <Row>
         <Col lg="3" xs="12" className="position-fixed" >
           <h1>KB</h1>
-          <button className="btn btn-primary">Test</button>
+          <button className="btn btn-primary" onclick="this.handleTest()">Test</button>
         </Col>
       </Row>
     </Container>
