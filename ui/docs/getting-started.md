@@ -27,3 +27,6 @@ Open a terminal in the `ui` sub directory of this project and issue the commands
 ```
 yarn start
 ```
+
+
+## Needed: How to call an olf-erm service endpoint - get, post, put and delete examples

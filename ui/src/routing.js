@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Route from 'react-router-dom/Route'
 import Switch from 'react-router-dom/Switch'
-import Dash from './dash'
+import Dash from './modules/dash/dash'
 import Nav from './components/nav'
 import Kb from './modules/kb'
 
