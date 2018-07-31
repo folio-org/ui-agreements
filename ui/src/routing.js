@@ -3,7 +3,7 @@ import Route from 'react-router-dom/Route'
 import Switch from 'react-router-dom/Switch'
 import Dash from './modules/dash/dash'
 import Nav from './components/nav'
-import Kb from './modules/kb'
+import KbComponent from './modules/kb/kbComponent'
 
 import { observer } from 'mobx-react'
 import * as mobx from 'mobx'
@@ -38,8 +38,8 @@ class Routing extends Component {
         <div className="pt-4" >
           <Switch>
             <Route history={history} exact path={match.path} render={() => <Dash app={this.app} />} />
+            <Route history={history} exact path={match.path+'/kb'} render={() => <KbComponent app={this.app} />} />
             { mods }
-            <Route history={history} exact path={match.path+'/kb'} render={() => <Kb app={this.app} />} />
           </Switch>
        </div>
       </div>
