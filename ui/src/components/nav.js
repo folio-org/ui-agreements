@@ -29,6 +29,10 @@ export default ({location, match, ...props}) => (
     <Nav pills >
       <RouterNavlink location={location} to={match.path} exact >Dash</RouterNavlink>
       <RouterNavlink location={location} to={match.path + '/agreements'} >Agreements</RouterNavlink>
+      <RouterNavlink location={location} to={match.path + '/licenses'} >Licenses</RouterNavlink>
+      <RouterNavlink location={location} to={match.path + '/titles'} >Titles</RouterNavlink>
+      <RouterNavlink location={location} to={match.path + '/packages'} >Packages</RouterNavlink>
+      <RouterNavlink location={location} to={match.path + '/kb'} >KB</RouterNavlink>
     </Nav>
   </Navbar>
 )
