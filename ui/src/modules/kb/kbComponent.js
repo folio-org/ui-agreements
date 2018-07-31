@@ -21,7 +21,9 @@ class KbComponent extends React.Component {
   }
 
   handleTest() {
-    console.log("handleTest::test");
+
+    console.log("handleTest::test %o",this.props.app);
+    console.log("API root: %s",this.props.app.apiConfig.root);
   }
 
   render() {
