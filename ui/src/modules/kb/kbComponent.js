@@ -24,6 +24,9 @@ class KbComponent extends React.Component {
 
     console.log("handleTest::test %o",this.props.app);
     console.log("API root: %s",this.props.app.apiConfig.root);
+    this.props.app.fetchJSON (this.props.app.apiConfig.root+'/knowledgebase').then((jsonData) => {
+      console.log("result of /knowlegebase: %o",jsonData);
+    })
   }
 
   render() {
