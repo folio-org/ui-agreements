@@ -6,7 +6,6 @@ import { Container, Row, Col } from 'reactstrap'
 import Search from '../../components/search'
 import Kb from './kb'
 
-import UrlParamResourceSearch from '../../lib/resource/url-param-resource-search'
 import {tableFormatters, textHighlighter} from '../../lib/helpers'
 
 class KbComponent extends React.Component {
@@ -15,9 +14,15 @@ class KbComponent extends React.Component {
     super(props);
 
     this.state = {
+      showPane: true
     }
 
     this.handleTest = this.handleTest.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
+  handleClose() {
+    console.log("handleClose");
   }
 
   handleTest() {
@@ -31,7 +36,7 @@ class KbComponent extends React.Component {
 
   render() {
     return (
-      <Kb onTest={this.handleTest}/>
+      <Kb onTest={this.handleTest} onClose={this.handleClose} showPane={this.state.showPane} app={this.props.app} />
     )
   }
 }

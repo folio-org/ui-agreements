@@ -8,23 +8,54 @@ import Search from '../../components/search'
 import UrlParamResourceSearch from '../../lib/resource/url-param-resource-search'
 import {tableFormatters, textHighlighter} from '../../lib/helpers'
 
+import Paneset from '@folio/stripes-components/lib/Paneset';
+import Pane from '@folio/stripes-components/lib/Pane';
 
-const Kb = observer(({onTest}) => {
+
+let searchIn = [
+  '__cql'
+]
+
+
+const Kb = observer(({onTest, showPane, handleClose, app}) => {
+
+  const columns = [
+    {
+      Header: "Id",
+      id: 'id',
+      accessor: d => ({name: d.id, id: d.id})
+    }
+  ]
+
+  const filterGroups = {
+  }
+
 
   return (
-    <Container fluid={true}>
-      <Row>
-        <Col lg="3" xs="12" className="position-fixed" >
-          <h1>KB</h1>
-          <button className="btn btn-primary" onClick={onTest}>Test</button>
-        </Col>
-      </Row>
-    </Container>
+    <Paneset>
+      {
+        showPane &&
+        <Pane defaultWidth="20%" dismissible paneTitle="KB Filters" onClose={handleClose}>
+          KB Query
+          <input type="text" name="KBQuery"/>
+          <button type="submit" className="btn btn-primary">Go</button>
+          
+        </Pane>
+      }
+      <Pane defaultWidth="fill" paneTitle="KB Titles">
+        // Pane Content
+        <button className="btn btn-primary" onClick={onTest}>Test</button>
+        <UrlParamResourceSearch resource="PackageContentItem" fieldsToSearch={searchIn} columnDef={columns} app={app} />
+      </Pane>
+    </Paneset>
   )
 })
 
 Kb.propTypes = {
-    onTest: React.PropTypes.func
+    onTest: React.PropTypes.func,
+    showPane: React.PropTypes.bool,
+    handleClose: React.PropTypes.func,
+    app: React.PropTypes.object,
 };
 
 
