@@ -23,7 +23,7 @@ const Kb = observer(({onTest, showPane, handleClose, app}) => {
     {
       Header: "Id",
       id: 'id',
-      accessor: d => ({name: d.id, id: d.id})
+      accessor: 'id'
     }
   ]
 
