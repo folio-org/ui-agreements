@@ -17,7 +17,7 @@ let searchIn = [
 ]
 
 
-const Kb = observer(({onTest, showFilterPane, showDetailPane, handleCloseFilter, handleCloseDetail app}) => {
+const Kb = observer(({onTest, showFilterPane, showDetailPane, handleCloseFilter, handleCloseDetail, app}) => {
 
   const columns = [
     // { Header: "Id", id: 'id', accessor: 'pci_id' },
