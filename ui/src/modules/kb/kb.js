@@ -17,7 +17,7 @@ let searchIn = [
 ]
 
 
-const Kb = observer(({onTest, showPane, handleClose, app}) => {
+const Kb = observer(({onTest, showFilterPane, showDetailPane, handleCloseFilter, handleCloseDetail app}) => {
 
   const columns = [
     // { Header: "Id", id: 'id', accessor: 'pci_id' },
@@ -41,8 +41,8 @@ const Kb = observer(({onTest, showPane, handleClose, app}) => {
   return (
     <Paneset>
       {
-        showPane &&
-        <Pane defaultWidth="20%" dismissible paneTitle="KB Filters" onClose={handleClose}>
+        showFilterPane &&
+        <Pane defaultWidth="20%" dismissible paneTitle="KB Filters" onClose={handleCloseFilter}>
           KB Query
           <input type="text" name="KBQuery"/>
           <button type="submit" className="btn btn-primary">Go</button>
@@ -50,18 +50,24 @@ const Kb = observer(({onTest, showPane, handleClose, app}) => {
         </Pane>
       }
       <Pane defaultWidth="fill" paneTitle="KB Titles">
-        // Pane Content
-        <button className="btn btn-primary" onClick={onTest}>Test</button>
         <UrlParamResourceSearch resource="PackageContentItem" fieldsToSearch={searchIn} columnDef={columns} app={app} />
       </Pane>
+      {
+        showDetailPane &&
+        <Pane defaultWidth="40%" dismissible paneTitle="Details" onClose={handleCloseDetail}>
+          <button className="btn btn-primary" onClick={onTest}>Test</button>
+        </Pane>
+      }
     </Paneset>
   )
 })
 
 Kb.propTypes = {
     onTest: React.PropTypes.func,
-    showPane: React.PropTypes.bool,
-    handleClose: React.PropTypes.func,
+    showFilterPane: React.PropTypes.bool,
+    handleCloseFilter: React.PropTypes.func,
+    showDetailPane: React.PropTypes.bool,
+    handleCloseDetail: React.PropTypes.func,
     app: React.PropTypes.object,
 };
 

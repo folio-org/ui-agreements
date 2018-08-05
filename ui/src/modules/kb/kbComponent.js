@@ -14,15 +14,23 @@ class KbComponent extends React.Component {
     super(props);
 
     this.state = {
-      showPane: true
+      showDetailPane: false,
+      showFilterPane: true
     }
 
     this.handleTest = this.handleTest.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.handleCloseDetail = this.handleCloseDetail.bind(this);
+    this.handleCloseFilter = this.handleCloseFilter.bind(this);
   }
 
-  handleClose() {
-    console.log("handleClose");
+  handleCloseFilter() {
+    console.log("handleCloseFilter");
+    this.setState({showFilterPane:false});
+  }
+
+  handleCloseDetail() {
+    console.log("handleCloseDetail");
+    this.setState({showDetailPane:false});
   }
 
   handleTest() {
@@ -36,7 +44,12 @@ class KbComponent extends React.Component {
 
   render() {
     return (
-      <Kb onTest={this.handleTest} onClose={this.handleClose} showPane={this.state.showPane} app={this.props.app} />
+      <Kb onTest={this.handleTest} 
+	  onCloseDetail={this.handleCloseDetail} 
+	  onCloseFilter={this.handleCloseFilter} 
+	  showDetailPane={this.state.showDetailPane} 
+	  showFilterPane={this.state.showFilterPane} 
+	  app={this.props.app} />
     )
   }
 }
