@@ -20,11 +20,18 @@ let searchIn = [
 const Kb = observer(({onTest, showPane, handleClose, app}) => {
 
   const columns = [
-    {
-      Header: "Id",
-      id: 'id',
-      accessor: 'id'
-    }
+    // { Header: "Id", id: 'id', accessor: 'pci_id' },
+    { Header: "Title", id: 'title', accessor: 'title' },
+    // { Header: "Title ID", id: 'title_id', accessor: 'title_id' },
+    { Header: "Platform", id: 'platform', accessor: 'platform' },
+    { Header: "Source", id: 'source', accessor: 'package_source' },
+    // { Header: "Source KB", id: 'kb', accessor: 'package_kb' },
+    { Header: "Package", id: 'package_name', accessor: 'package_name' },
+    { Header: "Coverage Depth", id: 'coverageDepth', accessor: 'coverageDepth' },
+    { Header: "Coverage Note", id: 'coverageNote', accessor: 'coverageNote' },
+    { Header: "Coverage Summary", id: 'coverage', accessor: 'coverage' },
+    // { Header: "Date Added", id: 'dateAdded', accessor: 'dateAdded' },
+    // { Header: "Date Removed", id: 'dateRemoved', accessor: 'dateRemoved' },
   ]
 
   const filterGroups = {
