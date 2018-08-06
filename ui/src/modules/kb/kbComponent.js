@@ -45,11 +45,11 @@ class KbComponent extends React.Component {
   render() {
     return (
       <Kb onTest={this.handleTest} 
-	  onCloseDetail={this.handleCloseDetail} 
-	  onCloseFilter={this.handleCloseFilter} 
-	  showDetailPane={this.state.showDetailPane} 
-	  showFilterPane={this.state.showFilterPane} 
-	  app={this.props.app} />
+	        onCloseDetail={this.handleCloseDetail} 
+      	  onCloseFilter={this.handleCloseFilter} 
+      	  showDetailPane={this.state.showDetailPane} 
+      	  showFilterPane={this.state.showFilterPane} 
+      	  app={this.props.app} />
     )
   }
 }

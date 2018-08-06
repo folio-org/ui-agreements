@@ -11,6 +11,9 @@ import {tableFormatters, textHighlighter} from '../../lib/helpers'
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 
+import { Link } from 'react-router-dom'
+
+
 
 let searchIn = [
   '__cql'
@@ -24,10 +27,8 @@ const Kb = observer(({onTest, showFilterPane, showDetailPane, handleCloseFilter,
     { Header: "Title2", id: 'title',
       // Construct a new json object to represent the cell value containing the ID and the title
       accessor: d => ({title: d.title, title_id: d.title_id}),
-      // Construct a rendere that creates a href and renders a link
-      // Cell: tableFormatters.pipe( (cell) => (textHighlighter(cell.value.title)), (previous, cell) => (<a href={`#${cell.value.title_id}`}>{previous}</a>) ) },
-      Cell: (cell) => (<a href={`/olf-erm/titles/${cell.value.title_id}`}>{cell.value.title}</a>)
-      // accessor: 'title' },
+      // Construct a renderer that creates a href and renders a link
+      Cell: (cell) => (<Link to={`/olf-erm/titles/${cell.value.title_id}`}>{cell.value.title}</Link>)
     },
     // { Header: "Title ID", id: 'title_id', accessor: 'title_id' },
     { Header: "Platform", id: 'platform', accessor: 'platform' },
