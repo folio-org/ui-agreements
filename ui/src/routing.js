@@ -42,8 +42,8 @@ class Routing extends Component {
         <Nav match={match} color="light" sticky="top" light expand="lg" className='justify-content-center' location={location} />
         <div className="pt-4" >
           <Switch>
-            { mods }
           </Switch>
+          { mods }
        </div>
       </div>
     )
