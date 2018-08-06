@@ -60,6 +60,7 @@ const Dash = observer((props) => {
       	                36455 individual electronic resources.</CardText>
       	        <CardText>
       	          Quick Search: <input name="q" type="text"/>
+                  <button className="btn btn-primary" onClick={props.testHandler}>Test</button>
       	        </CardText>
       	      </CardBody>
       	    </Card>
