@@ -20,11 +20,11 @@ let searchIn = [
 ]
 
 
-const Kb = observer(({onTest, showFilterPane, showDetailPane, handleCloseFilter, handleCloseDetail, app}) => {
+const Kb = observer(({onTest, showFilterPane, showDetailPane, handleCloseFilter, handleCloseDetail, handleSelectPCI, app}) => {
 
   const columns = [
     // { Header: "Id", id: 'id', accessor: 'pci_id' },
-    { Header: "Title2", id: 'title',
+    { Header: "Content and Package", id: 'title',
       // Construct a new json object to represent the cell value containing the ID and the title
       accessor: d => ({title: d.title, title_id: d.title_id}),
       // Construct a renderer that creates a href and renders a link
@@ -34,10 +34,16 @@ const Kb = observer(({onTest, showFilterPane, showDetailPane, handleCloseFilter,
     { Header: "Platform", id: 'platform', accessor: 'platform' },
     { Header: "Source", id: 'source', accessor: 'package_source' },
     // { Header: "Source KB", id: 'kb', accessor: 'package_kb' },
-    { Header: "Package", id: 'package_name', accessor: 'package_name' },
+    { Header: "Package", id: 'package_name', accessor: 'package_name',
+      accessor: d => ({pkgName: d.package_name, pkgId: d.package_id}),
+      Cell: (cell) => (<Link to={`/olf-erm/packages/${cell.value.pkgId}`}>{cell.value.pkgName}</Link>)
+    },
     { Header: "Coverage Depth", id: 'coverageDepth', accessor: 'coverageDepth' },
     { Header: "Coverage Note", id: 'coverageNote', accessor: 'coverageNote' },
     { Header: "Coverage Summary", id: 'coverage', accessor: 'coverage' },
+    { Header: "Action", id: 'action_btn', accessor: 'pci_id',
+      Cell: (cell) => (<button className="btn btn-primary" onClick={handleSelectPCI}>Select</button>)
+    },
     // { Header: "Date Added", id: 'dateAdded', accessor: 'dateAdded' },
     // { Header: "Date Removed", id: 'dateRemoved', accessor: 'dateRemoved' },
   ]
@@ -76,6 +82,7 @@ Kb.propTypes = {
     handleCloseFilter: React.PropTypes.func,
     showDetailPane: React.PropTypes.bool,
     handleCloseDetail: React.PropTypes.func,
+    handleSelectPCI: React.PropTypes.func,
     app: React.PropTypes.object,
 };
 
