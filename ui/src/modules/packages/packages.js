@@ -23,8 +23,7 @@ let searchIn = [
 const Packages = observer(({onTest, showFilterPane, showDetailPane, handleCloseFilter, handleCloseDetail, handleSelectPCI, app}) => {
 
   const columns = [
-    // { Header: "Id", id: 'id', accessor: 'pci_id' },
-    { Header: "Package Name", id: 'name' },
+    { Header: "Package Name", id: 'name', accessor: 'name' },
   ]
 
   const filterGroups = {
