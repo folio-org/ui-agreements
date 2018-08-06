@@ -1,9 +1,7 @@
 import React, {Component} from 'react'
 import Route from 'react-router-dom/Route'
 import Switch from 'react-router-dom/Switch'
-import Dash from './modules/dash/dash'
 import Nav from './components/nav'
-import KbComponent from './modules/kb/kbComponent'
 
 import { observer } from 'mobx-react'
 import * as mobx from 'mobx'
@@ -26,21 +24,26 @@ class Routing extends Component {
     // This block of code automatically creates routes based on folio permissions.
     // see get modules() in olf-erm-ui/ui/src/lib/folio-stripes/app.js for details
     // This is how we magically create routes for enabled modules.
+    //
+    // Modules are loaded automatically if the user has a permission corresponding to the module. For now we
+    // set defaults in ourPerms field of src/lib/folio-stripes/app.js. If you want to add a new module,
+    // you will want to add the module name to the ourPerms map in order to have that module appear in
+    // the modules list below
 
     let mods = this.app.modules.values().map((entry, index) => {
       let ModRoutes = entry.routes
       return (<ModRoutes key={`erm-lazy-routes-${index}`} {...this.props} app={this.app} />)
     })
+
+    console.log("Loaded mods: %o",mods);
     
     return (
       <div className="erm" >
         <Nav match={match} color="light" sticky="top" light expand="lg" className='justify-content-center' location={location} />
         <div className="pt-4" >
           <Switch>
-            <Route history={history} exact path={match.path} render={() => <Dash app={this.app} />} />
-            <Route history={history} exact path={match.path+'/kb'} render={() => <KbComponent app={this.app} />} />
-            { mods }
           </Switch>
+          { mods }
        </div>
       </div>
     )

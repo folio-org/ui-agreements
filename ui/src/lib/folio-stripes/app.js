@@ -32,8 +32,12 @@ class App extends AppBase {
   get ourPerms() {
     
     // Temporary defaults.
+    // Entries in this list will cause corresponding modules to be auto-loaded
     const defaults = [
-      'olf-erm.agreements.user'
+      'olf-erm.agreements.user',
+      'olf-erm.titles.user',
+      'olf-erm.kb.user',
+      'olf-erm.dash.user',
     ]
     
     return defaults.concat(this.allPerms.filter(item => (

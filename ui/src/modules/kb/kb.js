@@ -21,7 +21,14 @@ const Kb = observer(({onTest, showFilterPane, showDetailPane, handleCloseFilter,
 
   const columns = [
     // { Header: "Id", id: 'id', accessor: 'pci_id' },
-    { Header: "Title", id: 'title', accessor: 'title' },
+    { Header: "Title2", id: 'title',
+      // Construct a new json object to represent the cell value containing the ID and the title
+      accessor: d => ({title: d.title, title_id: d.title_id}),
+      // Construct a rendere that creates a href and renders a link
+      // Cell: tableFormatters.pipe( (cell) => (textHighlighter(cell.value.title)), (previous, cell) => (<a href={`#${cell.value.title_id}`}>{previous}</a>) ) },
+      Cell: (cell) => (<a href={`/olf-erm/titles/${cell.value.title_id}`}>{cell.value.title}</a>)
+      // accessor: 'title' },
+    },
     // { Header: "Title ID", id: 'title_id', accessor: 'title_id' },
     { Header: "Platform", id: 'platform', accessor: 'platform' },
     { Header: "Source", id: 'source', accessor: 'package_source' },
