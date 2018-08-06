@@ -7,7 +7,7 @@ import KbComponent from './kbComponent'
 
 const Routes = ({app, match, ...props}) => (
   <Switch>
-    <Route history={history} exact path={match.path+'/kb'} render={() => <KbComponent app={this.app} />} />
+    <Route {...props} exact path={match.path+'/kb'} render={() => <KbComponent app={app} />} />
   </Switch>
 )
 

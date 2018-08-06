@@ -7,7 +7,7 @@ import Dash from './dash'
 
 const Routes = ({app, match, ...props}) => (
   <Switch>
-    <Route history={history} exact path={match.path} render={() => <Dash app={this.app} />} />
+    <Route {...props} exact path={match.path} render={() => <Dash app={app} />} />
   </Switch>
 )
 

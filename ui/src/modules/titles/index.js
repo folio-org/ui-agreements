@@ -7,7 +7,7 @@ import TitlesComponent from './titlesComponent'
 
 const Routes = ({app, match, ...props}) => (
   <Switch>
-    <Route history={history} exact path={match.path+'/titles'} render={() => <TitlesComponent app={this.app} />} />
+    <Route {...props} exact path={match.path+'/titles'} render={() => <TitlesComponent app={app} />} />
   </Switch>
 )
 

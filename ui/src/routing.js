@@ -34,7 +34,8 @@ class Routing extends Component {
       let ModRoutes = entry.routes
       return (<ModRoutes key={`erm-lazy-routes-${index}`} {...this.props} app={this.app} />)
     })
-    
+
+    console.log("Loaded mods: %o",mods);
     
     return (
       <div className="erm" >
