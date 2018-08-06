@@ -22,7 +22,7 @@ const Agreements = observer((props) => {
       Header: "Name",
       id: 'name',
       accessor: d => ({name: d.name, id: d.id}),
-      Cell: tableFormatters.pipe( (cell) => (highlighter(cell.value.name)), (previous, cell) => (<a href={`#${cell.value.id}`}>{previous}</a>) )
+      Cell: tableFormatters.pipe( (cell) => (highlighter(cell.value.name)), (previous, cell) => (<a href={`/${cell.value.id}`}>{previous}</a>) )
     },{
       Header: "Subscription",
       columns:[{
