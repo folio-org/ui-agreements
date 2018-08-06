@@ -7,6 +7,8 @@ import Search from '../../components/search'
 
 import {tableFormatters, textHighlighter} from '../../lib/helpers'
 
+import Packages from './packages'
+
 class PackagesComponent extends React.Component {
 
   constructor(props) {
@@ -17,8 +19,14 @@ class PackagesComponent extends React.Component {
   }
 
   render() {
-    return (
-      <p>Packages</p>
+   return (
+      <Packages onTest={this.handleTest}
+                showFilterPane={this.state.showFilterPane}
+                showDetailPane={this.state.showDetailPane}
+                handleCloseFilter={this.handleCloseFilter}
+                handleCloseDetail={this.handleCloseDetail}
+                handleSelectPCI={this.handleSelectPCI}
+                app={this.props.app} />
     )
   }
 }
