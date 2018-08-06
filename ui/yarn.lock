@@ -3159,7 +3159,7 @@ for-own@^1.0.0:
   dependencies:
     for-in "^1.0.1"
 
-foreach@^2.0.5:
+foreach@^2.0.4, foreach@^2.0.5:
   version "2.0.5"
   resolved "http://npm.k-int.com/foreach/-/foreach-2.0.5.tgz#0bee005018aeb260d0a3af3ae658dd0136ec1b99"
 
@@ -4279,6 +4279,18 @@ jsesc@~0.5.0:
 json-loader@^0.5.4:
   version "0.5.7"
   resolved "http://npm.k-int.com/json-loader/-/json-loader-0.5.7.tgz#dca14a70235ff82f0ac9a3abeb60d337a365185d"
+
+json-pointer@^0.3.0:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/json-pointer/-/json-pointer-0.3.1.tgz#cea90275ae349019849b3d3e5ee01e1575c487b7"
+  dependencies:
+    foreach "^2.0.4"
+
+json-schema-parser@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/json-schema-parser/-/json-schema-parser-0.1.0.tgz#99064273ab9df45cb2a2bc4538e9bafb3f6cca38"
+  dependencies:
+    json-pointer "^0.3.0"
 
 json-schema-traverse@^0.3.0:
   version "0.3.1"

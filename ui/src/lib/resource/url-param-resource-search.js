@@ -148,7 +148,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
         let params = Object.assign({term : this.fetchParams.term}, {
           perPage : state.pageSize,
           page: state.page + 1,
-          sort: this.sort.map((sort => (`${sort.id};${sort.desc ? 'desc' : 'asc'}`)))
+          sort: state.sorted.map((sort => (`${sort.id};${sort.desc ? 'desc' : 'asc'}`)))
         })
         
         this.app.addToQueryString( params )

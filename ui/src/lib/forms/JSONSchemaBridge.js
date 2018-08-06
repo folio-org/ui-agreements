@@ -9,16 +9,6 @@ export default class ExtendedJSONSchemaBridge extends JSONSchemaBridge {
   constructor (schema, validator, extension = {}) {
     super(schema, validator)
     this.ext = extension
-    
-    this.rewriteRootRef()
-  }
-  
-  // Resolve ref on root if present to make everything else work.
-  rewriteRootRef = () => {
-    if (this.schema.$ref) {
-      let root = this.resolveRef (this.schema.$ref, this.schema)
-      Object.assign (this.schema, root)
-    }
   }
 
   resolveRef = (ref, schema) => {
@@ -64,12 +54,23 @@ export default class ExtendedJSONSchemaBridge extends JSONSchemaBridge {
           } else if (definition.type === 'object') {
             definition = definition.properties[next]
           } else {
-            const [{properties: combinedDefinition = {}} = {}] =
-              ['allOf', 'anyOf', 'oneOf'].filter(key => definition[key]).map(key =>
-                definition[key].find(({properties = {}}) => properties[next])
+            let filtered = ['allOf', 'anyOf', 'oneOf'].filter(key => definition[key]).map(key =>
+                definition[key].find((obj) => {
+                  
+                  // Resolve any refs.
+                  if (obj.$ref) {
+                    let ref = this.resolveRef(obj.$ref, this.schema)
+                    
+                    // Also append to the object.
+                    Object.assign(obj, ref)
+                  }
+                  
+                  let properties = obj.properties || {}
+                  return properties[next]
+                })
               )
-              
-              definition = combinedDefinition[next]
+            const [{properties: combinedDefinition = {}} = {}] = filtered  
+            definition = combinedDefinition[next]
           }
           
           invariant(definition, 'Field not found in schema: "%s"', name)
@@ -111,7 +112,6 @@ export default class ExtendedJSONSchemaBridge extends JSONSchemaBridge {
     )
     
     this.extend(name, fieldDef)
-    console.log (name + ": %o", fieldDef)
     return fieldDef
   }
   
@@ -157,10 +157,10 @@ export default class ExtendedJSONSchemaBridge extends JSONSchemaBridge {
 //    return theType
 //  }
   
-//  getSubfields = (name) => {
-//    let subfields = super.getSubfields(name)
-//    
-//    console.log(`gsf: ${name}: `, subfields)
-//    return subfields
-//  }
+  getSubfields (name) {
+    let subfields = super.getSubfields(name)
+    
+    console.log(`gsf: ${name}: `, subfields)
+    return subfields
+  }
 }

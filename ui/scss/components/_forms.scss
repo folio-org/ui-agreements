@@ -1,0 +1,31 @@
+form.form {
+  div[id]:not(.badge) {
+    
+    > label {
+      margin-left: -$grid-gutter-width;
+    }
+      
+    @extend .card;
+    @extend .card-body;
+    @extend .mb-3;
+    padding-left: 2* $grid-gutter-width;
+  }
+
+  .badge {
+    .octicon-plus {
+      cursor: pointer;
+      &:after {
+        font-size: 1.3rem;
+        content: " + ";
+      }
+    }
+  
+    .octicon-dash {
+      cursor: pointer;
+      &:after {
+        font-size: 1.3rem;
+        content: " - ";
+      }
+    }
+  }
+}

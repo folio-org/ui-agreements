@@ -5,501 +5,524 @@ import JSONSchemaForm from '../../lib/forms/JSONSchemaForm'
 import { Row, Container } from 'reactstrap'
 
 const formSchema = {
-  "$schema": "http://json-schema.org/schema#",
-  "title": "Subscription Agreement",
-  "$ref": "#/definitions/SubscriptionAgreement",
-  "definitions": {
-    "SubscriptionAgreement": {
-      "id": "http://localhost:8080/kiwt/config/schema/embedded/SubscriptionAgreement",
-      "type": "object",
-      "required": ["name"],
-      "properties": {
-        "vendorReference": {
-          "type": "string"
-        },
-        "startDate": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "renewalDate": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "nextReviewDate": {
-          "format": "date-time",
-          "type": "string"
-        },
+    "$schema": "http://json-schema.org/schema#",
+    "$id": "http://localhost:8080/kiwt/config/schema/embedded/SubscriptionAgreement",
+    "title": "Subscription Agreement",
+    "type": "object",
+    "required": ["name"],
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "localReference": {
+        "type": "string"
+      },
+      "vendorReference": {
+        "type": "string"
+      },
+      "startDate": {
+        "format": "date-time",
+        "type": "string"
+      },
+      "renewalDate": {
+        "format": "date-time",
+        "type": "string"
+      },
+      "nextReviewDate": {
+        "format": "date-time",
+        "type": "string"
+      },
+      "version": {
+        "type": "integer"
+      },
+      "enabled": {
+        "type": "boolean"
+      },
+      "endDate": {
+        "format": "date-time",
+        "type": "string"
+      },
+      "items": {
+        "type": "array",
         "items": {
-          "type": "array",
-          "items": {
-            "oneOf": [{
-              "type": "string"
-            }, {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                }
-              }
-            }, {
-              "$ref": "#/definitions/AgreementLineItem"
-            }]
-          }
-        },
-        "name": {
-          "type": "string"
-        },
-        "localReference": {
-          "type": "string"
-        },
-        "agreementType": {
-          "oneOf": [{
-            "type": "string"
-          }, {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            }
-          }, {
-            "$ref": "#/definitions/RefdataValue"
-          }]
-        },
-        "version": {
-          "type": "integer"
-        },
-        "enabled": {
-          "type": "boolean"
-        },
-        "endDate": {
-          "format": "date-time",
-          "type": "string"
-        }
-      }
-    },
-    "AgreementLineItem": {
-      "type": "object",
-      "properties": {
-        "pci": {
-          "oneOf": [{
-            "type": "string"
-          }, {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            }
-          }, {
-            "$ref": "#/definitions/PackageContentItem"
-          }]
-        },
-        "activeTo": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "owner": {
-          "$ref": "#/definitions/SubscriptionAgreement"
-        },
-        "activeFrom": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "version": {
-          "type": "integer"
-        },
-        "coverage": {
-          "type": "array",
-          "items": {
-            "oneOf": [{
-              "type": "string"
-            }, {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                }
-              }
-            }, {
-              "$ref": "#/definitions/HoldingsCoverage"
-            }]
-          }
-        },
-        "pti": {
-          "oneOf": [{
-            "type": "string"
-          }, {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            }
-          }, {
-            "$ref": "#/definitions/PlatformTitleInstance"
-          }]
-        },
-        "pkg": {
-          "oneOf": [{
-            "type": "string"
-          }, {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            }
-          }, {
-            "$ref": "#/definitions/Package"
-          }]
-        },
-        "enabled": {
-          "type": "boolean"
-        }
-      }
-    },
-    "PackageContentItem": {
-      "type": "object",
-      "required": ["pti", "pkg"],
-      "properties": {
-        "accessStart": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "accessEnd": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "depth": {
-          "type": "string"
-        },
-        "note": {
-          "type": "string"
-        },
-        "version": {
-          "type": "integer"
-        },
-        "pti": {
-          "oneOf": [{
-            "type": "string"
-          }, {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            }
-          }, {
-            "$ref": "#/definitions/PlatformTitleInstance"
-          }]
-        },
-        "pkg": {
-          "oneOf": [{
-            "type": "string"
-          }, {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            }
-          }, {
-            "$ref": "#/definitions/Package"
-          }]
-        }
-      }
-    },
-    "PlatformTitleInstance": {
-      "type": "object",
-      "required": ["titleInstance", "platform"],
-      "properties": {
-        "titleInstance": {
-          "oneOf": [{
-            "type": "string"
-          }, {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            }
-          }, {
-            "$ref": "#/definitions/TitleInstance"
-          }]
-        },
-        "platform": {
-          "oneOf": [{
-            "type": "string"
-          }, {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            }
-          }, {
-            "$ref": "#/definitions/Platform"
-          }]
-        },
-        "version": {
-          "type": "integer"
-        }
-      }
-    },
-    "TitleInstance": {
-      "type": "object",
-      "required": ["title"],
-      "properties": {
-        "title": {
-          "type": "string"
-        },
-        "version": {
-          "type": "integer"
-        },
-        "identifiers": {
-          "type": "array",
-          "items": {
-            "oneOf": [{
-              "type": "string"
-            }, {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                }
-              }
-            }, {
-              "$ref": "#/definitions/IdentifierOccurrence"
-            }]
-          }
-        }
-      }
-    },
-    "IdentifierOccurrence": {
-      "type": "object",
-      "required": ["status", "identifier"],
-      "properties": {
-        "title": {
-          "oneOf": [{
-            "type": "string"
-          }, {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            }
-          }, {
-            "$ref": "#/definitions/TitleInstance"
-          }]
-        },
-        "status": {
-          "oneOf": [{
-            "type": "string"
-          }, {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            }
-          }, {
-            "$ref": "#/definitions/RefdataValue"
-          }]
-        },
-        "version": {
-          "type": "integer"
-        },
-        "identifier": {
-          "oneOf": [{
-            "type": "string"
-          }, {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            }
-          }, {
-            "$ref": "#/definitions/Identifier"
-          }]
-        }
-      }
-    },
-    "RefdataValue": {
-      "type": "object",
-      "required": ["value", "owner"],
-      "properties": {
-        "style": {
-          "type": "string"
-        },
-        "value": {
-          "type": "string",
-          "minLength": 0
-        },
-        "owner": {
-          "oneOf": [{
-            "type": "string"
-          }, {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            }
-          }, {
-            "$ref": "#/definitions/RefdataCategory"
-          }]
-        },
-        "version": {
-          "type": "integer"
-        },
-        "label": {
-          "type": "string"
-        }
-      }
-    },
-    "RefdataCategory": {
-      "type": "object",
-      "required": ["desc"],
-      "properties": {
-        "desc": {
-          "type": "string",
-          "minLength": 0
-        },
-        "version": {
-          "type": "integer"
-        }
-      }
-    },
-    "Identifier": {
-      "type": "object",
-      "required": ["ns", "value"],
-      "properties": {
-        "ns": {
-          "oneOf": [{
-            "type": "string"
-          }, {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            }
-          }, {
-            "$ref": "#/definitions/IdentifierNamespace"
-          }]
-        },
-        "value": {
-          "type": "string"
-        },
-        "version": {
-          "type": "integer"
-        },
-        "occurrences": {
-          "type": "array",
-          "items": {
-            "oneOf": [{
-              "type": "string"
-            }, {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                }
-              }
-            }, {
-              "$ref": "#/definitions/IdentifierOccurrence"
-            }]
-          }
-        }
-      }
-    },
-    "IdentifierNamespace": {
-      "type": "object",
-      "required": ["value"],
-      "properties": {
-        "value": {
-          "type": "string"
-        },
-        "version": {
-          "type": "integer"
-        }
-      }
-    },
-    "Platform": {
-      "type": "object",
-      "required": ["name"],
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "version": {
-          "type": "integer"
-        }
-      }
-    },
-    "Package": {
-      "type": "object",
-      "required": ["name", "source", "reference"],
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "version": {
-          "type": "integer"
-        },
-        "source": {
-          "type": "string"
-        },
-        "reference": {
-          "type": "string"
-        }
-      }
-    },
-    "HoldingsCoverage": {
-      "type": "object",
-      "properties": {
-        "startDate": {
-          "type": "string"
-        },
-        "startIssue": {
-          "type": "string"
-        },
-        "ali": {
-          "oneOf": [{
-            "type": "string"
-          }, {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            }
-          }, {
+          "anyOf": [{
             "$ref": "#/definitions/AgreementLineItem"
+          }, {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            }
           }]
-        },
-        "endIssue": {
-          "type": "string"
-        },
-        "startVolume": {
-          "type": "string"
-        },
-        "version": {
-          "type": "integer"
-        },
-        "endVolume": {
-          "type": "string"
-        },
-        "endDate": {
-          "type": "string"
+        }
+      },
+      "agreementType": {
+        "anyOf": [{
+          "$ref": "#/definitions/RefdataValue"
+        },{
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          }
+        }]
+      }
+    },
+    "definitions": {
+      "AgreementLineItem": {
+        "type": "object",
+        "required": ["owner"],
+        "properties": {
+          "pci": {
+            "anyOf": [{
+              "$ref": "#/definitions/PackageContentItem"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }]
+          },
+          "activeTo": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "activeFrom": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "coverage": {
+            "type": "array",
+            "items": {
+              "anyOf": [{
+                "$ref": "#/definitions/HoldingsCoverage"
+              }, {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                }
+              }]
+            }
+          },
+          "pti": {
+            "anyOf": [{
+              "$ref": "#/definitions/PlatformTitleInstance"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }]
+          },
+          "pkg": {
+            "anyOf": [{
+              "$ref": "#/definitions/Package"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }]
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PackageContentItem": {
+        "type": "object",
+        "required": ["pti", "pkg"],
+        "properties": {
+          "accessStart": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "accessEnd": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "depth": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "pti": {
+            "anyOf": [{
+              "$ref": "#/definitions/PlatformTitleInstance"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }]
+          },
+          "pkg": {
+            "anyOf": [{
+              "$ref": "#/definitions/Package"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }]
+          }
+        }
+      },
+      "PlatformTitleInstance": {
+        "type": "object",
+        "required": ["titleInstance", "platform"],
+        "properties": {
+          "titleInstance": {
+            "anyOf": [{
+              "$ref": "#/definitions/TitleInstance"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }]
+          },
+          "platform": {
+            "anyOf": [{
+              "$ref": "#/definitions/Platform"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }]
+          },
+          "version": {
+            "type": "integer"
+          }
+        }
+      },
+      "TitleInstance": {
+        "type": "object",
+        "required": ["title"],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "identifiers": {
+            "type": "array",
+            "items": {
+              "anyOf": [{
+                "$ref": "#/definitions/IdentifierOccurrence"
+              }, {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                }
+              }]
+            }
+          }
+        }
+      },
+      "IdentifierOccurrence": {
+        "type": "object",
+        "required": ["status", "identifier"],
+        "properties": {
+          "title": {
+            "anyOf": [{
+              "$ref": "#/definitions/TitleInstance"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }]
+          },
+          "status": {
+            "anyOf": [{
+              "$ref": "#/definitions/RefdataValue"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }]
+          },
+          "version": {
+            "type": "integer"
+          },
+          "identifier": {
+            "anyOf": [{
+              "$ref": "#/definitions/Identifier"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }]
+          }
+        }
+      },
+      "RefdataValue": {
+        "type": "object",
+        "required": ["value", "owner"],
+        "properties": {
+          "style": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string",
+            "minLength": 0
+          },
+          "owner": {
+            "anyOf": [{
+              "$ref": "#/definitions/RefdataCategory"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }]
+          },
+          "version": {
+            "type": "integer"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      },
+      "RefdataCategory": {
+        "type": "object",
+        "required": ["desc"],
+        "properties": {
+          "desc": {
+            "type": "string",
+            "minLength": 0
+          },
+          "version": {
+            "type": "integer"
+          }
+        }
+      },
+      "Identifier": {
+        "type": "object",
+        "required": ["ns", "value"],
+        "properties": {
+          "ns": {
+            "anyOf": [{
+              "$ref": "#/definitions/IdentifierNamespace"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }]
+          },
+          "value": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "occurrences": {
+            "type": "array",
+            "items": {
+              "anyOf": [{
+                "$ref": "#/definitions/IdentifierOccurrence"
+              }, {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                }
+              }]
+            }
+          }
+        }
+      },
+      "IdentifierNamespace": {
+        "type": "object",
+        "required": ["value"],
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer"
+          }
+        }
+      },
+      "Platform": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer"
+          }
+        }
+      },
+      "Package": {
+        "type": "object",
+        "required": ["name", "source", "reference"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "source": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          }
+        }
+      },
+      "SubscriptionAgreement": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "vendorReference": {
+            "type": "string"
+          },
+          "startDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "renewalDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "nextReviewDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "anyOf": [{
+                "$ref": "#/definitions/AgreementLineItem"
+              }, {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  }
+                }
+              }]
+            }
+          },
+          "name": {
+            "type": "string"
+          },
+          "localReference": {
+            "type": "string"
+          },
+          "agreementType": {
+            "anyOf": [{
+              "$ref": "#/definitions/RefdataValue"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }]
+          },
+          "version": {
+            "type": "integer"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "endDate": {
+            "format": "date-time",
+            "type": "string"
+          }
+        }
+      },
+      "HoldingsCoverage": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string"
+          },
+          "startIssue": {
+            "type": "string"
+          },
+          "ali": {
+            "anyOf": [{
+              "$ref": "#/definitions/AgreementLineItem"
+            }, {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }]
+          },
+          "endIssue": {
+            "type": "string"
+          },
+          "startVolume": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "endVolume": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string"
+          }
         }
       }
     }
   }
-}
 
 const EditAgreement = ( {match: { params : {resourceId} }}) => {
   

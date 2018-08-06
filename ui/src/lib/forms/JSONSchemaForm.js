@@ -2,8 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Ajv from 'ajv'
 import AutoForm from 'uniforms-bootstrap4/AutoForm'
-import AutoField from 'uniforms-bootstrap4/AutoField'
-import SubmitField from 'uniforms-bootstrap4/SubmitField'
 import { hot } from 'react-hot-loader'
 
 
@@ -20,16 +18,19 @@ const JSONSchemaForm = ({ schema, model }) => {
       throw {details: validator.errors};
     }
   }
-  const bridge = new JSONSchemaBridge(schema, schemaValidator, {
-    
-    types : {
-      "RefdataValue" : {
-        "type": 'string'
-      }
-    }
-    
-  })
-  return <AutoForm className="col-12" schema={bridge} onSubmit={doc => console.log(doc)} model={model} />
+  
+//  let resolvedSchema = SchemaParser.parse(schema)
+//  if (resolvedSchema.undefined) {
+//    // Happens with root ref.
+//    Object.assign(resolvedSchema, resolvedSchema.undefined)
+//    delete resolvedSchema.undefined
+//    delete resolvedSchema.$ref
+//  }
+  
+//  console.log("Resolved schema", resolvedSchema)
+  
+  const bridge = new JSONSchemaBridge(schema, schemaValidator)
+  return <AutoForm showInlineError={true} className="col-12" schema={bridge} onSubmit={doc => console.log(doc)} model={model} />
 }
   
 export default hot(module)(JSONSchemaForm)
