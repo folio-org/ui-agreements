@@ -36,6 +36,7 @@ class App extends AppBase {
     const defaults = [
       'olf-erm.agreements.user',
       'olf-erm.titles.user',
+      'olf-erm.packages.user',
       'olf-erm.kb.user',
       'olf-erm.dash.user',
     ]

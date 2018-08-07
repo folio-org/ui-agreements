@@ -21,6 +21,7 @@ class KbComponent extends React.Component {
     this.handleTest = this.handleTest.bind(this);
     this.handleCloseDetail = this.handleCloseDetail.bind(this);
     this.handleCloseFilter = this.handleCloseFilter.bind(this);
+    this.handleSelectPCI = this.handleSelectPCI.bind(this);
   }
 
   handleCloseFilter() {
@@ -42,14 +43,20 @@ class KbComponent extends React.Component {
     })
   }
 
+  handleSelectPCI() {
+    console.log("handleSelectPCI");
+    this.setState({showDetailPane:true});
+  }
+
   render() {
     return (
       <Kb onTest={this.handleTest} 
-	  onCloseDetail={this.handleCloseDetail} 
-	  onCloseFilter={this.handleCloseFilter} 
-	  showDetailPane={this.state.showDetailPane} 
-	  showFilterPane={this.state.showFilterPane} 
-	  app={this.props.app} />
+      	  showFilterPane={this.state.showFilterPane} 
+      	  showDetailPane={this.state.showDetailPane} 
+      	  handleCloseFilter={this.handleCloseFilter} 
+	        handleCloseDetail={this.handleCloseDetail} 
+          handleSelectPCI={this.handleSelectPCI}
+      	  app={this.props.app} />
     )
   }
 }

@@ -35,8 +35,6 @@ class Routing extends Component {
       return (<ModRoutes key={`erm-lazy-routes-${index}`} {...this.props} app={this.app} />)
     })
 
-    console.log("Loaded mods: %o",mods);
-    
     return (
       <div className="erm" >
         <Nav match={match} color="light" sticky="top" light expand="lg" className='justify-content-center' location={location} />
