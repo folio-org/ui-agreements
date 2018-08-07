@@ -42,7 +42,7 @@ const Packages = observer(({onTest, showFilterPane, showDetailPane, handleCloseF
         </Pane>
       }
       <Pane defaultWidth="fill" paneTitle="KB Titles">
-        <UrlParamResourceSearch resource="Package" fieldsToSearch={searchIn} columnDef={columns} app={app} />
+        <UrlParamResourceSearch resource="Pkg" fieldsToSearch={searchIn} columnDef={columns} app={app} />
       </Pane>
       {
         showDetailPane &&
