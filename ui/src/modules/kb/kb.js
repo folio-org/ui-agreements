@@ -16,9 +16,8 @@ import { Link } from 'react-router-dom'
 
 
 let searchIn = [
-  '__cql'
+  'pti.titleInstance.title'
 ]
-
 
 const Kb = observer(({onTest, 
                       showFilterPane, 
@@ -65,10 +64,7 @@ const Kb = observer(({onTest,
       {
         showFilterPane &&
         <Pane defaultWidth="20%" dismissible paneTitle="KB Filters" onClose={handleCloseFilter}>
-          KB Query
-          <input type="text" name="KBQuery"/>
-          <button type="submit" className="btn btn-primary">Go</button>
-          
+          <Search className="w-100" app={app} filters={filterGroups} />
         </Pane>
       }
       <Pane defaultWidth="fill" paneTitle="KB Titles">
