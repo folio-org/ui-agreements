@@ -57,6 +57,7 @@ class KbComponent extends React.Component {
       <Kb onTest={this.handleTest} 
       	  showFilterPane={this.state.showFilterPane} 
       	  showDetailPane={this.state.showDetailPane} 
+      	  selectedDetailRecord={this.state.selectedDetailRecord} 
       	  handleCloseFilter={this.handleCloseFilter} 
 	        handleCloseDetail={this.handleCloseDetail} 
           handleSelectPCI={this.handleSelectPCI}
