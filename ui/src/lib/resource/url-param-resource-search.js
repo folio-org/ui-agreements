@@ -172,6 +172,35 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
         loading={this.working} // Display the loading overlay when we need it
         onFetchData={this.fetchTableData} // Request new data when things change
         className="-striped -highlight"
+        getTdProps={(state, rowInfo, column, instance) => {
+          return {
+            onClick: (e, handleOriginal) => {
+              // console.log("A Td Element was clicked!");
+              // console.log("TD clicked it produced this event:", e);
+              // console.log("It was in this column:", column);
+              // console.log("It was in this row:", rowInfo);
+              // console.log("It was in this table instance:", instance);
+              // IMPORTANT! React-Table uses onClick internally to trigger
+              // events like expanding SubComponents and pivots.
+              // By default a custom 'onClick' handler will override this functionality.
+              // If you want to fire the original onClick handler, call the
+              // 'handleOriginal' function.
+              if (handleOriginal) {
+                handleOriginal();
+              }
+            }
+          };
+        }}
+        getTrProps={(state, rowInfo, column) => {
+          return {
+            onClick: (e, handleOriginal) => {
+              // console.log("Row clicked",e);
+              if (handleOriginal) {
+                handleOriginal();
+              }
+            }
+          };
+        }}
           >{(state, makeTable, instance) => {
             let results = state.data.length < 1 ? 'No results found' : `Showing ${state.data.length} results`
             return (
