@@ -43,8 +43,11 @@ class KbComponent extends React.Component {
     })
   }
 
-  handleSelectPCI() {
-    console.log("handleSelectPCI");
+  /**
+   * Called when a user clicks on the select button in a row. could equally be called on select of the row
+   */
+  handleSelectPCI(pci) {
+    console.log("handleSelectPCI",pci);
     this.setState({showDetailPane:true});
   }
 

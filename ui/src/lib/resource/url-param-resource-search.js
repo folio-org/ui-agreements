@@ -194,7 +194,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
         getTrProps={(state, rowInfo, column) => {
           return {
             onClick: (e, handleOriginal) => {
-              // console.log("Row clicked",e);
+              console.log("Row clicked",e,rowInfo);
               if (handleOriginal) {
                 handleOriginal();
               }

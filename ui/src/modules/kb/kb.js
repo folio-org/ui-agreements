@@ -42,7 +42,7 @@ const Kb = observer(({onTest, showFilterPane, showDetailPane, handleCloseFilter,
     { Header: "Coverage Note", id: 'coverageNote', accessor: 'coverageNote' },
     { Header: "Coverage Summary", id: 'coverage', accessor: 'coverage' },
     { Header: "Action", id: 'action_btn', accessor: 'pci_id',
-      Cell: (cell) => (<button className="btn btn-primary" onClick={handleSelectPCI}>Select</button>)
+      Cell: (cell) => (<button className="btn btn-primary" onClick={()=>handleSelectPCI(cell.original)}>Select</button>)
     },
     // { Header: "Date Added", id: 'dateAdded', accessor: 'dateAdded' },
     // { Header: "Date Removed", id: 'dateRemoved', accessor: 'dateRemoved' },
@@ -64,7 +64,9 @@ const Kb = observer(({onTest, showFilterPane, showDetailPane, handleCloseFilter,
         </Pane>
       }
       <Pane defaultWidth="fill" paneTitle="KB Titles">
-        <UrlParamResourceSearch resource="PackageContentItem" fieldsToSearch={searchIn} columnDef={columns} app={app} />
+        <UrlParamResourceSearch resource="PackageContentItem" 
+                                fieldsToSearch={searchIn} 
+                                columnDef={columns} app={app} />
       </Pane>
       {
         showDetailPane &&
