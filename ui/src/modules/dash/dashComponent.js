@@ -20,9 +20,9 @@ class DashComponent extends React.Component {
 
   handleTriggerSync() {
     console.log("handleTriggerSync::test %o",this.props.app);
-    // this.props.app.fetchJSON (this.props.app.apiConfig.root+'/knowledgebase').then((jsonData) => {
-    //   console.log("result of /knowlegebase: %o",jsonData);
-    // })
+    this.props.app.fetchJSON (this.props.app.apiConfig.root+'/erm/knowledgebase/triggerCacheUpdate').then((jsonData) => {
+      console.log("result of /knowlegebase: %o",jsonData);
+    })
   }
 
   render() {
