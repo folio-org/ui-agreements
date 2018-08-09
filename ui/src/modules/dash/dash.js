@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom'
 
 import { Container, Card, CardImg, CardText, CardHeader, CardBody, CardTitle, CardSubtitle, Button, Row, Col } from 'reactstrap';
 
-const Dash = observer((props) => {
+
+const Dash = observer(({handleTriggerSync, app}) => {
   
   return (
     <div>
@@ -60,7 +61,7 @@ const Dash = observer((props) => {
       	                36455 individual electronic resources.</CardText>
       	        <CardText>
       	          Quick Search: <input name="q" type="text"/>
-                  <button className="btn btn-primary" onClick={props.testHandler}>Test</button>
+                  <button className="btn btn-primary">Test</button>
       	        </CardText>
       	      </CardBody>
       	    </Card>
@@ -88,6 +89,16 @@ const Dash = observer((props) => {
       	        <CardText>You are currently selecting titles from 23 packages</CardText>
       	      </CardBody>
       	    </Card>
+
+            <br/>
+
+      	    <Card>
+      	      <CardHeader>Admin</CardHeader>
+      	      <CardBody>
+      	        <CardText><button className="btn btn-primary" onClick={handleTriggerSync}>Trigger KB Sync</button></CardText>
+      	      </CardBody>
+      	    </Card>
+
       	  </Col>
       
       	  <Col sm="3">
@@ -113,5 +124,10 @@ const Dash = observer((props) => {
     </div>
   )
 })
+
+Dash.propTypes = {
+    handleTriggerSync: React.PropTypes.func,
+    app: React.PropTypes.object,
+};
 
 export default hot(module)(Dash)

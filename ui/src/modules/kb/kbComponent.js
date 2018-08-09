@@ -15,7 +15,8 @@ class KbComponent extends React.Component {
 
     this.state = {
       showDetailPane: false,
-      showFilterPane: true
+      showFilterPane: true,
+      selectedDetailRecord: null
     }
 
     this.handleTest = this.handleTest.bind(this);
@@ -43,9 +44,12 @@ class KbComponent extends React.Component {
     })
   }
 
-  handleSelectPCI() {
-    console.log("handleSelectPCI");
-    this.setState({showDetailPane:true});
+  /**
+   * Called when a user clicks on the select button in a row. could equally be called on select of the row
+   */
+  handleSelectPCI(pci) {
+    console.log("handleSelectPCI",pci);
+    this.setState({showDetailPane:true, selectedDetailRecord:pci});
   }
 
   render() {
@@ -53,6 +57,7 @@ class KbComponent extends React.Component {
       <Kb onTest={this.handleTest} 
       	  showFilterPane={this.state.showFilterPane} 
       	  showDetailPane={this.state.showDetailPane} 
+      	  selectedDetailRecord={this.state.selectedDetailRecord} 
       	  handleCloseFilter={this.handleCloseFilter} 
 	        handleCloseDetail={this.handleCloseDetail} 
           handleSelectPCI={this.handleSelectPCI}

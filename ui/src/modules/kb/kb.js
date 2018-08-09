@@ -16,11 +16,16 @@ import { Link } from 'react-router-dom'
 
 
 let searchIn = [
-  '__cql'
+  'pti.titleInstance.title'
 ]
 
-
-const Kb = observer(({onTest, showFilterPane, showDetailPane, handleCloseFilter, handleCloseDetail, handleSelectPCI, app}) => {
+const Kb = observer(({onTest, 
+                      showFilterPane, 
+                      showDetailPane, 
+                      selectedDetailRecord, 
+                      handleCloseFilter, 
+                      handleCloseDetail, 
+                      handleSelectPCI, app}) => {
 
   const columns = [
     // { Header: "Id", id: 'id', accessor: 'pci_id' },
@@ -41,8 +46,10 @@ const Kb = observer(({onTest, showFilterPane, showDetailPane, handleCloseFilter,
     { Header: "Coverage Depth", id: 'coverageDepth', accessor: 'coverageDepth' },
     { Header: "Coverage Note", id: 'coverageNote', accessor: 'coverageNote' },
     { Header: "Coverage Summary", id: 'coverage', accessor: 'coverage' },
+
+    // This is what a cell containing a button that triggers an action would look like
     { Header: "Action", id: 'action_btn', accessor: 'pci_id',
-      Cell: (cell) => (<button className="btn btn-primary" onClick={handleSelectPCI}>Select</button>)
+      Cell: (cell) => (<button className="btn btn-primary" onClick={()=>handleSelectPCI(cell.original)}>Select</button>)
     },
     // { Header: "Date Added", id: 'dateAdded', accessor: 'dateAdded' },
     // { Header: "Date Removed", id: 'dateRemoved', accessor: 'dateRemoved' },
@@ -57,19 +64,37 @@ const Kb = observer(({onTest, showFilterPane, showDetailPane, handleCloseFilter,
       {
         showFilterPane &&
         <Pane defaultWidth="20%" dismissible paneTitle="KB Filters" onClose={handleCloseFilter}>
-          KB Query
-          <input type="text" name="KBQuery"/>
-          <button type="submit" className="btn btn-primary">Go</button>
-          
+          <Search className="w-100" app={app} filters={filterGroups} />
         </Pane>
       }
       <Pane defaultWidth="fill" paneTitle="KB Titles">
-        <UrlParamResourceSearch resource="PackageContentItem" fieldsToSearch={searchIn} columnDef={columns} app={app} />
+        <UrlParamResourceSearch resource="PackageContentItem" 
+                                fieldsToSearch={searchIn} 
+                                columnDef={columns} 
+                                app={app} />
       </Pane>
       {
         showDetailPane &&
         <Pane defaultWidth="40%" dismissible paneTitle="Details" onClose={handleCloseDetail}>
+          <ul>
+            <li>pci_id: {selectedDetailRecord.pci_id}</li>
+            <li>coverage: {selectedDetailRecord.coverage}</li>
+            <li>coverageDepth: {selectedDetailRecord.coverageDepth}</li>
+            <li>coverageNote: {selectedDetailRecord.coverageNote}</li>
+            <li>dateAdded: {selectedDetailRecord.dateAdded}</li>
+            <li>dateRemoved: {selectedDetailRecord.dateRemoved}</li>
+            <li>package_id: {selectedDetailRecord.package_id}</li>
+            <li>package_kb: {selectedDetailRecord.package_kb}</li>
+            <li>package_name: {selectedDetailRecord.package_name}</li>
+            <li>package_source: {selectedDetailRecord.package_source}</li>
+            <li>platform: {selectedDetailRecord.platform}</li>
+            <li>platform_id: {selectedDetailRecord.platform_id}</li>
+            <li>title: {selectedDetailRecord.title}</li>
+            <li>title_id: {selectedDetailRecord.title_id}</li>
+          </ul>
           <button className="btn btn-primary" onClick={onTest}>Test</button>
+          <button className="btn btn-primary" onClick={onTest}>Purchase</button>
+          <button className="btn btn-primary" onClick={onTest}>Add to Agreement</button>
         </Pane>
       }
     </Paneset>
@@ -79,9 +104,10 @@ const Kb = observer(({onTest, showFilterPane, showDetailPane, handleCloseFilter,
 Kb.propTypes = {
     onTest: React.PropTypes.func,
     showFilterPane: React.PropTypes.bool,
-    handleCloseFilter: React.PropTypes.func,
     showDetailPane: React.PropTypes.bool,
+    handleCloseFilter: React.PropTypes.func,
     handleCloseDetail: React.PropTypes.func,
+    selectedDetailRecord: React.PropTypes.object,
     handleSelectPCI: React.PropTypes.func,
     app: React.PropTypes.object,
 };
