@@ -29,7 +29,7 @@ const Kb = observer(({onTest,
 
   const columns = [
     // { Header: "Id", id: 'id', accessor: 'pci_id' },
-    { Header: "KB", id: 'platform', accessor: 'package_kb' },
+    { Header: "KB", id: 'PackageKB', accessor: 'package_kb' },
     { Header: "Title", id: 'title',
       // Construct a new json object to represent the cell value containing the ID and the title
       accessor: d => ({title: d.title, title_id: d.title_id}),
