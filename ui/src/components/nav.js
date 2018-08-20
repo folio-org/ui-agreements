@@ -31,7 +31,7 @@ export default ({location, match, ...props}) => (
       <RouterNavlink location={location} to={match.path + '/agreements'} >Agreements</RouterNavlink>
       <RouterNavlink location={location} to={match.path + '/titles'} >Titles</RouterNavlink>
       <RouterNavlink location={location} to={match.path + '/packages'} >Packages</RouterNavlink>
-      <RouterNavlink location={location} to={match.path + '/kb'} >KB</RouterNavlink>
+      <RouterNavlink location={location} to={match.path + '/kb'} >KB(s)</RouterNavlink>
     </Nav>
   </Navbar>
 )

@@ -19,6 +19,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
     fieldsToSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
     columnDef: PropTypes.arrayOf(PropTypes.object).isRequired,
     handleRowClicked: React.PropTypes.func,
+    keyField: React.PropTypes.string,
   }
 
   constructor (props) {
@@ -45,6 +46,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
   @observable page = 1
   @observable totalPages = 1
   @observable total = 0
+  @observable selection = []
   
   path = null
   @action.bound
@@ -163,8 +165,47 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
   }
   
   @action.bound
+  toggleSelection = (key, shift, row) => {
+
+    console.log("toggleSelection(%o,%o%,%o)",key, shift, row);
+
+    // start off with the existing state
+    const keyIndex = this.selection.indexOf(key);
+    // check to see if the key exists
+    if (keyIndex >= 0) {
+      console.log("toggle off %o",key);
+      // it does exist so we will remove it using destructing
+      this.selection = [
+        ...this.selection.slice(0, keyIndex),
+        ...this.selection.slice(keyIndex + 1)
+      ];
+    } else {
+      console.log("toggle on %o",key);
+      // it does not exist so add it
+      this.selection.push(key);
+    }
+  };
+
+  @action.bound
+  isSelected = key => {
+    return this.selection.includes(key);
+  };
+
+  @action.bound
+  selectAll = () => {
+  };
+
+  @action.bound
+  toggleAll = () => {
+  };
+
+  @action.bound
+  logSelection = () => {
+    console.log("selection:", this.selection);
+  };
+
+  @action.bound
   doSort = (newSorted, column, shiftKey) => {
-    
   }
   
   render() {
@@ -174,8 +215,14 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
     
     return (
       <CheckboxTable
+        keyField={this.props.keyField}
         columns={this.props.columnDef.slice()}
+        selectAll="true"
         selectType="checkbox"
+        toggleSelection={this.toggleSelection}
+        isSelected={this.isSelected}
+        selectAll={this.selectAll}
+        toggleAll={this.toggleAll}
         noDataText="No results found"
         manual // Forces table not to paginate or sort automatically, so we can handle it server-side
         showPagination={paginate}

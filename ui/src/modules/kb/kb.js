@@ -75,7 +75,8 @@ const Kb = observer(({onTest,
                                 fieldsToSearch={searchIn} 
                                 columnDef={columns} 
                                 app={app} 
-                                handleRowClicked={kbTableRowClicked}/>
+                                handleRowClicked={kbTableRowClicked}
+                                keyField="pci_id" />
       </Pane>
       {
         showDetailPane &&
