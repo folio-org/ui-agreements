@@ -1,25 +1,31 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { observer } from 'mobx-react'
-import { observable, action, computed } from 'mobx'
-import { hot } from 'react-hot-loader'
-import ReactTable from 'react-table'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { observer } from 'mobx-react';
+import { observable, action, computed } from 'mobx';
+import { hot } from 'react-hot-loader';
+import ReactTable from 'react-table';
+import checkboxHOC from "react-table/lib/hoc/selectTable";
 
-import ResourceBasedComponent from './resource-based-component'
+import ResourceBasedComponent from './resource-based-component';
+
+const CheckboxTable = checkboxHOC(ReactTable);
 
 @observer
 class UrlParamResourceSearch extends ResourceBasedComponent {
+
   
   static propTypes = {
     resource: PropTypes.string.isRequired,
     fieldsToSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
-    columnDef: PropTypes.arrayOf(PropTypes.object).isRequired
+    columnDef: PropTypes.arrayOf(PropTypes.object).isRequired,
+    handleRowClicked: React.PropTypes.func,
   }
 
   constructor (props) {
     super(props)
     this.updateStateFromParams()
   }
+
   
   @action.bound
   updateStateFromParams = (urlPars) => {
@@ -167,12 +173,13 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
     let minRows = paginate ? undefined : (this.total < 1 ? 5 : this.total % this.perPage)
     
     return (
-      <ReactTable
+      <CheckboxTable
         columns={this.props.columnDef.slice()}
+        selectType="checkbox"
         noDataText="No results found"
         manual // Forces table not to paginate or sort automatically, so we can handle it server-side
         showPagination={paginate}
-        showPaginationTop={paginate}
+        // showPaginationTop={paginate}
         showPaginationBottom={paginate}
         showPageSizeOptions={paginate}
         minRows={minRows}
@@ -204,7 +211,12 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
         getTrProps={(state, rowInfo, column) => {
           return {
             onClick: (e, handleOriginal) => {
+
               console.log("Row clicked",e,rowInfo);
+              if (this.props.handleRowClicked) {
+                this.props.handleRowClicked(e,rowInfo)
+              }
+
               if (handleOriginal) {
                 handleOriginal();
               }
@@ -220,7 +232,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
               </div>
             )
           }}
-      </ReactTable>
+      </CheckboxTable>
     )
   }
 }

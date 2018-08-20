@@ -23,6 +23,7 @@ class KbComponent extends React.Component {
     this.handleCloseDetail = this.handleCloseDetail.bind(this);
     this.handleCloseFilter = this.handleCloseFilter.bind(this);
     this.handleSelectPCI = this.handleSelectPCI.bind(this);
+    this.kbTableRowClicked = this.kbTableRowClicked.bind(this);
   }
 
   handleCloseFilter() {
@@ -44,6 +45,11 @@ class KbComponent extends React.Component {
     })
   }
 
+  kbTableRowClicked(e,rowInfo) {
+    console.log("kbTableRowClicked %o %o",e,rowInfo)
+    this.setState({showDetailPane:true, selectedDetailRecord:rowInfo.original});
+  }
+
   /**
    * Called when a user clicks on the select button in a row. could equally be called on select of the row
    */
@@ -61,6 +67,7 @@ class KbComponent extends React.Component {
       	  handleCloseFilter={this.handleCloseFilter} 
 	        handleCloseDetail={this.handleCloseDetail} 
           handleSelectPCI={this.handleSelectPCI}
+          kbTableRowClicked={this.kbTableRowClicked}
       	  app={this.props.app} />
     )
   }

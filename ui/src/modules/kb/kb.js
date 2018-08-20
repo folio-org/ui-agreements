@@ -25,7 +25,9 @@ const Kb = observer(({onTest,
                       selectedDetailRecord, 
                       handleCloseFilter, 
                       handleCloseDetail, 
-                      handleSelectPCI, app}) => {
+                      handleSelectPCI, 
+                      kbTableRowClicked,
+                      app}) => {
 
   const columns = [
     // { Header: "Id", id: 'id', accessor: 'pci_id' },
@@ -49,9 +51,9 @@ const Kb = observer(({onTest,
     { Header: "Coverage Summary", id: 'coverage', accessor: 'coverage' },
 
     // This is what a cell containing a button that triggers an action would look like
-    { Header: "Action", id: 'action_btn', accessor: 'pci_id',
-      Cell: (cell) => (<button className="btn btn-primary" onClick={()=>handleSelectPCI(cell.original)}>Select</button>)
-    },
+    // { Header: "Action", id: 'action_btn', accessor: 'pci_id',
+    //   Cell: (cell) => (<button className="btn btn-primary" onClick={()=>handleSelectPCI(cell.original)}>Select</button>)
+    // },
     // { Header: "Date Added", id: 'dateAdded', accessor: 'dateAdded' },
     // { Header: "Date Removed", id: 'dateRemoved', accessor: 'dateRemoved' },
   ]
@@ -72,7 +74,8 @@ const Kb = observer(({onTest,
         <UrlParamResourceSearch resource="PackageContentItem" 
                                 fieldsToSearch={searchIn} 
                                 columnDef={columns} 
-                                app={app} />
+                                app={app} 
+                                handleRowClicked={kbTableRowClicked}/>
       </Pane>
       {
         showDetailPane &&
@@ -110,6 +113,7 @@ Kb.propTypes = {
     handleCloseDetail: React.PropTypes.func,
     selectedDetailRecord: React.PropTypes.object,
     handleSelectPCI: React.PropTypes.func,
+    kbTableRowClicked: React.PropTypes.func,
     app: React.PropTypes.object,
 };
 
