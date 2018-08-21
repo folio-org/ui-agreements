@@ -16,10 +16,10 @@ import { Link } from 'react-router-dom'
 
 import Modal from '@folio/stripes-components/lib/Modal';
 
-const AddActivity = observer(({app}) => {
+const AddActivity = observer(({app, show}) => {
 
   return (
-    <Modal dismissable closeOnBackgroundClick label="Add to Agreement....">
+    <Modal dismissable closeOnBackgroundClick show={show} label="Add to Agreement....">
       this is the add content to agreement modal
     </Modal>
   )
@@ -27,6 +27,7 @@ const AddActivity = observer(({app}) => {
 
 AddActivity.propTypes = {
     app: React.PropTypes.object,
+    show: React.PropTypes.bool,
 };
 
 

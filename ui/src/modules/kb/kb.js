@@ -31,6 +31,8 @@ const Kb = observer(({showFilterPane,
                       kbTableRowClicked,
 	              selection,
 	              detailPaneContent,
+	              currentActivity,
+	              startActivity,
                       app}) => {
 
   const columns = [
@@ -68,6 +70,7 @@ const Kb = observer(({showFilterPane,
         </Pane>
       }
       <Pane defaultWidth="fill" paneTitle="KB Titles">
+	<button className="btn btn-primary" onClick={() => { startActivity('addToAgreement') }} >Test</button> ca={currentActivity} {currentActivity=='addToAgreement'?'yep':'no'}
         <UrlParamResourceSearch resource="PackageContentItem" 
                                 fieldsToSearch={searchIn} 
                                 columnDef={columns} 
@@ -104,7 +107,7 @@ const Kb = observer(({showFilterPane,
 	  <p>After detail</p>
         </Pane>
       }
-      <AddToAgreementActivity app={app}/>
+      <AddToAgreementActivity app={app} show={currentActivity==='addToAgreement'} />
     </Paneset>
   )
 })
@@ -118,6 +121,8 @@ Kb.propTypes = {
     kbTableRowClicked: React.PropTypes.func,
     selection: React.PropTypes.array,
     detailPaneContent: React.PropTypes.string,
+    currentActivity: React.PropTypes.string,
+    startActivity: React.PropTypes.func,
     app: React.PropTypes.object,
 };
 

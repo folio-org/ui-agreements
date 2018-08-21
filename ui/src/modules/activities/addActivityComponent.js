@@ -15,13 +15,14 @@ class AddActivityComponent extends React.Component {
     super(props);
 
     this.state = {
+      show: this.props.show,
     }
 
   }
 
   render() {
     return (
-      <AddActivity app={this.props.app} />
+      <AddActivity app={this.props.app} show={this.state.show} />
     )
   }
 }

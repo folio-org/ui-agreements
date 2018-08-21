@@ -19,11 +19,13 @@ class KbComponent extends React.Component {
       selectedDetailRecord: null,
       selection: [],
       detailPaneContent: null,
+      currentActivity:null
     }
 
     this.handleCloseDetail = this.handleCloseDetail.bind(this);
     this.handleCloseFilter = this.handleCloseFilter.bind(this);
     this.kbTableRowClicked = this.kbTableRowClicked.bind(this);
+    this.startActivity = this.startActivity.bind(this);
   }
 
   handleCloseFilter() {
@@ -44,6 +46,11 @@ class KbComponent extends React.Component {
     this.setState({showDetailPane:true, selectedDetailRecord:rowInfo.original});
   }
 
+  startActivity(activity) {
+    console.log("startActivity(%s)",activity);
+    this.setState({currentActivity:activity});
+  }
+
   render() {
     return (
       <Kb showFilterPane={this.state.showFilterPane} 
@@ -54,6 +61,8 @@ class KbComponent extends React.Component {
           kbTableRowClicked={this.kbTableRowClicked}
 	  selection={this.state.selection}
 	  detailPaneContent={this.detailPaneContent}
+	  currentActivity={this.state.currentActivity}
+	  startActivity={this.startActivity}
       	  app={this.props.app} />
     )
   }
