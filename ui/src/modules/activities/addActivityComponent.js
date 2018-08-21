@@ -15,14 +15,17 @@ class AddActivityComponent extends React.Component {
     super(props);
 
     this.state = {
-      show: props.show,
+      currentActivity: props.currentActivity,
     }
 
   }
 
   render() {
     return (
-      <AddActivity app={this.props.app} show={this.state.show} />
+      <div>
+	CA::{this.state.currentActivity}
+        <AddActivity app={this.props.app} open={this.state.currentActivity=='addToAgreement'?true:false} />
+      </div>
     )
   }
 }

@@ -19,7 +19,7 @@ class KbComponent extends React.Component {
       selectedDetailRecord: null,
       selection: [],
       detailPaneContent: null,
-      currentActivity:null
+      currentActivity:'none'
     }
 
     this.handleCloseDetail = this.handleCloseDetail.bind(this);
