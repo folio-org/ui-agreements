@@ -78,6 +78,7 @@ const Kb = observer(({showFilterPane,
                                 handleRowClicked={kbTableRowClicked}
                                 keyField="pci_id"
 	                        selection={selection} />
+        <AddToAgreementActivity app={app} show={false} not_working_show={currentActivity=='addToAgreement'?true:false} />
       </Pane>
       {
         showDetailPane &&
@@ -107,7 +108,6 @@ const Kb = observer(({showFilterPane,
 	  <p>After detail</p>
         </Pane>
       }
-      <AddToAgreementActivity app={app} show={currentActivity==='addToAgreement'} />
     </Paneset>
   )
 })

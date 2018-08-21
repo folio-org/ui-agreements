@@ -14,14 +14,19 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import { Link } from 'react-router-dom'
 
 
+// See http://ux.folio.org/docs/guidelines/components/modal/
 import Modal from '@folio/stripes-components/lib/Modal';
 
 const AddActivity = observer(({app, show}) => {
 
   return (
-    <Modal dismissable closeOnBackgroundClick show={show} label="Add to Agreement....">
-      this is the add content to agreement modal
-    </Modal>
+    <div>
+      <br/>
+      <h1>AddActivity show={show}</h1>
+      <Modal dismissable closeOnBackgroundClick open={show} label="Add to Agreement....">
+        this is the add content to agreement modal
+      </Modal>
+    </div>
   )
 })
 

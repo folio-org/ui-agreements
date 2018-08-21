@@ -15,7 +15,7 @@ class AddActivityComponent extends React.Component {
     super(props);
 
     this.state = {
-      show: this.props.show,
+      show: props.show,
     }
 
   }
