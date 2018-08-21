@@ -13,14 +13,12 @@ import Pane from '@folio/stripes-components/lib/Pane';
 
 import { Link } from 'react-router-dom'
 
-const Pci = observer(({onTest, showFilterPane, showDetailPane, handleCloseFilter, handleCloseDetail, handleSelectPCI, app}) => {
+const Pci = observer(({app}) => {
 
   return (
-    <Paneset>
-      <Pane defaultWidth="fill" paneTitle="Package Content Item:">
-        PCI
-      </Pane>
-    </Paneset>
+    <div>
+      This panel renders a package content item
+    </div>
   )
 })
 

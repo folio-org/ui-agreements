@@ -26,6 +26,7 @@ const Kb = observer(({showFilterPane,
                       handleCloseDetail, 
                       kbTableRowClicked,
 	              selection,
+	              detailPaneContent,
                       app}) => {
 
   const columns = [
@@ -93,6 +94,8 @@ const Kb = observer(({showFilterPane,
           <button className="btn btn-primary">Test</button>
           <button className="btn btn-primary">Purchase</button>
           <button className="btn btn-primary">Add to Agreement</button>
+	  {detailPaneContent}
+	  <p>After detail</p>
         </Pane>
       }
     </Paneset>
@@ -107,6 +110,7 @@ Kb.propTypes = {
     selectedDetailRecord: React.PropTypes.object,
     kbTableRowClicked: React.PropTypes.func,
     selection: React.PropTypes.array,
+    detailPaneContent: React.PropTypes.string,
     app: React.PropTypes.object,
 };
 

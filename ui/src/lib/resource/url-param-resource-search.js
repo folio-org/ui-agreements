@@ -4,11 +4,13 @@ import { observer } from 'mobx-react';
 import { observable, action, computed } from 'mobx';
 import { hot } from 'react-hot-loader';
 import ReactTable from 'react-table';
-import checkboxHOC from "react-table/lib/hoc/selectTable";
+import selectTableHOC from 'react-table/lib/hoc/selectTable'
+import treeTableHOC from "react-table/lib/hoc/treeTable"
+
 
 import ResourceBasedComponent from './resource-based-component';
 
-const CheckboxTable = checkboxHOC(ReactTable);
+const TableHOC = selectTableHOC(ReactTable);
 
 @observer
 class UrlParamResourceSearch extends ResourceBasedComponent {
@@ -43,7 +45,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
     }
   }
   
-  @observable perPage = 10
+  @observable perPage = 50
   @observable page = 1
   @observable totalPages = 1
   @observable total = 0
@@ -219,7 +221,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
     let minRows = paginate ? undefined : (this.total < 1 ? 5 : this.total % this.perPage)
     
     return (
-      <CheckboxTable
+      <TableHOC
         keyField={this.props.keyField}
         columns={this.props.columnDef.slice()}
         selectAll="true"
@@ -284,7 +286,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
               </div>
             )
           }}
-      </CheckboxTable>
+      </TableHOC>
     )
   }
 }

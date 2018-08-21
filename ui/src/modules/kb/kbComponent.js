@@ -17,7 +17,8 @@ class KbComponent extends React.Component {
       showDetailPane: false,
       showFilterPane: true,
       selectedDetailRecord: null,
-      selection: []
+      selection: [],
+      detailPaneContent: null,
     }
 
     this.handleCloseDetail = this.handleCloseDetail.bind(this);
@@ -37,6 +38,9 @@ class KbComponent extends React.Component {
 
   kbTableRowClicked(e,rowInfo) {
     console.log("kbTableRowClicked %o %o",e,rowInfo)
+    // set the detailPaneContent to be our pciComponent
+    this.detailPaneContent="pciComponent";
+    // and Switch on the detail pane
     this.setState({showDetailPane:true, selectedDetailRecord:rowInfo.original});
   }
 
@@ -49,6 +53,7 @@ class KbComponent extends React.Component {
 	  handleCloseDetail={this.handleCloseDetail} 
           kbTableRowClicked={this.kbTableRowClicked}
 	  selection={this.state.selection}
+	  detailPaneContent={this.detailPaneContent}
       	  app={this.props.app} />
     )
   }
