@@ -19,17 +19,18 @@ let searchIn = [
   'pti.titleInstance.title'
 ]
 
-const Kb = observer(({onTest, 
-                      showFilterPane, 
+const Kb = observer(({showFilterPane, 
                       showDetailPane, 
                       selectedDetailRecord, 
                       handleCloseFilter, 
                       handleCloseDetail, 
-                      handleSelectPCI, 
                       kbTableRowClicked,
+	              selection,
                       app}) => {
 
   const columns = [
+    // { Header: "Title ID", id: 'title_id', accessor: 'title_id' },
+    // { Header: "Source KB", id: 'kb', accessor: 'package_kb' },
     // { Header: "Id", id: 'id', accessor: 'pci_id' },
     { Header: "KB", id: 'PackageKB', accessor: 'package_kb' },
     { Header: "Title", id: 'title',
@@ -38,10 +39,8 @@ const Kb = observer(({onTest,
       // Construct a renderer that creates a href and renders a link
       Cell: (cell) => (<Link to={`/olf-erm/titles/${cell.value.title_id}`}>{cell.value.title}</Link>)
     },
-    // { Header: "Title ID", id: 'title_id', accessor: 'title_id' },
     { Header: "Platform", id: 'platform', accessor: 'platform' },
     { Header: "Source", id: 'source', accessor: 'package_source' },
-    // { Header: "Source KB", id: 'kb', accessor: 'package_kb' },
     { Header: "Package", id: 'package_name', accessor: 'package_name',
       accessor: d => ({pkgName: d.package_name, pkgId: d.package_id}),
       Cell: (cell) => (<Link to={`/olf-erm/packages/${cell.value.pkgId}`}>{cell.value.pkgName}</Link>)
@@ -49,13 +48,6 @@ const Kb = observer(({onTest,
     { Header: "Coverage Depth", id: 'coverageDepth', accessor: 'coverageDepth' },
     { Header: "Coverage Note", id: 'coverageNote', accessor: 'coverageNote' },
     { Header: "Coverage Summary", id: 'coverage', accessor: 'coverage' },
-
-    // This is what a cell containing a button that triggers an action would look like
-    // { Header: "Action", id: 'action_btn', accessor: 'pci_id',
-    //   Cell: (cell) => (<button className="btn btn-primary" onClick={()=>handleSelectPCI(cell.original)}>Select</button>)
-    // },
-    // { Header: "Date Added", id: 'dateAdded', accessor: 'dateAdded' },
-    // { Header: "Date Removed", id: 'dateRemoved', accessor: 'dateRemoved' },
   ]
 
   const filterGroups = {
@@ -76,7 +68,8 @@ const Kb = observer(({onTest,
                                 columnDef={columns} 
                                 app={app} 
                                 handleRowClicked={kbTableRowClicked}
-                                keyField="pci_id" />
+                                keyField="pci_id"
+	                        selection={selection} />
       </Pane>
       {
         showDetailPane &&
@@ -97,9 +90,9 @@ const Kb = observer(({onTest,
             <li>title: {selectedDetailRecord.title}</li>
             <li>title_id: {selectedDetailRecord.title_id}</li>
           </ul>
-          <button className="btn btn-primary" onClick={onTest}>Test</button>
-          <button className="btn btn-primary" onClick={onTest}>Purchase</button>
-          <button className="btn btn-primary" onClick={onTest}>Add to Agreement</button>
+          <button className="btn btn-primary">Test</button>
+          <button className="btn btn-primary">Purchase</button>
+          <button className="btn btn-primary">Add to Agreement</button>
         </Pane>
       }
     </Paneset>
@@ -107,14 +100,13 @@ const Kb = observer(({onTest,
 })
 
 Kb.propTypes = {
-    onTest: React.PropTypes.func,
     showFilterPane: React.PropTypes.bool,
     showDetailPane: React.PropTypes.bool,
     handleCloseFilter: React.PropTypes.func,
     handleCloseDetail: React.PropTypes.func,
     selectedDetailRecord: React.PropTypes.object,
-    handleSelectPCI: React.PropTypes.func,
     kbTableRowClicked: React.PropTypes.func,
+    selection: React.PropTypes.array,
     app: React.PropTypes.object,
 };
 

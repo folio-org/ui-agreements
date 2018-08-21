@@ -20,6 +20,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
     columnDef: PropTypes.arrayOf(PropTypes.object).isRequired,
     handleRowClicked: React.PropTypes.func,
     keyField: React.PropTypes.string,
+    selection: PropTypes.array,
   }
 
   constructor (props) {
@@ -46,7 +47,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
   @observable page = 1
   @observable totalPages = 1
   @observable total = 0
-  @observable selection = []
+  @observable selection = this.props.selection || []
   
   path = null
   @action.bound

@@ -16,13 +16,12 @@ class KbComponent extends React.Component {
     this.state = {
       showDetailPane: false,
       showFilterPane: true,
-      selectedDetailRecord: null
+      selectedDetailRecord: null,
+      selection: []
     }
 
-    this.handleTest = this.handleTest.bind(this);
     this.handleCloseDetail = this.handleCloseDetail.bind(this);
     this.handleCloseFilter = this.handleCloseFilter.bind(this);
-    this.handleSelectPCI = this.handleSelectPCI.bind(this);
     this.kbTableRowClicked = this.kbTableRowClicked.bind(this);
   }
 
@@ -36,38 +35,20 @@ class KbComponent extends React.Component {
     this.setState({showDetailPane:false});
   }
 
-  handleTest() {
-
-    console.log("handleTest::test %o",this.props.app);
-    console.log("API root: %s",this.props.app.apiConfig.root);
-    this.props.app.fetchJSON (this.props.app.apiConfig.root+'/knowledgebase').then((jsonData) => {
-      console.log("result of /knowlegebase: %o",jsonData);
-    })
-  }
-
   kbTableRowClicked(e,rowInfo) {
     console.log("kbTableRowClicked %o %o",e,rowInfo)
     this.setState({showDetailPane:true, selectedDetailRecord:rowInfo.original});
   }
 
-  /**
-   * Called when a user clicks on the select button in a row. could equally be called on select of the row
-   */
-  handleSelectPCI(pci) {
-    console.log("handleSelectPCI",pci);
-    this.setState({showDetailPane:true, selectedDetailRecord:pci});
-  }
-
   render() {
     return (
-      <Kb onTest={this.handleTest} 
-      	  showFilterPane={this.state.showFilterPane} 
+      <Kb showFilterPane={this.state.showFilterPane} 
       	  showDetailPane={this.state.showDetailPane} 
       	  selectedDetailRecord={this.state.selectedDetailRecord} 
       	  handleCloseFilter={this.handleCloseFilter} 
-	        handleCloseDetail={this.handleCloseDetail} 
-          handleSelectPCI={this.handleSelectPCI}
+	  handleCloseDetail={this.handleCloseDetail} 
           kbTableRowClicked={this.kbTableRowClicked}
+	  selection={this.state.selection}
       	  app={this.props.app} />
     )
   }
