@@ -281,7 +281,11 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
             let results = state.data.length < 1 ? 'No results found' : `Showing ${state.data.length} results`
             return (
               <div>
-                <h2>{results}</h2>
+		<div>
+		  <div className="pull-left"><h2>{results}</h2></div>
+		  <div className='pull-right'>X selected</div>
+		  <div className="clearfix"></div>
+		</div>
                 {makeTable()}
               </div>
             )

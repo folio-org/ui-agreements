@@ -14,6 +14,10 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import { Link } from 'react-router-dom'
 
 
+// Import activities that can be triggered on selected rows
+import AddToAgreementActivity from '../activities/addActivityComponent';
+
+
 
 let searchIn = [
   'pti.titleInstance.title'
@@ -94,10 +98,13 @@ const Kb = observer(({showFilterPane,
           <button className="btn btn-primary">Test</button>
           <button className="btn btn-primary">Purchase</button>
           <button className="btn btn-primary">Add to Agreement</button>
-	  {detailPaneContent}
+	  { (detailPaneContent == 'pciComponent') && (<div>Include the PCI detail pane</div>)}
+	  { (detailPaneContent == 'currentSelectionComponent') && (<div>Include the Current Selection pane</div>)}
+	  { (detailPaneContent == 'package') && (<div>Include the Package Selection pane</div>)}
 	  <p>After detail</p>
         </Pane>
       }
+      <AddToAgreementActivity app={app}/>
     </Paneset>
   )
 })
