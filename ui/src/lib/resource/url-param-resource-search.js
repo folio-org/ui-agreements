@@ -168,7 +168,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
   @action.bound
   toggleSelection = (key, shift, row) => {
 
-    console.log("toggleSelection(%o,%o%,%o)",key, shift, row);
+    // console.log("toggleSelection(%o,%o%,%o)",key, shift, row);
 
     // start off with the existing state
     const keyIndex = this.selection.indexOf(key);
@@ -185,6 +185,10 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
       // it does not exist so add it
       this.selection.push(key);
     }
+
+    // Steve: This causes the checkbox to display when checked - appreciate it's possibly not the
+    // mobx way.
+    this.setState({});
   };
 
   @action.bound
