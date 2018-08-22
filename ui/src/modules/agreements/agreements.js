@@ -3,7 +3,10 @@ import {observable} from 'mobx'
 import { observer } from 'mobx-react'
 import { hot } from 'react-hot-loader'
 import { Container, Row, Col } from 'reactstrap'
+import { Link } from 'react-router-dom'
+
 import Search from '../../components/search'
+import TriPanel from '../../components/layout/tri-panel'
 
 import UrlParamResourceSearch from '../../lib/resource/url-param-resource-search'
 import {tableFormatters, textHighlighter} from '../../lib/helpers'
@@ -22,7 +25,7 @@ const Agreements = observer((props) => {
       Header: "Name",
       id: 'name',
       accessor: d => ({name: d.name, id: d.id}),
-      Cell: tableFormatters.pipe( (cell) => (highlighter(cell.value.name)), (previous, cell) => (<a href={`/${cell.value.id}`}>{previous}</a>) )
+      Cell: tableFormatters.pipe( (cell) => (highlighter(cell.value.name)), (previous, cell) => (<Link to={`/${cell.value.id}`}>{previous}</Link>) )
     },{
       Header: "Subscription",
       columns:[{
@@ -64,16 +67,10 @@ const Agreements = observer((props) => {
   }
   
   return (
-    <Container fluid={true}>
-      <Row>
-        <Col lg="3" xs="12" className="position-fixed" >
-          <Search className="w-100" app={props.app} filters={filterGroups} />
-        </Col>
-        <Col lg={{size:9, offset:3}} xs="12">
-          <UrlParamResourceSearch resource="SubscriptionAgreement" fieldsToSearch={searchIn} columnDef={columns} app={props.app} />
-        </Col>
-      </Row>
-    </Container>
+    <TriPanel
+      left= { <Search className="w-100" app={props.app} filters={filterGroups} /> }
+      center= { <UrlParamResourceSearch resource="SubscriptionAgreement" fieldsToSearch={searchIn} columnDef={columns} app={props.app} /> }
+    />
   )
 })
 
