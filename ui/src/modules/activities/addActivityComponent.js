@@ -13,10 +13,7 @@ import {tableFormatters, textHighlighter} from '../../lib/helpers'
 const AddActivityComponent = observer(( { app, currentActivity } ) => {
   
   return (
-    <div>
-      <p>CA::{currentActivity}</p>
-      <AddActivity app={app} open={!!currentActivity} />
-    </div>
+    <AddActivity app={app} open={!!currentActivity} />
   )
 })
 

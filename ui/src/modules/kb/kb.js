@@ -70,7 +70,9 @@ const Kb = observer(({showFilterPane,
             </Pane>
           }
         <Pane defaultWidth="fill" paneTitle="KB Titles">
-          <button className="btn btn-primary" onClick={() => { startActivity('addToAgreement') }} >Test</button>
+	  <div  className="d-flex justify-content-end">
+            <button className="btn btn-primary" onClick={() => { startActivity('addToAgreement') }} >Add to aggreement</button>
+	  </div>
           <UrlParamResourceSearch resource="PackageContentItem" 
             fieldsToSearch={searchIn} 
             columnDef={columns} 
