@@ -39,21 +39,22 @@ const Kb = observer(({showFilterPane,
        // { Header: "Title ID", id: 'title_id', accessor: 'title_id' },
        // { Header: "Source KB", id: 'kb', accessor: 'package_kb' },
        // { Header: "Id", id: 'id', accessor: 'pci_id' },
-       { Header: "KB", id: 'PackageKB', accessor: 'package_kb' },
-       { Header: "Title", id: 'title',
-         // Construct a new json object to represent the cell value containing the ID and the title
-         accessor: d => ({title: d.title, title_id: d.title_id}),
-         // Construct a renderer that creates a href and renders a link
-         Cell: (cell) => (<Link to={`/olf-erm/titles/${cell.value.title_id}`}>{cell.value.title}</Link>)
+       { Header: "KB", id: 'PackageKB', accessor: 'pkg.remoteKb.name' },
+       {
+         Header: "Title",
+         id: 'pti.titleInstance.title',
+         accessor: 'pti.titleInstance',
+         Cell: (cell) => (<Link to={`/olf-erm/titles/${cell.value.id}`}>{cell.value.title}</Link>)
        },
-       { Header: "Platform", id: 'platform', accessor: 'platform' },
-       { Header: "Source", id: 'source', accessor: 'package_source' },
-       { Header: "Package", id: 'package_name', accessor: 'package_name',
-         accessor: d => ({pkgName: d.package_name, pkgId: d.package_id}),
-         Cell: (cell) => (<Link to={`/olf-erm/packages/${cell.value.pkgId}`}>{cell.value.pkgName}</Link>)
+       { Header: "Platform",accessor: 'pti.platform.name' },
+       { Header: "Source", accessor: 'pkg.source' },
+       { Header: "Package",
+         id: 'pkg.name',
+         accessor: 'pkg',
+         Cell: (cell) => (<Link to={`/olf-erm/packages/${cell.value.id}`}>{cell.value.name}</Link>)
        },
-       { Header: "Coverage Depth", id: 'coverageDepth', accessor: 'coverageDepth' },
-       { Header: "Coverage Note", id: 'coverageNote', accessor: 'coverageNote' },
+       { Header: "Coverage Depth", accessor: 'depth' },
+       { Header: "Coverage Note", accessor: 'note' },
        { Header: "Coverage Summary", id: 'coverage', accessor: 'coverage' },
    ]
     
