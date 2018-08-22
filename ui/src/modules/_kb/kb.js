@@ -75,9 +75,9 @@ const Kb = observer(({showFilterPane,
             </Pane>
           }
         <Pane defaultWidth="fill" paneTitle="KB Titles">
-	  <div  className="d-flex justify-content-end">
-            <button className="btn btn-primary" onClick={() => { startActivity('addToAgreement') }} >Add to aggreement</button>
-	  </div>
+      	  <div  className="d-flex justify-content-end">
+                  <button className="btn btn-primary" onClick={() => { startActivity('addToAgreement') }} >Add to aggreement</button>
+      	  </div>
           <UrlParamResourceSearch resource="PackageContentItem" 
             fieldsToSearch={searchIn} 
             columnDef={columns} 
@@ -104,18 +104,18 @@ const Kb = observer(({showFilterPane,
   })
   
   Kb.propTypes = {
-  showFilterPane: React.PropTypes.bool,
-  showDetailPane: React.PropTypes.bool,
-  handleCloseFilter: React.PropTypes.func,
-  handleCloseDetail: React.PropTypes.func,
-  selectedDetailRecord: React.PropTypes.object,
-  kbTableRowClicked: React.PropTypes.func,
-  selection: React.PropTypes.array,
-  detailPaneContent: React.PropTypes.string,
-  currentActivity: React.PropTypes.string,
-  startActivity: React.PropTypes.func,
-  app: React.PropTypes.object,
-};
+    showFilterPane: React.PropTypes.bool,
+    showDetailPane: React.PropTypes.bool,
+    handleCloseFilter: React.PropTypes.func,
+    handleCloseDetail: React.PropTypes.func,
+    selectedDetailRecord: React.PropTypes.object,
+    kbTableRowClicked: React.PropTypes.func,
+    selection: React.PropTypes.array,
+    detailPaneContent: React.PropTypes.string,
+    currentActivity: React.PropTypes.string,
+    startActivity: React.PropTypes.func,
+    app: React.PropTypes.object,
+  };
 
 
 export default hot(module)(Kb)
