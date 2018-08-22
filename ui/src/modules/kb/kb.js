@@ -11,7 +11,9 @@ import {tableFormatters, textHighlighter} from '../../lib/helpers'
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+
+import PciComponent from './pciComponent';
 
 
 //Import activities that can be triggered on selected rows
@@ -67,7 +69,7 @@ const Kb = observer(({showFilterPane,
             </Pane>
           }
         <Pane defaultWidth="fill" paneTitle="KB Titles">
-          <button className="btn btn-primary" onClick={() => { startActivity('addToAgreement') }} >Test</button> ca={currentActivity} {currentActivity=='addToAgreement'?'yep':'no'}
+          <button className="btn btn-primary" onClick={() => { startActivity('addToAgreement') }} >Test</button>
           <UrlParamResourceSearch resource="PackageContentItem" 
             fieldsToSearch={searchIn} 
             columnDef={columns} 
@@ -75,35 +77,19 @@ const Kb = observer(({showFilterPane,
             handleRowClicked={kbTableRowClicked}
             keyField="pci_id"
             selection={selection} />
+
           <AddToAgreementActivity app={app} currentActivity={currentActivity} />
         </Pane>
         {
-          showDetailPane &&
-          <Pane defaultWidth="40%" dismissible paneTitle="Details" onClose={handleCloseDetail}>
-          <ul>
-            <li>pci_id: {selectedDetailRecord.pci_id}</li>
-            <li>coverage: {selectedDetailRecord.coverage}</li>
-            <li>coverageDepth: {selectedDetailRecord.coverageDepth}</li>
-            <li>coverageNote: {selectedDetailRecord.coverageNote}</li>
-            <li>dateAdded: {selectedDetailRecord.dateAdded}</li>
-            <li>dateRemoved: {selectedDetailRecord.dateRemoved}</li>
-            <li>package_id: {selectedDetailRecord.package_id}</li>
-            <li>package_kb: {selectedDetailRecord.package_kb}</li>
-            <li>package_name: {selectedDetailRecord.package_name}</li>
-            <li>package_source: {selectedDetailRecord.package_source}</li>
-            <li>platform: {selectedDetailRecord.platform}</li>
-            <li>platform_id: {selectedDetailRecord.platform_id}</li>
-            <li>title: {selectedDetailRecord.title}</li>
-            <li>title_id: {selectedDetailRecord.title_id}</li>
-          </ul>
-          <button className="btn btn-primary">Test</button>
-          <button className="btn btn-primary">Purchase</button>
-          <button className="btn btn-primary">Add to Agreement</button>
-          { (detailPaneContent == 'pciComponent') && (<div>Include the PCI detail pane</div>)}
-          { (detailPaneContent == 'currentSelectionComponent') && (<div>Include the Current Selection pane</div>)}
-          { (detailPaneContent == 'package') && (<div>Include the Package Selection pane</div>)}
-          <p>After detail</p>
-          </Pane>
+		 
+          showDetailPane && ( 
+            <Pane defaultWidth="40%" dismissible paneTitle="Details" onClose={handleCloseDetail}>
+
+            { (detailPaneContent == 'pciComponent') && ( <PciComponent app={app} selectedDetailRecord={selectedDetailRecord} /> ) }
+            { (detailPaneContent == 'currentSelectionComponent') && (<div>Include the Current Selection pane</div>)}
+            { (detailPaneContent == 'package') && (<div>Include the Package Selection pane</div>)}
+            </Pane>
+          )
         }
         </Paneset>
     )

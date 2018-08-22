@@ -20,7 +20,7 @@ class PCIComponent extends React.Component {
 
   render() {
     return (
-      <Pci app={this.props.app} />
+      <Pci app={this.props.app} selectedDetailRecord={this.props.selectedDetailRecord} />
     )
   }
 }
