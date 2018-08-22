@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {observable} from 'mobx'
 import { observer } from 'mobx-react'
 import { hot } from 'react-hot-loader'
@@ -9,24 +10,20 @@ import AddActivity from './addActivity'
 import {tableFormatters, textHighlighter} from '../../lib/helpers'
 
 /** A workflow screen for controlling the purchase of items */
-class AddActivityComponent extends React.Component {
+const AddActivityComponent = observer(( { app, currentActivity } ) => {
+  
+  return (
+    <div>
+      <p>CA::{currentActivity}</p>
+      <AddActivity app={app} open={!!currentActivity} />
+    </div>
+  )
+})
 
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      currentActivity: props.currentActivity,
-    }
-
-  }
-
-  render() {
-    return (
-      <div>
-	CA::{this.state.currentActivity}
-        <AddActivity app={this.props.app} open={this.state.currentActivity=='addToAgreement'?true:false} />
-      </div>
-    )
-  }
+AddActivityComponent.propTypes = {
+  currentActivity: PropTypes.string,
+  app: PropTypes.object,
 }
+
 export default hot(module)(AddActivityComponent)

@@ -6,8 +6,6 @@ import Switch from 'react-router-dom/Switch'
 import AddToAgreementActivityComponent from './addActivityComponent'
 import PurchaseActivityComponent from './purchaseActivityComponent'
 
-
-
 const Routes = ({app, match, ...props}) => (
   <Switch>
     <Route {...props} exact path={match.path+'/activity/add'} render={(p) => <AddActivityComponent {...p} app={app} />} />

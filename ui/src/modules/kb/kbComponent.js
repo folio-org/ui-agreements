@@ -19,7 +19,7 @@ class KbComponent extends React.Component {
       selectedDetailRecord: null,
       selection: [],
       detailPaneContent: null,
-      currentActivity:'none'
+      currentActivity: null // Null means none. Use this so that truthy logic evaluates this to false.
     }
 
     this.handleCloseDetail = this.handleCloseDetail.bind(this);
@@ -54,16 +54,16 @@ class KbComponent extends React.Component {
   render() {
     return (
       <Kb showFilterPane={this.state.showFilterPane} 
-      	  showDetailPane={this.state.showDetailPane} 
-      	  selectedDetailRecord={this.state.selectedDetailRecord} 
-      	  handleCloseFilter={this.handleCloseFilter} 
-	  handleCloseDetail={this.handleCloseDetail} 
-          kbTableRowClicked={this.kbTableRowClicked}
-	  selection={this.state.selection}
-	  detailPaneContent={this.detailPaneContent}
-	  currentActivity={this.state.currentActivity}
-	  startActivity={this.startActivity}
-      	  app={this.props.app} />
+    	  showDetailPane={this.state.showDetailPane} 
+    	  selectedDetailRecord={this.state.selectedDetailRecord} 
+    	  handleCloseFilter={this.handleCloseFilter} 
+        handleCloseDetail={this.handleCloseDetail} 
+        kbTableRowClicked={this.kbTableRowClicked}
+    	  selection={this.state.selection}
+    	  detailPaneContent={this.detailPaneContent}
+    	  currentActivity={this.state.currentActivity}
+    	  startActivity={this.startActivity}
+    	  app={this.props.app} />
     )
   }
 }
