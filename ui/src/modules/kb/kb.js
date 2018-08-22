@@ -83,7 +83,7 @@ const Kb = observer(({showFilterPane,
             columnDef={columns} 
             app={app} 
             handleRowClicked={kbTableRowClicked}
-            keyField="pci_id"
+            keyField="id"
             selection={selection} />
 
           <AddToAgreementActivity app={app} currentActivity={currentActivity} />
