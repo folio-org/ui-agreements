@@ -24,6 +24,9 @@ const Packages = observer(({onTest, showFilterPane, showDetailPane, handleCloseF
 
   const columns = [
     { Header: "Package Name", id: 'name', accessor: 'name' },
+    { Header: "Source", id: 'source', accessor: 'source' },
+    { Header: "Reference", id: 'reference', accessor: 'reference' },
+    { Header: "KB", id: 'remotekb', accessor: 'remoteKb.name' },
   ]
 
   const filterGroups = {
