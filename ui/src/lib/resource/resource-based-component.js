@@ -83,9 +83,7 @@ class ResourceBasedComponent extends Component {
     }
   })
   
-  onDataFetched() {
-    
-  }
+  onDataFetched() { }
 }
 
 export default ResourceBasedComponent

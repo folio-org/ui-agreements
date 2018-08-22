@@ -1,25 +1,35 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { observer } from 'mobx-react'
-import { observable, action, computed } from 'mobx'
-import { hot } from 'react-hot-loader'
-import ReactTable from 'react-table'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { observer } from 'mobx-react';
+import { observable, action, computed } from 'mobx';
+import { hot } from 'react-hot-loader';
+import ReactTable from 'react-table';
+import selectTableHOC from 'react-table/lib/hoc/selectTable'
+import treeTableHOC from "react-table/lib/hoc/treeTable"
 
-import ResourceBasedComponent from './resource-based-component'
+
+import ResourceBasedComponent from './resource-based-component';
+
+const TableHOC = selectTableHOC(ReactTable);
 
 @observer
 class UrlParamResourceSearch extends ResourceBasedComponent {
+
   
   static propTypes = {
     resource: PropTypes.string.isRequired,
     fieldsToSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
-    columnDef: PropTypes.arrayOf(PropTypes.object).isRequired
+    columnDef: PropTypes.arrayOf(PropTypes.object).isRequired,
+    handleRowClicked: React.PropTypes.func,
+    keyField: React.PropTypes.string,
+    selection: PropTypes.array,
   }
 
   constructor (props) {
     super(props)
     this.updateStateFromParams()
   }
+
   
   @action.bound
   updateStateFromParams = (urlPars) => {
@@ -28,17 +38,18 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
     if (urlPars.perPage) {
       num = parseInt(urlPars.perPage)
       this.perPage = (num === NaN ? 10 : num)
-    }    
+    }
     if (urlPars.page) {
       num = parseInt(urlPars.page)
       this.page = (num === NaN ? 10 : num)
     }
   }
   
-  @observable perPage = 10
+  @observable perPage = 50
   @observable page = 1
   @observable totalPages = 1
   @observable total = 0
+  @observable selection = this.props.selection || []
   
   path = null
   @action.bound
@@ -118,6 +129,11 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
       num = parseInt(this.responseData.total)
       this.total = (num === NaN ? 0 : num)
     }
+
+    if (this.responseData.totalPages) {
+      num = parseInt(this.responseData.totalPages)
+      this.totalPages = (num === NaN ? 1 : num)
+    }
   }
   
   @computed get tableRows() {    
@@ -151,20 +167,73 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
     }
   }
   
+  @action.bound
+  toggleSelection = (key, shift, row) => {
+
+    // console.log("toggleSelection(%o,%o%,%o)",key, shift, row);
+
+    // start off with the existing state
+    const keyIndex = this.selection.indexOf(key);
+    // check to see if the key exists
+    if (keyIndex >= 0) {
+      console.log("toggle off %o",key);
+      // it does exist so we will remove it using destructing
+      this.selection = [
+        ...this.selection.slice(0, keyIndex),
+        ...this.selection.slice(keyIndex + 1)
+      ];
+    } else {
+      console.log("toggle on %o",key);
+      // it does not exist so add it
+      this.selection.push(key);
+    }
+
+    // Steve: This causes the checkbox to display when checked - appreciate it's possibly not the
+    // mobx way.
+    this.setState({});
+  };
+
+  @action.bound
+  isSelected = key => {
+    return this.selection.includes(key);
+  };
+
+  @action.bound
+  selectAll = () => {
+  };
+
+  @action.bound
+  toggleAll = () => {
+  };
+
+  @action.bound
+  logSelection = () => {
+    console.log("selection:", this.selection);
+  };
+
+  @action.bound
+  doSort = (newSorted, column, shiftKey) => {
+  }
+  
   render() {
     
     let paginate = this.totalPages > 1
-    let minRows = (!this.tableRows.length || this.tableRows.length < 1 ? 5 : this.tableRows.length) 
-    let fromRes = ((this.page - 1) * this.perPage) + 1
-    let toRes = (fromRes + this.tableRows.length - 1)
-    
+    let minRows = paginate ? undefined : (this.total < 1 ? 5 : this.total % this.perPage)
     
     return (
-      <ReactTable
+      <TableHOC
+        keyField={this.props.keyField}
         columns={this.props.columnDef.slice()}
+        selectAll="true"
+        selectType="checkbox"
+        toggleSelection={this.toggleSelection}
+        isSelected={this.isSelected}
+        selectAll={this.selectAll}
+        toggleAll={this.toggleAll}
         noDataText="No results found"
         manual // Forces table not to paginate or sort automatically, so we can handle it server-side
         showPagination={paginate}
+        // showPaginationTop={paginate}
         showPaginationBottom={paginate}
         showPageSizeOptions={paginate}
         minRows={minRows}
@@ -174,16 +243,54 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
         loading={this.working} // Display the loading overlay when we need it
         onFetchData={this.fetchTableData} // Request new data when things change
         className="-striped -highlight"
+        getTdProps={(state, rowInfo, column, instance) => {
+          return {
+            onClick: (e, handleOriginal) => {
+              // console.log("A Td Element was clicked!");
+              // console.log("TD clicked it produced this event:", e);
+              // console.log("It was in this column:", column);
+              // console.log("It was in this row:", rowInfo);
+              // console.log("It was in this table instance:", instance);
+              // IMPORTANT! React-Table uses onClick internally to trigger
+              // events like expanding SubComponents and pivots.
+              // By default a custom 'onClick' handler will override this functionality.
+              // If you want to fire the original onClick handler, call the
+              // 'handleOriginal' function.
+              if (handleOriginal) {
+                handleOriginal();
+              }
+            }
+          };
+        }}
+        getTrProps={(state, rowInfo, column) => {
+          return {
+            onClick: (e, handleOriginal) => {
+
+              console.log("Row clicked",e,rowInfo);
+              if (this.props.handleRowClicked) {
+                this.props.handleRowClicked(e,rowInfo)
+              }
+
+              if (handleOriginal) {
+                handleOriginal();
+              }
+            }
+          };
+        }}
           >{(state, makeTable, instance) => {
-            let results = state.data.length < 1 ? 'No results found' : `Showing results ${fromRes} to ${toRes} of ${this.total}`
+            let results = state.data.length < 1 ? 'No results found' : `Showing ${state.data.length} results of ${this.total}`
             return (
               <div>
-                <h2>{results}</h2>
+            		<div>
+            		  <div className="pull-left"><h2>{results}</h2></div>
+            		  <div className='pull-right'></div>
+            		  <div className="clearfix"></div>
+            		</div>
                 {makeTable()}
               </div>
             )
           }}
-      </ReactTable>
+      </TableHOC>
     )
   }
 }

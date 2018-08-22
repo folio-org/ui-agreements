@@ -20,7 +20,13 @@ import PciComponent from './pciComponent';
 import AddToAgreementActivity from '../activities/addActivityComponent';
 
 const searchIn = [
-  'pti.titleInstance.title'
+  'pti.titleInstance.title',
+  'pkg.remoteKb.name',
+  'pti.platform.name',
+  'pkg.name',
+  'pkg.source',
+  'depth',
+  'note'
 ]
 
 const Kb = observer(({showFilterPane, 
@@ -35,26 +41,25 @@ const Kb = observer(({showFilterPane,
   startActivity,
   app}) => {
     
+    // Grab a highlighter that will highlight the current search term.
+    const highlighter = textHighlighter ( () => (app.queryStringObject.term))
     const columns = [
-       // { Header: "Title ID", id: 'title_id', accessor: 'title_id' },
-       // { Header: "Source KB", id: 'kb', accessor: 'package_kb' },
-       // { Header: "Id", id: 'id', accessor: 'pci_id' },
-       { Header: "KB", id: 'PackageKB', accessor: 'pkg.remoteKb.name' },
+       { Header: "KB", id: 'PackageKB', accessor: 'pkg.remoteKb.name', Cell: (cell) => (highlighter(cell.value)) },
        {
          Header: "Title",
          id: 'pti.titleInstance.title',
          accessor: 'pti.titleInstance',
-         Cell: (cell) => (<Link to={`/olf-erm/titles/${cell.value.id}`}>{cell.value.title}</Link>)
+         Cell: tableFormatters.pipe( (cell) => (highlighter(cell.value.title)), (previous, cell) => (<Link to={`/olf-erm/titles/${cell.value.id}`}>{previous}</Link>) )
        },
-       { Header: "Platform",accessor: 'pti.platform.name' },
-       { Header: "Source", accessor: 'pkg.source' },
+       { Header: "Platform",accessor: 'pti.platform.name', Cell: (cell) => (highlighter(cell.value)) },
+       { Header: "Source", accessor: 'pkg.source', Cell: (cell) => (highlighter(cell.value)) },
        { Header: "Package",
          id: 'pkg.name',
          accessor: 'pkg',
-         Cell: (cell) => (<Link to={`/olf-erm/packages/${cell.value.id}`}>{cell.value.name}</Link>)
+         Cell: tableFormatters.pipe( (cell) => (highlighter(cell.value.name)), (previous, cell) => (<Link to={`/olf-erm/packages/${cell.value.id}`}>{previous}</Link>) )
        },
-       { Header: "Coverage Depth", accessor: 'depth' },
-       { Header: "Coverage Note", accessor: 'note' },
+       { Header: "Coverage Depth", accessor: 'depth', Cell: (cell) => (highlighter(cell.value))},
+       { Header: "Coverage Note", accessor: 'note', Cell: (cell) => (highlighter(cell.value))},
        { Header: "Coverage Summary", id: 'coverage', accessor: 'coverage' },
    ]
     
