@@ -7,6 +7,20 @@ import ReactTable from 'react-table'
 
 import ResourceBasedComponent from './resource-based-component'
 
+
+const SelectComponent = observer(({ selections, row }) => {
+  const selectClick = action((e) => {
+//    var shiftKey = e.shiftKey
+//    e.stopPropagation()
+    (selections.has(row.id) && selections.delete(row.id)) || selections.set(row.id, true)
+    
+    console.log (`${row.id} now ${selections.has(row.id)}`)
+  })
+  
+  return <input type="checkbox" checked={selections.has(row.id)} onClick={selectClick} />
+})
+
+
 @observer
 class UrlParamResourceSearch extends ResourceBasedComponent {
   
@@ -15,10 +29,40 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
     fieldsToSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
     columnDef: PropTypes.arrayOf(PropTypes.object).isRequired
   }
+  
+  @observable
+  columnDef = []
+  
+  @observable
+  selections = new Map()
 
   constructor (props) {
     super(props)
     this.updateStateFromParams()
+    
+    
+    this.selections = new Map()
+    
+    // Add the selection box.
+    const select = {
+      id: '_selector',
+      accessor: () => 'x', // this value is not important
+      Header: "",
+      Cell: (ci) => { 
+        console.log (ci);
+        return <SelectComponent row={ci.original} selections={this.selections} />
+      },
+      width: 30,
+      filterable: false,
+      sortable: false,
+      resizable: false,
+      style: { textAlign: 'center' }
+    }
+    
+    this.columnDef = [
+      select,
+      ...props.columnDef,
+    ];
   }
   
   @action.bound
@@ -159,9 +203,11 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
     let toRes = (fromRes + this.tableRows.length - 1)
     
     
+    
+    
     return (
       <ReactTable
-        columns={this.props.columnDef.slice()}
+        columns={this.columnDef.slice()}
         noDataText="No results found"
         manual // Forces table not to paginate or sort automatically, so we can handle it server-side
         showPagination={paginate}
@@ -174,6 +220,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
         loading={this.working} // Display the loading overlay when we need it
         onFetchData={this.fetchTableData} // Request new data when things change
         className="-striped -highlight"
+      
           >{(state, makeTable, instance) => {
             let results = state.data.length < 1 ? 'No results found' : `Showing results ${fromRes} to ${toRes} of ${this.total}`
             return (
