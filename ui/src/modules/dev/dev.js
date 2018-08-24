@@ -18,9 +18,13 @@ const Dev = observer((props) => {
   
   return (
     <div>
-      Dev panel
+      <h1>Development actions</h1>
+      <ul>
+        <li><button className="btn btn-primary">Import Ebsco Package Test</button></li>
+        <li><button className="btn btn-primary">Create POL Test</button></li>
+      </ul>
     </div>
   )
 })
 
-export default hot(module)(KbEntries)
+export default hot(module)(Dev)
