@@ -11,6 +11,11 @@ import {tableFormatters, textHighlighter} from '../../lib/helpers'
 /** A workflow screen for controlling the purchase of items */
 class PurchaseActivityComponent extends React.Component {
 
+  static propTypes = {
+    app: PropTypes.object.isRequired,
+    currentActivity: PropTypes.string,
+  }
+
   constructor(props) {
     super(props);
 
@@ -21,7 +26,7 @@ class PurchaseActivityComponent extends React.Component {
 
   render() {
     return (
-      <PurchaseActivity app={this.props.app} />
+      <PurchaseActivity app={this.props.app} open={!!this.props.currentActivity}/>
     )
   }
 }
