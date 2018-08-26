@@ -37,9 +37,9 @@ class Dev extends React.Component {
         <h1>Development actions</h1>
         <ul>
           <li><button className="btn btn-primary">Import Ebsco Package Test</button></li>
-          <li><button className="btn btn-primary">Test Purchase Activity (Explicit List)</button></li>
+          <li><button className="btn btn-primary" onClick={() => this.startActivity("purchase")}>Test Purchase Activity (Explicit List)</button></li>
           <li><button className="btn btn-primary">Test Purchase Activity (All via query)</button></li>
-          <li><button className="btn btn-primary" onClick={() => this.startActivity("startActivity")}>Test Add To Agreement Activity (Explicit List)</button></li>
+          <li><button className="btn btn-primary" onClick={() => this.startActivity("addToAgreement")}>Test Add To Agreement Activity (Explicit List)</button></li>
           <li><button className="btn btn-primary">Test Add To Agreement Activity (All via query)</button></li>
         </ul>
         <AddActivityComponent app={this.props.app} currentActivity={'fhfh'}/>
