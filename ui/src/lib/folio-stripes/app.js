@@ -39,6 +39,7 @@ class App extends AppBase {
       'olf-erm.packages.user',
       'olf-erm.kb.user',
       'olf-erm.dash.user',
+      'olf-erm.dev.user',
     ]
     
     return defaults.concat(this.allPerms.filter(item => (
