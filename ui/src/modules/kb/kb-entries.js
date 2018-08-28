@@ -23,7 +23,7 @@ const searchIn = [
 
 const KbEntries = observer((props) => {
   
-  const highlighter = textHighlighter ( () => (props.app.queryStringObject.term))
+  const highlighter = textHighlighter ( () => (props.app.queryStringObject.term) )
   
   const columns = [
     { Header: "KB", id: 'PackageKB', accessor: 'pkg.remoteKb.name', Cell: (cell) => (highlighter(cell.value)) },

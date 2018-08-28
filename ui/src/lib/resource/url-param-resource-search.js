@@ -7,7 +7,9 @@ import ReactTable from 'react-table'
 
 import ResourceBasedComponent from './resource-based-component'
 
-
+/**
+ * This is the select box for a row.
+ */
 const SelectComponent = observer(({ selections, row }) => {
   const selectClick = action((e) => {
 //    var shiftKey = e.shiftKey
@@ -39,8 +41,6 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
   constructor (props) {
     super(props)
     this.updateStateFromParams()
-    
-    
     this.selections = new Map()
     
     // Add the selection box.
@@ -48,8 +48,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
       id: '_selector',
       accessor: () => 'x', // this value is not important
       Header: "",
-      Cell: (ci) => { 
-        console.log (ci);
+      Cell: (ci) => {
         return <SelectComponent row={ci.original} selections={this.selections} />
       },
       width: 30,
@@ -72,7 +71,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
     if (urlPars.perPage) {
       num = parseInt(urlPars.perPage)
       this.perPage = (num === NaN ? 10 : num)
-    }    
+    }
     if (urlPars.page) {
       num = parseInt(urlPars.page)
       this.page = (num === NaN ? 10 : num)
@@ -87,7 +86,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
   path = null
   @action.bound
   updateParamsFromUrl = (location) => {
-    
+
     if (!location || location.pathname == this.path) {
 
       let urlPars = this.app.queryStringObject
@@ -99,18 +98,18 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
         perPage: this.perPage,
         page: this.page
       }
-      
+
       let newParams = Object.assign({}, this.fetchParams, urlPars, constants)
       if (newParams.term) {
         newParams.match = this.props.fieldsToSearch
       }
-      
+
       this.fetchParams = newParams
     }
-    
+
     this.path = (location || window.location).pathname
   }
-  
+
   stopListening = null
   componentWillUnmount() {
     if ( typeof this.stopListening == 'function' ) {
@@ -119,7 +118,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
       this.stopListening = null
     }
   }
-  
+
   @computed get responseData() {
     if (this.data) {
       return this.data.body().data()
@@ -136,6 +135,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
     let theTarget = this.app.api.custom(theType)
     return theTarget
   }
+  
   remoteDataCallback = (dataContext, parameters) => {
     let results = dataContext.get(parameters)
     return results
@@ -197,13 +197,10 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
   
   render() {
     
-    let paginate = this.totalPages > 1
+    let paginate = true
     let minRows = (!this.tableRows.length || this.tableRows.length < 1 ? 5 : this.tableRows.length) 
     let fromRes = ((this.page - 1) * this.perPage) + 1
     let toRes = (fromRes + this.tableRows.length - 1)
-    
-    
-    
     
     return (
       <ReactTable
@@ -220,7 +217,20 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
         loading={this.working} // Display the loading overlay when we need it
         onFetchData={this.fetchTableData} // Request new data when things change
         className="-striped -highlight"
-      
+        getTrProps= {(state, rowInfo, column) => {
+          // someone asked for an example of a background color change
+          // here it is...
+          if (rowInfo) {
+            const selected = this.selections.has(rowInfo.row.id);
+            return {
+              style: {
+                backgroundColor: (selected ? "lightgreen" : "inherit")
+              }
+            };
+          }
+          else return {}
+        }}
+          
           >{(state, makeTable, instance) => {
             let results = state.data.length < 1 ? 'No results found' : `Showing results ${fromRes} to ${toRes} of ${this.total}`
             return (

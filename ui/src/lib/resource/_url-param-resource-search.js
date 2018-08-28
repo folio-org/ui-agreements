@@ -228,7 +228,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
         selectType="checkbox"
         toggleSelection={this.toggleSelection}
         isSelected={this.isSelected}
-        selectAll={this.selectAll}
+//        selectAll={this.selectAll}
         toggleAll={this.toggleAll}
         noDataText="No results found"
         manual // Forces table not to paginate or sort automatically, so we can handle it server-side
