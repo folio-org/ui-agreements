@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { observer } from 'mobx-react'
 import { hot } from 'react-hot-loader'
 import { Container, Row, Col } from 'reactstrap'
+import { observable } from 'mobx'
 
 @observer
 class TriPanel extends Component {
@@ -67,14 +68,14 @@ class TriPanel extends Component {
       visibleRightCols = this.rightCols
     }
 
-    let centerCols = totalCols - (visibleLeftCols + visibleRightCols)
+    let centerCols = this.totalCols - (visibleLeftCols + visibleRightCols)
 
-    let leftComponent = this.left ? <Col lg={visibleLeftCols} xs={totalCols} className="position-fixed" >
-      { left }
+    let leftComponent = this.left ? <Col lg={visibleLeftCols} xs={this.totalCols} className="position-fixed" >
+      { this.left }
     </Col> : null
 
-    let rightComponent = this.right ? <Col lg={{size:(visibleRightCols), offset:(visibleLeftCols + centerCols) }} xs={totalCols} >
-      { right }
+    let rightComponent = this.right ? <Col lg={{size:(visibleRightCols), offset:(visibleLeftCols + centerCols) }} xs={this.totalCols} >
+      { this.right }
     </Col> : null
 
     return (
@@ -82,7 +83,7 @@ class TriPanel extends Component {
         <Row>
           { leftComponent }
           
-          <Col lg={{size:(centerCols), offset:(visibleLeftCols) }} xs={totalCols} >
+          <Col lg={{size:(centerCols), offset:(visibleLeftCols) }} xs={this.totalCols} >
             { this.center }
           </Col>
             
