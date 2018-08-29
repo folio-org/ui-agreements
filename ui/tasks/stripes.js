@@ -98,8 +98,8 @@ const options = {
         loader: 'babel-loader',
         options: {
           plugins: [
-           require('babel-plugin-syntax-async-functions'),
            require("babel-plugin-transform-decorators-legacy").default,
+           require('babel-plugin-syntax-async-functions'),
            require('react-hot-loader/babel'),
           ],
           presets: [

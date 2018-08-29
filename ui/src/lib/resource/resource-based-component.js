@@ -2,6 +2,14 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { observable, autorun, action, runInAction, computed, toJS } from 'mobx'
 
+
+/**
+ *
+ * This is designed to be the base of any component that needs to interact with a restful types resource.
+ * This is fetched from the "app" object. This enables us to abstract the method for fetching the "resource"
+ * away from this component.
+ * 
+ */
 class ResourceBasedComponent extends Component {
   
   static propTypes = {

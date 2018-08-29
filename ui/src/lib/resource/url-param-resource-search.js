@@ -1,27 +1,60 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import { observer } from 'mobx-react'
-import { observable, action, computed } from 'mobx'
+import { observer, Observer } from 'mobx-react'
+import { observable, action, computed, trace } from 'mobx'
 import { hot } from 'react-hot-loader'
 import ReactTable from 'react-table'
+import { ReactTableDefaults } from 'react-table'
+import classNames from 'classnames'
 
 import ResourceBasedComponent from './resource-based-component'
 
 /**
  * This is the select box for a row.
  */
-const SelectComponent = observer(({ selections, row }) => {
-  const selectClick = action((e) => {
+const SelectComponent = observer(({ selectToggle, selections, row }) => {
+  const selectClick = (e) => {
 //    var shiftKey = e.shiftKey
 //    e.stopPropagation()
-    (selections.has(row.id) && selections.delete(row.id)) || selections.set(row.id, true)
-    
-    console.log (`${row.id} now ${selections.has(row.id)}`)
-  })
-  
+    selectToggle(row.id)
+  }
   return <input type="checkbox" checked={selections.has(row.id)} onClick={selectClick} />
 })
 
+const RowComponent = observer(({className, primarySelection, selections, row, current, currentIdToggle, onClick, ...props}) => {
+  trace(false)
+  let rowClasses = {}
+  
+  const rowClick = (e) => {
+    if (row.id) {
+      console.log (`set to ${row.id}`)
+      currentIdToggle(row.id)
+    }
+    if (onClick) {
+      onClick();
+    }
+  }
+  
+  console.log (current)
+  
+  if (row && row.id) {
+    if (selections.has(row.id)) {
+      // Add to the properties.
+      rowClasses['bg-secondary'] = true
+      rowClasses['text-white'] = true
+    }
+    
+    if (current.id == row.id) {
+
+      rowClasses['bg-secondary'] = false
+      rowClasses['bg-primary'] = true
+      rowClasses['text-white'] = true
+    }
+  }
+  
+  return <ReactTableDefaults.TrComponent className={classNames(className, rowClasses)} onClick={rowClick} { ...props } />
+
+})
 
 @observer
 class UrlParamResourceSearch extends ResourceBasedComponent {
@@ -34,6 +67,25 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
   
   @observable
   columnDef = []
+  
+  @action.bound
+  selectToggle = (id) => {
+    (this.selections.has(id) && this.selections.delete(id)) || this.selections.set(id, true)
+  }
+  
+  @observable
+  current = { 
+    id: ''
+  }
+  
+  @action.bound
+  currentIdToggle = (id) => {
+    if (this.current.id == id) {
+      this.current.id = ''
+    } else {
+      this.current.id = id
+    }
+  }
   
   @observable
   selections = new Map()
@@ -49,7 +101,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
       accessor: () => 'x', // this value is not important
       Header: "",
       Cell: (ci) => {
-        return <SelectComponent row={ci.original} selections={this.selections} />
+        return <SelectComponent row={ci.original} selections={this.selections} selectToggle={this.selectToggle} />
       },
       width: 30,
       filterable: false,
@@ -63,6 +115,8 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
       ...props.columnDef,
     ];
   }
+
+  rowComponent = (props) => (<RowComponent selections={this.selections} current={this.current} currentIdToggle={this.currentIdToggle} {...props} />)
   
   @action.bound
   updateStateFromParams = (urlPars) => {
@@ -84,6 +138,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
   @observable total = 0
   
   path = null
+  
   @action.bound
   updateParamsFromUrl = (location) => {
 
@@ -217,19 +272,31 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
         loading={this.working} // Display the loading overlay when we need it
         onFetchData={this.fetchTableData} // Request new data when things change
         className="-striped -highlight"
-        getTrProps= {(state, rowInfo, column) => {
-          // someone asked for an example of a background color change
-          // here it is...
-          if (rowInfo) {
-            const selected = this.selections.has(rowInfo.row.id);
-            return {
-              style: {
-                backgroundColor: (selected ? "lightgreen" : "inherit")
-              }
-            };
-          }
-          else return {}
-        }}
+        TrComponent={this.rowComponent}
+      
+      
+        // Special property generators.
+        getTrProps= {(state, rowInfo, column) => (rowInfo ? {
+          // Get the column info.
+          row: rowInfo.original
+        } : {})}
+      
+//        getTdProps={(state, rowInfo, column, instance) => {
+//          return {
+//            onClick: (e, handleOriginal) => {
+//              
+//              if (rowInfo && rowInfo.original.id) {
+//                // Set the current context to the single resource id.
+//                console.log ("running td click")
+//              }
+//
+//              // Handle the default.
+//              if (handleOriginal) {
+//                handleOriginal();
+//              }
+//            }
+//          };
+//        }}
           
           >{(state, makeTable, instance) => {
             let results = state.data.length < 1 ? 'No results found' : `Showing results ${fromRes} to ${toRes} of ${this.total}`
