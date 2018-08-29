@@ -6,6 +6,7 @@ import Nav from './components/nav'
 import { observer } from 'mobx-react'
 import * as mobx from 'mobx'
 const {observable, computed, autorun, action} = mobx
+import DevTools from 'mobx-react-devtools'
 
 @observer
 class Routing extends Component {
@@ -37,6 +38,7 @@ class Routing extends Component {
 
     return (
       <div className="erm" >
+        <DevTools />
         <Nav match={match} color="light" sticky="top" light expand="lg" className='justify-content-center' location={location} />
         <div className="pt-4" >
           <Switch>
