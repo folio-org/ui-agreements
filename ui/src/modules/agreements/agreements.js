@@ -1,14 +1,9 @@
 import React from 'react'
-import {observable} from 'mobx'
 import { observer } from 'mobx-react'
 import { hot } from 'react-hot-loader'
-import { Container, Row, Col } from 'reactstrap'
 import { Link } from 'react-router-dom'
 
-import Search from '../../components/search'
-import TriPanel from '../../components/layout/tri-panel'
-
-import UrlParamResourceSearch from '../../lib/resource/url-param-resource-search'
+import ResourceCRUD from '../../lib/resource/resource-based-crud'
 import {tableFormatters, textHighlighter} from '../../lib/helpers'
 
 let searchIn = [
@@ -67,10 +62,8 @@ const Agreements = observer((props) => {
   }
   
   return (
-    <TriPanel
-      left= { <Search className="w-100" app={props.app} filters={filterGroups} /> }
-      center= { <UrlParamResourceSearch resource="SubscriptionAgreement" fieldsToSearch={searchIn} columnDef={columns} app={props.app} /> }
-    />
+      
+    <ResourceCRUD filterGroups={filterGroups} searchIn={searchIn} columnDef={columns} app={props.app} resource="SubscriptionAgreement" />
   )
 })
 

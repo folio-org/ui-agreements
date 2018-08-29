@@ -9,7 +9,7 @@ import { hot } from 'react-hot-loader'
  * Observer type row component. Allows for changes to observables to cause a redraw. This will change when observable properties are updated.
  */
 
-const RowComponent =  observer(({className, selections, row, current, currentIdToggle, onClick, ...props}) => {
+const RowComponent =  observer(({className, selections, row, isCurrent, currentIdToggle, onClick, ...props}) => {
   let rowClasses = {}
   
   const rowClick = (e) => {
@@ -29,7 +29,7 @@ const RowComponent =  observer(({className, selections, row, current, currentIdT
       rowClasses['text-white'] = true
     }
     
-    if (current.id == row.id) {
+    if (isCurrent(row.id)) {
 
       rowClasses['bg-secondary'] = false
       rowClasses['bg-primary'] = true
@@ -53,9 +53,7 @@ RowComponent.propTypes = {
     id: PropTypes.string.isRequired
   }),
   
-  current: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  }).isRequired,
+  isCurrent: PropTypes.func.isRequired,
   
   currentIdToggle: PropTypes.func.isRequired
 }

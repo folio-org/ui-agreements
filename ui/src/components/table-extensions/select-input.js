@@ -10,12 +10,12 @@ import { hot } from 'react-hot-loader'
 const SelectComponent = observer(({ selectToggle, selections, row }) => {
   const selectClick = (e) => {
 //    var shiftKey = e.shiftKey
-//    e.stopPropagation()
+    e.stopPropagation()
     selectToggle(row.id)
   }
   
   // Read only component for checkbox. Just mimics the status of the row.
-  return <input type="checkbox" defaultChecked={selections.has(row.id)} onClick={selectClick} />
+  return <input type="checkbox" checked={selections.has(row.id)} onClick={selectClick} />
 })
 
 // The property types.

@@ -33,20 +33,6 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
   }
   
   @observable
-  current = { 
-    id: ''
-  }
-  
-  @action.bound
-  currentIdToggle = (id) => {
-    if (this.current.id == id) {
-      this.current.id = ''
-    } else {
-      this.current.id = id
-    }
-  }
-  
-  @observable
   selections = new Map()
 
   constructor (props) {
@@ -75,7 +61,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
     ];
   }
 
-  rowComponent = (props) => (<RowComponent selections={this.selections} current={this.current} currentIdToggle={this.currentIdToggle} {...props} />)
+  rowComponent = (props) => (<RowComponent selections={this.selections} isCurrent={this.props.isCurrent} currentIdToggle={this.props.currentIdToggle} {...props} />)
   
   @action.bound
   updateStateFromParams = (urlPars) => {

@@ -2,8 +2,16 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { observer } from 'mobx-react'
 import { hot } from 'react-hot-loader'
-import { Container, Row, Col } from 'reactstrap'
-import { observable } from 'mobx'
+import { Container, Row, Col, Button } from 'reactstrap'
+import { observable, action } from 'mobx'
+import FaClose from 'react-icons/lib/fa/close'
+import FaSearch from 'react-icons/lib/fa/search'
+
+const PanelHeader = ({ children }) => (
+  <Row className="pb-3" >
+    {children}
+  </Row>
+)
 
 @observer
 class TriPanel extends Component {
@@ -12,6 +20,11 @@ class TriPanel extends Component {
     left: PropTypes.object,
     center: PropTypes.object.isRequired,
     right: PropTypes.object,
+
+    leftHeading: PropTypes.object,
+    heading: PropTypes.object,
+    rightHeading: PropTypes.object,
+    
     totalCols: PropTypes.number,
     leftCols: PropTypes.number,
     rightCols: PropTypes.number,
@@ -55,26 +68,44 @@ class TriPanel extends Component {
     }
   }
   
+  @observable
+  showLeft = true
+  
+  @observable
+  showRight = true
+  
+  @action.bound
+  toggleLeft = () => {
+    this.showLeft = !this.showLeft
+    
+    console.log (`Left should be ${this.showLeft ? 'visible' : 'hidden'}`)
+  }
+  
   render = () => {
+    
+    const {leftHeading, heading, rightHeading} = this.props
     
     let visibleLeftCols = 0
     let visibleRightCols = 0
     
-    if (this.left) {
+    if (this.left && this.showLeft) {
       visibleLeftCols = this.leftCols
     }
     
-    if (this.right) {
+    if (this.right && this.showRight) {
       visibleRightCols = this.rightCols
     }
 
     let centerCols = this.totalCols - (visibleLeftCols + visibleRightCols)
 
-    let leftComponent = this.left ? <Col lg={visibleLeftCols} xs={this.totalCols} className="position-fixed" >
+    let leftComponent = (this.left || leftHeading) && this.showLeft ? <Col lg={visibleLeftCols} xs={this.totalCols} className="position-fixed" >
+      <PanelHeader>
+        <Button color="light" onClick={this.toggleLeft} ><FaClose /></Button>
+      </PanelHeader>
       { this.left }
     </Col> : null
 
-    let rightComponent = this.right ? <Col lg={{size:(visibleRightCols), offset:(visibleLeftCols + centerCols) }} xs={this.totalCols} >
+    let rightComponent = this.right || rightHeading? <Col lg={{size:(visibleRightCols), offset:(visibleLeftCols + centerCols) }} xs={this.totalCols} >
       { this.right }
     </Col> : null
 
@@ -84,6 +115,10 @@ class TriPanel extends Component {
           { leftComponent }
           
           <Col lg={{size:(centerCols), offset:(visibleLeftCols) }} xs={this.totalCols} >
+            <PanelHeader>
+              { (!this.showLeft && this.left) && <Button color="light" onClick={this.toggleLeft} ><FaSearch /></Button>}
+            </PanelHeader>
+            
             { this.center }
           </Col>
             
