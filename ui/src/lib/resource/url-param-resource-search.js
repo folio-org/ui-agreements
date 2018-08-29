@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import { observer, Observer } from 'mobx-react'
-import { observable, action, computed } from 'mobx'
+import { observable, action, computed} from 'mobx'
 import { hot } from 'react-hot-loader'
 import ReactTable from 'react-table'
 
@@ -14,8 +14,14 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
   
   static propTypes = {
     resource: PropTypes.string.isRequired,
-    fieldsToSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
-    columnDef: PropTypes.arrayOf(PropTypes.object).isRequired
+    fieldsToSearch: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.PropTypes.object // MobX Observable array is not an array.
+    ]).isRequired,
+    columnDef: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.object),
+      PropTypes.PropTypes.object // MobX Observable array is not an array.
+    ]).isRequired
   }
   
   @observable

@@ -15,7 +15,7 @@ const SelectComponent = observer(({ selectToggle, selections, row }) => {
   }
   
   // Read only component for checkbox. Just mimics the status of the row.
-  return <input type="checkbox" checked={selections.has(row.id)} onClick={selectClick} />
+  return <input type="checkbox" defaultChecked={selections.has(row.id)} onClick={selectClick} />
 })
 
 // The property types.
