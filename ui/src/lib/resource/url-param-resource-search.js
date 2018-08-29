@@ -61,7 +61,7 @@ class UrlParamResourceSearch extends ResourceBasedComponent {
     ];
   }
 
-  rowComponent = (props) => (<RowComponent selections={this.selections} isCurrent={this.props.isCurrent} currentIdToggle={this.props.currentIdToggle} {...props} />)
+  rowComponent = (props) => (<RowComponent selections={this.selections} isCurrent={this.props.isCurrent} currentToggle={this.props.currentToggle} {...props} />)
   
   @action.bound
   updateStateFromParams = (urlPars) => {

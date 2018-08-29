@@ -62,7 +62,6 @@ const Agreements = observer((props) => {
   }
   
   return (
-      
     <ResourceCRUD filterGroups={filterGroups} searchIn={searchIn} columnDef={columns} app={props.app} resource="SubscriptionAgreement" />
   )
 })

@@ -22,14 +22,20 @@ class ResourceCRUD extends Component {
   isCurrent = (id) => (this.current.id == id)
   
   @action.bound
-  currentIdToggle = (id) => {
-    (this.current.id == id && (this.current.id = '')) || (this.current.id = id)
+  currentToggle = (current) => {
+    if (this.current.id == current.id) {
+      this.current = { id : '' }
+    } else {
+      this.current = current
+    }
+    
+    console.log (this.current)
   }
   
   render = () => (
     <TriPanel
       left= { <Search className="w-100" app={this.props.app} filters={this.props.filterGroups} /> }
-      center= { <UrlParamResourceSearch isCurrent={this.isCurrent} currentIdToggle={this.currentIdToggle} resource={this.props.resource} fieldsToSearch={this.props.searchIn} columnDef={this.props.columnDef} app={this.props.app} /> }
+      center= { <UrlParamResourceSearch isCurrent={this.isCurrent} currentToggle={this.currentToggle} resource={this.props.resource} fieldsToSearch={this.props.searchIn} columnDef={this.props.columnDef} app={this.props.app} /> }
     />
   )
 }

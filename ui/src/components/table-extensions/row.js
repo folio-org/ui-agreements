@@ -9,12 +9,12 @@ import { hot } from 'react-hot-loader'
  * Observer type row component. Allows for changes to observables to cause a redraw. This will change when observable properties are updated.
  */
 
-const RowComponent =  observer(({className, selections, row, isCurrent, currentIdToggle, onClick, ...props}) => {
+const RowComponent =  observer(({className, selections, row, isCurrent, currentToggle, onClick, ...props}) => {
   let rowClasses = {}
   
   const rowClick = (e) => {
     if (row.id) {
-      currentIdToggle(row.id)
+      currentToggle(row)
     }
     if (onClick) {
       onClick();
@@ -55,7 +55,7 @@ RowComponent.propTypes = {
   
   isCurrent: PropTypes.func.isRequired,
   
-  currentIdToggle: PropTypes.func.isRequired
+  currentToggle: PropTypes.func.isRequired
 }
 
 export default hot(module)(RowComponent)
