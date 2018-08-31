@@ -44,6 +44,17 @@ const KbEntries = observer((props) => {
   ]
 
   const filterGroups = {
+    'pkg.source' : {
+      text: 'Package Source',
+      filters: {
+        'kbplus': {
+          text: 'KB+'
+        },
+        'k-int': {
+          text: 'K-Int'
+        }
+      }
+    }
   }
   
   
