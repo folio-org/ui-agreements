@@ -1,11 +1,20 @@
 import React, {Component} from 'react'
-import {observable, action} from 'mobx'
+import {observable, action, computed} from 'mobx'
 import { observer } from 'mobx-react'
 import { hot } from 'react-hot-loader'
+import { Container, Row, Col, Button } from 'reactstrap'
+import FaClose from 'react-icons/lib/fa/close'
+import FaSearch from 'react-icons/lib/fa/search'
 
-import TriPanel from '../../components/layout/tri-panel'
 import Search from '../../components/search'
 import UrlParamResourceSearch from '../../lib/resource/url-param-resource-search'
+import ResourceView from '../../lib/resource/resource-view'
+
+const PanelHeader = ({ children }) => (
+  <Row className="pb-3" >
+    {children}
+  </Row>
+)
 
 @observer
 class ResourceCRUD extends Component {
@@ -15,29 +24,76 @@ class ResourceCRUD extends Component {
   }
   
   @observable
-  current = { 
-    id: ''
+  left = true
+  
+  @action.bound
+  toggleLeft() {
+    this.left = !!!this.left
   }
+  
+  @computed
+  get right() {
+    return this.current && this.current.id
+  }
+  
+  @observable
+  current = {}
   
   isCurrent = (id) => (this.current.id == id)
   
   @action.bound
   currentToggle = (current) => {
     if (this.current.id == current.id) {
-      this.current = { id : '' }
+      this.currentClear()
     } else {
       this.current = current
     }
-    
-    console.log (this.current)
   }
   
-  render = () => (
-    <TriPanel
-      left= { <Search className="w-100" app={this.props.app} filters={this.props.filterGroups} /> }
-      center= { <UrlParamResourceSearch isCurrent={this.isCurrent} currentToggle={this.currentToggle} resource={this.props.resource} fieldsToSearch={this.props.searchIn} columnDef={this.props.columnDef} app={this.props.app} /> }
-    />
-  )
+  @action.bound
+  currentClear = () => {
+    this.current = {}
+  }
+
+  render(){
+
+    let showLeft = !!this.left
+    let showRight = !!this.right
+      
+    let totalCols = 12
+    let leftCols = (showLeft ? 2 : 0)
+    let rightCols = (showRight ? 5 : 0)
+    
+    let centerCols = totalCols - (leftCols + rightCols)
+    
+    
+    return <Container fluid={true}>
+      <Row>
+        { this.left ? <Col lg={leftCols} xs={totalCols} className="position-fixed" >
+          <PanelHeader>
+            <Button color="light" onClick={this.toggleLeft} ><FaClose /></Button>
+          </PanelHeader>
+          <Search className="w-100" app={this.props.app} filters={this.props.filterGroups} />
+        </Col> : null }
+        
+        <Col lg={{size:(centerCols), offset:(leftCols) }} xs={totalCols} >
+          <PanelHeader>
+            { !this.left && <Button color="light" onClick={this.toggleLeft} ><FaSearch /></Button>}
+          </PanelHeader>
+          
+          <UrlParamResourceSearch isCurrent={this.isCurrent} currentToggle={this.currentToggle} resource={this.props.resource} fieldsToSearch={this.props.searchIn} columnDef={this.props.columnDef} app={this.props.app} />
+        </Col>
+          
+        { this.right ? <Col lg={{size:(rightCols)}} xs={totalCols} >
+          <PanelHeader>
+            <Button color="light" onClick={this.currentClear} ><FaClose /></Button>
+          </PanelHeader>
+          
+          <ResourceView current={this.current} />
+        </Col> : null }
+      </Row>
+    </Container>
+  }
 }
 
 export default hot(module)(ResourceCRUD)
