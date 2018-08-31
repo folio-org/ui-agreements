@@ -6,6 +6,9 @@ import { Link } from 'react-router-dom'
 import ResourceCRUD from '../../lib/resource/resource-based-crud'
 import {tableFormatters, textHighlighter} from '../../lib/helpers'
 
+
+import ViewKbEntry from './view-kb-entry'
+
 const searchIn = [
   'pti.titleInstance.title',
   'pkg.remoteKb.name',
@@ -46,7 +49,7 @@ const KbEntries = observer((props) => {
   
   
   return (
-    <ResourceCRUD filterGroups={filterGroups} searchIn={searchIn} columnDef={columns} app={props.app} resource="PackageContentItem" />
+    <ResourceCRUD viewPanelComponent={ViewKbEntry} filterGroups={filterGroups} searchIn={searchIn} columnDef={columns} app={props.app} resource="PackageContentItem" />
   )
 })
 

@@ -67,6 +67,17 @@ class ResourceCRUD extends Component {
     let centerCols = totalCols - (leftCols + rightCols)
     
     
+    let {viewPanelComponent, ...viewProps} = this.props
+    
+    viewPanelComponent = viewPanelComponent ?
+      React.createElement(
+        viewPanelComponent,
+        { current: this.current, ...viewProps }
+      ) : 
+      <ResourceView current={this.current} />
+    
+    console.log (viewPanelComponent) 
+    
     return <Container fluid={true}>
       <Row>
         { this.left ? <Col lg={leftCols} xs={totalCols} className="position-fixed" >
@@ -89,7 +100,8 @@ class ResourceCRUD extends Component {
             <Button color="light" onClick={this.currentClear} ><FaClose /></Button>
           </PanelHeader>
           
-          <ResourceView current={this.current} />
+          { viewPanelComponent }
+          
         </Col> : null }
       </Row>
     </Container>

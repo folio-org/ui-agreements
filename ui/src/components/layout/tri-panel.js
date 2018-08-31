@@ -6,11 +6,7 @@ import { observable, action } from 'mobx'
 import FaClose from 'react-icons/lib/fa/close'
 import FaSearch from 'react-icons/lib/fa/search'
 
-const PanelHeader = ({ children }) => (
-  <Row className="pb-3" >
-    {children}
-  </Row>
-)
+
 
 @observer
 class TriPanel extends Component {
