@@ -20,13 +20,7 @@ class PackagesComponent extends React.Component {
 
   render() {
    return (
-      <Packages onTest={this.handleTest}
-                showFilterPane={this.state.showFilterPane}
-                showDetailPane={this.state.showDetailPane}
-                handleCloseFilter={this.handleCloseFilter}
-                handleCloseDetail={this.handleCloseDetail}
-                handleSelectPCI={this.handleSelectPCI}
-                app={this.props.app} />
+      <Packages {...this.props} />
     )
   }
 }
