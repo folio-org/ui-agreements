@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 import ResourceCRUD from '../../lib/resource/resource-based-crud'
 import {tableFormatters, textHighlighter} from '../../lib/helpers'
+import ViewAgreementComponent from './ViewAgreementComponent'
 
 let searchIn = [
   'name',
@@ -62,8 +63,9 @@ const Agreements = observer((props) => {
   }
   
   return (
-    <ResourceCRUD filterGroups={filterGroups} searchIn={searchIn} columnDef={columns} app={props.app} resource="SubscriptionAgreement" />
+    <ResourceCRUD viewPanelComponent={ViewAgreementComponent} filterGroups={filterGroups} searchIn={searchIn} columnDef={columns} app={props.app} resource="SubscriptionAgreement" />
   )
 })
 
 export default hot(module)(Agreements)
+
