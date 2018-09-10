@@ -1,8 +1,0 @@
-/node_modules
-/dist
-/.*
-!.gitignore
-!.npmrc
-!.tern-project
-!.eslintrc.json
-/yarn-error.log
