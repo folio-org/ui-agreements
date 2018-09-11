@@ -2,32 +2,43 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Switch from 'react-router-dom/Switch';
 import Route from 'react-router-dom/Route';
-import Application from './routes/application';
-import ExamplePage from './routes/example-page';
+import ERM from './ERM';
 import Settings from './settings';
 
-/*
-  STRIPES-NEW-APP
-  This is the main entry point into your new app.
-*/
+const NoMatch = () => (
+  <div>
+    <h2>{this.props.stripes.intl.formatMessage({ id: 'ui-erm.errors.noMatch.oops' })}</h2>
+    <p>{this.props.stripes.intl.formatMessage({ id: 'ui-erm.errors.noMatch.how' }, { location: <tt>{this.props.location.pathname}</tt> })}</p>
+  </div>
+);
 
-class Erm extends React.Component {
+class App extends React.Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     showSettings: PropTypes.bool,
+    stripes: PropTypes.object.isRequired,
+  }
+
+  constructor(props) {
+    super(props);
+    this.connectedERM = props.stripes.connect(ERM)
   }
 
   render() {
     if (this.props.showSettings) {
       return <Settings {...this.props} />;
     }
+
     return (
       <Switch>
-        <Route path={`${this.props.match.path}`} exact component={Application} />
-        <Route path={`${this.props.match.path}/examples`} exact component={ExamplePage} />
+        <Route
+          path={`${this.props.match.path}`}
+          render={() => <this.connectedERM {...this.props} />}
+        />
+        <Route component={NoMatch} />
       </Switch>
     );
   }
 }
 
-export default Erm;
+export default App;
