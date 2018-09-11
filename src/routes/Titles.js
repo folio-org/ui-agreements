@@ -29,6 +29,7 @@ export default class Titles extends React.Component {
   static manifest = Object.freeze({
     records: {
       type: 'okapi',
+      resourceShouldRefresh: true,
       path: 'erm/titles',
       recordsRequired: '%{resultCount}',
       perRequest: 1,
@@ -87,6 +88,10 @@ export default class Titles extends React.Component {
           columnMapping={{
             id: 'ID',
             title: 'Title',
+          }}
+          columnWidths={{
+            id: 150,
+            title: 'auto',
           }}
         />
       </React.Fragment>

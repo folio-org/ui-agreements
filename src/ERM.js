@@ -27,17 +27,22 @@ export default class Erm extends React.Component {
   constructor(props) {
     super(props);
 
-    // The `resources` object of a connected component is shared across the module
-    // and since each of the following may specify a `records` on their manifest,
-    // we give them each a separate `dataKey` to ensure their results don't collide.
-    this.connectedDashboard = props.stripes.connect(Dashboard /*, { dataKey: 'dashboard' } */);
-    this.connectedAgreements = props.stripes.connect(Agreements /*, { dataKey: 'agreements' } */);
-    this.connectedTitles = props.stripes.connect(Titles /*, { dataKey: 'titles' } */);
+    this.connectedDashboard = props.stripes.connect(Dashboard);
+    this.connectedAgreements = props.stripes.connect(Agreements);
+    this.connectedTitles = props.stripes.connect(Titles);
+  }
+
+  getCurrentPage(props) {
+    const { match, location } = props;
+    const lStripped = location.pathname.substring(match.path.length + 1);
+    const rStripped = lStripped.split('/')[0];
+
+    return rStripped;
   }
 
   render() {
-    const { stripes, match, location, resources, mutator } = this.props;
-    const currentPage = location.pathname.substring(match.path.length + 1);
+    const { stripes, match } = this.props;
+    const currentPage = this.getCurrentPage(this.props);
 
     return (
       <React.Fragment>
@@ -49,15 +54,15 @@ export default class Erm extends React.Component {
         <Switch>
           <Route
             path={`${match.path}/dashboard`}
-            render={() => <this.connectedDashboard resources={resources} mutator={mutator} stripes={stripes} />}
+            render={() => <this.connectedDashboard stripes={stripes} />}
           />
           <Route
             path={`${match.path}/agreements`}
-            render={() => <this.connectedAgreements resources={resources} mutator={mutator} stripes={stripes} />}
+            render={() => <this.connectedAgreements stripes={stripes} />}
           />
           <Route
             path={`${match.path}/titles`}
-            render={() => <this.connectedTitles resources={resources} mutator={mutator} stripes={stripes} />}
+            render={() => <this.connectedTitles stripes={stripes} />}
           />
           <Redirect
             exact

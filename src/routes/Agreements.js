@@ -28,6 +28,7 @@ export default class Agreements extends React.Component {
   static manifest = Object.freeze({
     records: {
       type: 'okapi',
+      resourceShouldRefresh: true,
       path: (queryParams, pathComponents, resources) => {
         let path = 'erm/sas';
         let params = [];
@@ -36,7 +37,9 @@ export default class Agreements extends React.Component {
 
         if (query) params.push(`${MATCH}&term=${query}`);
 
-        return `${path}?${params.join('&')}`;
+        if (params.length) return `${path}?${params.join('&')}`;
+
+        return path;
       },
     },
     query: {
@@ -56,10 +59,6 @@ export default class Agreements extends React.Component {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   };
-
-  componentWillUnmount() {
-    console.log('Agreements willUnmount')
-  }
 
   render() {
     const path = '/erm/agreements';
@@ -83,8 +82,13 @@ export default class Agreements extends React.Component {
           parentMutator={this.props.mutator}
           columnMapping={{
             id: 'ID',
-            title: 'Title',
+            name: 'Name',
             description: 'Description'
+          }}
+          columnWidths={{
+            id: 150,
+            name: 250,
+            description: 'auto',
           }}
         />
       </React.Fragment>

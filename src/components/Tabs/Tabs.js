@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import Button from '@folio/stripes-components/lib/Button';
 import SegmentedControl from '@folio/stripes-components/lib/SegmentedControl';
 
+import css from './Tabs.css'
+
 export default class Tabs extends React.Component {
   static propTypes = {
     tab: PropTypes.oneOfType([
@@ -31,7 +33,7 @@ export default class Tabs extends React.Component {
     this.setState({ tab: id });
     this.props.parentMutator.query.update({
       _path: `/erm/${id}`,
-      layer: 'null',
+      layer: null,
       query: '',
       filters: '',
       sort: '',
@@ -40,11 +42,13 @@ export default class Tabs extends React.Component {
 
   render() {
     return (
-      <SegmentedControl activeId={this.state.tab} onActivate={this.handleActivate}>
-        <Button id="dashboard">Dashboard</Button>
-        <Button id="agreements">Agreements</Button>
-        <Button id="titles">Titles</Button>
-      </SegmentedControl>
+      <div className={css.SegControl}>
+        <SegmentedControl activeId={this.state.tab} onActivate={this.handleActivate}>
+          <Button id="dashboard">Dashboard</Button>
+          <Button id="agreements">Agreements</Button>
+          <Button id="titles">Titles</Button>
+        </SegmentedControl>
+      </div>
     );
   }
 }
