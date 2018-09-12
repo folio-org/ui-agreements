@@ -42,16 +42,8 @@ export default class Agreements extends React.Component {
         return path;
       },
     },
-    query: {
-      initialValue: {
-        query: '',
-        filters: '',
-        sort: '',
-      },
-    },
-    resultCount: {
-      initialValue: INITIAL_RESULT_COUNT
-    },
+    query: {},
+    resultCount: { initialValue: INITIAL_RESULT_COUNT },
   });
 
   static propTypes = {

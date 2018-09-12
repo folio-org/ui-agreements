@@ -6,7 +6,7 @@ import Layout from '@folio/stripes-components/lib/Layout';
 import Icon from '@folio/stripes-components/lib/Icon';
 import Pane from '@folio/stripes-components/lib/Pane';
 
-export default class ViewAgreement extends React.Component {
+export default class ViewTitle extends React.Component {
   static propTypes = {
     parentResources: PropTypes.object,
     match: PropTypes.object,
@@ -14,7 +14,7 @@ export default class ViewAgreement extends React.Component {
     onClose: PropTypes.func,
   };
 
-  getAgreement(props) {
+  getTitle(props) {
     const records = get(props.parentResources.records, ['records'], []);
     const id = props.match.params.id;
 
@@ -22,12 +22,12 @@ export default class ViewAgreement extends React.Component {
   }
 
   render() {
-    const agreement = this.getAgreement(this.props);
+    const title = this.getTitle(this.props);
 
-    if (!agreement) {
+    if (!title) {
       return (
         <Pane
-          id="pane-view-agreement"
+          id="pane-view-title"
           defaultWidth={this.props.paneWidth}
           paneTitle="Loading..."
           dismissible
@@ -42,15 +42,15 @@ export default class ViewAgreement extends React.Component {
 
     return (
       <Pane
-        id="pane-view-agreement"
+        id="pane-view-title"
         defaultWidth={this.props.paneWidth}
-        paneTitle={agreement.name}
+        paneTitle={title.name}
         dismissible
         onClose={this.props.onClose}
       >
         <h3>View Record</h3>
         <pre>
-          {JSON.stringify(agreement, null, '\t')}
+          {JSON.stringify(title, null, '\t')}
         </pre>
       </Pane>
     );

@@ -3,18 +3,10 @@ import PropTypes from 'prop-types';
 
 import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
 
+import ViewTitle from '../components/ViewTitle';
 import packageInfo from '../../package.json';
 
 const INITIAL_RESULT_COUNT = 20;
-
-const ViewRecord = (props) => (
-  <div>
-    <h3>View Record</h3>
-    <pre>
-      {JSON.stringify(props)}
-    </pre>
-  </div>
-);
 
 const EditRecord = (props) => (
   <div>
@@ -31,9 +23,9 @@ export default class Titles extends React.Component {
       type: 'okapi',
       resourceShouldRefresh: true,
       path: 'erm/titles',
-      recordsRequired: '%{resultCount}',
-      perRequest: 1,
-      offsetParam: 'page',
+      // recordsRequired: '%{resultCount}',
+      // perRequest: 1,
+      // offsetParam: 'page',
       GET: {
         params: {
           match: 'title',
@@ -42,17 +34,8 @@ export default class Titles extends React.Component {
         },
       },
     },
+    query: {},
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
-    query: {
-      initialValue: {
-        query: '',
-        filters: '',
-        sort: '',
-      },
-    },
-    resultCount: {
-      initialValue: INITIAL_RESULT_COUNT
-    },
   });
 
   static propTypes = {
@@ -60,10 +43,6 @@ export default class Titles extends React.Component {
       records: PropTypes.arrayOf(PropTypes.object),
     }),
   };
-
-  componentWillUnmount() {
-    console.log('Titles willUnmount')
-  }
 
   render() {
     const path = '/erm/titles';
@@ -79,7 +58,7 @@ export default class Titles extends React.Component {
           objectName="title"
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
-          viewRecordComponent={ViewRecord}
+          viewRecordComponent={ViewTitle}
           editRecordComponent={EditRecord}
           visibleColumns={['id', 'title']}
           viewRecordPerms="module.erm.enabled"
