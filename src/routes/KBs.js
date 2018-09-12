@@ -53,12 +53,6 @@ export default class KBs extends React.Component {
     }),
   };
 
-  constructor(props) {
-    super(props);
-
-    this.connectedViewKB = props.stripes.connect(ViewKB);
-  }
-
   render() {
     const path = '/erm/kbs';
     packageInfo.stripes.route = path;
@@ -73,7 +67,7 @@ export default class KBs extends React.Component {
           objectName="kb"
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
-          viewRecordComponent={this.connectedViewKB}
+          viewRecordComponent={ViewKB}
           editRecordComponent={EditRecord}
           visibleColumns={['id', 'title', 'platform']}
           viewRecordPerms="module.erm.enabled"
