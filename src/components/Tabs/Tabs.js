@@ -46,6 +46,7 @@ export default class Tabs extends React.Component {
         <SegmentedControl activeId={this.state.tab} onActivate={this.handleActivate}>
           <Button id="dashboard">Dashboard</Button>
           <Button id="agreements">Agreements</Button>
+          <Button id="kbs">KBs</Button>
           <Button id="titles">Titles</Button>
         </SegmentedControl>
       </div>

@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Dashboard from './routes/Dashboard';
 import Agreements from './routes/Agreements';
+import KBs from './routes/KBs';
 import Titles from './routes/Titles';
 import Tabs from './components/Tabs';
 
@@ -29,6 +30,7 @@ export default class Erm extends React.Component {
 
     this.connectedDashboard = props.stripes.connect(Dashboard);
     this.connectedAgreements = props.stripes.connect(Agreements);
+    this.connectedKBs = props.stripes.connect(KBs);
     this.connectedTitles = props.stripes.connect(Titles);
   }
 
@@ -59,6 +61,10 @@ export default class Erm extends React.Component {
           <Route
             path={`${match.path}/agreements`}
             render={() => <this.connectedAgreements stripes={stripes} />}
+          />
+          <Route
+            path={`${match.path}/kbs`}
+            render={() => <this.connectedKBs stripes={stripes} />}
           />
           <Route
             path={`${match.path}/titles`}
