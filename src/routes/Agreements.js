@@ -48,7 +48,7 @@ export default class Agreements extends React.Component {
 
   static propTypes = {
     resources: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
+      records: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.object]),
     }),
   };
 
@@ -70,6 +70,7 @@ export default class Agreements extends React.Component {
           editRecordComponent={EditRecord}
           visibleColumns={['id', 'name', 'description']}
           viewRecordPerms="module.erm.enabled"
+          newRecordPerms="module.erm.enabled"
           parentResources={this.props.resources}
           parentMutator={this.props.mutator}
           showSingleResult
