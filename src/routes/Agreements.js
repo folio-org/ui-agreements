@@ -52,6 +52,12 @@ export default class Agreements extends React.Component {
     }),
   };
 
+  constructor(props) {
+    super(props);
+
+    this.connectedViewAgreement = props.stripes.connect(ViewAgreement);
+  }
+
   render() {
     const path = '/erm/agreements';
     packageInfo.stripes.route = path;
@@ -66,20 +72,21 @@ export default class Agreements extends React.Component {
           objectName="title"
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
-          viewRecordComponent={ViewAgreement}
+          viewRecordComponent={this.connectedViewAgreement}
           editRecordComponent={EditRecord}
           visibleColumns={['id', 'name', 'description']}
           viewRecordPerms="module.erm.enabled"
           parentResources={this.props.resources}
           parentMutator={this.props.mutator}
+          showSingleResult
           columnMapping={{
             id: 'ID',
             name: 'Name',
             description: 'Description'
           }}
           columnWidths={{
-            id: 150,
-            name: 250,
+            id: 300,
+            name: 300,
             description: 'auto',
           }}
         />

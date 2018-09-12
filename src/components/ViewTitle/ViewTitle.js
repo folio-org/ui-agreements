@@ -7,18 +7,21 @@ import Icon from '@folio/stripes-components/lib/Icon';
 import Pane from '@folio/stripes-components/lib/Pane';
 
 export default class ViewTitle extends React.Component {
+  static manifest = Object.freeze({
+    selectedTitle: {
+      type: 'okapi',
+      path: 'erm/titles/:{id}',
+    }
+  });
+
   static propTypes = {
-    parentResources: PropTypes.object,
     match: PropTypes.object,
     paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onClose: PropTypes.func,
   };
 
   getTitle(props) {
-    const records = get(props.parentResources.records, ['records'], []);
-    const id = props.match.params.id;
-
-    return records.find(r => r.id === id);
+    return get(props.resources.selectedTitle, ['records', 0], {});
   }
 
   render() {

@@ -44,6 +44,12 @@ export default class Titles extends React.Component {
     }),
   };
 
+  constructor(props) {
+    super(props);
+
+    this.connectedViewTitle = props.stripes.connect(ViewTitle);
+  }
+
   render() {
     const path = '/erm/titles';
     packageInfo.stripes.route = path;
@@ -58,18 +64,19 @@ export default class Titles extends React.Component {
           objectName="title"
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
-          viewRecordComponent={ViewTitle}
+          viewRecordComponent={this.connectedViewTitle}
           editRecordComponent={EditRecord}
           visibleColumns={['id', 'title']}
           viewRecordPerms="module.erm.enabled"
           parentResources={this.props.resources}
           parentMutator={this.props.mutator}
+          showSingleResult
           columnMapping={{
             id: 'ID',
             title: 'Title',
           }}
           columnWidths={{
-            id: 150,
+            id: 300,
             title: 'auto',
           }}
         />

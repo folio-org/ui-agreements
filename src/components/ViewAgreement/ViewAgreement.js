@@ -7,6 +7,13 @@ import Icon from '@folio/stripes-components/lib/Icon';
 import Pane from '@folio/stripes-components/lib/Pane';
 
 export default class ViewAgreement extends React.Component {
+  static manifest = Object.freeze({
+    selectedAgreement: {
+      type: 'okapi',
+      path: 'erm/sas/:{id}',
+    }
+  });
+
   static propTypes = {
     parentResources: PropTypes.object,
     match: PropTypes.object,
@@ -15,10 +22,7 @@ export default class ViewAgreement extends React.Component {
   };
 
   getAgreement(props) {
-    const records = get(props.parentResources.records, ['records'], []);
-    const id = props.match.params.id;
-
-    return records.find(r => r.id === id);
+    return get(props.resources.selectedAgreement, ['records', 0], {});
   }
 
   render() {
