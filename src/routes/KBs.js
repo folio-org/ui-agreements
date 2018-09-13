@@ -19,10 +19,7 @@ const EditRecord = (props) => (
 );
 
 const MATCH = [
-  'title',
-  'platform',
-  'localReference',
-  'vendorReference',
+  'pti.titleInstance.title'
 ].map(t => `match=${t}`).join('&');
 
 export default class KBs extends React.Component {
@@ -69,12 +66,13 @@ export default class KBs extends React.Component {
           resultCountIncrement={INITIAL_RESULT_COUNT}
           viewRecordComponent={ViewKB}
           editRecordComponent={EditRecord}
-          visibleColumns={['sourcekb', 'pkg', 'title', 'platform', 'coverage']}
+          visibleColumns={['vendor', 'sourcekb', 'pkg', 'title', 'platform', 'coverage']}
           viewRecordPerms="module.erm.enabled"
           parentResources={this.props.resources}
           parentMutator={this.props.mutator}
           showSingleResult
           columnMapping={{
+            vendor: 'Vendor',
             sourcekb: 'KB',
             pkg: 'Package',
             coverage: 'Coverage Summary',
@@ -85,6 +83,7 @@ export default class KBs extends React.Component {
             title: 400,
             platform: 300,
             sourcekb: 100,
+            vendor: 100,
             pkg: 300,
             coverage: 200,
           }}
@@ -93,6 +92,7 @@ export default class KBs extends React.Component {
             pkg: kb => get(kb, ['pkg', 'name'], ''),
             title: kb => get(kb, ['pti', 'titleInstance', 'title'], ''),
             platform: kb => get(kb, ['pti', 'platform', 'name'], ''),
+            vendor: kb => get(kb, ['pkg', 'vendor', 'name'], ''),
             coverage: kb => get(kb, ['coverage'], ''),
           }}
         />
