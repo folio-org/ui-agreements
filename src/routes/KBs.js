@@ -69,24 +69,31 @@ export default class KBs extends React.Component {
           resultCountIncrement={INITIAL_RESULT_COUNT}
           viewRecordComponent={ViewKB}
           editRecordComponent={EditRecord}
-          visibleColumns={['id', 'title', 'platform']}
+          visibleColumns={['sourcekb', 'pkg', 'title', 'platform', 'coverage']}
           viewRecordPerms="module.erm.enabled"
           parentResources={this.props.resources}
           parentMutator={this.props.mutator}
           showSingleResult
           columnMapping={{
-            id: 'ID',
+            sourcekb: 'KB',
+            pkg: 'Package',
+            coverage: 'Coverage Summary',
             title: 'Title',
             platform: 'Platform'
           }}
           columnWidths={{
-            id: 300,
             title: 400,
-            platform: 'auto',
+            platform: 300,
+            sourcekb: 100,
+            pkg: 300,
+            coverage: 200,
           }}
           resultsFormatter={{
+            sourcekb: kb => get(kb, ['pkg', 'remoteKb', 'name'], ''),
+            pkg: kb => get(kb, ['pkg', 'name'], ''),
             title: kb => get(kb, ['pti', 'titleInstance', 'title'], ''),
             platform: kb => get(kb, ['pti', 'platform', 'name'], ''),
+            coverage: kb => get(kb, ['coverage'], ''),
           }}
         />
       </React.Fragment>
