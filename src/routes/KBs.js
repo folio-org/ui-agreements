@@ -19,10 +19,7 @@ const EditRecord = (props) => (
 );
 
 const MATCH = [
-  'title',
-  'platform',
-  'localReference',
-  'vendorReference',
+  'pti.titleInstance.title'
 ].map(t => `match=${t}`).join('&');
 
 export default class KBs extends React.Component {
