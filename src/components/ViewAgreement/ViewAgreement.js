@@ -24,7 +24,15 @@ class ViewAgreement extends React.Component {
     selectedAgreement: {
       type: 'okapi',
       path: 'erm/sas/:{id}',
-    }
+    },
+    agreementLines: {
+      type: 'okapi',
+      path: 'erm/entitlements',
+      params: {
+        match: 'owner.id',
+        term: ':{id}',
+      },
+    },
   });
 
   static propTypes = {
@@ -51,12 +59,17 @@ class ViewAgreement extends React.Component {
     return get(this.props.resources.selectedAgreement, ['records', 0], {});
   }
 
+  getAgreementLines() {
+    return get(this.props.resources.agreementLines, ['records'], []);
+  }
+
   getSectionProps() {
     return {
       agreement: this.getAgreement(),
+      agreementLines: this.getAgreementLines(),
       onToggle: this.handleSectionToggle,
       stripes: this.props.stripes,
-    }
+    };
   }
 
   handleSectionToggle = ({ id }) => {
@@ -85,7 +98,6 @@ class ViewAgreement extends React.Component {
   }
 
   render() {
-    const { stripes } = this.props;
     const agreement = this.getAgreement();
 
     if (!agreement) return this.renderLoadingPane();

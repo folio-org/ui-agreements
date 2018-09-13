@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Accordion, AccordionSet } from '@folio/stripes-components/lib/Accordion';
-import KeyValue from '@folio/stripes-components/lib/KeyValue';
+import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 
 class AgreementLines extends React.Component {
   static propTypes = {
-    agreement: PropTypes.object,
+    agreementLines: PropTypes.arrayOf([PropTypes.object]),
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
@@ -14,7 +14,7 @@ class AgreementLines extends React.Component {
   };
 
   render() {
-    const { agreement, stripes: { intl } } = this.props;
+    const { agreementLines, stripes: { intl } } = this.props;
 
     return (
       <Accordion
@@ -23,7 +23,23 @@ class AgreementLines extends React.Component {
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
-        -
+        <Row>
+          <Col xs={12}>
+            <MultiColumnList
+              contentData={agreementLines}
+              maxHeight={400}
+              visibleColumns={['name', 'type']}
+              formatter={{
+                name: line => line.entitlementLabel,
+                type: line => line.entitlementType,
+              }}
+              columnWidths={{
+                name: '50%',
+                type: '50%',
+              }}
+            />
+          </Col>
+        </Row>
       </Accordion>
     );
   }
