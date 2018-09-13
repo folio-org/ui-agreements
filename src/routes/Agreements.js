@@ -29,9 +29,10 @@ export default class Agreements extends React.Component {
     records: {
       type: 'okapi',
       resourceShouldRefresh: true,
+      records: 'results',
       path: (queryParams, pathComponents, resources) => {
         let path = 'erm/sas';
-        let params = [];
+        let params = ['stats=true'];
 
         const { query: { query, filters, sort } } = resources;
 

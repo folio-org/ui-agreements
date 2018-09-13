@@ -6,7 +6,7 @@ import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
 import ViewTitle from '../components/ViewTitle';
 import packageInfo from '../../package.json';
 
-const INITIAL_RESULT_COUNT = 20;
+const INITIAL_RESULT_COUNT = 1;
 
 const EditRecord = (props) => (
   <div>
@@ -22,20 +22,36 @@ export default class Titles extends React.Component {
     records: {
       type: 'okapi',
       resourceShouldRefresh: true,
+      records: 'results',
       path: 'erm/titles',
-      // recordsRequired: '%{resultCount}',
-      // perRequest: 1,
-      // offsetParam: 'page',
+      recordsRequired: '%{resultCount}',
+      perRequest: 1,
+      offsetParam: 'page',
       GET: {
-        params: {
-          match: 'title',
-          term: '%{query.query}',
-          perPage: '50',
+        params: (queryParams, pathComponents, resources) => {
+          const params = {
+            perPage: '100',
+            stats: 'true',
+          };
+
+          if (resources && resources.query && resources.query.query) {
+            params.match = 'title';
+            params.term = resources.query.query;
+          }
+
+          return params;
         },
       },
     },
-    query: {},
-    resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    query: {
+      initialValue: {
+        query: '',
+        filters: '',
+      }
+    },
+    resultCount: {
+      initialValue: INITIAL_RESULT_COUNT,
+    },
   });
 
   static propTypes = {

@@ -27,9 +27,10 @@ export default class KBs extends React.Component {
     records: {
       type: 'okapi',
       resourceShouldRefresh: true,
+      records: 'results',
       path: (queryParams, pathComponents, resources) => {
         let path = 'erm/pci';
-        let params = [];
+        let params = ['stats=true'];
 
         const { query: { query, filters, sort } } = resources;
 
