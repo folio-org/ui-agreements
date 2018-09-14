@@ -6,7 +6,7 @@ import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 
 class AgreementLines extends React.Component {
   static propTypes = {
-    agreementLines: PropTypes.arrayOf([PropTypes.object]),
+    agreementLines: PropTypes.arrayOf(PropTypes.object),
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
