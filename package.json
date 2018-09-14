@@ -17,6 +17,7 @@
   "devDependencies": {
     "@folio/eslint-config-stripes": "^3.2.1",
     "@folio/stripes-cli": "^1.4.0",
+    "@folio/stripes-logger": "^0.0.2",
     "babel-eslint": "^9.0.0",
     "eslint": "^5.5.0"
   },
