@@ -1,0 +1,41 @@
+{
+  "meta.title": "ERM",
+  "new-app.greeting": "Congratulations!",
+  "new-app.message": "Your Stripes app is running.",
+
+  "settings.general": "General",
+  "settings.general.message": "These are your general app settings.",
+  "settings.some-feature": "Some Feature",
+  "settings.some-feature.message": "These are your settings for some app feature.",
+
+  "errors.noMatch.oops": "Uh-oh!",
+  "errors.noMatch.how": "How did you get to {location}?",
+
+  "agreements.agreementInfo": "Agreement information",
+  "agreements.agreementName": "Agreement name",
+  "agreements.agreementDescription": "Description",
+  "agreements.agreementCancelDeadline": "Cancellation deadline",
+  "agreements.agreementRenewPrio": "Renewal priority",
+  "agreements.agreementStatus": "Agreement status",
+  "agreements.agreementIsPerpetual": "Is perpetual?",
+  "agreements.internalContacts": "Internal contacts",
+  "agreements.contentReviews": "Content reviews",
+  "agreements.contentReviewNeeded": "Content review needed?",
+  "agreements.contentReviewDates": "Upcoming review dates",
+  "agreements.trials": "Trials",
+  "agreements.trialAgreement": "Agreement is for trial?",
+  "agreements.trialStartDate": "Trial start date",
+  "agreements.trialEndDate": "Trial end date",
+  "agreements.trialURL": "URL from trial",
+  "agreements.reviewHistory": "Review history",
+  "agreements.reviewDate": "Review date",
+  "agreements.reviewDecision": "Decision",
+  "agreements.reviewNotes": "Decision notes",
+  "agreements.agreementLines": "Agreement lines",
+  "agreements.license": "License",
+  "agreements.licenseAndBusTerms": "License and business terms",
+  "agreements.organizations": "Organizations",
+  "agreements.eresources": "E-resources",
+  "agreements.assocAgreements": "Associated agreements"
+
+}
