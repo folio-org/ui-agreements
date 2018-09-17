@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Accordion, AccordionSet } from '@folio/stripes-components/lib/Accordion';
-import KeyValue from '@folio/stripes-components/lib/KeyValue';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import { Accordion } from '@folio/stripes-components';
 
 class LicenseBusinessTerms extends React.Component {
   static propTypes = {

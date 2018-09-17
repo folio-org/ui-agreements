@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Button from '@folio/stripes-components/lib/Button';
-import SegmentedControl from '@folio/stripes-components/lib/SegmentedControl';
+import { Button, SegmentedControl } from '@folio/stripes-components';
 
-import css from './Tabs.css'
+import css from './Tabs.css';
 
 export default class Tabs extends React.Component {
   static propTypes = {

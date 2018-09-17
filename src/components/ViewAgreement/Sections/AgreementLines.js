@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Accordion } from '@folio/stripes-components/lib/Accordion';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
+import {
+  Accordion,
+  Col,
+  MultiColumnList,
+  Row,
+} from '@folio/stripes-components';
 
 class AgreementLines extends React.Component {
   static propTypes = {

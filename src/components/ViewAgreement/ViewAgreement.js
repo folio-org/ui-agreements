@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
-import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
-import KeyValue from '@folio/stripes-components/lib/KeyValue';
-import Layout from '@folio/stripes-components/lib/Layout';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import Icon from '@folio/stripes-components/lib/Icon';
-import Pane from '@folio/stripes-components/lib/Pane';
+import {
+  AccordionSet,
+  Icon,
+  Layout,
+  Pane,
+} from '@folio/stripes-components';
 
 import {
   AgreementInfo,
