@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Accordion, AccordionSet } from '@folio/stripes-components/lib/Accordion';
-import KeyValue from '@folio/stripes-components/lib/KeyValue';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import {
+  Accordion,
+  AccordionSet,
+  Col,
+  KeyValue,
+  Row,
+} from '@folio/stripes-components';
 
 import css from './AgreementInfo.css';
 

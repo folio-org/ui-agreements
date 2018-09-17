@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
-import Layout from '@folio/stripes-components/lib/Layout';
-import Icon from '@folio/stripes-components/lib/Icon';
-import Pane from '@folio/stripes-components/lib/Pane';
+import {
+  Icon,
+  Layout,
+  Pane,
+} from '@folio/stripes-components';
 
 export default class ViewTitle extends React.Component {
   static manifest = Object.freeze({
