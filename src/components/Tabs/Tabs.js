@@ -25,18 +25,13 @@ export default class Tabs extends React.Component {
   setTab = () => {
     const { tab } = this.props;
     if (!tab) return;
-    this.setState( { tab })
+    this.setState({ tab });
   }
 
   handleActivate = ({ id }) => {
     this.setState({ tab: id });
-    this.props.parentMutator.query.update({
-      _path: `/erm/${id}`,
-      layer: null,
-      query: '',
-      filters: '',
-      sort: '',
-    });
+    this.props.parentMutator.query.replace({ _path: `/erm/${id}` });
+    this.props.parentMutator.resultCount.replace(1);
   }
 
   render() {

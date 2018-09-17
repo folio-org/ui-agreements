@@ -5,9 +5,9 @@ import { get } from 'lodash';
 import { SearchAndSort } from '@folio/stripes-smart-components';
 
 import ViewKB from '../components/ViewKB';
-import packageInfo from '../../package.json';
+import packageInfo from '../../package';
 
-const INITIAL_RESULT_COUNT = 20;
+const INITIAL_RESULT_COUNT = 100;
 
 const EditRecord = (props) => (
   <div>
@@ -42,7 +42,7 @@ export default class KBs extends React.Component {
       },
     },
     query: {},
-    resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    resultCount: { },
   });
 
   static propTypes = {
