@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { SearchAndSort } from '@folio/stripes-smart-components';
 
 import ViewTitle from '../components/ViewTitle';
-import packageInfo from '../../package.json';
+import packageInfo from '../../package';
 
-const INITIAL_RESULT_COUNT = 1;
+const INITIAL_RESULT_COUNT = 100;
 
 const EditRecord = (props) => (
   <div>
@@ -25,12 +25,10 @@ export default class Titles extends React.Component {
       records: 'results',
       path: 'erm/titles',
       recordsRequired: '%{resultCount}',
-      perRequest: 1,
-      offsetParam: 'page',
+      perRequest: 100,
       GET: {
         params: (queryParams, pathComponents, resources) => {
           const params = {
-            perPage: '100',
             stats: 'true',
           };
 
@@ -57,6 +55,10 @@ export default class Titles extends React.Component {
   static propTypes = {
     resources: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
+      resultCount: PropTypes.number,
+    }),
+    mutator: PropTypes.shape({
+      resultCount: PropTypes.object,
     }),
   };
 

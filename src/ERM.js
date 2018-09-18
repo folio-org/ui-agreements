@@ -9,7 +9,10 @@ import Titles from './routes/Titles';
 import Tabs from './components/Tabs';
 
 export default class Erm extends React.Component {
-  static manifest = Object.freeze({ query: {} });
+  static manifest = Object.freeze({
+    query: {},
+    resultCount: {},
+  });
 
   static propTypes = {
     location: PropTypes.shape({

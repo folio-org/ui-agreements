@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { SearchAndSort } from '@folio/stripes-smart-components';
 
 import ViewAgreement from '../components/ViewAgreement';
-import packageInfo from '../../package.json';
+import packageInfo from '../../package';
 
-const INITIAL_RESULT_COUNT = 20;
+const INITIAL_RESULT_COUNT = 100;
 
 const EditRecord = (props) => (
   <div>
@@ -44,7 +44,7 @@ export default class Agreements extends React.Component {
       },
     },
     query: {},
-    resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    resultCount: { },
   });
 
   static propTypes = {
