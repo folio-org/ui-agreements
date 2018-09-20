@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import stripesForm from '@folio/stripes-form';
-import { Button, IconButton, Pane, PaneMenu } from '@folio/stripes-components/lib/Pane';
+import { Button, IconButton, Pane, PaneMenu } from '@folio/stripes-components';
 
 import AgreementForm from '../AgreementForm';
 
@@ -38,11 +38,11 @@ class AgreementPane extends Component {
   }
 
   renderLastMenu() {
-    const { stripes: { intl } } = this.props;
+    const { initialValues, stripes: { intl } } = this.props;
 
     let id;
     let label;
-    if (this.props.initialValues.id) {
+    if (initialValues && initialValues.id) {
       id = 'clickable-updateagreement';
       label = intl.formatMessage({ id: 'ui-erm.agreements.updateAgreement' });
     } else {
@@ -81,14 +81,15 @@ class AgreementPane extends Component {
 
   render() {
     const { initialValues, stripes: { intl } } = this.props;
-    const paneTitle = initialValues.id ? initialValues.name : intl.formatMessage({ id: 'ui-erm.agreements.createAgreement' });
+    const paneTitle = initialValues && initialValues.id ?
+      initialValues.name : intl.formatMessage({ id: 'ui-erm.agreements.createAgreement' });
 
     return (
       <form id="form-agreement">
         <Pane
           defaultWidth="100%"
-          firstMenu={this.renderFirstMenu}
-          lastMenu={this.renderLastMenu}
+          firstMenu={this.renderFirstMenu()}
+          lastMenu={this.renderLastMenu()}
           paneTitle={paneTitle}
         >
           <AgreementForm {...this.props} deleteAgreement={this.deleteAgreement} />

@@ -1,1 +1,1 @@
-export { default } from 'AgreementForm';
+export { default } from './AgreementForm';

@@ -28,7 +28,8 @@
     "@folio/stripes-smart-components": "^1.8.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.1.1",
+    "redux-form": "^7.0.3"
   },
   "peerDependencies": {
     "@folio/stripes-core": "^2.12.0",
