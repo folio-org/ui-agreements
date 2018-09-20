@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import {
   Accordion,
   AccordionSet,
@@ -67,13 +68,13 @@ class AgreementInfo extends React.Component {
           <Col xs={6}>
             <KeyValue
               label={intl.formatMessage({ id: 'ui-erm.agreements.agreementCancelDeadline' })}
-              value="-"
+              value={agreement.cancellationDeadline ? intl.formatDate(agreement.cancellationDeadline) : '-'}
             />
           </Col>
           <Col xs={6}>
             <KeyValue
               label={intl.formatMessage({ id: 'ui-erm.agreements.agreementRenewPrio' })}
-              value="-"
+              value={get(agreement, ['renewalPriority', 'label'], '-')}
             />
           </Col>
         </Row>
@@ -81,13 +82,13 @@ class AgreementInfo extends React.Component {
           <Col xs={6}>
             <KeyValue
               label={intl.formatMessage({ id: 'ui-erm.agreements.agreementStatus' })}
-              value="-"
+              value={get(agreement, ['agreementStatus', 'label'], '-')}
             />
           </Col>
           <Col xs={6}>
             <KeyValue
               label={intl.formatMessage({ id: 'ui-erm.agreements.agreementIsPerpetual' })}
-              value="-"
+              value={get(agreement, ['isPerpetual', 'label'], '-')}
             />
           </Col>
         </Row>
