@@ -4,7 +4,7 @@ import { get } from 'lodash';
 
 import { SearchAndSort } from '@folio/stripes-smart-components';
 
-import ViewKB from '../components/ViewKB';
+import ViewKB from '../components/KBs/ViewKB';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;

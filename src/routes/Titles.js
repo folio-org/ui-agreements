@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { SearchAndSort } from '@folio/stripes-smart-components';
 
-import ViewTitle from '../components/ViewTitle';
+import ViewTitle from '../components/Titles/ViewTitle';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
