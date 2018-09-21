@@ -11,6 +11,8 @@
   "errors.noMatch.oops": "Uh-oh!",
   "errors.noMatch.how": "How did you get to {location}?",
 
+  "agreements.edit": "Edit",
+
   "agreements.agreementInfo": "Agreement information",
   "agreements.agreementName": "Agreement name",
   "agreements.agreementDescription": "Description",
@@ -40,6 +42,7 @@
 
   "agreements.closeNewAgreement": "Close New Agreement dialog",
   "agreements.createAgreement": "Create Agreement",
-  "agreements.updateAgreement": "Create Agreement"
+  "agreements.updateAgreement": "Update Agreement",
+  "agreements.editAgreement": "Edit Agreement"
 
 }

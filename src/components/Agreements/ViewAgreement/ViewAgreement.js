@@ -7,6 +7,7 @@ import {
   Icon,
   Layout,
   Pane,
+  Layer,
 } from '@folio/stripes-components';
 
 import {
@@ -18,6 +19,8 @@ import {
   LicenseBusinessTerms,
   Organizations
 } from './Sections';
+
+import EditAgreement from '../EditAgreement';
 
 class ViewAgreement extends React.Component {
   static manifest = Object.freeze({
@@ -33,6 +36,7 @@ class ViewAgreement extends React.Component {
         term: ':{id}',
       },
     },
+    query: {},
   });
 
   static propTypes = {
@@ -81,6 +85,11 @@ class ViewAgreement extends React.Component {
     }));
   }
 
+  handleSubmit = (agreement) => {
+    this.props.mutator.selectedAgreement.PUT(agreement)
+      .then(() => this.props.onCloseEdit());
+  }
+
   renderLoadingPane() {
     return (
       <Pane
@@ -97,11 +106,29 @@ class ViewAgreement extends React.Component {
     );
   }
 
+  renderEditLayer() {
+    const { resources: { query }, stripes: { intl } } = this.props;
+
+    return (
+      <Layer
+        isOpen={query.layer === 'edit'}
+        contentLabel={intl.formatMessage({ id: 'ui-erm.agreements.editAgreement' })}
+      >
+        <EditAgreement
+          {...this.props}
+          onSubmit={this.handleSubmit}
+          parentMutator={this.props.mutator}
+          initialValues={this.getAgreement()}
+        />
+      </Layer>
+    );
+  }
+
   render() {
     const agreement = this.getAgreement();
-
     if (!agreement) return this.renderLoadingPane();
 
+    const { stripes } = this.props;
     const sectionProps = this.getSectionProps();
 
     return (
@@ -111,6 +138,14 @@ class ViewAgreement extends React.Component {
         paneTitle={agreement.name}
         dismissible
         onClose={this.props.onClose}
+        actionMenuItems={stripes.hasPerm('ui-erm.agreements.edit') ? [{
+          id: 'clickable-edit-agreement',
+          title: stripes.intl.formatMessage({ id: 'ui-erm.agreements.editAgreement' }),
+          label: stripes.intl.formatMessage({ id: 'ui-erm.agreements.edit' }),
+          href: this.props.editLink,
+          onClick: this.props.onEdit,
+          icon: 'edit',
+        }] : []}
       >
         <AccordionSet>
           <AgreementInfo id="agreementInfo" open={this.state.sections.agreementInfo} {...sectionProps} />
@@ -121,6 +156,7 @@ class ViewAgreement extends React.Component {
           <Eresources id="eresources" open={this.state.sections.eresources} {...sectionProps} />
           <AssociatedAgreements id="associatedAgreements" open={this.state.sections.associatedAgreements} {...sectionProps} />
         </AccordionSet>
+        { this.renderEditLayer() }
       </Pane>
     );
   }

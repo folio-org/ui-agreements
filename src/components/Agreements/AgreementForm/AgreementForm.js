@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Field } from 'redux-form';
 import { Col, Row, TextField } from '@folio/stripes-components';
 
-class AgreementForm extends Component {
+class AgreementForm extends React.Component {
   render() {
     return (
       <Row>

@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import stripesForm from '@folio/stripes-form';
@@ -7,12 +6,12 @@ import { Button, IconButton, Pane, PaneMenu } from '@folio/stripes-components';
 
 import AgreementForm from '../AgreementForm';
 
-class AgreementPane extends Component {
+class EditAgreement extends React.Component {
   static propTypes = {
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     onSave: PropTypes.func,
-    onCancel: PropTypes.func,
+    onCloseEdit: PropTypes.func,
     onRemove: PropTypes.func,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
@@ -20,17 +19,12 @@ class AgreementPane extends Component {
     parentMutator: PropTypes.object
   }
 
-  constructor(props) {
-    super(props);
-    this.deleteAgreement = this.deleteAgreement.bind(this);
-  }
-
   renderFirstMenu() {
     return (
       <PaneMenu>
         <IconButton
           icon="closeX"
-          onClick={this.props.onCancel}
+          onClick={this.props.onCloseEdit}
           aria-label={this.props.stripes.intl.formatMessage({ id: 'ui-erm.agreements.closeNewAgreement' })}
         />
       </PaneMenu>
@@ -68,17 +62,6 @@ class AgreementPane extends Component {
     );
   }
 
-  deleteAgreement = (id) => {
-    const { parentMutator } = this.props;
-
-    parentMutator.records.DELETE({ id }).then(() => {
-      parentMutator.query.update({
-        _path: '/erm/sas',
-        layer: null
-      });
-    });
-  }
-
   render() {
     const { initialValues, stripes: { intl } } = this.props;
     const paneTitle = initialValues && initialValues.id ?
@@ -92,7 +75,7 @@ class AgreementPane extends Component {
           lastMenu={this.renderLastMenu()}
           paneTitle={paneTitle}
         >
-          <AgreementForm {...this.props} deleteAgreement={this.deleteAgreement} />
+          <AgreementForm {...this.props} />
         </Pane>
       </form>
     );
@@ -100,9 +83,9 @@ class AgreementPane extends Component {
 }
 
 export default stripesForm({
-  form: 'AgreementPane',
+  form: 'EditAgreement',
   // validate,
   // asyncValidate,
   navigationCheck: true,
   enableReinitialize: true,
-})(AgreementPane);
+})(EditAgreement);

@@ -9,7 +9,7 @@ import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
 
-export default class Agreements extends React.Component {
+class Agreements extends React.Component {
   static manifest = Object.freeze({
     records: {
       type: 'okapi',
@@ -89,3 +89,5 @@ export default class Agreements extends React.Component {
     );
   }
 }
+
+export default Agreements;
