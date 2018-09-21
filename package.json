@@ -50,6 +50,30 @@
         "visible": true
       },
       {
+        "permissionName": "ui-erm.agreements.view",
+        "displayName": "ERM: Can view agreements",
+        "visible": true,
+        "subPermissions": [
+          "module.erm.enabled"
+        ]
+      },
+      {
+        "permissionName": "ui-erm.agreements.edit",
+        "displayName": "ERM: Can edit agreements",
+        "visible": true,
+        "subPermissions": [
+          "ui-erm.agreements.view"
+        ]
+      },
+      {
+        "permissionName": "ui-erm.agreements.create",
+        "displayName": "ERM: Can create and edit agreements",
+        "visible": true,
+        "subPermissions": [
+          "ui-erm.agreements.edit"
+        ]
+      },
+      {
         "permissionName": "settings.erm.enabled",
         "displayName": "Settings (erm): display list of settings pages",
         "subPermissions": [
