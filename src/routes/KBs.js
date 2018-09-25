@@ -29,8 +29,8 @@ export default class KBs extends React.Component {
       resourceShouldRefresh: true,
       records: 'results',
       path: (queryParams, pathComponents, resources) => {
-        let path = 'erm/pci';
-        let params = ['stats=true'];
+        const path = 'erm/pci';
+        const params = ['stats=true'];
 
         const { query: { query, filters, sort } } = resources;
 
