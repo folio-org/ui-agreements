@@ -5,13 +5,6 @@ import Route from 'react-router-dom/Route';
 import ERM from './ERM';
 import Settings from './settings';
 
-const NoMatch = () => (
-  <div>
-    <h2>{this.props.stripes.intl.formatMessage({ id: 'ui-erm.errors.noMatch.oops' })}</h2>
-    <p>{this.props.stripes.intl.formatMessage({ id: 'ui-erm.errors.noMatch.how' }, { location: <tt>{this.props.location.pathname}</tt> })}</p>
-  </div>
-);
-
 class App extends React.Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
@@ -21,7 +14,7 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.connectedERM = props.stripes.connect(ERM)
+    this.connectedERM = props.stripes.connect(ERM);
   }
 
   render() {
@@ -35,7 +28,6 @@ class App extends React.Component {
           path={`${this.props.match.path}`}
           render={() => <this.connectedERM {...this.props} />}
         />
-        <Route component={NoMatch} />
       </Switch>
     );
   }

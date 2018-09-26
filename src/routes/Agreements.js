@@ -3,40 +3,25 @@ import PropTypes from 'prop-types';
 
 import { SearchAndSort } from '@folio/stripes-smart-components';
 
-import ViewAgreement from '../components/ViewAgreement';
+import ViewAgreement from '../components/Agreements/ViewAgreement';
+import EditAgreement from '../components/Agreements/EditAgreement';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
 
-const EditRecord = (props) => (
-  <div>
-    <h3>Edit Record</h3>
-    <pre>
-      {JSON.stringify(props)}
-    </pre>
-  </div>
-);
-
-const MATCH = [
-  'name',
-  'description',
-  'localReference',
-  'vendorReference',
-].map(t => `match=${t}`).join('&');
-
-export default class Agreements extends React.Component {
+class Agreements extends React.Component {
   static manifest = Object.freeze({
     records: {
       type: 'okapi',
       resourceShouldRefresh: true,
       records: 'results',
       path: (queryParams, pathComponents, resources) => {
-        let path = 'erm/sas';
-        let params = ['stats=true'];
+        const path = 'erm/sas';
+        const params = ['stats=true'];
 
         const { query: { query, filters, sort } } = resources;
 
-        if (query) params.push(`${MATCH}&term=${query}`);
+        if (query) params.push(`match=name&match=description&term=${query}`);
 
         if (params.length) return `${path}?${params.join('&')}`;
 
@@ -44,14 +29,27 @@ export default class Agreements extends React.Component {
       },
     },
     query: {},
-    resultCount: { },
+    resultCount: {},
   });
 
   static propTypes = {
     resources: PropTypes.shape({
       records: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.object]),
     }),
+    mutator: PropTypes.object,
   };
+
+  create = (agreement) => {
+    const { mutator } = this.props;
+
+    mutator.records.POST(agreement)
+      .then((newAgreement) => {
+        mutator.query.update({
+          _path: `/erm/agreements/view/${newAgreement.id}`,
+          layer: '',
+        });
+      });
+  }
 
   render() {
     const path = '/erm/agreements';
@@ -68,10 +66,11 @@ export default class Agreements extends React.Component {
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
           viewRecordComponent={ViewAgreement}
-          editRecordComponent={EditRecord}
+          editRecordComponent={EditAgreement}
           visibleColumns={['id', 'name', 'description']}
           viewRecordPerms="module.erm.enabled"
           newRecordPerms="module.erm.enabled"
+          onCreate={this.create}
           parentResources={this.props.resources}
           parentMutator={this.props.mutator}
           showSingleResult
@@ -90,3 +89,5 @@ export default class Agreements extends React.Component {
     );
   }
 }
+
+export default Agreements;

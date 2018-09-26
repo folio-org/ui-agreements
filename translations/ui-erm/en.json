@@ -11,6 +11,8 @@
   "errors.noMatch.oops": "Uh-oh!",
   "errors.noMatch.how": "How did you get to {location}?",
 
+  "agreements.edit": "Edit",
+
   "agreements.agreementInfo": "Agreement information",
   "agreements.agreementName": "Agreement name",
   "agreements.agreementDescription": "Description",
@@ -36,6 +38,11 @@
   "agreements.licenseAndBusTerms": "License and business terms",
   "agreements.organizations": "Organizations",
   "agreements.eresources": "E-resources",
-  "agreements.assocAgreements": "Associated agreements"
+  "agreements.assocAgreements": "Associated agreements",
+
+  "agreements.closeNewAgreement": "Close New Agreement dialog",
+  "agreements.createAgreement": "Create Agreement",
+  "agreements.updateAgreement": "Update Agreement",
+  "agreements.editAgreement": "Edit Agreement"
 
 }

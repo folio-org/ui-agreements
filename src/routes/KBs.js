@@ -4,7 +4,7 @@ import { get } from 'lodash';
 
 import { SearchAndSort } from '@folio/stripes-smart-components';
 
-import ViewKB from '../components/ViewKB';
+import ViewKB from '../components/KBs/ViewKB';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
@@ -29,8 +29,8 @@ export default class KBs extends React.Component {
       resourceShouldRefresh: true,
       records: 'results',
       path: (queryParams, pathComponents, resources) => {
-        let path = 'erm/pci';
-        let params = ['stats=true'];
+        const path = 'erm/pci';
+        const params = ['stats=true'];
 
         const { query: { query, filters, sort } } = resources;
 
