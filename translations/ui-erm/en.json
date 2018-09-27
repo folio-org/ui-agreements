@@ -1,15 +1,5 @@
 {
   "meta.title": "ERM",
-  "new-app.greeting": "Congratulations!",
-  "new-app.message": "Your Stripes app is running.",
-
-  "settings.general": "General",
-  "settings.general.message": "These are your general app settings.",
-  "settings.some-feature": "Some Feature",
-  "settings.some-feature.message": "These are your settings for some app feature.",
-
-  "errors.noMatch.oops": "Uh-oh!",
-  "errors.noMatch.how": "How did you get to {location}?",
 
   "agreements.edit": "Edit",
 
@@ -43,6 +33,15 @@
   "agreements.closeNewAgreement": "Close New Agreement dialog",
   "agreements.createAgreement": "Create Agreement",
   "agreements.updateAgreement": "Update Agreement",
-  "agreements.editAgreement": "Edit Agreement"
+  "agreements.editAgreement": "Edit Agreement",
+
+  "agreementLines.name": "Name",
+  "agreementLines.type": "Type",
+
+  "settings.general": "General",
+  "settings.general.message": "These are your general app settings.",
+  "settings.some-feature": "Some Feature",
+  "settings.some-feature.message": "These are your settings for some app feature."
+
 
 }

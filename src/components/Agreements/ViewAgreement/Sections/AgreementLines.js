@@ -1,4 +1,5 @@
 import React from 'react';
+import { injectIntl, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
 import {
   Accordion,
@@ -13,11 +14,11 @@ class AgreementLines extends React.Component {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    stripes: PropTypes.object,
+    intl: intlShape,
   };
 
   render() {
-    const { agreementLines, stripes: { intl } } = this.props;
+    const { agreementLines, intl } = this.props;
 
     return (
       <Accordion
@@ -36,6 +37,10 @@ class AgreementLines extends React.Component {
                 name: line => line.entitlementLabel,
                 type: line => line.entitlementType,
               }}
+              columnMapping={{
+                name: intl.formatMessage({ id: 'ui-erm.agreementLines.name' }),
+                type: intl.formatMessage({ id: 'ui-erm.agreementLines.type' }),
+              }}
               columnWidths={{
                 name: '50%',
                 type: '50%',
@@ -48,4 +53,4 @@ class AgreementLines extends React.Component {
   }
 }
 
-export default AgreementLines;
+export default injectIntl(AgreementLines);
