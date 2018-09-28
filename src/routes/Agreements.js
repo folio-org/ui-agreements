@@ -13,19 +13,22 @@ class Agreements extends React.Component {
   static manifest = Object.freeze({
     records: {
       type: 'okapi',
+      path: 'erm/sas',
       resourceShouldRefresh: true,
       records: 'results',
-      path: (queryParams, pathComponents, resources) => {
-        const path = 'erm/sas';
-        const params = ['stats=true'];
+      params: (queryParams, pathComponents, resources) => {
+        const params = {
+          stats: 'true',
+        };
 
         const { query: { query, filters, sort } } = resources;
 
-        if (query) params.push(`match=name&match=description&term=${query}`);
+        if (query) {
+          params.match = ['name', 'description'];
+          params.term = query;
+        }
 
-        if (params.length) return `${path}?${params.join('&')}`;
-
-        return path;
+        return params;
       },
     },
     query: {},

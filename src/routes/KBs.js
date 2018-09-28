@@ -18,27 +18,26 @@ const EditRecord = (props) => (
   </div>
 );
 
-const MATCH = [
-  'pti.titleInstance.title'
-].map(t => `match=${t}`).join('&');
-
 export default class KBs extends React.Component {
   static manifest = Object.freeze({
     records: {
+      path: 'erm/pci',
       type: 'okapi',
       resourceShouldRefresh: true,
       records: 'results',
-      path: (queryParams, pathComponents, resources) => {
-        const path = 'erm/pci';
-        const params = ['stats=true'];
+      params: (queryParams, pathComponents, resources) => {
+        const params = {
+          stats: 'true',
+        };
 
         const { query: { query, filters, sort } } = resources;
 
-        if (query) params.push(`${MATCH}&term=${query}`);
+        if (query) {
+          params.match = 'pti.titleInstance.title';
+          params.term = query;
+        }
 
-        if (params.length) return `${path}?${params.join('&')}`;
-
-        return path;
+        return params;
       },
     },
     query: {},
