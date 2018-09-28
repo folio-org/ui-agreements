@@ -5,6 +5,7 @@ import { get } from 'lodash';
 import { SearchAndSort } from '@folio/stripes-smart-components';
 
 import ViewKB from '../components/KBs/ViewKB';
+import getSASParams from '../util/getSASParams';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
@@ -25,20 +26,9 @@ export default class KBs extends React.Component {
       type: 'okapi',
       resourceShouldRefresh: true,
       records: 'results',
-      params: (queryParams, pathComponents, resources) => {
-        const params = {
-          stats: 'true',
-        };
-
-        const { query: { query, filters, sort } } = resources;
-
-        if (query) {
-          params.match = 'pti.titleInstance.title';
-          params.term = query;
-        }
-
-        return params;
-      },
+      params: getSASParams({
+        searchKey: 'pti.titleInstance.title'
+      }),
     },
     query: {},
     resultCount: { },
