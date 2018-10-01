@@ -47,9 +47,7 @@ export default class Titles extends React.Component {
         filters: '',
       }
     },
-    resultCount: {
-      initialValue: INITIAL_RESULT_COUNT,
-    },
+    resultCount: { initialValue: INITIAL_RESULT_COUNT },
   });
 
   static propTypes = {
