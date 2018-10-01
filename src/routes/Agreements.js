@@ -32,7 +32,7 @@ class Agreements extends React.Component {
       },
     },
     query: {},
-    resultCount: {},
+    resultCount: { initialValue: INITIAL_RESULT_COUNT },
   });
 
   static propTypes = {
