@@ -4,10 +4,13 @@ import { get } from 'lodash';
 
 import {
   AccordionSet,
+  Col,
+  ExpandAllButton,
   Icon,
+  Layer,
   Layout,
   Pane,
-  Layer,
+  Row,
 } from '@folio/stripes-components';
 
 import {
@@ -86,6 +89,10 @@ class ViewAgreement extends React.Component {
     }));
   }
 
+  handleAllSectionsToggle = (sections) => {
+    this.setState({ sections });
+  }
+
   handleSubmit = (agreement) => {
     this.props.mutator.selectedAgreement.PUT(agreement)
       .then(() => this.props.onCloseEdit());
@@ -150,6 +157,11 @@ class ViewAgreement extends React.Component {
       >
         <VendorInfo {...sectionProps} />
         <AccordionSet>
+          <Row end="xs">
+            <Col xs>
+              <ExpandAllButton accordionStatus={this.state.sections} onToggle={this.handleAllSectionsToggle} />
+            </Col>
+          </Row>
           <AgreementInfo id="agreementInfo" open={this.state.sections.agreementInfo} {...sectionProps} />
           <AgreementLines id="agreementLines" open={this.state.sections.agreementLines} {...sectionProps} />
           <License id="license" open={this.state.sections.license} {...sectionProps} />

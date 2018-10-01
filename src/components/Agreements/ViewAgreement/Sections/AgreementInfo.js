@@ -65,27 +65,19 @@ class AgreementInfo extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={6}>
+          <Col xs={4}>
             <KeyValue
               label={intl.formatMessage({ id: 'ui-erm.agreements.agreementCancelDeadline' })}
               value={agreement.cancellationDeadline ? intl.formatDate(agreement.cancellationDeadline) : '-'}
             />
           </Col>
-          <Col xs={6}>
+          <Col xs={4}>
             <KeyValue
               label={intl.formatMessage({ id: 'ui-erm.agreements.agreementRenewPrio' })}
               value={get(agreement, ['renewalPriority', 'label'], '-')}
             />
           </Col>
-        </Row>
-        <Row>
-          <Col xs={6}>
-            <KeyValue
-              label={intl.formatMessage({ id: 'ui-erm.agreements.agreementStatus' })}
-              value={get(agreement, ['agreementStatus', 'label'], '-')}
-            />
-          </Col>
-          <Col xs={6}>
+          <Col xs={4}>
             <KeyValue
               label={intl.formatMessage({ id: 'ui-erm.agreements.agreementIsPerpetual' })}
               value={get(agreement, ['isPerpetual', 'label'], '-')}
