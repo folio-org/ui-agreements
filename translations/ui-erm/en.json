@@ -3,6 +3,12 @@
 
   "agreements.edit": "Edit",
 
+  "agreements.vendorInfo.vendor": "Vendor",
+  "agreements.vendorInfo.startDate": "Start date",
+  "agreements.vendorInfo.endDate": "End date",
+  "agreements.vendorInfo.status": "Status",
+  "agreements.vendorInfo.visitPlatform": "Visit platform",
+
   "agreements.agreementInfo": "Agreement information",
   "agreements.agreementName": "Agreement name",
   "agreements.agreementDescription": "Description",

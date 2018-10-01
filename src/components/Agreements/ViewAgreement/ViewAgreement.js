@@ -17,7 +17,8 @@ import {
   Eresources,
   License,
   LicenseBusinessTerms,
-  Organizations
+  Organizations,
+  VendorInfo
 } from './Sections';
 
 import EditAgreement from '../EditAgreement';
@@ -147,6 +148,7 @@ class ViewAgreement extends React.Component {
           icon: 'edit',
         }] : []}
       >
+        <VendorInfo {...sectionProps} />
         <AccordionSet>
           <AgreementInfo id="agreementInfo" open={this.state.sections.agreementInfo} {...sectionProps} />
           <AgreementLines id="agreementLines" open={this.state.sections.agreementLines} {...sectionProps} />
