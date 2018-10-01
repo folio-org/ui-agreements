@@ -20,6 +20,7 @@ class VendorInfo extends React.Component {
 
   render() {
     const { agreement, intl } = this.props;
+    const { startDate, endDate } = agreement;
 
     return (
       <Row className={css.vendorInfo}>
@@ -32,19 +33,19 @@ class VendorInfo extends React.Component {
         <Col xs={2}>
           <KeyValue
             label={intl.formatMessage({ id: 'ui-erm.agreements.vendorInfo.startDate' })}
-            value={intl.formatDate(Date.now())}
+            value={startDate ? intl.formatDate(startDate) : '-'}
           />
         </Col>
         <Col xs={2}>
           <KeyValue
             label={intl.formatMessage({ id: 'ui-erm.agreements.vendorInfo.endDate' })}
-            value={intl.formatDate(Date.now())}
+            value={endDate ? intl.formatDate(endDate) : '-'}
           />
         </Col>
         <Col xs={2}>
           <KeyValue
             label={intl.formatMessage({ id: 'ui-erm.agreements.vendorInfo.status' })}
-            value="Active"
+            value={get(agreement, ['agreementStatus'], '-')}
           />
         </Col>
         <Col xs={3}>
