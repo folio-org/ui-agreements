@@ -6,6 +6,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import {
   Button,
   Col,
+  Icon,
   KeyValue,
   Row,
 } from '@folio/stripes-components';
@@ -49,7 +50,11 @@ class VendorInfo extends React.Component {
           />
         </Col>
         <Col xs={3}>
-          <Button>{intl.formatMessage({ id: 'ui-erm.agreements.vendorInfo.visitPlatform' })}</Button>
+          <Button>
+            <Icon size="small" icon="external-link">
+              {intl.formatMessage({ id: 'ui-erm.agreements.vendorInfo.visitPlatform' })}
+            </Icon>
+          </Button>
         </Col>
       </Row>
     );
