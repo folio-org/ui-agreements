@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { Field } from 'redux-form';
+import { get } from 'lodash';
 import {
-  Checkbox,
   Col,
   Datepicker,
   Row,
@@ -16,13 +16,34 @@ class AgreementForm extends React.Component {
   static propTypes = {
     intl: intlShape,
     parentResources: PropTypes.shape({
-      agreementTypeValues: PropTypes.object,
-      renewalPriorityValues: PropTypes.object,
       agreementStatusValues: PropTypes.object,
+      renewalPriorityValues: PropTypes.object,
       isPerpetualValues: PropTypes.object,
-      contentReviewNeededValues: PropTypes.object,
     }),
   };
+
+  getAgreementStatusValues() {
+    return get(this.props.parentResources.agreementStatusValues, ['records'], [])
+      .map(value => ({ label: value.label, value: value.id }));
+  }
+
+  getRenewalPriorityValues() {
+    const values = get(this.props.parentResources.renewalPriorityValues, ['records'], [])
+      .map(value => ({ label: value.label, value: value.id }));
+
+    values.unshift({ label: '', value: null });
+
+    return values;
+  }
+
+  getIsPerpetualValues() {
+    const values = get(this.props.parentResources.isPerpetualValues, ['records'], [])
+      .map(value => ({ label: value.label, value: value.id }));
+
+    values.unshift({ label: '', value: null });
+
+    return values;
+  }
 
   render() {
     const { intl } = this.props;
@@ -37,7 +58,6 @@ class AgreementForm extends React.Component {
                 name="name"
                 label={intl.formatMessage({ id: 'ui-erm.agreements.agreementName' })}
                 component={TextField}
-                fullWidth
               />
             </Col>
           </Row>
@@ -48,7 +68,6 @@ class AgreementForm extends React.Component {
                 name="description"
                 label={intl.formatMessage({ id: 'ui-erm.agreements.agreementDescription' })}
                 component={TextArea}
-                fullWidth
               />
             </Col>
           </Row>
@@ -60,7 +79,6 @@ class AgreementForm extends React.Component {
                 label={intl.formatMessage({ id: 'ui-erm.agreements.agreementStartDate' })}
                 component={Datepicker}
                 dateFormat="YYYY-MM-DD"
-                fullWidth
               />
             </Col>
             <Col xs={12} md={4}>
@@ -70,7 +88,6 @@ class AgreementForm extends React.Component {
                 label={intl.formatMessage({ id: 'ui-erm.agreements.agreementEndDate' })}
                 component={Datepicker}
                 dateFormat="YYYY-MM-DD"
-                fullWidth
               />
             </Col>
             <Col xs={12} md={4}>
@@ -80,7 +97,6 @@ class AgreementForm extends React.Component {
                 label={intl.formatMessage({ id: 'ui-erm.agreements.agreementCancelDeadline' })}
                 component={Datepicker}
                 dateFormat="YYYY-MM-DD"
-                fullWidth
               />
             </Col>
           </Row>
@@ -91,7 +107,7 @@ class AgreementForm extends React.Component {
                 name="agreementStatus"
                 label={intl.formatMessage({ id: 'ui-erm.agreements.agreementStatus' })}
                 component={Select}
-                dataOptions={this.props.parentResources.agreementTypeValues.records}
+                dataOptions={this.getAgreementStatusValues()}
               />
             </Col>
             <Col xs={12} md={4}>
@@ -100,11 +116,7 @@ class AgreementForm extends React.Component {
                 name="renewalPriority"
                 label={intl.formatMessage({ id: 'ui-erm.agreements.agreementRenewPrio' })}
                 component={Select}
-                dataOptions={[
-                  { label: 'Definitely renew', value: 'renew' },
-                  { label: 'For review', value: 'review' },
-                  { label: 'Definitely cancel', value: 'cancel' },
-                ]}
+                dataOptions={this.getRenewalPriorityValues()}
               />
             </Col>
             <Col xs={12} md={4}>
@@ -112,7 +124,8 @@ class AgreementForm extends React.Component {
                 id="isPerpetual"
                 name="isPerpetual"
                 label={intl.formatMessage({ id: 'ui-erm.agreements.agreementIsPerpetual' })}
-                component={Checkbox}
+                component={Select}
+                dataOptions={this.getIsPerpetualValues()}
               />
             </Col>
           </Row>
