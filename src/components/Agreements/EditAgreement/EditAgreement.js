@@ -15,6 +15,8 @@ const validate = (values) => {
       errors[key] = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
     }
   });
+
+  return errors;
 };
 
 class EditAgreement extends React.Component {
