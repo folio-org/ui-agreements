@@ -33,7 +33,7 @@ export default class KBs extends React.Component {
         const { query: { query, filters, sort } } = resources;
 
         if (query) {
-          params.match = 'pti.titleInstance.title';
+          params.match = 'pti.titleInstance.name';
           params.term = query;
         }
 
@@ -90,7 +90,7 @@ export default class KBs extends React.Component {
           resultsFormatter={{
             sourcekb: kb => get(kb, ['pkg', 'remoteKb', 'name'], ''),
             pkg: kb => get(kb, ['pkg', 'name'], ''),
-            title: kb => get(kb, ['pti', 'titleInstance', 'title'], ''),
+            title: kb => get(kb, ['pti', 'titleInstance', 'name'], ''),
             platform: kb => get(kb, ['pti', 'platform', 'name'], ''),
             vendor: kb => get(kb, ['pkg', 'vendor', 'name'], ''),
             coverage: kb => get(kb, ['coverage'], ''),
