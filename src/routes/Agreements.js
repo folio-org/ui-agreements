@@ -31,6 +31,26 @@ class Agreements extends React.Component {
         return params;
       },
     },
+    agreementTypeValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/SubscriptionAgreement/agreementType',
+    },
+    renewalPriorityValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/SubscriptionAgreement/renewalPriority',
+    },
+    agreementStatusValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/SubscriptionAgreement/agreementStatus',
+    },
+    isPerpetualValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/SubscriptionAgreement/isPerpetual',
+    },
+    contentReviewNeededValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/SubscriptionAgreement/contentReviewNeeded',
+    },
     query: {},
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
   });

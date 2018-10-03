@@ -1,10 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { FormattedMessage } from 'react-intl';
 import stripesForm from '@folio/stripes-form';
 import { Button, IconButton, Pane, PaneMenu } from '@folio/stripes-components';
 
 import AgreementForm from '../AgreementForm';
+
+const validate = (values) => {
+  const required = ['name', 'startDate', 'agreementStatus'];
+  const errors = {};
+
+  required.forEach((key) => {
+    if (!values[key]) {
+      errors[key] = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
+    }
+  });
+};
 
 class EditAgreement extends React.Component {
   static propTypes = {
@@ -84,8 +95,7 @@ class EditAgreement extends React.Component {
 
 export default stripesForm({
   form: 'EditAgreement',
-  // validate,
-  // asyncValidate,
+  validate,
   navigationCheck: true,
   enableReinitialize: true,
 })(EditAgreement);
