@@ -1,17 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { FormattedMessage } from 'react-intl';
 import stripesForm from '@folio/stripes-form';
 import { Button, IconButton, Pane, PaneMenu } from '@folio/stripes-components';
 
 import AgreementForm from '../AgreementForm';
+
+const validate = (values) => {
+  const required = ['name', 'startDate', 'agreementStatus'];
+  const errors = {};
+
+  required.forEach((key) => {
+    if (!values[key]) {
+      errors[key] = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
+    }
+  });
+
+  return errors;
+};
 
 class EditAgreement extends React.Component {
   static propTypes = {
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     onSave: PropTypes.func,
-    onCloseEdit: PropTypes.func,
+    onCancel: PropTypes.func,
     onRemove: PropTypes.func,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
@@ -24,7 +37,7 @@ class EditAgreement extends React.Component {
       <PaneMenu>
         <IconButton
           icon="closeX"
-          onClick={this.props.onCloseEdit}
+          onClick={this.props.onCancel}
           aria-label={this.props.stripes.intl.formatMessage({ id: 'ui-erm.agreements.closeNewAgreement' })}
         />
       </PaneMenu>
@@ -84,8 +97,7 @@ class EditAgreement extends React.Component {
 
 export default stripesForm({
   form: 'EditAgreement',
-  // validate,
-  // asyncValidate,
+  validate,
   navigationCheck: true,
   enableReinitialize: true,
 })(EditAgreement);

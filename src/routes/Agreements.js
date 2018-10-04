@@ -21,8 +21,28 @@ class Agreements extends React.Component {
         searchKey: ['name', 'description']
       }),
     },
+    agreementTypeValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/SubscriptionAgreement/agreementType',
+    },
+    renewalPriorityValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/SubscriptionAgreement/renewalPriority',
+    },
+    agreementStatusValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/SubscriptionAgreement/agreementStatus',
+    },
+    isPerpetualValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/SubscriptionAgreement/isPerpetual',
+    },
+    contentReviewNeededValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/SubscriptionAgreement/contentReviewNeeded',
+    },
     query: {},
-    resultCount: {},
+    resultCount: { initialValue: INITIAL_RESULT_COUNT },
   });
 
   static propTypes = {
@@ -30,6 +50,7 @@ class Agreements extends React.Component {
       records: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.object]),
     }),
     mutator: PropTypes.object,
+    stripes: PropTypes.object,
   };
 
   create = (agreement) => {
@@ -45,6 +66,7 @@ class Agreements extends React.Component {
   }
 
   render() {
+    const { stripes: { intl } } = this.props;
     const path = '/erm/agreements';
     packageInfo.stripes.route = path;
     packageInfo.stripes.home = path;
@@ -60,22 +82,45 @@ class Agreements extends React.Component {
           resultCountIncrement={INITIAL_RESULT_COUNT}
           viewRecordComponent={ViewAgreement}
           editRecordComponent={EditAgreement}
-          visibleColumns={['id', 'name', 'description']}
           viewRecordPerms="module.erm.enabled"
           newRecordPerms="module.erm.enabled"
           onCreate={this.create}
           parentResources={this.props.resources}
           parentMutator={this.props.mutator}
           showSingleResult
+          visibleColumns={[
+            'name',
+            'vendor',
+            'startDate',
+            'endDate',
+            'cancellationDeadline',
+            'agreementStatus',
+            'lastUpdated'
+          ]}
           columnMapping={{
-            id: 'ID',
-            name: 'Name',
-            description: 'Description'
+            name: intl.formatMessage({ id: 'ui-erm.agreements.agreementName' }),
+            vendor: intl.formatMessage({ id: 'ui-erm.agreements.vendorInfo.vendor' }),
+            startDate: intl.formatMessage({ id: 'ui-erm.agreements.agreementStartDate' }),
+            endDate: intl.formatMessage({ id: 'ui-erm.agreements.agreementEndDate' }),
+            cancellationDeadline: intl.formatMessage({ id: 'ui-erm.agreements.agreementCancelDeadline' }),
+            agreementStatus: intl.formatMessage({ id: 'ui-erm.agreements.agreementStatus' }),
+            lastUpdated: intl.formatMessage({ id: 'ui-erm.lastUpdated' }),
           }}
           columnWidths={{
-            id: 300,
             name: 300,
-            description: 'auto',
+            vendor: 200,
+            startDate: 120,
+            endDate: 120,
+            cancellationDeadline: 120,
+            agreementStatus: 150,
+            lastUpdated: 120,
+          }}
+          resultsFormatter={{
+            vendor: a => a.vendor && a.vendor.name,
+            startDate: a => a.startDate && intl.formatDate(a.startDate),
+            endDate: a => a.endDate && intl.formatDate(a.endDate),
+            cancellationDeadline: a => a.cancellationDeadline && intl.formatDate(a.cancellationDeadline),
+            agreementStatus: a => a.agreementStatus && a.agreementStatus.label,
           }}
         />
       </React.Fragment>

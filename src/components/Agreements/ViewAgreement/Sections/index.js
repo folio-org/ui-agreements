@@ -5,3 +5,4 @@ export { default as Eresources } from './Eresources';
 export { default as License } from './License';
 export { default as LicenseBusinessTerms } from './LicenseBusinessTerms';
 export { default as Organizations } from './Organizations';
+export { default as VendorInfo } from './VendorInfo';

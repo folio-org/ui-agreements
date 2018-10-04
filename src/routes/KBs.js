@@ -27,11 +27,11 @@ export default class KBs extends React.Component {
       resourceShouldRefresh: true,
       records: 'results',
       params: getSASParams({
-        searchKey: 'pti.titleInstance.title'
+        searchKey: 'pti.titleInstance.name'
       }),
     },
     query: {},
-    resultCount: { },
+    resultCount: { initialValue: INITIAL_RESULT_COUNT },
   });
 
   static propTypes = {
@@ -80,7 +80,7 @@ export default class KBs extends React.Component {
           resultsFormatter={{
             sourcekb: kb => get(kb, ['pkg', 'remoteKb', 'name'], ''),
             pkg: kb => get(kb, ['pkg', 'name'], ''),
-            title: kb => get(kb, ['pti', 'titleInstance', 'title'], ''),
+            title: kb => get(kb, ['pti', 'titleInstance', 'name'], ''),
             platform: kb => get(kb, ['pti', 'platform', 'name'], ''),
             vendor: kb => get(kb, ['pkg', 'vendor', 'name'], ''),
             coverage: kb => get(kb, ['coverage'], ''),

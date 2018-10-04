@@ -1,11 +1,19 @@
 {
   "meta.title": "ERM",
 
+  "lastUpdated": "Last updated",
+
   "agreements.edit": "Edit",
+
+  "agreements.vendorInfo.vendor": "Vendor",
+  "agreements.vendorInfo.status": "Status",
+  "agreements.vendorInfo.visitPlatform": "Visit platform",
 
   "agreements.agreementInfo": "Agreement information",
   "agreements.agreementName": "Agreement name",
   "agreements.agreementDescription": "Description",
+  "agreements.agreementStartDate": "Start date",
+  "agreements.agreementEndDate": "End date",
   "agreements.agreementCancelDeadline": "Cancellation deadline",
   "agreements.agreementRenewPrio": "Renewal priority",
   "agreements.agreementStatus": "Agreement status",
