@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import { cloneDeep, get } from 'lodash';
 
 import {
   AccordionSet,
@@ -71,6 +71,25 @@ class ViewAgreement extends React.Component {
     return get(this.props.resources.agreementLines, ['records'], []);
   }
 
+  getInitialValues() {
+    const agreement = cloneDeep(this.getAgreement());
+    const { agreementStatus, renewalPriority, isPerpetual } = agreement;
+
+    if (agreementStatus && agreementStatus.id) {
+      agreement.agreementStatus = agreementStatus.id;
+    }
+
+    if (renewalPriority && renewalPriority.id) {
+      agreement.renewalPriority = renewalPriority.id;
+    }
+
+    if (isPerpetual && isPerpetual.id) {
+      agreement.isPerpetual = isPerpetual.id;
+    }
+
+    return agreement;
+  }
+
   getSectionProps() {
     return {
       agreement: this.getAgreement(),
@@ -124,9 +143,10 @@ class ViewAgreement extends React.Component {
       >
         <EditAgreement
           {...this.props}
+          onCancel={this.props.onCloseEdit}
           onSubmit={this.handleSubmit}
           parentMutator={this.props.mutator}
-          initialValues={this.getAgreement()}
+          initialValues={this.getInitialValues()}
         />
       </Layer>
     );

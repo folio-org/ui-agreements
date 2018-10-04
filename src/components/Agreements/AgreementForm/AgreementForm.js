@@ -1,18 +1,132 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { injectIntl, intlShape } from 'react-intl';
 import { Field } from 'redux-form';
-import { Col, Row, TextField } from '@folio/stripes-components';
+import { get } from 'lodash';
+import {
+  Col,
+  Datepicker,
+  Row,
+  Select,
+  TextArea,
+  TextField,
+} from '@folio/stripes-components';
 
 class AgreementForm extends React.Component {
+  static propTypes = {
+    intl: intlShape,
+    parentResources: PropTypes.shape({
+      agreementStatusValues: PropTypes.object,
+      renewalPriorityValues: PropTypes.object,
+      isPerpetualValues: PropTypes.object,
+    }),
+  };
+
+  getAgreementStatusValues() {
+    return get(this.props.parentResources.agreementStatusValues, ['records'], [])
+      .map(value => ({ label: value.label, value: value.id }));
+  }
+
+  getRenewalPriorityValues() {
+    const values = get(this.props.parentResources.renewalPriorityValues, ['records'], [])
+      .map(value => ({ label: value.label, value: value.id }));
+
+    values.unshift({ label: '', value: null });
+
+    return values;
+  }
+
+  getIsPerpetualValues() {
+    const values = get(this.props.parentResources.isPerpetualValues, ['records'], [])
+      .map(value => ({ label: value.label, value: value.id }));
+
+    values.unshift({ label: '', value: null });
+
+    return values;
+  }
+
   render() {
+    const { intl } = this.props;
+
     return (
       <Row>
         <Col xs={8} style={{ margin: '0 auto', padding: '0' }}>
           <Row>
             <Col xs={12}>
-              <Field label="Name" name="name" id="name" component={TextField} fullWidth />
+              <Field
+                id="name"
+                name="name"
+                label={`${intl.formatMessage({ id: 'ui-erm.agreements.agreementName' })} *`}
+                component={TextField}
+              />
             </Col>
+          </Row>
+          <Row>
             <Col xs={12}>
-              <Field label="Description" name="description" id="description" component={TextField} fullWidth />
+              <Field
+                id="description"
+                name="description"
+                label={intl.formatMessage({ id: 'ui-erm.agreements.agreementDescription' })}
+                component={TextArea}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={4}>
+              <Field
+                id="startDate"
+                name="startDate"
+                label={`${intl.formatMessage({ id: 'ui-erm.agreements.agreementStartDate' })} *`}
+                component={Datepicker}
+                dateFormat="YYYY-MM-DD"
+              />
+            </Col>
+            <Col xs={12} md={4}>
+              <Field
+                id="endDate"
+                name="endDate"
+                label={intl.formatMessage({ id: 'ui-erm.agreements.agreementEndDate' })}
+                component={Datepicker}
+                dateFormat="YYYY-MM-DD"
+              />
+            </Col>
+            <Col xs={12} md={4}>
+              <Field
+                id="cancellationDeadline"
+                name="cancellationDeadline"
+                label={intl.formatMessage({ id: 'ui-erm.agreements.agreementCancelDeadline' })}
+                component={Datepicker}
+                dateFormat="YYYY-MM-DD"
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={4}>
+              <Field
+                id="agreementStatus"
+                name="agreementStatus"
+                label={`${intl.formatMessage({ id: 'ui-erm.agreements.agreementStatus' })} *`}
+                component={Select}
+                dataOptions={this.getAgreementStatusValues()}
+              />
+            </Col>
+            <Col xs={12} md={4}>
+              <Field
+                id="renewalPriority"
+                name="renewalPriority"
+                label={intl.formatMessage({ id: 'ui-erm.agreements.agreementRenewPrio' })}
+                component={Select}
+                dataOptions={this.getRenewalPriorityValues()}
+              />
+            </Col>
+            <Col xs={12} md={4}>
+              <Field
+                id="isPerpetual"
+                name="isPerpetual"
+                label={intl.formatMessage({ id: 'ui-erm.agreements.agreementIsPerpetual' })}
+                component={Select}
+                dataOptions={this.getIsPerpetualValues()}
+              />
             </Col>
           </Row>
         </Col>
@@ -21,4 +135,4 @@ class AgreementForm extends React.Component {
   }
 }
 
-export default AgreementForm;
+export default injectIntl(AgreementForm);
