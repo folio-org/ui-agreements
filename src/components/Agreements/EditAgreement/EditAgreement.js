@@ -24,7 +24,7 @@ class EditAgreement extends React.Component {
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     onSave: PropTypes.func,
-    onCloseEdit: PropTypes.func,
+    onCancel: PropTypes.func,
     onRemove: PropTypes.func,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
@@ -37,7 +37,7 @@ class EditAgreement extends React.Component {
       <PaneMenu>
         <IconButton
           icon="closeX"
-          onClick={this.props.onCloseEdit}
+          onClick={this.props.onCancel}
           aria-label={this.props.stripes.intl.formatMessage({ id: 'ui-erm.agreements.closeNewAgreement' })}
         />
       </PaneMenu>
