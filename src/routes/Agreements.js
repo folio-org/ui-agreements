@@ -18,7 +18,16 @@ class Agreements extends React.Component {
       resourceShouldRefresh: true,
       records: 'results',
       params: getSASParams({
-        searchKey: ['name', 'description']
+        searchKey: 'name',
+        columnMap: {
+          'Agreement name': 'name',
+          'Vendor': 'vendor',
+          'Start date': 'startDate',
+          'End date': 'endDate',
+          'Cancellation deadline': 'cancellationDeadline',
+          'Agreement status': 'agreementStatus',
+          'Last updated': 'lastUpdated',
+        }
       }),
     },
     agreementTypeValues: {

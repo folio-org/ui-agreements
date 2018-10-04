@@ -1,5 +1,8 @@
 export default (options) => (queryParams, pathComponents, resources) => {
-  const { searchKey = '' } = options;
+  const {
+    searchKey = '',
+    columnMap = {},
+  } = options;
 
   const params = {
     stats: 'true',
@@ -16,8 +19,9 @@ export default (options) => (queryParams, pathComponents, resources) => {
     params.sort = sort.split(',').map(sortKey => {
       const descending = sortKey.startsWith('-');
       const term = sortKey.replace('-', '');
+      const key = columnMap[term] || term;
 
-      return `${term};${descending ? 'desc' : 'asc'}`;
+      return `${key};${descending ? 'desc' : 'asc'}`;
     });
   }
 
