@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { SearchAndSort } from '@folio/stripes-smart-components';
 
 import ViewTitle from '../components/Titles/ViewTitle';
+import getSASParams from '../util/getSASParams';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
@@ -26,20 +27,9 @@ export default class Titles extends React.Component {
       path: 'erm/titles',
       recordsRequired: '%{resultCount}',
       perRequest: 100,
-      GET: {
-        params: (queryParams, pathComponents, resources) => {
-          const params = {
-            stats: 'true',
-          };
-
-          if (resources && resources.query && resources.query.query) {
-            params.match = 'title';
-            params.term = resources.query.query;
-          }
-
-          return params;
-        },
-      },
+      params: getSASParams({
+        searchKey: 'title'
+      }),
     },
     query: {
       initialValue: {

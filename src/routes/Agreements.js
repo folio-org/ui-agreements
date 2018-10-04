@@ -5,6 +5,7 @@ import { SearchAndSort } from '@folio/stripes-smart-components';
 
 import ViewAgreement from '../components/Agreements/ViewAgreement';
 import EditAgreement from '../components/Agreements/EditAgreement';
+import getSASParams from '../util/getSASParams';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
@@ -16,20 +17,18 @@ class Agreements extends React.Component {
       path: 'erm/sas',
       resourceShouldRefresh: true,
       records: 'results',
-      params: (queryParams, pathComponents, resources) => {
-        const params = {
-          stats: 'true',
-        };
-
-        const { query: { query, filters, sort } } = resources;
-
-        if (query) {
-          params.match = ['name', 'description'];
-          params.term = query;
+      params: getSASParams({
+        searchKey: 'name',
+        columnMap: {
+          'Agreement name': 'name',
+          'Vendor': 'vendor',
+          'Start date': 'startDate',
+          'End date': 'endDate',
+          'Cancellation deadline': 'cancellationDeadline',
+          'Agreement status': 'agreementStatus',
+          'Last updated': 'lastUpdated',
         }
-
-        return params;
-      },
+      }),
     },
     agreementTypeValues: {
       type: 'okapi',
