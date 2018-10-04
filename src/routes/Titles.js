@@ -76,18 +76,18 @@ export default class Titles extends React.Component {
           resultCountIncrement={INITIAL_RESULT_COUNT}
           viewRecordComponent={ViewTitle}
           editRecordComponent={EditRecord}
-          visibleColumns={['id', 'title']}
+          visibleColumns={['id', 'name']}
           viewRecordPerms="module.erm.enabled"
           parentResources={this.props.resources}
           parentMutator={this.props.mutator}
           showSingleResult
           columnMapping={{
             id: 'ID',
-            title: 'Title',
+            name: 'Title',
           }}
           columnWidths={{
             id: 300,
-            title: 'auto',
+            name: 'auto',
           }}
         />
       </React.Fragment>
