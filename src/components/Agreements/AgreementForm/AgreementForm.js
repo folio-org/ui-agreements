@@ -56,7 +56,7 @@ class AgreementForm extends React.Component {
               <Field
                 id="name"
                 name="name"
-                label={intl.formatMessage({ id: 'ui-erm.agreements.agreementName' })}
+                label={`${intl.formatMessage({ id: 'ui-erm.agreements.agreementName' })} *`}
                 component={TextField}
               />
             </Col>
@@ -76,7 +76,7 @@ class AgreementForm extends React.Component {
               <Field
                 id="startDate"
                 name="startDate"
-                label={intl.formatMessage({ id: 'ui-erm.agreements.agreementStartDate' })}
+                label={`${intl.formatMessage({ id: 'ui-erm.agreements.agreementStartDate' })} *`}
                 component={Datepicker}
                 dateFormat="YYYY-MM-DD"
               />
@@ -105,7 +105,7 @@ class AgreementForm extends React.Component {
               <Field
                 id="agreementStatus"
                 name="agreementStatus"
-                label={intl.formatMessage({ id: 'ui-erm.agreements.agreementStatus' })}
+                label={`${intl.formatMessage({ id: 'ui-erm.agreements.agreementStatus' })} *`}
                 component={Select}
                 dataOptions={this.getAgreementStatusValues()}
               />
