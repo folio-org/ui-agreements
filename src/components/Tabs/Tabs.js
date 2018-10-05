@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, SegmentedControl } from '@folio/stripes-components';
+import { Button, SegmentedControl } from '@folio/stripes/components';
 
 import css from './Tabs.css';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
-import { SearchAndSort } from '@folio/stripes-smart-components';
+import { SearchAndSort } from '@folio/stripes/smart-components';
 
 import ViewAgreement from '../components/Agreements/ViewAgreement';
 import EditAgreement from '../components/Agreements/EditAgreement';

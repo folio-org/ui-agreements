@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Accordion } from '@folio/stripes-components';
+import { Accordion } from '@folio/stripes/components';
 
 class Organizations extends React.Component {
   static propTypes = {

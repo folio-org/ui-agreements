@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { SearchAndSort } from '@folio/stripes-smart-components';
+import { SearchAndSort } from '@folio/stripes/smart-components';
 
 import ViewTitle from '../components/Titles/ViewTitle';
 import getSASParams from '../util/getSASParams';
