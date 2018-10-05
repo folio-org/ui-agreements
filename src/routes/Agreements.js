@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 
 import { SearchAndSort } from '@folio/stripes-smart-components';
 
@@ -9,6 +10,13 @@ import getSASParams from '../util/getSASParams';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
+
+// `label` and `values` will be filled in by `updateFilterConfig`
+const filterConfig = [
+  { name: 'agreementStatus', values: [] },
+  { name: 'renewalPriority', values: [] },
+  { name: 'isPerpetual', values: [] },
+];
 
 class Agreements extends React.Component {
   static manifest = Object.freeze({
@@ -62,6 +70,36 @@ class Agreements extends React.Component {
     stripes: PropTypes.object,
   };
 
+  componentDidUpdate() {
+    this.updateFilterConfig();
+  }
+
+  updateFilterConfig() {
+    // Define the list of filters we support and are fetching values for.
+    const filters = [
+      'agreementStatus',
+      'renewalPriority',
+      'isPerpetual'
+    ];
+
+    // Get the records for those filters
+    const records = filters
+      .map(filter => `${filter}Values`)
+      .map(name => get(this.props.resources[name], ['records'], []));
+
+    // If we've fetched the records for every filter...
+    if (records.every(record => record.length)) {
+      const { stripes: { intl } } = this.props;
+      // ...then for every filter...
+      filters.forEach((filter, i) => {
+        // ...set the filter's `values` and `label` properties
+        const config = filterConfig.find(c => c.name === filter);
+        config.values = records[i].map(r => ({ name: r.label, cql: r.value }));
+        config.label = intl.formatMessage({ id: `ui-erm.agreements.${filter}` });
+      });
+    }
+  }
+
   create = (agreement) => {
     const { mutator } = this.props;
 
@@ -85,7 +123,7 @@ class Agreements extends React.Component {
         <SearchAndSort
           key="agreements"
           packageInfo={packageInfo}
-          filterConfig={[]}
+          filterConfig={filterConfig}
           objectName="title"
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
@@ -107,11 +145,11 @@ class Agreements extends React.Component {
             'lastUpdated'
           ]}
           columnMapping={{
-            name: intl.formatMessage({ id: 'ui-erm.agreements.agreementName' }),
+            name: intl.formatMessage({ id: 'ui-erm.agreements.name' }),
             vendor: intl.formatMessage({ id: 'ui-erm.agreements.vendorInfo.vendor' }),
-            startDate: intl.formatMessage({ id: 'ui-erm.agreements.agreementStartDate' }),
-            endDate: intl.formatMessage({ id: 'ui-erm.agreements.agreementEndDate' }),
-            cancellationDeadline: intl.formatMessage({ id: 'ui-erm.agreements.agreementCancelDeadline' }),
+            startDate: intl.formatMessage({ id: 'ui-erm.agreements.startDate' }),
+            endDate: intl.formatMessage({ id: 'ui-erm.agreements.endDate' }),
+            cancellationDeadline: intl.formatMessage({ id: 'ui-erm.agreements.cancellationDeadline' }),
             agreementStatus: intl.formatMessage({ id: 'ui-erm.agreements.agreementStatus' }),
             lastUpdated: intl.formatMessage({ id: 'ui-erm.lastUpdated' }),
           }}
