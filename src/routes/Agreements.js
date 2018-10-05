@@ -12,10 +12,11 @@ import packageInfo from '../../package';
 const INITIAL_RESULT_COUNT = 100;
 
 // `label` and `values` will be filled in by `updateFilterConfig`
+// `cql` is defined to mute PropType checks by SAS and FilterGroups
 const filterConfig = [
-  { name: 'agreementStatus', values: [] },
-  { name: 'renewalPriority', values: [] },
-  { name: 'isPerpetual', values: [] },
+  { name: 'agreementStatus', label: '', cql: '', values: [] },
+  { name: 'renewalPriority', label: '', cql: '', values: [] },
+  { name: 'isPerpetual', label: '', cql: '', values: [] },
 ];
 
 class Agreements extends React.Component {
