@@ -10,7 +10,7 @@ import {
   Select,
   TextArea,
   TextField,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 class AgreementForm extends React.Component {
   static propTypes = {

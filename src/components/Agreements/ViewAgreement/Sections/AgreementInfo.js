@@ -7,7 +7,7 @@ import {
   Col,
   KeyValue,
   Row,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 import css from './AgreementInfo.css';
 

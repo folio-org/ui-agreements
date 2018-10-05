@@ -6,7 +6,7 @@ import {
   Col,
   MultiColumnList,
   Row,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 class AgreementLines extends React.Component {
   static propTypes = {

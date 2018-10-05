@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import stripesForm from '@folio/stripes-form';
-import { Button, IconButton, Pane, PaneMenu } from '@folio/stripes-components';
+import stripesForm from '@folio/stripes/form';
+import { Button, IconButton, Pane, PaneMenu } from '@folio/stripes/components';
 
 import AgreementForm from '../AgreementForm';
 

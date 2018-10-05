@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
-import { SearchAndSort } from '@folio/stripes-smart-components';
+import { SearchAndSort } from '@folio/stripes/smart-components';
 
 import ViewKB from '../components/KBs/ViewKB';
 import getSASParams from '../util/getSASParams';

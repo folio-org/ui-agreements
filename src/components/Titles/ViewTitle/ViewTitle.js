@@ -6,7 +6,7 @@ import {
   Icon,
   Layout,
   Pane,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 export default class ViewTitle extends React.Component {
   static manifest = Object.freeze({

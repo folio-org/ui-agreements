@@ -11,7 +11,7 @@ import {
   Layout,
   Pane,
   Row,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 
 import {
   AgreementInfo,
