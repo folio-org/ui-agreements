@@ -1,6 +1,6 @@
 {
   "name": "@folio/erm",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "ERM functionality for Stripes",
   "main": "src/index.js",
   "repository": "",
