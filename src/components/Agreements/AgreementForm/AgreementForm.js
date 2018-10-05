@@ -56,7 +56,7 @@ class AgreementForm extends React.Component {
               <Field
                 id="name"
                 name="name"
-                label={`${intl.formatMessage({ id: 'ui-erm.agreements.agreementName' })} *`}
+                label={`${intl.formatMessage({ id: 'ui-erm.agreements.name' })} *`}
                 component={TextField}
               />
             </Col>
@@ -76,7 +76,7 @@ class AgreementForm extends React.Component {
               <Field
                 id="startDate"
                 name="startDate"
-                label={`${intl.formatMessage({ id: 'ui-erm.agreements.agreementStartDate' })} *`}
+                label={`${intl.formatMessage({ id: 'ui-erm.agreements.startDate' })} *`}
                 component={Datepicker}
                 dateFormat="YYYY-MM-DD"
               />
@@ -85,7 +85,7 @@ class AgreementForm extends React.Component {
               <Field
                 id="endDate"
                 name="endDate"
-                label={intl.formatMessage({ id: 'ui-erm.agreements.agreementEndDate' })}
+                label={intl.formatMessage({ id: 'ui-erm.agreements.endDate' })}
                 component={Datepicker}
                 dateFormat="YYYY-MM-DD"
               />
@@ -94,7 +94,7 @@ class AgreementForm extends React.Component {
               <Field
                 id="cancellationDeadline"
                 name="cancellationDeadline"
-                label={intl.formatMessage({ id: 'ui-erm.agreements.agreementCancelDeadline' })}
+                label={intl.formatMessage({ id: 'ui-erm.agreements.cancellationDeadline' })}
                 component={Datepicker}
                 dateFormat="YYYY-MM-DD"
               />
@@ -114,7 +114,7 @@ class AgreementForm extends React.Component {
               <Field
                 id="renewalPriority"
                 name="renewalPriority"
-                label={intl.formatMessage({ id: 'ui-erm.agreements.agreementRenewPrio' })}
+                label={intl.formatMessage({ id: 'ui-erm.agreements.renewalPriority' })}
                 component={Select}
                 dataOptions={this.getRenewalPriorityValues()}
               />
@@ -123,7 +123,7 @@ class AgreementForm extends React.Component {
               <Field
                 id="isPerpetual"
                 name="isPerpetual"
-                label={intl.formatMessage({ id: 'ui-erm.agreements.agreementIsPerpetual' })}
+                label={intl.formatMessage({ id: 'ui-erm.agreements.isPerpetual' })}
                 component={Select}
                 dataOptions={this.getIsPerpetualValues()}
               />

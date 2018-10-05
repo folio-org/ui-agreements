@@ -33,13 +33,13 @@ class VendorInfo extends React.Component {
         </Col>
         <Col xs={2}>
           <KeyValue
-            label={intl.formatMessage({ id: 'ui-erm.agreements.agreementStartDate' })}
+            label={intl.formatMessage({ id: 'ui-erm.agreements.startDate' })}
             value={startDate ? intl.formatDate(startDate) : '-'}
           />
         </Col>
         <Col xs={2}>
           <KeyValue
-            label={intl.formatMessage({ id: 'ui-erm.agreements.agreementEndDate' })}
+            label={intl.formatMessage({ id: 'ui-erm.agreements.endDate' })}
             value={endDate ? intl.formatDate(endDate) : '-'}
           />
         </Col>
