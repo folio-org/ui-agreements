@@ -19,6 +19,14 @@ class Tabs extends React.Component {
     tab: '',
   };
 
+  static getDerivedStateFromProps(newProps, state) {
+    if (newProps.tab !== state.tab) {
+      return { tab: newProps.tab };
+    }
+
+    return null;
+  }
+
   componentDidMount() {
     this.setTab();
   }
