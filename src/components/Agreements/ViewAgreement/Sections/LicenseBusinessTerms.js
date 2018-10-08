@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { injectIntl, intlShape } from 'react-intl';
 import { Accordion } from '@folio/stripes/components';
 
 class LicenseBusinessTerms extends React.Component {
@@ -8,11 +9,11 @@ class LicenseBusinessTerms extends React.Component {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    stripes: PropTypes.object,
+    intl: intlShape,
   };
 
   render() {
-    const { agreement, stripes: { intl } } = this.props;
+    const { agreement, intl } = this.props;
 
     return (
       <Accordion
@@ -27,4 +28,4 @@ class LicenseBusinessTerms extends React.Component {
   }
 }
 
-export default LicenseBusinessTerms;
+export default injectIntl(LicenseBusinessTerms);
