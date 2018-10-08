@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { injectIntl, intlShape } from 'react-intl';
 import { get } from 'lodash';
 import {
   Accordion,
@@ -17,7 +18,7 @@ class AgreementInfo extends React.Component {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    stripes: PropTypes.object,
+    intl: intlShape,
   };
 
   state = {
@@ -39,7 +40,7 @@ class AgreementInfo extends React.Component {
   }
 
   render() {
-    const { agreement, stripes: { intl } } = this.props;
+    const { agreement, intl } = this.props;
 
     return (
       <Accordion
@@ -127,4 +128,4 @@ class AgreementInfo extends React.Component {
   }
 }
 
-export default AgreementInfo;
+export default injectIntl(AgreementInfo);
