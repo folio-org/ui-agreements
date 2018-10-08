@@ -53,6 +53,12 @@
   "eresources.name": "Name",
   "eresources.type": "Type",
 
+  "eresources.erInfo": "E-resource information",
+  "eresources.erType": "E-resource type",
+  "eresources.erAgreements": "Agreements for this e-resource",
+  "eresources.agreementStatus": "Agreement status",
+  "eresources.acqOptions": "Options for acquiring e-resource: {name}",
+
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
   "settings.some-feature": "Some Feature",

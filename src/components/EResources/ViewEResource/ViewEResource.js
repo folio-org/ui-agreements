@@ -1,34 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { cloneDeep, get } from 'lodash';
+import { get } from 'lodash';
 
 import {
   AccordionSet,
   Col,
   ExpandAllButton,
   Icon,
-  Layer,
   Layout,
   Pane,
   Row,
 } from '@folio/stripes/components';
 
 import {
-  AgreementInfo,
-  AgreementLines,
-  AssociatedAgreements,
-  Eresources,
-  License,
-  LicenseBusinessTerms,
-  Organizations,
-  VendorInfo
+  EResourceInfo,
+  EResourceAgreements,
+  AcquisitionOptions,
 } from './Sections';
 
-import EditAgreement from '../EditEResource';
-
-class ViewAgreement extends React.Component {
+class ViewEResource extends React.Component {
   static manifest = Object.freeze({
-    selectedAgreement: {
+    selectedEResource: {
       type: 'okapi',
       path: 'erm/eresources/:{id}',
     },
@@ -43,49 +35,28 @@ class ViewAgreement extends React.Component {
     stripes: PropTypes.object,
   };
 
-  state = {
-    sections: {
-      agreementInfo: true,
-      agreementLines: false,
-      license: false,
-      licenseBusinessTerms: false,
-      organizations: false,
-      eresources: false,
-      associatedAgreements: false,
-    }
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      sections: {
+        info: true,
+        agreements: false,
+        acquisitionOptions: false,
+      }
+    };
+
+    this.connectedEResourceAgreements = props.stripes.connect(EResourceAgreements);
   }
 
-  getAgreement() {
-    return get(this.props.resources.selectedAgreement, ['records', 0], {});
+  getEResource() {
+    return get(this.props.resources.selectedEResource, ['records', 0], undefined);
   }
 
-  getAgreementLines() {
-    return get(this.props.resources.agreementLines, ['records'], []);
-  }
-
-  getInitialValues() {
-    const agreement = cloneDeep(this.getAgreement());
-    const { agreementStatus, renewalPriority, isPerpetual } = agreement;
-
-    if (agreementStatus && agreementStatus.id) {
-      agreement.agreementStatus = agreementStatus.id;
-    }
-
-    if (renewalPriority && renewalPriority.id) {
-      agreement.renewalPriority = renewalPriority.id;
-    }
-
-    if (isPerpetual && isPerpetual.id) {
-      agreement.isPerpetual = isPerpetual.id;
-    }
-
-    return agreement;
-  }
 
   getSectionProps() {
     return {
-      agreement: this.getAgreement(),
-      agreementLines: this.getAgreementLines(),
+      eresource: this.getEResource(),
       onToggle: this.handleSectionToggle,
       stripes: this.props.stripes,
     };
@@ -104,15 +75,10 @@ class ViewAgreement extends React.Component {
     this.setState({ sections });
   }
 
-  handleSubmit = (agreement) => {
-    this.props.mutator.selectedAgreement.PUT(agreement)
-      .then(() => this.props.onCloseEdit());
-  }
-
   renderLoadingPane() {
     return (
       <Pane
-        id="pane-view-agreement"
+        id="pane-view-eresource"
         defaultWidth={this.props.paneWidth}
         paneTitle="Loading..."
         dismissible
@@ -125,67 +91,46 @@ class ViewAgreement extends React.Component {
     );
   }
 
-  renderEditLayer() {
-    const { resources: { query }, stripes: { intl } } = this.props;
-
-    return (
-      <Layer
-        isOpen={query.layer === 'edit'}
-        contentLabel={intl.formatMessage({ id: 'ui-erm.agreements.editAgreement' })}
-      >
-        <EditAgreement
-          {...this.props}
-          onCancel={this.props.onCloseEdit}
-          onSubmit={this.handleSubmit}
-          parentMutator={this.props.mutator}
-          initialValues={this.getInitialValues()}
-        />
-      </Layer>
-    );
-  }
-
   render() {
-    const agreement = this.getAgreement();
-    if (!agreement) return this.renderLoadingPane();
+    const resource = this.getEResource();
+    if (!resource) return this.renderLoadingPane();
 
-    const { stripes } = this.props;
     const sectionProps = this.getSectionProps();
 
     return (
       <Pane
-        id="pane-view-agreement"
+        id="pane-view-eresource"
         defaultWidth={this.props.paneWidth}
-        paneTitle={agreement.name}
+        paneTitle={resource.name}
         dismissible
         onClose={this.props.onClose}
-        actionMenuItems={stripes.hasPerm('ui-erm.agreements.edit') ? [{
-          id: 'clickable-edit-agreement',
-          title: stripes.intl.formatMessage({ id: 'ui-erm.agreements.editAgreement' }),
-          label: stripes.intl.formatMessage({ id: 'ui-erm.agreements.edit' }),
-          href: this.props.editLink,
-          onClick: this.props.onEdit,
-          icon: 'edit',
-        }] : []}
       >
-        <VendorInfo {...sectionProps} />
         <AccordionSet>
           <Row end="xs">
             <Col xs>
               <ExpandAllButton accordionStatus={this.state.sections} onToggle={this.handleAllSectionsToggle} />
             </Col>
           </Row>
-          <AgreementInfo id="agreementInfo" open={this.state.sections.agreementInfo} {...sectionProps} />
-          <AgreementLines id="agreementLines" open={this.state.sections.agreementLines} {...sectionProps} />
-          <License id="license" open={this.state.sections.license} {...sectionProps} />
-          <LicenseBusinessTerms id="licenseBusinessTerms" open={this.state.sections.licenseBusinessTerms} {...sectionProps} />
-          <Organizations id="organizations" open={this.state.sections.organizations} {...sectionProps} />
-          <Eresources id="eresources" open={this.state.sections.eresources} {...sectionProps} />
-          <AssociatedAgreements id="associatedAgreements" open={this.state.sections.associatedAgreements} {...sectionProps} />
+          <EResourceInfo
+            id="info"
+            open={this.state.sections.info}
+            {...sectionProps}
+          />
+          <this.connectedEResourceAgreements
+            id="agreements"
+            key={`agreements-${resource.id}`} // Force a remount when changing which eresource we're viewing
+            open={this.state.sections.agreements}
+            {...sectionProps}
+          />
+          <AcquisitionOptions
+            id="acquisitionOptions"
+            open={this.state.sections.acquisitionOptions}
+            {...sectionProps}
+          />
         </AccordionSet>
-        { this.renderEditLayer() }
       </Pane>
     );
   }
 }
 
-export default ViewAgreement;
+export default ViewEResource;

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 
 import ViewEResource from '../components/EResources/ViewEResource';
-import EditEResource from '../components/EResources/EditEResource';
 import getSASParams from '../util/getSASParams';
 import packageInfo from '../../package';
 
@@ -37,18 +36,6 @@ class EResources extends React.Component {
     stripes: PropTypes.object,
   };
 
-  create = (eresources) => {
-    const { mutator } = this.props;
-
-    mutator.records.POST(eresources)
-      .then((newEResource) => {
-        mutator.query.update({
-          _path: `/erm/eresources/view/${newEResource.id}`,
-          layer: '',
-        });
-      });
-  }
-
   render() {
     const { stripes: { intl } } = this.props;
     const path = '/erm/eresources';
@@ -65,9 +52,7 @@ class EResources extends React.Component {
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
           viewRecordComponent={ViewEResource}
-          editRecordComponent={EditEResource}
           viewRecordPerms="module.erm.enabled"
-          newRecordPerms="module.erm.enabled"
           onCreate={this.create}
           parentResources={this.props.resources}
           parentMutator={this.props.mutator}
