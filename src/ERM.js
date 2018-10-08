@@ -4,8 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Dashboard from './routes/Dashboard';
 import Agreements from './routes/Agreements';
-import KBs from './routes/KBs';
-import Titles from './routes/Titles';
+import EResources from './routes/EResources';
 import Tabs from './components/Tabs';
 
 export default class Erm extends React.Component {
@@ -33,8 +32,7 @@ export default class Erm extends React.Component {
 
     this.connectedDashboard = props.stripes.connect(Dashboard);
     this.connectedAgreements = props.stripes.connect(Agreements);
-    this.connectedKBs = props.stripes.connect(KBs);
-    this.connectedTitles = props.stripes.connect(Titles);
+    this.connectedEResources = props.stripes.connect(EResources);
   }
 
   getCurrentPage(props) {
@@ -66,12 +64,8 @@ export default class Erm extends React.Component {
             render={() => <this.connectedAgreements stripes={stripes} />}
           />
           <Route
-            path={`${match.path}/kbs`}
-            render={() => <this.connectedKBs stripes={stripes} />}
-          />
-          <Route
-            path={`${match.path}/titles`}
-            render={() => <this.connectedTitles stripes={stripes} />}
+            path={`${match.path}/eresources`}
+            render={() => <this.connectedEResources stripes={stripes} />}
           />
           <Redirect
             exact

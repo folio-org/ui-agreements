@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import { Button, SegmentedControl } from '@folio/stripes/components';
 
 import css from './Tabs.css';
 
-export default class Tabs extends React.Component {
+class Tabs extends React.Component {
   static propTypes = {
     tab: PropTypes.oneOfType([
       PropTypes.string,
@@ -17,6 +18,14 @@ export default class Tabs extends React.Component {
   state = {
     tab: '',
   };
+
+  static getDerivedStateFromProps(newProps, state) {
+    if (newProps.tab !== state.tab) {
+      return { tab: newProps.tab };
+    }
+
+    return null;
+  }
 
   componentDidMount() {
     this.setTab();
@@ -38,12 +47,19 @@ export default class Tabs extends React.Component {
     return (
       <div className={css.SegControl}>
         <SegmentedControl activeId={this.state.tab} onActivate={this.handleActivate}>
-          <Button id="dashboard">Dashboard</Button>
-          <Button id="agreements">Agreements</Button>
-          <Button id="kbs">KBs</Button>
-          <Button id="titles">Titles</Button>
+          <Button id="dashboard">
+            <FormattedMessage id="ui-erm.tabs.dashboard" />
+          </Button>
+          <Button id="agreements">
+            <FormattedMessage id="ui-erm.tabs.agreements" />
+          </Button>
+          <Button id="eresources">
+            <FormattedMessage id="ui-erm.tabs.eresources" />
+          </Button>
         </SegmentedControl>
       </div>
     );
   }
 }
+
+export default Tabs;
