@@ -112,11 +112,6 @@ class ViewAgreement extends React.Component {
     this.setState({ sections });
   }
 
-  handleSubmit = (agreement) => {
-    this.props.mutator.selectedAgreement.PUT(agreement)
-      .then(() => this.props.onCloseEdit());
-  }
-
   renderLoadingPane() {
     return (
       <Pane
@@ -144,7 +139,6 @@ class ViewAgreement extends React.Component {
         <EditAgreement
           {...this.props}
           onCancel={this.props.onCloseEdit}
-          onSubmit={this.handleSubmit}
           parentMutator={this.props.mutator}
           initialValues={this.getInitialValues()}
         />

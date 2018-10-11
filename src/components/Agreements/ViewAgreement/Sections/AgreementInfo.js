@@ -94,7 +94,14 @@ class AgreementInfo extends React.Component {
                 onToggle={this.handleSectionToggle}
                 open={this.state.sections.internalContacts}
               >
-                -
+                {
+                  Array.isArray(agreement.contacts) &&
+                  agreement.contacts.map(contact => (
+                    <span key={Math.random()}>
+                      {contact.id}: {contact.role}
+                    </span>
+                  ))
+                }
               </Accordion>
               <Accordion
                 id="contentReviews"

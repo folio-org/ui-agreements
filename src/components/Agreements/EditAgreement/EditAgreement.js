@@ -19,6 +19,11 @@ const validate = (values) => {
   return errors;
 };
 
+const handleSubmit = (agreement, dispatch, props) => {
+  props.onUpdate(agreement)
+    .then(() => props.onCancel());
+};
+
 class EditAgreement extends React.Component {
   static propTypes = {
     initialValues: PropTypes.object,
@@ -98,6 +103,7 @@ class EditAgreement extends React.Component {
 export default stripesForm({
   form: 'EditAgreement',
   validate,
+  onSubmit: handleSubmit,
   navigationCheck: true,
   enableReinitialize: true,
 })(EditAgreement);

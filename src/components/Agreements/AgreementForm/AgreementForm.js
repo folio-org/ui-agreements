@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field, FieldArray } from 'redux-form';
 import { get } from 'lodash';
 import {
   Col,
   Datepicker,
+  RepeatableField,
   Row,
   Select,
   TextArea,
@@ -126,6 +127,29 @@ class AgreementForm extends React.Component {
                 label={intl.formatMessage({ id: 'ui-erm.agreements.isPerpetual' })}
                 component={Select}
                 dataOptions={this.getIsPerpetualValues()}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <FieldArray
+                addLabel="+ Add Contact"
+                component={RepeatableField}
+                name="contacts"
+                renderField={(field, index) => (
+                  <React.Fragment>
+                    <Field
+                      component={TextField}
+                      label="Contact ID"
+                      name={`contacts[${index}].id`}
+                    />
+                    <Field
+                      component={TextField}
+                      label="Contact Role"
+                      name={`contacts[${index}].role`}
+                    />
+                  </React.Fragment>
+                )}
               />
             </Col>
           </Row>
