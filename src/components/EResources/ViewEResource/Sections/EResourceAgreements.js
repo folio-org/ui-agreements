@@ -57,14 +57,6 @@ class EResourceAgreements extends React.Component {
               package: intl.formatMessage({ id: 'ui-erm.eresources.parentPackage' }),
               acqMethod: intl.formatMessage({ id: 'ui-erm.eresources.acqMethod' }),
             }}
-            // columnWidths={{
-            //   name:,
-            //   type:,
-            //   startDate:,
-            //   endDate:,
-            //   package:,
-            //   acqMethod:,
-            // }}
           />
         </Col>
       </Row>
