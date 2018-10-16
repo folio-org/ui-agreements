@@ -13,9 +13,12 @@ class EResources extends React.Component {
   static manifest = Object.freeze({
     records: {
       type: 'okapi',
-      path: 'erm/eresources',
+      path: 'erm/resource/electronic',
       resourceShouldRefresh: true,
       records: 'results',
+      recordsRequired: '%{resultCount}',
+      perRequest: 100,
+      limitParam: 'perPage',
       params: getSASParams({
         searchKey: 'name',
         columnMap: {

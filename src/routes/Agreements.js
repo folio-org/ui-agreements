@@ -26,6 +26,9 @@ class Agreements extends React.Component {
       path: 'erm/sas',
       resourceShouldRefresh: true,
       records: 'results',
+      recordsRequired: '%{resultCount}',
+      perRequest: 100,
+      limitParam: 'perPage',
       params: getSASParams({
         searchKey: 'name',
         columnMap: {

@@ -22,7 +22,7 @@ class ViewEResource extends React.Component {
   static manifest = Object.freeze({
     selectedEResource: {
       type: 'okapi',
-      path: 'erm/eresources/:{id}',
+      path: 'erm/resource/:{id}',
     },
     query: {},
   });

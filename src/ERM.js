@@ -7,10 +7,12 @@ import Agreements from './routes/Agreements';
 import EResources from './routes/EResources';
 import Tabs from './components/Tabs';
 
+const INITIAL_RESULT_COUNT = 100;
+
 export default class Erm extends React.Component {
   static manifest = Object.freeze({
     query: {},
-    resultCount: { initialValue: 0 }
+    resultCount: { initialValue: INITIAL_RESULT_COUNT }
   });
 
   static propTypes = {
