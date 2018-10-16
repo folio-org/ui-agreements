@@ -14,7 +14,6 @@ import {
 
 import {
   EResourceInfo,
-  EResourceAgreements,
   AcquisitionOptions,
 } from './Sections';
 
@@ -45,8 +44,6 @@ class ViewEResource extends React.Component {
         acquisitionOptions: false,
       }
     };
-
-    this.connectedEResourceAgreements = props.stripes.connect(EResourceAgreements);
   }
 
   getEResource() {
@@ -56,6 +53,7 @@ class ViewEResource extends React.Component {
 
   getSectionProps() {
     return {
+      match: this.props.match,
       eresource: this.getEResource(),
       onToggle: this.handleSectionToggle,
       stripes: this.props.stripes,
@@ -114,12 +112,6 @@ class ViewEResource extends React.Component {
           <EResourceInfo
             id="info"
             open={this.state.sections.info}
-            {...sectionProps}
-          />
-          <this.connectedEResourceAgreements
-            id="agreements"
-            key={`agreements-${resource.id}`} // Force a remount when changing which eresource we're viewing
-            open={this.state.sections.agreements}
             {...sectionProps}
           />
           <AcquisitionOptions

@@ -7,15 +7,23 @@ import {
   Row,
 } from '@folio/stripes/components';
 
+import { EResourceAgreements } from '.';
 
 class EResourceInfo extends React.Component {
   static propTypes = {
     eresource: PropTypes.object,
     id: PropTypes.string,
+    match: PropTypes.object,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
     stripes: PropTypes.object,
   };
+
+  constructor(props) {
+    super(props);
+
+    this.connectedEResourceAgreements = props.stripes.connect(EResourceAgreements);
+  }
 
   render() {
     const { eresource, stripes: { intl } } = this.props;
@@ -35,6 +43,10 @@ class EResourceInfo extends React.Component {
             />
           </Col>
         </Row>
+        <this.connectedEResourceAgreements
+          key={`agreements-${eresource.id}`} // Force a remount when changing which eresource we're viewing
+          {...this.props}
+        />
       </Accordion>
     );
   }

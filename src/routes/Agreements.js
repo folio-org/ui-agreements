@@ -101,6 +101,8 @@ class Agreements extends React.Component {
         config.values = records[i].map(r => ({ name: r.label, cql: r.value }));
         config.label = intl.formatMessage({ id: `ui-erm.agreements.${filter}` });
       });
+
+      this.props.stripes.logger.log('erm', 'Filter Config Updated', filterConfig);
     }
   }
 

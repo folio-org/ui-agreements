@@ -58,6 +58,8 @@
   "eresources.erAgreements": "Agreements for this e-resource",
   "eresources.agreementStatus": "Agreement status",
   "eresources.acqOptions": "Options for acquiring e-resource: {name}",
+  "eresources.parentPackage": "Parent package",
+  "eresources.acqMethod": "Acquisition method",
 
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
