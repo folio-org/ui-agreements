@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import { injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 
 import {
   Accordion,
   Col,
+  Headline,
   KeyValue,
   Row,
 } from '@folio/stripes/components';
@@ -75,6 +76,9 @@ class EResourceInfo extends React.Component {
             />
           </Col>
         </Row>
+        <Headline size="medium" faded>
+          <FormattedMessage id="ui-erm.eresources.erAgreements" />
+        </Headline>
         <this.connectedEResourceAgreements
           key={`agreements-${eresource.id}`} // Force a remount when changing which eresource we're viewing
           {...this.props}
