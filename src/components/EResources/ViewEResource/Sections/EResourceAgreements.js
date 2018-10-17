@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
 import {
-  Accordion,
   Col,
   Icon,
   MultiColumnList,
@@ -12,80 +11,57 @@ import {
 
 class EResourceAgreements extends React.Component {
   static manifest = Object.freeze({
-    agreements: {
+    entitlements: {
       type: 'okapi',
-      path: 'erm/sas/%{agreementToFetch}',
-      fetch: false,
-      accumulate: true,
+      path: 'erm/resource/:{id}/entitlements',
+      throwErrors: false, // We can get a 404 from this endpoint
     },
-    agreementToFetch: { initialValue: '' },
   })
 
   static propTypes = {
-    eresource: PropTypes.object,
-    id: PropTypes.string,
-    mutator: PropTypes.shape({
-      agreements: PropTypes.object,
-      agreementToFetch: PropTypes.object
-    }),
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
+    match: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
     resources: PropTypes.shape({
-      agreements: PropTypes.object,
-      agreementToFetch: PropTypes.string
+      entitlements: PropTypes.object,
     }),
     stripes: PropTypes.object,
   };
 
-  componentDidMount() {
-    const { mutator, eresource: { entitlements } } = this.props;
-
-    mutator.agreements.reset();
-
-    if (!entitlements || !entitlements.length) return;
-
-    entitlements.forEach((entitlement) => {
-      mutator.agreementToFetch.replace(entitlement.owner.id);
-      mutator.agreements.GET();
-    });
-  }
 
   render() {
-    const { resources: { agreements }, stripes: { intl } } = this.props;
+    const { resources: { entitlements }, stripes: { intl } } = this.props;
 
-    if (!agreements || !agreements.records) {
+    if (!entitlements || !entitlements.records) {
       return <Icon icon="spinner-ellipsis" width="100px" />;
     }
 
     return (
-      <Accordion
-        id={this.props.id}
-        label={intl.formatMessage({ id: 'ui-erm.eresources.erInfo' })}
-        open={this.props.open}
-        onToggle={this.props.onToggle}
-      >
-        <Row>
-          <Col xs={12}>
-            <MultiColumnList
-              contentData={agreements.records}
-              maxHeight={400}
-              visibleColumns={['name', 'type']}
-              formatter={{
-                name: agreement => <Link to={`/erm/agreements/view/${agreement.id}`}>{agreement.name}</Link>,
-                type: agreement => agreement.agreementStatus && agreement.agreementStatus.label,
-              }}
-              columnMapping={{
-                name: intl.formatMessage({ id: 'ui-erm.eresources.erAgreements' }),
-                type: intl.formatMessage({ id: 'ui-erm.eresources.agreementStatus' }),
-              }}
-              columnWidths={{
-                name: '60%',
-                type: '40%',
-              }}
-            />
-          </Col>
-        </Row>
-      </Accordion>
+      <Row>
+        <Col xs={12}>
+          <MultiColumnList
+            contentData={entitlements.records}
+            maxHeight={400}
+            visibleColumns={['name', 'type', 'startDate', 'endDate', 'package', 'acqMethod']}
+            formatter={{
+              name: ({ owner }) => <Link to={`/erm/agreements/view/${owner.id}`}>{owner.name}</Link>,
+              type: ({ owner }) => owner.agreementStatus && owner.agreementStatus.label,
+              startDate: ({ owner }) => owner.startDate && intl.formatDate(owner.startDate),
+              endDate: ({ owner }) => owner.endDate && intl.formatDate(owner.endDate),
+              package: ({ resource }) => <Link to={`/erm/eresources/view/${resource.id}`}>{resource.name}</Link>,
+              acqMethod: ({ resource }) => (resource.class === 'org.olf.kb.Pkg' ?
+                intl.formatMessage({ id: 'ui-erm.eresources.package' }) : intl.formatMessage({ id: 'ui-erm.eresources.title' })
+              ),
+            }}
+            columnMapping={{
+              name: intl.formatMessage({ id: 'ui-erm.eresources.erAgreements' }),
+              type: intl.formatMessage({ id: 'ui-erm.eresources.agreementStatus' }),
+              startDate: intl.formatMessage({ id: 'ui-erm.agreements.startDate' }),
+              endDate: intl.formatMessage({ id: 'ui-erm.agreements.endDate' }),
+              package: intl.formatMessage({ id: 'ui-erm.eresources.parentPackage' }),
+              acqMethod: intl.formatMessage({ id: 'ui-erm.eresources.acqMethod' }),
+            }}
+          />
+        </Col>
+      </Row>
     );
   }
 }

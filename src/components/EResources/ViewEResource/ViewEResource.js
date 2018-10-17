@@ -14,7 +14,6 @@ import {
 
 import {
   EResourceInfo,
-  EResourceAgreements,
   AcquisitionOptions,
 } from './Sections';
 
@@ -22,7 +21,7 @@ class ViewEResource extends React.Component {
   static manifest = Object.freeze({
     selectedEResource: {
       type: 'okapi',
-      path: 'erm/eresources/:{id}',
+      path: 'erm/resource/:{id}',
     },
     query: {},
   });
@@ -45,8 +44,6 @@ class ViewEResource extends React.Component {
         acquisitionOptions: false,
       }
     };
-
-    this.connectedEResourceAgreements = props.stripes.connect(EResourceAgreements);
   }
 
   getEResource() {
@@ -56,6 +53,7 @@ class ViewEResource extends React.Component {
 
   getSectionProps() {
     return {
+      match: this.props.match,
       eresource: this.getEResource(),
       onToggle: this.handleSectionToggle,
       stripes: this.props.stripes,
@@ -79,7 +77,7 @@ class ViewEResource extends React.Component {
     return (
       <Pane
         id="pane-view-eresource"
-        defaultWidth={this.props.paneWidth}
+        defaultWidth="55%"
         paneTitle="Loading..."
         dismissible
         onClose={this.props.onClose}
@@ -100,7 +98,7 @@ class ViewEResource extends React.Component {
     return (
       <Pane
         id="pane-view-eresource"
-        defaultWidth={this.props.paneWidth}
+        defaultWidth="55%"
         paneTitle={resource.name}
         dismissible
         onClose={this.props.onClose}
@@ -114,12 +112,6 @@ class ViewEResource extends React.Component {
           <EResourceInfo
             id="info"
             open={this.state.sections.info}
-            {...sectionProps}
-          />
-          <this.connectedEResourceAgreements
-            id="agreements"
-            key={`agreements-${resource.id}`} // Force a remount when changing which eresource we're viewing
-            open={this.state.sections.agreements}
             {...sectionProps}
           />
           <AcquisitionOptions

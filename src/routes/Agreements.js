@@ -26,6 +26,9 @@ class Agreements extends React.Component {
       path: 'erm/sas',
       resourceShouldRefresh: true,
       records: 'results',
+      recordsRequired: '%{resultCount}',
+      perRequest: 100,
+      limitParam: 'perPage',
       params: getSASParams({
         searchKey: 'name',
         columnMap: {
@@ -98,6 +101,8 @@ class Agreements extends React.Component {
         config.values = records[i].map(r => ({ name: r.label, cql: r.value }));
         config.label = intl.formatMessage({ id: `ui-erm.agreements.${filter}` });
       });
+
+      this.props.stripes.logger.log('erm', 'Filter Config Updated', filterConfig);
     }
   }
 
