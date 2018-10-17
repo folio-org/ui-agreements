@@ -47,7 +47,9 @@ class EResourceAgreements extends React.Component {
               startDate: ({ owner }) => owner.startDate && intl.formatDate(owner.startDate),
               endDate: ({ owner }) => owner.endDate && intl.formatDate(owner.endDate),
               package: ({ resource }) => <Link to={`/erm/eresources/view/${resource.id}`}>{resource.name}</Link>,
-              acqMethod: ({ resource }) => resource.class,
+              acqMethod: ({ resource }) => (resource.class === 'org.olf.kb.Pkg' ?
+                intl.formatMessage({ id: 'ui-erm.eresources.package' }) : intl.formatMessage({ id: 'ui-erm.eresources.title' })
+              ),
             }}
             columnMapping={{
               name: intl.formatMessage({ id: 'ui-erm.eresources.erAgreements' }),
