@@ -55,6 +55,10 @@
 
   "eresources.erInfo": "E-resource information",
   "eresources.erType": "E-resource type",
+  "eresources.publisher": "Publisher",
+  "eresources.pIssn": "ISSN (Print)",
+  "eresources.eIssn": "ISSN (Online)",
+  "eresources.jusp": "JUSP",
   "eresources.erAgreements": "Agreements for this e-resource",
   "eresources.agreementStatus": "Agreement status",
   "eresources.acqOptions": "Options for acquiring e-resource: {name}",

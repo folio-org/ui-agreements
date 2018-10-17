@@ -77,7 +77,7 @@ class ViewEResource extends React.Component {
     return (
       <Pane
         id="pane-view-eresource"
-        defaultWidth={this.props.paneWidth}
+        defaultWidth="55%"
         paneTitle="Loading..."
         dismissible
         onClose={this.props.onClose}
@@ -98,7 +98,7 @@ class ViewEResource extends React.Component {
     return (
       <Pane
         id="pane-view-eresource"
-        defaultWidth={this.props.paneWidth}
+        defaultWidth="55%"
         paneTitle={resource.name}
         dismissible
         onClose={this.props.onClose}
