@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { injectIntl, intlShape } from 'react-intl';
 import {
   Accordion,
   Col,
@@ -13,11 +14,11 @@ class AcquisitionOptions extends React.Component {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    stripes: PropTypes.object,
+    intl: intlShape,
   };
 
   render() {
-    const { eresource, stripes: { intl } } = this.props;
+    const { eresource, intl } = this.props;
 
     return (
       <Accordion
@@ -36,4 +37,4 @@ class AcquisitionOptions extends React.Component {
   }
 }
 
-export default AcquisitionOptions;
+export default injectIntl(AcquisitionOptions);

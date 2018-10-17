@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
+import { injectIntl, intlShape } from 'react-intl';
+
 import {
   Accordion,
   Col,
@@ -17,7 +19,7 @@ class EResourceInfo extends React.Component {
     match: PropTypes.object,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    stripes: PropTypes.object,
+    intl: intlShape,
   };
 
   constructor(props) {
@@ -38,7 +40,7 @@ class EResourceInfo extends React.Component {
   }
 
   render() {
-    const { eresource, stripes: { intl } } = this.props;
+    const { eresource, intl } = this.props;
 
     return (
       <Accordion
@@ -82,4 +84,4 @@ class EResourceInfo extends React.Component {
   }
 }
 
-export default EResourceInfo;
+export default injectIntl(EResourceInfo);
