@@ -50,6 +50,8 @@
   "agreementLines.name": "Name",
   "agreementLines.type": "Type",
 
+  "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
+
   "eresources.name": "Name",
   "eresources.type": "Type",
 

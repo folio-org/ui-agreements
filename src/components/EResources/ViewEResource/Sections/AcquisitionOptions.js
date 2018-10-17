@@ -4,12 +4,13 @@ import { get } from 'lodash';
 import Link from 'react-router-dom/Link';
 import {
   Accordion,
-  Button,
   Col,
   Icon,
   MultiColumnList,
   Row,
 } from '@folio/stripes/components';
+
+import AddToBasketButton from '../../../AddToBasketButton';
 
 class AcquisitionOptions extends React.Component {
   static manifest = Object.freeze({
@@ -30,6 +31,12 @@ class AcquisitionOptions extends React.Component {
     }),
     stripes: PropTypes.object,
   };
+
+  constructor(props) {
+    super(props);
+
+    this.connectedAddToBasketButton = props.stripes.connect(AddToBasketButton);
+  }
 
   render() {
     const { eresource, resources: { entitlementOptions }, stripes: { intl } } = this.props;
@@ -59,8 +66,8 @@ class AcquisitionOptions extends React.Component {
                   intl.formatMessage({ id: 'ui-erm.eresources.title' })
                 ),
                 add: option => (option.class === 'org.olf.kb.Pkg' ?
-                  <Button buttonStyle="primary">{intl.formatMessage({ id: 'ui-erm.eresources.addPackage' })}</Button> :
-                  <Button buttonStyle="primary">{intl.formatMessage({ id: 'ui-erm.eresources.addTitle' })}</Button>
+                  <this.connectedAddToBasketButton key={option.id} item={option} addLabel={intl.formatMessage({ id: 'ui-erm.eresources.addPackage' })} /> :
+                  <this.connectedAddToBasketButton key={option.id} item={option} addLabel={intl.formatMessage({ id: 'ui-erm.eresources.addTitle' })} />
                 ),
               }}
               columnMapping={{

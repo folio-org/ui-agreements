@@ -2,10 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
+import { Layout } from '@folio/stripes/components';
+
+import OpenBasketButton from './components/OpenBasketButton';
 import Dashboard from './routes/Dashboard';
 import Agreements from './routes/Agreements';
 import EResources from './routes/EResources';
 import Tabs from './components/Tabs';
+
+import css from './ERM.css';
 
 const INITIAL_RESULT_COUNT = 100;
 
@@ -32,6 +37,7 @@ export default class Erm extends React.Component {
   constructor(props) {
     super(props);
 
+    this.connectedOpenBasketButton = props.stripes.connect(OpenBasketButton);
     this.connectedDashboard = props.stripes.connect(Dashboard);
     this.connectedAgreements = props.stripes.connect(Agreements);
     this.connectedEResources = props.stripes.connect(EResources);
@@ -51,11 +57,14 @@ export default class Erm extends React.Component {
 
     return (
       <React.Fragment>
-        <Tabs
-          tab={currentPage}
-          parentResources={this.props.resources}
-          parentMutator={this.props.mutator}
-        />
+        <Layout className={`${css.header} display-flex full padding-top-gutter padding-start-gutter padding-end-gutter`}>
+          <Tabs
+            tab={currentPage}
+            parentResources={this.props.resources}
+            parentMutator={this.props.mutator}
+          />
+          <this.connectedOpenBasketButton stripes={stripes} />
+        </Layout>
         <Switch>
           <Route
             path={`${match.path}/dashboard`}
