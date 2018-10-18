@@ -65,10 +65,19 @@ class AcquisitionOptions extends React.Component {
                   intl.formatMessage({ id: 'ui-erm.eresources.package' }) :
                   intl.formatMessage({ id: 'ui-erm.eresources.title' })
                 ),
-                add: option => (option.class === 'org.olf.kb.Pkg' ?
-                  <this.connectedAddToBasketButton key={option.id} item={option} addLabel={intl.formatMessage({ id: 'ui-erm.eresources.addPackage' })} /> :
-                  <this.connectedAddToBasketButton key={option.id} item={option} addLabel={intl.formatMessage({ id: 'ui-erm.eresources.addTitle' })} />
-                ),
+                add: option => {
+                  const addLabel = option.class === 'org.olf.kb.Pkg' ?
+                    intl.formatMessage({ id: 'ui-erm.eresources.addPackage' }) :
+                    intl.formatMessage({ id: 'ui-erm.eresources.addTitle' });
+
+                  return (
+                    <this.connectedAddToBasketButton
+                      key={option.id}
+                      addLabel={addLabel}
+                      item={option}
+                    />
+                  );
+                },
               }}
               columnMapping={{
                 package: intl.formatMessage({ id: 'ui-erm.eresources.parentPackage' }),

@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import { Layout } from '@folio/stripes/components';
 
+import Basket from './components/Basket';
 import OpenBasketButton from './components/OpenBasketButton';
 import Dashboard from './routes/Dashboard';
 import Agreements from './routes/Agreements';
@@ -37,6 +38,7 @@ export default class Erm extends React.Component {
   constructor(props) {
     super(props);
 
+    this.connectedBasket = props.stripes.connect(Basket);
     this.connectedOpenBasketButton = props.stripes.connect(OpenBasketButton);
     this.connectedDashboard = props.stripes.connect(Dashboard);
     this.connectedAgreements = props.stripes.connect(Agreements);

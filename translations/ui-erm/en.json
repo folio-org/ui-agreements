@@ -51,6 +51,7 @@
   "agreementLines.type": "Type",
 
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
+  "basket.close": "Close basket",
 
   "eresources.name": "Name",
   "eresources.type": "Type",
