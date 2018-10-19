@@ -16,6 +16,7 @@ class Basket extends React.Component {
   });
 
   static propTypes = {
+    container: PropTypes.node,
     mutator: PropTypes.shape({
       basket: PropTypes.shape({
         replace: PropTypes.func,
@@ -48,15 +49,20 @@ class Basket extends React.Component {
   }
 
   render() {
-    const basket = this.props.resources.basket || [];
-    const query = this.props.resources.query;
+    const { container, resources, stripes: { intl } } = this.props;
+
+    const basket = resources.basket || [];
+    const query = resources.query;
 
     return (
-      <Layer isOpen={query.basket}>
+      <Layer container={container} isOpen={query.basket}>
         <Paneset>
           <Pane
             defaultWidth="100%"
             firstMenu={this.renderFirstMenu()}
+            paneTitle={intl.formatMessage({ id: 'ui-erm.basket.name' })}
+            paneSub={intl.formatMessage({ id: 'ui-erm.basket.recordCount' }, { count: basket.length })}
+
           >
             <ul>
               {
