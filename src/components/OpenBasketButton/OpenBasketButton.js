@@ -6,6 +6,8 @@ import {
   Button,
 } from '@folio/stripes/components';
 
+import css from './OpenBasketButton.css';
+
 class OpenBasketButton extends React.Component {
   static manifest = Object.freeze({
     basket: {
@@ -32,18 +34,17 @@ class OpenBasketButton extends React.Component {
     const basket = this.props.resources.basket || [];
 
     return (
-      <div style={{ flex: 0 }}>
-        <Button
-          buttonStyle="primary"
-          disabled={basket.length === 0}
-          onClick={this.openBasket}
-        >
-          <FormattedMessage
-            id="ui-erm.basketButton"
-            values={{ count: basket.length }}
-          />
-        </Button>
-      </div>
+      <Button
+        buttonClass={css.button}
+        buttonStyle="primary"
+        disabled={basket.length === 0}
+        onClick={this.openBasket}
+      >
+        <FormattedMessage
+          id="ui-erm.basketButton"
+          values={{ count: basket.length }}
+        />
+      </Button>
     );
   }
 }
