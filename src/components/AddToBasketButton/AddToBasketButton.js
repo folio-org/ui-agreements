@@ -73,8 +73,6 @@ class AddToBasketButton extends React.Component {
   render() {
     const { itemExistsInBasket } = this.state;
 
-    console.log('Basket', this.props.resources.basket);
-
     return (
       <Button
         buttonStyle={itemExistsInBasket ? 'default' : 'primary'}

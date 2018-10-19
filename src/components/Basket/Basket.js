@@ -9,6 +9,8 @@ import {
   PaneMenu,
 } from '@folio/stripes/components';
 
+import BasketList from './BasketList';
+
 class Basket extends React.Component {
   static manifest = Object.freeze({
     basket: { initialValue: [] },
@@ -16,7 +18,7 @@ class Basket extends React.Component {
   });
 
   static propTypes = {
-    container: PropTypes.node,
+    container: PropTypes.instanceOf(Element).isRequired,
     mutator: PropTypes.shape({
       basket: PropTypes.shape({
         replace: PropTypes.func,
@@ -34,6 +36,15 @@ class Basket extends React.Component {
 
   closeBasket = () => {
     this.props.mutator.query.update({ basket: undefined });
+  }
+
+  removeItem = (item) => {
+    const { mutator, resources } = this.props;
+
+    const basket = resources.basket || [];
+    const updatedBasket = basket.filter(i => i.id !== item.id);
+
+    mutator.basket.replace(updatedBasket);
   }
 
   renderFirstMenu = () => {
@@ -55,7 +66,11 @@ class Basket extends React.Component {
     const query = resources.query;
 
     return (
-      <Layer container={container} isOpen={query.basket}>
+      <Layer
+        container={container}
+        contentLabel={intl.formatMessage({ id: 'ui-erm.basket.layerLabel' })}
+        isOpen={!!query.basket}
+      >
         <Paneset>
           <Pane
             defaultWidth="100%"
@@ -64,13 +79,10 @@ class Basket extends React.Component {
             paneSub={intl.formatMessage({ id: 'ui-erm.basket.recordCount' }, { count: basket.length })}
 
           >
-            <ul>
-              {
-                basket.map(item => (
-                  <li key={item.id}>{item.name}</li>
-                ))
-              }
-            </ul>
+            <BasketList
+              basket={basket}
+              removeItem={this.removeItem}
+            />
           </Pane>
         </Paneset>
       </Layer>
