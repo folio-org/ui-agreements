@@ -53,12 +53,25 @@ export default class Erm extends React.Component {
     return rStripped;
   }
 
+  renderBasket() {
+    // Don't render the basket until we've mounted and a have a ref to the container.
+    if (!this.container) return null;
+
+    return (
+      <this.connectedBasket
+        container={this.container}
+        stripes={this.props.stripes}
+      />
+    );
+  }
+
   render() {
     const { stripes, match } = this.props;
     const currentPage = this.getCurrentPage(this.props);
 
     return (
-      <React.Fragment>
+      <div ref={(ref) => { this.container = ref; }} className={css.container}>
+        { this.renderBasket() }
         <Layout className={`${css.header} display-flex full padding-top-gutter padding-start-gutter padding-end-gutter`}>
           <Tabs
             tab={currentPage}
@@ -67,26 +80,28 @@ export default class Erm extends React.Component {
           />
           <this.connectedOpenBasketButton stripes={stripes} />
         </Layout>
-        <Switch>
-          <Route
-            path={`${match.path}/dashboard`}
-            render={() => <this.connectedDashboard stripes={stripes} />}
-          />
-          <Route
-            path={`${match.path}/agreements`}
-            render={() => <this.connectedAgreements stripes={stripes} />}
-          />
-          <Route
-            path={`${match.path}/eresources`}
-            render={() => <this.connectedEResources stripes={stripes} />}
-          />
-          <Redirect
-            exact
-            from={`${match.path}`}
-            to={`${match.path}/dashboard`}
-          />
-        </Switch>
-      </React.Fragment>
+        <div className={css.body}>
+          <Switch>
+            <Route
+              path={`${match.path}/dashboard`}
+              render={() => <this.connectedDashboard stripes={stripes} />}
+            />
+            <Route
+              path={`${match.path}/agreements`}
+              render={() => <this.connectedAgreements stripes={stripes} />}
+            />
+            <Route
+              path={`${match.path}/eresources`}
+              render={() => <this.connectedEResources stripes={stripes} />}
+            />
+            <Redirect
+              exact
+              from={`${match.path}`}
+              to={`${match.path}/dashboard`}
+            />
+          </Switch>
+        </div>
+      </div>
     );
   }
 }

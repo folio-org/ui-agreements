@@ -1,8 +1,6 @@
 /* Tabs */
 .SegControl {
   display: flex;
-  position: relative;
-  z-index: 1;
   width: 100%;
   align-items: center;
   justify-content: center;
