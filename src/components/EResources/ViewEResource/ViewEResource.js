@@ -40,10 +40,11 @@ class ViewEResource extends React.Component {
     this.state = {
       sections: {
         info: true,
-        agreements: false,
-        acquisitionOptions: false,
+        acquisitionOptions: true,
       }
     };
+
+    this.connectedAcquisitionOptions = props.stripes.connect(AcquisitionOptions);
   }
 
   getEResource() {
@@ -114,8 +115,9 @@ class ViewEResource extends React.Component {
             open={this.state.sections.info}
             {...sectionProps}
           />
-          <AcquisitionOptions
+          <this.connectedAcquisitionOptions
             id="acquisitionOptions"
+            key={`acqOptions-${resource.id}`} // Force a remount when changing which resource we're viewing
             open={this.state.sections.acquisitionOptions}
             {...sectionProps}
           />

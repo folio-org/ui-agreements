@@ -1,0 +1,5 @@
+.button {
+  /* We don't want the size of the button to change when
+     the text changes based on the number of items in the basket. */
+  min-width: 150px;
+}
