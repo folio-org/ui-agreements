@@ -15,7 +15,6 @@ import {
 
 import {
   AgreementInfo,
-  AgreementLines,
   AssociatedAgreements,
   Eresources,
   License,
@@ -58,7 +57,7 @@ class ViewAgreement extends React.Component {
       license: false,
       licenseBusinessTerms: false,
       organizations: false,
-      eresources: false,
+      eresources: true,
       associatedAgreements: false,
     }
   }
@@ -177,7 +176,6 @@ class ViewAgreement extends React.Component {
             </Col>
           </Row>
           <AgreementInfo id="agreementInfo" open={this.state.sections.agreementInfo} {...sectionProps} />
-          <AgreementLines id="agreementLines" open={this.state.sections.agreementLines} {...sectionProps} />
           <License id="license" open={this.state.sections.license} {...sectionProps} />
           <LicenseBusinessTerms id="licenseBusinessTerms" open={this.state.sections.licenseBusinessTerms} {...sectionProps} />
           <Organizations id="organizations" open={this.state.sections.organizations} {...sectionProps} />

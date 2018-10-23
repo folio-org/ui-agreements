@@ -12,6 +12,8 @@ import {
   MultiColumnList,
 } from '@folio/stripes/components';
 
+import { renderResourceType } from '../../util/resourceType';
+
 class BasketList extends React.Component {
   static propTypes = {
     basket: PropTypes.arrayOf(PropTypes.object),
@@ -39,29 +41,26 @@ class BasketList extends React.Component {
               'remove'
             ]}
             formatter={{
-              name: item => <Link to={`/erm/eresources/view/${item.id}`}>{item.name}</Link>,
-              type: item => (item.class === 'org.olf.kb.Pkg' ?
-                intl.formatMessage({ id: 'ui-erm.eresources.package' }) :
-                intl.formatMessage({ id: 'ui-erm.eresources.title' })
-              ),
-              package: item => {
-                const pkg = get(item, ['_object', 'pkg']);
+              name: resource => <Link to={`/erm/eresources/view/${resource.id}`}>{resource.name}</Link>,
+              type: resource => renderResourceType(resource),
+              package: resource => {
+                const pkg = get(resource, ['_object', 'pkg']);
                 if (!pkg) return '';
 
                 return <Link to={`/erm/eresources/view/${pkg.id}`}>{pkg.name}</Link>;
               },
               publisher: () => 'TBD',
-              platform: item => (
-                get(item, ['_object', 'pti', 'platform', 'name']) ||
-                get(item, ['_object', 'nominalPlatform', 'name'])
+              platform: resource => (
+                get(resource, ['_object', 'pti', 'platform', 'name']) ||
+                get(resource, ['_object', 'nominalPlatform', 'name'])
               ),
               coverageStart: () => 'TBD',
               coverageEnd: () => 'TBD',
-              remove: item => (
+              remove: resource => (
                 <IconButton
                   aria-label={intl.formatMessage({ id: 'ui-erm.basket.removeItem' })}
                   icon="trashBin"
-                  onClick={() => removeItem(item)}
+                  onClick={() => removeItem(resource)}
                 />
               )
             }}

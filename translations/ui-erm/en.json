@@ -35,11 +35,12 @@
   "agreements.reviewDate": "Review date",
   "agreements.reviewDecision": "Decision",
   "agreements.reviewNotes": "Decision notes",
-  "agreements.agreementLines": "Agreement lines",
+  "agreements.agreementLines": "E-resources: agreement lines",
   "agreements.license": "License",
   "agreements.licenseAndBusTerms": "License and business terms",
   "agreements.organizations": "Organizations",
-  "agreements.eresources": "E-resources",
+  "agreements.eresourceAgreementLines": "E-resources - agreement lines",
+  "agreements.eresourcesCovered": "E-resources covered by this agreement",
   "agreements.assocAgreements": "Associated agreements",
 
   "agreements.closeNewAgreement": "Close New Agreement dialog",
@@ -47,8 +48,8 @@
   "agreements.updateAgreement": "Update Agreement",
   "agreements.editAgreement": "Edit Agreement",
 
-  "agreementLines.name": "Name",
-  "agreementLines.type": "Type",
+  "agreementLines.count": "Count",
+  "agreementLines.contentUpdated": "Content updated",
 
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
   "basket.name": "ERM Basket",
@@ -61,7 +62,6 @@
 
   "eresources.name": "Name",
   "eresources.type": "Type",
-
   "eresources.erInfo": "E-resource information",
   "eresources.erType": "E-resource type",
   "eresources.publisher": "Publisher",
