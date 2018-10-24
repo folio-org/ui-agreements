@@ -137,6 +137,8 @@ class ViewAgreement extends React.Component {
       >
         <EditAgreement
           {...this.props}
+          agreement={this.getAgreement()}
+          agreementLines={this.getAgreementLines()}
           onCancel={this.props.onCloseEdit}
           parentMutator={this.props.mutator}
           initialValues={this.getInitialValues()}

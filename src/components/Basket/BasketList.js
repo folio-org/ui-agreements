@@ -29,6 +29,7 @@ class BasketList extends React.Component {
         <Col xs={12}>
           <MultiColumnList
             contentData={basket}
+            interactive={false}
             maxHeight={400}
             visibleColumns={[
               'name',

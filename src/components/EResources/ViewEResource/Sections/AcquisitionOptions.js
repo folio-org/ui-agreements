@@ -57,6 +57,7 @@ class AcquisitionOptions extends React.Component {
           <Col xs={12}>
             <MultiColumnList
               contentData={entitlementOptions.records}
+              interactive={false}
               // maxHeight={400}
               visibleColumns={['package', 'platform', 'acqMethod', 'add']}
               formatter={{

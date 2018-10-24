@@ -40,6 +40,7 @@ class EResourceAgreements extends React.Component {
         <Col xs={12}>
           <MultiColumnList
             contentData={entitlements.records}
+            interactive={false}
             maxHeight={400}
             visibleColumns={['name', 'type', 'startDate', 'endDate', 'package', 'acqMethod']}
             formatter={{
