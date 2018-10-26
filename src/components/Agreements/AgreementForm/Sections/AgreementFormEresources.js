@@ -22,7 +22,6 @@ class AgreementFormEresources extends React.Component {
     intl: intlShape,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    touch: PropTypes.func,
   };
 
   getAgreementLine(id) {
