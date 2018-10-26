@@ -73,7 +73,7 @@ class BasketList extends React.Component {
               platform: intl.formatMessage({ id: 'ui-erm.eresources.platform' }),
               coverageStart: intl.formatMessage({ id: 'ui-erm.eresources.coverageStart' }),
               coverageEnd: intl.formatMessage({ id: 'ui-erm.eresources.coverageEnd' }),
-              remove: intl.formatMessage({ id: 'ui-erm.basket.remove' }),
+              remove: intl.formatMessage({ id: 'ui-erm.remove' }),
             }}
             columnWidths={{
               name: '30%',

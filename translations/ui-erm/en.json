@@ -2,6 +2,7 @@
   "meta.title": "ERM",
 
   "lastUpdated": "Last updated",
+  "remove": "Remove",
 
   "tabs.dashboard": "Dashboard",
   "tabs.agreements": "Agreements",
@@ -50,13 +51,14 @@
 
   "agreementLines.count": "Count",
   "agreementLines.contentUpdated": "Content updated",
+  "agreementLines.noLines": "No agreement lines have been added. Please use one of the options below.",
+  "agreementLines.removeItem": "Remove line from agreement",
 
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
   "basket.name": "ERM Basket",
   "basket.close": "Close basket",
   "basket.recordCount":  "Showing {count, number} {count, plural, one {record} other {records}}",
   "basket.layerLabel": "View E-resources in the ERM basket",
-  "basket.remove": "Remove",
   "basket.removeItem": "Remove item from basket",
   "basket.parentPackage": "Parent package",
 
