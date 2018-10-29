@@ -4,5 +4,6 @@ buildNPM {
   publishModDescriptor = 'yes'
   runRegression = 'no'
   runLint = 'no'
+  runSonarqube = true
   runTest = 'no'
 }
