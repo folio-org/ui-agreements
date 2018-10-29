@@ -39,7 +39,10 @@ class Tabs extends React.Component {
 
   handleActivate = ({ id }) => {
     this.setState({ tab: id });
-    this.props.parentMutator.query.replace({ _path: `/erm/${id}` });
+    this.props.parentMutator.query.replace({
+      _path: `/erm/${id}`,
+      layer: null,
+    });
     this.props.parentMutator.resultCount.replace(1);
   }
 

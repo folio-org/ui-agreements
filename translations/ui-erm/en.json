@@ -53,6 +53,7 @@
   "agreementLines.contentUpdated": "Content updated",
   "agreementLines.noLines": "No agreement lines have been added. Please use one of the options below.",
   "agreementLines.removeItem": "Remove line from agreement",
+  "agreementLines.createLine": "Create agreement line",
 
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
   "basket.name": "ERM Basket",

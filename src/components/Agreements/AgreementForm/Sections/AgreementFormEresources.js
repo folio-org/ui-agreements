@@ -14,6 +14,7 @@ import {
 } from '@folio/stripes/components';
 
 import { renderResourceType } from '../../../../util/resourceType';
+import BasketSelector from '../../../BasketSelector';
 
 class AgreementFormEresources extends React.Component {
   static propTypes = {
@@ -22,30 +23,54 @@ class AgreementFormEresources extends React.Component {
     intl: intlShape,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
+    stripes: PropTypes.object,
   };
 
-  getAgreementLine(id) {
-    return this.props.agreementLines.find(line => line.id === id);
+  state = {
+    addedLines: [],
   }
 
-  onRemoveAgreementLine = (fields, id, rowIndex) => {
+  getLineResource(line) {
+    if (line.resource) return line.resource;
+
+    const foundLine = this.props.agreementLines.find(l => l.id === line.id);
+    if (foundLine) return foundLine.resource;
+
+    return undefined;
+  }
+
+  onAddAgreementLine = (fields, resource) => {
+    this.setState((prevState) => ({
+      addedLines: [
+        ...prevState.addedLines,
+        { resource },
+      ]
+    }));
+
+    fields.push({ resource });
+  }
+
+  onRemoveAgreementLine = (fields, rowIndex, id) => {
     // mod-erm is implemented so that it doesn't expect the entire
     // array of agreement lines to be sent back on edits bc of the potential
     // size of that array. Instead, agreement line deletions are expected
     // to be sent back as an object that looks like { id: '123', _delete: true }.
     //
     // Since there's no "edit" function in redux-form fields so we remove
-    // the stale data and append the new data.
+    // the stale data and append the new data with the deletion marker property.
 
     fields.remove(rowIndex);
-    fields.push({
-      id,
-      _delete: true,
-    });
+
+    if (id) {
+      fields.push({
+        id,
+        _delete: true,
+      });
+    }
   }
 
   renderEresourceList = ({ fields }) => {
-    const { agreementLines, intl } = this.props;
+    const { agreementLines, intl, stripes } = this.props;
 
     if (!agreementLines || !agreementLines.length) {
       return <FormattedMessage id="ui-erm.agreementLines.noLines" />;
@@ -72,30 +97,30 @@ class AgreementFormEresources extends React.Component {
             'remove',
           ]}
           formatter={{
-            name: ({ id }) => {
-              const line = this.getAgreementLine(id);
-              const resource = get(line.resource, ['_object', 'pti', 'titleInstance'], line.resource);
-              return <Link to={`/erm/eresources/view/${resource.id}`}>{resource.name}</Link>;
+            name: (line) => {
+              const resource = this.getLineResource(line);
+              const title = get(resource, ['_object', 'pti', 'titleInstance'], resource);
+              return <Link to={`/erm/eresources/view/${title.id}`}>{title.name}</Link>;
             },
-            platform: ({ id }) => {
-              const line = this.getAgreementLine(id);
-              return get(line, ['resource', '_object', 'pti', 'platform', 'name']) ||
-                get(line, ['resource', '_object', 'nominalPlatform', 'name']);
+            platform: (line) => {
+              const resource = this.getLineResource(line);
+              return get(resource, ['_object', 'pti', 'platform', 'name']) ||
+                get(resource, ['_object', 'nominalPlatform', 'name']);
             },
-            type: ({ id }) => {
-              const line = this.getAgreementLine(id);
-              return line ? renderResourceType(this.getAgreementLine(id).resource) : '';
+            type: (line) => {
+              const resource = this.getLineResource(line);
+              return resource ? renderResourceType(resource) : '';
             },
-            count: ({ id }) => {
-              const line = this.getAgreementLine(id);
-              return get(line, ['_object', 'contentItems'], [0]).length; // If contentItems doesn't exist there's only one item.
+            count: (line) => {
+              const resource = this.getLineResource(line);
+              return get(resource, ['_object', 'contentItems'], [0]).length; // If contentItems doesn't exist there's only one item.
             },
-            remove: ({ id, rowIndex }) => {
+            remove: ({ rowIndex, id }) => {
               return (
                 <IconButton
                   aria-label={intl.formatMessage({ id: 'ui-erm.agreementLines.removeItem' })}
                   icon="trashBin"
-                  onClick={() => this.onRemoveAgreementLine(fields, id, rowIndex)}
+                  onClick={() => this.onRemoveAgreementLine(fields, rowIndex, id)}
                 />
               );
             },
@@ -114,7 +139,11 @@ class AgreementFormEresources extends React.Component {
             type: '10%',
           }}
         />
-        {/* <AutoSuggest /> */}
+        <BasketSelector
+          addButtonLabel={intl.formatMessage({ id: 'ui-erm.agreementLines.createLine' })}
+          onAdd={entitlement => this.onAddAgreementLine(fields, entitlement)}
+          stripes={stripes}
+        />
       </div>
     );
   }
