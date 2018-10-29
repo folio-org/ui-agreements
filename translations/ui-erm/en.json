@@ -63,6 +63,9 @@
   "basket.removeItem": "Remove item from basket",
   "basket.parentPackage": "Parent package",
 
+  "basketSelector.selectLabel": "Select from basket",
+  "basketSelector.selectPlaceholder": "Select e-resource or package",
+
   "eresources.name": "Name",
   "eresources.type": "Type",
   "eresources.erInfo": "E-resource information",

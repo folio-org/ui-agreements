@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
 
 import {
   Button,
+  Col,
+  Layout,
+  Row,
   Select,
 } from '@folio/stripes/components';
 
@@ -15,11 +18,12 @@ class BasketSelectorDisplay extends React.Component {
   static propTypes = {
     addButtonLabel: PropTypes.string,
     basket: PropTypes.arrayOf(PropTypes.object),
+    intl: intlShape,
     onAdd: PropTypes.func,
   }
 
   state = {
-    item: undefined,
+    item: { id: '' },
   }
 
   handleChange = (e) => {
@@ -30,11 +34,10 @@ class BasketSelectorDisplay extends React.Component {
   }
 
   render() {
-    const { addButtonLabel, basket, onAdd } = this.props;
+    const { addButtonLabel, basket, intl, onAdd } = this.props;
     const { item } = this.state;
 
     const dataOptions = [
-      {},
       ...basket.map(resource => ({
         value: resource.id,
         label: resource.name,
@@ -43,22 +46,31 @@ class BasketSelectorDisplay extends React.Component {
     ];
 
     return (
-      <div>
-        <Select
-          dataOptions={dataOptions}
-          label="Select from basket"
-          onChange={this.handleChange}
-          placeholder="Select e-resource or package"
-        />
-        <Button
-          disabled={item === undefined || item.id === undefined}
-          onClick={() => { onAdd(item); }}
-        >
-          {addButtonLabel}
-        </Button>
-      </div>
+      <Row>
+        <Col xs={12} md={8}>
+          <Select
+            dataOptions={dataOptions}
+            label={intl.formatMessage({ id: 'ui-erm.basketSelector.selectLabel' })}
+            onChange={this.handleChange}
+            placeholder={intl.formatMessage({ id: 'ui-erm.basketSelector.selectPlaceholder' })}
+            value={item.id}
+          />
+        </Col>
+        <Col xs={12} md={4}>
+          <Layout style={{ height: '100%' }} className="height-100 flex flex-direction-column flex-justify-end">
+            <Button
+              buttonStyle="primary"
+              disabled={!item.id}
+              fullWidth
+              onClick={() => { onAdd(item); }}
+            >
+              {addButtonLabel}
+            </Button>
+          </Layout>
+        </Col>
+      </Row>
     );
   }
 }
 
-export default BasketSelectorDisplay;
+export default injectIntl(BasketSelectorDisplay);
