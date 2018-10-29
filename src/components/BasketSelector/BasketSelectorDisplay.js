@@ -57,7 +57,7 @@ class BasketSelectorDisplay extends React.Component {
           />
         </Col>
         <Col xs={12} md={4}>
-          <Layout style={{ height: '100%' }} className="height-100 flex flex-direction-column flex-justify-end">
+          <Layout style={{ height: '100%' }} className="flex flex-direction-column justify-end">
             <Button
               buttonStyle="primary"
               disabled={!item.id}

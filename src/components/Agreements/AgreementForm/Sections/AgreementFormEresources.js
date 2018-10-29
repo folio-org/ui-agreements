@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
 import { get } from 'lodash';
 import { FieldArray } from 'redux-form';
 import Link from 'react-router-dom/Link';
@@ -69,25 +69,19 @@ class AgreementFormEresources extends React.Component {
     }
   }
 
-  renderEresourceList = ({ fields }) => {
-    const { agreementLines, intl, stripes } = this.props;
-
-    if (!agreementLines || !agreementLines.length) {
-      return <FormattedMessage id="ui-erm.agreementLines.noLines" />;
-    }
+  renderField = ({ fields }) => {
+    const { intl, stripes } = this.props;
 
     // Get the agreement lines and filter away lines that have been marked for deletion.
-    const data = fields.getAll().filter(line => !line._delete);
-
-    if (!data.length) {
-      return <FormattedMessage id="ui-erm.agreementLines.noLines" />;
-    }
+    const lines = fields.getAll() || [];
+    const renderedLines = lines.filter(line => !line._delete);
 
     return (
       <div>
         <MultiColumnList
-          contentData={data}
+          contentData={renderedLines}
           interactive={false}
+          isEmptyMessage={intl.formatMessage({ id: 'ui-erm.agreementLines.noLines' })}
           maxHeight={400}
           visibleColumns={[
             'name',
@@ -162,7 +156,7 @@ class AgreementFormEresources extends React.Component {
           <Col xs={12}>
             <FieldArray
               name="items"
-              component={this.renderEresourceList}
+              component={this.renderField}
               // toUpdate={this.state.lastAction} // TODO figure out (from EditableListForm)
             />
           </Col>
