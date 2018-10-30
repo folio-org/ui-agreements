@@ -21,10 +21,9 @@ const filterConfig = [
 
 class Agreements extends React.Component {
   static manifest = Object.freeze({
-    records: {
+    agreements: {
       type: 'okapi',
       path: 'erm/sas',
-      resourceShouldRefresh: true,
       records: 'results',
       recordsRequired: '%{resultCount}',
       perRequest: 100,
@@ -110,14 +109,13 @@ class Agreements extends React.Component {
       });
 
       this.props.mutator.agreementFiltersInitialized.replace(true);
-      this.props.stripes.logger.log('erm', 'Filter Config Updated', filterConfig);
     }
   }
 
   handleCreate = (agreement) => {
     const { mutator } = this.props;
 
-    return mutator.records.POST(agreement)
+    return mutator.agreements.POST(agreement)
       .then((newAgreement) => {
         mutator.query.update({
           _path: `/erm/agreements/view/${newAgreement.id}`,
@@ -133,7 +131,7 @@ class Agreements extends React.Component {
   }
 
   render() {
-    const { stripes: { intl } } = this.props;
+    const { mutator, resources, stripes: { intl } } = this.props;
     const path = '/erm/agreements';
     packageInfo.stripes.route = path;
     packageInfo.stripes.home = path;
@@ -155,8 +153,17 @@ class Agreements extends React.Component {
           detailProps={{
             onUpdate: this.handleUpdate
           }}
-          parentResources={this.props.resources}
-          parentMutator={this.props.mutator}
+          // SearchAndSort expects the resource it's going to list to be under the `records` key.
+          // However, if we just put it under `records` in the `manifest`, it would clash with
+          // the `records` that would need to be defined by the Agreements tab.
+          parentResources={{
+            ...resources,
+            records: resources.agreements,
+          }}
+          parentMutator={{
+            ...mutator,
+            records: mutator.agreements,
+          }}
           showSingleResult
           visibleColumns={[
             'name',
