@@ -70,18 +70,19 @@ class Agreements extends React.Component {
     query: {},
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     selectedAgreementId: { initialValue: '' },
+    agreementFiltersInitialized: { initialValue: false },
   });
 
   static propTypes = {
-    resources: PropTypes.shape({
-      records: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.object]),
-    }),
+    resources: PropTypes.object,
     mutator: PropTypes.object,
     stripes: PropTypes.object,
   };
 
   componentDidUpdate() {
-    this.updateFilterConfig();
+    if (!this.props.resources.agreementFiltersInitialized) {
+      this.updateFilterConfig();
+    }
   }
 
   updateFilterConfig() {
@@ -108,6 +109,7 @@ class Agreements extends React.Component {
         config.label = intl.formatMessage({ id: `ui-erm.agreements.${filter}` });
       });
 
+      this.props.mutator.agreementFiltersInitialized.replace(true);
       this.props.stripes.logger.log('erm', 'Filter Config Updated', filterConfig);
     }
   }

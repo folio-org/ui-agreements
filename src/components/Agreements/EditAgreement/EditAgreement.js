@@ -68,7 +68,7 @@ class EditAgreement extends React.Component {
           id={id}
           type="submit"
           title={label}
-          ariaLabel={label}
+          aria-label={label}
           disabled={this.props.pristine || this.props.submitting}
           onClick={this.props.handleSubmit}
           buttonStyle="primary paneHeaderNewButton"

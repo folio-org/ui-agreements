@@ -157,7 +157,6 @@ class AgreementFormEresources extends React.Component {
             <FieldArray
               name="items"
               component={this.renderField}
-              // toUpdate={this.state.lastAction} // TODO figure out (from EditableListForm)
             />
           </Col>
         </Row>
