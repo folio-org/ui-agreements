@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import BasketSelectorDisplay from './BasketSelectorDisplay';
 
-class BasketSelector extends React.Component {
+class BasketSelectorContainer extends React.Component {
   static manifest = Object.freeze({
     basket: { initialValue: [] },
   });
@@ -23,4 +23,4 @@ class BasketSelector extends React.Component {
   }
 }
 
-export default BasketSelector;
+export default BasketSelectorContainer;

@@ -31,12 +31,12 @@ class Agreements extends React.Component {
       params: getSASParams({
         searchKey: 'name',
         columnMap: {
-          'Agreement name': 'name',
+          'Name': 'name',
           'Vendor': 'vendor',
           'Start date': 'startDate',
           'End date': 'endDate',
           'Cancellation deadline': 'cancellationDeadline',
-          'Agreement status': 'agreementStatus',
+          'Status': 'agreementStatus',
           'Last updated': 'lastUpdated',
         }
       }),
