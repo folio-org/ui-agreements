@@ -15,7 +15,6 @@ import {
 
 import {
   AgreementInfo,
-  AgreementLines,
   AssociatedAgreements,
   Eresources,
   License,
@@ -58,7 +57,7 @@ class ViewAgreement extends React.Component {
       license: false,
       licenseBusinessTerms: false,
       organizations: false,
-      eresources: false,
+      eresources: true,
       associatedAgreements: false,
     }
   }
@@ -68,6 +67,9 @@ class ViewAgreement extends React.Component {
   }
 
   getAgreementLines() {
+    const isPending = get(this.props.resources.agreementLines, ['isPending'], true);
+    if (isPending) return undefined;
+
     return get(this.props.resources.agreementLines, ['records'], []);
   }
 
@@ -112,11 +114,6 @@ class ViewAgreement extends React.Component {
     this.setState({ sections });
   }
 
-  handleSubmit = (agreement) => {
-    this.props.mutator.selectedAgreement.PUT(agreement)
-      .then(() => this.props.onCloseEdit());
-  }
-
   renderLoadingPane() {
     return (
       <Pane
@@ -143,8 +140,9 @@ class ViewAgreement extends React.Component {
       >
         <EditAgreement
           {...this.props}
+          agreement={this.getAgreement()}
+          agreementLines={this.getAgreementLines()}
           onCancel={this.props.onCloseEdit}
-          onSubmit={this.handleSubmit}
           parentMutator={this.props.mutator}
           initialValues={this.getInitialValues()}
         />
@@ -154,7 +152,8 @@ class ViewAgreement extends React.Component {
 
   render() {
     const agreement = this.getAgreement();
-    if (!agreement) return this.renderLoadingPane();
+    const agreementLines = this.getAgreementLines();
+    if (!agreement || agreementLines === undefined) return this.renderLoadingPane();
 
     const { stripes } = this.props;
     const sectionProps = this.getSectionProps();
@@ -183,7 +182,6 @@ class ViewAgreement extends React.Component {
             </Col>
           </Row>
           <AgreementInfo id="agreementInfo" open={this.state.sections.agreementInfo} {...sectionProps} />
-          <AgreementLines id="agreementLines" open={this.state.sections.agreementLines} {...sectionProps} />
           <License id="license" open={this.state.sections.license} {...sectionProps} />
           <LicenseBusinessTerms id="licenseBusinessTerms" open={this.state.sections.licenseBusinessTerms} {...sectionProps} />
           <Organizations id="organizations" open={this.state.sections.organizations} {...sectionProps} />

@@ -11,10 +11,9 @@ const INITIAL_RESULT_COUNT = 100;
 
 class EResources extends React.Component {
   static manifest = Object.freeze({
-    records: {
+    eresources: {
       type: 'okapi',
       path: 'erm/resource/electronic',
-      resourceShouldRefresh: true,
       records: 'results',
       recordsRequired: '%{resultCount}',
       perRequest: 100,
@@ -33,14 +32,14 @@ class EResources extends React.Component {
 
   static propTypes = {
     resources: PropTypes.shape({
-      records: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.object]),
+      eresources: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.object]),
     }),
     mutator: PropTypes.object,
     stripes: PropTypes.object,
   };
 
   render() {
-    const { stripes: { intl } } = this.props;
+    const { mutator, resources, stripes: { intl } } = this.props;
     const path = '/erm/eresources';
     packageInfo.stripes.route = path;
     packageInfo.stripes.home = path;
@@ -56,9 +55,17 @@ class EResources extends React.Component {
           resultCountIncrement={INITIAL_RESULT_COUNT}
           viewRecordComponent={ViewEResource}
           viewRecordPerms="module.erm.enabled"
-          onCreate={this.create}
-          parentResources={this.props.resources}
-          parentMutator={this.props.mutator}
+          // SearchAndSort expects the resource it's going to list to be under the `records` key.
+          // However, if we just put it under `records` in the `manifest`, it would clash with
+          // the `records` that would need to be defined by the Agreements tab.
+          parentResources={{
+            ...resources,
+            records: resources.eresources,
+          }}
+          parentMutator={{
+            ...mutator,
+            records: mutator.eresources,
+          }}
           showSingleResult
           visibleColumns={[
             'name',

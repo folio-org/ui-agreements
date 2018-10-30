@@ -8,6 +8,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
+import { renderResourceType } from '../../../../util/resourceType';
 
 class EResourceAgreements extends React.Component {
   static manifest = Object.freeze({
@@ -39,6 +40,7 @@ class EResourceAgreements extends React.Component {
         <Col xs={12}>
           <MultiColumnList
             contentData={entitlements.records}
+            interactive={false}
             maxHeight={400}
             visibleColumns={['name', 'type', 'startDate', 'endDate', 'package', 'acqMethod']}
             formatter={{
@@ -47,9 +49,7 @@ class EResourceAgreements extends React.Component {
               startDate: ({ owner }) => owner.startDate && intl.formatDate(owner.startDate),
               endDate: ({ owner }) => owner.endDate && intl.formatDate(owner.endDate),
               package: ({ resource }) => <Link to={`/erm/eresources/view/${resource.id}`}>{resource.name}</Link>,
-              acqMethod: ({ resource }) => (resource.class === 'org.olf.kb.Pkg' ?
-                intl.formatMessage({ id: 'ui-erm.eresources.package' }) : intl.formatMessage({ id: 'ui-erm.eresources.title' })
-              ),
+              acqMethod: ({ resource }) => renderResourceType(resource),
             }}
             columnMapping={{
               name: intl.formatMessage({ id: 'ui-erm.eresources.erAgreements' }),

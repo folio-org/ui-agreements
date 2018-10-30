@@ -11,6 +11,7 @@ import {
 } from '@folio/stripes/components';
 
 import AddToBasketButton from '../../../AddToBasketButton';
+import { isPackage, renderResourceType } from '../../../../util/resourceType';
 
 class AcquisitionOptions extends React.Component {
   static manifest = Object.freeze({
@@ -56,17 +57,15 @@ class AcquisitionOptions extends React.Component {
           <Col xs={12}>
             <MultiColumnList
               contentData={entitlementOptions.records}
+              interactive={false}
               // maxHeight={400}
               visibleColumns={['package', 'platform', 'acqMethod', 'add']}
               formatter={{
                 package: option => <Link to={`/erm/eresources/view/${option.id}`}>{option.name}</Link>,
                 platform: option => get(option, ['_object', 'pti', 'platform', 'name'], '-'),
-                acqMethod: option => (option.class === 'org.olf.kb.Pkg' ?
-                  intl.formatMessage({ id: 'ui-erm.eresources.package' }) :
-                  intl.formatMessage({ id: 'ui-erm.eresources.title' })
-                ),
+                acqMethod: option => renderResourceType(option),
                 add: option => {
-                  const addLabel = option.class === 'org.olf.kb.Pkg' ?
+                  const addLabel = isPackage(option) ?
                     intl.formatMessage({ id: 'ui-erm.eresources.addPackage' }) :
                     intl.formatMessage({ id: 'ui-erm.eresources.addTitle' });
 
@@ -84,6 +83,12 @@ class AcquisitionOptions extends React.Component {
                 platform: intl.formatMessage({ id: 'ui-erm.eresources.platform' }),
                 acqMethod: intl.formatMessage({ id: 'ui-erm.eresources.acqMethod' }),
                 add: intl.formatMessage({ id: 'ui-erm.eresources.addToBasketHeader' }),
+              }}
+              columnWidths={{
+                package: '35%',
+                platform: '25%',
+                acqMethod: '15%',
+                add: '25%',
               }}
             />
           </Col>

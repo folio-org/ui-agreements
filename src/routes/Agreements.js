@@ -21,10 +21,9 @@ const filterConfig = [
 
 class Agreements extends React.Component {
   static manifest = Object.freeze({
-    records: {
+    agreements: {
       type: 'okapi',
       path: 'erm/sas',
-      resourceShouldRefresh: true,
       records: 'results',
       recordsRequired: '%{resultCount}',
       perRequest: 100,
@@ -32,15 +31,20 @@ class Agreements extends React.Component {
       params: getSASParams({
         searchKey: 'name',
         columnMap: {
-          'Agreement name': 'name',
+          'Name': 'name',
           'Vendor': 'vendor',
           'Start date': 'startDate',
           'End date': 'endDate',
           'Cancellation deadline': 'cancellationDeadline',
-          'Agreement status': 'agreementStatus',
+          'Status': 'agreementStatus',
           'Last updated': 'lastUpdated',
         }
       }),
+    },
+    selectedAgreement: {
+      type: 'okapi',
+      path: 'erm/sas/${selectedAgreementId}', // eslint-disable-line no-template-curly-in-string
+      fetch: false,
     },
     agreementTypeValues: {
       type: 'okapi',
@@ -64,18 +68,20 @@ class Agreements extends React.Component {
     },
     query: {},
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    selectedAgreementId: { initialValue: '' },
+    agreementFiltersInitialized: { initialValue: false },
   });
 
   static propTypes = {
-    resources: PropTypes.shape({
-      records: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.object), PropTypes.object]),
-    }),
+    resources: PropTypes.object,
     mutator: PropTypes.object,
     stripes: PropTypes.object,
   };
 
   componentDidUpdate() {
-    this.updateFilterConfig();
+    if (!this.props.resources.agreementFiltersInitialized) {
+      this.updateFilterConfig();
+    }
   }
 
   updateFilterConfig() {
@@ -102,14 +108,14 @@ class Agreements extends React.Component {
         config.label = intl.formatMessage({ id: `ui-erm.agreements.${filter}` });
       });
 
-      this.props.stripes.logger.log('erm', 'Filter Config Updated', filterConfig);
+      this.props.mutator.agreementFiltersInitialized.replace(true);
     }
   }
 
-  create = (agreement) => {
+  handleCreate = (agreement) => {
     const { mutator } = this.props;
 
-    mutator.records.POST(agreement)
+    return mutator.agreements.POST(agreement)
       .then((newAgreement) => {
         mutator.query.update({
           _path: `/erm/agreements/view/${newAgreement.id}`,
@@ -118,8 +124,14 @@ class Agreements extends React.Component {
       });
   }
 
+  handleUpdate = (agreement) => {
+    this.props.mutator.selectedAgreementId.replace(agreement.id);
+
+    return this.props.mutator.selectedAgreement.PUT(agreement);
+  }
+
   render() {
-    const { stripes: { intl } } = this.props;
+    const { mutator, resources, stripes: { intl } } = this.props;
     const path = '/erm/agreements';
     packageInfo.stripes.route = path;
     packageInfo.stripes.home = path;
@@ -137,9 +149,21 @@ class Agreements extends React.Component {
           editRecordComponent={EditAgreement}
           viewRecordPerms="module.erm.enabled"
           newRecordPerms="module.erm.enabled"
-          onCreate={this.create}
-          parentResources={this.props.resources}
-          parentMutator={this.props.mutator}
+          onCreate={this.handleCreate}
+          detailProps={{
+            onUpdate: this.handleUpdate
+          }}
+          // SearchAndSort expects the resource it's going to list to be under the `records` key.
+          // However, if we just put it under `records` in the `manifest`, it would clash with
+          // the `records` that would need to be defined by the Agreements tab.
+          parentResources={{
+            ...resources,
+            records: resources.agreements,
+          }}
+          parentMutator={{
+            ...mutator,
+            records: mutator.agreements,
+          }}
           showSingleResult
           visibleColumns={[
             'name',
