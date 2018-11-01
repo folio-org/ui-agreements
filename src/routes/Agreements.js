@@ -89,7 +89,7 @@ class Agreements extends React.Component {
     const filters = [
       'agreementStatus',
       'renewalPriority',
-      'isPerpetual'
+      'isPerpetual',
     ];
 
     // Get the records for those filters
@@ -104,7 +104,7 @@ class Agreements extends React.Component {
       filters.forEach((filter, i) => {
         // ...set the filter's `values` and `label` properties
         const config = filterConfig.find(c => c.name === filter);
-        config.values = records[i].map(r => ({ name: r.label, cql: r.value }));
+        config.values = records[i].map(r => ({ name: r.label, cql: '' }));
         config.label = intl.formatMessage({ id: `ui-erm.agreements.${filter}` });
       });
 

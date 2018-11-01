@@ -4,6 +4,9 @@
   "lastUpdated": "Last updated",
   "remove": "Remove",
 
+  "yes": "Yes",
+  "no": "No",
+
   "tabs.dashboard": "Dashboard",
   "tabs.agreements": "Agreements",
   "tabs.eresources": "E-resources",
@@ -68,6 +71,7 @@
 
   "eresources.name": "Name",
   "eresources.type": "Type",
+  "eresources.isPackage": "Is package",
   "eresources.erInfo": "E-resource information",
   "eresources.erType": "E-resource type",
   "eresources.publisher": "Publisher",
