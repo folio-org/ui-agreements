@@ -37,8 +37,8 @@ export default (options) => (queryParams, pathComponents, resources) => {
       let filterOnLabel = true;
 
       const filter = values
+        // Check if the `cql` rather than `name` should be used as the filter value.
         .map(value => {
-          // First check if the `cql` rather than `name` should be used as the filter value.
           const config = filterConfig.find(c => c.name === name);
           if (!config || !config.values) return value;
 
@@ -48,6 +48,7 @@ export default (options) => (queryParams, pathComponents, resources) => {
           filterOnLabel = false;
           return valueObject.cql;
         })
+        // Construct the actual filter string
         .map(value => `${name}${filterOnLabel ? '.label' : ''}==${value}`)
         .join('||');
 
