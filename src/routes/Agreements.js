@@ -86,11 +86,7 @@ class Agreements extends React.Component {
 
   updateFilterConfig() {
     // Define the list of filters we support and are fetching values for.
-    const filters = [
-      'agreementStatus',
-      'renewalPriority',
-      'isPerpetual'
-    ];
+    const filters = filterConfig.map(f => f.name);
 
     // Get the records for those filters
     const records = filters
