@@ -14,6 +14,15 @@ const INITIAL_RESULT_COUNT = 100;
 // `cql` is defined to mute PropType checks by SAS and FilterGroups
 const filterConfig = [
   { name: 'type', label: '', cql: '', values: [] },
+  {
+    name: 'class',
+    label: '',
+    cql: '',
+    values: [
+      { name: 'Yes', cql: 'org.olf.kb.Pkg' },
+      { name: 'No', cql: 'org.olf.kb.TitleInstance' },
+    ],
+  },
 ];
 
 class EResources extends React.Component {
@@ -30,7 +39,8 @@ class EResources extends React.Component {
         columnMap: {
           'Name': 'name',
           'Type': 'type',
-        }
+        },
+        filterConfig,
       }),
     },
     typeValues: {
@@ -62,7 +72,7 @@ class EResources extends React.Component {
 
   updateFilterConfig() {
     // Define the list of filters we support and are fetching values for.
-    const filters = filterConfig.map(f => f.name);
+    const filters = ['type'];
 
     // Get the records for those filters
     const records = filters
@@ -76,9 +86,15 @@ class EResources extends React.Component {
       filters.forEach((filter, i) => {
         // ...set the filter's `values` and `label` properties
         const config = filterConfig.find(c => c.name === filter);
-        config.values = records[i].map(r => ({ name: r.label, cql: r.value }));
+        config.values = records[i].map(r => ({ name: r.label, cql: '' }));
         config.label = intl.formatMessage({ id: `ui-erm.eresources.${filter}` });
       });
+
+      // Now we translate any filters that we didn't need to fetch values for.
+      const packageFilter = filterConfig.find(f => f.name === 'class');
+      packageFilter.label = intl.formatMessage({ id: 'ui-erm.eresources.isPackage' });
+      packageFilter.values[0].name = intl.formatMessage({ id: 'ui-erm.yes' });
+      packageFilter.values[1].name = intl.formatMessage({ id: 'ui-erm.no' });
 
       this.props.mutator.eresourceFiltersInitialized.replace(true);
     }
