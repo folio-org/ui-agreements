@@ -23,6 +23,7 @@ class AgreementFormEresources extends React.Component {
     intl: intlShape,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
+    parentResources: PropTypes.object,
     stripes: PropTypes.object,
   };
 
@@ -32,6 +33,9 @@ class AgreementFormEresources extends React.Component {
 
   getLineResource(line) {
     if (line.resource) return line.resource;
+
+    const basketLine = this.props.parentResources.basket.find(l => l.id === line.id);
+    if (basketLine) return basketLine;
 
     const foundLine = this.props.agreementLines.find(l => l.id === line.id);
     if (foundLine) return foundLine.resource;

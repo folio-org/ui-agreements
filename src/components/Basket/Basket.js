@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import {
+  Button,
   IconButton,
   Layer,
   Pane,
@@ -10,6 +12,8 @@ import {
 } from '@folio/stripes/components';
 
 import BasketList from './BasketList';
+
+const ADD_FROM_BASKET_PARAM = 'addFromBasket';
 
 class Basket extends React.Component {
   static manifest = Object.freeze({
@@ -31,14 +35,13 @@ class Basket extends React.Component {
       basket: PropTypes.array,
       query: PropTypes.object,
     }),
-    stripes: PropTypes.object,
   }
 
-  closeBasket = () => {
+  handleCloseBasket = () => {
     this.props.mutator.query.update({ basket: undefined });
   }
 
-  removeItem = (item) => {
+  handleRemoveItem = (item) => {
     const { mutator, resources } = this.props;
 
     const basket = resources.basket || [];
@@ -50,43 +53,57 @@ class Basket extends React.Component {
   renderFirstMenu = () => {
     return (
       <PaneMenu>
-        <IconButton
-          icon="closeX"
-          onClick={this.closeBasket}
-          aria-label={this.props.stripes.intl.formatMessage({ id: 'ui-erm.basket.close' })}
-        />
+        <FormattedMessage id="ui-erm.basket.close">
+          {ariaLabel => (
+            <IconButton
+              icon="closeX"
+              onClick={this.handleCloseBasket}
+              aria-label={ariaLabel}
+            />
+          )}
+        </FormattedMessage>
       </PaneMenu>
     );
   }
 
   render() {
-    const { container, resources, stripes: { intl } } = this.props;
+    const { container, resources } = this.props;
 
     const basket = resources.basket || [];
     const query = resources.query;
 
     return (
-      <Layer
-        container={container}
-        contentLabel={intl.formatMessage({ id: 'ui-erm.basket.layerLabel' })}
-        isOpen={!!query.basket}
-      >
-        <Paneset>
-          <Pane
-            defaultWidth="100%"
-            firstMenu={this.renderFirstMenu()}
-            paneTitle={intl.formatMessage({ id: 'ui-erm.basket.name' })}
-            paneSub={intl.formatMessage({ id: 'ui-erm.basket.recordCount' }, { count: basket.length })}
-
+      <FormattedMessage id="ui-erm.basket.layerLabel">
+        {layerContentLabel => (
+          <Layer
+            container={container}
+            contentLabel={layerContentLabel}
+            isOpen={!!query.basket}
           >
-            <BasketList
-              basket={basket}
-              removeItem={this.removeItem}
-            />
-          </Pane>
-        </Paneset>
-      </Layer>
-    )
+            <Paneset>
+              <Pane
+                defaultWidth="100%"
+                firstMenu={this.renderFirstMenu()}
+                paneTitle={<FormattedMessage id="ui-erm.basket.name" />}
+                paneSub={<FormattedMessage id="ui-erm.basket.recordCount" values={{ count: basket.length }} />}
+
+              >
+                <BasketList
+                  basket={basket}
+                  removeItem={this.handleRemoveItem}
+                />
+                <Button
+                  buttonStyle="primary"
+                  to={`/erm/agreements?layer=create&${ADD_FROM_BASKET_PARAM}=${basket.map((a, i) => i).join(',')}`}
+                >
+                  <FormattedMessage id="ui-erm.basket.createAgreement" />
+                </Button>
+              </Pane>
+            </Paneset>
+          </Layer>
+        )}
+      </FormattedMessage>
+    );
   }
 }
 

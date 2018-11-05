@@ -65,6 +65,7 @@
   "basket.layerLabel": "View E-resources in the ERM basket",
   "basket.removeItem": "Remove item from basket",
   "basket.parentPackage": "Parent package",
+  "basket.createAgreement": "Create new agreement",
 
   "basketSelector.selectLabel": "Select from basket",
   "basketSelector.selectPlaceholder": "Select e-resource or package",

@@ -66,10 +66,11 @@ class Agreements extends React.Component {
       type: 'okapi',
       path: 'erm/refdataValues/SubscriptionAgreement/contentReviewNeeded',
     },
+    agreementFiltersInitialized: { initialValue: false },
+    basket: { initialValue: [] },
     query: {},
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     selectedAgreementId: { initialValue: '' },
-    agreementFiltersInitialized: { initialValue: false },
   });
 
   static propTypes = {

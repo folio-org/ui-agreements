@@ -6,6 +6,8 @@ import { Button, IconButton, Pane, PaneMenu } from '@folio/stripes/components';
 
 import AgreementForm from '../AgreementForm';
 
+const ADD_FROM_BASKET_PARAM = 'addFromBasket';
+
 const validate = (values) => {
   const required = ['name', 'startDate', 'agreementStatus'];
   const errors = {};
@@ -28,6 +30,9 @@ class EditAgreement extends React.Component {
   static propTypes = {
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
+    location: PropTypes.shape({
+      search: PropTypes.string,
+    }),
     onSave: PropTypes.func,
     onCancel: PropTypes.func,
     onRemove: PropTypes.func,
@@ -35,6 +40,28 @@ class EditAgreement extends React.Component {
     submitting: PropTypes.bool,
     parentResources: PropTypes.object,
     parentMutator: PropTypes.object
+  }
+
+  componentDidMount() {
+    const { initialValues = {}, location: { search }, parentResources } = this.props;
+
+    if (search.includes(ADD_FROM_BASKET_PARAM)) {
+      const query = search.split('&').find(q => q.includes(ADD_FROM_BASKET_PARAM));
+      const indices = query.split('=')[1].split('%2C');
+
+      if (indices.length) {
+        const itemsToAdd = indices
+          .map(i => ({ resource: parentResources.basket[i] }))
+          .filter(i => i);
+
+        const items = [
+          ...(initialValues.items || []),
+          ...itemsToAdd,
+        ];
+
+        this.props.change('items', items);
+      }
+    }
   }
 
   renderFirstMenu() {
