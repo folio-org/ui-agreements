@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import Link from 'react-router-dom/Link';
-import { injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   Checkbox,
@@ -17,7 +17,6 @@ import { renderResourceType } from '../../util/resourceType';
 class BasketList extends React.Component {
   static propTypes = {
     basket: PropTypes.arrayOf(PropTypes.object),
-    intl: intlShape,
     onToggleAll: PropTypes.func,
     onToggleItem: PropTypes.func,
     removeItem: PropTypes.func,
@@ -25,7 +24,7 @@ class BasketList extends React.Component {
   }
 
   render() {
-    const { basket, intl, removeItem, selectedItems } = this.props;
+    const { basket, removeItem, selectedItems } = this.props;
 
     return (
       <Row>
@@ -69,11 +68,15 @@ class BasketList extends React.Component {
               coverageStart: () => 'TBD',
               coverageEnd: () => 'TBD',
               remove: resource => (
-                <IconButton
-                  aria-label={intl.formatMessage({ id: 'ui-erm.basket.removeItem' })}
-                  icon="trashBin"
-                  onClick={() => removeItem(resource)}
-                />
+                <FormattedMessage id="ui-erm.basket.removeItem">
+                  {ariaLabel => (
+                    <IconButton
+                      aria-label={ariaLabel}
+                      icon="trashBin"
+                      onClick={() => removeItem(resource)}
+                    />
+                  )}
+                </FormattedMessage>
               )
             }}
             columnMapping={{
@@ -84,16 +87,17 @@ class BasketList extends React.Component {
                   onChange={this.props.onToggleAll}
                 />
               ),
-              name: intl.formatMessage({ id: 'ui-erm.eresources.name' }),
-              type: intl.formatMessage({ id: 'ui-erm.eresources.type' }),
-              package: intl.formatMessage({ id: 'ui-erm.eresources.parentPackage' }),
-              publisher: intl.formatMessage({ id: 'ui-erm.eresources.publisher' }),
-              platform: intl.formatMessage({ id: 'ui-erm.eresources.platform' }),
-              coverageStart: intl.formatMessage({ id: 'ui-erm.eresources.coverageStart' }),
-              coverageEnd: intl.formatMessage({ id: 'ui-erm.eresources.coverageEnd' }),
-              remove: intl.formatMessage({ id: 'ui-erm.remove' }),
+              name: <FormattedMessage id="ui-erm.eresources.name" />,
+              type: <FormattedMessage id="ui-erm.eresources.type" />,
+              package: <FormattedMessage id="ui-erm.eresources.parentPackage" />,
+              publisher: <FormattedMessage id="ui-erm.eresources.publisher" />,
+              platform: <FormattedMessage id="ui-erm.eresources.platform" />,
+              coverageStart: <FormattedMessage id="ui-erm.eresources.coverageStart" />,
+              coverageEnd: <FormattedMessage id="ui-erm.eresources.coverageEnd" />,
+              remove: <FormattedMessage id="ui-erm.remove" />,
             }}
             columnWidths={{
+              selected: 40,
               name: '30%',
             }}
           />
@@ -103,4 +107,4 @@ class BasketList extends React.Component {
   }
 }
 
-export default injectIntl(BasketList);
+export default BasketList;
