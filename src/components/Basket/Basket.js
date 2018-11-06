@@ -37,6 +37,22 @@ class Basket extends React.Component {
     }),
   }
 
+  state = {
+    selectedItems: {},
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const basket = props.resources.basket || [];
+    if (basket.length !== Object.keys(state.selectedItems).length) {
+      const selectedItems = {};
+      basket.forEach(item => { selectedItems[item.id] = true; });
+
+      return { selectedItems };
+    }
+
+    return null;
+  }
+
   handleCloseBasket = () => {
     this.props.mutator.query.update({ basket: undefined });
   }
@@ -48,6 +64,24 @@ class Basket extends React.Component {
     const updatedBasket = basket.filter(i => i.id !== item.id);
 
     mutator.basket.replace(updatedBasket);
+  }
+
+  handleToggleAll = () => {
+    const selectedItems = {};
+
+    const someItemsUnselected = Object.values(this.state.selectedItems).includes(false);
+    Object.keys(this.state.selectedItems).forEach(key => { selectedItems[key] = someItemsUnselected; });
+
+    this.setState({ selectedItems });
+  }
+
+  handleToggleItem = (item) => {
+    this.setState(prevState => ({
+      selectedItems: {
+        ...prevState.selectedItems,
+        [item.id]: !(prevState.selectedItems[item.id])
+      },
+    }));
   }
 
   renderFirstMenu = () => {
@@ -63,6 +97,22 @@ class Basket extends React.Component {
           )}
         </FormattedMessage>
       </PaneMenu>
+    );
+  }
+
+  renderCreateAgreementButton = () => {
+    const selectedItems = Object.entries(this.state.selectedItems)
+      .filter(([_, selected]) => selected)
+      .map(([itemId]) => this.props.resources.basket.findIndex(i => i.id === itemId))
+      .join(',');
+
+    return (
+      <Button
+        buttonStyle="primary"
+        to={`/erm/agreements?layer=create&${ADD_FROM_BASKET_PARAM}=${selectedItems}`}
+      >
+        <FormattedMessage id="ui-erm.basket.createAgreement" />
+      </Button>
     );
   }
 
@@ -90,14 +140,12 @@ class Basket extends React.Component {
               >
                 <BasketList
                   basket={basket}
+                  onToggleAll={this.handleToggleAll}
+                  onToggleItem={this.handleToggleItem}
                   removeItem={this.handleRemoveItem}
+                  selectedItems={this.state.selectedItems}
                 />
-                <Button
-                  buttonStyle="primary"
-                  to={`/erm/agreements?layer=create&${ADD_FROM_BASKET_PARAM}=${basket.map((a, i) => i).join(',')}`}
-                >
-                  <FormattedMessage id="ui-erm.basket.createAgreement" />
-                </Button>
+                { this.renderCreateAgreementButton() }
               </Pane>
             </Paneset>
           </Layer>

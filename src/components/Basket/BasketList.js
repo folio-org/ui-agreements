@@ -18,11 +18,14 @@ class BasketList extends React.Component {
   static propTypes = {
     basket: PropTypes.arrayOf(PropTypes.object),
     intl: intlShape,
+    onToggleAll: PropTypes.func,
+    onToggleItem: PropTypes.func,
     removeItem: PropTypes.func,
+    selectedItems: PropTypes.object,
   }
 
   render() {
-    const { basket, intl, removeItem } = this.props;
+    const { basket, intl, removeItem, selectedItems } = this.props;
 
     return (
       <Row>
@@ -32,6 +35,7 @@ class BasketList extends React.Component {
             interactive={false}
             maxHeight={400}
             visibleColumns={[
+              'selected',
               'name',
               'type',
               'package',
@@ -42,6 +46,13 @@ class BasketList extends React.Component {
               'remove'
             ]}
             formatter={{
+              selected: resource => (
+                <Checkbox
+                  name={`selected-${resource.id}`}
+                  checked={!!(selectedItems[resource.id])}
+                  onChange={() => this.props.onToggleItem(resource)}
+                />
+              ),
               name: resource => <Link to={`/erm/eresources/view/${resource.id}`}>{resource.name}</Link>,
               type: resource => renderResourceType(resource),
               package: resource => {
@@ -66,6 +77,13 @@ class BasketList extends React.Component {
               )
             }}
             columnMapping={{
+              selected: (
+                <Checkbox
+                  name="selected-all"
+                  checked={Object.values(selectedItems).includes(false) !== true}
+                  onChange={this.props.onToggleAll}
+                />
+              ),
               name: intl.formatMessage({ id: 'ui-erm.eresources.name' }),
               type: intl.formatMessage({ id: 'ui-erm.eresources.type' }),
               package: intl.formatMessage({ id: 'ui-erm.eresources.parentPackage' }),
