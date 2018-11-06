@@ -6,8 +6,6 @@ import { Button, IconButton, Pane, PaneMenu } from '@folio/stripes/components';
 
 import AgreementForm from '../AgreementForm';
 
-const ADD_FROM_BASKET_PARAM = 'addFromBasket';
-
 const validate = (values) => {
   const required = ['name', 'startDate', 'agreementStatus'];
   const errors = {};
@@ -43,22 +41,28 @@ class EditAgreement extends React.Component {
   }
 
   componentDidMount() {
-    const { initialValues = {}, location: { search }, parentResources } = this.props;
+    const { initialValues = {}, parentMutator, parentResources: { query, basket } } = this.props;
 
-    if (search.includes(ADD_FROM_BASKET_PARAM)) {
-      const query = search.split('&').find(q => q.includes(ADD_FROM_BASKET_PARAM));
-      const indices = query.split('=')[1].split('%2C');
+    if (query.addFromBasket) {
+      // Get the indices of the basket items we're supposed to add
+      const indices = query.addFromBasket.split(',');
 
       if (indices.length) {
+        // Construct the _entitlement_ from those resources in the basket.
         const itemsToAdd = indices
-          .map(i => ({ resource: parentResources.basket[i] }))
-          .filter(i => i);
+          .map(i => ({ resource: basket[parseInt(i, 10)] }))
+          .filter(i => i.resource);
 
         const items = [
           ...(initialValues.items || []),
           ...itemsToAdd,
         ];
 
+        // Remove the query param since we've handled it and don't want it hanging
+        // around the next time the user creates/edits an agreement.
+        parentMutator.query.replace({ addFromBasket: null });
+
+        // Use redux-form to set the `items` part of the form using the new array.
         this.props.change('items', items);
       }
     }
