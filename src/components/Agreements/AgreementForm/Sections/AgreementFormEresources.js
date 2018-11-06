@@ -32,13 +32,19 @@ class AgreementFormEresources extends React.Component {
   }
 
   getLineResource(line) {
+    const { parentResources, agreementLines } = this.props;
+
     if (line.resource) return line.resource;
 
-    const basketLine = this.props.parentResources.basket.find(l => l.id === line.id);
-    if (basketLine) return basketLine;
+    if (parentResources && parentResources.basket) {
+      const basketLine = parentResources.basket.find(l => l.id === line.id);
+      if (basketLine) return basketLine;
+    }
 
-    const foundLine = this.props.agreementLines.find(l => l.id === line.id);
-    if (foundLine) return foundLine.resource;
+    if (agreementLines) {
+      const foundLine = agreementLines.find(l => l.id === line.id);
+      if (foundLine) return foundLine.resource;
+    }
 
     return undefined;
   }
