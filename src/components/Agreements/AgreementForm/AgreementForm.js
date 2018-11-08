@@ -1,5 +1,4 @@
 import React from 'react';
-import { injectIntl, intlShape } from 'react-intl';
 import {
   AccordionSet,
   Col,
@@ -13,10 +12,6 @@ import {
 } from './Sections';
 
 class AgreementForm extends React.Component {
-  static propTypes = {
-    intl: intlShape,
-  };
-
   state = {
     sections: {
       agreementFormInfo: true,
@@ -26,8 +21,10 @@ class AgreementForm extends React.Component {
 
   getSectionProps() {
     return {
+      agreementLines: this.props.agreementLines,
       onToggle: this.handleSectionToggle,
-      ...this.props,
+      parentResources: this.props.parentResources,
+      stripes: this.props.stripes,
     };
   }
 
@@ -61,4 +58,4 @@ class AgreementForm extends React.Component {
   }
 }
 
-export default injectIntl(AgreementForm);
+export default AgreementForm;

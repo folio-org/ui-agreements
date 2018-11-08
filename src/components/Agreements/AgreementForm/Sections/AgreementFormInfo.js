@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import { Field } from 'redux-form';
 
@@ -17,7 +17,6 @@ import {
 class AgreementFormInfo extends React.Component {
   static propTypes = {
     id: PropTypes.string,
-    intl: intlShape,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
     parentResources: PropTypes.shape({
@@ -51,12 +50,10 @@ class AgreementFormInfo extends React.Component {
   }
 
   render() {
-    const { intl } = this.props;
-
     return (
       <Accordion
         id={this.props.id}
-        label={intl.formatMessage({ id: 'ui-erm.agreements.agreementInfo' })}
+        label={<FormattedMessage id="ui-erm.agreements.agreementInfo" />}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
@@ -65,7 +62,7 @@ class AgreementFormInfo extends React.Component {
             <Field
               id="name"
               name="name"
-              label={`${intl.formatMessage({ id: 'ui-erm.agreements.name' })} *`}
+              label={<FormattedMessage id="ui-erm.agreements.name">{name => `${name} *`}</FormattedMessage>}
               component={TextField}
             />
           </Col>
@@ -75,7 +72,7 @@ class AgreementFormInfo extends React.Component {
             <Field
               id="description"
               name="description"
-              label={intl.formatMessage({ id: 'ui-erm.agreements.agreementDescription' })}
+              label={<FormattedMessage id="ui-erm.agreements.agreementDescription" />}
               component={TextArea}
             />
           </Col>
@@ -85,27 +82,30 @@ class AgreementFormInfo extends React.Component {
             <Field
               id="startDate"
               name="startDate"
-              label={`${intl.formatMessage({ id: 'ui-erm.agreements.startDate' })} *`}
+              label={<FormattedMessage id="ui-erm.agreements.startDate">{startDate => `${startDate} *`}</FormattedMessage>}
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
+              backendDateStandard="YYYY-MM-DD"
             />
           </Col>
           <Col xs={12} md={4}>
             <Field
               id="endDate"
               name="endDate"
-              label={intl.formatMessage({ id: 'ui-erm.agreements.endDate' })}
+              label={<FormattedMessage id="ui-erm.agreements.endDate" />}
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
+              backendDateStandard="YYYY-MM-DD"
             />
           </Col>
           <Col xs={12} md={4}>
             <Field
               id="cancellationDeadline"
               name="cancellationDeadline"
-              label={intl.formatMessage({ id: 'ui-erm.agreements.cancellationDeadline' })}
+              label={<FormattedMessage id="ui-erm.agreements.cancellationDeadline" />}
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
+              backendDateStandard="YYYY-MM-DD"
             />
           </Col>
         </Row>
@@ -114,7 +114,7 @@ class AgreementFormInfo extends React.Component {
             <Field
               id="agreementStatus"
               name="agreementStatus"
-              label={`${intl.formatMessage({ id: 'ui-erm.agreements.agreementStatus' })} *`}
+              label={<FormattedMessage id="ui-erm.agreements.agreementStatus">{agreementStatus => `${agreementStatus} *`}</FormattedMessage>}
               component={Select}
               dataOptions={this.getAgreementStatusValues()}
             />
@@ -123,7 +123,7 @@ class AgreementFormInfo extends React.Component {
             <Field
               id="renewalPriority"
               name="renewalPriority"
-              label={intl.formatMessage({ id: 'ui-erm.agreements.renewalPriority' })}
+              label={<FormattedMessage id="ui-erm.agreements.renewalPriority" />}
               component={Select}
               dataOptions={this.getRenewalPriorityValues()}
             />
@@ -132,7 +132,7 @@ class AgreementFormInfo extends React.Component {
             <Field
               id="isPerpetual"
               name="isPerpetual"
-              label={intl.formatMessage({ id: 'ui-erm.agreements.isPerpetual' })}
+              label={<FormattedMessage id="ui-erm.agreements.isPerpetual" />}
               component={Select}
               dataOptions={this.getIsPerpetualValues()}
             />
@@ -143,4 +143,4 @@ class AgreementFormInfo extends React.Component {
   }
 }
 
-export default injectIntl(AgreementFormInfo);
+export default AgreementFormInfo;
