@@ -29,9 +29,6 @@ class EditAgreement extends React.Component {
   static propTypes = {
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
-    location: PropTypes.shape({
-      search: PropTypes.string,
-    }),
     onSave: PropTypes.func,
     onCancel: PropTypes.func,
     onRemove: PropTypes.func,
