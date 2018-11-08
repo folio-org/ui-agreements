@@ -169,7 +169,7 @@ class Basket extends React.Component {
                 <div>
                   <Headline bold>{agreement.name}&nbsp;&#40;{agreement.agreementStatus.label}&#41;</Headline>{/* eslint-disable-line */}
                   <div>
-                    <FormattedMessage id="ui-erm.agreements.startDate" />: <FormattedDate value={agreement.startDate} /> {/* eslint-disable-line */}
+                    <strong><FormattedMessage id="ui-erm.agreements.startDate" />: </strong><FormattedDate value={agreement.startDate} /> {/* eslint-disable-line */}
                   </div>
                   {agreement.vendor && (
                     <div>
