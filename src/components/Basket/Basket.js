@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedDate, FormattedMessage } from 'react-intl';
 
 import {
+  AutoSuggest,
   Button,
+  Col,
+  Headline,
   IconButton,
   Layer,
   Pane,
   Paneset,
   PaneMenu,
+  Row,
 } from '@folio/stripes/components';
 
 import BasketList from './BasketList';
@@ -17,6 +21,20 @@ const ADD_FROM_BASKET_PARAM = 'addFromBasket';
 
 class Basket extends React.Component {
   static manifest = Object.freeze({
+    openAgreements: {
+      type: 'okapi',
+      path: 'erm/sas',
+      perRequest: 100,
+      limitParam: 'perPage',
+      params: {
+        filters: [
+          'agreementStatus.value==active',
+          'agreementStatus.value==draft',
+          'agreementStatus.value==in_negotiation',
+          'agreementStatus.value==requested',
+        ].join('||')
+      }
+    },
     basket: { initialValue: [] },
     query: {},
   });
@@ -33,12 +51,14 @@ class Basket extends React.Component {
     }),
     resources: PropTypes.shape({
       basket: PropTypes.array,
+      openAgreements: PropTypes.object,
       query: PropTypes.object,
     }),
   }
 
   state = {
     selectedItems: {},
+    selectedAgreement: undefined,
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -84,6 +104,15 @@ class Basket extends React.Component {
     }));
   }
 
+  constructAddToBasketParam = () => {
+    const selectedItems = Object.entries(this.state.selectedItems)
+      .filter(([_, selected]) => selected)
+      .map(([itemId]) => this.props.resources.basket.findIndex(i => i.id === itemId))
+      .join(',');
+
+    return `${ADD_FROM_BASKET_PARAM}=${selectedItems}`;
+  }
+
   renderFirstMenu = () => {
     return (
       <PaneMenu>
@@ -101,18 +130,82 @@ class Basket extends React.Component {
   }
 
   renderCreateAgreementButton = () => {
-    const selectedItems = Object.entries(this.state.selectedItems)
-      .filter(([_, selected]) => selected)
-      .map(([itemId]) => this.props.resources.basket.findIndex(i => i.id === itemId))
-      .join(',');
+    const disabled = Object.values(this.state.selectedItems).find(v => v) === undefined; // None of the `selectedItems` value's are `true`
 
     return (
       <Button
         buttonStyle="primary"
-        to={`/erm/agreements?layer=create&${ADD_FROM_BASKET_PARAM}=${selectedItems}`}
+        disabled={disabled}
+        to={disabled ? null : `/erm/agreements?layer=create&${this.constructAddToBasketParam()}`}
       >
         <FormattedMessage id="ui-erm.basket.createAgreement" />
       </Button>
+    );
+  }
+
+  renderAddToAgreementSection = () => {
+    const { openAgreements } = this.props.resources;
+    if (!openAgreements || !openAgreements.records.length) return null;
+
+    return (
+      <div>
+        <FormattedMessage tagName="div" id="ui-erm.basket.addToExistingAgreement" />
+        <Row>
+          <Col xs={12} md={8}>
+            <AutoSuggest
+              includeItem={(agreement, searchString) => {
+                const lowerCasedSearchString = searchString.toLowerCase();
+
+                return (
+                  agreement.name.toLowerCase().includes(lowerCasedSearchString) ||
+                  agreement.agreementStatus.label.toLowerCase().includes(lowerCasedSearchString) ||
+                  agreement.startDate.toLowerCase().includes(lowerCasedSearchString) ||
+                  (agreement.vendor && agreement.vendor.name.toLowerCase().includes(lowerCasedSearchString))
+                );
+              }}
+              items={openAgreements.records}
+              onChange={(selectedAgreement) => { this.setState({ selectedAgreement }); }}
+              renderOption={agreement => (
+                <div>
+                  <Headline bold>{agreement.name}&nbsp;&#40;{agreement.agreementStatus.label}&#41;</Headline>{/* eslint-disable-line */}
+                  <div>
+                    <FormattedMessage id="ui-erm.agreements.startDate" />: <FormattedDate value={agreement.startDate} /> {/* eslint-disable-line */}
+                  </div>
+                  {agreement.vendor && (
+                    <div>
+                      <strong><FormattedMessage id="ui-erm.agreements.vendorInfo.vendor" />: </strong>{agreement.vendor.name} {/* eslint-disable-line */}
+                    </div>
+                  )}
+                </div>
+              )}
+              renderValue={agreement => agreement && agreement.name}
+              valueKey="id"
+            />
+          </Col>
+          <Col xs={12} md={4}>
+            { this.renderAddToAgreementButton() }
+          </Col>
+        </Row>
+      </div>
+    );
+  }
+
+  renderAddToAgreementButton = () => {
+    const disabled = (
+      this.state.selectedAgreement === undefined ||
+      Object.values(this.state.selectedItems).find(v => v) === undefined // None of the `selectedItems` value's are `true`;
+    );
+
+    return (
+      <div>
+        <Button
+          buttonStyle="primary"
+          disabled={disabled}
+          to={disabled ? null : `/erm/agreements/view/${this.state.selectedAgreement}?layer=edit&${this.constructAddToBasketParam()}`}
+        >
+          <FormattedMessage id="ui-erm.basket.addToSelectedAgreement" />
+        </Button>
+      </div>
     );
   }
 
@@ -126,6 +219,7 @@ class Basket extends React.Component {
       <FormattedMessage id="ui-erm.basket.layerLabel">
         {layerContentLabel => (
           <Layer
+            afterClose={() => this.setState({ selectedAgreement: undefined })}
             container={container}
             contentLabel={layerContentLabel}
             isOpen={!!query.basket}
@@ -146,6 +240,7 @@ class Basket extends React.Component {
                   selectedItems={this.state.selectedItems}
                 />
                 { this.renderCreateAgreementButton() }
+                { this.renderAddToAgreementSection() }
               </Pane>
             </Paneset>
           </Layer>

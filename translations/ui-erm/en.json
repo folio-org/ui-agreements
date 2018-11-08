@@ -66,6 +66,8 @@
   "basket.removeItem": "Remove item from basket",
   "basket.parentPackage": "Parent package",
   "basket.createAgreement": "Create new agreement",
+  "basket.addToExistingAgreement": "Add to existing agreement",
+  "basket.addToSelectedAgreement": "Add to selected agreement",
 
   "basketSelector.selectLabel": "Select from basket",
   "basketSelector.selectPlaceholder": "Select e-resource or package",

@@ -41,6 +41,7 @@ class Tabs extends React.Component {
     this.setState({ tab: id });
     this.props.parentMutator.query.replace({
       _path: `/erm/${id}`,
+      addFromBasket: null,
       layer: null,
     });
     this.props.parentMutator.resultCount.replace(1);

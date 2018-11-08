@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { get, isEqual } from 'lodash';
 import stripesForm from '@folio/stripes/form';
 import { Button, IconButton, Pane, PaneMenu } from '@folio/stripes/components';
 
@@ -40,8 +41,47 @@ class EditAgreement extends React.Component {
     parentMutator: PropTypes.object
   }
 
+  static defaultProps = {
+    initialValues: {},
+  }
+
+  state = {
+    addedResourcesFromBasket: [],
+  }
+
   componentDidMount() {
-    const { initialValues = {}, parentMutator, parentResources: { query, basket } } = this.props;
+    this.updateAddedResourcesFromBasket();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // If we've stayed mounted but now have to handle a newly-added `addFromBasket` query param,
+    // update the added resources from the basket.
+    if (get(this.props.parentResources, ['query', 'addFromBasket']) && !get(prevProps.parentResources, ['query', 'addFromBasket'])) {
+      this.updateAddedResourcesFromBasket();
+    }
+
+    // The value of the `items` field can be fed by the basket or if we're _editing_, the
+    // previously-persisted values. We need to merge these two arrays when we get that data changes.s
+    if (
+      !isEqual(this.props.initialValues, prevProps.initialValues) ||
+      !isEqual(this.state.addedResourcesFromBasket, prevState.addedResourcesFromBasket)
+    ) {
+      this.props.change(
+        'items',
+        [
+          ...get(this.props, ['initialValues', 'items'], []),
+          ...this.state.addedResourcesFromBasket,
+        ]
+      );
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.parentMutator.query.replace({ addFromBasket: null });
+  }
+
+  updateAddedResourcesFromBasket() {
+    const { parentResources: { query, basket } } = this.props;
 
     if (query.addFromBasket) {
       // Get the indices of the basket items we're supposed to add
@@ -49,21 +89,12 @@ class EditAgreement extends React.Component {
 
       if (indices.length) {
         // Construct the _entitlement_ from those resources in the basket.
-        const itemsToAdd = indices
+        const addedResourcesFromBasket = indices
           .map(i => ({ resource: basket[parseInt(i, 10)] }))
           .filter(i => i.resource);
 
-        const items = [
-          ...(initialValues.items || []),
-          ...itemsToAdd,
-        ];
-
-        // Remove the query param since we've handled it and don't want it hanging
-        // around the next time the user creates/edits an agreement.
-        parentMutator.query.replace({ addFromBasket: null });
-
-        // Use redux-form to set the `items` part of the form using the new array.
-        this.props.change('items', items);
+        // Save off the resource objects we're adding from the basket
+        this.setState({ addedResourcesFromBasket });
       }
     }
   }
@@ -71,26 +102,30 @@ class EditAgreement extends React.Component {
   renderFirstMenu() {
     return (
       <PaneMenu>
-        <IconButton
-          icon="closeX"
-          onClick={this.props.onCancel}
-          aria-label={this.props.stripes.intl.formatMessage({ id: 'ui-erm.agreements.closeNewAgreement' })}
-        />
+        <FormattedMessage id="ui-erm.agreements.closeNewAgreement">
+          {ariaLabel => (
+            <IconButton
+              icon="closeX"
+              onClick={this.props.onCancel}
+              aria-label={ariaLabel}
+            />
+          )}
+        </FormattedMessage>
       </PaneMenu>
     );
   }
 
   renderLastMenu() {
-    const { initialValues, stripes: { intl } } = this.props;
+    const { initialValues } = this.props;
 
     let id;
-    let label;
-    if (initialValues && initialValues.id) {
+    let labelId;
+    if (initialValues.id) {
       id = 'clickable-updateagreement';
-      label = intl.formatMessage({ id: 'ui-erm.agreements.updateAgreement' });
+      labelId = 'ui-erm.agreements.updateAgreement';
     } else {
       id = 'clickable-createagreement';
-      label = intl.formatMessage({ id: 'ui-erm.agreements.createAgreement' });
+      labelId = 'ui-erm.agreements.createAgreement';
     }
 
     return (
@@ -98,23 +133,20 @@ class EditAgreement extends React.Component {
         <Button
           id={id}
           type="submit"
-          title={label}
-          aria-label={label}
           disabled={this.props.pristine || this.props.submitting}
           onClick={this.props.handleSubmit}
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
         >
-          {label}
+          <FormattedMessage id={labelId} />
         </Button>
       </PaneMenu>
     );
   }
 
   render() {
-    const { initialValues, stripes: { intl } } = this.props;
-    const paneTitle = initialValues && initialValues.id ?
-      initialValues.name : intl.formatMessage({ id: 'ui-erm.agreements.createAgreement' });
+    const { initialValues } = this.props;
+    const paneTitle = initialValues.id ? initialValues.name : <FormattedMessage id="ui-erm.agreements.createAgreement" />;
 
     return (
       <form id="form-agreement">
@@ -137,4 +169,5 @@ export default stripesForm({
   onSubmit: handleSubmit,
   navigationCheck: true,
   enableReinitialize: true,
+  keepDirtyOnReinitialize: true,
 })(EditAgreement);
