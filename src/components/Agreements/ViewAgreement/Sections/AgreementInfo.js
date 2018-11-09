@@ -45,14 +45,14 @@ class AgreementInfo extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label={intl.formatMessage({ id: 'ui-erm.agreements.agreementInfo' })}
+        label={intl.formatMessage({ id: 'ui-agreements.agreements.agreementInfo' })}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
         <Row>
           <Col xs={12}>
             <KeyValue
-              label={intl.formatMessage({ id: 'ui-erm.agreements.name' })}
+              label={intl.formatMessage({ id: 'ui-agreements.agreements.name' })}
               value={agreement.name}
             />
           </Col>
@@ -60,7 +60,7 @@ class AgreementInfo extends React.Component {
         <Row>
           <Col xs={12}>
             <KeyValue
-              label={intl.formatMessage({ id: 'ui-erm.agreements.agreementDescription' })}
+              label={intl.formatMessage({ id: 'ui-agreements.agreements.agreementDescription' })}
               value={agreement.description}
             />
           </Col>
@@ -68,19 +68,19 @@ class AgreementInfo extends React.Component {
         <Row>
           <Col xs={4}>
             <KeyValue
-              label={intl.formatMessage({ id: 'ui-erm.agreements.cancellationDeadline' })}
+              label={intl.formatMessage({ id: 'ui-agreements.agreements.cancellationDeadline' })}
               value={agreement.cancellationDeadline ? intl.formatDate(agreement.cancellationDeadline) : '-'}
             />
           </Col>
           <Col xs={4}>
             <KeyValue
-              label={intl.formatMessage({ id: 'ui-erm.agreements.renewalPriority' })}
+              label={intl.formatMessage({ id: 'ui-agreements.agreements.renewalPriority' })}
               value={get(agreement, ['renewalPriority', 'label'], '-')}
             />
           </Col>
           <Col xs={4}>
             <KeyValue
-              label={intl.formatMessage({ id: 'ui-erm.agreements.isPerpetual' })}
+              label={intl.formatMessage({ id: 'ui-agreements.agreements.isPerpetual' })}
               value={get(agreement, ['isPerpetual', 'label'], '-')}
             />
           </Col>
@@ -90,7 +90,7 @@ class AgreementInfo extends React.Component {
             <AccordionSet>
               <Accordion
                 id="internalContacts"
-                label={intl.formatMessage({ id: 'ui-erm.agreements.internalContacts' })}
+                label={intl.formatMessage({ id: 'ui-agreements.agreements.internalContacts' })}
                 onToggle={this.handleSectionToggle}
                 open={this.state.sections.internalContacts}
               >
@@ -98,7 +98,7 @@ class AgreementInfo extends React.Component {
               </Accordion>
               <Accordion
                 id="contentReviews"
-                label={intl.formatMessage({ id: 'ui-erm.agreements.contentReviews' })}
+                label={intl.formatMessage({ id: 'ui-agreements.agreements.contentReviews' })}
                 onToggle={this.handleSectionToggle}
                 open={this.state.sections.contentReviews}
               >
@@ -106,7 +106,7 @@ class AgreementInfo extends React.Component {
               </Accordion>
               <Accordion
                 id="trials"
-                label={intl.formatMessage({ id: 'ui-erm.agreements.trials' })}
+                label={intl.formatMessage({ id: 'ui-agreements.agreements.trials' })}
                 onToggle={this.handleSectionToggle}
                 open={this.state.sections.trials}
               >
@@ -114,7 +114,7 @@ class AgreementInfo extends React.Component {
               </Accordion>
               <Accordion
                 id="reviewHistory"
-                label={intl.formatMessage({ id: 'ui-erm.agreements.reviewHistory' })}
+                label={intl.formatMessage({ id: 'ui-agreements.agreements.reviewHistory' })}
                 onToggle={this.handleSectionToggle}
                 open={this.state.sections.reviewHistory}
               >

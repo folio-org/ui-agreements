@@ -49,7 +49,7 @@ class AcquisitionOptions extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label={intl.formatMessage({ id: 'ui-erm.eresources.acqOptions' }, eresource)}
+        label={intl.formatMessage({ id: 'ui-agreements.eresources.acqOptions' }, eresource)}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
@@ -66,8 +66,8 @@ class AcquisitionOptions extends React.Component {
                 acqMethod: option => renderResourceType(option),
                 add: option => {
                   const addLabel = isPackage(option) ?
-                    intl.formatMessage({ id: 'ui-erm.eresources.addPackage' }) :
-                    intl.formatMessage({ id: 'ui-erm.eresources.addTitle' });
+                    intl.formatMessage({ id: 'ui-agreements.eresources.addPackage' }) :
+                    intl.formatMessage({ id: 'ui-agreements.eresources.addTitle' });
 
                   return (
                     <this.connectedAddToBasketButton
@@ -79,10 +79,10 @@ class AcquisitionOptions extends React.Component {
                 },
               }}
               columnMapping={{
-                package: intl.formatMessage({ id: 'ui-erm.eresources.parentPackage' }),
-                platform: intl.formatMessage({ id: 'ui-erm.eresources.platform' }),
-                acqMethod: intl.formatMessage({ id: 'ui-erm.eresources.acqMethod' }),
-                add: intl.formatMessage({ id: 'ui-erm.eresources.addToBasketHeader' }),
+                package: intl.formatMessage({ id: 'ui-agreements.eresources.parentPackage' }),
+                platform: intl.formatMessage({ id: 'ui-agreements.eresources.platform' }),
+                acqMethod: intl.formatMessage({ id: 'ui-agreements.eresources.acqMethod' }),
+                add: intl.formatMessage({ id: 'ui-agreements.eresources.addToBasketHeader' }),
               }}
               columnWidths={{
                 package: '35%',

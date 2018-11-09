@@ -9,12 +9,12 @@ const isPackage = (resource) => {
 };
 
 const renderResourceType = (resource) => {
-  if (isPackage(resource)) return <FormattedMessage id="ui-erm.eresources.package" />;
+  if (isPackage(resource)) return <FormattedMessage id="ui-agreements.eresources.package" />;
 
   return get(
     resource,
     ['_object', 'pti', 'titleInstance', 'type', 'label'],
-    <FormattedMessage id="ui-erm.eresources.title" />
+    <FormattedMessage id="ui-agreements.eresources.title" />
   );
 };
 

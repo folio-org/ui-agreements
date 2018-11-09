@@ -53,7 +53,7 @@ class AgreementFormInfo extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label={<FormattedMessage id="ui-erm.agreements.agreementInfo" />}
+        label={<FormattedMessage id="ui-agreements.agreements.agreementInfo" />}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
@@ -62,7 +62,7 @@ class AgreementFormInfo extends React.Component {
             <Field
               id="name"
               name="name"
-              label={<FormattedMessage id="ui-erm.agreements.name">{name => `${name} *`}</FormattedMessage>}
+              label={<FormattedMessage id="ui-agreements.agreements.name">{name => `${name} *`}</FormattedMessage>}
               component={TextField}
             />
           </Col>
@@ -72,7 +72,7 @@ class AgreementFormInfo extends React.Component {
             <Field
               id="description"
               name="description"
-              label={<FormattedMessage id="ui-erm.agreements.agreementDescription" />}
+              label={<FormattedMessage id="ui-agreements.agreements.agreementDescription" />}
               component={TextArea}
             />
           </Col>
@@ -82,7 +82,7 @@ class AgreementFormInfo extends React.Component {
             <Field
               id="startDate"
               name="startDate"
-              label={<FormattedMessage id="ui-erm.agreements.startDate">{startDate => `${startDate} *`}</FormattedMessage>}
+              label={<FormattedMessage id="ui-agreements.agreements.startDate">{startDate => `${startDate} *`}</FormattedMessage>}
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
               backendDateStandard="YYYY-MM-DD"
@@ -92,7 +92,7 @@ class AgreementFormInfo extends React.Component {
             <Field
               id="endDate"
               name="endDate"
-              label={<FormattedMessage id="ui-erm.agreements.endDate" />}
+              label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
               backendDateStandard="YYYY-MM-DD"
@@ -102,7 +102,7 @@ class AgreementFormInfo extends React.Component {
             <Field
               id="cancellationDeadline"
               name="cancellationDeadline"
-              label={<FormattedMessage id="ui-erm.agreements.cancellationDeadline" />}
+              label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
               backendDateStandard="YYYY-MM-DD"
@@ -114,7 +114,7 @@ class AgreementFormInfo extends React.Component {
             <Field
               id="agreementStatus"
               name="agreementStatus"
-              label={<FormattedMessage id="ui-erm.agreements.agreementStatus">{agreementStatus => `${agreementStatus} *`}</FormattedMessage>}
+              label={<FormattedMessage id="ui-agreements.agreements.agreementStatus">{agreementStatus => `${agreementStatus} *`}</FormattedMessage>}
               component={Select}
               dataOptions={this.getAgreementStatusValues()}
             />
@@ -123,7 +123,7 @@ class AgreementFormInfo extends React.Component {
             <Field
               id="renewalPriority"
               name="renewalPriority"
-              label={<FormattedMessage id="ui-erm.agreements.renewalPriority" />}
+              label={<FormattedMessage id="ui-agreements.agreements.renewalPriority" />}
               component={Select}
               dataOptions={this.getRenewalPriorityValues()}
             />
@@ -132,7 +132,7 @@ class AgreementFormInfo extends React.Component {
             <Field
               id="isPerpetual"
               name="isPerpetual"
-              label={<FormattedMessage id="ui-erm.agreements.isPerpetual" />}
+              label={<FormattedMessage id="ui-agreements.agreements.isPerpetual" />}
               component={Select}
               dataOptions={this.getIsPerpetualValues()}
             />

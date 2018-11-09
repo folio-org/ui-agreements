@@ -87,14 +87,14 @@ class EResources extends React.Component {
         // ...set the filter's `values` and `label` properties
         const config = filterConfig.find(c => c.name === filter);
         config.values = records[i].map(r => ({ name: r.label, cql: '' }));
-        config.label = intl.formatMessage({ id: `ui-erm.eresources.${filter}` });
+        config.label = intl.formatMessage({ id: `ui-agreements.eresources.${filter}` });
       });
 
       // Now we translate any filters that we didn't need to fetch values for.
       const packageFilter = filterConfig.find(f => f.name === 'class');
-      packageFilter.label = intl.formatMessage({ id: 'ui-erm.eresources.isPackage' });
-      packageFilter.values[0].name = intl.formatMessage({ id: 'ui-erm.yes' });
-      packageFilter.values[1].name = intl.formatMessage({ id: 'ui-erm.no' });
+      packageFilter.label = intl.formatMessage({ id: 'ui-agreements.eresources.isPackage' });
+      packageFilter.values[0].name = intl.formatMessage({ id: 'ui-agreements.yes' });
+      packageFilter.values[1].name = intl.formatMessage({ id: 'ui-agreements.no' });
 
       this.props.mutator.eresourceFiltersInitialized.replace(true);
     }
@@ -134,8 +134,8 @@ class EResources extends React.Component {
             'type',
           ]}
           columnMapping={{
-            name: intl.formatMessage({ id: 'ui-erm.eresources.name' }),
-            type: intl.formatMessage({ id: 'ui-erm.eresources.type' }),
+            name: intl.formatMessage({ id: 'ui-agreements.eresources.name' }),
+            type: intl.formatMessage({ id: 'ui-agreements.eresources.type' }),
           }}
           columnWidths={{
             name: 500,

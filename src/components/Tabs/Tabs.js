@@ -52,13 +52,13 @@ class Tabs extends React.Component {
       <div className={css.SegControl}>
         <SegmentedControl activeId={this.state.tab} onActivate={this.handleActivate}>
           <Button id="dashboard">
-            <FormattedMessage id="ui-erm.tabs.dashboard" />
+            <FormattedMessage id="ui-agreements.tabs.dashboard" />
           </Button>
           <Button id="agreements">
-            <FormattedMessage id="ui-erm.tabs.agreements" />
+            <FormattedMessage id="ui-agreements.tabs.agreements" />
           </Button>
           <Button id="eresources">
-            <FormattedMessage id="ui-erm.tabs.eresources" />
+            <FormattedMessage id="ui-agreements.tabs.eresources" />
           </Button>
         </SegmentedControl>
       </div>

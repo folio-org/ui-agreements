@@ -50,9 +50,9 @@ class BasketSelectorDisplay extends React.Component {
         <Col xs={12} md={8}>
           <Select
             dataOptions={dataOptions}
-            label={intl.formatMessage({ id: 'ui-erm.basketSelector.selectLabel' })}
+            label={intl.formatMessage({ id: 'ui-agreements.basketSelector.selectLabel' })}
             onChange={this.handleChange}
-            placeholder={intl.formatMessage({ id: 'ui-erm.basketSelector.selectPlaceholder' })}
+            placeholder={intl.formatMessage({ id: 'ui-agreements.basketSelector.selectPlaceholder' })}
             value={item.id}
           />
         </Col>

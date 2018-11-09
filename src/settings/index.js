@@ -13,19 +13,19 @@ export default class ErmSettings extends React.Component {
   pages = [
     {
       route: 'general',
-      label: this.props.stripes.intl.formatMessage({ id: 'ui-erm.settings.general' }),
+      label: this.props.stripes.intl.formatMessage({ id: 'ui-agreements.settings.general' }),
       component: GeneralSettings,
     },
     {
       route: 'somefeature',
-      label: this.props.stripes.intl.formatMessage({ id: 'ui-erm.settings.some-feature' }),
+      label: this.props.stripes.intl.formatMessage({ id: 'ui-agreements.settings.some-feature' }),
       component: SomeFeatureSettings,
     },
   ];
 
   render() {
     return (
-      <Settings {...this.props} pages={this.pages} paneTitle="ui-erm" />
+      <Settings {...this.props} pages={this.pages} paneTitle="ui-agreements" />
     );
   }
 }

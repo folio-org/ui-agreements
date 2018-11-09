@@ -41,7 +41,7 @@ class OpenBasketButton extends React.Component {
         onClick={this.openBasket}
       >
         <FormattedMessage
-          id="ui-erm.basketButton"
+          id="ui-agreements.basketButton"
           values={{ count: basket.length }}
         />
       </Button>

@@ -18,7 +18,7 @@ class License extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label={intl.formatMessage({ id: 'ui-erm.agreements.license' })}
+        label={intl.formatMessage({ id: 'ui-agreements.agreements.license' })}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >

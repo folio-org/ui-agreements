@@ -27,32 +27,32 @@ class VendorInfo extends React.Component {
       <Row className={css.vendorInfo}>
         <Col xs={3}>
           <KeyValue
-            label={intl.formatMessage({ id: 'ui-erm.agreements.vendorInfo.vendor' })}
+            label={intl.formatMessage({ id: 'ui-agreements.agreements.vendorInfo.vendor' })}
             value={get(agreement, ['vendor', 'name'], '-')}
           />
         </Col>
         <Col xs={2}>
           <KeyValue
-            label={intl.formatMessage({ id: 'ui-erm.agreements.startDate' })}
+            label={intl.formatMessage({ id: 'ui-agreements.agreements.startDate' })}
             value={startDate ? intl.formatDate(startDate) : '-'}
           />
         </Col>
         <Col xs={2}>
           <KeyValue
-            label={intl.formatMessage({ id: 'ui-erm.agreements.endDate' })}
+            label={intl.formatMessage({ id: 'ui-agreements.agreements.endDate' })}
             value={endDate ? intl.formatDate(endDate) : '-'}
           />
         </Col>
         <Col xs={2}>
           <KeyValue
-            label={intl.formatMessage({ id: 'ui-erm.agreements.vendorInfo.status' })}
+            label={intl.formatMessage({ id: 'ui-agreements.agreements.vendorInfo.status' })}
             value={get(agreement, ['agreementStatus', 'label'], '-')}
           />
         </Col>
         <Col xs={3}>
           <Button>
             <Icon size="small" icon="external-link">
-              {intl.formatMessage({ id: 'ui-erm.agreements.vendorInfo.visitPlatform' })}
+              {intl.formatMessage({ id: 'ui-agreements.agreements.vendorInfo.visitPlatform' })}
             </Icon>
           </Button>
         </Col>
