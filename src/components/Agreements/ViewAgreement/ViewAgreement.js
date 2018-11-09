@@ -136,7 +136,7 @@ class ViewAgreement extends React.Component {
     return (
       <Layer
         isOpen={query.layer === 'edit'}
-        contentLabel={intl.formatMessage({ id: 'ui-erm.agreements.editAgreement' })}
+        contentLabel={intl.formatMessage({ id: 'ui-agreements.agreements.editAgreement' })}
       >
         <EditAgreement
           {...this.props}
@@ -165,10 +165,10 @@ class ViewAgreement extends React.Component {
         paneTitle={agreement.name}
         dismissible
         onClose={this.props.onClose}
-        actionMenuItems={stripes.hasPerm('ui-erm.agreements.edit') ? [{
+        actionMenuItems={stripes.hasPerm('ui-agreements.agreements.edit') ? [{
           id: 'clickable-edit-agreement',
-          title: stripes.intl.formatMessage({ id: 'ui-erm.agreements.editAgreement' }),
-          label: stripes.intl.formatMessage({ id: 'ui-erm.agreements.edit' }),
+          title: stripes.intl.formatMessage({ id: 'ui-agreements.agreements.editAgreement' }),
+          label: stripes.intl.formatMessage({ id: 'ui-agreements.agreements.edit' }),
           href: this.props.editLink,
           onClick: this.props.onEdit,
           icon: 'edit',

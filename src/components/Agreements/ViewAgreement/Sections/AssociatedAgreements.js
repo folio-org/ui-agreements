@@ -18,7 +18,7 @@ class AssociatedAgreements extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label={intl.formatMessage({ id: 'ui-erm.agreements.assocAgreements' })}
+        label={intl.formatMessage({ id: 'ui-agreements.agreements.assocAgreements' })}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >

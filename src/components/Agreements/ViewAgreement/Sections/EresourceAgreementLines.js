@@ -45,11 +45,11 @@ class EresourceAgreementLines extends React.Component {
           contentUpdated: () => 'TBD',
         }}
         columnMapping={{
-          name: intl.formatMessage({ id: 'ui-erm.eresources.name' }),
-          platform: intl.formatMessage({ id: 'ui-erm.eresources.platform' }),
-          type: intl.formatMessage({ id: 'ui-erm.eresources.erType' }),
-          count: intl.formatMessage({ id: 'ui-erm.agreementLines.count' }),
-          contentUpdated: intl.formatMessage({ id: 'ui-erm.agreementLines.contentUpdated' }),
+          name: intl.formatMessage({ id: 'ui-agreements.eresources.name' }),
+          platform: intl.formatMessage({ id: 'ui-agreements.eresources.platform' }),
+          type: intl.formatMessage({ id: 'ui-agreements.eresources.erType' }),
+          count: intl.formatMessage({ id: 'ui-agreements.agreementLines.count' }),
+          contentUpdated: intl.formatMessage({ id: 'ui-agreements.agreementLines.contentUpdated' }),
         }}
         columnWidths={{
           name: '20%',

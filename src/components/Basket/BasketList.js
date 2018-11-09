@@ -68,7 +68,7 @@ class BasketList extends React.Component {
               coverageStart: () => 'TBD',
               coverageEnd: () => 'TBD',
               remove: resource => (
-                <FormattedMessage id="ui-erm.basket.removeItem">
+                <FormattedMessage id="ui-agreements.basket.removeItem">
                   {ariaLabel => (
                     <IconButton
                       aria-label={ariaLabel}
@@ -87,14 +87,14 @@ class BasketList extends React.Component {
                   onChange={this.props.onToggleAll}
                 />
               ),
-              name: <FormattedMessage id="ui-erm.eresources.name" />,
-              type: <FormattedMessage id="ui-erm.eresources.type" />,
-              package: <FormattedMessage id="ui-erm.eresources.parentPackage" />,
-              publisher: <FormattedMessage id="ui-erm.eresources.publisher" />,
-              platform: <FormattedMessage id="ui-erm.eresources.platform" />,
-              coverageStart: <FormattedMessage id="ui-erm.eresources.coverageStart" />,
-              coverageEnd: <FormattedMessage id="ui-erm.eresources.coverageEnd" />,
-              remove: <FormattedMessage id="ui-erm.remove" />,
+              name: <FormattedMessage id="ui-agreements.eresources.name" />,
+              type: <FormattedMessage id="ui-agreements.eresources.type" />,
+              package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
+              publisher: <FormattedMessage id="ui-agreements.eresources.publisher" />,
+              platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
+              coverageStart: <FormattedMessage id="ui-agreements.eresources.coverageStart" />,
+              coverageEnd: <FormattedMessage id="ui-agreements.eresources.coverageEnd" />,
+              remove: <FormattedMessage id="ui-agreements.remove" />,
             }}
             columnWidths={{
               selected: 40,

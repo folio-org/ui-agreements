@@ -5,7 +5,7 @@ import Route from 'react-router-dom/Route';
 import ERM from './ERM';
 import Settings from './settings';
 
-class App extends React.Component {
+class UIAgreements extends React.Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     showSettings: PropTypes.bool,
@@ -33,4 +33,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default UIAgreements;

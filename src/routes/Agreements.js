@@ -106,7 +106,7 @@ class Agreements extends React.Component {
         // ...set the filter's `values` and `label` properties
         const config = filterConfig.find(c => c.name === filter);
         config.values = records[i].map(r => ({ name: r.label, cql: '' }));
-        config.label = intl.formatMessage({ id: `ui-erm.agreements.${filter}` });
+        config.label = intl.formatMessage({ id: `ui-agreements.agreements.${filter}` });
       });
 
       this.props.mutator.agreementFiltersInitialized.replace(true);
@@ -176,13 +176,13 @@ class Agreements extends React.Component {
             'lastUpdated'
           ]}
           columnMapping={{
-            name: intl.formatMessage({ id: 'ui-erm.agreements.name' }),
-            vendor: intl.formatMessage({ id: 'ui-erm.agreements.vendorInfo.vendor' }),
-            startDate: intl.formatMessage({ id: 'ui-erm.agreements.startDate' }),
-            endDate: intl.formatMessage({ id: 'ui-erm.agreements.endDate' }),
-            cancellationDeadline: intl.formatMessage({ id: 'ui-erm.agreements.cancellationDeadline' }),
-            agreementStatus: intl.formatMessage({ id: 'ui-erm.agreements.agreementStatus' }),
-            lastUpdated: intl.formatMessage({ id: 'ui-erm.lastUpdated' }),
+            name: intl.formatMessage({ id: 'ui-agreements.agreements.name' }),
+            vendor: intl.formatMessage({ id: 'ui-agreements.agreements.vendorInfo.vendor' }),
+            startDate: intl.formatMessage({ id: 'ui-agreements.agreements.startDate' }),
+            endDate: intl.formatMessage({ id: 'ui-agreements.agreements.endDate' }),
+            cancellationDeadline: intl.formatMessage({ id: 'ui-agreements.agreements.cancellationDeadline' }),
+            agreementStatus: intl.formatMessage({ id: 'ui-agreements.agreements.agreementStatus' }),
+            lastUpdated: intl.formatMessage({ id: 'ui-agreements.lastUpdated' }),
           }}
           columnWidths={{
             name: 300,

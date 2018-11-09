@@ -1,4 +1,4 @@
-# Change history for ui-erm
+# Change history for ui-agreements
 
 ## 1.1.0 (IN PROGRESS)
 

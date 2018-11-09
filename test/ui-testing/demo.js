@@ -1,7 +1,7 @@
 /* global Nightmare, describe, it, before, after */
 
 module.exports.test = (uiTestCtx) => {
-  describe('Module test: ui-erm:', function() {
+  describe('Module test: ui-agreements:', function() {
     const { config, helpers: { login, logout } } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 

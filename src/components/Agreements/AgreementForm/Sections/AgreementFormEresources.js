@@ -61,7 +61,7 @@ class AgreementFormEresources extends React.Component {
   }
 
   onRemoveAgreementLine = (fields, rowIndex, id) => {
-    // mod-erm is implemented so that it doesn't expect the entire
+    // mod-agreements is implemented so that it doesn't expect the entire
     // array of agreement lines to be sent back on edits bc of the potential
     // size of that array. Instead, agreement line deletions are expected
     // to be sent back as an object that looks like { id: '123', _delete: true }.
@@ -91,7 +91,7 @@ class AgreementFormEresources extends React.Component {
         <MultiColumnList
           contentData={renderedLines}
           interactive={false}
-          isEmptyMessage={intl.formatMessage({ id: 'ui-erm.agreementLines.noLines' })}
+          isEmptyMessage={intl.formatMessage({ id: 'ui-agreements.agreementLines.noLines' })}
           maxHeight={400}
           visibleColumns={[
             'name',
@@ -122,7 +122,7 @@ class AgreementFormEresources extends React.Component {
             remove: ({ rowIndex, id }) => {
               return (
                 <IconButton
-                  aria-label={intl.formatMessage({ id: 'ui-erm.agreementLines.removeItem' })}
+                  aria-label={intl.formatMessage({ id: 'ui-agreements.agreementLines.removeItem' })}
                   icon="trashBin"
                   onClick={() => this.onRemoveAgreementLine(fields, rowIndex, id)}
                 />
@@ -130,12 +130,12 @@ class AgreementFormEresources extends React.Component {
             },
           }}
           columnMapping={{
-            name: intl.formatMessage({ id: 'ui-erm.eresources.name' }),
-            platform: intl.formatMessage({ id: 'ui-erm.eresources.platform' }),
-            type: intl.formatMessage({ id: 'ui-erm.eresources.erType' }),
-            count: intl.formatMessage({ id: 'ui-erm.agreementLines.count' }),
-            contentUpdated: intl.formatMessage({ id: 'ui-erm.agreementLines.contentUpdated' }),
-            remove: intl.formatMessage({ id: 'ui-erm.remove' }),
+            name: intl.formatMessage({ id: 'ui-agreements.eresources.name' }),
+            platform: intl.formatMessage({ id: 'ui-agreements.eresources.platform' }),
+            type: intl.formatMessage({ id: 'ui-agreements.eresources.erType' }),
+            count: intl.formatMessage({ id: 'ui-agreements.agreementLines.count' }),
+            contentUpdated: intl.formatMessage({ id: 'ui-agreements.agreementLines.contentUpdated' }),
+            remove: intl.formatMessage({ id: 'ui-agreements.remove' }),
           }}
           columnWidths={{
             name: '20%',
@@ -144,7 +144,7 @@ class AgreementFormEresources extends React.Component {
           }}
         />
         <BasketSelector
-          addButtonLabel={intl.formatMessage({ id: 'ui-erm.agreementLines.createLine' })}
+          addButtonLabel={intl.formatMessage({ id: 'ui-agreements.agreementLines.createLine' })}
           onAdd={entitlement => this.onAddAgreementLine(fields, entitlement)}
           stripes={stripes}
         />
@@ -158,7 +158,7 @@ class AgreementFormEresources extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label={intl.formatMessage({ id: 'ui-erm.agreements.eresourceAgreementLines' })}
+        label={intl.formatMessage({ id: 'ui-agreements.agreements.eresourceAgreementLines' })}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >

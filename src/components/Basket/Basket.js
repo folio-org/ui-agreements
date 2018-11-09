@@ -116,7 +116,7 @@ class Basket extends React.Component {
   renderFirstMenu = () => {
     return (
       <PaneMenu>
-        <FormattedMessage id="ui-erm.basket.close">
+        <FormattedMessage id="ui-agreements.basket.close">
           {ariaLabel => (
             <IconButton
               icon="closeX"
@@ -138,7 +138,7 @@ class Basket extends React.Component {
         disabled={disabled}
         to={disabled ? null : `/erm/agreements?layer=create&${this.constructAddToBasketParam()}`}
       >
-        <FormattedMessage id="ui-erm.basket.createAgreement" />
+        <FormattedMessage id="ui-agreements.basket.createAgreement" />
       </Button>
     );
   }
@@ -149,7 +149,7 @@ class Basket extends React.Component {
 
     return (
       <div>
-        <FormattedMessage tagName="div" id="ui-erm.basket.addToExistingAgreement" />
+        <FormattedMessage tagName="div" id="ui-agreements.basket.addToExistingAgreement" />
         <Row>
           <Col xs={12} md={8}>
             <AutoSuggest
@@ -169,11 +169,11 @@ class Basket extends React.Component {
                 <div>
                   <Headline bold>{agreement.name}&nbsp;&#40;{agreement.agreementStatus.label}&#41;</Headline>{/* eslint-disable-line */}
                   <div>
-                    <strong><FormattedMessage id="ui-erm.agreements.startDate" />: </strong><FormattedDate value={agreement.startDate} /> {/* eslint-disable-line */}
+                    <strong><FormattedMessage id="ui-agreements.agreements.startDate" />: </strong><FormattedDate value={agreement.startDate} /> {/* eslint-disable-line */}
                   </div>
                   {agreement.vendor && (
                     <div>
-                      <strong><FormattedMessage id="ui-erm.agreements.vendorInfo.vendor" />: </strong>{agreement.vendor.name} {/* eslint-disable-line */}
+                      <strong><FormattedMessage id="ui-agreements.agreements.vendorInfo.vendor" />: </strong>{agreement.vendor.name} {/* eslint-disable-line */}
                     </div>
                   )}
                 </div>
@@ -203,7 +203,7 @@ class Basket extends React.Component {
           disabled={disabled}
           to={disabled ? null : `/erm/agreements/view/${this.state.selectedAgreement}?layer=edit&${this.constructAddToBasketParam()}`}
         >
-          <FormattedMessage id="ui-erm.basket.addToSelectedAgreement" />
+          <FormattedMessage id="ui-agreements.basket.addToSelectedAgreement" />
         </Button>
       </div>
     );
@@ -216,7 +216,7 @@ class Basket extends React.Component {
     const query = resources.query;
 
     return (
-      <FormattedMessage id="ui-erm.basket.layerLabel">
+      <FormattedMessage id="ui-agreements.basket.layerLabel">
         {layerContentLabel => (
           <Layer
             afterClose={() => this.setState({ selectedAgreement: undefined })}
@@ -228,8 +228,8 @@ class Basket extends React.Component {
               <Pane
                 defaultWidth="100%"
                 firstMenu={this.renderFirstMenu()}
-                paneTitle={<FormattedMessage id="ui-erm.basket.name" />}
-                paneSub={<FormattedMessage id="ui-erm.basket.recordCount" values={{ count: basket.length }} />}
+                paneTitle={<FormattedMessage id="ui-agreements.basket.name" />}
+                paneSub={<FormattedMessage id="ui-agreements.basket.recordCount" values={{ count: basket.length }} />}
 
               >
                 <BasketList

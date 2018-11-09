@@ -46,38 +46,38 @@ class EResourceInfo extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label={intl.formatMessage({ id: 'ui-erm.eresources.erInfo' })}
+        label={intl.formatMessage({ id: 'ui-agreements.eresources.erInfo' })}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
         <Row>
           <Col xs={4}>
             <KeyValue
-              label={intl.formatMessage({ id: 'ui-erm.eresources.erType' })}
+              label={intl.formatMessage({ id: 'ui-agreements.eresources.erType' })}
               value={get(eresource, ['type', 'label'], '-')}
             />
           </Col>
           <Col xs={4}>
             <KeyValue
-              label={intl.formatMessage({ id: 'ui-erm.eresources.publisher' })}
+              label={intl.formatMessage({ id: 'ui-agreements.eresources.publisher' })}
               value={get(eresource, ['publisher', 'label'], '-')}
             />
           </Col>
           <Col xs={2}>
             <KeyValue
-              label={intl.formatMessage({ id: 'ui-erm.eresources.pIssn' })}
+              label={intl.formatMessage({ id: 'ui-agreements.eresources.pIssn' })}
               value={this.getIdentifier('pissn')}
             />
           </Col>
           <Col xs={2}>
             <KeyValue
-              label={intl.formatMessage({ id: 'ui-erm.eresources.eIssn' })}
+              label={intl.formatMessage({ id: 'ui-agreements.eresources.eIssn' })}
               value={this.getIdentifier('eissn')}
             />
           </Col>
         </Row>
         <Headline size="medium" faded>
-          <FormattedMessage id="ui-erm.eresources.erAgreements" />
+          <FormattedMessage id="ui-agreements.eresources.erAgreements" />
         </Headline>
         <this.connectedEResourceAgreements
           key={`agreements-${eresource.id}`} // Force a remount when changing which eresource we're viewing

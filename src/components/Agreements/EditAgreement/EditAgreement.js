@@ -99,7 +99,7 @@ class EditAgreement extends React.Component {
   renderFirstMenu() {
     return (
       <PaneMenu>
-        <FormattedMessage id="ui-erm.agreements.closeNewAgreement">
+        <FormattedMessage id="ui-agreements.agreements.closeNewAgreement">
           {ariaLabel => (
             <IconButton
               icon="closeX"
@@ -119,10 +119,10 @@ class EditAgreement extends React.Component {
     let labelId;
     if (initialValues.id) {
       id = 'clickable-updateagreement';
-      labelId = 'ui-erm.agreements.updateAgreement';
+      labelId = 'ui-agreements.agreements.updateAgreement';
     } else {
       id = 'clickable-createagreement';
-      labelId = 'ui-erm.agreements.createAgreement';
+      labelId = 'ui-agreements.agreements.createAgreement';
     }
 
     return (
@@ -143,7 +143,7 @@ class EditAgreement extends React.Component {
 
   render() {
     const { initialValues } = this.props;
-    const paneTitle = initialValues.id ? initialValues.name : <FormattedMessage id="ui-erm.agreements.createAgreement" />;
+    const paneTitle = initialValues.id ? initialValues.name : <FormattedMessage id="ui-agreements.agreements.createAgreement" />;
 
     return (
       <form id="form-agreement">

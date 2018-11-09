@@ -15,7 +15,7 @@ import css from './ERM.css';
 
 const INITIAL_RESULT_COUNT = 100;
 
-export default class Erm extends React.Component {
+export default class ERM extends React.Component {
   static manifest = Object.freeze({
     query: {},
     resultCount: { initialValue: INITIAL_RESULT_COUNT }

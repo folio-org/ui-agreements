@@ -18,7 +18,7 @@ class Organizations extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label={intl.formatMessage({ id: 'ui-erm.agreements.organizations' })}
+        label={intl.formatMessage({ id: 'ui-agreements.agreements.organizations' })}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >

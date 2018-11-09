@@ -30,7 +30,7 @@ class Eresources extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label={intl.formatMessage({ id: 'ui-erm.agreements.eresourceAgreementLines' })}
+        label={intl.formatMessage({ id: 'ui-agreements.agreements.eresourceAgreementLines' })}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
@@ -41,7 +41,7 @@ class Eresources extends React.Component {
         </Row>
         <Accordion
           id="eresources-covered"
-          label={intl.formatMessage({ id: 'ui-erm.agreements.eresourcesCovered' })}
+          label={intl.formatMessage({ id: 'ui-agreements.agreements.eresourcesCovered' })}
           open={this.state.eResourcesCoveredOpen}
           onToggle={this.onToggleEresourcesCovered}
         >

@@ -1,5 +1,5 @@
 {
-  "name": "@folio/erm",
+  "name": "@folio/agreements",
   "version": "1.0.0",
   "description": "ERM functionality for Stripes",
   "main": "src/index.js",
@@ -34,7 +34,7 @@
   },
   "stripes": {
     "type": "app",
-    "displayName": "ui-erm.meta.title",
+    "displayName": "ui-agreements.meta.title",
     "route": "/erm",
     "home": "/erm/dashboard",
     "hasSettings": true,
@@ -42,12 +42,12 @@
     "okapiInterfaces": {},
     "permissionSets": [
       {
-        "permissionName": "module.erm.enabled",
-        "displayName": "UI: ui-erm module is enabled",
+        "permissionName": "module.agreements.enabled",
+        "displayName": "UI: ui-agreements module is enabled",
         "visible": true
       },
       {
-        "permissionName": "ui-erm.agreements.view",
+        "permissionName": "ui-agreements.agreements.view",
         "displayName": "ERM: Can view agreements",
         "visible": true,
         "subPermissions": [
@@ -55,24 +55,24 @@
         ]
       },
       {
-        "permissionName": "ui-erm.agreements.edit",
+        "permissionName": "ui-agreements.agreements.edit",
         "displayName": "ERM: Can edit agreements",
         "visible": true,
         "subPermissions": [
-          "ui-erm.agreements.view"
+          "ui-agreements.agreements.view"
         ]
       },
       {
-        "permissionName": "ui-erm.agreements.create",
+        "permissionName": "ui-agreements.agreements.create",
         "displayName": "ERM: Can create and edit agreements",
         "visible": true,
         "subPermissions": [
-          "ui-erm.agreements.edit"
+          "ui-agreements.agreements.edit"
         ]
       },
       {
-        "permissionName": "settings.erm.enabled",
-        "displayName": "Settings (erm): display list of settings pages",
+        "permissionName": "settings.agreements.enabled",
+        "displayName": "Settings (agreements): display list of settings pages",
         "subPermissions": [
           "settings.enabled"
         ],
