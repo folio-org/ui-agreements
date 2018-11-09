@@ -51,7 +51,7 @@
         "displayName": "ERM: Can view agreements",
         "visible": true,
         "subPermissions": [
-          "module.erm.enabled"
+          "module.agreements.enabled"
         ]
       },
       {
