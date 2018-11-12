@@ -53,36 +53,51 @@ class AgreementInfo extends React.Component {
           <Col xs={12}>
             <KeyValue
               label={intl.formatMessage({ id: 'ui-agreements.agreements.name' })}
-              value={agreement.name}
-            />
+            >
+              <div data-test-agreement-name>
+                {agreement.name}
+              </div>
+            </KeyValue>
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
             <KeyValue
               label={intl.formatMessage({ id: 'ui-agreements.agreements.agreementDescription' })}
-              value={agreement.description}
-            />
+            >
+              <div data-test-agreement-description>
+                {agreement.description}
+              </div>
+            </KeyValue>
           </Col>
         </Row>
         <Row>
           <Col xs={4}>
             <KeyValue
               label={intl.formatMessage({ id: 'ui-agreements.agreements.cancellationDeadline' })}
-              value={agreement.cancellationDeadline ? intl.formatDate(agreement.cancellationDeadline) : '-'}
-            />
+            >
+              <div data-test-agreement-cancellationDeadline>
+                {agreement.cancellationDeadline ? intl.formatDate(agreement.cancellationDeadline) : '-'}
+              </div>
+            </KeyValue>
           </Col>
           <Col xs={4}>
             <KeyValue
               label={intl.formatMessage({ id: 'ui-agreements.agreements.renewalPriority' })}
-              value={get(agreement, ['renewalPriority', 'label'], '-')}
-            />
+            >
+              <div data-test-agreement-renewalPriority>
+                {get(agreement, ['renewalPriority', 'label'], '-')}
+              </div>
+            </KeyValue>
           </Col>
           <Col xs={4}>
             <KeyValue
               label={intl.formatMessage({ id: 'ui-agreements.agreements.isPerpetual' })}
-              value={get(agreement, ['isPerpetual', 'label'], '-')}
-            />
+            >
+              <div data-test-agreement-isPerpetual>
+                {get(agreement, ['isPerpetual', 'label'], '-')}
+              </div>
+            </KeyValue>
           </Col>
         </Row>
         <Row className={css.agreementInfoSections}>
