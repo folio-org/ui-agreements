@@ -8,6 +8,14 @@ module.exports.test = (uiTestCtx) => {
     this.timeout(Number(config.test_timeout));
 
     describe('Login > open agreements > create, view, edit agreement > logout', () => {
+      const number = Math.round(Math.random() * 1000);
+      const values = {
+        name: `Fledgling Agreement #${number}`,
+        description: `This agreement of count #${number} is still in its initial stages.`,
+        renewalPriority: 'For Review',
+        isPerpetual: 'Yes',
+      };
+
       before((done) => {
         login(nightmare, config, done);
       });
@@ -31,29 +39,24 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      it('should create an agreement', done => {
-        const number = Math.round(Math.random() * 100);
-        const values = {
-          name: `Fledgling Agreement #${number}`,
-          description: `This agreement of count #${number} is still in its initial stages.`,
-          renewalPriority: 'For Review',
-          isPerpetual: 'Yes',
-        };
-
+      it(`should create an agreement: ${values.name}`, done => {
         nightmare
           .wait('#clickable-newagreement')
           .click('#clickable-newagreement')
-          .wait('#agreementFormInfo input[name=name]')
+          .wait('#edit-agreement-name')
 
-          .insert('#agreementFormInfo input[name=name]', values.name)
-          .insert('#agreementFormInfo textarea[name=description]', values.description)
+          .insert('#edit-agreement-name', values.name)
+          .insert('#edit-agreement-description', values.description)
 
-          .click('#agreementFormInfo input[name=startDate]')
-          .type('#agreementFormInfo input[name=startDate]', '\u000d') // "Enter" selects current date
+          .click('#edit-agreement-start-date')
+          .type('#edit-agreement-start-date', '\u000d') // "Enter" selects current date
 
-          .type('#agreementFormInfo select[name=agreementStatus]', 'draft')
-          .type('#agreementFormInfo select[name=renewalPriority]', 'for')
-          .type('#agreementFormInfo select[name=isPerpetual]', 'yes')
+          .insert('#edit-agreement-end-date', '2019-01-31')
+          .insert('#edit-agreement-cancellation-deadline', '2019-01-15')
+
+          .type('#edit-agreement-agreement-status', 'draft')
+          .type('#edit-agreement-renewal-priority', 'for')
+          .type('#edit-agreement-is-perpetual', 'yes')
 
           .click('#clickable-createagreement')
           .wait('#agreementInfo')
