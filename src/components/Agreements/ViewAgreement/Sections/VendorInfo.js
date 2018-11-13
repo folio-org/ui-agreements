@@ -26,28 +26,24 @@ class VendorInfo extends React.Component {
     return (
       <Row className={css.vendorInfo}>
         <Col xs={3}>
-          <KeyValue
-            label={intl.formatMessage({ id: 'ui-agreements.agreements.vendorInfo.vendor' })}
-            value={get(agreement, ['vendor', 'name'], '-')}
-          />
+          <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.vendorInfo.vendor' })}>
+            <div data-test-agreement-vendor-name>{get(agreement, ['vendor', 'name'], '-')}</div>
+          </KeyValue>
         </Col>
         <Col xs={2}>
-          <KeyValue
-            label={intl.formatMessage({ id: 'ui-agreements.agreements.startDate' })}
-            value={startDate ? intl.formatDate(startDate) : '-'}
-          />
+          <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.startDate' })}>
+            <div data-test-agreement-start-date>{startDate ? intl.formatDate(startDate) : '-'}</div>
+          </KeyValue>
         </Col>
         <Col xs={2}>
-          <KeyValue
-            label={intl.formatMessage({ id: 'ui-agreements.agreements.endDate' })}
-            value={endDate ? intl.formatDate(endDate) : '-'}
-          />
+          <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.endDate' })}>
+            <div data-test-agreement-end-date>{endDate ? intl.formatDate(endDate) : '-'}</div>
+          </KeyValue>
         </Col>
         <Col xs={2}>
-          <KeyValue
-            label={intl.formatMessage({ id: 'ui-agreements.agreements.vendorInfo.status' })}
-            value={get(agreement, ['agreementStatus', 'label'], '-')}
-          />
+          <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.vendorInfo.status' })}>
+            <div data-test-agreement-status>{get(agreement, ['agreementStatus', 'label'], '-')}</div>
+          </KeyValue>
         </Col>
         <Col xs={3}>
           <Button>

@@ -51,9 +51,7 @@ class AgreementInfo extends React.Component {
       >
         <Row>
           <Col xs={12}>
-            <KeyValue
-              label={intl.formatMessage({ id: 'ui-agreements.agreements.name' })}
-            >
+            <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.name' })}>
               <div data-test-agreement-name>
                 {agreement.name}
               </div>
@@ -62,9 +60,7 @@ class AgreementInfo extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue
-              label={intl.formatMessage({ id: 'ui-agreements.agreements.agreementDescription' })}
-            >
+            <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.agreementDescription' })}>
               <div data-test-agreement-description>
                 {agreement.description}
               </div>
@@ -73,27 +69,21 @@ class AgreementInfo extends React.Component {
         </Row>
         <Row>
           <Col xs={4}>
-            <KeyValue
-              label={intl.formatMessage({ id: 'ui-agreements.agreements.cancellationDeadline' })}
-            >
+            <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.cancellationDeadline' })}>
               <div data-test-agreement-cancellationDeadline>
                 {agreement.cancellationDeadline ? intl.formatDate(agreement.cancellationDeadline) : '-'}
               </div>
             </KeyValue>
           </Col>
           <Col xs={4}>
-            <KeyValue
-              label={intl.formatMessage({ id: 'ui-agreements.agreements.renewalPriority' })}
-            >
+            <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.renewalPriority' })}>
               <div data-test-agreement-renewalPriority>
                 {get(agreement, ['renewalPriority', 'label'], '-')}
               </div>
             </KeyValue>
           </Col>
           <Col xs={4}>
-            <KeyValue
-              label={intl.formatMessage({ id: 'ui-agreements.agreements.isPerpetual' })}
-            >
+            <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.isPerpetual' })}>
               <div data-test-agreement-isPerpetual>
                 {get(agreement, ['isPerpetual', 'label'], '-')}
               </div>
