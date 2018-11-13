@@ -70,21 +70,21 @@ class AgreementInfo extends React.Component {
         <Row>
           <Col xs={4}>
             <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.cancellationDeadline' })}>
-              <div data-test-agreement-cancellationDeadline>
+              <div data-test-agreement-cancellation-deadline>
                 {agreement.cancellationDeadline ? intl.formatDate(agreement.cancellationDeadline) : '-'}
               </div>
             </KeyValue>
           </Col>
           <Col xs={4}>
             <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.renewalPriority' })}>
-              <div data-test-agreement-renewalPriority>
+              <div data-test-agreement-renewal-priority>
                 {get(agreement, ['renewalPriority', 'label'], '-')}
               </div>
             </KeyValue>
           </Col>
           <Col xs={4}>
             <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.isPerpetual' })}>
-              <div data-test-agreement-isPerpetual>
+              <div data-test-agreement-is-perpetual>
                 {get(agreement, ['isPerpetual', 'label'], '-')}
               </div>
             </KeyValue>

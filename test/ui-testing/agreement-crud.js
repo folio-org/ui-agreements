@@ -36,7 +36,7 @@ const createAgreement = (nightmare, config, defaultValues) => {
       .insert('#edit-agreement-end-date', '2019-01-31')
       .insert('#edit-agreement-cancellation-deadline', '2019-01-15')
 
-      .type('#edit-agreement-agreement-status', 'draft')
+      .type('#edit-agreement-status', 'draft')
       .type('#edit-agreement-renewal-priority', 'for')
       .type('#edit-agreement-is-perpetual', 'yes')
 
@@ -53,12 +53,12 @@ const createAgreement = (nightmare, config, defaultValues) => {
           throw Error(`Description of agreement is incorrect. Expected "${expectedValues.description}" and got "${foundDescription}" `);
         }
 
-        const foundRenewalPriority = document.querySelector('[data-test-agreement-renewalPriority]').innerText;
+        const foundRenewalPriority = document.querySelector('[data-test-agreement-renewal-priority]').innerText;
         if (foundRenewalPriority !== expectedValues.renewalPriority) {
           throw Error(`RenewalPriority of agreement is incorrect. Expected "${expectedValues.renewalPriority}" and got "${foundRenewalPriority}" `);
         }
 
-        const foundIsPerpetual = document.querySelector('[data-test-agreement-isPerpetual]').innerText;
+        const foundIsPerpetual = document.querySelector('[data-test-agreement-is-perpetual]').innerText;
         if (foundIsPerpetual !== expectedValues.isPerpetual) {
           throw Error(`IsPerpetual of agreement is incorrect. Expected "${expectedValues.isPerpetual}" and got "${foundIsPerpetual}" `);
         }
@@ -142,7 +142,7 @@ module.exports.test = (uiTestCtx) => {
           .insert('#edit-agreement-cancellation-deadline', '')
           .insert('#edit-agreement-cancellation-deadline', '2019-10-15')
 
-          .type('#edit-agreement-agreement-status', values.editedStatus)
+          .type('#edit-agreement-status', values.editedStatus)
           .type('#edit-agreement-renewal-priority', values.editedRenewalPriority)
           .click('#clickable-updateagreement')
           .wait(1000) // Wait for the POST/reloading to trigger since #agreementInfo may be up for some ms first.
@@ -158,7 +158,7 @@ module.exports.test = (uiTestCtx) => {
               throw Error(`Status of agreement is incorrect. Expected "${expectedValues.editedStatus}" and got "${status}" `);
             }
 
-            const renewalPriority = document.querySelector('[data-test-agreement-renewalPriority]').innerText;
+            const renewalPriority = document.querySelector('[data-test-agreement-renewal-priority]').innerText;
             if (renewalPriority !== expectedValues.editedRenewalPriority) {
               throw Error(`Renewal Priority of agreement is incorrect. Expected "${expectedValues.editedRenewalPriority}" and got "${renewalPriority}" `);
             }

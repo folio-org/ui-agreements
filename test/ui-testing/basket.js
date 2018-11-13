@@ -7,13 +7,18 @@ module.exports.test = (uiTestCtx) => {
     const { config, helpers: { login, logout } } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 
+    const number = Math.round(Math.random() * 1000);
     const values = {
-      search: 'nanotech'
+      search: 'nanotech',
+      agreementName: `Basketforged Agreement #${number}`,
+      agreementStartDate: '2019-01-31',
+      agreementRenewalPriority: 'Definitely Renew',
+      agreementStatus: 'In Negotiation',
     };
 
     this.timeout(Number(config.test_timeout));
 
-    describe('Login > open eresources > add eresources to basket > logout', () => {
+    describe('login > open eresources > add eresources to basket', () => {
       before((done) => {
         login(nightmare, config, done);
       });
@@ -70,6 +75,59 @@ module.exports.test = (uiTestCtx) => {
           .wait('#basket-contents [role=listitem]:nth-of-type(2) a')
           .then(done)
           .catch(done);
+      });
+
+      describe('create agreement from basket contents', () => {
+        it(`should create a new agreement: ${values.agreementName}`, done => {
+          nightmare
+            .click('#basket-contents [role=listitem]:nth-of-type(2) input[type=checkbox]')
+            .click('[data-test-basket-create-agreement]')
+            .wait('#edit-agreement-name')
+            .wait('#agreementFormEresources [role=listitem]') // An agreement line has been auto-added for the basket item
+            .insert('#edit-agreement-name', values.agreementName)
+            .insert('#edit-agreement-start-date', values.agreementStartDate)
+            .type('#edit-agreement-status', values.agreementStatus)
+            .type('#edit-agreement-renewal-priority', values.agreementRenewalPriority)
+            .click('#clickable-createagreement')
+            .wait('#agreementInfo')
+            .then(done)
+            .catch(done);
+        });
+
+        it('should see correct agreement fields', done => {
+          nightmare
+            .wait('#agreementInfo')
+            .evaluate(expectedValues => {
+              const foundName = document.querySelector('[data-test-agreement-name]').innerText;
+              if (foundName !== expectedValues.agreementName) {
+                throw Error(`Name of agreement is incorrect. Expected "${expectedValues.agreementName}" and got "${foundName}" `);
+              }
+
+              const foundStatus = document.querySelector('[data-test-agreement-status]').innerText;
+              if (foundStatus !== expectedValues.agreementStatus) {
+                throw Error(`Status of agreement is incorrect. Expected "${expectedValues.agreementStatus}" and got "${foundStatus}" `);
+              }
+
+              const foundRenewalPriority = document.querySelector('[data-test-agreement-renewal-priority]').innerText;
+              if (foundRenewalPriority !== expectedValues.agreementRenewalPriority) {
+                throw Error(`Renewal Priority of agreement iss incorrect. Expected "${expectedValues.agreementRenewalPriority}" and got "${foundRenewalPriority}" `);
+              }
+            }, values)
+            .then(done)
+            .catch(done);
+        });
+
+        it('should see only one agreement line', done => {
+          nightmare
+            .wait('section#eresources')
+            .evaluate(() => {
+              const lines = document.querySelectorAll('#agreement-lines [role=listitem]');
+
+              if (lines.length !== 1) throw Error(`Expected to find 1 agreement line and found ${lines.length}`);
+            })
+            .then(done)
+            .catch(done);
+        });
       });
     });
   });

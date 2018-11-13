@@ -112,7 +112,7 @@ class AgreementFormInfo extends React.Component {
         <Row>
           <Col xs={12} md={4}>
             <Field
-              id="edit-agreement-agreement-status"
+              id="edit-agreement-status"
               name="agreementStatus"
               label={<FormattedMessage id="ui-agreements.agreements.agreementStatus">{agreementStatus => `${agreementStatus} *`}</FormattedMessage>}
               component={Select}

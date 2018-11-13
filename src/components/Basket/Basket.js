@@ -135,6 +135,7 @@ class Basket extends React.Component {
     return (
       <Button
         buttonStyle="primary"
+        data-test-basket-create-agreement
         disabled={disabled}
         to={disabled ? null : `/erm/agreements?layer=create&${this.constructAddToBasketParam()}`}
       >
@@ -153,6 +154,7 @@ class Basket extends React.Component {
         <Row>
           <Col xs={12} md={8}>
             <AutoSuggest
+              data-test-basket-agreement-select
               includeItem={(agreement, searchString) => {
                 const lowerCasedSearchString = searchString.toLowerCase();
 
@@ -200,6 +202,7 @@ class Basket extends React.Component {
       <div>
         <Button
           buttonStyle="primary"
+          data-test-basket-add-to-agreement
           disabled={disabled}
           to={disabled ? null : `/erm/agreements/view/${this.state.selectedAgreement}?layer=edit&${this.constructAddToBasketParam()}`}
         >

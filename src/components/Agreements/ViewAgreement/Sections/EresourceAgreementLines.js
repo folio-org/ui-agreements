@@ -22,6 +22,7 @@ class EresourceAgreementLines extends React.Component {
     return (
       <MultiColumnList
         contentData={agreementLines}
+        id="agreement-lines"
         interactive={false}
         maxHeight={400}
         visibleColumns={[
