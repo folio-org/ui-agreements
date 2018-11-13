@@ -52,8 +52,8 @@ class EResourceAgreements extends React.Component {
               acqMethod: ({ resource }) => renderResourceType(resource),
             }}
             columnMapping={{
-              name: intl.formatMessage({ id: 'ui-agreements.eresources.erAgreements' }),
-              type: intl.formatMessage({ id: 'ui-agreements.eresources.agreementStatus' }),
+              name: intl.formatMessage({ id: 'ui-agreements.agreements.name' }),
+              type: intl.formatMessage({ id: 'ui-agreements.agreements.agreementStatus' }),
               startDate: intl.formatMessage({ id: 'ui-agreements.agreements.startDate' }),
               endDate: intl.formatMessage({ id: 'ui-agreements.agreements.endDate' }),
               package: intl.formatMessage({ id: 'ui-agreements.eresources.parentPackage' }),
