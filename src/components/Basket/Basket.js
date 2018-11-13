@@ -232,15 +232,17 @@ class Basket extends React.Component {
                 paneSub={<FormattedMessage id="ui-agreements.basket.recordCount" values={{ count: basket.length }} />}
 
               >
-                <BasketList
-                  basket={basket}
-                  onToggleAll={this.handleToggleAll}
-                  onToggleItem={this.handleToggleItem}
-                  removeItem={this.handleRemoveItem}
-                  selectedItems={this.state.selectedItems}
-                />
-                { this.renderCreateAgreementButton() }
-                { this.renderAddToAgreementSection() }
+                <div id="basket-contents">
+                  <BasketList
+                    basket={basket}
+                    onToggleAll={this.handleToggleAll}
+                    onToggleItem={this.handleToggleItem}
+                    removeItem={this.handleRemoveItem}
+                    selectedItems={this.state.selectedItems}
+                  />
+                  { this.renderCreateAgreementButton() }
+                  { this.renderAddToAgreementSection() }
+                </div>
               </Pane>
             </Paneset>
           </Layer>

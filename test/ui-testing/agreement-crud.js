@@ -14,56 +14,58 @@ const generateAgreementValues = () => {
   };
 };
 
-const createAgreement = (nightmare, config, done, defaultValues) => {
+const createAgreement = (nightmare, config, defaultValues) => {
   const values = defaultValues || generateAgreementValues();
 
-  nightmare
-    .wait('#clickable-agreements-module')
-    .click('#clickable-agreements-module')
-    .wait('#agreements-module-display')
-    .click('nav #agreements')
-    .wait('#clickable-newagreement')
-    .click('#clickable-newagreement')
-    .wait('#edit-agreement-name')
+  it(`should create an agreement: ${values.name}`, done => {
+    nightmare
+      .wait('#clickable-agreements-module')
+      .click('#clickable-agreements-module')
+      .wait('#agreements-module-display')
+      .click('nav #agreements')
+      .wait('#clickable-newagreement')
+      .click('#clickable-newagreement')
+      .wait('#edit-agreement-name')
 
-    .insert('#edit-agreement-name', values.name)
-    .insert('#edit-agreement-description', values.description)
+      .insert('#edit-agreement-name', values.name)
+      .insert('#edit-agreement-description', values.description)
 
-    .click('#edit-agreement-start-date')
-    .type('#edit-agreement-start-date', '\u000d') // "Enter" selects current date
+      .click('#edit-agreement-start-date')
+      .type('#edit-agreement-start-date', '\u000d') // "Enter" selects current date
 
-    .insert('#edit-agreement-end-date', '2019-01-31')
-    .insert('#edit-agreement-cancellation-deadline', '2019-01-15')
+      .insert('#edit-agreement-end-date', '2019-01-31')
+      .insert('#edit-agreement-cancellation-deadline', '2019-01-15')
 
-    .type('#edit-agreement-agreement-status', 'draft')
-    .type('#edit-agreement-renewal-priority', 'for')
-    .type('#edit-agreement-is-perpetual', 'yes')
+      .type('#edit-agreement-agreement-status', 'draft')
+      .type('#edit-agreement-renewal-priority', 'for')
+      .type('#edit-agreement-is-perpetual', 'yes')
 
-    .click('#clickable-createagreement')
-    .wait('#agreementInfo')
-    .evaluate(expectedValues => {
-      const foundName = document.querySelector('[data-test-agreement-name]').innerText;
-      if (foundName !== expectedValues.name) {
-        throw Error(`Name of agreement is incorrect. Expected "${expectedValues.name}" and got "${foundName}" `);
-      }
+      .click('#clickable-createagreement')
+      .wait('#agreementInfo')
+      .evaluate(expectedValues => {
+        const foundName = document.querySelector('[data-test-agreement-name]').innerText;
+        if (foundName !== expectedValues.name) {
+          throw Error(`Name of agreement is incorrect. Expected "${expectedValues.name}" and got "${foundName}" `);
+        }
 
-      const foundDescription = document.querySelector('[data-test-agreement-description]').innerText;
-      if (foundDescription !== expectedValues.description) {
-        throw Error(`Description of agreement is incorrect. Expected "${expectedValues.description}" and got "${foundDescription}" `);
-      }
+        const foundDescription = document.querySelector('[data-test-agreement-description]').innerText;
+        if (foundDescription !== expectedValues.description) {
+          throw Error(`Description of agreement is incorrect. Expected "${expectedValues.description}" and got "${foundDescription}" `);
+        }
 
-      const foundRenewalPriority = document.querySelector('[data-test-agreement-renewalPriority]').innerText;
-      if (foundRenewalPriority !== expectedValues.renewalPriority) {
-        throw Error(`RenewalPriority of agreement is incorrect. Expected "${expectedValues.renewalPriority}" and got "${foundRenewalPriority}" `);
-      }
+        const foundRenewalPriority = document.querySelector('[data-test-agreement-renewalPriority]').innerText;
+        if (foundRenewalPriority !== expectedValues.renewalPriority) {
+          throw Error(`RenewalPriority of agreement is incorrect. Expected "${expectedValues.renewalPriority}" and got "${foundRenewalPriority}" `);
+        }
 
-      const foundIsPerpetual = document.querySelector('[data-test-agreement-isPerpetual]').innerText;
-      if (foundIsPerpetual !== expectedValues.isPerpetual) {
-        throw Error(`IsPerpetual of agreement is incorrect. Expected "${expectedValues.isPerpetual}" and got "${foundIsPerpetual}" `);
-      }
-    }, values)
-    .then(done)
-    .catch(done);
+        const foundIsPerpetual = document.querySelector('[data-test-agreement-isPerpetual]').innerText;
+        if (foundIsPerpetual !== expectedValues.isPerpetual) {
+          throw Error(`IsPerpetual of agreement is incorrect. Expected "${expectedValues.isPerpetual}" and got "${foundIsPerpetual}" `);
+        }
+      }, values)
+      .then(done)
+      .catch(done);
+  });
 
   return values;
 };
@@ -71,7 +73,7 @@ const createAgreement = (nightmare, config, done, defaultValues) => {
 module.exports.createAgreement = createAgreement;
 
 module.exports.test = (uiTestCtx) => {
-  describe('Module test: ui-agreements:', function test() {
+  describe('Module test: ui-agreements: basic agreement crud', function test() {
     const { config, helpers: { login, logout } } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
     const values = generateAgreementValues();
@@ -102,9 +104,7 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      it(`should create an agreement: ${values.name}`, done => {
-        createAgreement(nightmare, config, done, values);
-      });
+      createAgreement(nightmare, config, values);
 
       it(`should search for and find agreement: ${values.name}`, done => {
         nightmare

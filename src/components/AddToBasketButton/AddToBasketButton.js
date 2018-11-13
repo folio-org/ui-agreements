@@ -76,6 +76,8 @@ class AddToBasketButton extends React.Component {
     return (
       <Button
         buttonStyle={itemExistsInBasket ? 'default' : 'primary'}
+        data-test-add-to-basket-button={itemExistsInBasket ? undefined : true}
+        data-test-remove-from-basket-button={itemExistsInBasket ? true : undefined}
         disabled={this.props.disabled}
         onClick={itemExistsInBasket ? this.removeFromBasket : this.addToBasket}
       >

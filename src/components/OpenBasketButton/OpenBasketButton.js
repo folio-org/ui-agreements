@@ -37,6 +37,8 @@ class OpenBasketButton extends React.Component {
       <Button
         buttonClass={css.button}
         buttonStyle="primary"
+        data-test-open-basket-button
+        data-test-basket-size={basket.length}
         disabled={basket.length === 0}
         onClick={this.openBasket}
       >
