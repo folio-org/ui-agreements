@@ -150,7 +150,7 @@ module.exports.test = (uiTestCtx, nightmare) => {
           .type('#edit-agreement-renewal-priority', values.editedRenewalPriority)
           .click('#clickable-updateagreement')
           .wait('#agreementInfo')
-          .waitUntilNetworkIdle(500) // Wait for the POST/reloading to trigger since #agreementInfo may be up for some ms first.
+          .wait(5000) // Wait for the POST/reloading to trigger since #agreementInfo may be up for some ms first.
           .evaluate(expectedValues => {
             const name = document.querySelector('[data-test-agreement-name]').innerText;
             if (name !== expectedValues.editedName) {

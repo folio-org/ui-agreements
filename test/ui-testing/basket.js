@@ -204,7 +204,7 @@ module.exports.test = (uiTestCtx, nightmare) => {
           nightmare
             .click('[data-test-open-basket-button]')
             .wait('#select-agreement-for-basket')
-            .waitUntilNetworkIdle(500) // Wait for _all_ the agreements to come back
+            .wait(5000) // Wait for _all_ the agreements to come back
             .input('#select-agreement-for-basket', agreement.name)
             .wait(250)
             .click('#list-dropdown-select-agreement-for-basket li')
@@ -217,7 +217,7 @@ module.exports.test = (uiTestCtx, nightmare) => {
             })
             .click('#clickable-updateagreement')
             .wait('#agreementInfo')
-            .waitUntilNetworkIdle(500) // Wait for the update list of agreement lines to fetch/render
+            .wait(5000) // Wait for the update list of agreement lines to fetch/render
             .then(done)
             .catch(done);
         });
