@@ -2,6 +2,44 @@
 
 // import { createAgreement } from './agreement-crud';
 
+const _CONSTANTS = {
+  ERESOURCES_NAME_COLUMN: 0,
+  ERESOURCES_TYPE_COLUMN: 1,
+  LINES_NAME_COLUMN: 0,
+  LINES_TYPE_COLUMN: 2,
+};
+
+const BASKET = [];
+
+const addTitleToBasket = (nightmare, done, index) => {
+  return nightmare
+    .wait(`#list-agreements [role=listitem]:nth-of-type(${index}) a`)
+    .click(`#list-agreements [role=listitem]:nth-of-type(${index}) a`)
+    .wait('[data-test-basket-add-button][data-test-add-title-to-basket]')
+    .click('[data-test-basket-add-button][data-test-add-title-to-basket]')
+    // .wait('[data-test-basket-remove-button]')
+    .evaluate((resourceIndex, CONSTANTS) => {
+      const selectedResourceNode = document.querySelector(`#list-agreements [role=listitem]:nth-of-type(${resourceIndex}) a`);
+      const name = selectedResourceNode.children[CONSTANTS.ERESOURCES_NAME_COLUMN].innerText;
+      const type = selectedResourceNode.children[CONSTANTS.ERESOURCES_TYPE_COLUMN].innerText;
+
+      const removeButtons = [...document.querySelectorAll('[data-test-basket-remove-button]')];
+      const addedItems = removeButtons.map(node => ({
+        id: node.getAttribute('data-test-entitlement-option-id'),
+        name,
+        type,
+      }));
+
+      return addedItems;
+    }, index, _CONSTANTS)
+    .then(addedItems => {
+      BASKET.push(...addedItems);
+
+      done();
+    })
+    .catch(done);
+};
+
 module.exports.test = (uiTestCtx) => {
   describe('Module test: ui-agreements: basic basket functionality', function test() {
     const { config, helpers: { login, logout } } = uiTestCtx;
@@ -48,36 +86,45 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      it('should add two items to the basket', done => {
+      it('should add first title to the basket', done => {
+        addTitleToBasket(nightmare, done, 1);
+      });
+
+      it('should add second title to the basket', done => {
+        addTitleToBasket(nightmare, done, 2);
+      });
+
+      it('should add third title to the basket', done => {
+        addTitleToBasket(nightmare, done, 3);
+      });
+
+      it('should display a View Basket button with three items', done => {
         nightmare
-          .wait('#list-agreements [role=listitem]:nth-of-type(1) a')
-          .click('#list-agreements [role=listitem]:nth-of-type(1) a')
-          .wait('[data-test-add-to-basket-button]')
-          .click('[data-test-add-to-basket-button]')
-          .wait('[data-test-add-to-basket-button]')
-          .click('[data-test-add-to-basket-button]')
           .evaluate(() => {
             const basketButton = document.querySelector('[data-test-open-basket-button]');
             if (!basketButton) throw Error('Could not find "View Basket" button');
 
             const basketSize = basketButton.getAttribute('data-test-basket-size');
-            if (basketSize !== '2') throw Error(`Basket size is not "2" but "${basketSize}"`);
+            if (basketSize !== '3') throw Error(`Expected 3 items in basket button and found "${basketSize}"`);
           })
           .then(done)
           .catch(done);
       });
 
-      it('should open basket and see two items', done => {
+      it('should open basket and see three items', done => {
         nightmare
           .click('[data-test-open-basket-button]')
           .wait('#basket-contents')
-          .wait('#basket-contents [role=listitem]:nth-of-type(1) a')
-          .wait('#basket-contents [role=listitem]:nth-of-type(2) a')
+          .evaluate(() => {
+            const basketContents = document.querySelectorAll('#basket-contents [role=listitem]');
+            const basketSize = basketContents.length;
+            if (basketSize !== 3) throw Error(`Expected 3 items in the basket and found ${basketSize}`);
+          })
           .then(done)
           .catch(done);
       });
 
-      describe('create agreement from basket contents', () => {
+      describe('create agreement from first and third items in basket', () => {
         it(`should create a new agreement: ${values.agreementName}`, done => {
           nightmare
             .click('#basket-contents [role=listitem]:nth-of-type(2) input[type=checkbox]')
@@ -117,15 +164,36 @@ module.exports.test = (uiTestCtx) => {
             .catch(done);
         });
 
-        it('should see only one agreement line', done => {
+        it('should see two agreement lines with correct resources', done => {
           nightmare
             .wait('section#eresources')
-            .evaluate(() => {
-              const lines = document.querySelectorAll('#agreement-lines [role=listitem]');
+            .evaluate((CONSTANTS) => {
+              const lines = [...document.querySelectorAll('#agreement-lines [role=listitem]')];
 
-              if (lines.length !== 1) throw Error(`Expected to find 1 agreement line and found ${lines.length}`);
+              if (lines.length !== 2) throw Error(`Expected to find 2 agreement line and found ${lines.length}`);
+
+              return lines.map(node => ({
+                id: node.children[CONSTANTS.LINES_NAME_COLUMN].children[0].getAttribute('data-test-resource-id'),
+                name: node.children[CONSTANTS.LINES_NAME_COLUMN].textContent,
+                type: node.children[CONSTANTS.LINES_TYPE_COLUMN].textContent,
+              }));
+            }, _CONSTANTS)
+            .then(lines => {
+              const firstTitleLine = lines.find(line => line.id === BASKET[0].id);
+              const thirdTitleLine = lines.find(line => line.id === BASKET[2].id);
+
+              if (!firstTitleLine) throw Error(`Could not find agreement line for ${BASKET[0].name}`);
+              if (!thirdTitleLine) throw Error(`Could not find agreement line for ${BASKET[2].name}`);
+
+              if (firstTitleLine.id !== BASKET[0].id) throw Error(`Expected Line #0 ID (${firstTitleLine.id}) to be ${BASKET[0].id}`);
+              if (thirdTitleLine.id !== BASKET[2].id) throw Error(`Expected Line #1 ID (${thirdTitleLine.id}) to be ${BASKET[2].id}`);
+              if (firstTitleLine.name !== BASKET[0].name) throw Error(`Expected Line #0 Name (${firstTitleLine.name}) to be ${BASKET[0].name}`);
+              if (thirdTitleLine.name !== BASKET[2].name) throw Error(`Expected Line #1 Name (${thirdTitleLine.name}) to be ${BASKET[2].name}`);
+              if (firstTitleLine.type !== BASKET[0].type) throw Error(`Expected Line #0 Type (${firstTitleLine.type}) to be ${BASKET[0].type}`);
+              if (thirdTitleLine.type !== BASKET[2].type) throw Error(`Expected Line #1 Type (${thirdTitleLine.type}) to be ${BASKET[2].type}`);
+
+              done();
             })
-            .then(done)
             .catch(done);
         });
       });

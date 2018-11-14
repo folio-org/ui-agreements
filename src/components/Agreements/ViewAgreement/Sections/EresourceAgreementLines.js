@@ -35,7 +35,14 @@ class EresourceAgreementLines extends React.Component {
         formatter={{
           name: line => {
             const resource = get(line.resource, ['_object', 'pti', 'titleInstance'], line.resource);
-            return <Link to={`/erm/eresources/view/${resource.id}`}>{resource.name}</Link>;
+            return (
+              <Link
+                data-test-resource-id={line.resource.id}
+                to={`/erm/eresources/view/${resource.id}`}
+              >
+                {resource.name}
+              </Link>
+            );
           },
           platform: line => (
             get(line, ['resource', '_object', 'pti', 'platform', 'name']) ||

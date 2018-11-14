@@ -16,6 +16,8 @@ class EResourceAgreements extends React.Component {
       type: 'okapi',
       path: 'erm/resource/:{id}/entitlements',
       throwErrors: false, // We can get a 404 from this endpoint
+      perRequest: 100,
+      limitParam: 'perPage',
     },
   })
 

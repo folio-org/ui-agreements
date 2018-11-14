@@ -65,15 +65,22 @@ class AcquisitionOptions extends React.Component {
                 platform: option => get(option, ['_object', 'pti', 'platform', 'name'], '-'),
                 acqMethod: option => renderResourceType(option),
                 add: option => {
-                  const addLabel = isPackage(option) ?
+                  const optionIsPackage = isPackage(option);
+
+                  const addLabel = optionIsPackage ?
                     intl.formatMessage({ id: 'ui-agreements.eresources.addPackage' }) :
                     intl.formatMessage({ id: 'ui-agreements.eresources.addTitle' });
+
+                  const buttonProps = optionIsPackage ?
+                    { 'data-test-add-package-to-basket': true } :
+                    { 'data-test-add-title-to-basket': true };
 
                   return (
                     <this.connectedAddToBasketButton
                       key={option.id}
                       addLabel={addLabel}
                       item={option}
+                      buttonProps={buttonProps}
                     />
                   );
                 },

@@ -14,6 +14,7 @@ class AddToBasketButton extends React.Component {
 
   static propTypes = {
     addLabel: PropTypes.string,
+    buttonProps: PropTypes.object,
     removeLabel: PropTypes.string,
     disabled: PropTypes.bool,
     item: PropTypes.shape({
@@ -31,6 +32,7 @@ class AddToBasketButton extends React.Component {
 
   static defaultProps = {
     addLabel: 'Add to basket',
+    buttonProps: {},
     removeLabel: 'Remove from basket',
   }
 
@@ -72,16 +74,19 @@ class AddToBasketButton extends React.Component {
 
   render() {
     const { itemExistsInBasket } = this.state;
+    const { addLabel, buttonProps, disabled, item, removeLabel } = this.props;
 
     return (
       <Button
+        {...buttonProps}
         buttonStyle={itemExistsInBasket ? 'default' : 'primary'}
-        data-test-add-to-basket-button={itemExistsInBasket ? undefined : true}
-        data-test-remove-from-basket-button={itemExistsInBasket ? true : undefined}
-        disabled={this.props.disabled}
+        data-test-basket-add-button={itemExistsInBasket ? undefined : true}
+        data-test-basket-remove-button={itemExistsInBasket ? true : undefined}
+        data-test-entitlement-option-id={item.id}
+        disabled={disabled}
         onClick={itemExistsInBasket ? this.removeFromBasket : this.addToBasket}
       >
-        {itemExistsInBasket ? this.props.removeLabel : this.props.addLabel}
+        {itemExistsInBasket ? removeLabel : addLabel}
       </Button>
     );
   }

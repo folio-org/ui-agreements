@@ -90,7 +90,6 @@ class EditAgreement extends React.Component {
           .map(i => ({ resource: basket[parseInt(i, 10)] }))
           .filter(i => i.resource);
 
-        console.log(indices);
         // Save off the resource objects we're adding from the basket
         this.setState({ addedResourcesFromBasket });
       }
