@@ -1,6 +1,6 @@
-/* global Nightmare, describe, it, before, after */
+/* global describe, it, before, after */
 
-// import { createAgreement } from './agreement-crud';
+const AgreementCRUD = require('./agreement-crud');
 
 const _CONSTANTS = {
   ERESOURCES_NAME_COLUMN: 0,
@@ -11,41 +11,73 @@ const _CONSTANTS = {
 
 const BASKET = [];
 
-const addTitleToBasket = (nightmare, done, index) => {
-  return nightmare
-    .wait(`#list-agreements [role=listitem]:nth-of-type(${index}) a`)
-    .click(`#list-agreements [role=listitem]:nth-of-type(${index}) a`)
-    .wait('[data-test-basket-add-button][data-test-add-title-to-basket]')
-    .click('[data-test-basket-add-button][data-test-add-title-to-basket]')
-    // .wait('[data-test-basket-remove-button]')
-    .evaluate((resourceIndex, CONSTANTS) => {
-      const selectedResourceNode = document.querySelector(`#list-agreements [role=listitem]:nth-of-type(${resourceIndex}) a`);
-      const name = selectedResourceNode.children[CONSTANTS.ERESOURCES_NAME_COLUMN].innerText;
-      const type = selectedResourceNode.children[CONSTANTS.ERESOURCES_TYPE_COLUMN].innerText;
+const shouldAddTitleToBasket = (nightmare, index) => {
+  it(`should add title ${index} to basket`, done => {
+    nightmare
+      .wait(`#list-agreements [role=listitem]:nth-of-type(${index}) a`)
+      .click(`#list-agreements [role=listitem]:nth-of-type(${index}) a`)
+      .wait('[data-test-basket-add-button][data-test-add-title-to-basket]')
+      .click('[data-test-basket-add-button][data-test-add-title-to-basket]')
+      // .wait('[data-test-basket-remove-button]')
+      .evaluate((resourceIndex, CONSTANTS) => {
+        const selectedResourceNode = document.querySelector(`#list-agreements [role=listitem]:nth-of-type(${resourceIndex}) a`);
+        const name = selectedResourceNode.children[CONSTANTS.ERESOURCES_NAME_COLUMN].innerText;
+        const type = selectedResourceNode.children[CONSTANTS.ERESOURCES_TYPE_COLUMN].innerText;
 
-      const removeButtons = [...document.querySelectorAll('[data-test-basket-remove-button]')];
-      const addedItems = removeButtons.map(node => ({
-        id: node.getAttribute('data-test-entitlement-option-id'),
-        name,
-        type,
-      }));
+        const removeButtons = [...document.querySelectorAll('[data-test-basket-remove-button]')];
+        const addedItems = removeButtons.map(node => ({
+          id: node.getAttribute('data-test-entitlement-option-id'),
+          name,
+          type,
+        }));
 
-      return addedItems;
-    }, index, _CONSTANTS)
-    .then(addedItems => {
-      BASKET.push(...addedItems);
+        return addedItems;
+      }, index, _CONSTANTS)
+      .then(addedItems => {
+        BASKET.push(...addedItems);
 
-      done();
-    })
-    .catch(done);
+        done();
+      })
+      .catch(done);
+  });
 };
 
-module.exports.test = (uiTestCtx) => {
+const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = []) => {
+  it(`should see ${basketIndices.length} lines with correct resources`, done => {
+    nightmare
+      .wait('section#eresources')
+      .evaluate((CONSTANTS, indices) => {
+        const lines = [...document.querySelectorAll('#agreement-lines [role=listitem]')];
+
+        if (lines.length !== indices.length) throw Error(`Expected to find ${indices.length} agreement line and found ${lines.length}`);
+
+        return lines.map(node => ({
+          id: node.children[CONSTANTS.LINES_NAME_COLUMN].children[0].getAttribute('data-test-resource-id'),
+          name: node.children[CONSTANTS.LINES_NAME_COLUMN].textContent,
+          type: node.children[CONSTANTS.LINES_TYPE_COLUMN].textContent,
+        }));
+      }, _CONSTANTS, basketIndices)
+      .then(lines => {
+        basketIndices.forEach(index => {
+          const resource = BASKET[index];
+          const line = lines.find(l => l.id === resource.id);
+          if (!line) throw Error(`Could not find agreement line for ${resource.name}`);
+          if (line.id !== resource.id) throw Error(`Expected Line #0 ID (${line.id}) to be ${resource.id}`);
+          if (line.name !== resource.name) throw Error(`Expected Line #0 Name (${line.name}) to be ${resource.name}`);
+          if (line.type !== resource.type) throw Error(`Expected Line #0 Type (${line.type}) to be ${resource.type}`);
+        });
+
+        done();
+      })
+      .catch(done);
+  });
+};
+
+module.exports.test = (uiTestCtx, nightmare) => {
   describe('Module test: ui-agreements: basic basket functionality', function test() {
     const { config, helpers: { login, logout } } = uiTestCtx;
-    const nightmare = new Nightmare(config.nightmare);
 
-    const number = Math.round(Math.random() * 1000);
+    const number = Math.round(Math.random() * 100000);
     const values = {
       search: 'nanotech',
       agreementName: `Basketforged Agreement #${number}`,
@@ -86,17 +118,11 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      it('should add first title to the basket', done => {
-        addTitleToBasket(nightmare, done, 1);
-      });
+      shouldAddTitleToBasket(nightmare, 1);
 
-      it('should add second title to the basket', done => {
-        addTitleToBasket(nightmare, done, 2);
-      });
+      shouldAddTitleToBasket(nightmare, 2);
 
-      it('should add third title to the basket', done => {
-        addTitleToBasket(nightmare, done, 3);
-      });
+      shouldAddTitleToBasket(nightmare, 3);
 
       it('should display a View Basket button with three items', done => {
         nightmare
@@ -124,7 +150,7 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      describe('create agreement from first and third items in basket', () => {
+      describe('create agreement via Basket from first and third items in basket', () => {
         it(`should create a new agreement: ${values.agreementName}`, done => {
           nightmare
             .click('#basket-contents [role=listitem]:nth-of-type(2) input[type=checkbox]')
@@ -164,38 +190,39 @@ module.exports.test = (uiTestCtx) => {
             .catch(done);
         });
 
-        it('should see two agreement lines with correct resources', done => {
+        shouldHaveCorrectAgreementLines(nightmare, [0, 2]);
+      });
+
+      describe('create agreement via New Agreement with second item > add first and third items via Basket', () => {
+        const agreement = AgreementCRUD.generateAgreementValues();
+
+        it(`should create agreement: ${agreement.name}`, done => {
+          AgreementCRUD.createAgreement(nightmare, done, agreement, BASKET[1].id);
+        });
+
+        it(`should add first and third items to agreement: ${agreement.name}`, done => {
           nightmare
-            .wait('section#eresources')
-            .evaluate((CONSTANTS) => {
-              const lines = [...document.querySelectorAll('#agreement-lines [role=listitem]')];
-
-              if (lines.length !== 2) throw Error(`Expected to find 2 agreement line and found ${lines.length}`);
-
-              return lines.map(node => ({
-                id: node.children[CONSTANTS.LINES_NAME_COLUMN].children[0].getAttribute('data-test-resource-id'),
-                name: node.children[CONSTANTS.LINES_NAME_COLUMN].textContent,
-                type: node.children[CONSTANTS.LINES_TYPE_COLUMN].textContent,
-              }));
-            }, _CONSTANTS)
-            .then(lines => {
-              const firstTitleLine = lines.find(line => line.id === BASKET[0].id);
-              const thirdTitleLine = lines.find(line => line.id === BASKET[2].id);
-
-              if (!firstTitleLine) throw Error(`Could not find agreement line for ${BASKET[0].name}`);
-              if (!thirdTitleLine) throw Error(`Could not find agreement line for ${BASKET[2].name}`);
-
-              if (firstTitleLine.id !== BASKET[0].id) throw Error(`Expected Line #0 ID (${firstTitleLine.id}) to be ${BASKET[0].id}`);
-              if (thirdTitleLine.id !== BASKET[2].id) throw Error(`Expected Line #1 ID (${thirdTitleLine.id}) to be ${BASKET[2].id}`);
-              if (firstTitleLine.name !== BASKET[0].name) throw Error(`Expected Line #0 Name (${firstTitleLine.name}) to be ${BASKET[0].name}`);
-              if (thirdTitleLine.name !== BASKET[2].name) throw Error(`Expected Line #1 Name (${thirdTitleLine.name}) to be ${BASKET[2].name}`);
-              if (firstTitleLine.type !== BASKET[0].type) throw Error(`Expected Line #0 Type (${firstTitleLine.type}) to be ${BASKET[0].type}`);
-              if (thirdTitleLine.type !== BASKET[2].type) throw Error(`Expected Line #1 Type (${thirdTitleLine.type}) to be ${BASKET[2].type}`);
-
-              done();
+            .click('[data-test-open-basket-button]')
+            .wait('#select-agreement-for-basket')
+            .waitUntilNetworkIdle(500) // Wait for _all_ the agreements to come back
+            .input('#select-agreement-for-basket', agreement.name)
+            .wait(250)
+            .click('#list-dropdown-select-agreement-for-basket li')
+            .wait(250)
+            .click('[data-test-basket-add-to-agreement]')
+            .wait('#form-agreement')
+            .wait(() => {
+              const resources = document.querySelectorAll('#agreementFormEresources [role=listitem]');
+              return resources.length === 3;
             })
+            .click('#clickable-updateagreement')
+            .wait('#agreementInfo')
+            .waitUntilNetworkIdle(500) // Wait for the update list of agreement lines to fetch/render
+            .then(done)
             .catch(done);
         });
+
+        shouldHaveCorrectAgreementLines(nightmare, [0, 1, 2]);
       });
     });
   });

@@ -24,16 +24,22 @@ class Basket extends React.Component {
     openAgreements: {
       type: 'okapi',
       path: 'erm/sas',
-      perRequest: 100,
+      records: 'results',
       limitParam: 'perPage',
+      perRequest: 100,
+      recordsRequired: '1000',
       params: {
+        stats: 'true',
         filters: [
           'agreementStatus.value==active',
           'agreementStatus.value==draft',
           'agreementStatus.value==in_negotiation',
           'agreementStatus.value==requested',
-        ].join('||')
-      }
+        ].join('||'),
+      },
+      shouldRefresh: (resource, action, refresh) => {
+        return refresh || action.meta.resource === 'agreements';
+      },
     },
     basket: { initialValue: [] },
     query: {},
@@ -154,7 +160,7 @@ class Basket extends React.Component {
         <Row>
           <Col xs={12} md={8}>
             <AutoSuggest
-              data-test-basket-agreement-select
+              id="select-agreement-for-basket"
               includeItem={(agreement, searchString) => {
                 const lowerCasedSearchString = searchString.toLowerCase();
 
@@ -166,9 +172,12 @@ class Basket extends React.Component {
                 );
               }}
               items={openAgreements.records}
-              onChange={(selectedAgreement) => { this.setState({ selectedAgreement }); }}
+              onChange={(selectedAgreement) => {
+                console.log(`Selected Agreement changed to: ${selectedAgreement}`)
+                this.setState({ selectedAgreement });
+              }}
               renderOption={agreement => (
-                <div>
+                <div data-test-agreement-id={agreement.id}>
                   <Headline bold>{agreement.name}&nbsp;&#40;{agreement.agreementStatus.label}&#41;</Headline>{/* eslint-disable-line */}
                   <div>
                     <strong><FormattedMessage id="ui-agreements.agreements.startDate" />: </strong><FormattedDate value={agreement.startDate} /> {/* eslint-disable-line */}

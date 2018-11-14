@@ -11,10 +11,10 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run nav/agreement-crud/basket --show",
-    "test-nav": "stripes test nightmare --run nav --show",
-    "test-agreement-crud": "stripes test nightmare --run agreement-crud --show",
-    "test-basket": "stripes test nightmare --run basket --show",
+    "test": "stripes test nightmare --run nav/agreement-crud/basket",
+    "test-nav": "stripes test nightmare --run nav",
+    "test-agreement-crud": "stripes test nightmare --run agreement-crud",
+    "test-basket": "stripes test nightmare --run basket",
     "lint": "eslint src"
   },
   "devDependencies": {

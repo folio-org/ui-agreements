@@ -1,7 +1,7 @@
-/* global Nightmare, describe, it, before, after */
+/* global describe, it, before, after */
 
 const generateAgreementValues = () => {
-  const number = Math.round(Math.random() * 1000);
+  const number = Math.round(Math.random() * 100000);
   return {
     name: `Fledgling Agreement #${number}`,
     description: `This agreement of count #${number} is still in its initial stages.`,
@@ -14,68 +14,70 @@ const generateAgreementValues = () => {
   };
 };
 
-const createAgreement = (nightmare, config, defaultValues) => {
+const createAgreement = (nightmare, done, defaultValues, resourceId) => {
   const values = defaultValues || generateAgreementValues();
 
-  it(`should create an agreement: ${values.name}`, done => {
-    nightmare
-      .wait('#clickable-agreements-module')
-      .click('#clickable-agreements-module')
-      .wait('#agreements-module-display')
-      .click('nav #agreements')
-      .wait('#clickable-newagreement')
-      .click('#clickable-newagreement')
-      .wait('#edit-agreement-name')
+  nightmare
+    .wait('#clickable-agreements-module')
+    .click('#clickable-agreements-module')
+    .wait('#agreements-module-display')
+    .click('nav #agreements')
+    .wait('#clickable-newagreement')
+    .click('#clickable-newagreement')
+    .wait('#edit-agreement-name')
 
-      .insert('#edit-agreement-name', values.name)
-      .insert('#edit-agreement-description', values.description)
+    .insert('#edit-agreement-name', values.name)
+    .insert('#edit-agreement-description', values.description)
 
-      .click('#edit-agreement-start-date')
-      .type('#edit-agreement-start-date', '\u000d') // "Enter" selects current date
+    .click('#edit-agreement-start-date')
+    .type('#edit-agreement-start-date', '\u000d') // "Enter" selects current date
 
-      .insert('#edit-agreement-end-date', '2019-01-31')
-      .insert('#edit-agreement-cancellation-deadline', '2019-01-15')
+    .insert('#edit-agreement-end-date', '2019-01-31')
+    .insert('#edit-agreement-cancellation-deadline', '2019-01-15')
 
-      .type('#edit-agreement-status', 'draft')
-      .type('#edit-agreement-renewal-priority', 'for')
-      .type('#edit-agreement-is-perpetual', 'yes')
+    .type('#edit-agreement-status', 'draft')
+    .type('#edit-agreement-renewal-priority', 'for')
+    .type('#edit-agreement-is-perpetual', 'yes')
 
-      .click('#clickable-createagreement')
-      .wait('#agreementInfo')
-      .evaluate(expectedValues => {
-        const foundName = document.querySelector('[data-test-agreement-name]').innerText;
-        if (foundName !== expectedValues.name) {
-          throw Error(`Name of agreement is incorrect. Expected "${expectedValues.name}" and got "${foundName}" `);
-        }
+    .select('#basket-selector', resourceId)
+    .click('#basket-selector-add-button')
+    .wait(250)
 
-        const foundDescription = document.querySelector('[data-test-agreement-description]').innerText;
-        if (foundDescription !== expectedValues.description) {
-          throw Error(`Description of agreement is incorrect. Expected "${expectedValues.description}" and got "${foundDescription}" `);
-        }
+    .click('#clickable-createagreement')
+    .wait('#agreementInfo')
+    .evaluate(expectedValues => {
+      const foundName = document.querySelector('[data-test-agreement-name]').innerText;
+      if (foundName !== expectedValues.name) {
+        throw Error(`Name of agreement is incorrect. Expected "${expectedValues.name}" and got "${foundName}" `);
+      }
 
-        const foundRenewalPriority = document.querySelector('[data-test-agreement-renewal-priority]').innerText;
-        if (foundRenewalPriority !== expectedValues.renewalPriority) {
-          throw Error(`RenewalPriority of agreement is incorrect. Expected "${expectedValues.renewalPriority}" and got "${foundRenewalPriority}" `);
-        }
+      const foundDescription = document.querySelector('[data-test-agreement-description]').innerText;
+      if (foundDescription !== expectedValues.description) {
+        throw Error(`Description of agreement is incorrect. Expected "${expectedValues.description}" and got "${foundDescription}" `);
+      }
 
-        const foundIsPerpetual = document.querySelector('[data-test-agreement-is-perpetual]').innerText;
-        if (foundIsPerpetual !== expectedValues.isPerpetual) {
-          throw Error(`IsPerpetual of agreement is incorrect. Expected "${expectedValues.isPerpetual}" and got "${foundIsPerpetual}" `);
-        }
-      }, values)
-      .then(done)
-      .catch(done);
-  });
+      const foundRenewalPriority = document.querySelector('[data-test-agreement-renewal-priority]').innerText;
+      if (foundRenewalPriority !== expectedValues.renewalPriority) {
+        throw Error(`RenewalPriority of agreement is incorrect. Expected "${expectedValues.renewalPriority}" and got "${foundRenewalPriority}" `);
+      }
+
+      const foundIsPerpetual = document.querySelector('[data-test-agreement-is-perpetual]').innerText;
+      if (foundIsPerpetual !== expectedValues.isPerpetual) {
+        throw Error(`IsPerpetual of agreement is incorrect. Expected "${expectedValues.isPerpetual}" and got "${foundIsPerpetual}" `);
+      }
+    }, values)
+    .then(done)
+    .catch(done);
 
   return values;
 };
 
+module.exports.generateAgreementValues = generateAgreementValues;
 module.exports.createAgreement = createAgreement;
 
-module.exports.test = (uiTestCtx) => {
+module.exports.test = (uiTestCtx, nightmare) => {
   describe('Module test: ui-agreements: basic agreement crud', function test() {
     const { config, helpers: { login, logout } } = uiTestCtx;
-    const nightmare = new Nightmare(config.nightmare);
     const values = generateAgreementValues();
 
     this.timeout(Number(config.test_timeout));
@@ -104,7 +106,9 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      createAgreement(nightmare, config, values);
+      it('should create agreement', done => {
+        createAgreement(nightmare, done, values);
+      });
 
       it(`should search for and find agreement: ${values.name}`, done => {
         nightmare
