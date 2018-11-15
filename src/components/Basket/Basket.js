@@ -172,10 +172,7 @@ class Basket extends React.Component {
                 );
               }}
               items={openAgreements.records}
-              onChange={(selectedAgreement) => {
-                console.log(`Selected Agreement changed to: ${selectedAgreement}`)
-                this.setState({ selectedAgreement });
-              }}
+              onChange={(selectedAgreement) => { this.setState({ selectedAgreement }); }}
               renderOption={agreement => (
                 <div data-test-agreement-id={agreement.id}>
                   <Headline bold>{agreement.name}&nbsp;&#40;{agreement.agreementStatus.label}&#41;</Headline>{/* eslint-disable-line */}

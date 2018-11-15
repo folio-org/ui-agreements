@@ -18,7 +18,6 @@ const shouldAddTitleToBasket = (nightmare, index) => {
       .click(`#list-agreements [role=listitem]:nth-of-type(${index}) a`)
       .wait('[data-test-basket-add-button][data-test-add-title-to-basket]')
       .click('[data-test-basket-add-button][data-test-add-title-to-basket]')
-      // .wait('[data-test-basket-remove-button]')
       .evaluate((resourceIndex, CONSTANTS) => {
         const selectedResourceNode = document.querySelector(`#list-agreements [role=listitem]:nth-of-type(${resourceIndex}) a`);
         const name = selectedResourceNode.children[CONSTANTS.ERESOURCES_NAME_COLUMN].innerText;
