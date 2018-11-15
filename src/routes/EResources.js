@@ -112,7 +112,7 @@ class EResources extends React.Component {
           key="eresources"
           packageInfo={packageInfo}
           filterConfig={filterConfig}
-          objectName="name"
+          objectName="eresource"
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
           viewRecordComponent={ViewEResource}

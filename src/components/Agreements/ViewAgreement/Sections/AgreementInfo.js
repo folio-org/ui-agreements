@@ -51,38 +51,43 @@ class AgreementInfo extends React.Component {
       >
         <Row>
           <Col xs={12}>
-            <KeyValue
-              label={intl.formatMessage({ id: 'ui-agreements.agreements.name' })}
-              value={agreement.name}
-            />
+            <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.name' })}>
+              <div data-test-agreement-name>
+                {agreement.name}
+              </div>
+            </KeyValue>
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue
-              label={intl.formatMessage({ id: 'ui-agreements.agreements.agreementDescription' })}
-              value={agreement.description}
-            />
+            <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.agreementDescription' })}>
+              <div data-test-agreement-description>
+                {agreement.description}
+              </div>
+            </KeyValue>
           </Col>
         </Row>
         <Row>
           <Col xs={4}>
-            <KeyValue
-              label={intl.formatMessage({ id: 'ui-agreements.agreements.cancellationDeadline' })}
-              value={agreement.cancellationDeadline ? intl.formatDate(agreement.cancellationDeadline) : '-'}
-            />
+            <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.cancellationDeadline' })}>
+              <div data-test-agreement-cancellation-deadline>
+                {agreement.cancellationDeadline ? intl.formatDate(agreement.cancellationDeadline) : '-'}
+              </div>
+            </KeyValue>
           </Col>
           <Col xs={4}>
-            <KeyValue
-              label={intl.formatMessage({ id: 'ui-agreements.agreements.renewalPriority' })}
-              value={get(agreement, ['renewalPriority', 'label'], '-')}
-            />
+            <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.renewalPriority' })}>
+              <div data-test-agreement-renewal-priority>
+                {get(agreement, ['renewalPriority', 'label'], '-')}
+              </div>
+            </KeyValue>
           </Col>
           <Col xs={4}>
-            <KeyValue
-              label={intl.formatMessage({ id: 'ui-agreements.agreements.isPerpetual' })}
-              value={get(agreement, ['isPerpetual', 'label'], '-')}
-            />
+            <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.isPerpetual' })}>
+              <div data-test-agreement-is-perpetual>
+                {get(agreement, ['isPerpetual', 'label'], '-')}
+              </div>
+            </KeyValue>
           </Col>
         </Row>
         <Row className={css.agreementInfoSections}>

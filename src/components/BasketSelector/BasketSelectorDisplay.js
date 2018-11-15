@@ -29,6 +29,7 @@ class BasketSelectorDisplay extends React.Component {
   handleChange = (e) => {
     const id = e.target.value;
     const item = this.props.basket.find(i => i.id === id);
+    if (!item) return;
 
     this.setState({ item });
   }
@@ -50,6 +51,7 @@ class BasketSelectorDisplay extends React.Component {
         <Col xs={12} md={8}>
           <Select
             dataOptions={dataOptions}
+            id="basket-selector"
             label={intl.formatMessage({ id: 'ui-agreements.basketSelector.selectLabel' })}
             onChange={this.handleChange}
             placeholder={intl.formatMessage({ id: 'ui-agreements.basketSelector.selectPlaceholder' })}
@@ -62,6 +64,7 @@ class BasketSelectorDisplay extends React.Component {
               buttonStyle="primary"
               disabled={!item.id}
               fullWidth
+              id="basket-selector-add-button"
               onClick={() => { onAdd(item); }}
             >
               {addButtonLabel}

@@ -24,16 +24,22 @@ class Basket extends React.Component {
     openAgreements: {
       type: 'okapi',
       path: 'erm/sas',
-      perRequest: 100,
+      records: 'results',
       limitParam: 'perPage',
+      perRequest: 100,
+      recordsRequired: '1000',
       params: {
+        stats: 'true',
         filters: [
           'agreementStatus.value==active',
           'agreementStatus.value==draft',
           'agreementStatus.value==in_negotiation',
           'agreementStatus.value==requested',
-        ].join('||')
-      }
+        ].join('||'),
+      },
+      shouldRefresh: (resource, action, refresh) => {
+        return refresh || action.meta.resource === 'agreements';
+      },
     },
     basket: { initialValue: [] },
     query: {},
@@ -135,6 +141,7 @@ class Basket extends React.Component {
     return (
       <Button
         buttonStyle="primary"
+        data-test-basket-create-agreement
         disabled={disabled}
         to={disabled ? null : `/erm/agreements?layer=create&${this.constructAddToBasketParam()}`}
       >
@@ -153,6 +160,7 @@ class Basket extends React.Component {
         <Row>
           <Col xs={12} md={8}>
             <AutoSuggest
+              id="select-agreement-for-basket"
               includeItem={(agreement, searchString) => {
                 const lowerCasedSearchString = searchString.toLowerCase();
 
@@ -166,7 +174,7 @@ class Basket extends React.Component {
               items={openAgreements.records}
               onChange={(selectedAgreement) => { this.setState({ selectedAgreement }); }}
               renderOption={agreement => (
-                <div>
+                <div data-test-agreement-id={agreement.id}>
                   <Headline bold>{agreement.name}&nbsp;&#40;{agreement.agreementStatus.label}&#41;</Headline>{/* eslint-disable-line */}
                   <div>
                     <strong><FormattedMessage id="ui-agreements.agreements.startDate" />: </strong><FormattedDate value={agreement.startDate} /> {/* eslint-disable-line */}
@@ -200,6 +208,7 @@ class Basket extends React.Component {
       <div>
         <Button
           buttonStyle="primary"
+          data-test-basket-add-to-agreement
           disabled={disabled}
           to={disabled ? null : `/erm/agreements/view/${this.state.selectedAgreement}?layer=edit&${this.constructAddToBasketParam()}`}
         >
@@ -232,15 +241,17 @@ class Basket extends React.Component {
                 paneSub={<FormattedMessage id="ui-agreements.basket.recordCount" values={{ count: basket.length }} />}
 
               >
-                <BasketList
-                  basket={basket}
-                  onToggleAll={this.handleToggleAll}
-                  onToggleItem={this.handleToggleItem}
-                  removeItem={this.handleRemoveItem}
-                  selectedItems={this.state.selectedItems}
-                />
-                { this.renderCreateAgreementButton() }
-                { this.renderAddToAgreementSection() }
+                <div id="basket-contents">
+                  <BasketList
+                    basket={basket}
+                    onToggleAll={this.handleToggleAll}
+                    onToggleItem={this.handleToggleItem}
+                    removeItem={this.handleRemoveItem}
+                    selectedItems={this.state.selectedItems}
+                  />
+                  { this.renderCreateAgreementButton() }
+                  { this.renderAddToAgreementSection() }
+                </div>
               </Pane>
             </Paneset>
           </Layer>

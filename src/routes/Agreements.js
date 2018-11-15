@@ -143,7 +143,7 @@ class Agreements extends React.Component {
           key="agreements"
           packageInfo={packageInfo}
           filterConfig={filterConfig}
-          objectName="title"
+          objectName="agreement"
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
           viewRecordComponent={ViewAgreement}

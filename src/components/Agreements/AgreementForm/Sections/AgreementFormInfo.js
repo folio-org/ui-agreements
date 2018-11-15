@@ -60,7 +60,7 @@ class AgreementFormInfo extends React.Component {
         <Row>
           <Col xs={12}>
             <Field
-              id="name"
+              id="edit-agreement-name"
               name="name"
               label={<FormattedMessage id="ui-agreements.agreements.name">{name => `${name} *`}</FormattedMessage>}
               component={TextField}
@@ -70,7 +70,7 @@ class AgreementFormInfo extends React.Component {
         <Row>
           <Col xs={12}>
             <Field
-              id="description"
+              id="edit-agreement-description"
               name="description"
               label={<FormattedMessage id="ui-agreements.agreements.agreementDescription" />}
               component={TextArea}
@@ -80,7 +80,7 @@ class AgreementFormInfo extends React.Component {
         <Row>
           <Col xs={12} md={4}>
             <Field
-              id="startDate"
+              id="edit-agreement-start-date"
               name="startDate"
               label={<FormattedMessage id="ui-agreements.agreements.startDate">{startDate => `${startDate} *`}</FormattedMessage>}
               component={Datepicker}
@@ -90,7 +90,7 @@ class AgreementFormInfo extends React.Component {
           </Col>
           <Col xs={12} md={4}>
             <Field
-              id="endDate"
+              id="edit-agreement-end-date"
               name="endDate"
               label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
               component={Datepicker}
@@ -100,7 +100,7 @@ class AgreementFormInfo extends React.Component {
           </Col>
           <Col xs={12} md={4}>
             <Field
-              id="cancellationDeadline"
+              id="edit-agreement-cancellation-deadline"
               name="cancellationDeadline"
               label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}
               component={Datepicker}
@@ -112,7 +112,7 @@ class AgreementFormInfo extends React.Component {
         <Row>
           <Col xs={12} md={4}>
             <Field
-              id="agreementStatus"
+              id="edit-agreement-status"
               name="agreementStatus"
               label={<FormattedMessage id="ui-agreements.agreements.agreementStatus">{agreementStatus => `${agreementStatus} *`}</FormattedMessage>}
               component={Select}
@@ -121,7 +121,7 @@ class AgreementFormInfo extends React.Component {
           </Col>
           <Col xs={12} md={4}>
             <Field
-              id="renewalPriority"
+              id="edit-agreement-renewal-priority"
               name="renewalPriority"
               label={<FormattedMessage id="ui-agreements.agreements.renewalPriority" />}
               component={Select}
@@ -130,7 +130,7 @@ class AgreementFormInfo extends React.Component {
           </Col>
           <Col xs={12} md={4}>
             <Field
-              id="isPerpetual"
+              id="edit-agreement-is-perpetual"
               name="isPerpetual"
               label={<FormattedMessage id="ui-agreements.agreements.isPerpetual" />}
               component={Select}
