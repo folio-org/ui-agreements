@@ -13,6 +13,7 @@ class Tabs extends React.Component {
       PropTypes.number,
     ]),
     parentMutator: PropTypes.object,
+    parentResources: PropTypes.object,
   };
 
   state = {
@@ -31,6 +32,30 @@ class Tabs extends React.Component {
     this.setTab();
   }
 
+  getPersistedQuery = (id) => {
+    const { parentResources } = this.props;
+    let prev = { filters: null, sort: null };
+    if (id === 'agreements') prev = parentResources.queryAgreements;
+    else if (id === 'eresources') prev = parentResources.queryEresources;
+
+    return prev;
+  }
+
+  persistSortAndFilters = () => {
+    const { parentMutator, parentResources } = this.props;
+    const { tab } = this.state;
+    let mutator;
+
+    if (tab === 'agreements') mutator = parentMutator.queryAgreements;
+    else if (tab === 'eresources') mutator = parentMutator.queryEresources;
+    else return;
+
+    mutator.replace({
+      filters: parentResources.query.filters,
+      sort: parentResources.query.sort,
+    });
+  }
+
   setTab = () => {
     const { tab } = this.props;
     if (!tab) return;
@@ -38,12 +63,17 @@ class Tabs extends React.Component {
   }
 
   handleActivate = ({ id }) => {
+    this.persistSortAndFilters();
+
     this.setState({ tab: id });
+
     this.props.parentMutator.query.replace({
       _path: `/erm/${id}`,
       addFromBasket: null,
       layer: null,
+      ...this.getPersistedQuery(id),
     });
+
     this.props.parentMutator.resultCount.replace(1);
   }
 
