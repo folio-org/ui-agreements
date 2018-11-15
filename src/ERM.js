@@ -18,6 +18,18 @@ const INITIAL_RESULT_COUNT = 100;
 export default class ERM extends React.Component {
   static manifest = Object.freeze({
     query: {},
+    queryAgreements: {
+      initialValue: {
+        filters: 'agreementStatus.Requested,agreementStatus.In Negotiation,agreementStatus.Draft,agreementStatus.Active',
+        sort: 'Name',
+      }
+    },
+    queryEresources: {
+      initialValue: {
+        filters: null,
+        sort: 'Name',
+      }
+    },
     resultCount: { initialValue: INITIAL_RESULT_COUNT }
   });
 
