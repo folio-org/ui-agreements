@@ -3,19 +3,13 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
 import {
-  AccordionSet,
-  Col,
-  ExpandAllButton,
   Icon,
   Layout,
   Pane,
-  Row,
 } from '@folio/stripes/components';
 
-import {
-  EResourceInfo,
-  AcquisitionOptions,
-} from './Sections';
+import ViewPackage from '../ViewPackage';
+import ViewTitle from '../ViewTitle';
 
 class ViewEResource extends React.Component {
   static manifest = Object.freeze({
@@ -29,49 +23,12 @@ class ViewEResource extends React.Component {
   static propTypes = {
     match: PropTypes.object,
     onClose: PropTypes.func,
-    parentResources: PropTypes.object,
-    paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    resources: PropTypes.object,
     stripes: PropTypes.object,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      sections: {
-        info: true,
-        acquisitionOptions: true,
-      }
-    };
-
-    this.connectedAcquisitionOptions = props.stripes.connect(AcquisitionOptions);
-  }
-
   getEResource() {
     return get(this.props.resources.selectedEResource, ['records', 0], undefined);
-  }
-
-
-  getSectionProps() {
-    return {
-      match: this.props.match,
-      eresource: this.getEResource(),
-      onToggle: this.handleSectionToggle,
-      stripes: this.props.stripes,
-    };
-  }
-
-  handleSectionToggle = ({ id }) => {
-    this.setState((prevState) => ({
-      sections: {
-        ...prevState.sections,
-        [id]: !prevState.sections[id],
-      }
-    }));
-  }
-
-  handleAllSectionsToggle = (sections) => {
-    this.setState({ sections });
   }
 
   renderLoadingPane() {
@@ -94,7 +51,11 @@ class ViewEResource extends React.Component {
     const resource = this.getEResource();
     if (!resource) return this.renderLoadingPane();
 
-    const sectionProps = this.getSectionProps();
+    const childProps = {
+      match: this.props.match, // For param substitution in resource paths.
+      eresource: this.getEResource(),
+      stripes: this.props.stripes,
+    };
 
     return (
       <Pane
@@ -104,24 +65,7 @@ class ViewEResource extends React.Component {
         dismissible
         onClose={this.props.onClose}
       >
-        <AccordionSet>
-          <Row end="xs">
-            <Col xs>
-              <ExpandAllButton accordionStatus={this.state.sections} onToggle={this.handleAllSectionsToggle} />
-            </Col>
-          </Row>
-          <EResourceInfo
-            id="info"
-            open={this.state.sections.info}
-            {...sectionProps}
-          />
-          <this.connectedAcquisitionOptions
-            id="acquisitionOptions"
-            key={`acqOptions-${resource.id}`} // Force a remount when changing which resource we're viewing
-            open={this.state.sections.acquisitionOptions}
-            {...sectionProps}
-          />
-        </AccordionSet>
+        { resource.type ? <ViewTitle {...childProps} /> : <ViewPackage {...childProps} /> }
       </Pane>
     );
   }

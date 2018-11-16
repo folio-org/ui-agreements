@@ -11,7 +11,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { EResourceAgreements } from '.';
+import EResourceAgreements from '../../EResourceAgreements';
 
 export default class EResourceInfo extends React.Component {
   static propTypes = {
@@ -80,6 +80,7 @@ export default class EResourceInfo extends React.Component {
         </Headline>
         <this.connectedEResourceAgreements
           key={`agreements-${eresource.id}`} // Force a remount when changing which eresource we're viewing
+          type="title"
           {...this.props}
         />
       </Accordion>
