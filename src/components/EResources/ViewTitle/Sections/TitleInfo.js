@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   Accordion,
@@ -11,16 +11,15 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { EResourceAgreements } from '.';
+import EResourceAgreements from '../../EResourceAgreements';
 
-class EResourceInfo extends React.Component {
+class TitleInfo extends React.Component {
   static propTypes = {
     eresource: PropTypes.object,
     id: PropTypes.string,
     match: PropTypes.object,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    intl: intlShape,
   };
 
   constructor(props) {
@@ -41,37 +40,37 @@ class EResourceInfo extends React.Component {
   }
 
   render() {
-    const { eresource, intl } = this.props;
+    const { eresource } = this.props;
 
     return (
       <Accordion
         id={this.props.id}
-        label={intl.formatMessage({ id: 'ui-agreements.eresources.erInfo' })}
+        label={<FormattedMessage id="ui-agreements.eresources.erInfo" />}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
         <Row>
           <Col xs={4}>
             <KeyValue
-              label={intl.formatMessage({ id: 'ui-agreements.eresources.erType' })}
+              label={<FormattedMessage id="ui-agreements.eresources.erType" />}
               value={get(eresource, ['type', 'label'], '-')}
             />
           </Col>
           <Col xs={4}>
             <KeyValue
-              label={intl.formatMessage({ id: 'ui-agreements.eresources.publisher' })}
+              label={<FormattedMessage id="ui-agreements.eresources.publisher" />}
               value={get(eresource, ['publisher', 'label'], '-')}
             />
           </Col>
           <Col xs={2}>
             <KeyValue
-              label={intl.formatMessage({ id: 'ui-agreements.eresources.pIssn' })}
+              label={<FormattedMessage id="ui-agreements.eresources.pIssn" />}
               value={this.getIdentifier('pissn')}
             />
           </Col>
           <Col xs={2}>
             <KeyValue
-              label={intl.formatMessage({ id: 'ui-agreements.eresources.eIssn' })}
+              label={<FormattedMessage id="ui-agreements.eresources.eIssn" />}
               value={this.getIdentifier('eissn')}
             />
           </Col>
@@ -81,6 +80,7 @@ class EResourceInfo extends React.Component {
         </Headline>
         <this.connectedEResourceAgreements
           key={`agreements-${eresource.id}`} // Force a remount when changing which eresource we're viewing
+          type="title"
           {...this.props}
         />
       </Accordion>
@@ -88,4 +88,4 @@ class EResourceInfo extends React.Component {
   }
 }
 
-export default injectIntl(EResourceInfo);
+export default TitleInfo;
