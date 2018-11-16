@@ -5,7 +5,6 @@ import { Accordion } from '@folio/stripes/components';
 
 class LicenseBusinessTerms extends React.Component {
   static propTypes = {
-    agreement: PropTypes.object,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
@@ -13,7 +12,7 @@ class LicenseBusinessTerms extends React.Component {
   };
 
   render() {
-    const { agreement, intl } = this.props;
+    const { intl } = this.props;
 
     return (
       <Accordion

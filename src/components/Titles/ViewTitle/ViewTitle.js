@@ -17,7 +17,6 @@ export default class ViewTitle extends React.Component {
   });
 
   static propTypes = {
-    match: PropTypes.object,
     paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onClose: PropTypes.func,
   };
