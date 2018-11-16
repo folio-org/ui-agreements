@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { get } from 'lodash';
 import { FieldArray } from 'redux-form';
 import Link from 'react-router-dom/Link';
@@ -91,7 +91,7 @@ class AgreementFormEresources extends React.Component {
         <MultiColumnList
           contentData={renderedLines}
           interactive={false}
-          isEmptyMessage={intl.formatMessage({ id: 'ui-agreements.agreementLines.noLines' })}
+          isEmptyMessage={<FormattedMessage id="ui-agreements.agreementLines.noLines" />}
           maxHeight={400}
           visibleColumns={[
             'name',
@@ -121,11 +121,15 @@ class AgreementFormEresources extends React.Component {
             },
             remove: ({ rowIndex, id }) => {
               return (
-                <IconButton
-                  aria-label={intl.formatMessage({ id: 'ui-agreements.agreementLines.removeItem' })}
-                  icon="trashBin"
-                  onClick={() => this.onRemoveAgreementLine(fields, rowIndex, id)}
-                />
+                <FormattedMessage id="ui-agreements.agreementLines.removeItem">
+                  {ariaLabel => (
+                    <IconButton
+                      aria-label={ariaLabel}
+                      icon="trashBin"
+                      onClick={() => this.onRemoveAgreementLine(fields, rowIndex, id)}
+                    />
+                  )}
+                </FormattedMessage>
               );
             },
           }}
@@ -144,7 +148,7 @@ class AgreementFormEresources extends React.Component {
           }}
         />
         <BasketSelector
-          addButtonLabel={intl.formatMessage({ id: 'ui-agreements.agreementLines.createLine' })}
+          addButtonLabel={<FormattedMessage id="ui-agreements.agreementLines.createLine" />}
           onAdd={entitlement => this.onAddAgreementLine(fields, entitlement)}
           stripes={stripes}
         />
@@ -153,12 +157,10 @@ class AgreementFormEresources extends React.Component {
   }
 
   render() {
-    const { intl } = this.props;
-
     return (
       <Accordion
         id={this.props.id}
-        label={intl.formatMessage({ id: 'ui-agreements.agreements.eresourceAgreementLines' })}
+        label={<FormattedMessage id="ui-agreements.agreements.eresourceAgreementLines" />}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
