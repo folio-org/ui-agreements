@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   Button,
@@ -10,15 +10,14 @@ import {
   Select,
 } from '@folio/stripes/components';
 
-class BasketSelectorDisplay extends React.Component {
+export default class BasketSelectorDisplay extends React.Component {
   static manifest = Object.freeze({
     basket: { initialValue: [] },
   });
 
   static propTypes = {
-    addButtonLabel: PropTypes.string,
+    addButtonLabel: PropTypes.node,
     basket: PropTypes.arrayOf(PropTypes.object),
-    intl: intlShape,
     onAdd: PropTypes.func,
   }
 
@@ -35,7 +34,7 @@ class BasketSelectorDisplay extends React.Component {
   }
 
   render() {
-    const { addButtonLabel, basket, intl, onAdd } = this.props;
+    const { addButtonLabel, basket, onAdd } = this.props;
     const { item } = this.state;
 
     const dataOptions = [
@@ -49,14 +48,18 @@ class BasketSelectorDisplay extends React.Component {
     return (
       <Row>
         <Col xs={12} md={8}>
-          <Select
-            dataOptions={dataOptions}
-            id="basket-selector"
-            label={intl.formatMessage({ id: 'ui-agreements.basketSelector.selectLabel' })}
-            onChange={this.handleChange}
-            placeholder={intl.formatMessage({ id: 'ui-agreements.basketSelector.selectPlaceholder' })}
-            value={item.id}
-          />
+          <FormattedMessage id="ui-agreements.basketSelector.selectPlaceholder">
+            {placeholder => (
+              <Select
+                dataOptions={dataOptions}
+                id="basket-selector"
+                label={<FormattedMessage id="ui-agreements.basketSelector.selectLabel" />}
+                onChange={this.handleChange}
+                placeholder={placeholder}
+                value={item.id}
+              />
+            )}
+          </FormattedMessage>
         </Col>
         <Col xs={12} md={4}>
           <Layout style={{ height: '100%' }} className="flex flex-direction-column justify-end">
@@ -75,5 +78,3 @@ class BasketSelectorDisplay extends React.Component {
     );
   }
 }
-
-export default injectIntl(BasketSelectorDisplay);

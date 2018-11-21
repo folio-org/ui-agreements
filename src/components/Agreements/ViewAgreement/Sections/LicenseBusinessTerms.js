@@ -1,24 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Accordion } from '@folio/stripes/components';
 
-class LicenseBusinessTerms extends React.Component {
+export default class LicenseBusinessTerms extends React.Component {
   static propTypes = {
-    agreement: PropTypes.object,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    intl: intlShape,
   };
 
   render() {
-    const { agreement, intl } = this.props;
-
     return (
       <Accordion
         id={this.props.id}
-        label={intl.formatMessage({ id: 'ui-agreements.agreements.licenseAndBusTerms' })}
+        label={<FormattedMessage id="ui-agreements.agreements.licenseAndBusTerms" />}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
@@ -27,5 +23,3 @@ class LicenseBusinessTerms extends React.Component {
     );
   }
 }
-
-export default injectIntl(LicenseBusinessTerms);

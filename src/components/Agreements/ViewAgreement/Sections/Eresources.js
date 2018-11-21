@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Accordion, Col, Row } from '@folio/stripes/components';
 
 import EresourceAgreementLines from './EresourceAgreementLines';
 import EresourcesCovered from './EresourcesCovered';
 
-class Eresources extends React.Component {
+export default class Eresources extends React.Component {
   static propTypes = {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    intl: intlShape,
   };
 
   state = {
@@ -25,12 +24,10 @@ class Eresources extends React.Component {
   }
 
   render() {
-    const { intl } = this.props;
-
     return (
       <Accordion
         id={this.props.id}
-        label={intl.formatMessage({ id: 'ui-agreements.agreements.eresourceAgreementLines' })}
+        label={<FormattedMessage id="ui-agreements.agreements.eresourceAgreementLines" />}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
@@ -41,7 +38,7 @@ class Eresources extends React.Component {
         </Row>
         <Accordion
           id="eresources-covered"
-          label={intl.formatMessage({ id: 'ui-agreements.agreements.eresourcesCovered' })}
+          label={<FormattedMessage id="ui-agreements.agreements.eresourcesCovered" />}
           open={this.state.eResourcesCoveredOpen}
           onToggle={this.onToggleEresourcesCovered}
         >
@@ -55,5 +52,3 @@ class Eresources extends React.Component {
     );
   }
 }
-
-export default injectIntl(Eresources);

@@ -17,8 +17,6 @@ export default class ViewKB extends React.Component {
   });
 
   static propTypes = {
-    parentResources: PropTypes.object,
-    match: PropTypes.object,
     paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onClose: PropTypes.func,
   };

@@ -35,6 +35,7 @@ export default class KBs extends React.Component {
   });
 
   static propTypes = {
+    mutator: PropTypes.object,
     resources: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),

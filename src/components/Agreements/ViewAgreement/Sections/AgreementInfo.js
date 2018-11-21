@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { FormattedDate, FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import {
   Accordion,
@@ -12,13 +12,12 @@ import {
 
 import css from './AgreementInfo.css';
 
-class AgreementInfo extends React.Component {
+export default class AgreementInfo extends React.Component {
   static propTypes = {
     agreement: PropTypes.object,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    intl: intlShape,
   };
 
   state = {
@@ -40,18 +39,18 @@ class AgreementInfo extends React.Component {
   }
 
   render() {
-    const { agreement, intl } = this.props;
+    const { agreement } = this.props;
 
     return (
       <Accordion
         id={this.props.id}
-        label={intl.formatMessage({ id: 'ui-agreements.agreements.agreementInfo' })}
+        label={<FormattedMessage id="ui-agreements.agreements.agreementInfo" />}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
         <Row>
           <Col xs={12}>
-            <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.name' })}>
+            <KeyValue label={<FormattedMessage id="ui-agreements.agreements.name" />}>
               <div data-test-agreement-name>
                 {agreement.name}
               </div>
@@ -60,7 +59,7 @@ class AgreementInfo extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.agreementDescription' })}>
+            <KeyValue label={<FormattedMessage id="ui-agreements.agreements.agreementDescription" />}>
               <div data-test-agreement-description>
                 {agreement.description}
               </div>
@@ -69,21 +68,21 @@ class AgreementInfo extends React.Component {
         </Row>
         <Row>
           <Col xs={4}>
-            <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.cancellationDeadline' })}>
+            <KeyValue label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}>
               <div data-test-agreement-cancellation-deadline>
-                {agreement.cancellationDeadline ? intl.formatDate(agreement.cancellationDeadline) : '-'}
+                {agreement.cancellationDeadline ? <FormattedDate value={agreement.cancellationDeadline} /> : '-'}
               </div>
             </KeyValue>
           </Col>
           <Col xs={4}>
-            <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.renewalPriority' })}>
+            <KeyValue label={<FormattedMessage id="ui-agreements.agreements.renewalPriority" />}>
               <div data-test-agreement-renewal-priority>
                 {get(agreement, ['renewalPriority', 'label'], '-')}
               </div>
             </KeyValue>
           </Col>
           <Col xs={4}>
-            <KeyValue label={intl.formatMessage({ id: 'ui-agreements.agreements.isPerpetual' })}>
+            <KeyValue label={<FormattedMessage id="ui-agreements.agreements.isPerpetual" />}>
               <div data-test-agreement-is-perpetual>
                 {get(agreement, ['isPerpetual', 'label'], '-')}
               </div>
@@ -95,7 +94,7 @@ class AgreementInfo extends React.Component {
             <AccordionSet>
               <Accordion
                 id="internalContacts"
-                label={intl.formatMessage({ id: 'ui-agreements.agreements.internalContacts' })}
+                label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
                 onToggle={this.handleSectionToggle}
                 open={this.state.sections.internalContacts}
               >
@@ -103,7 +102,7 @@ class AgreementInfo extends React.Component {
               </Accordion>
               <Accordion
                 id="contentReviews"
-                label={intl.formatMessage({ id: 'ui-agreements.agreements.contentReviews' })}
+                label={<FormattedMessage id="ui-agreements.agreements.contentReviews" />}
                 onToggle={this.handleSectionToggle}
                 open={this.state.sections.contentReviews}
               >
@@ -111,7 +110,7 @@ class AgreementInfo extends React.Component {
               </Accordion>
               <Accordion
                 id="trials"
-                label={intl.formatMessage({ id: 'ui-agreements.agreements.trials' })}
+                label={<FormattedMessage id="ui-agreements.agreements.trials" />}
                 onToggle={this.handleSectionToggle}
                 open={this.state.sections.trials}
               >
@@ -119,7 +118,7 @@ class AgreementInfo extends React.Component {
               </Accordion>
               <Accordion
                 id="reviewHistory"
-                label={intl.formatMessage({ id: 'ui-agreements.agreements.reviewHistory' })}
+                label={<FormattedMessage id="ui-agreements.agreements.reviewHistory" />}
                 onToggle={this.handleSectionToggle}
                 open={this.state.sections.reviewHistory}
               >
@@ -132,5 +131,3 @@ class AgreementInfo extends React.Component {
     );
   }
 }
-
-export default injectIntl(AgreementInfo);

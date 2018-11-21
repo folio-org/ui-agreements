@@ -5,7 +5,7 @@ import BasketSelectorContainer from './BasketSelectorContainer';
 
 class BasketSelector extends React.Component {
   static propTypes = {
-    addButtonLabel: PropTypes.string,
+    addButtonLabel: PropTypes.node,
     onAdd: PropTypes.func,
     stripes: PropTypes.shape({
       connect: PropTypes.func,

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import Link from 'react-router-dom/Link';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import {
   Accordion,
   Col,
@@ -24,6 +25,7 @@ class AcquisitionOptions extends React.Component {
   static propTypes = {
     eresource: PropTypes.object,
     id: PropTypes.string,
+    intl: intlShape,
     match: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
     onToggle: PropTypes.func,
     open: PropTypes.bool,
@@ -40,7 +42,7 @@ class AcquisitionOptions extends React.Component {
   }
 
   render() {
-    const { eresource, resources: { entitlementOptions }, stripes: { intl } } = this.props;
+    const { eresource, resources: { entitlementOptions }, intl } = this.props;
 
     if (!entitlementOptions || !entitlementOptions.records) {
       return <Icon icon="spinner-ellipsis" width="100px" />;
@@ -49,7 +51,7 @@ class AcquisitionOptions extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label={intl.formatMessage({ id: 'ui-agreements.eresources.acqOptions' }, eresource)}
+        label={<FormattedMessage id="ui-agreements.eresources.acqOptions" values={{ eresource }} />}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
@@ -68,8 +70,8 @@ class AcquisitionOptions extends React.Component {
                   const optionIsPackage = isPackage(option);
 
                   const addLabel = optionIsPackage ?
-                    intl.formatMessage({ id: 'ui-agreements.eresources.addPackage' }) :
-                    intl.formatMessage({ id: 'ui-agreements.eresources.addTitle' });
+                    <FormattedMessage id="ui-agreements.eresources.addPackage" /> :
+                    <FormattedMessage id="ui-agreements.eresources.addTitle" />;
 
                   const buttonProps = optionIsPackage ?
                     { 'data-test-add-package-to-basket': true } :
@@ -105,4 +107,4 @@ class AcquisitionOptions extends React.Component {
   }
 }
 
-export default AcquisitionOptions;
+export default injectIntl(AcquisitionOptions);

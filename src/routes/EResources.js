@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
+import { injectIntl, intlShape } from 'react-intl';
 
 import { SearchAndSort } from '@folio/stripes/smart-components';
 
@@ -55,13 +56,13 @@ class EResources extends React.Component {
   });
 
   static propTypes = {
+    intl: intlShape,
     resources: PropTypes.shape({
       eresources: PropTypes.object,
       eresourceFiltersInitialized: PropTypes.bool,
       typeValues: PropTypes.object,
     }),
     mutator: PropTypes.object,
-    stripes: PropTypes.object,
   };
 
   componentDidUpdate() {
@@ -81,7 +82,7 @@ class EResources extends React.Component {
 
     // If we've fetched the records for every filter...
     if (records.every(record => record.length)) {
-      const { stripes: { intl } } = this.props;
+      const { intl } = this.props;
       // ...then for every filter...
       filters.forEach((filter, i) => {
         // ...set the filter's `values` and `label` properties
@@ -101,7 +102,7 @@ class EResources extends React.Component {
   }
 
   render() {
-    const { mutator, resources, stripes: { intl } } = this.props;
+    const { mutator, resources, intl } = this.props;
     const path = '/erm/eresources';
     packageInfo.stripes.route = path;
     packageInfo.stripes.home = path;
@@ -150,4 +151,4 @@ class EResources extends React.Component {
   }
 }
 
-export default EResources;
+export default injectIntl(EResources);

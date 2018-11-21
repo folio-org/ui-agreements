@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { cloneDeep, get } from 'lodash';
+import { FormattedMessage } from 'react-intl';
 
 import {
   AccordionSet,
@@ -131,12 +132,12 @@ class ViewAgreement extends React.Component {
   }
 
   renderEditLayer() {
-    const { resources: { query }, stripes: { intl } } = this.props;
+    const { resources: { query } } = this.props;
 
     return (
       <Layer
         isOpen={query.layer === 'edit'}
-        contentLabel={intl.formatMessage({ id: 'ui-agreements.agreements.editAgreement' })}
+        contentLabel={<FormattedMessage id="ui-agreements.agreements.editAgreement" />}
       >
         <EditAgreement
           {...this.props}
@@ -167,8 +168,7 @@ class ViewAgreement extends React.Component {
         onClose={this.props.onClose}
         actionMenuItems={stripes.hasPerm('ui-agreements.agreements.edit') ? [{
           id: 'clickable-edit-agreement',
-          title: stripes.intl.formatMessage({ id: 'ui-agreements.agreements.editAgreement' }),
-          label: stripes.intl.formatMessage({ id: 'ui-agreements.agreements.edit' }),
+          label: <FormattedMessage id="ui-agreements.agreements.edit" />,
           href: this.props.editLink,
           onClick: this.props.onEdit,
           icon: 'edit',

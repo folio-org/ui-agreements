@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 import GeneralSettings from './general-settings';
 import SomeFeatureSettings from './some-feature-settings';
@@ -13,12 +14,12 @@ export default class ErmSettings extends React.Component {
   pages = [
     {
       route: 'general',
-      label: this.props.stripes.intl.formatMessage({ id: 'ui-agreements.settings.general' }),
+      label: <FormattedMessage id="ui-agreements.settings.general" />,
       component: GeneralSettings,
     },
     {
       route: 'somefeature',
-      label: this.props.stripes.intl.formatMessage({ id: 'ui-agreements.settings.some-feature' }),
+      label: <FormattedMessage id="ui-agreements.settings.some-feature" />,
       component: SomeFeatureSettings,
     },
   ];

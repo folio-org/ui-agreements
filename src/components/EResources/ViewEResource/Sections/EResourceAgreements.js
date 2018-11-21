@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
+import { injectIntl, intlShape } from 'react-intl';
 import {
   Col,
   Icon,
@@ -22,16 +23,16 @@ class EResourceAgreements extends React.Component {
   })
 
   static propTypes = {
+    intl: intlShape,
     match: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
     resources: PropTypes.shape({
       entitlements: PropTypes.object,
     }),
-    stripes: PropTypes.object,
   };
 
 
   render() {
-    const { resources: { entitlements }, stripes: { intl } } = this.props;
+    const { resources: { entitlements }, intl } = this.props;
 
     if (!entitlements || !entitlements.records) {
       return <Icon icon="spinner-ellipsis" width="100px" />;
@@ -68,4 +69,4 @@ class EResourceAgreements extends React.Component {
   }
 }
 
-export default EResourceAgreements;
+export default injectIntl(EResourceAgreements);
