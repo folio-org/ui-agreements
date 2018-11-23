@@ -12,7 +12,7 @@ import {
 } from '@folio/stripes/components';
 
 import AddToBasketButton from '../../../AddToBasketButton';
-import { isPackage, renderResourceType } from '../../../../util/resourceType';
+import { isPackage, renderResourceType, renderResourceSourceKb } from '../../../../util/resourceType';
 
 class AcquisitionOptions extends React.Component {
   static manifest = Object.freeze({
@@ -63,7 +63,7 @@ class AcquisitionOptions extends React.Component {
               // maxHeight={400}
               visibleColumns={['sourceKb', 'package', 'platform', 'acqMethod', 'add']}
               formatter={{
-                remoteKb: option => get(option, ['_object', 'remoteKb', 'name'], '-'),  // Or _object.pkg.remoteKb.name
+                remoteKb: option => renderResourceSourceKb(option),
                 package: option => <Link to={`/erm/eresources/view/${option.id}`}>{option.name}</Link>,
                 platform: option => get(option, ['_object', 'pti', 'platform', 'name'], '-'),
                 acqMethod: option => renderResourceType(option),
