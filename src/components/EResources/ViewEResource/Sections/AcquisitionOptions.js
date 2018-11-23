@@ -61,8 +61,9 @@ class AcquisitionOptions extends React.Component {
               contentData={entitlementOptions.records}
               interactive={false}
               // maxHeight={400}
-              visibleColumns={['package', 'platform', 'acqMethod', 'add']}
+              visibleColumns={['sourceKb', 'package', 'platform', 'acqMethod', 'add']}
               formatter={{
+                remoteKb: option => get(option, ['_object', 'remoteKb', 'name'], '-'),  // Or _object.pkg.remoteKb.name
                 package: option => <Link to={`/erm/eresources/view/${option.id}`}>{option.name}</Link>,
                 platform: option => get(option, ['_object', 'pti', 'platform', 'name'], '-'),
                 acqMethod: option => renderResourceType(option),
@@ -88,13 +89,15 @@ class AcquisitionOptions extends React.Component {
                 },
               }}
               columnMapping={{
+                sourceKb: intl.formatMessage({ id: 'ui-agreements.eresources.sourceKb' }),
                 package: intl.formatMessage({ id: 'ui-agreements.eresources.parentPackage' }),
                 platform: intl.formatMessage({ id: 'ui-agreements.eresources.platform' }),
                 acqMethod: intl.formatMessage({ id: 'ui-agreements.eresources.acqMethod' }),
                 add: intl.formatMessage({ id: 'ui-agreements.eresources.addToBasketHeader' }),
               }}
               columnWidths={{
-                package: '35%',
+                sourceKb: '15%',
+                package: '25%',
                 platform: '25%',
                 acqMethod: '15%',
                 add: '25%',
