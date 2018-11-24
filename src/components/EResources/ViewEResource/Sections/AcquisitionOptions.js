@@ -63,7 +63,7 @@ class AcquisitionOptions extends React.Component {
               // maxHeight={400}
               visibleColumns={['sourceKb', 'package', 'platform', 'acqMethod', 'add']}
               formatter={{
-                remoteKb: option => renderResourceSourceKb(option),
+                sourceKb: option => renderResourceSourceKb(option),
                 package: option => <Link to={`/erm/eresources/view/${option.id}`}>{option.name}</Link>,
                 platform: option => get(option, ['_object', 'pti', 'platform', 'name'], '-'),
                 acqMethod: option => renderResourceType(option),
