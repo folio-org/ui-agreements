@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import Link from 'react-router-dom/Link';
 
 import {
   Accordion,
@@ -54,7 +55,10 @@ class PackageResources extends React.Component {
             platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
           }}
           formatter={{
-            name: resource => get(resource, ['_object', 'titleInstance', 'name'], ''),
+            name: resource => {
+              const { id, name } = resource._object.titleInstance;
+              return <Link to={`/erm/eresources/view/${id}`}>{name}</Link>;
+            },
             platform: resource => get(resource, ['_object', 'platform', 'name'], ''),
           }}
           visibleColumns={['name', 'platform']}
