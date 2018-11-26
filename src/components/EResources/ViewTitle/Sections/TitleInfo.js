@@ -13,7 +13,7 @@ import {
 
 import EResourceAgreements from '../../EResourceAgreements';
 
-export default class EResourceInfo extends React.Component {
+export default class TitleInfo extends React.Component {
   static propTypes = {
     eresource: PropTypes.object,
     id: PropTypes.string,
