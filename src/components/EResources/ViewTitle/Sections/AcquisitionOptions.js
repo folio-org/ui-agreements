@@ -51,7 +51,7 @@ class AcquisitionOptions extends React.Component {
     return (
       <Accordion
         id={this.props.id}
-        label={<FormattedMessage id="ui-agreements.eresources.acqOptions" values={{ eresource }} />}
+        label={<FormattedMessage id="ui-agreements.eresources.acqOptions" values={eresource} />}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >

@@ -19,10 +19,8 @@ const renderResourceType = (resource) => {
 };
 
 const renderResourceSourceKb = (resource) => {
-
-  if (isPackage(resource)) 
-    return get( resource, ['_object', 'remoteKb', 'name'], '-');
-  return get( resource, ['_object', 'pkg', 'remoteKb', 'name'], '-');
+  if (isPackage(resource)) { return get(resource, ['_object', 'remoteKb', 'name'], '-'); }
+  return get(resource, ['_object', 'pkg', 'remoteKb', 'name'], '-');
 };
 
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -11,21 +10,24 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { EResourceAgreements } from '.';
+import EResourceAgreements from '../../EResourceAgreements';
+import AddToBasketButton from '../../../AddToBasketButton';
 
-export default class EResourceInfo extends React.Component {
+class PackageInfo extends React.Component {
   static propTypes = {
     eresource: PropTypes.object,
     id: PropTypes.string,
     match: PropTypes.object,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
+    stripes: PropTypes.object,
   };
 
   constructor(props) {
     super(props);
 
     this.connectedEResourceAgreements = props.stripes.connect(EResourceAgreements);
+    this.connectedAddToBasketButton = props.stripes.connect(AddToBasketButton);
   }
 
   getIdentifier(type) {
@@ -41,37 +43,47 @@ export default class EResourceInfo extends React.Component {
 
   render() {
     const { eresource } = this.props;
+    const entitlementOption = {
+      class: 'org.olf.kb.Pkg',
+      id: eresource.id,
+      name: eresource.name,
+      _object: eresource,
+    };
 
     return (
       <Accordion
         id={this.props.id}
-        label={<FormattedMessage id="ui-agreements.eresources.erInfo" />}
+        label="Package information"
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
         <Row>
+          <Col xs={6}>
+            <this.connectedAddToBasketButton
+              key={eresource.id}
+              addLabel={<FormattedMessage id="ui-agreements.eresources.addPackage" />}
+              item={entitlementOption}
+              buttonProps={{ 'data-test-add-package-to-basket': true }}
+            />
+          </Col>
+        </Row>
+        <Row>
           <Col xs={4}>
             <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.erType" />}
-              value={get(eresource, ['type', 'label'], '-')}
+              label="Provider"
+              value="-"
             />
           </Col>
           <Col xs={4}>
             <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.publisher" />}
-              value={get(eresource, ['publisher', 'label'], '-')}
+              label="Source"
+              value={eresource.source || '-'}
             />
           </Col>
-          <Col xs={2}>
+          <Col xs={4}>
             <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.pIssn" />}
-              value={this.getIdentifier('pissn')}
-            />
-          </Col>
-          <Col xs={2}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.eIssn" />}
-              value={this.getIdentifier('eissn')}
+              label="Reference"
+              value={eresource.reference || '-'}
             />
           </Col>
         </Row>
@@ -80,9 +92,12 @@ export default class EResourceInfo extends React.Component {
         </Headline>
         <this.connectedEResourceAgreements
           key={`agreements-${eresource.id}`} // Force a remount when changing which eresource we're viewing
+          type="package"
           {...this.props}
         />
       </Accordion>
     );
   }
 }
+
+export default PackageInfo;
