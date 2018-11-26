@@ -32,6 +32,8 @@ class ViewPackage extends React.Component {
         resources: true,
       }
     };
+
+    this.connectedPackageResources = props.stripes.connect(PackageResources);
   }
 
   getSectionProps() {
@@ -57,6 +59,7 @@ class ViewPackage extends React.Component {
   }
 
   render() {
+    const { eresource } = this.props;
     const sectionProps = this.getSectionProps();
 
     return (
@@ -71,8 +74,9 @@ class ViewPackage extends React.Component {
           open={this.state.sections.info}
           {...sectionProps}
         />
-        <PackageResources
+        <this.connectedPackageResources
           id="resources"
+          key={`agreements-${eresource.id}`} // Force a remount when changing which eresource we're viewing
           open={this.state.sections.resources}
           {...sectionProps}
         />

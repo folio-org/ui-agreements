@@ -11,6 +11,7 @@ import {
 } from '@folio/stripes/components';
 
 import EResourceAgreements from '../../EResourceAgreements';
+import AddToBasketButton from '../../../AddToBasketButton';
 
 class PackageInfo extends React.Component {
   static propTypes = {
@@ -19,12 +20,14 @@ class PackageInfo extends React.Component {
     match: PropTypes.object,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
+    stripes: PropTypes.object,
   };
 
   constructor(props) {
     super(props);
 
     this.connectedEResourceAgreements = props.stripes.connect(EResourceAgreements);
+    this.connectedAddToBasketButton = props.stripes.connect(AddToBasketButton);
   }
 
   getIdentifier(type) {
@@ -40,6 +43,12 @@ class PackageInfo extends React.Component {
 
   render() {
     const { eresource } = this.props;
+    const entitlementOption = {
+      class: 'org.olf.kb.Pkg',
+      id: eresource.id,
+      name: eresource.name,
+      _object: eresource,
+    };
 
     return (
       <Accordion
@@ -48,6 +57,16 @@ class PackageInfo extends React.Component {
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
+        <Row>
+          <Col xs={6}>
+            <this.connectedAddToBasketButton
+              key={eresource.id}
+              addLabel={<FormattedMessage id="ui-agreements.eresources.addPackage" />}
+              item={entitlementOption}
+              buttonProps={{ 'data-test-add-package-to-basket': true }}
+            />
+          </Col>
+        </Row>
         <Row>
           <Col xs={4}>
             <KeyValue

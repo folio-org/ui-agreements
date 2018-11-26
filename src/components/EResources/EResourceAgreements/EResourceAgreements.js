@@ -31,51 +31,50 @@ class EResourceAgreements extends React.Component {
     type: PropTypes.oneOf(['title', 'package']),
   };
 
-  visibleColumns = () => {
-    return [
-      'name',
-      'type',
-      'startDate',
-      'endDate',
-      ...(this.props.type === 'title' ?
-        ['package', 'acqMethod'] : []
-      ),
-    ];
-  }
+  visibleColumns = () => ([
+    'name',
+    'type',
+    'startDate',
+    'endDate',
+    ...(this.props.type === 'title' ?
+      ['package', 'acqMethod'] : []
+    ),
+  ]);
 
-  formatter = () => {
-    return {
-      name: ({ owner }) => <Link to={`/erm/agreements/view/${owner.id}`}>{owner.name}</Link>,
-      type: ({ owner }) => owner.agreementStatus && owner.agreementStatus.label,
-      startDate: ({ owner }) => owner.startDate && <FormattedDate value={owner.startDate} />,
-      endDate: ({ owner }) => owner.endDate && <FormattedDate value={owner.endDate} />,
-      ...(this.props.type === 'title' ?
-        {
-          package: ({ resource }) => <Link to={`/erm/eresources/view/${resource.id}`}>{resource.name}</Link>,
-          acqMethod: ({ resource }) => renderResourceType(resource),
-        }
-        :
-        {}
-      ),
-    };
-  }
+  formatter = () => ({
+    name: ({ owner }) => <Link to={`/erm/agreements/view/${owner.id}`}>{owner.name}</Link>,
+    type: ({ owner }) => owner.agreementStatus && owner.agreementStatus.label,
+    startDate: ({ owner }) => owner.startDate && <FormattedDate value={owner.startDate} />,
+    endDate: ({ owner }) => owner.endDate && <FormattedDate value={owner.endDate} />,
+    ...(this.props.type === 'title' ?
+      {
+        package: ({ resource }) => <Link to={`/erm/eresources/view/${resource.id}`}>{resource.name}</Link>,
+        acqMethod: ({ resource }) => renderResourceType(resource),
+      }
+      :
+      {}
+    ),
+  });
 
-  columnMapping = () => {
-    return {
-      name: <FormattedMessage id="ui-agreements.agreements.name" />,
-      type: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
-      startDate: <FormattedMessage id="ui-agreements.agreements.startDate" />,
-      endDate: <FormattedMessage id="ui-agreements.agreements.endDate" />,
-      ...(this.props.type === 'title' ?
-        {
-          package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
-          acqMethod: <FormattedMessage id="ui-agreements.eresources.acqMethod" />,
-        }
-        :
-        {}
-      ),
-    }
-  }
+  columnMapping = () => ({
+    name: <FormattedMessage id="ui-agreements.agreements.name" />,
+    type: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
+    startDate: <FormattedMessage id="ui-agreements.agreements.startDate" />,
+    endDate: <FormattedMessage id="ui-agreements.agreements.endDate" />,
+    ...(this.props.type === 'title' ?
+      {
+        package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
+        acqMethod: <FormattedMessage id="ui-agreements.eresources.acqMethod" />,
+      }
+      :
+      {}
+    ),
+  });
+
+  columnWidths = () => ({
+    startDate: 120,
+    endDate: 120,
+  });
 
   render() {
     const { resources: { entitlements } } = this.props;
@@ -91,9 +90,10 @@ class EResourceAgreements extends React.Component {
             contentData={entitlements.records}
             interactive={false}
             maxHeight={400}
-            visibleColumns={this.visibleColumns()}
-            formatter={this.formatter()}
             columnMapping={this.columnMapping()}
+            columnWidths={this.columnWidths()}
+            formatter={this.formatter()}
+            visibleColumns={this.visibleColumns()}
           />
         </Col>
       </Row>
