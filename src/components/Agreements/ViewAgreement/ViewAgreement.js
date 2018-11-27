@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import {
   AccordionSet,
+  Button,
   Col,
   ExpandAllButton,
   Icon,
@@ -135,19 +136,23 @@ class ViewAgreement extends React.Component {
     const { resources: { query } } = this.props;
 
     return (
-      <Layer
-        isOpen={query.layer === 'edit'}
-        contentLabel={<FormattedMessage id="ui-agreements.agreements.editAgreement" />}
-      >
-        <EditAgreement
-          {...this.props}
-          agreement={this.getAgreement()}
-          agreementLines={this.getAgreementLines()}
-          onCancel={this.props.onCloseEdit}
-          parentMutator={this.props.mutator}
-          initialValues={this.getInitialValues()}
-        />
-      </Layer>
+      <FormattedMessage id="ui-agreements.agreements.editAgreement">
+        {layerContentLabel => (
+          <Layer
+            isOpen={query.layer === 'edit'}
+            contentLabel={layerContentLabel}
+          >
+            <EditAgreement
+              {...this.props}
+              agreement={this.getAgreement()}
+              agreementLines={this.getAgreementLines()}
+              onCancel={this.props.onCloseEdit}
+              parentMutator={this.props.mutator}
+              initialValues={this.getInitialValues()}
+            />
+          </Layer>
+        )}
+      </FormattedMessage>
     );
   }
 
@@ -166,13 +171,24 @@ class ViewAgreement extends React.Component {
         paneTitle={agreement.name}
         dismissible
         onClose={this.props.onClose}
-        actionMenuItems={stripes.hasPerm('ui-agreements.agreements.edit') ? [{
-          id: 'clickable-edit-agreement',
-          label: <FormattedMessage id="ui-agreements.agreements.edit" />,
-          href: this.props.editLink,
-          onClick: this.props.onEdit,
-          icon: 'edit',
-        }] : []}
+        actionMenu={() => {
+          if (!stripes.hasPerm('ui-agreements.agreements.edit')) return null;
+
+          return (
+            <React.Fragment>
+              <Button
+                buttonStyle="dropdownItem"
+                id="clickable-edit-agreement"
+                href={this.props.editLink}
+                onClick={this.props.onEdit}
+              >
+                <Icon icon="edit">
+                  <FormattedMessage id="ui-agreements.agreements.edit" />
+                </Icon>
+              </Button>
+            </React.Fragment>
+          );
+        }}
       >
         <VendorInfo {...sectionProps} />
         <AccordionSet>
