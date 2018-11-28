@@ -100,6 +100,9 @@
   "eresources.addToBasketHeader": "E-resource basket",
   "eresources.sourceKb": "Source",
 
+  "coverage.volumeShort": "Vol:",
+  "coverage.issueShort": "Iss:",
+
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
   "settings.some-feature": "Some Feature",

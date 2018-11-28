@@ -13,6 +13,7 @@ import {
 } from '@folio/stripes/components';
 
 import { renderResourceType } from '../../util/resourceType';
+import CoverageStatements from '../CoverageStatements';
 
 class BasketList extends React.Component {
   static propTypes = {
@@ -64,16 +65,7 @@ class BasketList extends React.Component {
                 get(resource, ['_object', 'pti', 'platform', 'name']) ||
                 get(resource, ['_object', 'nominalPlatform', 'name']) || '-'
               ),
-              coverage: resource => {
-                const coverages = resource._object.coverageStatements || [];
-                if (!coverages.length) return '-';
-
-                return (
-                  <React.Fragment>
-                    {coverages.map(coverage => <div>{coverage.summary}</div>)}
-                  </React.Fragment>
-                );
-              },
+              coverage: resource => <CoverageStatements statements={resource._object.coverageStatements} />,
               remove: resource => (
                 <FormattedMessage id="ui-agreements.basket.removeItem">
                   {ariaLabel => (

@@ -9,6 +9,8 @@ import {
   MultiColumnList,
 } from '@folio/stripes/components';
 
+import CoverageStatements from '../../../CoverageStatements';
+
 class PackageResources extends React.Component {
   static manifest = Object.freeze({
     packageContentItems: {
@@ -63,16 +65,7 @@ class PackageResources extends React.Component {
               return <Link to={`/erm/eresources/view/${id}`}>{name}</Link>;
             },
             platform: pci => get(pci._object, ['pti', 'platform', 'name'], ''),
-            coverage: pci => {
-              const coverages = pci._object.coverageStatements || [];
-              if (!coverages.length) return null;
-
-              return (
-                <React.Fragment>
-                  {coverages.map((coverage, i) => <div key={`coverage-${pci.id}-${i}`}>{coverage.summary}</div>)}
-                </React.Fragment>
-              );
-            }
+            coverage: pci => <CoverageStatements statements={pci._object.coverageStatements} />,
           }}
           visibleColumns={['name', 'platform', 'coverage']}
         />
