@@ -90,5 +90,8 @@
     "settings.general.message": "هذه هي إعداداتك العامة للتطبيق",
     "settings.some-feature": "بعض الخصائص",
     "settings.some-feature.message": "هذه هي إعداداتك لبعض خصائص التطبيق.",
-    "eresources.sourceKb": "Source"
+    "eresources.sourceKb": "Source",
+    "eresources.coverage": "Coverage",
+    "coverage.volumeShort": "Vol:",
+    "coverage.issueShort": "Iss:"
 }

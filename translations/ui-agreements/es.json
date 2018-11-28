@@ -90,5 +90,8 @@
     "settings.general.message": "These are your general app settings.",
     "settings.some-feature": "Some Feature",
     "settings.some-feature.message": "These are your settings for some app feature.",
-    "eresources.sourceKb": "Source"
+    "eresources.sourceKb": "Source",
+    "eresources.coverage": "Coverage",
+    "coverage.volumeShort": "Vol:",
+    "coverage.issueShort": "Iss:"
 }
