@@ -13,9 +13,9 @@ class AddToBasketButton extends React.Component {
   });
 
   static propTypes = {
-    addLabel: PropTypes.string,
+    addLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
     buttonProps: PropTypes.object,
-    removeLabel: PropTypes.string,
+    removeLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
     disabled: PropTypes.bool,
     item: PropTypes.shape({
       id: PropTypes.string,

@@ -11,7 +11,7 @@ import {
 
 class PackageResources extends React.Component {
   static manifest = Object.freeze({
-    packageEresources: {
+    packageContentItems: {
       type: 'okapi',
       path: 'erm/resource',
       records: 'results',
@@ -19,12 +19,11 @@ class PackageResources extends React.Component {
       perRequest: 100,
       recordsRequired: '1000',
       params: {
-        filters: 'packageOccurences.pkg==:{id}',
-        sort: 'titleInstance.name;asc',
+        filters: 'pkg.id==:{id}',
+        sort: 'pti.titleInstance.name;asc',
         stats: 'true',
       },
     },
-    packageEresourcesRequired: { initialValue: 100 },
   });
 
   static propTypes = {
@@ -33,12 +32,12 @@ class PackageResources extends React.Component {
     onToggle: PropTypes.func,
     open: PropTypes.bool,
     resources: PropTypes.shape({
-      packageEresources: PropTypes.object,
+      packageContentItems: PropTypes.object,
     }),
   };
 
   render() {
-    const resources = get(this.props.resources, ['packageEresources', 'records'], []);
+    const resources = get(this.props.resources, ['packageContentItems', 'records'], []);
 
     return (
       <Accordion
@@ -53,15 +52,29 @@ class PackageResources extends React.Component {
           columnMapping={{
             name: <FormattedMessage id="ui-agreements.eresources.name" />,
             platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
+            coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
+          }}
+          columnWidths={{
+            coverage: 300,
           }}
           formatter={{
-            name: resource => {
-              const { id, name } = resource._object.titleInstance;
+            name: pci => {
+              const { id, name } = pci._object.pti.titleInstance;
               return <Link to={`/erm/eresources/view/${id}`}>{name}</Link>;
             },
-            platform: resource => get(resource, ['_object', 'platform', 'name'], ''),
+            platform: pci => get(pci._object, ['pti', 'platform', 'name'], ''),
+            coverage: pci => {
+              const coverages = pci._object.coverageStatements || [];
+              if (!coverages.length) return null;
+
+              return (
+                <React.Fragment>
+                  {coverages.map((coverage, i) => <div key={`coverage-${pci.id}-${i}`}>{coverage.summary}</div>)}
+                </React.Fragment>
+              );
+            }
           }}
-          visibleColumns={['name', 'platform']}
+          visibleColumns={['name', 'platform', 'coverage']}
         />
       </Accordion>
     );
