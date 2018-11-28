@@ -90,5 +90,8 @@
     "settings.general.message": "Estas são as suas configurações gerais de aplicativos.",
     "settings.some-feature": "Algum recurso",
     "settings.some-feature.message": "Estas são suas configurações para alguns recursos do aplicativo.",
-    "eresources.sourceKb": "Fonte"
+    "eresources.sourceKb": "Fonte",
+    "eresources.coverage": "Cobertura",
+    "coverage.volumeShort": "Vol:",
+    "coverage.issueShort": "Fasc:"
 }
