@@ -83,6 +83,7 @@
   "eresources.coverageStart": "Coverage start",
   "eresources.coverageEnd": "Coverage end",
   "eresources.coverageDepth": "Coverage depth",
+  "eresources.coverage": "Coverage",
   "eresources.pIssn": "ISSN (Print)",
   "eresources.eIssn": "ISSN (Online)",
   "eresources.jusp": "JUSP",
@@ -98,6 +99,9 @@
   "eresources.platform": "Platform",
   "eresources.addToBasketHeader": "E-resource basket",
   "eresources.sourceKb": "Source",
+
+  "coverage.volumeShort": "Vol:",
+  "coverage.issueShort": "Iss:",
 
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",

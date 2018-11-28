@@ -13,6 +13,7 @@ import {
 } from '@folio/stripes/components';
 
 import { renderResourceType } from '../../util/resourceType';
+import CoverageStatements from '../CoverageStatements';
 
 class BasketList extends React.Component {
   static propTypes = {
@@ -40,8 +41,7 @@ class BasketList extends React.Component {
               'package',
               'publisher',
               'platform',
-              'coverageStart',
-              'coverageEnd',
+              'coverage',
               'remove'
             ]}
             formatter={{
@@ -56,17 +56,16 @@ class BasketList extends React.Component {
               type: resource => renderResourceType(resource),
               package: resource => {
                 const pkg = get(resource, ['_object', 'pkg']);
-                if (!pkg) return '';
+                if (!pkg) return '-';
 
                 return <Link to={`/erm/eresources/view/${pkg.id}`}>{pkg.name}</Link>;
               },
               publisher: () => 'TBD',
               platform: resource => (
                 get(resource, ['_object', 'pti', 'platform', 'name']) ||
-                get(resource, ['_object', 'nominalPlatform', 'name'])
+                get(resource, ['_object', 'nominalPlatform', 'name']) || '-'
               ),
-              coverageStart: () => 'TBD',
-              coverageEnd: () => 'TBD',
+              coverage: resource => <CoverageStatements statements={resource._object.coverageStatements} />,
               remove: resource => (
                 <FormattedMessage id="ui-agreements.basket.removeItem">
                   {ariaLabel => (
@@ -92,13 +91,13 @@ class BasketList extends React.Component {
               package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
               publisher: <FormattedMessage id="ui-agreements.eresources.publisher" />,
               platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
-              coverageStart: <FormattedMessage id="ui-agreements.eresources.coverageStart" />,
-              coverageEnd: <FormattedMessage id="ui-agreements.eresources.coverageEnd" />,
+              coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
               remove: <FormattedMessage id="ui-agreements.remove" />,
             }}
             columnWidths={{
               selected: 40,
               name: '30%',
+              coverage: 300,
             }}
           />
         </Col>
