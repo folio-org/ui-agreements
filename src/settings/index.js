@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 import GeneralSettings from './general-settings';
 import SomeFeatureSettings from './some-feature-settings';
+import ControlledVocabularySettings from './controlled-vocab-settings';
 
 /*
   STRIPES-NEW-APP
