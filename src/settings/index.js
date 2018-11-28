@@ -22,6 +22,11 @@ export default class ErmSettings extends React.Component {
       label: <FormattedMessage id="ui-agreements.settings.some-feature" />,
       component: SomeFeatureSettings,
     },
+    {
+      route: 'roles',
+      label: <FormattedMessage id="ui-agreements.settings.orgRoles" />,
+      component: ControlledVocabularySettings,
+    },
   ];
 
   render() {
