@@ -65,21 +65,30 @@ class AgreementFormOrganizations extends React.Component {
         <div>
           { !orgs.length && <FormattedMessage id="ui-agreements.organizations.agreementHasNone" /> }
           { orgs.map((_, index) => ((
-            <Row>
+            <Row key={index}>
               <Col xs={8}>
-                <Field
-                  name={`orgs[${index}].org.name`}
-                  component={Selection}
-                  dataOptions={this.state.orgs}
-                />
+                <FormattedMessage id="ui-agreements.organizations.selectOrg">
+                  {placeholder => (
+                    <Field
+                      name={`orgs[${index}].org.name`}
+                      component={Selection}
+                      dataOptions={this.state.orgs}
+                      placeholder={placeholder}
+                    />
+                  )}
+                </FormattedMessage>
               </Col>
               <Col xs={3}>
-                <Field
-                  name={`orgs[${index}].role`}
-                  component={Select}
-                  defaultValue={this.state.roles[0]}
-                  dataOptions={this.state.roles}
-                />
+                <FormattedMessage id="ui-agreements.organizations.selectRole">
+                  {placeholder => (
+                    <Field
+                      name={`orgs[${index}].role`}
+                      component={Select}
+                      dataOptions={this.state.roles}
+                      placeholder={placeholder}
+                    />
+                  )}
+                </FormattedMessage>
               </Col>
               <Col xs={1}>
                 <IconButton
@@ -90,7 +99,7 @@ class AgreementFormOrganizations extends React.Component {
             </Row>
           )))}
         </div>
-        <Button onClick={() => fields.push({ role: this.state.roles[0] })}>
+        <Button onClick={() => fields.push({ })}>
           <FormattedMessage id="ui-agreements.organizations.add" />
         </Button>
       </div>
