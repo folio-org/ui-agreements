@@ -125,7 +125,7 @@ class AgreementFormEresources extends React.Component {
                   {ariaLabel => (
                     <IconButton
                       aria-label={ariaLabel}
-                      icon="trashBin"
+                      icon="trash"
                       onClick={() => this.onRemoveAgreementLine(fields, rowIndex, id)}
                     />
                   )}

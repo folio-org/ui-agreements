@@ -71,7 +71,7 @@ class BasketList extends React.Component {
                   {ariaLabel => (
                     <IconButton
                       aria-label={ariaLabel}
-                      icon="trashBin"
+                      icon="trash"
                       onClick={() => removeItem(resource)}
                     />
                   )}

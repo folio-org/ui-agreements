@@ -83,7 +83,7 @@ class AgreementFormOrganizations extends React.Component {
               </Col>
               <Col xs={1}>
                 <IconButton
-                  icon="trashBin"
+                  icon="trash"
                   onClick={() => fields.remove(index)}
                 />
               </Col>

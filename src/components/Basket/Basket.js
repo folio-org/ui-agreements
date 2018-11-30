@@ -125,7 +125,7 @@ class Basket extends React.Component {
         <FormattedMessage id="ui-agreements.basket.close">
           {ariaLabel => (
             <IconButton
-              icon="closeX"
+              icon="times"
               onClick={this.handleCloseBasket}
               aria-label={ariaLabel}
             />
