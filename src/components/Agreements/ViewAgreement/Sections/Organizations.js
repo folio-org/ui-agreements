@@ -43,8 +43,7 @@ export default class Organizations extends React.Component {
               <Link to={`/vendors/view/${o.org.vendorsUuid}`}>{o.org.name}</Link> :
               o.org.name
             }
-            ,&nbsp;
-            {o.role.label}
+            {o.role && `, ${o.role.label}`}
           </div>
         ))}
       </React.Fragment>
@@ -54,7 +53,7 @@ export default class Organizations extends React.Component {
   renderOrganizations = () => {
     const { orgs } = this.props.agreement;
 
-    if (!orgs || !orgs.length) return <FormattedMessage id="ui-agreements.organizations.agreementhasNone" />;
+    if (!orgs || !orgs.length) return <FormattedMessage id="ui-agreements.organizations.agreementHasNone" />;
 
     return this.renderOrgList(orgs);
   }
@@ -62,7 +61,7 @@ export default class Organizations extends React.Component {
   renderLicenseOrganizations = () => {
     const { attachedLicenceId } = this.props.agreement;
 
-    if (!attachedLicenceId) return <FormattedMessage id="ui-agreements.license.agreementhasNone" />;
+    if (!attachedLicenceId) return <FormattedMessage id="ui-agreements.license.agreementHasNone" />;
 
     return <FormattedMessage id="ui-agreements.license.noLicenseOrganizations" />;
   }

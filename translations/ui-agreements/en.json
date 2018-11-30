@@ -105,12 +105,15 @@
 
   "license.edit": "Edit license",
   "license.editLicenseOrganizations": "Edit license organizations",
-  "license.agreementhasNone": "Agreement has no license.",
+  "license.agreementHasNone": "Agreement has no license.",
   "license.noLicenseOrganizations": "No license organizations",
 
   "organizations.edit": "Edit organizations",
-  "organizations.agreementhasNone": "Agreement has no organizations.",
-
+  "organizations.add": "+ Add organization",
+  "organizations.agreementHasNone": "Agreement has no organizations.",
+  "organizations.name": "Name",
+  "organizations.role": "Role",
+  "organizations.remove": "Remove",
 
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",

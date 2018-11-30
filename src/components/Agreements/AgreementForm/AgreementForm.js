@@ -8,7 +8,8 @@ import {
 
 import {
   AgreementFormInfo,
-  AgreementFormEresources
+  AgreementFormEresources,
+  AgreementFormOrganizations,
 } from './Sections';
 
 class AgreementForm extends React.Component {
@@ -53,6 +54,7 @@ class AgreementForm extends React.Component {
         </Row>
         <AgreementFormInfo id="agreementFormInfo" open={this.state.sections.agreementFormInfo} {...sectionProps} />
         <AgreementFormEresources id="agreementFormEresources" open={this.state.sections.agreementFormEresources} {...sectionProps} />
+        <AgreementFormOrganizations id="agreementFormOrganizations" open={this.state.sections.agreementFormOrganizations} {...sectionProps} />
       </AccordionSet>
     );
   }

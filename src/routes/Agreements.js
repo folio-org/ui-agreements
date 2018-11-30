@@ -47,6 +47,10 @@ class Agreements extends React.Component {
       path: 'erm/sas/${selectedAgreementId}', // eslint-disable-line no-template-curly-in-string
       fetch: false,
     },
+    orgs: {
+      type: 'okapi',
+      path: 'erm/org',
+    },
     agreementTypeValues: {
       type: 'okapi',
       path: 'erm/refdataValues/SubscriptionAgreement/agreementType',
@@ -66,6 +70,10 @@ class Agreements extends React.Component {
     contentReviewNeededValues: {
       type: 'okapi',
       path: 'erm/refdataValues/SubscriptionAgreement/contentReviewNeeded',
+    },
+    orgRoleValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/SubscriptionAgreementOrg/role',
     },
     agreementFiltersInitialized: { initialValue: false },
     basket: { initialValue: [] },

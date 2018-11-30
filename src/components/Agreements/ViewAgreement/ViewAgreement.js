@@ -77,7 +77,7 @@ class ViewAgreement extends React.Component {
 
   getInitialValues() {
     const agreement = cloneDeep(this.getAgreement());
-    const { agreementStatus, renewalPriority, isPerpetual } = agreement;
+    const { agreementStatus, renewalPriority, isPerpetual, orgs } = agreement;
 
     if (agreementStatus && agreementStatus.id) {
       agreement.agreementStatus = agreementStatus.id;
@@ -89,6 +89,13 @@ class ViewAgreement extends React.Component {
 
     if (isPerpetual && isPerpetual.id) {
       agreement.isPerpetual = isPerpetual.id;
+    }
+
+    if (orgs && orgs.length) {
+      agreement.orgs = orgs.map(o => ({
+        ...o,
+        role: o.role ? o.role.label : undefined,
+      }));
     }
 
     return agreement;
