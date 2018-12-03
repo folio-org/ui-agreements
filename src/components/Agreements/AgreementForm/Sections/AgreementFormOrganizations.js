@@ -8,14 +8,18 @@ import {
   Accordion,
   Button,
   Col,
+  OptionSegment,
   Select,
   Selection,
   IconButton,
   Row,
 } from '@folio/stripes/components';
 
+const CREATE_NEW_ORG_VALUE = 'CREATE_NEW_ORGANIZATION';
+
 class AgreementFormOrganizations extends React.Component {
   static propTypes = {
+    change: PropTypes.func,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
@@ -34,10 +38,10 @@ class AgreementFormOrganizations extends React.Component {
     if (!state.orgs.length && orgs.length) {
       return {
         ...newState,
-        orgs: orgs.map(org => ({
-          label: org.name,
-          value: org.name,
-        })),
+        orgs: [
+          { value: CREATE_NEW_ORG_VALUE },
+          ...orgs.map(org => ({ value: org.name })),
+        ],
       };
     }
 
@@ -57,14 +61,14 @@ class AgreementFormOrganizations extends React.Component {
     return null;
   }
 
-  renderField = ({ fields }) => {
-    const orgs = fields.getAll() || [];
+  renderOrgList = ({ fields }) => {
+    const agreementOrgs = fields.getAll() || [];
 
     return (
       <div>
         <div>
-          { !orgs.length && <FormattedMessage id="ui-agreements.organizations.agreementHasNone" /> }
-          { orgs.map((_, index) => ((
+          { !agreementOrgs.length && <FormattedMessage id="ui-agreements.organizations.agreementHasNone" /> }
+          { agreementOrgs.map((_, index) => ((
             <Row key={index}>
               <Col xs={8}>
                 <FormattedMessage id="ui-agreements.organizations.selectOrg">
@@ -73,6 +77,40 @@ class AgreementFormOrganizations extends React.Component {
                       name={`orgs[${index}].org.name`}
                       component={Selection}
                       dataOptions={this.state.orgs}
+                      formatter={(props) => {
+                        const { option, searchTerm } = props;
+                        if (option.value !== CREATE_NEW_ORG_VALUE) {
+                          return <OptionSegment {...props}>{option.value}</OptionSegment>;
+                        }
+                        if (searchTerm) {
+                          return <FormattedMessage id="ui-agreements.organizations.createNewOrg" values={{ name: searchTerm }} />;
+                        }
+
+                        return null;
+                      }}
+                      onChange={(e, value) => {
+                        if (value === CREATE_NEW_ORG_VALUE) {
+                          e.preventDefault();
+
+                          this.setState(prevState => ({
+                            orgs: [
+                              ...prevState.orgs,
+                              { value: prevState.searchString },
+                            ]
+                          }));
+
+                          // The call to `change()` needs to occur after the above `setState` call has been resolved.
+                          setTimeout(() => this.props.change(`orgs[${index}].org.name`, this.state.searchString), 1000);
+                        }
+                      }}
+                      onFilter={(searchString, orgs) => {
+                        this.setState({ searchString });
+                        return orgs.filter(org => {
+                          if (searchString && org.value === CREATE_NEW_ORG_VALUE) return true;
+
+                          return org.value.toLowerCase().includes(searchString.toLowerCase());
+                        });
+                      }}
                       placeholder={placeholder}
                     />
                   )}
@@ -118,7 +156,7 @@ class AgreementFormOrganizations extends React.Component {
           <Col xs={12}>
             <FieldArray
               name="orgs"
-              component={this.renderField}
+              component={this.renderOrgList}
             />
           </Col>
         </Row>

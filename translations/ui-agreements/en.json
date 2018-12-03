@@ -117,6 +117,7 @@
   "organizations.remove": "Remove",
   "organizations.selectOrg": "Select an organization",
   "organizations.selectRole": "Select a role",
+  "organizations.createNewOrg": "Create new organization: \"{name}\"",
 
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",

@@ -200,6 +200,7 @@ class Basket extends React.Component {
                       );
                     });
                   }}
+                  optionAlignment="start"
                   placeholder={placeholder}
                 />
               )}

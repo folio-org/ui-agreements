@@ -50,6 +50,13 @@ class Agreements extends React.Component {
     orgs: {
       type: 'okapi',
       path: 'erm/org',
+      records: 'results',
+      limitParam: 'perPage',
+      perRequest: 100,
+      recordsRequired: '1000',
+      params: {
+        stats: 'true',
+      },
     },
     agreementTypeValues: {
       type: 'okapi',

@@ -59,7 +59,7 @@ class ViewAgreement extends React.Component {
       license: false,
       licenseBusinessTerms: false,
       organizations: false,
-      eresources: true,
+      eresources: false,
       associatedAgreements: false,
     }
   }
