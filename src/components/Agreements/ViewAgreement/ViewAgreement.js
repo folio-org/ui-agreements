@@ -32,10 +32,10 @@ class ViewAgreement extends React.Component {
     selectedAgreement: {
       type: 'okapi',
       path: 'erm/sas/:{id}',
-      // Don't refresh when new organizations gets mutated since it's going to be while
-      // the agreement is being edited. If we did refresh, then the entire edit process
-      // would be interrupted because the resource will be nulled out and we'll throw
-      // up the Loading pane in this component.
+      // Don't refresh when 'organizations' gets mutated since it's going to be in CreateOrganizationModal
+      // while the agreement is being edited. If we did refresh, then the entire edit process would be
+      // interrupted because this resource would get isPending/nulled out and we'd throw up the Loading
+      // pane in this component.
       shouldRefresh: (resource, action, refresh) => {
         return refresh && action.meta.resource !== 'organizations';
       },
@@ -65,11 +65,11 @@ class ViewAgreement extends React.Component {
 
   state = {
     sections: {
-      agreementInfo: false,
+      agreementInfo: true,
       agreementLines: false,
       license: false,
       licenseBusinessTerms: false,
-      organizations: true,
+      organizations: false,
       eresources: false,
       associatedAgreements: false,
     }

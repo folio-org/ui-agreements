@@ -15,17 +15,15 @@ import {
 class AgreementForm extends React.Component {
   state = {
     sections: {
-      agreementFormInfo: false,
+      agreementFormInfo: true,
       agreementFormEresources: false,
-      agreementFormOrganizations: true,
+      agreementFormOrganizations: false,
     }
   }
 
   getSectionProps() {
     return {
       agreementLines: this.props.agreementLines,
-      change: this.props.change,
-      dispatch: this.props.dispatch,
       onToggle: this.handleSectionToggle,
       parentResources: this.props.parentResources,
       stripes: this.props.stripes,
