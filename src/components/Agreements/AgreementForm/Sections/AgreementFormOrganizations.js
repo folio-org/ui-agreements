@@ -46,12 +46,12 @@ class AgreementFormOrganizations extends React.Component {
     const newState = {};
 
     const orgs = get(nextProps.parentResources.orgs, ['records'], []);
-    if (!state.orgs.length && orgs.length) {
+    if (state.orgs.length !== orgs.length) {
       newState.orgs = orgs.map(({ id, name }) => ({ value: id, label: name }));
     }
 
     const roles = get(nextProps.parentResources.orgRoleValues, ['records'], []);
-    if (!state.roles.length && roles.length) {
+    if (state.roles.length !== roles.length) {
       newState.roles = roles.map(({ label }) => ({ value: label, label }));
     }
 

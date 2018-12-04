@@ -32,6 +32,13 @@ class ViewAgreement extends React.Component {
     selectedAgreement: {
       type: 'okapi',
       path: 'erm/sas/:{id}',
+      // Don't refresh when new organizations gets mutated since it's going to be while
+      // the agreement is being edited. If we did refresh, then the entire edit process
+      // would be interrupted because the resource will be nulled out and we'll throw
+      // up the Loading pane in this component.
+      shouldRefresh: (resource, action, refresh) => {
+        return refresh && action.meta.resource !== 'organizations';
+      },
     },
     agreementLines: {
       type: 'okapi',
@@ -39,6 +46,10 @@ class ViewAgreement extends React.Component {
       params: {
         match: 'owner.id',
         term: ':{id}',
+      },
+      // See above comment on shouldRefresh
+      shouldRefresh: (resource, action, refresh) => {
+        return refresh && action.meta.resource !== 'organizations';
       },
     },
     query: {},
