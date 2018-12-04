@@ -60,14 +60,34 @@ class AgreementFormOrganizations extends React.Component {
     return null;
   }
 
+  onRemoveOrganization = (fields, index, org) => {
+    // mod-agreements is implemented so that it doesn't expect the entire
+    // array of organizations to be sent back on edits bc of the potential
+    // size of that array. Instead, organization deletions are expected
+    // to be sent back as an object that looks like { id: '123', _delete: true }.
+    //
+    // There's no "edit" function in redux-form fields so we remove
+    // the stale data and append the new data with the deletion marker property.
+
+    fields.remove(index);
+
+    if (org.id) {
+      fields.push({
+        id: org.id,
+        _delete: true,
+      });
+    }
+  }
+
   renderOrgList = ({ fields }) => {
     const agreementOrgs = fields.getAll() || [];
+    const renderedOrgs = agreementOrgs.filter(org => !org._delete);
 
     return (
       <div>
         <div>
-          { !agreementOrgs.length && <FormattedMessage id="ui-agreements.organizations.agreementHasNone" /> }
-          { agreementOrgs.map((_, index) => ((
+          { !renderedOrgs.length && <FormattedMessage id="ui-agreements.organizations.agreementHasNone" /> }
+          { renderedOrgs.map((org, index) => ((
             <Row key={index}>
               <Col xs={8}>
                 <FormattedMessage id="ui-agreements.organizations.selectOrg">
@@ -80,8 +100,8 @@ class AgreementFormOrganizations extends React.Component {
                         return <OptionSegment {...props}>{props.option.label}</OptionSegment>;
                       }}
                       onFilter={(searchString, orgs) => {
-                        return orgs.filter(org => {
-                          return org.label.toLowerCase().includes(searchString.toLowerCase());
+                        return orgs.filter(o => {
+                          return o.label.toLowerCase().includes(searchString.toLowerCase());
                         });
                       }}
                       placeholder={placeholder}
@@ -104,7 +124,7 @@ class AgreementFormOrganizations extends React.Component {
               <Col xs={1}>
                 <IconButton
                   icon="trash"
-                  onClick={() => fields.remove(index)}
+                  onClick={() => this.onRemoveOrganization(fields, index, org)}
                 />
               </Col>
             </Row>
