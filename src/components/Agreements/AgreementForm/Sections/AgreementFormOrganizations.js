@@ -87,7 +87,7 @@ class AgreementFormOrganizations extends React.Component {
       <div>
         <div>
           { !renderedOrgs.length && <FormattedMessage id="ui-agreements.organizations.agreementHasNone" /> }
-          { renderedOrgs.map((org, index) => ((
+          { renderedOrgs.map((org, index) => (
             <Row key={index}>
               <Col xs={8}>
                 <FormattedMessage id="ui-agreements.organizations.selectOrg">
@@ -128,7 +128,7 @@ class AgreementFormOrganizations extends React.Component {
                 />
               </Col>
             </Row>
-          )))}
+          ))}
         </div>
         <Button onClick={() => fields.push({ })}>
           <FormattedMessage id="ui-agreements.organizations.add" />
