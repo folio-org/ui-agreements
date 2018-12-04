@@ -32,6 +32,13 @@ class ViewAgreement extends React.Component {
     selectedAgreement: {
       type: 'okapi',
       path: 'erm/sas/:{id}',
+      // Don't refresh when 'organizations' gets mutated since it's going to be in CreateOrganizationModal
+      // while the agreement is being edited. If we did refresh, then the entire edit process would be
+      // interrupted because this resource would get isPending/nulled out and we'd throw up the Loading
+      // pane in this component.
+      shouldRefresh: (resource, action, refresh) => {
+        return refresh && action.meta.resource !== 'organizations';
+      },
     },
     agreementLines: {
       type: 'okapi',
@@ -39,6 +46,10 @@ class ViewAgreement extends React.Component {
       params: {
         match: 'owner.id',
         term: ':{id}',
+      },
+      // See above comment on shouldRefresh
+      shouldRefresh: (resource, action, refresh) => {
+        return refresh && action.meta.resource !== 'organizations';
       },
     },
     query: {},
@@ -59,7 +70,7 @@ class ViewAgreement extends React.Component {
       license: false,
       licenseBusinessTerms: false,
       organizations: false,
-      eresources: true,
+      eresources: false,
       associatedAgreements: false,
     }
   }
@@ -77,7 +88,7 @@ class ViewAgreement extends React.Component {
 
   getInitialValues() {
     const agreement = cloneDeep(this.getAgreement());
-    const { agreementStatus, renewalPriority, isPerpetual } = agreement;
+    const { agreementStatus, renewalPriority, isPerpetual, orgs } = agreement;
 
     if (agreementStatus && agreementStatus.id) {
       agreement.agreementStatus = agreementStatus.id;
@@ -89,6 +100,14 @@ class ViewAgreement extends React.Component {
 
     if (isPerpetual && isPerpetual.id) {
       agreement.isPerpetual = isPerpetual.id;
+    }
+
+    if (orgs && orgs.length) {
+      agreement.orgs = orgs.map(o => ({
+        ...o,
+        org: o.org.id,
+        role: o.role ? o.role.label : undefined,
+      }));
     }
 
     return agreement;

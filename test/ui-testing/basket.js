@@ -148,7 +148,7 @@ module.exports.test = (uiTestCtx, nightmare) => {
           .then(done)
           .catch(done);
       });
-
+/*
       describe('create agreement via Basket from first and third items in basket', () => {
         it(`should create a new agreement: ${values.agreementName}`, done => {
           nightmare
@@ -191,7 +191,7 @@ module.exports.test = (uiTestCtx, nightmare) => {
 
         shouldHaveCorrectAgreementLines(nightmare, [0, 2]);
       });
-
+*/
       describe('create agreement via New Agreement with second item > add first and third items via Basket', () => {
         const agreement = AgreementCRUD.generateAgreementValues();
 
@@ -204,9 +204,10 @@ module.exports.test = (uiTestCtx, nightmare) => {
             .click('[data-test-open-basket-button]')
             .wait('#select-agreement-for-basket')
             .wait(5000) // Wait for _all_ the agreements to come back
-            .input('#select-agreement-for-basket', agreement.name)
+            .click('#select-agreement-for-basket')
+            .insert('#sl-container-select-agreement-for-basket input', agreement.name)
             .wait(250)
-            .click('#list-dropdown-select-agreement-for-basket li')
+            .click('#sl-container-select-agreement-for-basket li')
             .wait(250)
             .click('[data-test-basket-add-to-agreement]')
             .wait('#form-agreement')

@@ -66,7 +66,7 @@ class AgreementFormEresources extends React.Component {
     // size of that array. Instead, agreement line deletions are expected
     // to be sent back as an object that looks like { id: '123', _delete: true }.
     //
-    // Since there's no "edit" function in redux-form fields so we remove
+    // There's no "edit" function in redux-form fields so we remove
     // the stale data and append the new data with the deletion marker property.
 
     fields.remove(rowIndex);
@@ -125,7 +125,7 @@ class AgreementFormEresources extends React.Component {
                   {ariaLabel => (
                     <IconButton
                       aria-label={ariaLabel}
-                      icon="trashBin"
+                      icon="trash"
                       onClick={() => this.onRemoveAgreementLine(fields, rowIndex, id)}
                     />
                   )}

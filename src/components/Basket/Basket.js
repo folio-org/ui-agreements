@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 
 import {
-  AutoSuggest,
   Button,
   Col,
   Headline,
@@ -12,6 +12,7 @@ import {
   Pane,
   Paneset,
   PaneMenu,
+  Selection,
   Row,
 } from '@folio/stripes/components';
 
@@ -63,18 +64,28 @@ class Basket extends React.Component {
   }
 
   state = {
+    agreements: [],
     selectedItems: {},
     selectedAgreement: undefined,
   }
 
   static getDerivedStateFromProps(props, state) {
+    const newState = {};
+
     const basket = props.resources.basket || [];
     if (basket.length !== Object.keys(state.selectedItems).length) {
       const selectedItems = {};
       basket.forEach(item => { selectedItems[item.id] = true; });
 
-      return { selectedItems };
+      newState.selectedItems = selectedItems;
     }
+
+    const agreements = get(props.resources.openAgreements, ['records'], []);
+    if (state.agreements.length !== agreements.length) {
+      newState.agreements = agreements.map(a => ({ ...a, value: a.id }));
+    }
+
+    if (Object.keys(newState).length) return newState;
 
     return null;
   }
@@ -125,7 +136,7 @@ class Basket extends React.Component {
         <FormattedMessage id="ui-agreements.basket.close">
           {ariaLabel => (
             <IconButton
-              icon="closeX"
+              icon="times"
               onClick={this.handleCloseBasket}
               aria-label={ariaLabel}
             />
@@ -151,44 +162,49 @@ class Basket extends React.Component {
   }
 
   renderAddToAgreementSection = () => {
-    const { openAgreements } = this.props.resources;
-    if (!openAgreements || !openAgreements.records.length) return null;
+    if (!this.state.agreements.length) return null;
 
     return (
       <div>
         <FormattedMessage tagName="div" id="ui-agreements.basket.addToExistingAgreement" />
         <Row>
           <Col xs={12} md={8}>
-            <AutoSuggest
-              id="select-agreement-for-basket"
-              includeItem={(agreement, searchString) => {
-                const lowerCasedSearchString = searchString.toLowerCase();
-
-                return (
-                  agreement.name.toLowerCase().includes(lowerCasedSearchString) ||
-                  agreement.agreementStatus.label.toLowerCase().includes(lowerCasedSearchString) ||
-                  agreement.startDate.toLowerCase().includes(lowerCasedSearchString) ||
-                  (agreement.vendor && agreement.vendor.name.toLowerCase().includes(lowerCasedSearchString))
-                );
-              }}
-              items={openAgreements.records}
-              onChange={(selectedAgreement) => { this.setState({ selectedAgreement }); }}
-              renderOption={agreement => (
-                <div data-test-agreement-id={agreement.id}>
-                  <Headline bold>{agreement.name}&nbsp;&#40;{agreement.agreementStatus.label}&#41;</Headline>{/* eslint-disable-line */}
-                  <div>
-                    <strong><FormattedMessage id="ui-agreements.agreements.startDate" />: </strong><FormattedDate value={agreement.startDate} /> {/* eslint-disable-line */}
-                  </div>
-                  {agreement.vendor && (
-                    <div>
-                      <strong><FormattedMessage id="ui-agreements.agreements.vendorInfo.vendor" />: </strong>{agreement.vendor.name} {/* eslint-disable-line */}
+            <FormattedMessage id="ui-agreements.basket.clickToSelectAgreement">
+              {placeholder => (
+                <Selection
+                  id="select-agreement-for-basket"
+                  dataOptions={this.state.agreements}
+                  formatter={({ option }) => (
+                    <div data-test-agreement-id={option.id}>
+                      <Headline bold>{option.name}&nbsp;&#40;{option.agreementStatus.label}&#41;</Headline>{/* eslint-disable-line */}
+                      <div>
+                        <strong><FormattedMessage id="ui-agreements.agreements.startDate" />: </strong><FormattedDate value={option.startDate} /> {/* eslint-disable-line */}
+                      </div>
+                      {option.vendor && (
+                        <div>
+                          <strong><FormattedMessage id="ui-agreements.agreements.vendorInfo.vendor" />: </strong>{option.vendor.name} {/* eslint-disable-line */}
+                        </div>
+                      )}
                     </div>
                   )}
-                </div>
+                  onChange={(selectedAgreement) => { this.setState({ selectedAgreement }); }}
+                  onFilter={(searchString, agreements) => {
+                    return agreements.filter(agreement => {
+                      const lowerCasedSearchString = searchString.toLowerCase();
+
+                      return (
+                        agreement.name.toLowerCase().includes(lowerCasedSearchString) ||
+                        agreement.agreementStatus.label.toLowerCase().includes(lowerCasedSearchString) ||
+                        agreement.startDate.toLowerCase().includes(lowerCasedSearchString) ||
+                        (agreement.vendor && agreement.vendor.name.toLowerCase().includes(lowerCasedSearchString))
+                      );
+                    });
+                  }}
+                  optionAlignment="start"
+                  placeholder={placeholder}
+                />
               )}
-              renderValue={agreement => agreement && agreement.name}
-              valueKey="id"
-            />
+            </FormattedMessage>
           </Col>
           <Col xs={12} md={4}>
             { this.renderAddToAgreementButton() }

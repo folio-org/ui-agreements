@@ -102,7 +102,7 @@ class EditAgreement extends React.Component {
         <FormattedMessage id="ui-agreements.agreements.closeNewAgreement">
           {ariaLabel => (
             <IconButton
-              icon="closeX"
+              icon="times"
               onClick={this.props.onCancel}
               aria-label={ariaLabel}
             />
