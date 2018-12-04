@@ -15,8 +15,9 @@ import {
 class AgreementForm extends React.Component {
   state = {
     sections: {
-      agreementFormInfo: true,
-      agreementFormEresources: true,
+      agreementFormInfo: false,
+      agreementFormEresources: false,
+      agreementFormOrganizations: true,
     }
   }
 
@@ -24,6 +25,7 @@ class AgreementForm extends React.Component {
     return {
       agreementLines: this.props.agreementLines,
       change: this.props.change,
+      dispatch: this.props.dispatch,
       onToggle: this.handleSectionToggle,
       parentResources: this.props.parentResources,
       stripes: this.props.stripes,

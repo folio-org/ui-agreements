@@ -54,11 +54,11 @@ class ViewAgreement extends React.Component {
 
   state = {
     sections: {
-      agreementInfo: true,
+      agreementInfo: false,
       agreementLines: false,
       license: false,
       licenseBusinessTerms: false,
-      organizations: false,
+      organizations: true,
       eresources: false,
       associatedAgreements: false,
     }
@@ -94,6 +94,7 @@ class ViewAgreement extends React.Component {
     if (orgs && orgs.length) {
       agreement.orgs = orgs.map(o => ({
         ...o,
+        org: o.org.id,
         role: o.role ? o.role.label : undefined,
       }));
     }

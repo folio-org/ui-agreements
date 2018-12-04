@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import { Field, FieldArray } from 'redux-form';
 
+import { withStripes } from '@folio/stripes/core';
 import {
   Accordion,
   Button,
@@ -15,7 +16,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-const CREATE_NEW_ORG_VALUE = 'CREATE_NEW_ORGANIZATION';
+import CreateOrganizationModal from '../../../CreateOrganizationModal';
 
 class AgreementFormOrganizations extends React.Component {
   static propTypes = {
@@ -24,11 +25,21 @@ class AgreementFormOrganizations extends React.Component {
     onToggle: PropTypes.func,
     open: PropTypes.bool,
     parentResources: PropTypes.object,
+    stripes: PropTypes.shape({
+      connect: PropTypes.func,
+    }),
   };
+
+  constructor(props) {
+    super(props);
+
+    this.connectedCreateOrganizationModal = props.stripes.connect(CreateOrganizationModal);
+  }
 
   state = {
     orgs: [],
     roles: [],
+    showCreateOrgModal: false,
   }
 
   static getDerivedStateFromProps(nextProps, state) {
@@ -36,24 +47,12 @@ class AgreementFormOrganizations extends React.Component {
 
     const orgs = get(nextProps.parentResources.orgs, ['records'], []);
     if (!state.orgs.length && orgs.length) {
-      return {
-        ...newState,
-        orgs: [
-          { value: CREATE_NEW_ORG_VALUE },
-          ...orgs.map(org => ({ value: org.name })),
-        ],
-      };
+      newState.orgs = orgs.map(({ id, name }) => ({ value: id, label: name }));
     }
 
     const roles = get(nextProps.parentResources.orgRoleValues, ['records'], []);
     if (!state.roles.length && roles.length) {
-      return {
-        ...newState,
-        roles: roles.map(role => ({
-          value: role.label,
-          label: role.label,
-        })),
-      };
+      newState.roles = roles.map(({ label }) => ({ value: label, label }));
     }
 
     if (Object.keys(newState).length) return newState;
@@ -74,41 +73,15 @@ class AgreementFormOrganizations extends React.Component {
                 <FormattedMessage id="ui-agreements.organizations.selectOrg">
                   {placeholder => (
                     <Field
-                      name={`orgs[${index}].org.name`}
+                      name={`orgs[${index}].org`}
                       component={Selection}
                       dataOptions={this.state.orgs}
                       formatter={(props) => {
-                        const { option, searchTerm } = props;
-                        if (option.value !== CREATE_NEW_ORG_VALUE) {
-                          return <OptionSegment {...props}>{option.value}</OptionSegment>;
-                        }
-                        if (searchTerm) {
-                          return <FormattedMessage id="ui-agreements.organizations.createNewOrg" values={{ name: searchTerm }} />;
-                        }
-
-                        return null;
-                      }}
-                      onChange={(e, value) => {
-                        if (value === CREATE_NEW_ORG_VALUE) {
-                          e.preventDefault();
-
-                          this.setState(prevState => ({
-                            orgs: [
-                              ...prevState.orgs,
-                              { value: prevState.searchString },
-                            ]
-                          }));
-
-                          // The call to `change()` needs to occur after the above `setState` call has been resolved.
-                          setTimeout(() => this.props.change(`orgs[${index}].org.name`, this.state.searchString), 1000);
-                        }
+                        return <OptionSegment {...props}>{props.option.label}</OptionSegment>;
                       }}
                       onFilter={(searchString, orgs) => {
-                        this.setState({ searchString });
                         return orgs.filter(org => {
-                          if (searchString && org.value === CREATE_NEW_ORG_VALUE) return true;
-
-                          return org.value.toLowerCase().includes(searchString.toLowerCase());
+                          return org.label.toLowerCase().includes(searchString.toLowerCase());
                         });
                       }}
                       placeholder={placeholder}
@@ -158,6 +131,13 @@ class AgreementFormOrganizations extends React.Component {
               name="orgs"
               component={this.renderOrgList}
             />
+            <Button onClick={() => this.setState({ showCreateOrgModal: true })}>
+              <FormattedMessage id="ui-agreements.organizations.createNew" />
+            </Button>
+            <this.connectedCreateOrganizationModal
+              onClose={() => this.setState({ showCreateOrgModal: false })}
+              open={this.state.showCreateOrgModal}
+            />
           </Col>
         </Row>
       </Accordion>
@@ -165,4 +145,4 @@ class AgreementFormOrganizations extends React.Component {
   }
 }
 
-export default AgreementFormOrganizations;
+export default withStripes(AgreementFormOrganizations);
