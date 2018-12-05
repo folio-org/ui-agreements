@@ -24,7 +24,11 @@
     "@folio/stripes-cli": "^1.5.0",
     "@folio/stripes": "^1.1.0",
     "babel-eslint": "^9.0.0",
-    "eslint": "^5.5.0"
+    "eslint": "^5.5.0",
+    "react": "~16.6.3",
+    "react-dom": "~16.6.3",
+    "react-redux": "~5.1.1",
+    "redux": "~3.7.2"
   },
   "dependencies": {
     "lodash": "^4.17.4",
@@ -35,8 +39,11 @@
   },
   "peerDependencies": {
     "@folio/stripes": "^1.0.0",
-    "react": "*"
-  },
+    "react": "~16.6.3",
+    "react-dom": "~16.6.3",
+    "react-redux": "~5.1.1",
+    "redux": "~3.7.2"
+    },
   "stripes": {
     "type": "app",
     "displayName": "ui-agreements.meta.title",
