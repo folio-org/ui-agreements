@@ -1,6 +1,12 @@
 # Change history for ui-agreements
 
-## 1.1.0 (IN PROGRESS)
+## 1.2.0 (IN PROGRESS)
+
+## 1.1.0
+* Added Basket
+* Removed Titles and KB views.
+* Added ability to add entitlements to Agreements
+* Added ability to add organizations to Agreements
 
 ## 1.0.0
 
@@ -9,4 +15,3 @@
 * Added Agreement detail view.
 * Added Agreement lines view.
 * Added E-resources pane, list, and detail view.
-* Added ability to add e-resources to cart.
