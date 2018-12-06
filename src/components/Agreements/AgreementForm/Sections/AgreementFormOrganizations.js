@@ -23,7 +23,7 @@ class AgreementFormOrganizations extends React.Component {
     onToggle: PropTypes.func,
     open: PropTypes.bool,
     parentResources: PropTypes.shape({
-      orgs: PropTypes.object,
+      orgRoleValues: PropTypes.object,
     }),
     stripes: PropTypes.shape({
       connect: PropTypes.func,
