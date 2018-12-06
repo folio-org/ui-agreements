@@ -25,11 +25,6 @@ class AgreementFormOrganizations extends React.Component {
     parentResources: PropTypes.shape({
       orgs: PropTypes.object,
     }),
-    parentMutator: PropTypes.shape({
-      orgNameFilter: PropTypes.shape({
-        replace: PropTypes.func,
-      }),
-    }),
     stripes: PropTypes.shape({
       connect: PropTypes.func,
     }),

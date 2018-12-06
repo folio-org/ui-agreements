@@ -15,9 +15,9 @@ import {
 class AgreementForm extends React.Component {
   state = {
     sections: {
-      agreementFormInfo: false,
+      agreementFormInfo: true,
       agreementFormEresources: false,
-      agreementFormOrganizations: true,
+      agreementFormOrganizations: false,
     }
   }
 
