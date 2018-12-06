@@ -119,6 +119,7 @@
   "organizations.selectRole": "Select a role",
   "organizations.createNew": "Create new organization",
   "organizations.alreadyExists": "An organization with this name already exists!",
+  "organizations.typeToSearch": "Begin typing to search for an organization",
 
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",

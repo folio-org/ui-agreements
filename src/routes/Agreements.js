@@ -50,12 +50,11 @@ class Agreements extends React.Component {
     orgs: {
       type: 'okapi',
       path: 'erm/org',
-      records: 'results',
       limitParam: 'perPage',
       perRequest: 100,
-      recordsRequired: '1000',
       params: {
-        stats: 'true',
+        match: 'name',
+        term: '${orgNameFilter}', // eslint-disable-line no-template-curly-in-string
       },
     },
     agreementTypeValues: {
@@ -84,6 +83,7 @@ class Agreements extends React.Component {
     },
     agreementFiltersInitialized: { initialValue: false },
     basket: { initialValue: [] },
+    orgNameFilter: { initialValue: '' },
     query: {},
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     selectedAgreementId: { initialValue: '' },

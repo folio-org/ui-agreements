@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
+import { debounce, get } from 'lodash';
 import { Field, FieldArray } from 'redux-form';
 
 import { withStripes } from '@folio/stripes/core';
@@ -9,6 +9,7 @@ import {
   Accordion,
   Button,
   Col,
+  Icon,
   OptionSegment,
   Select,
   Selection,
@@ -24,7 +25,14 @@ class AgreementFormOrganizations extends React.Component {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    parentResources: PropTypes.object,
+    parentResources: PropTypes.shape({
+      orgs: PropTypes.object,
+    }),
+    parentMutator: PropTypes.shape({
+      orgNameFilter: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
+    }),
     stripes: PropTypes.shape({
       connect: PropTypes.func,
     }),
@@ -39,15 +47,21 @@ class AgreementFormOrganizations extends React.Component {
   state = {
     orgs: [],
     roles: [],
+    searchString: '',
     showCreateOrgModal: false,
   }
 
   static getDerivedStateFromProps(nextProps, state) {
     const newState = {};
 
-    const orgs = get(nextProps.parentResources.orgs, ['records'], []);
-    if (state.orgs.length !== orgs.length) {
-      newState.orgs = orgs.map(({ id, name }) => ({ value: id, label: name }));
+    if (state.searchString) {
+      const orgs = get(nextProps.parentResources.orgs, ['records'], []);
+      if (state.orgs.length !== orgs.length) {
+        newState.orgs = orgs.map(({ id, name }) => ({ value: id, label: name }));
+      }
+    } else if (state.orgs.length) {
+      // Clear list if there's no search string. This happens if we've closed and reopened the dropdown.
+      newState.orgs = [];
     }
 
     const roles = get(nextProps.parentResources.orgRoleValues, ['records'], []);
@@ -79,6 +93,11 @@ class AgreementFormOrganizations extends React.Component {
     }
   }
 
+  updateOrgNameFilter = debounce(
+    searchString => this.props.parentMutator.orgNameFilter.replace(searchString),
+    500
+  )
+
   renderOrgList = ({ fields }) => {
     const agreementOrgs = fields.getAll() || [];
     const renderedOrgs = agreementOrgs.filter(org => !org._delete);
@@ -96,13 +115,19 @@ class AgreementFormOrganizations extends React.Component {
                       name={`orgs[${index}].org`}
                       component={Selection}
                       dataOptions={this.state.orgs}
+                      emptyMessage={!this.state.searchString ? <FormattedMessage id="ui-agreements.organizations.typeToSearch" /> : undefined}
                       formatter={(props) => {
+                        if (this.props.parentResources.orgs.isPending) {
+                          return <Icon icon="spinner-ellipsis" />;
+                        }
+
                         return <OptionSegment {...props}>{props.option.label}</OptionSegment>;
                       }}
-                      onFilter={(searchString, orgs) => {
-                        return orgs.filter(o => {
-                          return o.label.toLowerCase().includes(searchString.toLowerCase());
-                        });
+                      onFilter={(searchString) => {
+                        this.setState({ searchString });
+                        this.updateOrgNameFilter(searchString);
+
+                        return this.state.orgs;
                       }}
                       placeholder={placeholder}
                     />
