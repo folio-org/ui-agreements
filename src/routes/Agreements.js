@@ -47,16 +47,6 @@ class Agreements extends React.Component {
       path: 'erm/sas/${selectedAgreementId}', // eslint-disable-line no-template-curly-in-string
       fetch: false,
     },
-    orgs: {
-      type: 'okapi',
-      path: 'erm/org',
-      limitParam: 'perPage',
-      perRequest: 100,
-      params: {
-        match: 'name',
-        term: '${orgNameFilter}', // eslint-disable-line no-template-curly-in-string
-      },
-    },
     agreementTypeValues: {
       type: 'okapi',
       path: 'erm/refdataValues/SubscriptionAgreement/agreementType',
@@ -83,7 +73,6 @@ class Agreements extends React.Component {
     },
     agreementFiltersInitialized: { initialValue: false },
     basket: { initialValue: [] },
-    orgNameFilter: { initialValue: '' },
     query: {},
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     selectedAgreementId: { initialValue: '' },

@@ -13,7 +13,7 @@ export default class OrganizationSelectionContainer extends React.Component {
       perRequest: 100,
       params: {
         match: 'name',
-        term: '${orgNameFilter}', // eslint-disable-line no-template-curly-in-string
+        term: '%{orgNameFilter}',
       },
     },
     orgNameFilter: { initialValue: '' },
