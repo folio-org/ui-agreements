@@ -47,17 +47,6 @@ class Agreements extends React.Component {
       path: 'erm/sas/${selectedAgreementId}', // eslint-disable-line no-template-curly-in-string
       fetch: false,
     },
-    orgs: {
-      type: 'okapi',
-      path: 'erm/org',
-      records: 'results',
-      limitParam: 'perPage',
-      perRequest: 100,
-      recordsRequired: '1000',
-      params: {
-        stats: 'true',
-      },
-    },
     agreementTypeValues: {
       type: 'okapi',
       path: 'erm/refdataValues/SubscriptionAgreement/agreementType',

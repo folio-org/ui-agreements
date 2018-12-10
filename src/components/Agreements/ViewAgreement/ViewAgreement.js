@@ -105,7 +105,6 @@ class ViewAgreement extends React.Component {
     if (orgs && orgs.length) {
       agreement.orgs = orgs.map(o => ({
         ...o,
-        org: o.org.id,
         role: o.role ? o.role.label : undefined,
       }));
     }
@@ -166,7 +165,14 @@ class ViewAgreement extends React.Component {
               agreement={this.getAgreement()}
               agreementLines={this.getAgreementLines()}
               onCancel={this.props.onCloseEdit}
-              parentMutator={this.props.mutator}
+              parentMutator={{
+                ...this.props.parentMutator,
+                ...this.props.mutator
+              }}
+              parentResources={{
+                ...this.props.parentResources,
+                ...this.props.resources
+              }}
               initialValues={this.getInitialValues()}
             />
           </Layer>

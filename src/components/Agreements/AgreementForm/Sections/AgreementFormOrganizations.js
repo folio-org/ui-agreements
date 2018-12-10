@@ -9,22 +9,22 @@ import {
   Accordion,
   Button,
   Col,
-  OptionSegment,
   Select,
-  Selection,
   IconButton,
   Row,
 } from '@folio/stripes/components';
 
 import CreateOrganizationModal from '../../../CreateOrganizationModal';
+import OrganizationSelection from '../../../OrganizationSelection';
 
 class AgreementFormOrganizations extends React.Component {
   static propTypes = {
-    change: PropTypes.func,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    parentResources: PropTypes.object,
+    parentResources: PropTypes.shape({
+      orgRoleValues: PropTypes.object,
+    }),
     stripes: PropTypes.shape({
       connect: PropTypes.func,
     }),
@@ -33,29 +33,19 @@ class AgreementFormOrganizations extends React.Component {
   constructor(props) {
     super(props);
 
-    this.connectedCreateOrganizationModal = props.stripes.connect(CreateOrganizationModal);
+    this.connectedCreateOrganizationModal = props.stripes.connect(CreateOrganizationModal, { dataKey: 'createOrganizationModal' });
   }
 
   state = {
-    orgs: [],
     roles: [],
     showCreateOrgModal: false,
   }
 
   static getDerivedStateFromProps(nextProps, state) {
-    const newState = {};
-
-    const orgs = get(nextProps.parentResources.orgs, ['records'], []);
-    if (state.orgs.length !== orgs.length) {
-      newState.orgs = orgs.map(({ id, name }) => ({ value: id, label: name }));
-    }
-
     const roles = get(nextProps.parentResources.orgRoleValues, ['records'], []);
     if (state.roles.length !== roles.length) {
-      newState.roles = roles.map(({ label }) => ({ value: label, label }));
+      return { roles: roles.map(({ label }) => ({ value: label, label })) };
     }
-
-    if (Object.keys(newState).length) return newState;
 
     return null;
   }
@@ -90,24 +80,10 @@ class AgreementFormOrganizations extends React.Component {
           { renderedOrgs.map((org, index) => (
             <Row key={index}>
               <Col xs={8}>
-                <FormattedMessage id="ui-agreements.organizations.selectOrg">
-                  {placeholder => (
-                    <Field
-                      name={`orgs[${index}].org`}
-                      component={Selection}
-                      dataOptions={this.state.orgs}
-                      formatter={(props) => {
-                        return <OptionSegment {...props}>{props.option.label}</OptionSegment>;
-                      }}
-                      onFilter={(searchString, orgs) => {
-                        return orgs.filter(o => {
-                          return o.label.toLowerCase().includes(searchString.toLowerCase());
-                        });
-                      }}
-                      placeholder={placeholder}
-                    />
-                  )}
-                </FormattedMessage>
+                <Field
+                  component={OrganizationSelection}
+                  name={`orgs[${index}].org`}
+                />
               </Col>
               <Col xs={3}>
                 <FormattedMessage id="ui-agreements.organizations.selectRole">
