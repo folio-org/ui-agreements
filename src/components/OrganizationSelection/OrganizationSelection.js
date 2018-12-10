@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withStripes } from '@folio/stripes/core';
 
 import OrganizationSelectionContainer from './OrganizationSelectionContainer';
 
-export default class OrganizationSelection extends React.Component {
+class OrganizationSelection extends React.Component {
   static propTypes = {
     input: PropTypes.shape({
       name: PropTypes.string,
@@ -26,3 +27,5 @@ export default class OrganizationSelection extends React.Component {
     return <this.connectedOrganizationSelectionContainer {...this.props} />;
   }
 }
+
+export default withStripes(OrganizationSelection);

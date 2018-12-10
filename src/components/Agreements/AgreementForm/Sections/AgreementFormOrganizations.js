@@ -83,7 +83,6 @@ class AgreementFormOrganizations extends React.Component {
                 <Field
                   component={OrganizationSelection}
                   name={`orgs[${index}].org`}
-                  stripes={this.props.stripes}
                 />
               </Col>
               <Col xs={3}>
