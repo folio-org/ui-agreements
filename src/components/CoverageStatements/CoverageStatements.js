@@ -54,9 +54,9 @@ export default class CoverageStatements extends React.Component {
     if (!statements || !statements.length) return '-';
 
     return (
-      <React.Fragment>
+      <Layout className="flex flex-direction-column flex-align-items-start">
         {statements.map(this.renderStatement)}
-      </React.Fragment>
+      </Layout>
     );
   }
 }
