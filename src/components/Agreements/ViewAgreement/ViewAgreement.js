@@ -57,6 +57,12 @@ class ViewAgreement extends React.Component {
       },
       shouldRefresh,
     },
+    users: {
+      type: 'okapi',
+      path: '/users',
+      fetch: false,
+      accumulate: true,
+    },
     query: {},
   });
 
@@ -80,6 +86,21 @@ class ViewAgreement extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.fetchUsers();
+  }
+
+  componentDidUpdate(prevProps) {
+    const prevContacts = get(prevProps.resources.contacts, ['records'], []);
+    const contacts = get(this.props.resources.contacts, ['records'], []);
+    const prevAgreement = get(prevProps.resources.selectedAgreement, ['records', 0], {});
+    const agreement = get(this.props.resources.selectedAgreement, ['records', 0], {});
+
+    if ((prevAgreement.id !== agreement.id) || (prevContacts.length !== contacts.length)) {
+      this.fetchUsers();
+    }
+  }
+
   getAgreement() {
     return get(this.props.resources.selectedAgreement, ['records', 0], {});
   }
@@ -92,10 +113,19 @@ class ViewAgreement extends React.Component {
   }
 
   getContacts() {
-    const isPending = get(this.props.resources.contacts, ['isPending'], true);
+    const isPending =
+      get(this.props.resources.contacts, ['isPending'], true) ||
+      get(this.props.resources.users, ['isPending'], true);
+
     if (isPending) return undefined;
 
-    return get(this.props.resources.contacts, ['records'], []);
+    const contacts = get(this.props.resources.contacts, ['records'], []);
+    const users = get(this.props.resources.users, ['records'], []);
+
+    return contacts.map((contact, i) => ({
+      ...users[i],
+      ...contact,
+    }));
   }
 
   getInitialValues() {
@@ -140,6 +170,14 @@ class ViewAgreement extends React.Component {
       },
       stripes: this.props.stripes,
     };
+  }
+
+  fetchUsers = () => {
+    const { mutator: { users } } = this.props;
+    const contacts = get(this.props.resources.contacts, ['records'], []);
+
+    users.reset();
+    contacts.forEach(contact => users.GET({ path: `users/${contact.user}` }));
   }
 
   handleSectionToggle = ({ id }) => {
