@@ -53,10 +53,6 @@ export default class CoverageStatements extends React.Component {
     const { statements } = this.props;
     if (!statements || !statements.length) return '-';
 
-    return (
-      <Layout className="flex flex-direction-column flex-align-items-start">
-        {statements.map(this.renderStatement)}
-      </Layout>
-    );
+    return <div>{statements.map(this.renderStatement)}</div>;
   }
 }
