@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 import GeneralSettings from './general-settings';
 import SomeFeatureSettings from './some-feature-settings';
+import ControlledVocabularySettings from './controlled-vocab-settings';
 
 /*
   STRIPES-NEW-APP
@@ -21,6 +22,11 @@ export default class ErmSettings extends React.Component {
       route: 'somefeature',
       label: <FormattedMessage id="ui-agreements.settings.some-feature" />,
       component: SomeFeatureSettings,
+    },
+    {
+      route: 'roles',
+      label: <FormattedMessage id="ui-agreements.settings.orgRoles" />,
+      component: ControlledVocabularySettings,
     },
   ];
 
