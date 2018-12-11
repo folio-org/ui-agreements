@@ -1,8 +1,6 @@
 # Change history for ui-agreements
 
-## 1.2.0 (IN PROGRESS)
-
-## 1.1.0
+## 1.1.0 - 2018-12-11
 * Added Basket
 * Removed Titles and KB views.
 * Added ability to add entitlements to Agreements
