@@ -93,5 +93,22 @@
     "eresources.sourceKb": "Fonte",
     "eresources.coverage": "Cobertura",
     "coverage.volumeShort": "Vol:",
-    "coverage.issueShort": "Fasc:"
+    "coverage.issueShort": "Fasc:",
+    "basket.clickToSelectAgreement": "Clique para selecionar o contrato",
+    "license.edit": "Editar licença",
+    "license.editLicenseOrganizations": "Editar organizações de licenças",
+    "license.agreementHasNone": "Contrato não tem licença.",
+    "license.noLicenseOrganizations": "Nenhuma organização de licença",
+    "organizations.edit": "Editar organizações",
+    "organizations.add": "+ Adicionar organização ao contrato",
+    "organizations.agreementHasNone": "Contrato não tem organizações.",
+    "organizations.name": "Nome",
+    "organizations.role": "Função",
+    "organizations.remove": "Remover",
+    "organizations.selectOrg": "Selecione uma organização",
+    "organizations.selectRole": "Selecione uma função",
+    "organizations.createNew": "Criar nova organização",
+    "organizations.alreadyExists": "Já existe uma organização com este nome!",
+    "organizations.typeToSearch": "Comece a digitar para procurar uma organização",
+    "settings.orgRoles": "Organisationa Roles"
 }
