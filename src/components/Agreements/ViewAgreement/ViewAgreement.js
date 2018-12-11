@@ -27,18 +27,17 @@ import {
 
 import EditAgreement from '../EditAgreement';
 
+// Don't refresh when 'organizations' gets mutated since it's going to be in CreateOrganizationModal while
+// the agreement is being edited. If we did refresh, then the entire edit process would be interrupted
+// because this resource would get isPending/nulled out and we'd throw up the Loading pane in this component.
+const shouldRefresh = (resource, action, refresh) => refresh && action.meta.resource !== 'organizations';
+
 class ViewAgreement extends React.Component {
   static manifest = Object.freeze({
     selectedAgreement: {
       type: 'okapi',
       path: 'erm/sas/:{id}',
-      // Don't refresh when 'organizations' gets mutated since it's going to be in CreateOrganizationModal
-      // while the agreement is being edited. If we did refresh, then the entire edit process would be
-      // interrupted because this resource would get isPending/nulled out and we'd throw up the Loading
-      // pane in this component.
-      shouldRefresh: (resource, action, refresh) => {
-        return refresh && action.meta.resource !== 'organizations';
-      },
+      shouldRefresh,
     },
     agreementLines: {
       type: 'okapi',
@@ -47,10 +46,16 @@ class ViewAgreement extends React.Component {
         match: 'owner.id',
         term: ':{id}',
       },
-      // See above comment on shouldRefresh
-      shouldRefresh: (resource, action, refresh) => {
-        return refresh && action.meta.resource !== 'organizations';
+      shouldRefresh,
+    },
+    contacts: {
+      type: 'okapi',
+      path: 'erm/contacts',
+      params: {
+        match: 'owner.id',
+        term: ':{id}',
       },
+      shouldRefresh,
     },
     query: {},
   });
@@ -86,6 +91,13 @@ class ViewAgreement extends React.Component {
     return get(this.props.resources.agreementLines, ['records'], []);
   }
 
+  getContacts() {
+    const isPending = get(this.props.resources.contacts, ['isPending'], true);
+    if (isPending) return undefined;
+
+    return get(this.props.resources.contacts, ['records'], []);
+  }
+
   getInitialValues() {
     const agreement = cloneDeep(this.getAgreement());
     const { agreementStatus, renewalPriority, isPerpetual, orgs } = agreement;
@@ -116,7 +128,16 @@ class ViewAgreement extends React.Component {
     return {
       agreement: this.getAgreement(),
       agreementLines: this.getAgreementLines(),
+      contacts: this.getContacts(),
       onToggle: this.handleSectionToggle,
+      parentMutator: {
+        ...this.props.parentMutator,
+        ...this.props.mutator
+      },
+      parentResources: {
+        ...this.props.parentResources,
+        ...this.props.resources
+      },
       stripes: this.props.stripes,
     };
   }
@@ -164,6 +185,7 @@ class ViewAgreement extends React.Component {
               {...this.props}
               agreement={this.getAgreement()}
               agreementLines={this.getAgreementLines()}
+              contacts={this.getContacts()}
               onCancel={this.props.onCloseEdit}
               parentMutator={{
                 ...this.props.parentMutator,

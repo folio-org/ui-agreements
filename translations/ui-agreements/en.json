@@ -73,6 +73,8 @@
   "basketSelector.selectLabel": "Select from basket",
   "basketSelector.selectPlaceholder": "Select e-resource or package",
 
+  "contacts.noContacts": "Agreement has no internal contacts.",
+
   "coverage.volumeShort": "Vol:",
   "coverage.issueShort": "Iss:",
 

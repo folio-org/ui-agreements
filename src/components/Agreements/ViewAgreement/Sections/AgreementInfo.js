@@ -10,12 +10,15 @@ import {
   Row,
 } from '@folio/stripes/components';
 
+import InternalContacts from './InternalContacts';
 import css from './AgreementInfo.css';
 
 export default class AgreementInfo extends React.Component {
   static propTypes = {
     agreement: PropTypes.object,
     id: PropTypes.string,
+    parentMutator: PropTypes.object,
+    parentResources: PropTypes.object,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
@@ -98,7 +101,7 @@ export default class AgreementInfo extends React.Component {
                 onToggle={this.handleSectionToggle}
                 open={this.state.sections.internalContacts}
               >
-                -
+                <InternalContacts key={agreement.id} {...this.props} />
               </Accordion>
               <Accordion
                 id="contentReviews"
