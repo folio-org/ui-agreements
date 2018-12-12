@@ -93,5 +93,22 @@
     "eresources.sourceKb": "Source",
     "eresources.coverage": "Coverage",
     "coverage.volumeShort": "Vol:",
-    "coverage.issueShort": "Iss:"
+    "coverage.issueShort": "Iss:",
+    "basket.clickToSelectAgreement": "Click to select agreement",
+    "license.edit": "Edit license",
+    "license.editLicenseOrganizations": "Edit license organizations",
+    "license.agreementHasNone": "Agreement has no license.",
+    "license.noLicenseOrganizations": "No license organizations",
+    "organizations.edit": "Edit organizations",
+    "organizations.add": "+ Add organization to agreement",
+    "organizations.agreementHasNone": "Agreement has no organizations.",
+    "organizations.name": "Name",
+    "organizations.role": "Role",
+    "organizations.remove": "Remove",
+    "organizations.selectOrg": "Select an organization",
+    "organizations.selectRole": "Select a role",
+    "organizations.createNew": "Create new organization",
+    "organizations.alreadyExists": "An organization with this name already exists!",
+    "organizations.typeToSearch": "Begin typing to search for an organization",
+    "settings.orgRoles": "Organisationa Roles"
 }
