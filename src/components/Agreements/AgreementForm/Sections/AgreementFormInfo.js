@@ -14,6 +14,8 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
+import AgreementFormInternalContacts from './AgreementFormInternalContacts';
+
 class AgreementFormInfo extends React.Component {
   static propTypes = {
     id: PropTypes.string,
@@ -138,6 +140,7 @@ class AgreementFormInfo extends React.Component {
             />
           </Col>
         </Row>
+        <AgreementFormInternalContacts {...this.props} />
       </Accordion>
     );
   }

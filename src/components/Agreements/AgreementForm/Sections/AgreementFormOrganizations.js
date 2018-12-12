@@ -44,7 +44,7 @@ class AgreementFormOrganizations extends React.Component {
   static getDerivedStateFromProps(nextProps, state) {
     const roles = get(nextProps.parentResources.orgRoleValues, ['records'], []);
     if (state.roles.length !== roles.length) {
-      return { roles: roles.map(({ label }) => ({ value: label, label })) };
+      return { roles: roles.map(({ id, label }) => ({ value: id, label })) };
     }
 
     return null;
