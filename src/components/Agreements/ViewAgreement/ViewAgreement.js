@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { cloneDeep, get } from 'lodash';
+import { cloneDeep, difference, get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -63,6 +63,14 @@ class ViewAgreement extends React.Component {
       fetch: false,
       accumulate: true,
     },
+    orgRoleValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/SubscriptionAgreementOrg/role',
+    },
+    contactRoleValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/InternalContact/role',
+    },
     query: {},
   });
 
@@ -91,12 +99,16 @@ class ViewAgreement extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const prevContacts = get(prevProps.resources.contacts, ['records'], []);
-    const contacts = get(this.props.resources.contacts, ['records'], []);
+    const prevUsers = get(prevProps.resources.contacts, ['records'], []).map(c => c.user);
+    const users = get(this.props.resources.contacts, ['records'], []).map(c => c.user);
     const prevAgreement = get(prevProps.resources.selectedAgreement, ['records', 0], {});
     const agreement = get(this.props.resources.selectedAgreement, ['records', 0], {});
 
-    if ((prevAgreement.id !== agreement.id) || (prevContacts.length !== contacts.length)) {
+    if (
+      (prevAgreement.id !== agreement.id) || // New agreement selected
+      (prevUsers.length !== users.length) || // Contacts loaded
+      (difference(prevUsers, users).length) // Contacts edited
+    ) {
       this.fetchUsers();
     }
   }
@@ -128,6 +140,11 @@ class ViewAgreement extends React.Component {
     }));
   }
 
+  getUser(userId) {
+    const users = get(this.props.resources.users, ['records'], []);
+    return users.find(u => u.id === userId);
+  }
+
   getInitialValues() {
     const agreement = cloneDeep(this.getAgreement());
     const { agreementStatus, renewalPriority, isPerpetual, contacts, orgs } = agreement;
@@ -149,7 +166,10 @@ class ViewAgreement extends React.Component {
     }
 
     if (contacts) {
-      agreement.contacts = contacts.map(c => ({ ...c, role: c.role.id }));
+      agreement.contacts = contacts.map(c => ({
+        ...c,
+        role: c.role.id,
+      }));
     }
 
     return agreement;

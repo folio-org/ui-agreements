@@ -29,7 +29,6 @@ export default class OrganizationSelectionDisplay extends React.Component {
       <FormattedMessage id="ui-agreements.organizations.selectOrg">
         {placeholder => (
           <Selection
-            component={Selection}
             dataOptions={organizations}
             emptyMessage={!searchString ? <FormattedMessage id="ui-agreements.organizations.typeToSearch" /> : undefined}
             formatter={(props) => {

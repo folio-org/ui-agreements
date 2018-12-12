@@ -14,7 +14,50 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
+import UserPicker from '../../../UserPicker';
+
 export default class AgreementFormInternalContacts extends React.Component {
+  static propTypes = {
+    parentResources: PropTypes.shape({
+      contactRoleValues: PropTypes.object,
+      users: PropTypes.object,
+    }),
+  };
+
+  state = {
+    roles: [],
+    users: {},
+  };
+
+  static getDerivedStateFromProps(props, state) {
+    const newState = {};
+
+    const contactRoleValues = get(props.parentResources, ['contactRoleValues', 'records'], []);
+    if (contactRoleValues.length !== state.roles.length) {
+      newState.roles = contactRoleValues.map(r => ({ value: r.id, label: r.label }));
+    }
+
+    const newUsers = get(props.parentResources, ['users', 'records'], []);
+    if (newUsers.length > Object.keys(state.users).length) {
+      const users = state.users;
+      newUsers.forEach(u => { users[u.id] = u; });
+      newState.users = users;
+    }
+
+    if (Object.keys(newState)) return newState;
+
+    return null;
+  }
+
+  addUser = (user) => {
+    this.setState(prevState => ({
+      users: {
+        ...prevState.users,
+        [user.id]: user,
+      },
+    }));
+  }
+
   onRemoveContact = (fields, index, contact) => {
     // mod-agreements is implemented so that it doesn't expect the entire
     // array of contacts to be sent back on edits bc of the potential
@@ -34,6 +77,14 @@ export default class AgreementFormInternalContacts extends React.Component {
     }
   }
 
+  renderUserName = (userId) => {
+    const user = this.state.users[userId];
+    if (!user || !user.personal) return '';
+
+    const { firstName, lastName } = user.personal;
+    return firstName ? `${lastName}, ${firstName}` : lastName;
+  }
+
   renderContactsList = ({ fields }) => {
     const contacts = fields.getAll() || [];
     const renderedContacts = contacts.filter(contact => !contact._delete);
@@ -46,18 +97,18 @@ export default class AgreementFormInternalContacts extends React.Component {
             <Row key={index}>
               <Col xs={6}>
                 <Field
-                  component={TextField}
+                  addUser={this.addUser}
+                  component={UserPicker}
+                  format={this.renderUserName}
                   name={`contacts[${index}].user`}
+                  normalize={value => value.id}
                 />
               </Col>
               <Col xs={5}>
                 <Field
                   name={`contacts[${index}].role`}
                   component={Select}
-                  dataOptions={[
-                    { value: '402881866799100901679989da380002', label: 'Agreement Owner' },
-                    { value: '402881866799100901679989da4f0003', label: 'Subject Specialist' },
-                  ]}
+                  dataOptions={this.state.roles}
                 />
               </Col>
               <Col xs={1}>
@@ -77,6 +128,8 @@ export default class AgreementFormInternalContacts extends React.Component {
   }
 
   render() {
+    if (get(this.props.parentResources, ['users', 'isPending'], true)) return <Icon icon="spinner-ellipsis" width="100px" />;
+
     return (
       <FieldArray
         name="contacts"

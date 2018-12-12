@@ -44,6 +44,9 @@
     "react-redux": "*",
     "redux": "*"
   },
+  "optionalDependencies": {
+    "@folio/plugin-find-user": "^1.1.0"
+  },
   "stripes": {
     "type": "app",
     "displayName": "ui-agreements.meta.title",
