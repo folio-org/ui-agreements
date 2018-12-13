@@ -7,19 +7,6 @@ import { Button, IconButton, Pane, PaneMenu } from '@folio/stripes/components';
 
 import AgreementForm from '../AgreementForm';
 
-const validate = (values) => {
-  const required = ['name', 'startDate', 'agreementStatus'];
-  const errors = {};
-
-  required.forEach((key) => {
-    if (!values[key]) {
-      errors[key] = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
-    }
-  });
-
-  return errors;
-};
-
 const handleSubmit = (agreement, dispatch, props) => {
   props.onUpdate(agreement)
     .then(() => props.onCancel());
@@ -162,7 +149,6 @@ class EditAgreement extends React.Component {
 
 export default stripesForm({
   form: 'EditAgreement',
-  validate,
   onSubmit: handleSubmit,
   navigationCheck: true,
   enableReinitialize: true,

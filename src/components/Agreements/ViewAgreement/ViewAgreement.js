@@ -63,14 +63,6 @@ class ViewAgreement extends React.Component {
       fetch: false,
       accumulate: true,
     },
-    orgRoleValues: {
-      type: 'okapi',
-      path: 'erm/refdataValues/SubscriptionAgreementOrg/role',
-    },
-    contactRoleValues: {
-      type: 'okapi',
-      path: 'erm/refdataValues/InternalContact/role',
-    },
     query: {},
   });
 
@@ -104,11 +96,7 @@ class ViewAgreement extends React.Component {
     const prevAgreement = get(prevProps.resources.selectedAgreement, ['records', 0], {});
     const agreement = get(this.props.resources.selectedAgreement, ['records', 0], {});
 
-    if (
-      (prevAgreement.id !== agreement.id) || // New agreement selected
-      (prevUsers.length !== users.length) || // Contacts loaded
-      (difference(prevUsers, users).length) // Contacts edited
-    ) {
+    if ((prevAgreement.id !== agreement.id) || (difference(users, prevUsers).length)) {
       this.fetchUsers();
     }
   }
@@ -168,7 +156,7 @@ class ViewAgreement extends React.Component {
     if (contacts) {
       agreement.contacts = contacts.map(c => ({
         ...c,
-        role: c.role.id,
+        role: c.role ? c.role.id : undefined,
       }));
     }
 

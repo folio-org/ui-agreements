@@ -30,6 +30,7 @@
   "agreements.contentReviews": "Content reviews",
   "agreements.contentReviewNeeded": "Content review needed?",
   "agreements.contentReviewDates": "Upcoming review dates",
+  "agreements.selectStatus": "Select the status of this agreement",
   "agreements.trials": "Trials",
   "agreements.trialAgreement": "Agreement is for trial?",
   "agreements.trialStartDate": "Trial start date",
@@ -78,6 +79,7 @@
   "contacts.name": "Name",
   "contacts.role": "Role",
   "contacts.remove": "Remove",
+  "contacts.selectRole": "Select a role for this user",
 
   "coverage.volumeShort": "Vol:",
   "coverage.issueShort": "Iss:",

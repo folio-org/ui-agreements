@@ -31,17 +31,17 @@ export default class InternalContacts extends React.Component {
 
     if (!contacts.length) return <FormattedMessage id="ui-agreements.contacts.noContacts" />;
 
-    return contacts.map((contact) => {
+    return contacts.map((contact, i) => {
       if (!contact.personal) return null;
 
       const { firstName, lastName } = contact.personal;
       const displayName = firstName ? `${lastName}, ${firstName}` : lastName;
 
       return (
-        <div>
+        <div key={i}>
           <Link to={`/users/view/${contact.user}`}>{displayName}</Link>
           ,&nbsp;
-          <span>{contact.role.label}</span>
+          <span>{contact.role ? contact.role.label : ''}</span>
         </div>
       );
     });

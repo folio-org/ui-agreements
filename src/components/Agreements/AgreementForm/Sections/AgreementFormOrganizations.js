@@ -69,6 +69,10 @@ class AgreementFormOrganizations extends React.Component {
     }
   }
 
+  validate = (value) => (
+    !value ? <FormattedMessage id="stripes-core.label.missingRequiredField" /> : undefined
+  );
+
   renderOrgList = ({ fields }) => {
     const agreementOrgs = fields.getAll() || [];
     const renderedOrgs = agreementOrgs.filter(org => !org._delete);
@@ -83,6 +87,7 @@ class AgreementFormOrganizations extends React.Component {
                 <Field
                   component={OrganizationSelection}
                   name={`orgs[${index}].org`}
+                  validate={this.validate}
                 />
               </Col>
               <Col xs={3}>
@@ -93,6 +98,7 @@ class AgreementFormOrganizations extends React.Component {
                       component={Select}
                       dataOptions={this.state.roles}
                       placeholder={placeholder}
+                      validate={this.validate}
                     />
                   )}
                 </FormattedMessage>

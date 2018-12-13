@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Icon,
   TextField,
 } from '@folio/stripes/components';
 import { Pluggable } from '@folio/stripes/core';
@@ -10,6 +9,9 @@ import { Pluggable } from '@folio/stripes/core';
 export default class UserPicker extends React.Component {
   static propTypes = {
     addUser: PropTypes.func,
+    meta: PropTypes.shape({
+      error: PropTypes.node,
+    }),
     input: PropTypes.shape({
       onChange: PropTypes.func,
       onFilter: PropTypes.func,
@@ -19,10 +21,11 @@ export default class UserPicker extends React.Component {
 
 
   render() {
-    const { addUser, input: { onChange, onFilter, value } } = this.props;
+    const { addUser, input: { onChange, value }, meta: { error } } = this.props;
 
     return (
       <TextField
+        error={error}
         endControl={(
           <Pluggable
             aria-haspopup="true"
@@ -36,7 +39,8 @@ export default class UserPicker extends React.Component {
             disableRecordCreation
             searchButtonStyle="fieldControl"
             selectUser={user => {
-              addUser(user);
+              if (addUser) addUser(user);
+
               onChange(user);
             }}
             type="find-user"
@@ -47,7 +51,6 @@ export default class UserPicker extends React.Component {
         )}
         hasClearIcon={false}
         onChange={onChange}
-        onFilter={onFilter}
         readOnly
         value={value}
       />

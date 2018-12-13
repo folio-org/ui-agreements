@@ -11,7 +11,6 @@ import {
   Col,
   Row,
   Select,
-  TextField,
 } from '@folio/stripes/components';
 
 import UserPicker from '../../../UserPicker';
@@ -77,6 +76,10 @@ export default class AgreementFormInternalContacts extends React.Component {
     }
   }
 
+  validate = (value) => (
+    !value ? <FormattedMessage id="stripes-core.label.missingRequiredField" /> : undefined
+  );
+
   renderUserName = (userId) => {
     const user = this.state.users[userId];
     if (!user || !user.personal) return '';
@@ -102,14 +105,21 @@ export default class AgreementFormInternalContacts extends React.Component {
                   format={this.renderUserName}
                   name={`contacts[${index}].user`}
                   normalize={value => value.id}
+                  validate={this.validate}
                 />
               </Col>
               <Col xs={5}>
-                <Field
-                  name={`contacts[${index}].role`}
-                  component={Select}
-                  dataOptions={this.state.roles}
-                />
+                <FormattedMessage id="ui-agreements.contacts.selectRole">
+                  {placeholder => (
+                    <Field
+                      name={`contacts[${index}].role`}
+                      component={Select}
+                      dataOptions={this.state.roles}
+                      placeholder={placeholder}
+                      validate={this.validate}
+                    />
+                  )}
+                </FormattedMessage>
               </Col>
               <Col xs={1}>
                 <IconButton
@@ -128,7 +138,11 @@ export default class AgreementFormInternalContacts extends React.Component {
   }
 
   render() {
-    if (get(this.props.parentResources, ['users', 'isPending'], true)) return <Icon icon="spinner-ellipsis" width="100px" />;
+    const users = get(this.props.parentResources, ['users', 'records'], []);
+    const contacts = get(this.props.parentResources, ['contacts', 'records'], []);
+    if (users.length < contacts.length) {
+      return <Icon icon="spinner-ellipsis" width="100px" />;
+    }
 
     return (
       <FieldArray

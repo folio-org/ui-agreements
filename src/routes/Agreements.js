@@ -67,6 +67,14 @@ class Agreements extends React.Component {
       type: 'okapi',
       path: 'erm/refdataValues/SubscriptionAgreement/contentReviewNeeded',
     },
+    orgRoleValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/SubscriptionAgreementOrg/role',
+    },
+    contactRoleValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/InternalContact/role',
+    },
     agreementFiltersInitialized: { initialValue: false },
     basket: { initialValue: [] },
     query: {},

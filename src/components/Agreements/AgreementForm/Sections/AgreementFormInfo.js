@@ -51,6 +51,10 @@ class AgreementFormInfo extends React.Component {
     return values;
   }
 
+  validate = (value) => (
+    !value ? <FormattedMessage id="stripes-core.label.missingRequiredField" /> : undefined
+  );
+
   render() {
     return (
       <Accordion
@@ -66,6 +70,7 @@ class AgreementFormInfo extends React.Component {
               name="name"
               label={<FormattedMessage id="ui-agreements.agreements.name">{name => `${name} *`}</FormattedMessage>}
               component={TextField}
+              validate={this.validate}
             />
           </Col>
         </Row>
@@ -88,6 +93,7 @@ class AgreementFormInfo extends React.Component {
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
               backendDateStandard="YYYY-MM-DD"
+              validate={this.validate}
             />
           </Col>
           <Col xs={12} md={4}>
@@ -113,13 +119,20 @@ class AgreementFormInfo extends React.Component {
         </Row>
         <Row>
           <Col xs={12} md={4}>
-            <Field
-              id="edit-agreement-status"
-              name="agreementStatus"
-              label={<FormattedMessage id="ui-agreements.agreements.agreementStatus">{agreementStatus => `${agreementStatus} *`}</FormattedMessage>}
-              component={Select}
-              dataOptions={this.getAgreementStatusValues()}
-            />
+            <FormattedMessage id="ui-agreements.agreements.selectStatus">
+              {placeholder => (
+                <Field
+                  id="edit-agreement-status"
+                  component={Select}
+                  dataOptions={this.getAgreementStatusValues()}
+                  name="agreementStatus"
+                  label={<FormattedMessage id="ui-agreements.agreements.agreementStatus">{agreementStatus => `${agreementStatus} *`}</FormattedMessage>}
+                  placeholder={placeholder}
+                  required
+                  validate={this.validate}
+                />
+              )}
+            </FormattedMessage>
           </Col>
           <Col xs={12} md={4}>
             <Field
