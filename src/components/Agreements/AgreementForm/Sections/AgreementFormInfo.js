@@ -6,6 +6,7 @@ import { Field } from 'redux-form';
 
 import {
   Accordion,
+  AccordionSet,
   Col,
   Datepicker,
   Row,
@@ -28,6 +29,12 @@ class AgreementFormInfo extends React.Component {
       isPerpetualValues: PropTypes.object,
     }),
   };
+
+  state = {
+    sections: {
+      formInternalContacts: false,
+    }
+  }
 
   getAgreementStatusValues() {
     return get(this.props.parentResources.agreementStatusValues, ['records'], [])
@@ -52,7 +59,25 @@ class AgreementFormInfo extends React.Component {
     return values;
   }
 
+  getSectionProps() {
+    return {
+      parentMutator: this.props.parentMutator,
+      parentResources: this.props.parentResources,
+    };
+  }
+
+  handleSectionToggle = ({ id }) => {
+    this.setState((prevState) => ({
+      sections: {
+        ...prevState.sections,
+        [id]: !prevState.sections[id],
+      }
+    }));
+  }
+
   render() {
+    const sectionProps = this.getSectionProps();
+
     return (
       <Accordion
         id={this.props.id}
@@ -150,7 +175,16 @@ class AgreementFormInfo extends React.Component {
             />
           </Col>
         </Row>
-        <AgreementFormInternalContacts {...this.props} />
+        <AccordionSet>
+          <Accordion
+            id="formInternalContacts"
+            label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
+            onToggle={this.handleSectionToggle}
+            open={this.state.sections.formInternalContacts}
+          >
+            <AgreementFormInternalContacts {...sectionProps} />
+          </Accordion>
+        </AccordionSet>
       </Accordion>
     );
   }

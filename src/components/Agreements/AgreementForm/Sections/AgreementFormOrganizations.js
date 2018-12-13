@@ -9,9 +9,10 @@ import {
   Accordion,
   Button,
   Col,
-  Select,
   IconButton,
+  Layout,
   Row,
+  Select,
 } from '@folio/stripes/components';
 
 import CreateOrganizationModal from '../../../CreateOrganizationModal';
@@ -70,6 +71,12 @@ class AgreementFormOrganizations extends React.Component {
     }
   }
 
+  renderNoOrgs = () => (
+    <Layout className="padding-bottom-gutter">
+      <FormattedMessage id="ui-agreements.organizations.agreementHasNone" />
+    </Layout>
+  )
+
   renderOrgList = ({ fields }) => {
     const agreementOrgs = fields.getAll() || [];
     const renderedOrgs = agreementOrgs.filter(org => !org._delete);
@@ -77,7 +84,7 @@ class AgreementFormOrganizations extends React.Component {
     return (
       <div>
         <div>
-          { !renderedOrgs.length && <FormattedMessage id="ui-agreements.organizations.agreementHasNone" /> }
+          { !renderedOrgs.length && this.renderNoOrgs() }
           { renderedOrgs.map((org, index) => (
             <Row key={index}>
               <Col xs={8}>

@@ -6,9 +6,10 @@ import { Field, FieldArray } from 'redux-form';
 
 import {
   Button,
+  Col,
   Icon,
   IconButton,
-  Col,
+  Layout,
   Row,
   Select,
 } from '@folio/stripes/components';
@@ -85,6 +86,12 @@ export default class AgreementFormInternalContacts extends React.Component {
     return firstName ? `${lastName}, ${firstName}` : lastName;
   }
 
+  renderNoContacts = () => (
+    <Layout className="padding-bottom-gutter">
+      <FormattedMessage id="ui-agreements.contacts.noContacts" />
+    </Layout>
+  );
+
   renderContactsList = ({ fields }) => {
     const contacts = fields.getAll() || [];
     const renderedContacts = contacts.filter(contact => !contact._delete);
@@ -92,7 +99,7 @@ export default class AgreementFormInternalContacts extends React.Component {
     return (
       <div>
         <div>
-          { !renderedContacts.length && <FormattedMessage id="ui-agreements.contacts.noContacts" /> }
+          { !renderedContacts.length && this.renderNoContacts() }
           { renderedContacts.map((contact, index) => (
             <Row key={index}>
               <Col xs={6}>
