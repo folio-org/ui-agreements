@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import {
   TextField,
@@ -24,36 +25,41 @@ export default class UserPicker extends React.Component {
     const { addUser, input: { onChange, value }, meta: { error } } = this.props;
 
     return (
-      <TextField
-        error={error}
-        endControl={(
-          <Pluggable
-            aria-haspopup="true"
-            columnMapping={{
-              name: 'Name',
-              patronGroup: 'Patron Group',
-              username: 'Username',
-              barcode: 'Barcode',
-            }}
-            dataKey="user"
-            disableRecordCreation
-            searchButtonStyle="fieldControl"
-            selectUser={user => {
-              if (addUser) addUser(user);
+      <FormattedMessage id="ui-agreements.userpicker.clickSearchButton">
+        {placeholder => (
+          <TextField
+            error={error}
+            endControl={(
+              <Pluggable
+                aria-haspopup="true"
+                columnMapping={{
+                  name: 'Name',
+                  patronGroup: 'Patron Group',
+                  username: 'Username',
+                  barcode: 'Barcode',
+                }}
+                dataKey="user"
+                disableRecordCreation
+                searchButtonStyle="fieldControl"
+                selectUser={user => {
+                  if (addUser) addUser(user);
 
-              onChange(user);
-            }}
-            type="find-user"
-            visibleColumns={['name', 'patronGroup', 'username', 'barcode']}
-          >
-            <span>N/A</span>
-          </Pluggable>
+                  onChange(user);
+                }}
+                type="find-user"
+                visibleColumns={['name', 'patronGroup', 'username', 'barcode']}
+              >
+                <span>N/A</span>
+              </Pluggable>
+            )}
+            hasClearIcon={false}
+            onChange={onChange}
+            placeholder={placeholder}
+            readOnly
+            value={value}
+          />
         )}
-        hasClearIcon={false}
-        onChange={onChange}
-        readOnly
-        value={value}
-      />
+      </FormattedMessage>
     );
   }
 }
