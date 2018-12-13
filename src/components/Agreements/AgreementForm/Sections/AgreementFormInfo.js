@@ -15,6 +15,7 @@ import {
 } from '@folio/stripes/components';
 
 import AgreementFormInternalContacts from './AgreementFormInternalContacts';
+import { required } from '../../../../util/validators';
 
 class AgreementFormInfo extends React.Component {
   static propTypes = {
@@ -51,10 +52,6 @@ class AgreementFormInfo extends React.Component {
     return values;
   }
 
-  validate = (value) => (
-    !value ? <FormattedMessage id="stripes-core.label.missingRequiredField" /> : undefined
-  );
-
   render() {
     return (
       <Accordion
@@ -70,7 +67,7 @@ class AgreementFormInfo extends React.Component {
               name="name"
               label={<FormattedMessage id="ui-agreements.agreements.name">{name => `${name} *`}</FormattedMessage>}
               component={TextField}
-              validate={this.validate}
+              validate={required}
             />
           </Col>
         </Row>
@@ -93,7 +90,7 @@ class AgreementFormInfo extends React.Component {
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
               backendDateStandard="YYYY-MM-DD"
-              validate={this.validate}
+              validate={required}
             />
           </Col>
           <Col xs={12} md={4}>
@@ -129,7 +126,7 @@ class AgreementFormInfo extends React.Component {
                   label={<FormattedMessage id="ui-agreements.agreements.agreementStatus">{agreementStatus => `${agreementStatus} *`}</FormattedMessage>}
                   placeholder={placeholder}
                   required
-                  validate={this.validate}
+                  validate={required}
                 />
               )}
             </FormattedMessage>

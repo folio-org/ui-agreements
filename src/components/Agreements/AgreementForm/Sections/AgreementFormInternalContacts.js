@@ -14,6 +14,7 @@ import {
 } from '@folio/stripes/components';
 
 import UserPicker from '../../../UserPicker';
+import { required } from '../../../../util/validators';
 
 export default class AgreementFormInternalContacts extends React.Component {
   static propTypes = {
@@ -76,10 +77,6 @@ export default class AgreementFormInternalContacts extends React.Component {
     }
   }
 
-  validate = (value) => (
-    !value ? <FormattedMessage id="stripes-core.label.missingRequiredField" /> : undefined
-  );
-
   renderUserName = (userId) => {
     const user = this.state.users[userId];
     if (!user || !user.personal) return '';
@@ -105,7 +102,7 @@ export default class AgreementFormInternalContacts extends React.Component {
                   format={this.renderUserName}
                   name={`contacts[${index}].user`}
                   normalize={value => value.id}
-                  validate={this.validate}
+                  validate={required}
                 />
               </Col>
               <Col xs={5}>
@@ -116,7 +113,7 @@ export default class AgreementFormInternalContacts extends React.Component {
                       component={Select}
                       dataOptions={this.state.roles}
                       placeholder={placeholder}
-                      validate={this.validate}
+                      validate={required}
                     />
                   )}
                 </FormattedMessage>
