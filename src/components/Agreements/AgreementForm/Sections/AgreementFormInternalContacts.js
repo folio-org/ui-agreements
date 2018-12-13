@@ -45,7 +45,7 @@ export default class AgreementFormInternalContacts extends React.Component {
       newState.users = users;
     }
 
-    if (Object.keys(newState)) return newState;
+    if (Object.keys(newState).length) return newState;
 
     return null;
   }
