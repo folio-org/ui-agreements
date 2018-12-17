@@ -6,6 +6,7 @@ import {
   Accordion,
   Col,
   Headline,
+  Icon,
   KeyValue,
   Row,
 } from '@folio/stripes/components';
@@ -61,7 +62,11 @@ class PackageInfo extends React.Component {
           <Col xs={6}>
             <this.connectedAddToBasketButton
               key={eresource.id}
-              addLabel={<FormattedMessage id="ui-agreements.eresources.addPackage" />}
+              addLabel={
+                <Icon icon="plus-sign">
+                  <FormattedMessage id="ui-agreements.eresources.addPackage" />
+                </Icon>
+              }
               item={entitlementOption}
               buttonProps={{ 'data-test-add-package-to-basket': true }}
             />

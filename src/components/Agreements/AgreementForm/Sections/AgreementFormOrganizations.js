@@ -12,6 +12,7 @@ import {
   Select,
   IconButton,
   Row,
+  Icon,
 } from '@folio/stripes/components';
 
 import CreateOrganizationModal from '../../../CreateOrganizationModal';
@@ -107,7 +108,9 @@ class AgreementFormOrganizations extends React.Component {
           ))}
         </div>
         <Button onClick={() => fields.push({ })}>
-          <FormattedMessage id="ui-agreements.organizations.add" />
+          <Icon icon="plus-sign">
+            <FormattedMessage id="ui-agreements.organizations.add" />
+          </Icon>
         </Button>
       </div>
     );

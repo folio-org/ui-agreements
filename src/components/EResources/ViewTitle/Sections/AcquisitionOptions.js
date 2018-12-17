@@ -81,7 +81,7 @@ class AcquisitionOptions extends React.Component {
                   return (
                     <this.connectedAddToBasketButton
                       key={option.id}
-                      addLabel={addLabel}
+                      addLabel={<Icon icon="plus-sign">{addLabel}</Icon>}
                       item={option}
                       buttonProps={buttonProps}
                     />
