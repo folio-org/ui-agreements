@@ -15,27 +15,15 @@ module.exports.test = (uiTestCtx, nightmare) => {
         logout(nightmare, config, done);
       });
 
-      it('should open app and see selected Dashboard tab', (done) => {
+      it('should open app and see selected Agreements tab', (done) => {
         nightmare
           .wait('#clickable-agreements-module')
           .click('#clickable-agreements-module')
           .wait('#agreements-module-display')
-          .wait('nav #dashboard')
-          .evaluate(() => document.querySelector('nav #dashboard').className)
+          .wait('nav #agreements')
+          .evaluate(() => document.querySelector('nav #agreements').className)
           .then(className => {
             if (!className.includes('primary')) throw Error('Dashboard tab is not selected');
-            done();
-          })
-          .catch(done);
-      });
-
-      it('should click Agreements tab and see updated URL', (done) => {
-        nightmare
-          .click('nav #agreements')
-          .wait(1000)
-          .evaluate(() => document.location.pathname)
-          .then(pathName => {
-            if (!pathName.includes('/erm/agreements')) throw Error('URL is incorrect');
             done();
           })
           .catch(done);
@@ -48,6 +36,18 @@ module.exports.test = (uiTestCtx, nightmare) => {
           .evaluate(() => document.location.pathname)
           .then(pathName => {
             if (!pathName.includes('/erm/eresources')) throw Error('URL is incorrect');
+            done();
+          })
+          .catch(done);
+      });
+
+      it('should click Agreements tab and see updated URL', (done) => {
+        nightmare
+          .click('nav #agreements')
+          .wait(1000)
+          .evaluate(() => document.location.pathname)
+          .then(pathName => {
+            if (!pathName.includes('/erm/agreements')) throw Error('URL is incorrect');
             done();
           })
           .catch(done);
