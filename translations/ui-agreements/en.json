@@ -30,6 +30,7 @@
   "agreements.contentReviews": "Content reviews",
   "agreements.contentReviewNeeded": "Content review needed?",
   "agreements.contentReviewDates": "Upcoming review dates",
+  "agreements.selectStatus": "Select the status of this agreement",
   "agreements.trials": "Trials",
   "agreements.trialAgreement": "Agreement is for trial?",
   "agreements.trialStartDate": "Trial start date",
@@ -72,6 +73,13 @@
 
   "basketSelector.selectLabel": "Select from basket",
   "basketSelector.selectPlaceholder": "Select e-resource or package",
+
+  "contacts.noContacts": "Agreement has no internal contacts.",
+  "contacts.add": "+ Add internal contact",
+  "contacts.name": "Name",
+  "contacts.role": "Role",
+  "contacts.remove": "Remove",
+  "contacts.selectRole": "Select a role for this user",
 
   "coverage.volumeShort": "Vol:",
   "coverage.issueShort": "Iss:",
@@ -125,6 +133,7 @@
   "settings.general.message": "These are your general app settings.",
   "settings.some-feature": "Some Feature",
   "settings.some-feature.message": "These are your settings for some app feature.",
-  "settings.orgRoles": "Organisationa Roles"
+  "settings.orgRoles": "Organisation Roles",
 
+  "userpicker.clickSearchButton": "Click the 'Search' button to select a user"
 }

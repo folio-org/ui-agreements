@@ -24,14 +24,14 @@ export default class OrganizationSelectionDisplay extends React.Component {
   };
 
   render() {
-    const { loading, onChange, onFilter, organizations, searchString, value } = this.props;
+    const { error, loading, onChange, onFilter, organizations, searchString, value } = this.props;
     return (
       <FormattedMessage id="ui-agreements.organizations.selectOrg">
         {placeholder => (
           <Selection
-            component={Selection}
             dataOptions={organizations}
             emptyMessage={!searchString ? <FormattedMessage id="ui-agreements.organizations.typeToSearch" /> : undefined}
+            error={error}
             formatter={(props) => {
               const { option } = props;
               if (loading || !option) return <Icon icon="spinner-ellipsis" />;

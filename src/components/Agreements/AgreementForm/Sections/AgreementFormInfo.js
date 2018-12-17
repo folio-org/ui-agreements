@@ -6,6 +6,7 @@ import { Field } from 'redux-form';
 
 import {
   Accordion,
+  AccordionSet,
   Col,
   Datepicker,
   Row,
@@ -13,6 +14,9 @@ import {
   TextArea,
   TextField,
 } from '@folio/stripes/components';
+
+import AgreementFormInternalContacts from './AgreementFormInternalContacts';
+import { required } from '../../../../util/validators';
 
 class AgreementFormInfo extends React.Component {
   static propTypes = {
@@ -25,6 +29,12 @@ class AgreementFormInfo extends React.Component {
       isPerpetualValues: PropTypes.object,
     }),
   };
+
+  state = {
+    sections: {
+      formInternalContacts: false,
+    }
+  }
 
   getAgreementStatusValues() {
     return get(this.props.parentResources.agreementStatusValues, ['records'], [])
@@ -49,7 +59,25 @@ class AgreementFormInfo extends React.Component {
     return values;
   }
 
+  getSectionProps() {
+    return {
+      parentMutator: this.props.parentMutator,
+      parentResources: this.props.parentResources,
+    };
+  }
+
+  handleSectionToggle = ({ id }) => {
+    this.setState((prevState) => ({
+      sections: {
+        ...prevState.sections,
+        [id]: !prevState.sections[id],
+      }
+    }));
+  }
+
   render() {
+    const sectionProps = this.getSectionProps();
+
     return (
       <Accordion
         id={this.props.id}
@@ -64,6 +92,7 @@ class AgreementFormInfo extends React.Component {
               name="name"
               label={<FormattedMessage id="ui-agreements.agreements.name">{name => `${name} *`}</FormattedMessage>}
               component={TextField}
+              validate={required}
             />
           </Col>
         </Row>
@@ -86,6 +115,7 @@ class AgreementFormInfo extends React.Component {
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
               backendDateStandard="YYYY-MM-DD"
+              validate={required}
             />
           </Col>
           <Col xs={12} md={4}>
@@ -111,13 +141,20 @@ class AgreementFormInfo extends React.Component {
         </Row>
         <Row>
           <Col xs={12} md={4}>
-            <Field
-              id="edit-agreement-status"
-              name="agreementStatus"
-              label={<FormattedMessage id="ui-agreements.agreements.agreementStatus">{agreementStatus => `${agreementStatus} *`}</FormattedMessage>}
-              component={Select}
-              dataOptions={this.getAgreementStatusValues()}
-            />
+            <FormattedMessage id="ui-agreements.agreements.selectStatus">
+              {placeholder => (
+                <Field
+                  id="edit-agreement-status"
+                  component={Select}
+                  dataOptions={this.getAgreementStatusValues()}
+                  name="agreementStatus"
+                  label={<FormattedMessage id="ui-agreements.agreements.agreementStatus">{agreementStatus => `${agreementStatus} *`}</FormattedMessage>}
+                  placeholder={placeholder}
+                  required
+                  validate={required}
+                />
+              )}
+            </FormattedMessage>
           </Col>
           <Col xs={12} md={4}>
             <Field
@@ -138,6 +175,16 @@ class AgreementFormInfo extends React.Component {
             />
           </Col>
         </Row>
+        <AccordionSet>
+          <Accordion
+            id="formInternalContacts"
+            label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
+            onToggle={this.handleSectionToggle}
+            open={this.state.sections.formInternalContacts}
+          >
+            <AgreementFormInternalContacts {...sectionProps} />
+          </Accordion>
+        </AccordionSet>
       </Accordion>
     );
   }

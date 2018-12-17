@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { cloneDeep, get } from 'lodash';
+import { cloneDeep, difference, get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -27,18 +27,17 @@ import {
 
 import EditAgreement from '../EditAgreement';
 
+// Don't refresh when 'organizations' gets mutated since it's going to be in CreateOrganizationModal while
+// the agreement is being edited. If we did refresh, then the entire edit process would be interrupted
+// because this resource would get isPending/nulled out and we'd throw up the Loading pane in this component.
+const shouldRefresh = (resource, action, refresh) => refresh && action.meta.resource !== 'organizations';
+
 class ViewAgreement extends React.Component {
   static manifest = Object.freeze({
     selectedAgreement: {
       type: 'okapi',
       path: 'erm/sas/:{id}',
-      // Don't refresh when 'organizations' gets mutated since it's going to be in CreateOrganizationModal
-      // while the agreement is being edited. If we did refresh, then the entire edit process would be
-      // interrupted because this resource would get isPending/nulled out and we'd throw up the Loading
-      // pane in this component.
-      shouldRefresh: (resource, action, refresh) => {
-        return refresh && action.meta.resource !== 'organizations';
-      },
+      shouldRefresh,
     },
     agreementLines: {
       type: 'okapi',
@@ -47,10 +46,22 @@ class ViewAgreement extends React.Component {
         match: 'owner.id',
         term: ':{id}',
       },
-      // See above comment on shouldRefresh
-      shouldRefresh: (resource, action, refresh) => {
-        return refresh && action.meta.resource !== 'organizations';
+      shouldRefresh,
+    },
+    contacts: {
+      type: 'okapi',
+      path: 'erm/contacts',
+      params: {
+        match: 'owner.id',
+        term: ':{id}',
       },
+      shouldRefresh,
+    },
+    users: {
+      type: 'okapi',
+      path: '/users',
+      fetch: false,
+      accumulate: true,
     },
     query: {},
   });
@@ -75,6 +86,21 @@ class ViewAgreement extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.fetchUsers();
+  }
+
+  componentDidUpdate(prevProps) {
+    const prevUsers = get(prevProps.resources.contacts, ['records'], []).map(c => c.user);
+    const users = get(this.props.resources.contacts, ['records'], []).map(c => c.user);
+    const prevAgreement = get(prevProps.resources.selectedAgreement, ['records', 0], {});
+    const agreement = get(this.props.resources.selectedAgreement, ['records', 0], {});
+
+    if ((prevAgreement.id !== agreement.id) || (difference(users, prevUsers).length)) {
+      this.fetchUsers();
+    }
+  }
+
   getAgreement() {
     return get(this.props.resources.selectedAgreement, ['records', 0], {});
   }
@@ -86,9 +112,30 @@ class ViewAgreement extends React.Component {
     return get(this.props.resources.agreementLines, ['records'], []);
   }
 
+  getContacts() {
+    const isPending =
+      get(this.props.resources.contacts, ['isPending'], true) ||
+      get(this.props.resources.users, ['isPending'], true);
+
+    if (isPending) return undefined;
+
+    const contacts = get(this.props.resources.contacts, ['records'], []);
+    const users = get(this.props.resources.users, ['records'], []);
+
+    return contacts.map((contact, i) => ({
+      ...users[i],
+      ...contact,
+    }));
+  }
+
+  getUser(userId) {
+    const users = get(this.props.resources.users, ['records'], []);
+    return users.find(u => u.id === userId);
+  }
+
   getInitialValues() {
     const agreement = cloneDeep(this.getAgreement());
-    const { agreementStatus, renewalPriority, isPerpetual, orgs } = agreement;
+    const { agreementStatus, renewalPriority, isPerpetual, contacts, orgs } = agreement;
 
     if (agreementStatus && agreementStatus.id) {
       agreement.agreementStatus = agreementStatus.id;
@@ -103,9 +150,13 @@ class ViewAgreement extends React.Component {
     }
 
     if (orgs && orgs.length) {
-      agreement.orgs = orgs.map(o => ({
-        ...o,
-        role: o.role ? o.role.label : undefined,
+      agreement.orgs = orgs.map(o => ({ ...o, role: o.role.id }));
+    }
+
+    if (contacts) {
+      agreement.contacts = contacts.map(c => ({
+        ...c,
+        role: c.role ? c.role.id : undefined,
       }));
     }
 
@@ -116,9 +167,26 @@ class ViewAgreement extends React.Component {
     return {
       agreement: this.getAgreement(),
       agreementLines: this.getAgreementLines(),
+      contacts: this.getContacts(),
       onToggle: this.handleSectionToggle,
+      parentMutator: {
+        ...this.props.parentMutator,
+        ...this.props.mutator
+      },
+      parentResources: {
+        ...this.props.parentResources,
+        ...this.props.resources
+      },
       stripes: this.props.stripes,
     };
+  }
+
+  fetchUsers = () => {
+    const { mutator: { users } } = this.props;
+    const contacts = get(this.props.resources.contacts, ['records'], []);
+
+    users.reset();
+    contacts.forEach(contact => users.GET({ path: `users/${contact.user}` }));
   }
 
   handleSectionToggle = ({ id }) => {
@@ -164,6 +232,7 @@ class ViewAgreement extends React.Component {
               {...this.props}
               agreement={this.getAgreement()}
               agreementLines={this.getAgreementLines()}
+              contacts={this.getContacts()}
               onCancel={this.props.onCloseEdit}
               parentMutator={{
                 ...this.props.parentMutator,

@@ -9,14 +9,16 @@ import {
   Accordion,
   Button,
   Col,
-  Select,
   IconButton,
+  Layout,
   Row,
+  Select,
   Icon,
 } from '@folio/stripes/components';
 
 import CreateOrganizationModal from '../../../CreateOrganizationModal';
 import OrganizationSelection from '../../../OrganizationSelection';
+import { required } from '../../../../util/validators';
 
 class AgreementFormOrganizations extends React.Component {
   static propTypes = {
@@ -45,7 +47,7 @@ class AgreementFormOrganizations extends React.Component {
   static getDerivedStateFromProps(nextProps, state) {
     const roles = get(nextProps.parentResources.orgRoleValues, ['records'], []);
     if (state.roles.length !== roles.length) {
-      return { roles: roles.map(({ label }) => ({ value: label, label })) };
+      return { roles: roles.map(({ id, label }) => ({ value: id, label })) };
     }
 
     return null;
@@ -70,6 +72,12 @@ class AgreementFormOrganizations extends React.Component {
     }
   }
 
+  renderNoOrgs = () => (
+    <Layout className="padding-bottom-gutter">
+      <FormattedMessage id="ui-agreements.organizations.agreementHasNone" />
+    </Layout>
+  )
+
   renderOrgList = ({ fields }) => {
     const agreementOrgs = fields.getAll() || [];
     const renderedOrgs = agreementOrgs.filter(org => !org._delete);
@@ -77,13 +85,14 @@ class AgreementFormOrganizations extends React.Component {
     return (
       <div>
         <div>
-          { !renderedOrgs.length && <FormattedMessage id="ui-agreements.organizations.agreementHasNone" /> }
+          { !renderedOrgs.length && this.renderNoOrgs() }
           { renderedOrgs.map((org, index) => (
             <Row key={index}>
               <Col xs={8}>
                 <Field
                   component={OrganizationSelection}
                   name={`orgs[${index}].org`}
+                  validate={required}
                 />
               </Col>
               <Col xs={3}>
@@ -94,6 +103,7 @@ class AgreementFormOrganizations extends React.Component {
                       component={Select}
                       dataOptions={this.state.roles}
                       placeholder={placeholder}
+                      validate={required}
                     />
                   )}
                 </FormattedMessage>

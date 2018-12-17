@@ -20,9 +20,12 @@ export default class OrganizationSelectionContainer extends React.Component {
   });
 
   static propTypes = {
+    meta: PropTypes.shape({
+      error: PropTypes.node,
+    }),
     input: PropTypes.shape({
       onChange: PropTypes.func,
-      value: PropTypes.oneOfType(PropTypes.object, PropTypes.string),
+      value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     }),
     mutator: PropTypes.shape({
       orgNameFilter: PropTypes.shape({
@@ -79,6 +82,7 @@ export default class OrganizationSelectionContainer extends React.Component {
   render() {
     return (
       <OrganizationSelectionDisplay
+        error={get(this.props, ['meta', 'error'])}
         loading={get(this.props.resources, ['organizations', 'isPending'], false)}
         onChange={this.handleChange}
         onFilter={this.handleFilter}
