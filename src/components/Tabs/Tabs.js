@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Button, SegmentedControl } from '@folio/stripes/components';
+import { Button, ButtonGroup } from '@folio/stripes/components';
 
 import css from './Tabs.css';
 
@@ -62,7 +62,9 @@ class Tabs extends React.Component {
     this.setState({ tab });
   }
 
-  handleActivate = ({ id }) => {
+  handleNavigate = (e) => {
+    const { id } = e.target;
+
     this.persistSortAndFilters();
 
     this.setState({ tab: id });
@@ -78,19 +80,28 @@ class Tabs extends React.Component {
   }
 
   render() {
+    const { tab } = this.state;
+
     return (
       <div className={css.SegControl}>
-        <SegmentedControl activeId={this.state.tab} onActivate={this.handleActivate}>
-          <Button id="dashboard">
-            <FormattedMessage id="ui-agreements.tabs.dashboard" />
-          </Button>
-          <Button id="agreements">
+        <ButtonGroup tagName="nav">
+          <Button
+            id="agreements"
+            buttonStyle={tab === 'agreements' ? 'primary' : undefined}
+            fullWidth
+            onClick={this.handleNavigate}
+          >
             <FormattedMessage id="ui-agreements.tabs.agreements" />
           </Button>
-          <Button id="eresources">
+          <Button
+            id="eresources"
+            buttonStyle={tab === 'eresources' ? 'primary' : undefined}
+            fullWidth
+            onClick={this.handleNavigate}
+          >
             <FormattedMessage id="ui-agreements.tabs.eresources" />
           </Button>
-        </SegmentedControl>
+        </ButtonGroup>
       </div>
     );
   }

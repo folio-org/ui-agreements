@@ -95,10 +95,6 @@ export default class ERM extends React.Component {
         <div className={css.body}>
           <Switch>
             <Route
-              path={`${match.path}/dashboard`}
-              render={() => <this.connectedDashboard stripes={stripes} />}
-            />
-            <Route
               path={`${match.path}/agreements`}
               render={() => <this.connectedAgreements stripes={stripes} />}
             />
