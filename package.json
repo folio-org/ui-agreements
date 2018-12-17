@@ -13,10 +13,10 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run nav/agreement-crud/basket",
-    "test-nav": "stripes test nightmare --run nav",
-    "test-agreement-crud": "stripes test nightmare --run agreement-crud",
-    "test-basket": "stripes test nightmare --run basket",
+    "test": "stripes test nightmare --show --run nav/agreement-crud/basket",
+    "test-nav": "stripes test nightmare --show --run nav",
+    "test-agreement-crud": "stripes test nightmare --show --run agreement-crud",
+    "test-basket": "stripes test nightmare --show --run basket",
     "lint": "eslint src"
   },
   "devDependencies": {
@@ -51,7 +51,7 @@
     "type": "app",
     "displayName": "ui-agreements.meta.title",
     "route": "/erm",
-    "home": "/erm/dashboard",
+    "home": "/erm/agreements?sort=Name&filters=agreementStatus.Requested,agreementStatus.In Negotiation,agreementStatus.Draft,agreementStatus.Active",
     "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {},

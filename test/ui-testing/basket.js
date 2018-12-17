@@ -148,7 +148,7 @@ module.exports.test = (uiTestCtx, nightmare) => {
           .then(done)
           .catch(done);
       });
-/*
+
       describe('create agreement via Basket from first and third items in basket', () => {
         it(`should create a new agreement: ${values.agreementName}`, done => {
           nightmare
@@ -191,7 +191,7 @@ module.exports.test = (uiTestCtx, nightmare) => {
 
         shouldHaveCorrectAgreementLines(nightmare, [0, 2]);
       });
-*/
+
       describe('create agreement via New Agreement with second item > add first and third items via Basket', () => {
         const agreement = AgreementCRUD.generateAgreementValues();
 
