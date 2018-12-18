@@ -41,7 +41,7 @@ export default class CoverageStatements extends React.Component {
         <Layout className="margin-end-gutter">
           {this.renderDate(statement.startDate, statement.startVolume, statement.startIssue)}
         </Layout>
-        <Icon icon="right-arrow" />
+        <Icon icon="arrow-right" />
         <Layout className="margin-start-gutter">
           {this.renderDate(statement.endDate, statement.endVolume, statement.endIssue)}
         </Layout>

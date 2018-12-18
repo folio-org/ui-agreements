@@ -8,6 +8,7 @@ import EresourcesCovered from './EresourcesCovered';
 
 export default class Eresources extends React.Component {
   static propTypes = {
+    fetchMoreEresources: PropTypes.func,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
