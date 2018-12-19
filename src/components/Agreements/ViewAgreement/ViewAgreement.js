@@ -59,7 +59,7 @@ class ViewAgreement extends React.Component {
       },
       shouldRefresh,
     },
-    eresources: {
+    agreementEresources: {
       type: 'okapi',
       path: 'erm/sas/:{id}/resources',
       params: {
@@ -67,7 +67,7 @@ class ViewAgreement extends React.Component {
         sort: 'pti.titleInstance.name;asc',
       },
       records: 'results',
-      recordsRequired: '%{eresourcesCount}',
+      recordsRequired: '%{agreementEresourcesCount}',
       perRequest: ERESOURCES_RESULTS_INTERVAL,
       limitParam: 'perPage',
       shouldRefresh,
@@ -78,7 +78,7 @@ class ViewAgreement extends React.Component {
       fetch: false,
       accumulate: true,
     },
-    eresourcesCount: { initialValue: ERESOURCES_RESULTS_INTERVAL },
+    agreementEresourcesCount: { initialValue: ERESOURCES_RESULTS_INTERVAL },
     query: {},
   });
 
@@ -206,8 +206,8 @@ class ViewAgreement extends React.Component {
   }
 
   fetchMoreEresources = () => {
-    const { eresourcesCount } = this.props.resources;
-    this.props.mutator.eresourcesCount.replace(eresourcesCount + ERESOURCES_RESULTS_INTERVAL);
+    const { agreementEresourcesCount } = this.props.resources;
+    this.props.mutator.agreementEresourcesCount.replace(agreementEresourcesCount + ERESOURCES_RESULTS_INTERVAL);
   }
 
   handleSectionToggle = ({ id }) => {

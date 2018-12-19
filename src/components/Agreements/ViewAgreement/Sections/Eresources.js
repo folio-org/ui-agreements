@@ -25,29 +25,31 @@ export default class Eresources extends React.Component {
   }
 
   render() {
+    // The rendering of agreement lines and covered eresources can be fairly expensive.
+    // To do so, they may be using virtualized rendering or other techniques which require
+    // them to calculate how many lines/resources to show based on the DOM node heights.
+    // When the accordions are hidden, the heights will be 0 and throw off the calculations,
+    // so we're being safe and extra performant by not rendering those components here when
+    // it's not necessary.
+
+    const { id, onToggle, open } = this.props;
+    const { eResourcesCoveredOpen } = this.state;
+
     return (
       <Accordion
-        id={this.props.id}
+        id={id}
         label={<FormattedMessage id="ui-agreements.agreements.eresourceAgreementLines" />}
-        open={this.props.open}
-        onToggle={this.props.onToggle}
+        open={open}
+        onToggle={onToggle}
       >
-        <Row>
-          <Col xs={12}>
-            <EresourceAgreementLines {...this.props} />
-          </Col>
-        </Row>
+        { open ? <EresourceAgreementLines {...this.props} /> : <div /> }
         <Accordion
           id="eresources-covered"
           label={<FormattedMessage id="ui-agreements.agreements.eresourcesCovered" />}
-          open={this.state.eResourcesCoveredOpen}
+          open={eResourcesCoveredOpen}
           onToggle={this.onToggleEresourcesCovered}
         >
-          <Row>
-            <Col xs={12}>
-              <EresourcesCovered {...this.props} />
-            </Col>
-          </Row>
+          {open && eResourcesCoveredOpen ? <EresourcesCovered {...this.props} /> : <div /> }
         </Accordion>
       </Accordion>
     );
