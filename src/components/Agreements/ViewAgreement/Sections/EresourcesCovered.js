@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
-
-import {
-  MultiColumnList,
-} from '@folio/stripes/components';
+import { MultiColumnList } from '@folio/stripes/components';
 
 import CoverageStatements from '../../../CoverageStatements';
 
@@ -16,11 +13,8 @@ export default class EresourcesCovered extends React.Component {
     parentResources: PropTypes.shape({
       agreementEresources: PropTypes.object,
     }),
+    visible: PropTypes.bool,
   };
-
-  state = {
-    mountedMCL: false,
-  }
 
   columnMapping = {
     name: <FormattedMessage id="ui-agreements.eresources.name" />,
@@ -57,24 +51,16 @@ export default class EresourcesCovered extends React.Component {
     'coverage',
   ]
 
-  // The reason for all the `mountedMCL` business is that we have to ensure that the MCL has been mounted
-  // and its DOM nodes are up before passing it data. If the data is passed before it has mounted,
-  // then the `virtualize` row calculations will be incorrect because the rows will all be of height 0.
-  handleMountedMCL = () => {
-    this.setState({ mountedMCL: true });
-  }
-
   render() {
     const agreementEresources = get(this.props.parentResources, ['agreementEresources', 'records'], []);
 
     return (
       <MultiColumnList
         columnMapping={this.columnMapping}
-        contentData={this.state.mountedMCL ? agreementEresources : []}
+        contentData={this.props.visible ? agreementEresources : []}
         formatter={this.formatter}
         height={800}
         id="eresources-covered"
-        instanceRef={this.handleMountedMCL}
         interactive={false}
         onNeedMoreData={this.props.fetchMoreEresources}
         virtualize

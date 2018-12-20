@@ -3,16 +3,14 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import Link from 'react-router-dom/Link';
-
-import {
-  MultiColumnList,
-} from '@folio/stripes/components';
+import { MultiColumnList } from '@folio/stripes/components';
 
 import { renderResourceType } from '../../../../util/resourceType';
 
 export default class EresourceAgreementLines extends React.Component {
   static propTypes = {
     agreementLines: PropTypes.arrayOf(PropTypes.object),
+    visible: PropTypes.bool,
   };
 
   columnWidths = {
@@ -63,7 +61,7 @@ export default class EresourceAgreementLines extends React.Component {
       <MultiColumnList
         columnMapping={this.columnMapping}
         columnWidths={this.columnWidths}
-        contentData={this.props.agreementLines}
+        contentData={this.props.visible ? this.props.agreementLines : []}
         formatter={this.formatter}
         id="agreement-lines"
         interactive={false}
