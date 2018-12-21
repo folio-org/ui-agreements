@@ -27,6 +27,8 @@ import {
 
 import EditAgreement from '../EditAgreement';
 
+const ERESOURCES_RESULTS_INTERVAL = 100;
+
 // Don't refresh when 'organizations' gets mutated since it's going to be in CreateOrganizationModal while
 // the agreement is being edited. If we did refresh, then the entire edit process would be interrupted
 // because this resource would get isPending/nulled out and we'd throw up the Loading pane in this component.
@@ -57,12 +59,26 @@ class ViewAgreement extends React.Component {
       },
       shouldRefresh,
     },
+    agreementEresources: {
+      type: 'okapi',
+      path: 'erm/sas/:{id}/resources',
+      params: {
+        stats: 'true',
+        sort: 'pti.titleInstance.name;asc',
+      },
+      records: 'results',
+      recordsRequired: '%{agreementEresourcesCount}',
+      perRequest: ERESOURCES_RESULTS_INTERVAL,
+      limitParam: 'perPage',
+      shouldRefresh,
+    },
     users: {
       type: 'okapi',
       path: '/users',
       fetch: false,
       accumulate: true,
     },
+    agreementEresourcesCount: { initialValue: ERESOURCES_RESULTS_INTERVAL },
     query: {},
   });
 
@@ -189,6 +205,11 @@ class ViewAgreement extends React.Component {
     contacts.forEach(contact => users.GET({ path: `users/${contact.user}` }));
   }
 
+  fetchMoreEresources = () => {
+    const { agreementEresourcesCount } = this.props.resources;
+    this.props.mutator.agreementEresourcesCount.replace(agreementEresourcesCount + ERESOURCES_RESULTS_INTERVAL);
+  }
+
   handleSectionToggle = ({ id }) => {
     this.setState((prevState) => ({
       sections: {
@@ -291,12 +312,37 @@ class ViewAgreement extends React.Component {
               <ExpandAllButton accordionStatus={this.state.sections} onToggle={this.handleAllSectionsToggle} />
             </Col>
           </Row>
-          <AgreementInfo id="agreementInfo" open={this.state.sections.agreementInfo} {...sectionProps} />
-          <License id="license" open={this.state.sections.license} {...sectionProps} />
-          <LicenseBusinessTerms id="licenseBusinessTerms" open={this.state.sections.licenseBusinessTerms} {...sectionProps} />
-          <Organizations id="organizations" open={this.state.sections.organizations} {...sectionProps} />
-          <Eresources id="eresources" open={this.state.sections.eresources} {...sectionProps} />
-          <AssociatedAgreements id="associatedAgreements" open={this.state.sections.associatedAgreements} {...sectionProps} />
+          <AgreementInfo
+            id="agreementInfo"
+            open={this.state.sections.agreementInfo}
+            {...sectionProps}
+          />
+          <License
+            id="license"
+            open={this.state.sections.license}
+            {...sectionProps}
+          />
+          <LicenseBusinessTerms
+            id="licenseBusinessTerms"
+            open={this.state.sections.licenseBusinessTerms}
+            {...sectionProps}
+          />
+          <Organizations
+            id="organizations"
+            open={this.state.sections.organizations}
+            {...sectionProps}
+          />
+          <Eresources
+            id="eresources"
+            open={this.state.sections.eresources}
+            fetchMoreEresources={this.fetchMoreEresources}
+            {...sectionProps}
+          />
+          <AssociatedAgreements
+            id="associatedAgreements"
+            open={this.state.sections.associatedAgreements}
+            {...sectionProps}
+          />
         </AccordionSet>
         { this.renderEditLayer() }
       </Pane>

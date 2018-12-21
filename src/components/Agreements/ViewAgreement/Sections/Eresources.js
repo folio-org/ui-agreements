@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Accordion, Col, Row } from '@folio/stripes/components';
+import { Accordion } from '@folio/stripes/components';
 
 import EresourceAgreementLines from './EresourceAgreementLines';
 import EresourcesCovered from './EresourcesCovered';
 
 export default class Eresources extends React.Component {
   static propTypes = {
+    fetchMoreEresources: PropTypes.func,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
@@ -24,29 +25,30 @@ export default class Eresources extends React.Component {
   }
 
   render() {
+    const { id, onToggle, open } = this.props;
+    const { eResourcesCoveredOpen } = this.state;
+
     return (
       <Accordion
-        id={this.props.id}
+        id={id}
         label={<FormattedMessage id="ui-agreements.agreements.eresourceAgreementLines" />}
-        open={this.props.open}
-        onToggle={this.props.onToggle}
+        open={open}
+        onToggle={onToggle}
       >
-        <Row>
-          <Col xs={12}>
-            <EresourceAgreementLines {...this.props} />
-          </Col>
-        </Row>
+        <EresourceAgreementLines
+          visible={open}
+          {...this.props}
+        />
         <Accordion
           id="eresources-covered"
           label={<FormattedMessage id="ui-agreements.agreements.eresourcesCovered" />}
-          open={this.state.eResourcesCoveredOpen}
+          open={eResourcesCoveredOpen}
           onToggle={this.onToggleEresourcesCovered}
         >
-          <Row>
-            <Col xs={12}>
-              <EresourcesCovered {...this.props} />
-            </Col>
-          </Row>
+          <EresourcesCovered
+            visible={open && eResourcesCoveredOpen}
+            {...this.props}
+          />
         </Accordion>
       </Accordion>
     );
