@@ -21,18 +21,18 @@ export default class OrgRoleSettings extends React.Component {
         { labelSingular => (
           <this.connectedControlledVocab
             {...this.props}
-            dataKey={undefined}
             baseUrl="erm/refdataValues/SubscriptionAgreementOrg/role"
-            label={<FormattedMessage id="ui-agreements.settings.orgRoles" />}
-            labelSingular={labelSingular}
-            visibleFields={['label']}
             columnMapping={{
               label: <FormattedMessage id="ui-agreements.settings.orgRoles.role" />
             }}
+            dataKey={undefined}
             hiddenFields={['numberOfObjects']}
-            nameKey="label"
             id="cv-org-roles"
+            label={<FormattedMessage id="ui-agreements.settings.orgRoles" />}
+            labelSingular={labelSingular}
+            nameKey="label"
             sortby="label"
+            visibleFields={['label']}
           />
         )}
       </FormattedMessage>
