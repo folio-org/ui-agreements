@@ -28,10 +28,8 @@ export default class EresourcesCovered extends React.Component {
 
   formatter = {
     name: e => {
-      const name = get(e._object, ['pti', 'titleInstance', 'name'], '-');
-      const id = get(e._object, ['pti', 'id']);
-
-      return <EResourceLink eresource={{ id, name }} />;
+      const titleInstance = get(e._object, ['pti', 'titleInstance'], {});
+      return <EResourceLink eresource={titleInstance} />;
     },
     platform: e => get(e._object, ['pti', 'platform', 'name'], '-'),
     package: e => get(e._object, ['pkg', 'name'], '-'),

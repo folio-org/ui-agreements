@@ -32,8 +32,8 @@ export default class EresourceAgreementLines extends React.Component {
       const resource = get(line.resource, ['_object', 'pti', 'titleInstance'], line.resource);
       return (
         <EResourceLink
-          data-test-resource-id={line.resource.id}
           eresource={resource}
+          linkProps={{ 'data-test-resource-id': line.resource.id }}
         />
       );
     },
