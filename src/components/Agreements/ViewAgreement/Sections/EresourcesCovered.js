@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import Link from 'react-router-dom/Link';
 import { MultiColumnList } from '@folio/stripes/components';
 
 import CoverageStatements from '../../../CoverageStatements';
+import EResourceLink from '../../../EResourceLink';
 
 export default class EresourcesCovered extends React.Component {
   static propTypes = {
@@ -29,9 +29,9 @@ export default class EresourcesCovered extends React.Component {
   formatter = {
     name: e => {
       const name = get(e._object, ['pti', 'titleInstance', 'name'], '-');
-      const eresourceId = get(e._object, ['pti', 'id']);
+      const id = get(e._object, ['pti', 'id']);
 
-      return eresourceId ? <Link to={`/erm/eresources/view/${eresourceId}`}>{name}</Link> : name;
+      return <EResourceLink eresource={{ id, name }} />;
     },
     platform: e => get(e._object, ['pti', 'platform', 'name'], '-'),
     package: e => get(e._object, ['pkg', 'name'], '-'),

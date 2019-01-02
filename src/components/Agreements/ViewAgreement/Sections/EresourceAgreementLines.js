@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
-import Link from 'react-router-dom/Link';
 import { MultiColumnList } from '@folio/stripes/components';
 
 import { renderResourceType } from '../../../../util/resourceType';
+import EResourceLink from '../../../EResourceLink';
 
 export default class EresourceAgreementLines extends React.Component {
   static propTypes = {
@@ -31,12 +31,10 @@ export default class EresourceAgreementLines extends React.Component {
     name: line => {
       const resource = get(line.resource, ['_object', 'pti', 'titleInstance'], line.resource);
       return (
-        <Link
+        <EResourceLink
           data-test-resource-id={line.resource.id}
-          to={`/erm/eresources/view/${resource.id}`}
-        >
-          {resource.name}
-        </Link>
+          eresource={resource}
+        />
       );
     },
     platform: line => (

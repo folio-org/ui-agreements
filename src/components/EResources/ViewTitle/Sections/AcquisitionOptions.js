@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import Link from 'react-router-dom/Link';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import {
   Accordion,
@@ -13,6 +12,7 @@ import {
 
 import AddToBasketButton from '../../../AddToBasketButton';
 import { isPackage, renderResourceType, renderResourceSourceKb } from '../../../../util/resourceType';
+import EResourceLink from '../../../EResourceLink';
 
 class AcquisitionOptions extends React.Component {
   static manifest = Object.freeze({
@@ -64,7 +64,7 @@ class AcquisitionOptions extends React.Component {
               visibleColumns={['sourceKb', 'package', 'platform', 'acqMethod', 'add']}
               formatter={{
                 sourceKb: option => renderResourceSourceKb(option),
-                package: option => <Link to={`/erm/eresources/view/${option.id}`}>{option.name}</Link>,
+                package: option => <EResourceLink eresource={option} />,
                 platform: option => get(option, ['_object', 'pti', 'platform', 'name'], '-'),
                 acqMethod: option => renderResourceType(option),
                 add: option => {
