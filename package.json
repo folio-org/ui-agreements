@@ -54,7 +54,9 @@
     "home": "/erm/agreements?sort=Name&filters=agreementStatus.Requested,agreementStatus.In Negotiation,agreementStatus.Draft,agreementStatus.Active",
     "hasSettings": true,
     "queryResource": "query",
-    "okapiInterfaces": {},
+    "okapiInterfaces": {
+      "erm": "1.0"
+    },
     "permissionSets": [
       {
         "permissionName": "module.agreements.enabled",
