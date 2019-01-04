@@ -157,8 +157,8 @@ class Agreements extends React.Component {
           resultCountIncrement={INITIAL_RESULT_COUNT}
           viewRecordComponent={ViewAgreement}
           editRecordComponent={EditAgreement}
-          viewRecordPerms="module.erm.enabled"
-          newRecordPerms="module.erm.enabled"
+          viewRecordPerms="ui-agreements.agreements.view"
+          newRecordPerms="ui-agreements.agreements.create"
           onCreate={this.handleCreate}
           detailProps={{
             onUpdate: this.handleUpdate

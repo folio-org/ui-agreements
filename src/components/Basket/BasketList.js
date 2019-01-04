@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -14,6 +13,7 @@ import {
 
 import { renderResourceType } from '../../util/resourceType';
 import CoverageStatements from '../CoverageStatements';
+import EResourceLink from '../EResourceLink';
 
 class BasketList extends React.Component {
   static propTypes = {
@@ -52,13 +52,13 @@ class BasketList extends React.Component {
                   onChange={() => this.props.onToggleItem(resource)}
                 />
               ),
-              name: resource => <Link to={`/erm/eresources/view/${resource.id}`}>{resource.name}</Link>,
+              name: resource => <EResourceLink eresource={resource} />,
               type: resource => renderResourceType(resource),
               package: resource => {
                 const pkg = get(resource, ['_object', 'pkg']);
                 if (!pkg) return '-';
 
-                return <Link to={`/erm/eresources/view/${pkg.id}`}>{pkg.name}</Link>;
+                return <EResourceLink eresource={pkg} />;
               },
               publisher: () => 'TBD',
               platform: resource => (

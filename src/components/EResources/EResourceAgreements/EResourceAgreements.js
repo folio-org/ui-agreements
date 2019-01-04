@@ -11,6 +11,7 @@ import {
 } from '@folio/stripes/components';
 
 import { renderResourceType } from '../../../util/resourceType';
+import EResourceLink from '../../EResourceLink';
 
 class EResourceAgreements extends React.Component {
   static manifest = Object.freeze({
@@ -48,7 +49,7 @@ class EResourceAgreements extends React.Component {
     endDate: ({ owner }) => owner.endDate && <FormattedDate value={owner.endDate} />,
     ...(this.props.type === 'title' ?
       {
-        package: ({ resource }) => <Link to={`/erm/eresources/view/${resource.id}`}>{resource.name}</Link>,
+        package: ({ resource }) => <EResourceLink eresource={resource} />,
         acqMethod: ({ resource }) => renderResourceType(resource),
       }
       :

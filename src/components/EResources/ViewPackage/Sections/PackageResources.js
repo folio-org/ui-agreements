@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import Link from 'react-router-dom/Link';
 
 import {
   Accordion,
@@ -10,6 +9,7 @@ import {
 } from '@folio/stripes/components';
 
 import CoverageStatements from '../../../CoverageStatements';
+import EResourceLink from '../../../EResourceLink';
 
 class PackageResources extends React.Component {
   static manifest = Object.freeze({
@@ -61,8 +61,7 @@ class PackageResources extends React.Component {
           }}
           formatter={{
             name: pci => {
-              const { id, name } = pci._object.pti.titleInstance;
-              return <Link to={`/erm/eresources/view/${id}`}>{name}</Link>;
+              return <EResourceLink eresource={pci._object.pti.titleInstance} />;
             },
             platform: pci => get(pci._object, ['pti', 'platform', 'name'], ''),
             coverage: pci => <CoverageStatements statements={pci._object.coverageStatements} />,

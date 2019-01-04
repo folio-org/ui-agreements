@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { get } from 'lodash';
 import { FieldArray } from 'redux-form';
-import Link from 'react-router-dom/Link';
 
 import {
   Accordion,
@@ -15,6 +14,7 @@ import {
 
 import { renderResourceType } from '../../../../util/resourceType';
 import BasketSelector from '../../../BasketSelector';
+import EResourceLink from '../../../EResourceLink';
 
 class AgreementFormEresources extends React.Component {
   static propTypes = {
@@ -104,7 +104,7 @@ class AgreementFormEresources extends React.Component {
             name: (line) => {
               const resource = this.getLineResource(line);
               const title = get(resource, ['_object', 'pti', 'titleInstance'], resource);
-              return <Link to={`/erm/eresources/view/${title.id}`}>{title.name}</Link>;
+              return <EResourceLink eresource={title} />;
             },
             platform: (line) => {
               const resource = this.getLineResource(line);
