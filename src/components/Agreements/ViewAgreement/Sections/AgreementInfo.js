@@ -23,24 +23,6 @@ export default class AgreementInfo extends React.Component {
     open: PropTypes.bool,
   };
 
-  state = {
-    sections: {
-      internalContacts: false,
-      contentReviews: false,
-      trials: false,
-      reviewHistory: false,
-    }
-  }
-
-  handleSectionToggle = ({ id }) => {
-    this.setState((prevState) => ({
-      sections: {
-        ...prevState.sections,
-        [id]: !prevState.sections[id],
-      }
-    }));
-  }
-
   render() {
     const { agreement } = this.props;
 
@@ -95,36 +77,16 @@ export default class AgreementInfo extends React.Component {
         <Row className={css.agreementInfoSections}>
           <Col xs={12}>
             <AccordionSet>
-              <Accordion
-                id="internalContacts"
-                label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
-                onToggle={this.handleSectionToggle}
-                open={this.state.sections.internalContacts}
-              >
+              <Accordion closedByDefault label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}>
                 <InternalContacts key={agreement.id} {...this.props} />
               </Accordion>
-              <Accordion
-                id="contentReviews"
-                label={<FormattedMessage id="ui-agreements.agreements.contentReviews" />}
-                onToggle={this.handleSectionToggle}
-                open={this.state.sections.contentReviews}
-              >
+              <Accordion closedByDefault label={<FormattedMessage id="ui-agreements.agreements.contentReviews" />}>
                 -
               </Accordion>
-              <Accordion
-                id="trials"
-                label={<FormattedMessage id="ui-agreements.agreements.trials" />}
-                onToggle={this.handleSectionToggle}
-                open={this.state.sections.trials}
-              >
+              <Accordion closedByDefault label={<FormattedMessage id="ui-agreements.agreements.trials" />}>
                 -
               </Accordion>
-              <Accordion
-                id="reviewHistory"
-                label={<FormattedMessage id="ui-agreements.agreements.reviewHistory" />}
-                onToggle={this.handleSectionToggle}
-                open={this.state.sections.reviewHistory}
-              >
+              <Accordion closedByDefault label={<FormattedMessage id="ui-agreements.agreements.reviewHistory" />}>
                 -
               </Accordion>
             </AccordionSet>
