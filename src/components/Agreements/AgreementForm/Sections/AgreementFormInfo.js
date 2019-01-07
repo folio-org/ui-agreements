@@ -30,12 +30,6 @@ class AgreementFormInfo extends React.Component {
     }),
   };
 
-  state = {
-    sections: {
-      formInternalContacts: false,
-    }
-  }
-
   getAgreementStatusValues() {
     return get(this.props.parentResources.agreementStatusValues, ['records'], [])
       .map(value => ({ label: value.label, value: value.id }));
@@ -64,15 +58,6 @@ class AgreementFormInfo extends React.Component {
       parentMutator: this.props.parentMutator,
       parentResources: this.props.parentResources,
     };
-  }
-
-  handleSectionToggle = ({ id }) => {
-    this.setState((prevState) => ({
-      sections: {
-        ...prevState.sections,
-        [id]: !prevState.sections[id],
-      }
-    }));
   }
 
   render() {
@@ -176,12 +161,7 @@ class AgreementFormInfo extends React.Component {
           </Col>
         </Row>
         <AccordionSet>
-          <Accordion
-            id="formInternalContacts"
-            label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
-            onToggle={this.handleSectionToggle}
-            open={this.state.sections.formInternalContacts}
-          >
+          <Accordion label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}>
             <AgreementFormInternalContacts {...sectionProps} />
           </Accordion>
         </AccordionSet>
