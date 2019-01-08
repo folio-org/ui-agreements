@@ -40,7 +40,7 @@ To run `ui-agreements` within a Stripes platform:
 
 ## Additional information
 
-Read the [Stripes Module Developer's Guide](https://github.com/folio-org/stripes-core/blob/master/doc/dev-guide.md).
+Read the [Stripes Module Developer's Guide](https://github.com/folio-org/stripes/blob/master/doc/dev-guide.md).
 
 Other [modules](https://dev.folio.org/source-code/#client-side).
 
