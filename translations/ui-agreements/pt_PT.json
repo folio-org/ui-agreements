@@ -122,6 +122,6 @@
     "eresources.haveAccess": "Have access",
     "eresources.accessStart": "Access start",
     "eresources.accessEnd": "Access end",
-    "settings.orgRoles.orgRole": "Organization role",
-    "settings.orgRoles.role": "Role"
+    "settings.orgRoles.orgRole": "Função da Organização",
+    "settings.orgRoles.role": "Função"
 }
