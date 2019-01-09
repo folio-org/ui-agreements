@@ -117,7 +117,7 @@ class EResources extends React.Component {
           initialResultCount={INITIAL_RESULT_COUNT}
           resultCountIncrement={INITIAL_RESULT_COUNT}
           viewRecordComponent={ViewEResource}
-          viewRecordPerms="module.agreementss.enabled"
+          viewRecordPerms="module.agreements.enabled"
           // SearchAndSort expects the resource it's going to list to be under the `records` key.
           // However, if we just put it under `records` in the `manifest`, it would clash with
           // the `records` that would need to be defined by the Agreements tab.
