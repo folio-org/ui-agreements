@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "ERM functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -45,6 +45,7 @@
     "redux": "*"
   },
   "optionalDependencies": {
+    "@folio/plugin-find-agreement": "^1.0.0",
     "@folio/plugin-find-user": "^1.1.0"
   },
   "stripes": {
