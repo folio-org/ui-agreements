@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "ERM functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -51,7 +51,9 @@
     "home": "/erm/dashboard",
     "hasSettings": true,
     "queryResource": "query",
-    "okapiInterfaces": {},
+    "okapiInterfaces": {
+      "erm": "1.0"
+    },
     "permissionSets": [
       {
         "permissionName": "module.agreements.enabled",
