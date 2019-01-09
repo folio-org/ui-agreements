@@ -4,6 +4,7 @@ import Switch from 'react-router-dom/Switch';
 import Route from 'react-router-dom/Route';
 import ERM from './ERM';
 import Settings from './settings';
+import AgreementSearch from './routes/Agreements';
 
 class UIAgreements extends React.Component {
   static propTypes = {
@@ -34,3 +35,4 @@ class UIAgreements extends React.Component {
 }
 
 export default UIAgreements;
+export { AgreementSearch };

@@ -86,6 +86,8 @@ class Agreements extends React.Component {
     intl: intlShape,
     resources: PropTypes.object,
     mutator: PropTypes.object,
+    onSelectRow: PropTypes.func,
+    browseOnly: PropTypes.bool,
   };
 
   componentDidUpdate() {
@@ -160,6 +162,8 @@ class Agreements extends React.Component {
           viewRecordPerms="ui-agreements.agreements.view"
           newRecordPerms="ui-agreements.agreements.create"
           onCreate={this.handleCreate}
+          onSelectRow={this.props.onSelectRow}
+          browseOnly={this.props.browseOnly}
           detailProps={{
             onUpdate: this.handleUpdate
           }}
@@ -174,7 +178,6 @@ class Agreements extends React.Component {
             ...mutator,
             records: mutator.agreements,
           }}
-          showSingleResult
           visibleColumns={[
             'name',
             'vendor',

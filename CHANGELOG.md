@@ -1,7 +1,11 @@
 # Change history for ui-agreements
 
-## 1.2.0 - In-Progress
+## 1.3.0 - IN PROGRESS
+* Added support to enable ui-plugin-find-agreement.
+
+## 1.2.0 - 2019-01-04
 * Work on controlled vocab settings
+* Added ability to add internal contacts to Agreements.
 
 ## 1.1.0 - 2018-12-11
 * Added Basket
