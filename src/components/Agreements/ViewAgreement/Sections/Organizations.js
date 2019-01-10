@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { Accordion, Layout } from '@folio/stripes/components';
+import { Accordion, Badge, Icon, Layout } from '@folio/stripes/components';
 
 export default class Organizations extends React.Component {
   static propTypes = {
@@ -66,10 +67,17 @@ export default class Organizations extends React.Component {
     return <FormattedMessage id="ui-agreements.license.noLicenseOrganizations" />;
   }
 
+  renderBadge = () => {
+    const count = get(this.props.agreement, ['orgs', 'length']);
+    return count !== undefined ? <Badge>{count}</Badge> : <Icon icon="spinner-ellipsis" width="10px" />;
+  }
+
   render() {
     return (
       <Accordion
         id={this.props.id}
+        displayWhenClosed={this.renderBadge()}
+        displayWhenOpen={this.renderBadge()}
         label={<FormattedMessage id="ui-agreements.agreements.organizations" />}
         open={this.props.open}
         onToggle={this.props.onToggle}

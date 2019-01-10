@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { MultiColumnList } from '@folio/stripes/components';
+import { Accordion, Badge, Icon, MultiColumnList } from '@folio/stripes/components';
 
 import CoverageStatements from '../../../CoverageStatements';
 import EResourceLink from '../../../EResourceLink';
@@ -15,6 +15,10 @@ export default class EresourcesCovered extends React.Component {
     }),
     visible: PropTypes.bool,
   };
+
+  state = {
+    open: true,
+  }
 
   columnMapping = {
     name: <FormattedMessage id="ui-agreements.eresources.name" />,
@@ -49,21 +53,41 @@ export default class EresourcesCovered extends React.Component {
     'coverage',
   ]
 
+  onToggleAccordion = () => {
+    this.setState((prevState) => ({
+      open: !prevState.open,
+    }));
+  }
+
+  renderBadge = () => {
+    const count = get(this.props.parentResources, ['agreementEresources', 'records', 'length']);
+    return count !== undefined ? <Badge>{count}</Badge> : <Icon icon="spinner-ellipsis" width="10px" />;
+  }
+
   render() {
     const agreementEresources = get(this.props.parentResources, ['agreementEresources', 'records'], []);
 
     return (
-      <MultiColumnList
-        columnMapping={this.columnMapping}
-        contentData={this.props.visible ? agreementEresources : []}
-        formatter={this.formatter}
-        height={800}
+      <Accordion
+        displayWhenClosed={this.renderBadge()}
+        displayWhenOpen={this.renderBadge()}
         id="eresources-covered"
-        interactive={false}
-        onNeedMoreData={this.props.fetchMoreEresources}
-        virtualize
-        visibleColumns={this.visibleColumns}
-      />
+        label={<FormattedMessage id="ui-agreements.agreements.eresourcesCovered" />}
+        open={this.state.open}
+        onToggle={this.onToggleAccordion}
+      >
+        <MultiColumnList
+          columnMapping={this.columnMapping}
+          contentData={this.props.visible && this.state.open ? agreementEresources : []}
+          formatter={this.formatter}
+          height={800}
+          id="eresources-covered"
+          interactive={false}
+          onNeedMoreData={this.props.fetchMoreEresources}
+          virtualize
+          visibleColumns={this.visibleColumns}
+        />
+      </Accordion>
     );
   }
 }
