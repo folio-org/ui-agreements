@@ -77,18 +77,10 @@ export default class AgreementInfo extends React.Component {
         <Row className={css.agreementInfoSections}>
           <Col xs={12}>
             <AccordionSet>
-              <Accordion closedByDefault label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}>
-                <InternalContacts key={agreement.id} {...this.props} />
-              </Accordion>
-              <Accordion closedByDefault label={<FormattedMessage id="ui-agreements.agreements.contentReviews" />}>
-                -
-              </Accordion>
-              <Accordion closedByDefault label={<FormattedMessage id="ui-agreements.agreements.trials" />}>
-                -
-              </Accordion>
-              <Accordion closedByDefault label={<FormattedMessage id="ui-agreements.agreements.reviewHistory" />}>
-                -
-              </Accordion>
+              <InternalContacts key={agreement.id} {...this.props} />
+              <Accordion closedByDefault label={<FormattedMessage id="ui-agreements.agreements.contentReviews" />}>-</Accordion>
+              <Accordion closedByDefault label={<FormattedMessage id="ui-agreements.agreements.trials" />}>-</Accordion>
+              <Accordion closedByDefault label={<FormattedMessage id="ui-agreements.agreements.reviewHistory" />}>-</Accordion>
             </AccordionSet>
           </Col>
         </Row>

@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
 
-import {
-  Icon
-} from '@folio/stripes/components';
+import { Accordion, Badge, Icon } from '@folio/stripes/components';
 
 export default class InternalContacts extends React.Component {
   static propTypes = {
@@ -25,7 +24,12 @@ export default class InternalContacts extends React.Component {
     <Icon icon="spinner-ellipsis" width="100px" />
   );
 
-  render() {
+  renderBadge = () => {
+    const count = get(this.props.contacts, ['length']);
+    return count !== undefined ? <Badge>{count}</Badge> : <Icon icon="spinner-ellipsis" width="10px" />;
+  }
+
+  renderContacts = () => {
     const { contacts } = this.props;
     if (contacts === undefined) return this.renderSpinner();
 
@@ -45,5 +49,18 @@ export default class InternalContacts extends React.Component {
         </div>
       );
     });
+  }
+
+  render() {
+    return (
+      <Accordion
+        closedByDefault
+        displayWhenClosed={this.renderBadge()}
+        displayWhenOpen={this.renderBadge()}
+        label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
+      >
+        { this.renderContacts() }
+      </Accordion>
+    );
   }
 }
