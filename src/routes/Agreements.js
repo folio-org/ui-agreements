@@ -7,6 +7,7 @@ import { SearchAndSort } from '@folio/stripes/smart-components';
 
 import ViewAgreement from '../components/Agreements/ViewAgreement';
 import EditAgreement from '../components/Agreements/EditAgreement';
+import AgreementFilters from '../components/Agreements/AgreementFilters';
 import getSASParams from '../util/getSASParams';
 import packageInfo from '../../package';
 
@@ -136,10 +137,60 @@ class Agreements extends React.Component {
       });
   }
 
+  handleFilterChange = ({ name, values }) => {
+    this.setState((prevState) => ({
+      activeFilters: {
+        ...prevState.activeFilters,
+        [name]: values,
+      }
+    }), () => {
+      const { activeFilters } = this.state;
+
+      const filters = Object.keys(activeFilters)
+        .map((filterName) => {
+          return activeFilters[filterName]
+            .map((filterValue) => `${filterName}.${filterValue}`)
+            .join(',');
+        })
+        .join(',');
+
+      this.props.mutator.query.update({ filters });
+    });
+  }
+
   handleUpdate = (agreement) => {
     this.props.mutator.selectedAgreementId.replace(agreement.id);
 
     return this.props.mutator.selectedAgreement.PUT(agreement);
+  }
+
+  getActiveFilters = () => {
+    const filters = this.props.resources.query.filters;
+
+    if (!filters) return undefined;
+
+    return filters
+      .split(',')
+      .reduce((filterMap, currentFilter) => {
+        const [name, value] = currentFilter.split('.');
+
+        if (!Array.isArray(filterMap[name])) {
+          filterMap[name] = [];
+        }
+
+        filterMap[name].push(value);
+        return filterMap;
+      }, {});
+  }
+
+  renderFilters = (onChange) => {
+    return (
+      <AgreementFilters
+        activeFilters={this.getActiveFilters()}
+        onChange={onChange}
+        resources={this.props.resources}
+      />
+    );
   }
 
   render() {
@@ -180,6 +231,7 @@ class Agreements extends React.Component {
           newRecordPerms="ui-agreements.agreements.create"
           objectName="agreement"
           onCreate={this.handleCreate}
+          onFilterChange={this.handleFilterChange}
           onSelectRow={this.props.onSelectRow}
           packageInfo={packageInfo}
           resultCountIncrement={INITIAL_RESULT_COUNT}
@@ -196,6 +248,7 @@ class Agreements extends React.Component {
             ...resources,
             records: resources.agreements,
           }}
+          renderFilters={this.renderFilters}
           resultsFormatter={{
             vendor: a => a.vendor && a.vendor.name,
             startDate: a => a.startDate && intl.formatDate(a.startDate),
