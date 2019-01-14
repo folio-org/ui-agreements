@@ -151,42 +151,7 @@ class Agreements extends React.Component {
     return (
       <React.Fragment>
         <SearchAndSort
-          key="agreements"
-          packageInfo={packageInfo}
-          filterConfig={filterConfig}
-          objectName="agreement"
-          initialResultCount={INITIAL_RESULT_COUNT}
-          resultCountIncrement={INITIAL_RESULT_COUNT}
-          viewRecordComponent={ViewAgreement}
-          editRecordComponent={EditAgreement}
-          viewRecordPerms="ui-agreements.agreements.view"
-          newRecordPerms="ui-agreements.agreements.create"
-          onCreate={this.handleCreate}
-          onSelectRow={this.props.onSelectRow}
           browseOnly={this.props.browseOnly}
-          detailProps={{
-            onUpdate: this.handleUpdate
-          }}
-          // SearchAndSort expects the resource it's going to list to be under the `records` key.
-          // However, if we just put it under `records` in the `manifest`, it would clash with
-          // the `records` that would need to be defined by the Agreements tab.
-          parentResources={{
-            ...resources,
-            records: resources.agreements,
-          }}
-          parentMutator={{
-            ...mutator,
-            records: mutator.agreements,
-          }}
-          visibleColumns={[
-            'name',
-            'vendor',
-            'startDate',
-            'endDate',
-            'cancellationDeadline',
-            'agreementStatus',
-            'lastUpdated'
-          ]}
           columnMapping={{
             name: intl.formatMessage({ id: 'ui-agreements.agreements.name' }),
             vendor: intl.formatMessage({ id: 'ui-agreements.agreements.vendorInfo.vendor' }),
@@ -205,6 +170,32 @@ class Agreements extends React.Component {
             agreementStatus: 150,
             lastUpdated: 120,
           }}
+          detailProps={{
+            onUpdate: this.handleUpdate
+          }}
+          editRecordComponent={EditAgreement}
+          filterConfig={filterConfig}
+          initialResultCount={INITIAL_RESULT_COUNT}
+          key="agreements"
+          newRecordPerms="ui-agreements.agreements.create"
+          objectName="agreement"
+          onCreate={this.handleCreate}
+          onSelectRow={this.props.onSelectRow}
+          packageInfo={packageInfo}
+          resultCountIncrement={INITIAL_RESULT_COUNT}
+          viewRecordComponent={ViewAgreement}
+          viewRecordPerms="ui-agreements.agreements.view"
+          // SearchAndSort expects the resource it's going to list to be under the `records` key.
+          // However, if we just put it under `records` in the `manifest`, it would clash with
+          // the `records` that would need to be defined by the Agreements tab.
+          parentMutator={{
+            ...mutator,
+            records: mutator.agreements,
+          }}
+          parentResources={{
+            ...resources,
+            records: resources.agreements,
+          }}
           resultsFormatter={{
             vendor: a => a.vendor && a.vendor.name,
             startDate: a => a.startDate && intl.formatDate(a.startDate),
@@ -212,6 +203,15 @@ class Agreements extends React.Component {
             cancellationDeadline: a => a.cancellationDeadline && intl.formatDate(a.cancellationDeadline),
             agreementStatus: a => a.agreementStatus && a.agreementStatus.label,
           }}
+          visibleColumns={[
+            'name',
+            'vendor',
+            'startDate',
+            'endDate',
+            'cancellationDeadline',
+            'agreementStatus',
+            'lastUpdated'
+          ]}
         />
       </React.Fragment>
     );
