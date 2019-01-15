@@ -6,6 +6,12 @@ import { FormattedMessage } from 'react-intl';
 import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
 
+const FILTERS = [
+  'agreementStatus',
+  'renewalPriority',
+  'isPerpetual',
+];
+
 export default class AgreementFilters extends React.Component {
   static propTypes = {
     activeFilters: PropTypes.object,
@@ -16,22 +22,26 @@ export default class AgreementFilters extends React.Component {
   static defaultProps = {
     activeFilters: {
       agreementStatus: [],
+      renewalPriority: [],
+      isPerpetual: [],
     }
   };
 
   state = {
-    agreementStatusOptions: [],
+    agreementStatus: [],
+    renewalPriority: [],
+    isPerpetual: [],
   }
 
   static getDerivedStateFromProps(props, state) {
     const newState = {};
-    const agreementStatusOptions = get(props.resources, ['agreementStatus', 'records'], []);
-    if (agreementStatusOptions.length !== state.agreementStatusOptions.length) {
-      newState.agreementStatusOptions = agreementStatusOptions.map(option => ({
-        label: option.label,
-        value: option.label,
-      }));
-    }
+
+    FILTERS.forEach(filter => {
+      const values = get(props.resources, [`${filter}Values`, 'records'], []);
+      if (values.length !== state[filter].length) {
+        newState[filter] = values.map(({ label }) => ({ label, value: label }));
+      }
+    });
 
     if (Object.keys(newState).length) return newState;
 
@@ -42,24 +52,33 @@ export default class AgreementFilters extends React.Component {
     this.props.onChange({ name, values: [] });
   }
 
-  render() {
-    const { activeFilters, onChange } = this.props;
+  renderCheckboxFilter = (name, props) => {
+    const activeFilters = this.props.activeFilters[name] || [];
 
     return (
+      <Accordion
+        displayClearButton={activeFilters.length > 0}
+        header={FilterAccordionHeader}
+        label={<FormattedMessage id={`ui-agreements.agreements.${name}`} />}
+        onClearFilter={() => { this.props.onChange({ name, values: [] }); }}
+        {...props}
+      >
+        <CheckboxFilter
+          dataOptions={this.state[name]}
+          name={name}
+          onChange={this.props.onChange}
+          selectedValues={activeFilters}
+        />
+      </Accordion>
+    );
+  }
+
+  render() {
+    return (
       <AccordionSet>
-        <Accordion
-          displayClearButton={activeFilters.agreementStatus.length}
-          header={FilterAccordionHeader}
-          label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
-          onClearFilter={this.createClearFilterHandler('agreementStatus')}
-        >
-          <CheckboxFilter
-            dataOptions={this.state.agreementStatusOptions}
-            name="agreementStatus"
-            onChange={onChange}
-            selectedValues={activeFilters.agreementStatus}
-          />
-        </Accordion>
+        {this.renderCheckboxFilter('agreementStatus')}
+        {this.renderCheckboxFilter('renewalPriority', { closedByDefault: true })}
+        {this.renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
       </AccordionSet>
     );
   }

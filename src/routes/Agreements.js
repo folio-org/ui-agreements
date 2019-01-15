@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { injectIntl, intlShape } from 'react-intl';
 
 import { SearchAndSort } from '@folio/stripes/smart-components';
@@ -12,14 +11,6 @@ import getSASParams from '../util/getSASParams';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
-
-// `label` and `values` will be filled in by `updateFilterConfig`
-// `cql` is defined to mute PropType checks by SAS and FilterGroups
-const filterConfig = [
-  { name: 'agreementStatus', label: '', cql: '', values: [] },
-  { name: 'renewalPriority', label: '', cql: '', values: [] },
-  { name: 'isPerpetual', label: '', cql: '', values: [] },
-];
 
 class Agreements extends React.Component {
   static manifest = Object.freeze({
@@ -52,13 +43,13 @@ class Agreements extends React.Component {
       type: 'okapi',
       path: 'erm/refdataValues/SubscriptionAgreement/agreementType',
     },
-    renewalPriorityValues: {
-      type: 'okapi',
-      path: 'erm/refdataValues/SubscriptionAgreement/renewalPriority',
-    },
     agreementStatusValues: {
       type: 'okapi',
       path: 'erm/refdataValues/SubscriptionAgreement/agreementStatus',
+    },
+    renewalPriorityValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/SubscriptionAgreement/renewalPriority',
     },
     isPerpetualValues: {
       type: 'okapi',
@@ -76,7 +67,6 @@ class Agreements extends React.Component {
       type: 'okapi',
       path: 'erm/refdataValues/InternalContact/role',
     },
-    agreementFiltersInitialized: { initialValue: false },
     basket: { initialValue: [] },
     query: {},
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
@@ -91,38 +81,8 @@ class Agreements extends React.Component {
     browseOnly: PropTypes.bool,
   };
 
-  componentDidUpdate() {
-    if (!this.props.resources.agreementFiltersInitialized) {
-      this.updateFilterConfig();
-    }
-  }
-
-  updateFilterConfig() {
-    // Define the list of filters we support and are fetching values for.
-    const filters = [
-      'agreementStatus',
-      'renewalPriority',
-      'isPerpetual',
-    ];
-
-    // Get the records for those filters
-    const records = filters
-      .map(filter => `${filter}Values`)
-      .map(name => get(this.props.resources[name], ['records'], []));
-
-    // If we've fetched the records for every filter...
-    if (records.every(record => record.length)) {
-      const { intl } = this.props;
-      // ...then for every filter...
-      filters.forEach((filter, i) => {
-        // ...set the filter's `values` and `label` properties
-        const config = filterConfig.find(c => c.name === filter);
-        config.values = records[i].map(r => ({ name: r.label, cql: '' }));
-        config.label = intl.formatMessage({ id: `ui-agreements.agreements.${filter}` });
-      });
-
-      this.props.mutator.agreementFiltersInitialized.replace(true);
-    }
+  state = {
+    activeFilters: [],
   }
 
   handleCreate = (agreement) => {
@@ -152,6 +112,7 @@ class Agreements extends React.Component {
             .map((filterValue) => `${filterName}.${filterValue}`)
             .join(',');
         })
+        .filter(filter => filter)
         .join(',');
 
       this.props.mutator.query.update({ filters });
@@ -225,7 +186,6 @@ class Agreements extends React.Component {
             onUpdate: this.handleUpdate
           }}
           editRecordComponent={EditAgreement}
-          filterConfig={filterConfig}
           initialResultCount={INITIAL_RESULT_COUNT}
           key="agreements"
           newRecordPerms="ui-agreements.agreements.create"
