@@ -4,7 +4,9 @@ import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/components';
-import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
+import { CheckboxFilter } from '@folio/stripes/smart-components';
+
+import OrganizationSelection from '../../OrganizationSelection';
 
 const FILTERS = [
   'agreementStatus',
@@ -73,12 +75,35 @@ export default class AgreementFilters extends React.Component {
     );
   }
 
+  renderOrganizationFilter = () => {
+    const activeFilters = this.props.activeFilters.orgs || [];
+
+    return (
+      <Accordion
+        closedByDefault
+        displayClearButton={activeFilters.length > 0}
+        header={FilterAccordionHeader}
+        label={<FormattedMessage id="ui-agreements.agreements.organizations" />}
+        onClearFilter={() => { this.props.onChange({ name: 'orgs', values: [] }); }}
+      >
+        <OrganizationSelection
+          input={{
+            name: 'agreement-orgs-filter',
+            onChange: value => this.props.onChange({ name: 'orgs', values: [value] }),
+            value: activeFilters[0] || {},
+          }}
+        />
+      </Accordion>
+    );
+  }
+
   render() {
     return (
       <AccordionSet>
         {this.renderCheckboxFilter('agreementStatus')}
         {this.renderCheckboxFilter('renewalPriority', { closedByDefault: true })}
         {this.renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
+        {this.renderOrganizationFilter()}
       </AccordionSet>
     );
   }

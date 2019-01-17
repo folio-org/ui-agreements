@@ -31,7 +31,10 @@ class Agreements extends React.Component {
           'Cancellation deadline': 'cancellationDeadline',
           'Status': 'agreementStatus',
           'Last updated': 'lastUpdated',
-        }
+        },
+        filterKeys: {
+          orgs: 'orgs.org',
+        },
       }),
     },
     selectedAgreement: {
