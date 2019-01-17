@@ -55,8 +55,14 @@ export default class OrganizationSelectionContainer extends React.Component {
     const organizations = get(nextProps.resources.organizations, ['records'], [])
       .map(({ id, name }) => ({ value: id, label: name }));
 
-    if (state.selectedOption) {
-      organizations.unshift(state.selectedOption);
+    // If an option is selected and it is /not/ in the list of orgs we just
+    // fetched, unshift it onto the list so it's always available for
+    // display, highlighting and selection.
+    const { selectedOption } = state;
+    if (selectedOption && selectedOption.value) {
+      if (!organizations.find(o => o.value === selectedOption.value)) {
+        organizations.unshift(selectedOption);
+      }
     }
 
     return { organizations };

@@ -1,24 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { injectIntl, intlShape } from 'react-intl';
 
 import { SearchAndSort } from '@folio/stripes/smart-components';
 
 import ViewAgreement from '../components/Agreements/ViewAgreement';
 import EditAgreement from '../components/Agreements/EditAgreement';
+import AgreementFilters from '../components/Agreements/AgreementFilters';
 import getSASParams from '../util/getSASParams';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
-
-// `label` and `values` will be filled in by `updateFilterConfig`
-// `cql` is defined to mute PropType checks by SAS and FilterGroups
-const filterConfig = [
-  { name: 'agreementStatus', label: '', cql: '', values: [] },
-  { name: 'renewalPriority', label: '', cql: '', values: [] },
-  { name: 'isPerpetual', label: '', cql: '', values: [] },
-];
 
 class Agreements extends React.Component {
   static manifest = Object.freeze({
@@ -39,7 +31,10 @@ class Agreements extends React.Component {
           'Cancellation deadline': 'cancellationDeadline',
           'Status': 'agreementStatus',
           'Last updated': 'lastUpdated',
-        }
+        },
+        filterKeys: {
+          orgs: 'orgs.org',
+        },
       }),
     },
     selectedAgreement: {
@@ -51,13 +46,13 @@ class Agreements extends React.Component {
       type: 'okapi',
       path: 'erm/refdataValues/SubscriptionAgreement/agreementType',
     },
-    renewalPriorityValues: {
-      type: 'okapi',
-      path: 'erm/refdataValues/SubscriptionAgreement/renewalPriority',
-    },
     agreementStatusValues: {
       type: 'okapi',
       path: 'erm/refdataValues/SubscriptionAgreement/agreementStatus',
+    },
+    renewalPriorityValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/SubscriptionAgreement/renewalPriority',
     },
     isPerpetualValues: {
       type: 'okapi',
@@ -75,7 +70,6 @@ class Agreements extends React.Component {
       type: 'okapi',
       path: 'erm/refdataValues/InternalContact/role',
     },
-    agreementFiltersInitialized: { initialValue: false },
     basket: { initialValue: [] },
     query: {},
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
@@ -90,38 +84,8 @@ class Agreements extends React.Component {
     browseOnly: PropTypes.bool,
   };
 
-  componentDidUpdate() {
-    if (!this.props.resources.agreementFiltersInitialized) {
-      this.updateFilterConfig();
-    }
-  }
-
-  updateFilterConfig() {
-    // Define the list of filters we support and are fetching values for.
-    const filters = [
-      'agreementStatus',
-      'renewalPriority',
-      'isPerpetual',
-    ];
-
-    // Get the records for those filters
-    const records = filters
-      .map(filter => `${filter}Values`)
-      .map(name => get(this.props.resources[name], ['records'], []));
-
-    // If we've fetched the records for every filter...
-    if (records.every(record => record.length)) {
-      const { intl } = this.props;
-      // ...then for every filter...
-      filters.forEach((filter, i) => {
-        // ...set the filter's `values` and `label` properties
-        const config = filterConfig.find(c => c.name === filter);
-        config.values = records[i].map(r => ({ name: r.label, cql: '' }));
-        config.label = intl.formatMessage({ id: `ui-agreements.agreements.${filter}` });
-      });
-
-      this.props.mutator.agreementFiltersInitialized.replace(true);
-    }
+  state = {
+    activeFilters: [],
   }
 
   handleCreate = (agreement) => {
@@ -136,10 +100,61 @@ class Agreements extends React.Component {
       });
   }
 
+  handleFilterChange = ({ name, values }) => {
+    this.setState((prevState) => ({
+      activeFilters: {
+        ...prevState.activeFilters,
+        [name]: values,
+      }
+    }), () => {
+      const { activeFilters } = this.state;
+
+      const filters = Object.keys(activeFilters)
+        .map((filterName) => {
+          return activeFilters[filterName]
+            .map((filterValue) => `${filterName}.${filterValue}`)
+            .join(',');
+        })
+        .filter(filter => filter)
+        .join(',');
+
+      this.props.mutator.query.update({ filters });
+    });
+  }
+
   handleUpdate = (agreement) => {
     this.props.mutator.selectedAgreementId.replace(agreement.id);
 
     return this.props.mutator.selectedAgreement.PUT(agreement);
+  }
+
+  getActiveFilters = () => {
+    const filters = this.props.resources.query.filters;
+
+    if (!filters) return undefined;
+
+    return filters
+      .split(',')
+      .reduce((filterMap, currentFilter) => {
+        const [name, value] = currentFilter.split('.');
+
+        if (!Array.isArray(filterMap[name])) {
+          filterMap[name] = [];
+        }
+
+        filterMap[name].push(value);
+        return filterMap;
+      }, {});
+  }
+
+  renderFilters = (onChange) => {
+    return (
+      <AgreementFilters
+        activeFilters={this.getActiveFilters()}
+        onChange={onChange}
+        resources={this.props.resources}
+      />
+    );
   }
 
   render() {
@@ -151,42 +166,7 @@ class Agreements extends React.Component {
     return (
       <React.Fragment>
         <SearchAndSort
-          key="agreements"
-          packageInfo={packageInfo}
-          filterConfig={filterConfig}
-          objectName="agreement"
-          initialResultCount={INITIAL_RESULT_COUNT}
-          resultCountIncrement={INITIAL_RESULT_COUNT}
-          viewRecordComponent={ViewAgreement}
-          editRecordComponent={EditAgreement}
-          viewRecordPerms="ui-agreements.agreements.view"
-          newRecordPerms="ui-agreements.agreements.create"
-          onCreate={this.handleCreate}
-          onSelectRow={this.props.onSelectRow}
           browseOnly={this.props.browseOnly}
-          detailProps={{
-            onUpdate: this.handleUpdate
-          }}
-          // SearchAndSort expects the resource it's going to list to be under the `records` key.
-          // However, if we just put it under `records` in the `manifest`, it would clash with
-          // the `records` that would need to be defined by the Agreements tab.
-          parentResources={{
-            ...resources,
-            records: resources.agreements,
-          }}
-          parentMutator={{
-            ...mutator,
-            records: mutator.agreements,
-          }}
-          visibleColumns={[
-            'name',
-            'vendor',
-            'startDate',
-            'endDate',
-            'cancellationDeadline',
-            'agreementStatus',
-            'lastUpdated'
-          ]}
           columnMapping={{
             name: intl.formatMessage({ id: 'ui-agreements.agreements.name' }),
             vendor: intl.formatMessage({ id: 'ui-agreements.agreements.vendorInfo.vendor' }),
@@ -205,6 +185,33 @@ class Agreements extends React.Component {
             agreementStatus: 150,
             lastUpdated: 120,
           }}
+          detailProps={{
+            onUpdate: this.handleUpdate
+          }}
+          editRecordComponent={EditAgreement}
+          initialResultCount={INITIAL_RESULT_COUNT}
+          key="agreements"
+          newRecordPerms="ui-agreements.agreements.create"
+          objectName="agreement"
+          onCreate={this.handleCreate}
+          onFilterChange={this.handleFilterChange}
+          onSelectRow={this.props.onSelectRow}
+          packageInfo={packageInfo}
+          resultCountIncrement={INITIAL_RESULT_COUNT}
+          viewRecordComponent={ViewAgreement}
+          viewRecordPerms="ui-agreements.agreements.view"
+          // SearchAndSort expects the resource it's going to list to be under the `records` key.
+          // However, if we just put it under `records` in the `manifest`, it would clash with
+          // the `records` that would need to be defined by the Agreements tab.
+          parentMutator={{
+            ...mutator,
+            records: mutator.agreements,
+          }}
+          parentResources={{
+            ...resources,
+            records: resources.agreements,
+          }}
+          renderFilters={this.renderFilters}
           resultsFormatter={{
             vendor: a => a.vendor && a.vendor.name,
             startDate: a => a.startDate && intl.formatDate(a.startDate),
@@ -212,6 +219,15 @@ class Agreements extends React.Component {
             cancellationDeadline: a => a.cancellationDeadline && intl.formatDate(a.cancellationDeadline),
             agreementStatus: a => a.agreementStatus && a.agreementStatus.label,
           }}
+          visibleColumns={[
+            'name',
+            'vendor',
+            'startDate',
+            'endDate',
+            'cancellationDeadline',
+            'agreementStatus',
+            'lastUpdated'
+          ]}
         />
       </React.Fragment>
     );
