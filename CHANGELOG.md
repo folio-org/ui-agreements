@@ -2,6 +2,7 @@
 
 ## 1.3.0 - IN PROGRESS
 * Added support to enable ui-plugin-find-agreement.
+* Added Organizations filter to Agreements.
 
 ## 1.2.0 - 2019-01-04
 * Work on controlled vocab settings
