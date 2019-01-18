@@ -1,6 +1,9 @@
 # Change history for ui-agreements
 
-## 1.3.0 - IN PROGRESS
+## 2.0.0 - IN PROGRESS
+* Upgrade to Stripes 2.0
+
+## 1.3.0 - 2019-01-18
 * Added support to enable ui-plugin-find-agreement.
 * Added Organizations filter to Agreements.
 
