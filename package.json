@@ -44,9 +44,6 @@
     "react-redux": "*",
     "redux": "*"
   },
-  "optionalDependencies": {
-    "@folio/plugin-find-agreement": "^2.0.0"
-  },
   "stripes": {
     "type": "app",
     "displayName": "ui-agreements.meta.title",
