@@ -90,7 +90,7 @@ export default class AgreementFilters extends React.Component {
           input={{
             name: 'agreement-orgs-filter',
             onChange: value => this.props.onChange({ name: 'orgs', values: [value] }),
-            value: activeFilters[0] || {},
+            value: activeFilters[0] || '',
           }}
         />
       </Accordion>
