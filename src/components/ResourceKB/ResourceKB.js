@@ -29,6 +29,6 @@ export default class ResourceKB extends React.Component {
       return get(resource, ['_object', 'remoteKb', 'name'], '-');
     }
 
-    return get(resource, ['_object', 'pkg', 'remoteKb', 'name'], '-')
+    return get(resource, ['_object', 'pkg', 'remoteKb', 'name'], '-');
   }
 }
