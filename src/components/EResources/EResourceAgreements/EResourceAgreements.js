@@ -10,8 +10,8 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { renderResourceType } from '../../../util/resourceType';
 import EResourceLink from '../../EResourceLink';
+import ResourceType from '../../ResourceType';
 
 class EResourceAgreements extends React.Component {
   static manifest = Object.freeze({
@@ -50,7 +50,7 @@ class EResourceAgreements extends React.Component {
     ...(this.props.type === 'title' ?
       {
         package: ({ resource }) => <EResourceLink eresource={resource} />,
-        acqMethod: ({ resource }) => renderResourceType(resource),
+        acqMethod: ({ resource }) => <ResourceType resource={resource} />,
       }
       :
       {}

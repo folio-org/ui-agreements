@@ -18,18 +18,38 @@ export default class CoverageStatements extends React.Component {
     ),
   }
 
+  renderVolume = (volume) => {
+    if (!volume) return null;
+
+    return (
+      <React.Fragment>
+        <FormattedMessage id="ui-agreements.coverage.volumeShort" />
+        {volume}
+      </React.Fragment>
+    );
+  }
+
+  renderIssue = (issue) => {
+    if (!issue) return null;
+
+    return (
+      <React.Fragment>
+        <FormattedMessage id="ui-agreements.coverage.issueShort" />
+        {issue}
+      </React.Fragment>
+    );
+  }
+
   renderDate = (date, volume, issue) => {
     if (!date && !volume && !issue) return '*';
 
     return (
       <React.Fragment>
-        <div>{date}</div>
+        { date ? <div>{date}</div> : null }
         <div>
-          <FormattedMessage id="ui-agreements.coverage.volumeShort" />
-          {volume}
+          {this.renderVolume(volume)}
           &nbsp;
-          <FormattedMessage id="ui-agreements.coverage.issueShort" />
-          {issue}
+          {this.renderIssue(issue)}
         </div>
       </React.Fragment>
     );

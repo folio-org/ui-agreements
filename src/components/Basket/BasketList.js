@@ -11,9 +11,10 @@ import {
   MultiColumnList,
 } from '@folio/stripes/components';
 
-import { renderResourceType } from '../../util/resourceType';
 import CoverageStatements from '../CoverageStatements';
 import EResourceLink from '../EResourceLink';
+import ResourceType from '../ResourceType';
+
 
 class BasketList extends React.Component {
   static propTypes = {
@@ -53,7 +54,7 @@ class BasketList extends React.Component {
                 />
               ),
               name: resource => <EResourceLink eresource={resource} />,
-              type: resource => renderResourceType(resource),
+              type: resource => <ResourceType resource={resource} />,
               package: resource => {
                 const pkg = get(resource, ['_object', 'pkg']);
                 if (!pkg) return '-';

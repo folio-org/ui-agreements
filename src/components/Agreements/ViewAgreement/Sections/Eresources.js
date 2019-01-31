@@ -9,6 +9,7 @@ import EresourcesCovered from './EresourcesCovered';
 
 export default class Eresources extends React.Component {
   static propTypes = {
+    agreementLines: PropTypes.arrayOf(PropTypes.object),
     fetchMoreEresources: PropTypes.func,
     id: PropTypes.string,
     onToggle: PropTypes.func,
@@ -17,7 +18,9 @@ export default class Eresources extends React.Component {
 
   renderBadge = () => {
     const count = get(this.props.agreementLines, ['length']);
-    return count !== undefined ? <Badge>{count}</Badge> : <Icon icon="spinner-ellipsis" width="10px" />;
+    if (!count) return <Icon icon="spinner-ellipsis" width="10px" />;
+
+    return <Badge data-test-agreement-lines-count={count}>{count}</Badge>;
   }
 
   render() {

@@ -12,9 +12,9 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { renderResourceType } from '../../../../util/resourceType';
 import BasketSelector from '../../../BasketSelector';
 import EResourceLink from '../../../EResourceLink';
+import ResourceType from '../../../ResourceType';
 
 class AgreementFormEresources extends React.Component {
   static propTypes = {
@@ -113,7 +113,7 @@ class AgreementFormEresources extends React.Component {
             },
             type: (line) => {
               const resource = this.getLineResource(line);
-              return resource ? renderResourceType(resource) : '';
+              return <ResourceType resource={resource} />;
             },
             count: (line) => {
               const resource = this.getLineResource(line);
