@@ -5,5 +5,5 @@ buildNPM {
   runRegression = 'no'
   runLint = 'no'
   runSonarqube = true
-  runTest = 'no'
+  runTest = 'yes'
 }

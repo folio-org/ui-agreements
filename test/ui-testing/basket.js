@@ -16,6 +16,7 @@ const shouldAddTitleToBasket = (nightmare, index) => {
     nightmare
       .wait(`#list-agreements [role=listitem]:nth-of-type(${index}) a`)
       .click(`#list-agreements [role=listitem]:nth-of-type(${index}) a`)
+      .wait(2000)
       .wait('[data-test-basket-add-button][data-test-add-title-to-basket]')
       .click('[data-test-basket-add-button][data-test-add-title-to-basket]')
       .evaluate((resourceIndex, CONSTANTS) => {
@@ -52,10 +53,8 @@ const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = []) => {
         return header.getAttribute('aria-expanded');
       })
       .then((accordionExpanded) => {
-        console.log('Expanded? ', accordionExpanded);
         let chain = nightmare;
         if (accordionExpanded === 'false') {
-          console.log('Expanding!');
           chain = chain
             .click('section#eresources [class*=header] button')
             .wait('#agreement-lines [role=listitem]');
@@ -74,9 +73,6 @@ const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = []) => {
         }, _CONSTANTS, basketIndices);
       })
       .then(lines => {
-        console.log('lines', lines);
-        console.log('basket', BASKET);
-        console.log('indices', basketIndices);
         basketIndices.forEach(index => {
           const resource = BASKET[index];
           const line = lines.find(l => l.id === resource.id);
