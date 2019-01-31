@@ -11,7 +11,9 @@ import {
 } from '@folio/stripes/components';
 
 import AddToBasketButton from '../../../AddToBasketButton';
-import { isPackage, renderResourceType, renderResourceSourceKb } from '../../../../util/resourceType';
+import ResourceKB from '../../../ResourceKB';
+import ResourceType from '../../../ResourceType';
+import isPackage from '../../../../util/isPackage';
 import EResourceLink from '../../../EResourceLink';
 
 class AcquisitionOptions extends React.Component {
@@ -63,10 +65,10 @@ class AcquisitionOptions extends React.Component {
               // maxHeight={400}
               visibleColumns={['sourceKb', 'package', 'platform', 'acqMethod', 'add']}
               formatter={{
-                sourceKb: option => renderResourceSourceKb(option),
+                sourceKb: option => <ResourceKB resource={option} />,
                 package: option => <EResourceLink eresource={option} />,
                 platform: option => get(option, ['_object', 'pti', 'platform', 'name'], '-'),
-                acqMethod: option => renderResourceType(option),
+                acqMethod: option => <ResourceType resource={option} />,
                 add: option => {
                   const optionIsPackage = isPackage(option);
 

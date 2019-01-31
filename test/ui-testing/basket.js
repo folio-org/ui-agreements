@@ -45,18 +45,38 @@ const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = []) => {
   it(`should see ${basketIndices.length} lines with correct resources`, done => {
     nightmare
       .wait('section#eresources')
-      .evaluate((CONSTANTS, indices) => {
-        const lines = [...document.querySelectorAll('#agreement-lines [role=listitem]')];
+      .evaluate(() => {
+        const header = document.querySelector('section#eresources [class*=header] button');
+        if (!header) throw Error('Could not find Eresources accordion header');
 
-        if (lines.length !== indices.length) throw Error(`Expected to find ${indices.length} agreement line and found ${lines.length}`);
+        return header.getAttribute('aria-expanded');
+      })
+      .then((accordionExpanded) => {
+        console.log('Expanded? ', accordionExpanded);
+        let chain = nightmare;
+        if (accordionExpanded === 'false') {
+          console.log('Expanding!');
+          chain = chain
+            .click('section#eresources [class*=header] button')
+            .wait('#agreement-lines [role=listitem]');
+        }
 
-        return lines.map(node => ({
-          id: node.children[CONSTANTS.LINES_NAME_COLUMN].children[0].getAttribute('data-test-resource-id'),
-          name: node.children[CONSTANTS.LINES_NAME_COLUMN].textContent,
-          type: node.children[CONSTANTS.LINES_TYPE_COLUMN].textContent,
-        }));
-      }, _CONSTANTS, basketIndices)
+        return chain.evaluate((CONSTANTS, indices) => {
+          const lines = [...document.querySelectorAll('#agreement-lines [role=listitem]')];
+
+          if (lines.length !== indices.length) throw Error(`Expected to find ${indices.length} agreement line and found ${lines.length}`);
+
+          return lines.map(node => ({
+            id: node.children[CONSTANTS.LINES_NAME_COLUMN].children[0].getAttribute('data-test-resource-id'),
+            name: node.children[CONSTANTS.LINES_NAME_COLUMN].textContent,
+            type: node.children[CONSTANTS.LINES_TYPE_COLUMN].textContent,
+          }));
+        }, _CONSTANTS, basketIndices);
+      })
       .then(lines => {
+        console.log('lines', lines);
+        console.log('basket', BASKET);
+        console.log('indices', basketIndices);
         basketIndices.forEach(index => {
           const resource = BASKET[index];
           const line = lines.find(l => l.id === resource.id);

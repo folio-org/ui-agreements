@@ -4,8 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import { MultiColumnList } from '@folio/stripes/components';
 
-import { renderResourceType } from '../../../../util/resourceType';
 import EResourceLink from '../../../EResourceLink';
+import ResourceType from '../../../ResourceType';
 
 export default class EresourceAgreementLines extends React.Component {
   static propTypes = {
@@ -29,7 +29,10 @@ export default class EresourceAgreementLines extends React.Component {
 
   formatter = {
     name: line => {
-      const resource = get(line.resource, ['_object', 'pti', 'titleInstance'], line.resource);
+      const resource = get(line.resource, ['_object', 'pti', 'titleInstance']);
+
+      if (!resource) return line.label;
+
       return (
         <EResourceLink
           eresource={resource}
@@ -41,7 +44,7 @@ export default class EresourceAgreementLines extends React.Component {
       get(line, ['resource', '_object', 'pti', 'platform', 'name']) ||
       get(line, ['resource', '_object', 'nominalPlatform', 'name'])
     ),
-    type: line => renderResourceType(line.resource),
+    type: line => <ResourceType resource={line.resource} />,
     count: line => (get(line, ['_object', 'contentItems'], [0])).length, // If contentItems doesn't exist there's only one item.
     contentUpdated: () => 'TBD',
   }
