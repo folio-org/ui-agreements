@@ -5,9 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import {
   Checkbox,
-  Col,
   IconButton,
-  Row,
   MultiColumnList,
 } from '@folio/stripes/components';
 
@@ -29,80 +27,76 @@ class BasketList extends React.Component {
     const { basket, removeItem, selectedItems } = this.props;
 
     return (
-      <Row>
-        <Col xs={12}>
-          <MultiColumnList
-            contentData={basket}
-            interactive={false}
-            maxHeight={400}
-            visibleColumns={[
-              'selected',
-              'name',
-              'type',
-              'package',
-              'publisher',
-              'platform',
-              'coverage',
-              'remove'
-            ]}
-            formatter={{
-              selected: resource => (
-                <Checkbox
-                  name={`selected-${resource.id}`}
-                  checked={!!(selectedItems[resource.id])}
-                  onChange={() => this.props.onToggleItem(resource)}
-                />
-              ),
-              name: resource => <EResourceLink eresource={resource} />,
-              type: resource => <ResourceType resource={resource} />,
-              package: resource => {
-                const pkg = get(resource, ['_object', 'pkg']);
-                if (!pkg) return '-';
+      <MultiColumnList
+        contentData={basket}
+        interactive={false}
+        maxHeight={400}
+        visibleColumns={[
+          'selected',
+          'name',
+          'type',
+          'package',
+          'publisher',
+          'platform',
+          'coverage',
+          'remove'
+        ]}
+        formatter={{
+          selected: resource => (
+            <Checkbox
+              name={`selected-${resource.id}`}
+              checked={!!(selectedItems[resource.id])}
+              onChange={() => this.props.onToggleItem(resource)}
+            />
+          ),
+          name: resource => <EResourceLink eresource={resource} />,
+          type: resource => <ResourceType resource={resource} />,
+          package: resource => {
+            const pkg = get(resource, ['_object', 'pkg']);
+            if (!pkg) return '-';
 
-                return <EResourceLink eresource={pkg} />;
-              },
-              publisher: () => 'TBD',
-              platform: resource => (
-                get(resource, ['_object', 'pti', 'platform', 'name']) ||
-                get(resource, ['_object', 'nominalPlatform', 'name']) || '-'
-              ),
-              coverage: resource => <CoverageStatements statements={resource._object.coverageStatements} />,
-              remove: resource => (
-                <FormattedMessage id="ui-agreements.basket.removeItem">
-                  {ariaLabel => (
-                    <IconButton
-                      aria-label={ariaLabel}
-                      icon="trash"
-                      onClick={() => removeItem(resource)}
-                    />
-                  )}
-                </FormattedMessage>
-              )
-            }}
-            columnMapping={{
-              selected: (
-                <Checkbox
-                  name="selected-all"
-                  checked={Object.values(selectedItems).includes(false) !== true}
-                  onChange={this.props.onToggleAll}
+            return <EResourceLink eresource={pkg} />;
+          },
+          publisher: () => 'TBD',
+          platform: resource => (
+            get(resource, ['_object', 'pti', 'platform', 'name']) ||
+            get(resource, ['_object', 'nominalPlatform', 'name']) || '-'
+          ),
+          coverage: resource => <CoverageStatements statements={resource._object.coverageStatements} />,
+          remove: resource => (
+            <FormattedMessage id="ui-agreements.basket.removeItem">
+              {ariaLabel => (
+                <IconButton
+                  aria-label={ariaLabel}
+                  icon="trash"
+                  onClick={() => removeItem(resource)}
                 />
-              ),
-              name: <FormattedMessage id="ui-agreements.eresources.name" />,
-              type: <FormattedMessage id="ui-agreements.eresources.type" />,
-              package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
-              publisher: <FormattedMessage id="ui-agreements.eresources.publisher" />,
-              platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
-              coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
-              remove: <FormattedMessage id="ui-agreements.remove" />,
-            }}
-            columnWidths={{
-              selected: 40,
-              name: '30%',
-              coverage: 300,
-            }}
-          />
-        </Col>
-      </Row>
+              )}
+            </FormattedMessage>
+          )
+        }}
+        columnMapping={{
+          selected: (
+            <Checkbox
+              name="selected-all"
+              checked={Object.values(selectedItems).includes(false) !== true}
+              onChange={this.props.onToggleAll}
+            />
+          ),
+          name: <FormattedMessage id="ui-agreements.eresources.name" />,
+          type: <FormattedMessage id="ui-agreements.eresources.type" />,
+          package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
+          publisher: <FormattedMessage id="ui-agreements.eresources.publisher" />,
+          platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
+          coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
+          remove: <FormattedMessage id="ui-agreements.remove" />,
+        }}
+        columnWidths={{
+          selected: 40,
+          name: '30%',
+          coverage: 300,
+        }}
+      />
     );
   }
 }

@@ -1,4 +1,4 @@
-/* global describe, it, before, after */
+/* global describe, it, before, after, Nightmare */
 
 const generateAgreementValues = () => {
   const number = Math.round(Math.random() * 100000);
@@ -75,9 +75,10 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
 module.exports.generateAgreementValues = generateAgreementValues;
 module.exports.createAgreement = createAgreement;
 
-module.exports.test = (uiTestCtx, nightmare) => {
+module.exports.test = (uiTestCtx) => {
   describe('Module test: ui-agreements: basic agreement crud', function test() {
     const { config, helpers: { login, logout } } = uiTestCtx;
+    const nightmare = new Nightmare(config.nightmare);
     const values = generateAgreementValues();
 
     this.timeout(Number(config.test_timeout));
