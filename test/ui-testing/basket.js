@@ -57,11 +57,11 @@ const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = []) => {
         if (accordionExpanded === 'false') {
           chain = chain
             .click('section#eresources [class*=header] button')
-            .wait('#agreement-lines [class*=scrollable] [aria-rowindex]');
+            .wait('#agreement-lines [class*=mclScrollable] [aria-rowindex]');
         }
 
         return chain.evaluate((CONSTANTS, indices) => {
-          const lines = [...document.querySelectorAll('#agreement-lines [class*=scrollable] [aria-rowindex]')];
+          const lines = [...document.querySelectorAll('#agreement-lines [class*=mclScrollable] [aria-rowindex]')];
 
           if (lines.length !== indices.length) throw Error(`Expected to find ${indices.length} agreement line and found ${lines.length}`);
 
@@ -158,7 +158,7 @@ module.exports.test = (uiTestCtx) => {
           .click('[data-test-open-basket-button]')
           .wait('#basket-contents')
           .evaluate(() => {
-            const basketContents = document.querySelectorAll('#basket-contents [class*=scrollable] [aria-rowindex]');
+            const basketContents = document.querySelectorAll('#basket-contents [class*=mclScrollable] [aria-rowindex]');
             const basketSize = basketContents.length;
             if (basketSize !== 3) throw Error(`Expected 3 items in the basket and found ${basketSize}`);
           })
@@ -169,10 +169,10 @@ module.exports.test = (uiTestCtx) => {
       describe('create agreement via Basket from first and third items in basket', () => {
         it(`should create a new agreement: ${values.agreementName}`, done => {
           nightmare
-            .click('#basket-contents [class*=scrollable] [aria-rowindex="3"] input[type=checkbox]')
+            .click('#basket-contents [class*=mclScrollable] [aria-rowindex="3"] input[type=checkbox]')
             .click('[data-test-basket-create-agreement]')
             .wait('#edit-agreement-name')
-            .wait('#agreementFormEresources [class*=scrollable] [aria-rowindex]') // An agreement line has been auto-added for the basket item
+            .wait('#agreementFormEresources [class*=mclScrollable] [aria-rowindex]') // An agreement line has been auto-added for the basket item
             .insert('#edit-agreement-name', values.agreementName)
             .insert('#edit-agreement-start-date', values.agreementStartDate)
             .type('#edit-agreement-status', values.agreementStatus)
@@ -229,7 +229,7 @@ module.exports.test = (uiTestCtx) => {
             .click('[data-test-basket-add-to-agreement]')
             .wait('#form-agreement')
             .wait(() => {
-              const resources = document.querySelectorAll('#agreementFormEresources [class*=scrollable] [aria-rowindex]');
+              const resources = document.querySelectorAll('#agreementFormEresources [class*=mclScrollable] [aria-rowindex]');
               return resources.length === 3;
             })
             .click('#clickable-updateagreement')
