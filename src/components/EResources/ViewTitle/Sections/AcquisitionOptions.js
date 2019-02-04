@@ -21,6 +21,7 @@ class AcquisitionOptions extends React.Component {
     entitlementOptions: {
       type: 'okapi',
       path: 'erm/resource/:{id}/entitlementOptions',
+      throwErrors: false // We can get a 404 from this
     }
   })
 

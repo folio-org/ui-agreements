@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedDate, FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import { MultiColumnList } from '@folio/stripes/components';
 
@@ -29,7 +29,7 @@ export default class EresourceAgreementLines extends React.Component {
 
   formatter = {
     name: line => {
-      const resource = get(line.resource, ['_object', 'pti', 'titleInstance']);
+      const resource = get(line.resource, ['_object', 'pti', 'titleInstance'], line.resource);
 
       if (!resource) return line.label;
 
@@ -46,7 +46,7 @@ export default class EresourceAgreementLines extends React.Component {
     ),
     type: line => <ResourceType resource={line.resource} />,
     count: line => (get(line, ['_object', 'contentItems'], [0])).length, // If contentItems doesn't exist there's only one item.
-    contentUpdated: () => 'TBD',
+    contentUpdated: ({ contentUpdated }) => (contentUpdated ? <FormattedDate value={contentUpdated} /> : '-'),
   }
 
   visibleColumns = [
