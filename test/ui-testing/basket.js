@@ -1,4 +1,4 @@
-/* global describe, it, before, after */
+/* global describe, it, before, after, Nightmare */
 
 const AgreementCRUD = require('./agreement-crud');
 
@@ -14,13 +14,13 @@ const BASKET = [];
 const shouldAddTitleToBasket = (nightmare, index) => {
   it(`should add title ${index} to basket`, done => {
     nightmare
-      .wait(`#list-agreements [role=listitem]:nth-of-type(${index}) a`)
-      .click(`#list-agreements [role=listitem]:nth-of-type(${index}) a`)
+      .wait(`#list-agreements [aria-rowindex="${index + 1}"] a`)
+      .click(`#list-agreements [aria-rowindex="${index + 1}"] a`)
       .wait(2000)
       .wait('[data-test-basket-add-button][data-test-add-title-to-basket]')
       .click('[data-test-basket-add-button][data-test-add-title-to-basket]')
       .evaluate((resourceIndex, CONSTANTS) => {
-        const selectedResourceNode = document.querySelector(`#list-agreements [role=listitem]:nth-of-type(${resourceIndex}) a`);
+        const selectedResourceNode = document.querySelector(`#list-agreements [aria-rowindex="${resourceIndex + 1}"] a`);
         const name = selectedResourceNode.children[CONSTANTS.ERESOURCES_NAME_COLUMN].innerText;
         const type = selectedResourceNode.children[CONSTANTS.ERESOURCES_TYPE_COLUMN].innerText;
 
@@ -57,11 +57,11 @@ const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = []) => {
         if (accordionExpanded === 'false') {
           chain = chain
             .click('section#eresources [class*=header] button')
-            .wait('#agreement-lines [role=listitem]');
+            .wait('#agreement-lines [class*=scrollable] [aria-rowindex]');
         }
 
         return chain.evaluate((CONSTANTS, indices) => {
-          const lines = [...document.querySelectorAll('#agreement-lines [role=listitem]')];
+          const lines = [...document.querySelectorAll('#agreement-lines [class*=scrollable] [aria-rowindex]')];
 
           if (lines.length !== indices.length) throw Error(`Expected to find ${indices.length} agreement line and found ${lines.length}`);
 
@@ -88,9 +88,10 @@ const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = []) => {
   });
 };
 
-module.exports.test = (uiTestCtx, nightmare) => {
+module.exports.test = (uiTestCtx) => {
   describe('Module test: ui-agreements: basic basket functionality', function test() {
     const { config, helpers: { login, logout } } = uiTestCtx;
+    const nightmare = new Nightmare(config.nightmare);
 
     const number = Math.round(Math.random() * 100000);
     const values = {
@@ -157,7 +158,7 @@ module.exports.test = (uiTestCtx, nightmare) => {
           .click('[data-test-open-basket-button]')
           .wait('#basket-contents')
           .evaluate(() => {
-            const basketContents = document.querySelectorAll('#basket-contents [role=listitem]');
+            const basketContents = document.querySelectorAll('#basket-contents [class*=scrollable] [aria-rowindex]');
             const basketSize = basketContents.length;
             if (basketSize !== 3) throw Error(`Expected 3 items in the basket and found ${basketSize}`);
           })
@@ -168,10 +169,10 @@ module.exports.test = (uiTestCtx, nightmare) => {
       describe('create agreement via Basket from first and third items in basket', () => {
         it(`should create a new agreement: ${values.agreementName}`, done => {
           nightmare
-            .click('#basket-contents [role=listitem]:nth-of-type(2) input[type=checkbox]')
+            .click('#basket-contents [class*=scrollable] [aria-rowindex="3"] input[type=checkbox]')
             .click('[data-test-basket-create-agreement]')
             .wait('#edit-agreement-name')
-            .wait('#agreementFormEresources [role=listitem]') // An agreement line has been auto-added for the basket item
+            .wait('#agreementFormEresources [class*=scrollable] [aria-rowindex]') // An agreement line has been auto-added for the basket item
             .insert('#edit-agreement-name', values.agreementName)
             .insert('#edit-agreement-start-date', values.agreementStartDate)
             .type('#edit-agreement-status', values.agreementStatus)
@@ -228,7 +229,7 @@ module.exports.test = (uiTestCtx, nightmare) => {
             .click('[data-test-basket-add-to-agreement]')
             .wait('#form-agreement')
             .wait(() => {
-              const resources = document.querySelectorAll('#agreementFormEresources [role=listitem]');
+              const resources = document.querySelectorAll('#agreementFormEresources [class*=scrollable] [aria-rowindex]');
               return resources.length === 3;
             })
             .click('#clickable-updateagreement')

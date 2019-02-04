@@ -1,8 +1,9 @@
-/* global describe, it, before, after */
+/* global describe, it, before, after, Nightmare */
 
-module.exports.test = (uiTestCtx, nightmare) => {
+module.exports.test = (uiTestCtx) => {
   describe('Module test: ui-agreements: tab navigation', function test() {
     const { config, helpers: { login, logout } } = uiTestCtx;
+    const nightmare = new Nightmare(config.nightmare);
 
     this.timeout(Number(config.test_timeout));
 
