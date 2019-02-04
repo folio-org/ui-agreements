@@ -29,7 +29,7 @@ export default class EresourceAgreementLines extends React.Component {
 
   formatter = {
     name: line => {
-      const resource = get(line.resource, ['_object', 'pti', 'titleInstance']);
+      const resource = get(line.resource, ['_object', 'pti', 'titleInstance'], line.resource);
 
       if (!resource) return line.label;
 
