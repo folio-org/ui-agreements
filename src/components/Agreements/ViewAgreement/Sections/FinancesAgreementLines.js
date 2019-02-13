@@ -15,11 +15,12 @@ export default class FinancesAgreementLines extends React.Component {
   };
 
   render() {
-    const button = <Button align="end">
-                     <Icon icon="edit">
-                       <FormattedMessage id="ui-agreements.agreements.editFinancesAgreementLines" />
-                     </Icon>
-                   </Button>;
+    const button =
+      <Button align="end">
+        <Icon icon="edit">
+          <FormattedMessage id="ui-agreements.agreements.editFinancesAgreementLines" />
+        </Icon>
+      </Button>;
 
     return (
       <Accordion
@@ -28,7 +29,7 @@ export default class FinancesAgreementLines extends React.Component {
         open={this.props.open}
         onToggle={this.props.onToggle}
         displayWhenClosed={button}
-        displayWhenOpen  ={button}
+        displayWhenOpen={button}
       />
     );
   }
