@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
   Accordion,
+  Button,
   Icon,
 } from '@folio/stripes/components';
 
@@ -14,17 +15,21 @@ export default class FinancesAgreementLines extends React.Component {
   };
 
   render() {
+    const button = <Button align="end">
+                     <Icon icon="edit">
+                       <FormattedMessage id="ui-agreements.agreements.editFinancesAgreementLines" />
+                     </Icon>
+                   </Button>;
+
     return (
       <Accordion
         id={this.props.id}
         label={<FormattedMessage id="ui-agreements.agreements.financesAgreementLines" />}
         open={this.props.open}
         onToggle={this.props.onToggle}
-      >
-        <Icon icon="edit">
-          <FormattedMessage id="ui-agreements.agreements.edit" />
-        </Icon>
-      </Accordion>
+        displayWhenClosed={button}
+        displayWhenOpen  ={button}
+      />
     );
   }
 }
