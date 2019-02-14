@@ -16,8 +16,11 @@ import {
   Icon,
 } from '@folio/stripes/components';
 
-import CreateOrganizationModal from '../../../CreateOrganizationModal';
-import OrganizationSelection from '../../../OrganizationSelection';
+import {
+  CreateOrganizationModal,
+  OrganizationSelection
+} from '@folio/stripes-erm-components';
+
 import { required } from '../../../../util/validators';
 
 class AgreementFormOrganizations extends React.Component {
@@ -32,12 +35,6 @@ class AgreementFormOrganizations extends React.Component {
       connect: PropTypes.func,
     }),
   };
-
-  constructor(props) {
-    super(props);
-
-    this.connectedCreateOrganizationModal = props.stripes.connect(CreateOrganizationModal, { dataKey: 'createOrganizationModal' });
-  }
 
   state = {
     roles: [],
@@ -143,7 +140,7 @@ class AgreementFormOrganizations extends React.Component {
             <Button onClick={() => this.setState({ showCreateOrgModal: true })}>
               <FormattedMessage id="ui-agreements.organizations.createNew" />
             </Button>
-            <this.connectedCreateOrganizationModal
+            <CreateOrganizationModal
               onClose={() => this.setState({ showCreateOrgModal: false })}
               open={this.state.showCreateOrgModal}
             />

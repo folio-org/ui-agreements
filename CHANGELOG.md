@@ -2,6 +2,7 @@
 
 ## 2.0.0 - IN PROGRESS
 * Upgrade to Stripes 2.0
+* Use @folio/stripes-erm-components for shared components.
 
 ## 1.3.0 - 2019-01-18
 * Added support to enable ui-plugin-find-agreement.

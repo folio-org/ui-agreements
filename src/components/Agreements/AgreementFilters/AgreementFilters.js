@@ -5,8 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/components';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
-
-import OrganizationSelection from '../../OrganizationSelection';
+import { OrganizationSelection } from '@folio/stripes-erm-components';
 
 const FILTERS = [
   'agreementStatus',
