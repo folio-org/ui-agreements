@@ -17,6 +17,9 @@ const shouldAddTitleToBasket = (nightmare, index) => {
       .wait(`#list-agreements [aria-rowindex="${index + 1}"] a`)
       .click(`#list-agreements [aria-rowindex="${index + 1}"] a`)
       .wait(2000)
+      .wait(() => {
+        return document.querySelector('[data-test-basket-remove-button][data-test-add-title-to-basket]') === null;
+      })
       .wait('[data-test-basket-add-button][data-test-add-title-to-basket]')
       .click('[data-test-basket-add-button][data-test-add-title-to-basket]')
       .evaluate((resourceIndex, CONSTANTS) => {
@@ -24,18 +27,17 @@ const shouldAddTitleToBasket = (nightmare, index) => {
         const name = selectedResourceNode.children[CONSTANTS.ERESOURCES_NAME_COLUMN].innerText;
         const type = selectedResourceNode.children[CONSTANTS.ERESOURCES_TYPE_COLUMN].innerText;
 
-        const removeButtons = [...document.querySelectorAll('[data-test-basket-remove-button]')];
-        const addedItems = removeButtons.map(node => ({
-          id: node.getAttribute('data-test-entitlement-option-id'),
+        const removeButton = document.querySelector('[data-test-basket-remove-button]');
+        const addedItem = {
+          id: removeButton.getAttribute('data-test-entitlement-option-id'),
           name,
           type,
-        }));
+        };
 
-        return addedItems;
+        return addedItem;
       }, index, _CONSTANTS)
-      .then(addedItems => {
-        BASKET.push(...addedItems);
-
+      .then(addedItem => {
+        BASKET.push(addedItem);
         done();
       })
       .catch(done);
