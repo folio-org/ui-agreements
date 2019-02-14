@@ -16,8 +16,9 @@ import {
   Icon,
 } from '@folio/stripes/components';
 
+import { OrganizationSelection } from '@folio/stripes-erm-components';
+
 import CreateOrganizationModal from '../../../CreateOrganizationModal';
-import OrganizationSelection from '../../../OrganizationSelection';
 import { required } from '../../../../util/validators';
 
 class AgreementFormOrganizations extends React.Component {
