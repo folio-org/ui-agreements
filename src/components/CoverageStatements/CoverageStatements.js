@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedDate, FormattedMessage } from 'react-intl';
 
 import { Icon, Layout } from '@folio/stripes/components';
 
@@ -45,7 +45,7 @@ export default class CoverageStatements extends React.Component {
 
     return (
       <React.Fragment>
-        { date ? <div>{date}</div> : null }
+        { date ? <div><FormattedDate value={date} /></div> : null }
         <div>
           {this.renderVolume(volume)}
           &nbsp;
