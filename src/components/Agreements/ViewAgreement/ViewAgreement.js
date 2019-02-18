@@ -84,10 +84,16 @@ class ViewAgreement extends React.Component {
   });
 
   static propTypes = {
+    editLink: PropTypes.string,
     match: PropTypes.object,
+    mutator: PropTypes.object,
     onClose: PropTypes.func,
+    onCloseEdit: PropTypes.func,
+    onEdit: PropTypes.func,
+    parentMutator: PropTypes.object,
     parentResources: PropTypes.object,
     paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    resources: PropTypes.object,
     stripes: PropTypes.object,
   };
 
@@ -288,8 +294,13 @@ class ViewAgreement extends React.Component {
         paneTitle={agreement.name}
         dismissible
         onClose={this.props.onClose}
-        actionMenu={() => {
+        actionMenu={({ onToggle }) => {
           if (!stripes.hasPerm('ui-agreements.agreements.edit')) return null;
+
+          const handleClick = () => {
+            this.props.onEdit();
+            onToggle();
+          };
 
           return (
             <React.Fragment>
@@ -297,7 +308,7 @@ class ViewAgreement extends React.Component {
                 buttonStyle="dropdownItem"
                 id="clickable-edit-agreement"
                 href={this.props.editLink}
-                onClick={this.props.onEdit}
+                onClick={handleClick}
               >
                 <Icon icon="edit">
                   <FormattedMessage id="ui-agreements.agreements.edit" />
