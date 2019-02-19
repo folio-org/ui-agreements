@@ -123,5 +123,7 @@
     "eresources.accessStart": "Início do acesso",
     "eresources.accessEnd": "Fim do acesso",
     "settings.orgRoles.orgRole": "Função da organização",
-    "settings.orgRoles.role": "Função"
+    "settings.orgRoles.role": "Função",
+    "agreements.financesAgreementLines": "Finanças - linhas de contrato",
+    "agreements.editFinancesAgreementLines": "Editar linhas de contrato"
 }
