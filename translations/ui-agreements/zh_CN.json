@@ -123,5 +123,7 @@
     "eresources.accessStart": "访问开始",
     "eresources.accessEnd": "访问结束",
     "settings.orgRoles.orgRole": "组织角色",
-    "settings.orgRoles.role": "角色"
+    "settings.orgRoles.role": "角色",
+    "agreements.financesAgreementLines": "财务 - 协议行",
+    "agreements.editFinancesAgreementLines": "编辑协议行"
 }
