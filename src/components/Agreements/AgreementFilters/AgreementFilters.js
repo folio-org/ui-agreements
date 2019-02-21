@@ -83,7 +83,10 @@ export default class AgreementFilters extends React.Component {
         displayClearButton={activeFilters.length > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-agreements.agreements.organizations" />}
-        onClearFilter={() => { this.props.onChange({ name: 'orgs', values: [] }); }}
+        onClearFilter={() => {
+          this.props.onChange({ name: 'orgs', values: [] });
+          this.props.onChange({ name: 'role', values: [] });
+        }}
       >
         <OrganizationSelection
           input={{
@@ -107,13 +110,20 @@ export default class AgreementFilters extends React.Component {
     const activeFilters = this.props.activeFilters.role || [];
 
     return (
-      <Selection
-        dataOptions={dataOptions}
-        label="Organization Role"
-        disabled={orgFilters.length === 0}
-        value={activeFilters[0] || ''}
-        onChange={value => this.props.onChange({ name: 'role', values: [value] })}
-      />
+      <Accordion
+        closedByDefault
+        displayClearButton={activeFilters.length > 0}
+        header={FilterAccordionHeader}
+        label={<FormattedMessage id="ui-agreements.settings.orgRoles.orgRole" />}
+        onClearFilter={() => { this.props.onChange({ name: 'role', values: [] }); }}
+      >
+        <Selection
+          dataOptions={dataOptions}
+          disabled={orgFilters.length === 0}
+          value={activeFilters[0] || ''}
+          onChange={value => this.props.onChange({ name: 'role', values: [value] })}
+        />
+      </Accordion>
     );
   }
 
