@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/components';
+import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
 import { OrganizationSelection } from '@folio/stripes-erm-components';
 
@@ -83,7 +83,10 @@ export default class AgreementFilters extends React.Component {
         displayClearButton={activeFilters.length > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-agreements.agreements.organizations" />}
-        onClearFilter={() => { this.props.onChange({ name: 'orgs', values: [] }); }}
+        onClearFilter={() => {
+          this.props.onChange({ name: 'orgs', values: [] });
+          this.props.onChange({ name: 'role', values: [] });
+        }}
       >
         <OrganizationSelection
           input={{
@@ -96,6 +99,34 @@ export default class AgreementFilters extends React.Component {
     );
   }
 
+  renderRoleLabel = () => {
+    const roles = get(this.props.resources.orgRoleValues, ['records'], []);
+    const dataOptions = roles.map(role => ({
+      value: role.id,
+      label: role.label,
+    }));
+
+    const orgFilters = this.props.activeFilters.orgs || [];
+    const activeFilters = this.props.activeFilters.role || [];
+
+    return (
+      <Accordion
+        closedByDefault
+        displayClearButton={activeFilters.length > 0}
+        header={FilterAccordionHeader}
+        label={<FormattedMessage id="ui-agreements.settings.orgRoles.orgRole" />}
+        onClearFilter={() => { this.props.onChange({ name: 'role', values: [] }); }}
+      >
+        <Selection
+          dataOptions={dataOptions}
+          disabled={orgFilters.length === 0}
+          value={activeFilters[0] || ''}
+          onChange={value => this.props.onChange({ name: 'role', values: [value] })}
+        />
+      </Accordion>
+    );
+  }
+
   render() {
     return (
       <AccordionSet>
@@ -103,6 +134,7 @@ export default class AgreementFilters extends React.Component {
         {this.renderCheckboxFilter('renewalPriority', { closedByDefault: true })}
         {this.renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
         {this.renderOrganizationFilter()}
+        {this.renderRoleLabel()}
       </AccordionSet>
     );
   }

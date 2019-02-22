@@ -34,6 +34,7 @@ class Agreements extends React.Component {
         },
         filterKeys: {
           orgs: 'orgs.org',
+          role: 'orgs.role',
         },
       }),
     },
