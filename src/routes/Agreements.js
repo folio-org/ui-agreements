@@ -11,6 +11,8 @@ import getSASParams from '../util/getSASParams';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
+const DEFAULT_FILTERS = 'agreementStatus.Requested,agreementStatus.In Negotiation,agreementStatus.Draft,agreementStatus.Active';
+const DEFAULT_SORT = 'Name';
 
 class Agreements extends React.Component {
   static manifest = Object.freeze({
@@ -72,7 +74,12 @@ class Agreements extends React.Component {
       path: 'erm/refdataValues/InternalContact/role',
     },
     basket: { initialValue: [] },
-    query: {},
+    query: {
+      initialValue: {
+        filters: DEFAULT_FILTERS,
+        sort: DEFAULT_SORT,
+      },
+    },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     selectedAgreementId: { initialValue: '' },
   });
@@ -84,10 +91,6 @@ class Agreements extends React.Component {
     onSelectRow: PropTypes.func,
     browseOnly: PropTypes.bool,
   };
-
-  state = {
-    activeFilters: [],
-  }
 
   handleCreate = (agreement) => {
     const { mutator } = this.props;
@@ -102,25 +105,21 @@ class Agreements extends React.Component {
   }
 
   handleFilterChange = ({ name, values }) => {
-    this.setState((prevState) => ({
-      activeFilters: {
-        ...prevState.activeFilters,
-        [name]: values,
-      }
-    }), () => {
-      const { activeFilters } = this.state;
+    const newFilters = {
+      ...this.getActiveFilters(),
+      [name]: values,
+    };
 
-      const filters = Object.keys(activeFilters)
-        .map((filterName) => {
-          return activeFilters[filterName]
-            .map((filterValue) => `${filterName}.${filterValue}`)
-            .join(',');
-        })
-        .filter(filter => filter)
-        .join(',');
+    const filters = Object.keys(newFilters)
+      .map((filterName) => {
+        return newFilters[filterName]
+          .map((filterValue) => `${filterName}.${filterValue}`)
+          .join(',');
+      })
+      .filter(filter => filter)
+      .join(',');
 
-      this.props.mutator.query.update({ filters });
-    });
+    this.props.mutator.query.update({ filters });
   }
 
   handleUpdate = (agreement) => {
@@ -130,11 +129,11 @@ class Agreements extends React.Component {
   }
 
   getActiveFilters = () => {
-    const filters = this.props.resources.query.filters;
+    const { query } = this.props.resources;
 
-    if (!filters) return undefined;
+    if (!query || !query.filters) return {};
 
-    return filters
+    return query.filters
       .split(',')
       .reduce((filterMap, currentFilter) => {
         const [name, value] = currentFilter.split('.');
@@ -146,6 +145,17 @@ class Agreements extends React.Component {
         filterMap[name].push(value);
         return filterMap;
       }, {});
+  }
+
+  getPackageInfo = () => {
+    return {
+      ...packageInfo,
+      stripes: {
+        ...packageInfo.stripes,
+        route: '/erm',
+        path: `/erm/agreements?sort=${DEFAULT_SORT}&filters=${DEFAULT_FILTERS}`,
+      },
+    };
   }
 
   renderFilters = (onChange) => {
@@ -160,9 +170,6 @@ class Agreements extends React.Component {
 
   render() {
     const { mutator, resources, intl } = this.props;
-    const path = '/erm/agreements';
-    packageInfo.stripes.route = path;
-    packageInfo.stripes.home = path;
 
     return (
       <React.Fragment>
@@ -197,7 +204,7 @@ class Agreements extends React.Component {
           onCreate={this.handleCreate}
           onFilterChange={this.handleFilterChange}
           onSelectRow={this.props.onSelectRow}
-          packageInfo={packageInfo}
+          packageInfo={this.getPackageInfo()}
           resultCountIncrement={INITIAL_RESULT_COUNT}
           viewRecordComponent={ViewAgreement}
           viewRecordPerms="ui-agreements.agreements.view"
