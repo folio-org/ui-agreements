@@ -1,7 +1,7 @@
 {
   "name": "@folio/agreements",
   "version": "2.0.2",
-  "description": "ERM functionality for Stripes",
+  "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
     "registry": "https://repository.folio.org/repository/npm-folio/"
@@ -93,6 +93,11 @@
         ],
         "visible": true
       }
-    ]
+    ],
+    "icons": [{
+      "name": "app",
+      "alt": "ERM agreement functionality for Stripes",
+      "title": "Agreements"
+    }]
   }
 }
