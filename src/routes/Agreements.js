@@ -152,7 +152,7 @@ class Agreements extends React.Component {
       ...packageInfo,
       stripes: {
         ...packageInfo.stripes,
-        route: '/erm',
+        route: '/erm/agreements',
         path: `/erm/agreements?sort=${DEFAULT_SORT}&filters=${DEFAULT_FILTERS}`,
       },
     };
