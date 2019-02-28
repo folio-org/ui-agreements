@@ -10,6 +10,7 @@ import {
   AgreementFormInfo,
   AgreementFormEresources,
   AgreementFormOrganizations,
+  AgreementFormLicense,
 } from './Sections';
 
 class AgreementForm extends React.Component {
@@ -18,6 +19,7 @@ class AgreementForm extends React.Component {
       agreementFormInfo: true,
       agreementFormEresources: false,
       agreementFormOrganizations: false,
+      agreementFormLicense: false,
     }
   }
 
@@ -56,6 +58,7 @@ class AgreementForm extends React.Component {
         </Row>
         <AgreementFormInfo id="agreementFormInfo" open={this.state.sections.agreementFormInfo} {...sectionProps} />
         <AgreementFormEresources id="agreementFormEresources" open={this.state.sections.agreementFormEresources} {...sectionProps} />
+        <AgreementFormLicense id="agreementFormLicense" open={this.state.sections.agreementFormLicense} {...sectionProps} />
         <AgreementFormOrganizations id="agreementFormOrganizations" open={this.state.sections.agreementFormOrganizations} {...sectionProps} />
       </AccordionSet>
     );

@@ -45,6 +45,8 @@
   "agreements.editFinancesAgreementLines": "Edit agreement lines",
   "agreements.license": "License",
   "agreements.licenseAndBusTerms": "License and business terms",
+  "agreements.licenseInfo": "License information",
+  "agreements.licenseNote": "General notes about the agreement's license",
   "agreements.organizations": "Organizations",
   "agreements.eresourceAgreementLines": "E-resources - agreement lines",
   "agreements.eresourcesCovered": "E-resources covered by this agreement",

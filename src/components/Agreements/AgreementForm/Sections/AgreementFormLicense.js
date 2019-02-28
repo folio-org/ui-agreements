@@ -1,25 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Field } from 'redux-form';
+
 import {
   Accordion,
   Col,
-  KeyValue,
   Row,
+  TextArea,
 } from '@folio/stripes/components';
 
-
-export default class License extends React.Component {
+class AgreementFormLicense extends React.Component {
   static propTypes = {
-    agreement: PropTypes.object,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
 
   render() {
-    const { agreement } = this.props;
-
     return (
       <Accordion
         id={this.props.id}
@@ -29,14 +27,17 @@ export default class License extends React.Component {
       >
         <Row>
           <Col xs={12}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.agreements.licenseNote" />}>
-              <div data-test-license-note>
-                {agreement.licenseNote}
-              </div>
-            </KeyValue>
+            <Field
+              id="edit-agreement-licenseNote"
+              name="licenseNote"
+              label={<FormattedMessage id="ui-agreements.agreements.licenseNote" />}
+              component={TextArea}
+            />
           </Col>
         </Row>
       </Accordion>
     );
   }
 }
+
+export default AgreementFormLicense;
