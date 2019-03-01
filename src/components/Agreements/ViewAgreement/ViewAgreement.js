@@ -19,7 +19,7 @@ import {
   AgreementInfo,
   AssociatedAgreements,
   Eresources,
-  FinancesAgreementLines,
+  Finances,
   License,
   LicenseBusinessTerms,
   Organizations,
@@ -101,7 +101,7 @@ class ViewAgreement extends React.Component {
     sections: {
       agreementInfo: true,
       agreementLines: false,
-      financesAgreementLines: false,
+      finances: false,
       license: false,
       licenseBusinessTerms: false,
       organizations: false,
@@ -330,9 +330,9 @@ class ViewAgreement extends React.Component {
             open={this.state.sections.agreementInfo}
             {...sectionProps}
           />
-          <FinancesAgreementLines
-            id="financesAgreementLines"
-            open={this.state.sections.financesAgreementLines}
+          <Finances
+            id="finances"
+            open={this.state.sections.finances}
             {...sectionProps}
           />
           <License
