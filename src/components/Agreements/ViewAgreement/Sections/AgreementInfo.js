@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
-import { Pluggable } from '@folio/stripes/core';
 import {
   Accordion,
   AccordionSet,
