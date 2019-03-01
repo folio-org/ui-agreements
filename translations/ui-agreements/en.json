@@ -46,7 +46,6 @@
   "agreements.license": "License",
   "agreements.licenseAndBusTerms": "License and business terms",
   "agreements.licenseInfo": "License information",
-  "agreements.licenseNote": "General notes about the agreement's license",
   "agreements.organizations": "Organizations",
   "agreements.eresourceAgreementLines": "E-resources - agreement lines",
   "agreements.eresourcesCovered": "E-resources covered by this agreement",
@@ -123,6 +122,10 @@
   "license.editLicenseOrganizations": "Edit license organizations",
   "license.agreementHasNone": "Agreement has no license.",
   "license.noLicenseOrganizations": "No license organizations",
+  "license.externalLicenses": "External licenses",
+  "license.generalNotes": "General notes about the agreement's license",
+  "license.noExternalLicenses": "Agreement has no external licenses.",
+  "license.addExternalLicense": "Add external license to agreement.",
 
   "organizations.edit": "Edit organizations",
   "organizations.add": "Add organization to agreement",

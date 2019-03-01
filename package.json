@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -13,10 +13,11 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run nav/agreement-crud/basket",
+    "test": "stripes test nightmare --run nav/agreement-crud/basket/external-licenses",
     "test-nav": "stripes test nightmare --run nav",
     "test-agreement-crud": "stripes test nightmare --run agreement-crud",
     "test-basket": "stripes test nightmare --run basket",
+    "test-external-licenses": "stripes test nightmare --run external-licenses",
     "lint": "eslint src"
   },
   "devDependencies": {

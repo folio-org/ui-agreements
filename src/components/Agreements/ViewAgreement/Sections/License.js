@@ -7,7 +7,7 @@ import {
   KeyValue,
   Row,
 } from '@folio/stripes/components';
-
+import ExternalLicenses from './ExternalLicenses';
 
 export default class License extends React.Component {
   static propTypes = {
@@ -15,7 +15,7 @@ export default class License extends React.Component {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-  };
+  }.isRequired;
 
   render() {
     const { agreement } = this.props;
@@ -29,13 +29,16 @@ export default class License extends React.Component {
       >
         <Row>
           <Col xs={12}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.agreements.licenseNote" />}>
+            <KeyValue label={<FormattedMessage id="ui-agreements.license.generalNotes" />}>
               <div data-test-license-note>
-                {agreement.licenseNote}
+                {agreement.licenseNote || '-'}
               </div>
             </KeyValue>
           </Col>
         </Row>
+        <div style={{ marginLeft: '1rem' }}>
+          <ExternalLicenses agreement={agreement} />
+        </div>
       </Accordion>
     );
   }
