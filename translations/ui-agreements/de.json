@@ -84,6 +84,8 @@
     "agreements.agreementLines": "E-resources: agreement lines",
     "agreements.license": "License",
     "agreements.licenseAndBusTerms": "License and business terms",
+    "agreements.licenseInfo": "License information",
+    "agreements.licenseNote": "General notes about the agreement's license",
     "agreements.organizations": "Organizations",
     "agreements.assocAgreements": "Associated agreements",
     "settings.general": "General",
