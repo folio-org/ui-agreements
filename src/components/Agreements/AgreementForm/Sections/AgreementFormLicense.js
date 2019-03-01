@@ -10,6 +10,8 @@ import {
   TextArea,
 } from '@folio/stripes/components';
 
+import AgreementFormExternalLicenses from './AgreementFormExternalLicenses';
+
 class AgreementFormLicense extends React.Component {
   static propTypes = {
     id: PropTypes.string,
@@ -31,11 +33,14 @@ class AgreementFormLicense extends React.Component {
               maxLength={255}
               id="edit-agreement-licenseNote"
               name="licenseNote"
-              label={<FormattedMessage id="ui-agreements.agreements.licenseNote" />}
+              label={<FormattedMessage id="ui-agreements.license.generalNotes" />}
               component={TextArea}
             />
           </Col>
         </Row>
+        <div style={{ marginLeft: '2rem' }}>
+          <AgreementFormExternalLicenses />
+        </div>
       </Accordion>
     );
   }
