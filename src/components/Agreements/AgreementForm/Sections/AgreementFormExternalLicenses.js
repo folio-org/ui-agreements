@@ -5,7 +5,7 @@ import { FieldArray } from 'redux-form';
 import { Accordion } from '@folio/stripes/components';
 import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 
-class LicenseFormCoreDocs extends React.Component {
+export default class AgreementFormExternalLicenses extends React.Component {
   render() {
     return (
       <Accordion
@@ -22,5 +22,3 @@ class LicenseFormCoreDocs extends React.Component {
     );
   }
 }
-
-export default LicenseFormCoreDocs;
