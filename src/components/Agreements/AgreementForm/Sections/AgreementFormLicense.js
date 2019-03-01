@@ -28,6 +28,7 @@ class AgreementFormLicense extends React.Component {
         <Row>
           <Col xs={12}>
             <Field
+              maxLength={255}
               id="edit-agreement-licenseNote"
               name="licenseNote"
               label={<FormattedMessage id="ui-agreements.agreements.licenseNote" />}
