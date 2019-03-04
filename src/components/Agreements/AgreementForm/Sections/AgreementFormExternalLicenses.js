@@ -15,7 +15,7 @@ export default class AgreementFormExternalLicenses extends React.Component {
         <FieldArray
           addDocBtnLabel={<FormattedMessage id="ui-agreements.license.addExternalLicense" />}
           component={DocumentsFieldArray}
-          isEmptyMessage={<FormattedMessage id="ui-agreements.coreDocs.noExternalLicenses" />}
+          isEmptyMessage={<FormattedMessage id="ui-agreements.license.noExternalLicenses" />}
           name="externalLicenseDocs"
         />
       </Accordion>
