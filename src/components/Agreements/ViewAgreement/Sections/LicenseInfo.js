@@ -7,9 +7,11 @@ import {
   KeyValue,
   Row,
 } from '@folio/stripes/components';
+
+import AllLicenses from './AllLicenses';
 import ExternalLicenses from './ExternalLicenses';
 
-export default class License extends React.Component {
+export default class LicenseInfo extends React.Component {
   static propTypes = {
     agreement: PropTypes.object,
     id: PropTypes.string,
@@ -37,6 +39,7 @@ export default class License extends React.Component {
           </Col>
         </Row>
         <div style={{ marginLeft: '1rem' }}>
+          <AllLicenses agreement={agreement} />
           <ExternalLicenses agreement={agreement} />
         </div>
       </Accordion>

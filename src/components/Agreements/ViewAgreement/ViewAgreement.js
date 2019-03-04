@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { cloneDeep, difference, get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import { Pluggable } from '@folio/stripes/core';
 
 import {
   AccordionSet,
@@ -20,7 +21,7 @@ import {
   AssociatedAgreements,
   Eresources,
   FinancesAgreementLines,
-  License,
+  LicenseInfo,
   LicenseBusinessTerms,
   Organizations,
   VendorInfo
@@ -102,7 +103,7 @@ class ViewAgreement extends React.Component {
       agreementInfo: true,
       agreementLines: false,
       financesAgreementLines: false,
-      license: false,
+      licenseInfo: false,
       licenseBusinessTerms: false,
       organizations: false,
       eresources: false,
@@ -319,6 +320,13 @@ class ViewAgreement extends React.Component {
         }}
       >
         <VendorInfo {...sectionProps} />
+        <Pluggable
+          type="find-license"
+          onLicenseSelected={l => { console.log('Selected license ', l); }}
+          renderTrigger={(props) => (
+            <Button onClick={props.onClick}>Select a License!</Button>
+          )}
+        />
         <AccordionSet>
           <Row end="xs">
             <Col xs>
@@ -335,9 +343,9 @@ class ViewAgreement extends React.Component {
             open={this.state.sections.financesAgreementLines}
             {...sectionProps}
           />
-          <License
-            id="license"
-            open={this.state.sections.license}
+          <LicenseInfo
+            id="licenseInfo"
+            open={this.state.sections.licenseInfo}
             {...sectionProps}
           />
           <LicenseBusinessTerms

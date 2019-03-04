@@ -10,6 +10,7 @@ import {
   TextArea,
 } from '@folio/stripes/components';
 
+import AgreementFormAllLicenses from './AgreementFormAllLicenses';
 import AgreementFormExternalLicenses from './AgreementFormExternalLicenses';
 
 class AgreementFormLicense extends React.Component {
@@ -39,6 +40,7 @@ class AgreementFormLicense extends React.Component {
           </Col>
         </Row>
         <div style={{ marginLeft: '2rem' }}>
+          <AgreementFormAllLicenses />
           <AgreementFormExternalLicenses />
         </div>
       </Accordion>
