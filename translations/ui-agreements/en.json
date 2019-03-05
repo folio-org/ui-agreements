@@ -132,12 +132,7 @@
   "license.prop.lookup": "Look-up a license",
   "license.prop.status": "Status",
   "license.prop.note": "Note",
-  "license.notSet": "Not set",
-  "license.prop.openEnded": "Open ended",
-  "license.prop.type": "Type",
-  "license.prop.startDate": "Start date",
-  "license.prop.endDate": "End date",
-  "license.prop.licensor": "Licensor",
+  "license.error.multipleControllingLicenses": "Only one Controlling License per agreement is allowed.",
 
   "organizations.edit": "Edit organizations",
   "organizations.add": "Add organization to agreement",

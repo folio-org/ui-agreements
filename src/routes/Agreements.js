@@ -73,6 +73,10 @@ class Agreements extends React.Component {
       type: 'okapi',
       path: 'erm/refdataValues/InternalContact/role',
     },
+    licenseLinkStatusValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/RemoteLicenseLink/status',
+    },
     basket: { initialValue: [] },
     query: {
       initialValue: {

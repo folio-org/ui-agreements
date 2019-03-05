@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Pluggable } from '@folio/stripes/core';
-import { Button, Col, KeyValue, Row } from '@folio/stripes/components';
+import { Button } from '@folio/stripes/components';
+import { LicenseCard } from '@folio/stripes-erm-components';
 
 export default class LicenseLookup extends React.Component {
   static propTypes = {
@@ -15,73 +15,17 @@ export default class LicenseLookup extends React.Component {
       onChange: PropTypes.func,
       value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     }),
-  }
-
-  state = {
-    license: undefined,
+    license: PropTypes.object,
+    onSelectLicense: PropTypes.func.isRequired,
   }
 
   handleLicenseSelected = (license) => {
-    this.setState({ license });
-
+    this.props.onSelectLicense(license);
     this.props.input.onChange(license.id);
   }
 
-  renderLicensor = () => {
-    const { license: { orgs = [] } } = this.state;
-    const licensor = orgs.find(o => get(o, ['role', 'value']) === 'licensor');
-    const licensorName = get(licensor, ['org', 'name']) || <FormattedMessage id="ui-agreements.license.notSet" />;
-
-    return licensorName;
-  }
-
-  renderEndDate() {
-    const { license } = this.state;
-    if (license.openEnded) return <FormattedMessage id="ui-agreements.license.prop.openEnded" />;
-    if (license.endDate) return <FormattedDate value={license.endDate} />;
-
-    return '-';
-  }
-
   renderLicense = () => {
-    const { license } = this.state;
-
-    return (
-      <div>
-        <div>
-          <strong>
-            {license.name}
-          </strong>
-        </div>
-        <Row>
-          <Col xs={2}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.license.prop.type" />}>
-              {get(license, ['type', 'label'], '-')}
-            </KeyValue>
-          </Col>
-          <Col xs={2}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.license.prop.status" />}>
-              {get(license, ['status', 'label'], '-')}
-            </KeyValue>
-          </Col>
-          <Col xs={2}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.license.prop.startDate" />}>
-              {license.startDate ? <FormattedDate value={license.startDate} /> : '-'}
-            </KeyValue>
-          </Col>
-          <Col xs={3}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.license.prop.endDate" />}>
-              {this.renderEndDate()}
-            </KeyValue>
-          </Col>
-          <Col xs={3}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.license.prop.licensor" />}>
-              {this.renderLicensor()}
-            </KeyValue>
-          </Col>
-        </Row>
-      </div>
-    );
+    return <LicenseCard license={this.props.license} />;
   }
 
   renderLookup = () => (
@@ -105,6 +49,6 @@ export default class LicenseLookup extends React.Component {
   )
 
   render() {
-    return this.state.license ? this.renderLicense() : this.renderLookup();
+    return this.props.license ? this.renderLicense() : this.renderLookup();
   }
 }

@@ -11,7 +11,6 @@ import {
   Row,
   Select,
   TextArea,
-  TextField,
   IconButton,
 } from '@folio/stripes/components';
 
@@ -23,11 +22,39 @@ export default class LicensesFieldArray extends React.Component {
     addLicenseBtnLabel: PropTypes.node,
     fields: PropTypes.object,
     isEmptyMessage: PropTypes.node,
+    parentResources: PropTypes.object,
   }
 
   static defaultProps = {
     addLicenseBtnLabel: <FormattedMessage id="ui-agreements.license.addLicense" />,
     isEmptyMessage: <FormattedMessage id="ui-agreements.license.noLicenses" />,
+  }
+
+  state = {
+    controllingLicenseStatusId: undefined,
+    licenses: {},
+    statusValues: [],
+  }
+
+  static getDerivedStateFromProps(nextProps, state) {
+    const statusValues = get(nextProps.parentResources.licenseLinkStatusValues, ['records'], []);
+    if (state.statusValues.length !== statusValues.length) {
+      return {
+        controllingLicenseStatusId: (statusValues.find(v => v.value === 'controlling') || {}).id,
+        statusValues: statusValues.map(({ id, label }) => ({ value: id, label })),
+      };
+    }
+
+    return null;
+  }
+
+  handleLicenseSelected = (license) => {
+    this.setState(prevState => ({
+      licenses: {
+        ...prevState.licenses,
+        [license.id]: license,
+      }
+    }));
   }
 
   handleDeleteLicense = (index, license) => {
@@ -40,14 +67,16 @@ export default class LicensesFieldArray extends React.Component {
     }
   }
 
-  validateDocIsSpecified = (value, allValues, props, name) => {
-    const index = parseInt(/\[([0-9]*)\]/.exec(name)[1], 10);
-    const { location, url } = get(allValues, [this.props.fields.name, index], {});
-    if (!location && !url) {
-      return <FormattedMessage id="stripes-erm-components.doc.error.docsMustHaveLocationOrURL" />;
-    }
+  validateOnlyOneControllingLicense = (value, allValues) => {
+    const { controllingLicenseStatusId } = this.state;
+    const { fields: { name } } = this.props;
 
-    return undefined;
+    if (value === controllingLicenseStatusId) {
+      const controllingLicenses = allValues[name].filter(l => l.status === controllingLicenseStatusId);
+      if (controllingLicenses.length > 1) {
+        return <FormattedMessage id="ui-agreements.license.error.multipleControllingLicenses" />;
+      }
+    }
   }
 
   validateRequired = (value) => (
@@ -55,15 +84,19 @@ export default class LicensesFieldArray extends React.Component {
   )
 
   renderLicenses = (licenses) => {
+    const { fields } = this.props;
+
     return licenses.map((license, i) => (
-      <div className={css.license}>
+      <div className={css.license} key={i}>
         <Row>
           <Col xs={11}>
             <Field
               component={LicenseLookup}
-              id={`licenses-id-${i}`}
+              id={`${fields.name}-remoteId-${i}`}
               label={<FormattedMessage id="ui-agreements.license.prop.lookup" />}
-              name={`licenses[${i}].id`}
+              license={this.state.licenses[license.remoteId]}
+              name={`${fields.name}[${i}].remoteId`}
+              onSelectLicense={this.handleLicenseSelected}
               required
               validate={this.validateRequired}
             />
@@ -71,7 +104,7 @@ export default class LicensesFieldArray extends React.Component {
           <Col xs={1}>
             <IconButton
               icon="trash"
-              id={`licenses-delete-${i}`}
+              id={`${fields.name}-delete-${i}`}
               onClick={() => this.handleDeleteLicense(i, license)}
             />
           </Col>
@@ -80,22 +113,23 @@ export default class LicensesFieldArray extends React.Component {
           <Col xs={4}>
             <Field
               component={Select}
-              dataOptions={[
-                { label: 'Controlling' }, { label: 'Future' }, { label: 'Historical' }
-              ]}
-              id={`licenses-status-${i}`}
+              dataOptions={this.state.statusValues}
+              id={`${fields.name}-status-${i}`}
               label={<FormattedMessage id="ui-agreements.license.prop.status" />}
-              name={`licenses[${i}].status`}
+              name={`${fields.name}[${i}].status`}
               required
-              validate={this.validateRequired}
+              validate={[
+                this.validateOnlyOneControllingLicense,
+                this.validateRequired,
+              ]}
             />
           </Col>
           <Col xs={8}>
             <Field
               component={TextArea}
-              id={`licenses-note-${i}`}
+              id={`${fields.name}-note-${i}`}
               label={<FormattedMessage id="ui-agreements.license.prop.note" />}
-              name={`licenses[${i}].note`}
+              name={`${fields.name}[${i}].note`}
             />
           </Col>
         </Row>
