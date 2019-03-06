@@ -13,11 +13,11 @@ import ExternalLicenses from './ExternalLicenses';
 
 export default class LicenseInfo extends React.Component {
   static propTypes = {
-    agreement: PropTypes.object,
+    agreement: PropTypes.object.isRequired,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-  }.isRequired;
+  };
 
   render() {
     const { agreement } = this.props;

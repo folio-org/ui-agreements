@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import { FormattedMessage } from 'react-intl';
-import { Accordion, Layout } from '@folio/stripes/components';
-import { DocumentCard } from '@folio/stripes-erm-components';
+import { FormattedDate, FormattedMessage } from 'react-intl';
+import { Accordion, Headline, Layout, MultiColumnList, InfoPopover } from '@folio/stripes/components';
+import { LicenseCard, LicenseEndDate } from '@folio/stripes-erm-components';
 
-export default class ExternalLicenses extends React.Component {
+export default class AllLicenses extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
       licenses: PropTypes.arrayOf(
@@ -21,25 +21,79 @@ export default class ExternalLicenses extends React.Component {
     }),
   };
 
-  renderExternalLicenses = (licenses) => (
-    licenses.map(license => <DocumentCard key={license.id} {...license} />)
-  )
+  renderControllingLicense = (licenses) => {
+    const controllingLicense = licenses.find(l => l.status.value === 'controlling');
+    if (!controllingLicense) return null;
 
-  render() {
-    const licenses = get(this.props, ['agreement', 'licenses'], []);
+    return (
+      <Layout id="agreement-controlling-license">
+        <Headline faded margin="none">
+          <FormattedMessage id="ui-agreements.license.controllingLicense" />
+        </Headline>
+        <LicenseCard license={controllingLicense.remoteId_object} />
+      </Layout>
+    );
+  }
+
+  renderInactiveLicenses = (licenses) => {
+    const inactiveLicenses = licenses.filter(l => l.status.value !== 'controlling');
+    if (!inactiveLicenses.length) return null;
 
     return (
       <Accordion
-        id="agreement-external-licenses"
-        label={<FormattedMessage id="ui-agreements.license.allLicenses" />}
+        id="agreement-inactive-licenses"
+        label={<FormattedMessage id="ui-agreements.license.inactiveLicenses" />}
       >
         <Layout className="margin-start-gutter padding-bottom-gutter">
-          { licenses.length ?
-            this.renderLicenses(licenses) :
-            <FormattedMessage id="ui-agreements.license.noLicenses" />
-          }
+          <MultiColumnList
+            columnMapping={{
+              note: '',
+              name: <FormattedMessage id="ui-agreements.license.prop.name" />,
+              status: <FormattedMessage id="ui-agreements.license.prop.status" />,
+              startDate: <FormattedMessage id="ui-agreements.license.prop.startDate" />,
+              endDate: <FormattedMessage id="ui-agreements.license.prop.endDate" />,
+            }}
+            columnWidths={{
+              note: 30,
+              name: '40%',
+              status: '20%',
+              startDate: '15%',
+              endDate: '15%'
+            }}
+            contentData={inactiveLicenses}
+            formatter={{
+              note: link => (link.note ? <InfoPopover content={link.note} /> : null),
+              name: ({ remoteId_object:license }) => license.name,
+              status: link => (link.status ? link.status.label : '-'),
+              startDate: ({ remoteId_object:license }) => (license.startDate ? <FormattedDate value={license.startDate} /> : '-'),
+              endDate: ({ remoteId_object:license }) => <LicenseEndDate license={license} />,
+            }}
+            interactive={false}
+            visibleColumns={[
+              'note',
+              'name',
+              'status',
+              'startDate',
+              'endDate',
+            ]}
+          />
         </Layout>
       </Accordion>
+    );
+  }
+
+  render() {
+    const licenses = get(this.props, ['agreement', 'linkedLicenses'], []);
+
+    if (!licenses.length) {
+      return <FormattedMessage id="ui-agreements.license.noLicenses" />;
+    }
+
+    return (
+      <React.Fragment>
+        {this.renderControllingLicense(licenses)}
+        {this.renderInactiveLicenses(licenses)}
+      </React.Fragment>
     );
   }
 }

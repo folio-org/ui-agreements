@@ -94,7 +94,7 @@ export default class LicensesFieldArray extends React.Component {
               component={LicenseLookup}
               id={`${fields.name}-remoteId-${i}`}
               label={<FormattedMessage id="ui-agreements.license.prop.lookup" />}
-              license={this.state.licenses[license.remoteId]}
+              license={this.state.licenses[license.remoteId] || license.remoteId_object}
               name={`${fields.name}[${i}].remoteId`}
               onSelectLicense={this.handleLicenseSelected}
               required

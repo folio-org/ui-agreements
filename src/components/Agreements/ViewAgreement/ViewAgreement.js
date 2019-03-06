@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { cloneDeep, difference, get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Pluggable } from '@folio/stripes/core';
 
 import {
   AccordionSet,
@@ -160,7 +159,14 @@ class ViewAgreement extends React.Component {
 
   getInitialValues() {
     const agreement = cloneDeep(this.getAgreement());
-    const { agreementStatus, renewalPriority, isPerpetual, contacts, orgs } = agreement;
+    const {
+      agreementStatus,
+      renewalPriority,
+      isPerpetual,
+      contacts,
+      orgs,
+      linkedLicenses
+    } = agreement;
 
     if (agreementStatus && agreementStatus.id) {
       agreement.agreementStatus = agreementStatus.id;
@@ -182,6 +188,13 @@ class ViewAgreement extends React.Component {
       agreement.contacts = contacts.map(c => ({
         ...c,
         role: c.role ? c.role.id : undefined,
+      }));
+    }
+
+    if (linkedLicenses) {
+      agreement.linkedLicenses = linkedLicenses.map(l => ({
+        ...l,
+        status: l.status.id,
       }));
     }
 
