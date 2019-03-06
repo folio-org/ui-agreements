@@ -320,13 +320,6 @@ class ViewAgreement extends React.Component {
         }}
       >
         <VendorInfo {...sectionProps} />
-        <Pluggable
-          type="find-license"
-          onLicenseSelected={l => { console.log('Selected license ', l); }}
-          renderTrigger={(props) => (
-            <Button onClick={props.onClick}>Select a License!</Button>
-          )}
-        />
         <AccordionSet>
           <Row end="xs">
             <Col xs>

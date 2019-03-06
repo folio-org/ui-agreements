@@ -123,6 +123,7 @@
   "license.allLicenses": "All licenses",
   "license.edit": "Edit license",
   "license.editLicenseOrganizations": "Edit license organizations",
+  "license.error.multipleControllingLicenses": "Only one Controlling License per agreement is allowed.",
   "license.externalLicenses": "External licenses",
   "license.generalNotes": "General notes about the agreement's license",
   "license.noExternalLicenses": "Agreement has no external licenses.",
@@ -132,7 +133,7 @@
   "license.prop.lookup": "Look-up a license",
   "license.prop.status": "Status",
   "license.prop.note": "Note",
-  "license.error.multipleControllingLicenses": "Only one Controlling License per agreement is allowed.",
+  "license.selectStatus": "Select a status",
 
   "organizations.edit": "Edit organizations",
   "organizations.add": "Add organization to agreement",

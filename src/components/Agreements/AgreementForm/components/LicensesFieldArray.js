@@ -111,18 +111,23 @@ export default class LicensesFieldArray extends React.Component {
         </Row>
         <Row>
           <Col xs={4}>
-            <Field
-              component={Select}
-              dataOptions={this.state.statusValues}
-              id={`${fields.name}-status-${i}`}
-              label={<FormattedMessage id="ui-agreements.license.prop.status" />}
-              name={`${fields.name}[${i}].status`}
-              required
-              validate={[
-                this.validateOnlyOneControllingLicense,
-                this.validateRequired,
-              ]}
-            />
+            <FormattedMessage id="ui-agreements.license.selectStatus">
+              {placeholder => (
+                <Field
+                  component={Select}
+                  dataOptions={this.state.statusValues}
+                  id={`${fields.name}-status-${i}`}
+                  label={<FormattedMessage id="ui-agreements.license.prop.status" />}
+                  name={`${fields.name}[${i}].status`}
+                  placeholder={placeholder}
+                  required
+                  validate={[
+                    this.validateOnlyOneControllingLicense,
+                    this.validateRequired,
+                  ]}
+                />
+              )}
+            </FormattedMessage>
           </Col>
           <Col xs={8}>
             <Field
