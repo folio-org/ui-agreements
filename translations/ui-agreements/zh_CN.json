@@ -125,5 +125,11 @@
     "settings.orgRoles.orgRole": "组织角色",
     "settings.orgRoles.role": "角色",
     "agreements.financesAgreementLines": "财务 - 协议行",
-    "agreements.editFinancesAgreementLines": "编辑协议行"
+    "agreements.editFinancesAgreementLines": "编辑协议行",
+    "agreements.licenseInfo": "License information",
+    "agreements.licenseNote": "General notes about the agreement's license",
+    "license.externalLicenses": "External licenses",
+    "license.generalNotes": "General notes about the agreement's license",
+    "license.noExternalLicenses": "Agreement has no external licenses.",
+    "license.addExternalLicense": "Add external license to agreement."
 }
