@@ -125,5 +125,11 @@
     "settings.orgRoles.orgRole": "دور المؤسسة",
     "settings.orgRoles.role": "الدور",
     "agreements.financesAgreementLines": "أمور مالية - سطور الاتفاقية",
-    "agreements.editFinancesAgreementLines": "تحرير سطور الاتفاقية"
+    "agreements.editFinancesAgreementLines": "تحرير سطور الاتفاقية",
+    "agreements.licenseInfo": "معلومات الرخصة",
+    "agreements.licenseNote": "ملاحظات عامة حول رخصة الاتفاقية",
+    "license.externalLicenses": "التراخيص الخارجية",
+    "license.generalNotes": "ملاحظات عامة حول رخصة الاتفاقية",
+    "license.noExternalLicenses": "لا توجد تراخيص خارجية بالاتفاقية",
+    "license.addExternalLicense": "إضافة رخصة خارجية إلى الاتفاقية"
 }
