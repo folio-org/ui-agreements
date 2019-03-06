@@ -125,5 +125,11 @@
     "settings.orgRoles.orgRole": "Organisation role",
     "settings.orgRoles.role": "Role",
     "agreements.financesAgreementLines": "Finances — agreement lines",
-    "agreements.editFinancesAgreementLines": "Edit agreement lines"
+    "agreements.editFinancesAgreementLines": "Edit agreement lines",
+    "agreements.licenseInfo": "License information",
+    "agreements.licenseNote": "General notes about the agreement's license",
+    "license.externalLicenses": "External licenses",
+    "license.generalNotes": "General notes about the agreement's license",
+    "license.noExternalLicenses": "Agreement has no external licenses.",
+    "license.addExternalLicense": "Add external license to agreement."
 }
