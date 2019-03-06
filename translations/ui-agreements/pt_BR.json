@@ -125,5 +125,11 @@
     "settings.orgRoles.orgRole": "Função da organização",
     "settings.orgRoles.role": "Função",
     "agreements.financesAgreementLines": "Finanças - linhas de contrato",
-    "agreements.editFinancesAgreementLines": "Editar linhas de contrato"
+    "agreements.editFinancesAgreementLines": "Editar linhas de contrato",
+    "agreements.licenseInfo": "Informações de licença",
+    "agreements.licenseNote": "Notas gerais sobre a licença do contrato",
+    "license.externalLicenses": "Licenças externas",
+    "license.generalNotes": "Notas gerais sobre a licença do contrato",
+    "license.noExternalLicenses": "Contrato não tem licenças externas.",
+    "license.addExternalLicense": "Adicione licença externa ao contrato."
 }
