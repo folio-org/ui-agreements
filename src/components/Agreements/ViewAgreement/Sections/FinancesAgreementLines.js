@@ -30,7 +30,9 @@ export default class FinancesAgreementLines extends React.Component {
         onToggle={this.props.onToggle}
         displayWhenClosed={button}
         displayWhenOpen={button}
-      />
+      >
+        TBD
+      </Accordion>
     );
   }
 }

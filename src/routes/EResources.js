@@ -4,9 +4,9 @@ import { get } from 'lodash';
 import { injectIntl, intlShape } from 'react-intl';
 
 import { SearchAndSort } from '@folio/stripes/smart-components';
+import { getSASParams } from '@folio/stripes-erm-components';
 
 import ViewEResource from '../components/EResources/ViewEResource';
-import getSASParams from '../util/getSASParams';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;

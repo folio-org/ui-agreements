@@ -7,6 +7,7 @@ import { LicenseCard } from '@folio/stripes-erm-components';
 
 export default class LicenseLookup extends React.Component {
   static propTypes = {
+    id: PropTypes.string.isRequired,
     input: PropTypes.shape({
       onChange: PropTypes.func,
       value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
@@ -21,7 +22,11 @@ export default class LicenseLookup extends React.Component {
   }
 
   renderLicense = () => {
-    return <LicenseCard license={this.props.license} />;
+    return (
+      <div id={`${this.props.id}-license-card`}>
+        <LicenseCard license={this.props.license} />
+      </div>
+    );
   }
 
   renderLookup = () => (
@@ -32,7 +37,7 @@ export default class LicenseLookup extends React.Component {
         renderTrigger={(props) => (
           <Button
             buttonStyle="primary"
-            id={props.triggerId}
+            id={`${this.props.id}-find-license-btn`}
             onClick={props.onClick}
           >
             <FormattedMessage id="ui-agreements.license.prop.lookup" />
