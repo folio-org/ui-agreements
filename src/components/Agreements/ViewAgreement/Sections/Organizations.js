@@ -62,7 +62,7 @@ export default class Organizations extends React.Component {
   renderLicenseOrganizations = () => {
     const { attachedLicenceId } = this.props.agreement;
 
-    if (!attachedLicenceId) return <FormattedMessage id="ui-agreements.license.agreementHasNone" />;
+    if (!attachedLicenceId) return <FormattedMessage id="ui-agreements.license.noLicenses" />;
 
     return <FormattedMessage id="ui-agreements.license.noLicenseOrganizations" />;
   }

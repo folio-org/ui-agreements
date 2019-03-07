@@ -10,6 +10,7 @@ import {
   TextArea,
 } from '@folio/stripes/components';
 
+import AgreementFormAllLicenses from './AgreementFormAllLicenses';
 import AgreementFormExternalLicenses from './AgreementFormExternalLicenses';
 
 class AgreementFormLicense extends React.Component {
@@ -17,6 +18,7 @@ class AgreementFormLicense extends React.Component {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
+    parentResources: PropTypes.object,
   };
 
   render() {
@@ -39,7 +41,8 @@ class AgreementFormLicense extends React.Component {
           </Col>
         </Row>
         <div style={{ marginLeft: '2rem' }}>
-          <AgreementFormExternalLicenses />
+          <AgreementFormAllLicenses parentResources={this.props.parentResources} />
+          <AgreementFormExternalLicenses parentResources={this.props.parentResources} />
         </div>
       </Accordion>
     );

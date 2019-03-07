@@ -52,17 +52,17 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
       }
 
       const foundDescription = document.querySelector('[data-test-agreement-description]').innerText;
-      if (foundDescription !== expectedValues.description) {
+      if (expectedValues.description && (foundDescription !== expectedValues.description)) {
         throw Error(`Description of agreement is incorrect. Expected "${expectedValues.description}" and got "${foundDescription}" `);
       }
 
       const foundRenewalPriority = document.querySelector('[data-test-agreement-renewal-priority]').innerText;
-      if (foundRenewalPriority !== expectedValues.renewalPriority) {
+      if (expectedValues.renewalPriority && (foundRenewalPriority !== expectedValues.renewalPriority)) {
         throw Error(`RenewalPriority of agreement is incorrect. Expected "${expectedValues.renewalPriority}" and got "${foundRenewalPriority}" `);
       }
 
       const foundIsPerpetual = document.querySelector('[data-test-agreement-is-perpetual]').innerText;
-      if (foundIsPerpetual !== expectedValues.isPerpetual) {
+      if (expectedValues.isPerpetual && (foundIsPerpetual !== expectedValues.isPerpetual)) {
         throw Error(`IsPerpetual of agreement is incorrect. Expected "${expectedValues.isPerpetual}" and got "${foundIsPerpetual}" `);
       }
     }, values)

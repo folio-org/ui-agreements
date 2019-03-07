@@ -142,9 +142,11 @@ class AgreementFormEresources extends React.Component {
             remove: intl.formatMessage({ id: 'ui-agreements.remove' }),
           }}
           columnWidths={{
-            name: '20%',
-            platform: '20%',
+            name: '35%',
+            platform: '35%',
             type: '10%',
+            count: '10%',
+            remove: '10%'
           }}
         />
         <BasketSelector
