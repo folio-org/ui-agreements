@@ -77,6 +77,8 @@ export default class LicensesFieldArray extends React.Component {
         return <FormattedMessage id="ui-agreements.license.error.multipleControllingLicenses" />;
       }
     }
+
+    return undefined;
   }
 
   validateRequired = (value) => (
