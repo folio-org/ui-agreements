@@ -97,7 +97,7 @@ module.exports.test = (uiTestCtx) => {
 
     const number = Math.round(Math.random() * 100000);
     const values = {
-      search: 'nanotech',
+      search: 'account',
       agreementName: `Basketforged Agreement #${number}`,
       agreementStartDate: '2019-01-31',
       agreementRenewalPriority: 'Definitely Renew',

@@ -22,7 +22,7 @@ import {
   AssociatedAgreements,
   Eresources,
   Finances,
-  License,
+  LicenseInfo,
   LicenseBusinessTerms,
   Organizations,
   VendorInfo
@@ -114,7 +114,7 @@ class ViewAgreement extends React.Component {
       agreementInfo: true,
       agreementLines: false,
       finances: false,
-      license: false,
+      licenseInfo: false,
       licenseBusinessTerms: false,
       organizations: false,
       eresources: false,
@@ -178,7 +178,14 @@ class ViewAgreement extends React.Component {
 
   getInitialValues() {
     const agreement = cloneDeep(this.getAgreement());
-    const { agreementStatus, renewalPriority, isPerpetual, contacts, orgs } = agreement;
+    const {
+      agreementStatus,
+      renewalPriority,
+      isPerpetual,
+      contacts,
+      orgs,
+      linkedLicenses
+    } = agreement;
 
     if (agreementStatus && agreementStatus.id) {
       agreement.agreementStatus = agreementStatus.id;
@@ -200,6 +207,13 @@ class ViewAgreement extends React.Component {
       agreement.contacts = contacts.map(c => ({
         ...c,
         role: c.role ? c.role.id : undefined,
+      }));
+    }
+
+    if (linkedLicenses) {
+      agreement.linkedLicenses = linkedLicenses.map(l => ({
+        ...l,
+        status: l.status.id,
       }));
     }
 
@@ -355,9 +369,9 @@ class ViewAgreement extends React.Component {
             open={this.state.sections.finances}
             {...sectionProps}
           />
-          <License
-            id="license"
-            open={this.state.sections.license}
+          <LicenseInfo
+            id="licenseInfo"
+            open={this.state.sections.licenseInfo}
             {...sectionProps}
           />
           <LicenseBusinessTerms

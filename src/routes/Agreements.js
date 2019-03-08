@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 
 import { SearchAndSort } from '@folio/stripes/smart-components';
+import { getSASParams } from '@folio/stripes-erm-components';
 
 import ViewAgreement from '../components/Agreements/ViewAgreement';
 import EditAgreement from '../components/Agreements/EditAgreement';
 import AgreementFilters from '../components/Agreements/AgreementFilters';
-import getSASParams from '../util/getSASParams';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
@@ -73,6 +73,10 @@ class Agreements extends React.Component {
       type: 'okapi',
       path: 'erm/refdataValues/InternalContact/role',
     },
+    licenseLinkStatusValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/RemoteLicenseLink/status',
+    },
     basket: { initialValue: [] },
     query: {
       initialValue: {
@@ -85,6 +89,7 @@ class Agreements extends React.Component {
   });
 
   static propTypes = {
+    disableRecordCreation: PropTypes.bool,
     intl: intlShape,
     resources: PropTypes.object,
     mutator: PropTypes.object,
@@ -196,6 +201,7 @@ class Agreements extends React.Component {
           detailProps={{
             onUpdate: this.handleUpdate
           }}
+          disableRecordCreation={this.props.disableRecordCreation}
           editRecordComponent={EditAgreement}
           initialResultCount={INITIAL_RESULT_COUNT}
           key="agreements"
