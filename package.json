@@ -13,11 +13,12 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run nav/agreement-crud/basket/external-licenses",
+    "test": "stripes test nightmare --run nav/agreement-crud/basket/external-licenses/linked-licenses",
     "test-nav": "stripes test nightmare --run nav",
     "test-agreement-crud": "stripes test nightmare --run agreement-crud",
     "test-basket": "stripes test nightmare --run basket",
     "test-external-licenses": "stripes test nightmare --run external-licenses",
+    "test-linked-licenses": "stripes test nightmare --run linked-licenses",
     "lint": "eslint src"
   },
   "devDependencies": {

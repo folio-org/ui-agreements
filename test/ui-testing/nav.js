@@ -18,8 +18,8 @@ module.exports.test = (uiTestCtx) => {
 
       it('should open app and see selected Agreements tab', (done) => {
         nightmare
-          .wait('#clickable-agreements-module')
-          .click('#clickable-agreements-module')
+          .wait('#app-list-item-clickable-agreements-module')
+          .click('#app-list-item-clickable-agreements-module')
           .wait('#agreements-module-display')
           .wait('nav #agreements')
           .evaluate(() => document.querySelector('nav #agreements').className)

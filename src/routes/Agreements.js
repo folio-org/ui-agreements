@@ -89,13 +89,18 @@ class Agreements extends React.Component {
   });
 
   static propTypes = {
+    browseOnly: PropTypes.bool,
     disableRecordCreation: PropTypes.bool,
     intl: intlShape,
     resources: PropTypes.object,
     mutator: PropTypes.object,
     onSelectRow: PropTypes.func,
-    browseOnly: PropTypes.bool,
+    showSingleResult: PropTypes.bool,
   };
+
+  static defaultProps = {
+    showSingleResult: true,
+  }
 
   handleCreate = (agreement) => {
     const { mutator } = this.props;
@@ -212,6 +217,7 @@ class Agreements extends React.Component {
           onSelectRow={this.props.onSelectRow}
           packageInfo={this.getPackageInfo()}
           resultCountIncrement={INITIAL_RESULT_COUNT}
+          showSingleResult={this.props.showSingleResult}
           viewRecordComponent={ViewAgreement}
           viewRecordPerms="ui-agreements.agreements.view"
           // SearchAndSort expects the resource it's going to list to be under the `records` key.
