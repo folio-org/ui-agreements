@@ -71,6 +71,7 @@ class ViewAgreement extends React.Component {
       },
       records: 'po_lines',
       shouldRefresh,
+      throwErrors: false,
     },
     agreementEresources: {
       type: 'okapi',
