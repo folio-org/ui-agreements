@@ -9,7 +9,6 @@ import FinancesAgreementLines from './FinancesAgreementLines';
 export default class Finances extends React.Component {
   static propTypes = {
     financesAgreementLines: PropTypes.arrayOf(PropTypes.object),
-    fetchMoreEresources: PropTypes.func,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
