@@ -62,6 +62,7 @@
   "agreementLines.gross": "YTD Gross",
   "agreementLines.net": "YTD Net",
   "agreementLines.noLines": "No agreement lines have been added. Please use one of the options below.",
+  "agreementLines.noPoLines": "Agreement has no agreement lines.",
   "agreementLines.poline": "PO Line",
   "agreementLines.removeItem": "Remove line from agreement",
   "agreementLines.tax": "YTD Tax",

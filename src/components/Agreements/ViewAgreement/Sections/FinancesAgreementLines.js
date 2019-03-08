@@ -2,14 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
-import { MultiColumnList } from '@folio/stripes/components';
-
-import EResourceLink from '../../../EResourceLink';
-import ResourceType from '../../../ResourceType';
+import { Icon, MultiColumnList } from '@folio/stripes/components';
 
 export default class FinancesAgreementLines extends React.Component {
   static propTypes = {
-    agreementLines: PropTypes.arrayOf(PropTypes.object),
+    financesAgreementLines: PropTypes.arrayOf(PropTypes.object),
     visible: PropTypes.bool,
   };
 
@@ -34,24 +31,13 @@ export default class FinancesAgreementLines extends React.Component {
   }
 
   formatter = {
-    name: line => {
-      const resource = get(line.resource, ['_object', 'pti', 'titleInstance'], line.resource);
-
-      if (!resource) return line.label;
-
-      return (
-        <EResourceLink
-          eresource={resource}
-          linkProps={{ 'data-test-resource-id': line.resource.id }}
-        />
-      );
-    },
-    type:      line => <ResourceType resource={line.resource} />,
-    costType: _line => ' ',
-    gross:    _line => '1799.99',
-    net:      _line => '1634.74',
-    tax:      _line => '165.25',
-    poline:   _line => ' ',
+    name:     line => (get(line, ['title']) || '-'),
+    type:     () => 'Package',
+    costType: () => 'General',
+    gross:    () => '1799.99',
+    net:      () => '1684.23',
+    tax:      () => '165.25',
+    poline:   line => (get(line, ['po_line_number']) || '-'),
   }
 
   visibleColumns = [
@@ -65,11 +51,19 @@ export default class FinancesAgreementLines extends React.Component {
   ]
 
   render() {
+    const { financesAgreementLines } = this.props;
+    if (financesAgreementLines === undefined) {
+      return <Icon icon="spinner-ellipsis" width="100px" />;
+    }
+    if (!financesAgreementLines.length) {
+      return <FormattedMessage id="ui-agreements.agreementLines.noPoLines" />;
+    }
+
     return (
       <MultiColumnList
         columnMapping={this.columnMapping}
         columnWidths={this.columnWidths}
-        contentData={this.props.visible ? this.props.agreementLines : []}
+        contentData={this.props.visible ? financesAgreementLines : []}
         formatter={this.formatter}
         id="finances-agreement-lines"
         interactive={false}

@@ -8,7 +8,7 @@ import FinancesAgreementLines from './FinancesAgreementLines';
 
 export default class Finances extends React.Component {
   static propTypes = {
-    agreementLines: PropTypes.arrayOf(PropTypes.object),
+    financesAgreementLines: PropTypes.arrayOf(PropTypes.object),
     fetchMoreEresources: PropTypes.func,
     id: PropTypes.string,
     onToggle: PropTypes.func,
@@ -16,10 +16,11 @@ export default class Finances extends React.Component {
   };
 
   renderBadge = () => {
-    const count = get(this.props.agreementLines, ['length']);
-    if (!count) return <Icon icon="spinner-ellipsis" width="10px" />;
-
-    return <Badge data-test-agreement-lines-count={count}>{count}</Badge>;
+    const count = get(this.props.financesAgreementLines, ['length']);
+    if (count === undefined) {
+      return <Icon icon="spinner-ellipsis" width="10px" />;
+    }
+    return <Badge data-test-finances-agreement-lines-count={count}>{count}</Badge>;
   }
 
   render() {
@@ -52,7 +53,6 @@ export default class Finances extends React.Component {
         <div style={{ marginLeft: 20, marginRight: 20 }}>
           <Accordion
             id="finance-reports"
-
             label={<FormattedMessage id="ui-agreements.agreements.financeReports" />}
           />
         </div>

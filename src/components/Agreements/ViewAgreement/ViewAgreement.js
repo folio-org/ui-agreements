@@ -15,6 +15,8 @@ import {
   Row,
 } from '@folio/stripes/components';
 
+import hyphenateUuid from '../../../util/hyphenateUuid';
+
 import {
   AgreementInfo,
   AssociatedAgreements,
@@ -58,6 +60,16 @@ class ViewAgreement extends React.Component {
         match: 'owner.id',
         term: ':{id}',
       },
+      shouldRefresh,
+    },
+    financesAgreementLines: {
+      type: 'okapi',
+      path: 'orders-storage/po_lines',
+      params: {
+        query: (_q, pathComponents, _r) => 'agreement_id==' + hyphenateUuid(`${pathComponents.id}`),
+        limit: '500',
+      },
+      records: 'po_lines',
       shouldRefresh,
     },
     agreementEresources: {
@@ -157,6 +169,13 @@ class ViewAgreement extends React.Component {
     return users.find(u => u.id === userId);
   }
 
+  getFinancesAgreementLines() {
+    const isPending = get(this.props.resources.financesAgreementLines, ['isPending'], true);
+    if (isPending) return undefined;
+
+    return get(this.props.resources.financesAgreementLines, ['records'], []);
+  }
+
   getInitialValues() {
     const agreement = cloneDeep(this.getAgreement());
     const { agreementStatus, renewalPriority, isPerpetual, contacts, orgs } = agreement;
@@ -192,6 +211,7 @@ class ViewAgreement extends React.Component {
       agreement: this.getAgreement(),
       agreementLines: this.getAgreementLines(),
       contacts: this.getContacts(),
+      financesAgreementLines: this.getFinancesAgreementLines(),
       onToggle: this.handleSectionToggle,
       parentMutator: {
         ...this.props.parentMutator,
