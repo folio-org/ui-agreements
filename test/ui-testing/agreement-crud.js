@@ -137,6 +137,7 @@ module.exports.test = (uiTestCtx) => {
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
           .wait('#agreementFormInfo')
+          .waitUntilNetworkIdle(2000)
           .insert('#edit-agreement-name', '')
           .insert('#edit-agreement-name', values.editedName)
 
