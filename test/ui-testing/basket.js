@@ -117,8 +117,8 @@ module.exports.test = (uiTestCtx) => {
 
       it('should open eresources', done => {
         nightmare
-          .wait('#clickable-agreements-module')
-          .click('#clickable-agreements-module')
+          .wait('#app-list-item-clickable-agreements-module')
+          .click('#app-list-item-clickable-agreements-module')
           .wait('#agreements-module-display')
           .click('nav #eresources')
           .wait('#input-eresource-search')

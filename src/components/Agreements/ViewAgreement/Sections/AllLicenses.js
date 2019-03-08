@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedDate, FormattedMessage } from 'react-intl';
-import { Accordion, Headline, Layout, MultiColumnList, InfoPopover } from '@folio/stripes/components';
+import { Accordion, Headline, Layout, KeyValue, MultiColumnList, InfoPopover } from '@folio/stripes/components';
 import { LicenseCard, LicenseEndDate } from '@folio/stripes-erm-components';
 
 export default class AllLicenses extends React.Component {
@@ -31,6 +31,13 @@ export default class AllLicenses extends React.Component {
           <FormattedMessage id="ui-agreements.license.controllingLicense" />
         </Headline>
         <LicenseCard license={controllingLicense.remoteId_object} />
+        {controllingLicense.note ?
+          <KeyValue label={<FormattedMessage id="ui-agreements.license.prop.note" />}>
+            {controllingLicense.note || '-'}
+          </KeyValue>
+          :
+          null
+        }
       </Layout>
     );
   }

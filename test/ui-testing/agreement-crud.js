@@ -18,8 +18,8 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
   const values = defaultValues || generateAgreementValues();
 
   nightmare
-    .wait('#clickable-agreements-module')
-    .click('#clickable-agreements-module')
+    .wait('#app-list-item-clickable-agreements-module')
+    .click('#app-list-item-clickable-agreements-module')
     .wait('#agreements-module-display')
     .click('nav #agreements')
     .wait('#clickable-newagreement')
@@ -94,8 +94,8 @@ module.exports.test = (uiTestCtx) => {
 
       it('should open app and navigate to Agreements', done => {
         nightmare
-          .wait('#clickable-agreements-module')
-          .click('#clickable-agreements-module')
+          .wait('#app-list-item-clickable-agreements-module')
+          .click('#app-list-item-clickable-agreements-module')
           .wait('#agreements-module-display')
           .click('nav #agreements')
           .wait(1000)
