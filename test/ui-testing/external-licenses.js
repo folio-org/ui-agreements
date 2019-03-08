@@ -51,8 +51,8 @@ module.exports.test = (uiTestCtx) => {
         console.log(`\tCreating ${name}`);
 
         nightmare
-          .wait('#clickable-agreements-module')
-          .click('#clickable-agreements-module')
+          .wait('#app-list-item-clickable-agreements-module')
+          .click('#app-list-item-clickable-agreements-module')
           .wait('#agreements-module-display')
           .wait('#clickable-newagreement')
           .click('#clickable-newagreement')
