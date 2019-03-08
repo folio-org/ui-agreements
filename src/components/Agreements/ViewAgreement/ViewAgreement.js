@@ -15,11 +15,13 @@ import {
   Row,
 } from '@folio/stripes/components';
 
+import hyphenateUuid from '../../../util/hyphenateUuid';
+
 import {
   AgreementInfo,
   AssociatedAgreements,
   Eresources,
-  FinancesAgreementLines,
+  Finances,
   LicenseInfo,
   LicenseBusinessTerms,
   Organizations,
@@ -58,6 +60,16 @@ class ViewAgreement extends React.Component {
         match: 'owner.id',
         term: ':{id}',
       },
+      shouldRefresh,
+    },
+    financesAgreementLines: {
+      type: 'okapi',
+      path: 'orders-storage/po_lines',
+      params: {
+        query: (_q, pathComponents, _r) => 'agreement_id==' + hyphenateUuid(`${pathComponents.id}`),
+        limit: '500',
+      },
+      records: 'po_lines',
       shouldRefresh,
     },
     agreementEresources: {
@@ -101,7 +113,7 @@ class ViewAgreement extends React.Component {
     sections: {
       agreementInfo: true,
       agreementLines: false,
-      financesAgreementLines: false,
+      finances: false,
       licenseInfo: false,
       licenseBusinessTerms: false,
       organizations: false,
@@ -157,6 +169,13 @@ class ViewAgreement extends React.Component {
     return users.find(u => u.id === userId);
   }
 
+  getFinancesAgreementLines() {
+    const isPending = get(this.props.resources.financesAgreementLines, ['isPending'], true);
+    if (isPending) return undefined;
+
+    return get(this.props.resources.financesAgreementLines, ['records'], []);
+  }
+
   getInitialValues() {
     const agreement = cloneDeep(this.getAgreement());
     const {
@@ -206,6 +225,7 @@ class ViewAgreement extends React.Component {
       agreement: this.getAgreement(),
       agreementLines: this.getAgreementLines(),
       contacts: this.getContacts(),
+      financesAgreementLines: this.getFinancesAgreementLines(),
       onToggle: this.handleSectionToggle,
       parentMutator: {
         ...this.props.parentMutator,
@@ -344,9 +364,9 @@ class ViewAgreement extends React.Component {
             open={this.state.sections.agreementInfo}
             {...sectionProps}
           />
-          <FinancesAgreementLines
-            id="financesAgreementLines"
-            open={this.state.sections.financesAgreementLines}
+          <Finances
+            id="finances"
+            open={this.state.sections.finances}
             {...sectionProps}
           />
           <LicenseInfo
