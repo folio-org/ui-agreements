@@ -1,3 +1,5 @@
+## 2.1.0 2019-01 Opened
+
 ## 2.0.3 2019-03-12
  * ERM-59 Manage licenses linked to agreements
  * ERM-46 Update note about a license for an agreement
