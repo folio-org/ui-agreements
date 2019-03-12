@@ -70,10 +70,10 @@ export default class AllLicenses extends React.Component {
             contentData={inactiveLicenses}
             formatter={{
               note: link => (link.note ? <InfoPopover content={link.note} /> : null),
-              name: ({ remoteId_object:license }) => license.name,
+              name: ({ remoteId_object:license = {} }) => license.name,
               status: link => (link.status ? link.status.label : '-'),
-              startDate: ({ remoteId_object:license }) => (license.startDate ? <FormattedDate value={license.startDate} /> : '-'),
-              endDate: ({ remoteId_object:license }) => <LicenseEndDate license={license} />,
+              startDate: ({ remoteId_object:license = {} }) => (license.startDate ? <FormattedDate value={license.startDate} /> : '-'),
+              endDate: ({ remoteId_object:license = {} }) => <LicenseEndDate license={license} />,
             }}
             interactive={false}
             visibleColumns={[
