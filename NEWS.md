@@ -1,4 +1,13 @@
-## 2.0.2 Open
+## 2.0.3 2019-01-12
+ * ERM-59 Manage licenses linked to agreements
+ * ERM-46 Update note about a license for an agreement
+ * ERM-41 Manage external licenses for an Agreement
+   * ERM-44 Remove an external license from an Agreement
+   * ERM-43 Edit external license details
+   * ERM-42 Add external license for an Agreement
+ * ERM-35 Filter Agreement Search Results by Organisation Role
+ * ERM-7 Add an Organisation to a License 
+   * ERM-29 Create and use erm-stripes-components repo
 
 ## 2.0.1 2019-02-23
 
