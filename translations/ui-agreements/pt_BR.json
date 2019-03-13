@@ -148,9 +148,9 @@
     "license.selectStatus": "Selecione um status",
     "agreements.financeReports": "Relatórios financeiros",
     "agreementLines.costType": "Tipo de custo",
-    "agreementLines.gross": "YTD Gross",
-    "agreementLines.net": "YTD Net",
+    "agreementLines.gross": "No acumulado do ano",
+    "agreementLines.net": "Acumulado do ano liquido",
     "agreementLines.noPoLines": "Contrato não tem linhas de contrato.",
-    "agreementLines.poline": "PO Line",
-    "agreementLines.tax": "YTD Tax"
+    "agreementLines.poline": "Linha do pedido",
+    "agreementLines.tax": "Acumulado no ano fiscal"
 }
