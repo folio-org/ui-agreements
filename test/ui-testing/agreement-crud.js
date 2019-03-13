@@ -45,6 +45,12 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
 
     .click('#clickable-createagreement')
     .wait('#agreementInfo')
+    .wait(agreementName => {
+      const nameElement = document.querySelector('[data-test-agreement-name]');
+      if (!nameElement) return false;
+
+      return nameElement.innerText === agreementName;
+    }, values.name)
     .evaluate(expectedValues => {
       const foundName = document.querySelector('[data-test-agreement-name]').innerText;
       if (foundName !== expectedValues.name) {
