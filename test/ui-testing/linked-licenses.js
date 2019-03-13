@@ -216,6 +216,53 @@ module.exports.test = (uiTestCtx) => {
             .catch(done);
         });
       }
+
+      it('should open Licenses module', done => {
+        nightmare
+          .wait('#app-list-item-clickable-licenses-module')
+          .click('#app-list-item-clickable-licenses-module')
+          .wait('#licenses-module-display')
+          .exists('#app-list-dropdown-toggle[aria-expanded="true"]')
+          .then(dropdownOpen => {
+            if (dropdownOpen) nightmare.click('#app-list-dropdown-toggle');
+          })
+          .then(done)
+          .catch(done);
+      });
+
+      it(`should find and open ${licenses[0].name}`, done => {
+        nightmare
+          .wait('#input-license-search')
+          .insert('#input-license-search', licenses[0].name)
+          .click('#pane-filter button[type="submit"]')
+          .waitUntilNetworkIdle(2000)
+          .click('#list-licenses [aria-rowindex="2"] a')
+          .wait(licenseName => {
+            const nameElement = document.querySelector('[data-test-license-name]');
+            if (!nameElement) return false;
+
+            return nameElement.innerText === licenseName;
+          }, licenses[0].name)
+          .then(done)
+          .catch(done);
+      });
+
+      it(`should find ${agreement.name} in Linked Agreements section`, done => {
+        nightmare
+          .wait('#linked-agreements-table')
+          .evaluate(agreementName => {
+            const nameElement = document.evaluate(
+              `//*[@id="linked-agreements-table"]//div[.="${agreementName}"]`,
+              document,
+              null,
+              XPathResult.FIRST_ORDERED_NODE_TYPE
+            ).singleNodeValue;
+
+            if (!nameElement) throw Error(`Expected linked agreement node for name ${agreementName}`);
+          }, agreement.name)
+          .then(done)
+          .catch(done);
+      });
     });
   });
 };

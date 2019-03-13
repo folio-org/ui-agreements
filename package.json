@@ -13,7 +13,7 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run nav/agreement-crud/basket/external-licenses/linked-licenses",
+    "test": "stripes test nightmare --run nav/agreement-crud/basket/external-licenses",
     "test-nav": "stripes test nightmare --run nav",
     "test-agreement-crud": "stripes test nightmare --run agreement-crud",
     "test-basket": "stripes test nightmare --run basket",
@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@folio/stripes-erm-components": "^1.0.6",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
     "react-intl": "^2.4.0",
     "react-router-dom": "^4.1.1",
