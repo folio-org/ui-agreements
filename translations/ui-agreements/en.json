@@ -40,7 +40,7 @@
   "agreements.reviewDate": "Review date",
   "agreements.reviewDecision": "Decision",
   "agreements.reviewNotes": "Decision notes",
-  "agreements.agreementLines": "E-resources: agreement lines",
+  "agreements.agreementLines": "Agreement lines",
   "agreements.financesAgreementLines": "Finances — agreement lines",
   "agreements.editFinancesAgreementLines": "Edit agreement lines",
   "agreements.financeReports": "Finance Reports",
@@ -96,6 +96,7 @@
 
   "eresources.name": "Name",
   "eresources.type": "Type",
+  "eresources.titles": "Titles",
   "eresources.isPackage": "Is package",
   "eresources.erInfo": "E-resource information",
   "eresources.erType": "E-resource type",

@@ -15,6 +15,7 @@ import {
 import BasketSelector from '../../../BasketSelector';
 import EResourceLink from '../../../EResourceLink';
 import ResourceType from '../../../ResourceType';
+import AgreementLineField from '../components/AgreementLineField';
 
 class AgreementFormEresources extends React.Component {
   static propTypes = {
@@ -88,6 +89,33 @@ class AgreementFormEresources extends React.Component {
 
     return (
       <div>
+        <ul
+          id="agreement-form-lines"
+          style={{
+            listStyle: 'none',
+            padding: 0,
+          }}
+        >
+          {renderedLines.map((line, i) => (
+            <AgreementLineField
+              fieldKey={i}
+              key={i}
+              line={line}
+              onDelete={this.onR}
+              resource={this.getLineResource(line)}
+            />
+          ))}
+        </ul>
+        <BasketSelector
+          addButtonLabel={<FormattedMessage id="ui-agreements.agreementLines.createLine" />}
+          onAdd={entitlement => this.onAddAgreementLine(fields, entitlement)}
+          stripes={stripes}
+        />
+      </div>
+    );
+  /*
+    return (
+      <div>
         <MultiColumnList
           contentData={renderedLines}
           interactive={false}
@@ -156,13 +184,14 @@ class AgreementFormEresources extends React.Component {
         />
       </div>
     );
+  */
   }
 
   render() {
     return (
       <Accordion
         id={this.props.id}
-        label={<FormattedMessage id="ui-agreements.agreements.eresourceAgreementLines" />}
+        label={<FormattedMessage id="ui-agreements.agreements.agreementLines" />}
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
