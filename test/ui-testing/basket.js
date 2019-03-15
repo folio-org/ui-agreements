@@ -16,10 +16,7 @@ const shouldAddTitleToBasket = (nightmare, index) => {
     nightmare
       .wait(`#list-agreements [aria-rowindex="${index + 1}"] a`)
       .click(`#list-agreements [aria-rowindex="${index + 1}"] a`)
-      .wait(2000)
-      .wait(() => {
-        return document.querySelector('[data-test-basket-remove-button][data-test-add-title-to-basket]') === null;
-      })
+      .waitUntilNetworkIdle(2000)
       .wait('[data-test-basket-add-button][data-test-add-title-to-basket]')
       .click('[data-test-basket-add-button][data-test-add-title-to-basket]')
       .evaluate((resourceIndex, CONSTANTS) => {
@@ -173,12 +170,15 @@ module.exports.test = (uiTestCtx) => {
           nightmare
             .click('#basket-contents [class*=mclScrollable] [aria-rowindex="3"] input[type=checkbox]')
             .click('[data-test-basket-create-agreement]')
-            .wait('#edit-agreement-name')
-            .wait('#agreementFormEresources [class*=mclScrollable] [aria-rowindex]') // An agreement line has been auto-added for the basket item
+            .wait('#accordion-toggle-button-agreementFormLines')
+            .click('#accordion-toggle-button-agreementFormLines')
+
+            // Ensure two agreement lines (0 and 1) has been auto-added for the basket item
+            .wait('#agreement-form-lines [data-test-ag-line-number="1"]')
+
             .insert('#edit-agreement-name', values.agreementName)
             .insert('#edit-agreement-start-date', values.agreementStartDate)
             .type('#edit-agreement-status', values.agreementStatus)
-            .type('#edit-agreement-renewal-priority', values.agreementRenewalPriority)
             .click('#clickable-createagreement')
             .wait('#agreementInfo')
             .then(done)
@@ -197,11 +197,6 @@ module.exports.test = (uiTestCtx) => {
               const foundStatus = document.querySelector('[data-test-agreement-status]').innerText;
               if (foundStatus !== expectedValues.agreementStatus) {
                 throw Error(`Status of agreement is incorrect. Expected "${expectedValues.agreementStatus}" and got "${foundStatus}" `);
-              }
-
-              const foundRenewalPriority = document.querySelector('[data-test-agreement-renewal-priority]').innerText;
-              if (foundRenewalPriority !== expectedValues.agreementRenewalPriority) {
-                throw Error(`Renewal Priority of agreement iss incorrect. Expected "${expectedValues.agreementRenewalPriority}" and got "${foundRenewalPriority}" `);
               }
             }, values)
             .then(done)
@@ -229,14 +224,18 @@ module.exports.test = (uiTestCtx) => {
             .click('#sl-container-select-agreement-for-basket li')
             .wait(250)
             .click('[data-test-basket-add-to-agreement]')
+
             .wait('#form-agreement')
+            .wait('#accordion-toggle-button-agreementFormLines')
+            .click('#accordion-toggle-button-agreementFormLines')
+
             .wait(() => {
-              const resources = document.querySelectorAll('#agreementFormEresources [class*=mclScrollable] [aria-rowindex]');
+              const resources = document.querySelectorAll('#agreement-form-lines [data-test-ag-line-number]');
               return resources.length === 3;
             })
             .click('#clickable-updateagreement')
             .wait('#agreementInfo')
-            .wait(5000) // Wait for the update list of agreement lines to fetch/render
+            .waitUntilNetworkIdle(2000) // Wait for the update list of agreement lines to fetch/render
             .then(done)
             .catch(done);
         });

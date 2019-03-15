@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { withStripes } from '@folio/stripes/core';
 import BasketSelectorContainer from './BasketSelectorContainer';
 
 class BasketSelector extends React.Component {
@@ -23,4 +24,4 @@ class BasketSelector extends React.Component {
   }
 }
 
-export default BasketSelector;
+export default withStripes(BasketSelector);

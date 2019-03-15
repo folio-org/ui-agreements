@@ -1,5 +1,9 @@
 @import '@folio/stripes-components/lib/variables';
 
+.agLineFieldArray {
+  list-style: none;
+  padding: 0;
+}
 .agLineField {
   width: 100%;
   border-color: var(--color-border-p2);

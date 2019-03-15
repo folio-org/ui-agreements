@@ -57,6 +57,7 @@
   "agreements.updateAgreement": "Update Agreement",
   "agreements.editAgreement": "Edit Agreement",
 
+  "agreementLines.addLine": "Add agreement line",
   "agreementLines.costType": "Cost type",
   "agreementLines.count": "Count",
   "agreementLines.contentUpdated": "Content updated",
@@ -68,6 +69,7 @@
   "agreementLines.removeItem": "Remove line from agreement",
   "agreementLines.tax": "YTD Tax",
   "agreementLines.createLine": "Create agreement line",
+  "agreementLines.lineTitle": "Agreement line #{number}",
 
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
   "basket.name": "ERM Basket",
@@ -85,7 +87,7 @@
   "basketSelector.selectPlaceholder": "Select e-resource or package",
 
   "contacts.noContacts": "Agreement has no internal contacts.",
-  "contacts.add": "+ Add internal contact",
+  "contacts.add": "Add internal contact",
   "contacts.name": "Name",
   "contacts.role": "Role",
   "contacts.remove": "Remove",

@@ -10,14 +10,9 @@ import EditAgreement from '../components/Agreements/EditAgreement';
 import AgreementFilters from '../components/Agreements/AgreementFilters';
 import packageInfo from '../../package';
 
-import TEST_BASKET from '../../test-basket';
-
-console.log(TEST_BASKET);
-
 const INITIAL_RESULT_COUNT = 100;
 const DEFAULT_FILTERS = 'agreementStatus.Requested,agreementStatus.In Negotiation,agreementStatus.Draft,agreementStatus.Active';
 const DEFAULT_SORT = 'Name';
-
 
 class Agreements extends React.Component {
   static manifest = Object.freeze({
@@ -105,10 +100,6 @@ class Agreements extends React.Component {
 
   static defaultProps = {
     showSingleResult: true,
-  }
-
-  componentDidMount() {
-    this.props.mutator.basket.replace(TEST_BASKET);
   }
 
   handleCreate = (agreement) => {
