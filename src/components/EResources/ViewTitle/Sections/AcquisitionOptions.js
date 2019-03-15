@@ -47,7 +47,11 @@ class AcquisitionOptions extends React.Component {
   render() {
     const { eresource, resources: { entitlementOptions }, intl } = this.props;
 
-    if (!entitlementOptions || !entitlementOptions.records) {
+    if (
+      !entitlementOptions ||
+      !entitlementOptions.records ||
+      entitlementOptions.isPending
+    ) {
       return <Icon icon="spinner-ellipsis" width="100px" />;
     }
 
