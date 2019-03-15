@@ -16,8 +16,7 @@ const generateAgreementValues = () => {
 
 const createAgreement = (nightmare, done, defaultValues, resourceId) => {
   const values = defaultValues || generateAgreementValues();
-
-  nightmare
+  let chain = nightmare
     .wait('#app-list-item-clickable-agreements-module')
     .click('#app-list-item-clickable-agreements-module')
     .wait('#agreements-module-display')
@@ -37,12 +36,18 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
 
     .type('#edit-agreement-status', 'draft')
     .type('#edit-agreement-renewal-priority', 'for')
-    .type('#edit-agreement-is-perpetual', 'yes')
+    .type('#edit-agreement-is-perpetual', 'yes');
 
-    .select('#basket-selector', resourceId)
-    .click('#basket-selector-add-button')
-    .wait(250)
+  if (resourceId) {
+    chain = chain
+      .click('#accordion-toggle-button-agreementFormLines')
+      .click('#add-agreement-line-button')
+      .select('#basket-selector', resourceId)
+      .click('#basket-selector-add-button')
+      .wait(250);
+  }
 
+  chain
     .click('#clickable-createagreement')
     .wait('#agreementInfo')
     .wait(agreementName => {
@@ -158,7 +163,7 @@ module.exports.test = (uiTestCtx) => {
           .type('#edit-agreement-renewal-priority', values.editedRenewalPriority)
           .click('#clickable-updateagreement')
           .wait('#agreementInfo')
-          .wait(5000) // Wait for the POST/reloading to trigger since #agreementInfo may be up for some ms first.
+          .waitUntilNetworkIdle(2000) // Wait for the POST/reloading to trigger since #agreementInfo may be up for some ms first.
           .evaluate(expectedValues => {
             const name = document.querySelector('[data-test-agreement-name]').innerText;
             if (name !== expectedValues.editedName) {

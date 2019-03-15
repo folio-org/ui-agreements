@@ -1,0 +1,36 @@
+@import '@folio/stripes-components/lib/variables';
+
+.agLineFieldArray {
+  list-style: none;
+  padding: 0;
+}
+.agLineField {
+  width: 100%;
+  border-color: var(--color-border-p2);
+  border-width: 1px 1px 0;
+  border-style: solid;
+
+  &:last-of-type {
+    border-bottom: 1px solid var(--color-border-p2);
+    margin-bottom: 4px;
+  }
+}
+
+.agLineHeader {
+  background-color: var(--bg-hover);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 14px;
+}
+
+.agLineHeaderActions {
+  margin: 0 0 0 auto; /* align to end of header */
+  padding: 4px 0;
+}
+
+.agLineBody {
+  padding: 14px;
+  background-color: color(var(--bg) blend(var(--bg-hover) 20%));
+  width: 100%;
+}
