@@ -40,6 +40,7 @@ export default function withKiwtFieldArray(WrappedComponent) {
         <WrappedComponent
           {...this.props}
           items={items}
+          name={fields.name}
           onAddField={this.handleAddField}
           onDeleteField={this.handleDeleteField}
           onReplaceField={this.handleReplaceField}

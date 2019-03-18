@@ -20,6 +20,7 @@ import EditCard from './EditCard';
 export default class AgreementLineField extends React.Component {
   static propTypes = {
     index: PropTypes.number,
+    name: PropTypes.string.isRequired,
     onDelete: PropTypes.func,
     onResourceSelected: PropTypes.func,
     resource: PropTypes.object,
@@ -51,13 +52,10 @@ export default class AgreementLineField extends React.Component {
   }
 
   renderCustomCoverageSelector = () => {
-    const { resource } = this.props;
-
     return (
       <FieldArray
         component={CustomCoverageFieldArray}
-        name="coverage"
-        resource={resource}
+        name={`${this.props.name}.coverage`}
       />
     );
   }
@@ -89,7 +87,7 @@ export default class AgreementLineField extends React.Component {
             </KeyValue>
           </Col>
         </Row>
-        {/* {this.renderCustomCoverageSelector()} */}
+        {this.renderCustomCoverageSelector()}
       </React.Fragment>
     );
   }

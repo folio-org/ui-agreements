@@ -8,7 +8,7 @@ import {
 
 import css from './EditCard.css';
 
-export default class extends React.PureComponent {
+export default class extends React.Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
     header: PropTypes.node.isRequired,

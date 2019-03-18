@@ -7,13 +7,14 @@ import {
   Layout,
 } from '@folio/stripes/components';
 
-import withKiwtFieldArray from '../../../withKiwtFieldArray';
 import AgreementLineField from './AgreementLineField';
+import withKiwtFieldArray from './withKiwtFieldArray';
 
 class AgreementLinesFieldArray extends React.Component {
   static propTypes = {
     agreementLines: PropTypes.arrayOf(PropTypes.object),
     items: PropTypes.arrayOf(PropTypes.object),
+    name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
     onDeleteField: PropTypes.func.isRequired,
     onReplaceField: PropTypes.func.isRequired,
@@ -42,6 +43,10 @@ class AgreementLinesFieldArray extends React.Component {
     this.props.onReplaceField(index, { resource });
   }
 
+  handleAddLine = () => {
+    this.props.onAddField({});
+  }
+
   renderEmpty = () => (
     <Layout className="padding-bottom-gutter">
       <FormattedMessage id="ui-agreements.agreementLines.noLines" />
@@ -54,6 +59,7 @@ class AgreementLinesFieldArray extends React.Component {
         key={i}
         index={i}
         line={line}
+        name={`${this.props.name}[${i}]`}
         onDelete={() => this.props.onDeleteField(i, line)}
         onResourceSelected={this.handleResourceSelected}
         resource={this.getLineResource(line)}
@@ -67,7 +73,7 @@ class AgreementLinesFieldArray extends React.Component {
         <div id="agreement-form-lines">
           { this.props.items.length ? this.renderLines() : this.renderEmpty() }
         </div>
-        <Button id="add-agreement-line-button" onClick={this.props.onAddField}>
+        <Button id="add-agreement-line-button" onClick={this.handleAddLine}>
           <FormattedMessage id="ui-agreements.agreementLines.addLine" />
         </Button>
       </div>
