@@ -130,6 +130,8 @@
   "eresources.addToBasketHeader": "E-resource basket",
   "eresources.sourceKb": "Source",
 
+  "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
+
   "license.addExternalLicense": "Add external license to agreement",
   "license.addLicense": "Add license to agreement",
   "license.allLicenses": "All licenses",

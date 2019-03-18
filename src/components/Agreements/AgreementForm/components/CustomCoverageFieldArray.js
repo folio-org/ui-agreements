@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 
@@ -13,6 +14,7 @@ import {
 
 import EditCard from './EditCard';
 import withKiwtFieldArray from './withKiwtFieldArray';
+import { required } from '../../../../util/validators';
 
 class CustomCoverageFieldArray extends React.Component {
   static propTypes = {
@@ -24,6 +26,33 @@ class CustomCoverageFieldArray extends React.Component {
 
   static defaultProps = {
     items: [],
+  }
+
+  validateDateOrder = (value, allValues, _props, name) => {
+    if (value) {
+      let startDate;
+      let endDate;
+
+      if (name.indexOf('startDate') >= 0) {
+        startDate = new Date(value);
+        endDate = new Date(get(allValues, name.replace('startDate', 'endDate')));
+      } else if (name.indexOf('endDate') >= 0) {
+        startDate = new Date(get(allValues, name.replace('endDate', 'startDate')));
+        endDate = new Date(value);
+      } else {
+        return undefined;
+      }
+
+      if (startDate >= endDate) {
+        return (
+          <div data-test-error-end-date-too-early>
+            <FormattedMessage id="ui-agreements.errors.endDateGreaterThanStartDate" />
+          </div>
+        );
+      }
+    }
+
+    return undefined;
   }
 
   handleAddCustomCoverage = () => {
@@ -49,6 +78,8 @@ class CustomCoverageFieldArray extends React.Component {
                 component={Datepicker}
                 label="Start date"
                 name={`${name}[${index}].startDate`}
+                required
+                validate={[required, this.validateDateOrder]}
               />
             </Col>
             <Col xs={4}>
@@ -74,6 +105,7 @@ class CustomCoverageFieldArray extends React.Component {
                 component={Datepicker}
                 label="End date"
                 name={`${name}[${index}].endDate`}
+                validate={this.validateDateOrder}
               />
             </Col>
             <Col xs={4}>
