@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import { FieldArray } from 'redux-form';
 
 import {
-  Button,
   Col,
-  Icon,
   KeyValue,
   Row,
 } from '@folio/stripes/components';
@@ -14,7 +13,9 @@ import {
 import BasketSelector from '../../../BasketSelector';
 import EResourceLink from '../../../EResourceLink';
 import ResourceType from '../../../ResourceType';
-import css from './AgreementLinesFieldArray.css';
+
+import CustomCoverageFieldArray from './CustomCoverageFieldArray';
+import EditCard from './EditCard';
 
 export default class AgreementLineField extends React.Component {
   static propTypes = {
@@ -49,6 +50,18 @@ export default class AgreementLineField extends React.Component {
     );
   }
 
+  renderCustomCoverageSelector = () => {
+    const { resource } = this.props;
+
+    return (
+      <FieldArray
+        component={CustomCoverageFieldArray}
+        name="coverage"
+        resource={resource}
+      />
+    );
+  }
+
   renderLineResource = () => {
     const { resource } = this.props;
 
@@ -76,13 +89,7 @@ export default class AgreementLineField extends React.Component {
             </KeyValue>
           </Col>
         </Row>
-        {/*
-        <Row>
-          <Col xs={12}>
-            [Add Custom Coverage Button]
-          </Col>
-        </Row>
-        */}
+        {/* {this.renderCustomCoverageSelector()} */}
       </React.Fragment>
     );
   }
@@ -100,36 +107,17 @@ export default class AgreementLineField extends React.Component {
     const { index, resource = {} } = this.props;
 
     return (
-      <li
-        className={css.agLineField}
+      <EditCard
         data-test-ag-line-number={index}
+        header={<FormattedMessage id="ui-agreements.agreementLines.lineTitle" values={{ number: index + 1 }} />}
+        onDelete={this.props.onDelete}
       >
-        <div>
-          <div className={css.agLineHeader} start="xs">
-            <div>
-              <strong>
-                <FormattedMessage id="ui-agreements.agreementLines.lineTitle" values={{ number: index + 1 }} />
-              </strong>
-            </div>
-            <div className={css.agLineHeaderActions}>
-              <Button
-                buttonStyle="link slim"
-                style={{ margin: 0, padding: 0 }}
-                onClick={this.props.onDelete}
-              >
-                <Icon icon="trash" />
-              </Button>
-            </div>
-          </div>
-          <div className={css.agLineBody}>
-            {
-              resource.id ?
-                this.renderLineResource() :
-                this.renderLineSelector()
-            }
-          </div>
-        </div>
-      </li>
+        {
+          resource.id ?
+            this.renderLineResource() :
+            this.renderLineSelector()
+        }
+      </EditCard>
     );
   }
 }

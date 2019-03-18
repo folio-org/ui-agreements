@@ -58,6 +58,7 @@
   "agreements.editAgreement": "Edit Agreement",
 
   "agreementLines.addLine": "Add agreement line",
+  "agreementLines.addCustomCoverage": "Add custom coverage",
   "agreementLines.costType": "Cost type",
   "agreementLines.count": "Count",
   "agreementLines.contentUpdated": "Content updated",
@@ -70,6 +71,7 @@
   "agreementLines.tax": "YTD Tax",
   "agreementLines.createLine": "Create agreement line",
   "agreementLines.lineTitle": "Agreement line #{number}",
+  "agreementLines.customCoverageTitle": "Custom coverage #{number}",
 
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
   "basket.name": "ERM Basket",
