@@ -13,6 +13,7 @@ import {
 import BasketSelector from '../../../BasketSelector';
 import EResourceLink from '../../../EResourceLink';
 import ResourceType from '../../../ResourceType';
+import isPackage from '../../../../util/isPackage';
 
 import CustomCoverageFieldArray from './CustomCoverageFieldArray';
 import EditCard from './EditCard';
@@ -52,6 +53,10 @@ export default class AgreementLineField extends React.Component {
   }
 
   renderCustomCoverageSelector = () => {
+    const { resource } = this.props;
+
+    if (isPackage(resource)) return null;
+
     return (
       <FieldArray
         component={CustomCoverageFieldArray}
