@@ -10,6 +10,7 @@ export default class Finances extends React.Component {
   static propTypes = {
     financesAgreementLines: PropTypes.arrayOf(PropTypes.object),
     id: PropTypes.string,
+    invoices: PropTypes.arrayOf(PropTypes.object),
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
@@ -20,6 +21,14 @@ export default class Finances extends React.Component {
       return <Icon icon="spinner-ellipsis" width="10px" />;
     }
     return <Badge data-test-finances-agreement-lines-count={count}>{count}</Badge>;
+  }
+
+  renderInvoices = () => {
+    const invoices = get(this.props, 'invoices', []);
+    if (!invoices.length) {
+      return null;
+    }
+    return <div align="end"><FormattedMessage id="ui-agreements.agreements.showInvoicesLink" /></div>;
   }
 
   render() {
@@ -45,6 +54,7 @@ export default class Finances extends React.Component {
         displayWhenClosed={buttonAndBadge}
         displayWhenOpen={buttonAndBadge}
       >
+        {this.renderInvoices()}
         <FinancesAgreementLines
           visible={open}
           {...this.props}
