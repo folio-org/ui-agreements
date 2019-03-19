@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Accordion, Badge, Button, Icon } from '@folio/stripes/components';
+import { Accordion, Badge, Button, Icon, Layout } from '@folio/stripes/components';
 
 import FinancesAgreementLines from './FinancesAgreementLines';
 
@@ -28,7 +28,7 @@ export default class Finances extends React.Component {
     if (!invoices.length) {
       return null;
     }
-    return <div align="end"><FormattedMessage id="ui-agreements.agreements.showInvoicesLink" /></div>;
+    return <Layout align="end"><FormattedMessage id="ui-agreements.agreements.showInvoicesLink" /></Layout>;
   }
 
   render() {

@@ -139,11 +139,15 @@ class ViewAgreement extends React.Component {
   componentDidUpdate(prevProps) {
     const prevUsers = get(prevProps.resources.contacts, ['records'], []).map(c => c.user);
     const users = get(this.props.resources.contacts, ['records'], []).map(c => c.user);
+    const prevFinances = get(prevProps.resources.financesAgreementLines, ['records'], []).map(f => f.id);
+    const finances = get(this.props.resources.financesAgreementLines, ['records'], []).map(f => f.id);
     const prevAgreement = get(prevProps.resources.selectedAgreement, ['records', 0], {});
     const agreement = get(this.props.resources.selectedAgreement, ['records', 0], {});
 
     if ((prevAgreement.id !== agreement.id) || (difference(users, prevUsers).length)) {
       this.fetchUsers();
+    }
+    if ((prevAgreement.id !== agreement.id) || (difference(finances, prevFinances).length)) {
       this.fetchInvoices();
     }
   }
@@ -267,6 +271,10 @@ class ViewAgreement extends React.Component {
   };
 
   fetchInvoices = () => {
+    if (!this.props.stripes.hasInterface('invoice-storage.invoice-line', '1.0')) {
+      return;
+    }
+
     const poLines = this.getFinancesAgreementLines();
     if (poLines === undefined) {
       return;
