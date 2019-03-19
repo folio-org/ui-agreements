@@ -180,42 +180,60 @@ class ViewAgreement extends React.Component {
   getInitialValues() {
     const agreement = cloneDeep(this.getAgreement());
     const {
-      agreementStatus,
-      renewalPriority,
-      isPerpetual,
-      contacts,
-      orgs,
-      linkedLicenses
+      agreementStatus = {},
+      renewalPriority = {},
+      isPerpetual = {},
+      contacts = [],
+      orgs = [],
+      linkedLicenses = [],
+      items = [],
     } = agreement;
 
-    if (agreementStatus && agreementStatus.id) {
+    if (agreementStatus.id) {
       agreement.agreementStatus = agreementStatus.id;
     }
 
-    if (renewalPriority && renewalPriority.id) {
+    if (renewalPriority.id) {
       agreement.renewalPriority = renewalPriority.id;
     }
 
-    if (isPerpetual && isPerpetual.id) {
+    if (isPerpetual.id) {
       agreement.isPerpetual = isPerpetual.id;
     }
 
-    if (orgs && orgs.length) {
-      agreement.orgs = orgs.map(o => ({ ...o, role: o.role.id }));
-    }
-
-    if (contacts) {
+    if (contacts.length) {
       agreement.contacts = contacts.map(c => ({
         ...c,
         role: c.role ? c.role.id : undefined,
       }));
     }
 
-    if (linkedLicenses) {
+    if (orgs.length) {
+      agreement.orgs = orgs.map(o => ({ ...o, role: o.role.id }));
+    }
+
+    if (linkedLicenses.length) {
       agreement.linkedLicenses = linkedLicenses.map(l => ({
         ...l,
         status: l.status.id,
       }));
+    }
+
+    const agreementLines = this.getAgreementLines() || [];
+    if (items.length && agreementLines.length) {
+      agreement.items = items.map(item => {
+        if (item.resource) {
+          return item;
+        } else {
+          const foundLine = agreementLines.find(line => line.id === item.id);
+          if (!foundLine) return item;
+
+          return {
+            id: foundLine.id,
+            coverage: foundLine.coverage,
+          };
+        }
+      });
     }
 
     return agreement;
@@ -270,7 +288,7 @@ class ViewAgreement extends React.Component {
     return (
       <Pane
         id="pane-view-agreement"
-        defaultWidth={this.props.paneWidth}
+        defaultWidth="60%"
         paneTitle="Loading..."
         dismissible
         onClose={this.props.onClose}
@@ -325,7 +343,7 @@ class ViewAgreement extends React.Component {
     return (
       <Pane
         id="pane-view-agreement"
-        defaultWidth={this.props.paneWidth}
+        defaultWidth="60%"
         paneTitle={agreement.name}
         dismissible
         onClose={this.props.onClose}

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Accordion, Badge, Icon, MultiColumnList } from '@folio/stripes/components';
+import { Accordion, Badge, Icon, Layout, MultiColumnList } from '@folio/stripes/components';
 
 import CoverageStatements from '../../../CoverageStatements';
 import EResourceLink from '../../../EResourceLink';
@@ -28,6 +28,15 @@ export default class EresourcesCovered extends React.Component {
     accessStart: <FormattedMessage id="ui-agreements.eresources.accessStart" />,
     accessEnd: <FormattedMessage id="ui-agreements.eresources.accessEnd" />,
     coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
+    isCustomCoverage: ' ',
+  }
+
+  columnWidths = {
+    name: 250,
+    platform: 150,
+    package: 150,
+    coverage: 225,
+    isCustomCoverage: 25,
   }
 
   formatter = {
@@ -40,7 +49,8 @@ export default class EresourcesCovered extends React.Component {
     haveAccess: () => 'TBD',
     accessStart: () => 'TBD',
     accessEnd: () => 'TBD',
-    coverage: e => <CoverageStatements statements={e._object.coverageStatements} />,
+    coverage: e => <CoverageStatements isCustomCoverage={e.customCoverage} statements={e.coverage} />,
+    isCustomCoverage: e => (e.customCoverage ? <Layout className="flex"><Icon icon="clock" status="success" /></Layout> : null),
   }
 
   visibleColumns = [
@@ -51,6 +61,7 @@ export default class EresourcesCovered extends React.Component {
     'accessStart',
     'accessEnd',
     'coverage',
+    'isCustomCoverage'
   ]
 
   onToggleAccordion = () => {
@@ -78,6 +89,7 @@ export default class EresourcesCovered extends React.Component {
       >
         <MultiColumnList
           columnMapping={this.columnMapping}
+          columnWidths={this.columnWidths}
           contentData={this.props.visible && this.state.open ? agreementEresources : []}
           formatter={this.formatter}
           height={800}

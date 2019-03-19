@@ -76,6 +76,7 @@ class CustomCoverageFieldArray extends React.Component {
                 backendDateStandard="YYYY-MM-DD"
                 dateFormat="YYYY-MM-DD"
                 component={Datepicker}
+                id={`cc-start-date-${index}`}
                 label="Start date"
                 name={`${name}[${index}].startDate`}
                 required
@@ -85,6 +86,7 @@ class CustomCoverageFieldArray extends React.Component {
             <Col xs={4}>
               <Field
                 component={TextField}
+                id={`cc-start-volume-${index}`}
                 label="Start volume"
                 name={`${name}[${index}].startVolume`}
               />
@@ -92,6 +94,7 @@ class CustomCoverageFieldArray extends React.Component {
             <Col xs={4}>
               <Field
                 component={TextField}
+                id={`cc-start-issue-${index}`}
                 label="Start issue"
                 name={`${name}[${index}].startIssue`}
               />
@@ -103,6 +106,7 @@ class CustomCoverageFieldArray extends React.Component {
                 backendDateStandard="YYYY-MM-DD"
                 dateFormat="YYYY-MM-DD"
                 component={Datepicker}
+                id={`cc-end-date-${index}`}
                 label="End date"
                 name={`${name}[${index}].endDate`}
                 validate={this.validateDateOrder}
@@ -111,6 +115,7 @@ class CustomCoverageFieldArray extends React.Component {
             <Col xs={4}>
               <Field
                 component={TextField}
+                id={`cc-end-volume-${index}`}
                 label="End volume"
                 name={`${name}[${index}].endVolume`}
               />
@@ -118,6 +123,7 @@ class CustomCoverageFieldArray extends React.Component {
             <Col xs={4}>
               <Field
                 component={TextField}
+                id={`cc-end-issue-${index}`}
                 label="End issue"
                 name={`${name}[${index}].endIssue`}
               />

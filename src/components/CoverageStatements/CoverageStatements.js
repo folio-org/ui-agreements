@@ -45,24 +45,24 @@ export default class CoverageStatements extends React.Component {
 
     return (
       <React.Fragment>
-        { date ? <div><FormattedDate value={date} /></div> : null }
-        <div>
+        { date ? <Layout className="textRight"><FormattedDate value={date} /></Layout> : null }
+        <Layout className="textRight">
           {this.renderVolume(volume)}
-          &nbsp;
+          {volume && issue ? <React.Fragment>&nbsp;</React.Fragment> : null}
           {this.renderIssue(issue)}
-        </div>
+        </Layout>
       </React.Fragment>
     );
   }
 
   renderStatement = (statement, i) => {
     return (
-      <Layout key={i} className="flex">
-        <Layout className="margin-end-gutter">
+      <Layout key={i} className="flex justified">
+        <Layout className="margin-end-gutter" style={{ width: '40%' }}>
           {this.renderDate(statement.startDate, statement.startVolume, statement.startIssue)}
         </Layout>
         <Icon icon="arrow-right" />
-        <Layout className="margin-start-gutter">
+        <Layout className="margin-start-gutter" style={{ width: '40%' }}>
           {this.renderDate(statement.endDate, statement.endVolume, statement.endIssue)}
         </Layout>
       </Layout>
@@ -73,6 +73,6 @@ export default class CoverageStatements extends React.Component {
     const { statements } = this.props;
     if (!statements || !statements.length) return '-';
 
-    return <div>{statements.map(this.renderStatement)}</div>;
+    return <Layout className="full">{statements.map(this.renderStatement)}</Layout>;
   }
 }

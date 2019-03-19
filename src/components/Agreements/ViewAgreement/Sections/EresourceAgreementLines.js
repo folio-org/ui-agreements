@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
-import { MultiColumnList } from '@folio/stripes/components';
+import { Icon, Layout, MultiColumnList } from '@folio/stripes/components';
 
 import EResourceLink from '../../../EResourceLink';
 import ResourceType from '../../../ResourceType';
+import CoverageStatements from '../../../CoverageStatements';
 
 export default class EresourceAgreementLines extends React.Component {
   static propTypes = {
@@ -14,9 +15,11 @@ export default class EresourceAgreementLines extends React.Component {
   };
 
   columnWidths = {
-    name: '20%',
-    platform: '20%',
-    type: '10%',
+    name: 250,
+    platform: 150,
+    type: 100,
+    coverage: 225,
+    isCustomCoverage: 25,
   }
 
   columnMapping = {
@@ -25,6 +28,8 @@ export default class EresourceAgreementLines extends React.Component {
     type: <FormattedMessage id="ui-agreements.eresources.erType" />,
     count: <FormattedMessage id="ui-agreements.agreementLines.count" />,
     contentUpdated: <FormattedMessage id="ui-agreements.agreementLines.contentUpdated" />,
+    coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
+    isCustomCoverage: ' ',
   }
 
   formatter = {
@@ -47,6 +52,8 @@ export default class EresourceAgreementLines extends React.Component {
     type: line => <ResourceType resource={line.resource} />,
     count: line => (get(line, ['_object', 'contentItems'], [0])).length, // If contentItems doesn't exist there's only one item.
     contentUpdated: ({ contentUpdated }) => (contentUpdated ? <FormattedDate value={contentUpdated} /> : '-'),
+    coverage: line => <CoverageStatements isCustomCoverage={line.customCoverage} statements={line.coverage} />,
+    isCustomCoverage: e => (e.customCoverage ? <Layout className="flex"><Icon icon="clock" status="success" /></Layout> : null),
   }
 
   visibleColumns = [
@@ -55,6 +62,8 @@ export default class EresourceAgreementLines extends React.Component {
     'type',
     'count',
     'contentUpdated',
+    'coverage',
+    'isCustomCoverage',
   ]
 
   render() {
