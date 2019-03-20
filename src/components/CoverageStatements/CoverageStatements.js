@@ -45,8 +45,11 @@ export default class CoverageStatements extends React.Component {
 
     return (
       <React.Fragment>
-        { date ? <div><FormattedDate value={date} /></div> : null }
-        <div>
+        { date ? <div data-test-date={date}><FormattedDate value={date} /></div> : null }
+        <div
+          data-test-issue={issue}
+          data-test-volume={volume}
+        >
           {this.renderVolume(volume)}
           {volume && issue ? <React.Fragment>&nbsp;</React.Fragment> : null}
           {this.renderIssue(issue)}
@@ -57,12 +60,24 @@ export default class CoverageStatements extends React.Component {
 
   renderStatement = (statement, i) => {
     return (
-      <Layout key={i} className="flex justified">
-        <Layout className="margin-end-gutter textRight" style={{ width: '40%' }}>
+      <Layout
+        className="flex justified"
+        data-test-statement={i}
+        key={i}
+      >
+        <Layout
+          className="margin-end-gutter textRight"
+          data-test-start
+          style={{ width: '40%' }}
+        >
           {this.renderDate(statement.startDate, statement.startVolume, statement.startIssue)}
         </Layout>
         <Icon icon="arrow-right" />
-        <Layout className="margin-start-gutter" style={{ width: '40%' }}>
+        <Layout
+          className="margin-start-gutter"
+          data-test-end
+          style={{ width: '40%' }}
+        >
           {this.renderDate(statement.endDate, statement.endVolume, statement.endIssue)}
         </Layout>
       </Layout>
@@ -73,6 +88,6 @@ export default class CoverageStatements extends React.Component {
     const { statements } = this.props;
     if (!statements || !statements.length) return '-';
 
-    return <Layout className="full">{statements.map(this.renderStatement)}</Layout>;
+    return <Layout className="full" data-test-coverage-statements>{statements.map(this.renderStatement)}</Layout>;
   }
 }
