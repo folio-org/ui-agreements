@@ -8,7 +8,13 @@ const getDisplayName = (WrappedComponent) => {
 export default function withKiwtFieldArray(WrappedComponent) {
   class WithKiwtFieldArray extends React.Component {
     static propTypes = {
-      fields: PropTypes.object,
+      fields: PropTypes.shape({
+        getAll: PropTypes.func.isRequired,
+        insert: PropTypes.func.isRequired,
+        name: PropTypes.string.isRequired,
+        push: PropTypes.func.isRequired,
+        remove: PropTypes.func.isRequired,
+      }).isRequired,
     }
 
     handleAddField = (field = {}) => {
