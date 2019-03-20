@@ -43,6 +43,7 @@
   "agreements.agreementLines": "Agreement lines",
   "agreements.financesAgreementLines": "Finances — agreement lines",
   "agreements.editFinancesAgreementLines": "Edit agreement lines",
+  "agreements.showInvoicesLink": "Show invoices",
   "agreements.financeReports": "Finance Reports",
   "agreements.license": "License",
   "agreements.licenseAndBusTerms": "License and business terms",
@@ -174,5 +175,7 @@
   "settings.orgRoles.orgRole": "Organization role",
   "settings.orgRoles.role": "Role",
 
-  "userpicker.clickSearchButton": "Click the 'Search' button to select a user"
+  "userpicker.clickSearchButton": "Click the 'Search' button to select a user",
+
+  "temporary.test.key": "DO NOT TRANSLATE -- THIS KEY WILL BE DELETED"
 }
