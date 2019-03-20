@@ -53,8 +53,8 @@ export default class EresourceAgreementLines extends React.Component {
     type: line => <ResourceType resource={line.resource} />,
     count: line => (get(line, ['_object', 'contentItems'], [0])).length, // If contentItems doesn't exist there's only one item.
     contentUpdated: ({ contentUpdated }) => (contentUpdated ? <FormattedDate value={contentUpdated} /> : '-'),
-    coverage: line => <CoverageStatements isCustomCoverage={line.customCoverage} statements={line.coverage} />,
-    isCustomCoverage: line => (line.customCoverage ? <CustomCoverageIcon /> : null),
+    coverage: line => <CoverageStatements statements={line.coverage} />,
+    isCustomCoverage: line => (line.customCoverage ? <CustomCoverageIcon /> : ''),
   }
 
   visibleColumns = [

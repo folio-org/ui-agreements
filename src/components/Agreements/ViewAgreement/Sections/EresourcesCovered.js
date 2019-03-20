@@ -50,8 +50,8 @@ export default class EresourcesCovered extends React.Component {
     haveAccess: () => 'TBD',
     accessStart: () => 'TBD',
     accessEnd: () => 'TBD',
-    coverage: e => <CoverageStatements isCustomCoverage={e.customCoverage} statements={e.coverage} />,
-    isCustomCoverage: e => (e.customCoverage ? <CustomCoverageIcon /> : null),
+    coverage: e => <CoverageStatements statements={e.coverage} />,
+    isCustomCoverage: e => (e.customCoverage ? <CustomCoverageIcon /> : ''),
   }
 
   visibleColumns = [
