@@ -3,5 +3,5 @@
 module.exports.formattedDate = function formattedDate(datestring) {
   const date = new Date(datestring);
 
-  return `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}}`;
+  return `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}`;
 };

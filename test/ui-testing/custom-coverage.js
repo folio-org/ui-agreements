@@ -26,7 +26,7 @@ const checkTableForCustomCoverageData = (nightmare, done, tableId, values) => {
       const endIssues = [...document.querySelectorAll(`#${id} [data-test-coverage-statements] [data-test-end] [data-test-issue]`)];
 
       expectedValues.coverage.forEach(ec => {
-        if (!startDates.find(e => e.textContent !== ec.startDateFormatted)) {
+        if (!startDates.find(e => e.textContent === ec.startDateFormatted)) {
           throw Error(`Expected to find start date of ${ec.startDateFormatted} in #${id}`);
         }
         if (!startVolumes.find(e => e.textContent.indexOf(ec.startVolumeFormatted) !== -1)) {
@@ -36,7 +36,7 @@ const checkTableForCustomCoverageData = (nightmare, done, tableId, values) => {
           throw Error(`Expected to find start issue of ${ec.startIssueFormatted} in #${id}`);
         }
 
-        if (!endDates.find(e => e.textContent !== ec.endDateFormatted)) {
+        if (!endDates.find(e => e.textContent === ec.endDateFormatted)) {
           throw Error(`Expected to find end date of ${ec.endDateFormatted} in #${id}`);
         }
         if (!endVolumes.find(e => e.textContent.indexOf(ec.endVolumeFormatted) !== -1)) {
@@ -190,7 +190,6 @@ module.exports.test = (uiTestCtx) => {
 
           .click('#accordion-toggle-button-agreementFormLines')
 
-          .click('#agreement-form-lines [data-test-ag-line-number="0"] #add-agreement-custom-coverage-button')
           .evaluate((expectedValues) => {
             const checkInput = (id, value) => {
               const loadedValue = document.getElementById(id).value;
@@ -212,7 +211,39 @@ module.exports.test = (uiTestCtx) => {
               checkInput(`cc-end-issue-${i}`, ec.endIssue);
             }
           }, values)
-          .click('#form-agreement [class*="paneHeader"] button[icon="times"]')
+          .then(done)
+          .catch(done);
+      });
+
+      it('should follow agreement line\'s link to eresource', done => {
+        nightmare
+          .click('#agreement-form-lines [data-test-ag-line-name] a')
+          .wait('#eresource-agreements-list')
+          .then(done)
+          .catch(done);
+      });
+
+      it('should find custom coverage info in "agreements for this eresource" list', done => {
+        nightmare
+          .evaluate((expectedValues) => {
+            const rows = [...document.querySelectorAll('#eresource-agreements-list [role="row"]')];
+            const row = rows.find(r => r.textContent.indexOf(expectedValues.name) > -1);
+            if (!row) throw Error(`Failed to find agreement ${expectedValues.name} in list`);
+
+            const customCoverageIndicator = row.querySelector('[data-test-custom-coverage]');
+            if (!customCoverageIndicator) throw Error('Failed to find custom coverage indicator');
+
+            const rowContains = (substring) => row.textContent.indexOf(substring) > -1;
+
+            expectedValues.coverage.forEach(ec => {
+              if (!rowContains(ec.startDateFormatted)) throw Error(`Expected to find start date of ${ec.startDateFormatted}`);
+              if (!rowContains(ec.startVolumeFormatted)) throw Error(`Expected to find start volume of ${ec.startVolumeFormatted}`);
+              if (!rowContains(ec.startIssueFormatted)) throw Error(`Expected to find start issue of ${ec.startIssueFormatted}`);
+              if (!rowContains(ec.endDateFormatted)) throw Error(`Expected to find end date of ${ec.endDateFormatted}`);
+              if (!rowContains(ec.endVolumeFormatted)) throw Error(`Expected to find end volume of ${ec.endVolumeFormatted}`);
+              if (!rowContains(ec.endIssueFormatted)) throw Error(`Expected to find end issue of ${ec.endIssueFormatted}`);
+            });
+          }, values)
           .then(done)
           .catch(done);
       });
