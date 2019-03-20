@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Accordion, Badge, Button, Icon } from '@folio/stripes/components';
+import { Accordion, Badge, Button, Icon, Layout } from '@folio/stripes/components';
 
 import FinancesAgreementLines from './FinancesAgreementLines';
 
@@ -10,6 +10,7 @@ export default class Finances extends React.Component {
   static propTypes = {
     financesAgreementLines: PropTypes.arrayOf(PropTypes.object),
     id: PropTypes.string,
+    invoices: PropTypes.arrayOf(PropTypes.object),
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
@@ -20,6 +21,14 @@ export default class Finances extends React.Component {
       return <Icon icon="spinner-ellipsis" width="10px" />;
     }
     return <Badge data-test-finances-agreement-lines-count={count}>{count}</Badge>;
+  }
+
+  renderInvoices = () => {
+    const invoices = get(this.props, 'invoices', []);
+    if (!invoices.length) {
+      return null;
+    }
+    return <Layout class="textRight"><FormattedMessage id="ui-agreements.agreements.showInvoicesLink" /></Layout>;
   }
 
   render() {
@@ -45,6 +54,7 @@ export default class Finances extends React.Component {
         displayWhenClosed={buttonAndBadge}
         displayWhenOpen={buttonAndBadge}
       >
+        {this.renderInvoices()}
         <FinancesAgreementLines
           visible={open}
           {...this.props}
