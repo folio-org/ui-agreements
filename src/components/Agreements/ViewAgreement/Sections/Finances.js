@@ -28,7 +28,7 @@ export default class Finances extends React.Component {
     if (!invoices.length) {
       return null;
     }
-    return <Layout align="end"><FormattedMessage id="ui-agreements.agreements.showInvoicesLink" /></Layout>;
+    return <Layout class="textRight"><FormattedMessage id="ui-agreements.agreements.showInvoicesLink" /></Layout>;
   }
 
   render() {
