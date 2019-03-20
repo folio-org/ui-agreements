@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Accordion, Badge, Icon, Layout, MultiColumnList } from '@folio/stripes/components';
 
 import CoverageStatements from '../../../CoverageStatements';
+import CustomCoverageIcon from '../../../CustomCoverageIcon';
 import EResourceLink from '../../../EResourceLink';
 
 export default class EresourcesCovered extends React.Component {
@@ -50,7 +51,7 @@ export default class EresourcesCovered extends React.Component {
     accessStart: () => 'TBD',
     accessEnd: () => 'TBD',
     coverage: e => <CoverageStatements isCustomCoverage={e.customCoverage} statements={e.coverage} />,
-    isCustomCoverage: e => (e.customCoverage ? <Layout className="flex"><Icon icon="clock" status="success" /></Layout> : null),
+    isCustomCoverage: e => (e.customCoverage ? <CustomCoverageIcon /> : null),
   }
 
   visibleColumns = [
@@ -68,6 +69,17 @@ export default class EresourcesCovered extends React.Component {
     this.setState((prevState) => ({
       open: !prevState.open,
     }));
+  }
+
+  renderCustomCoverage = () => {
+    return (
+      <Layout
+        className="flex"
+        data-test-custom-coverage
+      >
+        <Icon icon="clock" status="success" />
+      </Layout>
+    );
   }
 
   renderBadge = () => {

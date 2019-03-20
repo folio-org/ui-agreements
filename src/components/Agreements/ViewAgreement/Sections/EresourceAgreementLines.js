@@ -7,6 +7,7 @@ import { Icon, Layout, MultiColumnList } from '@folio/stripes/components';
 import EResourceLink from '../../../EResourceLink';
 import ResourceType from '../../../ResourceType';
 import CoverageStatements from '../../../CoverageStatements';
+import CustomCoverageIcon from '../../../CustomCoverageIcon';
 
 export default class EresourceAgreementLines extends React.Component {
   static propTypes = {
@@ -53,7 +54,7 @@ export default class EresourceAgreementLines extends React.Component {
     count: line => (get(line, ['_object', 'contentItems'], [0])).length, // If contentItems doesn't exist there's only one item.
     contentUpdated: ({ contentUpdated }) => (contentUpdated ? <FormattedDate value={contentUpdated} /> : '-'),
     coverage: line => <CoverageStatements isCustomCoverage={line.customCoverage} statements={line.coverage} />,
-    isCustomCoverage: e => (e.customCoverage ? <Layout className="flex"><Icon icon="clock" status="success" /></Layout> : null),
+    isCustomCoverage: line => (line.customCoverage ? <CustomCoverageIcon /> : null),
   }
 
   visibleColumns = [
@@ -65,6 +66,17 @@ export default class EresourceAgreementLines extends React.Component {
     'coverage',
     'isCustomCoverage',
   ]
+
+  renderCustomCoverage = () => {
+    return (
+      <Layout
+        className="flex"
+        data-test-custom-coverage
+      >
+        <Icon icon="clock" status="success" />
+      </Layout>
+    );
+  }
 
   render() {
     return (

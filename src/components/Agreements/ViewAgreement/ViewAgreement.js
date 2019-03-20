@@ -230,7 +230,7 @@ class ViewAgreement extends React.Component {
 
           return {
             id: foundLine.id,
-            coverage: foundLine.coverage,
+            coverage: foundLine.customCoverage ? foundLine.coverage : undefined,
           };
         }
       });
