@@ -45,12 +45,12 @@ export default class CoverageStatements extends React.Component {
 
     return (
       <React.Fragment>
-        { date ? <Layout className="textRight"><FormattedDate value={date} /></Layout> : null }
-        <Layout className="textRight">
+        { date ? <div><FormattedDate value={date} /></div> : null }
+        <div>
           {this.renderVolume(volume)}
           {volume && issue ? <React.Fragment>&nbsp;</React.Fragment> : null}
           {this.renderIssue(issue)}
-        </Layout>
+        </div>
       </React.Fragment>
     );
   }
@@ -58,7 +58,7 @@ export default class CoverageStatements extends React.Component {
   renderStatement = (statement, i) => {
     return (
       <Layout key={i} className="flex justified">
-        <Layout className="margin-end-gutter" style={{ width: '40%' }}>
+        <Layout className="margin-end-gutter textRight" style={{ width: '40%' }}>
           {this.renderDate(statement.startDate, statement.startVolume, statement.startIssue)}
         </Layout>
         <Icon icon="arrow-right" />
