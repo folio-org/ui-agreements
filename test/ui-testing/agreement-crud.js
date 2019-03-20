@@ -87,7 +87,7 @@ module.exports.generateAgreementValues = generateAgreementValues;
 module.exports.createAgreement = createAgreement;
 
 module.exports.test = (uiTestCtx) => {
-  describe('Module test: ui-agreements: basic agreement crud', function test() {
+  describe('ui-agreements: basic agreement crud', function test() {
     const { config, helpers: { login, logout } } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
     const values = generateAgreementValues();

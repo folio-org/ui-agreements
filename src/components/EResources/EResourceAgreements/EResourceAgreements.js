@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 import {
-  Col,
   Icon,
   MultiColumnList,
-  Row,
 } from '@folio/stripes/components';
 
 import EResourceLink from '../../EResourceLink';
 import ResourceType from '../../ResourceType';
+import CoverageStatements from '../../CoverageStatements';
+import CustomCoverageIcon from '../../CustomCoverageIcon';
 
 class EResourceAgreements extends React.Component {
   static manifest = Object.freeze({
@@ -38,7 +38,12 @@ class EResourceAgreements extends React.Component {
     'startDate',
     'endDate',
     ...(this.props.type === 'title' ?
-      ['package', 'acqMethod'] : []
+      [
+        'package',
+        'acqMethod',
+        'coverage',
+        'isCustomCoverage'
+      ] : []
     ),
   ]);
 
@@ -47,14 +52,10 @@ class EResourceAgreements extends React.Component {
     type: ({ owner }) => owner.agreementStatus && owner.agreementStatus.label,
     startDate: ({ owner }) => owner.startDate && <FormattedDate value={owner.startDate} />,
     endDate: ({ owner }) => owner.endDate && <FormattedDate value={owner.endDate} />,
-    ...(this.props.type === 'title' ?
-      {
-        package: ({ resource }) => <EResourceLink eresource={resource} />,
-        acqMethod: ({ resource }) => <ResourceType resource={resource} />,
-      }
-      :
-      {}
-    ),
+    package: ({ resource }) => <EResourceLink eresource={resource} />,
+    acqMethod: ({ resource }) => <ResourceType resource={resource} />,
+    coverage: line => <CoverageStatements statements={line.coverage} />,
+    isCustomCoverage: line => (line.customCoverage ? <CustomCoverageIcon /> : ''),
   });
 
   columnMapping = () => ({
@@ -62,14 +63,10 @@ class EResourceAgreements extends React.Component {
     type: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
     startDate: <FormattedMessage id="ui-agreements.agreements.startDate" />,
     endDate: <FormattedMessage id="ui-agreements.agreements.endDate" />,
-    ...(this.props.type === 'title' ?
-      {
-        package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
-        acqMethod: <FormattedMessage id="ui-agreements.eresources.acqMethod" />,
-      }
-      :
-      {}
-    ),
+    package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
+    acqMethod: <FormattedMessage id="ui-agreements.eresources.acqMethod" />,
+    coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
+    isCustomCoverage: ' ',
   });
 
   columnWidths = () => ({
@@ -80,24 +77,21 @@ class EResourceAgreements extends React.Component {
   render() {
     const { resources: { entitlements } } = this.props;
 
-    if (!entitlements || !entitlements.records) {
+    if (!entitlements || !entitlements.records || entitlements.isPending) {
       return <Icon icon="spinner-ellipsis" width="100px" />;
     }
 
     return (
-      <Row>
-        <Col xs={12}>
-          <MultiColumnList
-            contentData={entitlements.records}
-            interactive={false}
-            maxHeight={400}
-            columnMapping={this.columnMapping()}
-            columnWidths={this.columnWidths()}
-            formatter={this.formatter()}
-            visibleColumns={this.visibleColumns()}
-          />
-        </Col>
-      </Row>
+      <MultiColumnList
+        contentData={entitlements.records}
+        id="eresource-agreements-list"
+        interactive={false}
+        maxHeight={400}
+        columnMapping={this.columnMapping()}
+        columnWidths={this.columnWidths()}
+        formatter={this.formatter()}
+        visibleColumns={this.visibleColumns()}
+      />
     );
   }
 }
