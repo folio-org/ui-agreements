@@ -10,8 +10,8 @@ import {
 
 import EResourceLink from '../../EResourceLink';
 import ResourceType from '../../ResourceType';
-import CoverageStatements from '../../CoverageStatements'
-import CustomCoverageIcon from '../../CustomCoverageIcon'
+import CoverageStatements from '../../CoverageStatements';
+import CustomCoverageIcon from '../../CustomCoverageIcon';
 
 class EResourceAgreements extends React.Component {
   static manifest = Object.freeze({
