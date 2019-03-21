@@ -81,7 +81,7 @@
     "agreements.reviewDate": "Review date",
     "agreements.reviewDecision": "Decision",
     "agreements.reviewNotes": "Decision notes",
-    "agreements.agreementLines": "E-resources: agreement lines",
+    "agreements.agreementLines": "Agreement lines",
     "agreements.license": "Licenza",
     "agreements.licenseAndBusTerms": "License and business terms",
     "agreements.organizations": "Organizzazioni",
@@ -152,5 +152,13 @@
     "agreementLines.net": "YTD Net",
     "agreementLines.noPoLines": "Agreement has no agreement lines.",
     "agreementLines.poline": "PO Line",
-    "agreementLines.tax": "YTD Tax"
+    "agreementLines.tax": "YTD Tax",
+    "agreementLines.addLine": "Add agreement line",
+    "agreementLines.lineTitle": "Agreement line #{number}",
+    "eresources.titles": "Titles",
+    "agreements.showInvoicesLink": "Show invoices",
+    "temporary.test.key": "DO NOT TRANSLATE -- THIS KEY WILL BE DELETED",
+    "agreementLines.addCustomCoverage": "Add custom coverage",
+    "agreementLines.customCoverageTitle": "Custom coverage #{number}",
+    "errors.endDateGreaterThanStartDate": "End date must be after the start date."
 }
