@@ -132,6 +132,7 @@
   "eresources.sourceKb": "Source",
 
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
+  "errors.multipleOpenEndedCoverages": "Cannot have multiple open-ended coverage statements.",
 
   "license.addExternalLicense": "Add external license to agreement",
   "license.addLicense": "Add license to agreement",

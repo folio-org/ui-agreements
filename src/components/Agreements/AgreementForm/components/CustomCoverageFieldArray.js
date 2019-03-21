@@ -55,6 +55,25 @@ class CustomCoverageFieldArray extends React.Component {
     return undefined;
   }
 
+  validateMultipleOpenEnded = (_value, allValues, _props, name) => {
+    // Name is something like "items[3].coverage[2].endDate" and we want the "items[3].coverage" array
+    const coverages = get(allValues, name.substring(0, name.lastIndexOf('[')));
+    let openEndedCoverages = 0;
+    coverages.forEach(c => {
+      if (!c.endDate) openEndedCoverages += 1;
+    });
+
+    if (openEndedCoverages > 1) {
+      return (
+        <div data-test-error-multiple-open-ended>
+          <FormattedMessage id="ui-agreements.errors.multipleOpenEndedCoverages" />
+        </div>
+      );
+    }
+
+    return undefined;
+  }
+
   handleAddCustomCoverage = () => {
     this.props.onAddField({});
   }
@@ -80,7 +99,11 @@ class CustomCoverageFieldArray extends React.Component {
                 label="Start date"
                 name={`${name}[${index}].startDate`}
                 required
-                validate={[required, this.validateDateOrder]}
+                validate={[
+                  required,
+                  this.validateDateOrder,
+                  this.validateMultipleOpenEnded,
+                ]}
               />
             </Col>
             <Col xs={4}>
@@ -109,7 +132,10 @@ class CustomCoverageFieldArray extends React.Component {
                 id={`cc-end-date-${index}`}
                 label="End date"
                 name={`${name}[${index}].endDate`}
-                validate={this.validateDateOrder}
+                validate={[
+                  this.validateDateOrder,
+                  this.validateMultipleOpenEnded,
+                ]}
               />
             </Col>
             <Col xs={4}>
