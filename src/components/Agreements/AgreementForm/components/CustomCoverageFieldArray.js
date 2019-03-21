@@ -74,6 +74,49 @@ class CustomCoverageFieldArray extends React.Component {
     return undefined;
   }
 
+  validateOverlappingDates = (value, allValues, _props, name) => {
+    // Name is something like "items[3].coverage[2].endDate" and we want the "items[3].coverage" array
+    const coverages = get(allValues, name.substring(0, name.lastIndexOf('[')));
+    const ranges = coverages
+      .map((c, i) => ({
+        coverageIndex: i,
+        startDate: new Date(c.startDate),
+        endDate: c.endDate ? new Date(c.endDate) : new Date('4000-01-01'),
+      }))
+      .sort((a, b) => (a.startDate.getTime() < b.startDate.getTime() ? -1 : 1));
+
+    const result = ranges.reduce(
+      (accumulator, current, i, a) => {
+        if (i === 0) return accumulator;
+
+        const previous = a[i - 1];
+
+        const overlap = previous.endDate.getTime() >= current.startDate.getTime();
+
+        if (overlap) {
+          accumulator.overlap = true;
+          accumulator.ranges.push([current.coverageIndex, previous.coverageIndex]);
+        }
+
+        return accumulator;
+      },
+      { overlap: false, ranges: [] }
+    );
+
+    if (result.overlap) {
+      return (
+        <div data-test-error-overlapping-coverage-dates>
+          <FormattedMessage
+            id="ui-agreements.errors.overlappingCoverage"
+            values={{ coverages: result.ranges.map(r => `${r[0] + 1} & ${r[1] + 1}`).join(', ') }}
+          />
+        </div>
+      );
+    }
+
+    return undefined;
+  }
+
   handleAddCustomCoverage = () => {
     this.props.onAddField({});
   }
@@ -103,6 +146,7 @@ class CustomCoverageFieldArray extends React.Component {
                   required,
                   this.validateDateOrder,
                   this.validateMultipleOpenEnded,
+                  this.validateOverlappingDates,
                 ]}
               />
             </Col>
@@ -135,6 +179,7 @@ class CustomCoverageFieldArray extends React.Component {
                 validate={[
                   this.validateDateOrder,
                   this.validateMultipleOpenEnded,
+                  this.validateOverlappingDates,
                 ]}
               />
             </Col>
