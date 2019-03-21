@@ -13,7 +13,6 @@ import {
   Layout,
   Row,
   Select,
-  Icon,
 } from '@folio/stripes/components';
 
 import {
@@ -115,9 +114,7 @@ class AgreementFormOrganizations extends React.Component {
           ))}
         </div>
         <Button onClick={() => fields.push({ })}>
-          <Icon icon="plus-sign">
-            <FormattedMessage id="ui-agreements.organizations.add" />
-          </Icon>
+          <FormattedMessage id="ui-agreements.organizations.add" />
         </Button>
       </div>
     );

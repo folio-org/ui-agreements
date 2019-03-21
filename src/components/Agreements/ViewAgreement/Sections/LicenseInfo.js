@@ -40,7 +40,7 @@ export default class LicenseInfo extends React.Component {
             </Col>
           </Row>
         ) : null }
-        <div style={{ marginTop: '1rem', marginLeft: '1rem' }}>
+        <div style={{ marginTop: '1rem', marginLeft: '2rem' }}>
           <AllLicenses agreement={agreement} />
           <ExternalLicenses agreement={agreement} />
         </div>

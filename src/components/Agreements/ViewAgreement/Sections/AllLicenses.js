@@ -94,7 +94,7 @@ export default class AllLicenses extends React.Component {
 
     if (!licenses.length) {
       return (
-        <Layout className="margin-start-gutter padding-bottom-gutter">
+        <Layout className="padding-bottom-gutter">
           <FormattedMessage id="ui-agreements.license.noLicenses" />
         </Layout>
       );
