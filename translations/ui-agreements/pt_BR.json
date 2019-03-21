@@ -81,7 +81,7 @@
     "agreements.reviewDate": "Data de revisão",
     "agreements.reviewDecision": "Decisão",
     "agreements.reviewNotes": "Notas de decisão",
-    "agreements.agreementLines": "E-recursos: linhas de contrato",
+    "agreements.agreementLines": "Linhas de contrato",
     "agreements.license": "Licença",
     "agreements.licenseAndBusTerms": "Termos de licença e negócios",
     "agreements.organizations": "Organizações",
@@ -113,7 +113,7 @@
     "settings.orgRoles": "Funções da organização",
     "agreements.selectStatus": "Selecione o status deste contrato",
     "contacts.noContacts": "Contrato não tem contatos internos.",
-    "contacts.add": "+ Adicionar contato interno",
+    "contacts.add": "Adicionar contato interno",
     "contacts.name": "Nome",
     "contacts.role": "Função",
     "contacts.remove": "Remover",
@@ -152,5 +152,13 @@
     "agreementLines.net": "Acumulado do ano liquido",
     "agreementLines.noPoLines": "Contrato não tem linhas de contrato.",
     "agreementLines.poline": "Linha do pedido",
-    "agreementLines.tax": "Acumulado no ano fiscal"
+    "agreementLines.tax": "Acumulado no ano fiscal",
+    "agreementLines.addLine": "Adicionar linha de contrato",
+    "agreementLines.lineTitle": "Linha de contrato núm. {number}",
+    "eresources.titles": "Títulos",
+    "agreements.showInvoicesLink": "Mostrar faturas",
+    "temporary.test.key": "DO NOT TRANSLATE -- THIS KEY WILL BE DELETED",
+    "agreementLines.addCustomCoverage": "Adicionar cobertura personalizada",
+    "agreementLines.customCoverageTitle": "Cobertura personalizada núm. {number}",
+    "errors.endDateGreaterThanStartDate": "Data de término deve ser após a data de início."
 }
