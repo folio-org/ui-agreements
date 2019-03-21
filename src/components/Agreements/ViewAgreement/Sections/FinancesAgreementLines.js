@@ -38,6 +38,9 @@ export default class FinancesAgreementLines extends React.Component {
     }
     const purchaseOrderId = get(line, ['purchase_order_id']);
     const id = get(line, ['id']);
+    if (purchaseOrderId === undefined || id === undefined) {
+      return poLineNumber;
+    }
     return (
       <Link to={`/orders/view/${purchaseOrderId}/po-line/view/${id}`}>
         {poLineNumber}
