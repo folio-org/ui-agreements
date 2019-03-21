@@ -65,7 +65,7 @@ class CustomCoverageFieldArray extends React.Component {
 
     if (openEndedCoverages > 1) {
       return (
-        <div data-test-error-end-date-too-early>
+        <div data-test-error-multiple-open-ended>
           <FormattedMessage id="ui-agreements.errors.multipleOpenEndedCoverages" />
         </div>
       );
