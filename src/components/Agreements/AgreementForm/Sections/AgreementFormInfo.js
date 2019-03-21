@@ -6,7 +6,6 @@ import { Field } from 'redux-form';
 
 import {
   Accordion,
-  AccordionSet,
   Col,
   Datepicker,
   Row,
@@ -162,11 +161,14 @@ class AgreementFormInfo extends React.Component {
             />
           </Col>
         </Row>
-        <AccordionSet>
-          <Accordion label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}>
+        <div style={{ marginLeft: '2rem' }}>
+          <Accordion
+            closedByDefault
+            label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
+          >
             <AgreementFormInternalContacts {...sectionProps} />
           </Accordion>
-        </AccordionSet>
+        </div>
       </Accordion>
     );
   }

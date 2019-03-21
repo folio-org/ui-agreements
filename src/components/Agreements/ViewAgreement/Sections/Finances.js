@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Accordion, Badge, Button, Icon, Layout } from '@folio/stripes/components';
+import { Accordion, Badge, Icon, Layout } from '@folio/stripes/components';
 
 import FinancesAgreementLines from './FinancesAgreementLines';
 
@@ -34,32 +34,21 @@ export default class Finances extends React.Component {
   render() {
     const { id, onToggle, open } = this.props;
 
-    const buttonAndBadge =
-      <div>
-        <Button align="end">
-          <Icon icon="edit">
-            <FormattedMessage id="ui-agreements.agreements.editFinancesAgreementLines" />
-          </Icon>
-        </Button>
-        {' '}
-        {this.renderBadge()}
-      </div>;
-
     return (
       <Accordion
         id={id}
         label={<FormattedMessage id="ui-agreements.agreements.financesAgreementLines" />}
         open={open}
         onToggle={onToggle}
-        displayWhenClosed={buttonAndBadge}
-        displayWhenOpen={buttonAndBadge}
+        displayWhenClosed={this.renderBadge()}
+        displayWhenOpen={this.renderBadge()}
       >
         {this.renderInvoices()}
         <FinancesAgreementLines
           visible={open}
           {...this.props}
         />
-        <div style={{ marginLeft: 20, marginRight: 20 }}>
+        <div style={{ marginLeft: '2rem' }}>
           <Accordion
             id="finance-reports"
             label={<FormattedMessage id="ui-agreements.agreements.financeReports" />}

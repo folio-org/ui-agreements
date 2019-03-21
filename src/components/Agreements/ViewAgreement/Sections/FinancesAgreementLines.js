@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { get } from 'lodash';
-import { Icon, MultiColumnList } from '@folio/stripes/components';
+import { Icon, Layout, MultiColumnList } from '@folio/stripes/components';
 
 export default class FinancesAgreementLines extends React.Component {
   static propTypes = {
@@ -74,7 +74,11 @@ export default class FinancesAgreementLines extends React.Component {
       return <Icon icon="spinner-ellipsis" width="100px" />;
     }
     if (!financesAgreementLines.length) {
-      return <FormattedMessage id="ui-agreements.agreementLines.noPoLines" />;
+      return (
+        <Layout className="padding-bottom-gutter">
+          <FormattedMessage id="ui-agreements.agreementLines.noPoLines" />
+        </Layout>
+      );
     }
 
     return (
