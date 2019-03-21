@@ -12,6 +12,7 @@ import {
 } from '@folio/stripes/components';
 
 import EResourceAgreements from '../../EResourceAgreements';
+import getResourceIdentifier from '../../../../util/getResourceIdentifier';
 
 export default class TitleInfo extends React.Component {
   static propTypes = {
@@ -29,23 +30,14 @@ export default class TitleInfo extends React.Component {
   }
 
   renderIdentifier(type, width = 3) {
-    const { eresource: { identifiers } } = this.props;
-
-    if (!Array.isArray(identifiers) || !identifiers.length) return null;
-
-    const entry = identifiers.find(i => i.identifier.ns.value === type);
-    if (!entry) return null;
-
-    let value = get(entry, ['identifier', 'value']);
-    if (!value) return null;
-
-    if (Array.isArray(value)) value = value.map(v => <div>{v}</div>);
+    const identifier = getResourceIdentifier(this.props.eresource, type);
+    if (!identifier) return null;
 
     return (
       <Col xs={width}>
         <KeyValue
           label={<FormattedMessage id={`ui-agreements.identifier.${type}`} />}
-          value={value}
+          value={identifier}
         />
       </Col>
     );
