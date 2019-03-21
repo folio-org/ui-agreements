@@ -29,16 +29,18 @@ export default class LicenseInfo extends React.Component {
         open={this.props.open}
         onToggle={this.props.onToggle}
       >
-        <Row>
-          <Col xs={12}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.license.generalNotes" />}>
-              <div data-test-license-note>
-                {agreement.licenseNote || '-'}
-              </div>
-            </KeyValue>
-          </Col>
-        </Row>
-        <div style={{ marginLeft: '1rem' }}>
+        { agreement.licenseNote ? (
+          <Row>
+            <Col xs={12}>
+              <KeyValue label={<FormattedMessage id="ui-agreements.license.generalNotes" />}>
+                <div data-test-license-note>
+                  {agreement.licenseNote}
+                </div>
+              </KeyValue>
+            </Col>
+          </Row>
+        ) : null }
+        <div style={{ marginTop: '1rem', marginLeft: '1rem' }}>
           <AllLicenses agreement={agreement} />
           <ExternalLicenses agreement={agreement} />
         </div>

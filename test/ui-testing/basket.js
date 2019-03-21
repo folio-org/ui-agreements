@@ -11,7 +11,7 @@ const _CONSTANTS = {
 
 const BASKET = [];
 
-const shouldAddTitleToBasket = (nightmare, index) => {
+const shouldAddTitleToBasket = (nightmare, index, basket = BASKET) => {
   it(`should add title ${index} to basket`, done => {
     nightmare
       .wait(`#list-agreements [aria-rowindex="${index + 1}"] a`)
@@ -34,14 +34,16 @@ const shouldAddTitleToBasket = (nightmare, index) => {
         return addedItem;
       }, index, _CONSTANTS)
       .then(addedItem => {
-        BASKET.push(addedItem);
+        basket.push(addedItem);
         done();
       })
       .catch(done);
   });
 };
 
-const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = []) => {
+module.exports.shouldAddTitleToBasket = shouldAddTitleToBasket;
+
+const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = [], basket = BASKET) => {
   it(`should see ${basketIndices.length} lines with correct resources`, done => {
     nightmare
       .wait('section#eresources')
@@ -73,7 +75,7 @@ const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = []) => {
       })
       .then(lines => {
         basketIndices.forEach(index => {
-          const resource = BASKET[index];
+          const resource = basket[index];
           const line = lines.find(l => l.id === resource.id);
           if (!line) throw Error(`Could not find agreement line for ${resource.name}`);
           if (line.id !== resource.id) throw Error(`Expected Line #0 ID (${line.id}) to be ${resource.id}`);
@@ -86,9 +88,10 @@ const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = []) => {
       .catch(done);
   });
 };
+module.exports.shouldHaveCorrectAgreementLines = shouldHaveCorrectAgreementLines;
 
 module.exports.test = (uiTestCtx) => {
-  describe('Module test: ui-agreements: basic basket functionality', function test() {
+  describe('ui-agreements: basic basket functionality', function test() {
     const { config, helpers: { login, logout } } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 

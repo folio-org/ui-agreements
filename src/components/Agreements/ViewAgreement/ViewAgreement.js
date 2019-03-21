@@ -73,6 +73,14 @@ class ViewAgreement extends React.Component {
       shouldRefresh,
       throwErrors: false,
     },
+    invoices: {
+      type: 'okapi',
+      path: 'invoice-storage/invoice-lines',
+      records: 'invoiceLines',
+      throwErrors: false,
+      fetch: false,
+      accumulate: true,
+    },
     agreementEresources: {
       type: 'okapi',
       path: 'erm/sas/:{id}/resources',
@@ -125,16 +133,22 @@ class ViewAgreement extends React.Component {
 
   componentDidMount() {
     this.fetchUsers();
+    this.fetchInvoices();
   }
 
   componentDidUpdate(prevProps) {
     const prevUsers = get(prevProps.resources.contacts, ['records'], []).map(c => c.user);
     const users = get(this.props.resources.contacts, ['records'], []).map(c => c.user);
+    const prevFinances = get(prevProps.resources.financesAgreementLines, ['records'], []).map(f => f.id);
+    const finances = get(this.props.resources.financesAgreementLines, ['records'], []).map(f => f.id);
     const prevAgreement = get(prevProps.resources.selectedAgreement, ['records', 0], {});
     const agreement = get(this.props.resources.selectedAgreement, ['records', 0], {});
 
     if ((prevAgreement.id !== agreement.id) || (difference(users, prevUsers).length)) {
       this.fetchUsers();
+    }
+    if ((prevAgreement.id !== agreement.id) || (difference(finances, prevFinances).length)) {
+      this.fetchInvoices();
     }
   }
 
@@ -177,45 +191,70 @@ class ViewAgreement extends React.Component {
     return get(this.props.resources.financesAgreementLines, ['records'], []);
   }
 
+  getInvoices() {
+    const isPending = get(this.props.resources.invoices, ['isPending'], true);
+    if (isPending) return undefined;
+
+    return get(this.props.resources.invoices, ['records'], []);
+  }
+
   getInitialValues() {
     const agreement = cloneDeep(this.getAgreement());
     const {
-      agreementStatus,
-      renewalPriority,
-      isPerpetual,
-      contacts,
-      orgs,
-      linkedLicenses
+      agreementStatus = {},
+      renewalPriority = {},
+      isPerpetual = {},
+      contacts = [],
+      orgs = [],
+      linkedLicenses = [],
+      items = [],
     } = agreement;
 
-    if (agreementStatus && agreementStatus.id) {
+    if (agreementStatus.id) {
       agreement.agreementStatus = agreementStatus.id;
     }
 
-    if (renewalPriority && renewalPriority.id) {
+    if (renewalPriority.id) {
       agreement.renewalPriority = renewalPriority.id;
     }
 
-    if (isPerpetual && isPerpetual.id) {
+    if (isPerpetual.id) {
       agreement.isPerpetual = isPerpetual.id;
     }
 
-    if (orgs && orgs.length) {
-      agreement.orgs = orgs.map(o => ({ ...o, role: o.role.id }));
-    }
-
-    if (contacts) {
+    if (contacts.length) {
       agreement.contacts = contacts.map(c => ({
         ...c,
         role: c.role ? c.role.id : undefined,
       }));
     }
 
-    if (linkedLicenses) {
+    if (orgs.length) {
+      agreement.orgs = orgs.map(o => ({ ...o, role: o.role.id }));
+    }
+
+    if (linkedLicenses.length) {
       agreement.linkedLicenses = linkedLicenses.map(l => ({
         ...l,
         status: l.status.id,
       }));
+    }
+
+    const agreementLines = this.getAgreementLines() || [];
+    if (items.length && agreementLines.length) {
+      agreement.items = items.map(item => {
+        if (item.resource) {
+          return item;
+        } else {
+          const foundLine = agreementLines.find(line => line.id === item.id);
+          if (!foundLine) return item;
+
+          return {
+            id: foundLine.id,
+            coverage: foundLine.customCoverage ? foundLine.coverage : undefined,
+          };
+        }
+      });
     }
 
     return agreement;
@@ -227,6 +266,7 @@ class ViewAgreement extends React.Component {
       agreementLines: this.getAgreementLines(),
       contacts: this.getContacts(),
       financesAgreementLines: this.getFinancesAgreementLines(),
+      invoices: this.getInvoices(),
       onToggle: this.handleSectionToggle,
       parentMutator: {
         ...this.props.parentMutator,
@@ -246,7 +286,30 @@ class ViewAgreement extends React.Component {
 
     users.reset();
     contacts.forEach(contact => users.GET({ path: `users/${contact.user}` }));
-  }
+  };
+
+  fetchInvoices = () => {
+    if (!this.props.stripes.hasInterface('invoice-storage.invoice-line', '1.0')) {
+      return;
+    }
+
+    const poLines = this.getFinancesAgreementLines();
+    if (poLines === undefined) {
+      return;
+    }
+
+    const { mutator: { invoices } } = this.props;
+    invoices.reset();
+
+    if (!poLines.length) {
+      return;
+    }
+
+    const query = poLines.map(poLine => 'poLineId=' + poLine.id).join(' OR ');
+    invoices.GET({
+      params: { query },
+    });
+  };
 
   fetchMoreEresources = () => {
     const { agreementEresourcesCount } = this.props.resources;
@@ -270,7 +333,7 @@ class ViewAgreement extends React.Component {
     return (
       <Pane
         id="pane-view-agreement"
-        defaultWidth={this.props.paneWidth}
+        defaultWidth="60%"
         paneTitle="Loading..."
         dismissible
         onClose={this.props.onClose}
@@ -325,7 +388,7 @@ class ViewAgreement extends React.Component {
     return (
       <Pane
         id="pane-view-agreement"
-        defaultWidth={this.props.paneWidth}
+        defaultWidth="60%"
         paneTitle={agreement.name}
         dismissible
         onClose={this.props.onClose}

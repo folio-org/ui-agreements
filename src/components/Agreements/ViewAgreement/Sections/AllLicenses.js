@@ -93,7 +93,11 @@ export default class AllLicenses extends React.Component {
     const licenses = get(this.props, ['agreement', 'linkedLicenses'], []);
 
     if (!licenses.length) {
-      return <FormattedMessage id="ui-agreements.license.noLicenses" />;
+      return (
+        <Layout className="margin-start-gutter padding-bottom-gutter">
+          <FormattedMessage id="ui-agreements.license.noLicenses" />
+        </Layout>
+      );
     }
 
     return (

@@ -43,6 +43,7 @@
   "agreements.agreementLines": "Agreement lines",
   "agreements.financesAgreementLines": "Finances — agreement lines",
   "agreements.editFinancesAgreementLines": "Edit agreement lines",
+  "agreements.showInvoicesLink": "Show invoices",
   "agreements.financeReports": "Finance Reports",
   "agreements.license": "License",
   "agreements.licenseAndBusTerms": "License and business terms",
@@ -58,6 +59,7 @@
   "agreements.editAgreement": "Edit Agreement",
 
   "agreementLines.addLine": "Add agreement line",
+  "agreementLines.addCustomCoverage": "Add custom coverage",
   "agreementLines.costType": "Cost type",
   "agreementLines.count": "Count",
   "agreementLines.contentUpdated": "Content updated",
@@ -70,6 +72,7 @@
   "agreementLines.tax": "YTD Tax",
   "agreementLines.createLine": "Create agreement line",
   "agreementLines.lineTitle": "Agreement line #{number}",
+  "agreementLines.customCoverageTitle": "Custom coverage #{number}",
 
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
   "basket.name": "ERM Basket",
@@ -128,6 +131,8 @@
   "eresources.addToBasketHeader": "E-resource basket",
   "eresources.sourceKb": "Source",
 
+  "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
+
   "license.addExternalLicense": "Add external license to agreement",
   "license.addLicense": "Add license to agreement",
   "license.allLicenses": "All licenses",
@@ -170,5 +175,7 @@
   "settings.orgRoles.orgRole": "Organization role",
   "settings.orgRoles.role": "Role",
 
-  "userpicker.clickSearchButton": "Click the 'Search' button to select a user"
+  "userpicker.clickSearchButton": "Click the 'Search' button to select a user",
+
+  "temporary.test.key": "DO NOT TRANSLATE -- THIS KEY WILL BE DELETED"
 }
