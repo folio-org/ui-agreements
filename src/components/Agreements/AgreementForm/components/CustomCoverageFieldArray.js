@@ -60,7 +60,7 @@ class CustomCoverageFieldArray extends React.Component {
     const coverages = get(allValues, name.substring(0, name.lastIndexOf('[')));
     let openEndedCoverages = 0;
     coverages.forEach(c => {
-      if (!c.endDate) openEndedCoverages += 1;
+      if (c.startDate && !c.endDate) openEndedCoverages += 1;
     });
 
     if (openEndedCoverages > 1) {
