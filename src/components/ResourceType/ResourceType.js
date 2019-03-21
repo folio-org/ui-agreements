@@ -15,6 +15,9 @@ export default class ResourceType extends React.Component {
             label: PropTypes.string,
           })
         })
+      }),
+      type: PropTypes.shape({
+        label: PropTypes.string,
       })
     })
   }
@@ -27,10 +30,9 @@ export default class ResourceType extends React.Component {
       return <FormattedMessage id="ui-agreements.eresources.package" />;
     }
 
-    return get(
-      resource,
-      ['_object', 'pti', 'titleInstance', 'type', 'label'],
-      <FormattedMessage id="ui-agreements.eresources.title" />
-    );
+    let type = get(resource, ['_object', 'pti', 'titleInstance', 'type', 'label']);
+    if (!type) type = get(resource, ['type', 'label']);
+
+    return type || <FormattedMessage id="ui-agreements.eresources.title" />;
   }
 }

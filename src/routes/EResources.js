@@ -7,6 +7,8 @@ import { SearchAndSort } from '@folio/stripes/smart-components';
 import { getSASParams } from '@folio/stripes-erm-components';
 
 import ViewEResource from '../components/EResources/ViewEResource';
+import ResourceType from '../components/ResourceType';
+import getResourceIdentifier from '../util/getResourceIdentifier';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
@@ -133,17 +135,29 @@ class EResources extends React.Component {
           visibleColumns={[
             'name',
             'type',
+            'isbn',
+            'eissn',
+            'pissn',
           ]}
           columnMapping={{
             name: intl.formatMessage({ id: 'ui-agreements.eresources.name' }),
             type: intl.formatMessage({ id: 'ui-agreements.eresources.type' }),
+            isbn: intl.formatMessage({ id: 'ui-agreements.identifier.isbn' }),
+            eissn: intl.formatMessage({ id: 'ui-agreements.identifier.eissn' }),
+            pissn: intl.formatMessage({ id: 'ui-agreements.identifier.pissn' }),
           }}
           columnWidths={{
             name: 500,
-            type: 200,
+            type: 100,
+            isbn: 150,
+            eissn: 150,
+            pissn: 150,
           }}
           resultsFormatter={{
-            type: a => a.type && a.type.label,
+            type: e => <ResourceType resource={e} />,
+            isbn: e => getResourceIdentifier(e._object, 'isbn'),
+            eissn: e => getResourceIdentifier(e._object, 'eissn'),
+            pissn: e => getResourceIdentifier(e._object, 'pissn'),
           }}
         />
       </React.Fragment>
