@@ -133,6 +133,7 @@
 
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
   "errors.multipleOpenEndedCoverages": "Cannot have multiple open-ended coverage statements.",
+  "errors.overlappingCoverage": "The following coverages have overlapping dates: {coverages}",
 
   "license.addExternalLicense": "Add external license to agreement",
   "license.addLicense": "Add license to agreement",
