@@ -28,15 +28,27 @@ export default class TitleInfo extends React.Component {
     this.connectedEResourceAgreements = props.stripes.connect(EResourceAgreements);
   }
 
-  getIdentifier(type) {
+  renderIdentifier(type, width = 3) {
     const { eresource: { identifiers } } = this.props;
 
-    if (!Array.isArray(identifiers) || !identifiers.length) return '-';
+    if (!Array.isArray(identifiers) || !identifiers.length) return null;
 
     const entry = identifiers.find(i => i.identifier.ns.value === type);
-    if (!entry) return '-';
+    if (!entry) return null;
 
-    return entry.identifier.value;
+    let value = get(entry, ['identifier', 'value']);
+    if (!value) return null;
+
+    if (Array.isArray(value)) value = value.map(v => <div>{v}</div>);
+
+    return (
+      <Col xs={width}>
+        <KeyValue
+          label={<FormattedMessage id={`ui-agreements.identifier.${type}`} />}
+          value={value}
+        />
+      </Col>
+    );
   }
 
   render() {
@@ -62,18 +74,14 @@ export default class TitleInfo extends React.Component {
               value={get(eresource, ['publisher', 'label'], '-')}
             />
           </Col>
-          <Col xs={2}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.pIssn" />}
-              value={this.getIdentifier('pissn')}
-            />
-          </Col>
-          <Col xs={2}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.eIssn" />}
-              value={this.getIdentifier('eissn')}
-            />
-          </Col>
+          { this.renderIdentifier('pissn', 2) }
+          { this.renderIdentifier('eissn', 2) }
+        </Row>
+        <Row>
+          { this.renderIdentifier('doi') }
+          { this.renderIdentifier('ezb') }
+          { this.renderIdentifier('zdb') }
+          { this.renderIdentifier('isbn') }
         </Row>
         <Headline size="medium" faded>
           <FormattedMessage id="ui-agreements.eresources.erAgreements" />
