@@ -152,6 +152,7 @@
   "license.externalLicenses": "External licenses",
   "license.generalNotes": "General notes about the agreement's license",
   "license.inactiveLicenses": "Inactive licenses",
+  "license.noControllingLicense": "No controlling license is linked to this agreement.",
   "license.noExternalLicenses": "Agreement has no external licenses.",
   "license.noFindLicensePlugin": "Cannot select license because no \"Find License\" plugin is installed.",
   "license.noLicenseOrganizations": "Agreement has no license organizations",

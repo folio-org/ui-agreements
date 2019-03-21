@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
+import { get } from 'lodash';
 
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import { getSASParams } from '@folio/stripes-erm-components';
@@ -44,6 +45,10 @@ class Agreements extends React.Component {
       type: 'okapi',
       path: 'erm/sas/${selectedAgreementId}', // eslint-disable-line no-template-curly-in-string
       fetch: false,
+    },
+    terms: {
+      type: 'okapi',
+      path: 'licenses/custprops',
     },
     agreementTypeValues: {
       type: 'okapi',
@@ -92,7 +97,13 @@ class Agreements extends React.Component {
     browseOnly: PropTypes.bool,
     disableRecordCreation: PropTypes.bool,
     intl: intlShape,
-    resources: PropTypes.object,
+    resources: PropTypes.shape({
+      query: PropTypes.object,
+      records: PropTypes.object,
+      statusValues: PropTypes.object,
+      terms: PropTypes.object,
+      typeValues: PropTypes.object,
+    }),
     mutator: PropTypes.object,
     onSelectRow: PropTypes.func,
     showSingleResult: PropTypes.bool,
@@ -136,6 +147,22 @@ class Agreements extends React.Component {
     this.props.mutator.selectedAgreementId.replace(agreement.id);
 
     return this.props.mutator.selectedAgreement.PUT(agreement);
+  }
+
+  getDefaultLicenseValues = () => {
+    const status = get(this.props.resources.statusValues, ['records'], []).find(v => v.value === 'active') || {};
+    const type = get(this.props.resources.typeValues, ['records'], []).find(v => v.value === 'local') || {};
+
+    const customProperties = {};
+    get(this.props.resources.terms, ['records'], [])
+      .filter(term => term.primary)
+      .forEach(term => { customProperties[term.name] = ''; });
+
+    return {
+      status: status.id,
+      type: type.id,
+      customProperties,
+    };
   }
 
   getActiveFilters = () => {
@@ -204,12 +231,14 @@ class Agreements extends React.Component {
             lastUpdated: 120,
           }}
           detailProps={{
-            onUpdate: this.handleUpdate
+            onUpdate: this.handleUpdate,
+            defaultLicenseValues: this.getDefaultLicenseValues(),
           }}
           disableRecordCreation={this.props.disableRecordCreation}
           editRecordComponent={EditAgreement}
           initialResultCount={INITIAL_RESULT_COUNT}
           key="agreements"
+          newRecordInitialValues={this.getDefaultLicenseValues()}
           newRecordPerms="ui-agreements.agreements.create"
           objectName="agreement"
           onCreate={this.handleCreate}
