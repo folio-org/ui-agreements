@@ -160,5 +160,13 @@
     "temporary.test.key": "DO NOT TRANSLATE -- THIS KEY WILL BE DELETED",
     "agreementLines.addCustomCoverage": "Adicionar cobertura personalizada",
     "agreementLines.customCoverageTitle": "Cobertura personalizada núm. {number}",
-    "errors.endDateGreaterThanStartDate": "Data de término deve ser após a data de início."
+    "errors.endDateGreaterThanStartDate": "Data de término deve ser após a data de início.",
+    "errors.multipleOpenEndedCoverages": "Não é possível ter várias declarações de cobertura abertas.",
+    "errors.overlappingCoverage": "The following coverages have overlapping dates: {coverages}",
+    "identifier.doi": "DOI",
+    "identifier.eissn": "ISSN (Online)",
+    "identifier.ezb": "EZB",
+    "identifier.isbn": "ISBN",
+    "identifier.pissn": "ISSN (Print)",
+    "identifier.zdb": "ZDB"
 }
