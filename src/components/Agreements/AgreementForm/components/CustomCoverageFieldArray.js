@@ -12,7 +12,7 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-import withKiwtFieldArray from '@folio/stripes-erm-components';
+import { withKiwtFieldArray } from '@folio/stripes-erm-components';
 
 import EditCard from './EditCard';
 import { required } from '../../../../util/validators';

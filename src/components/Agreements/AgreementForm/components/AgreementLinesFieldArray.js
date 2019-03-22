@@ -7,7 +7,7 @@ import {
   Layout,
 } from '@folio/stripes/components';
 
-import withKiwtFieldArray from '@folio/stripes-erm-components';
+import { withKiwtFieldArray } from '@folio/stripes-erm-components';
 
 import AgreementLineField from './AgreementLineField';
 

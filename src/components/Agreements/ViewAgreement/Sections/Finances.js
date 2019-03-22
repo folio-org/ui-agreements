@@ -52,7 +52,9 @@ export default class Finances extends React.Component {
           <Accordion
             id="finance-reports"
             label={<FormattedMessage id="ui-agreements.agreements.financeReports" />}
-          />
+          >
+            TBD
+          </Accordion>
         </div>
       </Accordion>
     );

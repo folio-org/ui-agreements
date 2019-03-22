@@ -14,10 +14,12 @@ import {
   IconButton,
 } from '@folio/stripes/components';
 
+import { withKiwtFieldArray } from '@folio/stripes-erm-components';
+
 import LicenseLookup from './LicenseLookup';
 import css from './LicensesFieldArray.css';
 
-export default class LicensesFieldArray extends React.Component {
+class LicensesFieldArray extends React.Component {
   static propTypes = {
     addLicenseBtnLabel: PropTypes.node,
     isEmptyMessage: PropTypes.node,
@@ -158,3 +160,5 @@ export default class LicensesFieldArray extends React.Component {
     );
   }
 }
+
+export default withKiwtFieldArray(LicensesFieldArray);
