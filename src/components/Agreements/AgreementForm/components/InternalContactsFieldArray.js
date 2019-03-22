@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
 import { Field } from 'redux-form';
 
 import {
@@ -13,10 +12,12 @@ import {
   Select,
 } from '@folio/stripes/components';
 
+import { withKiwtFieldArray } from '@folio/stripes-erm-components';
+
 import UserPicker from '../../../UserPicker';
 import { required } from '../../../../util/validators';
 
-export default class AgreementFormInternalContacts extends React.Component {
+class InternalContactsFieldArray extends React.Component {
   static propTypes = {
     items: PropTypes.arrayOf(PropTypes.object),
     onAddField: PropTypes.func.isRequired,
@@ -125,3 +126,5 @@ export default class AgreementFormInternalContacts extends React.Component {
     );
   }
 }
+
+export default withKiwtFieldArray(InternalContactsFieldArray);
