@@ -3,14 +3,7 @@ const AgreementCRUD = require('./agreement-crud');
 
 let NUMBER_OF_TERMS;
 
-const TERM = {
-  name: 'otherRestrictions',
-  label: 'Other restrictions',
-  value: 'A Few',
-  editedValue: 'A Lot',
-};
-
-module.exports.test = (uiTestCtx, term = TERM) => {
+module.exports.test = (uiTestCtx) => {
   const number = Math.round(Math.random() * 100000);
   const licenses = [{
     name: `Controlling License #${number}`,
@@ -18,6 +11,13 @@ module.exports.test = (uiTestCtx, term = TERM) => {
     status: 'Controlling',
     startDate: '2018-07-01',
   }];
+
+  const term = {
+    name: 'otherRestrictions',
+    label: 'Other restrictions',
+    value: 'A Few',
+    editedValue: 'A Lot',
+  };
 
   const agreement = {
     name: `Linked License Agreement #${number}`,
@@ -78,7 +78,7 @@ module.exports.test = (uiTestCtx, term = TERM) => {
             .catch(done);
         });
 
-        it('should add term', done => {
+        it(`should add term ${term.name}`, done => {
           nightmare
             .click('#add-term-btn')
             .wait(500)
