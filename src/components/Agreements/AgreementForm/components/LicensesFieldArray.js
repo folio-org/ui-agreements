@@ -20,8 +20,11 @@ import css from './LicensesFieldArray.css';
 export default class LicensesFieldArray extends React.Component {
   static propTypes = {
     addLicenseBtnLabel: PropTypes.node,
-    fields: PropTypes.object,
     isEmptyMessage: PropTypes.node,
+    items: PropTypes.arrayOf(PropTypes.object),
+    name: PropTypes.string.isRequired,
+    onAddField: PropTypes.func.isRequired,
+    onDeleteField: PropTypes.func.isRequired,
     parentResources: PropTypes.object,
   }
 
@@ -57,19 +60,9 @@ export default class LicensesFieldArray extends React.Component {
     }));
   }
 
-  handleDeleteLicense = (index, license) => {
-    const { fields } = this.props;
-
-    fields.remove(index);
-
-    if (license.id) {
-      fields.push({ id: license.id, _delete: true });
-    }
-  }
-
   validateOnlyOneControllingLicense = (value, allValues) => {
     const { controllingLicenseStatusId } = this.state;
-    const { fields: { name } } = this.props;
+    const { name } = this.props;
 
     if (value === controllingLicenseStatusId) {
       const controllingLicenses = allValues[name].filter(l => l.status === controllingLicenseStatusId);
@@ -85,19 +78,19 @@ export default class LicensesFieldArray extends React.Component {
     !value ? <FormattedMessage id="stripes-core.label.missingRequiredField" /> : undefined
   )
 
-  renderLicenses = (licenses) => {
-    const { fields } = this.props;
+  renderLicenses = () => {
+    const { items, name, onDeleteField } = this.props;
 
-    return licenses.map((license, i) => (
+    return items.map((license, i) => (
       <div className={css.license} key={i}>
         <Row>
           <Col xs={11}>
             <Field
               component={LicenseLookup}
-              id={`${fields.name}-remoteId-${i}`}
+              id={`${name}-remoteId-${i}`}
               label={<FormattedMessage id="ui-agreements.license.prop.lookup" />}
               license={this.state.licenses[license.remoteId] || license.remoteId_object}
-              name={`${fields.name}[${i}].remoteId`}
+              name={`${name}[${i}].remoteId`}
               onSelectLicense={this.handleLicenseSelected}
               required
               validate={this.validateRequired}
@@ -106,8 +99,8 @@ export default class LicensesFieldArray extends React.Component {
           <Col xs={1}>
             <IconButton
               icon="trash"
-              id={`${fields.name}-delete-${i}`}
-              onClick={() => this.handleDeleteLicense(i, license)}
+              id={`${name}-delete-${i}`}
+              onClick={() => onDeleteField(i, license)}
             />
           </Col>
         </Row>
@@ -118,9 +111,9 @@ export default class LicensesFieldArray extends React.Component {
                 <Field
                   component={Select}
                   dataOptions={this.state.statusValues}
-                  id={`${fields.name}-status-${i}`}
+                  id={`${name}-status-${i}`}
                   label={<FormattedMessage id="ui-agreements.license.prop.status" />}
-                  name={`${fields.name}[${i}].status`}
+                  name={`${name}[${i}].status`}
                   placeholder={placeholder}
                   required
                   validate={[
@@ -134,9 +127,9 @@ export default class LicensesFieldArray extends React.Component {
           <Col xs={8}>
             <Field
               component={TextArea}
-              id={`${fields.name}-note-${i}`}
+              id={`${name}-note-${i}`}
               label={<FormattedMessage id="ui-agreements.license.prop.note" />}
-              name={`${fields.name}[${i}].note`}
+              name={`${name}[${i}].note`}
             />
           </Col>
         </Row>
@@ -151,16 +144,14 @@ export default class LicensesFieldArray extends React.Component {
   )
 
   render() {
-    const { fields } = this.props;
-    const licenses = (this.props.fields.getAll() || [])
-      .filter(d => d._delete !== true);
+    const { items, onAddField } = this.props;
 
     return (
       <div>
         <div>
-          { licenses.length ? this.renderLicenses(licenses) : this.renderEmpty() }
+          { items.length ? this.renderLicenses() : this.renderEmpty() }
         </div>
-        <Button id="add-license-btn" onClick={() => fields.push({})}>
+        <Button id="add-license-btn" onClick={() => onAddField({})}>
           { this.props.addLicenseBtnLabel }
         </Button>
       </div>

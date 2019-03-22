@@ -7,8 +7,9 @@ import {
   Layout,
 } from '@folio/stripes/components';
 
+import withKiwtFieldArray from '@folio/stripes-erm-components';
+
 import AgreementLineField from './AgreementLineField';
-import withKiwtFieldArray from './withKiwtFieldArray';
 
 class AgreementLinesFieldArray extends React.Component {
   static propTypes = {

@@ -12,8 +12,9 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
+import withKiwtFieldArray from '@folio/stripes-erm-components';
+
 import EditCard from './EditCard';
-import withKiwtFieldArray from './withKiwtFieldArray';
 import { required } from '../../../../util/validators';
 
 class CustomCoverageFieldArray extends React.Component {
