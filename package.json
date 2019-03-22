@@ -20,6 +20,7 @@
     "test-external-licenses": "stripes test nightmare --run external-licenses",
     "test-custom-coverage": "stripes test nightmare --run custom-coverage",
     "test-linked-licenses": "stripes test nightmare --run linked-licenses",
+    "test-license-terms": "stripes test nightmare --run license-terms",
     "lint": "eslint src"
   },
   "devDependencies": {

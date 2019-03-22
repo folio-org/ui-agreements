@@ -7,6 +7,12 @@ import { LicenseTermsList } from '@folio/stripes-erm-components';
 
 export default class LicenseBusinessTerms extends React.Component {
   static propTypes = {
+    linkedLicenses: PropTypes.shape({
+      status: PropTypes.shape({
+        value: PropTypes.string,
+      }).isRequired,
+      remoteId_object: PropTypes.object.isRequired,
+    }),
     parentResources: PropTypes.shape({
       terms: PropTypes.object,
     }),
