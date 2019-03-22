@@ -162,12 +162,7 @@ class AgreementFormInfo extends React.Component {
           </Col>
         </Row>
         <div style={{ marginLeft: '2rem' }}>
-          <Accordion
-            closedByDefault
-            label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
-          >
-            <AgreementFormInternalContacts {...sectionProps} />
-          </Accordion>
+          <AgreementFormInternalContacts {...sectionProps} />
         </div>
       </Accordion>
     );
