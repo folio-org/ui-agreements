@@ -59,6 +59,19 @@ export default class CoverageStatements extends React.Component {
   }
 
   renderStatement = (statement, i) => {
+    const {
+      startDate,
+      startVolume,
+      startIssue,
+      endDate,
+      endVolume,
+      endIssue,
+    } = statement;
+
+    if (!startDate && !startVolume && !startIssue && !endDate && !endVolume && !endIssue) {
+      return '';
+    }
+
     return (
       <Layout
         className="flex justified"
@@ -70,7 +83,7 @@ export default class CoverageStatements extends React.Component {
           data-test-start
           style={{ width: '40%' }}
         >
-          {this.renderDate(statement.startDate, statement.startVolume, statement.startIssue)}
+          {this.renderDate(startDate, startVolume, startIssue)}
         </Layout>
         <Icon icon="arrow-right" />
         <Layout
@@ -78,7 +91,7 @@ export default class CoverageStatements extends React.Component {
           data-test-end
           style={{ width: '40%' }}
         >
-          {this.renderDate(statement.endDate, statement.endVolume, statement.endIssue)}
+          {this.renderDate(endDate, endVolume, endIssue)}
         </Layout>
       </Layout>
     );
