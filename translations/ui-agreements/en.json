@@ -7,6 +7,8 @@
   "yes": "Yes",
   "no": "No",
 
+  "save": "Save",
+
   "tabs.dashboard": "Dashboard",
   "tabs.agreements": "Agreements",
   "tabs.eresources": "E-resources",
@@ -177,9 +179,8 @@
   "organizations.typeToSearch": "Begin typing to search for an organization",
 
   "settings.general": "General",
-  "settings.general.message": "These are your general app settings.",
-  "settings.some-feature": "Some Feature",
-  "settings.some-feature.message": "These are your settings for some app feature.",
+  "settings.general.hideEResourcesFunctionality.title": "Hide all \"E-resources\" functionality",
+  "settings.general.hideEResourcesFunctionality.description": "Useful when E-resources are searched for and managed by an external application that reports them to this Agreements application.",
   "settings.orgRoles": "Organization roles",
   "settings.orgRoles.orgRole": "Organization role",
   "settings.orgRoles.role": "Role",
