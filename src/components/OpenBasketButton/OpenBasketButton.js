@@ -6,6 +6,7 @@ import {
   Button,
 } from '@folio/stripes/components';
 
+import IfEResourcesEnabled from '../IfEResourcesEnabled';
 import css from './OpenBasketButton.css';
 
 class OpenBasketButton extends React.Component {
@@ -34,19 +35,21 @@ class OpenBasketButton extends React.Component {
     const basket = this.props.resources.basket || [];
 
     return (
-      <Button
-        buttonClass={css.button}
-        buttonStyle="primary"
-        data-test-open-basket-button
-        data-test-basket-size={basket.length}
-        disabled={basket.length === 0}
-        onClick={this.openBasket}
-      >
-        <FormattedMessage
-          id="ui-agreements.basketButton"
-          values={{ count: basket.length }}
-        />
-      </Button>
+      <IfEResourcesEnabled>
+        <Button
+          buttonClass={css.button}
+          buttonStyle="primary"
+          data-test-open-basket-button
+          data-test-basket-size={basket.length}
+          disabled={basket.length === 0}
+          onClick={this.openBasket}
+        >
+          <FormattedMessage
+            id="ui-agreements.basketButton"
+            values={{ count: basket.length }}
+          />
+        </Button>
+      </IfEResourcesEnabled>
     );
   }
 }

@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { Button, ButtonGroup } from '@folio/stripes/components';
 
+import IfEResourcesEnabled from '../IfEResourcesEnabled';
 import css from './Tabs.css';
 
 class Tabs extends React.Component {
@@ -83,26 +84,28 @@ class Tabs extends React.Component {
     const { tab } = this.state;
 
     return (
-      <div className={css.SegControl}>
-        <ButtonGroup tagName="nav">
-          <Button
-            id="agreements"
-            buttonStyle={tab === 'agreements' ? 'primary' : undefined}
-            fullWidth
-            onClick={this.handleNavigate}
-          >
-            <FormattedMessage id="ui-agreements.tabs.agreements" />
-          </Button>
-          <Button
-            id="eresources"
-            buttonStyle={tab === 'eresources' ? 'primary' : undefined}
-            fullWidth
-            onClick={this.handleNavigate}
-          >
-            <FormattedMessage id="ui-agreements.tabs.eresources" />
-          </Button>
-        </ButtonGroup>
-      </div>
+      <IfEResourcesEnabled>
+        <div className={css.SegControl}>
+          <ButtonGroup tagName="nav">
+            <Button
+              id="agreements"
+              buttonStyle={tab === 'agreements' ? 'primary' : undefined}
+              fullWidth
+              onClick={this.handleNavigate}
+            >
+              <FormattedMessage id="ui-agreements.tabs.agreements" />
+            </Button>
+            <Button
+              id="eresources"
+              buttonStyle={tab === 'eresources' ? 'primary' : undefined}
+              fullWidth
+              onClick={this.handleNavigate}
+            >
+              <FormattedMessage id="ui-agreements.tabs.eresources" />
+            </Button>
+          </ButtonGroup>
+        </div>
+      </IfEResourcesEnabled>
     );
   }
 }

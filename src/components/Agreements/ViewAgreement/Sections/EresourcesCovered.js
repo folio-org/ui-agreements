@@ -7,6 +7,7 @@ import { Accordion, Badge, Icon, Layout, MultiColumnList } from '@folio/stripes/
 import CoverageStatements from '../../../CoverageStatements';
 import CustomCoverageIcon from '../../../CustomCoverageIcon';
 import EResourceLink from '../../../EResourceLink';
+import IfEResourcesEnabled from '../../../IfEResourcesEnabled';
 
 export default class EresourcesCovered extends React.Component {
   static propTypes = {
@@ -91,27 +92,29 @@ export default class EresourcesCovered extends React.Component {
     const agreementEresources = get(this.props.parentResources, ['agreementEresources', 'records'], []);
 
     return (
-      <Accordion
-        displayWhenClosed={this.renderBadge()}
-        displayWhenOpen={this.renderBadge()}
-        id="eresources-covered"
-        label={<FormattedMessage id="ui-agreements.agreements.eresourcesCovered" />}
-        open={this.state.open}
-        onToggle={this.onToggleAccordion}
-      >
-        <MultiColumnList
-          columnMapping={this.columnMapping}
-          columnWidths={this.columnWidths}
-          contentData={this.props.visible && this.state.open ? agreementEresources : []}
-          formatter={this.formatter}
-          height={800}
+      <IfEResourcesEnabled>
+        <Accordion
+          displayWhenClosed={this.renderBadge()}
+          displayWhenOpen={this.renderBadge()}
           id="eresources-covered"
-          interactive={false}
-          onNeedMoreData={this.props.fetchMoreEresources}
-          virtualize
-          visibleColumns={this.visibleColumns}
-        />
-      </Accordion>
+          label={<FormattedMessage id="ui-agreements.agreements.eresourcesCovered" />}
+          open={this.state.open}
+          onToggle={this.onToggleAccordion}
+        >
+          <MultiColumnList
+            columnMapping={this.columnMapping}
+            columnWidths={this.columnWidths}
+            contentData={this.props.visible && this.state.open ? agreementEresources : []}
+            formatter={this.formatter}
+            height={800}
+            id="eresources-covered"
+            interactive={false}
+            onNeedMoreData={this.props.fetchMoreEresources}
+            virtualize
+            visibleColumns={this.visibleColumns}
+          />
+        </Accordion>
+      </IfEResourcesEnabled>
     );
   }
 }
