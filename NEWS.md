@@ -1,4 +1,11 @@
-## 2.1.0 2019-01 Opened
+## 2.1.0 2019-03-22
+ * ERM-130 Sort order of multiple coverage statements should be ascending by start date
+ * ERM-129 Cannot edit custom coverage dates once they have been added
+ * ERM-90 Display identifiers in e-resource preview pane
+ * ERM-89 Display identifiers in e-resource search & sort
+ * ERM-78 General license note (on agreement) should not display if not populated
+ * ERM-65 Manage custom entitlement coverage for titles 
+   * ERM-91 Indicate the coverage for a title within an Agreement
 
 ## 2.0.3 2019-03-12
  * ERM-59 Manage licenses linked to agreements

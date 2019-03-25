@@ -58,7 +58,7 @@ class CustomCoverageFieldArray extends React.Component {
 
   validateMultipleOpenEnded = (_value, allValues, _props, name) => {
     // Name is something like "items[3].coverage[2].endDate" and we want the "items[3].coverage" array
-    const coverages = get(allValues, name.substring(0, name.lastIndexOf('[')));
+    const coverages = get(allValues, name.substring(0, name.lastIndexOf('[')), []);
     let openEndedCoverages = 0;
     coverages.forEach(c => {
       if (c.startDate && !c.endDate) openEndedCoverages += 1;
@@ -77,7 +77,7 @@ class CustomCoverageFieldArray extends React.Component {
 
   validateOverlappingDates = (value, allValues, _props, name) => {
     // Name is something like "items[3].coverage[2].endDate" and we want the "items[3].coverage" array
-    const coverages = get(allValues, name.substring(0, name.lastIndexOf('[')));
+    const coverages = get(allValues, name.substring(0, name.lastIndexOf('[')), []);
     const ranges = coverages
       .map((c, i) => ({
         coverageIndex: i,
