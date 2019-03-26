@@ -16,7 +16,10 @@ module.exports.test = (uiTestCtx) => {
     name: 'otherRestrictions',
     label: 'Other restrictions',
     value: 'A Few',
+<<<<<<< HEAD
     editedValue: 'A Lot',
+=======
+>>>>>>> 0c42a9189dad6da7986fc0d70ab4659bfd0dde57
   };
 
   const agreement = {
@@ -60,10 +63,13 @@ module.exports.test = (uiTestCtx) => {
 
             .click('#accordion-toggle-button-licenseFormTerms')
 
+<<<<<<< HEAD
             /* .click('#clickable-createlicense')
             .wait('#licenseInfo')
             .waitUntilNetworkIdle(500)
             .then(() => nightmare.click('#pane-view-license button[icon=times]')) */
+=======
+>>>>>>> 0c42a9189dad6da7986fc0d70ab4659bfd0dde57
             .then(done)
             .catch(done);
         });
@@ -87,7 +93,10 @@ module.exports.test = (uiTestCtx) => {
               if (count !== NUMBER_OF_TERMS + 1) {
                 throw Error(`Expected ${NUMBER_OF_TERMS + 1} terms but found ${count}!`);
               }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0c42a9189dad6da7986fc0d70ab4659bfd0dde57
               NUMBER_OF_TERMS += 1;
             })
             .then(done)
@@ -107,7 +116,11 @@ module.exports.test = (uiTestCtx) => {
             .click('#clickable-createlicense')
             .wait('#licenseInfo')
             .waitUntilNetworkIdle(500)
+<<<<<<< HEAD
             .then(() => nightmare.click('#pane-view-license button[icon=times]'))
+=======
+            //  .then(() => nightmare.click('#pane-view-license button[icon=times]'))
+>>>>>>> 0c42a9189dad6da7986fc0d70ab4659bfd0dde57
             .then(done)
             .catch(done);
         });
@@ -202,6 +215,7 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
+<<<<<<< HEAD
       it('should set license link statuses', done => {
         licenses.reduce((nightmare2, l, i) => (
           nightmare2.type(`#linkedLicenses-status-${i}`, l.status)
@@ -216,6 +230,8 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
+=======
+>>>>>>> 0c42a9189dad6da7986fc0d70ab4659bfd0dde57
       it('should save updated agreement', done => {
         nightmare
           .click('#clickable-updateagreement')
@@ -244,6 +260,7 @@ module.exports.test = (uiTestCtx) => {
         });
       }
 
+<<<<<<< HEAD
       /* it('should open Licenses module', done => {
         nightmare
           .wait('#app-list-item-clickable-licenses-module')
@@ -253,10 +270,17 @@ module.exports.test = (uiTestCtx) => {
           .then(dropdownOpen => {
             if (dropdownOpen) nightmare.click('#app-list-dropdown-toggle');
           })
+=======
+      it('should open license and business terms accordion', done => {
+        nightmare
+          .wait('#accordion-toggle-button-licenseBusinessTerms')
+          .click('#accordion-toggle-button-licenseBusinessTerms')
+>>>>>>> 0c42a9189dad6da7986fc0d70ab4659bfd0dde57
           .then(done)
           .catch(done);
       });
 
+<<<<<<< HEAD
       it(`should find and open ${licenses[0].name}`, done => {
         nightmare
           .wait('#input-license-search')
@@ -270,10 +294,19 @@ module.exports.test = (uiTestCtx) => {
 
             return nameElement.innerText === licenseName;
           }, licenses[0].name)
+=======
+      it('should count the number of terms', done => {
+        nightmare
+          .evaluate(() => [...document.querySelectorAll('[data-test-term-name]')].length)
+          .then(count => {
+            NUMBER_OF_TERMS = count;
+          })
+>>>>>>> 0c42a9189dad6da7986fc0d70ab4659bfd0dde57
           .then(done)
           .catch(done);
       });
 
+<<<<<<< HEAD
       it(`should find ${agreement.name} in Linked Agreements section`, done => {
         nightmare
           .wait('#linked-agreements-table')
@@ -290,6 +323,33 @@ module.exports.test = (uiTestCtx) => {
           .then(done)
           .catch(done);
       }); */
+=======
+      it(`should find term ${term.name} in terms list`, done => {
+        nightmare
+          .evaluate((expectedTerm) => {
+            const nameElement = document.querySelector(`[data-test-term-label=${expectedTerm.name}]`);
+            const valueElement = document.querySelector(`[data-test-term-value=${expectedTerm.name}]`);
+
+            if (!nameElement) {
+              throw Error(`Expected to find ${expectedTerm.name} label`);
+            }
+
+            if (nameElement.textContent !== expectedTerm.label) {
+              throw Error(`Expected to find term name ${expectedTerm.label}`);
+            }
+
+            if (!valueElement) {
+              throw Error(`Expected to find ${expectedTerm.name} value`);
+            }
+
+            if (valueElement.textContent !== expectedTerm.value) {
+              throw Error(`Expected to find term value ${expectedTerm.value}`);
+            }
+          }, term)
+          .then(done)
+          .catch(done);
+      });
+>>>>>>> 0c42a9189dad6da7986fc0d70ab4659bfd0dde57
     });
   });
 };
