@@ -7,23 +7,25 @@ import { LicenseTermsList } from '@folio/stripes-erm-components';
 
 export default class LicenseBusinessTerms extends React.Component {
   static propTypes = {
-    linkedLicenses: PropTypes.shape({
-      status: PropTypes.shape({
-        value: PropTypes.string,
-      }).isRequired,
-      remoteId_object: PropTypes.object.isRequired,
-    }),
-    parentResources: PropTypes.shape({
-      terms: PropTypes.object,
-    }),
-    id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
-  };
+    agreement: PropTypes.shape({
+      linkedLicenses: PropTypes.arrayOf(PropTypes.shape({
+        remoteId_object: PropTypes.object.isRequired,
+        status: PropTypes.shape({
+          value: PropTypes.string,
+        }).isRequired,
+      })),
+      parentResources: PropTypes.shape({
+        terms: PropTypes.object
+      }),
+      id: PropTypes.string,
+      onToggle: PropTypes.func,
+      open: PropTypes.bool,
+    })
+  }
 
- renderLicenseTermsList = (controllingLicense) => {
+ renderLicenseTermsList = (agreement, controllingLicense) => {
    const license = controllingLicense.remoteId_object;
-   const terms = get(this.props.parentResources.terms, ['records'], []);
+   const terms = get(agreement.parentResources.terms, ['records'], []);
    return (
      <LicenseTermsList
        license={license}
@@ -33,20 +35,21 @@ export default class LicenseBusinessTerms extends React.Component {
  }
 
  render() {
-   const licenses = get(this.props, ['agreement', 'linkedLicenses'], []);
+   const agreement = this.props;
+   const licenses = get(agreement, ['agreement', 'linkedLicenses'], []);
    const controllingLicense = licenses.find(l => l.status.value === 'controlling');
 
    return (
      <Accordion
-       id={this.props.id}
+       id={agreement.id}
        label={<FormattedMessage id="ui-agreements.agreements.licenseAndBusTerms" />}
-       open={this.props.open}
-       onToggle={this.props.onToggle}
+       open={agreement.open}
+       onToggle={agreement.onToggle}
      >
        { controllingLicense ?
-         this.renderLicenseTermsList(controllingLicense) :
+         this.renderLicenseTermsList(agreement, controllingLicense) :
          <FormattedMessage id="ui-agreements.license.noControllingLicense" />
-         }
+       }
      </Accordion>
    );
  }

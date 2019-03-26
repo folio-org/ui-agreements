@@ -101,7 +101,6 @@ module.exports.test = (uiTestCtx) => {
             .click('#clickable-createlicense')
             .wait('#licenseInfo')
             .waitUntilNetworkIdle(500)
-            //  .then(() => nightmare.click('#pane-view-license button[icon=times]'))
             .then(done)
             .catch(done);
         });

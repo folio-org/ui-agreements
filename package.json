@@ -57,7 +57,8 @@
     "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {
-      "erm": "1.0"
+      "erm": "1.0",
+      "licenses": "1.0"
     },
     "permissionSets": [
       {
