@@ -97,7 +97,6 @@
     "basket.clickToSelectAgreement": "单击以选中协议",
     "license.edit": "编辑许可证",
     "license.editLicenseOrganizations": "编辑许可证组织",
-    "license.agreementHasNone": "协议没有许可证。",
     "license.noLicenseOrganizations": "没有许可证组织",
     "organizations.edit": "编辑组织",
     "organizations.add": "将组织添加到协议",
@@ -127,7 +126,6 @@
     "agreements.financesAgreementLines": "财务 - 协议行",
     "agreements.editFinancesAgreementLines": "编辑协议行",
     "agreements.licenseInfo": "License information",
-    "agreements.licenseNote": "General notes about the agreement's license",
     "license.externalLicenses": "External licenses",
     "license.generalNotes": "General notes about the agreement's license",
     "license.noExternalLicenses": "Agreement has no external licenses.",
@@ -157,7 +155,6 @@
     "agreementLines.lineTitle": "Agreement line #{number}",
     "eresources.titles": "Titles",
     "agreements.showInvoicesLink": "Show invoices",
-    "temporary.test.key": "DO NOT TRANSLATE -- THIS KEY WILL BE DELETED",
     "agreementLines.addCustomCoverage": "Add custom coverage",
     "agreementLines.customCoverageTitle": "Custom coverage #{number}",
     "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
@@ -168,5 +165,6 @@
     "identifier.ezb": "EZB",
     "identifier.isbn": "ISBN",
     "identifier.pissn": "ISSN (Print)",
-    "identifier.zdb": "ZDB"
+    "identifier.zdb": "ZDB",
+    "license.noControllingLicense": "No controlling license is linked to this agreement."
 }
