@@ -171,7 +171,5 @@
   "settings.orgRoles.orgRole": "Organization role",
   "settings.orgRoles.role": "Role",
 
-  "userpicker.clickSearchButton": "Click the 'Search' button to select a user",
-
-  "temporary.test.key": "DO NOT TRANSLATE -- THIS KEY WILL BE DELETED"
+  "userpicker.clickSearchButton": "Click the 'Search' button to select a user"
 }
