@@ -161,12 +161,13 @@
     "agreementLines.addCustomCoverage": "إضافة تغطية مخصصة",
     "agreementLines.customCoverageTitle": "تغطية مخصصة #{number}",
     "errors.endDateGreaterThanStartDate": "يجب أن يكون تاريخ الإنتهاء بعد تاريخ البدء.",
-    "errors.multipleOpenEndedCoverages": "Cannot have multiple open-ended coverage statements.",
-    "errors.overlappingCoverage": "The following coverages have overlapping dates: {coverages}",
-    "identifier.doi": "DOI",
-    "identifier.eissn": "ISSN (Online)",
+    "errors.multipleOpenEndedCoverages": "لا يمكن أن يكون لها عدة بيانات تغطية مفتوحة.",
+    "errors.overlappingCoverage": "التغطيات التالية لها تواريخ متداخلة: {coverages}",
+    "identifier.doi": "معرف الكيان الرقمي",
+    "identifier.eissn": "ISSN (عبر الإنترنت)",
     "identifier.ezb": "EZB",
     "identifier.isbn": "ISBN",
-    "identifier.pissn": "ISSN (Print)",
-    "identifier.zdb": "ZDB"
+    "identifier.pissn": "ISSN (طباعة)",
+    "identifier.zdb": "ZDB",
+    "license.noControllingLicense": "No controlling license is linked to this agreement."
 }

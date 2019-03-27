@@ -162,11 +162,12 @@
     "agreementLines.customCoverageTitle": "Cobertura personalizada núm. {number}",
     "errors.endDateGreaterThanStartDate": "Data de término deve ser após a data de início.",
     "errors.multipleOpenEndedCoverages": "Não é possível ter várias declarações de cobertura abertas.",
-    "errors.overlappingCoverage": "The following coverages have overlapping dates: {coverages}",
+    "errors.overlappingCoverage": "As seguintes coberturas têm datas sobrepostas: {coverages}",
     "identifier.doi": "DOI",
     "identifier.eissn": "ISSN (Online)",
     "identifier.ezb": "EZB",
     "identifier.isbn": "ISBN",
-    "identifier.pissn": "ISSN (Print)",
-    "identifier.zdb": "ZDB"
+    "identifier.pissn": "ISSN (Impresso)",
+    "identifier.zdb": "ZDB",
+    "license.noControllingLicense": "No controlling license is linked to this agreement."
 }

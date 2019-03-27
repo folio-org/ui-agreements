@@ -168,5 +168,6 @@
     "identifier.ezb": "EZB",
     "identifier.isbn": "ISBN",
     "identifier.pissn": "ISSN (Print)",
-    "identifier.zdb": "ZDB"
+    "identifier.zdb": "ZDB",
+    "license.noControllingLicense": "No controlling license is linked to this agreement."
 }
