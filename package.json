@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -13,12 +13,14 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run nav/agreement-crud/basket/external-licenses",
+    "test": "stripes test nightmare --run nav/agreement-crud/basket/external-licenses/custom-coverage",
     "test-nav": "stripes test nightmare --run nav",
     "test-agreement-crud": "stripes test nightmare --run agreement-crud",
     "test-basket": "stripes test nightmare --run basket",
     "test-external-licenses": "stripes test nightmare --run external-licenses",
+    "test-custom-coverage": "stripes test nightmare --run custom-coverage",
     "test-linked-licenses": "stripes test nightmare --run linked-licenses",
+    "test-license-terms": "stripes test nightmare --run license-terms",
     "lint": "eslint src"
   },
   "devDependencies": {
@@ -33,7 +35,7 @@
     "redux": "~3.7.2"
   },
   "dependencies": {
-    "@folio/stripes-erm-components": "^1.0.6",
+    "@folio/stripes-erm-components": "^1.3.0",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
     "react-intl": "^2.4.0",
@@ -55,7 +57,8 @@
     "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {
-      "erm": "1.0"
+      "erm": "1.0",
+      "licenses": "1.0"
     },
     "permissionSets": [
       {

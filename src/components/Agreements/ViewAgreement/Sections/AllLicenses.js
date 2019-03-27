@@ -69,7 +69,7 @@ export default class AllLicenses extends React.Component {
             }}
             contentData={inactiveLicenses}
             formatter={{
-              note: link => (link.note ? <InfoPopover content={link.note} /> : null),
+              note: link => (link.note ? <InfoPopover content={link.note} /> : ''),
               name: ({ remoteId_object:license = {} }) => license.name,
               status: link => (link.status ? link.status.label : '-'),
               startDate: ({ remoteId_object:license = {} }) => (license.startDate ? <FormattedDate value={license.startDate} /> : '-'),
@@ -93,7 +93,11 @@ export default class AllLicenses extends React.Component {
     const licenses = get(this.props, ['agreement', 'linkedLicenses'], []);
 
     if (!licenses.length) {
-      return <FormattedMessage id="ui-agreements.license.noLicenses" />;
+      return (
+        <Layout className="padding-bottom-gutter">
+          <FormattedMessage id="ui-agreements.license.noLicenses" />
+        </Layout>
+      );
     }
 
     return (

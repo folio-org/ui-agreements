@@ -59,6 +59,7 @@
   "agreements.editAgreement": "Edit Agreement",
 
   "agreementLines.addLine": "Add agreement line",
+  "agreementLines.addCustomCoverage": "Add custom coverage",
   "agreementLines.costType": "Cost type",
   "agreementLines.count": "Count",
   "agreementLines.contentUpdated": "Content updated",
@@ -71,6 +72,7 @@
   "agreementLines.tax": "YTD Tax",
   "agreementLines.createLine": "Create agreement line",
   "agreementLines.lineTitle": "Agreement line #{number}",
+  "agreementLines.customCoverageTitle": "Custom coverage #{number}",
 
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
   "basket.name": "ERM Basket",
@@ -129,6 +131,17 @@
   "eresources.addToBasketHeader": "E-resource basket",
   "eresources.sourceKb": "Source",
 
+  "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
+  "errors.multipleOpenEndedCoverages": "Cannot have multiple open-ended coverage statements.",
+  "errors.overlappingCoverage": "The following coverages have overlapping dates: {coverages}",
+
+  "identifier.doi": "DOI",
+  "identifier.eissn": "ISSN (Online)",
+  "identifier.ezb": "EZB",
+  "identifier.isbn": "ISBN",
+  "identifier.pissn": "ISSN (Print)",
+  "identifier.zdb": "ZDB",
+
   "license.addExternalLicense": "Add external license to agreement",
   "license.addLicense": "Add license to agreement",
   "license.allLicenses": "All licenses",
@@ -139,6 +152,7 @@
   "license.externalLicenses": "External licenses",
   "license.generalNotes": "General notes about the agreement's license",
   "license.inactiveLicenses": "Inactive licenses",
+  "license.noControllingLicense": "No controlling license is linked to this agreement.",
   "license.noExternalLicenses": "Agreement has no external licenses.",
   "license.noFindLicensePlugin": "Cannot select license because no \"Find License\" plugin is installed.",
   "license.noLicenseOrganizations": "Agreement has no license organizations",

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 import { get } from 'lodash';
-import { Icon, MultiColumnList } from '@folio/stripes/components';
+import { Icon, Layout, MultiColumnList } from '@folio/stripes/components';
 
 export default class FinancesAgreementLines extends React.Component {
   static propTypes = {
@@ -30,6 +31,23 @@ export default class FinancesAgreementLines extends React.Component {
     poline:   <FormattedMessage id="ui-agreements.agreementLines.poline" />,
   }
 
+  polineFormatter(line) {
+    const poLineNumber = get(line, ['po_line_number']);
+    if (poLineNumber === undefined) {
+      return '-';
+    }
+    const purchaseOrderId = get(line, ['purchase_order_id']);
+    const id = get(line, ['id']);
+    if (purchaseOrderId === undefined || id === undefined) {
+      return poLineNumber;
+    }
+    return (
+      <Link to={`/orders/view/${purchaseOrderId}/po-line/view/${id}`}>
+        {poLineNumber}
+      </Link>
+    );
+  }
+
   formatter = {
     name:     line => (get(line, ['title']) || '-'),
     type:     () => 'Package',
@@ -37,7 +55,7 @@ export default class FinancesAgreementLines extends React.Component {
     gross:    () => '1799.99',
     net:      () => '1684.23',
     tax:      () => '165.25',
-    poline:   line => (get(line, ['po_line_number']) || '-'),
+    poline:   line => (this.polineFormatter(line)),
   }
 
   visibleColumns = [
@@ -56,7 +74,11 @@ export default class FinancesAgreementLines extends React.Component {
       return <Icon icon="spinner-ellipsis" width="100px" />;
     }
     if (!financesAgreementLines.length) {
-      return <FormattedMessage id="ui-agreements.agreementLines.noPoLines" />;
+      return (
+        <Layout className="padding-bottom-gutter">
+          <FormattedMessage id="ui-agreements.agreementLines.noPoLines" />
+        </Layout>
+      );
     }
 
     return (

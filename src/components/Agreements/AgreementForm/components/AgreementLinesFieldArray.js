@@ -7,13 +7,18 @@ import {
   Layout,
 } from '@folio/stripes/components';
 
-import AgreementLineField from './AgreementLineField';
-import css from './AgreementLinesFieldArray.css';
+import { withKiwtFieldArray } from '@folio/stripes-erm-components';
 
-export default class AgreementLinesFieldArray extends React.Component {
+import AgreementLineField from './AgreementLineField';
+
+class AgreementLinesFieldArray extends React.Component {
   static propTypes = {
     agreementLines: PropTypes.arrayOf(PropTypes.object),
-    fields: PropTypes.object,
+    items: PropTypes.arrayOf(PropTypes.object),
+    name: PropTypes.string.isRequired,
+    onAddField: PropTypes.func.isRequired,
+    onDeleteField: PropTypes.func.isRequired,
+    onReplaceField: PropTypes.func.isRequired,
     parentResources: PropTypes.object,
   }
 
@@ -36,18 +41,11 @@ export default class AgreementLinesFieldArray extends React.Component {
   }
 
   handleResourceSelected = (index, resource) => {
-    this.props.fields.remove(index);
-    this.props.fields.insert(index, { resource });
+    this.props.onReplaceField(index, { resource });
   }
 
-  handleDeleteLine = (index, line) => {
-    const { fields } = this.props;
-
-    fields.remove(index);
-
-    if (line.id) {
-      fields.push({ id: line.id, _delete: true });
-    }
+  handleAddLine = () => {
+    this.props.onAddField({});
   }
 
   renderEmpty = () => (
@@ -56,13 +54,14 @@ export default class AgreementLinesFieldArray extends React.Component {
     </Layout>
   )
 
-  renderLines = (lines) => {
-    return lines.map((line, i) => (
+  renderLines = () => {
+    return this.props.items.map((line, i) => (
       <AgreementLineField
         key={i}
         index={i}
         line={line}
-        onDelete={() => this.handleDeleteLine(i, line)}
+        name={`${this.props.name}[${i}]`}
+        onDelete={() => this.props.onDeleteField(i, line)}
         onResourceSelected={this.handleResourceSelected}
         resource={this.getLineResource(line)}
       />
@@ -70,20 +69,17 @@ export default class AgreementLinesFieldArray extends React.Component {
   }
 
   render = () => {
-    const { fields } = this.props;
-
-    // Get the agreement lines and filter away lines that have been marked for deletion.
-    const lines = (fields.getAll() || []).filter(line => !line._delete);
-
     return (
       <div>
-        <ul id="agreement-form-lines" className={css.agLineFieldArray}>
-          { lines.length ? this.renderLines(lines) : this.renderEmpty() }
-        </ul>
-        <Button id="add-agreement-line-button" onClick={() => fields.push({})}>
+        <div id="agreement-form-lines">
+          { this.props.items.length ? this.renderLines() : this.renderEmpty() }
+        </div>
+        <Button id="add-agreement-line-button" onClick={this.handleAddLine}>
           <FormattedMessage id="ui-agreements.agreementLines.addLine" />
         </Button>
       </div>
     );
   }
 }
+
+export default withKiwtFieldArray(AgreementLinesFieldArray);
