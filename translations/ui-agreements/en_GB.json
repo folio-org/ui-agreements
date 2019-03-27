@@ -97,7 +97,6 @@
     "basket.clickToSelectAgreement": "Click to select agreement",
     "license.edit": "Edit license",
     "license.editLicenseOrganizations": "Edit license organisations",
-    "license.agreementHasNone": "Agreement has no license.",
     "license.noLicenseOrganizations": "No license organisations",
     "organizations.edit": "Edit organizations",
     "organizations.add": "Add organization to agreement",
@@ -127,7 +126,6 @@
     "agreements.financesAgreementLines": "Finances — agreement lines",
     "agreements.editFinancesAgreementLines": "Edit agreement lines",
     "agreements.licenseInfo": "License information",
-    "agreements.licenseNote": "General notes about the agreement's license",
     "license.externalLicenses": "External licenses",
     "license.generalNotes": "General notes about the agreement's license",
     "license.noExternalLicenses": "Agreement has no external licenses.",
@@ -157,7 +155,6 @@
     "agreementLines.lineTitle": "Agreement line #{number}",
     "eresources.titles": "Titles",
     "agreements.showInvoicesLink": "Show invoices",
-    "temporary.test.key": "DO NOT TRANSLATE -- THIS KEY WILL BE DELETED",
     "agreementLines.addCustomCoverage": "Add custom coverage",
     "agreementLines.customCoverageTitle": "Custom coverage #{number}",
     "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
@@ -168,5 +165,6 @@
     "identifier.ezb": "EZB",
     "identifier.isbn": "ISBN",
     "identifier.pissn": "ISSN (Print)",
-    "identifier.zdb": "ZDB"
+    "identifier.zdb": "ZDB",
+    "license.noControllingLicense": "No controlling licence is linked to this agreement."
 }
