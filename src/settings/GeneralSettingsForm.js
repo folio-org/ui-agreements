@@ -33,13 +33,18 @@ class GeneralSettingsForm extends React.Component {
     });
   }
 
-
   getLastMenu = () => {
     const { pristine, submitting } = this.props;
 
     return (
-      <Button type="submit" disabled={(pristine || submitting)} id="clickable-save-agreements-general-settings">
-        <FormattedMessage id="ui-agreements.save" />
+      <Button
+        buttonStyle="primary"
+        disabled={(pristine || submitting)}
+        id="clickable-save-agreements-general-settings"
+        marginBottom0
+        type="submit"
+      >
+        <FormattedMessage id="stripes-core.button.save" />
       </Button>
     );
   }
