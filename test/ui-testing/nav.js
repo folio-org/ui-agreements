@@ -2,25 +2,26 @@
 
 module.exports.test = (uiTestCtx) => {
   describe('ui-agreements: tab navigation', function test() {
-    const { config, helpers: { login, logout } } = uiTestCtx;
+    const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 
     this.timeout(Number(config.test_timeout));
 
     describe('Login > navigate to app > verify tabs work > logout', () => {
       before((done) => {
-        login(nightmare, config, done);
+        helpers.login(nightmare, config, done);
       });
 
       after((done) => {
-        logout(nightmare, config, done);
+        helpers.logout(nightmare, config, done);
+      });
+
+      it('should open Agreements app', done => {
+        helpers.clickApp(nightmare, done, 'agreements');
       });
 
       it('should open app and see selected Agreements tab', (done) => {
         nightmare
-          .wait('#app-list-item-clickable-agreements-module')
-          .click('#app-list-item-clickable-agreements-module')
-          .wait('#agreements-module-display')
           .wait('nav #agreements')
           .evaluate(() => document.querySelector('nav #agreements').className)
           .then(className => {

@@ -31,18 +31,22 @@ module.exports.test = (uiTestCtx) => {
   const docsFieldName = DOCS_FIELD_NAME;
 
   describe(`ui-agreements: set external licenses: "${docs.map(d => d.name).join(', ')}"`, function test() {
-    const { config, helpers: { login, logout } } = uiTestCtx;
+    const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 
     this.timeout(Number(config.test_timeout));
 
     describe('login > open agreements > create agreement > edit external licenses > logout', () => {
       before((done) => {
-        login(nightmare, config, done);
+        helpers.login(nightmare, config, done);
       });
 
       after((done) => {
-        logout(nightmare, config, done);
+        helpers.logout(nightmare, config, done);
+      });
+
+      it('should open Agreements app', done => {
+        helpers.clickApp(nightmare, done, 'agreements');
       });
 
       it('should navigate to create agreement page and expand docs section', done => {
@@ -51,9 +55,6 @@ module.exports.test = (uiTestCtx) => {
         console.log(`\tCreating ${name}`);
 
         nightmare
-          .wait('#app-list-item-clickable-agreements-module')
-          .click('#app-list-item-clickable-agreements-module')
-          .wait('#agreements-module-display')
           .wait('#clickable-newagreement')
           .click('#clickable-newagreement')
 

@@ -9,6 +9,7 @@ import {
 
 import { withKiwtFieldArray } from '@folio/stripes-erm-components';
 
+import IfEResourcesEnabled from '../../../IfEResourcesEnabled';
 import AgreementLineField from './AgreementLineField';
 
 class AgreementLinesFieldArray extends React.Component {
@@ -74,9 +75,11 @@ class AgreementLinesFieldArray extends React.Component {
         <div id="agreement-form-lines">
           { this.props.items.length ? this.renderLines() : this.renderEmpty() }
         </div>
-        <Button id="add-agreement-line-button" onClick={this.handleAddLine}>
-          <FormattedMessage id="ui-agreements.agreementLines.addLine" />
-        </Button>
+        <IfEResourcesEnabled>
+          <Button id="add-agreement-line-button" onClick={this.handleAddLine}>
+            <FormattedMessage id="ui-agreements.agreementLines.addLine" />
+          </Button>
+        </IfEResourcesEnabled>
       </div>
     );
   }

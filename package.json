@@ -13,11 +13,12 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run nav/agreement-crud/basket/external-licenses/custom-coverage",
+    "test": "stripes test nightmare --run nav/agreement-crud/basket/external-licenses/custom-coverage/hide-eresources-func",
     "test-nav": "stripes test nightmare --run nav",
     "test-agreement-crud": "stripes test nightmare --run agreement-crud",
     "test-basket": "stripes test nightmare --run basket",
     "test-external-licenses": "stripes test nightmare --run external-licenses",
+    "test-hide-eresources-func": "stripes test nightmare --run hide-eresources-func",
     "test-custom-coverage": "stripes test nightmare --run custom-coverage",
     "test-linked-licenses": "stripes test nightmare --run linked-licenses",
     "test-license-terms": "stripes test nightmare --run license-terms",
@@ -57,6 +58,7 @@
     "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {
+      "configuration": "2.0",
       "erm": "1.0",
       "licenses": "1.0"
     },

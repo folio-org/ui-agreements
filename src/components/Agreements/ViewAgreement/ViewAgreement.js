@@ -126,7 +126,7 @@ class ViewAgreement extends React.Component {
       licenseInfo: false,
       licenseBusinessTerms: false,
       organizations: false,
-      eresources: false,
+      eresourcesAgreementLines: false,
       associatedAgreements: false,
     }
   }
@@ -449,8 +449,8 @@ class ViewAgreement extends React.Component {
             {...sectionProps}
           />
           <Eresources
-            id="eresources"
-            open={this.state.sections.eresources}
+            id="eresourcesAgreementLines"
+            open={this.state.sections.eresourcesAgreementLines}
             fetchMoreEresources={this.fetchMoreEresources}
             {...sectionProps}
           />

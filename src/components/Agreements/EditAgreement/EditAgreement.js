@@ -90,6 +90,7 @@ class EditAgreement extends React.Component {
           {ariaLabel => (
             <IconButton
               icon="times"
+              id="close-agreement-form-button"
               onClick={this.props.onCancel}
               aria-label={ariaLabel}
             />

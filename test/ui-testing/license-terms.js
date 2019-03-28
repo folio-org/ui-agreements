@@ -23,27 +23,22 @@ module.exports.test = (uiTestCtx) => {
   };
 
   describe('ui-agreements: license terms', function test() {
-    const { config, helpers: { login, logout } } = uiTestCtx;
+    const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 
     this.timeout(Number(config.test_timeout));
 
     describe('login > create license > edit terms > create agreement > link license > check term > logout', () => {
       before((done) => {
-        login(nightmare, config, done);
+        helpers.login(nightmare, config, done);
       });
 
       after((done) => {
-        logout(nightmare, config, done);
+        helpers.logout(nightmare, config, done);
       });
 
-      it('should open Licenses module', done => {
-        nightmare
-          .wait('#app-list-item-clickable-licenses-module')
-          .click('#app-list-item-clickable-licenses-module')
-          .wait('#licenses-module-display')
-          .then(done)
-          .catch(done);
+      it('should open Licenses app', done => {
+        helpers.clickApp(nightmare, done, 'licenses');
       });
 
       licenses.forEach(l => {
@@ -100,7 +95,7 @@ module.exports.test = (uiTestCtx) => {
           nightmare
             .click('#clickable-createlicense')
             .wait('#licenseInfo')
-            .waitUntilNetworkIdle(500)
+            .waitUntilNetworkIdle(1000)
             .then(done)
             .catch(done);
         });
@@ -132,6 +127,10 @@ module.exports.test = (uiTestCtx) => {
         });
       });
 
+      it('should open Agreements app', done => {
+        helpers.clickApp(nightmare, done, 'agreements');
+      });
+
       it(`should create agreement: ${agreement.name}`, done => {
         AgreementCRUD.createAgreement(nightmare, done, agreement);
       });
@@ -142,6 +141,7 @@ module.exports.test = (uiTestCtx) => {
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
           .wait('#agreementFormInfo')
+          .waitUntilNetworkIdle(1000)
           .click('#accordion-toggle-button-agreementFormLicense')
           .then(done)
           .catch(done);
@@ -233,9 +233,11 @@ module.exports.test = (uiTestCtx) => {
 
       it('should count the number of terms', done => {
         nightmare
-          .evaluate(() => [...document.querySelectorAll('[data-test-term-name]')].length)
+          .evaluate(() => [...document.querySelectorAll('[data-test-term-label]')].length)
           .then(count => {
-            NUMBER_OF_TERMS = count;
+            if (count !== NUMBER_OF_TERMS) {
+              throw Error(`Expected ${NUMBER_OF_TERMS} terms but found ${count}!`);
+            }
           })
           .then(done)
           .catch(done);
