@@ -21,6 +21,7 @@
     "test-hide-eresources-func": "stripes test nightmare --run hide-eresources-func",
     "test-custom-coverage": "stripes test nightmare --run custom-coverage",
     "test-linked-licenses": "stripes test nightmare --run linked-licenses",
+    "test-license-terms": "stripes test nightmare --run license-terms",
     "lint": "eslint src"
   },
   "devDependencies": {
@@ -58,7 +59,8 @@
     "queryResource": "query",
     "okapiInterfaces": {
       "configuration": "2.0",
-      "erm": "1.0"
+      "erm": "1.0",
+      "licenses": "1.0"
     },
     "permissionSets": [
       {
