@@ -42,6 +42,7 @@ class OpenBasketButton extends React.Component {
           data-test-open-basket-button
           data-test-basket-size={basket.length}
           disabled={basket.length === 0}
+          id="open-basket-button"
           onClick={this.openBasket}
         >
           <FormattedMessage

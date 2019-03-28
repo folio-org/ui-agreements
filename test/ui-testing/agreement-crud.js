@@ -17,12 +17,11 @@ const generateAgreementValues = () => {
 const createAgreement = (nightmare, done, defaultValues, resourceId) => {
   const values = defaultValues || generateAgreementValues();
   let chain = nightmare
-    .wait('#app-list-item-clickable-agreements-module')
-    .click('#app-list-item-clickable-agreements-module')
     .wait('#agreements-module-display')
     .click('nav #agreements')
     .wait('#clickable-newagreement')
     .click('#clickable-newagreement')
+    .waitUntilNetworkIdle(1000)
     .wait('#edit-agreement-name')
 
     .insert('#edit-agreement-name', values.name)
@@ -88,28 +87,27 @@ module.exports.createAgreement = createAgreement;
 
 module.exports.test = (uiTestCtx) => {
   describe('ui-agreements: basic agreement crud', function test() {
-    const { config, helpers: { login, logout } } = uiTestCtx;
+    const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
     const values = generateAgreementValues();
 
     this.timeout(Number(config.test_timeout));
 
-    describe('Login > open agreements > create, view, edit agreement > logout', () => {
+    describe('open agreements > create, view, edit agreement', () => {
       before((done) => {
-        login(nightmare, config, done);
+        helpers.login(nightmare, config, done);
       });
 
       after((done) => {
-        logout(nightmare, config, done);
+        helpers.logout(nightmare, config, done);
       });
 
-      it('should open app and navigate to Agreements', done => {
+      it('should open Agreements app', done => {
+        helpers.clickApp(nightmare, done, 'agreements');
+      });
+
+      it('should confirm correct URL', done => {
         nightmare
-          .wait('#app-list-item-clickable-agreements-module')
-          .click('#app-list-item-clickable-agreements-module')
-          .wait('#agreements-module-display')
-          .click('nav #agreements')
-          .wait(1000)
           .evaluate(() => document.location.pathname)
           .then(pathName => {
             if (!pathName.includes('/erm/agreements')) throw Error('URL is incorrect');

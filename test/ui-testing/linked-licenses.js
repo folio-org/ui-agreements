@@ -25,27 +25,22 @@ module.exports.test = (uiTestCtx) => {
   };
 
   describe('ui-agreements: linked licenses', function test() {
-    const { config, helpers: { login, logout } } = uiTestCtx;
+    const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 
     this.timeout(Number(config.test_timeout));
 
     describe('login > create agreement > link licenses > logout', () => {
       before((done) => {
-        login(nightmare, config, done);
+        helpers.login(nightmare, config, done);
       });
 
       after((done) => {
-        logout(nightmare, config, done);
+        helpers.logout(nightmare, config, done);
       });
 
-      it('should open Licenses module', done => {
-        nightmare
-          .wait('#app-list-item-clickable-licenses-module')
-          .click('#app-list-item-clickable-licenses-module')
-          .wait('#licenses-module-display')
-          .then(done)
-          .catch(done);
+      it('should open Licenses app', done => {
+        helpers.clickApp(nightmare, done, 'licenses');
       });
 
       licenses.forEach(l => {
@@ -66,6 +61,10 @@ module.exports.test = (uiTestCtx) => {
             .then(done)
             .catch(done);
         });
+      });
+
+      it('should open Agreements app', done => {
+        helpers.clickApp(nightmare, done, 'agreements');
       });
 
       it(`should create agreement: ${agreement.name}`, done => {
@@ -217,17 +216,8 @@ module.exports.test = (uiTestCtx) => {
         });
       }
 
-      it('should open Licenses module', done => {
-        nightmare
-          .wait('#app-list-item-clickable-licenses-module')
-          .click('#app-list-item-clickable-licenses-module')
-          .wait('#licenses-module-display')
-          .exists('#app-list-dropdown-toggle[aria-expanded="true"]')
-          .then(dropdownOpen => {
-            if (dropdownOpen) nightmare.click('#app-list-dropdown-toggle');
-          })
-          .then(done)
-          .catch(done);
+      it('should open Licenses app', done => {
+        helpers.clickApp(nightmare, done, 'licenses');
       });
 
       it(`should find and open ${licenses[0].name}`, done => {

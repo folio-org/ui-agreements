@@ -53,7 +53,7 @@ const checkTableForCustomCoverageData = (nightmare, done, tableId, values) => {
 
 module.exports.test = (uiTestCtx) => {
   describe('ui-agreements: custom coverages', function test() {
-    const { config, helpers: { login, logout } } = uiTestCtx;
+    const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
     const values = {
       name: `Custom Coverage Agreement #${Math.round(Math.random() * 100000)}`,
@@ -92,18 +92,19 @@ module.exports.test = (uiTestCtx) => {
 
     describe('login > fill basket > create agreement > set custom coverage > logout', () => {
       before((done) => {
-        login(nightmare, config, done);
+        helpers.login(nightmare, config, done);
       });
 
       after((done) => {
-        logout(nightmare, config, done);
+        helpers.logout(nightmare, config, done);
+      });
+
+      it('should open Agreements app', done => {
+        helpers.clickApp(nightmare, done, 'agreements');
       });
 
       it('should open eresources', done => {
         nightmare
-          .wait('#app-list-item-clickable-agreements-module')
-          .click('#app-list-item-clickable-agreements-module')
-          .wait('#agreements-module-display')
           .click('nav #eresources')
           .wait('#input-eresource-search')
           .then(done)

@@ -46,9 +46,9 @@ module.exports.shouldAddTitleToBasket = shouldAddTitleToBasket;
 const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = [], basket = BASKET) => {
   it(`should see ${basketIndices.length} lines with correct resources`, done => {
     nightmare
-      .wait('section#eresources')
+      .wait('section#eresourcesAgreementLines')
       .evaluate(() => {
-        const header = document.querySelector('section#eresources [class*=header] button');
+        const header = document.querySelector('section#eresourcesAgreementLines [class*=header] button');
         if (!header) throw Error('Could not find Eresources accordion header');
 
         return header.getAttribute('aria-expanded');
@@ -57,7 +57,7 @@ const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = [], basket =
         let chain = nightmare;
         if (accordionExpanded === 'false') {
           chain = chain
-            .click('section#eresources [class*=header] button')
+            .click('section#eresourcesAgreementLines [class*=header] button')
             .wait('#agreement-lines [class*=mclScrollable] [aria-rowindex]');
         }
 
@@ -92,7 +92,7 @@ module.exports.shouldHaveCorrectAgreementLines = shouldHaveCorrectAgreementLines
 
 module.exports.test = (uiTestCtx) => {
   describe('ui-agreements: basic basket functionality', function test() {
-    const { config, helpers: { login, logout } } = uiTestCtx;
+    const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 
     const number = Math.round(Math.random() * 100000);
@@ -106,20 +106,21 @@ module.exports.test = (uiTestCtx) => {
 
     this.timeout(Number(config.test_timeout));
 
-    describe('login > open eresources > add eresources to basket', () => {
+    describe('open eresources > add eresources to basket', () => {
       before((done) => {
-        login(nightmare, config, done);
+        helpers.login(nightmare, config, done);
       });
 
       after((done) => {
-        logout(nightmare, config, done);
+        helpers.logout(nightmare, config, done);
+      });
+
+      it('should open Agreements app', done => {
+        helpers.clickApp(nightmare, done, 'agreements');
       });
 
       it('should open eresources', done => {
         nightmare
-          .wait('#app-list-item-clickable-agreements-module')
-          .click('#app-list-item-clickable-agreements-module')
-          .wait('#agreements-module-display')
           .click('nav #eresources')
           .wait('#input-eresource-search')
           .then(done)
