@@ -17,7 +17,7 @@ export default function CustomCoverage() {
               <rect style={{ opacity: 1, fill: '#008000', fillOpacity: 1, stroke: '#008000', strokeWidth: 0.79, strokeLinecap: 'round', strokeMiterlimit: 4, strokeDasharray: 'none', strokeOpacity: 1 }} width="1.94" height="1.94" x="0.44" y="294.65" ry="0.73" />
               <rect style={{ opacity: 1, fill: '#008000', fillOpacity: 1, stroke: '#008000', strokeWidth: 1.13, strokeLinecap: 'round', strokeMiterlimit: 4, strokeDasharray: 'none', strokeOpacity: 1 }} width="2.76" height="2.76" x="9.37" y="284.87" ry="1.04" />
               <rect style={{ opacity: 1, fill: '#787878', fillOpacity: 1, stroke: '#787878', strokeWidth: 0.80, strokeLinecap: 'round', strokeMiterlimit: 4, strokeDasharray: 'none', strokeOpacity: 1 }} width="1.96" height="1.96" x="0.44" y="285.77" ry="0.74" />
-              <path style={{ fill: 'none', stroke: '#008000', strokeWidth: 0.97, strokeLinecap: 'round', strokeLinejoin: 'round', strokeMiterlimit: 4, strokeDasharray: 'none', strokeOpacity: 1 }} d="m 1.29,294.94 c 0.69,-4.42 9.35,-2.85 9.54,-6.61"  />
+              <path style={{ fill: 'none', stroke: '#008000', strokeWidth: 0.97, strokeLinecap: 'round', strokeLinejoin: 'round', strokeMiterlimit: 4, strokeDasharray: 'none', strokeOpacity: 1 }} d="m 1.29,294.94 c 0.69,-4.42 9.35,-2.85 9.54,-6.61" />
             </g>
             <g style={{ display: 'inline' }} transform="translate(-4.26,-288.64)">
               <path d="m 4.75,292.57 -0.01,-2.94" style={{ fill: 'none', stroke: '#787878', strokeWidth: 0.31, strokeLinecap: 'butt', strokeLinejoin: 'miter', strokeMiterlimit: 4, strokeDasharray: 'none', strokeOpacity: 1 }} />
