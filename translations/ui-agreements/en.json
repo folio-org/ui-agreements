@@ -72,6 +72,7 @@
   "agreementLines.tax": "YTD Tax",
   "agreementLines.createLine": "Create agreement line",
   "agreementLines.lineTitle": "Agreement line #{number}",
+  "agreementLines.hasCustomCoverage": "Has custom coverage",
   "agreementLines.customCoverageTitle": "Custom coverage #{number}",
 
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
