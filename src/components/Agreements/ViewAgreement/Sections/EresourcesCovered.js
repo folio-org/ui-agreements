@@ -38,7 +38,7 @@ export default class EresourcesCovered extends React.Component {
     platform: 150,
     package: 150,
     coverage: 225,
-    isCustomCoverage: 25,
+    isCustomCoverage: 30,
   }
 
   formatter = {

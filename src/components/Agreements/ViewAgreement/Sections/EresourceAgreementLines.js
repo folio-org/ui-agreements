@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import { Icon, Layout, MultiColumnList } from '@folio/stripes/components';
 
@@ -20,7 +20,7 @@ export default class EresourceAgreementLines extends React.Component {
     platform: 150,
     type: 100,
     coverage: 225,
-    isCustomCoverage: 25,
+    isCustomCoverage: 30,
   }
 
   columnMapping = {
