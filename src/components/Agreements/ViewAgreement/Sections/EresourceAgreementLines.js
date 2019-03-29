@@ -20,7 +20,7 @@ export default class EresourceAgreementLines extends React.Component {
     platform: 150,
     type: 100,
     coverage: 225,
-    isCustomCoverage: 25,
+    isCustomCoverage: 30,
   }
 
   columnMapping = {
