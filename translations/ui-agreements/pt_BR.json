@@ -21,7 +21,7 @@
     "agreements.editAgreement": "Editar contrato",
     "agreementLines.count": "Contagem",
     "agreementLines.contentUpdated": "Conteúdo atualizado",
-    "agreementLines.noLines": "Nenhuma linha de contrato foi adicionada. Por favor, use uma das opções abaixo.",
+    "agreementLines.noLines": "Contrato não tem linhas de contrato.",
     "agreementLines.removeItem": "Remover linha do contrato",
     "agreementLines.createLine": "Criar linha de contrato",
     "basketButton": "Ver {count, number} {count, plural, one {item} other {itens}}",
@@ -87,9 +87,6 @@
     "agreements.organizations": "Organizações",
     "agreements.assocAgreements": "Contratos associados",
     "settings.general": "Geral",
-    "settings.general.message": "Estas são as suas configurações gerais de aplicativos.",
-    "settings.some-feature": "Algum recurso",
-    "settings.some-feature.message": "Estas são suas configurações para alguns recursos do aplicativo.",
     "eresources.sourceKb": "Fonte",
     "eresources.coverage": "Cobertura",
     "coverage.volumeShort": "Vol:",
@@ -166,5 +163,8 @@
     "identifier.isbn": "ISBN",
     "identifier.pissn": "ISSN (Impresso)",
     "identifier.zdb": "ZDB",
-    "license.noControllingLicense": "No controlling license is linked to this agreement."
+    "license.noControllingLicense": "Nenhuma licença de controle está vinculada a este contrato.",
+    "settings.general.hideEResourcesFunctionality.title": "Ocultar todas as funcionalidades de \"E-recursos\"",
+    "settings.general.hideEResourcesFunctionality.description": "Útil quando E-recursos são procurados e gerenciados por um aplicativo externo que relata para esta aplicação de contratos.",
+    "agreementLines.hasCustomCoverage": "Tem cobertura customizada"
 }
