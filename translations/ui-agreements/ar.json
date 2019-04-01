@@ -87,9 +87,6 @@
     "agreements.organizations": "المؤسسات",
     "agreements.assocAgreements": "الاتفاقيات المرتبطة",
     "settings.general": "عام",
-    "settings.general.message": "هذه هي إعداداتك العامة للتطبيق",
-    "settings.some-feature": "بعض الخصائص",
-    "settings.some-feature.message": "هذه هي إعداداتك لبعض خصائص التطبيق.",
     "eresources.sourceKb": "المصدر",
     "eresources.coverage": "التغطية",
     "coverage.volumeShort": "المجلد:",
@@ -166,5 +163,8 @@
     "identifier.isbn": "ISBN",
     "identifier.pissn": "ISSN (طباعة)",
     "identifier.zdb": "ZDB",
-    "license.noControllingLicense": "No controlling license is linked to this agreement."
+    "license.noControllingLicense": "لا توجد رخصة تحكم مرتبطة بهذه الاتفاقية",
+    "settings.general.hideEResourcesFunctionality.title": "إخفاء جميع وظائف \"الموارد الإلكترونية\"",
+    "settings.general.hideEResourcesFunctionality.description": "مفيد عندما يتم البحث عن الموارد الإلكترونية وإدارتها بواسطة تطبيق خارجي يقوم بتقديم النقارير عنها إلى تطبيق الاتفاقيات هذا.",
+    "agreementLines.hasCustomCoverage": "له تغطية مخصصة"
 }

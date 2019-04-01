@@ -87,9 +87,6 @@
     "agreements.organizations": "机构",
     "agreements.assocAgreements": "相关协议",
     "settings.general": "常规",
-    "settings.general.message": "这些是您的常规应用设置。",
-    "settings.some-feature": "某些功能",
-    "settings.some-feature.message": "这些是您的某些应用功能设置。",
     "eresources.sourceKb": "资源",
     "eresources.coverage": "收录范围率",
     "coverage.volumeShort": "卷:",
@@ -166,5 +163,8 @@
     "identifier.isbn": "ISBN",
     "identifier.pissn": "ISSN (Print)",
     "identifier.zdb": "ZDB",
-    "license.noControllingLicense": "No controlling license is linked to this agreement."
+    "license.noControllingLicense": "No controlling license is linked to this agreement.",
+    "settings.general.hideEResourcesFunctionality.title": "Hide all \"E-resources\" functionality",
+    "settings.general.hideEResourcesFunctionality.description": "Useful when E-resources are searched for and managed by an external application that reports them to this Agreements application.",
+    "agreementLines.hasCustomCoverage": "Has custom coverage"
 }
