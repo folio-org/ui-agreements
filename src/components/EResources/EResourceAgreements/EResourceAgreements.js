@@ -12,6 +12,7 @@ import EResourceLink from '../../EResourceLink';
 import ResourceType from '../../ResourceType';
 import CoverageStatements from '../../CoverageStatements';
 import CustomCoverageIcon from '../../CustomCoverageIcon';
+import getResourceFromEntitlement from '../../../util/getResourceFromEntitlement';
 
 class EResourceAgreements extends React.Component {
   static manifest = Object.freeze({
@@ -52,7 +53,7 @@ class EResourceAgreements extends React.Component {
     type: ({ owner }) => owner.agreementStatus && owner.agreementStatus.label,
     startDate: ({ owner }) => owner.startDate && <FormattedDate value={owner.startDate} />,
     endDate: ({ owner }) => owner.endDate && <FormattedDate value={owner.endDate} />,
-    package: ({ resource }) => <EResourceLink eresource={resource} />,
+    package: (line) => <EResourceLink eresource={getResourceFromEntitlement(line)} />,
     acqMethod: ({ resource }) => <ResourceType resource={resource} />,
     coverage: line => <CoverageStatements statements={line.coverage} />,
     isCustomCoverage: line => (line.customCoverage ? <CustomCoverageIcon /> : ''),

@@ -12,7 +12,10 @@ import {
 
 import BasketSelector from '../../../BasketSelector';
 import EResourceLink from '../../../EResourceLink';
+import ResourceCount from '../../../ResourceCount';
+import ResourceProvider from '../../../ResourceProvider';
 import ResourceType from '../../../ResourceType';
+import isExternal from '../../../../util/isExternal';
 import isPackage from '../../../../util/isPackage';
 
 import CustomCoverageFieldArray from './CustomCoverageFieldArray';
@@ -32,8 +35,8 @@ export default class AgreementLineField extends React.Component {
   }
 
   renderLineName = (resource) => {
-    const title = get(resource, ['_object', 'pti', 'titleInstance'], resource);
-    return <EResourceLink eresource={title} />;
+    const dereferencedResource = get(resource, ['_object', 'pti', 'titleInstance'], resource);
+    return <EResourceLink eresource={dereferencedResource} />;
   }
 
   renderLineType = (resource) => {
@@ -41,21 +44,18 @@ export default class AgreementLineField extends React.Component {
   }
 
   renderLineTitles = (resource) => {
-    // If contentItems doesn't exist there's only one item.
-    return get(resource, ['_object', 'contentItems'], [0]).length;
+    return <ResourceCount resource={resource} />;
   }
 
-  renderLinePlatform = (resource) => {
-    return (
-      get(resource, ['_object', 'pti', 'platform', 'name']) ||
-      get(resource, ['_object', 'nominalPlatform', 'name'])
-    );
+  renderLineProvider = (resource) => {
+    return <ResourceProvider resource={resource} />;
   }
 
   renderCustomCoverageSelector = () => {
     const { resource } = this.props;
 
     if (isPackage(resource)) return null;
+    if (isExternal(resource)) return null;
 
     return (
       <FieldArray
@@ -66,7 +66,7 @@ export default class AgreementLineField extends React.Component {
   }
 
   renderLineResource = () => {
-    const { resource } = this.props;
+    const { resource = {} } = this.props;
 
     return (
       <React.Fragment>
@@ -87,8 +87,8 @@ export default class AgreementLineField extends React.Component {
             </KeyValue>
           </Col>
           <Col xs={12} md={3}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.eresources.platform" />}>
-              <div data-test-ag-line-platform>{this.renderLinePlatform(resource)}</div>
+            <KeyValue label={<FormattedMessage id="ui-agreements.eresources.provider" />}>
+              <div data-test-ag-line-provider>{this.renderLineProvider(resource)}</div>
             </KeyValue>
           </Col>
         </Row>
@@ -116,7 +116,7 @@ export default class AgreementLineField extends React.Component {
         onDelete={this.props.onDelete}
       >
         {
-          resource.id ?
+          (resource.id || resource.reference) ?
             this.renderLineResource() :
             this.renderLineSelector()
         }

@@ -14,6 +14,7 @@
     "start": "stripes serve",
     "build": "stripes build --output ./output",
     "test": "stripes test nightmare --run nav/agreement-crud/basket/external-licenses/custom-coverage/hide-eresources-func",
+    "test-int": "stripes test nightmare --run nav/agreement-crud/basket/external-licenses/custom-coverage/hide-eresources-func/linked-licenses/license-terms",
     "test-nav": "stripes test nightmare --run nav",
     "test-agreement-crud": "stripes test nightmare --run agreement-crud",
     "test-basket": "stripes test nightmare --run basket",

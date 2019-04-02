@@ -13,7 +13,6 @@ import CoverageStatements from '../CoverageStatements';
 import EResourceLink from '../EResourceLink';
 import ResourceType from '../ResourceType';
 
-
 class BasketList extends React.Component {
   static propTypes = {
     basket: PropTypes.arrayOf(PropTypes.object),

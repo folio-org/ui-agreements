@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
 
+import { stripesConnect } from '@folio/stripes/core';
+
 class FolioLink extends React.Component {
   static manifest = Object.freeze({
     query: {},
@@ -48,4 +50,4 @@ class FolioLink extends React.Component {
   }
 }
 
-export default FolioLink;
+export default stripesConnect(FolioLink);

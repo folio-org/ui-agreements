@@ -45,23 +45,32 @@ class EditAgreement extends React.Component {
     }
 
     // The value of the `items` field can be fed by the basket or if we're _editing_, the
-    // previously-persisted values. We need to merge these two arrays when we get that data changes.s
+    // previously-persisted values. We need to merge these two arrays when we get those data changes.
+    const externalAgreementLine = get(this.props.parentResources.externalAgreementLine, ['records', 0]);
     if (
       !isEqual(this.props.initialValues, prevProps.initialValues) ||
-      !isEqual(this.state.addedResourcesFromBasket, prevState.addedResourcesFromBasket)
+      !isEqual(this.state.addedResourcesFromBasket, prevState.addedResourcesFromBasket) ||
+      !isEqual(externalAgreementLine, get(prevProps.parentResources.externalAgreementLine, ['records', 0]))
     ) {
-      this.props.change(
-        'items',
-        [
-          ...get(this.props, ['initialValues', 'items'], []),
-          ...this.state.addedResourcesFromBasket,
-        ]
-      );
+      const items = [
+        ...get(this.props, ['initialValues', 'items'], []),
+        ...this.state.addedResourcesFromBasket,
+      ];
+
+      if (externalAgreementLine) {
+        items.push(externalAgreementLine);
+      }
+
+      this.props.change('items', items);
     }
   }
 
   componentWillUnmount() {
-    this.props.parentMutator.query.replace({ addFromBasket: null });
+    this.props.parentMutator.query.replace({
+      addFromBasket: null,
+      authority: null,
+      referenceId: null,
+    });
   }
 
   updateAddedResourcesFromBasket() {
