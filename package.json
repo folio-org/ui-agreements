@@ -23,6 +23,7 @@
     "test-custom-coverage": "stripes test nightmare --run custom-coverage",
     "test-linked-licenses": "stripes test nightmare --run linked-licenses",
     "test-license-terms": "stripes test nightmare --run license-terms",
+    "test-ekb-int": "stripes test nightmare --run ekb-int",
     "lint": "eslint src"
   },
   "devDependencies": {
