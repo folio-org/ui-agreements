@@ -14,8 +14,8 @@ module.exports.test = (uiTestCtx) => {
     const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 
-    console.log('\n    These tests require the eHoldings backend module (mod-kb-ebsco-java).');
-    console.log('    Ensure it is installed and running before expecting these tests to pass.')
+    console.log('\n    These tests require eHoldings installed and configured with EBSCO keys.');
+    console.log('    Ensure it is installed, running, and functional before expecting these tests to pass.')
 
     const resources = [{
       authority: 'EKB-PACKAGE',
