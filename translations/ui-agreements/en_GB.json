@@ -21,7 +21,7 @@
     "agreements.editAgreement": "Edit Agreement",
     "agreementLines.count": "Count",
     "agreementLines.contentUpdated": "Content updated",
-    "agreementLines.noLines": "No agreement lines have been added. Please use one of the options below.",
+    "agreementLines.noLines": "Agreement has no agreement lines.",
     "agreementLines.removeItem": "Remove line from agreement",
     "agreementLines.createLine": "Create agreement line",
     "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
@@ -87,9 +87,6 @@
     "agreements.organizations": "Organisations",
     "agreements.assocAgreements": "Associated agreements",
     "settings.general": "General",
-    "settings.general.message": "These are your general app settings.",
-    "settings.some-feature": "Some Feature",
-    "settings.some-feature.message": "These are your settings for some app feature.",
     "eresources.sourceKb": "Source",
     "eresources.coverage": "Coverage",
     "coverage.volumeShort": "Vol:",
@@ -166,5 +163,8 @@
     "identifier.isbn": "ISBN",
     "identifier.pissn": "ISSN (Print)",
     "identifier.zdb": "ZDB",
-    "license.noControllingLicense": "No controlling licence is linked to this agreement."
+    "license.noControllingLicense": "No controlling licence is linked to this agreement.",
+    "settings.general.hideEResourcesFunctionality.title": "Hide all \"E-resources\" functionality",
+    "settings.general.hideEResourcesFunctionality.description": "Useful when E-resources are searched for and managed by an external application that reports them to this Agreements application.",
+    "agreementLines.hasCustomCoverage": "Has custom coverage"
 }
