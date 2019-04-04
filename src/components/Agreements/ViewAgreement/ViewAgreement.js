@@ -43,7 +43,6 @@ class ViewAgreement extends React.Component {
       type: 'okapi',
       path: 'erm/sas/:{id}',
       shouldRefresh,
-      throwErrors: false,
     },
     agreementLines: {
       type: 'okapi',
@@ -53,7 +52,6 @@ class ViewAgreement extends React.Component {
         term: ':{id}',
       },
       shouldRefresh,
-      throwErrors: false,
     },
     contacts: {
       type: 'okapi',
@@ -63,7 +61,6 @@ class ViewAgreement extends React.Component {
         term: ':{id}',
       },
       shouldRefresh,
-      throwErrors: false,
     },
     financesAgreementLines: {
       type: 'okapi',
@@ -80,7 +77,6 @@ class ViewAgreement extends React.Component {
       type: 'okapi',
       path: 'invoice-storage/invoice-lines',
       records: 'invoiceLines',
-      throwErrors: false,
       fetch: false,
       accumulate: true,
     },
@@ -102,7 +98,6 @@ class ViewAgreement extends React.Component {
       path: '/users',
       fetch: false,
       accumulate: true,
-      throwErrors: false,
     },
     agreementEresourcesCount: { initialValue: ERESOURCES_RESULTS_INTERVAL },
     query: {},

@@ -96,11 +96,12 @@ module.exports.test = (uiTestCtx) => {
             nightmare
               .click('#clickable-createagreement')
               .wait('#agreementInfo')
+              .waitUntilNetworkIdle(2000)
               .then(done)
               .catch(done);
           });
 
-          it('should check agreement lines listing', done => {
+          it('should have resource info in agreement lines list', done => {
               nightmare
               .wait('#accordion-toggle-button-eresourcesAgreementLines')
               .click('#accordion-toggle-button-eresourcesAgreementLines')
