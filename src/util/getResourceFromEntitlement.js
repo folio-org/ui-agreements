@@ -1,5 +1,5 @@
-import isExternal from './isExternal';
 import { get } from 'lodash';
+import isExternal from './isExternal';
 
 export default function getResourceFromEntitlement(line = {}) {
   if (isExternal(line)) return line;

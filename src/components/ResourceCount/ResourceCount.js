@@ -25,6 +25,6 @@ export default class ResourceCount extends React.Component {
     }
 
     // If contentItems doesn't exist there's only one item.
-    return get(resource, ['_object', 'contentItems', 'length'], 1)
+    return get(resource, ['_object', 'contentItems', 'length'], 1);
   }
 }

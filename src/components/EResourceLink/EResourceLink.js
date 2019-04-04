@@ -26,7 +26,7 @@ class EResourceLink extends React.Component {
     const { authority, id, reference } = eresource;
 
     if (!authority && id) {
-      return `/erm/eresources/view/${id}`
+      return `/erm/eresources/view/${id}`;
     }
 
     if (authority === 'EKB-PACKAGE') {

@@ -33,5 +33,3 @@ export default class ResourceProvider extends React.Component {
     );
   }
 }
-
-

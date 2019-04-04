@@ -11,6 +11,7 @@ import ResourceType from '../../../ResourceType';
 import CoverageStatements from '../../../CoverageStatements';
 import CustomCoverageIcon from '../../../CustomCoverageIcon';
 import getResourceFromEntitlement from '../../../../util/getResourceFromEntitlement';
+
 export default class EresourceAgreementLines extends React.Component {
   static propTypes = {
     agreementLines: PropTypes.arrayOf(PropTypes.object),
