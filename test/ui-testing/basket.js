@@ -77,7 +77,7 @@ const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = [], basket =
         basketIndices.forEach(index => {
           const resource = basket[index];
           const line = lines.find(l => l.id === resource.id);
-          if (!line) throw Error(`Could not find agreement line for ${resource.name}`);
+          if (!line) throw Error(`Could not find agreement line for ${resource.name} (${resource.id})`);
           if (line.id !== resource.id) throw Error(`Expected Line #0 ID (${line.id}) to be ${resource.id}`);
           if (line.name !== resource.name) throw Error(`Expected Line #0 Name (${line.name}) to be ${resource.name}`);
           if (line.type !== resource.type) throw Error(`Expected Line #0 Type (${line.type}) to be ${resource.type}`);

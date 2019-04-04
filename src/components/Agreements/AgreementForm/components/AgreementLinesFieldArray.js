@@ -2,15 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import {
-  Button,
-  Layout,
-} from '@folio/stripes/components';
+import { Button, Layout } from '@folio/stripes/components';
 
 import { withKiwtFieldArray } from '@folio/stripes-erm-components';
 
 import IfEResourcesEnabled from '../../../IfEResourcesEnabled';
 import AgreementLineField from './AgreementLineField';
+import isExternal from '../../../../util/isExternal';
 
 class AgreementLinesFieldArray extends React.Component {
   static propTypes = {
@@ -28,14 +26,24 @@ class AgreementLinesFieldArray extends React.Component {
 
     if (line.resource) return line.resource;
 
+    if (agreementLines) {
+      const foundLine = agreementLines.find(l => l.id === line.id);
+      if (foundLine) {
+        if (isExternal(foundLine)) {
+          return foundLine;
+        } else {
+          return foundLine.resource;
+        }
+      }
+    }
+
     if (parentResources && parentResources.basket) {
       const basketLine = parentResources.basket.find(l => l.id === line.id);
       if (basketLine) return basketLine;
     }
 
-    if (agreementLines) {
-      const foundLine = agreementLines.find(l => l.id === line.id);
-      if (foundLine) return foundLine.resource;
+    if (isExternal(line)) {
+      return line;
     }
 
     return undefined;
@@ -69,7 +77,7 @@ class AgreementLinesFieldArray extends React.Component {
     ));
   }
 
-  render = () => {
+  render() {
     return (
       <div>
         <div id="agreement-form-lines">

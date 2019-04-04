@@ -113,7 +113,7 @@ export default class ERM extends React.Component {
   }
 
   render() {
-    const { stripes, match } = this.props;
+    const { location, match } = this.props;
     const currentPage = this.getCurrentPage(this.props);
 
     return (
@@ -126,19 +126,19 @@ export default class ERM extends React.Component {
               parentResources={this.props.resources}
               parentMutator={this.props.mutator}
             />
-            <this.connectedOpenBasketButton stripes={stripes} />
+            <this.connectedOpenBasketButton />
           </Layout>
         </IfEResourcesEnabled>
         <div className={css.body}>
           <Switch>
             <Route
               path={`${match.path}/agreements`}
-              render={() => <this.connectedAgreements stripes={stripes} />}
+              render={() => <this.connectedAgreements location={location} />}
             />
             <IfEResourcesEnabled>
               <Route
                 path={`${match.path}/eresources`}
-                render={() => <this.connectedEResources stripes={stripes} />}
+                render={() => <this.connectedEResources location={location} />}
               />
             </IfEResourcesEnabled>
             <Redirect

@@ -77,7 +77,6 @@ class ViewAgreement extends React.Component {
       type: 'okapi',
       path: 'invoice-storage/invoice-lines',
       records: 'invoiceLines',
-      throwErrors: false,
       fetch: false,
       accumulate: true,
     },
