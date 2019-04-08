@@ -22,6 +22,7 @@ export default class EresourceAgreementLines extends React.Component {
     name: 250,
     provider: 150,
     type: 100,
+    count: 60,
     coverage: 225,
     isCustomCoverage: 30,
   }
