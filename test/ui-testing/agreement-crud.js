@@ -16,14 +16,12 @@ const generateAgreementValues = () => {
 
 const createAgreement = (nightmare, done, defaultValues, resourceId) => {
   const values = defaultValues || generateAgreementValues();
-
-  nightmare
-    .wait('#clickable-agreements-module')
-    .click('#clickable-agreements-module')
+  let chain = nightmare
     .wait('#agreements-module-display')
     .click('nav #agreements')
     .wait('#clickable-newagreement')
     .click('#clickable-newagreement')
+    .waitUntilNetworkIdle(1000)
     .wait('#edit-agreement-name')
 
     .insert('#edit-agreement-name', values.name)
@@ -37,14 +35,26 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
 
     .type('#edit-agreement-status', 'draft')
     .type('#edit-agreement-renewal-priority', 'for')
-    .type('#edit-agreement-is-perpetual', 'yes')
+    .type('#edit-agreement-is-perpetual', 'yes');
 
-    .select('#basket-selector', resourceId)
-    .click('#basket-selector-add-button')
-    .wait(250)
+  if (resourceId) {
+    chain = chain
+      .click('#accordion-toggle-button-agreementFormLines')
+      .click('#add-agreement-line-button')
+      .select('#basket-selector', resourceId)
+      .click('#basket-selector-add-button')
+      .wait(250);
+  }
 
+  chain
     .click('#clickable-createagreement')
     .wait('#agreementInfo')
+    .wait(agreementName => {
+      const nameElement = document.querySelector('[data-test-agreement-name]');
+      if (!nameElement) return false;
+
+      return nameElement.innerText === agreementName;
+    }, values.name)
     .evaluate(expectedValues => {
       const foundName = document.querySelector('[data-test-agreement-name]').innerText;
       if (foundName !== expectedValues.name) {
@@ -52,17 +62,17 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
       }
 
       const foundDescription = document.querySelector('[data-test-agreement-description]').innerText;
-      if (foundDescription !== expectedValues.description) {
+      if (expectedValues.description && (foundDescription !== expectedValues.description)) {
         throw Error(`Description of agreement is incorrect. Expected "${expectedValues.description}" and got "${foundDescription}" `);
       }
 
       const foundRenewalPriority = document.querySelector('[data-test-agreement-renewal-priority]').innerText;
-      if (foundRenewalPriority !== expectedValues.renewalPriority) {
+      if (expectedValues.renewalPriority && (foundRenewalPriority !== expectedValues.renewalPriority)) {
         throw Error(`RenewalPriority of agreement is incorrect. Expected "${expectedValues.renewalPriority}" and got "${foundRenewalPriority}" `);
       }
 
       const foundIsPerpetual = document.querySelector('[data-test-agreement-is-perpetual]').innerText;
-      if (foundIsPerpetual !== expectedValues.isPerpetual) {
+      if (expectedValues.isPerpetual && (foundIsPerpetual !== expectedValues.isPerpetual)) {
         throw Error(`IsPerpetual of agreement is incorrect. Expected "${expectedValues.isPerpetual}" and got "${foundIsPerpetual}" `);
       }
     }, values)
@@ -76,29 +86,28 @@ module.exports.generateAgreementValues = generateAgreementValues;
 module.exports.createAgreement = createAgreement;
 
 module.exports.test = (uiTestCtx) => {
-  describe('Module test: ui-agreements: basic agreement crud', function test() {
-    const { config, helpers: { login, logout } } = uiTestCtx;
+  describe('ui-agreements: basic agreement crud', function test() {
+    const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
     const values = generateAgreementValues();
 
     this.timeout(Number(config.test_timeout));
 
-    describe('Login > open agreements > create, view, edit agreement > logout', () => {
+    describe('open agreements > create, view, edit agreement', () => {
       before((done) => {
-        login(nightmare, config, done);
+        helpers.login(nightmare, config, done);
       });
 
       after((done) => {
-        logout(nightmare, config, done);
+        helpers.logout(nightmare, config, done);
       });
 
-      it('should open app and navigate to Agreements', done => {
+      it('should open Agreements app', done => {
+        helpers.clickApp(nightmare, done, 'agreements');
+      });
+
+      it('should confirm correct URL', done => {
         nightmare
-          .wait('#clickable-agreements-module')
-          .click('#clickable-agreements-module')
-          .wait('#agreements-module-display')
-          .click('nav #agreements')
-          .wait(1000)
           .evaluate(() => document.location.pathname)
           .then(pathName => {
             if (!pathName.includes('/erm/agreements')) throw Error('URL is incorrect');
@@ -137,6 +146,7 @@ module.exports.test = (uiTestCtx) => {
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
           .wait('#agreementFormInfo')
+          .waitUntilNetworkIdle(2000)
           .insert('#edit-agreement-name', '')
           .insert('#edit-agreement-name', values.editedName)
 
@@ -151,7 +161,7 @@ module.exports.test = (uiTestCtx) => {
           .type('#edit-agreement-renewal-priority', values.editedRenewalPriority)
           .click('#clickable-updateagreement')
           .wait('#agreementInfo')
-          .wait(5000) // Wait for the POST/reloading to trigger since #agreementInfo may be up for some ms first.
+          .waitUntilNetworkIdle(2000) // Wait for the POST/reloading to trigger since #agreementInfo may be up for some ms first.
           .evaluate(expectedValues => {
             const name = document.querySelector('[data-test-agreement-name]').innerText;
             if (name !== expectedValues.editedName) {

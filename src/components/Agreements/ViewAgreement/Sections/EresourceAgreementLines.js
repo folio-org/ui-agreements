@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
-import { MultiColumnList } from '@folio/stripes/components';
+import { Icon, Layout, MultiColumnList } from '@folio/stripes/components';
 
 import EResourceLink from '../../../EResourceLink';
+import ResourceCount from '../../../ResourceCount';
+import ResourceProvider from '../../../ResourceProvider';
 import ResourceType from '../../../ResourceType';
+import CoverageStatements from '../../../CoverageStatements';
+import CustomCoverageIcon from '../../../CustomCoverageIcon';
+import getResourceFromEntitlement from '../../../../util/getResourceFromEntitlement';
 
 export default class EresourceAgreementLines extends React.Component {
   static propTypes = {
@@ -14,48 +19,63 @@ export default class EresourceAgreementLines extends React.Component {
   };
 
   columnWidths = {
-    name: '20%',
-    platform: '20%',
-    type: '10%',
+    name: 250,
+    provider: 150,
+    type: 100,
+    coverage: 225,
+    isCustomCoverage: 30,
   }
 
   columnMapping = {
     name: <FormattedMessage id="ui-agreements.eresources.name" />,
-    platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
+    provider: <FormattedMessage id="ui-agreements.eresources.provider" />,
     type: <FormattedMessage id="ui-agreements.eresources.erType" />,
     count: <FormattedMessage id="ui-agreements.agreementLines.count" />,
-    contentUpdated: <FormattedMessage id="ui-agreements.agreementLines.contentUpdated" />,
+    coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
+    isCustomCoverage: ' ',
   }
 
   formatter = {
     name: line => {
-      const resource = get(line.resource, ['_object', 'pti', 'titleInstance'], line.resource);
-
+      const resource = getResourceFromEntitlement(line);
       if (!resource) return line.label;
 
       return (
         <EResourceLink
           eresource={resource}
-          linkProps={{ 'data-test-resource-id': line.resource.id }}
+          linkProps={{
+            'data-test-resource-id': get(line, ['resource', 'id']),
+            'data-test-external-reference': line.reference,
+          }}
         />
       );
     },
-    platform: line => (
-      get(line, ['resource', '_object', 'pti', 'platform', 'name']) ||
-      get(line, ['resource', '_object', 'nominalPlatform', 'name'])
-    ),
-    type: line => <ResourceType resource={line.resource} />,
-    count: line => (get(line, ['_object', 'contentItems'], [0])).length, // If contentItems doesn't exist there's only one item.
-    contentUpdated: ({ contentUpdated }) => (contentUpdated ? <FormattedDate value={contentUpdated} /> : '-'),
+    provider: line => <ResourceProvider resource={line.resource || line} />,
+    type: line => <ResourceType resource={getResourceFromEntitlement(line)} />,
+    count: line => <ResourceCount resource={getResourceFromEntitlement(line)} />,
+    coverage: line => <CoverageStatements statements={line.coverage} />,
+    isCustomCoverage: line => (line.customCoverage ? <CustomCoverageIcon /> : ''),
   }
 
   visibleColumns = [
     'name',
-    'platform',
+    'provider',
     'type',
     'count',
-    'contentUpdated',
+    'coverage',
+    'isCustomCoverage',
   ]
+
+  renderCustomCoverage = () => {
+    return (
+      <Layout
+        className="flex"
+        data-test-custom-coverage
+      >
+        <Icon icon="clock" status="success" />
+      </Layout>
+    );
+  }
 
   render() {
     return (

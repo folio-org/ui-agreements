@@ -6,7 +6,6 @@ import { Field } from 'redux-form';
 
 import {
   Accordion,
-  AccordionSet,
   Col,
   Datepicker,
   Row,
@@ -75,9 +74,10 @@ class AgreementFormInfo extends React.Component {
             <Field
               id="edit-agreement-name"
               name="name"
-              label={<FormattedMessage id="ui-agreements.agreements.name">{name => `${name} *`}</FormattedMessage>}
+              label={<FormattedMessage id="ui-agreements.agreements.name" />}
               component={TextField}
               validate={required}
+              required
             />
           </Col>
         </Row>
@@ -96,11 +96,12 @@ class AgreementFormInfo extends React.Component {
             <Field
               id="edit-agreement-start-date"
               name="startDate"
-              label={<FormattedMessage id="ui-agreements.agreements.startDate">{startDate => `${startDate} *`}</FormattedMessage>}
+              label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
               backendDateStandard="YYYY-MM-DD"
               validate={required}
+              required
             />
           </Col>
           <Col xs={12} md={4}>
@@ -133,7 +134,7 @@ class AgreementFormInfo extends React.Component {
                   component={Select}
                   dataOptions={this.getAgreementStatusValues()}
                   name="agreementStatus"
-                  label={<FormattedMessage id="ui-agreements.agreements.agreementStatus">{agreementStatus => `${agreementStatus} *`}</FormattedMessage>}
+                  label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
                   placeholder={placeholder}
                   required
                   validate={required}
@@ -160,11 +161,9 @@ class AgreementFormInfo extends React.Component {
             />
           </Col>
         </Row>
-        <AccordionSet>
-          <Accordion label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}>
-            <AgreementFormInternalContacts {...sectionProps} />
-          </Accordion>
-        </AccordionSet>
+        <div style={{ marginLeft: '2rem' }}>
+          <AgreementFormInternalContacts {...sectionProps} />
+        </div>
       </Accordion>
     );
   }

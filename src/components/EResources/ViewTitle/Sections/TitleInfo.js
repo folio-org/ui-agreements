@@ -12,6 +12,7 @@ import {
 } from '@folio/stripes/components';
 
 import EResourceAgreements from '../../EResourceAgreements';
+import getResourceIdentifier from '../../../../util/getResourceIdentifier';
 
 export default class TitleInfo extends React.Component {
   static propTypes = {
@@ -28,15 +29,18 @@ export default class TitleInfo extends React.Component {
     this.connectedEResourceAgreements = props.stripes.connect(EResourceAgreements);
   }
 
-  getIdentifier(type) {
-    const { eresource: { identifiers } } = this.props;
+  renderIdentifier(type, width = 3) {
+    const identifier = getResourceIdentifier(this.props.eresource, type);
+    if (!identifier) return null;
 
-    if (!Array.isArray(identifiers) || !identifiers.length) return '-';
-
-    const entry = identifiers.find(i => i.identifier.ns.value === type);
-    if (!entry) return '-';
-
-    return entry.identifier.value;
+    return (
+      <Col xs={width}>
+        <KeyValue
+          label={<FormattedMessage id={`ui-agreements.identifier.${type}`} />}
+          value={identifier}
+        />
+      </Col>
+    );
   }
 
   render() {
@@ -62,18 +66,14 @@ export default class TitleInfo extends React.Component {
               value={get(eresource, ['publisher', 'label'], '-')}
             />
           </Col>
-          <Col xs={2}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.pIssn" />}
-              value={this.getIdentifier('pissn')}
-            />
-          </Col>
-          <Col xs={2}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.eIssn" />}
-              value={this.getIdentifier('eissn')}
-            />
-          </Col>
+          { this.renderIdentifier('pissn', 2) }
+          { this.renderIdentifier('eissn', 2) }
+        </Row>
+        <Row>
+          { this.renderIdentifier('doi') }
+          { this.renderIdentifier('ezb') }
+          { this.renderIdentifier('zdb') }
+          { this.renderIdentifier('isbn') }
         </Row>
         <Headline size="medium" faded>
           <FormattedMessage id="ui-agreements.eresources.erAgreements" />

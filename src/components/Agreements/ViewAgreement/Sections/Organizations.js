@@ -62,7 +62,7 @@ export default class Organizations extends React.Component {
   renderLicenseOrganizations = () => {
     const { attachedLicenceId } = this.props.agreement;
 
-    if (!attachedLicenceId) return <FormattedMessage id="ui-agreements.license.agreementHasNone" />;
+    if (!attachedLicenceId) return <FormattedMessage id="ui-agreements.license.noLicenses" />;
 
     return <FormattedMessage id="ui-agreements.license.noLicenseOrganizations" />;
   }
@@ -85,16 +85,18 @@ export default class Organizations extends React.Component {
         <Layout className="padding-bottom-gutter">
           { this.renderOrganizations() }
         </Layout>
-        <Accordion
-          id={`${this.props.id}-license`}
-          label={<FormattedMessage id="ui-agreements.agreements.license" />}
-          open={this.state.displayLicenseOrgs}
-          onToggle={this.toggleDisplayLicenseOrgs}
-        >
-          <Layout className="padding-bottom-gutter">
-            { this.renderLicenseOrganizations() }
-          </Layout>
-        </Accordion>
+        <div style={{ marginLeft: '2rem' }}>
+          <Accordion
+            id={`${this.props.id}-license`}
+            label={<FormattedMessage id="ui-agreements.agreements.license" />}
+            open={this.state.displayLicenseOrgs}
+            onToggle={this.toggleDisplayLicenseOrgs}
+          >
+            <Layout className="padding-bottom-gutter">
+              { this.renderLicenseOrganizations() }
+            </Layout>
+          </Accordion>
+        </div>
       </Accordion>
     );
   }

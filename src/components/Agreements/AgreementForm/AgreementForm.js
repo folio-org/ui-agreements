@@ -8,16 +8,20 @@ import {
 
 import {
   AgreementFormInfo,
-  AgreementFormEresources,
+  AgreementFormLines,
   AgreementFormOrganizations,
+  AgreementFormLicense,
 } from './Sections';
+
+import css from './AgreementForm.css';
 
 class AgreementForm extends React.Component {
   state = {
     sections: {
       agreementFormInfo: true,
-      agreementFormEresources: false,
+      agreementFormLines: false,
       agreementFormOrganizations: false,
+      agreementFormLicense: false,
     }
   }
 
@@ -48,16 +52,19 @@ class AgreementForm extends React.Component {
     const sectionProps = this.getSectionProps();
 
     return (
-      <AccordionSet>
-        <Row end="xs">
-          <Col xs>
-            <ExpandAllButton accordionStatus={this.state.sections} onToggle={this.handleAllSectionsToggle} />
-          </Col>
-        </Row>
-        <AgreementFormInfo id="agreementFormInfo" open={this.state.sections.agreementFormInfo} {...sectionProps} />
-        <AgreementFormEresources id="agreementFormEresources" open={this.state.sections.agreementFormEresources} {...sectionProps} />
-        <AgreementFormOrganizations id="agreementFormOrganizations" open={this.state.sections.agreementFormOrganizations} {...sectionProps} />
-      </AccordionSet>
+      <div className={css.agreementForm}>
+        <AccordionSet>
+          <Row end="xs">
+            <Col xs>
+              <ExpandAllButton accordionStatus={this.state.sections} onToggle={this.handleAllSectionsToggle} />
+            </Col>
+          </Row>
+          <AgreementFormInfo id="agreementFormInfo" open={this.state.sections.agreementFormInfo} {...sectionProps} />
+          <AgreementFormLines id="agreementFormLines" open={this.state.sections.agreementFormLines} {...sectionProps} />
+          <AgreementFormLicense id="agreementFormLicense" open={this.state.sections.agreementFormLicense} {...sectionProps} />
+          <AgreementFormOrganizations id="agreementFormOrganizations" open={this.state.sections.agreementFormOrganizations} {...sectionProps} />
+        </AccordionSet>
+      </div>
     );
   }
 }

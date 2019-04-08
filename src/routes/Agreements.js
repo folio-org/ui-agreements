@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 
 import { SearchAndSort } from '@folio/stripes/smart-components';
+import { getSASParams } from '@folio/stripes-erm-components';
 
 import ViewAgreement from '../components/Agreements/ViewAgreement';
 import EditAgreement from '../components/Agreements/EditAgreement';
 import AgreementFilters from '../components/Agreements/AgreementFilters';
-import getSASParams from '../util/getSASParams';
 import packageInfo from '../../package';
 
 const INITIAL_RESULT_COUNT = 100;
+const DEFAULT_FILTERS = 'agreementStatus.Requested,agreementStatus.In Negotiation,agreementStatus.Draft,agreementStatus.Active';
+const DEFAULT_SORT = 'Name';
 
 class Agreements extends React.Component {
   static manifest = Object.freeze({
@@ -43,6 +45,19 @@ class Agreements extends React.Component {
       path: 'erm/sas/${selectedAgreementId}', // eslint-disable-line no-template-curly-in-string
       fetch: false,
     },
+    externalAgreementLine: {
+      type: 'okapi',
+      path: 'erm/entitlements/external',
+      params: {
+        authority: '?{authority}',
+        reference: '?{referenceId}',
+      },
+      throwErrors: false,
+    },
+    terms: {
+      type: 'okapi',
+      path: 'licenses/custprops',
+    },
     agreementTypeValues: {
       type: 'okapi',
       path: 'erm/refdataValues/SubscriptionAgreement/agreementType',
@@ -71,22 +86,33 @@ class Agreements extends React.Component {
       type: 'okapi',
       path: 'erm/refdataValues/InternalContact/role',
     },
+    licenseLinkStatusValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/RemoteLicenseLink/status',
+    },
     basket: { initialValue: [] },
-    query: {},
+    query: {
+      initialValue: {
+        filters: DEFAULT_FILTERS,
+        sort: DEFAULT_SORT,
+      },
+    },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     selectedAgreementId: { initialValue: '' },
   });
 
   static propTypes = {
+    browseOnly: PropTypes.bool,
+    disableRecordCreation: PropTypes.bool,
     intl: intlShape,
     resources: PropTypes.object,
     mutator: PropTypes.object,
     onSelectRow: PropTypes.func,
-    browseOnly: PropTypes.bool,
+    showSingleResult: PropTypes.bool,
   };
 
-  state = {
-    activeFilters: [],
+  static defaultProps = {
+    showSingleResult: true,
   }
 
   handleCreate = (agreement) => {
@@ -102,25 +128,21 @@ class Agreements extends React.Component {
   }
 
   handleFilterChange = ({ name, values }) => {
-    this.setState((prevState) => ({
-      activeFilters: {
-        ...prevState.activeFilters,
-        [name]: values,
-      }
-    }), () => {
-      const { activeFilters } = this.state;
+    const newFilters = {
+      ...this.getActiveFilters(),
+      [name]: values,
+    };
 
-      const filters = Object.keys(activeFilters)
-        .map((filterName) => {
-          return activeFilters[filterName]
-            .map((filterValue) => `${filterName}.${filterValue}`)
-            .join(',');
-        })
-        .filter(filter => filter)
-        .join(',');
+    const filters = Object.keys(newFilters)
+      .map((filterName) => {
+        return newFilters[filterName]
+          .map((filterValue) => `${filterName}.${filterValue}`)
+          .join(',');
+      })
+      .filter(filter => filter)
+      .join(',');
 
-      this.props.mutator.query.update({ filters });
-    });
+    this.props.mutator.query.update({ filters });
   }
 
   handleUpdate = (agreement) => {
@@ -130,11 +152,11 @@ class Agreements extends React.Component {
   }
 
   getActiveFilters = () => {
-    const filters = this.props.resources.query.filters;
+    const { query } = this.props.resources;
 
-    if (!filters) return undefined;
+    if (!query || !query.filters) return {};
 
-    return filters
+    return query.filters
       .split(',')
       .reduce((filterMap, currentFilter) => {
         const [name, value] = currentFilter.split('.');
@@ -146,6 +168,17 @@ class Agreements extends React.Component {
         filterMap[name].push(value);
         return filterMap;
       }, {});
+  }
+
+  getPackageInfo = () => {
+    return {
+      ...packageInfo,
+      stripes: {
+        ...packageInfo.stripes,
+        route: '/erm/agreements',
+        path: `/erm/agreements?sort=${DEFAULT_SORT}&filters=${DEFAULT_FILTERS}`,
+      },
+    };
   }
 
   renderFilters = (onChange) => {
@@ -160,77 +193,74 @@ class Agreements extends React.Component {
 
   render() {
     const { mutator, resources, intl } = this.props;
-    const path = '/erm/agreements';
-    packageInfo.stripes.route = path;
-    packageInfo.stripes.home = path;
 
     return (
-      <React.Fragment>
-        <SearchAndSort
-          browseOnly={this.props.browseOnly}
-          columnMapping={{
-            name: intl.formatMessage({ id: 'ui-agreements.agreements.name' }),
-            vendor: intl.formatMessage({ id: 'ui-agreements.agreements.vendorInfo.vendor' }),
-            startDate: intl.formatMessage({ id: 'ui-agreements.agreements.startDate' }),
-            endDate: intl.formatMessage({ id: 'ui-agreements.agreements.endDate' }),
-            cancellationDeadline: intl.formatMessage({ id: 'ui-agreements.agreements.cancellationDeadline' }),
-            agreementStatus: intl.formatMessage({ id: 'ui-agreements.agreements.agreementStatus' }),
-            lastUpdated: intl.formatMessage({ id: 'ui-agreements.lastUpdated' }),
-          }}
-          columnWidths={{
-            name: 300,
-            vendor: 200,
-            startDate: 120,
-            endDate: 120,
-            cancellationDeadline: 120,
-            agreementStatus: 150,
-            lastUpdated: 120,
-          }}
-          detailProps={{
-            onUpdate: this.handleUpdate
-          }}
-          editRecordComponent={EditAgreement}
-          initialResultCount={INITIAL_RESULT_COUNT}
-          key="agreements"
-          newRecordPerms="ui-agreements.agreements.create"
-          objectName="agreement"
-          onCreate={this.handleCreate}
-          onFilterChange={this.handleFilterChange}
-          onSelectRow={this.props.onSelectRow}
-          packageInfo={packageInfo}
-          resultCountIncrement={INITIAL_RESULT_COUNT}
-          viewRecordComponent={ViewAgreement}
-          viewRecordPerms="ui-agreements.agreements.view"
-          // SearchAndSort expects the resource it's going to list to be under the `records` key.
-          // However, if we just put it under `records` in the `manifest`, it would clash with
-          // the `records` that would need to be defined by the Agreements tab.
-          parentMutator={{
-            ...mutator,
-            records: mutator.agreements,
-          }}
-          parentResources={{
-            ...resources,
-            records: resources.agreements,
-          }}
-          renderFilters={this.renderFilters}
-          resultsFormatter={{
-            vendor: a => a.vendor && a.vendor.name,
-            startDate: a => a.startDate && intl.formatDate(a.startDate),
-            endDate: a => a.endDate && intl.formatDate(a.endDate),
-            cancellationDeadline: a => a.cancellationDeadline && intl.formatDate(a.cancellationDeadline),
-            agreementStatus: a => a.agreementStatus && a.agreementStatus.label,
-          }}
-          visibleColumns={[
-            'name',
-            'vendor',
-            'startDate',
-            'endDate',
-            'cancellationDeadline',
-            'agreementStatus',
-            'lastUpdated'
-          ]}
-        />
-      </React.Fragment>
+      <SearchAndSort
+        browseOnly={this.props.browseOnly}
+        columnMapping={{
+          name: intl.formatMessage({ id: 'ui-agreements.agreements.name' }),
+          vendor: intl.formatMessage({ id: 'ui-agreements.agreements.vendorInfo.vendor' }),
+          startDate: intl.formatMessage({ id: 'ui-agreements.agreements.startDate' }),
+          endDate: intl.formatMessage({ id: 'ui-agreements.agreements.endDate' }),
+          cancellationDeadline: intl.formatMessage({ id: 'ui-agreements.agreements.cancellationDeadline' }),
+          agreementStatus: intl.formatMessage({ id: 'ui-agreements.agreements.agreementStatus' }),
+          lastUpdated: intl.formatMessage({ id: 'ui-agreements.lastUpdated' }),
+        }}
+        columnWidths={{
+          name: 300,
+          vendor: 200,
+          startDate: 120,
+          endDate: 120,
+          cancellationDeadline: 120,
+          agreementStatus: 150,
+          lastUpdated: 120,
+        }}
+        detailProps={{
+          onUpdate: this.handleUpdate
+        }}
+        disableRecordCreation={this.props.disableRecordCreation}
+        editRecordComponent={EditAgreement}
+        initialResultCount={INITIAL_RESULT_COUNT}
+        key="agreements"
+        newRecordPerms="ui-agreements.agreements.create"
+        objectName="agreement"
+        onCreate={this.handleCreate}
+        onFilterChange={this.handleFilterChange}
+        onSelectRow={this.props.onSelectRow}
+        packageInfo={this.getPackageInfo()}
+        resultCountIncrement={INITIAL_RESULT_COUNT}
+        showSingleResult={this.props.showSingleResult}
+        viewRecordComponent={ViewAgreement}
+        viewRecordPerms="ui-agreements.agreements.view"
+        // SearchAndSort expects the resource it's going to list to be under the `records` key.
+        // However, if we just put it under `records` in the `manifest`, it would clash with
+        // the `records` that would need to be defined by the Agreements tab.
+        parentMutator={{
+          ...mutator,
+          records: mutator.agreements,
+        }}
+        parentResources={{
+          ...resources,
+          records: resources.agreements,
+        }}
+        renderFilters={this.renderFilters}
+        resultsFormatter={{
+          vendor: a => a.vendor && a.vendor.name,
+          startDate: a => a.startDate && intl.formatDate(a.startDate),
+          endDate: a => a.endDate && intl.formatDate(a.endDate),
+          cancellationDeadline: a => a.cancellationDeadline && intl.formatDate(a.cancellationDeadline),
+          agreementStatus: a => a.agreementStatus && a.agreementStatus.label,
+        }}
+        visibleColumns={[
+          'name',
+          'vendor',
+          'startDate',
+          'endDate',
+          'cancellationDeadline',
+          'agreementStatus',
+          'lastUpdated'
+        ]}
+      />
     );
   }
 }

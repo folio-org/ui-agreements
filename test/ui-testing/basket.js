@@ -11,15 +11,12 @@ const _CONSTANTS = {
 
 const BASKET = [];
 
-const shouldAddTitleToBasket = (nightmare, index) => {
+const shouldAddTitleToBasket = (nightmare, index, basket = BASKET) => {
   it(`should add title ${index} to basket`, done => {
     nightmare
       .wait(`#list-agreements [aria-rowindex="${index + 1}"] a`)
       .click(`#list-agreements [aria-rowindex="${index + 1}"] a`)
-      .wait(2000)
-      .wait(() => {
-        return document.querySelector('[data-test-basket-remove-button][data-test-add-title-to-basket]') === null;
-      })
+      .waitUntilNetworkIdle(2000)
       .wait('[data-test-basket-add-button][data-test-add-title-to-basket]')
       .click('[data-test-basket-add-button][data-test-add-title-to-basket]')
       .evaluate((resourceIndex, CONSTANTS) => {
@@ -37,19 +34,21 @@ const shouldAddTitleToBasket = (nightmare, index) => {
         return addedItem;
       }, index, _CONSTANTS)
       .then(addedItem => {
-        BASKET.push(addedItem);
+        basket.push(addedItem);
         done();
       })
       .catch(done);
   });
 };
 
-const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = []) => {
+module.exports.shouldAddTitleToBasket = shouldAddTitleToBasket;
+
+const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = [], basket = BASKET) => {
   it(`should see ${basketIndices.length} lines with correct resources`, done => {
     nightmare
-      .wait('section#eresources')
+      .wait('section#eresourcesAgreementLines')
       .evaluate(() => {
-        const header = document.querySelector('section#eresources [class*=header] button');
+        const header = document.querySelector('section#eresourcesAgreementLines [class*=header] button');
         if (!header) throw Error('Could not find Eresources accordion header');
 
         return header.getAttribute('aria-expanded');
@@ -58,7 +57,7 @@ const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = []) => {
         let chain = nightmare;
         if (accordionExpanded === 'false') {
           chain = chain
-            .click('section#eresources [class*=header] button')
+            .click('section#eresourcesAgreementLines [class*=header] button')
             .wait('#agreement-lines [class*=mclScrollable] [aria-rowindex]');
         }
 
@@ -76,9 +75,9 @@ const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = []) => {
       })
       .then(lines => {
         basketIndices.forEach(index => {
-          const resource = BASKET[index];
+          const resource = basket[index];
           const line = lines.find(l => l.id === resource.id);
-          if (!line) throw Error(`Could not find agreement line for ${resource.name}`);
+          if (!line) throw Error(`Could not find agreement line for ${resource.name} (${resource.id})`);
           if (line.id !== resource.id) throw Error(`Expected Line #0 ID (${line.id}) to be ${resource.id}`);
           if (line.name !== resource.name) throw Error(`Expected Line #0 Name (${line.name}) to be ${resource.name}`);
           if (line.type !== resource.type) throw Error(`Expected Line #0 Type (${line.type}) to be ${resource.type}`);
@@ -89,15 +88,16 @@ const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = []) => {
       .catch(done);
   });
 };
+module.exports.shouldHaveCorrectAgreementLines = shouldHaveCorrectAgreementLines;
 
 module.exports.test = (uiTestCtx) => {
-  describe('Module test: ui-agreements: basic basket functionality', function test() {
-    const { config, helpers: { login, logout } } = uiTestCtx;
+  describe('ui-agreements: basic basket functionality', function test() {
+    const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 
     const number = Math.round(Math.random() * 100000);
     const values = {
-      search: 'nanotech',
+      search: 's',
       agreementName: `Basketforged Agreement #${number}`,
       agreementStartDate: '2019-01-31',
       agreementRenewalPriority: 'Definitely Renew',
@@ -106,20 +106,21 @@ module.exports.test = (uiTestCtx) => {
 
     this.timeout(Number(config.test_timeout));
 
-    describe('login > open eresources > add eresources to basket', () => {
+    describe('open eresources > add eresources to basket', () => {
       before((done) => {
-        login(nightmare, config, done);
+        helpers.login(nightmare, config, done);
       });
 
       after((done) => {
-        logout(nightmare, config, done);
+        helpers.logout(nightmare, config, done);
+      });
+
+      it('should open Agreements app', done => {
+        helpers.clickApp(nightmare, done, 'agreements');
       });
 
       it('should open eresources', done => {
         nightmare
-          .wait('#clickable-agreements-module')
-          .click('#clickable-agreements-module')
-          .wait('#agreements-module-display')
           .click('nav #eresources')
           .wait('#input-eresource-search')
           .then(done)
@@ -173,12 +174,15 @@ module.exports.test = (uiTestCtx) => {
           nightmare
             .click('#basket-contents [class*=mclScrollable] [aria-rowindex="3"] input[type=checkbox]')
             .click('[data-test-basket-create-agreement]')
-            .wait('#edit-agreement-name')
-            .wait('#agreementFormEresources [class*=mclScrollable] [aria-rowindex]') // An agreement line has been auto-added for the basket item
+            .wait('#accordion-toggle-button-agreementFormLines')
+            .click('#accordion-toggle-button-agreementFormLines')
+
+            // Ensure two agreement lines (0 and 1) has been auto-added for the basket item
+            .wait('#agreement-form-lines [data-test-ag-line-number="1"]')
+
             .insert('#edit-agreement-name', values.agreementName)
             .insert('#edit-agreement-start-date', values.agreementStartDate)
             .type('#edit-agreement-status', values.agreementStatus)
-            .type('#edit-agreement-renewal-priority', values.agreementRenewalPriority)
             .click('#clickable-createagreement')
             .wait('#agreementInfo')
             .then(done)
@@ -197,11 +201,6 @@ module.exports.test = (uiTestCtx) => {
               const foundStatus = document.querySelector('[data-test-agreement-status]').innerText;
               if (foundStatus !== expectedValues.agreementStatus) {
                 throw Error(`Status of agreement is incorrect. Expected "${expectedValues.agreementStatus}" and got "${foundStatus}" `);
-              }
-
-              const foundRenewalPriority = document.querySelector('[data-test-agreement-renewal-priority]').innerText;
-              if (foundRenewalPriority !== expectedValues.agreementRenewalPriority) {
-                throw Error(`Renewal Priority of agreement iss incorrect. Expected "${expectedValues.agreementRenewalPriority}" and got "${foundRenewalPriority}" `);
               }
             }, values)
             .then(done)
@@ -229,14 +228,18 @@ module.exports.test = (uiTestCtx) => {
             .click('#sl-container-select-agreement-for-basket li')
             .wait(250)
             .click('[data-test-basket-add-to-agreement]')
+
             .wait('#form-agreement')
+            .wait('#accordion-toggle-button-agreementFormLines')
+            .click('#accordion-toggle-button-agreementFormLines')
+
             .wait(() => {
-              const resources = document.querySelectorAll('#agreementFormEresources [class*=mclScrollable] [aria-rowindex]');
+              const resources = document.querySelectorAll('#agreement-form-lines [data-test-ag-line-number]');
               return resources.length === 3;
             })
             .click('#clickable-updateagreement')
             .wait('#agreementInfo')
-            .wait(5000) // Wait for the update list of agreement lines to fetch/render
+            .waitUntilNetworkIdle(2000) // Wait for the update list of agreement lines to fetch/render
             .then(done)
             .catch(done);
         });
