@@ -1,3 +1,17 @@
+## 2.2.0 2019-04-08
+
+ * ERM-115 Provide correct data for agreement line
+ * ERM-111 Build Settings Page
+ * ERM-112 Build Wrapper Component for supression
+ * ERM-113 Use Wrapper Component in Agreements
+ * ERM-114 Write tests
+ * ERM-98 Rendering Controlling Terms License
+ * ERM-127 Resources with no coverage set should not display
+ * ERM-110 Agreement Detail record - View attached EBSCO eResource
+ * ERM-109 Support the ability to create an agreement from eHoldings
+ * ERM-108 Supress agreements app functions
+ * ERM-64 Show Controlling License Terms
+
 ## 2.1.0 2019-03-22
  * ERM-130 Sort order of multiple coverage statements should be ascending by start date
  * ERM-129 Cannot edit custom coverage dates once they have been added
