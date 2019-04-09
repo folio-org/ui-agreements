@@ -66,7 +66,7 @@ class EditAgreement extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.parentMutator.query.replace({
+    this.props.parentMutator.query.update({
       addFromBasket: null,
       authority: null,
       referenceId: null,
