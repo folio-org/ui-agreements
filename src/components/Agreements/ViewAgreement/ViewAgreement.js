@@ -1,17 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { cloneDeep, difference, get } from 'lodash';
+import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
-
+import { withTags } from '@folio/stripes-erm-components';
 import {
   AccordionSet,
   Button,
   Col,
   ExpandAllButton,
   Icon,
+  IconButton,
   Layer,
   Layout,
   Pane,
+  PaneMenu,
   Row,
 } from '@folio/stripes/components';
 
@@ -42,7 +45,10 @@ class ViewAgreement extends React.Component {
     selectedAgreement: {
       type: 'okapi',
       path: 'erm/sas/:{id}',
-      shouldRefresh,
+      shouldRefresh: (resource, action, refresh) => {
+        const { path } = action.meta;
+        return refresh || (path && path.match(/link/));
+      },
     },
     agreementLines: {
       type: 'okapi',
@@ -115,6 +121,8 @@ class ViewAgreement extends React.Component {
     paneWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     resources: PropTypes.object,
     stripes: PropTypes.object,
+    tagsEnabled: PropTypes.bool,
+    tagsToggle: PropTypes.func,
   };
 
   state = {
@@ -376,6 +384,35 @@ class ViewAgreement extends React.Component {
     );
   }
 
+  renderDetailMenu(agreement) {
+    const {
+      tagsEnabled,
+      tagsToggle,
+    } = this.props;
+
+
+    const tags = ((agreement && agreement.tags) || {}) || [];
+
+    return (
+      <PaneMenu>
+        {
+          tagsEnabled &&
+          <FormattedMessage id="ui-requests.showTags">
+            {ariaLabel => (
+              <IconButton
+                icon="tag"
+                id="clickable-show-tags"
+                badgeCount={tags.length}
+                onClick={tagsToggle}
+                ariaLabel={ariaLabel}
+              />
+            )}
+          </FormattedMessage>
+        }
+      </PaneMenu>
+    );
+  }
+
   render() {
     const agreement = this.getAgreement();
     const agreementLines = this.getAgreementLines();
@@ -389,6 +426,7 @@ class ViewAgreement extends React.Component {
         id="pane-view-agreement"
         defaultWidth="60%"
         paneTitle={agreement.name}
+        lastMenu={this.renderDetailMenu(agreement)}
         dismissible
         onClose={this.props.onClose}
         actionMenu={({ onToggle }) => {
@@ -465,4 +503,6 @@ class ViewAgreement extends React.Component {
   }
 }
 
-export default ViewAgreement;
+export default compose(
+  withTags,
+)(ViewAgreement);
