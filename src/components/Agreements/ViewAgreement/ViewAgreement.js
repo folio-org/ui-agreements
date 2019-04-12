@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { cloneDeep, difference, get } from 'lodash';
 import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
-import { withTags } from '@folio/stripes-erm-components';
+import { withTags } from '@folio/stripes/smart-components';
 import {
   AccordionSet,
   Button,
