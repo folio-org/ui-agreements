@@ -11,6 +11,7 @@ module.exports.test = (uiTestCtx) => {
   describe('Login > Enable Tags > Find user > Create Tags > Logout\n', function test() {
     const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
+    nightmare.options.width = 1000; // added this temporarily as MultiSelect doesnt work well with narrow screen sizes
 
     this.timeout(Number(config.test_timeout));
 
@@ -88,7 +89,7 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      it('should click the Badges icon and add a Tag', done => {
+      it('should add a new Tag', done => {
         nightmare
           .wait('#clickable-show-tags')
           .click('#clickable-show-tags')
@@ -102,6 +103,22 @@ module.exports.test = (uiTestCtx) => {
               document.querySelectorAll('div[class*="valueChipValue"]')
             ).findIndex(e => e.textContent === tagValue) >= 0;
           }, testTag)
+          .then(() => {
+            nightmare
+              .then(done)
+              .catch(done);
+          })
+          .catch(done);
+      });
+
+      it('should have the badge count equal to 1', done => {
+        nightmare
+          .wait('#clickable-show-tags')
+          .wait(() => {
+            return Array.from(
+              document.querySelectorAll('span[class*="label"]')
+            ).findIndex(e => e.textContent === '1') >= 0;
+          })
           .then(() => {
             nightmare
               .then(done)
