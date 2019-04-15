@@ -80,10 +80,6 @@ class Agreements extends React.Component {
       type: 'okapi',
       path: 'erm/refdataValues/SubscriptionAgreementOrg/role',
     },
-    tags: {
-      type: 'okapi',
-      path: 'tags?limit=100',
-    },
     contactRoleValues: {
       type: 'okapi',
       path: 'erm/refdataValues/InternalContact/role',
