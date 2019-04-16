@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { cloneDeep, difference, get } from 'lodash';
-import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
 import { withTags } from '@folio/stripes/smart-components';
 import {
@@ -390,14 +389,13 @@ class ViewAgreement extends React.Component {
       tagsToggle,
     } = this.props;
 
-
-    const tags = ((agreement && agreement.tags) || {}) || [];
+    const tags = get(agreement, 'tags', []);
 
     return (
       <PaneMenu>
         {
           tagsEnabled &&
-          <FormattedMessage id="ui-requests.showTags">
+          <FormattedMessage id="ui-agreements.agreements.showTags">
             {ariaLabel => (
               <IconButton
                 icon="tag"
@@ -497,12 +495,10 @@ class ViewAgreement extends React.Component {
             {...sectionProps}
           />
         </AccordionSet>
-        { this.renderEditLayer() }
+        {this.renderEditLayer()}
       </Pane>
     );
   }
 }
 
-export default compose(
-  withTags,
-)(ViewAgreement);
+export default withTags(ViewAgreement);

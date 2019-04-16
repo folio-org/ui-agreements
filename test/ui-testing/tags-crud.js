@@ -74,7 +74,7 @@ module.exports.test = (uiTestCtx) => {
           .wait('#input-agreement-search')
           .insert('#input-agreement-search', agreement.name)
           .click('[data-test-search-and-sort-submit]')
-          .wait(1000) // If another agreement was open wait for the new one to be open before the next operation.
+          .waitUntilNetworkIdle(1000)
           .wait('#agreementInfo')
           .evaluate(expectedValues => {
             const node = document.querySelector('[data-test-agreement-name]');
@@ -103,27 +103,15 @@ module.exports.test = (uiTestCtx) => {
               document.querySelectorAll('div[class*="valueChipValue"]')
             ).findIndex(e => e.textContent === tagValue) >= 0;
           }, testTag)
-          .then(() => {
-            nightmare
-              .then(done)
-              .catch(done);
-          })
+          .then(done)
           .catch(done);
       });
 
       it('should have the badge count equal to 1', done => {
         nightmare
           .wait('#clickable-show-tags')
-          .wait(() => {
-            return Array.from(
-              document.querySelectorAll('span[class*="label"]')
-            ).findIndex(e => e.textContent === '1') >= 0;
-          })
-          .then(() => {
-            nightmare
-              .then(done)
-              .catch(done);
-          })
+          .evaluate(() => parseInt(document.querySelector('#clickable-show-tags').textContent) === 1)
+          .then(done)
           .catch(done);
       });
     });
