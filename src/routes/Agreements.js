@@ -37,6 +37,7 @@ class Agreements extends React.Component {
         filterKeys: {
           orgs: 'orgs.org',
           role: 'orgs.role',
+          tags: 'tags.value',
         },
       }),
     },
@@ -85,6 +86,7 @@ class Agreements extends React.Component {
     tags: {
       type: 'okapi',
       path: 'tags?limit=100',
+      records: 'tags',
     },
     contactRoleValues: {
       type: 'okapi',
