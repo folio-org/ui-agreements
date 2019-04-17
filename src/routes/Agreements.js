@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
-
+import { FormattedDate, FormattedMessage } from 'react-intl';
 import { SearchAndSort } from '@folio/stripes/smart-components';
-import { getSASParams } from '@folio/stripes-erm-components';
-
+import { getSASParams, Tags } from '@folio/stripes-erm-components';
 import ViewAgreement from '../components/Agreements/ViewAgreement';
 import EditAgreement from '../components/Agreements/EditAgreement';
 import AgreementFilters from '../components/Agreements/AgreementFilters';
@@ -104,7 +102,6 @@ class Agreements extends React.Component {
   static propTypes = {
     browseOnly: PropTypes.bool,
     disableRecordCreation: PropTypes.bool,
-    intl: intlShape,
     resources: PropTypes.object,
     mutator: PropTypes.object,
     onSelectRow: PropTypes.func,
@@ -147,9 +144,10 @@ class Agreements extends React.Component {
 
   handleUpdate = (agreement) => {
     this.props.mutator.selectedAgreementId.replace(agreement.id);
-
     return this.props.mutator.selectedAgreement.PUT(agreement);
   }
+
+  getHelperResourcePath = (helper, id) => `erm/sas/${id}`;
 
   getActiveFilters = () => {
     const { query } = this.props.resources;
@@ -192,19 +190,19 @@ class Agreements extends React.Component {
   }
 
   render() {
-    const { mutator, resources, intl } = this.props;
+    const { mutator, resources } = this.props;
 
     return (
       <SearchAndSort
         browseOnly={this.props.browseOnly}
         columnMapping={{
-          name: intl.formatMessage({ id: 'ui-agreements.agreements.name' }),
-          vendor: intl.formatMessage({ id: 'ui-agreements.agreements.vendorInfo.vendor' }),
-          startDate: intl.formatMessage({ id: 'ui-agreements.agreements.startDate' }),
-          endDate: intl.formatMessage({ id: 'ui-agreements.agreements.endDate' }),
-          cancellationDeadline: intl.formatMessage({ id: 'ui-agreements.agreements.cancellationDeadline' }),
-          agreementStatus: intl.formatMessage({ id: 'ui-agreements.agreements.agreementStatus' }),
-          lastUpdated: intl.formatMessage({ id: 'ui-agreements.lastUpdated' }),
+          name: <FormattedMessage id="ui-agreements.agreements.name" />,
+          vendor: <FormattedMessage id="ui-agreements.agreements.vendorInfo.vendor" />,
+          startDate: <FormattedMessage id="ui-agreements.agreements.startDate" />,
+          endDate: <FormattedMessage id="ui-agreements.agreements.endDate" />,
+          cancellationDeadline: <FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />,
+          agreementStatus: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
+          lastUpdated: <FormattedMessage id="ui-agreements.lastUpdated" />,
         }}
         columnWidths={{
           name: 300,
@@ -220,6 +218,7 @@ class Agreements extends React.Component {
         }}
         disableRecordCreation={this.props.disableRecordCreation}
         editRecordComponent={EditAgreement}
+        getHelperResourcePath={this.getHelperResourcePath}
         initialResultCount={INITIAL_RESULT_COUNT}
         key="agreements"
         newRecordPerms="ui-agreements.agreements.create"
@@ -231,6 +230,7 @@ class Agreements extends React.Component {
         resultCountIncrement={INITIAL_RESULT_COUNT}
         showSingleResult={this.props.showSingleResult}
         viewRecordComponent={ViewAgreement}
+        getHelperComponent={helper => (helper === 'tags' ? Tags : null)}
         viewRecordPerms="ui-agreements.agreements.view"
         // SearchAndSort expects the resource it's going to list to be under the `records` key.
         // However, if we just put it under `records` in the `manifest`, it would clash with
@@ -246,9 +246,9 @@ class Agreements extends React.Component {
         renderFilters={this.renderFilters}
         resultsFormatter={{
           vendor: a => a.vendor && a.vendor.name,
-          startDate: a => a.startDate && intl.formatDate(a.startDate),
-          endDate: a => a.endDate && intl.formatDate(a.endDate),
-          cancellationDeadline: a => a.cancellationDeadline && intl.formatDate(a.cancellationDeadline),
+          startDate: a => a.startDate && <FormattedDate value={a.startDate} />,
+          endDate: a => a.endDate && <FormattedDate value={a.endDate} />,
+          cancellationDeadline: a => a.cancellationDeadline && <FormattedDate value={a.cancellationDeadline} />,
           agreementStatus: a => a.agreementStatus && a.agreementStatus.label,
         }}
         visibleColumns={[
@@ -265,4 +265,4 @@ class Agreements extends React.Component {
   }
 }
 
-export default injectIntl(Agreements);
+export default Agreements;

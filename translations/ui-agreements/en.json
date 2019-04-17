@@ -1,22 +1,17 @@
 {
   "meta.title": "ERM",
-
   "lastUpdated": "Last updated",
   "remove": "Remove",
-
   "yes": "Yes",
   "no": "No",
-
   "tabs.dashboard": "Dashboard",
   "tabs.agreements": "Agreements",
   "tabs.eresources": "E-resources",
-
   "agreements.edit": "Edit",
-
+  "agreements.showTags": "Show Tags",
   "agreements.vendorInfo.vendor": "Vendor",
   "agreements.vendorInfo.status": "Status",
   "agreements.vendorInfo.visitPlatform": "Visit platform",
-
   "agreements.agreementInfo": "Agreement information",
   "agreements.name": "Name",
   "agreements.agreementDescription": "Description",
@@ -52,12 +47,10 @@
   "agreements.eresourceAgreementLines": "E-resources - agreement lines",
   "agreements.eresourcesCovered": "E-resources covered by this agreement",
   "agreements.assocAgreements": "Associated agreements",
-
   "agreements.closeNewAgreement": "Close New Agreement dialog",
   "agreements.createAgreement": "Create Agreement",
   "agreements.updateAgreement": "Update Agreement",
   "agreements.editAgreement": "Edit Agreement",
-
   "agreementLines.addLine": "Add agreement line",
   "agreementLines.addCustomCoverage": "Add custom coverage",
   "agreementLines.costType": "Cost type",
@@ -74,11 +67,10 @@
   "agreementLines.lineTitle": "Agreement line #{number}",
   "agreementLines.hasCustomCoverage": "Has custom coverage",
   "agreementLines.customCoverageTitle": "Custom coverage #{number}",
-
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
   "basket.name": "ERM Basket",
   "basket.close": "Close basket",
-  "basket.recordCount":  "Showing {count, number} {count, plural, one {record} other {records}}",
+  "basket.recordCount": "Showing {count, number} {count, plural, one {record} other {records}}",
   "basket.layerLabel": "View E-resources in the ERM basket",
   "basket.removeItem": "Remove item from basket",
   "basket.parentPackage": "Parent package",
@@ -86,20 +78,16 @@
   "basket.addToExistingAgreement": "Add to existing agreement",
   "basket.addToSelectedAgreement": "Add to selected agreement",
   "basket.clickToSelectAgreement": "Click to select agreement",
-
   "basketSelector.selectLabel": "Select from basket",
   "basketSelector.selectPlaceholder": "Select e-resource or package",
-
   "contacts.noContacts": "Agreement has no internal contacts.",
   "contacts.add": "Add internal contact",
   "contacts.name": "Name",
   "contacts.role": "Role",
   "contacts.remove": "Remove",
   "contacts.selectRole": "Select a role for this user",
-
   "coverage.volumeShort": "Vol:",
   "coverage.issueShort": "Iss:",
-
   "eresources.name": "Name",
   "eresources.type": "Type",
   "eresources.titles": "Titles",
@@ -132,18 +120,15 @@
   "eresources.provider": "Provider",
   "eresources.addToBasketHeader": "E-resource basket",
   "eresources.sourceKb": "Source",
-
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
   "errors.multipleOpenEndedCoverages": "Cannot have multiple open-ended coverage statements.",
   "errors.overlappingCoverage": "The following coverages have overlapping dates: {coverages}",
-
   "identifier.doi": "DOI",
   "identifier.eissn": "ISSN (Online)",
   "identifier.ezb": "EZB",
   "identifier.isbn": "ISBN",
   "identifier.pissn": "ISSN (Print)",
   "identifier.zdb": "ZDB",
-
   "license.addExternalLicense": "Add external license to agreement",
   "license.addLicense": "Add license to agreement",
   "license.allLicenses": "All licenses",
@@ -166,7 +151,6 @@
   "license.prop.status": "Status (this agreement)",
   "license.prop.startDate": "Start date",
   "license.selectStatus": "Select a status",
-
   "organizations.edit": "Edit organizations",
   "organizations.add": "Add organization to agreement",
   "organizations.agreementHasNone": "Agreement has no organizations.",
@@ -178,13 +162,11 @@
   "organizations.createNew": "Create new organization",
   "organizations.alreadyExists": "An organization with this name already exists!",
   "organizations.typeToSearch": "Begin typing to search for an organization",
-
   "settings.general": "General",
   "settings.general.hideEResourcesFunctionality.title": "Hide all \"E-resources\" functionality",
   "settings.general.hideEResourcesFunctionality.description": "Useful when E-resources are searched for and managed by an external application that reports them to this Agreements application.",
   "settings.orgRoles": "Organization roles",
   "settings.orgRoles.orgRole": "Organization role",
   "settings.orgRoles.role": "Role",
-
   "userpicker.clickSearchButton": "Click the 'Search' button to select a user"
 }
