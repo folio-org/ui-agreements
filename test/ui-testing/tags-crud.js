@@ -36,7 +36,7 @@ module.exports.test = (uiTestCtx) => {
           .wait('#tags_enabled')
           .wait(222)
           .evaluate(() => {
-            const list = document.querySelectorAll('[value="true"]');
+            const list = document.querySelectorAll('#tags_enabled[value="true"]');
             list.forEach(el => (el.click()));
           })
           .then(() => {
