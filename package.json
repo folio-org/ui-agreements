@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -17,6 +17,7 @@
     "test-int": "stripes test nightmare --run nav/agreement-crud/basket/external-licenses/custom-coverage/hide-eresources-func/linked-licenses/license-terms",
     "test-nav": "stripes test nightmare --run nav",
     "test-agreement-crud": "stripes test nightmare --run agreement-crud",
+    "test-tags-crud": "stripes test nightmare --run tags-crud",
     "test-basket": "stripes test nightmare --run basket",
     "test-external-licenses": "stripes test nightmare --run external-licenses",
     "test-hide-eresources-func": "stripes test nightmare --run hide-eresources-func",

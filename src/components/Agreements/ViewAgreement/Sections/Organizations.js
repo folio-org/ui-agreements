@@ -27,18 +27,10 @@ export default class Organizations extends React.Component {
     open: PropTypes.bool,
   };
 
-  state = {
-    displayLicenseOrgs: false,
-  }
-
-  toggleDisplayLicenseOrgs = () => {
-    this.setState(prevState => ({ displayLicenseOrgs: !prevState.displayLicenseOrgs }));
-  }
-
   renderOrgList = (orgs) => {
     return (
       <React.Fragment>
-        { orgs.map((o, index) => (
+        {orgs.map((o, index) => (
           <Layout className="marginTopHalf" key={index}>
             {o.org.vendorsUuid ?
               <Link to={`/vendors/view/${o.org.vendorsUuid}`}>{o.org.name}</Link> :
@@ -59,14 +51,6 @@ export default class Organizations extends React.Component {
     return this.renderOrgList(orgs);
   }
 
-  renderLicenseOrganizations = () => {
-    const { attachedLicenceId } = this.props.agreement;
-
-    if (!attachedLicenceId) return <FormattedMessage id="ui-agreements.license.noLicenses" />;
-
-    return <FormattedMessage id="ui-agreements.license.noLicenseOrganizations" />;
-  }
-
   renderBadge = () => {
     const count = get(this.props.agreement, ['orgs', 'length']);
     return count !== undefined ? <Badge>{count}</Badge> : <Icon icon="spinner-ellipsis" width="10px" />;
@@ -83,20 +67,8 @@ export default class Organizations extends React.Component {
         onToggle={this.props.onToggle}
       >
         <Layout className="padding-bottom-gutter">
-          { this.renderOrganizations() }
+          {this.renderOrganizations()}
         </Layout>
-        <div style={{ marginLeft: '2rem' }}>
-          <Accordion
-            id={`${this.props.id}-license`}
-            label={<FormattedMessage id="ui-agreements.agreements.license" />}
-            open={this.state.displayLicenseOrgs}
-            onToggle={this.toggleDisplayLicenseOrgs}
-          >
-            <Layout className="padding-bottom-gutter">
-              { this.renderLicenseOrganizations() }
-            </Layout>
-          </Accordion>
-        </div>
       </Accordion>
     );
   }
