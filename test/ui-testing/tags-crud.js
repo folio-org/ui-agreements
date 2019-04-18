@@ -101,21 +101,13 @@ module.exports.test = (uiTestCtx) => {
           .wait('#multiselect-option-list-tags-filter > ul > li')
           .click('#multiselect-option-list-tags-filter > ul > li')
           .wait('#list-agreements')
-          .wait((agreement, tag) => {
+          .wait(() => document.querySelector('#list-agreements [aria-rowindex="3"]') === null)
+          .wait((agreement) => {
             const agreementsArray = [...document.querySelectorAll('#list-agreements div[role="row"]')];
             const index =
               agreementsArray.findIndex(node => node.querySelector('div:nth-child(1)').textContent === agreement);
             return index >= 0;
-          }, agreement.name, testTag)
-          .evaluate((agreement, tag) => {
-            const agreementsArray = [...document.querySelectorAll('#list-agreements div[role="row"]')];
-            const index =
-              agreementsArray.findIndex(node => node.querySelector('div:nth-child(1)').textContent === agreement);
-
-            if (document.querySelector('#list-agreements [aria-rowindex="3"]')) {
-              throw new Error('Only one agreement should be found');
-            }
-          }, agreement.name, testTag)
+          }, agreement.name)
           .then(done)
           .catch(done)
       });
