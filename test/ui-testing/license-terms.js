@@ -44,8 +44,8 @@ module.exports.test = (uiTestCtx) => {
       licenses.forEach(l => {
         it(`should create new license: ${l.name}`, done => {
           nightmare
-            .wait('#clickable-newlicense')
-            .click('#clickable-newlicense')
+            .wait('#clickable-new-license')
+            .click('#clickable-new-license')
 
             .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 
@@ -93,7 +93,7 @@ module.exports.test = (uiTestCtx) => {
 
         it('should create license', done => {
           nightmare
-            .click('#clickable-createlicense')
+            .click('#clickable-create-license')
             .wait('#licenseInfo')
             .waitUntilNetworkIdle(1000)
             .then(done)
@@ -157,11 +157,11 @@ module.exports.test = (uiTestCtx) => {
             .waitUntilNetworkIdle(1000)
             .wait('#plugin-find-license-modal #input-license-search')
             .insert('#plugin-find-license-modal #input-license-search', l.name)
-            .wait('#plugin-find-license-modal #pane-filter button[type="submit"]')
-            .click('#plugin-find-license-modal #pane-filter button[type="submit"]')
-            .wait('#list-plugin-find-license[data-total-count="1"]')
-            .wait(`#plugin-find-license-modal [role="row"] a[data-label*="${l.name}"]`)
-            .click(`#plugin-find-license-modal [role="row"] a[data-label*="${l.name}"]`)
+            .wait('#plugin-find-license-modal #clickable-search-licenses')
+            .click('#plugin-find-license-modal #clickable-search-licenses')
+            .wait('#list-licenses[data-total-count="1"]')
+            .wait(`#plugin-find-license-modal [role="row"][data-label*="${l.name}"]`)
+            .click(`#plugin-find-license-modal [role="row"][data-label*="${l.name}"]`)
             .wait(`#linkedLicenses-remoteId-${i}-license-card`)
             .insert(`#linkedLicenses-note-${i}`, l.note)
             .then(done)
