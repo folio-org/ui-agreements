@@ -3,7 +3,7 @@ const AgreementCRUD = require('./agreement-crud');
 
 module.exports.test = (uiTestCtx) => {
   const number = Math.round(Math.random() * 100000);
-  const testTag = `test${Math.floor(Math.random() * 10000)}`;
+  const testTag = `test${Math.floor(Math.random() * 100000)}`;
   const agreement = {
     name: `Tags Agreement #${number}`,
   };
@@ -11,7 +11,7 @@ module.exports.test = (uiTestCtx) => {
   describe('Login > Enable Tags > Find user > Create Tags > Logout\n', function test() {
     const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
-    nightmare.options.width = 1000; // added this temporarily as MultiSelect doesnt work well with narrow screen sizes
+    nightmare.options.width = 1300; // added this temporarily as MultiSelect doesnt work well with narrow screen sizes
 
     this.timeout(Number(config.test_timeout));
 
@@ -75,8 +75,8 @@ module.exports.test = (uiTestCtx) => {
           .click('#clickable-show-tags')
           .wait('#input-tag-input')
           .type('#input-tag-input', testTag)
-          .click('#input-tag-input')
-          .type('#input-tag-input', '\u000d')
+          .wait('#multiselect-option-list-input-tag > ul > li')
+          .click('#multiselect-option-list-input-tag > ul > li')
           .wait((tagValue) => {
             return Array.from(
               document.querySelectorAll('div[class*="valueChipValue"]')
@@ -92,6 +92,35 @@ module.exports.test = (uiTestCtx) => {
           .wait(() => parseInt(document.querySelector('#clickable-show-tags').textContent) === 1)
           .then(done)
           .catch(done);
+      });
+
+      it('should filter agreements by the tag', done => {
+        nightmare
+          .wait('#tags-filter-input')
+          .type('#tags-filter-input', testTag)
+          .wait('#multiselect-option-list-tags-filter > ul > li')
+          .click('#multiselect-option-list-tags-filter > ul > li')
+          .wait('#list-agreements')
+          .wait((agreement, tag) => {
+            const agreementsArray = [...document.querySelectorAll('#list-agreements div[role="row"]')];
+            const index =
+              agreementsArray.findIndex(node => node.querySelector('div:nth-child(1)').textContent === agreement);
+            return index >= 0;
+          }, agreement.name, testTag)
+          .evaluate((agreement, tag) => {
+            const agreementsArray = [...document.querySelectorAll('#list-agreements div[role="row"]')];
+            const index =
+              agreementsArray.findIndex(node => node.querySelector('div:nth-child(1)').textContent === agreement);
+
+            if (index === -1) {
+              throw new Error(`Could not find the agreement ${agreement} for the tag ${tag}`);
+            }
+            else if (document.querySelector('#list-agreements [aria-rowindex="3"]')) {
+              throw new Error('Only one agreement should be found');
+            }
+          }, agreement.name, testTag)
+          .then(done)
+          .catch(done)
       });
     });
   });

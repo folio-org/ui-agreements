@@ -113,10 +113,11 @@ export default class AgreementFilters extends React.Component {
         displayClearButton={activeFilters.length > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-agreements.agreements.tags" />}
-        onClearFilter={() => { this.props.onChange({ name:'tags', values: [] }); }}
+        onClearFilter={() => { this.props.onChange({ name: 'tags', values: [] }); }}
         {...this.props}
       >
         <MultiSelectionFilter
+          id="tags-filter"
           dataOptions={dataOptions}
           name="tags"
           onChange={this.props.onChange}
