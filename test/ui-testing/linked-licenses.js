@@ -46,15 +46,15 @@ module.exports.test = (uiTestCtx) => {
       licenses.forEach(l => {
         it(`should create new license: ${l.name}`, done => {
           nightmare
-            .wait('#clickable-newlicense')
-            .click('#clickable-newlicense')
+            .wait('#clickable-new-license')
+            .click('#clickable-new-license')
 
             .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 
             .insert('#edit-license-name', l.name)
             .insert('#edit-license-start-date', l.startDate)
 
-            .click('#clickable-createlicense')
+            .click('#clickable-create-license')
             .wait('#licenseInfo')
             .waitUntilNetworkIdle(500)
             .then(() => nightmare.click('#pane-view-license button[icon=times]'))
@@ -92,11 +92,11 @@ module.exports.test = (uiTestCtx) => {
             .waitUntilNetworkIdle(1000)
             .wait('#plugin-find-license-modal #input-license-search')
             .insert('#plugin-find-license-modal #input-license-search', l.name)
-            .wait('#plugin-find-license-modal #pane-filter button[type="submit"]')
-            .click('#plugin-find-license-modal #pane-filter button[type="submit"]')
-            .wait('#list-plugin-find-license[data-total-count="1"]')
-            .wait(`#plugin-find-license-modal [role="row"] a[data-label*="${l.name}"]`)
-            .click(`#plugin-find-license-modal [role="row"] a[data-label*="${l.name}"]`)
+            .wait('#plugin-find-license-modal #clickable-search-licenses')
+            .click('#plugin-find-license-modal #clickable-search-licenses')
+            .wait('#list-licenses[data-total-count="1"]')
+            .wait(`#plugin-find-license-modal [role="row"][data-label*="${l.name}"]`)
+            .click(`#plugin-find-license-modal [role="row"][data-label*="${l.name}"]`)
             .wait(`#linkedLicenses-remoteId-${i}-license-card`)
             .insert(`#linkedLicenses-note-${i}`, l.note)
             .then(done)
@@ -224,9 +224,9 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .wait('#input-license-search')
           .insert('#input-license-search', licenses[0].name)
-          .click('#pane-filter button[type="submit"]')
+          .click('#clickable-search-licenses')
           .waitUntilNetworkIdle(2000)
-          .click('#list-licenses [aria-rowindex="2"] a')
+          .click('#list-licenses a[aria-rowindex="2"]')
           .wait(licenseName => {
             const nameElement = document.querySelector('[data-test-license-name]');
             if (!nameElement) return false;
