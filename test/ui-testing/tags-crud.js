@@ -112,10 +112,7 @@ module.exports.test = (uiTestCtx) => {
             const index =
               agreementsArray.findIndex(node => node.querySelector('div:nth-child(1)').textContent === agreement);
 
-            if (index === -1) {
-              throw new Error(`Could not find the agreement ${agreement} for the tag ${tag}`);
-            }
-            else if (document.querySelector('#list-agreements [aria-rowindex="3"]')) {
+            if (document.querySelector('#list-agreements [aria-rowindex="3"]')) {
               throw new Error('Only one agreement should be found');
             }
           }, agreement.name, testTag)
