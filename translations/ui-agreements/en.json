@@ -47,6 +47,7 @@
   "agreements.eresourceAgreementLines": "E-resources - agreement lines",
   "agreements.eresourcesCovered": "E-resources covered by this agreement",
   "agreements.assocAgreements": "Associated agreements",
+  "agreements.tags": "Tags",
   "agreements.closeNewAgreement": "Close New Agreement dialog",
   "agreements.createAgreement": "Create Agreement",
   "agreements.updateAgreement": "Update Agreement",
