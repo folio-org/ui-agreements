@@ -4,7 +4,7 @@
     "tabs.agreements": "الاتفاقيات",
     "tabs.eresources": "الموارد الإلكترونية",
     "agreements.edit": "تحرير",
-    "agreements.vendorInfo.vendor": "مقدم الخدمة",
+    "agreements.vendorInfo.vendor": "الموّرد",
     "agreements.vendorInfo.status": "الحالة",
     "agreements.vendorInfo.visitPlatform": "قم بزيارة المنصة",
     "agreements.name": "الاسم",
@@ -167,5 +167,7 @@
     "settings.general.hideEResourcesFunctionality.title": "إخفاء جميع وظائف \"الموارد الإلكترونية\"",
     "settings.general.hideEResourcesFunctionality.description": "مفيد عندما يتم البحث عن الموارد الإلكترونية وإدارتها بواسطة تطبيق خارجي يقوم بتقديم النقارير عنها إلى تطبيق الاتفاقيات هذا.",
     "agreementLines.hasCustomCoverage": "له تغطية مخصصة",
-    "eresources.provider": "المزود"
+    "eresources.provider": "المزود",
+    "agreements.showTags": "عرض الوسوم",
+    "agreements.tags": "الوسوم"
 }
