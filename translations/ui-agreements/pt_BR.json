@@ -167,5 +167,7 @@
     "settings.general.hideEResourcesFunctionality.title": "Ocultar todas as funcionalidades de \"E-recursos\"",
     "settings.general.hideEResourcesFunctionality.description": "Útil quando E-recursos são procurados e gerenciados por um aplicativo externo que relata para esta aplicação de contratos.",
     "agreementLines.hasCustomCoverage": "Tem cobertura customizada",
-    "eresources.provider": "Fornecedor"
+    "eresources.provider": "Fornecedor",
+    "agreements.showTags": "Mostrar tags",
+    "agreements.tags": "Tags"
 }
