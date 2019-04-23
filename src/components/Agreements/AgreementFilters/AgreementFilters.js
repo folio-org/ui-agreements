@@ -11,6 +11,7 @@ const FILTERS = [
   'agreementStatus',
   'renewalPriority',
   'isPerpetual',
+  'Tags'
 ];
 
 export default class AgreementFilters extends React.Component {
@@ -25,6 +26,7 @@ export default class AgreementFilters extends React.Component {
       agreementStatus: [],
       renewalPriority: [],
       isPerpetual: [],
+      Tags: [],
     }
   };
 
@@ -32,6 +34,7 @@ export default class AgreementFilters extends React.Component {
     agreementStatus: [],
     renewalPriority: [],
     isPerpetual: [],
+    Tags: [],
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -99,7 +102,7 @@ export default class AgreementFilters extends React.Component {
     );
   }
 
-  renderTagsFilter = () => {
+  renderTagsFilter = (name, props) => {
     const tags = get(this.props.resources.tags, ['records'], []);
     const dataOptions = tags.map(tag => ({
       value: tag.label,
@@ -110,10 +113,12 @@ export default class AgreementFilters extends React.Component {
 
     return (
       <Accordion
+        id="clickable-tags-filter"
         displayClearButton={activeFilters.length > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-agreements.agreements.tags" />}
         onClearFilter={() => { this.props.onChange({ name: 'tags', values: [] }); }}
+        {...props}
       >
         <MultiSelectionFilter
           id="tags-filter"
@@ -162,7 +167,7 @@ export default class AgreementFilters extends React.Component {
         {this.renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
         {this.renderOrganizationFilter()}
         {this.renderRoleLabel()}
-        {this.renderTagsFilter()}
+        {this.renderTagsFilter('Tags', { closedByDefault: true })}
       </AccordionSet>
     );
   }
