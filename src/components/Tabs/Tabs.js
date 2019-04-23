@@ -64,7 +64,7 @@ class Tabs extends React.Component {
   }
 
   handleNavigate = (e) => {
-    const { id } = e.target;
+    const { id } = e.currentTarget;
 
     this.persistSortAndFilters();
 

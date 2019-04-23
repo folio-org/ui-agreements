@@ -74,7 +74,7 @@
       },
       {
         "permissionName": "ui-agreements.agreements.view",
-        "displayName": "ERM: Can view agreements",
+        "displayName": "Agreements: Can view agreements",
         "visible": true,
         "subPermissions": [
           "module.agreements.enabled"
@@ -82,7 +82,7 @@
       },
       {
         "permissionName": "ui-agreements.agreements.edit",
-        "displayName": "ERM: Can edit agreements",
+        "displayName": "Agreements: Can edit agreements",
         "visible": true,
         "subPermissions": [
           "ui-agreements.agreements.view"
@@ -90,7 +90,7 @@
       },
       {
         "permissionName": "ui-agreements.agreements.create",
-        "displayName": "ERM: Can create and edit agreements",
+        "displayName": "Agreements: Can create and edit agreements",
         "visible": true,
         "subPermissions": [
           "ui-agreements.agreements.edit"
