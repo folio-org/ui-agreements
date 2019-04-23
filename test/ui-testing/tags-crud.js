@@ -96,6 +96,8 @@ module.exports.test = (uiTestCtx) => {
 
       it('should filter agreements by the tag', done => {
         nightmare
+          .wait('#accordion-toggle-button-clickable-tags-filter')
+          .click('#accordion-toggle-button-clickable-tags-filter')
           .wait('#tags-filter-input')
           .type('#tags-filter-input', testTag)
           .wait('#multiselect-option-list-tags-filter > ul > li')
