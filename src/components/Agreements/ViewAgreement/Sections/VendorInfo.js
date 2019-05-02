@@ -44,13 +44,6 @@ export default class VendorInfo extends React.Component {
             <div data-test-agreement-status>{get(agreement, ['agreementStatus', 'label'], '-')}</div>
           </KeyValue>
         </Col>
-        <Col xs={3}>
-          <Button>
-            <Icon size="small" icon="external-link">
-              <FormattedMessage id="ui-agreements.agreements.vendorInfo.visitPlatform" />
-            </Icon>
-          </Button>
-        </Col>
       </Row>
     );
   }
