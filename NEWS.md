@@ -1,5 +1,6 @@
 ## 2.3.0 Open
 
+ * ERM-197 Change "ERM" to "Agreements" in UI
  * ERM-166 Remove unwanted extra license section
  * ERM-133 Configure Document Categories
  * ERM-143 Add License / Supplementaty License Information Panel UI
