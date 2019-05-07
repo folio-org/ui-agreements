@@ -42,7 +42,7 @@ export default class InternalContacts extends React.Component {
       const displayName = firstName ? `${lastName}, ${firstName}` : lastName;
 
       return (
-        <div key={i}>
+        <div key={contact.user}>
           <Link to={`/users/view/${contact.user}`}>{displayName}</Link>
           ,&nbsp;
           <span>{contact.role ? contact.role.label : ''}</span>
