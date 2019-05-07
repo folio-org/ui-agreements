@@ -15,8 +15,10 @@
     "build": "stripes build --output ./output",
     "test": "stripes test nightmare --run nav/agreement-crud/basket/external-licenses/custom-coverage/hide-eresources-func",
     "test-int": "stripes test nightmare --run nav/agreement-crud/basket/external-licenses/custom-coverage/hide-eresources-func/linked-licenses/license-terms",
+    "test-licenses-int": "stripes test nightmare --run linked-licenses/license-terms",
     "test-nav": "stripes test nightmare --run nav",
     "test-agreement-crud": "stripes test nightmare --run agreement-crud",
+    "test-tags-crud": "stripes test nightmare --run tags-crud",
     "test-basket": "stripes test nightmare --run basket",
     "test-external-licenses": "stripes test nightmare --run external-licenses",
     "test-hide-eresources-func": "stripes test nightmare --run hide-eresources-func",
@@ -72,7 +74,7 @@
       },
       {
         "permissionName": "ui-agreements.agreements.view",
-        "displayName": "ERM: Can view agreements",
+        "displayName": "Agreements: Can view agreements",
         "visible": true,
         "subPermissions": [
           "module.agreements.enabled"
@@ -80,7 +82,7 @@
       },
       {
         "permissionName": "ui-agreements.agreements.edit",
-        "displayName": "ERM: Can edit agreements",
+        "displayName": "Agreements: Can edit agreements",
         "visible": true,
         "subPermissions": [
           "ui-agreements.agreements.view"
@@ -88,7 +90,7 @@
       },
       {
         "permissionName": "ui-agreements.agreements.create",
-        "displayName": "ERM: Can create and edit agreements",
+        "displayName": "Agreements: Can create and edit agreements",
         "visible": true,
         "subPermissions": [
           "ui-agreements.agreements.edit"

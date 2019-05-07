@@ -61,7 +61,7 @@
     "eresources.acqMethod": "Acquisition method",
     "eresources.platform": "Platform",
     "eresources.addToBasketHeader": "E-resource basket",
-    "meta.title": "ERM",
+    "meta.title": "Agreements",
     "remove": "Remove",
     "yes": "Sim",
     "no": "No",
@@ -167,5 +167,7 @@
     "settings.general.hideEResourcesFunctionality.title": "Hide all \"E-resources\" functionality",
     "settings.general.hideEResourcesFunctionality.description": "Useful when E-resources are searched for and managed by an external application that reports them to this Agreements application.",
     "agreementLines.hasCustomCoverage": "Has custom coverage",
-    "eresources.provider": "Provider"
+    "eresources.provider": "Provider",
+    "agreements.showTags": "Show Tags",
+    "agreements.tags": "Tags"
 }

@@ -4,13 +4,14 @@ import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
-import { CheckboxFilter } from '@folio/stripes/smart-components';
+import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
 import { OrganizationSelection } from '@folio/stripes-erm-components';
 
 const FILTERS = [
   'agreementStatus',
   'renewalPriority',
   'isPerpetual',
+  'Tags'
 ];
 
 export default class AgreementFilters extends React.Component {
@@ -25,6 +26,7 @@ export default class AgreementFilters extends React.Component {
       agreementStatus: [],
       renewalPriority: [],
       isPerpetual: [],
+      Tags: [],
     }
   };
 
@@ -32,6 +34,7 @@ export default class AgreementFilters extends React.Component {
     agreementStatus: [],
     renewalPriority: [],
     isPerpetual: [],
+    Tags: [],
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -99,6 +102,35 @@ export default class AgreementFilters extends React.Component {
     );
   }
 
+  renderTagsFilter = (name, props) => {
+    const tags = get(this.props.resources.tags, ['records'], []);
+    const dataOptions = tags.map(tag => ({
+      value: tag.label,
+      label: tag.label,
+    }));
+
+    const activeFilters = this.props.activeFilters.tags || [];
+
+    return (
+      <Accordion
+        id="clickable-tags-filter"
+        displayClearButton={activeFilters.length > 0}
+        header={FilterAccordionHeader}
+        label={<FormattedMessage id="ui-agreements.agreements.tags" />}
+        onClearFilter={() => { this.props.onChange({ name: 'tags', values: [] }); }}
+        {...props}
+      >
+        <MultiSelectionFilter
+          id="tags-filter"
+          dataOptions={dataOptions}
+          name="tags"
+          onChange={this.props.onChange}
+          selectedValues={activeFilters}
+        />
+      </Accordion>
+    );
+  }
+
   renderRoleLabel = () => {
     const roles = get(this.props.resources.orgRoleValues, ['records'], []);
     const dataOptions = roles.map(role => ({
@@ -135,6 +167,7 @@ export default class AgreementFilters extends React.Component {
         {this.renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
         {this.renderOrganizationFilter()}
         {this.renderRoleLabel()}
+        {this.renderTagsFilter('Tags', { closedByDefault: true })}
       </AccordionSet>
     );
   }
