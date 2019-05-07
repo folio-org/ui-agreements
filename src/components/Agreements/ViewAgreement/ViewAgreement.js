@@ -231,7 +231,7 @@ class ViewAgreement extends React.Component {
     if (contacts.length) {
       agreement.contacts = contacts.map(c => ({
         ...c,
-        role: c.role ? c.role.id : undefined,
+        role: c.role ? c.role.value : undefined,
       }));
     }
 

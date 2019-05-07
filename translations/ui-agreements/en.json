@@ -82,11 +82,6 @@
   "basketSelector.selectLabel": "Select from basket",
   "basketSelector.selectPlaceholder": "Select e-resource or package",
   "contacts.noContacts": "Agreement has no internal contacts.",
-  "contacts.add": "Add internal contact",
-  "contacts.name": "Name",
-  "contacts.role": "Role",
-  "contacts.remove": "Remove",
-  "contacts.selectRole": "Select a role for this user",
   "coverage.volumeShort": "Vol:",
   "coverage.issueShort": "Iss:",
   "eresources.name": "Name",
@@ -168,6 +163,5 @@
   "settings.general.hideEResourcesFunctionality.description": "Useful when E-resources are searched for and managed by an external application that reports them to this Agreements application.",
   "settings.orgRoles": "Organization roles",
   "settings.orgRoles.orgRole": "Organization role",
-  "settings.orgRoles.role": "Role",
-  "userpicker.clickSearchButton": "Click the 'Search' button to select a user"
+  "settings.orgRoles.role": "Role"
 }

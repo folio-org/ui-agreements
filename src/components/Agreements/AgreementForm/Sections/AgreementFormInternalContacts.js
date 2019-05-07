@@ -5,9 +5,7 @@ import { get } from 'lodash';
 import { FieldArray } from 'redux-form';
 
 import { Accordion } from '@folio/stripes/components';
-import { Spinner } from '@folio/stripes-erm-components';
-
-import InternalContactsFieldArray from '../components/InternalContactsFieldArray';
+import { InternalContactsFieldArray, Spinner } from '@folio/stripes-erm-components';
 
 export default class AgreementFormInternalContacts extends React.Component {
   static propTypes = {
@@ -32,6 +30,7 @@ export default class AgreementFormInternalContacts extends React.Component {
         label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
       >
         <FieldArray
+          isEmptyMessage={<FormattedMessage id="ui-agreements.contacts.noContacts" />}
           name="contacts"
           component={InternalContactsFieldArray}
           contactRoles={contactRoles}
