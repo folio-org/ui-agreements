@@ -1,3 +1,5 @@
+## 2.4.0 OPEN
+
 ## 2.3.0 2019-05-07
 
  * ERM-197 Change "ERM" to "Agreements" in UI
