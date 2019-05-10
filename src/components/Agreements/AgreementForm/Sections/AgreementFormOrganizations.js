@@ -12,9 +12,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { CreateOrganizationModal } from '@folio/stripes-erm-components';
-
-import OrganizationsFieldArray from '../components/OrganizationsFieldArray';
+import { CreateOrganizationModal, OrganizationsFieldArray } from '@folio/stripes-erm-components';
 
 class AgreementFormOrganizations extends React.Component {
   static propTypes = {
@@ -47,6 +45,8 @@ class AgreementFormOrganizations extends React.Component {
               name="orgs"
               component={OrganizationsFieldArray}
               roles={get(this.props.parentResources.orgRoleValues, ['records'], [])}
+              organizations={get(this.props.parentResources.selectedAgreement, ['records.orgs'], [])}
+              change={this.props.change}
             />
             <Button onClick={() => this.setState({ showCreateOrgModal: true })}>
               <FormattedMessage id="ui-agreements.organizations.createNew" />

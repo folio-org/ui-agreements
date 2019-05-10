@@ -206,6 +206,7 @@ class ViewAgreement extends React.Component {
 
   getInitialValues() {
     const agreement = cloneDeep(this.getAgreement());
+    //console.log(agreement,'agreement');
     const {
       agreementStatus = {},
       renewalPriority = {},
@@ -236,7 +237,7 @@ class ViewAgreement extends React.Component {
     }
 
     if (orgs.length) {
-      agreement.orgs = orgs.map(o => ({ ...o, role: o.role.id }));
+      agreement.orgs = orgs.map(o => ({ ...o, role: o.role ? o.role.value : undefined, }));
     }
 
     if (linkedLicenses.length) {

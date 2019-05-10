@@ -149,6 +149,7 @@ class Agreements extends React.Component {
   }
 
   handleUpdate = (agreement) => {
+    console.log(agreement,'agreement');
     this.props.mutator.selectedAgreementId.replace(agreement.id);
     return this.props.mutator.selectedAgreement.PUT(agreement);
   }

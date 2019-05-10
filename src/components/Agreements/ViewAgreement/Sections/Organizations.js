@@ -31,13 +31,14 @@ export default class Organizations extends React.Component {
     return (
       <React.Fragment>
         {orgs.map((o, index) => (
-          <Layout className="marginTopHalf" key={index}>
-            {o.org.vendorsUuid ?
-              <Link to={`/vendors/view/${o.org.vendorsUuid}`}>{o.org.name}</Link> :
-              o.org.name
-            }
-            {o.role && `, ${o.role.label}`}
-          </Layout>
+          o.org ?
+          <Layout className="marginTopHalf" key={o.org.id}>
+          {o.org.orgsUuid ?
+            <Link to={`/vendors/view/${o.org.orgsUuid}`}>{o.org.name}</Link> :
+            o.org.name
+          }
+          {o.role && `, ${o.role.label}`}
+          </Layout> : null
         ))}
       </React.Fragment>
     );
