@@ -30,15 +30,15 @@ export default class Organizations extends React.Component {
   renderOrgList = (orgs) => {
     return (
       <React.Fragment>
-        {orgs.map((o, index) => (
+        {orgs.map(o => (
           o.org ?
-          <Layout className="marginTopHalf" key={o.org.id}>
-          {o.org.orgsUuid ?
-            <Link to={`/vendors/view/${o.org.orgsUuid}`}>{o.org.name}</Link> :
-            o.org.name
-          }
-          {o.role && `, ${o.role.label}`}
-          </Layout> : null
+            <Layout className="marginTopHalf" key={o.org.id}>
+              {o.org.orgsUuid ?
+                <Link to={`/vendors/view/${o.org.orgsUuid}`}>{o.org.name}</Link> :
+                o.org.name
+              }
+              {o.role && `, ${o.role.label}`}
+            </Layout> : null
         ))}
       </React.Fragment>
     );

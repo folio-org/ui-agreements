@@ -16,11 +16,13 @@ import { CreateOrganizationModal, OrganizationsFieldArray } from '@folio/stripes
 
 class AgreementFormOrganizations extends React.Component {
   static propTypes = {
+    change: PropTypes.func,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
     parentResources: PropTypes.shape({
       orgRoleValues: PropTypes.object,
+      selectedAgreement: PropTypes.object,
     }),
     stripes: PropTypes.shape({
       connect: PropTypes.func,

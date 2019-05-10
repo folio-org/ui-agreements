@@ -8,28 +8,9 @@ import { Button, IconButton, Pane, PaneMenu } from '@folio/stripes/components';
 import AgreementForm from '../AgreementForm';
 
 const handleSubmit = (agreement, dispatch, props) => {
-  //const agreementPayload = addOrgsUuid(agreement)
-  console.log(agreement.orgs,'orgs');
   props.onUpdate(agreement)
     .then(() => props.onCancel());
 };
-
-const addOrgsUuid = (agreement) => {
-  const { orgs } = agreement;
-  if(!orgs.length) {
-    return agreement;
-  }
-  else {
-    orgs.forEach(org => {
-      if(org.org) {
-        org.org.orgsUuid = org.id;
-        delete org.id;
-      }
-    });
-  }
-  agreement.orgs = orgs;
-  return agreement;
-}
 
 class EditAgreement extends React.Component {
   static propTypes = {
