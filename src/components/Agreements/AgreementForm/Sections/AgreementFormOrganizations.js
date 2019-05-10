@@ -47,7 +47,6 @@ class AgreementFormOrganizations extends React.Component {
               name="orgs"
               component={OrganizationsFieldArray}
               roles={get(this.props.parentResources.orgRoleValues, ['records'], [])}
-              organizations={get(this.props.parentResources.selectedAgreement, ['records.orgs'], [])}
               change={this.props.change}
             />
             <Button onClick={() => this.setState({ showCreateOrgModal: true })}>
