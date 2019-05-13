@@ -4,9 +4,7 @@ import { get } from 'lodash';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 
 import {
-  Button,
   Col,
-  Icon,
   KeyValue,
   Row,
 } from '@folio/stripes/components';

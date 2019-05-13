@@ -16,7 +16,6 @@ import { CreateOrganizationModal, OrganizationsFieldArray } from '@folio/stripes
 
 class AgreementFormOrganizations extends React.Component {
   static propTypes = {
-    change: PropTypes.func,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
@@ -47,7 +46,6 @@ class AgreementFormOrganizations extends React.Component {
               name="orgs"
               component={OrganizationsFieldArray}
               roles={get(this.props.parentResources.orgRoleValues, ['records'], [])}
-              change={this.props.change}
             />
             <Button onClick={() => this.setState({ showCreateOrgModal: true })}>
               <FormattedMessage id="ui-agreements.organizations.createNew" />

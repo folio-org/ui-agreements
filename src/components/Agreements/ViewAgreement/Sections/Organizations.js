@@ -34,7 +34,7 @@ export default class Organizations extends React.Component {
           o.org ?
             <Layout className="marginTopHalf" key={o.org.id}>
               {o.org.orgsUuid ?
-                <Link to={`/vendors/view/${o.org.orgsUuid}`}>{o.org.name}</Link> :
+                <Link to={`/organizations/view/${o.org.orgsUuid}`}>{o.org.name}</Link> :
                 o.org.name
               }
               {o.role && `, ${o.role.label}`}
