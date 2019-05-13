@@ -22,7 +22,6 @@ class AgreementFormOrganizations extends React.Component {
     open: PropTypes.bool,
     parentResources: PropTypes.shape({
       orgRoleValues: PropTypes.object,
-      selectedAgreement: PropTypes.object,
     }),
     stripes: PropTypes.shape({
       connect: PropTypes.func,
