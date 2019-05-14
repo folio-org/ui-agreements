@@ -76,11 +76,13 @@ class GeneralSettingsForm extends React.Component {
           <Layout className="padding-bottom-gutter padding-top-gutter">
             <FormattedMessage id="ui-agreements.settings.general.hideEResourcesFunctionality.description" />
           </Layout>
-          <List
-            items={[1, 2, 3]}
-            itemFormatter={item => <FormattedMessage id={`ui-agreements.settings.hideEResources.result.${item}`} tagName="li" />}
-            listStyle="bullets"
-          />
+          <Layout className="margin-both-gutter">
+            <List
+              items={[1, 2, 3]}
+              itemFormatter={item => <FormattedMessage id={`ui-agreements.settings.hideEResources.result.${item}`} tagName="li" />}
+              listStyle="bullets"
+            />
+          </Layout>
         </Pane>
       </form>
     );
