@@ -35,7 +35,7 @@ export default class InternalContacts extends React.Component {
 
     if (!contacts.length) return <FormattedMessage id="ui-agreements.contacts.noContacts" />;
 
-    return contacts.map((contact, i) => {
+    return contacts.map((contact) => {
       if (!contact.personal) return null;
 
       const { firstName, lastName } = contact.personal;
@@ -59,7 +59,7 @@ export default class InternalContacts extends React.Component {
         displayWhenOpen={this.renderBadge()}
         label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
       >
-        { this.renderContacts() }
+        {this.renderContacts()}
       </Accordion>
     );
   }
