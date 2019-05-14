@@ -130,11 +130,11 @@ class Agreements extends React.Component {
       });
   }
 
-  handleFilterChange = ({ name, values }) => {
-    const newFilters = {
-      ...this.getActiveFilters(),
-      [name]: values,
-    };
+  handleFilterChange = (filter) => {
+    const filtersArray = Array.isArray(filter) ? filter : [filter];
+
+    const newFilters = { ...this.getActiveFilters() };
+    filtersArray.forEach(f => { newFilters[f.name] = f.values; });
 
     const filters = Object.keys(newFilters)
       .map((filterName) => {
@@ -142,7 +142,7 @@ class Agreements extends React.Component {
           .map((filterValue) => `${filterName}.${filterValue}`)
           .join(',');
       })
-      .filter(filter => filter)
+      .filter(f => f)
       .join(',');
 
     this.props.mutator.query.update({ filters });
