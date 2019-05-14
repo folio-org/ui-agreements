@@ -119,6 +119,7 @@
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
   "errors.multipleOpenEndedCoverages": "Cannot have multiple open-ended coverage statements.",
   "errors.overlappingCoverage": "The following coverages have overlapping dates: {coverages}",
+  "errors.unsetAgreementLines": "Agreement {count, plural, one {line} other {lines}} {list} {count, plural, one {has} other {have}} no {count, plural, one {resource} other {resources}}. Select and create the {count, plural, one {line} other {lines}}, or delete {count, plural, one {it} other {them}}.",
   "identifier.doi": "DOI",
   "identifier.eissn": "ISSN (Online)",
   "identifier.ezb": "EZB",

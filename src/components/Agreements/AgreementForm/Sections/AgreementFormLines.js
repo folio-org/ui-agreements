@@ -20,6 +20,24 @@ export default class AgreementFormLines extends React.Component {
     parentResources: PropTypes.object,
   };
 
+  validateRequired = (lines = []) => {
+    const unsetLines = [];
+    lines.forEach((line, i) => {
+      if (Object.keys(line).length === 0) {
+        unsetLines.push(`#${i + 1}`);
+      }
+    });
+
+    if (unsetLines.length) {
+      const list = unsetLines.join(', ');
+      return {
+        items: <FormattedMessage id="ui-agreements.errors.unsetAgreementLines" values={{ count: unsetLines.length, list }} />
+      };
+    }
+
+    return undefined;
+  }
+
   render() {
     const { agreementLines, parentResources } = this.props;
 
@@ -37,6 +55,7 @@ export default class AgreementFormLines extends React.Component {
               component={AgreementLinesFieldArray}
               name="items"
               parentResources={parentResources}
+              validate={this.validateRequired}
             />
           </Col>
         </Row>
