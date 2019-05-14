@@ -159,8 +159,11 @@
   "organizations.alreadyExists": "An organization with this name already exists!",
   "organizations.typeToSearch": "Begin typing to search for an organization",
   "settings.general": "General",
-  "settings.general.hideEResourcesFunctionality.title": "Hide all \"E-resources\" functionality",
-  "settings.general.hideEResourcesFunctionality.description": "Useful when E-resources are searched for and managed by an external application that reports them to this Agreements application.",
+  "settings.general.hideEResourcesFunctionality.title": "Hide internal agreements knowledgebase",
+  "settings.general.hideEResourcesFunctionality.description": "If you are using another app (e.g. eHoldings) as your knowledge base and wish to hide the internal agreements knowledge base, you can check this setting. Specifically, this will:",
+  "settings.hideEResources.result.1": "Hide the E-resources tab in the agreements app",
+  "settings.hideEResources.result.2": "Hide the basket icon in the agreements app",
+  "settings.hideEResources.result.3": "Hide the \"E-resources covered by this agreement\" accordion in individual agreements",
   "settings.orgRoles": "Organization roles",
   "settings.orgRoles.orgRole": "Organization role",
   "settings.orgRoles.role": "Role"

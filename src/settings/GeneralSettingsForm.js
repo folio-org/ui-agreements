@@ -7,9 +7,12 @@ import {
   Button,
   Checkbox,
   Col,
+  Layout,
+  List,
   Pane,
   Row
 } from '@folio/stripes/components';
+
 
 import stripesForm from '@folio/stripes/form';
 
@@ -62,7 +65,6 @@ class GeneralSettingsForm extends React.Component {
             <Col xs={12}>
               <Field
                 label={<FormattedMessage id="ui-agreements.settings.general.hideEResourcesFunctionality.title" />}
-                description={<FormattedMessage id="ui-agreements.settings.general.hideEResourcesFunctionality.description" />}
                 id="hideEResourcesFunctionality"
                 name="hideEResourcesFunctionality"
                 component={Checkbox}
@@ -70,8 +72,17 @@ class GeneralSettingsForm extends React.Component {
                 normalize={v => !!v}
               />
             </Col>
-
           </Row>
+          <Layout className="padding-bottom-gutter padding-top-gutter">
+            <FormattedMessage id="ui-agreements.settings.general.hideEResourcesFunctionality.description" />
+          </Layout>
+          <Layout className="margin-both-gutter">
+            <List
+              items={[1, 2, 3]}
+              itemFormatter={item => <FormattedMessage id={`ui-agreements.settings.hideEResources.result.${item}`} tagName="li" />}
+              listStyle="bullets"
+            />
+          </Layout>
         </Pane>
       </form>
     );
