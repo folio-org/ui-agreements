@@ -12,9 +12,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { CreateOrganizationModal } from '@folio/stripes-erm-components';
-
-import OrganizationsFieldArray from '../components/OrganizationsFieldArray';
+import { CreateOrganizationModal, OrganizationsFieldArray } from '@folio/stripes-erm-components';
 
 class AgreementFormOrganizations extends React.Component {
   static propTypes = {
