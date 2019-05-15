@@ -13,11 +13,12 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run nav/agreement-crud/basket/external-licenses/custom-coverage/hide-eresources-func",
-    "test-int": "stripes test nightmare --run nav/agreement-crud/basket/external-licenses/custom-coverage/hide-eresources-func/linked-licenses/license-terms",
+    "test": "stripes test nightmare --run nav/agreement-crud/orgs/basket/external-licenses/custom-coverage/hide-eresources-func",
+    "test-int": "stripes test nightmare --run nav/agreement-crud/orgs/basket/external-licenses/custom-coverage/hide-eresources-func/linked-licenses/license-terms",
     "test-licenses-int": "stripes test nightmare --run linked-licenses/license-terms",
     "test-nav": "stripes test nightmare --run nav",
     "test-agreement-crud": "stripes test nightmare --run agreement-crud",
+    "test-orgs": "stripes test nightmare --run orgs",
     "test-tags-crud": "stripes test nightmare --run tags-crud",
     "test-basket": "stripes test nightmare --run basket",
     "test-external-licenses": "stripes test nightmare --run external-licenses",
@@ -105,10 +106,12 @@
         "visible": true
       }
     ],
-    "icons": [{
-      "name": "app",
-      "alt": "ERM agreement functionality for Stripes",
-      "title": "Agreements"
-    }]
+    "icons": [
+      {
+        "name": "app",
+        "alt": "ERM agreement functionality for Stripes",
+        "title": "Agreements"
+      }
+    ]
   }
 }

@@ -32,7 +32,7 @@ export default class Organizations extends React.Component {
       <React.Fragment>
         {orgs.map(o => (
           o.org ?
-            <Layout className="marginTopHalf" key={`${o.org.id}-${o.role.value}`}>
+            <Layout data-test-organizations-org className="marginTopHalf" key={`${o.org.id}-${o.role.value}`}>
               {o.org.orgsUuid ?
                 <Link to={`/organizations/view/${o.org.orgsUuid}`}>{o.org.name}</Link> :
                 o.org.name
