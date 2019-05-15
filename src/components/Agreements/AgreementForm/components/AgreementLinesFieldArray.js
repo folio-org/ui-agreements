@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Button, Layout } from '@folio/stripes/components';
+import { Button, Icon, Layout } from '@folio/stripes/components';
 
 import { withKiwtFieldArray } from '@folio/stripes-erm-components';
 
@@ -10,10 +10,15 @@ import IfEResourcesEnabled from '../../../IfEResourcesEnabled';
 import AgreementLineField from './AgreementLineField';
 import isExternal from '../../../../util/isExternal';
 
+import css from './AgreementLinesFieldArray.css';
+
 class AgreementLinesFieldArray extends React.Component {
   static propTypes = {
     agreementLines: PropTypes.arrayOf(PropTypes.object),
     items: PropTypes.arrayOf(PropTypes.object),
+    meta: PropTypes.shape({
+      error: PropTypes.object,
+    }),
     name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
     onDeleteField: PropTypes.func.isRequired,
@@ -63,6 +68,19 @@ class AgreementLinesFieldArray extends React.Component {
     </Layout>
   )
 
+  renderError = () => {
+    const { meta: { error = {} }, name } = this.props;
+    if (!error[name]) return null;
+
+    return (
+      <div className={css.error}>
+        <Icon size="medium" icon="exclamation-circle" status="error">
+          {error[name]}
+        </Icon>
+      </div>
+    );
+  }
+
   renderLines = () => {
     return this.props.items.map((line, i) => (
       <AgreementLineField
@@ -80,6 +98,7 @@ class AgreementLinesFieldArray extends React.Component {
   render() {
     return (
       <div>
+        { this.renderError() }
         <div id="agreement-form-lines">
           { this.props.items.length ? this.renderLines() : this.renderEmpty() }
         </div>
