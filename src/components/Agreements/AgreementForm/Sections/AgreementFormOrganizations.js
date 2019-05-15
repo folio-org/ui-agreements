@@ -7,12 +7,11 @@ import { FieldArray } from 'redux-form';
 import { withStripes } from '@folio/stripes/core';
 import {
   Accordion,
-  Button,
   Col,
   Row,
 } from '@folio/stripes/components';
 
-import { CreateOrganizationModal, OrganizationsFieldArray } from '@folio/stripes-erm-components';
+import { OrganizationsFieldArray } from '@folio/stripes-erm-components';
 
 class AgreementFormOrganizations extends React.Component {
   static propTypes = {
@@ -26,10 +25,6 @@ class AgreementFormOrganizations extends React.Component {
       connect: PropTypes.func,
     }),
   };
-
-  state = {
-    showCreateOrgModal: false,
-  }
 
   render() {
     return (
@@ -45,13 +40,6 @@ class AgreementFormOrganizations extends React.Component {
               name="orgs"
               component={OrganizationsFieldArray}
               roles={get(this.props.parentResources.orgRoleValues, ['records'], [])}
-            />
-            <Button onClick={() => this.setState({ showCreateOrgModal: true })}>
-              <FormattedMessage id="ui-agreements.organizations.createNew" />
-            </Button>
-            <CreateOrganizationModal
-              onClose={() => this.setState({ showCreateOrgModal: false })}
-              open={this.state.showCreateOrgModal}
             />
           </Col>
         </Row>

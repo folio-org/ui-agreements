@@ -23,7 +23,7 @@ module.exports.test = (uiTestCtx) => {
 
         this.timeout(Number(config.test_timeout));
 
-        const vendor = orgs.find(o => o.role === 'Vendor');
+        const contentProvider = orgs.find(o => o.role === 'Content Provider');
         const orgToEdit = orgs.find(o => o.editedName);
         const orgToDelete = orgs.find(o => o.toDelete);
 
@@ -90,6 +90,7 @@ module.exports.test = (uiTestCtx) => {
                         .click('#clickable-filter-status-active')
                         .wait(`#list-plugin-find-organization [aria-rowindex="${row + 3}"] > a`)
                         .click(`#list-plugin-find-organization [aria-rowindex="${row + 3}"] > a`)
+                        .waitUntilNetworkIdle(2000)
                         .evaluate((r, _orgs) => {
                             const orgElement = document.querySelector(`#orgs-nameOrg-${r}`);
                             const name = orgElement.value;
@@ -108,7 +109,6 @@ module.exports.test = (uiTestCtx) => {
 
                 it(`should assign role: ${org.role}`, done => {
                     nightmare
-                        .waitUntilNetworkIdle(2000)
                         .wait(`#orgs-role-${row}`)
                         .click(`#orgs-role-${row}`)
                         .type(`#orgs-role-${row}`, org.role)
@@ -119,7 +119,6 @@ module.exports.test = (uiTestCtx) => {
                                 throw Error(`Expected role to be ${o.role} but is ${role}`);
                             }
                         }, row, org)
-                        .waitUntilNetworkIdle(1000)
                         .then(done)
                         .catch(done);
                 });
@@ -186,7 +185,6 @@ module.exports.test = (uiTestCtx) => {
             });
 
             if (orgToEdit) {
-
                 it('should edit Agreement', done => {
                     nightmare
                         .evaluate(o => {
@@ -203,8 +201,8 @@ module.exports.test = (uiTestCtx) => {
                                 .click(`#orgs-nameOrg-${row}-search-button`)
                                 .wait('#clickable-filter-status-active')
                                 .click('#clickable-filter-status-active')
-                                .wait('#list-plugin-find-organization [aria-rowindex="10"]')
-                                .click('#list-plugin-find-organization [aria-rowindex="10"]')
+                                .wait('#list-plugin-find-organization [aria-rowindex="10"] > a')
+                                .click('#list-plugin-find-organization [aria-rowindex="10"] > a')
                                 .waitUntilNetworkIdle(2000)
                                 .wait(`#orgs-role-${row}`)
                                 .click(`#orgs-role-${row}`)
@@ -252,6 +250,24 @@ module.exports.test = (uiTestCtx) => {
                     .then(done)
                     .catch(done);
             });
+
+            if (orgToEdit) {
+                it(`should find org in Organizations list with role ${orgToEdit.editedRole}`, done => {
+                    nightmare
+                        .evaluate(o => {
+                            const rows = [...document.querySelectorAll('[data-test-organizations-org]')].map(e => e.textContent);
+                            const row = rows.find(r => r.indexOf(o.editedName) >= 0);
+                            if (!row) {
+                                throw Error(`Could not find row with an org named ${o.editedName}`);
+                            }
+                            if (row.indexOf(o.editedRole) < 0) {
+                                throw Error(`Expected row for "${o.editedName}" to contain role ${o.editedRole}.`);
+                            }
+                        }, orgToEdit)
+                        .then(done)
+                        .catch(done);
+                });
+            }
 
             if (orgToDelete) {
                 it(`should NOT find org in organizations list with role ${orgToDelete.role}`, done => {
