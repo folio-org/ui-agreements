@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Button,
-  Icon,
-} from '@folio/stripes/components';
+import { Button, Icon } from '@folio/stripes/components';
+
+import { Card } from '@folio/stripes-erm-components';
 
 import css from './EditCard.css';
 
-export default class extends React.Component {
+export default class EditCard extends React.Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
     header: PropTypes.node.isRequired,
@@ -25,33 +24,28 @@ export default class extends React.Component {
     </Button>
   )
 
-  render() {
-    const {
-      children,
-      header,
-      onDelete,
-      ...rest
-    } = this.props;
+  renderHeader = () => {
+    const { header, onDelete } = this.props;
 
     return (
-      <div
-        className={css.card}
-        {...rest}
-      >
+      <React.Fragment>
         <div>
-          <div className={css.header} start="xs">
-            <div>
-              <strong>{ header }</strong>
-            </div>
-            <div className={css.headerDelete}>
-              { onDelete ? this.renderDeleteButton() : null }
-            </div>
-          </div>
-          <div className={css.body}>
-            {children}
-          </div>
+          <strong>{ header }</strong>
         </div>
-      </div>
+        <div className={css.headerDelete}>
+          { onDelete ? this.renderDeleteButton() : null }
+        </div>
+      </React.Fragment>
+    );
+  }
+
+  render() {
+    const { children, header, onDelete, ...rest } = this.props; // eslint-disable-line no-unused-vars
+
+    return (
+      <Card header={this.renderHeader()} {...rest}>
+        {children}
+      </Card>
     );
   }
 }
