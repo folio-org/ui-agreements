@@ -163,5 +163,9 @@
     "agreementLines.hasCustomCoverage": "Tiene cobertura personalizada",
     "eresources.provider": "Proveedor",
     "agreements.showTags": "Mostrar etiquetas",
-    "agreements.tags": "Etiquetas"
+    "agreements.tags": "Etiquetas",
+    "settings.hideEResources.result.1": "Hide the E-resources tab in the agreements app",
+    "settings.hideEResources.result.2": "Hide the basket icon in the agreements app",
+    "settings.hideEResources.result.3": "Ocultar el pliego \"E-recursos cubiertos por este acuerdo\" en acuerdos individuales",
+    "errors.unsetAgreementLines": "Acuerdo {count, plural, one { line } other { lines }} {list} {count, plural, one { has } other { have }} no {count, plural, one { resource } other { resources }} . Seleccione y cree el {count, plural, one { line } other { lines }} , o elimine {count, plural, one { it } other { them }} ."
 }

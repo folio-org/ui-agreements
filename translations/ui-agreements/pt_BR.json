@@ -158,10 +158,14 @@
     "identifier.pissn": "ISSN (Impresso)",
     "identifier.zdb": "ZDB",
     "license.noControllingLicense": "Nenhuma licença de controle está vinculada a este contrato.",
-    "settings.general.hideEResourcesFunctionality.title": "Ocultar todas as funcionalidades de \"E-recursos\"",
-    "settings.general.hideEResourcesFunctionality.description": "Útil quando E-recursos são procurados e gerenciados por um aplicativo externo que relata para esta aplicação de contratos.",
+    "settings.general.hideEResourcesFunctionality.title": "Ocultar base de conhecimento de acordos internos",
+    "settings.general.hideEResourcesFunctionality.description": "Se você estiver usando outro aplicativo (por exemplo, eHoldings) como sua base de conhecimento e desejar ocultar a base de conhecimento de contratos internos, poderá verificar essa configuração. Especificamente, isso irá:",
     "agreementLines.hasCustomCoverage": "Tem cobertura customizada",
     "eresources.provider": "Fornecedor",
     "agreements.showTags": "Mostrar tags",
-    "agreements.tags": "Tags"
+    "agreements.tags": "Tags",
+    "settings.hideEResources.result.1": "Ocultar a aba E-recursos no aplicativo de contratos",
+    "settings.hideEResources.result.2": "Ocultar o ícone de cesta no aplicativo de contratos",
+    "settings.hideEResources.result.3": "Ocultar a aba \"E-recursos cobertos por este acordo\" em acordos individuais",
+    "errors.unsetAgreementLines": "Contrato {count, plural, one {linha} other {linhas}} {list} {count, plural, one {tem} other {tem}} no {count, plural, one {recurso} other {recursos}} . Selecione e crie a {count, plural, one {linha} other {linhas}} , ou exclua {count, plural, one {ela} other {elas}} ."
 }

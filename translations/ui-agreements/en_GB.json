@@ -158,10 +158,14 @@
     "identifier.pissn": "ISSN (Print)",
     "identifier.zdb": "ZDB",
     "license.noControllingLicense": "No controlling licence is linked to this agreement.",
-    "settings.general.hideEResourcesFunctionality.title": "Hide all \"E-resources\" functionality",
-    "settings.general.hideEResourcesFunctionality.description": "Useful when E-resources are searched for and managed by an external application that reports them to this Agreements application.",
+    "settings.general.hideEResourcesFunctionality.title": "Hide internal agreements knowledgebase",
+    "settings.general.hideEResourcesFunctionality.description": "If you are using another app (e.g. eHoldings) as your knowledge base and wish to hide the internal agreements knowledge base, you can check this setting. Specifically, this will:",
     "agreementLines.hasCustomCoverage": "Has custom coverage",
     "eresources.provider": "Provider",
     "agreements.showTags": "Show Tags",
-    "agreements.tags": "Tags"
+    "agreements.tags": "Tags",
+    "settings.hideEResources.result.1": "Hide the E-resources tab in the agreements app",
+    "settings.hideEResources.result.2": "Hide the basket icon in the agreements app",
+    "settings.hideEResources.result.3": "Hide the \"E-resources covered by this agreement\" accordion in individual agreements",
+    "errors.unsetAgreementLines": "Agreement {count, plural, one {line} other {lines}} {list} {count, plural, one {has} other {have}} no {count, plural, one {resource} other {resources}}. Select and create the {count, plural, one {line} other {lines}}, or delete {count, plural, one {it} other {them}}."
 }
