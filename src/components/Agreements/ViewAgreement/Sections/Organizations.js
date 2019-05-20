@@ -5,10 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { Card } from '@folio/stripes-erm-components';
 import { Accordion, Badge, Icon, Layout, MultiColumnList } from '@folio/stripes/components';
-import { stripesConnect } from '@folio/stripes/core';
 
-
-class Organizations extends React.Component {
+export default class Organizations extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
       attachedLicenceId: PropTypes.string,
@@ -109,5 +107,3 @@ class Organizations extends React.Component {
     );
   }
 }
-
-export default stripesConnect(Organizations);
