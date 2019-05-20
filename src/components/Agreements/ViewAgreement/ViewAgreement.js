@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { cloneDeep, difference, get } from 'lodash';
+import { cloneDeep, difference, get, keyBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { withTags } from '@folio/stripes/smart-components';
 import {
@@ -66,6 +66,13 @@ class ViewAgreement extends React.Component {
         term: ':{id}',
       },
       shouldRefresh,
+    },
+    interface: {
+      type: 'okapi',
+      path: 'organizations-storage/interfaces',
+      throwErrors: false,
+      accumulate: 'true',
+      fetch: false,
     },
     financesAgreementLines: {
       type: 'okapi',
@@ -140,6 +147,7 @@ class ViewAgreement extends React.Component {
   componentDidMount() {
     this.fetchUsers();
     this.fetchInvoices();
+    this.fetchInterfaces();
   }
 
   componentDidUpdate(prevProps) {
@@ -149,12 +157,33 @@ class ViewAgreement extends React.Component {
     const finances = get(this.props.resources.financesAgreementLines, ['records'], []).map(f => f.id);
     const prevAgreement = get(prevProps.resources.selectedAgreement, ['records', 0], {});
     const agreement = get(this.props.resources.selectedAgreement, ['records', 0], {});
+    const prevOrgs = get(prevProps.resources.selectedAgreement, ['records', 0, 'orgs'], []).map(o => o.id);
+    const orgs = get(this.props.resources.selectedAgreement, ['records', 0, 'orgs'], []).map(o => o.id);
+
+
+    if ((prevAgreement.id !== agreement.id) || (difference(orgs, prevOrgs).length)) {
+      this.fetchInterfaces();
+    }
 
     if ((prevAgreement.id !== agreement.id) || (difference(users, prevUsers).length)) {
       this.fetchUsers();
     }
     if ((prevAgreement.id !== agreement.id) || (difference(finances, prevFinances).length)) {
       this.fetchInvoices();
+    }
+  }
+
+  fetchInterfaces = () => {
+    const { orgs } = this.getAgreement();
+    const ids = [];
+    if (orgs && orgs.length) {
+      orgs.forEach(org => {
+        const interfaces = get(org.org, ['orgsUuid_object', 'interfaces'], []);
+        ids.push(...interfaces.map(id => `id==${id}`));
+      });
+      const query = [...new Set(ids)].join(' or ');
+      this.props.mutator.interface.reset();
+      this.props.mutator.interface.GET({ params: { query } });
     }
   }
 
@@ -202,6 +231,22 @@ class ViewAgreement extends React.Component {
     if (isPending) return undefined;
 
     return get(this.props.resources.invoices, ['records'], []);
+  }
+
+  getOrganizations() {
+    const isPending = get(this.props.resources.interface, ['isPending'], true);
+    if (isPending) return undefined;
+    const interfaces = get(this.props.resources, ['interface', 'records', 0, 'interfaces'], []);
+    const interfaceMap = keyBy(interfaces, 'id');
+    const { orgs } = this.getAgreement();
+    const organizations = cloneDeep(orgs);
+    organizations.forEach(org => {
+      const orgInterfaces = get(org.org, ['orgsUuid_object', 'interfaces'], []);
+      orgInterfaces.forEach((orgInterface, index) => {
+        orgInterfaces[index] = interfaceMap[orgInterface];
+      });
+    });
+    return organizations;
   }
 
   getInitialValues() {
@@ -272,6 +317,7 @@ class ViewAgreement extends React.Component {
       agreementLines: this.getAgreementLines(),
       contacts: this.getContacts(),
       financesAgreementLines: this.getFinancesAgreementLines(),
+      organizations: this.getOrganizations(),
       invoices: this.getInvoices(),
       onToggle: this.handleSectionToggle,
       parentMutator: {
@@ -366,6 +412,7 @@ class ViewAgreement extends React.Component {
               agreement={this.getAgreement()}
               agreementLines={this.getAgreementLines()}
               contacts={this.getContacts()}
+              organizations={this.getOrganizations()}
               onCancel={this.props.onCloseEdit}
               parentMutator={{
                 ...this.props.parentMutator,
