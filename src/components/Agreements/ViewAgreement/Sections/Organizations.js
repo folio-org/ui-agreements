@@ -31,7 +31,6 @@ export default class Organizations extends React.Component {
 
   renderOrgList = () => {
     const { organizations } = this.props;
-    const interpunct = ' · ';
     return (
       <React.Fragment>
         {organizations && organizations.map(o => {
@@ -49,8 +48,7 @@ export default class Organizations extends React.Component {
                           <Link to={`/organizations/view/${o.org.orgsUuid}`}>
                             {o.org.name}
                           </Link>
-                          {interpunct}
-                          {o.role.label}
+                          {o.role && ` · ${o.role.label}`}
                         </span>
                         : o.org.name
                     }
