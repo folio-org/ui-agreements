@@ -34,7 +34,7 @@ export default class Organizations extends React.Component {
     return (
       <React.Fragment>
         {organizations && organizations.map(o => {
-          const interfaces = get(o, ['org.orgsUuid_object', 'interfaces'], []);
+          const interfaces = get(o.org, ['orgsUuid_object', 'interfaces'], []);
           return (
             o.org ?
               <Card
