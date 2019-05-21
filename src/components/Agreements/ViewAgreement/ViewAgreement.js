@@ -178,7 +178,7 @@ class ViewAgreement extends React.Component {
     const ids = [];
     if (orgs && orgs.length) {
       orgs.forEach(org => {
-        const interfaces = get(org.org, ['orgsUuid_object', 'interfaces'], []);
+        const interfaces = get(org, ['org.orgsUuid_object', 'interfaces'], []);
         ids.push(...interfaces.map(id => `id==${id}`));
       });
       const query = [...new Set(ids)].join(' or ');
@@ -241,7 +241,7 @@ class ViewAgreement extends React.Component {
     const { orgs } = this.getAgreement();
     const organizations = cloneDeep(orgs);
     organizations.forEach(org => {
-      const orgInterfaces = get(org.org, ['orgsUuid_object', 'interfaces'], []);
+      const orgInterfaces = get(org, ['org.orgsUuid_object', 'interfaces'], []);
       orgInterfaces.forEach((orgInterface, index) => {
         orgInterfaces[index] = interfaceMap[orgInterface];
       });
