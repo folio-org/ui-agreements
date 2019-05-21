@@ -239,12 +239,15 @@ class ViewAgreement extends React.Component {
     const interfaces = get(this.props.resources, ['interface', 'records', 0, 'interfaces'], []);
     const interfaceMap = keyBy(interfaces, 'id');
     const { orgs } = this.getAgreement();
-    const organizations = cloneDeep(orgs);
-    organizations.forEach(org => {
-      const orgInterfaces = get(org.org, ['orgsUuid_object', 'interfaces'], []);
-      orgInterfaces.forEach((orgInterface, index) => {
-        orgInterfaces[index] = interfaceMap[orgInterface];
-      });
+    const organizations = orgs.map(o => {
+      const orgInterfaces = get(o.org, ['orgsUuid_object', 'interfaces'], []);
+      return {
+        ...o,
+        org: {
+          ...o.org,
+          interfaces: orgInterfaces.map(i => interfaceMap[i]),
+        }
+      };
     });
     return organizations;
   }

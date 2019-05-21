@@ -31,10 +31,11 @@ export default class Organizations extends React.Component {
 
   renderOrgList = () => {
     const { organizations } = this.props;
+    const interpunct = ' · ';
     return (
       <React.Fragment>
         {organizations && organizations.map(o => {
-          const interfaces = get(o.org, ['orgsUuid_object', 'interfaces'], []);
+          const interfaces = get(o, ['org', 'interfaces'], []);
           return (
             o.org ?
               <Card
@@ -44,11 +45,14 @@ export default class Organizations extends React.Component {
                   <span className="my-card-header">
                     {
                       o.org.orgsUuid ?
-                        <Link to={`/organizations/view/${o.org.orgsUuid}`}>
-                          {o.org.name}
-                          .
+                        <span>
+                          <Link to={`/organizations/view/${o.org.orgsUuid}`}>
+                            {o.org.name}
+                          </Link>
+                          {interpunct}
                           {o.role.label}
-                        </Link> : o.org.name
+                        </span>
+                        : o.org.name
                     }
                   </span>
                 }
