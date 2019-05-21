@@ -1,4 +1,14 @@
-## 2.4.0 OPEN
+## 2.4.0 2109-05-21
+ * ERM-238 Clearing the organization filter value not working as expected in Agreements
+ * ERM-222 System error on saving an agreement with an empty organization field group
+ * ERM-221 System error on saving an agreement with an empty Agreement Line
+ * ERM-220 Support Organizations app as source of Organizations in Agreements
+   * ERM-234 Front-end updates
+ * ERM-216 "Preview" panel does not open after the "Search & filter" panel has been collapsed and uncollapsed.
+ * ERM-212 Remove horizontal rules between filters in Agreements and License apps
+ * ERM-186 Change the 'hide e-resource functionality' option in Agreements
+ * ERM-180 Use generalised contacts component
+ * ERM-75  Clearing the organization filter value not working as expected 
 
 ## 2.3.0 2019-05-07
 
