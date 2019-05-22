@@ -1,14 +1,216 @@
 /* global describe, it, before, after, Nightmare */
 
-const generateNumber = () => Math.round(Math.random() * 100000);
+const generateNumber = () => Math.round(Math.random() * 100000)
 
-const Interfaces = [{
-    name: `Content Provider ${generateNumber()}`,
+const interfaceName = `Interface ${generateNumber()}`;
+const agreementName = `Agreement #${generateNumber()}`;
+const org = {
+    name: `Org #${generateNumber()}`,
     role: 'Content Provider',
-    toDelete: true,
-}, {
-    name: `Vendor ${generateNumber()}`,
-    role: 'Vendor',
-    editedName: `Subscription Agent ${generateNumber()}`,
-    editedRole: 'Subscription Agent',
-}];
+};
+const orgCode = `Code #${generateNumber()}`;
+const orgStatus = 'Active';
+const row = 0;
+
+
+module.exports.test = (uiTestCtx) => {
+    const orgName = org.name;
+    describe(`ui-agreements: set orgs with interfaces: "${orgName}`, function test() {
+
+        const { config, helpers } = uiTestCtx;
+        const nightmare = new Nightmare(config.nightmare);
+        nightmare.options.width = 1300;
+
+        this.timeout(Number(config.test_timeout));
+
+        describe('login > open Orgs > create orgs > create interfaces > create agreement > logout', () => {
+            before((done) => {
+                helpers.login(nightmare, config, done);
+            });
+
+            after((done) => {
+                helpers.logout(nightmare, config, done);
+            });
+
+            it('should open organizations app', done => {
+                helpers.clickApp(nightmare, done, 'organizations');
+            });
+
+            it('should add interface', done => {
+                const uri = `http://qwerty${generateNumber()}.com`;
+                const username = `username #${generateNumber()}`;
+                const password = `password #${generateNumber()}`;
+                console.log(`\tCreating ${interfaceName}`);
+
+                nightmare
+                    .wait('#organizations-module-display')
+                    .wait('#clickable-neworganization')
+                    .click('#clickable-neworganization')
+                    .waitUntilNetworkIdle(1000)
+                    .wait('#accordion-toggle-button-interfacesSection')
+                    .click('#accordion-toggle-button-interfacesSection')
+                    .wait('[data-test-plugin-find-interfaces-button]')
+                    .click('[data-test-plugin-find-interfaces-button]')
+                    .wait('[data-test-find-interfaces-modal')
+                    .wait('a[href="/organizations/interface/add"]')
+                    .click('a[href="/organizations/interface/add"]')
+                    .wait('input[name="name"]')
+                    .insert('input[name="name"]', interfaceName)
+                    .wait('input[name="uri"]')
+                    .insert('input[name="uri"]', uri)
+                    .wait('input[name="username"]')
+                    .insert('input[name="username"]', username)
+                    .wait('input[name="password"]')
+                    .insert('input[name="password"]', password)
+                    .wait('button[type="submit"]')
+                    .click('button[type="submit"]')
+                    .wait(2000)
+                    .wait('[class*=paneHeader] button')
+                    .click('[class*=paneHeader] button')
+                    .then(done)
+                    .catch(done);
+            });
+
+            it('should create Org', done => {
+                console.log(`\tCreating ${orgName}`);
+                nightmare
+                    .wait('input[name="name"]')
+                    .insert('input[name="name"]', orgName)
+                    .wait('input[name="code"]')
+                    .insert('input[name="code"]', orgCode)
+                    .wait('select[name="status"]')
+                    .type('select[name="status"]', orgStatus)
+                    .wait('#accordion-toggle-button-interfacesSection')
+                    .click('#accordion-toggle-button-interfacesSection')
+                    .wait('[data-test-plugin-find-interfaces-button]')
+                    .click('[data-test-plugin-find-interfaces-button]')
+                    .waitUntilNetworkIdle(2000)
+                    .wait('[data-test-find-interfaces-modal]')
+                    .wait('#input-interface-search')
+                    .type('#input-interface-search', interfaceName)
+                    .click('[data-test-search-and-sort-submit]')
+                    .waitUntilNetworkIdle(1000)
+                    .wait('[data-test-find-interfaces-modal-save]')
+                    .click('[data-test-find-interfaces-modal-save]')
+                    .wait('#clickable-create-organization')
+                    .click('#clickable-create-organization')
+                    .then(done)
+                    .catch(done)
+            });
+
+            it('should open agreements app', done => {
+                helpers.clickApp(nightmare, done, 'agreements');
+            });
+
+            it('should navigate to create agreements page', done => {
+                console.log(`\tCreating ${agreementName}`);
+
+                nightmare
+                    .wait('#agreements-module-display')
+                    .click('nav #agreements')
+                    .wait('#clickable-newagreement')
+                    .click('#clickable-newagreement')
+                    .waitUntilNetworkIdle(1000)
+                    .wait('#accordion-toggle-button-agreementFormOrganizations')
+                    .click('#accordion-toggle-button-agreementFormOrganizations')
+                    .waitUntilNetworkIdle(1000)
+                    .wait('#edit-agreement-name')
+                    .insert('#edit-agreement-name', agreementName)
+                    .click('#edit-agreement-start-date')
+                    .type('#edit-agreement-start-date', '\u000d') // "Enter" selects current date
+                    .insert('#edit-agreement-end-date', '2019-01-31')
+                    .insert('#edit-agreement-cancellation-deadline', '2019-01-15')
+                    .type('#edit-agreement-status', 'draft')
+                    .then(done)
+                    .catch(done);
+            });
+
+
+            it('should add org', done => {
+                nightmare
+                    .click('#add-org-btn')
+                    .evaluate((r) => {
+                        if (!document.querySelector(`#orgs-nameOrg-${r}-search-button`)) {
+                            throw Error('Expected organization picker button to exist.');
+                        }
+
+                        if (!document.querySelector(`#orgs-role-${r}`)) {
+                            throw Error('Expected role dropdown to exist.');
+                        }
+                    }, row)
+                    .then(done)
+                    .catch(done);
+            });
+
+            it('should select org', done => {
+                nightmare
+                    .click(`#orgs-nameOrg-${row}-search-button`)
+                    .wait('#input-organization-search')
+                    .type('#input-organization-search', orgName)
+                    .click('[data-test-search-and-sort-submit]')
+                    .waitUntilNetworkIdle(1000)
+                    .evaluate((name) => {
+                        const nameElements = [...document.querySelectorAll('div[role="gridcell"]')];
+                        const organization = nameElements.find(e => e.textContent === name);
+                        if (!organization) throw new Error(`Could not find the organization ${name}`);
+                        organization.click();
+                    }, orgName)
+                    .waitUntilNetworkIdle(1000)
+                    .then(done)
+                    .catch(done)
+            });
+
+            it(`should assign role: ${org.role}`, done => {
+                nightmare
+                    .wait(`#orgs-role-${row}`)
+                    .type(`#orgs-role-${row}`, org.role)
+                    .evaluate((r, o) => {
+                        const roleElement = document.querySelector(`#orgs-role-${r}`);
+                        const role = roleElement.selectedOptions[0].textContent;
+                        if (role !== o.role) {
+                            throw Error(`Expected role to be ${o.role} but is ${role}`);
+                        }
+                    }, row, org)
+                    .then(done)
+                    .catch(done);
+            });
+
+            it('should create Agreement', done => {
+                nightmare
+                    .click('#clickable-createagreement')
+                    .waitUntilNetworkIdle(2000)
+                    .then(done)
+                    .catch(done);
+            });
+
+            it(`should find "${org.name}" in Organizations list with role ${org.role}`, done => {
+                nightmare
+                    .evaluate((org, name) => {
+                        const rows = [...document.querySelectorAll('[data-test-organizations-org]')].map(e => e.textContent);
+                        const row = rows.find(r => r.indexOf(name) >= 0);
+                        if (!row) {
+                            throw Error(`Could not find row with an org named ${name}`);
+                        }
+                        if (row.indexOf(org.role) < 0) {
+                            throw Error(`Expected row for "${name}" to contain role ${org.role}.`);
+                        }
+                    }, org, orgName)
+                    .then(done)
+                    .catch(done);
+            });
+
+            it(`should find "${interfaceName}" in interface list`, done => {
+                nightmare
+                    .evaluate(interfaceName => {
+                        const nameElements = [...document.querySelectorAll('[data-test-card-body ] div[role="gridcell"]')];
+                        const interfaceFound = nameElements.find(e => e.textContent === interfaceName);
+                        if (!interfaceFound) {
+                            throw Error(`Could not find row with an interface named ${interfaceName}`);
+                        }
+                    }, interfaceName)
+                    .then(done)
+                    .catch(done);
+            });
+        });
+    });
+};
