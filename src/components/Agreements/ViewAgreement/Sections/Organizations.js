@@ -48,10 +48,10 @@ export default class Organizations extends React.Component {
                           <Link to={`/organizations/view/${o.org.orgsUuid}`}>
                             {o.org.name}
                           </Link>
-                          {o.role && ` · ${o.role.label}`}
                         </span>
                         : o.org.name
                     }
+                    {o.role && ` · ${o.role.label}`}
                   </span>
                 }
               >
