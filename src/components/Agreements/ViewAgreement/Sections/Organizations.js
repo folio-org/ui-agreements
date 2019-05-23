@@ -58,13 +58,27 @@ export default class Organizations extends React.Component {
                 {interfaces && interfaces.length ?
                   <MultiColumnList
                     contentData={interfaces}
-                    visibleColumns={['name', 'uri', 'username', 'password', 'type']}
+                    visibleColumns={['name', 'username', 'password', 'type', 'notes']}
                     columnMapping={{
                       name: <FormattedMessage id="ui-agreements.interface.name" />,
-                      uri: <FormattedMessage id="ui-agreements.interface.uri" />,
                       username: <FormattedMessage id="ui-agreements.interface.username" />,
                       password: <FormattedMessage id="ui-agreements.interface.password" />,
                       type: <FormattedMessage id="ui-agreements.interface.type" />,
+                      notes: <FormattedMessage id="ui-agreements.interface.notes" />,
+                    }}
+                    formatter={{
+                      name: item => (
+                        <span>
+                          {item.name}
+                          <a href={item.uri}>
+                            <Icon icon="external-link" iconPosition="end" />
+                          </a>
+                        </span>
+                      ),
+                      notes: item => get(item, ['notes']),
+                      username: item => get(item, ['username']),
+                      password: item => get(item, ['password']),
+                      type: item => get(item, ['type']),
                     }}
                     columnWidths={{
                       name: 150,

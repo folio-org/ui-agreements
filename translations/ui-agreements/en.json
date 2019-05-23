@@ -131,7 +131,7 @@
   "interface.password": "Password",
   "interface.uri": "URI",
   "interface.type": "Interface type",
-  "interface.note": "Note",
+  "interface.notes": "Notes",
   "interface.notFound": "No interfaces found",
   "license.addExternalLicense": "Add external license to agreement",
   "license.addLicense": "Add license to agreement",
