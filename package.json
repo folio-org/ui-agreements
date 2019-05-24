@@ -13,12 +13,13 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run nav/agreement-crud/orgs/basket/external-licenses/custom-coverage/hide-eresources-func",
-    "test-int": "stripes test nightmare --run nav/agreement-crud/orgs/basket/external-licenses/custom-coverage/hide-eresources-func/linked-licenses/license-terms",
+    "test": "stripes test nightmare --run nav/agreement-crud/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func",
+    "test-int": "stripes test nightmare --run nav/agreement-crud/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/linked-licenses/license-terms",
     "test-licenses-int": "stripes test nightmare --run linked-licenses/license-terms",
     "test-nav": "stripes test nightmare --run nav",
     "test-agreement-crud": "stripes test nightmare --run agreement-crud",
     "test-orgs": "stripes test nightmare --run orgs",
+    "test-interfaces": "stripes test nightmare --run interfaces",
     "test-tags-crud": "stripes test nightmare --run tags-crud",
     "test-basket": "stripes test nightmare --run basket",
     "test-external-licenses": "stripes test nightmare --run external-licenses",
@@ -73,7 +74,8 @@
         "displayName": "UI: ui-agreements module is enabled",
         "visible": true,
         "subPermissions": [
-          "configuration.entries.collection.get"
+          "configuration.entries.collection.get",
+          "tags.collection.get"
         ]
       },
       {
@@ -81,7 +83,10 @@
         "displayName": "Agreements: Can view agreements",
         "visible": true,
         "subPermissions": [
-          "module.agreements.enabled"
+          "module.agreements.enabled",
+          "ui-organizations.view",
+          "organizations-storage.interfaces.all",
+          "tags.item.post"
         ]
       },
       {
