@@ -204,8 +204,8 @@ module.exports.test = (uiTestCtx) => {
             it(`should find "${interfaceName}" in interface list`, done => {
                 nightmare
                     .evaluate(interfaceName => {
-                        const nameElements = [...document.querySelectorAll('#organizations div[role="gridcell"]')];
-                        const interfaceFound = nameElements.find(e => e.textContent === interfaceName);
+                        const interfaceElements = [...document.querySelectorAll('#organizations div[role="gridcell"]')];
+                        const interfaceFound = interfaceElements.find(e => e.textContent === interfaceName);
                         if (!interfaceFound) {
                             throw Error(`Could not find row with an interface named ${interfaceName}`);
                         }
@@ -217,8 +217,8 @@ module.exports.test = (uiTestCtx) => {
             it(`should find username "${username}"`, done => {
                 nightmare
                     .evaluate(username => {
-                        const nameElements = [...document.querySelectorAll('#organizations div[role="gridcell"]')];
-                        const usernameFound = nameElements.find(e => e.textContent === username);
+                        const usernameElements = [...document.querySelectorAll('#organizations div[role="gridcell"]')];
+                        const usernameFound = usernameElements.find(e => e.textContent === username);
                         if (!usernameFound) {
                             throw Error(`Could not find row with username ${username}`);
                         }
@@ -230,8 +230,8 @@ module.exports.test = (uiTestCtx) => {
             it(`should find password "${password}"`, done => {
                 nightmare
                     .evaluate(password => {
-                        const nameElements = [...document.querySelectorAll('#organizations div[role="gridcell"]')];
-                        const passwordFound = nameElements.find(e => e.textContent === password);
+                        const passwordElements = [...document.querySelectorAll('#organizations div[role="gridcell"]')];
+                        const passwordFound = passwordElements.find(e => e.textContent === password);
                         if (!passwordFound) {
                             throw Error(`Could not find row with password ${password}`);
                         }
@@ -243,8 +243,8 @@ module.exports.test = (uiTestCtx) => {
             it(`should find uri "${uri}"`, done => {
                 nightmare
                     .evaluate(uri => {
-                        const nameElements = [...document.querySelectorAll('#organizations span a')];
-                        const uriFound = nameElements.find(e => e.attributes['href'].nodeValue === uri);
+                        const uriElements = [...document.querySelectorAll('#organizations span a')];
+                        const uriFound = uriElements.find(e => e.attributes['href'].nodeValue === uri);
                         if (!uriFound) {
                             throw Error(`Could not find row with uri ${uri}`);
                         }
@@ -256,8 +256,8 @@ module.exports.test = (uiTestCtx) => {
             it(`should find notes "${notes}"`, done => {
                 nightmare
                     .evaluate(notes => {
-                        const nameElements = [...document.querySelectorAll('#organizations div[role="gridcell"]')];
-                        const notesFound = nameElements.find(e => e.textContent === notes);
+                        const notesElements = [...document.querySelectorAll('#organizations div[role="gridcell"]')];
+                        const notesFound = notesElements.find(e => e.textContent === notes);
                         if (!notesFound) {
                             throw Error(`Could not find row with notes ${notes}`);
                         }
