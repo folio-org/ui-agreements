@@ -72,7 +72,10 @@
       {
         "permissionName": "module.agreements.enabled",
         "displayName": "UI: ui-agreements module is enabled",
-        "visible": true
+        "visible": true,
+        "subPermissions": [
+          "configuration.entries.collection.get"
+        ]
       },
       {
         "permissionName": "tags.collection.get",
@@ -112,11 +115,13 @@
       },
       {
         "permissionName": "settings.agreements.enabled",
-        "displayName": "Settings (agreements): display list of settings pages",
+        "displayName": "Settings (Agreements): Can view and edit settings",
+        "visible": true,
         "subPermissions": [
-          "settings.enabled"
-        ],
-        "visible": true
+          "module.agreements.enabled",
+          "settings.enabled",
+          "configuration.all"
+        ]
       }
     ],
     "icons": [
