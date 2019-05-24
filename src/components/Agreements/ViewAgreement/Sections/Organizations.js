@@ -39,7 +39,7 @@ export default class Organizations extends React.Component {
             o.org ?
               <Card
                 data-test-organizations-org
-                key={`${o.org.id}-${o.role.value}`}
+                key={`${o.org.id}-${o.role && o.role.value}`}
                 header={
                   <span className="my-card-header">
                     {
@@ -82,7 +82,7 @@ export default class Organizations extends React.Component {
                     }}
                     columnWidths={{
                       name: 150,
-                      uri: 250,
+                      notes: 250,
                       username: 130,
                       password: 130,
                       type: 150,

@@ -70,7 +70,6 @@ class ViewAgreement extends React.Component {
     interface: {
       type: 'okapi',
       path: 'organizations-storage/interfaces',
-      throwErrors: false,
       accumulate: 'true',
       fetch: false,
     },
@@ -157,9 +156,8 @@ class ViewAgreement extends React.Component {
     const finances = get(this.props.resources.financesAgreementLines, ['records'], []).map(f => f.id);
     const prevAgreement = get(prevProps.resources.selectedAgreement, ['records', 0], {});
     const agreement = get(this.props.resources.selectedAgreement, ['records', 0], {});
-    const prevOrgs = get(prevProps.resources.selectedAgreement, ['records', 0, 'orgs'], []).map(o => o.id);
-    const orgs = get(this.props.resources.selectedAgreement, ['records', 0, 'orgs'], []).map(o => o.id);
-
+    const prevOrgs = get(prevProps.resources.selectedAgreement, ['records', 0, 'orgs'], []).map(o => get(o, ['org', 'id']));
+    const orgs = get(this.props.resources.selectedAgreement, ['records', 0, 'orgs'], []).map(o => get(o, ['org', 'id']));
 
     if ((prevAgreement.id !== agreement.id) || (difference(orgs, prevOrgs).length)) {
       this.fetchInterfaces();
@@ -183,7 +181,7 @@ class ViewAgreement extends React.Component {
       });
       const query = [...new Set(ids)].join(' or ');
       this.props.mutator.interface.reset();
-      this.props.mutator.interface.GET({ params: { query } });
+      if (ids && ids.length) this.props.mutator.interface.GET({ params: { query } });
     }
   }
 
