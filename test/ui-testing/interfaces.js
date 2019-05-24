@@ -7,9 +7,9 @@ const agreementName = `Agreement #${generateNumber()}`;
 const org = {
     name: `Org #${generateNumber()}`,
     role: 'Content Provider',
+    code: `Code #${generateNumber()}`,
+    status: 'Active'
 };
-const orgCode = `Code #${generateNumber()}`;
-const orgStatus = 'Active';
 const row = 0;
 const uri = `http://qwerty${generateNumber()}.com`;
 const username = `username #${generateNumber()}`;
@@ -18,6 +18,9 @@ const notes = `Hello world ${generateNumber()}`;
 
 module.exports.test = (uiTestCtx) => {
     const orgName = org.name;
+    const orgCode = org.code;
+    const orgStatus = org.status;
+
     describe(`ui-agreements: set orgs with interfaces: "${orgName}`, function test() {
 
         const { config, helpers } = uiTestCtx;

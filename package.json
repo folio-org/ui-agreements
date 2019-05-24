@@ -74,18 +74,9 @@
         "displayName": "UI: ui-agreements module is enabled",
         "visible": true,
         "subPermissions": [
-          "configuration.entries.collection.get"
+          "configuration.entries.collection.get",
+          "tags.collection.get"
         ]
-      },
-      {
-        "permissionName": "tags.collection.get",
-        "displayName": "Tags: Can view tags",
-        "visible": true
-      },
-      {
-        "permissionName": "tags.item.post",
-        "displayName": "Tags: Can create tags",
-        "visible": true
       },
       {
         "permissionName": "ui-agreements.agreements.view",
@@ -94,7 +85,8 @@
         "subPermissions": [
           "module.agreements.enabled",
           "ui-organizations.view",
-          "organizations-storage.interfaces.all"
+          "organizations-storage.interfaces.all",
+          "tags.item.post"
         ]
       },
       {
