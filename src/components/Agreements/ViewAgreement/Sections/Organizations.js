@@ -41,7 +41,7 @@ export default class Organizations extends React.Component {
                 data-test-organizations-org
                 key={`${o.org.id}-${o.role && o.role.value}`}
                 header={
-                  <span className="my-card-header">
+                  <span>
                     {
                       o.org.orgsUuid ?
                         <span>
