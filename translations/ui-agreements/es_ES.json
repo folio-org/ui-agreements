@@ -167,5 +167,12 @@
     "settings.hideEResources.result.1": "Hide the E-resources tab in the agreements app",
     "settings.hideEResources.result.2": "Hide the basket icon in the agreements app",
     "settings.hideEResources.result.3": "Ocultar el pliego \"E-recursos cubiertos por este acuerdo\" en acuerdos individuales",
-    "errors.unsetAgreementLines": "Acuerdo {count, plural, one { line } other { lines }} {list} {count, plural, one { has } other { have }} no {count, plural, one { resource } other { resources }} . Seleccione y cree el {count, plural, one { line } other { lines }} , o elimine {count, plural, one { it } other { them }} ."
+    "errors.unsetAgreementLines": "Acuerdo {count, plural, one { line } other { lines }} {list} {count, plural, one { has } other { have }} no {count, plural, one { resource } other { resources }} . Seleccione y cree el {count, plural, one { line } other { lines }} , o elimine {count, plural, one { it } other { them }} .",
+    "interface.name": "Nombre de la interfaz",
+    "interface.username": "Nombre de usuario",
+    "interface.password": "Contraseña",
+    "interface.uri": "URI",
+    "interface.type": "Tipo de interfaz",
+    "interface.notes": "Notas",
+    "interface.notFound": "No se encontraron interfaces"
 }
