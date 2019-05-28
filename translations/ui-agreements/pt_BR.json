@@ -167,5 +167,12 @@
     "settings.hideEResources.result.1": "Ocultar a aba E-recursos no aplicativo de contratos",
     "settings.hideEResources.result.2": "Ocultar o ícone de cesta no aplicativo de contratos",
     "settings.hideEResources.result.3": "Ocultar a aba \"E-recursos cobertos por este acordo\" em acordos individuais",
-    "errors.unsetAgreementLines": "Contrato {count, plural, one {linha} other {linhas}} {list} {count, plural, one {tem} other {tem}} no {count, plural, one {recurso} other {recursos}} . Selecione e crie a {count, plural, one {linha} other {linhas}} , ou exclua {count, plural, one {ela} other {elas}} ."
+    "errors.unsetAgreementLines": "Contrato {count, plural, one {linha} other {linhas}} {list} {count, plural, one {tem} other {tem}} no {count, plural, one {recurso} other {recursos}} . Selecione e crie a {count, plural, one {linha} other {linhas}} , ou exclua {count, plural, one {ela} other {elas}} .",
+    "interface.name": "Nome da interface",
+    "interface.username": "Nome de usuário",
+    "interface.password": "Senha",
+    "interface.uri": "URI",
+    "interface.type": "Tipo de interface",
+    "interface.notes": "Notas",
+    "interface.notFound": "Nenhuma interface encontrada"
 }

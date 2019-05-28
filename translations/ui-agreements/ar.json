@@ -167,5 +167,12 @@
     "settings.hideEResources.result.1": "إخفاء تبويب الموارد الإلكترونية في تطبيق الاتفاقيات",
     "settings.hideEResources.result.2": "إخفاء أيقونة السلة في تطبيق الاتفاقيات",
     "settings.hideEResources.result.3": "إخفاء أكورديون \"الموارد الإلكترونية التي تغطيها هذه الاتفاقية\" في الاتفاقيات الفردية",
-    "errors.unsetAgreementLines": "الاتفاقية ليس بها   {count, plural, one {بند} other {بنود}} {list} {count, plural, one {ذو} other {ذات}}  {count, plural, one {مورد} other {موارد}}. قم بتحديد وإنشاء {count, plural, one {بند} other {بنود}}, أو قم بحذف {count, plural, one {ـه} other {ـها}}."
+    "errors.unsetAgreementLines": "الاتفاقية ليس بها   {count, plural, one {بند} other {بنود}} {list} {count, plural, one {ذو} other {ذات}}  {count, plural, one {مورد} other {موارد}}. قم بتحديد وإنشاء {count, plural, one {بند} other {بنود}}, أو قم بحذف {count, plural, one {ـه} other {ـها}}.",
+    "interface.name": "اسم الواجهة",
+    "interface.username": "اسم المستخدم",
+    "interface.password": "كلمة المرور",
+    "interface.uri": "URI",
+    "interface.type": "نوع الواجهة",
+    "interface.notes": "ملاحظات",
+    "interface.notFound": "لم يتم العثور على واجهات"
 }
