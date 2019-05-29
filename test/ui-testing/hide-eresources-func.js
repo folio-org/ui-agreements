@@ -66,7 +66,6 @@ module.exports.test = (uiTestCtx) => {
           .evaluate(() => {
             if (!document.getElementById('eresources')) throw Error('Failed to find "E-Resources" nav button.');
             if (!document.getElementById('open-basket-button')) throw Error('Failed to find "Open Basket" button.');
-            if (!document.getElementById('eresources-covered')) throw Error('Failed to find "E-Resources Covered" accordion.');
           })
           .then(done)
           .catch(done);

@@ -48,7 +48,7 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
 
   chain
     .click('#clickable-createagreement')
-    .wait('#agreementInfo')
+    .wait('[data-test-agreement-info]')
     .wait(agreementName => {
       const nameElement = document.querySelector('[data-test-agreement-name]');
       if (!nameElement) return false;
@@ -126,7 +126,7 @@ module.exports.test = (uiTestCtx) => {
           .insert('#input-agreement-search', values.name)
           .click('[data-test-search-and-sort-submit]')
           .wait(1000) // If another agreement was open wait for the new one to be open before the next operation.
-          .wait('#agreementInfo')
+          .wait('[data-test-agreement-info]')
           .evaluate(expectedValues => {
             const node = document.querySelector('[data-test-agreement-name]');
             if (!node || !node.innerText) throw Error('No agreement name node found.');
@@ -145,7 +145,7 @@ module.exports.test = (uiTestCtx) => {
           .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
-          .wait('#agreementFormInfo')
+          .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000)
           .insert('#edit-agreement-name', '')
           .insert('#edit-agreement-name', values.editedName)
@@ -160,8 +160,8 @@ module.exports.test = (uiTestCtx) => {
           .type('#edit-agreement-status', values.editedStatus)
           .type('#edit-agreement-renewal-priority', values.editedRenewalPriority)
           .click('#clickable-updateagreement')
-          .wait('#agreementInfo')
-          .waitUntilNetworkIdle(2000) // Wait for the POST/reloading to trigger since #agreementInfo may be up for some ms first.
+          .wait('[data-test-agreement-info]')
+          .waitUntilNetworkIdle(2000)
           .evaluate(expectedValues => {
             const name = document.querySelector('[data-test-agreement-name]').innerText;
             if (name !== expectedValues.editedName) {

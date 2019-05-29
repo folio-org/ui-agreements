@@ -198,7 +198,7 @@ module.exports.test = (uiTestCtx) => {
       it('should save updated agreement', done => {
         nightmare
           .click('#clickable-updateagreement')
-          .wait('#agreementInfo')
+          .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000)
           .wait('#accordion-toggle-button-licenseInfo')
           .click('#accordion-toggle-button-licenseInfo')

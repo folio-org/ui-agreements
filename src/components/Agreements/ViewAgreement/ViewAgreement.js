@@ -24,10 +24,11 @@ import {
   AssociatedAgreements,
   Eresources,
   Finances,
+  InternalContacts,
   LicenseInfo,
   LicenseBusinessTerms,
   Organizations,
-  VendorInfo
+  VendorInfo,
 } from './Sections';
 
 import EditAgreement from '../EditAgreement';
@@ -132,9 +133,9 @@ class ViewAgreement extends React.Component {
 
   state = {
     sections: {
-      agreementInfo: true,
       agreementLines: false,
       finances: false,
+      internalContacts: true,
       licenseInfo: false,
       licenseBusinessTerms: false,
       organizations: false,
@@ -500,15 +501,16 @@ class ViewAgreement extends React.Component {
         }}
       >
         <VendorInfo {...sectionProps} />
+        <AgreementInfo id="agreementInfo" {...sectionProps} />
         <AccordionSet>
           <Row end="xs">
             <Col xs>
               <ExpandAllButton accordionStatus={this.state.sections} onToggle={this.handleAllSectionsToggle} />
             </Col>
           </Row>
-          <AgreementInfo
-            id="agreementInfo"
-            open={this.state.sections.agreementInfo}
+          <InternalContacts
+            id="internalContacts"
+            open={this.state.sections.internalContacts}
             {...sectionProps}
           />
           <Finances

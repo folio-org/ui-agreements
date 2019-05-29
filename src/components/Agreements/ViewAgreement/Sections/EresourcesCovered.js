@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Accordion, Badge, Icon, Layout, MultiColumnList } from '@folio/stripes/components';
+import { Badge, Icon, Layout, MultiColumnList, KeyValue } from '@folio/stripes/components';
 
 import CoverageStatements from '../../../CoverageStatements';
 import CustomCoverageIcon from '../../../CustomCoverageIcon';
@@ -93,14 +93,7 @@ export default class EresourcesCovered extends React.Component {
 
     return (
       <IfEResourcesEnabled>
-        <Accordion
-          displayWhenClosed={this.renderBadge()}
-          displayWhenOpen={this.renderBadge()}
-          id="eresources-covered"
-          label={<FormattedMessage id="ui-agreements.agreements.eresourcesCovered" />}
-          open={this.state.open}
-          onToggle={this.onToggleAccordion}
-        >
+        <KeyValue label={<FormattedMessage id="ui-agreements.agreements.eresourcesCovered" />}>
           <MultiColumnList
             columnMapping={this.columnMapping}
             columnWidths={this.columnWidths}
@@ -113,7 +106,7 @@ export default class EresourcesCovered extends React.Component {
             virtualize
             visibleColumns={this.visibleColumns}
           />
-        </Accordion>
+        </KeyValue>
       </IfEResourcesEnabled>
     );
   }
