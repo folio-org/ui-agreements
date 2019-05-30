@@ -16,8 +16,8 @@ export default class AgreementInfo extends React.Component {
   render() {
     const { agreement } = this.props;
     return (
-      <React.Fragment>
-        <Row data-test-agreement-info>
+      <div data-test-agreement-info>
+        <Row>
           <Col xs={12}>
             <KeyValue label={<FormattedMessage id="ui-agreements.agreements.name" />}>
               <div data-test-agreement-name>
@@ -58,7 +58,7 @@ export default class AgreementInfo extends React.Component {
             </KeyValue>
           </Col>
         </Row>
-      </React.Fragment>
+      </div>
     );
   }
 }
