@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedDate, FormattedMessage } from 'react-intl';
-import { Accordion, Headline, Layout, KeyValue, MultiColumnList, InfoPopover } from '@folio/stripes/components';
+import { Headline, Layout, KeyValue, MultiColumnList, InfoPopover } from '@folio/stripes/components';
 import { LicenseCard, LicenseEndDate } from '@folio/stripes-erm-components';
 
 export default class AllLicenses extends React.Component {
@@ -47,45 +47,40 @@ export default class AllLicenses extends React.Component {
     if (!inactiveLicenses.length) return null;
 
     return (
-      <Accordion
-        id="agreement-inactive-licenses"
-        label={<FormattedMessage id="ui-agreements.license.inactiveLicenses" />}
-      >
-        <Layout className="margin-start-gutter padding-bottom-gutter">
-          <MultiColumnList
-            columnMapping={{
-              note: '',
-              name: <FormattedMessage id="ui-agreements.license.prop.name" />,
-              status: <FormattedMessage id="ui-agreements.license.prop.status" />,
-              startDate: <FormattedMessage id="ui-agreements.license.prop.startDate" />,
-              endDate: <FormattedMessage id="ui-agreements.license.prop.endDate" />,
-            }}
-            columnWidths={{
-              note: 30,
-              name: '40%',
-              status: '20%',
-              startDate: '15%',
-              endDate: '15%'
-            }}
-            contentData={inactiveLicenses}
-            formatter={{
-              note: link => (link.note ? <InfoPopover content={link.note} /> : ''),
-              name: ({ remoteId_object:license = {} }) => license.name,
-              status: link => (link.status ? link.status.label : '-'),
-              startDate: ({ remoteId_object:license = {} }) => (license.startDate ? <FormattedDate value={license.startDate} /> : '-'),
-              endDate: ({ remoteId_object:license = {} }) => <LicenseEndDate license={license} />,
-            }}
-            interactive={false}
-            visibleColumns={[
-              'note',
-              'name',
-              'status',
-              'startDate',
-              'endDate',
-            ]}
-          />
-        </Layout>
-      </Accordion>
+      <KeyValue label={<FormattedMessage id="ui-agreements.license.inactiveLicenses" />}>
+        <MultiColumnList
+          columnMapping={{
+            note: '',
+            name: <FormattedMessage id="ui-agreements.license.prop.name" />,
+            status: <FormattedMessage id="ui-agreements.license.prop.status" />,
+            startDate: <FormattedMessage id="ui-agreements.license.prop.startDate" />,
+            endDate: <FormattedMessage id="ui-agreements.license.prop.endDate" />,
+          }}
+          columnWidths={{
+            note: 30,
+            name: '40%',
+            status: '20%',
+            startDate: '15%',
+            endDate: '15%'
+          }}
+          contentData={inactiveLicenses}
+          formatter={{
+            note: link => (link.note ? <InfoPopover content={link.note} /> : ''),
+            name: ({ remoteId_object: license = {} }) => license.name,
+            status: link => (link.status ? link.status.label : '-'),
+            startDate: ({ remoteId_object: license = {} }) => (license.startDate ? <FormattedDate value={license.startDate} /> : '-'),
+            endDate: ({ remoteId_object: license = {} }) => <LicenseEndDate license={license} />,
+          }}
+          interactive={false}
+          visibleColumns={[
+            'note',
+            'name',
+            'status',
+            'startDate',
+            'endDate',
+          ]}
+        />
+      </KeyValue>
     );
   }
 

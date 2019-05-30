@@ -39,7 +39,7 @@ export default class Eresources extends React.Component {
           visible={open}
           {...this.props}
         />
-        <div style={{ marginLeft: '2rem' }}>
+        <div>
           <EresourcesCovered
             visible={open}
             {...this.props}

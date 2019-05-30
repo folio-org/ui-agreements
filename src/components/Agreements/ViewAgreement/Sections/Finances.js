@@ -48,14 +48,6 @@ export default class Finances extends React.Component {
           visible={open}
           {...this.props}
         />
-        <div style={{ marginLeft: '2rem' }}>
-          <Accordion
-            id="finance-reports"
-            label={<FormattedMessage id="ui-agreements.agreements.financeReports" />}
-          >
-            TBD
-          </Accordion>
-        </div>
       </Accordion>
     );
   }

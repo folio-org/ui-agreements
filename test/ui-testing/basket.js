@@ -184,14 +184,14 @@ module.exports.test = (uiTestCtx) => {
             .insert('#edit-agreement-start-date', values.agreementStartDate)
             .type('#edit-agreement-status', values.agreementStatus)
             .click('#clickable-createagreement')
-            .wait('#agreementInfo')
+            .wait('[data-test-agreement-info]')
             .then(done)
             .catch(done);
         });
 
         it('should see correct agreement fields', done => {
           nightmare
-            .wait('#agreementInfo')
+            .wait('[data-test-agreement-info]')
             .evaluate(expectedValues => {
               const foundName = document.querySelector('[data-test-agreement-name]').innerText;
               if (foundName !== expectedValues.agreementName) {
@@ -238,7 +238,7 @@ module.exports.test = (uiTestCtx) => {
               return resources.length === 3;
             })
             .click('#clickable-updateagreement')
-            .wait('#agreementInfo')
+            .wait('[data-test-agreement-info]')
             .waitUntilNetworkIdle(2000) // Wait for the update list of agreement lines to fetch/render
             .then(done)
             .catch(done);

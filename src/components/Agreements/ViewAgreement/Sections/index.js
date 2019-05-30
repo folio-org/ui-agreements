@@ -1,4 +1,5 @@
 export { default as AgreementInfo } from './AgreementInfo';
+export { default as InternalContacts } from './InternalContacts';
 export { default as AssociatedAgreements } from './AssociatedAgreements';
 export { default as Eresources } from './Eresources';
 export { default as Finances } from './Finances';

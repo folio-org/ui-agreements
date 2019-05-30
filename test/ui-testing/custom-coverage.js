@@ -159,8 +159,8 @@ module.exports.test = (uiTestCtx) => {
 
         chain
           .click('#clickable-updateagreement')
-          .wait('#agreementInfo')
-          .waitUntilNetworkIdle(2000) // Wait for the POST/reloading to trigger since #agreementInfo may be up for some ms first.
+          .wait('[data-test-agreement-info]')
+          .waitUntilNetworkIdle(2000)
           .then(done)
           .catch(done);
       });

@@ -4,7 +4,7 @@ const getCreateAgreementUrl = ({ authority, referenceId }) => (
   `/erm/agreements?layer=create&authority=${authority}&referenceId=${referenceId}`
 );
 
-const getEHoldingsUrl = ({ authority, referenceId }) =>  {
+const getEHoldingsUrl = ({ authority, referenceId }) => {
   if (authority === 'EKB-PACKAGE') return `/eholdings/packages/${referenceId}`;
   if (authority === 'EKB-TITLE') return `/eholdings/resources/${referenceId}`;
 }
@@ -95,14 +95,14 @@ module.exports.test = (uiTestCtx) => {
           it(`should create agreement ${values.name}`, done => {
             nightmare
               .click('#clickable-createagreement')
-              .wait('#agreementInfo')
+              .wait('[data-test-agreement-info]')
               .waitUntilNetworkIdle(2000)
               .then(done)
               .catch(done);
           });
 
           it('should have resource info in agreement lines list', done => {
-              nightmare
+            nightmare
               .wait('#accordion-toggle-button-eresourcesAgreementLines')
               .click('#accordion-toggle-button-eresourcesAgreementLines')
               .evaluate(expected => {
