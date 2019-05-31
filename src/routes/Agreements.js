@@ -8,6 +8,12 @@ import EditAgreement from '../components/Agreements/EditAgreement';
 import AgreementFilters from '../components/Agreements/AgreementFilters';
 import packageInfo from '../../package';
 
+import {
+  handleDeleteFile,
+  handleDownloadFile,
+  handleUploadFile,
+} from './handlers/file';
+
 const INITIAL_RESULT_COUNT = 100;
 const DEFAULT_FILTERS = 'agreementStatus.Requested,agreementStatus.In Negotiation,agreementStatus.Draft,agreementStatus.Active';
 const DEFAULT_SORT = 'Name';
@@ -108,6 +114,7 @@ class Agreements extends React.Component {
   static propTypes = {
     browseOnly: PropTypes.bool,
     disableRecordCreation: PropTypes.bool,
+    okapi: PropTypes.object,
     resources: PropTypes.object,
     mutator: PropTypes.object,
     onSelectRow: PropTypes.func,
@@ -116,6 +123,18 @@ class Agreements extends React.Component {
 
   static defaultProps = {
     showSingleResult: true,
+  }
+
+  handleDeleteFile = (file) => {
+    return handleDeleteFile(file, this.props.okapi);
+  }
+
+  handleDownloadFile = (file) => {
+    handleDownloadFile(file, this.props.okapi);
+  }
+
+  handleUploadFile = (file) => {
+    return handleUploadFile(file, this.props.okapi);
   }
 
   handleCreate = (agreement) => {
@@ -220,7 +239,12 @@ class Agreements extends React.Component {
           lastUpdated: 120,
         }}
         detailProps={{
-          onUpdate: this.handleUpdate
+          onUpdate: this.handleUpdate,
+          handlers: {
+            onDeleteFile: this.handleDeleteFile,
+            onDownloadFile: this.handleDownloadFile,
+            onUploadFile: this.handleUploadFile,
+          },
         }}
         disableRecordCreation={this.props.disableRecordCreation}
         editRecordComponent={EditAgreement}

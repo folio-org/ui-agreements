@@ -15,6 +15,7 @@ import AgreementFormExternalLicenses from './AgreementFormExternalLicenses';
 
 class AgreementFormLicense extends React.Component {
   static propTypes = {
+    handlers: PropTypes.object,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
@@ -22,6 +23,7 @@ class AgreementFormLicense extends React.Component {
   };
 
   render() {
+    const { handlers } = this.props;
     return (
       <Accordion
         id={this.props.id}
@@ -42,7 +44,7 @@ class AgreementFormLicense extends React.Component {
         </Row>
         <div style={{ marginLeft: '2rem' }}>
           <AgreementFormAllLicenses parentResources={this.props.parentResources} />
-          <AgreementFormExternalLicenses parentResources={this.props.parentResources} />
+          <AgreementFormExternalLicenses parentResources={this.props.parentResources} handlers={handlers} />
         </div>
       </Accordion>
     );

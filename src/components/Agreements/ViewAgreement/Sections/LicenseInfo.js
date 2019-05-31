@@ -14,13 +14,14 @@ import ExternalLicenses from './ExternalLicenses';
 export default class LicenseInfo extends React.Component {
   static propTypes = {
     agreement: PropTypes.object.isRequired,
+    handlers: PropTypes.object,
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
 
   render() {
-    const { agreement } = this.props;
+    const { agreement, handlers } = this.props;
 
     return (
       <Accordion
@@ -42,7 +43,7 @@ export default class LicenseInfo extends React.Component {
         ) : null}
         <div>
           <AllLicenses agreement={agreement} />
-          <ExternalLicenses agreement={agreement} />
+          <ExternalLicenses agreement={agreement} handlers={handlers} />
         </div>
       </Accordion>
     );
