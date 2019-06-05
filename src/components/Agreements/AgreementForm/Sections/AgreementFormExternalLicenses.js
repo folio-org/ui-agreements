@@ -15,10 +15,6 @@ export default class AgreementFormExternalLicenses extends React.Component {
     }),
   };
 
-  getDeleteFilePath = (file) => `/agreements/files/${file.id}`;
-
-  getUploadFilePath = () => '/agreements/files';
-
   render() {
     const { handlers } = this.props;
     return (
