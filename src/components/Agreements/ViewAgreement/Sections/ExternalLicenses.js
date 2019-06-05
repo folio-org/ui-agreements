@@ -7,6 +7,9 @@ import { DocumentCard } from '@folio/stripes-erm-components';
 
 export default class ExternalLicenses extends React.Component {
   static propTypes = {
+    handlers: PropTypes.shape({
+      onDownloadFile: PropTypes.func,
+    }),
     agreement: PropTypes.shape({
       externalLicenseDocs: PropTypes.arrayOf(
         PropTypes.shape({
@@ -21,9 +24,15 @@ export default class ExternalLicenses extends React.Component {
     }),
   };
 
-  renderExternalLicenses = (licenses) => (
-    licenses.map(license => <DocumentCard key={license.id} {...license} />)
-  )
+  renderExternalLicenses = (licenses) => {
+    return licenses.map(license => (
+      <DocumentCard
+        key={license.id}
+        onDownloadFile={this.props.handlers.onDownloadFile}
+        {...license}
+      />
+    ));
+  }
 
   render() {
     const externalLicenseDocs = get(this.props, ['agreement', 'externalLicenseDocs'], []);

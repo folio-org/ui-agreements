@@ -5,12 +5,12 @@ const generateAgreementValues = () => {
   return {
     name: `Fledgling Agreement #${number}`,
     description: `This agreement of count #${number} is still in its initial stages.`,
-    renewalPriority: 'For Review',
+    renewalPriority: 'For review',
     isPerpetual: 'Yes',
 
     editedName: `Edited Agreement #${number}`,
-    editedRenewalPriority: 'Definitely Renew',
-    editedStatus: 'In Negotiation',
+    editedRenewalPriority: 'Definitely renew',
+    editedStatus: 'In negotiation',
   };
 };
 

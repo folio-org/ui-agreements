@@ -28,6 +28,7 @@ class AgreementForm extends React.Component {
   getSectionProps() {
     return {
       agreementLines: this.props.agreementLines,
+      handlers: this.props.handlers,
       onToggle: this.handleSectionToggle,
       parentResources: this.props.parentResources,
       parentMutator: this.props.parentMutator,

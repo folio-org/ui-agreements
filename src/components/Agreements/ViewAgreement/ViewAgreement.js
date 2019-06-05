@@ -319,6 +319,7 @@ class ViewAgreement extends React.Component {
       agreementLines: this.getAgreementLines(),
       contacts: this.getContacts(),
       financesAgreementLines: this.getFinancesAgreementLines(),
+      handlers: this.props.handlers,
       organizations: this.getOrganizations(),
       invoices: this.getInvoices(),
       onToggle: this.handleSectionToggle,
