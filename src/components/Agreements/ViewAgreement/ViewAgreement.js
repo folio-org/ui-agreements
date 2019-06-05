@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { cloneDeep, difference, get, keyBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { withTags } from '@folio/stripes/smart-components';
+import { withTags, NotesSmartAccordion } from '@folio/stripes/smart-components';
+
 import {
   AccordionSet,
   Button,
@@ -546,6 +547,14 @@ class ViewAgreement extends React.Component {
             {...sectionProps}
           />
         </AccordionSet>
+        <NotesSmartAccordion
+          domainName="agreements"
+          entityName={agreement.name}
+          entityType="agreement"
+          entityId={agreement.id}
+          pathToNoteCreate="/erm/notes/new"
+          pathToNoteDetails="/erm/notes"
+        />
         {this.renderEditLayer()}
       </Pane>
     );

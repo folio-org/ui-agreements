@@ -13,6 +13,9 @@ import Tabs from './components/Tabs';
 import Dashboard from './routes/Dashboard';
 import Agreements from './routes/Agreements';
 import EResources from './routes/EResources';
+import NoteCreate from './routes/note-create';
+import NoteView from './routes/note-view';
+import NoteEdit from './routes/note-edit';
 
 import css from './ERM.css';
 
@@ -119,7 +122,7 @@ export default class ERM extends React.Component {
     return (
       <div ref={(ref) => { this.container = ref; }} className={css.container}>
         <IfEResourcesEnabled>
-          { this.renderBasket() }
+          {this.renderBasket()}
           <Layout className={`${css.header} display-flex full padding-top-gutter padding-start-gutter padding-end-gutter`}>
             <Tabs
               tab={currentPage}
@@ -134,6 +137,21 @@ export default class ERM extends React.Component {
             <Route
               path={`${match.path}/agreements`}
               render={() => <this.connectedAgreements location={location} />}
+            />
+            <Route
+              path={`${match.path}/notes/new`}
+              exact
+              component={NoteCreate}
+            />
+            <Route
+              path={`${match.path}/notes/:noteId`}
+              exact
+              component={NoteView}
+            />
+            <Route
+              path={`${match.path}/notes/:id/edit`}
+              exact
+              component={NoteEdit}
             />
             <IfEResourcesEnabled>
               <Route
