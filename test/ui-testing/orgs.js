@@ -274,9 +274,9 @@ module.exports.test = (uiTestCtx) => {
                     nightmare
                         .evaluate(o => {
                             const rows = [...document.querySelectorAll('[data-test-organizations-org]')].map(e => e.textContent);
-                            const row = rows.find(r => r.indexOf(o.name) >= 0);
+                            const row = rows.find(r => r.indexOf(o.name) >= 0 && r.indexOf(o.role) >= 0);
                             if (row) {
-                                throw Error(`Found a row with a org named ${o.name} when it should have been deleted.`);
+                                throw Error(`Found a row with an org named ${o.name} when it should have been deleted.`);
                             }
                         }, orgToDelete)
                         .then(done)
