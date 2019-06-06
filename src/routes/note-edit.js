@@ -57,7 +57,7 @@ export default class NoteEditRoute extends Component {
         entityTypeTranslationKeys={entityTypeTranslationKeys}
         entityTypePluralizedTranslationKeys={entityTypePluralizedTranslationKeys}
         paneHeaderAppIcon="agreement"
-        domain="agreement"
+        domain="agreements"
         navigateBack={this.goToNoteView}
         noteId={id}
       />

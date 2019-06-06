@@ -3,7 +3,8 @@ const AgreementCRUD = require('./agreement-crud');
 
 module.exports.test = (uiTestCtx) => {
     const number = Math.round(Math.random() * 100000);
-    const testNote = `test${Math.floor(Math.random() * 100000)}`;
+    const testNote = `note${Math.floor(Math.random() * 100000)}`;
+    const editedNote = `editnote${Math.floor(Math.random() * 100000)}`;
     const noteType = `noteType${Math.floor(Math.random() * 100000)}`;
     const agreement = {
         name: `Notes Agreement #${number}`,
@@ -25,11 +26,12 @@ module.exports.test = (uiTestCtx) => {
                 helpers.logout(nightmare, config, done);
             });
 
+            it('should open Settings', done => {
+                helpers.clickSettings(nightmare, done);
+            });
+
             it('should create note type in settings', done => {
                 nightmare
-                    .wait(config.select.settings)
-                    .click(config.select.settings)
-                    .wait('#app-list-item-clickable-settings')
                     .wait('a[href="/settings/notes"]')
                     .click('a[href="/settings/notes"]')
                     .wait('a[href="/settings/notes/general"]')
@@ -82,13 +84,88 @@ module.exports.test = (uiTestCtx) => {
             it('shoud find created note in notes list', done => {
                 nightmare
                     .evaluate(note => {
-                        const rows = [...document.querySelectorAll('#notes-list')].map(e => e.textContent);
-                        const row = rows.find(r => r.indexOf(note) >= 0);
-                        if (!row) {
+                        const notesRows = [...document.querySelectorAll('#notes-list')].map(e => e.textContent);
+                        const noteElement = notesRows.find(r => r.indexOf(note) >= 0);
+                        if (!noteElement) {
                             throw Error(`Could not find row with the note ${note}`);
                         }
                     }, testNote)
                     .then(done)
+                    .catch(done);
+            });
+
+            it(`shoud edit note to ${editedNote}`, done => {
+                nightmare
+                    .evaluate(note => {
+                        const notesElements = [...document.querySelectorAll('div[role="gridcell"]')];
+                        const noteElement = notesElements.find(e => e.textContent === note);
+                        if (!noteElement) {
+                            throw Error(`Could not find row with the note ${note}`);
+                        }
+                        noteElement.click();
+                    }, testNote)
+                    .then(() => {
+                        nightmare
+                            .wait('[data-test-navigate-note-edit]')
+                            .click('[data-test-navigate-note-edit]')
+                            .waitUntilNetworkIdle(3000)
+                            .wait('[data-test-note-title-field]')
+                            .insert('[data-test-note-title-field]', '')
+                            .insert('[data-test-note-title-field]', editedNote)
+                            .wait('[data-test-save-note]')
+                            .click('[data-test-save-note]')
+                            .waitUntilNetworkIdle(2000)
+                            .then(done)
+                            .catch(done);
+                    })
+                    .catch(done);
+            });
+
+            it('shoud find edited note in notes list', done => {
+                nightmare
+                    .wait('[data-test-leave-note-view]')
+                    .click('[data-test-leave-note-view]')
+                    .wait('#notes-list')
+                    .evaluate(note => {
+                        const notesRows = [...document.querySelectorAll('#notes-list')].map(e => e.textContent);
+                        const noteElement = notesRows.find(r => r.indexOf(note) >= 0);
+                        if (!noteElement) {
+                            throw Error(`Could not find row with the edited note ${note}`);
+                        }
+                    }, editedNote)
+                    .then(done)
+                    .catch(done);
+            });
+
+            it('should delete the note', done => {
+                nightmare
+                    .evaluate(note => {
+                        const notesElements = [...document.querySelectorAll('div[role="gridcell"]')];
+                        const noteElement = notesElements.find(e => { console.log(e.textContent); return e.textContent === note });
+                        if (!noteElement) {
+                            throw Error(`Could not find row with the note ${note}`);
+                        }
+                        noteElement.click();
+                    }, editedNote)
+                    .then(() => {
+                        nightmare
+                            .waitUntilNetworkIdle(2000)
+                            .wait('[class*=paneHeaderCenterButton]')
+                            .click('[class*=paneHeaderCenterButton]')
+                            .wait('[data-test-note-delete]')
+                            .click('[data-test-note-delete]')
+                            .wait('#clickable-confirm-delete-note-confirm')
+                            .click('#clickable-confirm-delete-note-confirm')
+                            .evaluate(note => {
+                                const notesRows = [...document.querySelectorAll('#notes-list')].map(e => e.textContent);
+                                const noteElement = notesRows.find(r => r.indexOf(note) >= 0);
+                                if (noteElement) {
+                                    throw Error(`Should not find row with the edited note ${note}`);
+                                }
+                            }, editedNote)
+                            .then(done)
+                            .catch(done)
+                    })
                     .catch(done);
             });
         });
