@@ -6,4 +6,5 @@ export { default as Finances } from './Finances';
 export { default as LicenseInfo } from './LicenseInfo';
 export { default as LicenseBusinessTerms } from './LicenseBusinessTerms';
 export { default as Organizations } from './Organizations';
+export { default as SupplementaryInfo } from './SupplementaryInfo';
 export { default as VendorInfo } from './VendorInfo';
