@@ -121,7 +121,7 @@ module.exports.test = (uiTestCtx) => {
                     .catch(done);
             });
 
-            it('shoud find edited note in notes list', done => {
+            it('should find edited note in notes list', done => {
                 nightmare
                     .wait('[data-test-leave-note-view]')
                     .click('[data-test-leave-note-view]')

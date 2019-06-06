@@ -29,6 +29,7 @@ import {
   LicenseInfo,
   LicenseBusinessTerms,
   Organizations,
+  SupplementaryInfo,
   VendorInfo,
 } from './Sections';
 
@@ -141,6 +142,7 @@ class ViewAgreement extends React.Component {
       licenseBusinessTerms: false,
       organizations: false,
       eresourcesAgreementLines: false,
+      supplementaryInfo: false,
       associatedAgreements: false,
     }
   }
@@ -539,6 +541,11 @@ class ViewAgreement extends React.Component {
             id="eresourcesAgreementLines"
             open={this.state.sections.eresourcesAgreementLines}
             fetchMoreEresources={this.fetchMoreEresources}
+            {...sectionProps}
+          />
+          <SupplementaryInfo
+            id="supplementaryInfo"
+            open={this.state.sections.supplementaryInfo}
             {...sectionProps}
           />
           <AssociatedAgreements

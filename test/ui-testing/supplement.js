@@ -1,27 +1,27 @@
 const Docs = require('./docs');
 
 const DOCS = [{
-  name: 'Final Copy',
+  name: 'Misc Paper',
   note: 'Signed and filed',
   location: 'Filing Cabinet',
-  url: 'http://licenses.com/final'
+  url: 'http://agreements.com/paper'
 }, {
-  name: 'Initial Copy',
-  url: 'http://licenses.com/initial'
+  name: 'Folder of secrets',
+  url: 'http://agreements.com/secrets'
 }];
 
 const EDITED_DOC = {
   docToEdit: DOCS[0].name,
-  name: 'Final Copy v2',
+  name: 'Misc Paper v2',
   note: 'Need to sign',
   location: 'Printer Tray',
-  url: 'http://licenses.com/final2'
+  url: 'http://agreements.com/paper2'
 };
 
 const DELETED_DOC = DOCS[1].name;
 
-const DOCS_FIELD_NAME = 'externalLicenseDocs';
-const DOCS_FORM_NAME = 'agreementFormLicense';
+const DOCS_FIELD_NAME = 'supplementaryDocs';
+const DOCS_FORM_NAME = 'agreementFormSupplementaryInfo';
 
 module.exports.test = (uiTestCtx) => {
   Docs.test(

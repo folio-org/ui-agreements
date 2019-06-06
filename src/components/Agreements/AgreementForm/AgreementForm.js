@@ -11,6 +11,7 @@ import {
   AgreementFormLines,
   AgreementFormOrganizations,
   AgreementFormLicense,
+  AgreementFormSupplementaryInfo,
 } from './Sections';
 
 import css from './AgreementForm.css';
@@ -22,6 +23,7 @@ class AgreementForm extends React.Component {
       agreementFormLines: false,
       agreementFormOrganizations: false,
       agreementFormLicense: false,
+      agreementFormSupplementaryInfo: false,
     }
   }
 
@@ -64,6 +66,7 @@ class AgreementForm extends React.Component {
           <AgreementFormLines id="agreementFormLines" open={this.state.sections.agreementFormLines} {...sectionProps} />
           <AgreementFormLicense id="agreementFormLicense" open={this.state.sections.agreementFormLicense} {...sectionProps} />
           <AgreementFormOrganizations id="agreementFormOrganizations" open={this.state.sections.agreementFormOrganizations} {...sectionProps} />
+          <AgreementFormSupplementaryInfo id="agreementFormSupplementaryInfo" open={this.state.sections.agreementFormSupplementaryInfo} {...sectionProps} />
         </AccordionSet>
       </div>
     );
