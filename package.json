@@ -13,8 +13,8 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run nav/agreement-crud/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func",
-    "test-int": "stripes test nightmare --run nav/agreement-crud/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/linked-licenses/license-terms",
+    "test": "stripes test nightmare --run nav/agreement-crud/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement",
+    "test-int": "stripes test nightmare --run nav/agreement-crud/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/linked-licenses/license-terms",
     "test-licenses-int": "stripes test nightmare --run linked-licenses/license-terms",
     "test-nav": "stripes test nightmare --run nav",
     "test-agreement-crud": "stripes test nightmare --run agreement-crud",
@@ -23,11 +23,15 @@
     "test-tags-crud": "stripes test nightmare --run tags-crud",
     "test-basket": "stripes test nightmare --run basket",
     "test-external-licenses": "stripes test nightmare --run external-licenses",
-    "test-hide-eresources-func": "stripes test nightmare --run hide-eresources-func",
     "test-custom-coverage": "stripes test nightmare --run custom-coverage",
+    "test-hide-eresources-func": "stripes test nightmare --run hide-eresources-func",
+    "test-supplement": "stripes test nightmare --run supplement",
+
     "test-linked-licenses": "stripes test nightmare --run linked-licenses",
     "test-license-terms": "stripes test nightmare --run license-terms",
+
     "test-ekb-int": "stripes test nightmare --run ekb-int",
+
     "lint": "eslint src"
   },
   "devDependencies": {
