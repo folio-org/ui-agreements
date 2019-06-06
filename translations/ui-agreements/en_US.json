@@ -174,5 +174,7 @@
     "interface.uri": "URI",
     "interface.type": "Interface type",
     "interface.notes": "Notes",
-    "interface.notFound": "No interfaces found"
+    "interface.notFound": "No interfaces found",
+    "notes.entityType.agreement": "Agreement",
+    "notes.entityType.agreement.pluralized": "{count} {count, plural, one {agreement} other {agreements}}"
 }

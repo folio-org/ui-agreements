@@ -8,14 +8,14 @@ module.exports.test = (uiTestCtx) => {
     name: `Tags Agreement #${number}`,
   };
 
-  describe('Login > Enable Tags > Find user > Create Tags > Logout\n', function test() {
+  describe('tags-crud', function test() {
     const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
     nightmare.options.width = 1300; // added this temporarily as MultiSelect doesnt work well with narrow screen sizes
 
     this.timeout(Number(config.test_timeout));
 
-    describe('login > create license > edit terms > create agreement > link license > check term > logout', () => {
+    describe('Login > Enable Tags > Find agreement > Create Tags > Logout\n', () => {
       before((done) => {
         helpers.login(nightmare, config, done);
       });
