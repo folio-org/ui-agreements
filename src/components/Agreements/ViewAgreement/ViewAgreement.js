@@ -472,7 +472,7 @@ class ViewAgreement extends React.Component {
   }
 
   render() {
-    const { stripes, location } = this.props;
+    const { stripes, location, match } = this.props;
     const query = location.search ? queryString.parse(location.search) : {};
     const width = (query.helper) ? '50%' : '60%';
     const key = (query.helper) ? 'small' : 'large';
