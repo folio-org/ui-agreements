@@ -475,7 +475,7 @@ class ViewAgreement extends React.Component {
     const { stripes, location } = this.props;
     const query = location.search ? queryString.parse(location.search) : {};
     const width = (query.helper) ? '50%' : '60%';
-    const key = (query.helper) ? 'small' : 'large';
+    const key = (query.helper) ? 'smallPane' : 'largePane';
     const agreement = this.getAgreement();
     const agreementLines = this.getAgreementLines();
     if (!agreement || agreementLines === undefined) return this.renderLoadingPane();
