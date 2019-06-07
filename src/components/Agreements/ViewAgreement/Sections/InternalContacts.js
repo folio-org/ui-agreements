@@ -18,6 +18,9 @@ export default class InternalContacts extends React.Component {
       }),
       user: PropTypes.string,
     })),
+    id: PropTypes.string,
+    onToggle: PropTypes.func,
+    open: PropTypes.bool,
   };
 
   renderSpinner = () => (
@@ -52,12 +55,16 @@ export default class InternalContacts extends React.Component {
   }
 
   render() {
+    const { id, onToggle, open } = this.props;
+
     return (
       <Accordion
-        closedByDefault
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
+        id={id}
         label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
+        onToggle={onToggle}
+        open={open}
       >
         {this.renderContacts()}
       </Accordion>
