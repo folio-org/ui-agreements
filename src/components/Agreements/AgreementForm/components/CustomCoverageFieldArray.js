@@ -136,7 +136,6 @@ class CustomCoverageFieldArray extends React.Component {
           <Row>
             <Col xs={4}>
               <Field
-                backendDateStandard="YYYY-MM-DD"
                 dateFormat="YYYY-MM-DD"
                 component={Datepicker}
                 id={`cc-start-date-${index}`}
@@ -171,7 +170,6 @@ class CustomCoverageFieldArray extends React.Component {
           <Row>
             <Col xs={4}>
               <Field
-                backendDateStandard="YYYY-MM-DD"
                 dateFormat="YYYY-MM-DD"
                 component={Datepicker}
                 id={`cc-end-date-${index}`}

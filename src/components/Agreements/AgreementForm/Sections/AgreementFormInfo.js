@@ -99,7 +99,6 @@ class AgreementFormInfo extends React.Component {
               label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
-              backendDateStandard="YYYY-MM-DD"
               validate={required}
               required
             />
@@ -111,7 +110,6 @@ class AgreementFormInfo extends React.Component {
               label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
-              backendDateStandard="YYYY-MM-DD"
             />
           </Col>
           <Col xs={12} md={4}>
@@ -121,7 +119,6 @@ class AgreementFormInfo extends React.Component {
               label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
-              backendDateStandard="YYYY-MM-DD"
             />
           </Col>
         </Row>
