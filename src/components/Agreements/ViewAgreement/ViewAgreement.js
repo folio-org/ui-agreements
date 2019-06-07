@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import { cloneDeep, difference, get, keyBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { withTags, NotesSmartAccordion } from '@folio/stripes/smart-components';
@@ -119,6 +120,7 @@ class ViewAgreement extends React.Component {
 
   static propTypes = {
     editLink: PropTypes.string,
+    location: PropTypes.object,
     match: PropTypes.object,
     mutator: PropTypes.object,
     onClose: PropTypes.func,
@@ -465,17 +467,21 @@ class ViewAgreement extends React.Component {
   }
 
   render() {
+    const { stripes, location } = this.props;
+    const query = location.search ? queryString.parse(location.search) : {};
+    const width = (query.helper) ? '50%' : '60%';
+    const key = (query.helper) ? 'small' : 'large';
     const agreement = this.getAgreement();
     const agreementLines = this.getAgreementLines();
     if (!agreement || agreementLines === undefined) return this.renderLoadingPane();
 
-    const { stripes } = this.props;
     const sectionProps = this.getSectionProps();
 
     return (
       <Pane
         id="pane-view-agreement"
-        defaultWidth="60%"
+        defaultWidth={width}
+        key={key}
         paneTitle={agreement.name}
         lastMenu={this.renderDetailMenu(agreement)}
         dismissible
