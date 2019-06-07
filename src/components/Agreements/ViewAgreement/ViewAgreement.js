@@ -141,7 +141,7 @@ class ViewAgreement extends React.Component {
     sections: {
       agreementLines: false,
       finances: false,
-      internalContacts: true,
+      internalContacts: false,
       licenseInfo: false,
       licenseBusinessTerms: false,
       organizations: false,
