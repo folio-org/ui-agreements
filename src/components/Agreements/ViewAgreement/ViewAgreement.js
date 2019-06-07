@@ -148,6 +148,7 @@ class ViewAgreement extends React.Component {
       eresourcesAgreementLines: false,
       supplementaryInfo: false,
       associatedAgreements: false,
+      agreementNotes: false,
     }
   }
 
@@ -557,15 +558,18 @@ class ViewAgreement extends React.Component {
             open={this.state.sections.associatedAgreements}
             {...sectionProps}
           />
+          <NotesSmartAccordion
+            domainName="agreements"
+            entityName={agreement.name}
+            entityType="agreement"
+            entityId={match.params.id}
+            id="agreementNotes"
+            onToggle={this.handleSectionToggle}
+            open={this.state.sections.agreementNotes}
+            pathToNoteCreate="/erm/notes/new"
+            pathToNoteDetails="/erm/notes"
+          />
         </AccordionSet>
-        <NotesSmartAccordion
-          domainName="agreements"
-          entityName={agreement.name}
-          entityType="agreement"
-          entityId={match.params.id}
-          pathToNoteCreate="/erm/notes/new"
-          pathToNoteDetails="/erm/notes"
-        />
         {this.renderEditLayer()}
       </Pane>
     );
