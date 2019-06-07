@@ -121,7 +121,11 @@ class ViewAgreement extends React.Component {
   static propTypes = {
     editLink: PropTypes.string,
     location: PropTypes.object,
-    match: PropTypes.object,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
     mutator: PropTypes.object,
     onClose: PropTypes.func,
     onCloseEdit: PropTypes.func,
@@ -139,13 +143,14 @@ class ViewAgreement extends React.Component {
     sections: {
       agreementLines: false,
       finances: false,
-      internalContacts: true,
+      internalContacts: false,
       licenseInfo: false,
       licenseBusinessTerms: false,
       organizations: false,
       eresourcesAgreementLines: false,
       supplementaryInfo: false,
       associatedAgreements: false,
+      agreementNotes: false,
     }
   }
 
@@ -474,7 +479,6 @@ class ViewAgreement extends React.Component {
     const agreement = this.getAgreement();
     const agreementLines = this.getAgreementLines();
     if (!agreement || agreementLines === undefined) return this.renderLoadingPane();
-
     const sectionProps = this.getSectionProps();
 
     return (
@@ -559,15 +563,18 @@ class ViewAgreement extends React.Component {
             open={this.state.sections.associatedAgreements}
             {...sectionProps}
           />
+          <NotesSmartAccordion
+            domainName="agreements"
+            entityName={agreement.name}
+            entityType="agreement"
+            entityId={match.params.id}
+            id="agreementNotes"
+            onToggle={this.handleSectionToggle}
+            open={this.state.sections.agreementNotes}
+            pathToNoteCreate="/erm/notes/new"
+            pathToNoteDetails="/erm/notes"
+          />
         </AccordionSet>
-        <NotesSmartAccordion
-          domainName="agreements"
-          entityName={agreement.name}
-          entityType="agreement"
-          entityId={agreement.id}
-          pathToNoteCreate="/erm/notes/new"
-          pathToNoteDetails="/erm/notes"
-        />
         {this.renderEditLayer()}
       </Pane>
     );
