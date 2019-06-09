@@ -174,5 +174,8 @@
     "interface.uri": "URI",
     "interface.type": "Interface type",
     "interface.notes": "Notes",
-    "interface.notFound": "No interfaces found"
+    "interface.notFound": "No interfaces found",
+    "agreements.supplementaryInfo": "Supplementary information",
+    "supplementaryInfo.agreementHasNone": "Agreement has no supplementary info",
+    "supplementaryInfo.addSupplementaryInfo": "Add supplementary information to agreement"
 }

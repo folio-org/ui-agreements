@@ -174,5 +174,8 @@
     "interface.uri": "URI",
     "interface.type": "نوع الواجهة",
     "interface.notes": "ملاحظات",
-    "interface.notFound": "لم يتم العثور على واجهات"
+    "interface.notFound": "لم يتم العثور على واجهات",
+    "agreements.supplementaryInfo": "معلومات تكميلية",
+    "supplementaryInfo.agreementHasNone": "لا توجد أي معلومات تكميلية للاتفاقية",
+    "supplementaryInfo.addSupplementaryInfo": "إضافة معلومات تكميلية للاتفاقية"
 }

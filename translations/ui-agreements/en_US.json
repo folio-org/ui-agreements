@@ -175,6 +175,7 @@
     "interface.type": "Interface type",
     "interface.notes": "Notes",
     "interface.notFound": "No interfaces found",
-    "notes.entityType.agreement": "Agreement",
-    "notes.entityType.agreement.pluralized": "{count} {count, plural, one {agreement} other {agreements}}"
+    "agreements.supplementaryInfo": "Supplementary information",
+    "supplementaryInfo.agreementHasNone": "Agreement has no supplementary info",
+    "supplementaryInfo.addSupplementaryInfo": "Add supplementary information to agreement"
 }
