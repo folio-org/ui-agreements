@@ -18,7 +18,7 @@ export default class Eresources extends React.Component {
 
   renderBadge = () => {
     const count = get(this.props.agreementLines, ['length']);
-    if (!count) return <Icon icon="spinner-ellipsis" width="10px" />;
+    if (count === undefined) return <Icon icon="spinner-ellipsis" width="10px" />;
 
     return <Badge data-test-agreement-lines-count={count}>{count}</Badge>;
   }
