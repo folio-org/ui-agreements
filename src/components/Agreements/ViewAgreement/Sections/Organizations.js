@@ -25,7 +25,7 @@ export default class Organizations extends React.Component {
     }).isRequired,
     id: PropTypes.string,
     onToggle: PropTypes.func,
-    organizations: PropTypes.object,
+    organizations: PropTypes.arrayOf(PropTypes.object),
     open: PropTypes.bool,
   };
 
