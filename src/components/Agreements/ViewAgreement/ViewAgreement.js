@@ -477,8 +477,7 @@ class ViewAgreement extends React.Component {
     const width = (query.helper) ? '50%' : '60%';
     const key = (query.helper) ? 'smallPane' : 'largePane';
     const agreement = this.getAgreement();
-    const agreementLines = this.getAgreementLines();
-    if (!agreement || agreementLines === undefined) return this.renderLoadingPane();
+    if (!agreement || (agreement.id !== match.params.id)) return this.renderLoadingPane();
     const sectionProps = this.getSectionProps();
 
     return (

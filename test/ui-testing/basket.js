@@ -100,8 +100,8 @@ module.exports.test = (uiTestCtx) => {
       search: 's',
       agreementName: `Basketforged Agreement #${number}`,
       agreementStartDate: '2019-01-31',
-      agreementRenewalPriority: 'Definitely Renew',
-      agreementStatus: 'In Negotiation',
+      agreementRenewalPriority: 'Definitely renew',
+      agreementStatus: 'In negotiation',
     };
 
     this.timeout(Number(config.test_timeout));
@@ -185,6 +185,7 @@ module.exports.test = (uiTestCtx) => {
             .type('#edit-agreement-status', values.agreementStatus)
             .click('#clickable-createagreement')
             .wait('[data-test-agreement-info]')
+            .waitUntilNetworkIdle(2000)
             .then(done)
             .catch(done);
         });

@@ -53,6 +53,7 @@ class Basket extends React.Component {
         replace: PropTypes.func,
       }),
       query: PropTypes.shape({
+        replace: PropTypes.func,
         update: PropTypes.func,
       }),
     }),
@@ -121,13 +122,11 @@ class Basket extends React.Component {
     }));
   }
 
-  constructAddToBasketParam = () => {
-    const selectedItems = Object.entries(this.state.selectedItems)
+  getSelectedItems = () => {
+    return Object.entries(this.state.selectedItems)
       .filter(([_, selected]) => selected)
       .map(([itemId]) => this.props.resources.basket.findIndex(i => i.id === itemId))
       .join(',');
-
-    return `${ADD_FROM_BASKET_PARAM}=${selectedItems}`;
   }
 
   renderFirstMenu = () => {
@@ -154,7 +153,14 @@ class Basket extends React.Component {
         buttonStyle="primary"
         data-test-basket-create-agreement
         disabled={disabled}
-        to={disabled ? null : `/erm/agreements?layer=create&${this.constructAddToBasketParam()}`}
+        onClick={() => {
+          this.props.mutator.query.replace({
+            _path: '/erm/agreements',
+            layer: 'create',
+            addFromBasket: this.getSelectedItems(),
+            basket: null,
+          });
+        }}
       >
         <FormattedMessage id="ui-agreements.basket.createAgreement" />
       </Button>
@@ -226,7 +232,14 @@ class Basket extends React.Component {
           buttonStyle="primary"
           data-test-basket-add-to-agreement
           disabled={disabled}
-          to={disabled ? null : `/erm/agreements/view/${this.state.selectedAgreement}?layer=edit&${this.constructAddToBasketParam()}`}
+          onClick={() => {
+            this.props.mutator.query.replace({
+              _path: `/erm/agreements/view/${this.state.selectedAgreement}`,
+              layer: 'edit',
+              addFromBasket: this.getSelectedItems(),
+              basket: null,
+            });
+          }}
         >
           <FormattedMessage id="ui-agreements.basket.addToSelectedAgreement" />
         </Button>
