@@ -241,7 +241,6 @@ class Agreements extends React.Component {
         detailProps={{
           onUpdate: this.handleUpdate,
           handlers: {
-            onDeleteFile: this.handleDeleteFile,
             onDownloadFile: this.handleDownloadFile,
             onUploadFile: this.handleUploadFile,
           },
