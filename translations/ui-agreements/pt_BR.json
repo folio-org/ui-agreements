@@ -175,7 +175,7 @@
     "interface.type": "Tipo de interface",
     "interface.notes": "Notas",
     "interface.notFound": "Nenhuma interface encontrada",
-    "agreements.supplementaryInfo": "Supplementary information",
-    "supplementaryInfo.agreementHasNone": "Agreement has no supplementary info",
-    "supplementaryInfo.addSupplementaryInfo": "Add supplementary information to agreement"
+    "agreements.supplementaryInfo": "Informação suplementar",
+    "supplementaryInfo.agreementHasNone": "Contrato não tem informações suplementares",
+    "supplementaryInfo.addSupplementaryInfo": "Acrescentar informações suplementares ao contrato"
 }
