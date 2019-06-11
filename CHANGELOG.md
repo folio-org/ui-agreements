@@ -1,6 +1,20 @@
 # Change history for ui-agreements
 
-## 2.0.0 - IN PROGRESS
+## 2.5.0 - 2019-06-11
+* Added ability to manage Notes for Agreements.
+
+## 2.4.0
+* Refactored to use `SearchAndSortQuery`
+* Supported Organizations app as source of Organizations in Agreements
+* Remove horizontal rules between filters in Agreements and License apps
+* Used generalised contacts component
+
+## 2.1.0
+* Displayed identifiers in e-resource preview pane
+* Displayed identifiers in e-resource search & sort
+* Added ability to manage custom coverage for resources.
+
+## 2.0.0
 * Upgrade to Stripes 2.0
 * Use @folio/stripes-erm-components for shared components.
 * Added ability to set External Licenses for Agreements.
