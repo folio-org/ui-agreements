@@ -5,7 +5,6 @@ import { get } from 'lodash';
 import { Field } from 'redux-form';
 
 import {
-  Accordion,
   Col,
   Datepicker,
   Row,
@@ -14,14 +13,10 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-import AgreementFormInternalContacts from './AgreementFormInternalContacts';
 import { required } from '../../../../util/validators';
 
 class AgreementFormInfo extends React.Component {
   static propTypes = {
-    id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
     parentResources: PropTypes.shape({
       agreementStatusValues: PropTypes.object,
       renewalPriorityValues: PropTypes.object,
@@ -52,23 +47,9 @@ class AgreementFormInfo extends React.Component {
     return values;
   }
 
-  getSectionProps() {
-    return {
-      parentMutator: this.props.parentMutator,
-      parentResources: this.props.parentResources,
-    };
-  }
-
   render() {
-    const sectionProps = this.getSectionProps();
-
     return (
-      <Accordion
-        id={this.props.id}
-        label={<FormattedMessage id="ui-agreements.agreements.agreementInfo" />}
-        open={this.props.open}
-        onToggle={this.props.onToggle}
-      >
+      <div data-test-edit-agreement-info>
         <Row>
           <Col xs={12}>
             <Field
@@ -161,10 +142,7 @@ class AgreementFormInfo extends React.Component {
             />
           </Col>
         </Row>
-        <div style={{ marginLeft: '2rem' }}>
-          <AgreementFormInternalContacts {...sectionProps} />
-        </div>
-      </Accordion>
+      </div>
     );
   }
 }

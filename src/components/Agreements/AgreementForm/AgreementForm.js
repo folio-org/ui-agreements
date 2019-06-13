@@ -8,6 +8,7 @@ import {
 
 import {
   AgreementFormInfo,
+  AgreementFormInternalContacts,
   AgreementFormLines,
   AgreementFormOrganizations,
   AgreementFormLicense,
@@ -19,8 +20,8 @@ import css from './AgreementForm.css';
 class AgreementForm extends React.Component {
   state = {
     sections: {
-      agreementFormInfo: true,
       agreementFormLines: false,
+      agreementFormInternalContacts: false,
       agreementFormOrganizations: false,
       agreementFormLicense: false,
       agreementFormSupplementaryInfo: false,
@@ -56,13 +57,14 @@ class AgreementForm extends React.Component {
 
     return (
       <div className={css.agreementForm}>
+        <AgreementFormInfo {...sectionProps} />
         <AccordionSet>
           <Row end="xs">
             <Col xs>
               <ExpandAllButton accordionStatus={this.state.sections} onToggle={this.handleAllSectionsToggle} />
             </Col>
           </Row>
-          <AgreementFormInfo id="agreementFormInfo" open={this.state.sections.agreementFormInfo} {...sectionProps} />
+          <AgreementFormInternalContacts id="agreementFormInternalContacts" open={this.state.sections.agreementFormInternalContacts} {...sectionProps} />
           <AgreementFormLines id="agreementFormLines" open={this.state.sections.agreementFormLines} {...sectionProps} />
           <AgreementFormLicense id="agreementFormLicense" open={this.state.sections.agreementFormLicense} {...sectionProps} />
           <AgreementFormOrganizations id="agreementFormOrganizations" open={this.state.sections.agreementFormOrganizations} {...sectionProps} />
