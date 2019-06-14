@@ -42,7 +42,7 @@ class AgreementFormLicense extends React.Component {
             />
           </Col>
         </Row>
-        <div style={{ marginLeft: '2rem' }}>
+        <div>
           <AgreementFormAllLicenses parentResources={this.props.parentResources} />
           <AgreementFormExternalLicenses parentResources={this.props.parentResources} handlers={handlers} />
         </div>
