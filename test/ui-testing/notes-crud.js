@@ -68,7 +68,8 @@ module.exports.test = (uiTestCtx) => {
 
             it('should add a new note', done => {
                 nightmare
-                    .wait('#accordion-toggle-button-notes-accordion')
+                    .wait('#accordion-toggle-button-agreementNotes')
+                    .click('#accordion-toggle-button-agreementNotes')
                     .wait('[data-test-notes-accordion-new-button]')
                     .click('[data-test-notes-accordion-new-button]')
                     .wait('[data-test-note-types-field]')
@@ -109,7 +110,7 @@ module.exports.test = (uiTestCtx) => {
                         nightmare
                             .wait('[data-test-navigate-note-edit]')
                             .click('[data-test-navigate-note-edit]')
-                            .waitUntilNetworkIdle(3000)
+                            .waitUntilNetworkIdle(2000)
                             .wait('[data-test-note-title-field]')
                             .insert('[data-test-note-title-field]', '')
                             .insert('[data-test-note-title-field]', editedNote)
@@ -126,12 +127,13 @@ module.exports.test = (uiTestCtx) => {
                 nightmare
                     .wait('[data-test-leave-note-view]')
                     .click('[data-test-leave-note-view]')
+                    .waitUntilNetworkIdle(2000)
                     .wait('#notes-list')
                     .evaluate(note => {
                         const notesRows = [...document.querySelectorAll('#notes-list')].map(e => e.textContent);
                         const noteElement = notesRows.find(r => r.indexOf(note) >= 0);
                         if (!noteElement) {
-                            throw Error(`Could not find row with the edited note ${note}`);
+                            throw Error(`Could not find row with the edited note ${note} but found ${noteElement}`);
                         }
                     }, editedNote)
                     .then(done)
@@ -152,6 +154,7 @@ module.exports.test = (uiTestCtx) => {
                     .evaluate(note => {
                         const notesRows = [...document.querySelectorAll('#notes-list')].map(e => e.textContent);
                         const noteElement = notesRows.find(r => r.indexOf(note) >= 0);
+
                         if (noteElement) {
                             throw Error(`Should not find row with the edited note ${note}`);
                         }
