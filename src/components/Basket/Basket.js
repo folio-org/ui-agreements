@@ -18,8 +18,6 @@ import {
 
 import BasketList from './BasketList';
 
-const ADD_FROM_BASKET_PARAM = 'addFromBasket';
-
 class Basket extends React.Component {
   static manifest = Object.freeze({
     openAgreements: {
@@ -213,7 +211,7 @@ class Basket extends React.Component {
             </FormattedMessage>
           </Col>
           <Col xs={12} md={4}>
-            { this.renderAddToAgreementButton() }
+            {this.renderAddToAgreementButton()}
           </Col>
         </Row>
       </div>
@@ -278,8 +276,8 @@ class Basket extends React.Component {
                     removeItem={this.handleRemoveItem}
                     selectedItems={this.state.selectedItems}
                   />
-                  { this.renderCreateAgreementButton() }
-                  { this.renderAddToAgreementSection() }
+                  {this.renderCreateAgreementButton()}
+                  {this.renderAddToAgreementSection()}
                 </div>
               </Pane>
             </Paneset>

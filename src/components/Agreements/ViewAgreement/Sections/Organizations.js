@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { Card } from '@folio/stripes-erm-components';
-import { Accordion, Badge, Icon, Layout, MultiColumnList } from '@folio/stripes/components';
+import { AppIcon } from '@folio/stripes/core';
+import { Accordion, Badge, Card, Icon, Layout, MultiColumnList } from '@folio/stripes/components';
 
 export default class Organizations extends React.Component {
   static propTypes = {
@@ -40,11 +40,20 @@ export default class Organizations extends React.Component {
               <Card
                 data-test-organizations-org
                 key={`${o.org.id}-${o.role && o.role.value}`}
-                header={
+                cardStyle="positive"
+                hasMargin
+                roundedBorder
+                headerStart={
                   <span>
                     {
                       o.org.orgsUuid ?
                         <span>
+                          <AppIcon
+                            app="organizations"
+                            appIconKey="organizations"
+                            size="small"
+                          />
+                          {' '}
                           <Link to={`/organizations/view/${o.org.orgsUuid}`}>
                             {o.org.name}
                           </Link>
@@ -69,8 +78,8 @@ export default class Organizations extends React.Component {
                     formatter={{
                       name: item => (
                         <span>
-                          {item.name}
                           <a href={item.uri}>
+                            {item.name}
                             <Icon icon="external-link" iconPosition="end" />
                           </a>
                         </span>
