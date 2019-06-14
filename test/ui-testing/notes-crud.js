@@ -36,6 +36,7 @@ module.exports.test = (uiTestCtx) => {
                     .click('a[href="/settings/notes"]')
                     .wait('a[href="/settings/notes/general"]')
                     .click('a[href="/settings/notes/general"]')
+                    .waitUntilNetworkIdle(1000)
                     .wait('#clickable-add-noteTypes')
                     .click('#clickable-add-noteTypes')
                     .wait('input[name="items[0].name"]')
