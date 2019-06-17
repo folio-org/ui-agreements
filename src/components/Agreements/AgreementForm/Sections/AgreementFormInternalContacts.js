@@ -9,6 +9,9 @@ import { InternalContactsFieldArray, Spinner } from '@folio/stripes-erm-componen
 
 export default class AgreementFormInternalContacts extends React.Component {
   static propTypes = {
+    id: PropTypes.string,
+    open: PropTypes.bool,
+    onToggle: PropTypes.func,
     parentResources: PropTypes.shape({
       contacts: PropTypes.object,
       contactRoleValues: PropTypes.object,
@@ -27,7 +30,10 @@ export default class AgreementFormInternalContacts extends React.Component {
     return (
       <Accordion
         closedByDefault
+        id={this.props.id}
         label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
+        open={this.props.open}
+        onToggle={this.props.onToggle}
       >
         <FieldArray
           isEmptyMessage={<FormattedMessage id="ui-agreements.contacts.noContacts" />}

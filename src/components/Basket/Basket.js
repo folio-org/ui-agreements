@@ -18,8 +18,6 @@ import {
 
 import BasketList from './BasketList';
 
-const ADD_FROM_BASKET_PARAM = 'addFromBasket';
-
 class Basket extends React.Component {
   static manifest = Object.freeze({
     openAgreements: {

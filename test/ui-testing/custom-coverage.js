@@ -141,7 +141,7 @@ module.exports.test = (uiTestCtx) => {
           .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
-          .wait('#agreementFormInfo')
+          .wait('[data-test-edit-agreement-info]')
           .waitUntilNetworkIdle(2000)
 
           .click('#accordion-toggle-button-agreementFormLines');
@@ -186,7 +186,7 @@ module.exports.test = (uiTestCtx) => {
           .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
-          .wait('#agreementFormInfo')
+          .wait('[data-test-edit-agreement-info]')
           .waitUntilNetworkIdle(2000)
 
           .click('#accordion-toggle-button-agreementFormLines')
