@@ -4,7 +4,11 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { Redirect } from 'react-router-dom';
 
 import { NoteCreatePage } from '@folio/stripes/smart-components';
-import formatNoteReferrerEntityData from '../components/utilities';
+
+import {
+  formatNoteReferrerEntityData,
+  urls,
+} from '../components/utilities';
 
 export default class NoteCreateRoute extends Component {
   static propTypes = {
@@ -17,14 +21,12 @@ export default class NoteCreateRoute extends Component {
   renderCreatePage() {
     const { history } = this.props;
 
-    const entityTypeTranslationKeys = {
-      agreement: 'ui-agreements.notes.entityType.agreement',
-    };
-
     return (
       <NoteCreatePage
         referredEntityData={formatNoteReferrerEntityData(this.props.location.state)}
-        entityTypeTranslationKeys={entityTypeTranslationKeys}
+        entityTypeTranslationKeys={{
+          agreement: 'ui-agreements.notes.entityType.agreement',
+        }}
         paneHeaderAppIcon="agreements"
         domain="agreements"
         navigateBack={history.goBack}
@@ -37,6 +39,6 @@ export default class NoteCreateRoute extends Component {
 
     return location.state
       ? this.renderCreatePage()
-      : <Redirect to="/erm" />;
+      : <Redirect to={urls.agreements()} />;
   }
 }

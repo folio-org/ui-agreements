@@ -1,25 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 
 class IfEResourcesEnabled extends React.Component {
   static manifest = {
-    hideEResourcesFunctionality: {},
+    settings: {
+      type: 'okapi',
+      path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
+      records: 'configs',
+      shouldRefresh: () => false,
+    },
   };
 
   static propTypes = {
     children: PropTypes.node,
     resources: PropTypes.shape({
-      hideEResourcesFunctionality: PropTypes.bool,
+      settings: PropTypes.object,
     }),
   };
 
+  isHidden = () => {
+    const settings = JSON.parse(get(this.props.resources.settings, 'records[0].value', '{}'));
+    return settings.hideEResourcesFunctionality;
+  }
+
   render() {
-    const { children, resources: { hideEResourcesFunctionality } } = this.props;
+    if (this.isHidden()) return null;
 
-    if (hideEResourcesFunctionality === true) return null;
-
-    return children;
+    return this.props.children;
   }
 }
 

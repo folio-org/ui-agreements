@@ -11,37 +11,32 @@ const FILTERS = [
   'agreementStatus',
   'renewalPriority',
   'isPerpetual',
-  'Tags'
+  'tags'
 ];
 
 export default class AgreementFilters extends React.Component {
   static propTypes = {
     activeFilters: PropTypes.object,
-    onChange: PropTypes.func.isRequired,
-    resources: PropTypes.object.isRequired,
+    data: PropTypes.object.isRequired,
+    filterHandlers: PropTypes.object,
   };
 
   static defaultProps = {
-    activeFilters: {
-      agreementStatus: [],
-      renewalPriority: [],
-      isPerpetual: [],
-      Tags: [],
-    }
+    activeFilters: {}
   };
 
   state = {
     agreementStatus: [],
     renewalPriority: [],
     isPerpetual: [],
-    Tags: [],
+    tags: [],
   }
 
   static getDerivedStateFromProps(props, state) {
     const newState = {};
 
     FILTERS.forEach(filter => {
-      const values = get(props.resources, [`${filter}Values`, 'records'], []);
+      const values = props.data[`${filter}Values`] || [];
       if (values.length !== state[filter].length) {
         newState[filter] = values.map(({ label }) => ({ label, value: label }));
       }
@@ -52,54 +47,59 @@ export default class AgreementFilters extends React.Component {
     return null;
   }
 
-  createClearFilterHandler = (name) => () => {
-    this.props.onChange({ name, values: [] });
-  }
-
   renderCheckboxFilter = (name, props) => {
-    const activeFilters = this.props.activeFilters[name] || [];
+    const { activeFilters } = this.props;
+    const groupFilters = activeFilters[name] || [];
 
     return (
       <Accordion
-        displayClearButton={activeFilters.length > 0}
+        displayClearButton={groupFilters.length > 0}
         header={FilterAccordionHeader}
+        id={`filter-accordion-${name}`}
         label={<FormattedMessage id={`ui-agreements.agreements.${name}`} />}
-        onClearFilter={() => { this.props.onChange({ name, values: [] }); }}
+        onClearFilter={() => { this.props.filterHandlers.clearGroup(name); }}
         separator={false}
         {...props}
       >
         <CheckboxFilter
           dataOptions={this.state[name]}
           name={name}
-          onChange={this.props.onChange}
-          selectedValues={activeFilters}
+          onChange={(group) => {
+            this.props.filterHandlers.state({
+              ...activeFilters,
+              [group.name]: group.values
+            });
+          }}
+          selectedValues={groupFilters}
         />
       </Accordion>
     );
   }
 
   renderOrganizationFilter = () => {
-    const activeFilters = this.props.activeFilters.orgs || [];
+    const { activeFilters } = this.props;
+    const orgFilters = activeFilters.orgs || [];
 
     return (
       <Accordion
         closedByDefault
-        displayClearButton={activeFilters.length > 0}
+        displayClearButton={orgFilters.length > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-agreements.agreements.organizations" />}
         onClearFilter={() => {
-          this.props.onChange([
-            { name: 'orgs', values: [] },
-            { name: 'role', values: [] }
-          ]);
+          this.props.filterHandlers.state({
+            ...activeFilters,
+            role: [],
+            orgs: [],
+          });
         }}
         separator={false}
       >
         <OrganizationSelection
           input={{
             name: 'agreement-orgs-filter',
-            onChange: value => this.props.onChange({ name: 'orgs', values: [value] }),
-            value: activeFilters[0] || '',
+            onChange: value => this.props.filterHandlers.state({ ...activeFilters, orgs: [value] }),
+            value: orgFilters[0] || '',
           }}
         />
       </Accordion>
@@ -107,41 +107,40 @@ export default class AgreementFilters extends React.Component {
   }
 
   renderOrganizationRoleFilter = () => {
-    const roles = get(this.props.resources.orgRoleValues, ['records'], []);
+    const roles = this.props.data.orgRoleValues;
+    // TODO: TEST USING THE VALUES GENERATED IN GDSFP
     const dataOptions = roles.map(role => ({
       value: role.id,
       label: role.label,
     }));
 
-    const orgFilters = this.props.activeFilters.orgs || [];
-    const activeFilters = this.props.activeFilters.role || [];
+    const { activeFilters } = this.props;
+    const orgFilters = activeFilters.orgs || [];
+    const roleFilters = activeFilters.role || [];
 
     return (
       <Accordion
         closedByDefault
-        displayClearButton={activeFilters.length > 0}
+        displayClearButton={roleFilters.length > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-agreements.settings.orgRoles.orgRole" />}
-        onClearFilter={() => { this.props.onChange({ name: 'role', values: [] }); }}
+        onClearFilter={() => { this.props.filterHandlers.clearGroup('role'); }}
         separator={false}
       >
         <Selection
           dataOptions={dataOptions}
           disabled={orgFilters.length === 0}
-          value={activeFilters[0] || ''}
-          onChange={value => this.props.onChange({ name: 'role', values: [value] })}
+          value={roleFilters[0] || ''}
+          onChange={value => this.props.filterHandlers.state({ ...activeFilters, role: [value] })}
         />
       </Accordion>
     );
   }
 
   renderTagsFilter = (name, props) => {
-    const tags = get(this.props.resources.tags, ['records'], []);
-    const dataOptions = tags.map(tag => ({
-      value: tag.label,
-      label: tag.label,
-    }));
-
+    const tags = get(this.props.data, 'tagValues.records', []);
+    // TODO: TEST USING THE VALUES GENERATED IN GDSFP
+    const dataOptions = tags.map(({ label }) => ({ value: label, label }));
     const activeFilters = this.props.activeFilters.tags || [];
 
     return (
@@ -150,7 +149,7 @@ export default class AgreementFilters extends React.Component {
         displayClearButton={activeFilters.length > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-agreements.agreements.tags" />}
-        onClearFilter={() => { this.props.onChange({ name: 'tags', values: [] }); }}
+        onClearFilter={() => { this.props.filterHandlers.clearGroup('tags'); }}
         separator={false}
         {...props}
       >
@@ -158,7 +157,7 @@ export default class AgreementFilters extends React.Component {
           id="tags-filter"
           dataOptions={dataOptions}
           name="tags"
-          onChange={this.props.onChange}
+          onChange={values => this.props.filterHandlers.state({ ...activeFilters, tags: values })}
           selectedValues={activeFilters}
         />
       </Accordion>

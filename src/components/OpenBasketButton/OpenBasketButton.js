@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import {
-  Button,
-} from '@folio/stripes/components';
+import { stripesConnect } from '@folio/stripes/core';
+import { Button } from '@folio/stripes/components';
 
-import IfEResourcesEnabled from '../IfEResourcesEnabled';
+import { urls } from '../utilities';
 import css from './OpenBasketButton.css';
 
 class OpenBasketButton extends React.Component {
@@ -27,32 +26,32 @@ class OpenBasketButton extends React.Component {
     }),
   }
 
-  openBasket = () => {
-    this.props.mutator.query.update({ basket: '1' });
+  handleClick = () => {
+    this.props.mutator.query.update({
+      _path: urls.basket(),
+    });
   }
 
   render() {
     const basket = this.props.resources.basket || [];
 
     return (
-      <IfEResourcesEnabled>
-        <Button
-          buttonClass={css.button}
-          buttonStyle="primary"
-          data-test-open-basket-button
-          data-test-basket-size={basket.length}
-          disabled={basket.length === 0}
-          id="open-basket-button"
-          onClick={this.openBasket}
-        >
-          <FormattedMessage
-            id="ui-agreements.basketButton"
-            values={{ count: basket.length }}
-          />
-        </Button>
-      </IfEResourcesEnabled>
+      <Button
+        buttonClass={css.button}
+        buttonStyle="primary"
+        data-test-open-basket-button
+        data-test-basket-size={basket.length}
+        disabled={basket.length === 0}
+        id="open-basket-button"
+        onClick={this.handleClick}
+      >
+        <FormattedMessage
+          id="ui-agreements.basketButton"
+          values={{ count: basket.length }}
+        />
+      </Button>
     );
   }
 }
 
-export default OpenBasketButton;
+export default stripesConnect(OpenBasketButton);

@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "@folio/stripes-erm-components": "^1.4.0",
+    "compose-function": "^3.0.3",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
     "query-string": "^6.6.0",
@@ -64,13 +65,16 @@
     "type": "app",
     "displayName": "ui-agreements.meta.title",
     "route": "/erm",
-    "home": "/erm/agreements?sort=Name&filters=agreementStatus.Requested,agreementStatus.In Negotiation,agreementStatus.Draft,agreementStatus.Active",
+    "home": "/erm/agreements",
     "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {
-      "configuration": "2.0",
+      "configuration": "5.0",
       "erm": "1.0",
-      "licenses": "1.0"
+      "invoice": "1.0",
+      "licenses": "1.0",
+      "orders": "6.0",
+      "users": "15.0"
     },
     "permissionSets": [
       {

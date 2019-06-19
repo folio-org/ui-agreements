@@ -4,7 +4,7 @@ import { FieldArray } from 'redux-form';
 
 import LicensesFieldArray from '../components/LicensesFieldArray';
 
-export default class AgreementFormAllLicenses extends React.Component {
+export default class AgreementFormLicenses extends React.Component {
   static propTypes = {
     parentResources: PropTypes.object,
   }

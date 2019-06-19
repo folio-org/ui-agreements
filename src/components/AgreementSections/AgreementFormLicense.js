@@ -10,7 +10,7 @@ import {
   TextArea,
 } from '@folio/stripes/components';
 
-import AgreementFormAllLicenses from './AgreementFormAllLicenses';
+import AgreementFormAllLicenses from './AgreementFormLicenses';
 import AgreementFormExternalLicenses from './AgreementFormExternalLicenses';
 
 class AgreementFormLicense extends React.Component {
