@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { KeyValue } from '@folio/stripes/components';
+import { Headline } from '@folio/stripes/components';
 import { DocumentCard } from '@folio/stripes-erm-components';
 
 export default class ExternalLicenses extends React.Component {
@@ -38,12 +38,15 @@ export default class ExternalLicenses extends React.Component {
     const externalLicenseDocs = get(this.props, ['agreement', 'externalLicenseDocs'], []);
 
     return (
-      <KeyValue label={<FormattedMessage id="ui-agreements.license.externalLicenses" />}>
+      <div>
+        <Headline faded margin="none" tag="h4">
+          <FormattedMessage id="ui-agreements.license.externalLicenses" />
+        </Headline>
         {externalLicenseDocs.length ?
           this.renderExternalLicenses(externalLicenseDocs) :
           <FormattedMessage id="ui-agreements.license.noExternalLicenses" />
         }
-      </KeyValue>
+      </div>
     );
   }
 }
