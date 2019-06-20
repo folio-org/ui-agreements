@@ -27,7 +27,7 @@ export default class AllLicenses extends React.Component {
 
     return (
       <Layout id="agreement-controlling-license">
-        <Headline faded margin="none">
+        <Headline faded margin="none" tag="h4">
           <FormattedMessage id="ui-agreements.license.controllingLicense" />
         </Headline>
         <LicenseCard license={controllingLicense.remoteId_object} />
@@ -47,7 +47,10 @@ export default class AllLicenses extends React.Component {
     if (!inactiveLicenses.length) return null;
 
     return (
-      <KeyValue label={<FormattedMessage id="ui-agreements.license.inactiveLicenses" />}>
+      <div>
+        <Headline faded margin="none" tag="h4">
+          <FormattedMessage id="ui-agreements.license.inactiveLicenses" />
+        </Headline>
         <MultiColumnList
           columnMapping={{
             note: '',
@@ -80,7 +83,7 @@ export default class AllLicenses extends React.Component {
             'endDate',
           ]}
         />
-      </KeyValue>
+      </div>
     );
   }
 
