@@ -144,7 +144,7 @@ export default class Agreement extends React.Component {
   renderLoadingPane = () => {
     return (
       <Pane
-        defaultWidth="45%"
+        defaultWidth="60%"
         dismissible
         id="pane-view-agreement"
         onClose={this.props.handlers.onClose}

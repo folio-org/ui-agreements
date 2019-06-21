@@ -12,7 +12,7 @@ import AgreementCreateRoute from './routes/AgreementCreateRoute';
 import AgreementEditRoute from './routes/AgreementEditRoute';
 import AgreementViewRoute from './routes/AgreementViewRoute';
 // import BasketRoute from './routes/BasketRoute';
-// import EResourcesRoute from './routes/EResourcesRoute';
+import EResourcesRoute from './routes/EResourcesRoute';
 import NoteCreateRoute from './routes/NoteCreateRoute';
 import NoteEditRoute from './routes/NoteEditRoute';
 import NoteViewRoute from './routes/NoteViewRoute';
@@ -22,6 +22,7 @@ import NoteViewRoute from './routes/NoteViewRoute';
 import Settings from './settings';
 
 import css from './index.css';
+import EResourceViewRoute from './routes/EResourceViewRoute';
 
 class App extends React.Component {
   static propTypes = {
@@ -57,12 +58,9 @@ class App extends React.Component {
               <Route path={`${path}/agreements/:id`} component={AgreementViewRoute} />
             </Route>
 
-            {/* <Route path={`${path}/eresources`} component={EResourcesRoute}>
-              <Switch>
-                <Route path={`${path}/eresources/package/:id`} component={PackageViewRoute} />
-                <Route path={`${path}/eresources/title/:id`} component={TitleViewRoute} />
-              </Switch>
-            </Route> */}
+            <Route path={`${path}/eresources`} component={EResourcesRoute}>
+              <Route path={`${path}/eresources/:id`} component={EResourceViewRoute} />
+            </Route>
 
             <Route path={`${path}/notes/create`} component={NoteCreateRoute} />
             <Route path={`${path}/notes/:id`} component={NoteViewRoute} />

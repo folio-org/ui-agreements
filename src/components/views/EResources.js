@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
 import { get, noop } from 'lodash';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   MultiColumnList,
@@ -23,20 +23,19 @@ import {
   SearchAndSortSearchButton as FilterPaneToggle,
 } from '@folio/stripes/smart-components';
 
+import ResourceType from '../ResourceType';
+import getResourceIdentifier from '../utilities/getResourceIdentifier';
 import AgreementFilters from '../AgreementFilters';
+
 import { urls } from '../utilities';
 import css from './Agreements.css';
 
-export default class Agreements extends React.Component {
+export default class EResources extends React.Component {
   static propTypes = {
     children: PropTypes.object,
     contentRef: PropTypes.object,
     data: PropTypes.shape({
-      agreements: PropTypes.array.isRequired,
-      agreementStatusValues: PropTypes.array.isRequired,
-      renewalPriorityValues: PropTypes.array.isRequired,
-      isPerpetualValues: PropTypes.array.isRequired,
-      orgRoleValues: PropTypes.array.isRequired,
+      eresources: PropTypes.array.isRequired,
       tags: PropTypes.array.isRequired,
     }),
     disableRecordCreation: PropTypes.bool,
@@ -50,20 +49,12 @@ export default class Agreements extends React.Component {
       totalCount: PropTypes.func,
     }),
     syncToLocationSearch: PropTypes.bool,
-    visibleColumns: PropTypes.arrayOf(PropTypes.string),
   }
 
   static defaultProps = {
     data: {},
     searchString: '',
     syncToLocationSearch: true,
-    visibleColumns: [
-      'name',
-      'agreementStatus',
-      'startDate',
-      'endDate',
-      'cancellationDeadline'
-    ],
   }
 
   state = {
@@ -71,27 +62,35 @@ export default class Agreements extends React.Component {
   }
 
   columnMapping = {
-    name: <FormattedMessage id="ui-agreements.agreements.name" />,
-    agreementStatus: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
-    startDate: <FormattedMessage id="ui-agreements.agreements.startDate" />,
-    endDate: <FormattedMessage id="ui-agreements.agreements.endDate" />,
-    cancellationDeadline: <FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />,
+    name: <FormattedMessage id="ui-agreements.eresources.name" />,
+    type: <FormattedMessage id="ui-agreements.eresources.type" />,
+    isbn: <FormattedMessage id="ui-agreements.identifier.isbn" />,
+    eissn: <FormattedMessage id="ui-agreements.identifier.eissn" />,
+    pissn: <FormattedMessage id="ui-agreements.identifier.pissn" />,
   }
 
   columnWidths = {
     name: 300,
-    agreementStatus: 150,
-    startDate: 120,
-    endDate: 120,
-    cancellationDeadline: 120,
+    type: 100,
+    isbn: 150,
+    eissn: 150,
+    pissn: 150,
   }
 
   formatter = {
-    agreementStatus: a => get(a, 'agreementStatus.label'),
-    startDate: a => a.startDate && <FormattedDate value={a.startDate} />,
-    endDate: a => a.endDate && <FormattedDate value={a.endDate} />,
-    cancellationDeadline: a => a.cancellationDeadline && <FormattedDate value={a.cancellationDeadline} />,
+    type: e => <ResourceType resource={e} />,
+    isbn: e => getResourceIdentifier(e._object, 'isbn'),
+    eissn: e => getResourceIdentifier(e._object, 'eissn'),
+    pissn: e => getResourceIdentifier(e._object, 'pissn'),
   }
+
+  visibleColumns = [
+    'name',
+    'type',
+    'isbn',
+    'eissn',
+    'pissn',
+  ]
 
   rowFormatter = (row) => {
     const { rowClass, rowData, rowIndex, rowProps = {}, cells } = row;
@@ -101,17 +100,14 @@ export default class Agreements extends React.Component {
       RowComponent = 'div';
     } else {
       RowComponent = Link;
-      rowProps.to = this.rowURL(rowData.id);
+      rowProps.to = `${urls.eresourceView(rowData.id)}${this.props.searchString}`;
     }
 
     return (
       <RowComponent
         aria-rowindex={rowIndex + 2}
         className={rowClass}
-        data-label={[
-          rowData.name,
-          this.formatter.agreementStatus(rowData),
-        ].join('...')}
+        data-label={rowData.name}
         key={`row-${rowIndex}`}
         role="row"
         {...rowProps}
@@ -119,10 +115,6 @@ export default class Agreements extends React.Component {
         {cells}
       </RowComponent>
     );
-  }
-
-  rowURL = (id) => {
-    return `${urls.agreementView(id)}${this.props.searchString}`;
   }
 
   toggleFilterPane = () => {
@@ -137,7 +129,7 @@ export default class Agreements extends React.Component {
     }
 
     return (
-      <div data-test-agreements-no-results-message>
+      <div data-test-eresources-no-results-message>
         <NoResultsMessage
           source={source}
           searchTerm={query.query || ''}
@@ -183,32 +175,6 @@ export default class Agreements extends React.Component {
     return <FormattedMessage id="stripes-smart-components.searchCriteria" />;
   }
 
-  renderResultsLastMenu() {
-    if (this.props.disableRecordCreation) {
-      return null;
-    }
-
-    return (
-      <IfPermission perm="ui-agreements.agreements.edit">
-        <PaneMenu>
-          <FormattedMessage id="ui-agreements.agreements.createAgreement">
-            {ariaLabel => (
-              <Button
-                aria-label={ariaLabel}
-                buttonStyle="primary"
-                id="clickable-new-agreement"
-                marginBottom0
-                to={`${urls.agreementCreate()}${this.props.searchString}`}
-              >
-                <FormattedMessage id="stripes-smart-components.new" />
-              </Button>
-            )}
-          </FormattedMessage>
-        </PaneMenu>
-      </IfPermission>
-    );
-  }
-
   render() {
     const {
       children,
@@ -220,7 +186,6 @@ export default class Agreements extends React.Component {
       querySetter,
       source,
       syncToLocationSearch,
-      visibleColumns,
     } = this.props;
 
     const query = queryGetter() || {};
@@ -228,11 +193,9 @@ export default class Agreements extends React.Component {
     const sortOrder = query.sort || '';
 
     return (
-      <div data-test-agreements ref={contentRef}>
+      <div data-test-eresources ref={contentRef}>
         <SearchAndSortQuery
-          initialFilterState={{
-            agreementStatus: ['Active', 'Draft', 'In negotiation', 'Requested']
-          }}
+          initialFilterState={{}}
           initialSortState={{ sort: 'name' }}
           initialSearchState={{ query: '' }}
           queryGetter={queryGetter}
@@ -254,7 +217,7 @@ export default class Agreements extends React.Component {
               const disableReset = () => (!filterChanged && !searchChanged);
 
               return (
-                <Paneset id="agreements-paneset">
+                <Paneset id="eresources-paneset">
                   {this.state.filterPaneIsVisible &&
                     <Pane
                       defaultWidth="20%"
@@ -263,10 +226,10 @@ export default class Agreements extends React.Component {
                     >
                       <form onSubmit={onSubmitSearch}>
                         <ButtonGroup fullWidth>
-                          <Button buttonStyle="primary">
+                          <Button to={urls.agreements()}>
                             <FormattedMessage id="ui-agreements.agreements" />
                           </Button>
-                          <Button to={urls.eresources()}>
+                          <Button buttonStyle="primary">
                             <FormattedMessage id="ui-agreements.eresources" />
                           </Button>
                         </ButtonGroup>
@@ -278,8 +241,8 @@ export default class Agreements extends React.Component {
                                 aria-label={ariaLabel}
                                 autoFocus
                                 className={css.searchField}
-                                data-test-agreement-search-input
-                                id="input-agreement-search"
+                                data-test-eresource-search-input
+                                id="input-eresource-search"
                                 inputRef={this.searchField}
                                 marginBottom0
                                 name="query"
@@ -297,7 +260,7 @@ export default class Agreements extends React.Component {
                             buttonStyle="primary"
                             disabled={!searchValue.query || searchValue.query === ''}
                             fullWidth
-                            id="clickable-search-agreements"
+                            id="clickable-search-eresources"
                             marginBottom0
                             type="submit"
                           >
@@ -316,11 +279,9 @@ export default class Agreements extends React.Component {
                             </Icon>
                           </Button>
                         </div>
-                        <AgreementFilters
-                          activeFilters={activeFilters.state}
-                          data={data}
-                          filterHandlers={getFilterHandlers()}
-                        />
+                        <div>
+                          E-resource Filters
+                        </div>
                       </form>
                     </Pane>
                   }
@@ -328,18 +289,17 @@ export default class Agreements extends React.Component {
                     appIcon={<AppIcon app="agreements" />}
                     defaultWidth="fill"
                     firstMenu={this.renderResultsFirstMenu(activeFilters)}
-                    lastMenu={this.renderResultsLastMenu()}
                     padContent={false}
-                    paneTitle={<FormattedMessage id="ui-agreements.agreements" />}
+                    paneTitle={<FormattedMessage id="ui-agreements.eresources" />}
                     paneSub={this.renderResultsPaneSubtitle(source)}
                   >
                     <MultiColumnList
                       autosize
                       columnMapping={this.columnMapping}
                       columnWidths={this.columnWidths}
-                      contentData={data.agreements}
+                      contentData={data.eresources}
                       formatter={this.formatter}
-                      id="list-agreements"
+                      id="list-eresources"
                       isEmptyMessage={this.renderIsEmptyMessage(query, source)}
                       onHeaderClick={onSort}
                       onNeedMoreData={onNeedMoreData}
@@ -349,7 +309,7 @@ export default class Agreements extends React.Component {
                       sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                       totalCount={count}
                       virtualize
-                      visibleColumns={visibleColumns}
+                      visibleColumns={this.visibleColumns}
                     />
                   </Pane>
                   { children }

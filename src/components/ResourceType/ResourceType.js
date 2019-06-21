@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
-import isPackage from '../../util/isPackage';
+import isPackage from '../utilities/isPackage';
 
 export default class ResourceType extends React.Component {
   static propTypes = {
@@ -34,9 +34,9 @@ export default class ResourceType extends React.Component {
     }
 
     return (
-      get(resource, ['_object', 'pti', 'titleInstance', 'type', 'label']) ||
-      get(resource, ['reference_object', 'type']) ||
-      get(resource, ['type', 'label']) ||
+      get(resource, '_object.pti.titleInstance.type.label') ||
+      get(resource, 'reference_object.type') ||
+      get(resource, 'type.label') ||
       <FormattedMessage id="ui-agreements.eresources.title" />
     );
   }

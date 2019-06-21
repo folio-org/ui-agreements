@@ -9,10 +9,25 @@ import Package from './Package';
 import Title from './Title';
 
 export default class EResource extends React.Component {
+  static propTypes = {
+    data: PropTypes.shape({
+      eresource: PropTypes.shape({
+        name: PropTypes.string,
+        type: PropTypes.object,
+      }),
+    }),
+    handlers: PropTypes.shape({
+      onClose: PropTypes.func.isRequired,
+      onToggleTags: PropTypes.func.isRequired
+    }).isRequired,
+    helperApp: PropTypes.node,
+    isLoading: PropTypes.bool,
+  }
+
   renderLoadingPane = () => {
     return (
       <Pane
-        defaultWidth="45%"
+        defaultWidth="55%"
         dismissible
         id="pane-view-eresource"
         onClose={this.props.handlers.onClose}
@@ -26,10 +41,30 @@ export default class EResource extends React.Component {
   }
 
   render() {
-    const { data: { eresource }, isLoading } = this.props;
+    const {
+      data,
+      handlers,
+      helperApp,
+      isLoading,
+    } = this.props;
 
-    if (!isLoading) return this.renderLoadingPane();
+    if (isLoading) return this.renderLoadingPane();
 
-    return eresource.type ? <Title {...this.props} /> : <Package {...this.props} />;
+    const EResourceViewComponent = data.eresource.type ? Title : Package;
+
+    return (
+      <React.Fragment>
+        <Pane
+          id="pane-view-eresource"
+          defaultWidth="55%"
+          paneTitle={data.eresource.name}
+          dismissible
+          onClose={handlers.onClose}
+        >
+          <EResourceViewComponent data={data} handlers={handlers} />
+        </Pane>
+        {helperApp}
+      </React.Fragment>
+    );
   }
 }

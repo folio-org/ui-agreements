@@ -124,7 +124,6 @@ class AgreementViewRoute extends React.Component {
       hasPerm: PropTypes.func.isRequired,
     }).isRequired,
     tagsEnabled: PropTypes.bool,
-    tagsToggle: PropTypes.func,
   };
 
   static defaultProps = {
