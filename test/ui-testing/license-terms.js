@@ -94,7 +94,7 @@ module.exports.test = (uiTestCtx) => {
         it('should create license', done => {
           nightmare
             .click('#clickable-create-license')
-            .wait('#licenseInfo')
+            .wait('#licenses')
             .waitUntilNetworkIdle(1000)
             .then(done)
             .catch(done);
@@ -142,7 +142,7 @@ module.exports.test = (uiTestCtx) => {
           .click('#clickable-edit-agreement')
           .wait('[data-test-edit-agreement-info]')
           .waitUntilNetworkIdle(1000)
-          .click('#accordion-toggle-button-agreementFormLicense')
+          .click('#accordion-toggle-button-formLicenses')
           .then(done)
           .catch(done);
       });
@@ -200,8 +200,8 @@ module.exports.test = (uiTestCtx) => {
           .click('#clickable-updateagreement')
           .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000)
-          .wait('#accordion-toggle-button-licenseInfo')
-          .click('#accordion-toggle-button-licenseInfo')
+          .wait('#accordion-toggle-button-licenses')
+          .click('#accordion-toggle-button-licenses')
           .then(done)
           .catch(done);
       });
@@ -225,8 +225,8 @@ module.exports.test = (uiTestCtx) => {
 
       it('should open license and business terms accordion', done => {
         nightmare
-          .wait('#accordion-toggle-button-licenseBusinessTerms')
-          .click('#accordion-toggle-button-licenseBusinessTerms')
+          .wait('#accordion-toggle-button-terms')
+          .click('#accordion-toggle-button-terms')
           .then(done)
           .catch(done);
       });

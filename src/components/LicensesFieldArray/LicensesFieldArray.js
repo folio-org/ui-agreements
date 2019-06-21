@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 
@@ -13,47 +12,32 @@ import {
   TextArea,
   IconButton,
 } from '@folio/stripes/components';
-
 import { withKiwtFieldArray } from '@folio/stripes-erm-components';
 
 import LicenseLookup from './LicenseLookup';
 import css from './LicensesFieldArray.css';
 
+const CONTROLLING_STATUS = 'controlling';
+
 class LicensesFieldArray extends React.Component {
   static propTypes = {
-    addLicenseBtnLabel: PropTypes.node,
-    isEmptyMessage: PropTypes.node,
     items: PropTypes.arrayOf(PropTypes.object),
     name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
     onDeleteField: PropTypes.func.isRequired,
-    parentResources: PropTypes.object,
-  }
-
-  static defaultProps = {
-    addLicenseBtnLabel: <FormattedMessage id="ui-agreements.license.addLicense" />,
-    isEmptyMessage: <FormattedMessage id="ui-agreements.license.noLicenses" />,
+    onReplaceField: PropTypes.func.isRequired,
+    data: PropTypes.shape({
+      licenseLinkStatusValues: PropTypes.array,
+    }),
   }
 
   state = {
-    controllingLicenseStatusId: undefined,
     licenses: {},
-    statusValues: [],
   }
 
-  static getDerivedStateFromProps(nextProps, state) {
-    const statusValues = get(nextProps.parentResources.licenseLinkStatusValues, ['records'], []);
-    if (state.statusValues.length !== statusValues.length) {
-      return {
-        controllingLicenseStatusId: (statusValues.find(v => v.value === 'controlling') || {}).id,
-        statusValues: statusValues.map(({ id, label }) => ({ value: id, label })),
-      };
-    }
+  handleLicenseSelected = (i, license) => {
+    this.props.onReplaceField(i, { remoteId: license.id });
 
-    return null;
-  }
-
-  handleLicenseSelected = (license) => {
     this.setState(prevState => ({
       licenses: {
         ...prevState.licenses,
@@ -63,11 +47,10 @@ class LicensesFieldArray extends React.Component {
   }
 
   validateOnlyOneControllingLicense = (value, allValues) => {
-    const { controllingLicenseStatusId } = this.state;
     const { name } = this.props;
 
-    if (value === controllingLicenseStatusId) {
-      const controllingLicenses = allValues[name].filter(l => l.status === controllingLicenseStatusId);
+    if (value === CONTROLLING_STATUS) {
+      const controllingLicenses = allValues[name].filter(l => l.status === CONTROLLING_STATUS);
       if (controllingLicenses.length > 1) {
         return <FormattedMessage id="ui-agreements.license.error.multipleControllingLicenses" />;
       }
@@ -81,7 +64,12 @@ class LicensesFieldArray extends React.Component {
   )
 
   renderLicenses = () => {
-    const { items, name, onDeleteField } = this.props;
+    const {
+      data: { licenseLinkStatusValues },
+      items,
+      name,
+      onDeleteField
+    } = this.props;
 
     return items.map((license, i) => (
       <div className={css.license} key={i}>
@@ -90,10 +78,9 @@ class LicensesFieldArray extends React.Component {
             <Field
               component={LicenseLookup}
               id={`${name}-remoteId-${i}`}
-              label={<FormattedMessage id="ui-agreements.license.prop.lookup" />}
               license={this.state.licenses[license.remoteId] || license.remoteId_object}
               name={`${name}[${i}].remoteId`}
-              onSelectLicense={this.handleLicenseSelected}
+              onSelectLicense={newLicense => this.handleLicenseSelected(i, newLicense)}
               required
               validate={this.validateRequired}
             />
@@ -112,7 +99,7 @@ class LicensesFieldArray extends React.Component {
               {placeholder => (
                 <Field
                   component={Select}
-                  dataOptions={this.state.statusValues}
+                  dataOptions={licenseLinkStatusValues}
                   id={`${name}-status-${i}`}
                   label={<FormattedMessage id="ui-agreements.license.prop.status" />}
                   name={`${name}[${i}].status`}
@@ -141,7 +128,7 @@ class LicensesFieldArray extends React.Component {
 
   renderEmpty = () => (
     <Layout className="padding-bottom-gutter">
-      { this.props.isEmptyMessage }
+      <FormattedMessage id="ui-agreements.license.noLicenses" />
     </Layout>
   )
 
@@ -154,7 +141,7 @@ class LicensesFieldArray extends React.Component {
           { items.length ? this.renderLicenses() : this.renderEmpty() }
         </div>
         <Button id="add-license-btn" onClick={() => onAddField({})}>
-          { this.props.addLicenseBtnLabel }
+          <FormattedMessage id="ui-agreements.license.addLicense" />
         </Button>
       </div>
     );

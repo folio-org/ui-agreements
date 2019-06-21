@@ -14,7 +14,7 @@ import {
 
 import { validators } from '../utilities';
 
-export default class AgreementFormInfo extends React.Component {
+export default class FormInfo extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       agreementStatusValues: PropTypes.array,
@@ -23,8 +23,36 @@ export default class AgreementFormInfo extends React.Component {
     }),
   };
 
+  state = {
+    dataOptions: {
+      agreementStatusValues: [],
+      renewalPriorityValues: [],
+      isPerpetualValues: [],
+    }
+  }
+
+  // Prepend an empty value to each set of dropdown options to facilitate
+  // unselecting a value.
+  static getDerivedStateFromProps(props, state) {
+    const { data } = props;
+    const dataOptions = {};
+
+    Object.keys(state.dataOptions).forEach(key => {
+      if (state.dataOptions[key].length !== (data[key].length + 1)) {
+        dataOptions[key] = [
+          { value: null, label: '' },
+          ...data[key],
+        ];
+      }
+    });
+
+    if (Object.keys(dataOptions).length) return { dataOptions };
+
+    return null;
+  }
+
   render() {
-    const { data } = this.props;
+    const { dataOptions } = this.state;
 
     return (
       <div data-test-edit-agreement-info>
@@ -86,48 +114,33 @@ export default class AgreementFormInfo extends React.Component {
         </Row>
         <Row>
           <Col xs={12} md={4}>
-            <FormattedMessage id="ui-agreements.agreements.selectStatus">
-              {placeholder => (
-                <Field
-                  component={Select}
-                  dataOptions={data.agreementStatusValues}
-                  id="edit-agreement-status"
-                  label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
-                  name="agreementStatus"
-                  placeholder={placeholder}
-                  required
-                  validate={validators.required}
-                />
-              )}
-            </FormattedMessage>
+            <Field
+              component={Select}
+              dataOptions={dataOptions.agreementStatusValues}
+              id="edit-agreement-status"
+              label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
+              name="agreementStatus"
+              required
+              validate={validators.required}
+            />
           </Col>
           <Col xs={12} md={4}>
-            <FormattedMessage id="ui-agreements.agreements.selectRenewalPriority">
-              {placeholder => (
-                <Field
-                  component={Select}
-                  dataOptions={data.renewalPriorityValues}
-                  id="edit-agreement-renewal-priority"
-                  label={<FormattedMessage id="ui-agreements.agreements.renewalPriority" />}
-                  name="renewalPriority"
-                  placeholder={placeholder}
-                />
-              )}
-            </FormattedMessage>
+            <Field
+              component={Select}
+              dataOptions={dataOptions.renewalPriorityValues}
+              id="edit-agreement-renewal-priority"
+              label={<FormattedMessage id="ui-agreements.agreements.renewalPriority" />}
+              name="renewalPriority"
+            />
           </Col>
           <Col xs={12} md={4}>
-            <FormattedMessage id="ui-agreements.agreements.selectIsPerpetual">
-              {placeholder => (
-                <Field
-                  component={Select}
-                  dataOptions={data.isPerpetualValues}
-                  id="edit-agreement-is-perpetual"
-                  label={<FormattedMessage id="ui-agreements.agreements.isPerpetual" />}
-                  name="isPerpetual"
-                  placeholder={placeholder}
-                />
-              )}
-            </FormattedMessage>
+            <Field
+              component={Select}
+              dataOptions={dataOptions.isPerpetualValues}
+              id="edit-agreement-is-perpetual"
+              label={<FormattedMessage id="ui-agreements.agreements.isPerpetual" />}
+              name="isPerpetual"
+            />
           </Col>
         </Row>
       </div>

@@ -135,6 +135,7 @@ class AgreementCreateRoute extends React.Component {
           licenseLinkStatusValues: get(resources, 'licenseLinkStatusValues.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
           renewalPriorityValues: get(resources, 'renewalPriorityValues.records', []),
+          users: [],
         }}
         handlers={{
           ...handlers,

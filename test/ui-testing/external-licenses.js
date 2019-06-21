@@ -21,7 +21,7 @@ const EDITED_DOC = {
 const DELETED_DOC = DOCS[1].name;
 
 const DOCS_FIELD_NAME = 'externalLicenseDocs';
-const DOCS_FORM_NAME = 'agreementFormLicense';
+const DOCS_FORM_NAME = 'formLicenses';
 
 module.exports.test = (uiTestCtx) => {
   Docs.test(

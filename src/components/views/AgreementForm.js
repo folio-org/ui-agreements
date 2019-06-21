@@ -20,7 +20,11 @@ import stripesForm from '@folio/stripes/form';
 import { Spinner } from '@folio/stripes-erm-components';
 
 import {
-  AgreementFormInfo,
+  FormInfo,
+  FormInternalContacts,
+  FormLicenses,
+  FormOrganizations,
+  FormSupplementaryInfo,
 } from '../AgreementSections';
 
 import css from './AgreementForm.css';
@@ -45,6 +49,10 @@ class AgreementForm extends React.Component {
 
   state = {
     sections: {
+      formInternalContacts: false,
+      formLicenses: false,
+      formOrganizations: false,
+      formSupplementaryInfo: false,
     }
   }
 
@@ -166,7 +174,11 @@ class AgreementForm extends React.Component {
                           />
                         </Col>
                       </Row>
-                      <AgreementFormInfo {...this.getSectionProps('agreementForMInfo')} />
+                      <FormInfo {...this.getSectionProps('formInfo')} />
+                      <FormInternalContacts {...this.getSectionProps('formInternalContacts')} />
+                      <FormLicenses {...this.getSectionProps('formLicenses')} />
+                      <FormOrganizations {...this.getSectionProps('formOrganizations')} />
+                      <FormSupplementaryInfo {...this.getSectionProps('formSupplementaryInfo')} />
                     </AccordionSet>
                   </div>
                 </form>

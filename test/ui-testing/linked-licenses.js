@@ -55,7 +55,7 @@ module.exports.test = (uiTestCtx) => {
             .insert('#edit-license-start-date', l.startDate)
 
             .click('#clickable-create-license')
-            .wait('#licenseInfo')
+            .wait('#licenses')
             .waitUntilNetworkIdle(500)
             .then(() => nightmare.click('#pane-view-license button[icon=times]'))
             .then(done)
@@ -77,7 +77,7 @@ module.exports.test = (uiTestCtx) => {
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
           .wait('[data-test-edit-agreement-info]')
-          .click('#accordion-toggle-button-agreementFormLicense')
+          .click('#accordion-toggle-button-formLicenses')
           .then(done)
           .catch(done);
       });
@@ -162,8 +162,8 @@ module.exports.test = (uiTestCtx) => {
           .click('#clickable-updateagreement')
           .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000)
-          .wait('#accordion-toggle-button-licenseInfo')
-          .click('#accordion-toggle-button-licenseInfo')
+          .wait('#accordion-toggle-button-licenses')
+          .click('#accordion-toggle-button-licenses')
           .then(done)
           .catch(done);
       });

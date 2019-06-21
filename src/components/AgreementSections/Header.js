@@ -9,9 +9,9 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import css from './AgreementHeader.css';
+import css from './Header.css';
 
-export default class AgreementHeader extends React.Component {
+export default class Header extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
       endData: PropTypes.string,

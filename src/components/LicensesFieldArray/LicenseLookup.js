@@ -8,17 +8,11 @@ import { LicenseCard } from '@folio/stripes-erm-components';
 export default class LicenseLookup extends React.Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
-    input: PropTypes.shape({
-      onChange: PropTypes.func,
-      value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    }),
     license: PropTypes.object,
+    meta: PropTypes.shape({
+      error: PropTypes.node,
+    }).isRequired,
     onSelectLicense: PropTypes.func.isRequired,
-  }
-
-  handleLicenseSelected = (license) => {
-    this.props.onSelectLicense(license);
-    this.props.input.onChange(license.id);
   }
 
   renderLicense = () => {
@@ -29,25 +23,29 @@ export default class LicenseLookup extends React.Component {
     );
   }
 
-  renderLookup = () => (
-    <span>
-      <Pluggable
-        type="find-license"
-        onLicenseSelected={this.handleLicenseSelected}
-        renderTrigger={(props) => (
-          <Button
-            buttonStyle="primary"
-            id={`${this.props.id}-find-license-btn`}
-            onClick={props.onClick}
-          >
-            <FormattedMessage id="ui-agreements.license.prop.lookup" />
-          </Button>
-        )}
-      >
-        <FormattedMessage id="ui-agreements.license.noFindLicensePlugin" />
-      </Pluggable>
-    </span>
-  )
+  renderLookup = () => {
+    const { id, onSelectLicense } = this.props;
+
+    return (
+      <span>
+        <Pluggable
+          type="find-license"
+          onLicenseSelected={onSelectLicense}
+          renderTrigger={(props) => (
+            <Button
+              buttonStyle="primary"
+              id={`${id}-find-license-btn`}
+              onClick={props.onClick}
+            >
+              <FormattedMessage id="ui-agreements.license.prop.lookup" />
+            </Button>
+          )}
+        >
+          <FormattedMessage id="ui-agreements.license.noFindLicensePlugin" />
+        </Pluggable>
+      </span>
+    );
+  }
 
   render() {
     // TL; DR, don't change this to track the license object as part of `this.state` instead of
@@ -61,10 +59,9 @@ export default class LicenseLookup extends React.Component {
     // the `key` for it is just the array index, then upon deleting the nth entry, the
     // n+k'th component will "slide" up to the n+k-1'th spot. However, React will not
     // change the `state` as part of that operation since the key will remain the same.
-    // Alternatively, if we set the key as the license's `id`, then in `handleLicenseSelected`
-    // we'll call setState to change the state.license, followed by `input.onChange`, which
-    // will trigger a rerender of our parent. The parent will now render a _new_ component with
-    // key being the license ID we passed it, wiping away the state we just set.
+    // Alternatively, if we set the key as the license's `id`, then the state.license
+    // which we set in here will be blown away when our parent rerenders because React
+    // will render a _new_ component based on that new key.
 
     return this.props.license ? this.renderLicense() : this.renderLookup();
   }

@@ -8,7 +8,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-export default class AgreementInfo extends React.Component {
+export default class Info extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
       cancellationDeadline: PropTypes.string,

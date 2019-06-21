@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { cloneDeep, difference, get, keyBy } from 'lodash';
+import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { withTags, NotesSmartAccordion } from '@folio/stripes/smart-components';
 
 import {
   AccordionSet,
@@ -17,11 +16,18 @@ import {
   Row,
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
+import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import { Spinner } from '@folio/stripes-erm-components';
 
 import {
-  AgreementHeader,
-  AgreementInfo,
+  Finances,
+  Header,
+  Info,
+  InternalContacts,
+  Licenses,
+  Organizations,
+  SupplementaryInfo,
+  Terms,
 } from '../AgreementSections';
 
 export default class Agreement extends React.Component {
@@ -41,14 +47,21 @@ export default class Agreement extends React.Component {
   state = {
     sections: {
       agreementNotes: false,
+      finances: false,
+      internalContacts: false,
+      licenses: false,
+      terms: false,
+      organizations: false,
+      supplementaryInfo: false,
     },
   }
 
   getSectionProps = (id) => {
-    const { data: { agreement }, handlers } = this.props;
+    const { data, handlers } = this.props;
 
     return {
-      agreement,
+      agreement: data.agreement,
+      data,
       id,
       handlers,
       onToggle: this.handleSectionToggle,
@@ -159,7 +172,7 @@ export default class Agreement extends React.Component {
         <Pane
           actionMenu={this.getActionMenu}
           appIcon={<AppIcon app="agreements" />}
-          defaultWidth="45%"
+          defaultWidth="60%"
           dismissible
           id="pane-view-agreement"
           lastMenu={this.renderEditAgreementPaneMenu()}
@@ -167,14 +180,20 @@ export default class Agreement extends React.Component {
           paneTitle={data.agreement.name}
         >
           <TitleManager record={data.agreement.name}>
-            <AgreementHeader {...this.getSectionProps()} />
-            <AgreementInfo {...this.getSectionProps('agreementInfo')} />
+            <Header {...this.getSectionProps()} />
+            <Info {...this.getSectionProps('info')} />
             <AccordionSet>
               <Row end="xs">
                 <Col xs>
                   <ExpandAllButton accordionStatus={this.state.sections} onToggle={this.handleAllSectionsToggle} />
                 </Col>
               </Row>
+              <InternalContacts {...this.getSectionProps('internalContacts')} />
+              <Finances {...this.getSectionProps('finances')} />
+              <Licenses {...this.getSectionProps('licenses')} />
+              <Terms {...this.getSectionProps('terms')} />
+              <Organizations {...this.getSectionProps('organizations')} />
+              <SupplementaryInfo {...this.getSectionProps('supplementaryInfo')} />
               <NotesSmartAccordion
                 {...this.getSectionProps('agreementNotes')}
                 domainName="agreements"

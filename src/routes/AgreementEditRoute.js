@@ -60,6 +60,7 @@ class AgreementCreateRoute extends React.Component {
     users: {
       type: 'okapi',
       path: '/users',
+      records: 'users',
       fetch: false,
       accumulate: true,
       shouldRefresh: () => false,

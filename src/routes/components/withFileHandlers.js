@@ -28,7 +28,7 @@ export default function withFileHandlers(WrappedComponent) {
       const formData = new FormData();
       formData.append('upload', file);
 
-      return fetch(`${okapi.url}/licenses/files`, {
+      return fetch(`${okapi.url}/erm/files`, {
         method: 'POST',
         headers: {
           'X-Okapi-Tenant': okapi.tenant,
@@ -41,7 +41,7 @@ export default function withFileHandlers(WrappedComponent) {
     handleDeleteFile = (file) => {
       const { stripes: { okapi } } = this.props;
 
-      return fetch(`${okapi.url}/licenses/files/${file.id}`, {
+      return fetch(`${okapi.url}/erm/files/${file.id}`, {
         method: 'DELETE',
         headers: {
           'X-Okapi-Tenant': okapi.tenant,
@@ -53,7 +53,7 @@ export default function withFileHandlers(WrappedComponent) {
     handleDownloadFile = (file) => {
       const { stripes: { okapi } } = this.props;
 
-      return fetch(`${okapi.url}/licenses/files/${file.id}/raw`, {
+      return fetch(`${okapi.url}/erm/files/${file.id}/raw`, {
         headers: {
           'X-Okapi-Tenant': okapi.tenant,
           'X-Okapi-Token': okapi.token,

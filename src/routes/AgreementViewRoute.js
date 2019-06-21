@@ -42,6 +42,7 @@ class AgreementViewRoute extends React.Component {
     interfaces: {
       type: 'okapi',
       path: 'organizations-storage/interfaces',
+      records: 'interfaces',
       accumulate: true,
       fetch: false,
     },
@@ -59,12 +60,17 @@ class AgreementViewRoute extends React.Component {
         query: 'agreementId==:{id}',
         limit: '500',
       },
-      fetch: props => !!props.stripes.hasInterface('orders', '6.0'),
       records: 'poLines',
+      fetch: props => !!props.stripes.hasInterface('orders', '6.0'),
+    },
+    terms: {
+      type: 'okapi',
+      path: 'licenses/custprops',
     },
     users: {
       type: 'okapi',
       path: 'users',
+      records: 'users',
       fetch: false,
       accumulate: true,
     },
@@ -167,7 +173,7 @@ class AgreementViewRoute extends React.Component {
   }
 
   fetchInterfaces = (newOrgs) => {
-    if (!this.props.stripes.hasInterface('invoice', '1.0')) return;
+    if (!this.props.stripes.hasInterface('organizations-storage.interfaces', '1.0')) return;
 
     const orgs = newOrgs || get(this.props.resources, 'agreement.records[0].orgs', []);
     const interfaces = flatten(orgs.map(o => get(o, 'org.orgsUuid_object.interfaces', [])));
@@ -180,7 +186,7 @@ class AgreementViewRoute extends React.Component {
   }
 
   fetchInvoices = (newOrderLines) => {
-    if (!this.props.stripes.hasInterface('orders', '6.0')) return;
+    if (!this.props.stripes.hasInterface('invoice', '1.0')) return;
 
     const orderLines = newOrderLines || get(this.props.resources, 'orderLines.records', []);
     const query = orderLines.map(pol => `poLineId=${pol.id}`).join(' OR ');
@@ -290,6 +296,7 @@ class AgreementViewRoute extends React.Component {
   render() {
     const {
       handlers,
+      resources,
       tagsEnabled,
     } = this.props;
 
@@ -298,6 +305,7 @@ class AgreementViewRoute extends React.Component {
         canEdit={this.props.stripes.hasPerm('ui-agreements.agreements.edit')}
         data={{
           agreement: this.getCompositeAgreement(),
+          terms: get(resources, 'terms.records', []),
         }}
         handlers={{
           ...handlers,
@@ -308,6 +316,7 @@ class AgreementViewRoute extends React.Component {
         }}
         helperApp={this.getHelperApp()}
         isLoading={this.isLoading()}
+        key={get(resources, 'agreement.loadedAt', 'loading')}
       />
     );
   }
