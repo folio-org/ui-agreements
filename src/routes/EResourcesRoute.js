@@ -13,21 +13,6 @@ import { urls } from '../components/utilities';
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
 
-// `label` and `values` will be filled in by `updateFilterConfig`
-// `cql` is defined to mute PropType checks by SAS and FilterGroups
-// const filterConfig = [
-//   { name: 'type', label: '', cql: '', values: [] },
-//   {
-//     name: 'class',
-//     label: '',
-//     cql: '',
-//     values: [
-//       { name: 'Yes', cql: 'org.olf.kb.Pkg' },
-//       { name: 'No', cql: 'org.olf.kb.TitleInstance' },
-//     ],
-//   },
-// ];
-
 class EResourcesRoute extends React.Component {
   static manifest = Object.freeze({
     eresources: {
@@ -39,10 +24,13 @@ class EResourcesRoute extends React.Component {
       limitParam: 'perPage',
       params: getSASParams({
         searchKey: 'name',
-        columnMap: {
-          'Name': 'name',
-          'Type': 'type',
-        },
+        filterConfig: [{
+          name: 'class',
+          values: [
+            { name: 'package', value: 'org.olf.kb.Pkg' },
+            { name: 'nopackage', value: 'org.olf.kb.TitleInstance' },
+          ]
+        }],
       }),
     },
     typeValues: {
@@ -154,6 +142,7 @@ class EResourcesRoute extends React.Component {
         data={{
           eresources: get(resources, 'eresources.records', []),
           tags: get(resources, 'tags.records', []),
+          typeValues: get(resources, 'typeValues.records', []),
         }}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}

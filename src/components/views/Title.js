@@ -1,13 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class Package extends React.Component {
+import {
+  AcquisitionOptions,
+  Agreements,
+  TitleInfo,
+} from '../EResourceSections';
+
+export default class Title extends React.Component {
   render() {
+    const { data } = this.props;
+
     return (
-      <pre>
-        title:
-        {JSON.stringify(this.props.data.eresource, null, '\t')}
-      </pre>
+      <div id="package">
+        <TitleInfo data={data} />
+        <Agreements data={data} />
+        <AcquisitionOptions data={data} />
+      </div>
     );
   }
 }

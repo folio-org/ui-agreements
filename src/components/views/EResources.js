@@ -24,8 +24,8 @@ import {
 } from '@folio/stripes/smart-components';
 
 import ResourceType from '../ResourceType';
-import getResourceIdentifier from '../utilities/getResourceIdentifier';
-import AgreementFilters from '../AgreementFilters';
+import EResourceFilters from '../EResourceFilters';
+import EResourceIdentifier from '../EResourceIdentifier';
 
 import { urls } from '../utilities';
 import css from './Agreements.css';
@@ -79,9 +79,9 @@ export default class EResources extends React.Component {
 
   formatter = {
     type: e => <ResourceType resource={e} />,
-    isbn: e => getResourceIdentifier(e._object, 'isbn'),
-    eissn: e => getResourceIdentifier(e._object, 'eissn'),
-    pissn: e => getResourceIdentifier(e._object, 'pissn'),
+    isbn: e => <EResourceIdentifier eresource={e._object} type="isbn" />,
+    eissn: e => <EResourceIdentifier eresource={e._object} type="eissn" />,
+    pissn: e => <EResourceIdentifier eresource={e._object} type="pissn" />,
   }
 
   visibleColumns = [
@@ -279,9 +279,11 @@ export default class EResources extends React.Component {
                             </Icon>
                           </Button>
                         </div>
-                        <div>
-                          E-resource Filters
-                        </div>
+                        <EResourceFilters
+                          activeFilters={activeFilters.state}
+                          data={data}
+                          filterHandlers={getFilterHandlers()}
+                        />
                       </form>
                     </Pane>
                   }

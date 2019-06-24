@@ -13,6 +13,9 @@ const urls = {
   noteView: id => `/erm/notes/${id}`,
   noteEdit: id => `/erm/notes/${id}/edit`,
   noteCreate: () => '/erm/notes/create',
+
+  eholdingsPackageView: id => `/eholdings/packages/${id}`,
+  eholdingsResourceView: id => `/eholdings/resources/${id}`,
 };
 
 export default urls;

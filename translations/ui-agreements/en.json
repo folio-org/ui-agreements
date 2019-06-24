@@ -115,6 +115,7 @@
   "eresources.eIssn": "ISSN (Online)",
   "eresources.jusp": "JUSP",
   "eresources.erAgreements": "Agreements for this e-resource",
+  "eresources.packageResources": "E-resources in package",
   "eresources.agreementStatus": "Agreement status",
   "eresources.acqOptions": "Options for acquiring e-resource: {name}",
   "eresources.addPackage": "Add package",

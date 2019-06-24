@@ -16,6 +16,31 @@ class EResourceViewRoute extends React.Component {
       type: 'okapi',
       path: 'erm/resource/:{id}',
     },
+    entitlementOptions: {
+      type: 'okapi',
+      path: 'erm/resource/:{id}/entitlementOptions',
+      throwErrors: false,
+    },
+    entitlements: {
+      type: 'okapi',
+      path: 'erm/resource/:{id}/entitlements',
+      perRequest: 100,
+      recordsRequired: '1000',
+      limitParam: 'perPage',
+    },
+    packageContents: {
+      type: 'okapi',
+      path: 'erm/resource',
+      records: 'results',
+      limitParam: 'perPage',
+      perRequest: 100,
+      recordsRequired: '1000',
+      params: {
+        filters: 'pkg.id==:{id}',
+        sort: 'pti.titleInstance.name;asc',
+        stats: 'true',
+      },
+    },
     query: {},
   });
 
@@ -95,6 +120,14 @@ class EResourceViewRoute extends React.Component {
     );
   }
 
+  getRecords = (resource) => {
+    return get(this.props.resources, `${resource}.isPending`, true)
+      ?
+      undefined
+      :
+      get(this.props.resources, `${resource}.records`);
+  }
+
   render() {
     const {
       handlers,
@@ -106,6 +139,9 @@ class EResourceViewRoute extends React.Component {
       <View
         data={{
           eresource: get(resources, 'eresource.records[0]', {}),
+          entitlementOptions: this.getRecords('entitlementOptions'),
+          entitlements: this.getRecords('entitlements'),
+          packageContents: this.getRecords('packageContents'),
         }}
         handlers={{
           ...handlers,

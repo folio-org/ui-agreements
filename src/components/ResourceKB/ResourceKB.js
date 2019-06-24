@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
-import isPackage from '../../util/isPackage';
+import { isPackage } from '../utilities';
 
 export default class ResourceKB extends React.Component {
   static propTypes = {

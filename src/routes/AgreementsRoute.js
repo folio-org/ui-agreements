@@ -24,15 +24,6 @@ class AgreementsRoute extends React.Component {
       limitParam: 'perPage',
       params: getSASParams({
         searchKey: 'name',
-        columnMap: {
-          'Name': 'name',
-          'Vendor': 'vendor',
-          'Start date': 'startDate',
-          'End date': 'endDate',
-          'Cancellation deadline': 'cancellationDeadline',
-          'Status': 'agreementStatus',
-          'Last updated': 'lastUpdated',
-        },
         filterKeys: {
           orgs: 'orgs.org',
           role: 'orgs.role',

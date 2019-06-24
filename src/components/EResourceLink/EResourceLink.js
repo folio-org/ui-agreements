@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import FolioLink from '../FolioLink';
-import isExternal from '../../util/isExternal';
+import { isExternal, urls } from '../utilities';
 
 class EResourceLink extends React.Component {
   static propTypes = {
@@ -25,17 +25,9 @@ class EResourceLink extends React.Component {
   getPath = (eresource) => {
     const { authority, id, reference } = eresource;
 
-    if (!authority && id) {
-      return `/erm/eresources/view/${id}`;
-    }
-
-    if (authority === 'EKB-PACKAGE') {
-      return `/eholdings/packages/${reference}`;
-    }
-
-    if (authority === 'EKB-TITLE') {
-      return `/eholdings/resources/${reference}`;
-    }
+    if (!authority && id) return urls.eresourceView(id);
+    if (authority === 'EKB-PACKAGE') return urls.eholdingsPackageView(reference);
+    if (authority === 'EKB-TITLE') return urls.eholdingsResourceView(reference);
 
     return undefined;
   }
