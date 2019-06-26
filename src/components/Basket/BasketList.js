@@ -51,15 +51,15 @@ class BasketList extends React.Component {
           name: resource => <EResourceLink eresource={resource} />,
           type: resource => <ResourceType resource={resource} />,
           package: resource => {
-            const pkg = get(resource, ['_object', 'pkg']);
+            const pkg = get(resource, '_object.pkg');
             if (!pkg) return '-';
 
             return <EResourceLink eresource={pkg} />;
           },
           publisher: () => 'TBD',
           platform: resource => (
-            get(resource, ['_object', 'pti', 'platform', 'name']) ||
-            get(resource, ['_object', 'nominalPlatform', 'name']) || '-'
+            get(resource, '_object.pti.platform.name') ||
+            get(resource, '_object.nominalPlatform.name') || '-'
           ),
           coverage: resource => <CoverageStatements statements={resource._object.coverageStatements} />,
           remove: resource => (

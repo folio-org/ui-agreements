@@ -35,7 +35,7 @@ export default class AgreementLineField extends React.Component {
   }
 
   renderLineName = (resource) => {
-    const dereferencedResource = get(resource, ['_object', 'pti', 'titleInstance'], resource);
+    const dereferencedResource = get(resource, '_object.pti.titleInstance', resource);
     return <EResourceLink eresource={dereferencedResource} />;
   }
 

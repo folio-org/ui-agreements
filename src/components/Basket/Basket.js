@@ -79,7 +79,7 @@ class Basket extends React.Component {
       newState.selectedItems = selectedItems;
     }
 
-    const agreements = get(props.resources.openAgreements, ['records'], []);
+    const agreements = get(props.resources.openAgreements, 'records', []);
     if (state.agreements.length !== agreements.length) {
       newState.agreements = agreements.map(a => ({ ...a, value: a.id }));
     }

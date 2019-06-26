@@ -26,9 +26,9 @@ export default class ResourceProvider extends React.Component {
     const { resource } = this.props;
 
     return (
-      get(resource, ['_object', 'pti', 'platform', 'name']) ||
-      get(resource, ['_object', 'nominalPlatform', 'name']) ||
-      get(resource, ['reference_object', 'provider']) ||
+      get(resource, '_object.pti.platform.name') ||
+      get(resource, '_object.nominalPlatform.name') ||
+      get(resource, 'reference_object.provider') ||
       null
     );
   }

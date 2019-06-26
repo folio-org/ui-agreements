@@ -37,15 +37,10 @@ class App extends React.Component {
     const { match: { path } } = this.props;
 
     return (
-      <div
-        className={css.container}
-        ref={(ref) => { this.container = ref; }}
-      >
+      <div className={css.container}>
         <IfEResourcesEnabled>
-          <Layout className={`${css.header} display-flex full padding-top-gutter padding-start-gutter padding-end-gutter`}>
-            <div style={{ margin: '0 0 0 auto' }}>
-              <OpenBasketButton />
-            </div>
+          <Layout className={`${css.header} display-flex justify-end full padding-top-gutter padding-start-gutter padding-end-gutter`}>
+            <OpenBasketButton />
           </Layout>
         </IfEResourcesEnabled>
         <div className={css.body}>

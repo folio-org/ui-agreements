@@ -21,10 +21,10 @@ export default class ResourceCount extends React.Component {
     if (!resource) return null;
 
     if (isExternal(resource)) {
-      return get(resource, ['reference_object', 'titleCount'], 1);
+      return get(resource, 'reference_object.titleCount', 1);
     }
 
     // If contentItems doesn't exist there's only one item.
-    return get(resource, ['_object', 'contentItems', 'length'], 1);
+    return get(resource, '_object.contentItems.length', 1);
   }
 }
