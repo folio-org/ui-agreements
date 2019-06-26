@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -60,26 +61,26 @@ class AgreementForm extends React.Component {
     }
   }
 
-  // componentDidUpdate(prevProps) {
-  //   const {
-  //     data: { agreementLinesToAdd: prevAgreementLinesToAdd },
-  //     initialValues: prevInitialValues,
-  //   } = prevProps;
-  //   const {
-  //     data: { agreementLinesToAdd: currAgreementLinesToAdd },
-  //     initialValues: currInitialValues,
-  //   } = this.props;
+  componentDidUpdate(prevProps) {
+    const {
+      data: { agreementLinesToAdd: prevAgreementLinesToAdd },
+      initialValues: prevInitialValues,
+    } = prevProps;
+    const {
+      data: { agreementLinesToAdd: currAgreementLinesToAdd },
+      initialValues: currInitialValues,
+    } = this.props;
 
-  //   if (
-  //     !isEqual(currInitialValues, prevInitialValues) ||
-  //     !isEqual(prevAgreementLinesToAdd, currAgreementLinesToAdd)
-  //   ) {
-  //     this.props.change('items', [
-  //       ...(currInitialValues.items || []),
-  //       ...currAgreementLinesToAdd,
-  //     ]);
-  //   }
-  // }
+    if (
+      !isEqual(currInitialValues, prevInitialValues) ||
+      !isEqual(prevAgreementLinesToAdd, currAgreementLinesToAdd)
+    ) {
+      this.props.change('items', [
+        ...(currInitialValues.items || []),
+        ...currAgreementLinesToAdd,
+      ]);
+    }
+  }
 
   getSectionProps(id) {
     const { data, handlers } = this.props;

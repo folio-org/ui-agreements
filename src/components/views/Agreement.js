@@ -25,6 +25,7 @@ import {
   Info,
   InternalContacts,
   Licenses,
+  Lines,
   Organizations,
   SupplementaryInfo,
   Terms,
@@ -46,13 +47,14 @@ export default class Agreement extends React.Component {
 
   state = {
     sections: {
-      agreementNotes: false,
+      notes: false,
       finances: false,
       internalContacts: false,
       licenses: false,
-      terms: false,
+      lines: false,
       organizations: false,
       supplementaryInfo: false,
+      terms: false,
     },
   }
 
@@ -193,9 +195,10 @@ export default class Agreement extends React.Component {
               <Licenses {...this.getSectionProps('licenses')} />
               <Terms {...this.getSectionProps('terms')} />
               <Organizations {...this.getSectionProps('organizations')} />
+              <Lines {...this.getSectionProps('lines')} />
               <SupplementaryInfo {...this.getSectionProps('supplementaryInfo')} />
               <NotesSmartAccordion
-                {...this.getSectionProps('agreementNotes')}
+                {...this.getSectionProps('notes')}
                 domainName="agreements"
                 entityId={data.agreement.id}
                 entityName={data.agreement.name}

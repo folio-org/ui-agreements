@@ -266,7 +266,7 @@ class AgreementViewRoute extends React.Component {
     this.props.history.push(`${urls.agreementEdit(match.params.id)}${location.search}`);
   }
 
-  handleNeedMoreEresources = () => {
+  handleNeedMoreEResources = () => {
     const { agreementEresourcesCount } = this.props.resources;
     this.props.mutator.agreementEresourcesCount.replace(agreementEresourcesCount + ERESOURCES_RESULTS_INTERVAL);
   }
@@ -310,7 +310,7 @@ class AgreementViewRoute extends React.Component {
           ...handlers,
           onClose: this.handleClose,
           onEdit: this.handleEdit,
-          onNeedMoreEresource: this.handleNeedMoreEresources,
+          onNeedMoreEResources: this.handleNeedMoreEResources,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
         helperApp={this.getHelperApp()}

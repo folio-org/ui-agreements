@@ -31,19 +31,20 @@ class AgreementLinesFieldArray extends React.Component {
 
     if (line.resource) return line.resource;
 
-    const savedLine = agreementLines.find(l => l.id === line.id);
-    if (savedLine) {
-      return isExternal(savedLine) ? savedLine : savedLine.resource;
-    }
+    if (line.id) {
+      const savedLine = agreementLines.find(l => l.id === line.id);
+      if (savedLine) {
+        return isExternal(savedLine) ? savedLine : savedLine.resource;
+      }
 
-    const basketLine = basket.find(l => l.id === line.id);
-    if (basketLine) {
-      console.log('Using basketLine');
-      return basketLine;
+      // const basketLine = basket.find(l => l.id === line.id);
+      // if (basketLine) {
+      //   console.log('Using basketLine');
+      //   return basketLine;
+      // }
     }
 
     if (isExternal(line)) {
-      console.log('Using externalLine');
       return line;
     }
 

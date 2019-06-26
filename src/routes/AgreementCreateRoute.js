@@ -123,27 +123,27 @@ class AgreementCreateRoute extends React.Component {
       });
   }
 
-  // getAgreementLinesToAdd = () => {
-  //   const { resources } = this.props;
-  //   const { query: { addFromBasket } } = resources;
+  getAgreementLinesToAdd = () => {
+    const { resources } = this.props;
+    const { query: { addFromBasket } } = resources;
 
-  //   const externalAgreementLines = get(resources, 'externalAgreementLine.records', []);
+    const externalAgreementLines = get(resources, 'externalAgreementLine.records', []);
 
-  //   let basketLines = [];
-  //   if (resources.query.addFromBasket) {
-  //     const basket = get(resources, 'basket', []);
+    let basketLines = [];
+    if (resources.query.addFromBasket) {
+      const basket = get(resources, 'basket', []);
 
-  //     basketLines = addFromBasket
-  //       .split(',')
-  //       .map(index => ({ id: get(basket, [parseInt(index, 10), 'id']) }))
-  //       .filter(line => line.id); // check that there _was_ a basket item at that index
-  //   }
+      basketLines = addFromBasket
+        .split(',')
+        .map(index => ({ resource: basket[parseInt(index, 10)] }))
+        .filter(line => line.resource); // check that there _was_ a basket item at that index
+    }
 
-  //   return [
-  //     ...externalAgreementLines,
-  //     ...basketLines,
-  //   ];
-  // }
+    return [
+      ...externalAgreementLines,
+      ...basketLines,
+    ];
+  }
 
   fetchIsPending = () => {
     return Object.values(this.props.resources)
@@ -159,7 +159,8 @@ class AgreementCreateRoute extends React.Component {
     return (
       <View
         data={{
-          agreementLines: [], // this.getAgreementLinesToAdd(),
+          agreementLines: this.getAgreementLinesToAdd(),
+          agreementLinesToAdd: this.getAgreementLinesToAdd(),
           agreementStatusValues: get(resources, 'agreementStatusValues.records', []),
           basket: get(resources, 'basket', []),
           contactRoleValues: get(resources, 'contactRoleValues.records', []),

@@ -24,6 +24,7 @@ class BasketRoute extends React.Component {
           'agreementStatus.value==in_negotiation',
           'agreementStatus.value==requested',
         ].join('||'),
+        sort: 'name',
       },
     },
     basket: { initialValue: [] },
