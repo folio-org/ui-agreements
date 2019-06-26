@@ -4,7 +4,7 @@ import { get } from 'lodash';
 
 import { isPackage } from '../utilities';
 
-export default class ResourceKB extends React.Component {
+export default class EResourceKB extends React.Component {
   static propTypes = {
     resource: PropTypes.shape({
       class: PropTypes.string,

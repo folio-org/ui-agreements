@@ -23,7 +23,7 @@ import {
   SearchAndSortSearchButton as FilterPaneToggle,
 } from '@folio/stripes/smart-components';
 
-import ResourceType from '../ResourceType';
+import EResourceType from '../EResourceType';
 import EResourceFilters from '../EResourceFilters';
 
 import { getResourceIdentifier, urls } from '../utilities';
@@ -77,7 +77,7 @@ export default class EResources extends React.Component {
   }
 
   formatter = {
-    type: e => <ResourceType resource={e} />,
+    type: e => <EResourceType resource={e} />,
     isbn: e => getResourceIdentifier(e._object, 'isbn'),
     eissn: e => getResourceIdentifier(e._object, 'eissn'),
     pissn: e => getResourceIdentifier(e._object, 'pissn'),

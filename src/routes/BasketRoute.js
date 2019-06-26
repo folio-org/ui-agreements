@@ -44,7 +44,7 @@ class BasketRoute extends React.Component {
   }
 
   handleRemoveBasketItem = (itemToDelete) => {
-    const { mutator, resources: { basket =  [] } } = this.props;
+    const { mutator, resources: { basket = [] } } = this.props;
 
     mutator.basket.replace(basket.filter(item => item.id !== itemToDelete.id));
   }

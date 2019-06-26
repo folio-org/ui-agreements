@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
 
-export default class ResourceProvider extends React.Component {
+export default class EResourceProvider extends React.Component {
   static propTypes = {
     resource: PropTypes.shape({
       _object: PropTypes.shape({

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 
 import {
@@ -15,7 +14,7 @@ import {
   Paneset,
 } from '@folio/stripes/components';
 
-import BasketList from '../Basket/BasketList';
+import BasketList from '../BasketList';
 
 export default class BasketRoute extends React.Component {
   static propTypes = {

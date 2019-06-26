@@ -9,9 +9,9 @@ import CoveredEResourcesList from './CoveredEResourcesList';
 import LinesList from './LinesList';
 
 import EResourceLink from '../EResourceLink';
-import ResourceCount from '../ResourceCount';
-import ResourceProvider from '../ResourceProvider';
-import ResourceType from '../ResourceType';
+import EResourceCount from '../EResourceCount';
+import EResourceProvider from '../EResourceProvider';
+import EResourceType from '../EResourceType';
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import { getResourceFromEntitlement } from '../utilities';
@@ -60,9 +60,9 @@ export default class Lines extends React.Component {
         />
       );
     },
-    provider: line => <ResourceProvider resource={line.resource || line} />,
-    type: line => <ResourceType resource={getResourceFromEntitlement(line)} />,
-    count: line => <ResourceCount resource={getResourceFromEntitlement(line)} />,
+    provider: line => <EResourceProvider resource={line.resource || line} />,
+    type: line => <EResourceType resource={getResourceFromEntitlement(line)} />,
+    count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
     coverage: line => <CoverageStatements statements={line.coverage} />,
     isCustomCoverage: line => (line.customCoverage ? <CustomCoverageIcon /> : ''),
   }

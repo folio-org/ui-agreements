@@ -8,8 +8,8 @@ import { Spinner } from '@folio/stripes-erm-components';
 
 import AddToBasketButton from '../AddToBasketButton';
 import EResourceLink from '../EResourceLink';
-import ResourceKB from '../ResourceKB';
-import ResourceType from '../ResourceType';
+import EResourceKB from '../EResourceKB';
+import EResourceType from '../EResourceType';
 
 import { isPackage } from '../utilities';
 
@@ -29,10 +29,10 @@ export default class AcquisitionOptions extends React.Component {
       interactive={false}
       visibleColumns={['sourceKb', 'package', 'platform', 'acqMethod', 'add']}
       formatter={{
-        sourceKb: option => <ResourceKB resource={option} />,
+        sourceKb: option => <EResourceKB resource={option} />,
         package: option => <EResourceLink eresource={option} />,
         platform: option => get(option, '_object.pti.platform.name', '-'),
-        acqMethod: option => <ResourceType resource={option} />,
+        acqMethod: option => <EResourceType resource={option} />,
         add: option => {
           const optionIsPackage = isPackage(option);
 

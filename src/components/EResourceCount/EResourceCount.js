@@ -4,7 +4,7 @@ import { get } from 'lodash';
 
 import { isExternal } from '../utilities';
 
-export default class ResourceCount extends React.Component {
+export default class EResourceCount extends React.Component {
   static propTypes = {
     resource: PropTypes.shape({
       _object: PropTypes.shape({

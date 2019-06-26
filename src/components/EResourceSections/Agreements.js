@@ -10,7 +10,7 @@ import { Spinner } from '@folio/stripes-erm-components';
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
-import ResourceType from '../ResourceType';
+import EResourceType from '../EResourceType';
 import { getResourceFromEntitlement, urls } from '../utilities';
 
 export default class Agreements extends React.Component {
@@ -35,7 +35,7 @@ export default class Agreements extends React.Component {
           startDate: ({ owner }) => owner.startDate && <FormattedDate value={owner.startDate} />,
           endDate: ({ owner }) => owner.endDate && <FormattedDate value={owner.endDate} />,
           package: (line) => <EResourceLink eresource={getResourceFromEntitlement(line)} />,
-          acqMethod: ({ resource }) => <ResourceType resource={resource} />,
+          acqMethod: ({ resource }) => <EResourceType resource={resource} />,
           coverage: line => <CoverageStatements statements={line.coverage} />,
           isCustomCoverage: line => line.customCoverage && <CustomCoverageIcon />,
         }}

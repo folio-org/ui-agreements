@@ -11,7 +11,7 @@ import {
 
 import CoverageStatements from '../CoverageStatements';
 import EResourceLink from '../EResourceLink';
-import ResourceType from '../ResourceType';
+import EResourceType from '../EResourceType';
 
 class BasketList extends React.Component {
   static propTypes = {
@@ -49,7 +49,7 @@ class BasketList extends React.Component {
             />
           ),
           name: resource => <EResourceLink eresource={resource} />,
-          type: resource => <ResourceType resource={resource} />,
+          type: resource => <EResourceType resource={resource} />,
           package: resource => {
             const pkg = get(resource, '_object.pkg');
             if (!pkg) return '-';
