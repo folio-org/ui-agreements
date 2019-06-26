@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
-import isExternal from '../../util/isExternal';
+import { isExternal } from '../utilities';
 
 export default class ResourceCount extends React.Component {
   static propTypes = {

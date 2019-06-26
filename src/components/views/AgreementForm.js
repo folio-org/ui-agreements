@@ -23,6 +23,7 @@ import {
   FormInfo,
   FormInternalContacts,
   FormLicenses,
+  FormLines,
   FormOrganizations,
   FormSupplementaryInfo,
 } from '../AgreementSections';
@@ -31,7 +32,9 @@ import css from './AgreementForm.css';
 
 class AgreementForm extends React.Component {
   static propTypes = {
-    data: PropTypes.object,
+    data: PropTypes.shape({
+      agreementLines: PropTypes.array.isRequired,
+    }).isRequired,
     handlers: PropTypes.PropTypes.shape({
       onClose: PropTypes.func.isRequired,
     }),
@@ -50,11 +53,33 @@ class AgreementForm extends React.Component {
   state = {
     sections: {
       formInternalContacts: false,
+      formLines: false,
       formLicenses: false,
       formOrganizations: false,
       formSupplementaryInfo: false,
     }
   }
+
+  // componentDidUpdate(prevProps) {
+  //   const {
+  //     data: { agreementLinesToAdd: prevAgreementLinesToAdd },
+  //     initialValues: prevInitialValues,
+  //   } = prevProps;
+  //   const {
+  //     data: { agreementLinesToAdd: currAgreementLinesToAdd },
+  //     initialValues: currInitialValues,
+  //   } = this.props;
+
+  //   if (
+  //     !isEqual(currInitialValues, prevInitialValues) ||
+  //     !isEqual(prevAgreementLinesToAdd, currAgreementLinesToAdd)
+  //   ) {
+  //     this.props.change('items', [
+  //       ...(currInitialValues.items || []),
+  //       ...currAgreementLinesToAdd,
+  //     ]);
+  //   }
+  // }
 
   getSectionProps(id) {
     const { data, handlers } = this.props;
@@ -176,6 +201,7 @@ class AgreementForm extends React.Component {
                       </Row>
                       <FormInfo {...this.getSectionProps('formInfo')} />
                       <FormInternalContacts {...this.getSectionProps('formInternalContacts')} />
+                      <FormLines {...this.getSectionProps('formLines')} />
                       <FormLicenses {...this.getSectionProps('formLicenses')} />
                       <FormOrganizations {...this.getSectionProps('formOrganizations')} />
                       <FormSupplementaryInfo {...this.getSectionProps('formSupplementaryInfo')} />

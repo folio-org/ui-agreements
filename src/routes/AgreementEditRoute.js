@@ -17,6 +17,14 @@ class AgreementCreateRoute extends React.Component {
       path: 'erm/sas/:{id}',
       shouldRefresh: () => false,
     },
+    agreementLines: {
+      type: 'okapi',
+      path: 'erm/entitlements',
+      params: {
+        match: 'owner.id',
+        term: ':{id}',
+      },
+    },
     agreementStatusValues: {
       type: 'okapi',
       path: 'erm/refdataValues/SubscriptionAgreement/agreementStatus',
@@ -26,16 +34,6 @@ class AgreementCreateRoute extends React.Component {
       type: 'okapi',
       path: 'erm/refdataValues/InternalContact/role',
       shouldRefresh: () => false,
-    },
-    externalAgreementLine: {
-      type: 'okapi',
-      path: 'erm/entitlements/external',
-      shouldRefresh: () => false,
-      params: {
-        authority: '?{authority}',
-        reference: '?{referenceId}',
-      },
-      throwErrors: false,
     },
     isPerpetualValues: {
       type: 'okapi',
@@ -66,6 +64,7 @@ class AgreementCreateRoute extends React.Component {
       shouldRefresh: () => false,
     },
     basket: { initialValue: [] },
+    query: { initialValue: {} },
   });
 
   static propTypes = {
@@ -164,7 +163,7 @@ class AgreementCreateRoute extends React.Component {
     initialValues.linkedLicenses = linkedLicenses.map(l => ({ ...l, status: l.status.value }));
     initialValues.orgs = orgs.map(o => ({ ...o, role: o.role.value }));
 
-    const lines = get(resources, 'agreementLines.resources', []);
+    const lines = get(resources, 'agreementLines.records', []);
     if (items.length && lines.length) {
       initialValues.items = items.map(item => {
         if (item.resource) return item;
@@ -197,6 +196,35 @@ class AgreementCreateRoute extends React.Component {
       });
   }
 
+  getAgreementLines = () => {
+    return [
+      ...get(this.props.resources, 'agreementLines.records', []),
+      ...this.getAgreementLinesToAdd(),
+    ];
+  }
+
+  getAgreementLinesToAdd = () => {
+    const { resources } = this.props;
+    const { query: { addFromBasket } } = resources;
+
+    const externalAgreementLines = get(resources, 'externalAgreementLine.records', []);
+
+    let basketLines = [];
+    if (resources.query.addFromBasket) {
+      const basket = get(resources, 'basket', []);
+
+      basketLines = addFromBasket
+        .split(',')
+        .map(index => ({ resource: basket[parseInt(index, 10)] }))
+        .filter(line => line.resource); // sanity check that there _was_ an item at that index
+    }
+
+    return [
+      ...externalAgreementLines,
+      ...basketLines,
+    ];
+  }
+
   fetchIsPending = () => {
     return Object.values(this.props.resources)
       .filter(r => r && r.resource !== 'agreements')
@@ -211,7 +239,10 @@ class AgreementCreateRoute extends React.Component {
     return (
       <View
         data={{
+          agreementLines: this.getAgreementLines(),
+          agreementLinesToAdd: this.getAgreementLinesToAdd(),
           agreementStatusValues: get(resources, 'agreementStatusValues.records', []),
+          basket: get(resources, 'basket', []),
           contactRoleValues: get(resources, 'contactRoleValues.records', []),
           externalAgreementLine: get(resources, 'externalAgreementLine.records', []),
           isPerpetualValues: get(resources, 'isPerpetualValues.records', []),

@@ -1,20 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Field } from 'redux-form';
 
-import { Button, Icon, Layout } from '@folio/stripes/components';
-
+import { Button, Layout } from '@folio/stripes/components';
 import { withKiwtFieldArray } from '@folio/stripes-erm-components';
 
-import IfEResourcesEnabled from '../../../IfEResourcesEnabled';
 import AgreementLineField from './AgreementLineField';
-import isExternal from '../../../../util/isExternal';
-
-import css from './AgreementLinesFieldArray.css';
+import IfEResourcesEnabled from '../../IfEResourcesEnabled';
+import { isExternal } from '../../utilities';
 
 class AgreementLinesFieldArray extends React.Component {
   static propTypes = {
-    agreementLines: PropTypes.arrayOf(PropTypes.object),
+    data: PropTypes.shape({
+      basket: PropTypes.array,
+      agreementLines: PropTypes.array,
+    }),
     items: PropTypes.arrayOf(PropTypes.object),
     meta: PropTypes.shape({
       error: PropTypes.object,
@@ -23,43 +24,46 @@ class AgreementLinesFieldArray extends React.Component {
     onAddField: PropTypes.func.isRequired,
     onDeleteField: PropTypes.func.isRequired,
     onReplaceField: PropTypes.func.isRequired,
-    parentResources: PropTypes.object,
   }
 
   getLineResource(line) {
-    const { parentResources, agreementLines } = this.props;
+    const { data: { agreementLines, basket } } = this.props;
 
     if (line.resource) return line.resource;
 
-    if (agreementLines) {
-      const foundLine = agreementLines.find(l => l.id === line.id);
-      if (foundLine) {
-        if (isExternal(foundLine)) {
-          return foundLine;
-        } else {
-          return foundLine.resource;
-        }
-      }
+    const savedLine = agreementLines.find(l => l.id === line.id);
+    if (savedLine) {
+      return isExternal(savedLine) ? savedLine : savedLine.resource;
     }
 
-    if (parentResources && parentResources.basket) {
-      const basketLine = parentResources.basket.find(l => l.id === line.id);
-      if (basketLine) return basketLine;
+    const basketLine = basket.find(l => l.id === line.id);
+    if (basketLine) {
+      console.log('Using basketLine');
+      return basketLine;
     }
 
     if (isExternal(line)) {
+      console.log('Using externalLine');
       return line;
     }
 
     return undefined;
   }
 
+  handleAddLine = () => {
+    this.props.onAddField({});
+  }
+
   handleResourceSelected = (index, resource) => {
     this.props.onReplaceField(index, { resource });
   }
 
-  handleAddLine = () => {
-    this.props.onAddField({});
+  validateResourceIsSelected = (value = {}) => {
+    if (Object.keys(value).length === 0) {
+      return <FormattedMessage id="ui-agreements.errors.unsetAgreementLines" />;
+    }
+
+    return undefined;
   }
 
   renderEmpty = () => (
@@ -68,29 +72,19 @@ class AgreementLinesFieldArray extends React.Component {
     </Layout>
   )
 
-  renderError = () => {
-    const { meta: { error = {} }, name } = this.props;
-    if (!error[name]) return null;
-
-    return (
-      <div className={css.error}>
-        <Icon size="medium" icon="exclamation-circle" status="error">
-          {error[name]}
-        </Icon>
-      </div>
-    );
-  }
-
   renderLines = () => {
     return this.props.items.map((line, i) => (
-      <AgreementLineField
-        key={i}
+      <Field
+        basket={this.props.basket}
+        component={AgreementLineField}
         index={i}
+        key={i}
         line={line}
         name={`${this.props.name}[${i}]`}
         onDelete={() => this.props.onDeleteField(i, line)}
         onResourceSelected={this.handleResourceSelected}
         resource={this.getLineResource(line)}
+        validate={this.validateResourceIsSelected}
       />
     ));
   }
@@ -98,7 +92,7 @@ class AgreementLinesFieldArray extends React.Component {
   render() {
     return (
       <div>
-        { this.renderError() }
+        {/* { this.renderError() } */}
         <div id="agreement-form-lines">
           { this.props.items.length ? this.renderLines() : this.renderEmpty() }
         </div>

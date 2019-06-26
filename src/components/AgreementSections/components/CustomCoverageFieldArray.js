@@ -12,10 +12,7 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-import { withKiwtFieldArray } from '@folio/stripes-erm-components';
-
-import EditCard from './EditCard';
-import { required } from '../../../../util/validators';
+import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
 class CustomCoverageFieldArray extends React.Component {
   static propTypes = {
@@ -27,6 +24,16 @@ class CustomCoverageFieldArray extends React.Component {
 
   static defaultProps = {
     items: [],
+  }
+
+  validateRequiredStartDate = (value, allValues, _props, name) => {
+    if (!value) {
+      if (get(allValues, name.replace('startDate', '_delete'), false) !== true) {
+        return <FormattedMessage id="stripes-core.label.missingRequiredField" />;
+      }
+    }
+
+    return undefined;
   }
 
   validateDateOrder = (value, allValues, _props, name) => {
@@ -144,7 +151,7 @@ class CustomCoverageFieldArray extends React.Component {
                 name={`${name}[${index}].startDate`}
                 required
                 validate={[
-                  required,
+                  this.validateRequiredStartDate,
                   this.validateDateOrder,
                   this.validateMultipleOpenEnded,
                   this.validateOverlappingDates,

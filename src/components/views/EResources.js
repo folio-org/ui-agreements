@@ -25,9 +25,8 @@ import {
 
 import ResourceType from '../ResourceType';
 import EResourceFilters from '../EResourceFilters';
-import EResourceIdentifier from '../EResourceIdentifier';
 
-import { urls } from '../utilities';
+import { getResourceIdentifier, urls } from '../utilities';
 import css from './Agreements.css';
 
 export default class EResources extends React.Component {
@@ -79,9 +78,9 @@ export default class EResources extends React.Component {
 
   formatter = {
     type: e => <ResourceType resource={e} />,
-    isbn: e => <EResourceIdentifier eresource={e._object} type="isbn" />,
-    eissn: e => <EResourceIdentifier eresource={e._object} type="eissn" />,
-    pissn: e => <EResourceIdentifier eresource={e._object} type="pissn" />,
+    isbn: e => getResourceIdentifier(e._object, 'isbn'),
+    eissn: e => getResourceIdentifier(e._object, 'eissn'),
+    pissn: e => getResourceIdentifier(e._object, 'pissn'),
   }
 
   visibleColumns = [

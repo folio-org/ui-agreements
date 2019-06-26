@@ -266,7 +266,6 @@ class Basket extends React.Component {
                 firstMenu={this.renderFirstMenu()}
                 paneTitle={<FormattedMessage id="ui-agreements.basket.name" />}
                 paneSub={<FormattedMessage id="ui-agreements.basket.recordCount" values={{ count: basket.length }} />}
-
               >
                 <div id="basket-contents">
                   <BasketList

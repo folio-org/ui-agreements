@@ -11,13 +11,11 @@ import AgreementsRoute from './routes/AgreementsRoute';
 import AgreementCreateRoute from './routes/AgreementCreateRoute';
 import AgreementEditRoute from './routes/AgreementEditRoute';
 import AgreementViewRoute from './routes/AgreementViewRoute';
-// import BasketRoute from './routes/BasketRoute';
+import BasketRoute from './routes/BasketRoute';
 import EResourcesRoute from './routes/EResourcesRoute';
 import NoteCreateRoute from './routes/NoteCreateRoute';
 import NoteEditRoute from './routes/NoteEditRoute';
 import NoteViewRoute from './routes/NoteViewRoute';
-// import PackageViewRoute from './routes/PackageViewRoute';
-// import TitleViewRoute from './routes/TitleViewRoute';
 
 import Settings from './settings';
 
@@ -66,7 +64,7 @@ class App extends React.Component {
             <Route path={`${path}/notes/:id`} component={NoteViewRoute} />
             <Route path={`${path}/notes/:id/edit`} component={NoteEditRoute} />
 
-            {/* <Route path={`${path}/basket`} component={BasketRoute} /> */}
+            <Route path={`${path}/basket`} component={BasketRoute} />
           </Switch>
         </div>
       </div>

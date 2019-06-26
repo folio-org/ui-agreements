@@ -16,14 +16,14 @@ import ResourceType from '../ResourceType';
 class BasketList extends React.Component {
   static propTypes = {
     basket: PropTypes.arrayOf(PropTypes.object),
+    onRemoveItem: PropTypes.func,
     onToggleAll: PropTypes.func,
     onToggleItem: PropTypes.func,
-    removeItem: PropTypes.func,
     selectedItems: PropTypes.object,
   }
 
   render() {
-    const { basket, removeItem, selectedItems } = this.props;
+    const { basket, onRemoveItem, selectedItems } = this.props;
 
     return (
       <MultiColumnList
@@ -68,7 +68,7 @@ class BasketList extends React.Component {
                 <IconButton
                   aria-label={ariaLabel}
                   icon="trash"
-                  onClick={() => removeItem(resource)}
+                  onClick={() => onRemoveItem(resource)}
                 />
               )}
             </FormattedMessage>
@@ -92,7 +92,8 @@ class BasketList extends React.Component {
         }}
         columnWidths={{
           selected: 40,
-          name: '30%',
+          name: 300,
+          type: 100,
           coverage: 300,
         }}
       />

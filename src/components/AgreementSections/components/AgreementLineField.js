@@ -4,27 +4,27 @@ import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'redux-form';
 
-import {
-  Col,
-  KeyValue,
-  Row,
-} from '@folio/stripes/components';
+import { Col, Icon, KeyValue, Row } from '@folio/stripes/components';
+import { EditCard } from '@folio/stripes-erm-components';
 
-import BasketSelector from '../../../BasketSelector';
-import EResourceLink from '../../../EResourceLink';
-import ResourceCount from '../../../ResourceCount';
-import ResourceProvider from '../../../ResourceProvider';
-import ResourceType from '../../../ResourceType';
-import isExternal from '../../../../util/isExternal';
-import isPackage from '../../../../util/isPackage';
+import BasketSelector from '../../BasketSelector';
+import EResourceLink from '../../EResourceLink';
+import ResourceCount from '../../ResourceCount';
+import ResourceProvider from '../../ResourceProvider';
+import ResourceType from '../../ResourceType';
+import { isExternal, isPackage } from '../../utilities';
 
 import CustomCoverageFieldArray from './CustomCoverageFieldArray';
-import EditCard from './EditCard';
 
 export default class AgreementLineField extends React.Component {
   static propTypes = {
     index: PropTypes.number,
-    name: PropTypes.string.isRequired,
+    input: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    meta: PropTypes.shape({
+      error: PropTypes.node,
+    }).isRequired,
     onDelete: PropTypes.func,
     onResourceSelected: PropTypes.func,
     resource: PropTypes.object,
@@ -52,7 +52,7 @@ export default class AgreementLineField extends React.Component {
   }
 
   renderCustomCoverageSelector = () => {
-    const { resource } = this.props;
+    const { input: { name }, resource } = this.props;
 
     if (isPackage(resource)) return null;
     if (isExternal(resource)) return null;
@@ -60,7 +60,7 @@ export default class AgreementLineField extends React.Component {
     return (
       <FieldArray
         component={CustomCoverageFieldArray}
-        name={`${this.props.name}.coverage`}
+        name={`${name}.coverage`}
       />
     );
   }
@@ -69,7 +69,7 @@ export default class AgreementLineField extends React.Component {
     const { resource = {} } = this.props;
 
     return (
-      <React.Fragment>
+      <div>
         <Row>
           <Col xs={12} md={5}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.name" />}>
@@ -93,21 +93,33 @@ export default class AgreementLineField extends React.Component {
           </Col>
         </Row>
         {this.renderCustomCoverageSelector()}
-      </React.Fragment>
+      </div>
     );
   }
 
   renderLineSelector = () => {
+    const { meta: { error } } = this.props;
+
     return (
       <BasketSelector
         addButtonLabel={<FormattedMessage id="ui-agreements.agreementLines.createLine" />}
+        basket={this.props.basket}
+        error={React.isValidElement(error) ? error : undefined}
         onAdd={resource => this.props.onResourceSelected(this.props.index, resource)}
       />
     );
   }
 
+  // renderError = error => (
+  //   <div className={css.error}>
+  //     <Icon size="medium" icon="exclamation-circle" status="error">
+  //       {error}
+  //     </Icon>
+  //   </div>
+  // )
+
   render() {
-    const { index, resource = {} } = this.props;
+    const { index, meta: { error }, resource = {} } = this.props;
 
     return (
       <EditCard
@@ -115,11 +127,13 @@ export default class AgreementLineField extends React.Component {
         header={<FormattedMessage id="ui-agreements.agreementLines.lineTitle" values={{ number: index + 1 }} />}
         onDelete={this.props.onDelete}
       >
-        {
-          (resource.id || resource.reference) ?
-            this.renderLineResource() :
-            this.renderLineSelector()
-        }
+        <React.Fragment>
+          {
+            (resource.id || resource.reference) ?
+              this.renderLineResource() :
+              this.renderLineSelector()
+          }
+        </React.Fragment>
       </EditCard>
     );
   }

@@ -59,6 +59,7 @@ class AgreementCreateRoute extends React.Component {
       shouldRefresh: () => false,
     },
     basket: { initialValue: [] },
+    query: { initialValue: {} },
   });
 
   static propTypes = {
@@ -99,6 +100,14 @@ class AgreementCreateRoute extends React.Component {
     };
   }
 
+  componentWillUnmount() {
+    this.props.mutator.query.update({
+      addFromBasket: null,
+      authority: null,
+      referenceId: null,
+    });
+  }
+
   handleClose = () => {
     const { location } = this.props;
     this.props.history.push(`${urls.agreements()}${location.search}`);
@@ -114,6 +123,28 @@ class AgreementCreateRoute extends React.Component {
       });
   }
 
+  // getAgreementLinesToAdd = () => {
+  //   const { resources } = this.props;
+  //   const { query: { addFromBasket } } = resources;
+
+  //   const externalAgreementLines = get(resources, 'externalAgreementLine.records', []);
+
+  //   let basketLines = [];
+  //   if (resources.query.addFromBasket) {
+  //     const basket = get(resources, 'basket', []);
+
+  //     basketLines = addFromBasket
+  //       .split(',')
+  //       .map(index => ({ id: get(basket, [parseInt(index, 10), 'id']) }))
+  //       .filter(line => line.id); // check that there _was_ a basket item at that index
+  //   }
+
+  //   return [
+  //     ...externalAgreementLines,
+  //     ...basketLines,
+  //   ];
+  // }
+
   fetchIsPending = () => {
     return Object.values(this.props.resources)
       .filter(r => r && r.resource !== 'agreements')
@@ -128,9 +159,10 @@ class AgreementCreateRoute extends React.Component {
     return (
       <View
         data={{
+          agreementLines: [], // this.getAgreementLinesToAdd(),
           agreementStatusValues: get(resources, 'agreementStatusValues.records', []),
+          basket: get(resources, 'basket', []),
           contactRoleValues: get(resources, 'contactRoleValues.records', []),
-          externalAgreementLine: get(resources, 'externalAgreementLine.records', []),
           isPerpetualValues: get(resources, 'isPerpetualValues.records', []),
           licenseLinkStatusValues: get(resources, 'licenseLinkStatusValues.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),

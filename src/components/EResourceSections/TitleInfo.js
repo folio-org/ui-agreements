@@ -5,7 +5,6 @@ import { get } from 'lodash';
 
 import { Col, KeyValue, Row } from '@folio/stripes/components';
 
-import EResourceIdentifier from '../EResourceIdentifier';
 import { getResourceIdentifier } from '../utilities';
 
 export default class TitleInfo extends React.Component {
