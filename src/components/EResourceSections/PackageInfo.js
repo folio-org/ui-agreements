@@ -12,6 +12,17 @@ import {
 import AddToBasketButton from '../AddToBasketButton';
 
 export default class PackageInfo extends React.Component {
+  static propTypes = {
+    data: PropTypes.shape({
+      eresource: PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+        reference: PropTypes.string,
+        source: PropTypes.string,
+      })
+    }).isRequired,
+  }
+
   render() {
     const { data: { eresource } } = this.props;
     const entitlementOption = {

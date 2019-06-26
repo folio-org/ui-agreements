@@ -74,7 +74,10 @@ class AgreementCreateRoute extends React.Component {
       agreements: PropTypes.shape({
         POST: PropTypes.func.isRequired,
       }).isRequired,
-    }).isRequired,
+      query: PropTypes.shape({
+        update: PropTypes.func.isRequired
+      }).isRequired,
+    }),
     resources: PropTypes.shape({
       agreement: PropTypes.object,
       orgRoleValues: PropTypes.object,

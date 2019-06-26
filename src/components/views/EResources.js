@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
-import { get, noop } from 'lodash';
+import { noop } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -15,7 +15,7 @@ import {
   Paneset,
 } from '@folio/stripes/components';
 
-import { AppIcon, IfPermission } from '@folio/stripes/core';
+import { AppIcon } from '@folio/stripes/core';
 
 import {
   SearchAndSortQuery,

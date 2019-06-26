@@ -15,6 +15,7 @@ export default class EresourcesCovered extends React.Component {
       eresources: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
     onNeedMoreEResources: PropTypes.func.isRequired,
+    visible: PropTypes.bool,
   };
 
   columnMapping = {

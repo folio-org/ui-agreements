@@ -84,6 +84,9 @@ class AgreementCreateRoute extends React.Component {
       agreements: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
       }).isRequired,
+      query: PropTypes.shape({
+        update: PropTypes.func.isRequired
+      }).isRequired,
       users: PropTypes.shape({
         GET: PropTypes.func.isRequired,
       }).isRequired,
@@ -130,6 +133,14 @@ class AgreementCreateRoute extends React.Component {
     if (prevLicense.id !== currLicense.id || newContacts.length) {
       this.fetchUsers(newContacts);
     }
+  }
+
+  componentWillUnmount() {
+    this.props.mutator.query.update({
+      addFromBasket: null,
+      authority: null,
+      referenceId: null,
+    });
   }
 
   fetchUsers = (contacts) => {

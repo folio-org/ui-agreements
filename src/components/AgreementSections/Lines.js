@@ -25,6 +25,9 @@ export default class Lines extends React.Component {
     handlers: PropTypes.shape({
       onNeedMoreEResources: PropTypes.func.isRequired,
     }).isRequired,
+    id: PropTypes.string,
+    onToggle: PropTypes.func,
+    open: PropTypes.bool,
   }
 
   columnWidths = {
@@ -77,7 +80,7 @@ export default class Lines extends React.Component {
   ]
 
   renderBadge = () => {
-    const count = get(this.props.data, 'agreement.lines.length');
+    const count = get(this.props, 'agreement.lines.length');
     if (count === undefined) return <Spinner />;
 
     return <Badge data-test-agreement-lines-count={count}>{count}</Badge>;

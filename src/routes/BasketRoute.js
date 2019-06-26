@@ -31,6 +31,22 @@ class BasketRoute extends React.Component {
     query: {},
   });
 
+  static propTypes = {
+    history: PropTypes.shape({
+      goBack: PropTypes.func.isRequired,
+      push: PropTypes.func.isRequired,
+    }).isRequired,
+    mutator: PropTypes.shape({
+      basket: PropTypes.shape({
+        replace: PropTypes.func.isRequired,
+      }).isRequired,
+    }),
+    resources: PropTypes.shape({
+      basket: PropTypes.array,
+      openAgreements: PropTypes.object,
+    }),
+  }
+
   handleAddToExistingAgreement = (addFromBasket, agreementId) => {
     this.props.history.push(`${urls.agreementEdit(agreementId)}?addFromBasket=${addFromBasket}`);
   }

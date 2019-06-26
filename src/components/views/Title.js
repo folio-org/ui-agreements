@@ -8,6 +8,10 @@ import {
 } from '../EResourceSections';
 
 export default class Title extends React.Component {
+  static propTypes = {
+    data: PropTypes.object,
+  }
+
   render() {
     const { data } = this.props;
 

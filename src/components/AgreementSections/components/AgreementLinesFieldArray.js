@@ -27,7 +27,7 @@ class AgreementLinesFieldArray extends React.Component {
   }
 
   getLineResource(line) {
-    const { data: { agreementLines, basket } } = this.props;
+    const { data: { agreementLines } } = this.props;
 
     if (line.resource) return line.resource;
 
@@ -36,12 +36,6 @@ class AgreementLinesFieldArray extends React.Component {
       if (savedLine) {
         return isExternal(savedLine) ? savedLine : savedLine.resource;
       }
-
-      // const basketLine = basket.find(l => l.id === line.id);
-      // if (basketLine) {
-      //   console.log('Using basketLine');
-      //   return basketLine;
-      // }
     }
 
     if (isExternal(line)) {
@@ -76,7 +70,7 @@ class AgreementLinesFieldArray extends React.Component {
   renderLines = () => {
     return this.props.items.map((line, i) => (
       <Field
-        basket={this.props.basket}
+        basket={this.props.data.basket}
         component={AgreementLineField}
         index={i}
         key={i}

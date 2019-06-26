@@ -8,6 +8,19 @@ import { Col, KeyValue, Row } from '@folio/stripes/components';
 import { getResourceIdentifier } from '../utilities';
 
 export default class TitleInfo extends React.Component {
+  static propTypes = {
+    data: PropTypes.shape({
+      eresource: PropTypes.shape({
+        type: PropTypes.shape({
+          label: PropTypes.string,
+        }),
+        publisher: PropTypes.shape({
+          label: PropTypes.string,
+        }),
+      })
+    }).isRequired,
+  }
+
   renderIdentifier(type, width = 3) {
     const identifier = getResourceIdentifier(this.props.data.eresource, type);
     if (!identifier) return null;

@@ -4,7 +4,7 @@ import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'redux-form';
 
-import { Col, Icon, KeyValue, Row } from '@folio/stripes/components';
+import { Col, KeyValue, Row } from '@folio/stripes/components';
 import { EditCard } from '@folio/stripes-erm-components';
 
 import BasketSelector from '../../BasketSelector';
@@ -18,6 +18,7 @@ import CustomCoverageFieldArray from './CustomCoverageFieldArray';
 
 export default class AgreementLineField extends React.Component {
   static propTypes = {
+    basket: PropTypes.arrayOf(PropTypes.object),
     index: PropTypes.number,
     input: PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -110,16 +111,8 @@ export default class AgreementLineField extends React.Component {
     );
   }
 
-  // renderError = error => (
-  //   <div className={css.error}>
-  //     <Icon size="medium" icon="exclamation-circle" status="error">
-  //       {error}
-  //     </Icon>
-  //   </div>
-  // )
-
   render() {
-    const { index, meta: { error }, resource = {} } = this.props;
+    const { index, resource = {} } = this.props;
 
     return (
       <EditCard
