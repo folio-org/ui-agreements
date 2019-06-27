@@ -24,6 +24,7 @@ import {
 } from '@folio/stripes/smart-components';
 
 import AgreementFilters from '../AgreementFilters';
+import IfEResourcesEnabled from '../IfEResourcesEnabled';
 import { urls } from '../utilities';
 import css from './Agreements.css';
 
@@ -37,7 +38,7 @@ export default class Agreements extends React.Component {
       renewalPriorityValues: PropTypes.array.isRequired,
       isPerpetualValues: PropTypes.array.isRequired,
       orgRoleValues: PropTypes.array.isRequired,
-      tags: PropTypes.array.isRequired,
+      tagsValues: PropTypes.array.isRequired,
     }),
     disableRecordCreation: PropTypes.bool,
     onNeedMoreData: PropTypes.func.isRequired,
@@ -262,14 +263,22 @@ export default class Agreements extends React.Component {
                       paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                     >
                       <form onSubmit={onSubmitSearch}>
-                        <ButtonGroup fullWidth>
-                          <Button buttonStyle="primary">
-                            <FormattedMessage id="ui-agreements.agreements" />
-                          </Button>
-                          <Button to={urls.eresources()}>
-                            <FormattedMessage id="ui-agreements.eresources" />
-                          </Button>
-                        </ButtonGroup>
+                        <IfEResourcesEnabled>
+                          <ButtonGroup fullWidth>
+                            <Button
+                              buttonStyle="primary"
+                              id="clickable-nav-agreements"
+                            >
+                              <FormattedMessage id="ui-agreements.agreements" />
+                            </Button>
+                            <Button
+                              id="clickable-nav-eresources"
+                              to={urls.eresources()}
+                            >
+                              <FormattedMessage id="ui-agreements.eresources" />
+                            </Button>
+                          </ButtonGroup>
+                        </IfEResourcesEnabled>
                         {/* TODO: Use forthcoming <SearchGroup> or similar component */}
                         <div className={css.searchGroupWrap}>
                           <FormattedMessage id="ui-agreements.agreements.searchInputLabel">

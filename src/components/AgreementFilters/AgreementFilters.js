@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
@@ -137,28 +136,29 @@ export default class AgreementFilters extends React.Component {
     );
   }
 
-  renderTagsFilter = (name, props) => {
-    const tags = get(this.props.data, 'tagValues.records', []);
+  renderTagsFilter = () => {
+    // const tags = get(this.props.data, 'tagValues.records', []);
     // TODO: TEST USING THE VALUES GENERATED IN GDSFP
-    const dataOptions = tags.map(({ label }) => ({ value: label, label }));
-    const activeFilters = this.props.activeFilters.tags || [];
+    // const dataOptions = tags.map(({ label }) => ({ value: label, label }));
+    const { activeFilters } = this.props;
+    const tagFilters = activeFilters.tags || [];
 
     return (
       <Accordion
+        closedByDefault
         id="clickable-tags-filter"
         displayClearButton={activeFilters.length > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-agreements.agreements.tags" />}
         onClearFilter={() => { this.props.filterHandlers.clearGroup('tags'); }}
         separator={false}
-        {...props}
       >
         <MultiSelectionFilter
+          dataOptions={this.state.tags}
           id="tags-filter"
-          dataOptions={dataOptions}
           name="tags"
-          onChange={values => this.props.filterHandlers.state({ ...activeFilters, tags: values })}
-          selectedValues={activeFilters}
+          onChange={e => this.props.filterHandlers.state({ ...activeFilters, tags: e.values })}
+          selectedValues={tagFilters}
         />
       </Accordion>
     );
@@ -172,7 +172,7 @@ export default class AgreementFilters extends React.Component {
         {this.renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
         {this.renderOrganizationFilter()}
         {this.renderOrganizationRoleFilter()}
-        {this.renderTagsFilter('Tags', { closedByDefault: true })}
+        {this.renderTagsFilter()}
       </AccordionSet>
     );
   }

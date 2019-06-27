@@ -18,9 +18,9 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
   const values = defaultValues || generateAgreementValues();
   let chain = nightmare
     .wait('#agreements-module-display')
-    .click('nav #agreements')
-    .wait('#clickable-newagreement')
-    .click('#clickable-newagreement')
+    .click('#clickable-nav-agreements')
+    .wait('#clickable-new-agreement')
+    .click('#clickable-new-agreement')
     .waitUntilNetworkIdle(1000)
     .wait('#edit-agreement-name')
 
@@ -39,15 +39,16 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
 
   if (resourceId) {
     chain = chain
-      .click('#accordion-toggle-button-agreementFormLines')
+      .click('#accordion-toggle-button-formLines')
       .click('#add-agreement-line-button')
-      .select('#basket-selector', resourceId)
+      .click('#basket-selector')
+      .click(`[id*=${resourceId}]`)
       .click('#basket-selector-add-button')
-      .wait(250);
+      .wait(1000);
   }
 
   chain
-    .click('#clickable-createagreement')
+    .click('#clickable-create-agreement')
     .wait('[data-test-agreement-info]')
     .wait(agreementName => {
       const nameElement = document.querySelector('[data-test-agreement-name]');
@@ -124,7 +125,7 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .wait('#input-agreement-search')
           .insert('#input-agreement-search', values.name)
-          .click('[data-test-search-and-sort-submit]')
+          .click('#clickable-search-agreements')
           .wait(1000) // If another agreement was open wait for the new one to be open before the next operation.
           .wait('[data-test-agreement-info]')
           .evaluate(expectedValues => {
@@ -142,11 +143,10 @@ module.exports.test = (uiTestCtx) => {
 
       it(`should edit agreement to: ${values.editedName}`, done => {
         nightmare
-          .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
-          .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000)
+          .wait('#edit-agreement-name')
           .insert('#edit-agreement-name', '')
           .insert('#edit-agreement-name', values.editedName)
 
@@ -159,7 +159,7 @@ module.exports.test = (uiTestCtx) => {
 
           .type('#edit-agreement-status', values.editedStatus)
           .type('#edit-agreement-renewal-priority', values.editedRenewalPriority)
-          .click('#clickable-updateagreement')
+          .click('#clickable-update-agreement')
           .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000)
           .evaluate(expectedValues => {

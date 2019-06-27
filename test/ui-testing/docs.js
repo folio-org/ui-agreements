@@ -31,8 +31,8 @@ module.exports.test = (uiTestCtx,
         console.log(`\tCreating ${name}`);
 
         nightmare
-          .wait('#clickable-newagreement')
-          .click('#clickable-newagreement')
+          .wait('#clickable-new-agreement')
+          .click('#clickable-new-agreement')
 
           .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 
@@ -68,7 +68,7 @@ module.exports.test = (uiTestCtx,
 
       it('should create agreement', done => {
         nightmare
-          .click('#clickable-createagreement')
+          .click('#clickable-create-agreement')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
           .then(done)
           .catch(done);
@@ -127,7 +127,6 @@ module.exports.test = (uiTestCtx,
 
       it('should open edit agreement', done => {
         nightmare
-          .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
           .wait('[data-test-edit-agreement-info]')
@@ -240,7 +239,7 @@ module.exports.test = (uiTestCtx,
 
       it('should save updated agreement', done => {
         nightmare
-          .click('#clickable-updateagreement')
+          .click('#clickable-update-agreement')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
           .then(done)
           .catch(done);

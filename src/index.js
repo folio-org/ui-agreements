@@ -56,8 +56,8 @@ class App extends React.Component {
             </Route>
 
             <Route path={`${path}/notes/create`} component={NoteCreateRoute} />
-            <Route path={`${path}/notes/:id`} component={NoteViewRoute} />
             <Route path={`${path}/notes/:id/edit`} component={NoteEditRoute} />
+            <Route path={`${path}/notes/:id`} component={NoteViewRoute} />
 
             <Route path={`${path}/basket`} component={BasketRoute} />
           </Switch>

@@ -47,12 +47,12 @@ module.exports.test = (uiTestCtx) => {
 
         nightmare
           .wait('#agreements-module-display')
-          .click('nav #agreements')
-          .wait('#clickable-newagreement')
-          .click('#clickable-newagreement')
+          .click('#clickable-nav-agreements')
+          .wait('#clickable-new-agreement')
+          .click('#clickable-new-agreement')
           .waitUntilNetworkIdle(1000)
-          .wait('#accordion-toggle-button-agreementFormOrganizations')
-          .click('#accordion-toggle-button-agreementFormOrganizations')
+          .wait('#accordion-toggle-button-formOrganizations')
+          .click('#accordion-toggle-button-formOrganizations')
           .waitUntilNetworkIdle(1000)
           .wait('#edit-agreement-name')
           .insert('#edit-agreement-name', name)
@@ -125,7 +125,7 @@ module.exports.test = (uiTestCtx) => {
 
       it('should create Agreement', done => {
         nightmare
-          .click('#clickable-createagreement')
+          .click('#clickable-create-agreement')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
           .then(done)
           .catch(done);
@@ -151,11 +151,10 @@ module.exports.test = (uiTestCtx) => {
 
       it('should open edit Agreement', done => {
         nightmare
-          .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
-          .wait('#accordion-toggle-button-agreementFormOrganizations')
-          .click('#accordion-toggle-button-agreementFormOrganizations')
+          .wait('#accordion-toggle-button-formOrganizations')
+          .click('#accordion-toggle-button-formOrganizations')
           .waitUntilNetworkIdle(1000)
           .then(done)
           .catch(done);
@@ -244,7 +243,7 @@ module.exports.test = (uiTestCtx) => {
 
       it('should save updated Agreement', done => {
         nightmare
-          .click('#clickable-updateagreement')
+          .click('#clickable-update-agreement')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
           .then(done)
           .catch(done);

@@ -31,6 +31,9 @@ import {
   Terms,
 } from '../AgreementSections';
 
+import { urls } from '../utilities';
+
+
 export default class Agreement extends React.Component {
   static propTypes = {
     canEdit: PropTypes.bool,
@@ -47,11 +50,11 @@ export default class Agreement extends React.Component {
 
   state = {
     sections: {
-      notes: false,
       finances: false,
       internalContacts: false,
       licenses: false,
       lines: false,
+      notes: false,
       organizations: false,
       supplementaryInfo: false,
       terms: false,
@@ -203,8 +206,8 @@ export default class Agreement extends React.Component {
                 entityId={data.agreement.id}
                 entityName={data.agreement.name}
                 entityType="agreement"
-                pathToNoteCreate="notes/create"
-                pathToNoteDetails="notes"
+                pathToNoteCreate={urls.noteCreate()}
+                pathToNoteDetails={urls.notes()}
               />
             </AccordionSet>
           </TitleManager>

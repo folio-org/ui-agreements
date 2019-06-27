@@ -50,7 +50,7 @@ export default class LinkedLicenses extends React.Component {
     if (!inactiveLicenses.length) return null;
 
     return (
-      <div>
+      <div id="inactive-licenses">
         <Headline faded margin="none" tag="h4">
           <FormattedMessage id="ui-agreements.license.inactiveLicenses" />
         </Headline>

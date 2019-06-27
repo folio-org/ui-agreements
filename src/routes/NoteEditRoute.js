@@ -36,10 +36,10 @@ export default class NoteEditRoute extends Component {
       <NoteEditPage
         referredEntityData={formatNoteReferrerEntityData(location.state)}
         entityTypeTranslationKeys={{
-          agreement: 'ui-agreements.notes.entityType.agreement',
+          agreement: 'ui-agreements.agreement',
         }}
         entityTypePluralizedTranslationKeys={{
-          agreement: 'ui-agreements.notes.entityType.agreement.pluralized',
+          agreement: 'ui-agreements.agreementPluralizable',
         }}
         paneHeaderAppIcon="agreement"
         domain="agreements"

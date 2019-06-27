@@ -94,7 +94,7 @@ module.exports.test = (uiTestCtx) => {
         it('should create license', done => {
           nightmare
             .click('#clickable-create-license')
-            .wait('#licenses')
+            .wait('#list-licenses')
             .waitUntilNetworkIdle(1000)
             .then(done)
             .catch(done);
@@ -137,7 +137,6 @@ module.exports.test = (uiTestCtx) => {
 
       it('should open edit agreement page and open licenses accordion', done => {
         nightmare
-          .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
           .wait('[data-test-edit-agreement-info]')
@@ -171,7 +170,7 @@ module.exports.test = (uiTestCtx) => {
 
       it('should fail to save due to license link status being unselected', done => {
         nightmare
-          .click('#clickable-updateagreement')
+          .click('#clickable-update-agreement')
           .evaluate(() => {
             if (!document.querySelector('label[for*="linkedLicenses-status-"] ~ div[role="alert"] [class*="feedbackError"]')) {
               throw Error('Expected to find a license link status error messages because it is undefined and did not');
@@ -197,7 +196,7 @@ module.exports.test = (uiTestCtx) => {
 
       it('should save updated agreement', done => {
         nightmare
-          .click('#clickable-updateagreement')
+          .click('#clickable-update-agreement')
           .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000)
           .wait('#accordion-toggle-button-licenses')

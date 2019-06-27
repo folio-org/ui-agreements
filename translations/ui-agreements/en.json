@@ -12,6 +12,9 @@
   "agreements": "Agreements",
   "eresources": "E-resources",
 
+  "agreement": "Agreement",
+  "agreementPluralizable": "{count} {count, plural, one {agreement} other {agreements}}",
+
   "agreements.searchInputLabel": "Search Agreements",
 
   "eresources.searchInputLabel": "Search E-resources",

@@ -57,7 +57,7 @@ class AgreementCreateRoute extends React.Component {
     },
     users: {
       type: 'okapi',
-      path: '/users',
+      path: 'users',
       records: 'users',
       fetch: false,
       accumulate: true,
@@ -118,19 +118,19 @@ class AgreementCreateRoute extends React.Component {
   }
 
   componentDidMount() {
-    const contacts = get(this.props.resources, 'license.records[0].contacts', []);
+    const contacts = get(this.props.resources, 'agreement.records[0].contacts', []);
     if (contacts.length) {
       this.fetchUsers(contacts);
     }
   }
 
   componentDidUpdate(prevProps) {
-    const prevLicense = get(prevProps.resources, 'license.records[0]', {});
-    const currLicense = get(this.props.resources, 'license.records[0]', {});
-    const prevContacts = prevLicense.contacts || [];
-    const currContacts = currLicense.contacts || [];
+    const prevAgreement = get(prevProps.resources, 'agreement.records[0]', {});
+    const currAgreement = get(this.props.resources, 'agreement.records[0]', {});
+    const prevContacts = prevAgreement.contacts || [];
+    const currContacts = currAgreement.contacts || [];
     const newContacts = difference(currContacts, prevContacts);
-    if (prevLicense.id !== currLicense.id || newContacts.length) {
+    if (prevAgreement.id !== currAgreement.id || newContacts.length) {
       this.fetchUsers(newContacts);
     }
   }

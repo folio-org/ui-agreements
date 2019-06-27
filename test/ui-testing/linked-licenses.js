@@ -55,7 +55,7 @@ module.exports.test = (uiTestCtx) => {
             .insert('#edit-license-start-date', l.startDate)
 
             .click('#clickable-create-license')
-            .wait('#licenses')
+            .wait('#list-licenses')
             .waitUntilNetworkIdle(500)
             .then(() => nightmare.click('#pane-view-license button[icon=times]'))
             .then(done)
@@ -73,7 +73,6 @@ module.exports.test = (uiTestCtx) => {
 
       it('should open edit agreement page and open licenses accordion', done => {
         nightmare
-          .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
           .wait('[data-test-edit-agreement-info]')
@@ -106,7 +105,7 @@ module.exports.test = (uiTestCtx) => {
 
       it('should fail to save due to license link status being unselected', done => {
         nightmare
-          .click('#clickable-updateagreement')
+          .click('#clickable-update-agreement')
           .evaluate(() => {
             if (!document.querySelector('label[for*="linkedLicenses-status-"] ~ div[role="alert"] [class*="feedbackError"]')) {
               throw Error('Expected to find a license link status error messages because it is undefined and did not');
@@ -159,7 +158,7 @@ module.exports.test = (uiTestCtx) => {
 
       it('should save updated agreement', done => {
         nightmare
-          .click('#clickable-updateagreement')
+          .click('#clickable-update-agreement')
           .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000)
           .wait('#accordion-toggle-button-licenses')
@@ -189,11 +188,11 @@ module.exports.test = (uiTestCtx) => {
       if (inactiveLicenses) {
         it('should find inactive licenses', done => {
           nightmare
-            .wait('#agreement-inactive-licenses')
+            .wait('#inactive-licenses')
             .evaluate(expected => {
               expected.forEach(l => {
                 const name = document.evaluate(
-                  `//*[@id="agreement-inactive-licenses"]//div[.="${l.name}"]`,
+                  `//*[@id="inactive-licenses"]//div[.="${l.name}"]`,
                   document,
                   null,
                   XPathResult.FIRST_ORDERED_NODE_TYPE
@@ -202,7 +201,7 @@ module.exports.test = (uiTestCtx) => {
                 if (!name) throw Error(`Expected inactive license node for name ${l.name}`);
 
                 const status = document.evaluate(
-                  `//*[@id="agreement-inactive-licenses"]//div[.="${l.status}"]`,
+                  `//*[@id="inactive-licenses"]//div[.="${l.status}"]`,
                   document,
                   null,
                   XPathResult.FIRST_ORDERED_NODE_TYPE

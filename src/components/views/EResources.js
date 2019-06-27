@@ -25,6 +25,7 @@ import {
 
 import EResourceType from '../EResourceType';
 import EResourceFilters from '../EResourceFilters';
+import IfEResourcesEnabled from '../IfEResourcesEnabled';
 
 import { getResourceIdentifier, urls } from '../utilities';
 import css from './Agreements.css';
@@ -224,14 +225,22 @@ export default class EResources extends React.Component {
                       paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                     >
                       <form onSubmit={onSubmitSearch}>
-                        <ButtonGroup fullWidth>
-                          <Button to={urls.agreements()}>
-                            <FormattedMessage id="ui-agreements.agreements" />
-                          </Button>
-                          <Button buttonStyle="primary">
-                            <FormattedMessage id="ui-agreements.eresources" />
-                          </Button>
-                        </ButtonGroup>
+                        <IfEResourcesEnabled>
+                          <ButtonGroup fullWidth>
+                            <Button
+                              id="clickable-nav-agreements"
+                              to={urls.agreements()}
+                            >
+                              <FormattedMessage id="ui-agreements.agreements" />
+                            </Button>
+                            <Button
+                              id="clickable-nav-eresources"
+                              buttonStyle="primary"
+                            >
+                              <FormattedMessage id="ui-agreements.eresources" />
+                            </Button>
+                          </ButtonGroup>
+                        </IfEResourcesEnabled>
                         {/* TODO: Use forthcoming <SearchGroup> or similar component */}
                         <div className={css.searchGroupWrap}>
                           <FormattedMessage id="ui-agreements.agreements.searchInputLabel">

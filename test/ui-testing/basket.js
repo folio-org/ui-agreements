@@ -14,13 +14,13 @@ const BASKET = [];
 const shouldAddTitleToBasket = (nightmare, index, basket = BASKET) => {
   it(`should add title ${index} to basket`, done => {
     nightmare
-      .wait(`#list-agreements [aria-rowindex="${index + 1}"] a`)
-      .click(`#list-agreements [aria-rowindex="${index + 1}"] a`)
+      .wait(`#list-eresources [aria-rowindex="${index + 1}"]`)
+      .click(`#list-eresources [aria-rowindex="${index + 1}"]`)
       .waitUntilNetworkIdle(2000)
       .wait('[data-test-basket-add-button][data-test-add-title-to-basket]')
       .click('[data-test-basket-add-button][data-test-add-title-to-basket]')
       .evaluate((resourceIndex, CONSTANTS) => {
-        const selectedResourceNode = document.querySelector(`#list-agreements [aria-rowindex="${resourceIndex + 1}"] a`);
+        const selectedResourceNode = document.querySelector(`#list-eresources [aria-rowindex="${resourceIndex + 1}"]`);
         const name = selectedResourceNode.children[CONSTANTS.ERESOURCES_NAME_COLUMN].innerText;
         const type = selectedResourceNode.children[CONSTANTS.ERESOURCES_TYPE_COLUMN].innerText;
 
@@ -46,9 +46,9 @@ module.exports.shouldAddTitleToBasket = shouldAddTitleToBasket;
 const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = [], basket = BASKET) => {
   it(`should see ${basketIndices.length} lines with correct resources`, done => {
     nightmare
-      .wait('section#eresourcesAgreementLines')
+      .wait('#accordion-toggle-button-lines')
       .evaluate(() => {
-        const header = document.querySelector('section#eresourcesAgreementLines [class*=header] button');
+        const header = document.querySelector('#accordion-toggle-button-lines');
         if (!header) throw Error('Could not find Eresources accordion header');
 
         return header.getAttribute('aria-expanded');
@@ -57,7 +57,7 @@ const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = [], basket =
         let chain = nightmare;
         if (accordionExpanded === 'false') {
           chain = chain
-            .click('section#eresourcesAgreementLines [class*=header] button')
+            .click('#accordion-toggle-button-lines')
             .wait('#agreement-lines [class*=mclScrollable] [aria-rowindex]');
         }
 
@@ -121,8 +121,9 @@ module.exports.test = (uiTestCtx) => {
 
       it('should open eresources', done => {
         nightmare
-          .click('nav #eresources')
-          .wait('#input-eresource-search')
+          .waitUntilNetworkIdle(1000)
+          .click('#clickable-nav-eresources')
+          .waitUntilNetworkIdle(1000)
           .then(done)
           .catch(done);
       });
@@ -131,8 +132,8 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .wait('#input-eresource-search')
           .insert('#input-eresource-search', values.search)
-          .click('[data-test-search-and-sort-submit]')
-          .wait(1000)
+          .click('#clickable-search-eresources')
+          .waitUntilNetworkIdle(2000)
           .then(done)
           .catch(done);
       });
@@ -174,8 +175,8 @@ module.exports.test = (uiTestCtx) => {
           nightmare
             .click('#basket-contents [class*=mclScrollable] [aria-rowindex="3"] input[type=checkbox]')
             .click('[data-test-basket-create-agreement]')
-            .wait('#accordion-toggle-button-agreementFormLines')
-            .click('#accordion-toggle-button-agreementFormLines')
+            .wait('#accordion-toggle-button-formLines')
+            .click('#accordion-toggle-button-formLines')
 
             // Ensure two agreement lines (0 and 1) has been auto-added for the basket item
             .wait('#agreement-form-lines [data-test-ag-line-number="1"]')
@@ -183,7 +184,7 @@ module.exports.test = (uiTestCtx) => {
             .insert('#edit-agreement-name', values.agreementName)
             .insert('#edit-agreement-start-date', values.agreementStartDate)
             .type('#edit-agreement-status', values.agreementStatus)
-            .click('#clickable-createagreement')
+            .click('#clickable-create-agreement')
             .wait('[data-test-agreement-info]')
             .waitUntilNetworkIdle(2000)
             .then(done)
@@ -221,8 +222,13 @@ module.exports.test = (uiTestCtx) => {
         it(`should add first and third items to agreement: ${agreement.name}`, done => {
           nightmare
             .click('[data-test-open-basket-button]')
+
+            // Unselect the second item in the basket
+            .wait('#basket-contents [class*=mclScrollable] [aria-rowindex="3"] input[type=checkbox]')
+            .click('#basket-contents [class*=mclScrollable] [aria-rowindex="3"] input[type=checkbox]')
+
             .wait('#select-agreement-for-basket')
-            .wait(5000) // Wait for _all_ the agreements to come back
+            .waitUntilNetworkIdle(2000) // Wait for _all_ the agreements to come back
             .click('#select-agreement-for-basket')
             .insert('#sl-container-select-agreement-for-basket input', agreement.name)
             .wait(250)
@@ -231,14 +237,14 @@ module.exports.test = (uiTestCtx) => {
             .click('[data-test-basket-add-to-agreement]')
 
             .wait('#form-agreement')
-            .wait('#accordion-toggle-button-agreementFormLines')
-            .click('#accordion-toggle-button-agreementFormLines')
+            .wait('#accordion-toggle-button-formLines')
+            .click('#accordion-toggle-button-formLines')
 
             .wait(() => {
               const resources = document.querySelectorAll('#agreement-form-lines [data-test-ag-line-number]');
               return resources.length === 3;
             })
-            .click('#clickable-updateagreement')
+            .click('#clickable-update-agreement')
             .wait('[data-test-agreement-info]')
             .waitUntilNetworkIdle(2000) // Wait for the update list of agreement lines to fetch/render
             .then(done)

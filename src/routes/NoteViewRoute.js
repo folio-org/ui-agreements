@@ -45,10 +45,10 @@ class NoteViewRoute extends Component {
     return (
       <NoteViewPage
         entityTypeTranslationKeys={{
-          agreement: 'ui-agreements.notes.entityType.agreement',
+          agreement: 'ui-agreements.agreement',
         }}
         entityTypePluralizedTranslationKeys={{
-          agreement: 'ui-agreements.notes.entityType.agreement.pluralized',
+          agreement: 'ui-agreements.agreementPluralizable',
         }}
         navigateBack={this.navigateBack}
         onEdit={this.onEdit}

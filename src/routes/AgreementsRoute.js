@@ -158,7 +158,7 @@ class AgreementsRoute extends React.Component {
           renewalPriorityValues: get(resources, 'renewalPriorityValues.records', []),
           isPerpetualValues: get(resources, 'isPerpetualValues.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
-          tags: get(resources, 'tags.records', []),
+          tagsValues: get(resources, 'tagsValues.records', []),
         }}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}

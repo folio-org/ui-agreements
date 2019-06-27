@@ -25,7 +25,7 @@ export default class NoteCreateRoute extends Component {
       <NoteCreatePage
         referredEntityData={formatNoteReferrerEntityData(this.props.location.state)}
         entityTypeTranslationKeys={{
-          agreement: 'ui-agreements.notes.entityType.agreement',
+          agreement: 'ui-agreements.agreement',
         }}
         paneHeaderAppIcon="agreements"
         domain="agreements"
