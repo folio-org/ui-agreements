@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Button,
-} from '@folio/stripes/components';
+import { Button } from '@folio/stripes/components';
+import { stripesConnect } from '@folio/stripes/core';
 
 class AddToBasketButton extends React.Component {
   static manifest = Object.freeze({
@@ -92,4 +91,4 @@ class AddToBasketButton extends React.Component {
   }
 }
 
-export default AddToBasketButton;
+export default stripesConnect(AddToBasketButton);

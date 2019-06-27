@@ -7,7 +7,7 @@ const Utils = require('./utils');
 const checkTableForCustomCoverageIcon = (nightmare, done, tableId) => {
   nightmare
     .evaluate((id) => {
-      if (!document.querySelector(`#${id} [data-test-custom-coverage`)) {
+      if (!document.querySelector(`#${id} [data-test-custom-coverage]`)) {
         throw Error(`Failed to find custom coverage icon in "${id}" table.`);
       }
     }, tableId)
@@ -105,8 +105,9 @@ module.exports.test = (uiTestCtx) => {
 
       it('should open eresources', done => {
         nightmare
-          .click('nav #eresources')
-          .wait('#input-eresource-search')
+          .waitUntilNetworkIdle(1000)
+          .click('#clickable-nav-eresources')
+          .waitUntilNetworkIdle(1000)
           .then(done)
           .catch(done);
       });
@@ -138,13 +139,12 @@ module.exports.test = (uiTestCtx) => {
 
       it('should edit agreement and add custom coverage', done => {
         let chain = nightmare
-          .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
           .wait('[data-test-edit-agreement-info]')
           .waitUntilNetworkIdle(2000)
 
-          .click('#accordion-toggle-button-agreementFormLines');
+          .click('#accordion-toggle-button-formLines');
 
         values.coverage.forEach((coverage, i) => {
           chain = chain
@@ -158,9 +158,11 @@ module.exports.test = (uiTestCtx) => {
         });
 
         chain
-          .click('#clickable-updateagreement')
+          .click('#clickable-update-agreement')
           .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000)
+          .wait('#accordion-toggle-button-lines')
+          .click('#accordion-toggle-button-lines')
           .then(done)
           .catch(done);
       });
@@ -183,13 +185,12 @@ module.exports.test = (uiTestCtx) => {
 
       it('should edit agreement and see previously-set custom coverages', done => {
         nightmare
-          .click('[class*=paneHeader] [class*=dropdown] button')
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
           .wait('[data-test-edit-agreement-info]')
           .waitUntilNetworkIdle(2000)
 
-          .click('#accordion-toggle-button-agreementFormLines')
+          .click('#accordion-toggle-button-formLines')
 
           .evaluate((expectedValues) => {
             const checkInput = (id, value) => {
@@ -219,7 +220,7 @@ module.exports.test = (uiTestCtx) => {
       it('should follow agreement line\'s link to eresource', done => {
         nightmare
           .click('#agreement-form-lines [data-test-ag-line-name] a')
-          .wait('#eresource-agreements-list')
+          .wait('#eresource-agreements [role="row"]')
           .then(done)
           .catch(done);
       });
@@ -227,7 +228,7 @@ module.exports.test = (uiTestCtx) => {
       it('should find custom coverage info in "agreements for this eresource" list', done => {
         nightmare
           .evaluate((expectedValues) => {
-            const rows = [...document.querySelectorAll('#eresource-agreements-list [role="row"]')];
+            const rows = [...document.querySelectorAll('#eresource-agreements [role="row"]')];
             const row = rows.find(r => r.textContent.indexOf(expectedValues.name) > -1);
             if (!row) throw Error(`Failed to find agreement ${expectedValues.name} in list`);
 

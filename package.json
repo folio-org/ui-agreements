@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "2.5.0",
+  "version": "3.0.0",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -20,13 +20,13 @@
     "test-agreement-crud": "stripes test nightmare --run agreement-crud",
     "test-orgs": "stripes test nightmare --run orgs",
     "test-interfaces": "stripes test nightmare --run interfaces",
-    "test-tags-crud": "stripes test nightmare --run tags-crud",
-    "test-notes-crud": "stripes test nightmare --run notes-crud",
     "test-basket": "stripes test nightmare --run basket",
+    "test-tags-crud": "stripes test nightmare --run tags-crud",
     "test-external-licenses": "stripes test nightmare --run external-licenses",
     "test-custom-coverage": "stripes test nightmare --run custom-coverage",
     "test-hide-eresources-func": "stripes test nightmare --run hide-eresources-func",
     "test-supplement": "stripes test nightmare --run supplement",
+    "test-notes-crud": "stripes test nightmare --run notes-crud",
     "test-linked-licenses": "stripes test nightmare --run linked-licenses",
     "test-license-terms": "stripes test nightmare --run license-terms",
     "test-ekb-int": "stripes test nightmare --run ekb-int",
@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "@folio/stripes-erm-components": "^1.4.0",
+    "compose-function": "^3.0.3",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
     "query-string": "^6.6.0",
@@ -64,13 +65,16 @@
     "type": "app",
     "displayName": "ui-agreements.meta.title",
     "route": "/erm",
-    "home": "/erm/agreements?sort=Name&filters=agreementStatus.Requested,agreementStatus.In Negotiation,agreementStatus.Draft,agreementStatus.Active",
+    "home": "/erm/agreements",
     "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {
-      "configuration": "2.0",
+      "configuration": "5.0",
       "erm": "1.0",
-      "licenses": "1.0"
+      "invoice": "1.0",
+      "licenses": "1.0",
+      "orders": "6.0",
+      "users": "15.0"
     },
     "permissionSets": [
       {

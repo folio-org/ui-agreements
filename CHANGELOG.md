@@ -1,5 +1,10 @@
 # Change history for ui-agreements
 
+## 3.0.0 - IN PROGRESS
+* Refactored to use `SearchAndSortQuery`
+* Changed navigation between Agreements and E-Resources.
+* Changed various accordion IDs and tags.
+
 ## 2.5.0 - 2019-06-11
 * Added ability to manage Notes for Agreements.
 

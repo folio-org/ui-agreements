@@ -1,21 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Switch from 'react-router-dom/Switch';
-import Route from 'react-router-dom/Route';
-import ERM from './ERM';
-import Settings from './settings';
-import AgreementSearch from './routes/Agreements';
+import { Route } from '@folio/stripes/core';
+import { Layout } from '@folio/stripes/components';
 
-class UIAgreements extends React.Component {
+import IfEResourcesEnabled from './components/IfEResourcesEnabled';
+import OpenBasketButton from './components/OpenBasketButton';
+
+import AgreementsRoute from './routes/AgreementsRoute';
+import AgreementCreateRoute from './routes/AgreementCreateRoute';
+import AgreementEditRoute from './routes/AgreementEditRoute';
+import AgreementViewRoute from './routes/AgreementViewRoute';
+import BasketRoute from './routes/BasketRoute';
+import EResourcesRoute from './routes/EResourcesRoute';
+import NoteCreateRoute from './routes/NoteCreateRoute';
+import NoteEditRoute from './routes/NoteEditRoute';
+import NoteViewRoute from './routes/NoteViewRoute';
+
+import Settings from './settings';
+
+import css from './index.css';
+import EResourceViewRoute from './routes/EResourceViewRoute';
+
+class App extends React.Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     showSettings: PropTypes.bool,
     stripes: PropTypes.object.isRequired,
-  }
-
-  constructor(props) {
-    super(props);
-    this.connectedERM = props.stripes.connect(ERM);
   }
 
   render() {
@@ -23,16 +34,38 @@ class UIAgreements extends React.Component {
       return <Settings {...this.props} />;
     }
 
+    const { match: { path } } = this.props;
+
     return (
-      <Switch>
-        <Route
-          path={`${this.props.match.path}`}
-          render={() => <this.connectedERM {...this.props} />}
-        />
-      </Switch>
+      <div className={css.container}>
+        <IfEResourcesEnabled>
+          <Layout className={`${css.header} display-flex justify-end full padding-top-gutter padding-start-gutter padding-end-gutter`}>
+            <OpenBasketButton />
+          </Layout>
+        </IfEResourcesEnabled>
+        <div className={css.body}>
+          <Switch>
+            <Route path={`${path}/agreements/create`} component={AgreementCreateRoute} />
+            <Route path={`${path}/agreements/:id/edit`} component={AgreementEditRoute} />
+            <Route path={`${path}/agreements`} component={AgreementsRoute}>
+              <Route path={`${path}/agreements/:id`} component={AgreementViewRoute} />
+            </Route>
+
+            <Route path={`${path}/eresources`} component={EResourcesRoute}>
+              <Route path={`${path}/eresources/:id`} component={EResourceViewRoute} />
+            </Route>
+
+            <Route path={`${path}/notes/create`} component={NoteCreateRoute} />
+            <Route path={`${path}/notes/:id/edit`} component={NoteEditRoute} />
+            <Route path={`${path}/notes/:id`} component={NoteViewRoute} />
+
+            <Route path={`${path}/basket`} component={BasketRoute} />
+          </Switch>
+        </div>
+      </div>
     );
   }
 }
 
-export default UIAgreements;
-export { AgreementSearch };
+export default App;
+export { default as Agreements } from './components/views/Agreements';

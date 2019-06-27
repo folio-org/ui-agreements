@@ -21,7 +21,7 @@ const EDITED_DOC = {
 const DELETED_DOC = DOCS[1].name;
 
 const DOCS_FIELD_NAME = 'supplementaryDocs';
-const DOCS_FORM_NAME = 'agreementFormSupplementaryInfo';
+const DOCS_FORM_NAME = 'formSupplementaryInfo';
 
 module.exports.test = (uiTestCtx) => {
   Docs.test(

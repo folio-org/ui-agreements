@@ -1,13 +1,13 @@
 /* global describe, it, before, after, Nightmare */
 
 const getCreateAgreementUrl = ({ authority, referenceId }) => (
-  `/erm/agreements?layer=create&authority=${authority}&referenceId=${referenceId}`
+  `/erm/agreements/create?authority=${authority}&referenceId=${referenceId}`
 );
 
 const getEHoldingsUrl = ({ authority, referenceId }) => {
   if (authority === 'EKB-PACKAGE') return `/eholdings/packages/${referenceId}`;
   if (authority === 'EKB-TITLE') return `/eholdings/resources/${referenceId}`;
-}
+};
 
 module.exports.test = (uiTestCtx) => {
   describe('ui-agreements: eholdings integration', function test() {
@@ -15,7 +15,7 @@ module.exports.test = (uiTestCtx) => {
     const nightmare = new Nightmare(config.nightmare);
 
     console.log('\n    These tests require eHoldings installed and configured with EBSCO keys.');
-    console.log('    Ensure it is installed, running, and functional before expecting these tests to pass.')
+    console.log('    Ensure it is installed, running, and functional before expecting these tests to pass.');
 
     const resources = [{
       authority: 'EKB-PACKAGE',
@@ -23,7 +23,7 @@ module.exports.test = (uiTestCtx) => {
     }, {
       authority: 'EKB-TITLE',
       referenceId: '120853-2337939-11517622'
-    }]
+    }];
 
     const runValues = resources.map(resource => ({
       name: `EHoldings Agreement #${Math.round(Math.random() * 100000)}`,
@@ -35,7 +35,7 @@ module.exports.test = (uiTestCtx) => {
 
     this.timeout(Number(config.test_timeout));
 
-    describe(`create new agreements with authority/referenceId > check agreement lines`, () => {
+    describe('create new agreements with authority/referenceId > check agreement lines', () => {
       before((done) => {
         helpers.login(nightmare, config, done);
       });
@@ -62,10 +62,10 @@ module.exports.test = (uiTestCtx) => {
 
           it('should have auto-added agreement line with information', done => {
             nightmare
-              .click('#accordion-toggle-button-agreementFormLines')
+              .click('#accordion-toggle-button-formLines')
               .evaluate(expected => {
                 if (!document.querySelector('[data-test-ag-line-number]')) {
-                  throw Error(`Failed to find expected agreement line for "${expected.referenceId}".`)
+                  throw Error(`Failed to find expected agreement line for "${expected.referenceId}".`);
                 }
 
                 if (!document.querySelector('[data-test-ag-line-name]').textContent) {
@@ -94,7 +94,7 @@ module.exports.test = (uiTestCtx) => {
 
           it(`should create agreement ${values.name}`, done => {
             nightmare
-              .click('#clickable-createagreement')
+              .click('#clickable-create-agreement')
               .wait('[data-test-agreement-info]')
               .waitUntilNetworkIdle(2000)
               .then(done)
@@ -103,8 +103,8 @@ module.exports.test = (uiTestCtx) => {
 
           it('should have resource info in agreement lines list', done => {
             nightmare
-              .wait('#accordion-toggle-button-eresourcesAgreementLines')
-              .click('#accordion-toggle-button-eresourcesAgreementLines')
+              .wait('#accordion-toggle-button-lines')
+              .click('#accordion-toggle-button-lines')
               .evaluate(expected => {
                 const cells = [...document.querySelectorAll('#agreement-lines [aria-rowindex="2"] [role="gridcell"]')];
 
