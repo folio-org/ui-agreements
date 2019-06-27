@@ -8,7 +8,7 @@ import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 
 import LicensesFieldArray from '../LicensesFieldArray';
 
-export default class AgreementFormLicense extends React.Component {
+export default class FormLicenses extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       agreement: PropTypes.object,

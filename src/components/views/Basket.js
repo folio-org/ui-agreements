@@ -16,7 +16,7 @@ import {
 
 import BasketList from '../BasketList';
 
-export default class BasketRoute extends React.Component {
+export default class Basket extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       basket: PropTypes.array.isRequired,
