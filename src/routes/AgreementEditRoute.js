@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { cloneDeep, difference, get } from 'lodash';
+import { cloneDeep, difference, get, flatten } from 'lodash';
 import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
@@ -10,7 +10,7 @@ import View from '../components/views/AgreementForm';
 import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
 
-class AgreementCreateRoute extends React.Component {
+class AgreementEditRoute extends React.Component {
   static manifest = Object.freeze({
     agreement: {
       type: 'okapi',
@@ -33,6 +33,24 @@ class AgreementCreateRoute extends React.Component {
     contactRoleValues: {
       type: 'okapi',
       path: 'erm/refdataValues/InternalContact/role',
+      shouldRefresh: () => false,
+    },
+    externalAgreementLine: {
+      type: 'okapi',
+      path: 'erm/entitlements/external',
+      shouldRefresh: () => false,
+      params: {
+        authority: '?{authority}',
+        reference: '?{referenceId}',
+      },
+      throwErrors: false,
+    },
+    interfaces: {
+      type: 'okapi',
+      path: 'organizations-storage/interfaces',
+      records: 'interfaces',
+      accumulate: true,
+      fetch: false,
       shouldRefresh: () => false,
     },
     isPerpetualValues: {
@@ -87,12 +105,16 @@ class AgreementCreateRoute extends React.Component {
       query: PropTypes.shape({
         update: PropTypes.func.isRequired
       }).isRequired,
+      interfaces: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+      }),
       users: PropTypes.shape({
         GET: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
     resources: PropTypes.shape({
       agreement: PropTypes.object,
+      interfaces: PropTypes.object,
       orgRoleValues: PropTypes.object,
       statusValues: PropTypes.object,
       terms: PropTypes.object,
@@ -122,6 +144,11 @@ class AgreementCreateRoute extends React.Component {
     if (contacts.length) {
       this.fetchUsers(contacts);
     }
+
+    const orgs = get(this.props.resources, 'agreement.records[0].orgs', []);
+    if (orgs.length) {
+      this.fetchInterfaces(orgs);
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -130,8 +157,14 @@ class AgreementCreateRoute extends React.Component {
     const prevContacts = prevAgreement.contacts || [];
     const currContacts = currAgreement.contacts || [];
     const newContacts = difference(currContacts, prevContacts);
+    const prevOrgs = prevAgreement.orgs || [];
+    const currOrgs = currAgreement.orgs || [];
+    const newOrgs = difference(currOrgs, prevOrgs);
     if (prevAgreement.id !== currAgreement.id || newContacts.length) {
       this.fetchUsers(newContacts);
+    }
+    if (prevAgreement.id !== currAgreement.id || newOrgs.length) {
+      this.fetchInterfaces(newOrgs);
     }
   }
 
@@ -151,6 +184,19 @@ class AgreementCreateRoute extends React.Component {
     if (!query) return;
     this.props.mutator.users.GET({ params: { query } });
   }
+
+  fetchInterfaces = (newOrgs) => {
+    if (!this.props.stripes.hasInterface('organizations-storage.interfaces', '1.0')) return;
+    const orgs = newOrgs || get(this.props.resources, 'agreement.records[0].orgs', []);
+    const interfaces = flatten(orgs.map(o => get(o, 'org.orgsUuid_object.interfaces', [])));
+    const query = [
+      ...new Set(interfaces.map(i => `id==${i}`))
+    ].join(' or ');
+
+    if (!query) return;
+    this.props.mutator.interfaces.GET({ params: { query } });
+  }
+
 
   getInitialValues = () => {
     const { resources } = this.props;
@@ -172,7 +218,7 @@ class AgreementCreateRoute extends React.Component {
     initialValues.renewalPriority = renewalPriority.value;
     initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
     initialValues.linkedLicenses = linkedLicenses.map(l => ({ ...l, status: l.status.value }));
-    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role.value }));
+    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role && o.role.value }));
 
     const lines = get(resources, 'agreementLines.records', []);
     if (items.length && lines.length) {
@@ -242,6 +288,28 @@ class AgreementCreateRoute extends React.Component {
       .some(r => r.isPending);
   }
 
+  getRecord = (id, resourceType) => {
+    return get(this.props.resources, `${resourceType}.records`, [])
+      .find(i => i.id === id);
+  }
+
+  getOrgs = () => {
+    const { resources } = this.props;
+    const agreement = get(resources, 'agreement.records[0]', {
+      orgs: [],
+    });
+
+    const orgs = agreement.orgs.map(o => ({
+      ...o,
+      interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
+        .map(id => this.getRecord(id, 'interfaces') || id)
+    }));
+
+    return {
+      orgs,
+    };
+  }
+
   render() {
     const { handlers, resources } = this.props;
 
@@ -250,6 +318,7 @@ class AgreementCreateRoute extends React.Component {
     return (
       <View
         data={{
+          orgs: this.getOrgs(),
           agreementLines: this.getAgreementLines(),
           agreementLinesToAdd: this.getAgreementLinesToAdd(),
           agreementStatusValues: get(resources, 'agreementStatusValues.records', []),
@@ -277,4 +346,4 @@ class AgreementCreateRoute extends React.Component {
 export default compose(
   withFileHandlers,
   stripesConnect
-)(AgreementCreateRoute);
+)(AgreementEditRoute);
