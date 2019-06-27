@@ -35,16 +35,6 @@ class AgreementEditRoute extends React.Component {
       path: 'erm/refdataValues/InternalContact/role',
       shouldRefresh: () => false,
     },
-    externalAgreementLine: {
-      type: 'okapi',
-      path: 'erm/entitlements/external',
-      shouldRefresh: () => false,
-      params: {
-        authority: '?{authority}',
-        reference: '?{referenceId}',
-      },
-      throwErrors: false,
-    },
     interfaces: {
       type: 'okapi',
       path: 'organizations-storage/interfaces',
@@ -318,7 +308,6 @@ class AgreementEditRoute extends React.Component {
     return (
       <View
         data={{
-          orgs: this.getOrgs(),
           agreementLines: this.getAgreementLines(),
           agreementLinesToAdd: this.getAgreementLinesToAdd(),
           agreementStatusValues: get(resources, 'agreementStatusValues.records', []),
@@ -328,6 +317,7 @@ class AgreementEditRoute extends React.Component {
           isPerpetualValues: get(resources, 'isPerpetualValues.records', []),
           licenseLinkStatusValues: get(resources, 'licenseLinkStatusValues.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
+          orgs: this.getOrgs(),
           renewalPriorityValues: get(resources, 'renewalPriorityValues.records', []),
           users: get(resources, 'users.records', []),
         }}
