@@ -6,7 +6,7 @@ import { FieldArray } from 'redux-form';
 import { Accordion } from '@folio/stripes/components';
 import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 
-export default class AgreementFormSupplementaryInfo extends React.Component {
+export default class FormSupplementaryInfo extends React.Component {
   static propTypes = {
     handlers: PropTypes.shape({
       onDownloadFile: PropTypes.func.isRequired,

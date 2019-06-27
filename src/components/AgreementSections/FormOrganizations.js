@@ -6,7 +6,7 @@ import { FieldArray } from 'redux-form';
 import { Accordion } from '@folio/stripes/components';
 import { OrganizationsFieldArray } from '@folio/stripes-erm-components';
 
-export default class AgreementFormOrganizations extends React.Component {
+export default class FormOrganizations extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       orgRoleValues: PropTypes.array,

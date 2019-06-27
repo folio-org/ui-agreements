@@ -10,7 +10,7 @@ import {
   Selection,
 } from '@folio/stripes/components';
 
-export default class BasketSelectorDisplay extends React.Component {
+export default class BasketSelector extends React.Component {
   static propTypes = {
     addButtonLabel: PropTypes.node,
     basket: PropTypes.arrayOf(PropTypes.object),

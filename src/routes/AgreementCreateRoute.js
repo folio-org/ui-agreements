@@ -10,7 +10,7 @@ import View from '../components/views/AgreementForm';
 import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
 
-class AgreementCreateRoute extends React.Component {
+class AgreementEditRoute extends React.Component {
   static manifest = Object.freeze({
     agreements: {
       type: 'okapi',
@@ -187,4 +187,4 @@ class AgreementCreateRoute extends React.Component {
 export default compose(
   withFileHandlers,
   stripesConnect
-)(AgreementCreateRoute);
+)(AgreementEditRoute);

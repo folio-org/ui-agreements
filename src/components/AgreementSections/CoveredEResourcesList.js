@@ -9,7 +9,7 @@ import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
 
-export default class EresourcesCovered extends React.Component {
+export default class CoveredEResourcesList extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
       eresources: PropTypes.arrayOf(PropTypes.object),

@@ -168,7 +168,7 @@ export default class EResources extends React.Component {
 
   renderResultsPaneSubtitle = (source) => {
     if (source && source.loaded()) {
-      const count = source ? source.totalCount() : 0;
+      const count = source.totalCount();
       return <FormattedMessage id="stripes-smart-components.searchResultsCountHeader" values={{ count }} />;
     }
 

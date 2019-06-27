@@ -12,7 +12,7 @@ import EResourceProvider from '../EResourceProvider';
 import EResourceType from '../EResourceType';
 import { getResourceFromEntitlement } from '../utilities';
 
-export default class Lines extends React.Component {
+export default class LinesList extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
       lines: PropTypes.arrayOf(PropTypes.object),
