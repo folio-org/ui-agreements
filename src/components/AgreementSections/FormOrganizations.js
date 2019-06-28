@@ -9,7 +9,6 @@ export default class FormOrganizations extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       orgRoleValues: PropTypes.array,
-      orgs: PropTypes.object,
     }),
     id: PropTypes.string,
     onToggle: PropTypes.func,

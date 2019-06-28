@@ -236,19 +236,6 @@ class AgreementEditRoute extends React.Component {
     ];
   }
 
-  getOrgs = () => {
-    const { resources } = this.props;
-    const agreement = get(resources, 'agreement.records[0]', {
-      orgs: [],
-    });
-
-    const orgs = agreement.orgs.map(o => ({
-      ...o,
-    }));
-
-    return orgs;
-  }
-
   fetchIsPending = () => {
     return Object.values(this.props.resources)
       .filter(r => r && r.resource !== 'agreements')
@@ -272,7 +259,6 @@ class AgreementEditRoute extends React.Component {
           isPerpetualValues: get(resources, 'isPerpetualValues.records', []),
           licenseLinkStatusValues: get(resources, 'licenseLinkStatusValues.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
-          orgs: this.getOrgs(),
           renewalPriorityValues: get(resources, 'renewalPriorityValues.records', []),
           users: get(resources, 'users.records', []),
         }}
