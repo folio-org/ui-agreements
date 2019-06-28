@@ -92,8 +92,9 @@ module.exports.test = (uiTestCtx) => {
           .wait('[data-test-find-interfaces-modal]')
           .wait('#input-interface-search')
           .type('#input-interface-search', interfaceName)
-          .click('#clickable-search-agreements')
-          .waitUntilNetworkIdle(1000)
+          .wait('[data-test-search-and-sort-submit]')
+          .click('[data-test-search-and-sort-submit]')
+          .waitUntilNetworkIdle(2000)
           .wait('[data-test-find-interfaces-modal-save]')
           .click('[data-test-find-interfaces-modal-save]')
           .wait('#clickable-create-organization')
@@ -151,7 +152,8 @@ module.exports.test = (uiTestCtx) => {
           .click(`#orgs-nameOrg-${row}-search-button`)
           .wait('#input-organization-search')
           .type('#input-organization-search', orgName)
-          .click('#clickable-search-agreements')
+          .wait('[data-test-search-and-sort-submit]')
+          .click('[data-test-search-and-sort-submit]')
           .waitUntilNetworkIdle(1000)
           .evaluate((name) => {
             const nameElements = [...document.querySelectorAll('div[role="gridcell"]')];
@@ -267,6 +269,99 @@ module.exports.test = (uiTestCtx) => {
           .then(done)
           .catch(done);
       });
+
+      it('should navigate to Edit Agreement page', done => {
+        nightmare
+          .wait('#clickable-edit-agreement')
+          .click('#clickable-edit-agreement')
+          .waitUntilNetworkIdle(2000)
+          .wait('#accordion-toggle-button-formOrganizations')
+          .click('#accordion-toggle-button-formOrganizations')
+          .then(done)
+          .catch(done);
+      });
+
+      it(`should find "${org.name}" in Organizations list with role ${org.role}`, done => {
+        nightmare
+          .evaluate((org, name) => {
+            const rows = [...document.querySelectorAll('[data-test-organizations-org]')].map(e => e.textContent);
+            const row = rows.find(r => r.indexOf(name) >= 0);
+            if (!row) {
+              throw Error(`Could not find row with an org named ${name}`);
+            }
+            if (row.indexOf(org.role) < 0) {
+              throw Error(`Expected row for "${name}" to contain role ${org.role}.`);
+            }
+          }, org, orgName)
+          .then(done)
+          .catch(done);
+      });
+
+      it(`should find "${interfaceName}" in interface list`, done => {
+        nightmare
+          .evaluate(interfaceName => {
+            const interfaceElements = [...document.querySelectorAll('#formOrganizations div[role="gridcell"]')];
+            const interfaceFound = interfaceElements.find(e => e.textContent === interfaceName);
+            if (!interfaceFound) {
+              throw Error(`Could not find row with an interface named ${interfaceName}`);
+            }
+          }, interfaceName)
+          .then(done)
+          .catch(done);
+      });
+
+      it(`should find username "${username}"`, done => {
+        nightmare
+          .evaluate(username => {
+            const usernameElements = [...document.querySelectorAll('#formOrganizations div[role="gridcell"]')];
+            const usernameFound = usernameElements.find(e => e.textContent === username);
+            if (!usernameFound) {
+              throw Error(`Could not find row with username ${username}`);
+            }
+          }, username)
+          .then(done)
+          .catch(done);
+      });
+
+      it(`should find password "${password}"`, done => {
+        nightmare
+          .evaluate(password => {
+            const passwordElements = [...document.querySelectorAll('#formOrganizations div[role="gridcell"]')];
+            const passwordFound = passwordElements.find(e => e.textContent === password);
+            if (!passwordFound) {
+              throw Error(`Could not find row with password ${password}`);
+            }
+          }, password)
+          .then(done)
+          .catch(done);
+      });
+
+      it(`should find uri "${uri}"`, done => {
+        nightmare
+          .evaluate(uri => {
+            const uriElements = [...document.querySelectorAll('#formOrganizations span a')];
+            const uriFound = uriElements.find(e => e.attributes.href.nodeValue === uri);
+            if (!uriFound) {
+              throw Error(`Could not find row with uri ${uri}`);
+            }
+          }, uri)
+          .then(done)
+          .catch(done);
+      });
+
+      it(`should find notes "${notes}"`, done => {
+        nightmare
+          .evaluate(notes => {
+            const notesElements = [...document.querySelectorAll('#formOrganizations div[role="gridcell"]')];
+            const notesFound = notesElements.find(e => e.textContent === notes);
+            if (!notesFound) {
+              throw Error(`Could not find row with notes ${notes}`);
+            }
+          }, notes)
+          .then(done)
+          .catch(done);
+      });
+
     });
   });
 };
