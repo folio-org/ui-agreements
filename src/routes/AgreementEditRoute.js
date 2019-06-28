@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { cloneDeep, difference, get, flatten } from 'lodash';
+import { cloneDeep, difference, get } from 'lodash';
 import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
@@ -33,14 +33,6 @@ class AgreementEditRoute extends React.Component {
     contactRoleValues: {
       type: 'okapi',
       path: 'erm/refdataValues/InternalContact/role',
-      shouldRefresh: () => false,
-    },
-    interfaces: {
-      type: 'okapi',
-      path: 'organizations-storage/interfaces',
-      records: 'interfaces',
-      accumulate: true,
-      fetch: false,
       shouldRefresh: () => false,
     },
     isPerpetualValues: {
@@ -95,16 +87,12 @@ class AgreementEditRoute extends React.Component {
       query: PropTypes.shape({
         update: PropTypes.func.isRequired
       }).isRequired,
-      interfaces: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
-      }),
       users: PropTypes.shape({
         GET: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
     resources: PropTypes.shape({
       agreement: PropTypes.object,
-      interfaces: PropTypes.object,
       orgRoleValues: PropTypes.object,
       statusValues: PropTypes.object,
       terms: PropTypes.object,
@@ -134,11 +122,6 @@ class AgreementEditRoute extends React.Component {
     if (contacts.length) {
       this.fetchUsers(contacts);
     }
-
-    const orgs = get(this.props.resources, 'agreement.records[0].orgs', []);
-    if (orgs.length) {
-      this.fetchInterfaces(orgs);
-    }
   }
 
   componentDidUpdate(prevProps) {
@@ -147,14 +130,8 @@ class AgreementEditRoute extends React.Component {
     const prevContacts = prevAgreement.contacts || [];
     const currContacts = currAgreement.contacts || [];
     const newContacts = difference(currContacts, prevContacts);
-    const prevOrgs = prevAgreement.orgs || [];
-    const currOrgs = currAgreement.orgs || [];
-    const newOrgs = difference(currOrgs, prevOrgs);
     if (prevAgreement.id !== currAgreement.id || newContacts.length) {
       this.fetchUsers(newContacts);
-    }
-    if (prevAgreement.id !== currAgreement.id || newOrgs.length) {
-      this.fetchInterfaces(newOrgs);
     }
   }
 
@@ -174,19 +151,6 @@ class AgreementEditRoute extends React.Component {
     if (!query) return;
     this.props.mutator.users.GET({ params: { query } });
   }
-
-  fetchInterfaces = (newOrgs) => {
-    if (!this.props.stripes.hasInterface('organizations-storage.interfaces', '1.0')) return;
-    const orgs = newOrgs || get(this.props.resources, 'agreement.records[0].orgs', []);
-    const interfaces = flatten(orgs.map(o => get(o, 'org.orgsUuid_object.interfaces', [])));
-    const query = [
-      ...new Set(interfaces.map(i => `id==${i}`))
-    ].join(' or ');
-
-    if (!query) return;
-    this.props.mutator.interfaces.GET({ params: { query } });
-  }
-
 
   getInitialValues = () => {
     const { resources } = this.props;
@@ -272,17 +236,6 @@ class AgreementEditRoute extends React.Component {
     ];
   }
 
-  fetchIsPending = () => {
-    return Object.values(this.props.resources)
-      .filter(r => r && r.resource !== 'agreements')
-      .some(r => r.isPending);
-  }
-
-  getRecord = (id, resourceType) => {
-    return get(this.props.resources, `${resourceType}.records`, [])
-      .find(i => i.id === id);
-  }
-
   getOrgs = () => {
     const { resources } = this.props;
     const agreement = get(resources, 'agreement.records[0]', {
@@ -291,13 +244,15 @@ class AgreementEditRoute extends React.Component {
 
     const orgs = agreement.orgs.map(o => ({
       ...o,
-      interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
-        .map(id => this.getRecord(id, 'interfaces') || id)
     }));
 
-    return {
-      orgs,
-    };
+    return orgs;
+  }
+
+  fetchIsPending = () => {
+    return Object.values(this.props.resources)
+      .filter(r => r && r.resource !== 'agreements')
+      .some(r => r.isPending);
   }
 
   render() {
