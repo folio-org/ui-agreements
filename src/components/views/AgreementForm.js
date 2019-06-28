@@ -33,6 +33,7 @@ import css from './AgreementForm.css';
 
 class AgreementForm extends React.Component {
   static propTypes = {
+    change: PropTypes.func,
     data: PropTypes.shape({
       agreementLines: PropTypes.array.isRequired,
     }).isRequired,

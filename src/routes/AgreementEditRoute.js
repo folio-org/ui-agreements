@@ -10,7 +10,7 @@ import View from '../components/views/AgreementForm';
 import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
 
-class AgreementCreateRoute extends React.Component {
+class AgreementEditRoute extends React.Component {
   static manifest = Object.freeze({
     agreement: {
       type: 'okapi',
@@ -172,7 +172,7 @@ class AgreementCreateRoute extends React.Component {
     initialValues.renewalPriority = renewalPriority.value;
     initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
     initialValues.linkedLicenses = linkedLicenses.map(l => ({ ...l, status: l.status.value }));
-    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role.value }));
+    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role && o.role.value }));
 
     const lines = get(resources, 'agreementLines.records', []);
     if (items.length && lines.length) {
@@ -277,4 +277,4 @@ class AgreementCreateRoute extends React.Component {
 export default compose(
   withFileHandlers,
   stripesConnect
-)(AgreementCreateRoute);
+)(AgreementEditRoute);
