@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'redux-form';
-
 import { Accordion } from '@folio/stripes/components';
 import { OrganizationsFieldArray } from '@folio/stripes-erm-components';
 
@@ -18,7 +17,6 @@ export default class FormOrganizations extends React.Component {
 
   render() {
     const { data, id, onToggle, open } = this.props;
-
     return (
       <Accordion
         id={id}

@@ -47,6 +47,9 @@ export default class Organizations extends React.Component {
         <Card
           data-test-organizations-org
           key={`${org.orgsUuid}-${role.value}`}
+          cardStyle="positive"
+          hasMargin
+          roundedBorder
           headerStart={
             <span>
               <AppIcon
