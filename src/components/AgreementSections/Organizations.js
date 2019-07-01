@@ -59,7 +59,7 @@ export default class Organizations extends React.Component {
             </span>
           }
           interfaces={interfaces}
-        />  
+        />
       );
     });
   }
