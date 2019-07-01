@@ -3,14 +3,11 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
-
+import { OrganizationCard } from '@folio/stripes-erm-components';
 import {
   Accordion,
   Badge,
-  Card,
-  Icon,
   Layout,
-  MultiColumnList
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
@@ -44,12 +41,10 @@ export default class Organizations extends React.Component {
       if (!org || !role) return null;
 
       return (
-        <Card
+        <OrganizationCard
           data-test-organizations-org
           key={`${org.orgsUuid}-${role.value}`}
           cardStyle="positive"
-          hasMargin
-          roundedBorder
           headerStart={
             <span>
               <AppIcon
@@ -63,42 +58,8 @@ export default class Organizations extends React.Component {
               {` · ${role.label}`}
             </span>
           }
-        >
-          {interfaces.length && typeof interfaces[0] === 'object' ?
-            <MultiColumnList
-              columnMapping={{
-                name: <FormattedMessage id="ui-agreements.interface.name" />,
-                username: <FormattedMessage id="ui-agreements.interface.username" />,
-                password: <FormattedMessage id="ui-agreements.interface.password" />,
-                type: <FormattedMessage id="ui-agreements.interface.type" />,
-                notes: <FormattedMessage id="ui-agreements.interface.notes" />,
-              }}
-              columnWidths={{
-                name: 150,
-                notes: 250,
-                username: 130,
-                password: 130,
-                type: 150,
-              }}
-              contentData={interfaces}
-              formatter={{
-                name: item => (
-                  <span>
-                    {item.name}
-                    <a href={item.uri}>
-                      <Icon icon="external-link" iconPosition="end" />
-                    </a>
-                  </span>
-                ),
-                notes: item => get(item, 'notes'),
-                username: item => get(item, 'username'),
-                password: item => get(item, 'password'),
-                type: item => get(item, 'type').join(', '),
-              }}
-              interactive={false}
-              visibleColumns={['name', 'username', 'password', 'type', 'notes']}
-            /> : <FormattedMessage id="ui-agreements.interface.notFound" />}
-        </Card>
+          interfaces={interfaces}
+        />  
       );
     });
   }
@@ -114,7 +75,6 @@ export default class Organizations extends React.Component {
 
   render() {
     const { agreement: { orgs = [] }, id, open, onToggle } = this.props;
-
     return (
       <Accordion
         id={id}
