@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { OrganizationCard } from '@folio/stripes-erm-components';
+import { ViewOrganizationCard } from '@folio/stripes-erm-components';
 import {
   Accordion,
   Badge,
@@ -41,10 +41,9 @@ export default class Organizations extends React.Component {
       if (!org || !role) return null;
 
       return (
-        <OrganizationCard
+        <ViewOrganizationCard
           data-test-organizations-org
           key={`${org.orgsUuid}-${role.value}`}
-          cardStyle="positive"
           headerStart={
             <span>
               <AppIcon
@@ -59,7 +58,7 @@ export default class Organizations extends React.Component {
             </span>
           }
           interfaces={interfaces}
-        />  
+        />
       );
     });
   }
