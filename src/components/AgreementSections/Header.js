@@ -56,7 +56,7 @@ export default class Header extends React.Component {
           </KeyValue>
         </Col>
         <Col xs={2}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.agreements.vendorInfo.status" />}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}>
             <div data-test-agreement-status>
               {get(agreement, 'agreementStatus.label', '-')}
             </div>
