@@ -9,6 +9,11 @@ import {
   urls,
 } from '../components/utilities';
 
+import {
+  entityTypeTranslationKeys,
+  entityTypePluralizedTranslationKeys,
+} from '../constants';
+
 class NoteViewRoute extends Component {
   static propTypes = {
     history: ReactRouterPropTypes.history.isRequired,
@@ -44,12 +49,8 @@ class NoteViewRoute extends Component {
 
     return (
       <NoteViewPage
-        entityTypeTranslationKeys={{
-          agreement: 'ui-agreements.agreement',
-        }}
-        entityTypePluralizedTranslationKeys={{
-          agreement: 'ui-agreements.agreementPluralizable',
-        }}
+        entityTypeTranslationKeys={entityTypeTranslationKeys}
+        entityTypePluralizedTranslationKeys={entityTypePluralizedTranslationKeys}
         navigateBack={this.navigateBack}
         onEdit={this.onEdit}
         paneHeaderAppIcon="agreement"
