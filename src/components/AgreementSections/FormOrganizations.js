@@ -17,6 +17,7 @@ export default class FormOrganizations extends React.Component {
 
   render() {
     const { data, id, onToggle, open } = this.props;
+    const addOrganizationBtnLabel = <FormattedMessage id="ui-agreements.organizations.addOrganizationToAgreement" />;
     return (
       <Accordion
         id={id}
@@ -27,6 +28,7 @@ export default class FormOrganizations extends React.Component {
         <FieldArray
           name="orgs"
           component={OrganizationsFieldArray}
+          addOrganizationBtnLabel={addOrganizationBtnLabel}
           roles={data.orgRoleValues}
         />
       </Accordion>
