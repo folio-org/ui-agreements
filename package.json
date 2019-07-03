@@ -27,6 +27,8 @@
     "test-hide-eresources-func": "stripes test nightmare --run hide-eresources-func",
     "test-supplement": "stripes test nightmare --run supplement",
     "test-notes-crud": "stripes test nightmare --run notes-crud",
+    "test-package-notes": "stripes test nightmare --run package-notes",
+    "test-title-notes": "stripes test nightmare --run title-notes",
     "test-linked-licenses": "stripes test nightmare --run linked-licenses",
     "test-license-terms": "stripes test nightmare --run license-terms",
     "test-ekb-int": "stripes test nightmare --run ekb-int",
