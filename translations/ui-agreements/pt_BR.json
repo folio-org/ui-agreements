@@ -187,5 +187,6 @@
     "agreements.selectIsPerpetual": "Selecione a perpetuidade do contrato",
     "agreements.closeEdit": "Fechar edição de contrato",
     "eresources.packageResources": "E-recursos no pacote",
-    "finances.none": "O contrato não tem linhas de pedido."
+    "finances.none": "O contrato não tem linhas de pedido.",
+    "organizations.addOrganizationToAgreement": "Adicionar organização ao contrato"
 }

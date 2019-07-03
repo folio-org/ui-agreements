@@ -187,5 +187,6 @@
     "agreements.selectIsPerpetual": "Select agreement perpetuity",
     "agreements.closeEdit": "Close edit agreement",
     "eresources.packageResources": "E-resources in package",
-    "finances.none": "Agreement has no order lines."
+    "finances.none": "Agreement has no order lines.",
+    "organizations.addOrganizationToAgreement": "Add organization to agreement"
 }
