@@ -42,7 +42,7 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
       .click('#accordion-toggle-button-formLines')
       .click('#add-agreement-line-button')
       .click('#basket-selector')
-      .click(`[id*=${resourceId}]`)
+      .click(`[id*="${resourceId}"]`)
       .click('#basket-selector-add-button')
       .wait(1000);
   }
