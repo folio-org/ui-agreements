@@ -56,7 +56,6 @@ export default class AgreementLineField extends React.Component {
   renderPOLineField = () => {
     const { index, input: { name } } = this.props;
 
-
     return (
       <Field
         component={POLineField}
@@ -141,8 +140,6 @@ export default class AgreementLineField extends React.Component {
               this.renderLineResource() :
               this.renderLineSelector()
           }
-          { /* TODO: REMOVE THIS} */ }
-          {this.renderPOLineField()}
         </React.Fragment>
       </EditCard>
     );

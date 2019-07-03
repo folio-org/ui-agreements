@@ -11,9 +11,6 @@ export default class POLineField extends React.Component {
     input: PropTypes.shape({
       onChange: PropTypes.func.isRequired,
     }).isRequired,
-    meta: PropTypes.shape({
-
-    }).isRequired,
   }
 
   state = {
@@ -27,7 +24,7 @@ export default class POLineField extends React.Component {
 
   handlePOLineUnselected = () => {
     this.props.input.onChange(null);
-    this.setState({ poLine: undefined })
+    this.setState({ poLine: undefined });
   }
 
   renderLinkPOLineButton = () => (
