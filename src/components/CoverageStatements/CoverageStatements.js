@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedDate, FormattedMessage } from 'react-intl';
-
+import { FormattedMessage } from 'react-intl';
 import { Icon, Layout } from '@folio/stripes/components';
+
+import FormattedUTCDate from '../FormattedUTCDate';
 
 export default class CoverageStatements extends React.Component {
   static propTypes = {
@@ -45,7 +46,7 @@ export default class CoverageStatements extends React.Component {
 
     return (
       <React.Fragment>
-        { date ? <div data-test-date={date}><FormattedDate value={date} /></div> : null }
+        { date ? <div data-test-date={date}><FormattedUTCDate value={date} /></div> : null }
         <div
           data-test-issue={issue}
           data-test-volume={volume}

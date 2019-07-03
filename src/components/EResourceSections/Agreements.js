@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { Link } from 'react-router-dom';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { Badge, Headline, MultiColumnList } from '@folio/stripes/components';
 import { Spinner } from '@folio/stripes-erm-components';
@@ -11,6 +11,7 @@ import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import EResourceType from '../EResourceType';
+import FormattedUTCDate from '../FormattedUTCDate';
 import { getResourceFromEntitlement, urls } from '../utilities';
 
 export default class Agreements extends React.Component {
@@ -32,8 +33,8 @@ export default class Agreements extends React.Component {
         formatter={{
           name: ({ owner }) => <Link to={urls.agreementView(owner.id)}>{owner.name}</Link>,
           type: ({ owner }) => get(owner, 'agreementStatus.label', ''),
-          startDate: ({ owner }) => owner.startDate && <FormattedDate value={owner.startDate} />,
-          endDate: ({ owner }) => owner.endDate && <FormattedDate value={owner.endDate} />,
+          startDate: ({ owner }) => owner.startDate && <FormattedUTCDate value={owner.startDate} />,
+          endDate: ({ owner }) => owner.endDate && <FormattedUTCDate value={owner.endDate} />,
           package: (line) => <EResourceLink eresource={getResourceFromEntitlement(line)} />,
           acqMethod: ({ resource }) => <EResourceType resource={resource} />,
           coverage: line => <CoverageStatements statements={line.coverage} />,
