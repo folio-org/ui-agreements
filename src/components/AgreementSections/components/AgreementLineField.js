@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { FieldArray } from 'redux-form';
+import { Field, FieldArray } from 'redux-form';
 
 import { Col, KeyValue, Row } from '@folio/stripes/components';
 import { EditCard } from '@folio/stripes-erm-components';
@@ -15,6 +15,7 @@ import EResourceType from '../../EResourceType';
 import { isExternal, isPackage } from '../../utilities';
 
 import CustomCoverageFieldArray from './CustomCoverageFieldArray';
+import POLineField from './POLineField';
 
 export default class AgreementLineField extends React.Component {
   static propTypes = {
@@ -52,7 +53,20 @@ export default class AgreementLineField extends React.Component {
     return <EResourceProvider resource={resource} />;
   }
 
-  renderCustomCoverageSelector = () => {
+  renderPOLineField = () => {
+    const { index, input: { name } } = this.props;
+
+
+    return (
+      <Field
+        component={POLineField}
+        index={index}
+        name={`${name}.poLineId`}
+      />
+    );
+  }
+
+  renderCustomCoverageFieldArray = () => {
     const { input: { name }, resource } = this.props;
 
     if (isPackage(resource)) return null;
@@ -93,7 +107,8 @@ export default class AgreementLineField extends React.Component {
             </KeyValue>
           </Col>
         </Row>
-        {this.renderCustomCoverageSelector()}
+        {this.renderPOLineField()}
+        {this.renderCustomCoverageFieldArray()}
       </div>
     );
   }
@@ -126,6 +141,8 @@ export default class AgreementLineField extends React.Component {
               this.renderLineResource() :
               this.renderLineSelector()
           }
+          { /* TODO: REMOVE THIS} */ }
+          {this.renderPOLineField()}
         </React.Fragment>
       </EditCard>
     );
