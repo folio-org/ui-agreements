@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   Button,
@@ -15,6 +15,7 @@ import {
 } from '@folio/stripes/components';
 
 import BasketList from '../BasketList';
+import FormattedUTCDate from '../FormattedUTCDate';
 
 export default class Basket extends React.Component {
   static propTypes = {
@@ -159,7 +160,7 @@ export default class Basket extends React.Component {
                     >
                       <Headline bold>{option.name}&nbsp;&#40;{option.agreementStatus.label}&#41;</Headline>{/* eslint-disable-line */}
                       <div>
-                        <strong><FormattedMessage id="ui-agreements.agreements.startDate" />: </strong><FormattedDate value={option.startDate} /> {/* eslint-disable-line */}
+                        <strong><FormattedMessage id="ui-agreements.agreements.startDate" />: </strong><FormattedUTCDate value={option.startDate} /> {/* eslint-disable-line */}
                       </div>
                     </div>
                   )}

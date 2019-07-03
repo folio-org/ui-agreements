@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
 import { get, noop } from 'lodash';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   MultiColumnList,
@@ -24,6 +24,7 @@ import {
 } from '@folio/stripes/smart-components';
 
 import AgreementFilters from '../AgreementFilters';
+import FormattedUTCDate from '../FormattedUTCDate';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
 import { urls } from '../utilities';
 import css from './Agreements.css';
@@ -89,9 +90,9 @@ export default class Agreements extends React.Component {
 
   formatter = {
     agreementStatus: a => get(a, 'agreementStatus.label'),
-    startDate: a => a.startDate && <FormattedDate value={a.startDate} />,
-    endDate: a => a.endDate && <FormattedDate value={a.endDate} />,
-    cancellationDeadline: a => a.cancellationDeadline && <FormattedDate value={a.cancellationDeadline} />,
+    startDate: a => a.startDate && <FormattedUTCDate value={a.startDate} />,
+    endDate: a => a.endDate && <FormattedUTCDate value={a.endDate} />,
+    cancellationDeadline: a => a.cancellationDeadline && <FormattedUTCDate value={a.cancellationDeadline} />,
   }
 
   rowFormatter = (row) => {
