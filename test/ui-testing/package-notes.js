@@ -1,8 +1,7 @@
 const Pkg = require('./er-notes');
 
 const PKG = {
-  name: 'K-Int Test Package 001',
-  type: 'Package',
+  isPackage: true,
 };
 
 module.exports.test = (uiTestCtx) => {

@@ -1,8 +1,7 @@
 const Title = require('./er-notes');
 
 const TITLE = {
-  name: '21 for 21',
-  type: 'Book',
+  isPackage: false,
 };
 
 module.exports.test = (uiTestCtx) => {

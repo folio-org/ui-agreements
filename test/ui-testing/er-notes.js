@@ -1,5 +1,4 @@
 /* global describe, it, before, after, Nightmare */
-// const AgreementCRUD = require('./agreement-crud');
 
 module.exports.test = (uiTestCtx, { eresource }) => {
   //  const number = Math.round(Math.random() * 100000);
@@ -69,7 +68,7 @@ module.exports.test = (uiTestCtx, { eresource }) => {
       });
 
 
-      it(`should search for ${eresource.type} "${eresource.name}"`, done => {
+      /* it(`should search for ${eresource.type} "${eresource.name}"`, done => {
         nightmare
           .click('#clickable-reset-all')
           .waitUntilNetworkIdle(2000)
@@ -79,9 +78,33 @@ module.exports.test = (uiTestCtx, { eresource }) => {
           .waitUntilNetworkIdle(2000)
           .then(done)
           .catch(done);
+      }); */
+
+      it('should use "Is package" filter', done => {
+        //  debug
+        console.log(`\t"Is Package" is ${eresource.isPackage}`);
+        let chain = nightmare;
+        if (eresource.isPackage === true) {
+          chain = chain.click('#clickable-filter-class-package');
+        } else {
+          chain = chain.click('#clickable-filter-class-nopackage');
+        }
+        chain
+          .waitUntilNetworkIdle(2000)
+          .then(done)
+          .catch(done);
       });
 
-      it(`should add a new note "${testNote}" to ${eresource.type} "${eresource.name}"`, done => {
+      it('should select first eresource in list', done => {
+        nightmare
+          .wait('#list-eresources')
+          .click('#list-eresources > div > div > div > a:nth-child(1) > div:nth-child(1)')
+          .waitUntilNetworkIdle(2000)
+          .then(done)
+          .catch(done);
+      });
+
+      it(`should add a new note "${testNote}" to eresource`, done => {
         nightmare
           .wait('#accordion-toggle-button-notes')
           .click('#accordion-toggle-button-notes')
@@ -155,7 +178,7 @@ module.exports.test = (uiTestCtx, { eresource }) => {
           .catch(done);
       });
 
-      it(`should delete the note ${editedNote}`, done => {
+      /* it(`should delete the note ${editedNote}`, done => {
         nightmare
           .wait('#notes-list div[aria-rowindex="2"]')
           .click('#notes-list div[aria-rowindex="2"]')
@@ -176,7 +199,7 @@ module.exports.test = (uiTestCtx, { eresource }) => {
           }, editedNote)
           .then(done)
           .catch(done);
-      });
+      }); */
     });
   });
 };

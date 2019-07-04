@@ -14,6 +14,7 @@ import { urls } from '../utilities';
 export default class Package extends React.Component {
   static propTypes = {
     data: PropTypes.object,
+    handlers: PropTypes.object,
   }
 
   state = {
