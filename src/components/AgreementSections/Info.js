@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import {
   Col,
   KeyValue,
   Row,
 } from '@folio/stripes/components';
+
+import FormattedUTCDate from '../FormattedUTCDate';
 
 export default class Info extends React.Component {
   static propTypes = {
@@ -50,7 +52,7 @@ export default class Info extends React.Component {
           <Col xs={4}>
             <KeyValue label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}>
               <div data-test-agreement-cancellation-deadline>
-                {agreement.cancellationDeadline ? <FormattedDate value={agreement.cancellationDeadline} /> : '-'}
+                {agreement.cancellationDeadline ? <FormattedUTCDate value={agreement.cancellationDeadline} /> : '-'}
               </div>
             </KeyValue>
           </Col>
