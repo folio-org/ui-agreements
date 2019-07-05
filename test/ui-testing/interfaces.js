@@ -192,7 +192,7 @@ module.exports.test = (uiTestCtx) => {
       it(`should find "${org.name}" in Organizations list with role ${org.role}`, done => {
         nightmare
           .evaluate((org, name) => {
-            const rows = [...document.querySelectorAll('[data-test-organizations-org]')].map(e => e.textContent);
+            const rows = [...document.querySelectorAll('[data-test-organization-card]')].map(e => e.textContent);
             const row = rows.find(r => r.indexOf(name) >= 0);
             if (!row) {
               throw Error(`Could not find row with an org named ${name}`);
@@ -296,72 +296,6 @@ module.exports.test = (uiTestCtx) => {
           .then(done)
           .catch(done);
       });
-
-      it(`should find "${interfaceName}" in interface list`, done => {
-        nightmare
-          .evaluate(interfaceName => {
-            const interfaceElements = [...document.querySelectorAll('#formOrganizations div[role="gridcell"]')];
-            const interfaceFound = interfaceElements.find(e => e.textContent === interfaceName);
-            if (!interfaceFound) {
-              throw Error(`Could not find row with an interface named ${interfaceName}`);
-            }
-          }, interfaceName)
-          .then(done)
-          .catch(done);
-      });
-
-      it(`should find username "${username}"`, done => {
-        nightmare
-          .evaluate(username => {
-            const usernameElements = [...document.querySelectorAll('#formOrganizations div[role="gridcell"]')];
-            const usernameFound = usernameElements.find(e => e.textContent === username);
-            if (!usernameFound) {
-              throw Error(`Could not find row with username ${username}`);
-            }
-          }, username)
-          .then(done)
-          .catch(done);
-      });
-
-      it(`should find password "${password}"`, done => {
-        nightmare
-          .evaluate(password => {
-            const passwordElements = [...document.querySelectorAll('#formOrganizations div[role="gridcell"]')];
-            const passwordFound = passwordElements.find(e => e.textContent === password);
-            if (!passwordFound) {
-              throw Error(`Could not find row with password ${password}`);
-            }
-          }, password)
-          .then(done)
-          .catch(done);
-      });
-
-      it(`should find uri "${uri}"`, done => {
-        nightmare
-          .evaluate(uri => {
-            const uriElements = [...document.querySelectorAll('#formOrganizations span a')];
-            const uriFound = uriElements.find(e => e.attributes.href.nodeValue === uri);
-            if (!uriFound) {
-              throw Error(`Could not find row with uri ${uri}`);
-            }
-          }, uri)
-          .then(done)
-          .catch(done);
-      });
-
-      it(`should find notes "${notes}"`, done => {
-        nightmare
-          .evaluate(notes => {
-            const notesElements = [...document.querySelectorAll('#formOrganizations div[role="gridcell"]')];
-            const notesFound = notesElements.find(e => e.textContent === notes);
-            if (!notesFound) {
-              throw Error(`Could not find row with notes ${notes}`);
-            }
-          }, notes)
-          .then(done)
-          .catch(done);
-      });
-
     });
   });
 };

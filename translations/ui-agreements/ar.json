@@ -187,5 +187,6 @@
     "agreements.selectIsPerpetual": "حدد ديمومة الاتفاقية",
     "agreements.closeEdit": "غلق تحرير الاتفاقية",
     "eresources.packageResources": "الموارد الإلكترونية بالحزمة",
-    "finances.none": "لا يوجد للاتفاقية خطوط أمر شراء"
+    "finances.none": "لا يوجد للاتفاقية خطوط أمر شراء",
+    "organizations.addOrganizationToAgreement": "إضافة مؤسسة إلى اتفاقية"
 }

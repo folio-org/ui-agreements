@@ -184,6 +184,7 @@
   "organizations.createNew": "Create new organization",
   "organizations.alreadyExists": "An organization with this name already exists!",
   "organizations.typeToSearch": "Begin typing to search for an organization",
+  "organizations.addOrganizationToAgreement": "Add organization to agreement",
   "supplementaryInfo.agreementHasNone": "Agreement has no supplementary info",
   "supplementaryInfo.addSupplementaryInfo": "Add supplementary information to agreement",
   "settings.general": "General",

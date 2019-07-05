@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   Col,
@@ -9,6 +9,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
+import FormattedUTCDate from '../FormattedUTCDate';
 import css from './Header.css';
 
 export default class Header extends React.Component {
@@ -44,14 +45,14 @@ export default class Header extends React.Component {
         <Col xs={2}>
           <KeyValue label={<FormattedMessage id="ui-agreements.agreements.startDate" />}>
             <div data-test-agreement-start-date>
-              {startDate ? <FormattedDate value={startDate} /> : '-'}
+              {startDate ? <FormattedUTCDate value={startDate} /> : '-'}
             </div>
           </KeyValue>
         </Col>
         <Col xs={2}>
           <KeyValue label={<FormattedMessage id="ui-agreements.agreements.endDate" />}>
             <div data-test-agreement-end-date>
-              {endDate ? <FormattedDate value={endDate} /> : '-'}
+              {endDate ? <FormattedUTCDate value={endDate} /> : '-'}
             </div>
           </KeyValue>
         </Col>
