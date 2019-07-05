@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import { MultiColumnList } from '@folio/stripes/components';
+import { Spinner } from '@folio/stripes-erm-components';
 
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
@@ -16,6 +18,7 @@ export default class LinesList extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
       lines: PropTypes.arrayOf(PropTypes.object),
+      orderLines: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
   }
 
@@ -26,6 +29,7 @@ export default class LinesList extends React.Component {
     count: 60,
     coverage: 225,
     isCustomCoverage: 30,
+    poLine: 100,
   }
 
   columnMapping = {
@@ -35,6 +39,7 @@ export default class LinesList extends React.Component {
     count: <FormattedMessage id="ui-agreements.agreementLines.count" />,
     coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
     isCustomCoverage: ' ',
+    poLine: <FormattedMessage id="ui-agreements.agreementLines.poline" />,
   }
 
   formatter = {
@@ -57,6 +62,7 @@ export default class LinesList extends React.Component {
     count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
     coverage: line => <CoverageStatements statements={line.coverage} />,
     isCustomCoverage: line => (line.customCoverage ? <CustomCoverageIcon /> : ''),
+    poLine: line => this.renderPOLine(line),
   }
 
   visibleColumns = [
@@ -66,7 +72,27 @@ export default class LinesList extends React.Component {
     'count',
     'coverage',
     'isCustomCoverage',
+    'poLine',
   ]
+
+  renderPOLine = (line) => {
+    const { orderLines } = this.props.agreement;
+
+    if (!line.poLineId) return '';
+    if (!orderLines) return <Spinner />;
+
+    const poLine = orderLines.find(orderLine => orderLine.id === line.poLineId);
+    if (!poLine) return <Spinner />;
+
+    return (
+      <Link
+        data-test-po-line
+        to={`/orders/lines/view/${line.poLineId}`}
+      >
+        {poLine.poLineNumber}
+      </Link>
+    );
+  }
 
   render() {
     const { agreement: { lines } } = this.props;

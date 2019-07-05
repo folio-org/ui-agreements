@@ -7,7 +7,7 @@ module.exports.test = (uiTestCtx) => {
 
     this.timeout(Number(config.test_timeout));
 
-    describe('Login > navigate to app > verify tabs work > logout', () => {
+    describe('Login > navigate to app > verify tabs work', () => {
       before((done) => {
         helpers.login(nightmare, config, done);
       });

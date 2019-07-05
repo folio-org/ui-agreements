@@ -53,7 +53,7 @@ export default class Agreement extends React.Component {
       finances: false,
       internalContacts: false,
       licenses: false,
-      lines: false,
+      lines: true,
       notes: false,
       organizations: false,
       supplementaryInfo: false,

@@ -10,11 +10,29 @@ export default class POLineField extends React.Component {
     index: PropTypes.number.isRequired,
     input: PropTypes.shape({
       onChange: PropTypes.func.isRequired,
+      value: PropTypes.string,
     }).isRequired,
+    poLine: PropTypes.shape({
+      acquisitionMethod: PropTypes.string,
+      poLineNumber: PropTypes.string,
+      title: PropTypes.string,
+    }),
+  }
+
+  static defaultProps = {
+    poLine: {},
   }
 
   state = {
-    poLine: undefined,
+    poLine: {},
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (!state.poLine.id && props.poLine.id) {
+      return { poLine: props.poLine };
+    }
+
+    return null;
   }
 
   handlePOLineSelected = ([poLine]) => {
@@ -24,7 +42,7 @@ export default class POLineField extends React.Component {
 
   handlePOLineUnselected = () => {
     this.props.input.onChange(null);
-    this.setState({ poLine: undefined });
+    this.setState({ poLine: {} });
   }
 
   renderLinkPOLineButton = () => (
@@ -45,6 +63,7 @@ export default class POLineField extends React.Component {
   renderUnlinkPOLineButton = () => (
     <Button
       buttonStyle="danger"
+      id={`clickable-unlink-poline-${this.props.index}`}
       marginBottom0
       onClick={this.handlePOLineUnselected}
     >
@@ -53,21 +72,25 @@ export default class POLineField extends React.Component {
   )
 
   renderPOLineInfo = () => {
-    const { poLine = {} } = this.state;
+    const { poLine } = this.state;
 
     return (
       <div>
         <Row>
           <Col xs={12}>
             <KeyValue label={<FormattedMessage id="ui-agreements.poLines.title" />}>
-              {poLine.title || '-'}
+              <div data-test-poline-title>
+                {poLine.title || '-'}
+              </div>
             </KeyValue>
           </Col>
         </Row>
         <Row>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.poLines.acqMethod" />}>
-              {poLine.acquisitionMethod || '-'}
+              <div data-test-poline-acq-method>
+                {poLine.acquisitionMethod || '-'}
+              </div>
             </KeyValue>
           </Col>
         </Row>
@@ -89,29 +112,29 @@ export default class POLineField extends React.Component {
   );
 
   render() {
-    const { poLine = {} } = this.state;
-    const polSelected = poLine.id !== undefined;
+    const { input: { value } } = this.props;
 
     return (
       <Card
-        cardStyle={polSelected ? 'positive' : 'negative'}
+        cardStyle={value ? 'positive' : 'negative'}
         hasMargin
         headerStart={(
           <span>
             <AppIcon app="orders" size="small" />
             &nbsp;
             <strong>
-              { polSelected ?
-                <FormattedMessage id="ui-agreements.poLines.poLineWithNumber" values={poLine} /> :
+              { value ?
+                <FormattedMessage id="ui-agreements.poLines.poLineWithNumber" values={this.state.poLine} /> :
                 <FormattedMessage id="ui-agreements.poLines.poLine" />
               }
             </strong>
           </span>
         )}
-        headerEnd={polSelected ? this.renderUnlinkPOLineButton() : this.renderLinkPOLineButton()}
+        headerEnd={value ? this.renderUnlinkPOLineButton() : this.renderLinkPOLineButton()}
+        id={`edit-poline-card-${this.props.index}`}
         roundedBorder
       >
-        { polSelected ? this.renderPOLineInfo() : this.renderEmpty() }
+        { value ? this.renderPOLineInfo() : this.renderEmpty() }
       </Card>
     );
   }

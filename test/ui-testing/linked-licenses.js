@@ -30,7 +30,7 @@ module.exports.test = (uiTestCtx) => {
 
     this.timeout(Number(config.test_timeout));
 
-    describe('login > create agreement > link licenses > logout', () => {
+    describe('create agreement > link licenses', () => {
       before((done) => {
         helpers.login(nightmare, config, done);
       });

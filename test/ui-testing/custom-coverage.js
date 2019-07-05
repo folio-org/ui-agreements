@@ -90,7 +90,7 @@ module.exports.test = (uiTestCtx) => {
 
     this.timeout(Number(config.test_timeout));
 
-    describe('login > fill basket > create agreement > set custom coverage > logout', () => {
+    describe('fill basket > create agreement > set custom coverage', () => {
       before((done) => {
         helpers.login(nightmare, config, done);
       });

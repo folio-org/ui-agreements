@@ -45,6 +45,13 @@ class AgreementEditRoute extends React.Component {
       path: 'erm/refdataValues/RemoteLicenseLink/status',
       shouldRefresh: () => false,
     },
+    orderLines: {
+      type: 'okapi',
+      path: 'orders/order-lines',
+      records: 'poLines',
+      fetch: false,
+      accumulate: true,
+    },
     orgRoleValues: {
       type: 'okapi',
       path: 'erm/refdataValues/SubscriptionAgreementOrg/role',
@@ -83,6 +90,9 @@ class AgreementEditRoute extends React.Component {
     mutator: PropTypes.shape({
       agreements: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
+      }),
+      orderLines: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
       }).isRequired,
       query: PropTypes.shape({
         update: PropTypes.func.isRequired
@@ -118,19 +128,25 @@ class AgreementEditRoute extends React.Component {
   }
 
   componentDidMount() {
-    const contacts = get(this.props.resources, 'agreement.records[0].contacts', []);
-    if (contacts.length) {
-      this.fetchUsers(contacts);
-    }
+    this.fetchOrderLines();
+    this.fetchUsers();
   }
 
   componentDidUpdate(prevProps) {
-    const prevAgreement = get(prevProps.resources, 'agreement.records[0]', {});
-    const currAgreement = get(this.props.resources, 'agreement.records[0]', {});
-    const prevContacts = prevAgreement.contacts || [];
-    const currContacts = currAgreement.contacts || [];
+    const { resources: prevResources } = prevProps;
+    const { resources: currResources } = this.props;
+
+    const prevLines = get(prevResources, 'agreementLines.records', []);
+    const currLines = get(currResources, 'agreementLines.records', []);
+    const newLines = difference(currLines, prevLines);
+    if (newLines.length) {
+      this.fetchOrderLines(newLines);
+    }
+
+    const prevContacts = get(prevResources, 'agreement.records[0].contacts', []);
+    const currContacts = get(currResources, 'agreement.records[0].contacts', []);
     const newContacts = difference(currContacts, prevContacts);
-    if (prevAgreement.id !== currAgreement.id || newContacts.length) {
+    if (newContacts.length) {
       this.fetchUsers(newContacts);
     }
   }
@@ -143,9 +159,26 @@ class AgreementEditRoute extends React.Component {
     });
   }
 
-  fetchUsers = (contacts) => {
+  fetchOrderLines = (newLines) => {
+    if (!this.props.stripes.hasInterface('orders', '6.0')) return;
+
+    const lines = newLines || get(this.props.resources, 'agreementLines.records', []);
+    const orderLineIds = lines
+      .map(line => line.poLineId)
+      .filter(id => id !== undefined);
+
+    const query = [
+      ...new Set(orderLineIds.map(id => `id==${id}`))
+    ].join(' or ');
+
+    if (!query) return;
+    this.props.mutator.orderLines.GET({ params: { query } });
+  }
+
+  fetchUsers = (newContacts) => {
     if (!this.props.stripes.hasInterface('users', '15.0')) return;
 
+    const contacts = newContacts || get(this.props.resources, 'agreement.records[0].contacts', []);
     const query = contacts.map(c => `id==${c.user}`).join(' or ');
 
     if (!query) return;
@@ -185,6 +218,7 @@ class AgreementEditRoute extends React.Component {
         return {
           id: line.id,
           coverage: line.customCoverage ? line.coverage : undefined,
+          poLineId: line.poLineId,
         };
       });
     }
@@ -258,6 +292,7 @@ class AgreementEditRoute extends React.Component {
           externalAgreementLine: get(resources, 'externalAgreementLine.records', []),
           isPerpetualValues: get(resources, 'isPerpetualValues.records', []),
           licenseLinkStatusValues: get(resources, 'licenseLinkStatusValues.records', []),
+          orderLines: get(resources, 'orderLines.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
           renewalPriorityValues: get(resources, 'renewalPriorityValues.records', []),
           users: get(resources, 'users.records', []),

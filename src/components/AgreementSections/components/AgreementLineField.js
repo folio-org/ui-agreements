@@ -29,6 +29,7 @@ export default class AgreementLineField extends React.Component {
     }).isRequired,
     onDelete: PropTypes.func,
     onResourceSelected: PropTypes.func,
+    poLine: PropTypes.object,
     resource: PropTypes.object,
   }
 
@@ -54,13 +55,18 @@ export default class AgreementLineField extends React.Component {
   }
 
   renderPOLineField = () => {
-    const { index, input: { name } } = this.props;
+    const {
+      index,
+      input: { name },
+      poLine,
+    } = this.props;
 
     return (
       <Field
         component={POLineField}
         index={index}
         name={`${name}.poLineId`}
+        poLine={poLine}
       />
     );
   }

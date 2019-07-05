@@ -21,6 +21,7 @@ export default class Lines extends React.Component {
     agreement: PropTypes.shape({
       eresources: PropTypes.arrayOf(PropTypes.object),
       lines: PropTypes.arrayOf(PropTypes.object),
+      orderLines: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
     handlers: PropTypes.shape({
       onNeedMoreEResources: PropTypes.func.isRequired,

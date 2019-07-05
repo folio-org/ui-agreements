@@ -15,6 +15,7 @@ class AgreementLinesFieldArray extends React.Component {
     data: PropTypes.shape({
       basket: PropTypes.array,
       agreementLines: PropTypes.array,
+      orderLines: PropTypes.array,
     }),
     items: PropTypes.arrayOf(PropTypes.object),
     meta: PropTypes.shape({
@@ -26,7 +27,13 @@ class AgreementLinesFieldArray extends React.Component {
     onReplaceField: PropTypes.func.isRequired,
   }
 
-  getLineResource(line) {
+  getLinePOLine = (line) => {
+    if (!line.poLineId) return undefined;
+
+    return this.props.data.orderLines.find(orderLine => orderLine.id === line.poLineId);
+  }
+
+  getLineResource = (line) => {
     const { data: { agreementLines } } = this.props;
 
     if (line.resource) return line.resource;
@@ -78,6 +85,7 @@ class AgreementLinesFieldArray extends React.Component {
         name={`${this.props.name}[${i}]`}
         onDelete={() => this.props.onDeleteField(i, line)}
         onResourceSelected={this.handleResourceSelected}
+        poLine={this.getLinePOLine(line)}
         resource={this.getLineResource(line)}
         validate={this.validateResourceIsSelected}
       />
