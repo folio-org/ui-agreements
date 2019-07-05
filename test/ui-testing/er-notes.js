@@ -68,6 +68,10 @@ module.exports.test = (uiTestCtx, { eresource }) => {
 
       it('should use "Is package" filter', done => {
         let chain = nightmare;
+        chain
+          .wait('#clickable-reset-all')
+          .click('#clickable-reset-all');
+
         if (eresource.isPackage === true) {
           chain = chain.click('#clickable-filter-class-package');
         } else {
