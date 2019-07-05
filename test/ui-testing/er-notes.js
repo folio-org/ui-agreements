@@ -74,7 +74,7 @@ module.exports.test = (uiTestCtx, { eresource }) => {
           chain = chain.click('#clickable-filter-class-nopackage');
         }
         chain
-          .waitUntilNetworkIdle(2000)
+          .waitUntilNetworkIdle(5000)
           .then(done)
           .catch(done);
       });
@@ -164,15 +164,31 @@ module.exports.test = (uiTestCtx, { eresource }) => {
 
       it(`should delete the note ${editedNote}`, done => {
         nightmare
-          .wait('#notes-list div[aria-rowindex="2"]')
-          .click('#notes-list div[aria-rowindex="2"]')
-          .waitUntilNetworkIdle(2000)
-          .wait('[class*=paneHeaderCenterButton]')
-          .click('[class*=paneHeaderCenterButton]')
-          .wait('[data-test-note-delete]')
-          .click('[data-test-note-delete]')
-          .wait('#clickable-confirm-delete-note-confirm')
-          .click('#clickable-confirm-delete-note-confirm')
+          .evaluate(note => {
+            const notesElements = [...document.querySelectorAll('div[role="gridcell"]')];
+            const noteElement = notesElements.find(e => e.textContent === note);
+            if (!noteElement) {
+              throw Error(`Could not find row with the note ${note}`);
+            }
+            noteElement.click();
+          }, editedNote)
+          .then(() => {
+            nightmare
+              .wait('[class*=paneHeaderCenterButton]')
+              .click('[class*=paneHeaderCenterButton]')
+              .wait('[data-test-note-delete]')
+              .click('[data-test-note-delete]')
+              .wait('#clickable-confirm-delete-note-confirm')
+              .click('#clickable-confirm-delete-note-confirm')
+              .waitUntilNetworkIdle(2000)
+              .then(done)
+              .catch(done);
+          })
+          .catch(done);
+      });
+
+      it(`should not find note ${editedNote} in notes list`, done => {
+        nightmare
           .evaluate(note => {
             const notesRows = [...document.querySelectorAll('#notes-list')].map(e => e.textContent);
             const noteElement = notesRows.find(r => r.indexOf(note) >= 0);
@@ -182,6 +198,43 @@ module.exports.test = (uiTestCtx, { eresource }) => {
             }
           }, editedNote)
           .then(done)
+          .catch(done);
+      });
+
+      it('should open Settings', done => {
+        helpers.clickSettings(nightmare, done);
+      });
+
+      it(`should find and delete note type ${noteType}`, done => {
+        nightmare
+          .wait('a[href="/settings/notes"]')
+          .click('a[href="/settings/notes"]')
+          .wait('a[href="/settings/notes/general"]')
+          .click('a[href="/settings/notes/general"]')
+          .wait('#editList-noteTypes')
+          .evaluate(type => {
+            let rowIndex = document.evaluate(
+              `//*[@id="editList-noteTypes"]//div[.="${type}"]`,
+              document,
+              null,
+              XPathResult.FIRST_ORDERED_NODE_TYPE
+            ).singleNodeValue.parentNode.attributes['aria-rowindex'].value;
+            rowIndex -= 2;
+
+            return rowIndex;
+          }, noteType)
+
+          .then(rowIndex => {
+            nightmare
+              .wait(`#clickable-delete-noteTypes-${rowIndex}`)
+              .click(`#clickable-delete-noteTypes-${rowIndex}`)
+              .waitUntilNetworkIdle(2000)
+              .wait('[data-test-confirmation-modal-confirm-button]')
+              .click('[data-test-confirmation-modal-confirm-button]')
+              .waitUntilNetworkIdle(2000)
+              .then(done)
+              .catch(done);
+          })
           .catch(done);
       });
     });

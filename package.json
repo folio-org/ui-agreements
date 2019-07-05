@@ -13,8 +13,8 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run nav/agreement-crud/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/notes-crud",
-    "test-int": "stripes test nightmare --run nav/agreement-crud/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/notes-crud/linked-licenses/license-terms",
+    "test": "stripes test nightmare --run nav/agreement-crud/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/notes-crud/package-notes/title-notes",
+    "test-int": "stripes test nightmare --run nav/agreement-crud/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/notes-crud/package-notes/title-notes/linked-licenses/license-terms",
     "test-licenses-int": "stripes test nightmare --run linked-licenses/license-terms",
     "test-nav": "stripes test nightmare --run nav",
     "test-agreement-crud": "stripes test nightmare --run agreement-crud",
