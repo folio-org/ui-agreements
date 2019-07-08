@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Headline, Layout, KeyValue, MultiColumnList, InfoPopover } from '@folio/stripes/components';
 import { LicenseCard, LicenseEndDate } from '@folio/stripes-erm-components';
+
+import FormattedUTCDate from '../FormattedUTCDate';
 
 export default class LinkedLicenses extends React.Component {
   static propTypes = {
@@ -74,7 +76,7 @@ export default class LinkedLicenses extends React.Component {
             note: link => (link.note ? <InfoPopover content={link.note} /> : ''),
             name: ({ remoteId_object: license = {} }) => license.name,
             status: link => (link.status ? link.status.label : '-'),
-            startDate: ({ remoteId_object: license = {} }) => (license.startDate ? <FormattedDate value={license.startDate} /> : '-'),
+            startDate: ({ remoteId_object: license = {} }) => (license.startDate ? <FormattedUTCDate value={license.startDate} /> : '-'),
             endDate: ({ remoteId_object: license = {} }) => <LicenseEndDate license={license} />,
           }}
           interactive={false}

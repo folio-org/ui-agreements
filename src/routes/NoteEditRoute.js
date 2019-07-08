@@ -9,6 +9,11 @@ import {
   urls,
 } from '../components/utilities';
 
+import {
+  entityTypeTranslationKeys,
+  entityTypePluralizedTranslationKeys,
+} from '../constants';
+
 export default class NoteEditRoute extends Component {
   static propTypes = {
     history: ReactRouterPropTypes.history.isRequired,
@@ -35,12 +40,8 @@ export default class NoteEditRoute extends Component {
     return (
       <NoteEditPage
         referredEntityData={formatNoteReferrerEntityData(location.state)}
-        entityTypeTranslationKeys={{
-          agreement: 'ui-agreements.agreement',
-        }}
-        entityTypePluralizedTranslationKeys={{
-          agreement: 'ui-agreements.agreementPluralizable',
-        }}
+        entityTypeTranslationKeys={entityTypeTranslationKeys}
+        entityTypePluralizedTranslationKeys={entityTypePluralizedTranslationKeys}
         paneHeaderAppIcon="agreement"
         domain="agreements"
         navigateBack={this.goToNoteView}

@@ -10,6 +10,8 @@ import {
   urls,
 } from '../components/utilities';
 
+import { entityTypeTranslationKeys } from '../constants';
+
 export default class NoteCreateRoute extends Component {
   static propTypes = {
     history: PropTypes.shape({
@@ -24,9 +26,7 @@ export default class NoteCreateRoute extends Component {
     return (
       <NoteCreatePage
         referredEntityData={formatNoteReferrerEntityData(this.props.location.state)}
-        entityTypeTranslationKeys={{
-          agreement: 'ui-agreements.agreement',
-        }}
+        entityTypeTranslationKeys={entityTypeTranslationKeys}
         paneHeaderAppIcon="agreements"
         domain="agreements"
         navigateBack={history.goBack}

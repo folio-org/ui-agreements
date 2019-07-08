@@ -13,9 +13,8 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-
-    "test": "stripes test nightmare --run nav/agreement-crud/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/notes-crud",
-    "test-int": "stripes test nightmare --run nav/agreement-crud/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/notes-crud/linked-licenses/license-terms",
+    "test": "stripes test nightmare --run nav/agreement-crud/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/notes-crud/package-notes/title-notes",
+    "test-int": "stripes test nightmare --run nav/agreement-crud/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/notes-crud/package-notes/title-notes/linked-licenses/license-terms",
     "test-licenses-int": "stripes test nightmare --run linked-licenses/license-terms",
     "test-folio-int": "stripes test nightmare --run ekb-int/po-lines",
 
@@ -30,7 +29,8 @@
     "test-hide-eresources-func": "stripes test nightmare --run hide-eresources-func",
     "test-supplement": "stripes test nightmare --run supplement",
     "test-notes-crud": "stripes test nightmare --run notes-crud",
-
+    "test-package-notes": "stripes test nightmare --run package-notes",
+    "test-title-notes": "stripes test nightmare --run title-notes",
     "test-linked-licenses": "stripes test nightmare --run linked-licenses",
     "test-license-terms": "stripes test nightmare --run license-terms",
 
