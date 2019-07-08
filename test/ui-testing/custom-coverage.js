@@ -6,9 +6,14 @@ const Utils = require('./utils');
 
 const checkTableForCustomCoverageIcon = (nightmare, done, tableId) => {
   nightmare
-    .evaluate((id) => {
-      if (!document.querySelector(`#${id} [data-test-custom-coverage]`)) {
-        throw Error(`Failed to find custom coverage icon in "${id}" table.`);
+    .wait(`#${tableId}`)
+    .evaluate(_tableId => {
+      if (!document.querySelector(`#${_tableId}`)) {
+        throw Error(`Failed to find "${_tableId}" table.`);
+      }
+
+      if (!document.querySelector(`#${_tableId} [data-test-custom-coverage]`)) {
+        throw Error(`Failed to find custom coverage icon in "${_tableId}" table.`);
       }
     }, tableId)
     .then(done)
@@ -17,6 +22,7 @@ const checkTableForCustomCoverageIcon = (nightmare, done, tableId) => {
 
 const checkTableForCustomCoverageData = (nightmare, done, tableId, values) => {
   nightmare
+    .wait(`#${tableId}`)
     .evaluate((expectedValues, id) => {
       const startDates = [...document.querySelectorAll(`#${id} [data-test-coverage-statements] [data-test-start] [data-test-date]`)];
       const startVolumes = [...document.querySelectorAll(`#${id} [data-test-coverage-statements] [data-test-start] [data-test-volume]`)];
@@ -162,7 +168,13 @@ module.exports.test = (uiTestCtx) => {
           .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000)
           .wait('#accordion-toggle-button-lines')
-          .click('#accordion-toggle-button-lines')
+          .evaluate(() => {
+            const header = document.querySelector('#accordion-toggle-button-lines');
+            if (!header) throw Error('Could not find Agreement Lines accordion header');
+
+            return header.getAttribute('aria-expanded');
+          })
+          .then(expanded => (expanded === 'true' ? nightmare : nightmare.click('#accordion-toggle-button-lines')))
           .then(done)
           .catch(done);
       });
