@@ -2,7 +2,8 @@
 
 module.exports.test = (uiTestCtx, { eresource }) => {
   const testNote = `note${Math.floor(Math.random() * 100000)}`;
-  const editedNote = `editnote${Math.floor(Math.random() * 100000)}`;
+  const editText = '-edited';
+  const editedNote = `${testNote}${editText}`;
   const noteType = `noteType${Math.floor(Math.random() * 100000)}`;
 
   describe('Notes crud', function test() {
@@ -70,7 +71,8 @@ module.exports.test = (uiTestCtx, { eresource }) => {
         let chain = nightmare;
         chain
           .wait('#clickable-reset-all')
-          .click('#clickable-reset-all');
+          .click('#clickable-reset-all')
+          .waitUntilNetworkIdle(2000);
 
         if (eresource.isPackage === true) {
           chain = chain.click('#clickable-filter-class-package');
@@ -98,6 +100,7 @@ module.exports.test = (uiTestCtx, { eresource }) => {
           .click('#accordion-toggle-button-notes')
           .wait('[data-test-notes-accordion-new-button]')
           .click('[data-test-notes-accordion-new-button]')
+          .waitUntilNetworkIdle(2000)
           .wait('[data-test-note-types-field]')
           .type('[data-test-note-types-field]', noteType)
           .wait('[data-test-note-title-field]')
@@ -138,8 +141,9 @@ module.exports.test = (uiTestCtx, { eresource }) => {
               .click('[data-test-navigate-note-edit]')
               .waitUntilNetworkIdle(2000)
               .wait('[data-test-note-title-field]')
-              .insert('[data-test-note-title-field]', '')
-              .insert('[data-test-note-title-field]', editedNote)
+              .type('[data-test-note-title-field]', editText)
+              /* .insert('[data-test-note-title-field]', '')
+              .insert('[data-test-note-title-field]', editedNote) */
               .wait('[data-test-save-note]')
               .click('[data-test-save-note]')
               .waitUntilNetworkIdle(2000)
@@ -239,6 +243,30 @@ module.exports.test = (uiTestCtx, { eresource }) => {
               .then(done)
               .catch(done);
           })
+          .catch(done);
+      });
+
+      it(`should not find note type ${noteType}`, done => {
+        nightmare
+          .wait('a[href="/settings/notes"]')
+          .click('a[href="/settings/notes"]')
+          .wait('a[href="/settings/notes/general"]')
+          .click('a[href="/settings/notes/general"]')
+          .wait('#editList-noteTypes')
+          .waitUntilNetworkIdle(2000)
+          .evaluate(type => {
+            const row = document.evaluate(
+              `//*[@id="editList-noteTypes"]//div[.="${type}"]`,
+              document,
+              null,
+              XPathResult.FIRST_ORDERED_NODE_TYPE
+            ).singleNodeValue;
+            if (row != null) {
+              throw Error(`Should not find row with type ${type}`);
+            }
+          }, noteType)
+
+          .then(done)
           .catch(done);
       });
     });
