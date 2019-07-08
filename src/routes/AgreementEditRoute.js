@@ -48,9 +48,16 @@ class AgreementEditRoute extends React.Component {
     orderLines: {
       type: 'okapi',
       path: 'orders/order-lines',
+      params: (_q, _p, _r, _l, props) => {
+        const query = get(props.resources, 'agreementLines.records', [])
+          .filter(line => line.poLineId)
+          .map(line => `id==${line.poLineId}`)
+          .join(' or ');
+
+        return query ? { query } : null;
+      },
+      fetch: props => !!props.stripes.hasInterface('orders', '6.0'),
       records: 'poLines',
-      fetch: false,
-      accumulate: true,
     },
     orgRoleValues: {
       type: 'okapi',
@@ -65,10 +72,16 @@ class AgreementEditRoute extends React.Component {
     users: {
       type: 'okapi',
       path: 'users',
+      params: (_q, _p, _r, _l, props) => {
+        const query = get(props.resources, 'agreement.records[0].contacts', [])
+          .filter(contact => contact.user)
+          .map(contact => `id==${contact.user}`)
+          .join(' or ');
+
+        return query ? { query } : null;
+      },
+      fetch: props => !!props.stripes.hasInterface('users', '15.0'),
       records: 'users',
-      fetch: false,
-      accumulate: true,
-      shouldRefresh: () => false,
     },
     basket: { initialValue: [] },
     query: { initialValue: {} },
@@ -91,14 +104,8 @@ class AgreementEditRoute extends React.Component {
       agreements: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
       }),
-      orderLines: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
-      }).isRequired,
       query: PropTypes.shape({
         update: PropTypes.func.isRequired
-      }).isRequired,
-      users: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
     resources: PropTypes.shape({
@@ -127,62 +134,12 @@ class AgreementEditRoute extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.fetchOrderLines();
-    this.fetchUsers();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { resources: prevResources } = prevProps;
-    const { resources: currResources } = this.props;
-
-    const prevLines = get(prevResources, 'agreementLines.records', []);
-    const currLines = get(currResources, 'agreementLines.records', []);
-    const newLines = difference(currLines, prevLines);
-    if (newLines.length) {
-      this.fetchOrderLines(newLines);
-    }
-
-    const prevContacts = get(prevResources, 'agreement.records[0].contacts', []);
-    const currContacts = get(currResources, 'agreement.records[0].contacts', []);
-    const newContacts = difference(currContacts, prevContacts);
-    if (newContacts.length) {
-      this.fetchUsers(newContacts);
-    }
-  }
-
   componentWillUnmount() {
     this.props.mutator.query.update({
       addFromBasket: null,
       authority: null,
       referenceId: null,
     });
-  }
-
-  fetchOrderLines = (newLines) => {
-    if (!this.props.stripes.hasInterface('orders', '6.0')) return;
-
-    const lines = newLines || get(this.props.resources, 'agreementLines.records', []);
-    const orderLineIds = lines
-      .map(line => line.poLineId)
-      .filter(id => id !== undefined);
-
-    const query = [
-      ...new Set(orderLineIds.map(id => `id==${id}`))
-    ].join(' or ');
-
-    if (!query) return;
-    this.props.mutator.orderLines.GET({ params: { query } });
-  }
-
-  fetchUsers = (newContacts) => {
-    if (!this.props.stripes.hasInterface('users', '15.0')) return;
-
-    const contacts = newContacts || get(this.props.resources, 'agreement.records[0].contacts', []);
-    const query = contacts.map(c => `id==${c.user}`).join(' or ');
-
-    if (!query) return;
-    this.props.mutator.users.GET({ params: { query } });
   }
 
   getInitialValues = () => {

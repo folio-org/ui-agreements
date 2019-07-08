@@ -51,7 +51,7 @@ class AgreementViewRoute extends React.Component {
 
         return query ? { query } : null;
       },
-      fetch: props => props.stripes.hasInterface('organizations-storage.interfaces', '1.0') !== 0,
+      fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '1.0'),
       records: 'interfaces',
     },
     orderLines: {
@@ -65,7 +65,7 @@ class AgreementViewRoute extends React.Component {
 
         return query ? { query } : null;
       },
-      fetch: props => props.stripes.hasInterface('orders', '6.0') !== 0,
+      fetch: props => !!props.stripes.hasInterface('orders', '6.0'),
       records: 'poLines',
     },
     terms: {
@@ -83,7 +83,7 @@ class AgreementViewRoute extends React.Component {
 
         return query ? { query } : null;
       },
-      fetch: props => props.stripes.hasInterface('users', '15.0') !== 0,
+      fetch: props => !!props.stripes.hasInterface('users', '15.0'),
       records: 'users',
     },
     agreementEresourcesCount: { initialValue: ERESOURCES_RESULTS_INTERVAL },
