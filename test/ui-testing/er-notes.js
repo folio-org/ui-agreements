@@ -252,7 +252,6 @@ module.exports.test = (uiTestCtx, { eresource }) => {
           .click('a[href="/settings/notes"]')
           .wait('a[href="/settings/notes/general"]')
           .click('a[href="/settings/notes/general"]')
-          .wait('#editList-noteTypes')
           .waitUntilNetworkIdle(2000)
           .evaluate(type => {
             const row = document.evaluate(
