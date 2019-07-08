@@ -42,16 +42,31 @@ class AgreementViewRoute extends React.Component {
     interfaces: {
       type: 'okapi',
       path: 'organizations-storage/interfaces',
+      params: (_q, _p, _r, _l, props) => {
+        const orgs = get(props.resources, 'agreement.records[0].orgs', []);
+        const interfaces = flatten(orgs.map(o => get(o, 'org.orgsUuid_object.interfaces', [])));
+        const query = [
+          ...new Set(interfaces.map(i => `id==${i}`))
+        ].join(' or ');
+
+        return query ? { query } : null;
+      },
+      fetch: props => props.stripes.hasInterface('organizations-storage.interfaces', '1.0') !== 0,
       records: 'interfaces',
-      accumulate: true,
-      fetch: false,
     },
     orderLines: {
       type: 'okapi',
       path: 'orders/order-lines',
+      params: (_q, _p, _r, _l, props) => {
+        const query = get(props.resources, 'agreementLines.records', [])
+          .filter(line => line.poLineId)
+          .map(line => `id==${line.poLineId}`)
+          .join(' or ');
+
+        return query ? { query } : null;
+      },
+      fetch: props => props.stripes.hasInterface('orders', '6.0') !== 0,
       records: 'poLines',
-      fetch: false,
-      accumulate: true,
     },
     terms: {
       type: 'okapi',
@@ -60,9 +75,16 @@ class AgreementViewRoute extends React.Component {
     users: {
       type: 'okapi',
       path: 'users',
+      params: (_q, _p, _r, _l, props) => {
+        const query = get(props.resources, 'agreement.records[0].contacts', [])
+          .filter(contact => contact.user)
+          .map(contact => `id==${contact.user}`)
+          .join(' or ');
+
+        return query ? { query } : null;
+      },
+      fetch: props => props.stripes.hasInterface('users', '15.0') !== 0,
       records: 'users',
-      fetch: false,
-      accumulate: true,
     },
     agreementEresourcesCount: { initialValue: ERESOURCES_RESULTS_INTERVAL },
     query: {},
@@ -85,18 +107,18 @@ class AgreementViewRoute extends React.Component {
       agreementEresourcesCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
-      interfaces: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
-      }),
-      orderLines: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
-      }),
+      // interfaces: PropTypes.shape({
+      //   GET: PropTypes.func.isRequired,
+      // }),
+      // orderLines: PropTypes.shape({
+      //   GET: PropTypes.func.isRequired,
+      // }),
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
       }).isRequired,
-      users: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
-      }),
+      // users: PropTypes.shape({
+      //   GET: PropTypes.func.isRequired,
+      // }),
     }).isRequired,
     resources: PropTypes.shape({
       agreement: PropTypes.object,
@@ -119,85 +141,85 @@ class AgreementViewRoute extends React.Component {
     handlers: {},
   }
 
-  componentDidMount() {
-    this.fetchInterfaces();
-    this.fetchOrderLines();
-    this.fetchUsers();
-  }
+  // componentDidMount() {
+  //   this.fetchInterfaces();
+  //   this.fetchOrderLines();
+  //   this.fetchUsers();
+  // }
 
-  componentDidUpdate(prevProps) {
-    const { resources: prevResources } = prevProps;
-    const { resources: currResources } = this.props;
+  // componentDidUpdate(prevProps) {
+  //   const { resources: prevResources } = prevProps;
+  //   const { resources: currResources } = this.props;
 
-    const prevId = get(prevResources, 'agreement.records[0].id');
-    const currId = get(currResources, 'agreement.records[0].id');
-    if (prevId !== currId) {
-      this.fetchInterfaces();
-      this.fetchOrderLines();
-      this.fetchUsers();
-      return;
-    }
+  //   const prevId = get(prevResources, 'agreement.records[0].id');
+  //   const currId = get(currResources, 'agreement.records[0].id');
+  //   if (prevId !== currId) {
+  //     this.fetchInterfaces();
+  //     this.fetchOrderLines();
+  //     this.fetchUsers();
+  //     return;
+  //   }
 
-    const prevOrgs = get(prevResources, 'agreement.records[0].orgs', []);
-    const currOrgs = get(currResources, 'agreement.records[0].orgs', []);
-    const newOrgs = difference(currOrgs, prevOrgs);
-    if (newOrgs.length) {
-      this.fetchInterfaces(newOrgs);
-    }
+  //   const prevOrgs = get(prevResources, 'agreement.records[0].orgs', []);
+  //   const currOrgs = get(currResources, 'agreement.records[0].orgs', []);
+  //   const newOrgs = difference(currOrgs, prevOrgs);
+  //   if (newOrgs.length) {
+  //     this.fetchInterfaces(newOrgs);
+  //   }
 
-    const prevLines = get(prevResources, 'agreementLines.records', []);
-    const currLines = get(currResources, 'agreementLines.records', []);
-    const newLines = difference(currLines, prevLines);
-    if (newLines.length) {
-      this.fetchOrderLines(newLines);
-    }
+  //   const prevLines = get(prevResources, 'agreementLines.records', []);
+  //   const currLines = get(currResources, 'agreementLines.records', []);
+  //   const newLines = difference(currLines, prevLines);
+  //   if (newLines.length) {
+  //     this.fetchOrderLines(newLines);
+  //   }
 
-    const prevContacts = get(prevResources, 'agreement.records[0].contacts', []);
-    const currContacts = get(currResources, 'agreement.records[0].contacts', []);
-    const newContacts = difference(currContacts, prevContacts);
-    if (newContacts.length) {
-      this.fetchUsers(newContacts);
-    }
-  }
+  //   const prevContacts = get(prevResources, 'agreement.records[0].contacts', []);
+  //   const currContacts = get(currResources, 'agreement.records[0].contacts', []);
+  //   const newContacts = difference(currContacts, prevContacts);
+  //   if (newContacts.length) {
+  //     this.fetchUsers(newContacts);
+  //   }
+  // }
 
-  fetchInterfaces = (newOrgs) => {
-    if (!this.props.stripes.hasInterface('organizations-storage.interfaces', '1.0')) return;
+  // fetchInterfaces = (newOrgs) => {
+  //   if (!this.props.stripes.hasInterface('organizations-storage.interfaces', '1.0')) return;
 
-    const orgs = newOrgs || get(this.props.resources, 'agreement.records[0].orgs', []);
-    const interfaces = flatten(orgs.map(o => get(o, 'org.orgsUuid_object.interfaces', [])));
-    const query = [
-      ...new Set(interfaces.map(i => `id==${i}`))
-    ].join(' or ');
+  //   const orgs = newOrgs || get(this.props.resources, 'agreement.records[0].orgs', []);
+  //   const interfaces = flatten(orgs.map(o => get(o, 'org.orgsUuid_object.interfaces', [])));
+  //   const query = [
+  //     ...new Set(interfaces.map(i => `id==${i}`))
+  //   ].join(' or ');
 
-    if (!query) return;
-    this.props.mutator.interfaces.GET({ params: { query } });
-  }
+  //   if (!query) return;
+  //   this.props.mutator.interfaces.GET({ params: { query } });
+  // }
 
-  fetchOrderLines = (newLines) => {
-    if (!this.props.stripes.hasInterface('orders', '6.0')) return;
+  // fetchOrderLines = (newLines) => {
+  //   if (!this.props.stripes.hasInterface('orders', '6.0')) return;
 
-    const lines = newLines || get(this.props.resources, 'agreementLines.records', []);
-    const orderLineIds = lines
-      .map(line => line.poLineId)
-      .filter(id => id !== undefined);
+  //   const lines = newLines || get(this.props.resources, 'agreementLines.records', []);
+  //   const orderLineIds = lines
+  //     .map(line => line.poLineId)
+  //     .filter(id => id !== undefined);
 
-    const query = [
-      ...new Set(orderLineIds.map(id => `id==${id}`))
-    ].join(' or ');
+  //   const query = [
+  //     ...new Set(orderLineIds.map(id => `id==${id}`))
+  //   ].join(' or ');
 
-    if (!query) return;
-    this.props.mutator.orderLines.GET({ params: { query } });
-  }
+  //   if (!query) return;
+  //   this.props.mutator.orderLines.GET({ params: { query } });
+  // }
 
-  fetchUsers = (newContacts) => {
-    if (!this.props.stripes.hasInterface('users', '15.0')) return;
+  // fetchUsers = (newContacts) => {
+  //   if (!this.props.stripes.hasInterface('users', '15.0')) return;
 
-    const contacts = newContacts || get(this.props.resources, 'agreement.records[0].contacts', []);
-    const query = contacts.map(c => `id==${c.user}`).join(' or ');
+  //   const contacts = newContacts || get(this.props.resources, 'agreement.records[0].contacts', []);
+  //   const query = contacts.map(c => `id==${c.user}`).join(' or ');
 
-    if (!query) return;
-    this.props.mutator.users.GET({ params: { query } });
-  }
+  //   if (!query) return;
+  //   this.props.mutator.users.GET({ params: { query } });
+  // }
 
   getCompositeAgreement = () => {
     const { resources } = this.props;
