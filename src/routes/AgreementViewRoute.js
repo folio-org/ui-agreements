@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get, difference, flatten } from 'lodash';
+import { get, flatten } from 'lodash';
 import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
@@ -107,18 +107,9 @@ class AgreementViewRoute extends React.Component {
       agreementEresourcesCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
-      // interfaces: PropTypes.shape({
-      //   GET: PropTypes.func.isRequired,
-      // }),
-      // orderLines: PropTypes.shape({
-      //   GET: PropTypes.func.isRequired,
-      // }),
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
       }).isRequired,
-      // users: PropTypes.shape({
-      //   GET: PropTypes.func.isRequired,
-      // }),
     }).isRequired,
     resources: PropTypes.shape({
       agreement: PropTypes.object,
@@ -140,86 +131,6 @@ class AgreementViewRoute extends React.Component {
   static defaultProps = {
     handlers: {},
   }
-
-  // componentDidMount() {
-  //   this.fetchInterfaces();
-  //   this.fetchOrderLines();
-  //   this.fetchUsers();
-  // }
-
-  // componentDidUpdate(prevProps) {
-  //   const { resources: prevResources } = prevProps;
-  //   const { resources: currResources } = this.props;
-
-  //   const prevId = get(prevResources, 'agreement.records[0].id');
-  //   const currId = get(currResources, 'agreement.records[0].id');
-  //   if (prevId !== currId) {
-  //     this.fetchInterfaces();
-  //     this.fetchOrderLines();
-  //     this.fetchUsers();
-  //     return;
-  //   }
-
-  //   const prevOrgs = get(prevResources, 'agreement.records[0].orgs', []);
-  //   const currOrgs = get(currResources, 'agreement.records[0].orgs', []);
-  //   const newOrgs = difference(currOrgs, prevOrgs);
-  //   if (newOrgs.length) {
-  //     this.fetchInterfaces(newOrgs);
-  //   }
-
-  //   const prevLines = get(prevResources, 'agreementLines.records', []);
-  //   const currLines = get(currResources, 'agreementLines.records', []);
-  //   const newLines = difference(currLines, prevLines);
-  //   if (newLines.length) {
-  //     this.fetchOrderLines(newLines);
-  //   }
-
-  //   const prevContacts = get(prevResources, 'agreement.records[0].contacts', []);
-  //   const currContacts = get(currResources, 'agreement.records[0].contacts', []);
-  //   const newContacts = difference(currContacts, prevContacts);
-  //   if (newContacts.length) {
-  //     this.fetchUsers(newContacts);
-  //   }
-  // }
-
-  // fetchInterfaces = (newOrgs) => {
-  //   if (!this.props.stripes.hasInterface('organizations-storage.interfaces', '1.0')) return;
-
-  //   const orgs = newOrgs || get(this.props.resources, 'agreement.records[0].orgs', []);
-  //   const interfaces = flatten(orgs.map(o => get(o, 'org.orgsUuid_object.interfaces', [])));
-  //   const query = [
-  //     ...new Set(interfaces.map(i => `id==${i}`))
-  //   ].join(' or ');
-
-  //   if (!query) return;
-  //   this.props.mutator.interfaces.GET({ params: { query } });
-  // }
-
-  // fetchOrderLines = (newLines) => {
-  //   if (!this.props.stripes.hasInterface('orders', '6.0')) return;
-
-  //   const lines = newLines || get(this.props.resources, 'agreementLines.records', []);
-  //   const orderLineIds = lines
-  //     .map(line => line.poLineId)
-  //     .filter(id => id !== undefined);
-
-  //   const query = [
-  //     ...new Set(orderLineIds.map(id => `id==${id}`))
-  //   ].join(' or ');
-
-  //   if (!query) return;
-  //   this.props.mutator.orderLines.GET({ params: { query } });
-  // }
-
-  // fetchUsers = (newContacts) => {
-  //   if (!this.props.stripes.hasInterface('users', '15.0')) return;
-
-  //   const contacts = newContacts || get(this.props.resources, 'agreement.records[0].contacts', []);
-  //   const query = contacts.map(c => `id==${c.user}`).join(' or ');
-
-  //   if (!query) return;
-  //   this.props.mutator.users.GET({ params: { query } });
-  // }
 
   getCompositeAgreement = () => {
     const { resources } = this.props;
