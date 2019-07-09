@@ -188,5 +188,7 @@
     "agreements.closeEdit": "Fechar edição de contrato",
     "eresources.packageResources": "E-recursos no pacote",
     "finances.none": "O contrato não tem linhas de pedido.",
-    "organizations.addOrganizationToAgreement": "Adicionar organização ao contrato"
+    "organizations.addOrganizationToAgreement": "Adicionar organização ao contrato",
+    "eresource": "E-resource",
+    "eresourcePluralizable": "{count} {count, plural, one {e-resource} other {e-resources}}"
 }
