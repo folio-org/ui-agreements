@@ -6,7 +6,6 @@ const Utils = require('./utils');
 
 const checkTableForCustomCoverageIcon = (nightmare, done, tableId) => {
   nightmare
-    .wait(`#${tableId}`)
     .evaluate(_tableId => {
       if (!document.querySelector(`#${_tableId}`)) {
         throw Error(`Failed to find "${_tableId}" table.`);
@@ -22,7 +21,6 @@ const checkTableForCustomCoverageIcon = (nightmare, done, tableId) => {
 
 const checkTableForCustomCoverageData = (nightmare, done, tableId, values) => {
   nightmare
-    .wait(`#${tableId}`)
     .evaluate((expectedValues, id) => {
       const startDates = [...document.querySelectorAll(`#${id} [data-test-coverage-statements] [data-test-start] [data-test-date]`)];
       const startVolumes = [...document.querySelectorAll(`#${id} [data-test-coverage-statements] [data-test-start] [data-test-volume]`)];

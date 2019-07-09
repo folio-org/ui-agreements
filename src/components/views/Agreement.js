@@ -31,7 +31,6 @@ import {
   Terms,
 } from '../AgreementSections';
 
-import POLineCardContainer from '../../containers/POLineCardContainer';
 import { urls } from '../utilities';
 
 
@@ -54,7 +53,7 @@ export default class Agreement extends React.Component {
       finances: false,
       internalContacts: false,
       licenses: false,
-      lines: true,
+      lines: false,
       notes: false,
       organizations: false,
       supplementaryInfo: false,
@@ -186,7 +185,6 @@ export default class Agreement extends React.Component {
           paneTitle={data.agreement.name}
         >
           <TitleManager record={data.agreement.name}>
-            {/* <POLineCardContainer id="fe09e437-e487-1d59-bffb-dca466e3f2ef" /> */}
             <Header {...this.getSectionProps()} />
             <Info {...this.getSectionProps('info')} />
             <AccordionSet>

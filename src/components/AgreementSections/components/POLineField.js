@@ -52,6 +52,7 @@ export default class POLineField extends React.Component {
       dataKey="poline"
       disableRecordCreation
       id={`poline-${this.props.index}-search-button`}
+      isSingleSelect
       marginBottom0
       searchLabel={<FormattedMessage id="ui-agreements.poLines.addPOLine" />}
       searchButtonStyle="primary"
