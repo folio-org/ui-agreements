@@ -64,7 +64,6 @@ module.exports.test = (uiTestCtx) => {
             };
           })
           .then(selectedPOLine => {
-            console.log('Selected PO Line: ', selectedPOLine);
             poLine = { ...selectedPOLine };
 
             nightmare
@@ -102,8 +101,6 @@ module.exports.test = (uiTestCtx) => {
           .click('#accordion-toggle-button-lines')
           .wait('#agreement-lines a[data-test-po-line]')
           .evaluate(_poLine => {
-            console.log('Checking for PO Line, ', _poLine);
-
             const poLineLink = document.querySelector('#agreement-lines a[data-test-po-line]');
             if (!poLineLink) {
               throw Error('Expected to find <a data-test-po-line> tag.');
