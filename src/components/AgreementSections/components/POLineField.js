@@ -57,7 +57,7 @@ export default class POLineField extends React.Component {
       searchLabel={<FormattedMessage id="ui-agreements.poLines.addPOLine" />}
       searchButtonStyle="primary"
       addLines={this.handlePOLineSelected}
-      type="find-po-lasdine"
+      type="find-po-line"
     >
       <FormattedMessage id="ui-agreements.poLines.noPOLinePlugin" />
     </Pluggable>
