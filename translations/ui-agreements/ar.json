@@ -188,5 +188,7 @@
     "agreements.closeEdit": "غلق تحرير الاتفاقية",
     "eresources.packageResources": "الموارد الإلكترونية بالحزمة",
     "finances.none": "لا يوجد للاتفاقية خطوط أمر شراء",
-    "organizations.addOrganizationToAgreement": "إضافة مؤسسة إلى اتفاقية"
+    "organizations.addOrganizationToAgreement": "إضافة مؤسسة إلى اتفاقية",
+    "eresource": "المورد الإلكتروني",
+    "eresourcePluralizable": "{count} {count, plural, one {مورد إلكتروني} other {مورد إلكتروني}}"
 }
