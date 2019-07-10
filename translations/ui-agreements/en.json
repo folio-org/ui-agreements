@@ -185,6 +185,17 @@
   "organizations.alreadyExists": "An organization with this name already exists!",
   "organizations.typeToSearch": "Begin typing to search for an organization",
   "organizations.addOrganizationToAgreement": "Add organization to agreement",
+
+  "poLines.acqMethod": "Acquisition method",
+  "poLines.addPOLine": "Add PO line",
+  "poLines.addPOLineToStart": "Add a PO line to get started",
+  "poLines.noPOLineAdded": "No PO line added",
+  "poLines.noPOLinePlugin": "No \"find-po-line\" plugin is installed",
+  "poLines.poLine": "PO line",
+  "poLines.poLineWithNumber": "PO line: {poLineNumber}",
+  "poLines.title": "Title in PO line",
+  "poLines.unlinkPOLine": "Unlink PO line",
+
   "supplementaryInfo.agreementHasNone": "Agreement has no supplementary info",
   "supplementaryInfo.addSupplementaryInfo": "Add supplementary information to agreement",
   "settings.general": "General",

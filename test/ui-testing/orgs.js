@@ -26,7 +26,7 @@ module.exports.test = (uiTestCtx) => {
     const orgToEdit = orgs.find(o => o.editedName);
     const orgToDelete = orgs.find(o => o.toDelete);
 
-    describe('login > open agreements > create agreements > edit orgs > logout', () => {
+    describe('open agreements > create agreements > edit orgs', () => {
       before((done) => {
         helpers.login(nightmare, config, done);
       });

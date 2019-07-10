@@ -28,7 +28,7 @@ module.exports.test = (uiTestCtx) => {
 
     this.timeout(Number(config.test_timeout));
 
-    describe('login > open Orgs > create orgs > create interfaces > create agreement > logout', () => {
+    describe('open Orgs > create orgs > create interfaces > create agreement', () => {
       before((done) => {
         helpers.login(nightmare, config, done);
       });

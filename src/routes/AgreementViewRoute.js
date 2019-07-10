@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get, difference, flatten } from 'lodash';
+import { get, flatten } from 'lodash';
 import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
@@ -42,26 +42,31 @@ class AgreementViewRoute extends React.Component {
     interfaces: {
       type: 'okapi',
       path: 'organizations-storage/interfaces',
+      params: (_q, _p, _r, _l, props) => {
+        const orgs = get(props.resources, 'agreement.records[0].orgs', []);
+        const interfaces = flatten(orgs.map(o => get(o, 'org.orgsUuid_object.interfaces', [])));
+        const query = [
+          ...new Set(interfaces.map(i => `id==${i}`))
+        ].join(' or ');
+
+        return query ? { query } : null;
+      },
+      fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '1.0'),
       records: 'interfaces',
-      accumulate: true,
-      fetch: false,
-    },
-    invoiceLines: {
-      type: 'okapi',
-      path: 'invoice/invoice-lines',
-      records: 'invoiceLines',
-      fetch: false,
-      accumulate: true,
     },
     orderLines: {
       type: 'okapi',
       path: 'orders/order-lines',
-      params: {
-        query: 'agreementId==:{id}',
-        limit: '500',
+      params: (_q, _p, _r, _l, props) => {
+        const query = get(props.resources, 'agreementLines.records', [])
+          .filter(line => line.poLineId)
+          .map(line => `id==${line.poLineId}`)
+          .join(' or ');
+
+        return query ? { query } : null;
       },
-      records: 'poLines',
       fetch: props => !!props.stripes.hasInterface('orders', '6.0'),
+      records: 'poLines',
     },
     terms: {
       type: 'okapi',
@@ -70,9 +75,16 @@ class AgreementViewRoute extends React.Component {
     users: {
       type: 'okapi',
       path: 'users',
+      params: (_q, _p, _r, _l, props) => {
+        const query = get(props.resources, 'agreement.records[0].contacts', [])
+          .filter(contact => contact.user)
+          .map(contact => `id==${contact.user}`)
+          .join(' or ');
+
+        return query ? { query } : null;
+      },
+      fetch: props => !!props.stripes.hasInterface('users', '15.0'),
       records: 'users',
-      fetch: false,
-      accumulate: true,
     },
     agreementEresourcesCount: { initialValue: ERESOURCES_RESULTS_INTERVAL },
     query: {},
@@ -95,18 +107,9 @@ class AgreementViewRoute extends React.Component {
       agreementEresourcesCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
-      interfaces: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
-      }),
-      invoiceLines: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
-      }),
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
       }).isRequired,
-      users: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
-      }),
     }).isRequired,
     resources: PropTypes.shape({
       agreement: PropTypes.object,
@@ -114,7 +117,6 @@ class AgreementViewRoute extends React.Component {
       agreementEresources: PropTypes.object,
       agreementEresourcesCount: PropTypes.number,
       interfaces: PropTypes.object,
-      invoiceLines: PropTypes.object,
       orderLines: PropTypes.object,
       query: PropTypes.object,
       users: PropTypes.object,
@@ -128,80 +130,6 @@ class AgreementViewRoute extends React.Component {
 
   static defaultProps = {
     handlers: {},
-  }
-
-  componentDidMount() {
-    this.fetchInterfaces();
-    this.fetchInvoices();
-    this.fetchUsers();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { resources: prevResources } = prevProps;
-    const { resources: currResources } = this.props;
-
-    const prevId = get(prevResources, 'agreement.records[0].id');
-    const currId = get(currResources, 'agreement.records[0].id');
-    if (prevId !== currId) {
-      this.fetchInterfaces();
-      this.fetchInvoices();
-      this.fetchUsers();
-      return;
-    }
-
-    const prevOrgs = get(prevResources, 'agreement.records[0].orgs', []);
-    const currOrgs = get(currResources, 'agreement.records[0].orgs', []);
-    const newOrgs = difference(currOrgs, prevOrgs);
-    if (newOrgs.length) {
-      this.fetchInterfaces(newOrgs);
-    }
-
-    const prevOrderLines = get(prevResources, 'orderLines.records', []);
-    const currOrderLines = get(currResources, 'orderLines.records', []);
-    const newOrderLines = difference(currOrderLines, prevOrderLines);
-    if (newOrderLines.length) {
-      this.fetchInvoices(newOrderLines);
-    }
-
-    const prevContacts = get(prevResources, 'agreement.records[0].contacts', []);
-    const currContacts = get(currResources, 'agreement.records[0].contacts', []);
-    const newContacts = difference(currContacts, prevContacts);
-    if (newContacts.length) {
-      this.fetchUsers(newContacts);
-    }
-  }
-
-  fetchInterfaces = (newOrgs) => {
-    if (!this.props.stripes.hasInterface('organizations-storage.interfaces', '1.0')) return;
-
-    const orgs = newOrgs || get(this.props.resources, 'agreement.records[0].orgs', []);
-    const interfaces = flatten(orgs.map(o => get(o, 'org.orgsUuid_object.interfaces', [])));
-    const query = [
-      ...new Set(interfaces.map(i => `id==${i}`))
-    ].join(' or ');
-
-    if (!query) return;
-    this.props.mutator.interfaces.GET({ params: { query } });
-  }
-
-  fetchInvoices = (newOrderLines) => {
-    if (!this.props.stripes.hasInterface('invoice', '1.0')) return;
-
-    const orderLines = newOrderLines || get(this.props.resources, 'orderLines.records', []);
-    const query = orderLines.map(pol => `poLineId=${pol.id}`).join(' OR ');
-
-    if (!query) return;
-    this.props.mutator.invoiceLines.GET({ params: { query } });
-  }
-
-  fetchUsers = (newContacts) => {
-    if (!this.props.stripes.hasInterface('users', '15.0')) return;
-
-    const contacts = newContacts || get(this.props.resources, 'agreement.records[0].contacts', []);
-    const query = contacts.map(c => `id==${c.user}`).join(' or ');
-
-    if (!query) return;
-    this.props.mutator.users.GET({ params: { query } });
   }
 
   getCompositeAgreement = () => {
@@ -227,7 +155,6 @@ class AgreementViewRoute extends React.Component {
       contacts,
       eresources: get(resources, 'agreementEresources.records'),
       lines: get(resources, 'agreementLines.records'),
-      invoiceLines: get(resources, 'invoiceLines.records'),
       orderLines: get(resources, 'orderLines.records'),
       orgs,
     };

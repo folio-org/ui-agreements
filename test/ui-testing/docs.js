@@ -12,7 +12,7 @@ module.exports.test = (uiTestCtx,
 
     this.timeout(Number(config.test_timeout));
 
-    describe(`login > open agreements > create agreement > edit ${docsFieldName} > logout`, () => {
+    describe(`open agreements > create agreement > edit ${docsFieldName} > logout`, () => {
       before((done) => {
         helpers.login(nightmare, config, done);
       });
