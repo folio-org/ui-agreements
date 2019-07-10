@@ -54,20 +54,19 @@ module.exports.test = (uiTestCtx) => {
           .wait('[data-test-ag-line-number="0"] [data-test-plugin-find-po-line-button]')
           .click('[data-test-ag-line-number="0"] [data-test-plugin-find-po-line-button]')
           .waitUntilNetworkIdle(2000)
-          .wait('#list-plugin-find-po-line [aria-rowindex="2"] input[type="checkbox"]')
-          .click('#list-plugin-find-po-line [aria-rowindex="2"] input[type="checkbox"]')
+          .wait('#list-plugin-find-po-line [aria-rowindex="2"] a')
           .evaluate(() => {
             const row = document.querySelector('#list-plugin-find-po-line [aria-rowindex="2"] a');
             return {
-              poLineNumber: row.children[1].textContent,
-              title: row.children[2].textContent,
+              poLineNumber: row.children[0].textContent,
+              title: row.children[1].textContent,
             };
           })
           .then(selectedPOLine => {
             poLine = { ...selectedPOLine };
 
             nightmare
-              .click('[data-test-find-po-line-modal-save]')
+              .click('#list-plugin-find-po-line [aria-rowindex="2"] a')
               .wait('#clickable-unlink-poline-0')
               .evaluate(_selectedPOLine => {
                 const header = document.querySelector('#edit-poline-card-0 [data-test-card-header-start]').innerText;
