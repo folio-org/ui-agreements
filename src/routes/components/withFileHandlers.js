@@ -35,7 +35,7 @@ export default function withFileHandlers(WrappedComponent) {
           'X-Okapi-Token': okapi.token,
         },
         body: formData,
-      }).then(response => response.json());
+      });
     }
 
     handleDeleteFile = (file) => {
