@@ -4,7 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'redux-form';
 
 import { Accordion } from '@folio/stripes/components';
-import AgreementLinesFieldArray from './components/AgreementLinesFieldArray';
+
+import AgreementLinesFieldArray from '../AgreementLinesFieldArray';
 
 export default class FormLines extends React.Component {
   static propTypes = {
