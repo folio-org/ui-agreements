@@ -190,5 +190,14 @@
     "finances.none": "لا يوجد للاتفاقية خطوط أمر شراء",
     "organizations.addOrganizationToAgreement": "إضافة مؤسسة إلى اتفاقية",
     "eresource": "المورد الإلكتروني",
-    "eresourcePluralizable": "{count} {count, plural, one {مورد إلكتروني} other {مورد إلكتروني}}"
+    "eresourcePluralizable": "{count} {count, plural, one {مورد إلكتروني} other {مورد إلكتروني}}",
+    "poLines.acqMethod": "طريقة التزويد",
+    "poLines.addPOLine": "إضافة خط أمر شراء",
+    "poLines.addPOLineToStart": "إضافة خط أمر شراء للبدء",
+    "poLines.noPOLineAdded": "لم تتم إضافة خط أمر شراء",
+    "poLines.noPOLinePlugin": "لم يتم تثبيت برنامج \"العثور على خط أمر الشراء\" المساعد",
+    "poLines.poLine": "خط أمر الشراء",
+    "poLines.poLineWithNumber": "خط أمر الشراء: {poLineNumber}",
+    "poLines.title": "العنوان في خط أمر الشراء",
+    "poLines.unlinkPOLine": "إلغاء ربط خط أمر الشراء"
 }
