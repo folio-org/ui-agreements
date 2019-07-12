@@ -29,6 +29,7 @@ import {
   Organizations,
   SupplementaryInfo,
   Terms,
+  UsageData,
 } from '../AgreementSections';
 
 import { urls } from '../utilities';
@@ -58,6 +59,7 @@ export default class Agreement extends React.Component {
       organizations: false,
       supplementaryInfo: false,
       terms: false,
+      usageData: false,
     },
   }
 
@@ -200,6 +202,7 @@ export default class Agreement extends React.Component {
               <Organizations {...this.getSectionProps('organizations')} />
               <Lines {...this.getSectionProps('lines')} />
               <SupplementaryInfo {...this.getSectionProps('supplementaryInfo')} />
+              <UsageData {...this.getSectionProps('usageData')} />
               <NotesSmartAccordion
                 {...this.getSectionProps('notes')}
                 domainName="agreements"

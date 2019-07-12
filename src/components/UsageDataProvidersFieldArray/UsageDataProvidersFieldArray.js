@@ -44,7 +44,7 @@ class UsageDataProvidersFieldArray extends React.Component {
   renderUDPFields = (items) => {
     return items.map((udp, index) => (
       <EditCard
-        header={<FormattedMessage id="ui-agreements.usageData.usageDataProviderIndex" values={{ index }} />}
+        header={<FormattedMessage id="ui-agreements.usageData.usageDataProviderIndex" values={{ index: index + 1 }} />}
         id={`edit-udp-card-${index}`}
         key={index}
         onDelete={() => this.props.onDeleteField(index, udp)}
