@@ -147,7 +147,7 @@ class AgreementViewRoute extends React.Component {
     const orgs = agreement.orgs.map(o => ({
       ...o,
       interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
-        .map(id => this.getRecord(id, 'interfaces') || id)
+        .map(id => this.getRecord(id, 'interfaces') || {})
     }));
 
     return {
@@ -191,6 +191,14 @@ class AgreementViewRoute extends React.Component {
   handleEdit = () => {
     const { location, match } = this.props;
     this.props.history.push(`${urls.agreementEdit(match.params.id)}${location.search}`);
+  }
+
+  handleExportEResourcesAsJSON = () => {
+    console.log('handleExportEResourcesAsJSON()');
+  }
+
+  handleExportEResourcesAsKBART = () => {
+    console.log('handleExportEResourcesAsKBART()');
   }
 
   handleNeedMoreEResources = () => {
@@ -237,6 +245,8 @@ class AgreementViewRoute extends React.Component {
           ...handlers,
           onClose: this.handleClose,
           onEdit: this.handleEdit,
+          onExportEResourcesAsJSON: this.handleExportEResourcesAsJSON,
+          onExportEResourcesAsKBART: this.handleExportEResourcesAsKBART,
           onNeedMoreEResources: this.handleNeedMoreEResources,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
