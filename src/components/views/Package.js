@@ -52,6 +52,7 @@ export default class Package extends React.Component {
       <div id="package">
         <PackageInfo data={data} />
         <Agreements data={data} />
+        <PackageContents data={data} />
         <NotesSmartAccordion
           {...this.getSectionProps('notes')}
           domainName="agreements"
@@ -61,7 +62,6 @@ export default class Package extends React.Component {
           pathToNoteCreate={urls.noteCreate()}
           pathToNoteDetails={urls.notes()}
         />
-        <PackageContents data={data} />
       </div>
     );
   }
