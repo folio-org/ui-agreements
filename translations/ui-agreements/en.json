@@ -149,6 +149,7 @@
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
   "errors.multipleOpenEndedCoverages": "Cannot have multiple open-ended coverage statements.",
   "errors.overlappingCoverage": "The following coverages have overlapping dates: {coverages}",
+  "errors.undefinedUDP": "A Usage Data Provider must be selected.",
   "errors.unsetAgreementLines": "Select a resource and create this line, or delete it to continue.",
 
   "finances.none": "Agreement has no order lines.",
@@ -213,6 +214,17 @@
   "poLines.poLineWithNumber": "PO line: {poLineNumber}",
   "poLines.title": "Title in PO line",
   "poLines.unlinkPOLine": "Unlink PO line",
+
+  "usageData": "Usage data",
+  "usageData.addUDP": "Add usage data provider",
+  "usageData.addUDPToStart": "Add a usage data provider to get started",
+  "usageData.agreementHasNone": "Agreement has no usage data providers.",
+  "usageData.noUDPAdded": "No usage data providers added",
+  "usageData.noUDPPlugin": "No \"find-erm-usage-data-provider\" plugin is installed",
+  "usageData.unlinkUDP": "Unlink usage data provider",
+  "usageData.usageDataProvider": "Usage data provider",
+  "usageData.usageDataProviderIndex": "Usage data provider {index}",
+  "usageData.note": "Note",
 
   "supplementaryInfo.agreementHasNone": "Agreement has no supplementary info",
   "supplementaryInfo.addSupplementaryInfo": "Add supplementary information to agreement",

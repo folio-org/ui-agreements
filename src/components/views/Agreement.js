@@ -20,7 +20,6 @@ import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import { Spinner } from '@folio/stripes-erm-components';
 
 import {
-  Finances,
   Header,
   Info,
   InternalContacts,
@@ -29,6 +28,7 @@ import {
   Organizations,
   SupplementaryInfo,
   Terms,
+  UsageData,
 } from '../AgreementSections';
 
 import { urls } from '../utilities';
@@ -50,7 +50,6 @@ export default class Agreement extends React.Component {
 
   state = {
     sections: {
-      finances: false,
       internalContacts: false,
       licenses: false,
       lines: false,
@@ -58,6 +57,7 @@ export default class Agreement extends React.Component {
       organizations: false,
       supplementaryInfo: false,
       terms: false,
+      usageData: false,
     },
   }
 
@@ -190,16 +190,20 @@ export default class Agreement extends React.Component {
             <AccordionSet>
               <Row end="xs">
                 <Col xs>
-                  <ExpandAllButton accordionStatus={this.state.sections} onToggle={this.handleAllSectionsToggle} />
+                  <ExpandAllButton
+                    accordionStatus={this.state.sections}
+                    id="clickable-expand-all"
+                    onToggle={this.handleAllSectionsToggle}
+                  />
                 </Col>
               </Row>
               <InternalContacts {...this.getSectionProps('internalContacts')} />
-              <Finances {...this.getSectionProps('finances')} />
+              <Lines {...this.getSectionProps('lines')} />
               <Licenses {...this.getSectionProps('licenses')} />
               <Terms {...this.getSectionProps('terms')} />
               <Organizations {...this.getSectionProps('organizations')} />
-              <Lines {...this.getSectionProps('lines')} />
               <SupplementaryInfo {...this.getSectionProps('supplementaryInfo')} />
+              <UsageData {...this.getSectionProps('usageData')} />
               <NotesSmartAccordion
                 {...this.getSectionProps('notes')}
                 domainName="agreements"

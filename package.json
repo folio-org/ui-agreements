@@ -17,7 +17,7 @@
     "test": "stripes test nightmare --run nav/agreement-crud/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/notes-crud/package-notes/title-notes",
     "test-erm": "stripes test nightmare --run nav/agreement-crud/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/notes-crud/package-notes/title-notes/linked-licenses/license-terms",
     "test-licenses-int": "stripes test nightmare --run linked-licenses/license-terms",
-    "test-folio-int": "stripes test nightmare --run ekb-int/po-lines",
+    "test-folio-int": "stripes test nightmare --run ekb-int/po-lines/eusage",
 
     "test-nav": "stripes test nightmare --run nav",
     "test-agreement-crud": "stripes test nightmare --run agreement-crud",
@@ -38,6 +38,7 @@
 
     "test-ekb-int": "stripes test nightmare --run ekb-int",
     "test-po-lines": "stripes test nightmare --run po-lines",
+    "test-eusage": "stripes test nightmare --run eusage",
 
     "lint": "eslint src"
   },
