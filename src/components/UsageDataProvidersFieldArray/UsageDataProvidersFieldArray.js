@@ -5,6 +5,7 @@ import { Field } from 'redux-form';
 import { Button, Layout, TextArea } from '@folio/stripes/components';
 import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
+import { validators } from '../utilities';
 import UsageDataProviderField from './UsageDataProviderField';
 
 class UsageDataProvidersFieldArray extends React.Component {
@@ -13,6 +14,7 @@ class UsageDataProvidersFieldArray extends React.Component {
     name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
     onDeleteField: PropTypes.func.isRequired,
+    onMarkforDeletion: PropTypes.func.isRequired,
     onReplaceField: PropTypes.func.isRequired,
   };
 
@@ -31,8 +33,13 @@ class UsageDataProvidersFieldArray extends React.Component {
     }));
   }
 
-  handleUDPUnselected = (index) => {
-    this.props.onReplaceField(index, { remoteId: null });
+  handleUDPUnselected = (index, udp) => {
+    /* handleUDPUnselected should mark the UDP to be deleted once we update the form.
+    onMarkforDeletion does that job. It pushes the {id: id, _delete: true) into the fields array
+    and on update would actually delete the field. onReplaceField takes care
+    of replacing the linked UDP UI with the default Add UDP UI */
+    this.props.onMarkforDeletion(udp);
+    this.props.onReplaceField(index, {});
   }
 
   renderEmpty = () => (
@@ -55,8 +62,9 @@ class UsageDataProvidersFieldArray extends React.Component {
           index={index}
           name={`${this.props.name}[${index}].remoteId`}
           onUDPSelected={selectedUDP => this.handleUDPSelected(index, selectedUDP)}
-          onUDPUnselected={() => this.handleUDPUnselected(index)}
+          onUDPUnselected={() => this.handleUDPUnselected(index, udp)}
           udp={this.state.udps[udp.remoteId] || udp.remoteId_object}
+          validate={validators.required}
         />
         <Field
           component={TextArea}

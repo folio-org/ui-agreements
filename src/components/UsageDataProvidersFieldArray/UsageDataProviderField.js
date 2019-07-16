@@ -8,6 +8,8 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
 
+import css from './UsageDataProviderField.css';
+
 export default class UsageDataProviderField extends React.Component {
   static propTypes = {
     id: PropTypes.string,
@@ -15,6 +17,9 @@ export default class UsageDataProviderField extends React.Component {
     input: PropTypes.shape({
       onChange: PropTypes.func.isRequired,
       value: PropTypes.string,
+    }).isRequired,
+    meta: PropTypes.shape({
+      error: PropTypes.node,
     }).isRequired,
     onUDPSelected: PropTypes.func.isRequired,
     onUDPUnselected: PropTypes.func.isRequired,
@@ -85,8 +90,20 @@ export default class UsageDataProviderField extends React.Component {
     </div>
   )
 
+  renderError = () => (
+    <Layout className={`textCentered ${css.error}`}>
+      <strong>
+        {this.props.meta.error}
+      </strong>
+    </Layout>
+  )
+
   render() {
-    const { id, input: { value } } = this.props;
+    const {
+      id,
+      input: { value },
+      meta: { error, touched }
+    } = this.props;
 
     return (
       <Card
@@ -102,6 +119,7 @@ export default class UsageDataProviderField extends React.Component {
         roundedBorder
       >
         { value ? this.renderUDP() : this.renderEmpty() }
+        { touched && error ? this.renderError() : null }
       </Card>
     );
   }
