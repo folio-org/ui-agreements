@@ -52,6 +52,7 @@ export default class Title extends React.Component {
       <div id="package">
         <TitleInfo data={data} />
         <Agreements data={data} />
+        <AcquisitionOptions data={data} />
         <NotesSmartAccordion
           {...this.getSectionProps('notes')}
           domainName="agreements"
@@ -61,7 +62,6 @@ export default class Title extends React.Component {
           pathToNoteCreate={urls.noteCreate()}
           pathToNoteDetails={urls.notes()}
         />
-        <AcquisitionOptions data={data} />
       </div>
     );
   }
