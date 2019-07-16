@@ -199,6 +199,7 @@ class AgreementForm extends React.Component {
                         <Col xs>
                           <ExpandAllButton
                             accordionStatus={this.state.sections}
+                            id="clickable-expand-all"
                             onToggle={this.handleAllSectionsToggle}
                           />
                         </Col>

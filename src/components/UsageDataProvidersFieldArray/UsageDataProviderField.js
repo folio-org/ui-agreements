@@ -69,7 +69,7 @@ export default class UsageDataProviderField extends React.Component {
     const { udp } = this.props;
 
     return (
-      <div>
+      <div data-test-udp-card-name>
         <AppIcon app="erm-usage" size="small">
           <strong>{udp.label}</strong>
         </AppIcon>

@@ -190,7 +190,11 @@ export default class Agreement extends React.Component {
             <AccordionSet>
               <Row end="xs">
                 <Col xs>
-                  <ExpandAllButton accordionStatus={this.state.sections} onToggle={this.handleAllSectionsToggle} />
+                  <ExpandAllButton
+                    accordionStatus={this.state.sections}
+                    id="clickable-expand-all"
+                    onToggle={this.handleAllSectionsToggle}
+                  />
                 </Col>
               </Row>
               <InternalContacts {...this.getSectionProps('internalContacts')} />

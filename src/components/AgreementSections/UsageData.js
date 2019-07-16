@@ -37,7 +37,10 @@ export default class UsageData extends React.Component {
         hasMargin
         headerStart={(
           <AppIcon app="erm-usage" size="small">
-            <Link to={`/eusage/view/${udp.remoteId}`}>
+            <Link
+              data-test-udp-link
+              to={`/eusage/view/${udp.remoteId}`}
+            >
               {get(udp, 'remoteId_object.label', udp.remoteId)}
             </Link>
           </AppIcon>
