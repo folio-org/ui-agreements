@@ -7,12 +7,12 @@ import { Field, FieldArray } from 'redux-form';
 import { Col, KeyValue, Row } from '@folio/stripes/components';
 import { EditCard } from '@folio/stripes-erm-components';
 
-import BasketSelector from '../../BasketSelector';
-import EResourceLink from '../../EResourceLink';
-import EResourceCount from '../../EResourceCount';
-import EResourceProvider from '../../EResourceProvider';
-import EResourceType from '../../EResourceType';
-import { isExternal, isPackage } from '../../utilities';
+import BasketSelector from '../BasketSelector';
+import EResourceLink from '../EResourceLink';
+import EResourceCount from '../EResourceCount';
+import EResourceProvider from '../EResourceProvider';
+import EResourceType from '../EResourceType';
+import { isExternal, isPackage } from '../utilities';
 
 import CustomCoverageFieldArray from './CustomCoverageFieldArray';
 import POLineField from './POLineField';

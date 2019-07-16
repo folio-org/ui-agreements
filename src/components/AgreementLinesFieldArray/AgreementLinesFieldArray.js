@@ -6,9 +6,10 @@ import { Field } from 'redux-form';
 import { Button, Layout } from '@folio/stripes/components';
 import { withKiwtFieldArray } from '@folio/stripes-erm-components';
 
+import IfEResourcesEnabled from '../IfEResourcesEnabled';
+import { isExternal } from '../utilities';
+
 import AgreementLineField from './AgreementLineField';
-import IfEResourcesEnabled from '../../IfEResourcesEnabled';
-import { isExternal } from '../../utilities';
 
 class AgreementLinesFieldArray extends React.Component {
   static propTypes = {

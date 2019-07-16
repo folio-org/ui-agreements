@@ -27,6 +27,7 @@ import {
   FormLines,
   FormOrganizations,
   FormSupplementaryInfo,
+  FormUsageData,
 } from '../AgreementSections';
 
 import css from './AgreementForm.css';
@@ -59,6 +60,7 @@ class AgreementForm extends React.Component {
       formLicenses: false,
       formOrganizations: false,
       formSupplementaryInfo: false,
+      formUsageProviders: false,
     }
   }
 
@@ -197,6 +199,7 @@ class AgreementForm extends React.Component {
                         <Col xs>
                           <ExpandAllButton
                             accordionStatus={this.state.sections}
+                            id="clickable-expand-all"
                             onToggle={this.handleAllSectionsToggle}
                           />
                         </Col>
@@ -207,6 +210,7 @@ class AgreementForm extends React.Component {
                       <FormLicenses {...this.getSectionProps('formLicenses')} />
                       <FormOrganizations {...this.getSectionProps('formOrganizations')} />
                       <FormSupplementaryInfo {...this.getSectionProps('formSupplementaryInfo')} />
+                      <FormUsageData {...this.getSectionProps('formUsageProviders')} />
                     </AccordionSet>
                   </div>
                 </form>

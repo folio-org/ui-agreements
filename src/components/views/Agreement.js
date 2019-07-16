@@ -28,6 +28,7 @@ import {
   Organizations,
   SupplementaryInfo,
   Terms,
+  UsageData,
 } from '../AgreementSections';
 
 import { urls } from '../utilities';
@@ -56,6 +57,7 @@ export default class Agreement extends React.Component {
       organizations: false,
       supplementaryInfo: false,
       terms: false,
+      usageData: false,
     },
   }
 
@@ -188,7 +190,11 @@ export default class Agreement extends React.Component {
             <AccordionSet>
               <Row end="xs">
                 <Col xs>
-                  <ExpandAllButton accordionStatus={this.state.sections} onToggle={this.handleAllSectionsToggle} />
+                  <ExpandAllButton
+                    accordionStatus={this.state.sections}
+                    id="clickable-expand-all"
+                    onToggle={this.handleAllSectionsToggle}
+                  />
                 </Col>
               </Row>
               <InternalContacts {...this.getSectionProps('internalContacts')} />
@@ -197,6 +203,7 @@ export default class Agreement extends React.Component {
               <Terms {...this.getSectionProps('terms')} />
               <Organizations {...this.getSectionProps('organizations')} />
               <SupplementaryInfo {...this.getSectionProps('supplementaryInfo')} />
+              <UsageData {...this.getSectionProps('usageData')} />
               <NotesSmartAccordion
                 {...this.getSectionProps('notes')}
                 domainName="agreements"
