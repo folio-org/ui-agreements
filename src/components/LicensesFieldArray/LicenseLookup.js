@@ -29,6 +29,7 @@ export default class LicenseLookup extends React.Component {
     return (
       <span>
         <Pluggable
+          dataKey={id}
           type="find-license"
           onLicenseSelected={onSelectLicense}
           renderTrigger={(props) => (
