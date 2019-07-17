@@ -52,8 +52,6 @@ module.exports.test = (uiTestCtx) => {
             .insert('#edit-license-name', l.name)
             .insert('#edit-license-start-date', l.startDate)
 
-            .click('#accordion-toggle-button-licenseFormTerms')
-
             .then(done)
             .catch(done);
         });
