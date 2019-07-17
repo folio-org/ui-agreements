@@ -52,8 +52,6 @@ module.exports.test = (uiTestCtx) => {
             .insert('#edit-license-name', l.name)
             .insert('#edit-license-start-date', l.startDate)
 
-            .click('#accordion-toggle-button-licenseFormTerms')
-
             .then(done)
             .catch(done);
         });
@@ -135,13 +133,12 @@ module.exports.test = (uiTestCtx) => {
         AgreementCRUD.createAgreement(nightmare, done, agreement);
       });
 
-      it('should open edit agreement page and open licenses accordion', done => {
+      it('should open edit agreement page', done => {
         nightmare
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
-          .wait('[data-test-edit-agreement-info]')
+          .wait('#formLicenses')
           .waitUntilNetworkIdle(1000)
-          .click('#accordion-toggle-button-formLicenses')
           .then(done)
           .catch(done);
       });

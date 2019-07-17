@@ -43,8 +43,6 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
-          .wait('#accordion-toggle-button-formLines')
-          .click('#accordion-toggle-button-formLines')
           .then(done)
           .catch(done);
       });

@@ -39,7 +39,6 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
 
   if (resourceId) {
     chain = chain
-      .click('#accordion-toggle-button-formLines')
       .click('#add-agreement-line-button')
       .click('#basket-selector')
       .click(`[id*="${resourceId}"]`)

@@ -115,10 +115,7 @@ module.exports.test = (uiTestCtx) => {
           .click('#clickable-nav-agreements')
           .wait('#clickable-new-agreement')
           .click('#clickable-new-agreement')
-          .waitUntilNetworkIdle(1000)
-          .wait('#accordion-toggle-button-formOrganizations')
-          .click('#accordion-toggle-button-formOrganizations')
-          .waitUntilNetworkIdle(1000)
+          .waitUntilNetworkIdle(2000)
           .wait('#edit-agreement-name')
           .insert('#edit-agreement-name', agreementName)
           .click('#edit-agreement-start-date')
@@ -275,22 +272,20 @@ module.exports.test = (uiTestCtx) => {
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
           .waitUntilNetworkIdle(2000)
-          .wait('#accordion-toggle-button-formOrganizations')
-          .click('#accordion-toggle-button-formOrganizations')
           .then(done)
           .catch(done);
       });
 
       it(`should find "${org.name}" in Organizations list with role ${org.role}`, done => {
         nightmare
-          .evaluate((org, name) => {
+          .evaluate((_org, _orgName) => {
             const rows = [...document.querySelectorAll('[data-test-organizations-org]')].map(e => e.textContent);
-            const row = rows.find(r => r.indexOf(name) >= 0);
-            if (!row) {
-              throw Error(`Could not find row with an org named ${name}`);
+            const _row = rows.find(r => r.indexOf(_orgName) >= 0);
+            if (!_row) {
+              throw Error(`Could not find row with an org named ${_orgName}`);
             }
-            if (row.indexOf(org.role) < 0) {
-              throw Error(`Expected row for "${name}" to contain role ${org.role}.`);
+            if (_row.indexOf(_org.role) < 0) {
+              throw Error(`Expected row for "${_orgName}" to contain role ${_org.role}.`);
             }
           }, org, orgName)
           .then(done)

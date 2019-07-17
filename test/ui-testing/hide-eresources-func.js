@@ -75,11 +75,7 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
-          .wait('#accordion-toggle-button-formLines')
-          .click('#accordion-toggle-button-formLines')
-          .evaluate(() => {
-            if (!document.getElementById('add-agreement-line-button')) throw Error('Failed to find "Add Agreement Line" button');
-          })
+          .wait('#add-agreement-line-button')
           .then(done)
           .catch(done);
       });
@@ -110,8 +106,7 @@ module.exports.test = (uiTestCtx) => {
 
       it('should not see "Add Agreement Line" button', done => {
         nightmare
-          .wait('#accordion-toggle-button-formLines')
-          .click('#accordion-toggle-button-formLines')
+          .wait('#formLines')
           .waitUntilNetworkIdle(1000)
           .evaluate(() => {
             if (document.getElementById('add-agreement-line-button')) throw Error('Found unexpected "Add Agreement Line" button');
