@@ -111,7 +111,9 @@ export default class UsageDataProviderField extends React.Component {
         hasMargin
         headerStart={(
           <AppIcon app="erm-usage" size="small">
-            <FormattedMessage id="ui-agreements.usageData.usageDataProvider" />
+            <strong>
+              <FormattedMessage id="ui-agreements.usageData.usageDataProvider" />
+            </strong>
           </AppIcon>
         )}
         headerEnd={value ? this.renderUnlinkUDPButton() : this.renderLinkUDPButton()}

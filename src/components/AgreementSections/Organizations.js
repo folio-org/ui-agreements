@@ -46,15 +46,12 @@ export default class Organizations extends React.Component {
           key={`${org.orgsUuid}-${role.value}`}
           headerStart={
             <span>
-              <AppIcon
-                app="organizations"
-                size="small"
-              />
-              &nbsp;
-              <Link to={`/organizations/view/${org.orgsUuid}`}>
-                {org.name}
-              </Link>
-              {` · ${role.label}`}
+              <AppIcon app="organizations" size="small">
+                <Link to={`/organizations/view/${org.orgsUuid}`}>
+                  {org.name}
+                </Link>
+                {` · ${role.label}`}
+              </AppIcon>
             </span>
           }
           interfaces={interfaces}

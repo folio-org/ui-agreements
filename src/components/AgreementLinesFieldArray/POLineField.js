@@ -123,14 +123,14 @@ export default class POLineField extends React.Component {
         hasMargin
         headerStart={(
           <span>
-            <AppIcon app="orders" size="small" />
-            &nbsp;
-            <strong>
-              { value ?
-                <FormattedMessage id="ui-agreements.poLines.poLineWithNumber" values={this.state.poLine} /> :
-                <FormattedMessage id="ui-agreements.poLines.poLine" />
-              }
-            </strong>
+            <AppIcon app="orders" size="small">
+              <strong>
+                { value ?
+                  <FormattedMessage id="ui-agreements.poLines.poLineWithNumber" values={this.state.poLine} /> :
+                  <FormattedMessage id="ui-agreements.poLines.poLine" />
+                }
+              </strong>
+            </AppIcon>
           </span>
         )}
         headerEnd={value ? this.renderUnlinkPOLineButton() : this.renderLinkPOLineButton()}
