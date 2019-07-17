@@ -62,7 +62,6 @@ module.exports.test = (uiTestCtx) => {
 
           it('should have auto-added agreement line with information', done => {
             nightmare
-              .click('#accordion-toggle-button-formLines')
               .evaluate(expected => {
                 if (!document.querySelector('[data-test-ag-line-number]')) {
                   throw Error(`Failed to find expected agreement line for "${expected.referenceId}".`);

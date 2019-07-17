@@ -55,12 +55,12 @@ class AgreementForm extends React.Component {
 
   state = {
     sections: {
-      formInternalContacts: false,
-      formLines: false,
-      formLicenses: false,
-      formOrganizations: false,
-      formSupplementaryInfo: false,
-      formUsageProviders: false,
+      formInternalContacts: true,
+      formLines: true,
+      formLicenses: true,
+      formOrganizations: true,
+      formSupplementaryInfo: true,
+      formUsageProviders: true,
     }
   }
 

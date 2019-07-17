@@ -50,10 +50,7 @@ module.exports.test = (uiTestCtx) => {
           .click('#clickable-nav-agreements')
           .wait('#clickable-new-agreement')
           .click('#clickable-new-agreement')
-          .waitUntilNetworkIdle(1000)
-          .wait('#accordion-toggle-button-formOrganizations')
-          .click('#accordion-toggle-button-formOrganizations')
-          .waitUntilNetworkIdle(1000)
+          .waitUntilNetworkIdle(2000)
           .wait('#edit-agreement-name')
           .insert('#edit-agreement-name', name)
           .click('#edit-agreement-start-date')
@@ -152,9 +149,7 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
-          .wait('#accordion-toggle-button-formOrganizations')
-          .click('#accordion-toggle-button-formOrganizations')
-          .waitUntilNetworkIdle(1000)
+          .waitUntilNetworkIdle(2000)
           .then(done)
           .catch(done);
       });

@@ -4,7 +4,7 @@ const generateNumber = () => Math.round(Math.random() * 100000);
 
 module.exports.test = (uiTestCtx,
   {
-    docs, editedDoc, deletedDoc, docsFieldName, formName
+    docs, editedDoc, deletedDoc, docsFieldName
   }) => {
   describe(`ui-agreements: set ${docsFieldName}: "${docs.map(d => d.name).join(', ')}"`, function test() {
     const { config, helpers } = uiTestCtx;
@@ -40,8 +40,6 @@ module.exports.test = (uiTestCtx,
           .click('#edit-agreement-start-date')
           .type('#edit-agreement-start-date', '\u000d') // "Enter" selects current date
           .type('#edit-agreement-status', 'active')
-
-          .click(`#accordion-toggle-button-${formName}`)
 
           .then(done)
           .catch(done);
@@ -130,7 +128,6 @@ module.exports.test = (uiTestCtx,
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
           .wait('[data-test-edit-agreement-info]')
-          .click(`#accordion-toggle-button-${formName}`)
           .waitUntilNetworkIdle(2000)
           .then(done)
           .catch(done);

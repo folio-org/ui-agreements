@@ -175,8 +175,6 @@ module.exports.test = (uiTestCtx) => {
           nightmare
             .click('#basket-contents [class*=mclScrollable] [aria-rowindex="3"] input[type=checkbox]')
             .click('[data-test-basket-create-agreement]')
-            .wait('#accordion-toggle-button-formLines')
-            .click('#accordion-toggle-button-formLines')
 
             // Ensure two agreement lines (0 and 1) has been auto-added for the basket item
             .wait('#agreement-form-lines [data-test-ag-line-number="1"]')
@@ -237,9 +235,6 @@ module.exports.test = (uiTestCtx) => {
             .click('[data-test-basket-add-to-agreement]')
 
             .wait('#form-agreement')
-            .wait('#accordion-toggle-button-formLines')
-            .click('#accordion-toggle-button-formLines')
-
             .wait(() => {
               const resources = document.querySelectorAll('#agreement-form-lines [data-test-ag-line-number]');
               return resources.length === 3;
