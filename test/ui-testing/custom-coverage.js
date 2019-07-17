@@ -146,9 +146,7 @@ module.exports.test = (uiTestCtx) => {
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
           .wait('[data-test-edit-agreement-info]')
-          .waitUntilNetworkIdle(2000)
-
-          .click('#accordion-toggle-button-formLines');
+          .waitUntilNetworkIdle(2000);
 
         values.coverage.forEach((coverage, i) => {
           chain = chain
@@ -199,8 +197,6 @@ module.exports.test = (uiTestCtx) => {
           .click('#clickable-edit-agreement')
           .wait('[data-test-edit-agreement-info]')
           .waitUntilNetworkIdle(2000)
-
-          .click('#accordion-toggle-button-formLines')
 
           .evaluate((expectedValues) => {
             const checkInput = (id, value) => {

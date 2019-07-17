@@ -75,8 +75,7 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
-          .wait('[data-test-edit-agreement-info]')
-          .click('#accordion-toggle-button-formLicenses')
+          .wait('#formLicenses')
           .then(done)
           .catch(done);
       });
