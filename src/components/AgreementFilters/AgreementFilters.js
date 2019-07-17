@@ -147,7 +147,7 @@ export default class AgreementFilters extends React.Component {
       <Accordion
         closedByDefault
         id="clickable-tags-filter"
-        displayClearButton={activeFilters.length > 0}
+        displayClearButton={tagFilters.length > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-agreements.agreements.tags" />}
         onClearFilter={() => { this.props.filterHandlers.clearGroup('tags'); }}
