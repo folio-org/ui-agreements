@@ -199,5 +199,16 @@
     "poLines.poLine": "PO line",
     "poLines.poLineWithNumber": "PO line: {poLineNumber}",
     "poLines.title": "Title in PO line",
-    "poLines.unlinkPOLine": "Unlink PO line"
+    "poLines.unlinkPOLine": "Unlink PO line",
+    "errors.undefinedUDP": "A Usage Data Provider must be selected.",
+    "usageData": "Usage data",
+    "usageData.addUDP": "Add usage data provider",
+    "usageData.addUDPToStart": "Add a usage data provider to get started",
+    "usageData.agreementHasNone": "Agreement has no usage data providers.",
+    "usageData.noUDPAdded": "No usage data providers added",
+    "usageData.noUDPPlugin": "No \"find-erm-usage-data-provider\" plugin is installed",
+    "usageData.unlinkUDP": "Unlink usage data provider",
+    "usageData.usageDataProvider": "Usage data provider",
+    "usageData.usageDataProviderIndex": "Usage data provider {index}",
+    "usageData.note": "Note"
 }

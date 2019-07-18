@@ -199,5 +199,16 @@
     "poLines.poLine": "Linha do pedido",
     "poLines.poLineWithNumber": "Linha do pedido: {poLineNumber}",
     "poLines.title": "Título na linha de pedido",
-    "poLines.unlinkPOLine": "Desvincular linha de pedido"
+    "poLines.unlinkPOLine": "Desvincular linha de pedido",
+    "errors.undefinedUDP": "Um provedor de dados de uso deve ser selecionado.",
+    "usageData": "Dados de uso",
+    "usageData.addUDP": "Adicionar provedor de dados de uso",
+    "usageData.addUDPToStart": "Adicione um provedor de dados de uso para começar",
+    "usageData.agreementHasNone": "O contrato não tem provedores de dados de uso.",
+    "usageData.noUDPAdded": "Nenhum provedor de dados de uso foi adicionado",
+    "usageData.noUDPPlugin": "Nenhum plugin \"procurar-provedor-de-dados-de-usp\" está instalado",
+    "usageData.unlinkUDP": "Desvincular o provedor de dados de uso",
+    "usageData.usageDataProvider": "Provedor de dados de uso",
+    "usageData.usageDataProviderIndex": "Provedor de dados de uso {index}",
+    "usageData.note": "Nota"
 }
