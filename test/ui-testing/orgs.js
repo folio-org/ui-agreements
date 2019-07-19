@@ -102,30 +102,30 @@ module.exports.test = (uiTestCtx) => {
             .catch(done);
         });
 
-      it(`should assign role: ${org.role}`, done => {
+        it(`should assign role: ${org.role}`, done => {
+          nightmare
+            .wait(`#orgs-role-${row}`)
+            .click(`#orgs-role-${row}`)
+            .type(`#orgs-role-${row}`, org.role)
+            .evaluate((r, o) => {
+              const roleElement = document.querySelector(`#orgs-role-${r}`);
+              const role = roleElement.selectedOptions[0].textContent;
+              if (role !== o.role) {
+                throw Error(`Expected role to be ${o.role} but is ${role}`);
+              }
+            }, row, org)
+            .then(done)
+            .catch(done);
+        });
+      });
+
+      it('should create Agreement', done => {
         nightmare
-          .wait(`#orgs-role-${row}`)
-          .click(`#orgs-role-${row}`)
-          .type(`#orgs-role-${row}`, org.role)
-          .evaluate((r, o) => {
-            const roleElement = document.querySelector(`#orgs-role-${r}`);
-            const role = roleElement.selectedOptions[0].textContent;
-            if (role !== o.role) {
-              throw Error(`Expected role to be ${o.role} but is ${role}`);
-            }
-          }, row, org)
+          .click('#clickable-create-agreement')
+          .waitUntilNetworkIdle(2000) // Wait for record to be fetched
           .then(done)
           .catch(done);
       });
-    });
-
-    it('should create Agreement', done => {
-      nightmare
-        .click('#clickable-create-agreement')
-        .waitUntilNetworkIdle(2000) // Wait for record to be fetched
-        .then(done)
-        .catch(done);
-    });
 
       orgs.forEach(org => {
         it(`should find "${org.name}" in Organizations list with role ${org.role}`, done => {
