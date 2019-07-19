@@ -124,6 +124,11 @@ class AgreementViewRoute extends React.Component {
     stripes: PropTypes.shape({
       hasInterface: PropTypes.func.isRequired,
       hasPerm: PropTypes.func.isRequired,
+      okapi: PropTypes.shape({
+        tenant: PropTypes.string.isRequired,
+        token: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
+      }).isRequired,
     }).isRequired,
     tagsEnabled: PropTypes.bool,
   };
@@ -194,11 +199,28 @@ class AgreementViewRoute extends React.Component {
   }
 
   handleExportEResourcesAsJSON = () => {
-    console.log('handleExportEResourcesAsJSON()');
+    const { resources, stripes: { okapi } } = this.props;
+    const { id, name } = get(resources, 'agreement.records[0]', {});
+
+    return fetch(`${okapi.url}/sas/${id}/export`, {
+      headers: {
+        'X-Okapi-Tenant': okapi.tenant,
+        'X-Okapi-Token': okapi.token,
+      },
+    }).then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      });
   }
 
   handleExportEResourcesAsKBART = () => {
-    console.log('handleExportEResourcesAsKBART()');
+
   }
 
   handleNeedMoreEResources = () => {

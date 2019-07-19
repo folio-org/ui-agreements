@@ -24,7 +24,6 @@ export default class CoveredEResourcesList extends React.Component {
       eresources: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
     onExportEResourcesAsJSON: PropTypes.func.isRequired,
-    onExportEResourcesAsKBART: PropTypes.func.isRequired,
     onNeedMoreEResources: PropTypes.func.isRequired,
     visible: PropTypes.bool,
   };
@@ -107,7 +106,7 @@ export default class CoveredEResourcesList extends React.Component {
                 </Button>
               )}
             </FormattedMessage>
-            <FormattedMessage id="ui-agreements.eresourcesCovered.exportAsJSON">
+            {/* <FormattedMessage id="ui-agreements.eresourcesCovered.exportAsJSON">
               {exportAsKbart => (
                 <Button
                   aria-label={exportAsKbart}
@@ -121,7 +120,7 @@ export default class CoveredEResourcesList extends React.Component {
                   <FormattedMessage id="ui-agreements.eresourcesCovered.kbart" />
                 </Button>
               )}
-            </FormattedMessage>
+            </FormattedMessage> */}
           </DropdownMenu>
         </Dropdown>
       </Col>
