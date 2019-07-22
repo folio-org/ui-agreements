@@ -1,6 +1,6 @@
 # Change history for ui-agreements
 
-## 3.0.0 - IN PROGRESS
+## 3.0.0 IN PROGRESS
 * Support Orders interface 7.0. ERM-350
 * Added ability to attach ERM Usage Data Providers to Agreements. ERM-273
 * Added ability to attach PO Lines to Agreement Lines. ERM-239, 240, 242
@@ -9,10 +9,10 @@
 * Changed navigation between Agreements and E-Resources. ERM-237
 * Refactored to use `SearchAndSortQuery`. ERM-253
 
-## 2.5.0 - 2019-06-11
+## 2.5.0 2019-06-11
 * Added ability to manage Notes for Agreements. ERM-284
 
-## 2.4.0 2109-05-21
+## 2.4.0 2019-05-21
  * ERM-238 Clearing the organization filter value not working as expected in Agreements
  * ERM-222 System error on saving an agreement with an empty organization field group
  * ERM-221 System error on saving an agreement with an empty Agreement Line
