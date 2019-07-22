@@ -83,7 +83,7 @@
       "erm": "1.0",
       "invoice": "1.0",
       "licenses": "1.0",
-      "orders": "6.0",
+      "orders": "6.0 7.0",
       "users": "13.0 14.0 15.0"
     },
     "permissionSets": [
