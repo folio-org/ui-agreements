@@ -1,6 +1,6 @@
 # Change history for ui-agreements
 
-## 3.0.0 IN PROGRESS
+## 3.0.0 2019-07-23
 * Support Orders interface 7.0. ERM-350
 * Added ability to attach ERM Usage Data Providers to Agreements. ERM-273
 * Added ability to attach PO Lines to Agreement Lines. ERM-239, 240, 242
