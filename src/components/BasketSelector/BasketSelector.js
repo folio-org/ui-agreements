@@ -44,19 +44,14 @@ export default class BasketSelector extends React.Component {
     return (
       <Row>
         <Col xs={12} md={8}>
-          <FormattedMessage id="ui-agreements.basketSelector.selectPlaceholder">
-            {placeholder => (
-              <Selection
-                dataOptions={dataOptions}
-                error={error}
-                id="basket-selector"
-                label={<FormattedMessage id="ui-agreements.basketSelector.selectLabel" />}
-                onChange={this.handleChange}
-                placeholder={placeholder}
-                value={item.id}
-              />
-            )}
-          </FormattedMessage>
+          <Selection
+            dataOptions={dataOptions}
+            error={error}
+            id="basket-selector"
+            label={<FormattedMessage id="ui-agreements.basketSelector.selectLabel" />}
+            onChange={this.handleChange}
+            value={item.id}
+          />
         </Col>
         <Col xs={12} md={4}>
           <Layout style={{ height: '100%' }} className="flex flex-align-items-center">

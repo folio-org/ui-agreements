@@ -95,23 +95,19 @@ class LicensesFieldArray extends React.Component {
         </Row>
         <Row>
           <Col xs={4}>
-            <FormattedMessage id="ui-agreements.license.selectStatus">
-              {placeholder => (
-                <Field
-                  component={Select}
-                  dataOptions={licenseLinkStatusValues}
-                  id={`${name}-status-${i}`}
-                  label={<FormattedMessage id="ui-agreements.license.prop.status" />}
-                  name={`${name}[${i}].status`}
-                  placeholder={placeholder}
-                  required
-                  validate={[
-                    this.validateOnlyOneControllingLicense,
-                    this.validateRequired,
-                  ]}
-                />
-              )}
-            </FormattedMessage>
+            <Field
+              component={Select}
+              dataOptions={licenseLinkStatusValues}
+              id={`${name}-status-${i}`}
+              label={<FormattedMessage id="ui-agreements.license.prop.status" />}
+              name={`${name}[${i}].status`}
+              placeholder=" "
+              required
+              validate={[
+                this.validateOnlyOneControllingLicense,
+                this.validateRequired,
+              ]}
+            />
           </Col>
           <Col xs={8}>
             <Field
