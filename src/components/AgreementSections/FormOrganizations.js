@@ -30,6 +30,7 @@ export default class FormOrganizations extends React.Component {
           component={OrganizationsFieldArray}
           addOrganizationBtnLabel={addOrganizationBtnLabel}
           roles={data.orgRoleValues}
+          uniqueRole="vendor"
         />
       </Accordion>
     );

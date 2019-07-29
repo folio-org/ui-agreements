@@ -198,8 +198,6 @@
   "organizations.name": "Name",
   "organizations.role": "Role",
   "organizations.remove": "Remove",
-  "organizations.selectOrg": "Select an organization",
-  "organizations.selectRole": "Select a role",
   "organizations.createNew": "Create new organization",
   "organizations.alreadyExists": "An organization with this name already exists!",
   "organizations.typeToSearch": "Begin typing to search for an organization",
