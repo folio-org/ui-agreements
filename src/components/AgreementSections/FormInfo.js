@@ -33,18 +33,13 @@ export default class FormInfo extends React.Component {
 
   // Prepend an empty value to each set of dropdown options to facilitate
   // unselecting a value.
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props) {
     const { data } = props;
     const dataOptions = {};
 
-    Object.keys(state.dataOptions).forEach(key => {
-      if (state.dataOptions[key].length !== (data[key].length + 1)) {
-        dataOptions[key] = [
-          { value: null, label: '' },
-          ...data[key],
-        ];
-      }
-    });
+    dataOptions.agreementStatusValues = [...data.agreementStatusValues];
+    dataOptions.renewalPriorityValues = [{ value: null, label: '' }, ...data.renewalPriorityValues];
+    dataOptions.isPerpetualValues = [{ value: null, label: '' }, ...data.isPerpetualValues];
 
     if (Object.keys(dataOptions).length) return { dataOptions };
 
@@ -120,6 +115,7 @@ export default class FormInfo extends React.Component {
               id="edit-agreement-status"
               label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
               name="agreementStatus"
+              placeholder=" "
               required
               validate={validators.required}
             />
