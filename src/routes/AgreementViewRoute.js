@@ -124,6 +124,11 @@ class AgreementViewRoute extends React.Component {
     stripes: PropTypes.shape({
       hasInterface: PropTypes.func.isRequired,
       hasPerm: PropTypes.func.isRequired,
+      okapi: PropTypes.shape({
+        tenant: PropTypes.string.isRequired,
+        token: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
+      }).isRequired,
     }).isRequired,
     tagsEnabled: PropTypes.bool,
   };
@@ -147,7 +152,7 @@ class AgreementViewRoute extends React.Component {
     const orgs = agreement.orgs.map(o => ({
       ...o,
       interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
-        .map(id => this.getRecord(id, 'interfaces') || id)
+        .map(id => this.getRecord(id, 'interfaces') || {})
     }));
 
     return {
@@ -191,6 +196,48 @@ class AgreementViewRoute extends React.Component {
   handleEdit = () => {
     const { location, match } = this.props;
     this.props.history.push(`${urls.agreementEdit(match.params.id)}${location.search}`);
+  }
+
+  handleExportEResourcesAsJSON = () => {
+    const { resources, stripes: { okapi } } = this.props;
+    const { id, name } = get(resources, 'agreement.records[0]', {});
+
+    return fetch(`${okapi.url}/erm/sas/${id}/export`, {
+      headers: {
+        'X-Okapi-Tenant': okapi.tenant,
+        'X-Okapi-Token': okapi.token,
+      },
+    }).then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      });
+  }
+
+  handleExportEResourcesAsKBART = () => {
+    const { resources, stripes: { okapi } } = this.props;
+    const { id, name } = get(resources, 'agreement.records[0]', {});
+
+    return fetch(`${okapi.url}/erm/sas/${id}/export/kbart`, {
+      headers: {
+        'X-Okapi-Tenant': okapi.tenant,
+        'X-Okapi-Token': okapi.token,
+      },
+    }).then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      });
   }
 
   handleNeedMoreEResources = () => {
@@ -237,6 +284,8 @@ class AgreementViewRoute extends React.Component {
           ...handlers,
           onClose: this.handleClose,
           onEdit: this.handleEdit,
+          onExportEResourcesAsJSON: this.handleExportEResourcesAsJSON,
+          onExportEResourcesAsKBART: this.handleExportEResourcesAsKBART,
           onNeedMoreEResources: this.handleNeedMoreEResources,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}

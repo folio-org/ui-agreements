@@ -24,6 +24,8 @@ export default class Lines extends React.Component {
       orderLines: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
     handlers: PropTypes.shape({
+      onExportEResourcesAsJSON: PropTypes.func.isRequired,
+      onExportEResourcesAsKBART: PropTypes.func.isRequired,
       onNeedMoreEResources: PropTypes.func.isRequired,
     }).isRequired,
     id: PropTypes.string,
@@ -111,6 +113,8 @@ export default class Lines extends React.Component {
         />
         <CoveredEResourcesList
           agreement={agreement}
+          onExportEResourcesAsJSON={handlers.onExportEResourcesAsJSON}
+          onExportEResourcesAsKBART={handlers.onExportEResourcesAsKBART}
           onNeedMoreEResources={handlers.onNeedMoreEResources}
           visible={open}
         />

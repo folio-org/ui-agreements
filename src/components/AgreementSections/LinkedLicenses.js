@@ -34,7 +34,7 @@ export default class LinkedLicenses extends React.Component {
 
     return (
       <Layout id="agreement-controlling-license">
-        <Headline faded margin="none" tag="h4">
+        <Headline margin="none" tag="h4">
           <FormattedMessage id="ui-agreements.license.controllingLicense" />
         </Headline>
         <LicenseCard license={controllingLicense.remoteId_object} />
@@ -53,7 +53,7 @@ export default class LinkedLicenses extends React.Component {
 
     return (
       <div id="inactive-licenses">
-        <Headline faded margin="none" tag="h4">
+        <Headline margin="none" tag="h4">
           <FormattedMessage id="ui-agreements.license.inactiveLicenses" />
         </Headline>
         <MultiColumnList

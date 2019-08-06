@@ -18,7 +18,6 @@
   "eresourcePluralizable": "{count} {count, plural, one {e-resource} other {e-resources}}",
 
   "agreements.searchInputLabel": "Search Agreements",
-
   "eresources.searchInputLabel": "Search E-resources",
 
   "agreements.edit": "Edit",
@@ -68,6 +67,7 @@
   "agreements.createAgreement": "Create agreement",
   "agreements.updateAgreement": "Update agreement",
   "agreements.editAgreement": "Edit agreement",
+
   "agreementLines.addLine": "Add agreement line",
   "agreementLines.addCustomCoverage": "Add custom coverage",
   "agreementLines.costType": "Cost type",
@@ -84,7 +84,9 @@
   "agreementLines.lineTitle": "Agreement line #{number}",
   "agreementLines.hasCustomCoverage": "Has custom coverage",
   "agreementLines.customCoverageTitle": "Custom coverage #{number}",
+
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
+
   "basket.name": "ERM Basket",
   "basket.close": "Close basket",
   "basket.recordCount": "Showing {count, number} {count, plural, one {record} other {records}}",
@@ -95,10 +97,15 @@
   "basket.addToExistingAgreement": "Add to existing agreement",
   "basket.addToSelectedAgreement": "Add to selected agreement",
   "basket.clickToSelectAgreement": "Click to select agreement",
-  "basketSelector.selectLabel": "Select e-resource or package from the basket",
+
+  "basketSelector.selectLabel": "Select from basket",
+  "basketSelector.selectPlaceholder": "Select e-resource or package",
+
   "contacts.noContacts": "Agreement has no internal contacts.",
+
   "coverage.volumeShort": "Vol:",
   "coverage.issueShort": "Iss:",
+
   "eresources.name": "Name",
   "eresources.type": "Type",
   "eresources.titles": "Titles",
@@ -132,18 +139,28 @@
   "eresources.provider": "Provider",
   "eresources.addToBasketHeader": "E-resource basket",
   "eresources.sourceKb": "Source",
+
+  "eresourcesCovered.exportAs": "Export as...",
+  "eresourcesCovered.exportAsJSON": "Export as JSON",
+  "eresourcesCovered.exportAsKBART": "Export as KBART",
+  "eresourcesCovered.json": "JSON",
+  "eresourcesCovered.kbart": "KBART",
+
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
   "errors.multipleOpenEndedCoverages": "Cannot have multiple open-ended coverage statements.",
   "errors.overlappingCoverage": "The following coverages have overlapping dates: {coverages}",
   "errors.undefinedUDP": "A Usage Data Provider must be selected.",
   "errors.unsetAgreementLines": "Select a resource and create this line, or delete it to continue.",
+
   "finances.none": "Agreement has no order lines.",
+
   "identifier.doi": "DOI",
   "identifier.eissn": "ISSN (Online)",
   "identifier.ezb": "EZB",
   "identifier.isbn": "ISBN",
   "identifier.pissn": "ISSN (Print)",
   "identifier.zdb": "ZDB",
+
   "interface.name": "Interface name",
   "interface.username": "Username",
   "interface.password": "Password",
@@ -151,6 +168,7 @@
   "interface.type": "Interface type",
   "interface.notes": "Notes",
   "interface.notFound": "No interfaces found",
+
   "license.addExternalLicense": "Add external license to agreement",
   "license.addLicense": "Add license to agreement",
   "license.allLicenses": "All licenses",
@@ -172,6 +190,8 @@
   "license.prop.note": "Note",
   "license.prop.status": "Status (this agreement)",
   "license.prop.startDate": "Start date",
+  "license.selectStatus": "Select a status",
+
   "organizations.edit": "Edit organizations",
   "organizations.add": "Add organization to agreement",
   "organizations.agreementHasNone": "Agreement has no organizations.",
