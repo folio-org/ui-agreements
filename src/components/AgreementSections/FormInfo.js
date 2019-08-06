@@ -35,15 +35,15 @@ export default class FormInfo extends React.Component {
     const { data } = props;
     const newState = {};
 
-    if (data.agreementStatusValues.length !== state.agreementStatusValues) {
+    if (data.agreementStatusValues.length !== state.agreementStatusValues.length) {
       newState.agreementStatusValues = data.agreementStatusValues;
     }
 
-    if (data.renewalPriorityValues.length + 1 !== state.renewalPriorityValues) {
+    if (data.renewalPriorityValues.length + 1 !== state.renewalPriorityValues.length) {
       newState.renewalPriorityValues = [{ value: null, label: '' }, ...data.renewalPriorityValues];
     }
 
-    if (data.isPerpetualValues.length + 1 !== state.isPerpetualValues) {
+    if (data.isPerpetualValues.length + 1 !== state.isPerpetualValues.length) {
       newState.isPerpetualValues = [{ value: null, label: '' }, ...data.isPerpetualValues];
     }
 
