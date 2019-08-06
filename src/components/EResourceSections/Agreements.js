@@ -80,7 +80,7 @@ export default class Agreements extends React.Component {
 
     return (
       <div id="eresource-agreements">
-        <Headline faded margin="none" size="large">
+        <Headline margin="none" tag="h3" size="large">
           <FormattedMessage id="ui-agreements.eresources.erAgreements" />
         </Headline>
         { entitlements ? this.renderAgreements() : this.renderLoading() }
