@@ -220,7 +220,24 @@ class AgreementViewRoute extends React.Component {
   }
 
   handleExportEResourcesAsKBART = () => {
+    const { resources, stripes: { okapi } } = this.props;
+    const { id, name } = get(resources, 'agreement.records[0]', {});
 
+    return fetch(`${okapi.url}/erm/sas/${id}/export/kbart`, {
+      headers: {
+        'X-Okapi-Tenant': okapi.tenant,
+        'X-Okapi-Token': okapi.token,
+      },
+    }).then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      });
   }
 
   handleNeedMoreEResources = () => {
