@@ -2,7 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Headline, MultiColumnList } from '@folio/stripes/components';
+import {
+  Button,
+  Col,
+  Dropdown,
+  DropdownButton,
+  DropdownMenu,
+  Headline,
+  MultiColumnList,
+  Row,
+} from '@folio/stripes/components';
 
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
@@ -14,9 +23,15 @@ export default class CoveredEResourcesList extends React.Component {
     agreement: PropTypes.shape({
       eresources: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
+    onExportEResourcesAsJSON: PropTypes.func.isRequired,
+    onExportEResourcesAsKBART: PropTypes.func.isRequired,
     onNeedMoreEResources: PropTypes.func.isRequired,
     visible: PropTypes.bool,
   };
+
+  state = {
+    exportDropdownOpen: false,
+  }
 
   columnMapping = {
     name: <FormattedMessage id="ui-agreements.eresources.name" />,
@@ -62,6 +77,57 @@ export default class CoveredEResourcesList extends React.Component {
     'isCustomCoverage'
   ]
 
+  handleToggleExportDropdown = () => {
+    this.setState(prevState => ({ exportDropdownOpen: prevState.exportDropdownOpen }));
+  }
+
+  renderExportDropdown = () => (
+    <Row end="xs">
+      <Col xs>
+        <Dropdown
+          onToggle={() => this.setState(prevState => ({ exportDropdownOpen: !prevState.exportDropdownOpen }))}
+          open={this.state.exportDropdownOpen}
+        >
+          <DropdownButton data-role="toggle">
+            <FormattedMessage id="ui-agreements.eresourcesCovered.exportAs" />
+          </DropdownButton>
+          <DropdownMenu data-role="menu">
+            <FormattedMessage id="ui-agreements.eresourcesCovered.exportAsJSON">
+              {exportAsJson => (
+                <Button
+                  aria-label={exportAsJson}
+                  buttonStyle="dropdownItem"
+                  id="clickable-dropdown-export-eresources-json"
+                  onClick={() => {
+                    this.setState({ exportDropdownOpen: false });
+                    this.props.onExportEResourcesAsJSON();
+                  }}
+                >
+                  <FormattedMessage id="ui-agreements.eresourcesCovered.json" />
+                </Button>
+              )}
+            </FormattedMessage>
+            <FormattedMessage id="ui-agreements.eresourcesCovered.exportAsJSON">
+              {exportAsKbart => (
+                <Button
+                  aria-label={exportAsKbart}
+                  buttonStyle="dropdownItem"
+                  id="clickable-dropdown-export-eresources-kbart"
+                  onClick={() => {
+                    this.setState({ exportDropdownOpen: false });
+                    this.props.onExportEResourcesAsKBART();
+                  }}
+                >
+                  <FormattedMessage id="ui-agreements.eresourcesCovered.kbart" />
+                </Button>
+              )}
+            </FormattedMessage>
+          </DropdownMenu>
+        </Dropdown>
+      </Col>
+    </Row>
+  )
+
   render() {
     const {
       agreement: { eresources },
@@ -71,9 +137,10 @@ export default class CoveredEResourcesList extends React.Component {
 
     return (
       <IfEResourcesEnabled>
-        <Headline faded margin="none" tag="h4">
+        <Headline margin="none" tag="h4">
           <FormattedMessage id="ui-agreements.agreements.eresourcesCovered" />
         </Headline>
+        { this.renderExportDropdown() }
         <MultiColumnList
           columnMapping={this.columnMapping}
           columnWidths={this.columnWidths}

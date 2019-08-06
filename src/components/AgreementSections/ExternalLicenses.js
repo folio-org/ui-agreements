@@ -32,7 +32,7 @@ export default class ExternalLicenses extends React.Component {
 
     return (
       <div>
-        <Headline faded margin="none" tag="h4">
+        <Headline margin="none" tag="h4">
           <FormattedMessage id="ui-agreements.license.externalLicenses" />
         </Headline>
         {externalLicenseDocs.map(license => (
