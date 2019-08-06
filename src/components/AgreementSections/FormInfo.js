@@ -24,35 +24,36 @@ export default class FormInfo extends React.Component {
   };
 
   state = {
-    dataOptions: {
-      agreementStatusValues: [],
-      renewalPriorityValues: [],
-      isPerpetualValues: [],
-    }
+    agreementStatusValues: [],
+    isPerpetualValues: [],
+    renewalPriorityValues: [],
   }
 
   // Prepend an empty value to each set of dropdown options to facilitate
   // unselecting a value.
   static getDerivedStateFromProps(props, state) {
     const { data } = props;
-    const dataOptions = {};
+    const newState = {};
 
-    Object.keys(state.dataOptions).forEach(key => {
-      if (state.dataOptions[key].length !== (data[key].length + 1)) {
-        dataOptions[key] = [
-          { value: null, label: '' },
-          ...data[key],
-        ];
-      }
-    });
+    if (data.agreementStatusValues.length !== state.agreementStatusValues.length) {
+      newState.agreementStatusValues = data.agreementStatusValues;
+    }
 
-    if (Object.keys(dataOptions).length) return { dataOptions };
+    if (data.renewalPriorityValues.length + 1 !== state.renewalPriorityValues.length) {
+      newState.renewalPriorityValues = [{ value: null, label: '' }, ...data.renewalPriorityValues];
+    }
+
+    if (data.isPerpetualValues.length + 1 !== state.isPerpetualValues.length) {
+      newState.isPerpetualValues = [{ value: null, label: '' }, ...data.isPerpetualValues];
+    }
+
+    if (Object.keys(newState).length) return newState;
 
     return null;
   }
 
   render() {
-    const { dataOptions } = this.state;
+    const { agreementStatusValues, isPerpetualValues, renewalPriorityValues } = this.state;
 
     return (
       <div data-test-edit-agreement-info>
@@ -116,10 +117,11 @@ export default class FormInfo extends React.Component {
           <Col xs={12} md={4}>
             <Field
               component={Select}
-              dataOptions={dataOptions.agreementStatusValues}
+              dataOptions={agreementStatusValues}
               id="edit-agreement-status"
               label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
               name="agreementStatus"
+              placeholder=" "
               required
               validate={validators.required}
             />
@@ -127,7 +129,7 @@ export default class FormInfo extends React.Component {
           <Col xs={12} md={4}>
             <Field
               component={Select}
-              dataOptions={dataOptions.renewalPriorityValues}
+              dataOptions={renewalPriorityValues}
               id="edit-agreement-renewal-priority"
               label={<FormattedMessage id="ui-agreements.agreements.renewalPriority" />}
               name="renewalPriority"
@@ -136,7 +138,7 @@ export default class FormInfo extends React.Component {
           <Col xs={12} md={4}>
             <Field
               component={Select}
-              dataOptions={dataOptions.isPerpetualValues}
+              dataOptions={isPerpetualValues}
               id="edit-agreement-is-perpetual"
               label={<FormattedMessage id="ui-agreements.agreements.isPerpetual" />}
               name="isPerpetual"
