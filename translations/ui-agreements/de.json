@@ -27,7 +27,7 @@
     "basket.createAgreement": "Create new agreement",
     "basket.addToExistingAgreement": "Add to existing agreement",
     "basket.addToSelectedAgreement": "Add to selected agreement",
-    "basketSelector.selectLabel": "Select e-resource or package from the basket",
+    "basketSelector.selectLabel": "Select from basket",
     "eresources.name": "Name",
     "eresources.type": "Type",
     "eresources.isPackage": "Is package",
@@ -118,7 +118,7 @@
     "license.inactiveLicenses": "Inactive licenses",
     "license.noFindLicensePlugin": "Cannot select license because no \"Find License\" plugin is installed.",
     "license.noLicenses": "Agreement has no licenses.",
-    "license.prop.endDate": "End date",
+    "license.prop.endDate": "Enddatum",
     "license.prop.lookup": "Look-up a license",
     "license.prop.name": "Name",
     "license.prop.note": "Note",
@@ -206,5 +206,12 @@
     "usageData.unlinkUDP": "Unlink usage data provider",
     "usageData.usageDataProvider": "Usage data provider",
     "usageData.usageDataProviderIndex": "Usage data provider {index}",
-    "usageData.note": "Note"
+    "usageData.note": "Note",
+    "basketSelector.selectPlaceholder": "Select e-resource or package",
+    "eresourcesCovered.exportAs": "Export as...",
+    "eresourcesCovered.exportAsJSON": "Export as JSON",
+    "eresourcesCovered.exportAsKBART": "Export as KBART",
+    "eresourcesCovered.json": "JSON",
+    "eresourcesCovered.kbart": "KBART",
+    "license.selectStatus": "Select a status"
 }
