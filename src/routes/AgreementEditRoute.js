@@ -56,7 +56,7 @@ class AgreementEditRoute extends React.Component {
 
         return query ? { query } : null;
       },
-      fetch: props => !!props.stripes.hasInterface('orders', '6.0'),
+      fetch: props => !!props.stripes.hasInterface('orders', '6.0 7.0'),
       records: 'poLines',
     },
     orgRoleValues: {
