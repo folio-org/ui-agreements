@@ -65,7 +65,6 @@
   "agreements.tags": "Tags",
   "agreements.closeEdit": "Close edit agreement",
   "agreements.createAgreement": "Create agreement",
-  "agreements.updateAgreement": "Update agreement",
   "agreements.editAgreement": "Edit agreement",
 
   "agreementLines.addLine": "Add agreement line",

@@ -146,29 +146,19 @@ class AgreementForm extends React.Component {
   }
 
   renderLastMenu() {
-    const { initialValues } = this.props;
-
-    let id;
-    let label;
-    if (initialValues && initialValues.id) {
-      id = 'clickable-update-agreement';
-      label = <FormattedMessage id="ui-agreements.agreements.updateAgreement" />;
-    } else {
-      id = 'clickable-create-agreement';
-      label = <FormattedMessage id="ui-agreements.agreements.createAgreement" />;
-    }
+    const { initialValues = {} } = this.props;
 
     return (
       <PaneMenu>
         <Button
-          id={id}
+          id={initialValues.id ? 'clickable-update-agreement' : 'clickable-create-agreement'}
           type="submit"
           disabled={this.props.pristine || this.props.submitting}
           onClick={this.props.handleSubmit}
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
         >
-          {label}
+          <FormattedMessage id="stripes-components.saveAndClose" />
         </Button>
       </PaneMenu>
     );
