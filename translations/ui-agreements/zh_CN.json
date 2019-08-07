@@ -206,5 +206,12 @@
     "usageData.unlinkUDP": "取消链接使用数据提供程序",
     "usageData.usageDataProvider": "使用数据提供程序",
     "usageData.usageDataProviderIndex": "使用数据提供程序{index}",
-    "usageData.note": "附注"
+    "usageData.note": "附注",
+    "basketSelector.selectPlaceholder": "Select e-resource or package",
+    "eresourcesCovered.exportAs": "Export as...",
+    "eresourcesCovered.exportAsJSON": "Export as JSON",
+    "eresourcesCovered.exportAsKBART": "Export as KBART",
+    "eresourcesCovered.json": "JSON",
+    "eresourcesCovered.kbart": "KBART",
+    "license.selectStatus": "Select a status"
 }

@@ -27,7 +27,7 @@
     "basket.createAgreement": "Criar novo contrato",
     "basket.addToExistingAgreement": "Adicionar ao contrato existente",
     "basket.addToSelectedAgreement": "Adicionar ao contrato selecionado",
-    "basketSelector.selectLabel": "Selecione e-recurso ou pacote da cesta",
+    "basketSelector.selectLabel": "Selecione a partir de cesta",
     "eresources.name": "Nome",
     "eresources.type": "Tipo",
     "eresources.isPackage": "É um pacote",
@@ -206,5 +206,12 @@
     "usageData.unlinkUDP": "Desvincular o provedor de dados de uso",
     "usageData.usageDataProvider": "Provedor de dados de uso",
     "usageData.usageDataProviderIndex": "Provedor de dados de uso {index}",
-    "usageData.note": "Nota"
+    "usageData.note": "Nota",
+    "basketSelector.selectPlaceholder": "Selecione o recurso eletrônico ou pacote",
+    "eresourcesCovered.exportAs": "Exportar como ...",
+    "eresourcesCovered.exportAsJSON": "Exportar como JSON",
+    "eresourcesCovered.exportAsKBART": "Exportar como KBART",
+    "eresourcesCovered.json": "JSON",
+    "eresourcesCovered.kbart": "KBART",
+    "license.selectStatus": "Selecione um status"
 }
