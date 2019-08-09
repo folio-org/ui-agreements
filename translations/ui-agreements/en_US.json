@@ -10,7 +10,6 @@
     "agreements.eresourceAgreementLines": "E-resources - agreement lines",
     "agreements.eresourcesCovered": "E-resources covered by this agreement",
     "agreements.createAgreement": "Create agreement",
-    "agreements.updateAgreement": "Update agreement",
     "agreements.editAgreement": "Edit agreement",
     "agreementLines.count": "Count",
     "agreementLines.contentUpdated": "Content updated",
