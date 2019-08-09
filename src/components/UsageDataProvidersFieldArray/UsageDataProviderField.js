@@ -32,12 +32,6 @@ export default class UsageDataProviderField extends React.Component {
     udp: {},
   }
 
-  renderEmpty = () => (
-    <Layout className="padding-bottom-gutter" data-test-udp-empty-message>
-      <FormattedMessage id="ui-agreements.usageData.agreementHasNone" />
-    </Layout>
-  );
-
   renderLinkUDPButton = () => (
     <Pluggable
       aria-haspopup="true"
