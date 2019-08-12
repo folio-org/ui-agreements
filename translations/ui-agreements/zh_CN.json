@@ -10,7 +10,6 @@
     "agreements.eresourceAgreementLines": "电子资源：协议条款",
     "agreements.eresourcesCovered": "本协议涵盖的电子资源",
     "agreements.createAgreement": "创建协议",
-    "agreements.updateAgreement": "更新协议",
     "agreements.editAgreement": "编辑协议",
     "agreementLines.count": "计数",
     "agreementLines.contentUpdated": "内容已更新",
