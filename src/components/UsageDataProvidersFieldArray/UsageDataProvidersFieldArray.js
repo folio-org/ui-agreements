@@ -14,7 +14,7 @@ class UsageDataProvidersFieldArray extends React.Component {
     name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
     onDeleteField: PropTypes.func.isRequired,
-    onMarkforDeletion: PropTypes.func.isRequired,
+    onMarkForDeletion: PropTypes.func.isRequired,
     onReplaceField: PropTypes.func.isRequired,
   };
 
@@ -35,10 +35,10 @@ class UsageDataProvidersFieldArray extends React.Component {
 
   handleUDPUnselected = (index, udp) => {
     /* handleUDPUnselected should mark the UDP to be deleted once we update the form.
-    onMarkforDeletion does that job. It pushes the {id: id, _delete: true) into the fields array
+    onMarkForDeletion does that job. It pushes the {id: id, _delete: true) into the fields array
     and on update would actually delete the field. onReplaceField takes care
     of replacing the linked UDP UI with the default Add UDP UI */
-    this.props.onMarkforDeletion(udp);
+    this.props.onMarkForDeletion(udp);
     this.props.onReplaceField(index, {});
   }
 
