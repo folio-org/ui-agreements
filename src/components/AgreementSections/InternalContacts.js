@@ -11,19 +11,7 @@ export default class InternalContacts extends React.Component {
     agreement: PropTypes.shape({
       contacts: PropTypes.arrayOf(
         PropTypes.shape({
-          role: PropTypes.shape({
-            label: PropTypes.string,
-          }),
-          user: PropTypes.oneOfType([
-            PropTypes.shape({
-              personal: PropTypes.shape({
-                firstName: PropTypes.string,
-                middleName: PropTypes.string,
-                lastName: PropTypes.string,
-              }).isRequired,
-            }).isRequired,
-            PropTypes.string
-          ]),
+          id: PropTypes.string,
         })
       ),
     }).isRequired,
