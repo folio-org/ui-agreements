@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
 
 import { Accordion, Badge } from '@folio/stripes/components';
+import { InternalContactCard } from '@folio/stripes-erm-components';
 
 export default class InternalContacts extends React.Component {
   static propTypes = {
@@ -42,29 +42,12 @@ export default class InternalContacts extends React.Component {
 
     if (!contacts.length) return <FormattedMessage id="ui-agreements.contacts.noContacts" />;
 
-    return contacts.map((contact, i) => {
-      if (!contact.user) return null;
-
-      const firstName = get(contact, 'user.personal.firstName');
-      const lastName = get(contact, 'user.personal.lastName');
-      const middleName = get(contact, 'user.personal.middleName');
-      let displayName = lastName;
-      if (firstName) displayName = `${displayName}, ${firstName}`;
-      if (middleName) displayName = `${displayName} ${middleName}`;
-
-      const role = get(contact, 'role.label', '');
-
-      return (
-        <div
-          data-test-agreement-contact
-          key={`${contact.user.id}-${i}`}
-        >
-          <Link to={`/users/view/${contact.user.id}`}>{displayName}</Link>
-          ,&nbsp;
-          <span>{role}</span>
-        </div>
-      );
-    });
+    return contacts.map(contact => (
+      <InternalContactCard
+        contact={contact}
+        key={contact.id}
+      />
+    ));
   }
 
   render() {
