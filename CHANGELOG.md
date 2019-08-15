@@ -3,6 +3,7 @@
 ## 3.1.0 IN PROGRESS
 * Allow only one Vendor organization to be selected.
 * Render Internal Contacts as cards. ERM-309
+* Added support for `mod-organizations-storage` 2.0
 
 ## 3.0.0 2019-07-23
 * Support Orders interface 7.0. ERM-350
