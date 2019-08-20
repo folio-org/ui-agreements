@@ -1,6 +1,6 @@
 # Change history for ui-agreements
 
-## 3.1.0 IN PROGRESS
+## 3.1.0 2019-08-20
 * Allow only one Vendor organization to be selected.
 * Render Internal Contacts as cards. ERM-309
 * Added support for `mod-organizations-storage` 2.0
