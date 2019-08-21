@@ -33,6 +33,11 @@ class EResourcesRoute extends React.Component {
         }],
       }),
     },
+    sourceKbValues: {
+      type: 'okapi',
+      path: 'erm/kbs',
+      shouldRefresh: () => false,
+    },
     typeValues: {
       type: 'okapi',
       path: 'erm/refdataValues/TitleInstance/type',
@@ -141,6 +146,7 @@ class EResourcesRoute extends React.Component {
       <View
         data={{
           eresources: get(resources, 'eresources.records', []),
+          sourceKbValues: get(resources, 'sourceKbValues.records', []).map(kb => ({ label: kb.name })),
           tags: get(resources, 'tags.records', []),
           typeValues: get(resources, 'typeValues.records', []),
         }}
