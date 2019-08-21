@@ -7,6 +7,7 @@ import { CheckboxFilter } from '@folio/stripes/smart-components';
 
 const FILTERS = [
   'type',
+  'sourceKb',
 ];
 
 export default class EResourceFilters extends React.Component {
@@ -20,11 +21,13 @@ export default class EResourceFilters extends React.Component {
     activeFilters: {
       class: [],
       type: [],
+      sourceKb: [],
     }
   };
 
   state = {
     type: [],
+    sourceKb: [],
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -107,6 +110,7 @@ export default class EResourceFilters extends React.Component {
       <AccordionSet>
         {this.renderCheckboxFilter('type')}
         {this.renderIsPackageFilter()}
+        {this.renderCheckboxFilter('sourceKb')}
       </AccordionSet>
     );
   }
