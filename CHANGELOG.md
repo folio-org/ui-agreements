@@ -1,5 +1,8 @@
 # Change history for ui-agreements
 
+## 3.1.1 2019-08-21
+* Use locally-defined saveAndClose translation key.
+
 ## 3.1.0 2019-08-20
 * Allow only one Vendor organization to be selected.
 * Render Internal Contacts as cards. ERM-309
