@@ -7,7 +7,6 @@
   "loading": "Loading...",
   "create": "Create",
   "notSet": "Not set",
-  "saveAndClose": "Save & close",
 
   "dashboard": "Dashboard",
   "agreements": "Agreements",
@@ -138,7 +137,7 @@
   "eresources.platform": "Platform",
   "eresources.provider": "Provider",
   "eresources.addToBasketHeader": "E-resource basket",
-  "eresources.sourceKb": "Source",
+  "eresources.source": "Source",
 
   "eresourcesCovered.exportAs": "Export as...",
   "eresourcesCovered.exportAsJSON": "Export as JSON",
