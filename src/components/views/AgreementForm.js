@@ -158,7 +158,7 @@ class AgreementForm extends React.Component {
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
         >
-          <FormattedMessage id="stripes-components.saveAndClose" />
+          <FormattedMessage id="ui-agreements.saveAndClose" />
         </Button>
       </PaneMenu>
     );
