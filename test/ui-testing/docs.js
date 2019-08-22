@@ -68,6 +68,7 @@ module.exports.test = (uiTestCtx,
         nightmare
           .click('#clickable-create-agreement')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
+          .click('#clickable-expand-all')
           .then(done)
           .catch(done);
       });
@@ -80,7 +81,7 @@ module.exports.test = (uiTestCtx,
               if (!docCard) {
                 throw Error(`Could not find doc card with a doc named ${d.name}`);
               }
-              const name = docCard.querySelector('[data-test-doc-name]').innerText;
+              const name = docCard.querySelector('[data-test-doc-name]').innerText.trim();
               if (name !== d.name) {
                 throw Error(`Expected name to be ${d.name} and found ${name}.`);
               }
@@ -238,6 +239,7 @@ module.exports.test = (uiTestCtx,
         nightmare
           .click('#clickable-update-agreement')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
+          .click('#clickable-expand-all')
           .then(done)
           .catch(done);
       });
@@ -250,7 +252,7 @@ module.exports.test = (uiTestCtx,
               if (!docCard) {
                 throw Error(`Could not find doc card with a doc named ${d.name}`);
               }
-              const name = docCard.querySelector('[data-test-doc-name]').innerText;
+              const name = docCard.querySelector('[data-test-doc-name]').innerText.trim();
               if (name !== d.name) {
                 throw Error(`Expected name to be ${d.name} and found ${name}.`);
               }
