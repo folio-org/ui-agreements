@@ -51,7 +51,7 @@ class AgreementViewRoute extends React.Component {
 
         return query ? { query } : null;
       },
-      fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '1.0'),
+      fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '1.0 2.0'),
       records: 'interfaces',
     },
     orderLines: {

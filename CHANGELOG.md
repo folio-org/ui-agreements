@@ -1,7 +1,12 @@
 # Change history for ui-agreements
 
-## 3.1.0 IN PROGRESS
+## 3.1.1 2019-08-21
+* Use locally-defined saveAndClose translation key.
+
+## 3.1.0 2019-08-20
 * Allow only one Vendor organization to be selected.
+* Render Internal Contacts as cards. ERM-309
+* Added support for `mod-organizations-storage` 2.0
 
 ## 3.0.0 2019-07-23
 * Support Orders interface 7.0. ERM-350

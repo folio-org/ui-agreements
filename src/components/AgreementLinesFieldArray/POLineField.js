@@ -14,6 +14,7 @@ export default class POLineField extends React.Component {
     }).isRequired,
     poLine: PropTypes.shape({
       acquisitionMethod: PropTypes.string,
+      id: PropTypes.string,
       poLineNumber: PropTypes.string,
       title: PropTypes.string,
     }),

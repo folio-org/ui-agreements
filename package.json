@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -54,7 +54,7 @@
     "redux": "~3.7.2"
   },
   "dependencies": {
-    "@folio/stripes-erm-components": "^1.4.0",
+    "@folio/stripes-erm-components": "^1.6.0",
     "compose-function": "^3.0.3",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
@@ -84,6 +84,7 @@
       "invoice": "1.0",
       "licenses": "1.0",
       "orders": "6.0 7.0",
+      "organizations-storage.interfaces": "2.0",
       "users": "13.0 14.0 15.0"
     },
     "permissionSets": [
