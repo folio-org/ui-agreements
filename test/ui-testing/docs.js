@@ -68,7 +68,7 @@ module.exports.test = (uiTestCtx,
         nightmare
           .click('#clickable-create-agreement')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
-          .click('#accordion-toggle-button-licenses')
+          .click('#clickable-expand-all')
           .then(done)
           .catch(done);
       });
@@ -239,7 +239,7 @@ module.exports.test = (uiTestCtx,
         nightmare
           .click('#clickable-update-agreement')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
-          .click('#accordion-toggle-button-licenses')
+          .click('#clickable-expand-all')
           .then(done)
           .catch(done);
       });
