@@ -212,5 +212,6 @@
     "eresourcesCovered.exportAsKBART": "Export as KBART",
     "eresourcesCovered.json": "JSON",
     "eresourcesCovered.kbart": "KBART",
-    "license.selectStatus": "Select a status"
+    "license.selectStatus": "Select a status",
+    "saveAndClose": "Save & close"
 }
