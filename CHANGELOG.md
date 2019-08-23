@@ -1,5 +1,8 @@
 # Change history for ui-agreements
 
+## 3.2 IN PROGRESS
+* Fixed package content lists being truncated at 1000 entries. ERM-409
+
 ## 3.1.1 2019-08-21
 * Use locally-defined saveAndClose translation key.
 

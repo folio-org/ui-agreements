@@ -10,6 +10,8 @@ import { Tags } from '@folio/stripes-erm-components';
 import View from '../components/views/EResource';
 import { urls } from '../components/utilities';
 
+const RECORDS_PER_REQUEST = 100;
+
 class EResourceViewRoute extends React.Component {
   static manifest = Object.freeze({
     eresource: {
@@ -24,8 +26,8 @@ class EResourceViewRoute extends React.Component {
     entitlements: {
       type: 'okapi',
       path: 'erm/resource/:{id}/entitlements',
-      perRequest: 100,
-      recordsRequired: '1000',
+      perRequest: RECORDS_PER_REQUEST,
+      recordsRequired: '%{entitlementsCount}',
       limitParam: 'perPage',
     },
     packageContents: {
@@ -33,8 +35,8 @@ class EResourceViewRoute extends React.Component {
       path: 'erm/resource',
       records: 'results',
       limitParam: 'perPage',
-      perRequest: 100,
-      recordsRequired: '1000',
+      perRequest: RECORDS_PER_REQUEST,
+      recordsRequired: '%{packageContentsCount}',
       params: {
         filters: 'pkg.id==:{id}',
         sort: 'pti.titleInstance.name;asc',
@@ -42,6 +44,8 @@ class EResourceViewRoute extends React.Component {
       },
     },
     query: {},
+    entitlementsCount: { initialValue: RECORDS_PER_REQUEST },
+    packageContentsCount: { initialValue: RECORDS_PER_REQUEST },
   });
 
   static propTypes = {
@@ -58,12 +62,20 @@ class EResourceViewRoute extends React.Component {
       }).isRequired
     }).isRequired,
     mutator: PropTypes.shape({
+      entitlementsCount: PropTypes.shape({
+        replace: PropTypes.func.isRequired,
+      }),
+      packageContentsCount: PropTypes.shape({
+        replace: PropTypes.func.isRequired,
+      }),
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
     resources: PropTypes.shape({
+      entitlementsCount: PropTypes.number,
       eresource: PropTypes.object,
+      packageContentsCount: PropTypes.number,
       query: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
@@ -74,6 +86,21 @@ class EResourceViewRoute extends React.Component {
 
   static defaultProps = {
     handlers: {},
+  }
+
+  componentDidUpdate() {
+    const { mutator, resources } = this.props;
+    const totalEntitlements = get(resources, 'entitlements.other.totalRecords', RECORDS_PER_REQUEST);
+    const totalPackageContents = get(resources, 'packageContents.other.totalRecords', RECORDS_PER_REQUEST);
+    const { entitlementsCount, packageContentsCount } = resources;
+
+    if (totalEntitlements > entitlementsCount) {
+      mutator.entitlementsCount.replace(totalEntitlements);
+    }
+
+    if (totalPackageContents > packageContentsCount) {
+      mutator.packageContentsCount.replace(totalPackageContents);
+    }
   }
 
   getHelperApp = () => {
