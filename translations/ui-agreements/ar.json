@@ -212,5 +212,6 @@
     "eresourcesCovered.exportAsKBART": "تصدير كـ KBART",
     "eresourcesCovered.json": "JSON",
     "eresourcesCovered.kbart": "KBART",
-    "license.selectStatus": "حدد الحالة"
+    "license.selectStatus": "حدد الحالة",
+    "saveAndClose": "حفظ وإغلاق"
 }
