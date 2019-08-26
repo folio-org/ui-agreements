@@ -2,6 +2,7 @@
 
 ## 3.2 IN PROGRESS
 * Fixed package content lists being truncated at 1000 entries. ERM-409
+* Fixed bug where not all the agreement lines were being fetched.
 
 ## 3.1.1 2019-08-21
 * Use locally-defined saveAndClose translation key.
