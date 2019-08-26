@@ -2,20 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
+import { Button, Col, Layout, Row, Select, TextArea } from '@folio/stripes/components';
+import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
-import {
-  Button,
-  Col,
-  Layout,
-  Row,
-  Select,
-  TextArea,
-  IconButton,
-} from '@folio/stripes/components';
-import { withKiwtFieldArray } from '@folio/stripes-erm-components';
-
-import LicenseLookup from './LicenseLookup';
-import css from './LicensesFieldArray.css';
+import { validators } from '../utilities';
+import LicenseField from './LicenseField';
 
 const CONTROLLING_STATUS = 'controlling';
 
@@ -25,18 +16,17 @@ class LicensesFieldArray extends React.Component {
     name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
     onDeleteField: PropTypes.func.isRequired,
+    onMarkForDeletion: PropTypes.func.isRequired,
     onReplaceField: PropTypes.func.isRequired,
-    data: PropTypes.shape({
-      licenseLinkStatusValues: PropTypes.array,
-    }),
-  }
+    licenseStatusValues: PropTypes.arrayOf(PropTypes.object),
+  };
 
   state = {
     licenses: {},
   }
 
-  handleLicenseSelected = (i, license) => {
-    this.props.onReplaceField(i, { remoteId: license.id });
+  handleLicenseSelected = (index, license) => {
+    this.props.onReplaceField(index, { remoteId: license.id });
 
     this.setState(prevState => ({
       licenses: {
@@ -45,6 +35,21 @@ class LicensesFieldArray extends React.Component {
       }
     }));
   }
+
+  handleLicenseUnselected = (index, license) => {
+    /* handleLicenseUnselected should mark the license to be deleted once we update the form.
+    onMarkForDeletion does that job. It pushes the {id: id, _delete: true) into the fields array
+    and on update would actually delete the field. onReplaceField takes care
+    of replacing the linked license UI with the default Add license UI */
+    this.props.onMarkForDeletion(license);
+    this.props.onReplaceField(index, {});
+  }
+
+  renderEmpty = () => (
+    <Layout className="padding-bottom-gutter" data-test-license-empty-message>
+      <FormattedMessage id="ui-agreements.license.agreementHasNone" />
+    </Layout>
+  )
 
   validateOnlyOneControllingLicense = (value, allValues) => {
     const { name } = this.props;
@@ -63,80 +68,77 @@ class LicensesFieldArray extends React.Component {
     !value ? <FormattedMessage id="stripes-core.label.missingRequiredField" /> : undefined
   )
 
-  renderLicenses = () => {
+  renderLicenseFields = () => {
     const {
-      data: { licenseLinkStatusValues },
+      licenseStatusValues,
       items,
       name,
       onDeleteField
     } = this.props;
 
-    return items.map((license, i) => (
-      <div className={css.license} key={i}>
+    return items.map((license, index) => (
+      <EditCard
+        deleteBtnProps={{
+          'id': `license-delete-${index}`,
+          'data-test-delete-field-button': true
+        }}
+        header={<FormattedMessage id="ui-agreements.license.licenseIndex" values={{ index: index + 1 }} />}
+        id={`edit-license-card-${index}`}
+        key={index}
+        onDelete={() => onDeleteField(index, license)}
+      >
+        <Field
+          component={LicenseField}
+          id={`license-remoteId-${index}`}
+          index={index}
+          license={this.state.licenses[license.remoteId] || license.remoteId_object}
+          name={`${name}[${index}].remoteId`}
+          onLicenseSelected={selectedLicense => this.handleLicenseSelected(index, selectedLicense)}
+          onLicenseUnselected={() => this.handleLicenseUnselected(index, license)}
+          validate={validators.required}
+        />
         <Row>
-          <Col xs={11}>
-            <Field
-              component={LicenseLookup}
-              id={`${name}-remoteId-${i}`}
-              license={this.state.licenses[license.remoteId] || license.remoteId_object}
-              name={`${name}[${i}].remoteId`}
-              onSelectLicense={newLicense => this.handleLicenseSelected(i, newLicense)}
-              required
-              validate={this.validateRequired}
-            />
-          </Col>
-          <Col xs={1}>
-            <IconButton
-              icon="trash"
-              id={`${name}-delete-${i}`}
-              onClick={() => onDeleteField(i, license)}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={4}>
+          <Col xs={12} md={6}>
             <Field
               component={Select}
-              dataOptions={licenseLinkStatusValues}
-              id={`${name}-status-${i}`}
+              dataOptions={licenseStatusValues}
+              id={`${name}-status-${index}`}
+              key={index}
               label={<FormattedMessage id="ui-agreements.license.prop.status" />}
-              name={`${name}[${i}].status`}
+              name={`${name}[${index}].status`}
               placeholder=" "
               required
               validate={[
                 this.validateOnlyOneControllingLicense,
-                this.validateRequired,
+                validators.required,
               ]}
             />
           </Col>
-          <Col xs={8}>
+          <Col xs={12} md={6}>
             <Field
               component={TextArea}
-              id={`${name}-note-${i}`}
+              id={`license-note-${index}`}
               label={<FormattedMessage id="ui-agreements.license.prop.note" />}
-              name={`${name}[${i}].note`}
+              name={`${name}[${index}].note`}
             />
           </Col>
         </Row>
-      </div>
+      </EditCard>
     ));
   }
 
-  renderEmpty = () => (
-    <Layout className="padding-bottom-gutter">
-      <FormattedMessage id="ui-agreements.license.noLicenses" />
-    </Layout>
-  )
-
   render() {
     const { items, onAddField } = this.props;
-
     return (
-      <div>
+      <div data-test-license-fa>
         <div>
-          { items.length ? this.renderLicenses() : this.renderEmpty() }
+          {items.length ? this.renderLicenseFields() : this.renderEmpty()}
         </div>
-        <Button id="add-license-btn" onClick={() => onAddField({})}>
+        <Button
+          data-test-license-fa-add-button
+          onClick={() => onAddField({})}
+          id="add-license-btn"
+        >
           <FormattedMessage id="ui-agreements.license.addLicense" />
         </Button>
       </div>
