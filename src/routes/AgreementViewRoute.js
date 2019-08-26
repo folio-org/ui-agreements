@@ -36,8 +36,8 @@ class AgreementViewRoute extends React.Component {
       type: 'okapi',
       path: 'erm/sas/:{id}/resources',
       params: {
-        stats: 'true',
         sort: 'pti.titleInstance.name;asc',
+        stats: 'true',
       },
       limitParam: 'perPage',
       perRequest: RECORDS_PER_REQUEST,
