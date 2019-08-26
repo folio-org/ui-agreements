@@ -11,7 +11,7 @@ import withFileHandlers from './components/withFileHandlers';
 import View from '../components/views/Agreement';
 import { urls } from '../components/utilities';
 
-const ERESOURCES_RESULTS_INTERVAL = 100;
+const RECORDS_PER_REQUEST = 100;
 
 class AgreementViewRoute extends React.Component {
   static manifest = Object.freeze({
@@ -24,8 +24,13 @@ class AgreementViewRoute extends React.Component {
       path: 'erm/entitlements',
       params: {
         match: 'owner.id',
+        stats: 'true',
         term: ':{id}',
       },
+      limitParam: 'perPage',
+      perRequest: RECORDS_PER_REQUEST,
+      records: 'results',
+      recordsRequired: '%{agreementLinesCount}',
     },
     agreementEresources: {
       type: 'okapi',
@@ -34,10 +39,10 @@ class AgreementViewRoute extends React.Component {
         stats: 'true',
         sort: 'pti.titleInstance.name;asc',
       },
+      limitParam: 'perPage',
+      perRequest: RECORDS_PER_REQUEST,
       records: 'results',
       recordsRequired: '%{agreementEresourcesCount}',
-      perRequest: ERESOURCES_RESULTS_INTERVAL,
-      limitParam: 'perPage',
     },
     interfaces: {
       type: 'okapi',
@@ -86,7 +91,8 @@ class AgreementViewRoute extends React.Component {
       fetch: props => !!props.stripes.hasInterface('users', '15.0'),
       records: 'users',
     },
-    agreementEresourcesCount: { initialValue: ERESOURCES_RESULTS_INTERVAL },
+    agreementLinesCount: { initialValue: RECORDS_PER_REQUEST },
+    agreementEresourcesCount: { initialValue: RECORDS_PER_REQUEST },
     query: {},
   });
 
@@ -104,6 +110,9 @@ class AgreementViewRoute extends React.Component {
       }).isRequired
     }).isRequired,
     mutator: PropTypes.shape({
+      agreementLinesCount: PropTypes.shape({
+        replace: PropTypes.func.isRequired,
+      }),
       agreementEresourcesCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
@@ -114,6 +123,7 @@ class AgreementViewRoute extends React.Component {
     resources: PropTypes.shape({
       agreement: PropTypes.object,
       agreementLines: PropTypes.object,
+      agreementLinesCount: PropTypes.number,
       agreementEresources: PropTypes.object,
       agreementEresourcesCount: PropTypes.number,
       interfaces: PropTypes.object,
@@ -240,9 +250,14 @@ class AgreementViewRoute extends React.Component {
       });
   }
 
+  handleNeedMoreLines = () => {
+    const { agreementLinesCount } = this.props.resources;
+    this.props.mutator.agreementLinesCount.replace(agreementLinesCount + RECORDS_PER_REQUEST);
+  }
+
   handleNeedMoreEResources = () => {
     const { agreementEresourcesCount } = this.props.resources;
-    this.props.mutator.agreementEresourcesCount.replace(agreementEresourcesCount + ERESOURCES_RESULTS_INTERVAL);
+    this.props.mutator.agreementEresourcesCount.replace(agreementEresourcesCount + RECORDS_PER_REQUEST);
   }
 
   handleToggleHelper = (helper) => {
@@ -287,6 +302,7 @@ class AgreementViewRoute extends React.Component {
           onExportEResourcesAsJSON: this.handleExportEResourcesAsJSON,
           onExportEResourcesAsKBART: this.handleExportEResourcesAsKBART,
           onNeedMoreEResources: this.handleNeedMoreEResources,
+          onNeedMoreLines: this.handleNeedMoreLines,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
         helperApp={this.getHelperApp()}

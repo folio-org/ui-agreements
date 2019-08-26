@@ -20,6 +20,7 @@ export default class LinesList extends React.Component {
       lines: PropTypes.arrayOf(PropTypes.object),
       orderLines: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
+    onNeedMoreLines: PropTypes.func.isRequired,
   }
 
   columnWidths = {
@@ -95,7 +96,10 @@ export default class LinesList extends React.Component {
   }
 
   render() {
-    const { agreement: { lines } } = this.props;
+    const {
+      agreement: { lines },
+      onNeedMoreLines,
+    } = this.props;
 
     return (
       <MultiColumnList
@@ -106,6 +110,7 @@ export default class LinesList extends React.Component {
         id="agreement-lines"
         interactive={false}
         maxHeight={400}
+        onNeedMoreData={onNeedMoreLines}
         visibleColumns={this.visibleColumns}
       />
     );
