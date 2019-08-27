@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get, flatten } from 'lodash';
+import { get, flatten, uniqBy } from 'lodash';
 import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
@@ -93,6 +93,16 @@ class AgreementViewRoute extends React.Component {
     },
     agreementLinesCount: { initialValue: RECORDS_PER_REQUEST },
     agreementEresourcesCount: { initialValue: RECORDS_PER_REQUEST },
+    interfacesCredentials: {
+      clientGeneratePk: false,
+      throwErrors: false,
+      path: 'organizations-storage/interfaces/%{interfaceRecord.id}/credentials',
+      type: 'okapi',
+      pk: 'FAKE_PK',  // it's done to fool stripes-connect not to add cred id to the path's end.
+      permissionsRequired: 'organizations-storage.interfaces.credentials.item.get',
+      fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '1.0 2.0'),
+    },
+    interfaceRecord: {},
     query: {},
   });
 
@@ -162,7 +172,8 @@ class AgreementViewRoute extends React.Component {
     const orgs = agreement.orgs.map(o => ({
       ...o,
       interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
-        .map(id => this.getRecord(id, 'interfaces') || {})
+        .map(id => this.getRecord(id, 'interfaces') || {}),
+      interfacesCreds: uniqBy(get(resources, 'interfacesCredentials.records', {}), 'id')
     }));
 
     return {
@@ -255,6 +266,11 @@ class AgreementViewRoute extends React.Component {
     this.props.mutator.agreementLinesCount.replace(agreementLinesCount + RECORDS_PER_REQUEST);
   }
 
+  handleGetCreds = (id) => {
+    const { mutator } = this.props;
+    mutator.interfaceRecord.replace({ id });
+  }
+
   handleNeedMoreEResources = () => {
     const { agreementEresourcesCount } = this.props.resources;
     this.props.mutator.agreementEresourcesCount.replace(agreementEresourcesCount + RECORDS_PER_REQUEST);
@@ -301,6 +317,7 @@ class AgreementViewRoute extends React.Component {
           onEdit: this.handleEdit,
           onExportEResourcesAsJSON: this.handleExportEResourcesAsJSON,
           onExportEResourcesAsKBART: this.handleExportEResourcesAsKBART,
+          onGetCreds: this.handleGetCreds,
           onNeedMoreEResources: this.handleNeedMoreEResources,
           onNeedMoreLines: this.handleNeedMoreLines,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,

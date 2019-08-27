@@ -17,6 +17,7 @@ export default class Organizations extends React.Component {
       orgs: PropTypes.arrayOf(
         PropTypes.shape({
           interfaces: PropTypes.array.isRequired,
+          interfacesCreds: PropTypes.object,
           org: PropTypes.shape({
             name: PropTypes.string.isRequired,
             orgsUuid: PropTypes.string,
@@ -28,6 +29,9 @@ export default class Organizations extends React.Component {
         }),
       ),
     }).isRequired,
+    handlers: PropTypes.shape({
+      onGetCreds: PropTypes.func,
+    }),
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
@@ -37,12 +41,13 @@ export default class Organizations extends React.Component {
     const { agreement: { orgs = [] } } = this.props;
 
     return orgs.map(o => {
-      const { interfaces, org, role } = o;
+      const { interfaces, interfacesCreds, org, role } = o;
       if (!org || !role) return null;
 
       return (
         <ViewOrganizationCard
           data-test-organizations-org
+          getCreds={this.props.handlers.onGetCreds}
           key={`${org.orgsUuid}-${role.value}`}
           headerStart={
             <span>
@@ -55,6 +60,7 @@ export default class Organizations extends React.Component {
             </span>
           }
           interfaces={interfaces}
+          interfacesCreds={interfacesCreds}
         />
       );
     });
@@ -81,7 +87,7 @@ export default class Organizations extends React.Component {
         onToggle={onToggle}
       >
         <Layout className="padding-bottom-gutter">
-          { orgs.length ? this.renderOrganizations() : this.renderNoOrganizations() }
+          {orgs.length ? this.renderOrganizations() : this.renderNoOrganizations()}
         </Layout>
       </Accordion>
     );
