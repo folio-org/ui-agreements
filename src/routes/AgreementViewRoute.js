@@ -169,11 +169,12 @@ class AgreementViewRoute extends React.Component {
       user: this.getRecord(c.user, 'users') || c.user,
     }));
 
+    const interfacesCreds = uniqBy(get(resources, 'interfacesCredentials.records', {}), 'id');
+
     const orgs = agreement.orgs.map(o => ({
       ...o,
       interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
-        .map(id => this.getRecord(id, 'interfaces') || {}),
-      interfacesCreds: uniqBy(get(resources, 'interfacesCredentials.records', {}), 'id')
+        .map(id => ({ ...this.getRecord(id, 'interfaces') || {}, creds: interfacesCreds.find(cred => cred.interfaceId === id) })),
     }));
 
     return {
