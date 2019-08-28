@@ -169,12 +169,15 @@ class AgreementViewRoute extends React.Component {
       user: this.getRecord(c.user, 'users') || c.user,
     }));
 
-    const interfacesCreds = uniqBy(get(resources, 'interfacesCredentials.records', {}), 'id');
+    const interfacesCredentials = uniqBy(get(resources, 'interfacesCredentials.records', []), 'id');
 
     const orgs = agreement.orgs.map(o => ({
       ...o,
       interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
-        .map(id => ({ ...this.getRecord(id, 'interfaces') || {}, creds: interfacesCreds.find(cred => cred.interfaceId === id) })),
+        .map(id => ({
+          ...this.getRecord(id, 'interfaces') || {},
+          credentials: interfacesCredentials.find(cred => cred.interfaceId === id)
+        })),
     }));
 
     return {
@@ -267,7 +270,7 @@ class AgreementViewRoute extends React.Component {
     this.props.mutator.agreementLinesCount.replace(agreementLinesCount + RECORDS_PER_REQUEST);
   }
 
-  handleGetCreds = (id) => {
+  handleFetchCredentials = (id) => {
     const { mutator } = this.props;
     mutator.interfaceRecord.replace({ id });
   }
@@ -318,7 +321,7 @@ class AgreementViewRoute extends React.Component {
           onEdit: this.handleEdit,
           onExportEResourcesAsJSON: this.handleExportEResourcesAsJSON,
           onExportEResourcesAsKBART: this.handleExportEResourcesAsKBART,
-          onGetCreds: this.handleGetCreds,
+          onFetchCredentials: this.handleFetchCredentials,
           onNeedMoreEResources: this.handleNeedMoreEResources,
           onNeedMoreLines: this.handleNeedMoreLines,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
