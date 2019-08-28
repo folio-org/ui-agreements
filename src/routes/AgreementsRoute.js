@@ -121,20 +121,8 @@ class AgreementsRoute extends React.Component {
     }
   }
 
-  querySetter = ({ nsValues, state }) => {
-    const defaults = {
-      filters: null,
-      query: null,
-      sort: null,
-    };
-
-    if (/reset/.test(state.changeType)) {
-      // A mutator's `replace()` function doesn't update the URL of the page. As a result,
-      // we always use `update()` but fully specify the values we want to null out.
-      this.props.mutator.query.update({ ...defaults, ...nsValues });
-    } else {
-      this.props.mutator.query.update(nsValues);
-    }
+  querySetter = ({ nsValues }) => {
+    this.props.mutator.query.update(nsValues);
   }
 
   queryGetter = () => {
