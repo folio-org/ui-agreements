@@ -25,6 +25,7 @@ class AgreementsRoute extends React.Component {
       params: getSASParams({
         searchKey: 'name',
         filterKeys: {
+          contacts: 'contacts.user',
           orgs: 'orgs.org',
           role: 'orgs.role',
           tags: 'tags.value',

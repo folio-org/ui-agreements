@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { OrganizationSelection } from '@folio/stripes-erm-components';
+import { InternalContactSelection, OrganizationSelection } from '@folio/stripes-erm-components';
 
 const FILTERS = [
   'agreementStatus',
@@ -136,6 +136,31 @@ export default class AgreementFilters extends React.Component {
     );
   }
 
+  renderInternalContactFilter = () => {
+    const { activeFilters } = this.props;
+    const contactFilters = activeFilters.contacts || [];
+
+    return (
+      <Accordion
+        closedByDefault
+        displayClearButton={contactFilters.length > 0}
+        header={FilterAccordionHeader}
+        label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
+        onClearFilter={() => this.props.filterHandlers.clearGroup('contacts')}
+        separator={false}
+      >
+        <InternalContactSelection
+          path="erm/contacts"
+          input={{
+            name: 'agreement-contacts-filter',
+            onChange: value => this.props.filterHandlers.state({ ...activeFilters, contacts: [value] }),
+            value: contactFilters[0] || '',
+          }}
+        />
+      </Accordion>
+    );
+  }
+
   renderTagsFilter = () => {
     // const tags = get(this.props.data, 'tagValues.records', []);
     // TODO: TEST USING THE VALUES GENERATED IN GDSFP
@@ -172,6 +197,7 @@ export default class AgreementFilters extends React.Component {
         {this.renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
         {this.renderOrganizationFilter()}
         {this.renderOrganizationRoleFilter()}
+        {this.renderInternalContactFilter()}
         {this.renderTagsFilter()}
       </AccordionSet>
     );
