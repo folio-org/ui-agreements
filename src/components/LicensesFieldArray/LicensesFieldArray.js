@@ -83,13 +83,13 @@ class LicensesFieldArray extends React.Component {
           'data-test-delete-field-button': true
         }}
         header={<FormattedMessage id="ui-agreements.license.licenseIndex" values={{ index: index + 1 }} />}
-        id={`edit-license-card-${index}`}
+        id={`linkedLicenses-remoteId-${index}-license-card`}
         key={index}
         onDelete={() => onDeleteField(index, license)}
       >
         <Field
           component={LicenseField}
-          id={`license-remoteId-${index}`}
+          id={`linkedLicenses-remoteId-${index}`}
           index={index}
           license={this.state.licenses[license.remoteId] || license.remoteId_object}
           name={`${name}[${index}].remoteId`}
@@ -102,7 +102,7 @@ class LicensesFieldArray extends React.Component {
             <Field
               component={Select}
               dataOptions={licenseStatusValues}
-              id={`${name}-status-${index}`}
+              id={`linkedLicenses-status-${index}`}
               key={index}
               label={<FormattedMessage id="ui-agreements.license.prop.status" />}
               name={`${name}[${index}].status`}
@@ -117,7 +117,7 @@ class LicensesFieldArray extends React.Component {
           <Col xs={12} md={6}>
             <Field
               component={TextArea}
-              id={`license-note-${index}`}
+              id={`linkedLicenses-note-${index}`}
               label={<FormattedMessage id="ui-agreements.license.prop.note" />}
               name={`${name}[${index}].note`}
             />

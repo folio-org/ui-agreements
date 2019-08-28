@@ -44,7 +44,7 @@ export default class LinkedLicenses extends React.Component {
             </strong>
           </AppIcon>
         )}
-        id={controllingLicense.id}
+        id="agreement-controlling-license"
         roundedBorder
       >
         <LicenseCard license={controllingLicense.remoteId_object} />

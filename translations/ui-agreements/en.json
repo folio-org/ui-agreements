@@ -188,6 +188,7 @@
   "license.noLicenseOrganizations": "Agreement has no license organizations",
   "license.noLicenseAdded": "No licenses added",
   "license.prop.endDate": "End date",
+  "license.prop.lookup": "Add license",
   "license.prop.name": "Name",
   "license.prop.note": "Note",
   "license.prop.status": "Status (this agreement)",

@@ -32,20 +32,28 @@ export default class LicenseField extends React.Component {
     license: {},
   }
 
-  renderLinkLicenseButton = () => (
-    <Pluggable
-      aria-haspopup="true"
-      dataKey="license"
-      id={`license-${this.props.index}-search-button`}
-      marginBottom0
-      onLicenseSelected={this.props.onLicenseSelected}
-      searchLabel={<FormattedMessage id="ui-agreements.license.addLicense" />}
-      searchButtonStyle="primary"
-      type="find-license"
-    >
-      <FormattedMessage id="ui-agreements.license.noFindLicensePlugin" />
-    </Pluggable>
-  )
+  renderLinkLicenseButton = () => {
+    const { id, onLicenseSelected } = this.props;
+
+    return (
+      <Pluggable
+        dataKey={id}
+        type="find-license"
+        onLicenseSelected={onLicenseSelected}
+        renderTrigger={(props) => (
+          <Button
+            buttonStyle="primary"
+            id={`${id}-find-license-btn`}
+            onClick={props.onClick}
+          >
+            <FormattedMessage id="ui-agreements.license.prop.lookup" />
+          </Button>
+        )}
+      >
+        <FormattedMessage id="ui-agreements.license.noFindLicensePlugin" />
+      </Pluggable>
+    );
+  }
 
   renderUnlinkLicenseButton = () => (
     <Button
