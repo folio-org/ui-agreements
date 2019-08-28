@@ -22,8 +22,13 @@ class AgreementEditRoute extends React.Component {
       path: 'erm/entitlements',
       params: {
         match: 'owner.id',
+        stats: 'true',
         term: ':{id}',
       },
+      limitParam: 'perPage',
+      perRequest: 100,
+      records: 'results',
+      recordsRequired: '1000',
     },
     agreementStatusValues: {
       type: 'okapi',
