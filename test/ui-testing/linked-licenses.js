@@ -96,8 +96,8 @@ module.exports.test = (uiTestCtx) => {
             .wait(`#plugin-find-license-modal [role="row"][data-label*="${l.name}"]`)
             .click(`#plugin-find-license-modal [role="row"][data-label*="${l.name}"]`)
             .wait(`#linkedLicenses-remoteId-${i}-license-card`)
+            .waitUntilNetworkIdle(2000)
             .insert(`#linkedLicenses-note-${i}`, l.note)
-            .waitUntilNetworkIdle(1000)
             .then(done)
             .catch(done);
         });

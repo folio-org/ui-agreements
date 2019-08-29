@@ -20,7 +20,7 @@ export default class LicenseField extends React.Component {
       onChange: PropTypes.func.isRequired,
       value: PropTypes.string,
     }).isRequired,
-    license: PropTypes.shape,
+    license: PropTypes.object,
     meta: PropTypes.shape({
       error: PropTypes.node,
     }).isRequired,
@@ -65,7 +65,6 @@ export default class LicenseField extends React.Component {
       <FormattedMessage id="ui-agreements.license.unlinkLicense" />
     </Button>
   )
-
 
   renderLicense = () => {
     return (
