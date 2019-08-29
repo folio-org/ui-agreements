@@ -1,6 +1,7 @@
 # Change history for ui-agreements
 
 ## 3.2 IN PROGRESS
+* Show/hide interface credentials. Fixes ERM-263
 * Fixed package content lists being truncated at 1000 entries. ERM-409
 * Fixed bug where not all the agreement lines were being fetched.
 * Fixed bug where resetting query term wouldn't execute a search. ERM-426
