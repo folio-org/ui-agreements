@@ -27,6 +27,7 @@ export default class Lines extends React.Component {
       onExportEResourcesAsJSON: PropTypes.func.isRequired,
       onExportEResourcesAsKBART: PropTypes.func.isRequired,
       onNeedMoreEResources: PropTypes.func.isRequired,
+      onNeedMoreLines: PropTypes.func.isRequired,
     }).isRequired,
     id: PropTypes.string,
     onToggle: PropTypes.func,
@@ -109,6 +110,7 @@ export default class Lines extends React.Component {
       >
         <LinesList
           agreement={agreement}
+          onNeedMoreLines={handlers.onNeedMoreLines}
           visible={open}
         />
         <CoveredEResourcesList
