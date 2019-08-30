@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Headline, Layout, KeyValue, MultiColumnList, InfoPopover } from '@folio/stripes/components';
+import { Card, Headline, Layout, KeyValue, MultiColumnList, InfoPopover } from '@folio/stripes/components';
+import { AppIcon } from '@folio/stripes/core';
 import { LicenseCard, LicenseEndDate } from '@folio/stripes-erm-components';
 
 import FormattedUTCDate from '../FormattedUTCDate';
@@ -33,17 +34,26 @@ export default class LinkedLicenses extends React.Component {
     if (!controllingLicense) return null;
 
     return (
-      <Layout id="agreement-controlling-license">
-        <Headline margin="none" tag="h4">
-          <FormattedMessage id="ui-agreements.license.controllingLicense" />
-        </Headline>
+      <Card
+        cardStyle="positive"
+        hasMargin
+        headerStart={(
+          <AppIcon app="licenses" size="small">
+            <strong>
+              <FormattedMessage id="ui-agreements.license.controllingLicense" />
+            </strong>
+          </AppIcon>
+        )}
+        id="agreement-controlling-license"
+        roundedBorder
+      >
         <LicenseCard license={controllingLicense.remoteId_object} />
         {controllingLicense.note &&
           <KeyValue label={<FormattedMessage id="ui-agreements.license.prop.note" />}>
             {controllingLicense.note}
           </KeyValue>
         }
-      </Layout>
+      </Card>
     );
   }
 
