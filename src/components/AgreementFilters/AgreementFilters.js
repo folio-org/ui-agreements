@@ -145,12 +145,14 @@ export default class AgreementFilters extends React.Component {
         closedByDefault
         displayClearButton={contactFilters.length > 0}
         header={FilterAccordionHeader}
+        id="internal-contacts-filter"
         label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
         onClearFilter={() => this.props.filterHandlers.clearGroup('contacts')}
         separator={false}
       >
         <InternalContactSelection
           path="erm/contacts"
+          id="agreement-internal-contacts-filter"
           input={{
             name: 'agreement-contacts-filter',
             onChange: value => this.props.filterHandlers.state({ ...activeFilters, contacts: [value] }),
