@@ -4,6 +4,7 @@
 * Fixed package content lists being truncated at 1000 entries. ERM-409
 * Fixed bug where not all the agreement lines were being fetched.
 * Fixed bug where resetting query term wouldn't execute a search. ERM-426
+* Added agreement filtering by internal contact. ERM-421
 
 ## 3.1.1 2019-08-21
 * Use locally-defined saveAndClose translation key.

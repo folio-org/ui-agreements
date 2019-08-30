@@ -162,9 +162,6 @@ export default class AgreementFilters extends React.Component {
   }
 
   renderTagsFilter = () => {
-    // const tags = get(this.props.data, 'tagValues.records', []);
-    // TODO: TEST USING THE VALUES GENERATED IN GDSFP
-    // const dataOptions = tags.map(({ label }) => ({ value: label, label }));
     const { activeFilters } = this.props;
     const tagFilters = activeFilters.tags || [];
 
