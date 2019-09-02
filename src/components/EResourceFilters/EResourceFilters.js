@@ -18,7 +18,11 @@ export default class EResourceFilters extends React.Component {
   };
 
   static defaultProps = {
-    activeFilters: {}
+    activeFilters: {
+      class: [],
+      type: [],
+      remoteKb: [],
+    }
   };
 
   state = {
