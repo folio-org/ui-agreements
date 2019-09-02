@@ -31,6 +31,9 @@ class EResourcesRoute extends React.Component {
             { name: 'nopackage', value: 'org.olf.kb.TitleInstance' },
           ]
         }],
+        filterKeys: {
+          remoteKb: 'remoteKb.id',
+        }
       }),
     },
     sourceValues: {
@@ -134,7 +137,6 @@ class EResourcesRoute extends React.Component {
       <View
         data={{
           eresources: get(resources, 'eresources.records', []),
-          //  sourceValues: get(resources, 'sourceValues.records', []).map(kb => ({ label: kb.name, value: kb.id })),
           sourceValues: get(resources, 'sourceValues.records', []),
           tags: get(resources, 'tags.records', []),
           typeValues: get(resources, 'typeValues.records', []),

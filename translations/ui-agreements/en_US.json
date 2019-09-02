@@ -78,7 +78,7 @@
     "agreements.organizations": "Organizations",
     "agreements.assocAgreements": "Associated agreements",
     "settings.general": "General",
-    "eresources.sourceKb": "Source",
+    "eresources.sourceKb": "External data source",
     "eresources.coverage": "Coverage",
     "coverage.volumeShort": "Vol:",
     "coverage.issueShort": "Iss:",

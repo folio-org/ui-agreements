@@ -7,7 +7,6 @@ import { CheckboxFilter } from '@folio/stripes/smart-components';
 
 const FILTERS = [
   'type',
-  'remoteKb',
 ];
 
 export default class EResourceFilters extends React.Component {
@@ -21,13 +20,11 @@ export default class EResourceFilters extends React.Component {
     activeFilters: {
       class: [],
       type: [],
-      remoteKb: [],
     }
   };
 
   state = {
     type: [],
-    remoteKb: [],
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -105,30 +102,30 @@ export default class EResourceFilters extends React.Component {
     );
   }
 
-  renderSourceFilter = () => {
-    const sourceValues = this.props.data.sourceValues;
-    const dataOptions = sourceValues.map(remoteKb => ({
+  renderRemoteKbFilter = () => {
+    const remoteKbValues = this.props.data.sourceValues;
+    const dataOptions = remoteKbValues.map(remoteKb => ({
       label: remoteKb.name,
       value: remoteKb.id,
     }));
 
     const { activeFilters } = this.props;
-    const sourceFilters = activeFilters.remoteKb || [];
+    const remoteKbFilters = activeFilters.remoteKb || [];
 
     return (
       <Accordion
-        //  closedByDefault
-        displayClearButton={sourceFilters.length > 0}
+        displayClearButton={remoteKbFilters.length > 0}
         header={FilterAccordionHeader}
-        label={<FormattedMessage id="ui-agreements.eresources.source" />}
+        id="filter-accordion-remoteKb"
+        label={<FormattedMessage id="ui-agreements.eresources.sourceKb" />}
         onClearFilter={() => { this.props.filterHandlers.clearGroup('remoteKb'); }}
         separator={false}
       >
         <Selection
           dataOptions={dataOptions}
-          //  disabled={sourceFilters.length === 0}
-          value={sourceFilters[0] || ''}
+          id="remoteKb-filter"
           onChange={value => this.props.filterHandlers.state({ ...activeFilters, remoteKb: [value] })}
+          value={remoteKbFilters[0] || ''}
         />
       </Accordion>
     );
@@ -139,7 +136,7 @@ export default class EResourceFilters extends React.Component {
       <AccordionSet>
         {this.renderCheckboxFilter('type')}
         {this.renderIsPackageFilter()}
-        {this.renderSourceFilter()}
+        {this.renderRemoteKbFilter()}
       </AccordionSet>
     );
   }
