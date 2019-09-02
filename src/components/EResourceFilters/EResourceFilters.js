@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/components';
+import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
 
 const FILTERS = [
   'type',
-  'source',
+  'remoteKb',
 ];
 
 export default class EResourceFilters extends React.Component {
@@ -18,16 +18,12 @@ export default class EResourceFilters extends React.Component {
   };
 
   static defaultProps = {
-    activeFilters: {
-      class: [],
-      type: [],
-      source: [],
-    }
+    activeFilters: {}
   };
 
   state = {
     type: [],
-    source: [],
+    remoteKb: [],
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -105,12 +101,72 @@ export default class EResourceFilters extends React.Component {
     );
   }
 
+  /* renderOrganizationRoleFilter = () => {
+    const roles = this.props.data.orgRoleValues;
+    // TODO: TEST USING THE VALUES GENERATED IN GDSFP
+    const dataOptions = roles.map(role => ({
+      value: role.id,
+      label: role.label,
+    }));
+
+    const { activeFilters } = this.props;
+    const orgFilters = activeFilters.orgs || [];
+    const roleFilters = activeFilters.role || [];
+
+    return (
+      <Accordion
+        closedByDefault
+        displayClearButton={roleFilters.length > 0}
+        header={FilterAccordionHeader}
+        label={<FormattedMessage id="ui-agreements.settings.orgRoles.orgRole" />}
+        onClearFilter={() => { this.props.filterHandlers.clearGroup('role'); }}
+        separator={false}
+      >
+        <Selection
+          dataOptions={dataOptions}
+          disabled={orgFilters.length === 0}
+          value={roleFilters[0] || ''}
+          onChange={value => this.props.filterHandlers.state({ ...activeFilters, role: [value] })}
+        />
+      </Accordion>
+    );
+  } */
+
+  renderSourceFilter = () => {
+    const sourceValues = this.props.data.sourceValues;
+    const dataOptions = sourceValues.map(remoteKb => ({
+      label: remoteKb.name,
+      value: remoteKb.id,
+    }));
+
+    const { activeFilters } = this.props;
+    const sourceFilters = activeFilters.remoteKb || [];
+
+    return (
+      <Accordion
+        //  closedByDefault
+        displayClearButton={sourceFilters.length > 0}
+        header={FilterAccordionHeader}
+        label={<FormattedMessage id="ui-agreements.eresources.source" />}
+        onClearFilter={() => { this.props.filterHandlers.clearGroup('remoteKb'); }}
+        separator={false}
+      >
+        <Selection
+          dataOptions={dataOptions}
+          //  disabled={sourceFilters.length === 0}
+          value={sourceFilters[0] || ''}
+          onChange={value => this.props.filterHandlers.state({ ...activeFilters, remoteKb: [value] })}
+        />
+      </Accordion>
+    );
+  }
+
   render() {
     return (
       <AccordionSet>
         {this.renderCheckboxFilter('type')}
         {this.renderIsPackageFilter()}
-        {this.renderCheckboxFilter('source')}
+        {this.renderSourceFilter()}
       </AccordionSet>
     );
   }
