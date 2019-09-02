@@ -30,21 +30,10 @@ class EResourcesRoute extends React.Component {
             { name: 'package', value: 'org.olf.kb.Pkg' },
             { name: 'nopackage', value: 'org.olf.kb.TitleInstance' },
           ]
-        },
-        {
-          name: 'pkg.source',
-          values: [
-            { name: 'GOKb', value: 'GOKb' },
-            { name: 'file', value: 'file' },
-          ]
         }],
       }),
     },
-<<<<<<< HEAD
-    sourceKbValues: {
-=======
     sourceValues: {
->>>>>>> ERM-299 Filters e-resources by source
       type: 'okapi',
       path: 'erm/kbs',
       shouldRefresh: () => false,
@@ -145,11 +134,7 @@ class EResourcesRoute extends React.Component {
       <View
         data={{
           eresources: get(resources, 'eresources.records', []),
-<<<<<<< HEAD
-          sourceKbValues: get(resources, 'sourceKbValues.records', []).map(kb => ({ label: kb.name })),
-=======
           sourceValues: get(resources, 'sourceValues.records', []).map(kb => ({ label: kb.name })),
->>>>>>> ERM-299 Filters e-resources by source
           tags: get(resources, 'tags.records', []),
           typeValues: get(resources, 'typeValues.records', []),
         }}

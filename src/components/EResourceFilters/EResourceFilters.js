@@ -111,7 +111,6 @@ export default class EResourceFilters extends React.Component {
         {this.renderCheckboxFilter('type')}
         {this.renderIsPackageFilter()}
         {this.renderCheckboxFilter('source')}
-        {this.renderPkgSource()}
       </AccordionSet>
     );
   }
