@@ -116,7 +116,6 @@
     "license.error.multipleControllingLicenses": "每个协议只允许一个控制许可证。",
     "license.inactiveLicenses": "未激活许可证",
     "license.noFindLicensePlugin": "无法选择许可证，因为未安装“查找许可证”插件。",
-    "license.noLicenses": "协议没有许可证。",
     "license.prop.endDate": "结束日期",
     "license.prop.lookup": "查找许可证",
     "license.prop.name": "名称",
@@ -213,5 +212,10 @@
     "eresourcesCovered.json": "JSON",
     "eresourcesCovered.kbart": "KBART",
     "license.selectStatus": "Select a status",
-    "saveAndClose": "Save & close"
+    "saveAndClose": "Save & close",
+    "license.addLicenseToStart": "Add a license to get started",
+    "license.agreementHasNone": "Agreement has no licenses.",
+    "license.licenseIndex": "License {index}",
+    "license.noLicenseAdded": "No licenses added",
+    "license.unlinkLicense": "Unlink license"
 }
