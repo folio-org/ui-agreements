@@ -116,7 +116,6 @@
     "license.error.multipleControllingLicenses": "مسموح فقط برخصة أساسية واحدة لكل إتفاقية",
     "license.inactiveLicenses": "تراخيص غير نشطة",
     "license.noFindLicensePlugin": "لا يمكن تحديد الرخصة لأن برنامج \"باحث الرخصة\" المساعد لم يتم تثبيته.",
-    "license.noLicenses": "لا توجد تراخيص بالاتفاقية",
     "license.prop.endDate": "تاريخ الانتهاء",
     "license.prop.lookup": "البحث عن رخصة",
     "license.prop.name": "الاسم",
@@ -213,5 +212,10 @@
     "eresourcesCovered.json": "JSON",
     "eresourcesCovered.kbart": "KBART",
     "license.selectStatus": "حدد الحالة",
-    "saveAndClose": "حفظ وإغلاق"
+    "saveAndClose": "حفظ وإغلاق",
+    "license.addLicenseToStart": "أضف رخصة للبدء",
+    "license.agreementHasNone": "لا توجد تراخيص بالاتفاقية",
+    "license.licenseIndex": "الترخيص {index}",
+    "license.noLicenseAdded": "لم تتم إضافة ترخيصات",
+    "license.unlinkLicense": "إلغاء ربط الرخصة"
 }
