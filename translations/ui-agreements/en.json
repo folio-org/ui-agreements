@@ -138,7 +138,7 @@
   "eresources.platform": "Platform",
   "eresources.provider": "Provider",
   "eresources.addToBasketHeader": "E-resource basket",
-  "eresources.sourceKb": "Source",
+  "eresources.sourceKb": "External data source",
 
   "eresourcesCovered.exportAs": "Export as...",
   "eresourcesCovered.exportAsJSON": "Export as JSON",
