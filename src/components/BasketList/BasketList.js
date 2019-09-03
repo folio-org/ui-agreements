@@ -61,7 +61,7 @@ class BasketList extends React.Component {
             get(resource, '_object.pti.platform.name') ||
             get(resource, '_object.nominalPlatform.name') || '-'
           ),
-          coverage: resource => <CoverageStatements statements={resource._object.coverageStatements} />,
+          coverage: resource => <CoverageStatements statements={resource._object.coverage} />,
           remove: resource => (
             <FormattedMessage id="ui-agreements.basket.removeItem">
               {ariaLabel => (
