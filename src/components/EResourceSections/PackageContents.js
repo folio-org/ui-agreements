@@ -31,7 +31,7 @@ export default class PackageContents extends React.Component {
       formatter={{
         name: pci => <EResourceLink eresource={pci._object.pti.titleInstance} />,
         platform: pci => get(pci._object, 'pti.platform.name', ''),
-        coverage: pci => <CoverageStatements statements={pci._object.coverageStatements} />,
+        coverage: pci => <CoverageStatements statements={pci._object.coverage} />,
       }}
       visibleColumns={['name', 'platform', 'coverage']}
     />
