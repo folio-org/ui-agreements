@@ -115,10 +115,9 @@
     "license.controllingLicense": "Controle de licença",
     "license.error.multipleControllingLicenses": "Somente uma licença de controle por contrato é permitida.",
     "license.inactiveLicenses": "Licenças inativas",
-    "license.noFindLicensePlugin": "Não é possível selecionar a licença porque nenhum plug-in \"Localizar Licença\" está instalado.",
-    "license.noLicenses": "Contrato não tem nenhuma licença.",
+    "license.noFindLicensePlugin": "Nenhum plug-in de \"Localizar licença\" está instalado.",
     "license.prop.endDate": "Data de término",
-    "license.prop.lookup": "Procure uma licença",
+    "license.prop.lookup": "Adicionar licença",
     "license.prop.name": "Nome",
     "license.prop.note": "Nota",
     "license.prop.status": "Status (este contrato)",
@@ -212,5 +211,11 @@
     "eresourcesCovered.exportAsKBART": "Exportar como KBART",
     "eresourcesCovered.json": "JSON",
     "eresourcesCovered.kbart": "KBART",
-    "license.selectStatus": "Selecione um status"
+    "license.selectStatus": "Selecione um status",
+    "saveAndClose": "Salvar e fechar",
+    "license.addLicenseToStart": "Adicione uma licença para começar",
+    "license.agreementHasNone": "Contrato não tem nenhuma licença.",
+    "license.licenseIndex": "Licença {index}",
+    "license.noLicenseAdded": "Nenhuma licença adicionada",
+    "license.unlinkLicense": "Desvincular licença"
 }

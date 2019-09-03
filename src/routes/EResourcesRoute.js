@@ -31,7 +31,15 @@ class EResourcesRoute extends React.Component {
             { name: 'nopackage', value: 'org.olf.kb.TitleInstance' },
           ]
         }],
+        filterKeys: {
+          remoteKb: 'remoteKb.id',
+        }
       }),
+    },
+    sourceValues: {
+      type: 'okapi',
+      path: 'erm/kbs',
+      shouldRefresh: () => false,
     },
     typeValues: {
       type: 'okapi',
@@ -108,20 +116,8 @@ class EResourcesRoute extends React.Component {
     }
   }
 
-  querySetter = ({ nsValues, state }) => {
-    const defaults = {
-      filters: null,
-      query: null,
-      sort: null,
-    };
-
-    if (/reset/.test(state.changeType)) {
-      // A mutator's `replace()` function doesn't update the URL of the page. As a result,
-      // we always use `update()` but fully specify the values we want to null out.
-      this.props.mutator.query.update({ ...defaults, ...nsValues });
-    } else {
-      this.props.mutator.query.update(nsValues);
-    }
+  querySetter = ({ nsValues }) => {
+    this.props.mutator.query.update(nsValues);
   }
 
   queryGetter = () => {
@@ -141,6 +137,7 @@ class EResourcesRoute extends React.Component {
       <View
         data={{
           eresources: get(resources, 'eresources.records', []),
+          sourceValues: get(resources, 'sourceValues.records', []),
           tags: get(resources, 'tags.records', []),
           typeValues: get(resources, 'typeValues.records', []),
         }}

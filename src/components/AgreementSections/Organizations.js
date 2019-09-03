@@ -28,6 +28,9 @@ export default class Organizations extends React.Component {
         }),
       ),
     }).isRequired,
+    handlers: PropTypes.shape({
+      onFetchCredentials: PropTypes.func,
+    }),
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
@@ -43,6 +46,7 @@ export default class Organizations extends React.Component {
       return (
         <ViewOrganizationCard
           data-test-organizations-org
+          fetchCredentials={this.props.handlers.onFetchCredentials}
           key={`${org.orgsUuid}-${role.value}`}
           headerStart={
             <span>
@@ -81,7 +85,7 @@ export default class Organizations extends React.Component {
         onToggle={onToggle}
       >
         <Layout className="padding-bottom-gutter">
-          { orgs.length ? this.renderOrganizations() : this.renderNoOrganizations() }
+          {orgs.length ? this.renderOrganizations() : this.renderNoOrganizations()}
         </Layout>
       </Accordion>
     );

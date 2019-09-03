@@ -116,9 +116,8 @@
     "license.error.multipleControllingLicenses": "Solo se permite una licencia de control por acuerdo.",
     "license.inactiveLicenses": "Licencias inactivas",
     "license.noFindLicensePlugin": "No se puede seleccionar la licencia porque no está instalado el plugin \"Find License\".",
-    "license.noLicenses": "El acuerdo no tiene licencias.",
     "license.prop.endDate": "End date",
-    "license.prop.lookup": "Look-up a license",
+    "license.prop.lookup": "Add license",
     "license.prop.name": "Name",
     "license.prop.note": "Note",
     "license.prop.status": "Status (this agreement)",
@@ -212,5 +211,11 @@
     "eresourcesCovered.exportAsKBART": "Export as KBART",
     "eresourcesCovered.json": "JSON",
     "eresourcesCovered.kbart": "KBART",
-    "license.selectStatus": "Select a status"
+    "license.selectStatus": "Select a status",
+    "saveAndClose": "Save & close",
+    "license.addLicenseToStart": "Add a license to get started",
+    "license.agreementHasNone": "Agreement has no licenses.",
+    "license.licenseIndex": "License {index}",
+    "license.noLicenseAdded": "No licenses added",
+    "license.unlinkLicense": "Unlink license"
 }

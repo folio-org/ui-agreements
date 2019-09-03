@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get, flatten } from 'lodash';
+import { get, flatten, uniqBy } from 'lodash';
 import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
@@ -11,7 +11,7 @@ import withFileHandlers from './components/withFileHandlers';
 import View from '../components/views/Agreement';
 import { urls } from '../components/utilities';
 
-const ERESOURCES_RESULTS_INTERVAL = 100;
+const RECORDS_PER_REQUEST = 100;
 
 class AgreementViewRoute extends React.Component {
   static manifest = Object.freeze({
@@ -24,20 +24,25 @@ class AgreementViewRoute extends React.Component {
       path: 'erm/entitlements',
       params: {
         match: 'owner.id',
+        stats: 'true',
         term: ':{id}',
       },
+      limitParam: 'perPage',
+      perRequest: RECORDS_PER_REQUEST,
+      records: 'results',
+      recordsRequired: '%{agreementLinesCount}',
     },
     agreementEresources: {
       type: 'okapi',
       path: 'erm/sas/:{id}/resources',
       params: {
-        stats: 'true',
         sort: 'pti.titleInstance.name;asc',
+        stats: 'true',
       },
+      limitParam: 'perPage',
+      perRequest: RECORDS_PER_REQUEST,
       records: 'results',
       recordsRequired: '%{agreementEresourcesCount}',
-      perRequest: ERESOURCES_RESULTS_INTERVAL,
-      limitParam: 'perPage',
     },
     interfaces: {
       type: 'okapi',
@@ -71,6 +76,7 @@ class AgreementViewRoute extends React.Component {
     terms: {
       type: 'okapi',
       path: 'licenses/custprops',
+      throwErrors: false,
     },
     users: {
       type: 'okapi',
@@ -86,7 +92,18 @@ class AgreementViewRoute extends React.Component {
       fetch: props => !!props.stripes.hasInterface('users', '15.0'),
       records: 'users',
     },
-    agreementEresourcesCount: { initialValue: ERESOURCES_RESULTS_INTERVAL },
+    agreementLinesCount: { initialValue: RECORDS_PER_REQUEST },
+    agreementEresourcesCount: { initialValue: RECORDS_PER_REQUEST },
+    interfacesCredentials: {
+      clientGeneratePk: false,
+      throwErrors: false,
+      path: 'organizations-storage/interfaces/%{interfaceRecord.id}/credentials',
+      type: 'okapi',
+      pk: 'FAKE_PK',  // it's done to fool stripes-connect not to add cred id to the path's end.
+      permissionsRequired: 'organizations-storage.interfaces.credentials.item.get',
+      fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '1.0 2.0'),
+    },
+    interfaceRecord: {},
     query: {},
   });
 
@@ -104,6 +121,9 @@ class AgreementViewRoute extends React.Component {
       }).isRequired
     }).isRequired,
     mutator: PropTypes.shape({
+      agreementLinesCount: PropTypes.shape({
+        replace: PropTypes.func.isRequired,
+      }),
       agreementEresourcesCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
@@ -114,6 +134,7 @@ class AgreementViewRoute extends React.Component {
     resources: PropTypes.shape({
       agreement: PropTypes.object,
       agreementLines: PropTypes.object,
+      agreementLinesCount: PropTypes.number,
       agreementEresources: PropTypes.object,
       agreementEresourcesCount: PropTypes.number,
       interfaces: PropTypes.object,
@@ -149,10 +170,15 @@ class AgreementViewRoute extends React.Component {
       user: this.getRecord(c.user, 'users') || c.user,
     }));
 
+    const interfacesCredentials = uniqBy(get(resources, 'interfacesCredentials.records', []), 'id');
+
     const orgs = agreement.orgs.map(o => ({
       ...o,
       interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
-        .map(id => this.getRecord(id, 'interfaces') || {})
+        .map(id => ({
+          ...this.getRecord(id, 'interfaces') || {},
+          credentials: interfacesCredentials.find(cred => cred.interfaceId === id)
+        })),
     }));
 
     return {
@@ -241,9 +267,19 @@ class AgreementViewRoute extends React.Component {
       });
   }
 
+  handleNeedMoreLines = () => {
+    const { agreementLinesCount } = this.props.resources;
+    this.props.mutator.agreementLinesCount.replace(agreementLinesCount + RECORDS_PER_REQUEST);
+  }
+
+  handleFetchCredentials = (id) => {
+    const { mutator } = this.props;
+    mutator.interfaceRecord.replace({ id });
+  }
+
   handleNeedMoreEResources = () => {
     const { agreementEresourcesCount } = this.props.resources;
-    this.props.mutator.agreementEresourcesCount.replace(agreementEresourcesCount + ERESOURCES_RESULTS_INTERVAL);
+    this.props.mutator.agreementEresourcesCount.replace(agreementEresourcesCount + RECORDS_PER_REQUEST);
   }
 
   handleToggleHelper = (helper) => {
@@ -287,7 +323,9 @@ class AgreementViewRoute extends React.Component {
           onEdit: this.handleEdit,
           onExportEResourcesAsJSON: this.handleExportEResourcesAsJSON,
           onExportEResourcesAsKBART: this.handleExportEResourcesAsKBART,
+          onFetchCredentials: this.handleFetchCredentials,
           onNeedMoreEResources: this.handleNeedMoreEResources,
+          onNeedMoreLines: this.handleNeedMoreLines,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
         helperApp={this.getHelperApp()}

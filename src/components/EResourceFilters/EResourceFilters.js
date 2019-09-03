@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/components';
+import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
 
 const FILTERS = [
@@ -102,11 +102,41 @@ export default class EResourceFilters extends React.Component {
     );
   }
 
+  renderRemoteKbFilter = () => {
+    const remoteKbValues = this.props.data.sourceValues;
+    const dataOptions = remoteKbValues.map(remoteKb => ({
+      label: remoteKb.name,
+      value: remoteKb.id,
+    }));
+
+    const { activeFilters } = this.props;
+    const remoteKbFilters = activeFilters.remoteKb || [];
+
+    return (
+      <Accordion
+        displayClearButton={remoteKbFilters.length > 0}
+        header={FilterAccordionHeader}
+        id="filter-accordion-remoteKb"
+        label={<FormattedMessage id="ui-agreements.eresources.sourceKb" />}
+        onClearFilter={() => { this.props.filterHandlers.clearGroup('remoteKb'); }}
+        separator={false}
+      >
+        <Selection
+          dataOptions={dataOptions}
+          id="remoteKb-filter"
+          onChange={value => this.props.filterHandlers.state({ ...activeFilters, remoteKb: [value] })}
+          value={remoteKbFilters[0] || ''}
+        />
+      </Accordion>
+    );
+  }
+
   render() {
     return (
       <AccordionSet>
         {this.renderCheckboxFilter('type')}
         {this.renderIsPackageFilter()}
+        {this.renderRemoteKbFilter()}
       </AccordionSet>
     );
   }

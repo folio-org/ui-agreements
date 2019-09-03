@@ -32,12 +32,14 @@ export default class FormLicenses extends React.Component {
 
   renderLinkedLicenses = () => (
     <div data-test-licenses-form-all-licenses>
-      <FieldArray
-        component={LicensesFieldArray}
-        data={this.props.data}
-        name="linkedLicenses"
-        validate={this.validateRequired}
-      />
+      <KeyValue label={<FormattedMessage id="ui-agreements.license.allLicenses" />}>
+        <FieldArray
+          component={LicensesFieldArray}
+          licenseStatusValues={this.props.data.licenseLinkStatusValues}
+          name="linkedLicenses"
+          validate={this.validateRequired}
+        />
+      </KeyValue>
     </div>
   )
 
