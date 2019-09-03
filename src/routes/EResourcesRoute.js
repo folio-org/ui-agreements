@@ -31,7 +31,15 @@ class EResourcesRoute extends React.Component {
             { name: 'nopackage', value: 'org.olf.kb.TitleInstance' },
           ]
         }],
+        filterKeys: {
+          remoteKb: 'remoteKb.id',
+        }
       }),
+    },
+    sourceValues: {
+      type: 'okapi',
+      path: 'erm/kbs',
+      shouldRefresh: () => false,
     },
     typeValues: {
       type: 'okapi',
@@ -129,6 +137,7 @@ class EResourcesRoute extends React.Component {
       <View
         data={{
           eresources: get(resources, 'eresources.records', []),
+          sourceValues: get(resources, 'sourceValues.records', []),
           tags: get(resources, 'tags.records', []),
           typeValues: get(resources, 'typeValues.records', []),
         }}
