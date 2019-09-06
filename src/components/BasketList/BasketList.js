@@ -35,7 +35,6 @@ class BasketList extends React.Component {
           'name',
           'type',
           'package',
-          'publisher',
           'platform',
           'coverage',
           'remove'
@@ -91,10 +90,7 @@ class BasketList extends React.Component {
           remove: <FormattedMessage id="ui-agreements.remove" />,
         }}
         columnWidths={{
-          selected: 40,
           name: 300,
-          type: 100,
-          coverage: 300,
         }}
       />
     );

@@ -25,9 +25,6 @@ export default class PackageContents extends React.Component {
         platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
         coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
       }}
-      columnWidths={{
-        coverage: 300,
-      }}
       formatter={{
         name: pci => <EResourceLink eresource={pci._object.pti.titleInstance} />,
         platform: pci => get(pci._object, 'pti.platform.name', ''),

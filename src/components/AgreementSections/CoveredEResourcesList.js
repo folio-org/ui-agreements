@@ -48,8 +48,6 @@ export default class CoveredEResourcesList extends React.Component {
     name: 250,
     platform: 150,
     package: 150,
-    coverage: 225,
-    isCustomCoverage: 30,
   }
 
   formatter = {
@@ -70,9 +68,6 @@ export default class CoveredEResourcesList extends React.Component {
     'name',
     'platform',
     'package',
-    'haveAccess',
-    'accessStart',
-    'accessEnd',
     'coverage',
     'isCustomCoverage'
   ]
@@ -130,7 +125,7 @@ export default class CoveredEResourcesList extends React.Component {
 
   render() {
     const {
-      agreement: { eresources },
+      agreement: { eresources, eresourcesCount },
       onNeedMoreEResources,
       visible,
     } = this.props;
@@ -146,10 +141,11 @@ export default class CoveredEResourcesList extends React.Component {
           columnWidths={this.columnWidths}
           contentData={visible ? eresources : []}
           formatter={this.formatter}
-          height={800}
           id="eresources-covered"
           interactive={false}
+          maxHeight={800}
           onNeedMoreData={onNeedMoreEResources}
+          totalCount={eresourcesCount}
           virtualize
           visibleColumns={this.visibleColumns}
         />

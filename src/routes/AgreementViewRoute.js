@@ -185,6 +185,7 @@ class AgreementViewRoute extends React.Component {
       ...agreement,
       contacts,
       eresources: get(resources, 'agreementEresources.records'),
+      eresourcesCount: get(resources, 'agreementEresources.other.totalRecords'),
       lines: get(resources, 'agreementLines.records'),
       orderLines: get(resources, 'orderLines.records'),
       orgs,

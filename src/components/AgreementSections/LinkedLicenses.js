@@ -75,11 +75,9 @@ export default class LinkedLicenses extends React.Component {
             endDate: <FormattedMessage id="ui-agreements.license.prop.endDate" />,
           }}
           columnWidths={{
-            note: 30,
             name: '40%',
-            status: '20%',
-            startDate: '15%',
-            endDate: '15%'
+            startDate: 120,
+            endDate: 120
           }}
           contentData={inactiveLicenses}
           formatter={{
