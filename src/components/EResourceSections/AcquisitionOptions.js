@@ -62,10 +62,10 @@ export default class AcquisitionOptions extends React.Component {
         add: <FormattedMessage id="ui-agreements.eresources.addToBasketHeader" />,
       }}
       columnWidths={{
-        sourceKb: '15%',
+        sourceKb: '10%',
         package: '25%',
         platform: '25%',
-        acqMethod: '15%',
+        acqMethod: '10%',
         add: '25%',
       }}
     />
