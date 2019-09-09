@@ -35,6 +35,7 @@
   "agreements.agreementStatus": "Status",
   "agreements.isPerpetual": "Is perpetual",
   "agreements.internalContacts": "Internal contacts",
+  "agreements.internalContactsRole": "Internal contacts role",
   "agreements.contentReviews": "Content reviews",
   "agreements.contentReviewNeeded": "Content review needed?",
   "agreements.contentReviewDates": "Upcoming review dates",
