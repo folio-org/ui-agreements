@@ -217,5 +217,6 @@
     "license.agreementHasNone": "Agreement has no licenses.",
     "license.licenseIndex": "License {index}",
     "license.noLicenseAdded": "No licenses added",
-    "license.unlinkLicense": "Unlink license"
+    "license.unlinkLicense": "Unlink license",
+    "license.noLicenses": "Agreement has no licenses."
 }
