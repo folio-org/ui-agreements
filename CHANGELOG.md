@@ -1,5 +1,8 @@
 # Change history for ui-agreements
 
+## 3.2.2 2019-09-09
+* Fixed package version mismatch.
+
 ## 3.2.1 2019-09-09
 * Re-added erroneously-deleted translation string.
 
