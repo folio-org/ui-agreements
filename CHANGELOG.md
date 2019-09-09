@@ -1,6 +1,9 @@
 # Change history for ui-agreements
 
-## 3.2 2019-09-09
+## 3.2.1 2019-09-09
+* Re-added erroneously-deleted translation string.
+
+## 3.2.0 2019-09-09
 * Show/hide interface credentials. Fixes ERM-263
 * Fixed package content lists being truncated at 1000 entries. ERM-409
 * Fixed bug where not all the agreement lines were being fetched.
