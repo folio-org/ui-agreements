@@ -217,5 +217,6 @@
     "license.agreementHasNone": "لا توجد تراخيص بالاتفاقية",
     "license.licenseIndex": "الترخيص {index}",
     "license.noLicenseAdded": "لم تتم إضافة ترخيصات",
-    "license.unlinkLicense": "إلغاء ربط الرخصة"
+    "license.unlinkLicense": "إلغاء ربط الرخصة",
+    "license.noLicenses": "Agreement has no licenses."
 }
