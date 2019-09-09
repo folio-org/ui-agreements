@@ -186,6 +186,7 @@
   "license.noExternalLicenses": "Agreement has no external licenses.",
   "license.noFindLicensePlugin": "No \"Find License\" plugin is installed.",
   "license.noLicenseOrganizations": "Agreement has no license organizations",
+  "license.noLicenses": "Agreement has no licenses.",
   "license.noLicenseAdded": "No licenses added",
   "license.prop.endDate": "End date",
   "license.prop.lookup": "Add license",
