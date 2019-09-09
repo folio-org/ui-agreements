@@ -52,7 +52,7 @@ export default class Organizations extends React.Component {
             <span>
               <AppIcon app="organizations" size="small">
                 <Link to={`/organizations/view/${org.orgsUuid}`}>
-                  {org.name}
+                  <strong>{org.name}</strong>
                 </Link>
                 {` · ${role.label}`}
               </AppIcon>
