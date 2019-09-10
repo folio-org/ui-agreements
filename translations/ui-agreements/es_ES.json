@@ -78,7 +78,7 @@
     "agreements.organizations": "Organizations",
     "agreements.assocAgreements": "Associated agreements",
     "settings.general": "General",
-    "eresources.sourceKb": "Source",
+    "eresources.sourceKb": "Fuente de datos externa",
     "eresources.coverage": "Coverage",
     "coverage.volumeShort": "Vol:",
     "coverage.issueShort": "Iss:",
@@ -117,7 +117,7 @@
     "license.inactiveLicenses": "Licencias inactivas",
     "license.noFindLicensePlugin": "No se puede seleccionar la licencia porque no está instalado el plugin \"Find License\".",
     "license.prop.endDate": "End date",
-    "license.prop.lookup": "Add license",
+    "license.prop.lookup": "Añadir licencia",
     "license.prop.name": "Name",
     "license.prop.note": "Note",
     "license.prop.status": "Status (this agreement)",
@@ -213,9 +213,10 @@
     "eresourcesCovered.kbart": "KBART",
     "license.selectStatus": "Select a status",
     "saveAndClose": "Save & close",
-    "license.addLicenseToStart": "Add a license to get started",
-    "license.agreementHasNone": "Agreement has no licenses.",
-    "license.licenseIndex": "License {index}",
-    "license.noLicenseAdded": "No licenses added",
-    "license.unlinkLicense": "Unlink license"
+    "license.addLicenseToStart": "Añadir una licencia para empezar",
+    "license.agreementHasNone": "El acuerdo no tiene licencias.",
+    "license.licenseIndex": "Licencia {index}",
+    "license.noLicenseAdded": "No se han añadido licencias",
+    "license.unlinkLicense": "Desvincular licencia",
+    "license.noLicenses": "Agreement has no licenses."
 }
