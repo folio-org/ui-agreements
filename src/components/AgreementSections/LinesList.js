@@ -26,11 +26,6 @@ export default class LinesList extends React.Component {
   columnWidths = {
     name: 250,
     provider: 150,
-    type: 100,
-    count: 60,
-    coverage: 225,
-    isCustomCoverage: 30,
-    poLine: 100,
   }
 
   columnMapping = {

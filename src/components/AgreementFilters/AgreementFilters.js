@@ -163,6 +163,36 @@ export default class AgreementFilters extends React.Component {
     );
   }
 
+  renderInternalContactRoleFilter = () => {
+    const contactRoles = this.props.data.contactRoleValues;
+    const dataOptions = contactRoles.map(contactRole => ({
+      value: contactRole.id,
+      label: contactRole.label,
+    }));
+
+    const { activeFilters } = this.props;
+    const contactRoleFilters = activeFilters.contactRole || [];
+
+    return (
+      <Accordion
+        closedByDefault
+        displayClearButton={contactRoleFilters.length > 0}
+        header={FilterAccordionHeader}
+        id="internal-contacts-role-filter"
+        label={<FormattedMessage id="ui-agreements.agreements.internalContactsRole" />}
+        onClearFilter={() => { this.props.filterHandlers.clearGroup('contactRole'); }}
+        separator={false}
+      >
+        <Selection
+          dataOptions={dataOptions}
+          id="agreement-internal-contacts-role-filter"
+          value={contactRoleFilters[0] || ''}
+          onChange={value => this.props.filterHandlers.state({ ...activeFilters, contactRole: [value] })}
+        />
+      </Accordion>
+    );
+  }
+
   renderTagsFilter = () => {
     const { activeFilters } = this.props;
     const tagFilters = activeFilters.tags || [];
@@ -197,6 +227,7 @@ export default class AgreementFilters extends React.Component {
         {this.renderOrganizationFilter()}
         {this.renderOrganizationRoleFilter()}
         {this.renderInternalContactFilter()}
+        {this.renderInternalContactRoleFilter()}
         {this.renderTagsFilter()}
       </AccordionSet>
     );

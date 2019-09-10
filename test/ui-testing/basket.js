@@ -67,7 +67,7 @@ const shouldHaveCorrectAgreementLines = (nightmare, basketIndices = [], basket =
           if (lines.length !== indices.length) throw Error(`Expected to find ${indices.length} agreement line and found ${lines.length}`);
 
           return lines.map(node => ({
-            id: node.children[CONSTANTS.LINES_NAME_COLUMN].children[0].getAttribute('data-test-resource-id'),
+            id: node.querySelector('[data-test-resource-id]').getAttribute('data-test-resource-id'),
             name: node.children[CONSTANTS.LINES_NAME_COLUMN].textContent,
             type: node.children[CONSTANTS.LINES_TYPE_COLUMN].textContent,
           }));

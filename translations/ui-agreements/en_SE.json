@@ -78,7 +78,7 @@
     "agreements.organizations": "Organizations",
     "agreements.assocAgreements": "Associated agreements",
     "settings.general": "General",
-    "eresources.sourceKb": "Source",
+    "eresources.sourceKb": "External data source",
     "eresources.coverage": "Coverage",
     "coverage.volumeShort": "Vol:",
     "coverage.issueShort": "Iss:",
@@ -217,5 +217,6 @@
     "license.agreementHasNone": "Agreement has no licenses.",
     "license.licenseIndex": "License {index}",
     "license.noLicenseAdded": "No licenses added",
-    "license.unlinkLicense": "Unlink license"
+    "license.unlinkLicense": "Unlink license",
+    "license.noLicenses": "Agreement has no licenses."
 }

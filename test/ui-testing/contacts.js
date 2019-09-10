@@ -274,7 +274,7 @@ module.exports.test = (uiTestCtx) => {
       }
 
       if (FILTERABLE_CONTACT) {
-        it('should filter agreements by the internal contact', done => {
+        it('should filter agreements by the internal contact name', done => {
           let totalAgreements;
           nightmare
             .evaluate(() => {
@@ -291,6 +291,44 @@ module.exports.test = (uiTestCtx) => {
                 .click('#agreement-internal-contacts-filter')
                 .type('#sl-container-agreement-internal-contacts-filter input', FILTERABLE_CONTACT.name)
                 .click('#sl-container-agreement-internal-contacts-filter li')
+                .wait('#list-agreements')
+                .waitUntilNetworkIdle(2000)
+                .evaluate(_totalAgreements => {
+                  const list = document.querySelector('#list-agreements');
+                  const count = parseInt(list.getAttribute('aria-rowcount'), 10);
+
+                  if (count < 1 || count >= _totalAgreements) {
+                    throw Error(`Fetched ${count} agreements which is not greater than zero and less than ${_totalAgreements}.`);
+                  }
+                }, totalAgreements)
+                .then(done)
+                .catch(done);
+            })
+            .catch(done);
+        });
+      }
+
+      if (FILTERABLE_CONTACT) {
+        it('should filter agreements by the internal contact role', done => {
+          let totalAgreements;
+          nightmare
+            .wait('#clickable-reset-all')
+            .click('#clickable-reset-all')
+            .waitUntilNetworkIdle(2000)
+            .evaluate(() => {
+              const list = document.querySelector('#list-agreements');
+              return parseInt(list.getAttribute('aria-rowcount'), 10);
+            })
+            .then(ariaRowCount => {
+              totalAgreements = ariaRowCount;
+
+              nightmare
+                .wait('#accordion-toggle-button-internal-contacts-role-filter')
+                .click('#accordion-toggle-button-internal-contacts-role-filter')
+                .wait('#agreement-internal-contacts-role-filter')
+                .click('#agreement-internal-contacts-role-filter')
+                .type('#sl-container-agreement-internal-contacts-role-filter input', FILTERABLE_CONTACT.role)
+                .click('#sl-container-agreement-internal-contacts-role-filter li')
                 .wait('#list-agreements')
                 .waitUntilNetworkIdle(2000)
                 .evaluate(_totalAgreements => {

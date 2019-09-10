@@ -200,6 +200,7 @@ export default class EResources extends React.Component {
           initialSearchState={{ query: '' }}
           queryGetter={queryGetter}
           querySetter={querySetter}
+          sortableColumns={['name', 'type']}
           syncToLocationSearch={syncToLocationSearch}
         >
           {

@@ -26,6 +26,7 @@ class AgreementsRoute extends React.Component {
         searchKey: 'name',
         filterKeys: {
           contacts: 'contacts.user',
+          contactRole: 'contacts.role',
           orgs: 'orgs.org',
           role: 'orgs.role',
           tags: 'tags.value',
@@ -45,6 +46,11 @@ class AgreementsRoute extends React.Component {
     isPerpetualValues: {
       type: 'okapi',
       path: 'erm/refdataValues/SubscriptionAgreement/isPerpetual',
+      shouldRefresh: () => false,
+    },
+    contactRoleValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/InternalContact/role',
       shouldRefresh: () => false,
     },
     orgRoleValues: {
@@ -146,6 +152,7 @@ class AgreementsRoute extends React.Component {
           agreementStatusValues: get(resources, 'agreementStatusValues.records', []),
           renewalPriorityValues: get(resources, 'renewalPriorityValues.records', []),
           isPerpetualValues: get(resources, 'isPerpetualValues.records', []),
+          contactRoleValues: get(resources, 'contactRoleValues.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
           tagsValues: get(resources, 'tagsValues.records', []),
         }}

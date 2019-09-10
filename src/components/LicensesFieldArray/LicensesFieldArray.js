@@ -98,7 +98,7 @@ class LicensesFieldArray extends React.Component {
           validate={validators.required}
         />
         <Row>
-          <Col xs={12} md={6}>
+          <Col xs={12} md={4}>
             <Field
               component={Select}
               dataOptions={licenseStatusValues}
@@ -114,7 +114,7 @@ class LicensesFieldArray extends React.Component {
               ]}
             />
           </Col>
-          <Col xs={12} md={6}>
+          <Col xs={12} md={8}>
             <Field
               component={TextArea}
               id={`${name}-note-${index}`}
