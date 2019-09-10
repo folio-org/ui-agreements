@@ -1,6 +1,6 @@
 # Change history for ui-agreements
 
-## 3.2.3 IN PROGRESS
+## 3.2.3 2019-09-10
 * Added agreement filtering by internal contact role. ERM-422
 
 ## 3.2.2 2019-09-09
