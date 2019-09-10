@@ -7,6 +7,7 @@
 * Fixed bug where resetting query term wouldn't execute a search. ERM-426
 * Added ability to filter e-resources by source KB. ERM-299
 * Added agreement filtering by internal contact. ERM-421
+* Added agreement filtering by internal contact role. ERM-422
 
 ## 3.1.1 2019-08-21
 * Use locally-defined saveAndClose translation key.
