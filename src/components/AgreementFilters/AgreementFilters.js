@@ -178,12 +178,14 @@ export default class AgreementFilters extends React.Component {
         closedByDefault
         displayClearButton={contactRoleFilters.length > 0}
         header={FilterAccordionHeader}
-        label={<FormattedMessage id="ui-agreements.internalContactsRole" />}
+        id="internal-contacts-role-filter"
+        label={<FormattedMessage id="ui-agreements.agreements.internalContactsRole" />}
         onClearFilter={() => { this.props.filterHandlers.clearGroup('contactRole'); }}
         separator={false}
       >
         <Selection
           dataOptions={dataOptions}
+          id="agreement-internal-contacts-role-filter"
           value={contactRoleFilters[0] || ''}
           onChange={value => this.props.filterHandlers.state({ ...activeFilters, contactRole: [value] })}
         />
