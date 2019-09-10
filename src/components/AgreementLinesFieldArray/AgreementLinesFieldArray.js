@@ -82,7 +82,6 @@ class AgreementLinesFieldArray extends React.Component {
         component={AgreementLineField}
         index={i}
         key={i}
-        line={line}
         name={`${this.props.name}[${i}]`}
         onDelete={() => this.props.onDeleteField(i, line)}
         onResourceSelected={this.handleResourceSelected}
@@ -98,7 +97,7 @@ class AgreementLinesFieldArray extends React.Component {
       <div>
         {/* { this.renderError() } */}
         <div id="agreement-form-lines">
-          { this.props.items.length ? this.renderLines() : this.renderEmpty() }
+          {this.props.items.length ? this.renderLines() : this.renderEmpty()}
         </div>
         <IfEResourcesEnabled>
           <Button id="add-agreement-line-button" onClick={this.handleAddLine}>
