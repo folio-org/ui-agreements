@@ -120,6 +120,7 @@
   "eresources.coverageEnd": "Coverage end",
   "eresources.coverageDepth": "Coverage depth",
   "eresources.coverage": "Coverage",
+  "eresources.defaultCoverage": "Default coverage",
   "eresources.haveAccess": "Have access",
   "eresources.accessStart": "Access start",
   "eresources.accessEnd": "Access end",
