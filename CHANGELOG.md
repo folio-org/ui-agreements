@@ -1,5 +1,8 @@
 # Change history for ui-agreements
 
+## 3.2.3 IN PROGRESS
+* Added agreement filtering by internal contact role. ERM-422
+
 ## 3.2.2 2019-09-09
 * Fixed package version mismatch.
 
@@ -16,7 +19,6 @@
 * Display coverage in e-resources/e-resources in package. ERM-372
 * Fixed links to titles from basket contents. ERM-438
 * Tweaked license status widths. ERM-439
-* Added agreement filtering by internal contact role. ERM-422
 
 ## 3.1.1 2019-08-21
 * Use locally-defined saveAndClose translation key.
