@@ -1,5 +1,8 @@
 # Change history for ui-agreements
 
+## 3.2.4 2019-09-10
+* Add support for interface `invoice` version `2.0`.
+
 ## 3.2.3 2019-09-10
 * Added agreement filtering by internal contact role. ERM-422
 
