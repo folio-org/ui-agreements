@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import {
   Col,
+  Headline,
   KeyValue,
   Row,
 } from '@folio/stripes/components';
@@ -32,11 +33,14 @@ export default class Info extends React.Component {
       <div data-test-agreement-info>
         <Row>
           <Col xs={12}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.agreements.name" />}>
-              <div data-test-agreement-name>
+            <div data-test-agreement-name>
+              <Headline
+                size="xx-large"
+                tag="h2"
+              >
                 {agreement.name}
-              </div>
-            </KeyValue>
+              </Headline>
+            </div>
           </Col>
         </Row>
         <Row>
