@@ -141,13 +141,31 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      it('should edit agreement and add custom coverage', done => {
-        let chain = nightmare
+      it('should edit agreement', done => {
+        basket[0].coverage.forEach(c => {
+          c.startDateFormatted = Utils.formattedDate(c.startDate);
+          c.endDateFormatted = Utils.formattedDate(c.endDate);
+          c.startVolumeFormatted = `Vol:${c.startVolume}`;
+          c.endVolumeFormatted = `Vol:${c.endVolume}`;
+          c.startIssueFormatted = `Iss:${c.startIssue}`;
+          c.endIssueFormatted = `Iss:${c.endIssue}`;
+        });
+
+        nightmare
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
           .wait('[data-test-edit-agreement-info]')
-          .waitUntilNetworkIdle(2000);
+          .waitUntilNetworkIdle(2000)
+          .then(done)
+          .catch(done);
+      });
 
+      it('should check if default coverage is present', done => {
+        checkTableForCustomCoverageData(nightmare, done, 'agreement-form-lines', basket[0]);
+      });
+
+      it('should add custom coverage', done => {
+        let chain = nightmare;
         values.coverage.forEach((coverage, i) => {
           chain = chain
             .click('#agreement-form-lines [data-test-ag-line-number="0"] #add-agreement-custom-coverage-button')
@@ -191,13 +209,22 @@ module.exports.test = (uiTestCtx) => {
         checkTableForCustomCoverageData(nightmare, done, 'eresources-covered', values);
       });
 
-      it('should edit agreement and see previously-set custom coverages', done => {
+      it('should edit agreement', done => {
         nightmare
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
           .wait('[data-test-edit-agreement-info]')
           .waitUntilNetworkIdle(2000)
+          .then(done)
+          .catch(done);
+      });
 
+      it('should verify default coverage is same as previous', done => {
+        checkTableForCustomCoverageData(nightmare, done, 'agreement-form-lines', basket[0]);
+      });
+
+      it('should see previously-set custom coverages', done => {
+        nightmare
           .evaluate((expectedValues) => {
             const checkInput = (id, value) => {
               const loadedValue = document.getElementById(id).value;

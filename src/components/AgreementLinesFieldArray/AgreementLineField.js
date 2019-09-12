@@ -119,7 +119,7 @@ export default class AgreementLineField extends React.Component {
           </Col>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.defaultCoverage" />}>
-              <div data-test-ag-coverage>{this.renderCoverage(resource)}</div>
+              <div data-test-ag-line-coverage>{this.renderCoverage(resource)}</div>
             </KeyValue>
           </Col>
         </Row>
