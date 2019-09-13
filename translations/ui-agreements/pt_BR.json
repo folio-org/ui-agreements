@@ -218,5 +218,6 @@
     "license.licenseIndex": "Licença {index}",
     "license.noLicenseAdded": "Nenhuma licença adicionada",
     "license.unlinkLicense": "Desvincular licença",
-    "license.noLicenses": "Contrato não tem nenhuma licença."
+    "license.noLicenses": "Contrato não tem nenhuma licença.",
+    "agreements.internalContactsRole": "Função do contato interno"
 }

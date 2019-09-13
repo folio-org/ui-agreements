@@ -218,5 +218,6 @@
     "license.licenseIndex": "License {index}",
     "license.noLicenseAdded": "No licenses added",
     "license.unlinkLicense": "Unlink license",
-    "license.noLicenses": "Agreement has no licenses."
+    "license.noLicenses": "Agreement has no licenses.",
+    "agreements.internalContactsRole": "Internal contact role"
 }
