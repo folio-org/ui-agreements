@@ -46,7 +46,7 @@ export default class Info extends React.Component {
         <Row>
           <Col xs={12}>
             <KeyValue label={<FormattedMessage id="ui-agreements.agreements.agreementDescription" />}>
-              <div data-test-agreement-description>
+              <div data-test-agreement-description style={{ whiteSpace: 'pre-wrap' }}>
                 {agreement.description || '-'}
               </div>
             </KeyValue>

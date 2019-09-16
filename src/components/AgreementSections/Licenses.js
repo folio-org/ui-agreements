@@ -53,7 +53,7 @@ export default class Licenses extends React.Component {
           <Row>
             <Col xs={12}>
               <KeyValue label={<FormattedMessage id="ui-agreements.license.generalNotes" />}>
-                <div data-test-license-note>
+                <div data-test-license-note style={{ whiteSpace: 'pre-wrap' }}>
                   {agreement.licenseNote}
                 </div>
               </KeyValue>

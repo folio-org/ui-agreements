@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Card, Headline, Layout, KeyValue, MultiColumnList, InfoPopover } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 import { LicenseCard, LicenseEndDate } from '@folio/stripes-erm-components';
+import css from './LinkedLicenses.css';
 
 import FormattedUTCDate from '../FormattedUTCDate';
 
@@ -81,7 +82,7 @@ export default class LinkedLicenses extends React.Component {
           }}
           contentData={inactiveLicenses}
           formatter={{
-            note: link => (link.note ? <InfoPopover content={link.note} /> : ''),
+            note: link => (link.note ? <InfoPopover contentClass={css.infoPopover} content={link.note} /> : ''),
             name: ({ remoteId_object: license = {} }) => license.name,
             status: link => (link.status ? link.status.label : '-'),
             startDate: ({ remoteId_object: license = {} }) => (license.startDate ? <FormattedUTCDate value={license.startDate} /> : '-'),
