@@ -75,7 +75,7 @@ class AddToBasketButton extends React.Component {
   render() {
     const { itemExistsInBasket } = this.state;
     const { addLabel, buttonProps, disabled, item, removeLabel } = this.props;
-    const coverage = JSON.stringify(get(item, '_object.coverage[0]', '-'));
+    const coverage = JSON.stringify(get(item, '_object.coverage[0]', {}));
 
     return (
       <Button
