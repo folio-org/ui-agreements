@@ -8,6 +8,7 @@ import { Col, KeyValue, Row } from '@folio/stripes/components';
 import { EditCard } from '@folio/stripes-erm-components';
 
 import BasketSelector from '../BasketSelector';
+import CoverageStatement from '../CoverageStatements';
 import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
@@ -52,6 +53,11 @@ export default class AgreementLineField extends React.Component {
 
   renderLineProvider = (resource) => {
     return <EResourceProvider resource={resource} />;
+  }
+
+  renderCoverage = (resource) => {
+    const coverage = get(resource, 'coverage');
+    return <CoverageStatement statements={coverage} />;
   }
 
   renderPOLineField = () => {
@@ -109,6 +115,11 @@ export default class AgreementLineField extends React.Component {
           <Col xs={12} md={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.provider" />}>
               <div data-test-ag-line-provider>{this.renderLineProvider(resource)}</div>
+            </KeyValue>
+          </Col>
+          <Col xs={3}>
+            <KeyValue label={<FormattedMessage id="ui-agreements.eresources.defaultCoverage" />}>
+              <div data-test-ag-line-coverage>{this.renderCoverage(resource)}</div>
             </KeyValue>
           </Col>
         </Row>

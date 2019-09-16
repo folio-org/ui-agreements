@@ -86,6 +86,10 @@ module.exports.test = (uiTestCtx) => {
                 if (!document.querySelector('[data-test-ag-line-provider]').textContent) {
                   throw Error('Expected to find a resource provider.');
                 }
+
+                if (!document.querySelector('[data-test-ag-line-coverage]').textContent) {
+                  throw Error('Expected to find default coverage.');
+                }
               }, values)
               .then(done)
               .catch(done);

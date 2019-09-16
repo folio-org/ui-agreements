@@ -90,7 +90,7 @@ export default class AcquisitionOptions extends React.Component {
         displayWhenOpen={this.renderBadge()}
         label={<FormattedMessage id="ui-agreements.eresources.acqOptions" values={eresource} />}
       >
-        { entitlementOptions ? this.renderOptions() : this.renderLoading() }
+        {entitlementOptions ? this.renderOptions() : this.renderLoading()}
       </Accordion>
     );
   }
