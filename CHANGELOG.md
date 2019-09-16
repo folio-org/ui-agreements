@@ -1,5 +1,8 @@
 # Change history for ui-agreements
 
+## 3.3.0 IN PROGRESS
+* Move the Save & close button and add a Cancel button to Pane Footer. ERM-411.
+
 ## 3.2.4 2019-09-10
 * Add support for interface `invoice` version `2.0`.
 
