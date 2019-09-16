@@ -218,5 +218,6 @@
     "license.licenseIndex": "许可证{index}",
     "license.noLicenseAdded": "未添加许可证",
     "license.unlinkLicense": "取消链接许可证",
-    "license.noLicenses": "Agreement has no licenses."
+    "license.noLicenses": "Agreement has no licenses.",
+    "agreements.internalContactsRole": "Internal contact role"
 }
