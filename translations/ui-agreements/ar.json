@@ -218,5 +218,6 @@
     "license.licenseIndex": "الترخيص {index}",
     "license.noLicenseAdded": "لم تتم إضافة ترخيصات",
     "license.unlinkLicense": "إلغاء ربط الرخصة",
-    "license.noLicenses": "Agreement has no licenses."
+    "license.noLicenses": "Agreement has no licenses.",
+    "agreements.internalContactsRole": "Internal contact role"
 }
