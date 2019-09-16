@@ -154,7 +154,7 @@ export default class EResources extends React.Component {
               {hideOrShowMessage => (
                 <FilterPaneToggle
                   visible={filterPaneIsVisible}
-                  aria-label={`${hideOrShowMessage}...s${appliedFiltersMessage}`}
+                  aria-label={`${hideOrShowMessage}...${appliedFiltersMessage}`}
                   onClick={this.toggleFilterPane}
                   badge={!filterPaneIsVisible && filterCount ? filterCount : undefined}
                 />
@@ -245,7 +245,7 @@ export default class EResources extends React.Component {
                         {/* TODO: Use forthcoming <SearchGroup> or similar component */}
                         <div className={css.searchGroupWrap}>
                           <FormattedMessage id="ui-agreements.agreements.searchInputLabel">
-                            { ariaLabel => (
+                            {ariaLabel => (
                               <SearchField
                                 aria-label={ariaLabel}
                                 autoFocus
@@ -319,7 +319,7 @@ export default class EResources extends React.Component {
                       visibleColumns={this.visibleColumns}
                     />
                   </Pane>
-                  { children }
+                  {children}
                 </Paneset>
               );
             }

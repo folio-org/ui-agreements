@@ -1,6 +1,7 @@
 # Change history for ui-agreements
 
 ## 3.3.0 IN PROGRESS
+* Update stripes to v2.10.1 to support PaneFooter.
 * Move the Save & close button and add a Cancel button to Pane Footer. ERM-411.
 * Apply the new large headline design to Agreements. ERM-260.
 * Display coverage for Agreement lines on Create Agreement pane. ERM-168.
