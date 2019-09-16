@@ -11,6 +11,7 @@ import {
   IconButton,
   Layout,
   Pane,
+  PaneFooter,
   PaneMenu,
   Paneset,
   Row,
@@ -45,6 +46,7 @@ class AgreementForm extends React.Component {
     handleSubmit: PropTypes.func.isRequired,
     isLoading: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
+    invalid: PropTypes.bool,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
   }
@@ -128,6 +130,41 @@ class AgreementForm extends React.Component {
     );
   }
 
+  renderPaneFooter() {
+    const { initialValues = {} } = this.props;
+
+    const startButton = (
+      <Button
+        buttonStyle="default mega"
+        id="clickable-cancel"
+        marginBottom0
+        onClick={this.props.handlers.onClose}
+      >
+        <FormattedMessage id="stripes-components.cancel" />
+      </Button>
+    );
+
+    const endButton = (
+      <Button
+        buttonStyle="primary mega"
+        disabled={this.props.pristine || this.props.submitting || this.props.invalid}
+        id={initialValues.id ? 'clickable-update-agreement' : 'clickable-create-agreement'}
+        marginBottom0
+        onClick={this.props.handleSubmit}
+        type="submit"
+      >
+        <FormattedMessage id="stripes-components.saveAndClose" />
+      </Button>
+    );
+
+    return (
+      <PaneFooter
+        renderStart={startButton}
+        renderEnd={endButton}
+      />
+    );
+  }
+
   renderFirstMenu() {
     return (
       <PaneMenu>
@@ -145,25 +182,6 @@ class AgreementForm extends React.Component {
     );
   }
 
-  renderLastMenu() {
-    const { initialValues = {} } = this.props;
-
-    return (
-      <PaneMenu>
-        <Button
-          id={initialValues.id ? 'clickable-update-agreement' : 'clickable-create-agreement'}
-          type="submit"
-          disabled={this.props.pristine || this.props.submitting}
-          onClick={this.props.handleSubmit}
-          buttonStyle="primary paneHeaderNewButton"
-          marginBottom0
-        >
-          <FormattedMessage id="ui-agreements.saveAndClose" />
-        </Button>
-      </PaneMenu>
-    );
-  }
-
   render() {
     const { initialValues: { id, name }, isLoading } = this.props;
 
@@ -176,9 +194,9 @@ class AgreementForm extends React.Component {
             <Pane
               appIcon={<AppIcon app="agreements" />}
               defaultWidth="100%"
+              footer={this.renderPaneFooter()}
               id="pane-agreement-form"
               firstMenu={this.renderFirstMenu()}
-              lastMenu={this.renderLastMenu()}
               paneTitle={id ? name : <FormattedMessage id="ui-agreements.agreements.createAgreement" />}
             >
               <TitleManager record={id ? name : create}>
