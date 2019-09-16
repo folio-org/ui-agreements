@@ -145,7 +145,7 @@ class AgreementForm extends React.Component {
 
     const endButton = (
       <Button
-        buttonStyle="primary paneHeaderNewButton"
+        buttonStyle="primary mega"
         disabled={this.props.pristine || this.props.submitting}
         id={initialValues.id ? 'clickable-update-agreement' : 'clickable-create-agreement'}
         marginBottom0
