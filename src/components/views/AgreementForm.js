@@ -46,6 +46,7 @@ class AgreementForm extends React.Component {
     handleSubmit: PropTypes.func.isRequired,
     isLoading: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
+    invalid: PropTypes.bool,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
   }
@@ -146,7 +147,7 @@ class AgreementForm extends React.Component {
     const endButton = (
       <Button
         buttonStyle="primary mega"
-        disabled={this.props.pristine || this.props.submitting}
+        disabled={this.props.pristine || this.props.submitting || this.props.invalid}
         id={initialValues.id ? 'clickable-update-agreement' : 'clickable-create-agreement'}
         marginBottom0
         onClick={this.props.handleSubmit}
