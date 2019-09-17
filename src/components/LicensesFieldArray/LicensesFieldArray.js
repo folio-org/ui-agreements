@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field, FieldArray } from 'redux-form';
 import { Button, Col, Layout, Row, Select, TextArea } from '@folio/stripes/components';
 import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
 import { validators } from '../utilities';
+import AmendmentsFieldArray from './AmendmentsFieldArray';
 import LicenseField from './LicenseField';
 
 const CONTROLLING_STATUS = 'controlling';
 
 class LicensesFieldArray extends React.Component {
   static propTypes = {
+    amendmentStatusValues: PropTypes.arrayOf(PropTypes.object),
     items: PropTypes.arrayOf(PropTypes.object),
     name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
@@ -25,8 +27,15 @@ class LicensesFieldArray extends React.Component {
     licenses: {},
   }
 
-  handleLicenseSelected = (index, license) => {
-    this.props.onReplaceField(index, { remoteId: license.id });
+  handleLicenseSelected = (index, license = {}) => {
+    const amendments = (license.amendments || []).map(a => ({
+      amendmentId: a.id,
+    }));
+
+    this.props.onReplaceField(index, {
+      amendments,
+      remoteId: license.id,
+    });
 
     this.setState(prevState => ({
       licenses: {
@@ -64,12 +73,9 @@ class LicensesFieldArray extends React.Component {
     return undefined;
   }
 
-  validateRequired = (value) => (
-    !value ? <FormattedMessage id="stripes-core.label.missingRequiredField" /> : undefined
-  )
-
   renderLicenseFields = () => {
     const {
+      amendmentStatusValues,
       licenseStatusValues,
       items,
       name,
@@ -123,6 +129,12 @@ class LicensesFieldArray extends React.Component {
             />
           </Col>
         </Row>
+        <FieldArray
+          amendmentStatusValues={amendmentStatusValues}
+          license={this.state.licenses[license.remoteId] || license.remoteId_object}
+          component={AmendmentsFieldArray}
+          name={`${name}[${index}].amendments`}
+        />
       </EditCard>
     ));
   }

@@ -35,6 +35,11 @@ class AgreementEditRoute extends React.Component {
       path: 'erm/refdataValues/SubscriptionAgreement/agreementStatus',
       shouldRefresh: () => false,
     },
+    amendmentStatusValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/LicenseAmendmentStatus/status',
+      shouldRefresh: () => false,
+    },
     contactRoleValues: {
       type: 'okapi',
       path: 'erm/refdataValues/InternalContact/role',
@@ -166,8 +171,12 @@ class AgreementEditRoute extends React.Component {
     initialValues.isPerpetual = isPerpetual.value;
     initialValues.renewalPriority = renewalPriority.value;
     initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
-    initialValues.linkedLicenses = linkedLicenses.map(l => ({ ...l, status: l.status.value }));
     initialValues.orgs = orgs.map(o => ({ ...o, role: o.role && o.role.value }));
+    initialValues.linkedLicenses = linkedLicenses.map(l => ({
+      ...l,
+      status: l.status.value,
+      amendments: (l.amendments || []).map(a => ({ ...a, status: a.status.value })),
+    }));
 
     const lines = get(resources, 'agreementLines.records', []);
     if (items.length && lines.length) {
@@ -249,6 +258,7 @@ class AgreementEditRoute extends React.Component {
           agreementLines: this.getAgreementLines(),
           agreementLinesToAdd: this.getAgreementLinesToAdd(),
           agreementStatusValues: get(resources, 'agreementStatusValues.records', []),
+          amendmentStatusValues: get(resources, 'amendmentStatusValues.records', []),
           basket: get(resources, 'basket', []),
           contactRoleValues: get(resources, 'contactRoleValues.records', []),
           externalAgreementLine: get(resources, 'externalAgreementLine.records', []),
