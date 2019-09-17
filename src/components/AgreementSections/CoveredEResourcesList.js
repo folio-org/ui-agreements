@@ -16,6 +16,7 @@ import {
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
+import FormattedUTCDate from '../FormattedUTCDate';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
 
 export default class CoveredEResourcesList extends React.Component {
@@ -57,9 +58,9 @@ export default class CoveredEResourcesList extends React.Component {
     },
     platform: e => get(e._object, 'pti.platform.name', '-'),
     package: e => get(e._object, 'pkg.name', '-'),
-    haveAccess: () => 'TBD',
-    accessStart: () => 'TBD',
-    accessEnd: () => 'TBD',
+    haveAccess: e => this.renderHaveAccess(e),
+    accessStart: e => this.renderDate(get(e._object, 'accessStart')),
+    accessEnd: e => this.renderDate(get(e._object, 'accessEnd')),
     coverage: e => <CoverageStatements statements={e.coverage} />,
     isCustomCoverage: e => (e.customCoverage ? <CustomCoverageIcon /> : ''),
   }
@@ -68,12 +69,37 @@ export default class CoveredEResourcesList extends React.Component {
     'name',
     'platform',
     'package',
+    'haveAccess',
+    'accessStart',
+    'accessEnd',
     'coverage',
     'isCustomCoverage'
   ]
 
   handleToggleExportDropdown = () => {
     this.setState(prevState => ({ exportDropdownOpen: prevState.exportDropdownOpen }));
+  }
+
+  renderDate = date => (
+    date ? <FormattedUTCDate value={date} /> : '-'
+  )
+
+  renderHaveAccess = eresource => {
+    const accessStart = new Date(get(eresource._object, 'accessStart')).getTime();
+    const accessEnd = new Date(get(eresource._object, 'accessStart')).getTime();
+    const now = new Date().getTime();
+
+    if (Number.isNaN(accessStart)) return '-';
+
+    if (Number.isNaN(accessEnd) && accessStart < now) {
+      return <FormattedMessage id="ui-agreements.yes" />;
+    }
+
+    if (!Number.isNaN(accessEnd) && accessStart < now && accessEnd > now) {
+      return <FormattedMessage id="ui-agreements.yes" />;
+    }
+
+    return <FormattedMessage id="ui-agreements.no" />;
   }
 
   renderExportDropdown = () => (
