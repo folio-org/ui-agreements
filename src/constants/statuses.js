@@ -1,7 +1,11 @@
 const statuses = {
+  CONTROLLING: 'controlling',
   CURRENT: 'current',
   EXPIRED: 'expired',
-  REJECTED: 'rejected'
+  FUTURE: 'future',
+  HISTORICAL: 'historical',
+  REJECTED: 'rejected',
+  UNSET: 'unset',
 };
 
 export default statuses;

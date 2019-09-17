@@ -175,7 +175,18 @@ class AgreementEditRoute extends React.Component {
     initialValues.linkedLicenses = linkedLicenses.map(l => ({
       ...l,
       status: l.status.value,
-      amendments: (l.amendments || []).map(a => ({ ...a, status: a.status.value })),
+      // Init the list of amendments based on the license's amendments to ensure
+      // we display those that have been created since this agreement's license was last
+      // edited. Ensure we provide defaults via amendmentId.
+      amendments: get(l, 'remoteId_object.amendments', [])
+        .map(a => {
+          const assignedAmendment = (l.amendments || []).find(la => la.amendmentId === a.id) || {};
+          return {
+            ...assignedAmendment,
+            amendmentId: a.id,
+            status: assignedAmendment.status ? assignedAmendment.status.value : undefined,
+          };
+        })
     }));
 
     const lines = get(resources, 'agreementLines.records', []);

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
+import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
 import { Card, Headline, Layout, KeyValue, MultiColumnList, InfoPopover } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
@@ -8,6 +9,9 @@ import { LicenseCard, LicenseEndDate } from '@folio/stripes-erm-components';
 import css from './LinkedLicenses.css';
 
 import FormattedUTCDate from '../FormattedUTCDate';
+import LicenseAmendmentList from '../LicenseAmendmentList';
+import { urls } from '../utilities';
+import { statuses } from '../../constants';
 
 export default class LinkedLicenses extends React.Component {
   static propTypes = {
@@ -34,25 +38,52 @@ export default class LinkedLicenses extends React.Component {
     const controllingLicense = licenses.find(l => l.status.value === 'controlling');
     if (!controllingLicense) return null;
 
+    const license = controllingLicense.remoteId_object || { amendments: [] };
+
+    const currentAmendments = (controllingLicense.amendments || [])
+      .filter(ca => ca.status.value === statuses.CURRENT)
+      .map(ca => ({
+        ...(license.amendments.find(a => a.id === ca.amendmentId) || {}),
+        note: ca.note,
+      }));
+
     return (
       <Card
         cardStyle="positive"
         hasMargin
         headerStart={(
           <AppIcon app="licenses" size="small">
-            <strong>
-              <FormattedMessage id="ui-agreements.license.controllingLicense" />
-            </strong>
+            <Link to={urls.licenseView(license.id)}>
+              <strong>{license.name}</strong>
+            </Link>
           </AppIcon>
         )}
         id="agreement-controlling-license"
         roundedBorder
       >
-        <LicenseCard license={controllingLicense.remoteId_object} />
-        {controllingLicense.note &&
+        <LicenseCard
+          license={license}
+          renderName={false}
+        />
+        { controllingLicense.note &&
           <KeyValue label={<FormattedMessage id="ui-agreements.license.prop.note" />}>
             {controllingLicense.note}
           </KeyValue>
+        }
+        { currentAmendments.length &&
+          <div>
+            <KeyValue
+              data-test-controlling-license-current-amendments
+              label={<FormattedMessage id="ui-agreements.license.currentAmendments" />}
+            >
+              <LicenseAmendmentList
+                amendments={currentAmendments}
+                id="controlling-license-current-amendments"
+                license={license}
+                renderStatuses
+              />
+            </KeyValue>
+          </div>
         }
       </Card>
     );

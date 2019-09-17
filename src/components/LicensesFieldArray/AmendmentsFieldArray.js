@@ -31,6 +31,8 @@ class AmendmentsFieldArray extends React.Component {
   };
 
   warnStatusMismatch = (value, allValues, _props, name) => {
+    if (!value) return undefined;
+
     const stringValue = typeof value === 'string' ? value : value.value;
     if (stringValue !== statuses.CURRENT) return undefined;
 
@@ -74,7 +76,7 @@ class AmendmentsFieldArray extends React.Component {
           <FormattedMessage id="ui-agreements.license.licenseAmendments" />
         </Headline>
         {items.map((item, i) => {
-          const amendment = amendments.find(a => item.amendmentId === a.id);
+          const amendment = amendments.find(a => item.amendmentId === a.id) || {};
 
           return (
             <Card
@@ -84,9 +86,10 @@ class AmendmentsFieldArray extends React.Component {
                   data-test-amendment-name
                   to={urls.amendmentView(license.id, amendment.id)}
                 >
-                  {amendment.name}
+                  <strong>{amendment.name}</strong>
                 </Link>
               }
+              key={amendment.id}
             >
               <Row>
                 <Col xs={12} md={4}>

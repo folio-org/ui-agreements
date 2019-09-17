@@ -1,3 +1,4 @@
+export { default as ControllingLicense } from './ControllingLicense';
 export { default as Finances } from './Finances';
 export { default as FormInfo } from './FormInfo';
 export { default as FormInternalContacts } from './FormInternalContacts';
