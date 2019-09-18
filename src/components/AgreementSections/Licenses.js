@@ -61,7 +61,7 @@ export default class Licenses extends React.Component {
           </Row>
         }
         <div>
-          <LinkedLicenses agreement={agreement} />
+          {/* <LinkedLicenses agreement={agreement} /> */}
           <ExternalLicenses agreement={agreement} handlers={handlers} />
         </div>
       </Accordion>

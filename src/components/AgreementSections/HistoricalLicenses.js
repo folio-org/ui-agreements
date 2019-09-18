@@ -17,7 +17,7 @@ import LicenseAmendmentList from '../LicenseAmendmentList';
 import { getLicenseAmendments, urls } from '../utilities';
 import { statuses } from '../../constants';
 
-export default class ControllingLicense extends React.Component {
+export default class HistoricalLicenses extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
       linkedLicenses: PropTypes.arrayOf(
@@ -49,8 +49,8 @@ export default class ControllingLicense extends React.Component {
     open: PropTypes.bool,
   };
 
-  renderLicense = linkedLicense => {
-    const currentAmendments = getLicenseAmendments(linkedLicense, statuses.CURRENT);
+  renderLicense = (linkedLicense, i) => {
+    const amendments = getLicenseAmendments(linkedLicense);
     const licenseRecord = linkedLicense.remoteId_object || {};
 
     return (
@@ -64,7 +64,7 @@ export default class ControllingLicense extends React.Component {
             </Link>
           </AppIcon>
         )}
-        id="agreement-controlling-license"
+        id={`agreement-historical-license-${i}`}
         roundedBorder
       >
         <LicenseCard
@@ -76,67 +76,40 @@ export default class ControllingLicense extends React.Component {
             {linkedLicense.note}
           </KeyValue>
         }
-        { currentAmendments.length ?
-          <KeyValue label={<FormattedMessage id="ui-agreements.license.currentAmendments" />}>
-            <LicenseAmendmentList
-              amendments={currentAmendments}
-              id="controlling-license-current-amendments"
-              license={licenseRecord}
-              renderStatuses
-            />
-          </KeyValue>
+        { amendments.length ?
+          <LicenseAmendmentList
+            amendments={amendments}
+            id={`agreement-historical-license-${i}-amendments`}
+            license={licenseRecord}
+          />
           : null
         }
       </Card>
     );
   }
 
-  renderAmendments = (linkedLicense, status) => {
-    const amendments = getLicenseAmendments(linkedLicense, status);
-
-    if (!amendments.length) return null;
-
-    const statusString = status || 'unset';
-
-    return (
-      <KeyValue label={<FormattedMessage id={`ui-agreements.license.${statusString}Amendments`} />}>
-        <LicenseAmendmentList
-          amendments={amendments}
-          id={`controlling-license-${statusString}-amendments`}
-          license={linkedLicense.remoteId_object}
-          renderStatuses={status !== statuses.HISTORICAL}
-        />
-      </KeyValue>
-    );
-  }
+  renderEmpty = () => (
+    <Layout className="padding-bottom-gutter">
+      <FormattedMessage id="ui-agreements.license.noHistoricalLicenses" />
+    </Layout>
+  )
 
   render() {
     const { id, onToggle, open } = this.props;
 
-    const license = get(this.props, 'agreement.linkedLicenses', [])
-      .find(l => l.status.value === statuses.CONTROLLING);
+    const licenses = get(this.props, 'agreement.linkedLicenses', [])
+      .filter(l => l.status.value === statuses.HISTORICAL);
 
     return (
       <Accordion
-        displayWhenClosed={<Badge>{license ? 1 : 0}</Badge>}
-        displayWhenOpen={<Badge>{license ? 1 : 0}</Badge>}
+        displayWhenClosed={<Badge>{licenses.length}</Badge>}
+        displayWhenOpen={<Badge>{licenses.length}</Badge>}
         id={id}
-        label={<FormattedMessage id="ui-agreements.license.controllingLicense" />}
+        label={<FormattedMessage id="ui-agreements.license.historicalLicenses" />}
         open={open}
         onToggle={onToggle}
       >
-        { license ?
-          <div>
-            {this.renderLicense(license)}
-            {this.renderAmendments(license, statuses.FUTURE)}
-            {this.renderAmendments(license, statuses.HISTORICAL)}
-            {this.renderAmendments(license, null)}
-          </div>
-          :
-          <Layout className="padding-bottom-gutter">
-            <FormattedMessage id="ui-agreements.license.noControllingLicense" />
-          </Layout>
-        }
+        { licenses.length ? licenses.map(this.renderLicense) : this.renderEmpty() }
       </Accordion>
     );
   }

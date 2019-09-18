@@ -198,6 +198,8 @@
   "license.noControllingLicense": "No controlling license is linked to this agreement.",
   "license.noExternalLicenses": "Agreement has no external licenses.",
   "license.noFindLicensePlugin": "No \"Find License\" plugin is installed.",
+  "license.noFutureLicenses": "Agreement has no future licenses.",
+  "license.noHistoricalLicenses": "Agreement has no historical licenses.",
   "license.noLicenseOrganizations": "Agreement has no license organizations",
   "license.noLicenses": "Agreement has no licenses.",
   "license.noLicenseAdded": "No licenses added",
