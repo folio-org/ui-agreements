@@ -10,7 +10,6 @@ export default function CustomCoverage() {
           className="flex"
           data-test-custom-coverage
           aria-label={customCoverage}
-          ref = {ref}
         >
           <svg focusable="false" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 4.23 4.23">
             <g transform="translate(-4.26,-288.64)" style={{ display: 'none' }}>

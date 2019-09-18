@@ -62,7 +62,27 @@ export default class CoveredEResourcesList extends React.Component {
     accessStart: () => 'TBD',
     accessEnd: () => 'TBD',
     coverage: e => <CoverageStatements statements={e.coverage} />,
-    isCustomCoverage: e => (e.customCoverage ? <CustomCoverageIcon/> : ''),
+    isCustomCoverage: line => {
+      const custom_coverage_tooltip_label = 'Custom Coverage';
+      if (!line.customCoverage) return '';
+      return (
+        <div>
+          <Tooltip
+            text={custom_coverage_tooltip_label}
+            id="custom_coverage_tooltip"
+          >
+            {({ref, ariaIds}) => 
+            <span
+              ref = {ref}
+            >
+              <CustomCoverageIcon/>
+            </span>
+            }
+            
+          </Tooltip>
+        </div>
+      );
+    },
   }
 
   visibleColumns = [
