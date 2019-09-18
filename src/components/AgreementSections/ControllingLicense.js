@@ -60,7 +60,7 @@ export default class ControllingLicense extends React.Component {
         headerStart={(
           <AppIcon app="licenses" size="small">
             <Link to={urls.licenseView(licenseRecord.id)}>
-              <strong>{licenseRecord.name}</strong>
+              <strong data-test-license-name={licenseRecord.name}>{licenseRecord.name}</strong>
             </Link>
           </AppIcon>
         )}

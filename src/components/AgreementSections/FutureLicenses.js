@@ -1,20 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
-import {
-  Accordion,
-  Card,
-  Badge,
-  KeyValue,
-  Layout,
-} from '@folio/stripes/components';
-import { AppIcon } from '@folio/stripes/core';
-import { LicenseCard } from '@folio/stripes-erm-components';
+import { Accordion, Badge, Layout } from '@folio/stripes/components';
 
-import LicenseAmendmentList from '../LicenseAmendmentList';
-import { getLicenseAmendments, urls } from '../utilities';
+import LinkedLicenseCard from '../LinkedLicenseCard';
 import { statuses } from '../../constants';
 
 export default class FutureLicenses extends React.Component {
@@ -22,22 +12,7 @@ export default class FutureLicenses extends React.Component {
     agreement: PropTypes.shape({
       linkedLicenses: PropTypes.arrayOf(
         PropTypes.shape({
-          amendments: PropTypes.arrayOf(PropTypes.shape({
-            amendmentId: PropTypes.string.isRequired,
-            note: PropTypes.string,
-            status: PropTypes.shape({
-              value: PropTypes.string,
-            }),
-          })),
-          endDate: PropTypes.string,
-          name: PropTypes.string,
-          note: PropTypes.string,
-          remoteId_object: PropTypes.shape({
-            amendments: PropTypes.arrayOf(PropTypes.shape({
-              id: PropTypes.string.isRequired
-            }))
-          }),
-          startDate: PropTypes.string,
+          id: PropTypes.string,
           status: PropTypes.shape({
             value: PropTypes.string,
           }),
@@ -50,41 +25,12 @@ export default class FutureLicenses extends React.Component {
   };
 
   renderLicense = (linkedLicense, i) => {
-    const amendments = getLicenseAmendments(linkedLicense);
-    const licenseRecord = linkedLicense.remoteId_object || {};
-
     return (
-      <Card
-        cardStyle="positive"
-        hasMargin
-        headerStart={(
-          <AppIcon app="licenses" size="small">
-            <Link to={urls.licenseView(licenseRecord.id)}>
-              <strong>{licenseRecord.name}</strong>
-            </Link>
-          </AppIcon>
-        )}
+      <LinkedLicenseCard
         id={`agreement-future-license-${i}`}
-        roundedBorder
-      >
-        <LicenseCard
-          license={licenseRecord}
-          renderName={false}
-        />
-        { linkedLicense.note &&
-          <KeyValue label={<FormattedMessage id="ui-agreements.license.prop.note" />}>
-            {linkedLicense.note}
-          </KeyValue>
-        }
-        { amendments.length ?
-          <LicenseAmendmentList
-            amendments={amendments}
-            id={`agreement-future-license-${i}-amendments`}
-            license={licenseRecord}
-          />
-          : null
-        }
-      </Card>
+        key={linkedLicense.id}
+        license={linkedLicense}
+      />
     );
   }
 
@@ -98,7 +44,7 @@ export default class FutureLicenses extends React.Component {
     const { id, onToggle, open } = this.props;
 
     const licenses = get(this.props, 'agreement.linkedLicenses', [])
-      .filter(l => l.status.value === statuses.FUTURE);
+      .filter(l => get(l, 'status.value') === statuses.FUTURE);
 
     return (
       <Accordion

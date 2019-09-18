@@ -21,12 +21,12 @@ import { Spinner } from '@folio/stripes-erm-components';
 
 import {
   ControllingLicense,
+  ExternalLicenses,
   FutureLicenses,
   Header,
   HistoricalLicenses,
   Info,
   InternalContacts,
-  Licenses,
   Lines,
   Organizations,
   SupplementaryInfo,
@@ -54,6 +54,7 @@ export default class Agreement extends React.Component {
   state = {
     sections: {
       controllingLicense: false,
+      externalLicenses: false,
       futureLicenses: false,
       historicalLicenses: false,
       internalContacts: false,
@@ -208,7 +209,7 @@ export default class Agreement extends React.Component {
               <ControllingLicense {...this.getSectionProps('controllingLicense')} />
               <FutureLicenses {...this.getSectionProps('futureLicenses')} />
               <HistoricalLicenses {...this.getSectionProps('historicalLicenses')} />
-              <Licenses {...this.getSectionProps('licenses')} />
+              <ExternalLicenses {...this.getSectionProps('externalLicenses')} />
               <Terms {...this.getSectionProps('terms')} />
               <Organizations {...this.getSectionProps('organizations')} />
               <SupplementaryInfo {...this.getSectionProps('supplementaryInfo')} />

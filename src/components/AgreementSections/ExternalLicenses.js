@@ -2,14 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Headline } from '@folio/stripes/components';
+import { Accordion, Badge, Layout } from '@folio/stripes/components';
 import { DocumentCard } from '@folio/stripes-erm-components';
 
 export default class ExternalLicenses extends React.Component {
   static propTypes = {
-    handlers: PropTypes.shape({
-      onDownloadFile: PropTypes.func,
-    }),
     agreement: PropTypes.shape({
       externalLicenseDocs: PropTypes.arrayOf(
         PropTypes.shape({
@@ -22,27 +19,43 @@ export default class ExternalLicenses extends React.Component {
         }),
       ),
     }),
+    handlers: PropTypes.shape({
+      onDownloadFile: PropTypes.func,
+    }).isRequired,
+    id: PropTypes.string,
+    onToggle: PropTypes.func,
+    open: PropTypes.bool,
   };
 
+  renderExternalLicense = license => (
+    <DocumentCard
+      key={license.id}
+      onDownloadFile={this.props.handlers.onDownloadFile}
+      {...license}
+    />
+  )
+
+  renderEmpty = () => (
+    <Layout className="padding-bottom-gutter">
+      <FormattedMessage id="ui-agreements.license.noExternalLicenses" />
+    </Layout>
+  )
+
   render() {
-    const externalLicenseDocs = get(this.props, 'agreement.externalLicenseDocs', []);
-    if (!externalLicenseDocs.length) {
-      return <FormattedMessage id="ui-agreements.license.noExternalLicenses" />;
-    }
+    const { id, onToggle, open } = this.props;
+    const externalLicenses = get(this.props, 'agreement.externalLicenseDocs', []);
 
     return (
-      <div>
-        <Headline margin="none" tag="h4">
-          <FormattedMessage id="ui-agreements.license.externalLicenses" />
-        </Headline>
-        {externalLicenseDocs.map(license => (
-          <DocumentCard
-            key={license.id}
-            onDownloadFile={this.props.handlers.onDownloadFile}
-            {...license}
-          />
-        ))}
-      </div>
+      <Accordion
+        displayWhenClosed={<Badge>{externalLicenses.length}</Badge>}
+        displayWhenOpen={<Badge>{externalLicenses.length}</Badge>}
+        id={id}
+        label={<FormattedMessage id="ui-agreements.license.externalLicenses" />}
+        open={open}
+        onToggle={onToggle}
+      >
+        { externalLicenses.length ? externalLicenses.map(this.renderExternalLicense) : this.renderEmpty() }
+      </Accordion>
     );
   }
 }

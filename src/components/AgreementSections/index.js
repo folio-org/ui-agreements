@@ -13,7 +13,6 @@ export { default as Header } from './Header';
 export { default as HistoricalLicenses } from './HistoricalLicenses';
 export { default as Info } from './Info';
 export { default as InternalContacts } from './InternalContacts';
-export { default as Licenses } from './Licenses';
 export { default as Lines } from './Lines';
 export { default as Organizations } from './Organizations';
 export { default as SupplementaryInfo } from './SupplementaryInfo';

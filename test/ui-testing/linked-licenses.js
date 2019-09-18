@@ -161,8 +161,8 @@ module.exports.test = (uiTestCtx) => {
           .click('#clickable-update-agreement')
           .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000)
-          .wait('#accordion-toggle-button-licenses')
-          .click('#accordion-toggle-button-licenses')
+          .wait('#clickable-expand-all')
+          .click('#clickable-expand-all')
           .then(done)
           .catch(done);
       });
@@ -176,7 +176,7 @@ module.exports.test = (uiTestCtx) => {
               const controllingLicenseElement = document.querySelector('#agreement-controlling-license');
               if (!controllingLicenseElement) throw Error('Failed to find controlling license element');
 
-              const name = controllingLicenseElement.querySelector('[data-test-license-card-name]').innerText;
+              const name = controllingLicenseElement.querySelector('[data-test-license-name]').innerText;
               if (name !== expected.name) throw Error(`Expected controlling license name "${expected.name}" and found "${name}".`);
             }, controllingLicense)
             .then(done)
@@ -184,36 +184,46 @@ module.exports.test = (uiTestCtx) => {
         });
       }
 
-      const inactiveLicenses = licenses.filter(l => l.status !== 'Controlling');
-      if (inactiveLicenses) {
-        it('should find inactive licenses', done => {
+      const historicalLicenses = licenses.filter(l => l.status === 'Historical');
+      if (historicalLicenses) {
+        it('should find historical licenses', done => {
           nightmare
-            .wait('#inactive-licenses')
             .evaluate(expected => {
+              const cards = [...document.querySelectorAll('#historicalLicenses [data-test-linked-license-card]')];
+
               expected.forEach(l => {
-                const name = document.evaluate(
-                  `//*[@id="inactive-licenses"]//div[.="${l.name}"]`,
-                  document,
-                  null,
-                  XPathResult.FIRST_ORDERED_NODE_TYPE
-                ).singleNodeValue;
+                const card = cards.find(c => c.querySelector(`[data-test-license-name="${l.name}"]`));
+                if (!card) throw Error(`Failed to find historical license card for "${l.name}"`);
 
-                if (!name) throw Error(`Expected inactive license node for name ${l.name}`);
-
-                const status = document.evaluate(
-                  `//*[@id="inactive-licenses"]//div[.="${l.status}"]`,
-                  document,
-                  null,
-                  XPathResult.FIRST_ORDERED_NODE_TYPE
-                ).singleNodeValue;
-
-                if (!status) throw Error(`Expected inactive license node for status ${l.status}`);
+                const name = card.querySelector(`[data-test-license-name="${l.name}"]`).innerText;
+                if (name !== l.name) throw Error(`Expected license name to be "${l.name}"`);
               });
-            }, inactiveLicenses)
+            }, historicalLicenses)
             .then(done)
             .catch(done);
         });
       }
+
+      const futureLicenses = licenses.filter(l => l.status === 'Future');
+      if (futureLicenses) {
+        it('should find future licenses', done => {
+          nightmare
+            .evaluate(expected => {
+              const cards = [...document.querySelectorAll('#futureLicenses [data-test-linked-license-card]')];
+
+              expected.forEach(l => {
+                const card = cards.find(c => c.querySelector(`[data-test-license-name="${l.name}"]`));
+                if (!card) throw Error(`Failed to find future license card for "${l.name}"`);
+
+                const name = card.querySelector(`[data-test-license-name="${l.name}"]`).innerText;
+                if (name !== l.name) throw Error(`Expected license name to be "${l.name}"`);
+              });
+            }, futureLicenses)
+            .then(done)
+            .catch(done);
+        });
+      }
+
 
       it('should open Licenses app', done => {
         helpers.clickApp(nightmare, done, 'licenses');
@@ -230,7 +240,7 @@ module.exports.test = (uiTestCtx) => {
             const nameElement = document.querySelector('[data-test-license-name]');
             if (!nameElement) return false;
 
-            return nameElement.innerText === licenseName;
+            return nameElement.innerText.trim() === licenseName;
           }, licenses[0].name)
           .then(done)
           .catch(done);
