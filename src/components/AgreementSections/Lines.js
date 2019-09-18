@@ -8,14 +8,14 @@ import { Spinner } from '@folio/stripes-erm-components';
 import CoveredEResourcesList from './CoveredEResourcesList';
 import LinesList from './LinesList';
 
-import EResourceLink from '../EResourceLink';
+//Fairly sure these aren't necessary
+/* import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
 import EResourceType from '../EResourceType';
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
-import { getResourceFromEntitlement } from '../utilities';
-import {Tooltip} from '@folio/stripes-components';
+import { getResourceFromEntitlement } from '../utilities'; */
 
 export default class Lines extends React.Component {
   static propTypes = {
