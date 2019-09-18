@@ -15,6 +15,7 @@ import EResourceType from '../EResourceType';
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import { getResourceFromEntitlement } from '../utilities';
+import {Tooltip} from '@folio/stripes-components';
 
 export default class Lines extends React.Component {
   static propTypes = {
@@ -34,7 +35,10 @@ export default class Lines extends React.Component {
     open: PropTypes.bool,
   }
 
-  columnWidths = {
+
+
+  //I'm fairly certain this code isn't necessary, committing to check before deleting.
+/*   columnWidths = {
     name: 250,
     provider: 150,
     type: 100,
@@ -71,7 +75,7 @@ export default class Lines extends React.Component {
     type: line => <EResourceType resource={getResourceFromEntitlement(line)} />,
     count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
     coverage: line => <CoverageStatements statements={line.coverage} />,
-    isCustomCoverage: line => (line.customCoverage ? <CustomCoverageIcon /> : ''),
+    isCustomCoverage: line => (line.customCoverage ? <CustomCoverageIcon/> : ''),
   }
 
   visibleColumns = [
@@ -82,7 +86,7 @@ export default class Lines extends React.Component {
     'coverage',
     'isCustomCoverage',
   ]
-
+ */
   renderBadge = () => {
     const count = get(this.props, 'agreement.lines.length');
     if (count === undefined) return <Spinner />;

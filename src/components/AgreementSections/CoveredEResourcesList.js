@@ -17,6 +17,7 @@ import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
+import {Tooltip} from '@folio/stripes-components';
 
 export default class CoveredEResourcesList extends React.Component {
   static propTypes = {
@@ -61,7 +62,7 @@ export default class CoveredEResourcesList extends React.Component {
     accessStart: () => 'TBD',
     accessEnd: () => 'TBD',
     coverage: e => <CoverageStatements statements={e.coverage} />,
-    isCustomCoverage: e => (e.customCoverage ? <CustomCoverageIcon /> : ''),
+    isCustomCoverage: e => (e.customCoverage ? <CustomCoverageIcon/> : ''),
   }
 
   visibleColumns = [

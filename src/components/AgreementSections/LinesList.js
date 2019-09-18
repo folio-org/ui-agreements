@@ -13,6 +13,7 @@ import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
 import EResourceType from '../EResourceType';
 import { getResourceFromEntitlement } from '../utilities';
+import {Tooltip} from '@folio/stripes-components';
 
 export default class LinesList extends React.Component {
   static propTypes = {
@@ -39,6 +40,7 @@ export default class LinesList extends React.Component {
   }
 
   formatter = {
+
     name: line => {
       const resource = getResourceFromEntitlement(line);
       if (!resource) return line.label;
@@ -57,7 +59,27 @@ export default class LinesList extends React.Component {
     type: line => <EResourceType resource={getResourceFromEntitlement(line)} />,
     count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
     coverage: line => <CoverageStatements statements={line.coverage} />,
-    isCustomCoverage: line => (line.customCoverage ? <CustomCoverageIcon /> : ''),
+    isCustomCoverage: line => {
+      const custom_coverage_tooltip_label = 'Custom Coverage';
+      if (!line.customCoverage) return '';
+      return (
+        <div>
+          <Tooltip
+            text={custom_coverage_tooltip_label}
+            id="custom_coverage_tooltip"
+          >
+            {({ref, ariaIds}) => 
+            <span
+              ref = {ref}
+            >
+              <CustomCoverageIcon/>
+            </span>
+            }
+            
+          </Tooltip>
+        </div>
+      );
+    },
     poLine: line => this.renderPOLine(line),
   }
 
