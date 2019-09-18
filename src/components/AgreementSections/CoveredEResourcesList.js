@@ -11,13 +11,14 @@ import {
   Headline,
   MultiColumnList,
   Row,
+  Tooltip,
 } from '@folio/stripes/components';
 
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
-import {Tooltip} from '@folio/stripes-components';
+
 
 export default class CoveredEResourcesList extends React.Component {
   static propTypes = {
@@ -63,17 +64,17 @@ export default class CoveredEResourcesList extends React.Component {
     accessEnd: () => 'TBD',
     coverage: e => <CoverageStatements statements={e.coverage} />,
     isCustomCoverage: line => {
-      const custom_coverage_tooltip_label = 'Custom Coverage';
+      const customCoverageTooltipLabel = 'Custom Coverage';
       if (!line.customCoverage) return '';
       return (
         <div>
           <Tooltip
-            text={custom_coverage_tooltip_label}
+            text={customCoverageTooltipLabel}
             id="custom_coverage_tooltip"
           >
-            {({ref, ariaIds}) => 
+            {({ref}) => 
             <span
-              ref = {ref}
+              ref={ref}
             >
               <CustomCoverageIcon/>
             </span>

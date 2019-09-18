@@ -5,7 +5,7 @@ import { Layout } from '@folio/stripes/components';
 export default function CustomCoverage() {
   return (
     <FormattedMessage id="ui-agreements.agreementLines.hasCustomCoverage">
-      {(customCoverage, ref) => (
+      {(customCoverage) => (
         <Layout
           className="flex"
           data-test-custom-coverage

@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import { MultiColumnList } from '@folio/stripes/components';
 import { Spinner } from '@folio/stripes-erm-components';
+import { Tooltip } from '@folio/stripes-components';
 
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
@@ -13,7 +14,7 @@ import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
 import EResourceType from '../EResourceType';
 import { getResourceFromEntitlement } from '../utilities';
-import {Tooltip} from '@folio/stripes-components';
+
 
 export default class LinesList extends React.Component {
   static propTypes = {
@@ -60,17 +61,17 @@ export default class LinesList extends React.Component {
     count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
     coverage: line => <CoverageStatements statements={line.coverage} />,
     isCustomCoverage: line => {
-      const custom_coverage_tooltip_label = 'Custom Coverage';
+      const customCoverageTooltipLabel = 'Custom Coverage';
       if (!line.customCoverage) return '';
       return (
         <div>
           <Tooltip
-            text={custom_coverage_tooltip_label}
+            text={customCoverageTooltipLabel}
             id="custom_coverage_tooltip"
           >
-            {({ref, ariaIds}) => 
+            {({ref}) => 
             <span
-              ref = {ref}
+              ref={ref}
             >
               <CustomCoverageIcon/>
             </span>
