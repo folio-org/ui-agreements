@@ -69,10 +69,7 @@ export default class LinesList extends React.Component {
             text={customCoverageTooltipLabel}
             id="custom_coverage_tooltip"
           >
-            {({ref}) => 
-            <span
-              ref={ref}
-            >
+            {({ ref }) => <span ref={ref}>
               <CustomCoverageIcon/>
             </span>
             }
