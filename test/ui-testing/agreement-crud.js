@@ -131,7 +131,7 @@ module.exports.test = (uiTestCtx) => {
             const node = document.querySelector('[data-test-agreement-name]');
             if (!node || !node.innerText) throw Error('No agreement name node found.');
 
-            const name = node.innerText;
+            const name = node.innerText.trim();
             if (name !== expectedValues.name) {
               throw Error(`Name of found agreement is incorrect. Expected "${expectedValues.name}" and got "${name}" `);
             }

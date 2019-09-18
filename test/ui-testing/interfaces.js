@@ -3,7 +3,7 @@
 const generateNumber = () => Math.round(Math.random() * 100000);
 
 const interfaceName = `Interface ${generateNumber()}`;
-const agreementName = `Agreement #${generateNumber()}`;
+const agreementName = `Interface Agreement #${generateNumber()}`;
 const org = {
   name: `Org #${generateNumber()}`,
   role: 'Content Provider',
@@ -51,9 +51,9 @@ module.exports.test = (uiTestCtx) => {
           .waitUntilNetworkIdle(1000)
           .wait('#accordion-toggle-button-interfacesSection')
           .click('#accordion-toggle-button-interfacesSection')
-          .wait('[data-test-plugin-find-interfaces-button]')
-          .click('[data-test-plugin-find-interfaces-button]')
-          .wait('[data-test-find-interfaces-modal')
+          .wait('[data-test-plugin-find-record-button]')
+          .click('[data-test-plugin-find-record-button]')
+          .wait('[data-test-find-records-modal]')
           .wait('a[href="/organizations/interface/add"]')
           .click('a[href="/organizations/interface/add"]')
           .wait('input[name="name"]')
@@ -86,18 +86,18 @@ module.exports.test = (uiTestCtx) => {
           .type('select[name="status"]', orgStatus)
           .wait('#accordion-toggle-button-interfacesSection')
           .click('#accordion-toggle-button-interfacesSection')
-          .wait('[data-test-plugin-find-interfaces-button]')
-          .click('[data-test-plugin-find-interfaces-button]')
+          .wait('[data-test-plugin-find-record-button]')
+          .click('[data-test-plugin-find-record-button]')
           .waitUntilNetworkIdle(2000)
-          .wait('[data-test-find-interfaces-modal]')
-          .wait('#input-interface-search')
-          .type('#input-interface-search', interfaceName)
-          .wait('[data-test-search-and-sort-submit]')
-          .click('[data-test-search-and-sort-submit]')
+          .wait('[data-test-find-records-modal] input[type="search"]')
+          .type('[data-test-find-records-modal] input[type="search"]', interfaceName)
+          .wait('[data-test-find-records-modal] button[type="submit"]')
+          .click('[data-test-find-records-modal] button[type="submit"]')
           .waitUntilNetworkIdle(2000)
-          .wait('[data-test-find-interfaces-modal-save]')
-          .click('[data-test-find-interfaces-modal-save]')
-          .wait('#clickable-create-organization')
+          .wait('[aria-rowindex="2"] input[type="checkbox"]')
+          .click('[aria-rowindex="2"] input[type="checkbox"]')
+          .click('[data-test-find-records-modal-save]')
+          .wait('#interface-list[aria-rowcount="2"]')
           .click('#clickable-create-organization')
           .then(done)
           .catch(done);
