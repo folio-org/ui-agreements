@@ -8,7 +8,7 @@ import { Spinner } from '@folio/stripes-erm-components';
 import CoveredEResourcesList from './CoveredEResourcesList';
 import LinesList from './LinesList';
 
-//Fairly sure these aren't necessary
+// Fairly sure these aren't necessary
 /* import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
@@ -37,56 +37,56 @@ export default class Lines extends React.Component {
 
 
 
-  //I'm fairly certain this code isn't necessary, committing to check before deleting.
-/*   columnWidths = {
-    name: 250,
-    provider: 150,
-    type: 100,
-    count: 60,
-    coverage: 225,
-    isCustomCoverage: 30,
-  }
+  // I'm fairly certain this code isn't necessary, committing to check before deleting.
+  /*   columnWidths = {
+      name: 250,
+      provider: 150,
+      type: 100,
+      count: 60,
+      coverage: 225,
+      isCustomCoverage: 30,
+    }
 
-  columnMapping = {
-    name: <FormattedMessage id="ui-agreements.eresources.name" />,
-    provider: <FormattedMessage id="ui-agreements.eresources.provider" />,
-    type: <FormattedMessage id="ui-agreements.eresources.erType" />,
-    count: <FormattedMessage id="ui-agreements.agreementLines.count" />,
-    coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
-    isCustomCoverage: ' ',
-  }
+    columnMapping = {
+      name: <FormattedMessage id="ui-agreements.eresources.name" />,
+      provider: <FormattedMessage id="ui-agreements.eresources.provider" />,
+      type: <FormattedMessage id="ui-agreements.eresources.erType" />,
+      count: <FormattedMessage id="ui-agreements.agreementLines.count" />,
+      coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
+      isCustomCoverage: ' ',
+    }
 
-  formatter = {
-    name: line => {
-      const resource = getResourceFromEntitlement(line);
-      if (!resource) return line.label;
+    formatter = {
+      name: line => {
+        const resource = getResourceFromEntitlement(line);
+        if (!resource) return line.label;
 
-      return (
-        <EResourceLink
-          eresource={resource}
-          linkProps={{
-            'data-test-resource-id': get(line, 'resource.id'),
-            'data-test-external-reference': line.reference,
-          }}
-        />
-      );
-    },
-    provider: line => <EResourceProvider resource={line.resource || line} />,
-    type: line => <EResourceType resource={getResourceFromEntitlement(line)} />,
-    count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
-    coverage: line => <CoverageStatements statements={line.coverage} />,
-    isCustomCoverage: line => (line.customCoverage ? <CustomCoverageIcon/> : ''),
-  }
+        return (
+          <EResourceLink
+            eresource={resource}
+            linkProps={{
+              'data-test-resource-id': get(line, 'resource.id'),
+              'data-test-external-reference': line.reference,
+            }}
+          />
+        );
+      },
+      provider: line => <EResourceProvider resource={line.resource || line} />,
+      type: line => <EResourceType resource={getResourceFromEntitlement(line)} />,
+      count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
+      coverage: line => <CoverageStatements statements={line.coverage} />,
+      isCustomCoverage: line => (line.customCoverage ? <CustomCoverageIcon/> : ''),
+    }
 
-  visibleColumns = [
-    'name',
-    'provider',
-    'type',
-    'count',
-    'coverage',
-    'isCustomCoverage',
-  ]
- */
+    visibleColumns = [
+      'name',
+      'provider',
+      'type',
+      'count',
+      'coverage',
+      'isCustomCoverage',
+    ]
+  */
   renderBadge = () => {
     const count = get(this.props, 'agreement.lines.length');
     if (count === undefined) return <Spinner />;

@@ -73,10 +73,9 @@ export default class CoveredEResourcesList extends React.Component {
             id="custom_coverage_tooltip"
           >
             {({ ref }) => <span ref={ref}>
-              <CustomCoverageIcon/>
-            </span>
-            }
-            
+                            <CustomCoverageIcon />
+                          </span>
+            }            
           </Tooltip>
         </div>
       );

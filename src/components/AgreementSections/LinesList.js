@@ -70,10 +70,9 @@ export default class LinesList extends React.Component {
             id="custom_coverage_tooltip"
           >
             {({ ref }) => <span ref={ref}>
-              <CustomCoverageIcon/>
-            </span>
+                            <CustomCoverageIcon />
+                          </span>
             }
-            
           </Tooltip>
         </div>
       );
