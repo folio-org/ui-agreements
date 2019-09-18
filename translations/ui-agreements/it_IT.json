@@ -54,7 +54,7 @@
     "eresources.addToBasketHeader": "E-resource basket",
     "meta.title": "Accordi",
     "remove": "Remove",
-    "yes": "Yes",
+    "yes": "Si",
     "no": "No",
     "agreements.agreementInfo": "Agreement information",
     "agreements.agreementDescription": "Descrizione",
@@ -204,7 +204,7 @@
     "usageData.unlinkUDP": "Unlink usage data provider",
     "usageData.usageDataProvider": "Usage data provider",
     "usageData.usageDataProviderIndex": "Usage data provider {index}",
-    "usageData.note": "Note",
+    "usageData.note": "Nota",
     "basketSelector.selectPlaceholder": "Select e-resource or package",
     "eresourcesCovered.exportAs": "Export as...",
     "eresourcesCovered.exportAsJSON": "Export as JSON",
@@ -219,5 +219,6 @@
     "license.noLicenseAdded": "No licenses added",
     "license.unlinkLicense": "Unlink license",
     "license.noLicenses": "Agreement has no licenses.",
-    "agreements.internalContactsRole": "Internal contact role"
+    "agreements.internalContactsRole": "Internal contact role",
+    "eresources.defaultCoverage": "Default coverage"
 }
