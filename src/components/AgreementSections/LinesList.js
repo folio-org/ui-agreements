@@ -64,17 +64,18 @@ export default class LinesList extends React.Component {
       const customCoverageTooltipLabel = 'Custom Coverage';
       if (!line.customCoverage) return '';
       return (
-        <div>
           <Tooltip
             text={customCoverageTooltipLabel}
             id="custom_coverage_tooltip"
           >
-            {({ ref }) => <span ref={ref}>
-                            <CustomCoverageIcon />
-                          </span>
+            {({ ref, ariaIds }) =>
+              <CustomCoverageIcon
+                ref={ref}
+                aria-labelledby={ariaIds.text}
+                aria-describedby={ariaIds.sub}
+              />
             }
           </Tooltip>
-        </div>
       );
     },
     poLine: line => this.renderPOLine(line),
