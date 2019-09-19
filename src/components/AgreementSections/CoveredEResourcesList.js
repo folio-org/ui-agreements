@@ -67,12 +67,17 @@ export default class CoveredEResourcesList extends React.Component {
       const customCoverageTooltipLabel = 'Custom Coverage';
       if (!line.customCoverage) return '';
       return (
-          <Tooltip
-            text={customCoverageTooltipLabel}
-            id="custom_coverage_tooltip"
-          >
-            {({ ref, ariaIds }) => <CustomCoverageIcon ref={ref} /> }
-          </Tooltip>
+        <Tooltip
+        text={customCoverageTooltipLabel}
+        id="custom_coverage_tooltip"
+      >
+        {({ ref, ariaIds }) =>
+          <CustomCoverageIcon
+            ref={ref}
+            aria-labelledby={ariaIds.text}
+          />
+        }
+      </Tooltip>
       );
     },
   }

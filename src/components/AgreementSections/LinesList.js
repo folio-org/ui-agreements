@@ -72,7 +72,6 @@ export default class LinesList extends React.Component {
               <CustomCoverageIcon
                 ref={ref}
                 aria-labelledby={ariaIds.text}
-                aria-describedby={ariaIds.sub}
               />
             }
           </Tooltip>
