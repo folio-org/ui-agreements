@@ -219,5 +219,6 @@
     "license.noLicenseAdded": "Nenhuma licença adicionada",
     "license.unlinkLicense": "Desvincular licença",
     "license.noLicenses": "Contrato não tem nenhuma licença.",
-    "agreements.internalContactsRole": "Função do contato interno"
+    "agreements.internalContactsRole": "Função do contato interno",
+    "eresources.defaultCoverage": "Default coverage"
 }
