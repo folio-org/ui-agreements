@@ -12,6 +12,8 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
+import { urls } from '../utilities';
+
 export default class UsageData extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
@@ -39,7 +41,7 @@ export default class UsageData extends React.Component {
           <AppIcon app="erm-usage" size="small">
             <Link
               data-test-udp-link
-              to={`/eusage/view/${udp.remoteId}`}
+              to={urls.udpView(udp.remoteId)}
             >
               {get(udp, 'remoteId_object.label', udp.remoteId)}
             </Link>

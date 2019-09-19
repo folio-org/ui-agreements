@@ -16,6 +16,7 @@ import {
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
+import FormattedUTCDate from '../FormattedUTCDate';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
 
 export default class CoveredEResourcesList extends React.Component {
@@ -37,11 +38,10 @@ export default class CoveredEResourcesList extends React.Component {
     name: <FormattedMessage id="ui-agreements.eresources.name" />,
     platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
     package: <FormattedMessage id="ui-agreements.eresources.package" />,
-    haveAccess: <FormattedMessage id="ui-agreements.eresources.haveAccess" />,
-    accessStart: <FormattedMessage id="ui-agreements.eresources.accessStart" />,
-    accessEnd: <FormattedMessage id="ui-agreements.eresources.accessEnd" />,
     coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
     isCustomCoverage: ' ',
+    accessStart: <FormattedMessage id="ui-agreements.eresources.accessStart" />,
+    accessEnd: <FormattedMessage id="ui-agreements.eresources.accessEnd" />,
   }
 
   columnWidths = {
@@ -57,11 +57,10 @@ export default class CoveredEResourcesList extends React.Component {
     },
     platform: e => get(e._object, 'pti.platform.name', '-'),
     package: e => get(e._object, 'pkg.name', '-'),
-    haveAccess: () => 'TBD',
-    accessStart: () => 'TBD',
-    accessEnd: () => 'TBD',
     coverage: e => <CoverageStatements statements={e.coverage} />,
     isCustomCoverage: e => (e.customCoverage ? <CustomCoverageIcon /> : ''),
+    accessStart: e => this.renderDate(get(e._object, 'accessStart')),
+    accessEnd: e => this.renderDate(get(e._object, 'accessEnd')),
   }
 
   visibleColumns = [
@@ -69,12 +68,18 @@ export default class CoveredEResourcesList extends React.Component {
     'platform',
     'package',
     'coverage',
-    'isCustomCoverage'
+    'isCustomCoverage',
+    'accessStart',
+    'accessEnd',
   ]
 
   handleToggleExportDropdown = () => {
     this.setState(prevState => ({ exportDropdownOpen: prevState.exportDropdownOpen }));
   }
+
+  renderDate = date => (
+    date ? <FormattedUTCDate value={date} /> : '-'
+  )
 
   renderExportDropdown = () => (
     <Row end="xs">

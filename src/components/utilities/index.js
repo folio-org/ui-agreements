@@ -1,3 +1,4 @@
+export { default as getLicenseAmendments } from './getLicenseAmendments';
 export { default as getResourceFromEntitlement } from './getResourceFromEntitlement';
 export { default as getResourceIdentifier } from './getResourceIdentifier';
 export { default as formatNoteReferrerEntityData } from './formatNoteReferrerEntityData';

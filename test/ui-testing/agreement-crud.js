@@ -53,10 +53,10 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
       const nameElement = document.querySelector('[data-test-agreement-name]');
       if (!nameElement) return false;
 
-      return nameElement.innerText === agreementName;
+      return nameElement.innerText.trim() === agreementName;
     }, values.name)
     .evaluate(expectedValues => {
-      const foundName = document.querySelector('[data-test-agreement-name]').innerText;
+      const foundName = document.querySelector('[data-test-agreement-name]').innerText.trim();
       if (foundName !== expectedValues.name) {
         throw Error(`Name of agreement is incorrect. Expected "${expectedValues.name}" and got "${foundName}" `);
       }
@@ -131,7 +131,7 @@ module.exports.test = (uiTestCtx) => {
             const node = document.querySelector('[data-test-agreement-name]');
             if (!node || !node.innerText) throw Error('No agreement name node found.');
 
-            const name = node.innerText;
+            const name = node.innerText.trim();
             if (name !== expectedValues.name) {
               throw Error(`Name of found agreement is incorrect. Expected "${expectedValues.name}" and got "${name}" `);
             }
@@ -162,7 +162,7 @@ module.exports.test = (uiTestCtx) => {
           .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000)
           .evaluate(expectedValues => {
-            const name = document.querySelector('[data-test-agreement-name]').innerText;
+            const name = document.querySelector('[data-test-agreement-name]').innerText.trim();
             if (name !== expectedValues.editedName) {
               throw Error(`Name of found agreement is incorrect. Expected "${expectedValues.editedName}" and got "${name}" `);
             }

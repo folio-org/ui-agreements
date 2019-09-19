@@ -194,7 +194,7 @@ module.exports.test = (uiTestCtx) => {
           nightmare
             .wait('[data-test-agreement-info]')
             .evaluate(expectedValues => {
-              const foundName = document.querySelector('[data-test-agreement-name]').innerText;
+              const foundName = document.querySelector('[data-test-agreement-name]').innerText.trim();
               if (foundName !== expectedValues.agreementName) {
                 throw Error(`Name of agreement is incorrect. Expected "${expectedValues.agreementName}" and got "${foundName}" `);
               }

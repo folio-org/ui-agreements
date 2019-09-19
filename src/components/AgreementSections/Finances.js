@@ -7,6 +7,8 @@ import { FormattedMessage } from 'react-intl';
 import { Accordion, Badge, MultiColumnList } from '@folio/stripes/components';
 import { Spinner } from '@folio/stripes-erm-components';
 
+import { urls } from '../utilities';
+
 export default class Finances extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
@@ -65,7 +67,7 @@ export default class Finances extends React.Component {
     if (!id) return poLineNumber;
 
     return (
-      <Link to={`/orders/lines/view/${id}`}>
+      <Link to={urls.poLineView(id)}>
         {poLineNumber}
       </Link>
     );

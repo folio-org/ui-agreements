@@ -12,6 +12,7 @@ export default class FormLicenses extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       agreement: PropTypes.object,
+      amendmentStatusValues: PropTypes.array,
       licenseLinkStatusValues: PropTypes.array,
     }),
     handlers: PropTypes.object,
@@ -34,10 +35,10 @@ export default class FormLicenses extends React.Component {
     <div data-test-licenses-form-all-licenses>
       <KeyValue label={<FormattedMessage id="ui-agreements.license.allLicenses" />}>
         <FieldArray
+          amendmentStatusValues={this.props.data.amendmentStatusValues}
           component={LicensesFieldArray}
           licenseStatusValues={this.props.data.licenseLinkStatusValues}
           name="linkedLicenses"
-          validate={this.validateRequired}
         />
       </KeyValue>
     </div>
