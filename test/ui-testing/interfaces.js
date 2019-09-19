@@ -188,14 +188,14 @@ module.exports.test = (uiTestCtx) => {
 
       it(`should find "${org.name}" in Organizations list with role ${org.role}`, done => {
         nightmare
-          .evaluate((org, name) => {
+          .evaluate((_org, name) => {
             const rows = [...document.querySelectorAll('[data-test-organization-card]')].map(e => e.textContent);
-            const row = rows.find(r => r.indexOf(name) >= 0);
-            if (!row) {
+            const _row = rows.find(r => r.indexOf(name) >= 0);
+            if (!_row) {
               throw Error(`Could not find row with an org named ${name}`);
             }
-            if (row.indexOf(org.role) < 0) {
-              throw Error(`Expected row for "${name}" to contain role ${org.role}.`);
+            if (row.indexOf(_org.role) < 0) {
+              throw Error(`Expected row for "${name}" to contain role ${_org.role}.`);
             }
           }, org, orgName)
           .then(done)
@@ -204,11 +204,11 @@ module.exports.test = (uiTestCtx) => {
 
       it(`should find "${interfaceName}" in interface list`, done => {
         nightmare
-          .evaluate(interfaceName => {
+          .evaluate(_interfaceName => {
             const interfaceElements = [...document.querySelectorAll('#organizations div[role="gridcell"]')];
-            const interfaceFound = interfaceElements.find(e => e.textContent === interfaceName);
+            const interfaceFound = interfaceElements.find(e => e.textContent === _interfaceName);
             if (!interfaceFound) {
-              throw Error(`Could not find row with an interface named ${interfaceName}`);
+              throw Error(`Could not find row with an interface named ${_interfaceName}`);
             }
           }, interfaceName)
           .then(done)
@@ -217,11 +217,11 @@ module.exports.test = (uiTestCtx) => {
 
       it(`should find username "${username}"`, done => {
         nightmare
-          .evaluate(username => {
+          .evaluate(_username => {
             const usernameElements = [...document.querySelectorAll('#organizations div[role="gridcell"]')];
-            const usernameFound = usernameElements.find(e => e.textContent === username);
+            const usernameFound = usernameElements.find(e => e.textContent === _username);
             if (!usernameFound) {
-              throw Error(`Could not find row with username ${username}`);
+              throw Error(`Could not find row with username ${_username}`);
             }
           }, username)
           .then(done)
@@ -230,11 +230,11 @@ module.exports.test = (uiTestCtx) => {
 
       it(`should find password "${password}"`, done => {
         nightmare
-          .evaluate(password => {
+          .evaluate(_password => {
             const passwordElements = [...document.querySelectorAll('#organizations div[role="gridcell"]')];
-            const passwordFound = passwordElements.find(e => e.textContent === password);
+            const passwordFound = passwordElements.find(e => e.textContent === _password);
             if (!passwordFound) {
-              throw Error(`Could not find row with password ${password}`);
+              throw Error(`Could not find row with password ${_password}`);
             }
           }, password)
           .then(done)
@@ -243,11 +243,11 @@ module.exports.test = (uiTestCtx) => {
 
       it(`should find uri "${uri}"`, done => {
         nightmare
-          .evaluate(uri => {
+          .evaluate(_uri => {
             const uriElements = [...document.querySelectorAll('#organizations span a')];
-            const uriFound = uriElements.find(e => e.attributes.href.nodeValue === uri);
+            const uriFound = uriElements.find(e => e.attributes.href.nodeValue === _uri);
             if (!uriFound) {
-              throw Error(`Could not find row with uri ${uri}`);
+              throw Error(`Could not find row with uri ${_uri}`);
             }
           }, uri)
           .then(done)
@@ -256,11 +256,11 @@ module.exports.test = (uiTestCtx) => {
 
       it(`should find notes "${notes}"`, done => {
         nightmare
-          .evaluate(notes => {
+          .evaluate(_notes => {
             const notesElements = [...document.querySelectorAll('#organizations div[role="gridcell"]')];
-            const notesFound = notesElements.find(e => e.textContent === notes);
+            const notesFound = notesElements.find(e => e.textContent === _notes);
             if (!notesFound) {
-              throw Error(`Could not find row with notes ${notes}`);
+              throw Error(`Could not find row with notes ${_notes}`);
             }
           }, notes)
           .then(done)
