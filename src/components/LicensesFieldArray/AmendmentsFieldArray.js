@@ -80,7 +80,7 @@ class AmendmentsFieldArray extends React.Component {
 
           return (
             <Card
-              data-test-amendment={i}
+              data-test-amendment={amendment.name}
               headerStart={
                 <Link
                   data-test-amendment-name
