@@ -11,6 +11,8 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
+import { urls } from '../utilities';
+
 export default class Organizations extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
@@ -51,7 +53,7 @@ export default class Organizations extends React.Component {
           headerStart={
             <span>
               <AppIcon app="organizations" size="small">
-                <Link to={`/organizations/view/${org.orgsUuid}`}>
+                <Link to={urls.orgView(org.orgsUuid)}>
                   <strong>{org.name}</strong>
                 </Link>
                 {` · ${role.label}`}

@@ -20,10 +20,13 @@ import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import { Spinner } from '@folio/stripes-erm-components';
 
 import {
+  ControllingLicense,
+  ExternalLicenses,
+  FutureLicenses,
   Header,
+  HistoricalLicenses,
   Info,
   InternalContacts,
-  Licenses,
   Lines,
   Organizations,
   SupplementaryInfo,
@@ -50,6 +53,10 @@ export default class Agreement extends React.Component {
 
   state = {
     sections: {
+      controllingLicense: false,
+      externalLicenses: false,
+      futureLicenses: false,
+      historicalLicenses: false,
       internalContacts: false,
       licenses: false,
       lines: false,
@@ -199,7 +206,10 @@ export default class Agreement extends React.Component {
               </Row>
               <InternalContacts {...this.getSectionProps('internalContacts')} />
               <Lines {...this.getSectionProps('lines')} />
-              <Licenses {...this.getSectionProps('licenses')} />
+              <ControllingLicense {...this.getSectionProps('controllingLicense')} />
+              <FutureLicenses {...this.getSectionProps('futureLicenses')} />
+              <HistoricalLicenses {...this.getSectionProps('historicalLicenses')} />
+              <ExternalLicenses {...this.getSectionProps('externalLicenses')} />
               <Terms {...this.getSectionProps('terms')} />
               <Organizations {...this.getSectionProps('organizations')} />
               <SupplementaryInfo {...this.getSectionProps('supplementaryInfo')} />

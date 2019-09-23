@@ -35,6 +35,11 @@ class AgreementEditRoute extends React.Component {
       path: 'erm/refdataValues/SubscriptionAgreement/agreementStatus',
       shouldRefresh: () => false,
     },
+    amendmentStatusValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/LicenseAmendmentStatus/status',
+      shouldRefresh: () => false,
+    },
     contactRoleValues: {
       type: 'okapi',
       path: 'erm/refdataValues/InternalContact/role',
@@ -166,8 +171,23 @@ class AgreementEditRoute extends React.Component {
     initialValues.isPerpetual = isPerpetual.value;
     initialValues.renewalPriority = renewalPriority.value;
     initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
-    initialValues.linkedLicenses = linkedLicenses.map(l => ({ ...l, status: l.status.value }));
     initialValues.orgs = orgs.map(o => ({ ...o, role: o.role && o.role.value }));
+    initialValues.linkedLicenses = linkedLicenses.map(l => ({
+      ...l,
+      status: l.status.value,
+      // Init the list of amendments based on the license's amendments to ensure
+      // we display those that have been created since this agreement's license was last
+      // edited. Ensure we provide defaults via amendmentId.
+      amendments: get(l, 'remoteId_object.amendments', [])
+        .map(a => {
+          const assignedAmendment = (l.amendments || []).find(la => la.amendmentId === a.id) || {};
+          return {
+            ...assignedAmendment,
+            amendmentId: a.id,
+            status: assignedAmendment.status ? assignedAmendment.status.value : undefined,
+          };
+        })
+    }));
 
     const lines = get(resources, 'agreementLines.records', []);
     if (items.length && lines.length) {
@@ -249,6 +269,7 @@ class AgreementEditRoute extends React.Component {
           agreementLines: this.getAgreementLines(),
           agreementLinesToAdd: this.getAgreementLinesToAdd(),
           agreementStatusValues: get(resources, 'agreementStatusValues.records', []),
+          amendmentStatusValues: get(resources, 'amendmentStatusValues.records', []),
           basket: get(resources, 'basket', []),
           contactRoleValues: get(resources, 'contactRoleValues.records', []),
           externalAgreementLine: get(resources, 'externalAgreementLine.records', []),

@@ -23,6 +23,11 @@ class AgreementEditRoute extends React.Component {
       path: 'erm/refdataValues/SubscriptionAgreement/agreementStatus',
       shouldRefresh: () => false,
     },
+    amendmentStatusValues: {
+      type: 'okapi',
+      path: 'erm/refdataValues/LicenseAmendmentStatus/status',
+      shouldRefresh: () => false,
+    },
     contactRoleValues: {
       type: 'okapi',
       path: 'erm/refdataValues/InternalContact/role',
@@ -165,6 +170,7 @@ class AgreementEditRoute extends React.Component {
           agreementLines: this.getAgreementLinesToAdd(),
           agreementLinesToAdd: this.getAgreementLinesToAdd(),
           agreementStatusValues: get(resources, 'agreementStatusValues.records', []),
+          amendmentStatusValues: get(resources, 'amendmentStatusValues.records', []),
           basket: get(resources, 'basket', []),
           contactRoleValues: get(resources, 'contactRoleValues.records', []),
           isPerpetualValues: get(resources, 'isPerpetualValues.records', []),

@@ -131,7 +131,7 @@ class AgreementForm extends React.Component {
   }
 
   renderPaneFooter() {
-    const { initialValues = {} } = this.props;
+    const { handleSubmit, initialValues = {}, pristine, submitting } = this.props;
 
     const startButton = (
       <Button
@@ -147,10 +147,10 @@ class AgreementForm extends React.Component {
     const endButton = (
       <Button
         buttonStyle="primary mega"
-        disabled={this.props.pristine || this.props.submitting || this.props.invalid}
+        disabled={pristine || submitting}
         id={initialValues.id ? 'clickable-update-agreement' : 'clickable-create-agreement'}
         marginBottom0
-        onClick={this.props.handleSubmit}
+        onClick={handleSubmit}
         type="submit"
       >
         <FormattedMessage id="stripes-components.saveAndClose" />

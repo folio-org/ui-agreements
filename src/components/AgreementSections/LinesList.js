@@ -13,7 +13,7 @@ import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
 import EResourceType from '../EResourceType';
-import { getResourceFromEntitlement } from '../utilities';
+import { getResourceFromEntitlement, urls } from '../utilities';
 
 
 export default class LinesList extends React.Component {
@@ -102,7 +102,7 @@ export default class LinesList extends React.Component {
     return (
       <Link
         data-test-po-line
-        to={`/orders/lines/view/${line.poLineId}`}
+        to={urls.poLineView(line.poLineId)}
       >
         {poLine.poLineNumber}
       </Link>
