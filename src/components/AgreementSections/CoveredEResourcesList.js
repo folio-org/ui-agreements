@@ -70,10 +70,7 @@ export default class CoveredEResourcesList extends React.Component {
           id="custom-coverage-tooltip"
         >
           {({ ref, ariaIds }) =>
-            <CustomCoverageIcon
-              ref={ref}
-              aria-labelledby={ariaIds.text}
-            />
+            <CustomCoverageIcon ref={ref} aria-labelledby={ariaIds.text} />
           }
         </Tooltip>
       );

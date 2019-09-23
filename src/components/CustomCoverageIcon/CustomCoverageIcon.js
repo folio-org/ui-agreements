@@ -41,7 +41,6 @@ const CustomCoverage = React.forwardRef((props, ref) => (
   </FormattedMessage>
 ));
 
-
 CustomCoverage.propTypes = {
   'aria-labelledby': PropTypes.string.isRequired
 }; 
