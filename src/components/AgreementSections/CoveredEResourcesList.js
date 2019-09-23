@@ -60,18 +60,15 @@ export default class CoveredEResourcesList extends React.Component {
     platform: e => get(e._object, 'pti.platform.name', '-'),
     package: e => get(e._object, 'pkg.name', '-'),
     coverage: e => <CoverageStatements statements={e.coverage} />,
-<<<<<<< HEAD
-=======
     accessStart: e => this.renderDate(get(e._object, 'accessStart')),
     accessEnd: e => this.renderDate(get(e._object, 'accessEnd')),
->>>>>>> 94f044232417e71c00b65215f86ef6ace18980d0
     isCustomCoverage: line => {
       const customCoverageTooltipLabel = 'Custom Coverage';
       if (!line.customCoverage) return '';
       return (
         <Tooltip
         text={customCoverageTooltipLabel}
-        id="custom_coverage_tooltip"
+        id="custom-coverage-tooltip"
       >
         {({ ref, ariaIds }) =>
           <CustomCoverageIcon

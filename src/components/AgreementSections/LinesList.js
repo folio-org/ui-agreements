@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import { MultiColumnList } from '@folio/stripes/components';
 import { Spinner } from '@folio/stripes-erm-components';
-import { Tooltip } from '@folio/stripes-components';
+import { Tooltip } from '@folio/stripes/components';
 
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
@@ -66,7 +66,7 @@ export default class LinesList extends React.Component {
       return (
           <Tooltip
             text={customCoverageTooltipLabel}
-            id="custom_coverage_tooltip"
+            id="custom-coverage-tooltip"
           >
             {({ ref, ariaIds }) =>
               <CustomCoverageIcon
