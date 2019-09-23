@@ -144,6 +144,8 @@
   "eresources.addToBasketHeader": "E-resource basket",
   "eresources.sourceKb": "External data source",
 
+  "customcoverages.tooltip": "Custom Coverage",
+
   "eresourcesCovered.exportAs": "Export as...",
   "eresourcesCovered.exportAsJSON": "Export as JSON",
   "eresourcesCovered.exportAsKBART": "Export as KBART",

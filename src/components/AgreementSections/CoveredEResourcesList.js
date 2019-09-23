@@ -63,11 +63,10 @@ export default class CoveredEResourcesList extends React.Component {
     accessStart: e => this.renderDate(get(e._object, 'accessStart')),
     accessEnd: e => this.renderDate(get(e._object, 'accessEnd')),
     isCustomCoverage: line => {
-      const customCoverageTooltipLabel = 'Custom Coverage';
       if (!line.customCoverage) return '';
       return (
         <Tooltip
-        text={customCoverageTooltipLabel}
+        text={<FormattedMessage id="ui-agreements.customcoverages.tooltip"/>}
         id="custom-coverage-tooltip"
       >
         {({ ref, ariaIds }) =>

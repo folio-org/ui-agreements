@@ -52,6 +52,9 @@
     "eresources.acqMethod": "Acquisition method",
     "eresources.platform": "Platform",
     "eresources.addToBasketHeader": "E-resource basket",
+
+    "customcoverages.tooltip": "Custom Coverage",
+    
     "meta.title": "Agreements",
     "remove": "Remove",
     "yes": "Yes",

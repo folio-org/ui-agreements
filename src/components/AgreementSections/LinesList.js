@@ -61,11 +61,10 @@ export default class LinesList extends React.Component {
     count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
     coverage: line => <CoverageStatements statements={line.coverage} />,
     isCustomCoverage: line => {
-      const customCoverageTooltipLabel = 'Custom Coverage';
       if (!line.customCoverage) return '';
       return (
           <Tooltip
-            text={customCoverageTooltipLabel}
+            text={<FormattedMessage id="ui-agreements.customcoverages.tooltip"/>}
             id="custom-coverage-tooltip"
           >
             {({ ref, ariaIds }) =>
