@@ -11,6 +11,7 @@ import {
   Headline,
   MultiColumnList,
   Row,
+  Tooltip,
 } from '@folio/stripes/components';
 
 import CoverageStatements from '../CoverageStatements';
@@ -18,6 +19,7 @@ import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import FormattedUTCDate from '../FormattedUTCDate';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
+
 
 export default class CoveredEResourcesList extends React.Component {
   static propTypes = {
@@ -58,9 +60,25 @@ export default class CoveredEResourcesList extends React.Component {
     platform: e => get(e._object, 'pti.platform.name', '-'),
     package: e => get(e._object, 'pkg.name', '-'),
     coverage: e => <CoverageStatements statements={e.coverage} />,
-    isCustomCoverage: e => (e.customCoverage ? <CustomCoverageIcon /> : ''),
     accessStart: e => this.renderDate(get(e._object, 'accessStart')),
     accessEnd: e => this.renderDate(get(e._object, 'accessEnd')),
+    isCustomCoverage: line => {
+      const customCoverageTooltipLabel = 'Custom Coverage';
+      if (!line.customCoverage) return '';
+      return (
+        <Tooltip
+        text={customCoverageTooltipLabel}
+        id="custom_coverage_tooltip"
+      >
+        {({ ref, ariaIds }) =>
+          <CustomCoverageIcon
+            ref={ref}
+            aria-labelledby={ariaIds.text}
+          />
+        }
+      </Tooltip>
+      );
+    },
   }
 
   visibleColumns = [

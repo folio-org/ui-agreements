@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import { MultiColumnList } from '@folio/stripes/components';
 import { Spinner } from '@folio/stripes-erm-components';
+import { Tooltip } from '@folio/stripes-components';
 
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
@@ -13,6 +14,7 @@ import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
 import EResourceType from '../EResourceType';
 import { getResourceFromEntitlement, urls } from '../utilities';
+
 
 export default class LinesList extends React.Component {
   static propTypes = {
@@ -39,6 +41,7 @@ export default class LinesList extends React.Component {
   }
 
   formatter = {
+
     name: line => {
       const resource = getResourceFromEntitlement(line);
       if (!resource) return line.label;
@@ -57,7 +60,23 @@ export default class LinesList extends React.Component {
     type: line => <EResourceType resource={getResourceFromEntitlement(line)} />,
     count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
     coverage: line => <CoverageStatements statements={line.coverage} />,
-    isCustomCoverage: line => (line.customCoverage ? <CustomCoverageIcon /> : ''),
+    isCustomCoverage: line => {
+      const customCoverageTooltipLabel = 'Custom Coverage';
+      if (!line.customCoverage) return '';
+      return (
+          <Tooltip
+            text={customCoverageTooltipLabel}
+            id="custom_coverage_tooltip"
+          >
+            {({ ref, ariaIds }) =>
+              <CustomCoverageIcon
+                ref={ref}
+                aria-labelledby={ariaIds.text}
+              />
+            }
+          </Tooltip>
+      );
+    },
     poLine: line => this.renderPOLine(line),
   }
 
