@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
-import { MultiColumnList } from '@folio/stripes/components';
+import { MultiColumnList, Tooltip } from '@folio/stripes/components';
 import { Spinner } from '@folio/stripes-erm-components';
-import { Tooltip } from '@folio/stripes/components';
 
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
