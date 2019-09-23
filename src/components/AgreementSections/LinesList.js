@@ -66,8 +66,7 @@ export default class LinesList extends React.Component {
           text={<FormattedMessage id="ui-agreements.customcoverages.tooltip" />}
           id="custom-coverage-tooltip"
         >
-          {({ ref, ariaIds }) =>
-            <CustomCoverageIcon ref={ref} aria-labelledby={ariaIds.text} />
+          {({ ref, ariaIds }) => <CustomCoverageIcon ref={ref} aria-labelledby={ariaIds.text} />
           }
         </Tooltip>
       );
