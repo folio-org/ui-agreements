@@ -11,7 +11,7 @@ const CustomCoverage = React.forwardRef((props, ref) => (
         className="flex"
         data-test-custom-coverage
       >
-        <button type="button" ref={ref} aria-labelledby={props['aria-labelledby']}>
+        <span ref={ref} aria-labelledby={props['aria-labelledby']}>
           <svg focusable="false" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 4.23 4.23">
             <g transform="translate(-4.26,-288.64)" style={{ display: 'none' }}>
               <path style={{ fill: 'none', stroke: '#787878', strokeWidth: 1.02, strokeLinecap: 'butt', strokeLinejoin: 'miter', strokeMiterlimit: 4, strokeDasharray: 'none', strokeOpacity: 1 }} d="M 1.48,296.11 1.44,285.58" />
@@ -35,7 +35,7 @@ const CustomCoverage = React.forwardRef((props, ref) => (
               <rect ry="1.04" y="293.72" x="0.53" height="2.76" width="2.76" style={{ opacity: 1, fill: '#008000', fillOpacity: 1, stroke: '#008000', strokeWidth: 1.13, strokeLinecap: 'round', strokeMiterlimit: 4, strokeDasharray: 'none', strokeOpacity: 1 }} />
             </g>
           </svg>
-        </button>
+        </span>
       </Layout>
     )}
   </FormattedMessage>

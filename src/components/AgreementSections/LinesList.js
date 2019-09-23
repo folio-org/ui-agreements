@@ -14,7 +14,6 @@ import EResourceProvider from '../EResourceProvider';
 import EResourceType from '../EResourceType';
 import { getResourceFromEntitlement, urls } from '../utilities';
 
-
 export default class LinesList extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
@@ -40,7 +39,6 @@ export default class LinesList extends React.Component {
   }
 
   formatter = {
-
     name: line => {
       const resource = getResourceFromEntitlement(line);
       if (!resource) return line.label;
@@ -63,8 +61,8 @@ export default class LinesList extends React.Component {
       if (!line.customCoverage) return '';
       return (
         <Tooltip
-          text={<FormattedMessage id="ui-agreements.customcoverages.tooltip" />}
           id="custom-coverage-tooltip"
+          text={<FormattedMessage id="ui-agreements.customcoverages.tooltip" />}
         >
           {({ ref, ariaIds }) => <CustomCoverageIcon ref={ref} aria-labelledby={ariaIds.text} />
           }
