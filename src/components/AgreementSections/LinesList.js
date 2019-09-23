@@ -64,7 +64,7 @@ export default class LinesList extends React.Component {
       if (!line.customCoverage) return '';
       return (
         <Tooltip
-          text={<FormattedMessage id="ui-agreements.customcoverages.tooltip"/>}
+          text={ <FormattedMessage id="ui-agreements.customcoverages.tooltip"/> }
           id="custom-coverage-tooltip"
         >
           {({ ref, ariaIds }) =>
@@ -73,7 +73,7 @@ export default class LinesList extends React.Component {
               aria-labelledby={ariaIds.text}
             />
           }
-      </Tooltip>
+        </Tooltip>
       );
     },
     poLine: line => this.renderPOLine(line),
