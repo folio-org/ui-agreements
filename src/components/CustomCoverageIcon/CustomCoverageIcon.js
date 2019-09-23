@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Layout } from '@folio/stripes/components';
+
 
 const CustomCoverage = React.forwardRef((props, ref) => (
   <FormattedMessage id="ui-agreements.agreementLines.hasCustomCoverage">
@@ -38,5 +40,10 @@ const CustomCoverage = React.forwardRef((props, ref) => (
     )}
   </FormattedMessage>
 ));
+
+
+CustomCoverage.propTypes = {
+  'aria-labelledby': PropTypes.string.isRequired
+}; 
 
 export default CustomCoverage;
