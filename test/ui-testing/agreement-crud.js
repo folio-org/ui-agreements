@@ -27,8 +27,8 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
     .insert('#edit-agreement-name', values.name)
     .insert('#edit-agreement-description', values.description)
 
-    .click('#edit-agreement-start-date')
-    .type('#edit-agreement-start-date', '\u000d') // "Enter" selects current date
+    .click('#period-start-date-0')
+    .type('#period-start-date-0', '\u000d') // "Enter" selects current date
 
     .insert('#edit-agreement-end-date', '2019-01-31')
     .insert('#edit-agreement-cancellation-deadline', '2019-01-15')
@@ -149,8 +149,8 @@ module.exports.test = (uiTestCtx) => {
           .insert('#edit-agreement-name', '')
           .insert('#edit-agreement-name', values.editedName)
 
-          .insert('#edit-agreement-start-date', '')
-          .insert('#edit-agreement-start-date', '2019-10-31')
+          .insert('#period-start-date-0', '')
+          .insert('#period-start-date-0', '2019-10-31')
           .insert('#edit-agreement-end-date', '')
           .insert('#edit-agreement-end-date', '2019-10-31')
           .insert('#edit-agreement-cancellation-deadline', '')

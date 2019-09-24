@@ -183,6 +183,9 @@ class AgreementEditRoute extends React.Component {
           ...handlers,
           onClose: this.handleClose,
         }}
+        initialValues={{
+          periods: [{}],
+        }}
         isLoading={this.fetchIsPending()}
         onSubmit={this.handleSubmit}
       />

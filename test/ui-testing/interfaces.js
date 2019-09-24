@@ -118,8 +118,8 @@ module.exports.test = (uiTestCtx) => {
           .waitUntilNetworkIdle(2000)
           .wait('#edit-agreement-name')
           .insert('#edit-agreement-name', agreementName)
-          .click('#edit-agreement-start-date')
-          .type('#edit-agreement-start-date', '\u000d') // "Enter" selects current date
+          .click('#period-start-date-0')
+          .type('#period-start-date-0', '\u000d') // "Enter" selects current date
           .insert('#edit-agreement-end-date', '2019-01-31')
           .insert('#edit-agreement-cancellation-deadline', '2019-01-15')
           .type('#edit-agreement-status', 'draft')

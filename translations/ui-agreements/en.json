@@ -88,6 +88,11 @@
   "agreementLines.hasCustomCoverage": "Has custom coverage",
   "agreementLines.customCoverageTitle": "Custom coverage #{number}",
 
+  "agreementPeriods": "Agreement periods",
+  "agreementPeriods.addPeriod": "Add agreement period",
+  "agreementPeriods.periodNote": "Agreement period note",
+  "agreementPeriods.periodTitle": "Agreement period #{number}",
+
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
 
   "basket.name": "ERM Basket",
@@ -152,7 +157,9 @@
 
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
   "errors.multipleOpenEndedCoverages": "Cannot have multiple open-ended coverage statements.",
+  "errors.multipleOpenEndedPeriods": "Cannot have multiple open-ended agreement periods.",
   "errors.overlappingCoverage": "The following coverages have overlapping dates: {coverages}",
+  "errors.overlappingPeriod": "The following periods have overlapping dates: {periods}",
   "errors.undefinedUDP": "A Usage Data Provider must be selected.",
   "errors.unsetAgreementLines": "Select a resource and create this line, or delete it to continue.",
 

@@ -181,7 +181,7 @@ module.exports.test = (uiTestCtx) => {
             .wait('#agreement-form-lines [data-test-ag-line-number="1"]')
 
             .insert('#edit-agreement-name', values.agreementName)
-            .insert('#edit-agreement-start-date', values.agreementStartDate)
+            .insert('#period-start-date-0', values.agreementStartDate)
             .type('#edit-agreement-status', values.agreementStatus)
             .click('#clickable-create-agreement')
             .wait('[data-test-agreement-info]')
