@@ -54,7 +54,11 @@ export default class AgreementLineField extends React.Component {
       }
 
       if (activeFrom >= activeTo) {
-        return <FormattedMessage id="ui-agreements.errors.endDateGreaterThanStartDate" />;
+        return (
+          <div data-test-error-end-date-too-early>
+            <FormattedMessage id="ui-agreements.errors.endDateGreaterThanStartDate" />
+          </div>
+        );
       }
     }
 

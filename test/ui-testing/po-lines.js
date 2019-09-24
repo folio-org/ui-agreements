@@ -39,6 +39,31 @@ module.exports.test = (uiTestCtx) => {
 
       Basket.shouldHaveCorrectAgreementLines(nightmare, [0], basket);
 
+      it('should edit agreement and should reject activeTo <= activeFrom', done => {
+        nightmare
+          .wait('#clickable-edit-agreement')
+          .click('#clickable-edit-agreement')
+          .waitUntilNetworkIdle(2000)
+          .insert('#edit-agreement-name', 'Invalid Date')
+          .click('#datepicker-clear-button-agreement-line-0-active-from')
+          .insert('#agreement-line-0-active-from', '2019-10-31')
+          .click('#datepicker-clear-button-agreement-line-0-active-to')
+          .type('#agreement-line-0-active-to', '2019-10-30')
+          .click('#clickable-update-agreement')
+          .evaluate(() => {
+            if (!document.querySelector('[data-test-error-end-date-too-early]')) {
+              throw Error('Expected to find an error message at [data-test-error-end-date-too-early] for the End Date');
+            }
+          })
+          .then(() => {
+            nightmare
+              .click('#clickable-cancel')
+              .click('#clickable-cancel-editing-confirmation-cancel');
+          })
+          .then(done)
+          .catch(done);
+      });
+
       it('should edit agreement', done => {
         nightmare
           .wait('#clickable-edit-agreement')
