@@ -54,11 +54,7 @@ export default class AgreementLineField extends React.Component {
       }
 
       if (activeFrom >= activeTo) {
-        return (
-          <div data-test-error-end-date-too-early>
-            <FormattedMessage id="ui-agreements.errors.endDateGreaterThanStartDate" />
-          </div>
-        );
+        return <FormattedMessage id="ui-agreements.errors.endDateGreaterThanStartDate" />;
       }
     }
 
@@ -156,8 +152,7 @@ export default class AgreementLineField extends React.Component {
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
-              id="agreement-line-active-from"
-              index={index}
+              id={`agreement-line-${index}-active-from`}
               label={<FormattedMessage id="ui-agreements.eresources.activeFrom" />}
               name={`${name}.activeFrom`}
               validate={this.validateDateOrder}
@@ -168,8 +163,7 @@ export default class AgreementLineField extends React.Component {
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
               dateFormat="YYYY-MM-DD"
-              id="agreement-line-active-to"
-              index={index}
+              id={`agreement-line-${index}-active-to`}
               label={<FormattedMessage id="ui-agreements.eresources.activeTo" />}
               name={`${name}.activeTo`}
               validate={this.validateDateOrder}
