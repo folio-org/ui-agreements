@@ -30,8 +30,8 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
     .click('#period-start-date-0')
     .type('#period-start-date-0', '\u000d') // "Enter" selects current date
 
-    .insert('#edit-agreement-end-date', '2019-01-31')
-    .insert('#edit-agreement-cancellation-deadline', '2019-01-15')
+    .insert('#period-end-date-0', '2019-01-31')
+    .insert('#period-cancellation-deadline--0', '2019-01-15')
 
     .type('#edit-agreement-status', 'draft')
     .type('#edit-agreement-renewal-priority', 'for')
@@ -151,10 +151,10 @@ module.exports.test = (uiTestCtx) => {
 
           .insert('#period-start-date-0', '')
           .insert('#period-start-date-0', '2019-10-31')
-          .insert('#edit-agreement-end-date', '')
-          .insert('#edit-agreement-end-date', '2019-10-31')
-          .insert('#edit-agreement-cancellation-deadline', '')
-          .insert('#edit-agreement-cancellation-deadline', '2019-10-15')
+          .insert('#period-end-date-0', '')
+          .insert('#period-end-date-0', '2019-10-31')
+          .insert('#period-cancellation-deadline--0', '')
+          .insert('#period-cancellation-deadline--0', '2019-10-15')
 
           .type('#edit-agreement-status', values.editedStatus)
           .type('#edit-agreement-renewal-priority', values.editedRenewalPriority)

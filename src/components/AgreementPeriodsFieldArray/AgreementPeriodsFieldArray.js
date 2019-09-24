@@ -8,6 +8,7 @@ import {
   Button,
   Col,
   Datepicker,
+  Headline,
   Row,
   TextArea,
 } from '@folio/stripes/components';
@@ -194,6 +195,9 @@ class AgreementPeriodsFieldArray extends React.Component {
   render = () => {
     return (
       <div>
+        <Headline>
+          <FormattedMessage id="ui-agreements.agreementPeriods" />
+        </Headline>
         <div id="agreement-form-periods">
           { this.renderPeriods() }
         </div>

@@ -113,7 +113,6 @@ export default class FormInfo extends React.Component {
         </Row>
         <FieldArray
           component={AgreementPeriodsFieldArray}
-          label={<FormattedMessage id="ui-agreements.agreementPeriods" />}
           name="periods"
         />
       </div>
