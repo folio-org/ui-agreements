@@ -220,5 +220,22 @@
     "license.unlinkLicense": "إلغاء ربط الرخصة",
     "license.noLicenses": "لا توجد تراخيص بالاتفاقية",
     "agreements.internalContactsRole": "دور جهة الاتصال الداخلية",
-    "eresources.defaultCoverage": "Default coverage"
+    "eresources.defaultCoverage": "التغطية الافتراضية",
+    "status": "الحالة",
+    "license.amendment": "تعديل",
+    "license.amendmentNote": "ملاحظة التعديل",
+    "license.currentAmendments": "تعديلات حالية",
+    "license.currentLicenses": "تراخيص حالية",
+    "license.futureAmendments": "تعديلات مستقبلية",
+    "license.futureLicenses": "تراخيص مستقبلية",
+    "license.historicalAmendments": "تعديلات سابقة",
+    "license.historicalLicenses": "تراخيص سابقة",
+    "license.licenseAmendments": "تعديلات الترخيص",
+    "license.noFutureLicenses": "لا توجد تراخيص مستقبلية بالاتفاقية",
+    "license.noHistoricalLicenses": "لا توجد تراخيص سابقة بالاتفاقية",
+    "license.unsetAmendments": "إلغاء تعيين التعديلات",
+    "license.warn.amendmentFuture": "يبدأ التعديل في المستقبل بينما تكون \"الحالة (هذه الاتفاقية)\" هي \"حالية\"",
+    "license.warn.amendmentPast": "انتهى التعديل بينما \"الحالة (هذه الاتفاقية)\" هي \"حالية\"",
+    "license.warn.amendmentStatus": "حالات متضاربة:حالة التعديل هي \"{status}\" بينما \"الحالة (هذه الاتفاقية)\" هي \"حالية\"",
+    "customcoverages.tooltip": "Custom Coverage"
 }
