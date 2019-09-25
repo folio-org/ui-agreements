@@ -14,7 +14,10 @@ import FormattedUTCDate from '../FormattedUTCDate';
 export default class Info extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
-      cancellationDeadline: PropTypes.string,
+      beganDate: PropTypes.string,
+      currentPeriod: PropTypes.shape({
+        cancellationDeadline: PropTypes.string,
+      }),
       description: PropTypes.string,
       isPerpetual: PropTypes.shape({
         label: PropTypes.string,
@@ -28,6 +31,7 @@ export default class Info extends React.Component {
 
   render() {
     const { agreement } = this.props;
+    const cancellationDeadline = get(agreement, 'currentPeriod.cancellationDeadline');
 
     return (
       <div data-test-agreement-info>
@@ -53,24 +57,31 @@ export default class Info extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={4}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}>
+          <Col xs={3}>
+            <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.currentCancellationDeadline" />}>
               <div data-test-agreement-cancellation-deadline>
-                {agreement.cancellationDeadline ? <FormattedUTCDate value={agreement.cancellationDeadline} /> : '-'}
+                {cancellationDeadline ? <FormattedUTCDate value={cancellationDeadline} /> : '-'}
               </div>
             </KeyValue>
           </Col>
-          <Col xs={4}>
+          <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.agreements.renewalPriority" />}>
               <div data-test-agreement-renewal-priority>
                 {get(agreement, 'renewalPriority.label', '-')}
               </div>
             </KeyValue>
           </Col>
-          <Col xs={4}>
+          <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.agreements.isPerpetual" />}>
               <div data-test-agreement-is-perpetual>
                 {get(agreement, 'isPerpetual.label', '-')}
+              </div>
+            </KeyValue>
+          </Col>
+          <Col xs={3}>
+            <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.dateAgreementBegan" />}>
+              <div data-test-agreement-began-date>
+                {agreement.beganDate ? <FormattedUTCDate value={agreement.beganDate} /> : '-'}
               </div>
             </KeyValue>
           </Col>

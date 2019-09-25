@@ -36,7 +36,6 @@ import {
 
 import { urls } from '../utilities';
 
-
 export default class Agreement extends React.Component {
   static propTypes = {
     canEdit: PropTypes.bool,

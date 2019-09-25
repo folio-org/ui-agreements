@@ -15,7 +15,10 @@ import css from './Header.css';
 export default class Header extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
-      endData: PropTypes.string,
+      currentPeriod: PropTypes.shape({
+        endDate: PropTypes.string,
+        startDate: PropTypes.string,
+      }),
       orgs: PropTypes.arrayOf(
         PropTypes.shape({
           org: PropTypes.shape({
@@ -26,7 +29,6 @@ export default class Header extends React.Component {
           }),
         }),
       ),
-      startDate: PropTypes.string,
     }).isRequired,
   };
 
@@ -38,19 +40,20 @@ export default class Header extends React.Component {
 
   render() {
     const { agreement } = this.props;
-    const { startDate, endDate } = agreement;
+    const startDate = get(agreement, 'currentPeriod.startDate');
+    const endDate = get(agreement, 'currentPeriod.endDate');
 
     return (
       <Row className={css.agreementHeader}>
         <Col xs={2}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.agreements.startDate" />}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.currentStartDate" />}>
             <div data-test-agreement-start-date>
               {startDate ? <FormattedUTCDate value={startDate} /> : '-'}
             </div>
           </KeyValue>
         </Col>
         <Col xs={2}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.agreements.endDate" />}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.currentEndDate" />}>
             <div data-test-agreement-end-date>
               {endDate ? <FormattedUTCDate value={endDate} /> : '-'}
             </div>

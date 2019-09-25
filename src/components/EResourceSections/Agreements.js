@@ -33,8 +33,8 @@ export default class Agreements extends React.Component {
         formatter={{
           name: ({ owner }) => <Link to={urls.agreementView(owner.id)}>{owner.name}</Link>,
           type: ({ owner }) => get(owner, 'agreementStatus.label', ''),
-          startDate: ({ owner }) => owner.startDate && <FormattedUTCDate value={owner.startDate} />,
-          endDate: ({ owner }) => owner.endDate && <FormattedUTCDate value={owner.endDate} />,
+          startDate: ({ owner }) => owner.currentPeriod.startDate && <FormattedUTCDate value={owner.currentPeriod.startDate} />,
+          endDate: ({ owner }) => owner.currentPeriod.endDate && <FormattedUTCDate value={owner.currentPeriod.endDate} />,
           package: (line) => <EResourceLink eresource={getResourceFromEntitlement(line)} />,
           acqMethod: ({ resource }) => <EResourceType resource={resource} />,
           coverage: line => <CoverageStatements statements={line.coverage} />,
@@ -43,8 +43,8 @@ export default class Agreements extends React.Component {
         columnMapping={{
           name: <FormattedMessage id="ui-agreements.agreements.name" />,
           type: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
-          startDate: <FormattedMessage id="ui-agreements.agreements.startDate" />,
-          endDate: <FormattedMessage id="ui-agreements.agreements.endDate" />,
+          startDate: <FormattedMessage id="ui-agreements.agreementPeriods.currentStartDate" />,
+          endDate: <FormattedMessage id="ui-agreements.agreementPeriods.currentEndDate" />,
           package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
           acqMethod: <FormattedMessage id="ui-agreements.eresources.acqMethod" />,
           coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,

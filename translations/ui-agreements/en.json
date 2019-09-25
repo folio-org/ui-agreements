@@ -32,6 +32,7 @@
   "agreements.agreementDescription": "Description",
   "agreements.startDate": "Start date",
   "agreements.endDate": "End date",
+  "agreements.dateAgreementBegan": "Date agreement began",
   "agreements.cancellationDeadline": "Cancellation deadline",
   "agreements.renewalPriority": "Renewal priority",
   "agreements.agreementStatus": "Status",
@@ -90,6 +91,10 @@
 
   "agreementPeriods": "Agreement periods",
   "agreementPeriods.addPeriod": "Add agreement period",
+  "agreementPeriods.currentEndDate": "Current period end date",
+  "agreementPeriods.currentStartDate": "Current period start date",
+  "agreementPeriods.currentCancellationDeadline": "Current period cancellation deadline",
+  "agreementPeriods.otherPeriods": "Other periods",
   "agreementPeriods.periodNote": "Agreement period note",
   "agreementPeriods.periodTitle": "Agreement period #{number}",
 
