@@ -220,5 +220,6 @@
     "license.unlinkLicense": "Unlink license",
     "license.noLicenses": "Agreement has no licenses.",
     "agreements.internalContactsRole": "Internal contact role",
-    "eresources.defaultCoverage": "Default coverage"
+    "eresources.defaultCoverage": "Default coverage",
+    "customcoverages.tooltip": "Custom Coverage"
 }

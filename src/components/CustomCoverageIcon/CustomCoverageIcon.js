@@ -1,16 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Layout } from '@folio/stripes/components';
 
-export default function CustomCoverage() {
-  return (
-    <FormattedMessage id="ui-agreements.agreementLines.hasCustomCoverage">
-      {customCoverage => (
-        <Layout
-          className="flex"
-          data-test-custom-coverage
-          aria-label={customCoverage}
-        >
+
+const CustomCoverage = React.forwardRef((props, ref) => (
+  <FormattedMessage id="ui-agreements.agreementLines.hasCustomCoverage">
+    {() => (
+      <Layout
+        className="flex"
+        data-test-custom-coverage
+      >
+        <span aria-labelledby={props['aria-labelledby']} ref={ref} tabIndex="-1">
           <svg focusable="false" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 4.23 4.23">
             <g transform="translate(-4.26,-288.64)" style={{ display: 'none' }}>
               <path style={{ fill: 'none', stroke: '#787878', strokeWidth: 1.02, strokeLinecap: 'butt', strokeLinejoin: 'miter', strokeMiterlimit: 4, strokeDasharray: 'none', strokeOpacity: 1 }} d="M 1.48,296.11 1.44,285.58" />
@@ -34,8 +35,14 @@ export default function CustomCoverage() {
               <rect ry="1.04" y="293.72" x="0.53" height="2.76" width="2.76" style={{ opacity: 1, fill: '#008000', fillOpacity: 1, stroke: '#008000', strokeWidth: 1.13, strokeLinecap: 'round', strokeMiterlimit: 4, strokeDasharray: 'none', strokeOpacity: 1 }} />
             </g>
           </svg>
-        </Layout>
-      )}
-    </FormattedMessage>
-  );
-}
+        </span>
+      </Layout>
+    )}
+  </FormattedMessage>
+));
+
+CustomCoverage.propTypes = {
+  'aria-labelledby': PropTypes.string.isRequired
+};
+
+export default CustomCoverage;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
-import { MultiColumnList } from '@folio/stripes/components';
+import { MultiColumnList, Tooltip } from '@folio/stripes/components';
 import { Spinner } from '@folio/stripes-erm-components';
 
 import CoverageStatements from '../CoverageStatements';
@@ -57,7 +57,18 @@ export default class LinesList extends React.Component {
     type: line => <EResourceType resource={getResourceFromEntitlement(line)} />,
     count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
     coverage: line => <CoverageStatements statements={line.coverage} />,
-    isCustomCoverage: line => (line.customCoverage ? <CustomCoverageIcon /> : ''),
+    isCustomCoverage: line => {
+      if (!line.customCoverage) return '';
+      return (
+        <Tooltip
+          id={`agreement-line-cc-tooltip-${line.rowIndex}`}
+          text={<FormattedMessage id="ui-agreements.customcoverages.tooltip" />}
+        >
+          {({ ref, ariaIds }) => <CustomCoverageIcon ref={ref} aria-labelledby={ariaIds.text} />
+          }
+        </Tooltip>
+      );
+    },
     poLine: line => this.renderPOLine(line),
   }
 
