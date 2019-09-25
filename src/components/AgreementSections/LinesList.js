@@ -84,9 +84,8 @@ export default class LinesList extends React.Component {
 
   renderPOLine = (line) => {
     const { orderLines } = this.props.agreement;
-
     if (!line.poLineId) return '';
-    if (!orderLines) return <Spinner />;
+    if (!orderLines.length) return <Spinner />;
 
     const poLine = orderLines.find(orderLine => orderLine.id === line.poLineId);
     if (!poLine) return <Spinner />;
@@ -103,10 +102,11 @@ export default class LinesList extends React.Component {
 
   render() {
     const {
-      agreement: { lines },
+      agreement: { lines, orderLines },
       onNeedMoreLines,
     } = this.props;
 
+    const rowUpdater = (rowData) => orderLines.find(orderLine => orderLine.id === rowData.poLineId);
     return (
       <MultiColumnList
         columnMapping={this.columnMapping}
@@ -117,6 +117,7 @@ export default class LinesList extends React.Component {
         interactive={false}
         maxHeight={400}
         onNeedMoreData={onNeedMoreLines}
+        rowUpdater={rowUpdater}
         visibleColumns={this.visibleColumns}
       />
     );
