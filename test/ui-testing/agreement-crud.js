@@ -1,4 +1,5 @@
 /* global describe, it, before, after, Nightmare */
+const Utils = require('./utils');
 
 const generateAgreementValues = () => {
   const number = Math.round(Math.random() * 100000);
@@ -7,15 +8,27 @@ const generateAgreementValues = () => {
     description: `This agreement of count #${number} is still in its initial stages.`,
     renewalPriority: 'For review',
     isPerpetual: 'Yes',
-
     editedName: `Edited Agreement #${number}`,
     editedRenewalPriority: 'Definitely renew',
     editedStatus: 'In negotiation',
   };
 };
 
+const agreementLines = () => {
+  const activeFrom = '2019-10-13';
+  const activeTo = '2019-10-31';
+  return {
+    activeFrom,
+    activeTo,
+    formattedActiveFrom: Utils.formattedDate(activeFrom),
+    formattedActiveTo: Utils.formattedDate(activeTo),
+  };
+};
+
 const createAgreement = (nightmare, done, defaultValues, resourceId) => {
   const values = defaultValues || generateAgreementValues();
+  const lines = agreementLines();
+
   let chain = nightmare
     .wait('#agreements-module-display')
     .click('#clickable-nav-agreements')
@@ -43,6 +56,9 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
       .click('#basket-selector')
       .click(`[id*="${resourceId}"]`)
       .click('#basket-selector-add-button')
+      .wait('#agreement-line-0-active-from')
+      .insert('#agreement-line-0-active-from', lines.activeFrom)
+      .insert('#agreement-line-0-active-to', lines.activeTo)
       .wait(1000);
   }
 
@@ -55,7 +71,7 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
 
       return nameElement.innerText.trim() === agreementName;
     }, values.name)
-    .evaluate(expectedValues => {
+    .evaluate((expectedValues, resourceId, lines) => {
       const foundName = document.querySelector('[data-test-agreement-name]').innerText.trim();
       if (foundName !== expectedValues.name) {
         throw Error(`Name of agreement is incorrect. Expected "${expectedValues.name}" and got "${foundName}" `);
@@ -75,7 +91,19 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
       if (expectedValues.isPerpetual && (foundIsPerpetual !== expectedValues.isPerpetual)) {
         throw Error(`IsPerpetual of agreement is incorrect. Expected "${expectedValues.isPerpetual}" and got "${foundIsPerpetual}" `);
       }
-    }, values)
+
+      if (resourceId) {
+        const activeFrom = document.querySelector('[data-test-active-from]').textContent;
+        if (lines.activeFrom && (activeFrom !== lines.formattedActiveFrom)) {
+          throw Error(`Active from date of agreement line is incorrect. Expected "${lines.formattedActiveFrom}" and got "${activeFrom}"`);
+        }
+
+        const activeTo = document.querySelector('[data-test-active-to]').textContent;
+        if (lines.activeTo && (activeTo !== lines.formattedActiveTo)) {
+          throw Error(`Active to date of agreement line is incorrect. Expected "${lines.formattedActiveTo}" and got "${activeTo}"`);
+        }
+      }
+    }, values, resourceId, lines)
     .then(done)
     .catch(done);
 

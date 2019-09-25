@@ -4,7 +4,7 @@ import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Field, FieldArray } from 'redux-form';
 
-import { Col, KeyValue, Row } from '@folio/stripes/components';
+import { Col, Datepicker, KeyValue, Row } from '@folio/stripes/components';
 import { EditCard } from '@folio/stripes-erm-components';
 
 import BasketSelector from '../BasketSelector';
@@ -36,6 +36,33 @@ export default class AgreementLineField extends React.Component {
 
   static defaultProps = {
     resource: {},
+  }
+
+  validateDateOrder = (value, allValues, _props, name) => {
+    if (value) {
+      let activeFrom;
+      let activeTo;
+
+      if (name.indexOf('activeFrom') >= 0) {
+        activeFrom = new Date(value);
+        activeTo = new Date(get(allValues, name.replace('activeFrom', 'activeTo')));
+      } else if (name.indexOf('endDate') >= 0) {
+        activeFrom = new Date(get(allValues, name.replace('activeTo', 'activeFrom')));
+        activeTo = new Date(value);
+      } else {
+        return undefined;
+      }
+
+      if (activeFrom >= activeTo) {
+        return (
+          <div data-test-error-end-date-too-early>
+            <FormattedMessage id="ui-agreements.errors.endDateGreaterThanStartDate" />
+          </div>
+        );
+      }
+    }
+
+    return undefined;
   }
 
   renderLineName = (resource) => {
@@ -92,7 +119,7 @@ export default class AgreementLineField extends React.Component {
   }
 
   renderLineResource = () => {
-    const { resource = {} } = this.props;
+    const { resource = {}, index, input: { name } } = this.props;
 
     return (
       <div>
@@ -121,6 +148,30 @@ export default class AgreementLineField extends React.Component {
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.defaultCoverage" />}>
               <div data-test-ag-line-coverage>{this.renderCoverage(resource)}</div>
             </KeyValue>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} md={4}>
+            <Field
+              backendDateStandard="YYYY-MM-DD"
+              component={Datepicker}
+              dateFormat="YYYY-MM-DD"
+              id={`agreement-line-${index}-active-from`}
+              label={<FormattedMessage id="ui-agreements.eresources.activeFrom" />}
+              name={`${name}.activeFrom`}
+              validate={this.validateDateOrder}
+            />
+          </Col>
+          <Col xs={12} md={4}>
+            <Field
+              backendDateStandard="YYYY-MM-DD"
+              component={Datepicker}
+              dateFormat="YYYY-MM-DD"
+              id={`agreement-line-${index}-active-to`}
+              label={<FormattedMessage id="ui-agreements.eresources.activeTo" />}
+              name={`${name}.activeTo`}
+              validate={this.validateDateOrder}
+            />
           </Col>
         </Row>
         {this.renderPOLineField()}
