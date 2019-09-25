@@ -23,6 +23,8 @@
   "agreements.searchInputLabel": "Search Agreements",
   "eresources.searchInputLabel": "Search E-resources",
 
+  "note": "Note",
+
   "agreements.edit": "Edit",
   "agreements.showTags": "Show Tags",
   "agreements.vendor": "Vendor",

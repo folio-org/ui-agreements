@@ -29,6 +29,7 @@ import {
   InternalContacts,
   Lines,
   Organizations,
+  OtherPeriods,
   SupplementaryInfo,
   Terms,
   UsageData,
@@ -61,6 +62,7 @@ export default class Agreement extends React.Component {
       lines: false,
       notes: false,
       organizations: false,
+      otherPeriods: false,
       supplementaryInfo: false,
       terms: false,
       usageData: false,
@@ -211,6 +213,7 @@ export default class Agreement extends React.Component {
               <ExternalLicenses {...this.getSectionProps('externalLicenses')} />
               <Terms {...this.getSectionProps('terms')} />
               <Organizations {...this.getSectionProps('organizations')} />
+              <OtherPeriods {...this.getSectionProps('otherPeriods')} />
               <SupplementaryInfo {...this.getSectionProps('supplementaryInfo')} />
               <UsageData {...this.getSectionProps('usageData')} />
               <NotesSmartAccordion
