@@ -96,7 +96,7 @@ export default class LinesList extends React.Component {
   renderPOLine = (line) => {
     const { orderLines } = this.props.agreement;
     if (!line.poLineId) return '';
-    if (!orderLines.length) return <Spinner />;
+    if (!orderLines) return <Spinner />;
 
     const poLine = orderLines.find(orderLine => orderLine.id === line.poLineId);
     if (!poLine) return <Spinner />;
