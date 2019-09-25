@@ -61,7 +61,7 @@ export default class LinesList extends React.Component {
       if (!line.customCoverage) return '';
       return (
         <Tooltip
-          id="custom-coverage-tooltip"
+          id={`agreement-line-cc-tooltip-${line.rowIndex}`}
           text={<FormattedMessage id="ui-agreements.customcoverages.tooltip" />}
         >
           {({ ref, ariaIds }) => <CustomCoverageIcon ref={ref} aria-labelledby={ariaIds.text} />

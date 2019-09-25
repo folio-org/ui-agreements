@@ -65,7 +65,7 @@ export default class CoveredEResourcesList extends React.Component {
       if (!line.customCoverage) return '';
       return (
         <Tooltip
-          id="custom-coverage-tooltip"
+          id={`covered-eresources-cc-tooltip-${line.rowIndex}`}
           text={<FormattedMessage id="ui-agreements.customcoverages.tooltip" />}
         >
           {({ ref, ariaIds }) => <CustomCoverageIcon ref={ref} aria-labelledby={ariaIds.text} />
