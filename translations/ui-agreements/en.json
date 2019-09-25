@@ -135,6 +135,8 @@
   "eresources.coverageDepth": "Coverage depth",
   "eresources.coverage": "Coverage",
   "eresources.defaultCoverage": "Default coverage",
+  "eresources.activeFrom": "Active from",
+  "eresources.activeTo": "Active to",
   "eresources.haveAccess": "Have access",
   "eresources.accessStart": "Access start",
   "eresources.accessEnd": "Access end",
@@ -155,6 +157,8 @@
   "eresources.provider": "Provider",
   "eresources.addToBasketHeader": "E-resource basket",
   "eresources.sourceKb": "External data source",
+
+  "customcoverages.tooltip": "Custom Coverage",
 
   "eresourcesCovered.exportAs": "Export as...",
   "eresourcesCovered.exportAsJSON": "Export as JSON",

@@ -39,22 +39,14 @@ module.exports.test = (uiTestCtx) => {
 
       Basket.shouldHaveCorrectAgreementLines(nightmare, [0], basket);
 
-      it('should edit agreement', done => {
-        nightmare
-          .wait('#clickable-edit-agreement')
-          .click('#clickable-edit-agreement')
-          .then(done)
-          .catch(done);
-      });
-
       it('should link a PO line', done => {
         nightmare
-          .wait('[data-test-ag-line-number="0"] [data-test-plugin-find-po-line-button]')
-          .click('[data-test-ag-line-number="0"] [data-test-plugin-find-po-line-button]')
+          .wait('[data-test-ag-line-number="0"] #find-record-trigger')
+          .click('[data-test-ag-line-number="0"] #find-record-trigger')
           .waitUntilNetworkIdle(2000)
-          .wait('#list-plugin-find-po-line [aria-rowindex="2"] a')
+          .wait('#list-plugin-find-records [class*=mclScrollable] [aria-rowindex="2"]')
           .evaluate(() => {
-            const row = document.querySelector('#list-plugin-find-po-line [aria-rowindex="2"] a');
+            const row = document.querySelector('#list-plugin-find-records [class*=mclScrollable] [aria-rowindex="2"]');
             return {
               poLineNumber: row.children[0].textContent,
               title: row.children[1].textContent,
@@ -64,7 +56,7 @@ module.exports.test = (uiTestCtx) => {
             poLine = { ...selectedPOLine };
 
             nightmare
-              .click('#list-plugin-find-po-line [aria-rowindex="2"] a')
+              .click('#list-plugin-find-records [class*=mclScrollable] [aria-rowindex="2"]')
               .wait('#clickable-unlink-poline-0')
               .evaluate(_selectedPOLine => {
                 const header = document.querySelector('#edit-poline-card-0 [data-test-card-header-start]').innerText;

@@ -29,8 +29,7 @@ class AgreementLinesFieldArray extends React.Component {
   }
 
   getLinePOLine = (line) => {
-    if (!line.poLineId) return undefined;
-
+    if (!line.poLineId || !this.props.data.orderLines) return undefined;
     return this.props.data.orderLines.find(orderLine => orderLine.id === line.poLineId);
   }
 
