@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, Badge, Icon, MultiColumnList } from '@folio/stripes/components';
+import { Accordion, Badge, MultiColumnList } from '@folio/stripes/components';
 import { Spinner } from '@folio/stripes-erm-components';
 
 import AddToBasketButton from '../AddToBasketButton';
@@ -47,7 +47,7 @@ export default class AcquisitionOptions extends React.Component {
           return (
             <AddToBasketButton
               key={option.id}
-              addLabel={<Icon icon="plus-sign">{addLabel}</Icon>}
+              addLabel={addLabel}
               item={option}
               buttonProps={buttonProps}
             />

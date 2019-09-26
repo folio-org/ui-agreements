@@ -76,14 +76,15 @@ export default class Agreements extends React.Component {
   }
 
   render() {
-    const { data: { entitlements } } = this.props;
+    const { data: { entitlements, eresource: { type } } } = this.props;
 
     return (
       <div id="eresource-agreements">
         <Headline margin="none" tag="h3" size="large">
-          <FormattedMessage id="ui-agreements.eresources.erAgreements" />
+          {type ? <FormattedMessage id="ui-agreements.eresources.erAgreements" />
+            : <FormattedMessage id="ui-agreements.eresources.packageAgreements" />}
         </Headline>
-        { entitlements ? this.renderAgreements() : this.renderLoading() }
+        {entitlements ? this.renderAgreements() : this.renderLoading()}
       </div>
     );
   }

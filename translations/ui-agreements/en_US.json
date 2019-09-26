@@ -44,7 +44,7 @@
     "eresources.erAgreements": "Agreements for this e-resource",
     "eresources.agreementStatus": "Agreement status",
     "eresources.acqOptions": "Options for acquiring e-resource: {name}",
-    "eresources.addPackage": "Add package",
+    "eresources.addPackage": "Add package to basket",
     "eresources.addTitle": "Add title",
     "eresources.removePackage": "Remove package",
     "eresources.removeTitle": "Remove title",
