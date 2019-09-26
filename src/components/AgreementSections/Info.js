@@ -26,9 +26,18 @@ export default class Info extends React.Component {
     }),
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      agreementIsClosed: (props.agreement.agreementStatus.value === 'closed' || false)
+    }
+    console.log("The agreement %o", props.agreement)
+    console.log("Is the agreement closed?: ", this.state.agreementIsClosed)
+  };
+ 
+
   render() {
     const { agreement } = this.props;
-
     return (
       <div data-test-agreement-info>
         <Row>
@@ -75,6 +84,25 @@ export default class Info extends React.Component {
             </KeyValue>
           </Col>
         </Row>
+        {this.state.agreementIsClosed &&
+          <Row>
+            <Col xs={3}>
+              <KeyValue label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}>
+                <div data-test-agreement-status>
+                  {get(agreement, 'agreementStatus.label', '-')}
+                </div>
+              </KeyValue>
+            </Col>
+            <Col xs={3}>
+              <KeyValue label={<FormattedMessage id="ui-agreements.agreements.reasonForClosure" />}>
+                <div data-test-agreement-reason-for-closure>
+                  {get(agreement, 'reasonForClosure.label', '-')}
+                </div>
+              </KeyValue>
+            </Col>
+          </Row>
+        
+        }
       </div>
     );
   }

@@ -29,6 +29,7 @@ export default class FormInfo extends React.Component {
     reasonForClosureValues: [],
     isPerpetualValues: [],
     renewalPriorityValues: [],
+    agreementIsOpen: true
   }
 
   // Prepend an empty value to each set of dropdown options to facilitate
@@ -36,9 +37,12 @@ export default class FormInfo extends React.Component {
   static getDerivedStateFromProps(props, state) {
     const { data } = props;
     const newState = {};
-
+    console.log("data state: %o", data)
     if (data.agreementStatusValues.length !== state.agreementStatusValues.length) {
       newState.agreementStatusValues = data.agreementStatusValues;
+      /* if (data.agreementStatus.value === 'closed') {
+        newState.agreementIsOpen = false;
+      } */
     }
 
     if (data.renewalPriorityValues.length + 1 !== state.renewalPriorityValues.length) {
@@ -102,6 +106,7 @@ export default class FormInfo extends React.Component {
             <Field
               component={Select}
               dataOptions={reasonForClosureValues}
+              disabled={this.state.agreementIsOpen}
               id="edit-agreement-reason-for-closure"
               label={<FormattedMessage id="ui-agreements.agreements.reasonForClosure" />}
               name="reasonForClosure"
