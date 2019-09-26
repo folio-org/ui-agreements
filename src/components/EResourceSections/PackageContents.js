@@ -8,6 +8,7 @@ import { Spinner } from '@folio/stripes-erm-components';
 
 import CoverageStatements from '../CoverageStatements';
 import EResourceLink from '../EResourceLink';
+import FormattedUTCDate from '../FormattedUTCDate';
 
 export default class PackageContents extends React.Component {
   static propTypes = {
@@ -16,22 +17,42 @@ export default class PackageContents extends React.Component {
     }),
   };
 
-  renderOptions = () => (
+  columnMapping = {
+    name: <FormattedMessage id="ui-agreements.eresources.name" />,
+    platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
+    coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
+    accessStart: <FormattedMessage id="ui-agreements.eresources.accessStart" />,
+    accessEnd: <FormattedMessage id="ui-agreements.eresources.accessEnd" />,
+  }
+
+  formatter = {
+    name: pci => <EResourceLink eresource={pci._object.pti.titleInstance} />,
+    platform: pci => get(pci._object, 'pti.platform.name', ''),
+    coverage: pci => <CoverageStatements statements={pci._object.coverage} />,
+    accessStart: pci => this.renderDate(get(pci._object, 'accessStart')),
+    accessEnd: pci => this.renderDate(get(pci._object, 'accessEnd')),
+  }
+
+  visibleColumns = [
+    'name',
+    'platform',
+    'coverage',
+    'accessStart',
+    'accessEnd',
+  ]
+
+  renderOptions = (packageContents) => (
     <MultiColumnList
-      contentData={this.props.data.packageContents}
-      interactive={false}
-      columnMapping={{
-        name: <FormattedMessage id="ui-agreements.eresources.name" />,
-        platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
-        coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
-      }}
-      formatter={{
-        name: pci => <EResourceLink eresource={pci._object.pti.titleInstance} />,
-        platform: pci => get(pci._object, 'pti.platform.name', ''),
-        coverage: pci => <CoverageStatements statements={pci._object.coverage} />,
-      }}
-      visibleColumns={['name', 'platform', 'coverage']}
+      columnMapping={this.columnMapping}
+      contentData={packageContents}
+      formatter={this.formatter}
+      id="packageContents-list"
+      visibleColumns={this.visibleColumns}
     />
+  )
+
+  renderDate = date => (
+    date ? <FormattedUTCDate value={date} /> : '-'
   )
 
   renderLoading = () => (
@@ -53,7 +74,7 @@ export default class PackageContents extends React.Component {
         displayWhenOpen={this.renderBadge()}
         label={<FormattedMessage id="ui-agreements.eresources.packageResources" />}
       >
-        { packageContents ? this.renderOptions() : this.renderLoading() }
+        { packageContents ? this.renderOptions(packageContents) : this.renderLoading() }
       </Accordion>
     );
   }
