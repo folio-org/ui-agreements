@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import { Card, Col, Headline, KeyValue, Row, Select, TextArea } from '@folio/stripes/components';
 import { LicenseEndDate, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
@@ -30,13 +30,13 @@ class AmendmentsFieldArray extends React.Component {
     name: PropTypes.string.isRequired,
   };
 
-  warnStatusMismatch = (value, allValues, _props, name) => {
-    if (!value) return undefined;
+  warnStatusMismatch = (value, allValues, meta) => {
+    if (!value && !meta) return undefined;
 
     const stringValue = typeof value === 'string' ? value : value.value;
     if (stringValue !== statuses.CURRENT) return undefined;
 
-    const amendmentId = get(allValues, name.replace('status', 'amendmentId'));
+    const amendmentId = get(allValues, meta.name.replace('status', 'amendmentId'));
     const amendments = get(this.props.license, 'amendments', []);
     const amendment = amendments.find(a => a.id === amendmentId);
 

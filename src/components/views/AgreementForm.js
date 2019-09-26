@@ -17,7 +17,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager } from '@folio/stripes/core';
-import stripesForm from '@folio/stripes/form';
+import stripesFinalForm from '@folio/stripes/final-form';
 
 import { Spinner } from '@folio/stripes-erm-components';
 
@@ -35,9 +35,11 @@ import css from './AgreementForm.css';
 
 class AgreementForm extends React.Component {
   static propTypes = {
-    change: PropTypes.func,
     data: PropTypes.shape({
       agreementLines: PropTypes.array.isRequired,
+    }).isRequired,
+    form: PropTypes.shape({
+      change: PropTypes.func.isRequired,
     }).isRequired,
     handlers: PropTypes.PropTypes.shape({
       onClose: PropTypes.func.isRequired,
@@ -80,7 +82,7 @@ class AgreementForm extends React.Component {
       !isEqual(currInitialValues, prevInitialValues) ||
       !isEqual(prevAgreementLinesToAdd, currAgreementLinesToAdd)
     ) {
-      this.props.change('items', [
+      this.props.form.change('items', [
         ...(currInitialValues.items || []),
         ...currAgreementLinesToAdd,
       ]);
@@ -231,9 +233,6 @@ class AgreementForm extends React.Component {
   }
 }
 
-export default stripesForm({
-  form: 'EditAgreement',
+export default stripesFinalForm({
   navigationCheck: true,
-  enableReinitialize: true,
-  keepDirtyOnReinitialize: true,
 })(AgreementForm);

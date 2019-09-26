@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field, FieldArray } from 'redux-form';
+import { Field } from 'react-final-form';
+import { FieldArray } from 'react-final-form-arrays';
 
 import { Accordion, KeyValue, TextArea } from '@folio/stripes/components';
 import { DocumentsFieldArray } from '@folio/stripes-erm-components';
