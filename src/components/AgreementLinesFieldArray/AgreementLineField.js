@@ -145,7 +145,7 @@ export default class AgreementLineField extends React.Component {
               <div data-test-ag-line-provider>{this.renderLineProvider(resource)}</div>
             </KeyValue>
           </Col>
-          <Col xs={3}>
+          <Col xs={4}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.defaultCoverage" />}>
               <div data-test-ag-line-coverage>{this.renderCoverage(resource)}</div>
             </KeyValue>

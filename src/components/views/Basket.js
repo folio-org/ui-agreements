@@ -158,7 +158,7 @@ export default class Basket extends React.Component {
                       data-test-agreement-id={option.id}
                       style={{ textAlign: 'left' }}
                     >
-                      <Headline bold>{option.name}&nbsp;&#40;{option.agreementStatus.label}&#41;</Headline>{/* eslint-disable-line */}
+                      <Headline>{option.name}&nbsp;&#40;{option.agreementStatus.label}&#41;</Headline>{/* eslint-disable-line */}
                       <div>
                         <strong><FormattedMessage id="ui-agreements.agreements.startDate" />: </strong><FormattedUTCDate value={option.startDate} /> {/* eslint-disable-line */}
                       </div>

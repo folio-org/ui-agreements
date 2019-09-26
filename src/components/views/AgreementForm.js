@@ -68,26 +68,40 @@ class AgreementForm extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidMount() {
     const {
-      data: { agreementLinesToAdd: prevAgreementLinesToAdd },
-      initialValues: prevInitialValues,
-    } = prevProps;
-    const {
-      data: { agreementLinesToAdd: currAgreementLinesToAdd },
-      initialValues: currInitialValues,
+      data: { agreementLinesToAdd },
+      initialValues,
     } = this.props;
 
-    if (
-      !isEqual(currInitialValues, prevInitialValues) ||
-      !isEqual(prevAgreementLinesToAdd, currAgreementLinesToAdd)
-    ) {
+    if (agreementLinesToAdd.length) {
       this.props.form.change('items', [
-        ...(currInitialValues.items || []),
-        ...currAgreementLinesToAdd,
+        ...(initialValues.items || []),
+        ...agreementLinesToAdd,
       ]);
     }
   }
+
+  // componentDidUpdate(prevProps) {
+  //   const {
+  //     data: { agreementLinesToAdd: prevAgreementLinesToAdd },
+  //     initialValues: prevInitialValues,
+  //   } = prevProps;
+  //   const {
+  //     data: { agreementLinesToAdd: currAgreementLinesToAdd },
+  //     initialValues: currInitialValues,
+  //   } = this.props;
+
+  //   if (
+  //     !isEqual(currInitialValues, prevInitialValues) ||
+  //     !isEqual(prevAgreementLinesToAdd, currAgreementLinesToAdd)
+  //   ) {
+  //     this.props.form.change('items', [
+  //       ...(currInitialValues.items || []),
+  //       ...currAgreementLinesToAdd,
+  //     ]);
+  //   }
+  // }
 
   getSectionProps(id) {
     const { data, handlers } = this.props;
@@ -185,9 +199,9 @@ class AgreementForm extends React.Component {
   }
 
   render() {
-    const { initialValues: { id, name }, isLoading } = this.props;
+    const { initialValues: { id, name } } = this.props;
 
-    if (isLoading) return this.renderLoadingPane();
+    console.log('Render');
 
     return (
       <Paneset>
