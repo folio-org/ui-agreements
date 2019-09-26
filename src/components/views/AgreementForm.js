@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEqual } from 'lodash';
+import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -9,7 +9,6 @@ import {
   Col,
   ExpandAllButton,
   IconButton,
-  Layout,
   Pane,
   PaneFooter,
   PaneMenu,
@@ -18,8 +17,6 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
-
-import { Spinner } from '@folio/stripes-erm-components';
 
 import {
   FormInfo,
@@ -37,9 +34,11 @@ class AgreementForm extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       agreementLines: PropTypes.array.isRequired,
+      agreementLinesToAdd: PropTypes.array.isRequired,
     }).isRequired,
     form: PropTypes.shape({
       change: PropTypes.func.isRequired,
+      getRegisteredFields: PropTypes.func.isRequired,
     }).isRequired,
     handlers: PropTypes.PropTypes.shape({
       onClose: PropTypes.func.isRequired,
@@ -58,6 +57,7 @@ class AgreementForm extends React.Component {
   }
 
   state = {
+    addedLinesToAdd: false,
     sections: {
       formInternalContacts: true,
       formLines: true,
@@ -68,40 +68,22 @@ class AgreementForm extends React.Component {
     }
   }
 
-  componentDidMount() {
-    const {
-      data: { agreementLinesToAdd },
-      initialValues,
-    } = this.props;
-
-    if (agreementLinesToAdd.length) {
-      this.props.form.change('items', [
-        ...(initialValues.items || []),
-        ...agreementLinesToAdd,
+  static getDerivedStateFromProps(props, state) {
+    if (
+      props.data.agreementLinesToAdd.length &&
+      state.addedLinesToAdd === false &&
+      props.form.getRegisteredFields().includes('items')
+    ) {
+      props.form.change('items', [
+        ...(props.initialValues.items || []),
+        ...props.data.agreementLinesToAdd,
       ]);
+
+      return { addedLinesToAdd: true };
     }
+
+    return null;
   }
-
-  // componentDidUpdate(prevProps) {
-  //   const {
-  //     data: { agreementLinesToAdd: prevAgreementLinesToAdd },
-  //     initialValues: prevInitialValues,
-  //   } = prevProps;
-  //   const {
-  //     data: { agreementLinesToAdd: currAgreementLinesToAdd },
-  //     initialValues: currInitialValues,
-  //   } = this.props;
-
-  //   if (
-  //     !isEqual(currInitialValues, prevInitialValues) ||
-  //     !isEqual(prevAgreementLinesToAdd, currAgreementLinesToAdd)
-  //   ) {
-  //     this.props.form.change('items', [
-  //       ...(currInitialValues.items || []),
-  //       ...currAgreementLinesToAdd,
-  //     ]);
-  //   }
-  // }
 
   getSectionProps(id) {
     const { data, handlers } = this.props;
@@ -126,24 +108,6 @@ class AgreementForm extends React.Component {
 
   handleAllSectionsToggle = (sections) => {
     this.setState({ sections });
-  }
-
-  renderLoadingPane = () => {
-    return (
-      <Paneset>
-        <Pane
-          dismissible
-          defaultWidth="100%"
-          id="pane-agreement-form"
-          onClose={this.props.handlers.onClose}
-          paneTitle={<FormattedMessage id="ui-agreements.loading" />}
-        >
-          <Layout className="marginTop1">
-            <Spinner />
-          </Layout>
-        </Pane>
-      </Paneset>
-    );
   }
 
   renderPaneFooter() {
@@ -199,9 +163,10 @@ class AgreementForm extends React.Component {
   }
 
   render() {
-    const { initialValues: { id, name } } = this.props;
+    const { form, initialValues: { id, name } } = this.props;
 
-    console.log('Render');
+    const values = form.getState().values;
+    console.log('Lines', get(values, 'items.length', 0));
 
     return (
       <Paneset>
@@ -230,7 +195,7 @@ class AgreementForm extends React.Component {
                       </Row>
                       <FormInfo {...this.getSectionProps('formInfo')} />
                       <FormInternalContacts {...this.getSectionProps('formInternalContacts')} />
-                      <FormLines {...this.getSectionProps('formLines')} />
+                      <FormLines {...this.getSectionProps('formLines')} count={get(values, 'items.length', 0)} />
                       <FormLicenses {...this.getSectionProps('formLicenses')} />
                       <FormOrganizations {...this.getSectionProps('formOrganizations')} />
                       <FormSupplementaryInfo {...this.getSectionProps('formSupplementaryInfo')} />
