@@ -35,6 +35,7 @@
   "agreements.cancellationDeadline": "Cancellation deadline",
   "agreements.renewalPriority": "Renewal priority",
   "agreements.agreementStatus": "Status",
+  "agreements.reasonForClosure": "Reason For Closure",
   "agreements.isPerpetual": "Is perpetual",
   "agreements.internalContacts": "Internal contacts",
   "agreements.internalContactsRole": "Internal contact role",

@@ -18,6 +18,7 @@ export default class FormInfo extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       agreementStatusValues: PropTypes.array,
+      reasonForClosureValues: PropTypes.array,
       renewalPriorityValues: PropTypes.array,
       isPerpetualValues: PropTypes.array,
     }),
@@ -25,6 +26,7 @@ export default class FormInfo extends React.Component {
 
   state = {
     agreementStatusValues: [],
+    reasonForClosureValues: [],
     isPerpetualValues: [],
     renewalPriorityValues: [],
   }
@@ -47,13 +49,17 @@ export default class FormInfo extends React.Component {
       newState.isPerpetualValues = [{ value: null, label: '' }, ...data.isPerpetualValues];
     }
 
+    if (data.reasonForClosureValues.length + 1 !== state.reasonForClosureValues.length) {
+      newState.reasonForClosureValues = [{ value: null, label: '' }, ...data.reasonForClosureValues];
+    }
+
     if (Object.keys(newState).length) return newState;
 
     return null;
   }
 
   render() {
-    const { agreementStatusValues, isPerpetualValues, renewalPriorityValues } = this.state;
+    const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues} = this.state;
 
     return (
       <div data-test-edit-agreement-info>
@@ -76,6 +82,49 @@ export default class FormInfo extends React.Component {
               id="edit-agreement-description"
               label={<FormattedMessage id="ui-agreements.agreements.agreementDescription" />}
               name="description"
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} md={6}>
+            <Field
+              component={Select}
+              dataOptions={agreementStatusValues}
+              id="edit-agreement-status"
+              label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
+              name="agreementStatus"
+              placeholder=" "
+              required
+              validate={validators.required}
+            />
+          </Col>
+          <Col xs={12} md={6}>
+            <Field
+              component={Select}
+              dataOptions={reasonForClosureValues}
+              id="edit-agreement-reason-for-closure"
+              label={<FormattedMessage id="ui-agreements.agreements.reasonForClosure" />}
+              name="reasonForClosure"
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} md={6}>
+            <Field
+              component={Select}
+              dataOptions={renewalPriorityValues}
+              id="edit-agreement-renewal-priority"
+              label={<FormattedMessage id="ui-agreements.agreements.renewalPriority" />}
+              name="renewalPriority"
+            />
+          </Col>
+          <Col xs={12} md={6}>
+            <Field
+              component={Select}
+              dataOptions={isPerpetualValues}
+              id="edit-agreement-is-perpetual"
+              label={<FormattedMessage id="ui-agreements.agreements.isPerpetual" />}
+              name="isPerpetual"
             />
           </Col>
         </Row>
@@ -110,38 +159,6 @@ export default class FormInfo extends React.Component {
               id="edit-agreement-cancellation-deadline"
               label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}
               name="cancellationDeadline"
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12} md={4}>
-            <Field
-              component={Select}
-              dataOptions={agreementStatusValues}
-              id="edit-agreement-status"
-              label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
-              name="agreementStatus"
-              placeholder=" "
-              required
-              validate={validators.required}
-            />
-          </Col>
-          <Col xs={12} md={4}>
-            <Field
-              component={Select}
-              dataOptions={renewalPriorityValues}
-              id="edit-agreement-renewal-priority"
-              label={<FormattedMessage id="ui-agreements.agreements.renewalPriority" />}
-              name="renewalPriority"
-            />
-          </Col>
-          <Col xs={12} md={4}>
-            <Field
-              component={Select}
-              dataOptions={isPerpetualValues}
-              id="edit-agreement-is-perpetual"
-              label={<FormattedMessage id="ui-agreements.agreements.isPerpetual" />}
-              name="isPerpetual"
             />
           </Col>
         </Row>
