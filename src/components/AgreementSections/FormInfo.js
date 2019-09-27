@@ -22,6 +22,7 @@ class FormInfo extends React.Component {
       renewalPriorityValues: PropTypes.array,
       isPerpetualValues: PropTypes.array,
     }),
+    statusValue: PropTypes.string,
   };
 
   state = {
@@ -36,12 +37,8 @@ class FormInfo extends React.Component {
   static getDerivedStateFromProps(props, state) {
     const { data } = props;
     const newState = {};
-    //console.log("data state: %o", data)
     if (data.agreementStatusValues.length !== state.agreementStatusValues.length) {
       newState.agreementStatusValues = data.agreementStatusValues;
-      /* if (data.agreementStatus.value === 'closed') {
-        newState.agreementIsOpen = false;
-      } */
     }
 
     if (data.renewalPriorityValues.length + 1 !== state.renewalPriorityValues.length) {
@@ -62,10 +59,8 @@ class FormInfo extends React.Component {
   }
 
   render() {
-    const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues} = this.state;
-    const { statusValue } = this.props;
-    
-    console.log("Status Value [Form Info]: ", statusValue)
+    const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues } = this.state;
+
     return (
       <div data-test-edit-agreement-info>
         <Row>
@@ -170,7 +165,7 @@ class FormInfo extends React.Component {
         </Row>
       </div>
     );
-  };
+  }
 }
 
-export default FormInfo
+export default FormInfo;

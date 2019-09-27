@@ -19,6 +19,9 @@ export default class Info extends React.Component {
       isPerpetual: PropTypes.shape({
         label: PropTypes.string,
       }),
+      agreementStatus: PropTypes.shape({
+        value: PropTypes.string,
+      }),
       name: PropTypes.string,
       renewalPriority: PropTypes.shape({
         label: PropTypes.string,
@@ -30,8 +33,8 @@ export default class Info extends React.Component {
     super(props);
     this.state = {
       agreementIsClosed: (props.agreement.agreementStatus.value === 'closed' || false)
-    }
-  };
+    };
+  }
 
   render() {
     const { agreement } = this.props;
@@ -98,7 +101,6 @@ export default class Info extends React.Component {
               </KeyValue>
             </Col>
           </Row>
-        
         }
       </div>
     );

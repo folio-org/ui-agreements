@@ -21,6 +21,9 @@ import stripesForm from '@folio/stripes/form';
 
 import { Spinner } from '@folio/stripes-erm-components';
 
+import { connect } from 'react-redux';
+import { formValueSelector } from 'redux-form';
+
 import {
   FormInfo,
   FormInternalContacts,
@@ -30,9 +33,6 @@ import {
   FormSupplementaryInfo,
   FormUsageData,
 } from '../AgreementSections';
-
-import { connect } from 'react-redux';
-import { formValueSelector } from 'redux-form';
 
 import css from './AgreementForm.css';
 
@@ -52,6 +52,7 @@ class AgreementForm extends React.Component {
     invalid: PropTypes.bool,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
+    statusValue: PropTypes.string,
   }
 
   static defaultProps = {
@@ -186,7 +187,7 @@ class AgreementForm extends React.Component {
   }
 
   render() {
-    const { initialValues: { id, name }, isLoading, statusValue} = this.props;
+    const { initialValues: { id, name }, isLoading } = this.props;
     if (isLoading) return this.renderLoadingPane();
 
     return (
@@ -214,8 +215,9 @@ class AgreementForm extends React.Component {
                           />
                         </Col>
                       </Row>
-                      <FormInfo {...this.getSectionProps('formInfo')} 
-                        statusValue={this.props.statusValue} 
+                      <FormInfo
+                        {...this.getSectionProps('formInfo')}
+                        statusValue={this.props.statusValue}
                       />
                       <FormInternalContacts {...this.getSectionProps('formInternalContacts')} />
                       <FormLines {...this.getSectionProps('formLines')} />
@@ -245,8 +247,8 @@ const agreementForm = stripesForm({
 const selector = formValueSelector('EditAgreement');
 
 export default connect(state => {
-  const statusValue = selector(state, 'agreementStatus')
+  const statusValue = selector(state, 'agreementStatus');
   return {
     statusValue,
-  }
+  };
 })(agreementForm);
