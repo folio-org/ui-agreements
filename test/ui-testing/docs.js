@@ -237,6 +237,7 @@ module.exports.test = (uiTestCtx,
       it('should save updated agreement', done => {
         nightmare
           .click('#clickable-update-agreement')
+          .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
           .click('#clickable-expand-all')
           .then(done)
