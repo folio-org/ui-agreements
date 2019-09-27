@@ -237,5 +237,9 @@
     "license.warn.amendmentFuture": "يبدأ التعديل في المستقبل بينما تكون \"الحالة (هذه الاتفاقية)\" هي \"حالية\"",
     "license.warn.amendmentPast": "انتهى التعديل بينما \"الحالة (هذه الاتفاقية)\" هي \"حالية\"",
     "license.warn.amendmentStatus": "حالات متضاربة:حالة التعديل هي \"{status}\" بينما \"الحالة (هذه الاتفاقية)\" هي \"حالية\"",
-    "customcoverages.tooltip": "Custom Coverage"
+    "customcoverages.tooltip": "تغطية مخصصة",
+    "eresources.activeFrom": "نشط من",
+    "eresources.activeTo": "نشط إلى",
+    "eresources.packageAgreements": "اتفاقيات لهذه الحزمة",
+    "eresources.addPackageToBasket": "إضافة حزمة إلى السلة"
 }
