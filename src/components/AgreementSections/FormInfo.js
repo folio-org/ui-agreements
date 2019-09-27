@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { connect } from 'react-redux';
+import { Field, reduxForm, formValueSelector } from 'redux-form';
 
 import {
   Col,
@@ -14,7 +15,7 @@ import {
 
 import { validators } from '../utilities';
 
-export default class FormInfo extends React.Component {
+class FormInfo extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       agreementStatusValues: PropTypes.array,
@@ -29,7 +30,6 @@ export default class FormInfo extends React.Component {
     reasonForClosureValues: [],
     isPerpetualValues: [],
     renewalPriorityValues: [],
-    agreementIsOpen: true
   }
 
   // Prepend an empty value to each set of dropdown options to facilitate
@@ -37,7 +37,7 @@ export default class FormInfo extends React.Component {
   static getDerivedStateFromProps(props, state) {
     const { data } = props;
     const newState = {};
-    console.log("data state: %o", data)
+    //console.log("data state: %o", data)
     if (data.agreementStatusValues.length !== state.agreementStatusValues.length) {
       newState.agreementStatusValues = data.agreementStatusValues;
       /* if (data.agreementStatus.value === 'closed') {
@@ -64,7 +64,6 @@ export default class FormInfo extends React.Component {
 
   render() {
     const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues} = this.state;
-
     return (
       <div data-test-edit-agreement-info>
         <Row>
@@ -106,7 +105,7 @@ export default class FormInfo extends React.Component {
             <Field
               component={Select}
               dataOptions={reasonForClosureValues}
-              disabled={this.state.agreementIsOpen}
+              disabled={this.props.statusValue !== 'closed'}
               id="edit-agreement-reason-for-closure"
               label={<FormattedMessage id="ui-agreements.agreements.reasonForClosure" />}
               name="reasonForClosure"
@@ -169,5 +168,19 @@ export default class FormInfo extends React.Component {
         </Row>
       </div>
     );
-  }
+  };
 }
+
+FormInfo = reduxForm({
+  form: 'agreementFormInfo'
+})(FormInfo)
+
+const selector = formValueSelector('agreementFormInfo')
+FormInfo = connect(state => {
+  const statusValue = selector(state, 'agreementStatus')
+  return {
+    statusValue,
+  }
+})(FormInfo)
+
+export default FormInfo

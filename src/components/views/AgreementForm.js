@@ -183,8 +183,7 @@ class AgreementForm extends React.Component {
   }
 
   render() {
-    const { initialValues: { id, name }, isLoading } = this.props;
-
+    const { initialValues: { id, name }, isLoading, statusValue} = this.props;
     if (isLoading) return this.renderLoadingPane();
 
     return (
