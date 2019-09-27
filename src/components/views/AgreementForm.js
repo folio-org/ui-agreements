@@ -31,6 +31,9 @@ import {
   FormUsageData,
 } from '../AgreementSections';
 
+import { connect } from 'react-redux';
+import { formValueSelector } from 'redux-form';
+
 import css from './AgreementForm.css';
 
 class AgreementForm extends React.Component {
@@ -211,7 +214,9 @@ class AgreementForm extends React.Component {
                           />
                         </Col>
                       </Row>
-                      <FormInfo {...this.getSectionProps('formInfo')} />
+                      <FormInfo {...this.getSectionProps('formInfo')} 
+                        statusValue={this.props.statusValue} 
+                      />
                       <FormInternalContacts {...this.getSectionProps('formInternalContacts')} />
                       <FormLines {...this.getSectionProps('formLines')} />
                       <FormLicenses {...this.getSectionProps('formLicenses')} />
@@ -230,9 +235,18 @@ class AgreementForm extends React.Component {
   }
 }
 
-export default stripesForm({
+const agreementForm = stripesForm({
   form: 'EditAgreement',
   navigationCheck: true,
   enableReinitialize: true,
   keepDirtyOnReinitialize: true,
 })(AgreementForm);
+
+const selector = formValueSelector('EditAgreement');
+
+export default connect(state => {
+  const statusValue = selector(state, 'agreementStatus')
+  return {
+    statusValue,
+  }
+})(agreementForm);

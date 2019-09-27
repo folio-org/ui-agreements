@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { Field } from 'redux-form';
 
 import {
   Col,
@@ -64,6 +63,9 @@ class FormInfo extends React.Component {
 
   render() {
     const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues} = this.state;
+    const { statusValue } = this.props;
+    
+    console.log("Status Value [Form Info]: ", statusValue)
     return (
       <div data-test-edit-agreement-info>
         <Row>
@@ -170,17 +172,5 @@ class FormInfo extends React.Component {
     );
   };
 }
-
-FormInfo = reduxForm({
-  form: 'agreementFormInfo'
-})(FormInfo)
-
-const selector = formValueSelector('agreementFormInfo')
-FormInfo = connect(state => {
-  const statusValue = selector(state, 'agreementStatus')
-  return {
-    statusValue,
-  }
-})(FormInfo)
 
 export default FormInfo
