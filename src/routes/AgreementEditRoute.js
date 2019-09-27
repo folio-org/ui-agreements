@@ -163,6 +163,7 @@ class AgreementEditRoute extends React.Component {
     const initialValues = cloneDeep(agreement);
     const {
       agreementStatus = {},
+      reasonForClosure = {},
       contacts = [],
       isPerpetual = {},
       items = [],
@@ -173,6 +174,7 @@ class AgreementEditRoute extends React.Component {
 
     // Set the values of dropdown-controlled props as values rather than objects.
     initialValues.agreementStatus = agreementStatus.value;
+    initialValues.reasonForClosure = reasonForClosure.value;
     initialValues.isPerpetual = isPerpetual.value;
     initialValues.renewalPriority = renewalPriority.value;
     initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
