@@ -22,10 +22,6 @@ class CustomCoverageFieldArray extends React.Component {
     onDeleteField: PropTypes.func.isRequired,
   }
 
-  static defaultProps = {
-    items: [],
-  }
-
   validateRequiredStartDate = (value, allValues, meta) => {
     if (!value && meta) {
       if (get(allValues, meta.name.replace('startDate', '_delete'), false) !== true) {
@@ -129,10 +125,6 @@ class CustomCoverageFieldArray extends React.Component {
     return undefined;
   }
 
-  handleAddCustomCoverage = () => {
-    this.props.onAddField({});
-  }
-
   renderCustomCoverages = () => {
     const { items, name } = this.props;
 
@@ -223,7 +215,7 @@ class CustomCoverageFieldArray extends React.Component {
         <div id="agreement-form-custom-coverages">
           { this.renderCustomCoverages() }
         </div>
-        <Button id="add-agreement-custom-coverage-button" onClick={this.handleAddCustomCoverage}>
+        <Button id="add-agreement-custom-coverage-button" onClick={() => this.props.onAddField()}>
           <FormattedMessage id="ui-agreements.agreementLines.addCustomCoverage" />
         </Button>
       </div>

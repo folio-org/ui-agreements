@@ -16,6 +16,20 @@ const username = `username #${generateNumber()}`;
 const password = `password #${generateNumber()}`;
 const notes = `Hello world ${generateNumber()}`;
 
+const shouldFindValueInInterfaceList = (nightmare, type, value) => {
+  it(`should find "${value}" in interface list`, done => {
+    nightmare
+      .evaluate(_value => {
+        const elements = [...document.querySelectorAll('#organizations div[role="gridcell"]')];
+        if (!elements.find(e => e.textContent === _value)) {
+          throw Error(`Could not find row with ${type} named ${_value}`);
+        }
+      }, value)
+      .then(done)
+      .catch(done);
+  });
+};
+
 module.exports.test = (uiTestCtx) => {
   const orgName = org.name;
   const orgCode = org.code;
@@ -181,7 +195,9 @@ module.exports.test = (uiTestCtx) => {
       it('should create Agreement', done => {
         nightmare
           .click('#clickable-create-agreement')
+          .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000)
+          .click('#clickable-expand-all')
           .then(done)
           .catch(done);
       });
@@ -194,7 +210,7 @@ module.exports.test = (uiTestCtx) => {
             if (!_row) {
               throw Error(`Could not find row with an org named ${name}`);
             }
-            if (row.indexOf(_org.role) < 0) {
+            if (_row.indexOf(_org.role) < 0) {
               throw Error(`Expected row for "${name}" to contain role ${_org.role}.`);
             }
           }, org, orgName)
@@ -202,44 +218,18 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      it(`should find "${interfaceName}" in interface list`, done => {
+      it('should fetch interfaces', done => {
         nightmare
-          .evaluate(_interfaceName => {
-            const interfaceElements = [...document.querySelectorAll('#organizations div[role="gridcell"]')];
-            const interfaceFound = interfaceElements.find(e => e.textContent === _interfaceName);
-            if (!interfaceFound) {
-              throw Error(`Could not find row with an interface named ${_interfaceName}`);
-            }
-          }, interfaceName)
+          .click('[data-test-show-credentials]')
+          .waitUntilNetworkIdle(2000)
           .then(done)
           .catch(done);
       });
 
-      it(`should find username "${username}"`, done => {
-        nightmare
-          .evaluate(_username => {
-            const usernameElements = [...document.querySelectorAll('#organizations div[role="gridcell"]')];
-            const usernameFound = usernameElements.find(e => e.textContent === _username);
-            if (!usernameFound) {
-              throw Error(`Could not find row with username ${_username}`);
-            }
-          }, username)
-          .then(done)
-          .catch(done);
-      });
-
-      it(`should find password "${password}"`, done => {
-        nightmare
-          .evaluate(_password => {
-            const passwordElements = [...document.querySelectorAll('#organizations div[role="gridcell"]')];
-            const passwordFound = passwordElements.find(e => e.textContent === _password);
-            if (!passwordFound) {
-              throw Error(`Could not find row with password ${_password}`);
-            }
-          }, password)
-          .then(done)
-          .catch(done);
-      });
+      shouldFindValueInInterfaceList(nightmare, 'interface', interfaceName);
+      shouldFindValueInInterfaceList(nightmare, 'username', username);
+      shouldFindValueInInterfaceList(nightmare, 'password', password);
+      shouldFindValueInInterfaceList(nightmare, 'notes', notes);
 
       it(`should find uri "${uri}"`, done => {
         nightmare
@@ -250,19 +240,6 @@ module.exports.test = (uiTestCtx) => {
               throw Error(`Could not find row with uri ${_uri}`);
             }
           }, uri)
-          .then(done)
-          .catch(done);
-      });
-
-      it(`should find notes "${notes}"`, done => {
-        nightmare
-          .evaluate(_notes => {
-            const notesElements = [...document.querySelectorAll('#organizations div[role="gridcell"]')];
-            const notesFound = notesElements.find(e => e.textContent === _notes);
-            if (!notesFound) {
-              throw Error(`Could not find row with notes ${_notes}`);
-            }
-          }, notes)
           .then(done)
           .catch(done);
       });

@@ -30,7 +30,6 @@ export default class FormLines extends React.Component {
       >
         <FieldArray
           component={AgreementLinesFieldArray}
-          count={this.props.count}
           data={data}
           name="items"
         />

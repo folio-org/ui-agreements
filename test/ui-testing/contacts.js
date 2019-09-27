@@ -116,6 +116,7 @@ module.exports.test = (uiTestCtx) => {
       it('should create agreement', done => {
         nightmare
           .click('#clickable-create-agreement')
+          .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
           .click('#clickable-expand-all')
           .then(done)

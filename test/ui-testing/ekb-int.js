@@ -100,14 +100,13 @@ module.exports.test = (uiTestCtx) => {
               .click('#clickable-create-agreement')
               .wait('[data-test-agreement-info]')
               .waitUntilNetworkIdle(2000)
+              .click('#clickable-expand-all')
               .then(done)
               .catch(done);
           });
 
           it('should have resource info in agreement lines list', done => {
             nightmare
-              .wait('#accordion-toggle-button-lines')
-              .click('#accordion-toggle-button-lines')
               .evaluate(expected => {
                 const cells = [...document.querySelectorAll('#agreement-lines [aria-rowindex="2"] [role="gridcell"]')];
 

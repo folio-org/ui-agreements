@@ -89,7 +89,7 @@ class UsageDataProvidersFieldArray extends React.Component {
         </div>
         <Button
           data-test-udp-fa-add-button
-          onClick={() => onAddField({})}
+          onClick={() => onAddField()}
           id="add-udp-btn"
         >
           <FormattedMessage id="ui-agreements.usageData.addUDP" />

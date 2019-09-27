@@ -3,9 +3,9 @@ const AgreementCRUD = require('./agreement-crud');
 
 module.exports.test = (uiTestCtx) => {
   const number = Math.round(Math.random() * 100000);
-  const testNote = `note${Math.floor(Math.random() * 100000)}`;
-  const editedNote = `editnote${Math.floor(Math.random() * 100000)}`;
-  const noteType = `noteType${Math.floor(Math.random() * 100000)}`;
+  const testNote = `note ${number}`;
+  const editedNote = `${testNote} edited`;
+  const noteType = `noteType ${number}`;
   const agreement = {
     name: `Notes Agreement #${number}`,
   };
@@ -96,7 +96,7 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      it(`should edit note to ${editedNote}`, done => {
+      it('should edit note to append "edited"', done => {
         nightmare
           .evaluate(note => {
             const notesElements = [...document.querySelectorAll('div[role="gridcell"]')];
@@ -112,8 +112,7 @@ module.exports.test = (uiTestCtx) => {
               .click('[data-test-navigate-note-edit]')
               .waitUntilNetworkIdle(2000)
               .wait('[data-test-note-title-field]')
-              .insert('[data-test-note-title-field]', '')
-              .insert('[data-test-note-title-field]', editedNote)
+              .insert('[data-test-note-title-field]', ' edited')
               .wait('[data-test-save-note]')
               .click('[data-test-save-note]')
               .waitUntilNetworkIdle(2000)
@@ -142,8 +141,8 @@ module.exports.test = (uiTestCtx) => {
 
       it('should delete the note', done => {
         nightmare
-          .wait('#notes-list div[aria-rowindex="2"]')
-          .click('#notes-list div[aria-rowindex="2"]')
+          .wait('#notes-list [aria-rowindex="2"]')
+          .click('#notes-list [aria-rowindex="2"]')
           .waitUntilNetworkIdle(2000)
           .wait('[class*=paneHeaderCenterButton]')
           .click('[class*=paneHeaderCenterButton]')

@@ -148,7 +148,7 @@ class LicensesFieldArray extends React.Component {
         </div>
         <Button
           data-test-license-fa-add-button
-          onClick={() => onAddField({})}
+          onClick={() => onAddField()}
           id="add-license-btn"
         >
           <FormattedMessage id="ui-agreements.license.addLicense" />

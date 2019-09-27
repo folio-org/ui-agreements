@@ -25,12 +25,11 @@ const shouldAddTitleToBasket = (nightmare, index, basket = BASKET) => {
         const type = selectedResourceNode.children[CONSTANTS.ERESOURCES_TYPE_COLUMN].innerText;
 
         const removeButton = document.querySelector('[data-test-basket-remove-button]');
-        const coverage = document.querySelector('[data-test-coverage-details]');
         const addedItem = {
           id: removeButton.getAttribute('data-test-entitlement-option-id'),
+          coverage: [JSON.parse(removeButton.getAttribute('data-test-coverage-details'))],
           name,
           type,
-          coverage: [JSON.parse(coverage.getAttribute('data-test-coverage-details'))],
         };
 
         return addedItem;
@@ -186,6 +185,7 @@ module.exports.test = (uiTestCtx) => {
             .click('#clickable-create-agreement')
             .wait('[data-test-agreement-info]')
             .waitUntilNetworkIdle(2000)
+            .click('#clickable-expand-all')
             .then(done)
             .catch(done);
         });

@@ -52,10 +52,6 @@ class AgreementLinesFieldArray extends React.Component {
     return undefined;
   }
 
-  handleAddLine = () => {
-    this.props.onAddField({});
-  }
-
   handleResourceSelected = (index, resource) => {
     this.props.onReplaceField(index, { resource });
   }
@@ -99,7 +95,7 @@ class AgreementLinesFieldArray extends React.Component {
           {this.props.items.length ? this.renderLines() : this.renderEmpty()}
         </div>
         <IfEResourcesEnabled>
-          <Button id="add-agreement-line-button" onClick={this.handleAddLine}>
+          <Button id="add-agreement-line-button" onClick={() => this.props.onAddField()}>
             <FormattedMessage id="ui-agreements.agreementLines.addLine" />
           </Button>
         </IfEResourcesEnabled>

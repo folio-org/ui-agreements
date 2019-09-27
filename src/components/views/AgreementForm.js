@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -214,6 +214,7 @@ class AgreementForm extends React.Component {
 }
 
 export default stripesFinalForm({
+  initialValuesEqual: (a, b) => isEqual(a, b),
   keepDirtyOnReinitialize: true,
   navigationCheck: true,
 })(AgreementForm);
