@@ -86,10 +86,11 @@ class AgreementForm extends React.Component {
   }
 
   getSectionProps(id) {
-    const { data, handlers } = this.props;
+    const { data, form, handlers } = this.props;
 
     return {
       data,
+      form,
       handlers,
       id,
       onToggle: this.handleSectionToggle,
@@ -165,8 +166,7 @@ class AgreementForm extends React.Component {
   render() {
     const { form, initialValues: { id, name } } = this.props;
 
-    const values = form.getState().values;
-    console.log('Lines', get(values, 'items.length', 0));
+    const hasLoaded = form.getRegisteredFields().length > 0;
 
     return (
       <Paneset>
@@ -184,6 +184,7 @@ class AgreementForm extends React.Component {
                 <form id="form-agreement">
                   <div className={css.agreementForm}>
                     <AccordionSet>
+                      {hasLoaded ? <div id="form-loaded" /> : null}
                       <Row end="xs">
                         <Col xs>
                           <ExpandAllButton
@@ -195,7 +196,7 @@ class AgreementForm extends React.Component {
                       </Row>
                       <FormInfo {...this.getSectionProps('formInfo')} />
                       <FormInternalContacts {...this.getSectionProps('formInternalContacts')} />
-                      <FormLines {...this.getSectionProps('formLines')} count={get(values, 'items.length', 0)} />
+                      <FormLines {...this.getSectionProps('formLines')} />
                       <FormLicenses {...this.getSectionProps('formLicenses')} />
                       <FormOrganizations {...this.getSectionProps('formOrganizations')} />
                       <FormSupplementaryInfo {...this.getSectionProps('formSupplementaryInfo')} />

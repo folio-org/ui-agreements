@@ -190,7 +190,7 @@ class AgreementEditRoute extends React.Component {
     }
 
     const lines = get(props.resources, 'agreementLines.records', []);
-    if (items.length && lines.length && !initialValues.items) {
+    if (items.length && lines.length) {
       updated = true;
 
       initialValues.items = items.map(item => {
