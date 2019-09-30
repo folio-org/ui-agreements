@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
-import { Col, KeyValue, Row } from '@folio/stripes/components';
+import {
+  Col,
+  Headline,
+  KeyValue,
+  Row,
+} from '@folio/stripes/components';
 
 import { getResourceIdentifier } from '../utilities';
 
@@ -40,6 +45,16 @@ export default class TitleInfo extends React.Component {
     return (
       <div id="title-info">
         <Row>
+          <Col xs={12}>
+            <Headline
+              size="xx-large"
+              tag="h2"
+            >
+              {eresource.name}
+            </Headline>
+          </Col>
+        </Row>
+        <Row>
           <Col xs={4}>
             <KeyValue
               label={<FormattedMessage id="ui-agreements.eresources.erType" />}
@@ -52,14 +67,14 @@ export default class TitleInfo extends React.Component {
               value={get(eresource, 'publisher.label', '-')}
             />
           </Col>
-          { this.renderIdentifier('pissn', 2) }
-          { this.renderIdentifier('eissn', 2) }
+          {this.renderIdentifier('pissn', 2)}
+          {this.renderIdentifier('eissn', 2)}
         </Row>
         <Row>
-          { this.renderIdentifier('doi') }
-          { this.renderIdentifier('ezb') }
-          { this.renderIdentifier('zdb') }
-          { this.renderIdentifier('isbn') }
+          {this.renderIdentifier('doi')}
+          {this.renderIdentifier('ezb')}
+          {this.renderIdentifier('zdb')}
+          {this.renderIdentifier('isbn')}
         </Row>
       </div>
     );
