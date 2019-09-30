@@ -15,10 +15,7 @@ import css from './Header.css';
 export default class Header extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
-      currentPeriod: PropTypes.shape({
-        endDate: PropTypes.string,
-        startDate: PropTypes.string,
-      }),
+      endDate: PropTypes.string,
       orgs: PropTypes.arrayOf(
         PropTypes.shape({
           org: PropTypes.shape({
@@ -29,6 +26,7 @@ export default class Header extends React.Component {
           }),
         }),
       ),
+      startDate: PropTypes.string,
     }).isRequired,
   };
 

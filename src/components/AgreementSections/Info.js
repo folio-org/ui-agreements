@@ -15,9 +15,7 @@ export default class Info extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
       beganDate: PropTypes.string,
-      currentPeriod: PropTypes.shape({
-        cancellationDeadline: PropTypes.string,
-      }),
+      cancellationDeadline: PropTypes.string,
       description: PropTypes.string,
       isPerpetual: PropTypes.shape({
         label: PropTypes.string,
