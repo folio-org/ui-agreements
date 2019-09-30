@@ -32,7 +32,7 @@ export default class Info extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      agreementIsClosed: (props.agreement.agreementStatus.value === 'closed' || false)
+      agreementIsClosed: (props.agreement.agreementStatus !== null || (props.agreement.agreementStatus.value === 'closed' || false))
     };
   }
 
