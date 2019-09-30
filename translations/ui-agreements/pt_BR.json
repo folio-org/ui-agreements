@@ -237,5 +237,9 @@
     "license.warn.amendmentFuture": "Amendment starts in the future while \"Status (this agreement)\" is \"Current.\"",
     "license.warn.amendmentPast": "Amendment has ended while \"Status (this agreement)\" is \"Current.\"",
     "license.warn.amendmentStatus": "Conflicting statuses: Amendment status is \"{status}\" while \"Status (this agreement)\" is \"Current.\"",
-    "customcoverages.tooltip": "Custom Coverage"
+    "customcoverages.tooltip": "Custom Coverage",
+    "eresources.activeFrom": "Active from",
+    "eresources.activeTo": "Active to",
+    "eresources.packageAgreements": "Agreements for this package",
+    "eresources.addPackageToBasket": "Add package to basket"
 }
