@@ -38,20 +38,21 @@ export default class Header extends React.Component {
 
   render() {
     const { agreement } = this.props;
+    const { startDate, endDate } = agreement;
 
     return (
       <Row className={css.agreementHeader}>
         <Col xs={2}>
           <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.periodStart" />}>
             <div data-test-agreement-start-date>
-              {agreement.startDate ? <FormattedUTCDate value={agreement.startDate} /> : '-'}
+              {startDate ? <FormattedUTCDate value={startDate} /> : '-'}
             </div>
           </KeyValue>
         </Col>
         <Col xs={2}>
           <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.periodEnd" />}>
             <div data-test-agreement-end-date>
-              {agreement.endDate ? <FormattedUTCDate value={agreement.endDate} /> : '-'}
+              {endDate ? <FormattedUTCDate value={endDate} /> : '-'}
             </div>
           </KeyValue>
         </Col>

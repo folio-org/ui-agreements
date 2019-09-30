@@ -14,7 +14,6 @@ import FormattedUTCDate from '../FormattedUTCDate';
 export default class Info extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
-      beganDate: PropTypes.string,
       cancellationDeadline: PropTypes.string,
       description: PropTypes.string,
       isPerpetual: PropTypes.shape({
@@ -54,34 +53,27 @@ export default class Info extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={3}>
+          <Col xs={4}>
             <KeyValue label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}>
               <div data-test-agreement-cancellation-deadline>
                 {agreement.cancellationDeadline ? <FormattedUTCDate value={agreement.cancellationDeadline} /> : '-'}
               </div>
             </KeyValue>
           </Col>
-          <Col xs={3}>
+          <Col xs={4}>
             <KeyValue label={<FormattedMessage id="ui-agreements.agreements.renewalPriority" />}>
               <div data-test-agreement-renewal-priority>
                 {get(agreement, 'renewalPriority.label', '-')}
               </div>
             </KeyValue>
           </Col>
-          <Col xs={3}>
+          <Col xs={4}>
             <KeyValue label={<FormattedMessage id="ui-agreements.agreements.isPerpetual" />}>
               <div data-test-agreement-is-perpetual>
                 {get(agreement, 'isPerpetual.label', '-')}
               </div>
             </KeyValue>
           </Col>
-          {/* <Col xs={3}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.dateAgreementBegan" />}>
-              <div data-test-agreement-began-date>
-                {agreement.beganDate ? <FormattedUTCDate value={agreement.beganDate} /> : '-'}
-              </div>
-            </KeyValue>
-          </Col> */}
         </Row>
       </div>
     );
