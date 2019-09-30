@@ -32,7 +32,7 @@ class EResourceViewRoute extends React.Component {
     },
     packageContents: {
       type: 'okapi',
-      path: 'erm/resource',
+      path: 'erm/packages/:{id}/content/%{filterPath.path}',
       records: 'results',
       limitParam: 'perPage',
       perRequest: RECORDS_PER_REQUEST,
@@ -45,6 +45,9 @@ class EResourceViewRoute extends React.Component {
     },
     query: {},
     entitlementsCount: { initialValue: RECORDS_PER_REQUEST },
+    filterPath: {
+      initialValue: { path: 'current' },
+    },
     packageContentsCount: { initialValue: RECORDS_PER_REQUEST },
   });
 
@@ -126,6 +129,11 @@ class EResourceViewRoute extends React.Component {
     this.props.history.push(`${urls.eresources()}${this.props.location.search}`);
   }
 
+  handleClickFilterButton = (path) => {
+    const { mutator } = this.props;
+    mutator.filterPath.replace({ path });
+  }
+
   handleToggleHelper = (helper) => {
     const { mutator, resources } = this.props;
     const currentHelper = resources.query.helper;
@@ -172,6 +180,7 @@ class EResourceViewRoute extends React.Component {
         }}
         handlers={{
           ...handlers,
+          onClickFilterButton: this.handleClickFilterButton,
           onClose: this.handleClose,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}

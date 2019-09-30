@@ -34,7 +34,7 @@ class AgreementViewRoute extends React.Component {
     },
     agreementEresources: {
       type: 'okapi',
-      path: 'erm/sas/:{id}/resources',
+      path: 'erm/sas/:{id}/resources/%{filterPath.path}',
       params: {
         sort: 'pti.titleInstance.name;asc',
         stats: 'true',
@@ -43,6 +43,9 @@ class AgreementViewRoute extends React.Component {
       perRequest: RECORDS_PER_REQUEST,
       records: 'results',
       recordsRequired: '%{agreementEresourcesCount}',
+    },
+    filterPath: {
+      initialValue: { path: 'current' },
     },
     interfaces: {
       type: 'okapi',
@@ -220,6 +223,11 @@ class AgreementViewRoute extends React.Component {
     this.props.history.push(`${urls.agreements()}${this.props.location.search}`);
   }
 
+  handleClickFilterButton = (path) => {
+    const { mutator } = this.props;
+    mutator.filterPath.replace({ path });
+  }
+
   handleEdit = () => {
     const { location, match } = this.props;
     this.props.history.push(`${urls.agreementEdit(match.params.id)}${location.search}`);
@@ -319,6 +327,7 @@ class AgreementViewRoute extends React.Component {
         }}
         handlers={{
           ...handlers,
+          onClickFilterButton: this.handleClickFilterButton,
           onClose: this.handleClose,
           onEdit: this.handleEdit,
           onExportEResourcesAsJSON: this.handleExportEResourcesAsJSON,

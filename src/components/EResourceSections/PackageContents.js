@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, Badge, MultiColumnList } from '@folio/stripes/components';
+import { Accordion, Badge, Button, ButtonGroup, Layout, MultiColumnList } from '@folio/stripes/components';
 import { Spinner } from '@folio/stripes-erm-components';
 
 import CoverageStatements from '../CoverageStatements';
@@ -15,6 +15,7 @@ export default class PackageContents extends React.Component {
     data: PropTypes.shape({
       packageContents: PropTypes.array,
     }),
+    onClickFilterButton: PropTypes.func.isRequired,
   };
 
   columnMapping = {
@@ -25,12 +26,17 @@ export default class PackageContents extends React.Component {
     accessEnd: <FormattedMessage id="ui-agreements.eresources.accessEnd" />,
   }
 
+  columnWidths = {
+    name: 250,
+    platform: 150,
+  }
+
   formatter = {
-    name: pci => <EResourceLink eresource={pci._object.pti.titleInstance} />,
-    platform: pci => get(pci._object, 'pti.platform.name', ''),
-    coverage: pci => <CoverageStatements statements={pci._object.coverage} />,
-    accessStart: pci => this.renderDate(get(pci._object, 'accessStart')),
-    accessEnd: pci => this.renderDate(get(pci._object, 'accessEnd')),
+    name: pci => <EResourceLink eresource={pci.pti.titleInstance} />,
+    platform: pci => get(pci, 'pti.platform.name', ''),
+    coverage: pci => <CoverageStatements statements={pci.pti.coverage} />,
+    accessStart: pci => this.renderDate(pci.accessStart),
+    accessEnd: pci => this.renderDate(pci.accessEnd),
   }
 
   visibleColumns = [
@@ -41,15 +47,18 @@ export default class PackageContents extends React.Component {
     'accessEnd',
   ]
 
-  renderOptions = (packageContents) => (
-    <MultiColumnList
-      columnMapping={this.columnMapping}
-      contentData={packageContents}
-      formatter={this.formatter}
-      id="packageContents-list"
-      visibleColumns={this.visibleColumns}
-    />
-  )
+  renderList = (packageContents) => {
+    return (
+      <MultiColumnList
+        columnMapping={this.columnMapping}
+        columnWidths={this.columnWidths}
+        contentData={packageContents}
+        formatter={this.formatter}
+        id="packageContents-list"
+        visibleColumns={this.visibleColumns}
+      />
+    );
+  }
 
   renderDate = date => (
     date ? <FormattedUTCDate value={date} /> : '-'
@@ -64,6 +73,40 @@ export default class PackageContents extends React.Component {
     return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
   }
 
+  renderFilterButtons = () => (
+    <Layout className="textCentered">
+      <ButtonGroup>
+        <Button
+          autoFocus
+          id="clickable-pci-current"
+          onClick={() => this.props.onClickFilterButton('current')}
+        >
+          <FormattedMessage id="ui-agreements.content.current" />
+        </Button>
+        <Button
+          id="clickable-pci-future"
+          onClick={() => this.props.onClickFilterButton('future')}
+        >
+          <FormattedMessage id="ui-agreements.content.future" />
+        </Button>
+        <Button
+          buttonStyle="default"
+          id="clickable-pci-dropped"
+          onClick={() => this.props.onClickFilterButton('dropped')}
+        >
+          <FormattedMessage id="ui-agreements.content.dropped" />
+        </Button>
+        <Button
+          buttonStyle="default"
+          id="clickable-pci-all"
+          onClick={() => this.props.onClickFilterButton('')}
+        >
+          <FormattedMessage id="ui-agreements.content.all" />
+        </Button>
+      </ButtonGroup>
+    </Layout>
+  )
+
   render() {
     const { data: { packageContents } } = this.props;
 
@@ -74,7 +117,9 @@ export default class PackageContents extends React.Component {
         displayWhenOpen={this.renderBadge()}
         label={<FormattedMessage id="ui-agreements.eresources.packageResources" />}
       >
-        { packageContents ? this.renderOptions(packageContents) : this.renderLoading() }
+        { this.renderFilterButtons() }
+
+        { packageContents ? this.renderList(packageContents) : this.renderLoading() }
       </Accordion>
     );
   }
