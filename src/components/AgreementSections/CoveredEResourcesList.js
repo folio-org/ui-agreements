@@ -54,7 +54,7 @@ export default class CoveredEResourcesList extends React.Component {
     package: 150,
   }
 
-  formatterResource = {
+  formatter= {
     name: e => {
       const titleInstance = get(e._object, 'pti.titleInstance', {});
       return <EResourceLink eresource={titleInstance} />;
@@ -64,27 +64,6 @@ export default class CoveredEResourcesList extends React.Component {
     coverage: e => <CoverageStatements statements={e.coverage} />,
     accessStart: e => this.renderDate(get(e._object, 'accessStart')),
     accessEnd: e => this.renderDate(get(e._object, 'accessEnd')),
-    isCustomCoverage: line => {
-      if (!line.customCoverage) return '';
-      return (
-        <Tooltip
-          id={`covered-eresources-cc-tooltip-${line.rowIndex}`}
-          text={<FormattedMessage id="ui-agreements.customcoverages.tooltip" />}
-        >
-          {({ ref, ariaIds }) => <CustomCoverageIcon ref={ref} aria-labelledby={ariaIds.text} />
-          }
-        </Tooltip>
-      );
-    },
-  }
-
-  formatter = {
-    name: e => <EResourceLink eresource={e.pti.titleInstance} />,
-    platform: e => get(e, 'pti.platform.name', '-'),
-    package: e => get(e, 'pkg.name', '-'),
-    coverage: e => <CoverageStatements statements={e.coverage} />,
-    accessStart: e => this.renderDate(e.accessStart),
-    accessEnd: e => this.renderDate(e.accessEnd),
     isCustomCoverage: line => {
       if (!line.customCoverage) return '';
       return (
@@ -184,7 +163,7 @@ export default class CoveredEResourcesList extends React.Component {
         </Button>
         <Button
           id="clickable-pci-all"
-          //  onClick={() => this.props.onClickFilterButton('')}
+          onClick={() => this.props.onClickFilterButton('')}
         >
           <FormattedMessage id="ui-agreements.content.all" />
         </Button>
