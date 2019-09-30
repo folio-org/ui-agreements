@@ -75,9 +75,9 @@ export default class Agreements extends React.Component {
   columnMapping = {
     name: <FormattedMessage id="ui-agreements.agreements.name" />,
     agreementStatus: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
-    startDate: <FormattedMessage id="ui-agreements.agreementPeriods.currentStartDate" />,
-    endDate: <FormattedMessage id="ui-agreements.agreementPeriods.currentEndDate" />,
-    cancellationDeadline: <FormattedMessage id="ui-agreements.agreementPeriods.currentCancellationDeadline" />,
+    startDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodStart" />,
+    endDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodEnd" />,
+    cancellationDeadline: <FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />,
   }
 
   columnWidths = {
@@ -90,9 +90,9 @@ export default class Agreements extends React.Component {
 
   formatter = {
     agreementStatus: a => get(a, 'agreementStatus.label'),
-    startDate: a => a.currentPeriod.startDate && <FormattedUTCDate value={a.currentPeriod.startDate} />,
-    endDate: a => a.currentPeriod.endDate && <FormattedUTCDate value={a.currentPeriod.endDate} />,
-    cancellationDeadline: a => a.currentPeriod.cancellationDeadline && <FormattedUTCDate value={a.currentPeriod.cancellationDeadline} />,
+    startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : ''),
+    endDate: a => (a.endDate ? <FormattedUTCDate value={a.endDate} /> : ''),
+    cancellationDeadline: a => (a.cancellationDeadline ? <FormattedUTCDate value={a.cancellationDeadline} /> : ''),
   }
 
   rowFormatter = (row) => {

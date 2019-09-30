@@ -40,22 +40,20 @@ export default class Header extends React.Component {
 
   render() {
     const { agreement } = this.props;
-    const startDate = get(agreement, 'currentPeriod.startDate');
-    const endDate = get(agreement, 'currentPeriod.endDate');
 
     return (
       <Row className={css.agreementHeader}>
         <Col xs={2}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.currentStartDate" />}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.periodStart" />}>
             <div data-test-agreement-start-date>
-              {startDate ? <FormattedUTCDate value={startDate} /> : '-'}
+              {agreement.startDate ? <FormattedUTCDate value={agreement.startDate} /> : '-'}
             </div>
           </KeyValue>
         </Col>
         <Col xs={2}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.currentEndDate" />}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.periodEnd" />}>
             <div data-test-agreement-end-date>
-              {endDate ? <FormattedUTCDate value={endDate} /> : '-'}
+              {agreement.endDate ? <FormattedUTCDate value={agreement.endDate} /> : '-'}
             </div>
           </KeyValue>
         </Col>

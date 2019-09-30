@@ -23,10 +23,10 @@ export default class Lines extends React.Component {
   }
 
   columnMapping = {
-    startDate: <FormattedMessage id="ui-agreements.agreements.startDate" />,
-    endDate: <FormattedMessage id="ui-agreements.agreements.endDate" />,
+    startDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodStart" />,
+    endDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodEnd" />,
     cancellationDeadline: <FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />,
-    note: <FormattedMessage id="ui-agreements.note" />,
+    note: <FormattedMessage id="ui-agreements.agreementPeriods.periodNote" />,
   }
 
   formatter = {
@@ -43,13 +43,6 @@ export default class Lines extends React.Component {
     'note',
   ]
 
-  renderBadge = () => {
-    const count = get(this.props, 'agreement.periods.length');
-    if (count === undefined) return <Spinner />;
-
-    return <Badge data-test-agreement-periods-count={count}>{count}</Badge>;
-  }
-
   render() {
     const {
       agreement,
@@ -58,10 +51,13 @@ export default class Lines extends React.Component {
       open,
     } = this.props;
 
+    const otherPeriods = (agreement.periods || [])
+      .filter(period => period.startDate !== agreement.startDate);
+
     return (
       <Accordion
-        displayWhenClosed={this.renderBadge()}
-        displayWhenOpen={this.renderBadge()}
+        displayWhenClosed={<Badge>{otherPeriods.length}</Badge>}
+        displayWhenOpen={<Badge>{otherPeriods.length}</Badge>}
         id={id}
         label={<FormattedMessage id="ui-agreements.agreementPeriods.otherPeriods" />}
         onToggle={onToggle}
@@ -69,7 +65,7 @@ export default class Lines extends React.Component {
       >
         <MultiColumnList
           columnMapping={this.columnMapping}
-          contentData={agreement.periods}
+          contentData={otherPeriods}
           formatter={this.formatter}
           id="agreement-periods-list"
           interactive={false}

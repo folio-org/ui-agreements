@@ -93,11 +93,10 @@
 
   "agreementPeriods": "Agreement periods",
   "agreementPeriods.addPeriod": "Add agreement period",
-  "agreementPeriods.currentEndDate": "Current period end date",
-  "agreementPeriods.currentStartDate": "Current period start date",
-  "agreementPeriods.currentCancellationDeadline": "Current period cancellation deadline",
   "agreementPeriods.otherPeriods": "Other periods",
-  "agreementPeriods.periodNote": "Agreement period note",
+  "agreementPeriods.periodEnd": "Period end",
+  "agreementPeriods.periodNote": "Period note",
+  "agreementPeriods.periodStart": "Period start",
   "agreementPeriods.periodTitle": "Agreement period #{number}",
 
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",

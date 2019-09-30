@@ -31,7 +31,6 @@ export default class Info extends React.Component {
 
   render() {
     const { agreement } = this.props;
-    const cancellationDeadline = get(agreement, 'currentPeriod.cancellationDeadline');
 
     return (
       <div data-test-agreement-info>
@@ -58,9 +57,9 @@ export default class Info extends React.Component {
         </Row>
         <Row>
           <Col xs={3}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.currentCancellationDeadline" />}>
+            <KeyValue label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}>
               <div data-test-agreement-cancellation-deadline>
-                {cancellationDeadline ? <FormattedUTCDate value={cancellationDeadline} /> : '-'}
+                {agreement.cancellationDeadline ? <FormattedUTCDate value={agreement.cancellationDeadline} /> : '-'}
               </div>
             </KeyValue>
           </Col>
@@ -78,13 +77,13 @@ export default class Info extends React.Component {
               </div>
             </KeyValue>
           </Col>
-          <Col xs={3}>
+          {/* <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.dateAgreementBegan" />}>
               <div data-test-agreement-began-date>
                 {agreement.beganDate ? <FormattedUTCDate value={agreement.beganDate} /> : '-'}
               </div>
             </KeyValue>
-          </Col>
+          </Col> */}
         </Row>
       </div>
     );
