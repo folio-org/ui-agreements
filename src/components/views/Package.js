@@ -46,13 +46,16 @@ export default class Package extends React.Component {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, handlers } = this.props;
 
     return (
       <div id="package">
         <PackageInfo data={data} />
         <Agreements data={data} />
-        <PackageContents data={data} />
+        <PackageContents
+          data={data}
+          onClickFilterButton={handlers.onClickFilterButton}
+        />
         <NotesSmartAccordion
           {...this.getSectionProps('notes')}
           domainName="agreements"
