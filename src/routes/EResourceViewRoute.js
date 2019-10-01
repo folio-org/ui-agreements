@@ -32,7 +32,7 @@ class EResourceViewRoute extends React.Component {
     },
     packageContents: {
       type: 'okapi',
-      path: 'erm/packages/:{id}/content/%{filterPath}',
+      path: 'erm/packages/:{id}/content/%{packageContentsFilter}',
       records: 'results',
       limitParam: 'perPage',
       perRequest: RECORDS_PER_REQUEST,
@@ -45,7 +45,7 @@ class EResourceViewRoute extends React.Component {
     },
     query: {},
     entitlementsCount: { initialValue: RECORDS_PER_REQUEST },
-    filterPath: { initialValue: 'current' },
+    packageContentsFilter: { initialValue: 'current' },
     packageContentsCount: { initialValue: RECORDS_PER_REQUEST },
   });
 
@@ -76,7 +76,7 @@ class EResourceViewRoute extends React.Component {
     resources: PropTypes.shape({
       entitlementsCount: PropTypes.number,
       eresource: PropTypes.object,
-      filterPath: PropTypes.string,
+      packageContentsFilter: PropTypes.string,
       packageContentsCount: PropTypes.number,
       query: PropTypes.object,
     }).isRequired,
@@ -128,9 +128,9 @@ class EResourceViewRoute extends React.Component {
     this.props.history.push(`${urls.eresources()}${this.props.location.search}`);
   }
 
-  handleClickFilterButton = (path) => {
+  handleFilterPackageContents = (path) => {
     const { mutator } = this.props;
-    mutator.filterPath.replace(path);
+    mutator.packageContentsFilter.replace(path);
   }
 
   handleToggleHelper = (helper) => {
@@ -175,12 +175,12 @@ class EResourceViewRoute extends React.Component {
           eresource: get(resources, 'eresource.records[0]', {}),
           entitlementOptions: this.getRecords('entitlementOptions'),
           entitlements: this.getRecords('entitlements'),
-          filterPath: this.props.resources.filterPath,
+          packageContentsFilter: this.props.resources.packageContentsFilter,
           packageContents: this.getRecords('packageContents'),
         }}
         handlers={{
           ...handlers,
-          onClickFilterButton: this.handleClickFilterButton,
+          onFilterPackageContents: this.handleFilterPackageContents,
           onClose: this.handleClose,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
