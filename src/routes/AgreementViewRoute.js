@@ -237,7 +237,7 @@ class AgreementViewRoute extends React.Component {
     const { resources, stripes: { okapi } } = this.props;
     const { id, name } = get(resources, 'agreement.records[0]', {});
 
-    return fetch(`${okapi.url}/erm/sas/${id}/export`, {
+    return fetch(`${okapi.url}/erm/sas/${id}/export/${resources.filterPath}`, {
       headers: {
         'X-Okapi-Tenant': okapi.tenant,
         'X-Okapi-Token': okapi.token,
@@ -258,7 +258,7 @@ class AgreementViewRoute extends React.Component {
     const { resources, stripes: { okapi } } = this.props;
     const { id, name } = get(resources, 'agreement.records[0]', {});
 
-    return fetch(`${okapi.url}/erm/sas/${id}/export/kbart`, {
+    return fetch(`${okapi.url}/erm/sas/${id}/export/${resources.filterPath}/kbart`, {
       headers: {
         'X-Okapi-Tenant': okapi.tenant,
         'X-Okapi-Token': okapi.token,
