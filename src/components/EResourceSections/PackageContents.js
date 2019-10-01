@@ -13,10 +13,10 @@ import FormattedUTCDate from '../FormattedUTCDate';
 export default class PackageContents extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      filterPath: PropTypes.string,
+      packageContentsFilter: PropTypes.string,
       packageContents: PropTypes.array,
     }),
-    onClickFilterButton: PropTypes.func.isRequired,
+    onFilterPackageContents: PropTypes.func.isRequired,
   };
 
   columnMapping = {
@@ -25,11 +25,6 @@ export default class PackageContents extends React.Component {
     coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
     accessStart: <FormattedMessage id="ui-agreements.eresources.accessStart" />,
     accessEnd: <FormattedMessage id="ui-agreements.eresources.accessEnd" />,
-  }
-
-  columnWidths = {
-    name: 250,
-    platform: 150,
   }
 
   formatter = {
@@ -52,10 +47,9 @@ export default class PackageContents extends React.Component {
     return (
       <MultiColumnList
         columnMapping={this.columnMapping}
-        columnWidths={this.columnWidths}
         contentData={packageContents}
         formatter={this.formatter}
-        id="packageContents-list"
+        id="package-contents-list"
         visibleColumns={this.visibleColumns}
       />
     );
@@ -78,30 +72,30 @@ export default class PackageContents extends React.Component {
     <Layout className="textCentered">
       <ButtonGroup>
         <Button
-          buttonStyle={this.props.data.filterPath === 'current' ? 'primary' : 'default'}
+          buttonStyle={this.props.data.packageContentsFilter === 'current' ? 'primary' : 'default'}
           id="clickable-pci-current"
-          onClick={() => this.props.onClickFilterButton('current')}
+          onClick={() => this.props.onFilterPackageContents('current')}
         >
           <FormattedMessage id="ui-agreements.content.current" />
         </Button>
         <Button
-          buttonStyle={this.props.data.filterPath === 'future' ? 'primary' : 'default'}
+          buttonStyle={this.props.data.packageContentsFilter === 'future' ? 'primary' : 'default'}
           id="clickable-pci-future"
-          onClick={() => this.props.onClickFilterButton('future')}
+          onClick={() => this.props.onFilterPackageContents('future')}
         >
           <FormattedMessage id="ui-agreements.content.future" />
         </Button>
         <Button
-          buttonStyle={this.props.data.filterPath === 'dropped' ? 'primary' : 'default'}
+          buttonStyle={this.props.data.packageContentsFilter === 'dropped' ? 'primary' : 'default'}
           id="clickable-pci-dropped"
-          onClick={() => this.props.onClickFilterButton('dropped')}
+          onClick={() => this.props.onFilterPackageContents('dropped')}
         >
           <FormattedMessage id="ui-agreements.content.dropped" />
         </Button>
         <Button
-          buttonStyle={this.props.data.filterPath === '' ? 'primary' : 'default'}
+          buttonStyle={this.props.data.packageContentsFilter === '' ? 'primary' : 'default'}
           id="clickable-pci-all"
-          onClick={() => this.props.onClickFilterButton('')}
+          onClick={() => this.props.onFilterPackageContents('')}
         >
           <FormattedMessage id="ui-agreements.content.all" />
         </Button>

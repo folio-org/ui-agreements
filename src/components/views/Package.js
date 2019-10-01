@@ -54,7 +54,7 @@ export default class Package extends React.Component {
         <Agreements data={data} />
         <PackageContents
           data={data}
-          onClickFilterButton={handlers.onClickFilterButton}
+          onFilterPackageContents={handlers.onFilterPackageContents}
         />
         <NotesSmartAccordion
           {...this.getSectionProps('notes')}
