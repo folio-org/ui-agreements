@@ -95,7 +95,8 @@
         "subPermissions": [
           "configuration.entries.collection.get",
           "tags.collection.get",
-          "erm.refdata.view"
+          "erm.refdata.view",
+          "note.types.collection.get"
         ]
       },
       {
@@ -104,9 +105,13 @@
         "visible": true,
         "subPermissions": [
           "module.agreements.enabled",
+          "erm.kbs.collection.get",
           "erm.packages.view",
           "erm.titles.view",
-          "erm.resource.view"
+          "erm.resource.view",
+          "erm.resources.collection.get",
+          "erm.resources.item.get",
+          "erm.resources.item.entitlement.get"
         ]
       },
       {
@@ -118,9 +123,11 @@
           "organizations-storage.interfaces.all",
           "tags.item.post",
           "erm.agreements.view",
-          "erm.files.view",
+          "erm.agreements.item.resources.get",
           "erm.contacts.view",
-          "erm.orgs.view"
+          "erm.files.view",
+          "erm.orgs.view",
+          "users.collection.get"
         ]
       },
       {
@@ -130,7 +137,10 @@
         "subPermissions": [
           "ui-agreements.agreements.view",
           "erm.agreements.edit",
-          "erm.files.edit"
+          "erm.files.edit",
+          "organizations-storage.categories.collection.get",
+          "organizations-storage.organizations.collection.get",
+          "usergroups.collection.get"
         ]
       },
       {
