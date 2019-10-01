@@ -27,6 +27,7 @@ export default class CoveredEResourcesList extends React.Component {
     agreement: PropTypes.shape({
       eresources: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
+    filterPath: PropTypes.string,
     onClickFilterButton: PropTypes.func.isRequired,
     onExportEResourcesAsJSON: PropTypes.func.isRequired,
     onExportEResourcesAsKBART: PropTypes.func.isRequired,
@@ -143,25 +144,28 @@ export default class CoveredEResourcesList extends React.Component {
     <Layout className="textCentered">
       <ButtonGroup>
         <Button
-          autoFocus
+          buttonStyle={this.props.filterPath === 'current' ? 'primary' : 'default'}
           id="clickable-pci-current"
           onClick={() => this.props.onClickFilterButton('current')}
         >
           <FormattedMessage id="ui-agreements.content.current" />
         </Button>
         <Button
+          buttonStyle={this.props.filterPath === 'future' ? 'primary' : 'default'}
           id="clickable-pci-future"
           onClick={() => this.props.onClickFilterButton('future')}
         >
           <FormattedMessage id="ui-agreements.content.future" />
         </Button>
         <Button
+          buttonStyle={this.props.filterPath === 'dropped' ? 'primary' : 'default'}
           id="clickable-pci-dropped"
           onClick={() => this.props.onClickFilterButton('dropped')}
         >
           <FormattedMessage id="ui-agreements.content.dropped" />
         </Button>
         <Button
+          buttonStyle={this.props.filterPath === '' ? 'primary' : 'default'}
           id="clickable-pci-all"
           onClick={() => this.props.onClickFilterButton('')}
         >

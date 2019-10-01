@@ -42,6 +42,7 @@ export default class Agreement extends React.Component {
     canEdit: PropTypes.bool,
     data: PropTypes.shape({
       agreement: PropTypes.object.isRequired,
+      filterPath: PropTypes.string,
     }).isRequired,
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
@@ -74,6 +75,7 @@ export default class Agreement extends React.Component {
     return {
       agreement: data.agreement,
       data,
+      filterPath: data.filterPath,
       id,
       handlers,
       onToggle: this.handleSectionToggle,
