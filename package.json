@@ -95,34 +95,52 @@
         "visible": true,
         "subPermissions": [
           "configuration.entries.collection.get",
-          "tags.collection.get"
+          "tags.collection.get",
+          "erm.refdata.view"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.resources.view",
+        "displayName": "Agreements: Search & View e-resources",
+        "visible": true,
+        "subPermissions": [
+          "module.agreements.enabled",
+          "erm.packages.view",
+          "erm.titles.view",
+          "erm.resource.view"
         ]
       },
       {
         "permissionName": "ui-agreements.agreements.view",
-        "displayName": "Agreements: Can view agreements",
+        "displayName": "Agreements: Search & View agreements",
         "visible": true,
         "subPermissions": [
           "module.agreements.enabled",
-          "ui-organizations.view",
           "organizations-storage.interfaces.all",
-          "tags.item.post"
+          "tags.item.post",
+          "erm.agreements.view",
+          "erm.files.view",
+          "erm.contacts.view",
+          "erm.orgs.view"
         ]
       },
       {
         "permissionName": "ui-agreements.agreements.edit",
-        "displayName": "Agreements: Can edit agreements",
+        "displayName": "Agreements: Edit agreements",
         "visible": true,
         "subPermissions": [
-          "ui-agreements.agreements.view"
+          "ui-agreements.agreements.view",
+          "erm.agreements.edit",
+          "erm.files.edit"
         ]
       },
       {
-        "permissionName": "ui-agreements.agreements.create",
-        "displayName": "Agreements: Can create and edit agreements",
+        "permissionName": "ui-agreements.agreements.delete",
+        "displayName": "Agreements: Delete agreements",
         "visible": true,
         "subPermissions": [
-          "ui-agreements.agreements.edit"
+          "ui-agreements.agreements.view",
+          "erm.agreements.item.delete"
         ]
       },
       {
