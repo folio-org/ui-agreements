@@ -31,13 +31,11 @@ export default class Info extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      agreementIsClosed: (props.agreement.agreementStatus !== null || (props.agreement.agreementStatus.value === 'closed' || false))
-    };
   }
 
   render() {
     const { agreement } = this.props;
+    const agreementIsClosed = (agreement.agreementStatus !== null && (agreement.agreementStatus.value === 'closed' ))
     return (
       <div data-test-agreement-info>
         <Row>
@@ -84,7 +82,7 @@ export default class Info extends React.Component {
             </KeyValue>
           </Col>
         </Row>
-        {this.state.agreementIsClosed &&
+        {agreementIsClosed &&
           <Row>
             <Col xs={4}>
               <KeyValue label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}>
