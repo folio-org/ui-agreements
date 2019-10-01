@@ -92,7 +92,6 @@
       {
         "permissionName": "module.agreements.enabled",
         "displayName": "UI: ui-agreements module is enabled",
-        "visible": true,
         "subPermissions": [
           "configuration.entries.collection.get",
           "tags.collection.get",
@@ -101,7 +100,7 @@
       },
       {
         "permissionName": "ui-agreements.resources.view",
-        "displayName": "Agreements: Search & View e-resources",
+        "displayName": "Agreements: Search & view e-resources",
         "visible": true,
         "subPermissions": [
           "module.agreements.enabled",
@@ -112,7 +111,7 @@
       },
       {
         "permissionName": "ui-agreements.agreements.view",
-        "displayName": "Agreements: Search & View agreements",
+        "displayName": "Agreements: Search & view agreements",
         "visible": true,
         "subPermissions": [
           "module.agreements.enabled",
