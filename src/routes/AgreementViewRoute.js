@@ -35,7 +35,7 @@ class AgreementViewRoute extends React.Component {
     },
     agreementEresources: {
       type: 'okapi',
-      path: 'erm/sas/:{id}/resources/%{filterPath.path}',
+      path: 'erm/sas/:{id}/resources/%{filterPath}',
       params: {
         sort: 'pti.titleInstance.name;asc',
         stats: 'true',
@@ -45,9 +45,7 @@ class AgreementViewRoute extends React.Component {
       records: 'results',
       recordsRequired: '%{agreementEresourcesCount}',
     },
-    filterPath: {
-      initialValue: { path: 'current' },
-    },
+    filterPath: { initialValue: 'current' },
     interfaces: {
       type: 'okapi',
       path: 'organizations-storage/interfaces',
@@ -141,6 +139,7 @@ class AgreementViewRoute extends React.Component {
       agreementLinesCount: PropTypes.number,
       agreementEresources: PropTypes.object,
       agreementEresourcesCount: PropTypes.number,
+      filterPath: PropTypes.string,
       interfaces: PropTypes.object,
       orderLines: PropTypes.object,
       query: PropTypes.object,
@@ -226,7 +225,7 @@ class AgreementViewRoute extends React.Component {
 
   handleClickFilterButton = (path) => {
     const { mutator } = this.props;
-    mutator.filterPath.replace({ path });
+    mutator.filterPath.replace(path);
   }
 
   handleEdit = () => {
@@ -324,6 +323,7 @@ class AgreementViewRoute extends React.Component {
         canEdit={this.props.stripes.hasPerm('ui-agreements.agreements.edit')}
         data={{
           agreement: this.getCompositeAgreement(),
+          filterPath: this.props.resources.filterPath,
           terms: get(resources, 'terms.records', []),
         }}
         handlers={{

@@ -13,6 +13,7 @@ import FormattedUTCDate from '../FormattedUTCDate';
 export default class PackageContents extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
+      filterPath: PropTypes.string,
       packageContents: PropTypes.array,
     }),
     onClickFilterButton: PropTypes.func.isRequired,
@@ -77,27 +78,28 @@ export default class PackageContents extends React.Component {
     <Layout className="textCentered">
       <ButtonGroup>
         <Button
-          autoFocus
+          buttonStyle={this.props.data.filterPath === 'current' ? 'primary' : 'default'}
           id="clickable-pci-current"
           onClick={() => this.props.onClickFilterButton('current')}
         >
           <FormattedMessage id="ui-agreements.content.current" />
         </Button>
         <Button
+          buttonStyle={this.props.data.filterPath === 'future' ? 'primary' : 'default'}
           id="clickable-pci-future"
           onClick={() => this.props.onClickFilterButton('future')}
         >
           <FormattedMessage id="ui-agreements.content.future" />
         </Button>
         <Button
-          buttonStyle="default"
+          buttonStyle={this.props.data.filterPath === 'dropped' ? 'primary' : 'default'}
           id="clickable-pci-dropped"
           onClick={() => this.props.onClickFilterButton('dropped')}
         >
           <FormattedMessage id="ui-agreements.content.dropped" />
         </Button>
         <Button
-          buttonStyle="default"
+          buttonStyle={this.props.data.filterPath === '' ? 'primary' : 'default'}
           id="clickable-pci-all"
           onClick={() => this.props.onClickFilterButton('')}
         >

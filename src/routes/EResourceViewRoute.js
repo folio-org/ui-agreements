@@ -32,7 +32,7 @@ class EResourceViewRoute extends React.Component {
     },
     packageContents: {
       type: 'okapi',
-      path: 'erm/packages/:{id}/content/%{filterPath.path}',
+      path: 'erm/packages/:{id}/content/%{filterPath}',
       records: 'results',
       limitParam: 'perPage',
       perRequest: RECORDS_PER_REQUEST,
@@ -45,9 +45,7 @@ class EResourceViewRoute extends React.Component {
     },
     query: {},
     entitlementsCount: { initialValue: RECORDS_PER_REQUEST },
-    filterPath: {
-      initialValue: { path: 'current' },
-    },
+    filterPath: { initialValue: 'current' },
     packageContentsCount: { initialValue: RECORDS_PER_REQUEST },
   });
 
@@ -78,6 +76,7 @@ class EResourceViewRoute extends React.Component {
     resources: PropTypes.shape({
       entitlementsCount: PropTypes.number,
       eresource: PropTypes.object,
+      filterPath: PropTypes.string,
       packageContentsCount: PropTypes.number,
       query: PropTypes.object,
     }).isRequired,
@@ -131,7 +130,7 @@ class EResourceViewRoute extends React.Component {
 
   handleClickFilterButton = (path) => {
     const { mutator } = this.props;
-    mutator.filterPath.replace({ path });
+    mutator.filterPath.replace(path);
   }
 
   handleToggleHelper = (helper) => {
@@ -176,6 +175,7 @@ class EResourceViewRoute extends React.Component {
           eresource: get(resources, 'eresource.records[0]', {}),
           entitlementOptions: this.getRecords('entitlementOptions'),
           entitlements: this.getRecords('entitlements'),
+          filterPath: this.props.resources.filterPath,
           packageContents: this.getRecords('packageContents'),
         }}
         handlers={{
