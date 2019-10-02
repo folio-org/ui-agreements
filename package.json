@@ -105,7 +105,6 @@
         "visible": true,
         "subPermissions": [
           "module.agreements.enabled",
-          "erm.kbs.collection.get",
           "erm.packages.view",
           "erm.titles.view",
           "erm.resources.view"
@@ -117,14 +116,10 @@
         "visible": true,
         "subPermissions": [
           "module.agreements.enabled",
-          "organizations-storage.interfaces.all",
-          "tags.item.post",
           "erm.agreements.view",
-          "erm.agreements.item.resources.get",
           "erm.contacts.view",
           "erm.files.view",
-          "erm.orgs.view",
-          "users.collection.get"
+          "erm.orgs.view"
         ]
       },
       {
@@ -135,9 +130,7 @@
           "ui-agreements.agreements.view",
           "erm.agreements.edit",
           "erm.files.edit",
-          "organizations-storage.categories.collection.get",
-          "organizations-storage.organizations.collection.get",
-          "usergroups.collection.get"
+          "tags.item.post"
         ]
       },
       {

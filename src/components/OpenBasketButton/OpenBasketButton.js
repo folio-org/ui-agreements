@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { stripesConnect } from '@folio/stripes/core';
+import { IfPermission, stripesConnect } from '@folio/stripes/core';
 import { Button } from '@folio/stripes/components';
 
 import { urls } from '../utilities';
@@ -36,20 +36,22 @@ class OpenBasketButton extends React.Component {
     const basket = this.props.resources.basket || [];
 
     return (
-      <Button
-        buttonClass={css.button}
-        buttonStyle="primary"
-        data-test-open-basket-button
-        data-test-basket-size={basket.length}
-        disabled={basket.length === 0}
-        id="open-basket-button"
-        onClick={this.handleClick}
-      >
-        <FormattedMessage
-          id="ui-agreements.basketButton"
-          values={{ count: basket.length }}
-        />
-      </Button>
+      <IfPermission perm="ui-agreements.agreements.edit">
+        <Button
+          buttonClass={css.button}
+          buttonStyle="primary"
+          data-test-open-basket-button
+          data-test-basket-size={basket.length}
+          disabled={basket.length === 0}
+          id="open-basket-button"
+          onClick={this.handleClick}
+        >
+          <FormattedMessage
+            id="ui-agreements.basketButton"
+            values={{ count: basket.length }}
+          />
+        </Button>
+      </IfPermission>
     );
   }
 }

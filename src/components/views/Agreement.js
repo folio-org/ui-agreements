@@ -121,21 +121,21 @@ export default class Agreement extends React.Component {
     } = this.props;
 
     return (
-      <PaneMenu>
-        { handlers.onToggleTags &&
-          <FormattedMessage id="ui-agreements.agreements.showTags">
-            {ariaLabel => (
-              <IconButton
-                icon="tag"
-                id="clickable-show-tags"
-                badgeCount={get(agreement, 'tags.length', 0)}
-                onClick={handlers.onToggleTags}
-                ariaLabel={ariaLabel}
-              />
-            )}
-          </FormattedMessage>
-        }
-        <IfPermission perm="ui-agreements.agreements.edit">
+      <IfPermission perm="ui-agreements.agreements.edit">
+        <PaneMenu>
+          { handlers.onToggleTags &&
+            <FormattedMessage id="ui-agreements.agreements.showTags">
+              {ariaLabel => (
+                <IconButton
+                  icon="tag"
+                  id="clickable-show-tags"
+                  badgeCount={get(agreement, 'tags.length', 0)}
+                  onClick={handlers.onToggleTags}
+                  ariaLabel={ariaLabel}
+                />
+              )}
+            </FormattedMessage>
+          }
           <FormattedMessage id="ui-agreements.agreements.editAgreement">
             {ariaLabel => (
               <Button
@@ -149,8 +149,8 @@ export default class Agreement extends React.Component {
               </Button>
             )}
           </FormattedMessage>
-        </IfPermission>
-      </PaneMenu>
+        </PaneMenu>
+      </IfPermission>
     );
   }
 
