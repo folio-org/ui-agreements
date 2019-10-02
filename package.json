@@ -108,10 +108,7 @@
           "erm.kbs.collection.get",
           "erm.packages.view",
           "erm.titles.view",
-          "erm.resource.view",
-          "erm.resources.collection.get",
-          "erm.resources.item.get",
-          "erm.resources.item.entitlement.get"
+          "erm.resources.view"
         ]
       },
       {
