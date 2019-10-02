@@ -55,7 +55,7 @@
     "redux": "~3.7.2"
   },
   "dependencies": {
-    "@folio/stripes-erm-components": "^1.7.0",
+    "@folio/stripes-erm-components": "^2.0.0",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
     "final-form-arrays": "^3.0.1",
