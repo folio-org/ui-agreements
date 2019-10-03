@@ -15,6 +15,7 @@ export { default as Info } from './Info';
 export { default as InternalContacts } from './InternalContacts';
 export { default as Lines } from './Lines';
 export { default as Organizations } from './Organizations';
+export { default as OtherPeriods } from './OtherPeriods';
 export { default as SupplementaryInfo } from './SupplementaryInfo';
 export { default as Terms } from './Terms';
 export { default as UsageData } from './UsageData';

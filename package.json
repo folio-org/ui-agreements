@@ -81,9 +81,9 @@
     "queryResource": "query",
     "okapiInterfaces": {
       "configuration": "2.0 3.0 4.0 5.0",
-      "erm": "1.0",
+      "erm": "1.0 2.0",
       "invoice": "1.0 2.0",
-      "licenses": "1.0",
+      "licenses": "1.0 2.0",
       "orders": "6.0 7.0",
       "organizations-storage.interfaces": "2.0",
       "users": "13.0 14.0 15.0"
@@ -92,37 +92,54 @@
       {
         "permissionName": "module.agreements.enabled",
         "displayName": "UI: ui-agreements module is enabled",
-        "visible": true,
         "subPermissions": [
           "configuration.entries.collection.get",
-          "tags.collection.get"
+          "tags.collection.get",
+          "erm.refdata.view",
+          "note.types.collection.get"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.resources.view",
+        "displayName": "Agreements: Search & view e-resources",
+        "visible": true,
+        "subPermissions": [
+          "module.agreements.enabled",
+          "erm.packages.view",
+          "erm.titles.view",
+          "erm.resources.view"
         ]
       },
       {
         "permissionName": "ui-agreements.agreements.view",
-        "displayName": "Agreements: Can view agreements",
+        "displayName": "Agreements: Search & view agreements",
         "visible": true,
         "subPermissions": [
           "module.agreements.enabled",
-          "ui-organizations.view",
-          "organizations-storage.interfaces.all",
-          "tags.item.post"
+          "erm.agreements.view",
+          "erm.contacts.view",
+          "erm.files.view",
+          "erm.orgs.view"
         ]
       },
       {
         "permissionName": "ui-agreements.agreements.edit",
-        "displayName": "Agreements: Can edit agreements",
+        "displayName": "Agreements: Edit agreements",
         "visible": true,
         "subPermissions": [
-          "ui-agreements.agreements.view"
+          "ui-agreements.agreements.view",
+          "erm.agreements.edit",
+          "erm.files.edit",
+          "tags.item.post"
         ]
       },
       {
-        "permissionName": "ui-agreements.agreements.create",
-        "displayName": "Agreements: Can create and edit agreements",
+        "permissionName": "ui-agreements.agreements.delete",
+        "displayName": "Agreements: Delete agreements",
         "visible": true,
         "subPermissions": [
-          "ui-agreements.agreements.edit"
+          "ui-agreements.agreements.view",
+          "erm.agreements.item.delete"
         ]
       },
       {

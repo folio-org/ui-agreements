@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Button } from '@folio/stripes/components';
-import { stripesConnect } from '@folio/stripes/core';
+import { IfPermission, stripesConnect } from '@folio/stripes/core';
 import { get } from 'lodash';
 
 class AddToBasketButton extends React.Component {
@@ -78,18 +78,20 @@ class AddToBasketButton extends React.Component {
     const coverage = JSON.stringify(get(item, '_object.coverage[0]', {}));
 
     return (
-      <Button
-        {...buttonProps}
-        buttonStyle={itemExistsInBasket ? 'default' : 'primary'}
-        data-test-basket-add-button={itemExistsInBasket ? undefined : true}
-        data-test-basket-remove-button={itemExistsInBasket ? true : undefined}
-        data-test-coverage-details={coverage}
-        data-test-entitlement-option-id={item.id}
-        disabled={disabled}
-        onClick={itemExistsInBasket ? this.removeFromBasket : this.addToBasket}
-      >
-        {itemExistsInBasket ? removeLabel : addLabel}
-      </Button>
+      <IfPermission perm="ui-agreements.agreements.edit">
+        <Button
+          {...buttonProps}
+          buttonStyle={itemExistsInBasket ? 'default' : 'primary'}
+          data-test-basket-add-button={itemExistsInBasket ? undefined : true}
+          data-test-basket-remove-button={itemExistsInBasket ? true : undefined}
+          data-test-coverage-details={coverage}
+          data-test-entitlement-option-id={item.id}
+          disabled={disabled}
+          onClick={itemExistsInBasket ? this.removeFromBasket : this.addToBasket}
+        >
+          {itemExistsInBasket ? removeLabel : addLabel}
+        </Button>
+      </IfPermission>
     );
   }
 }

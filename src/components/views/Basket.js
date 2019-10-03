@@ -172,7 +172,7 @@ export default class Basket extends React.Component {
                       return (
                         agreement.name.toLowerCase().includes(lowerCasedSearchString) ||
                         agreement.agreementStatus.label.toLowerCase().includes(lowerCasedSearchString) ||
-                        agreement.startDate.toLowerCase().includes(lowerCasedSearchString)
+                        (agreement.startDate && agreement.startDate.toLowerCase().includes(lowerCasedSearchString))
                       );
                     });
                   }}

@@ -75,8 +75,8 @@ export default class Agreements extends React.Component {
   columnMapping = {
     name: <FormattedMessage id="ui-agreements.agreements.name" />,
     agreementStatus: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
-    startDate: <FormattedMessage id="ui-agreements.agreements.startDate" />,
-    endDate: <FormattedMessage id="ui-agreements.agreements.endDate" />,
+    startDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodStart" />,
+    endDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodEnd" />,
     cancellationDeadline: <FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />,
   }
 
@@ -90,9 +90,9 @@ export default class Agreements extends React.Component {
 
   formatter = {
     agreementStatus: a => get(a, 'agreementStatus.label'),
-    startDate: a => a.startDate && <FormattedUTCDate value={a.startDate} />,
-    endDate: a => a.endDate && <FormattedUTCDate value={a.endDate} />,
-    cancellationDeadline: a => a.cancellationDeadline && <FormattedUTCDate value={a.cancellationDeadline} />,
+    startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : ''),
+    endDate: a => (a.endDate ? <FormattedUTCDate value={a.endDate} /> : ''),
+    cancellationDeadline: a => (a.cancellationDeadline ? <FormattedUTCDate value={a.cancellationDeadline} /> : ''),
   }
 
   rowFormatter = (row) => {

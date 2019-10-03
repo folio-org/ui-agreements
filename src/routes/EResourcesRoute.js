@@ -43,7 +43,7 @@ class EResourcesRoute extends React.Component {
     },
     typeValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/TitleInstance/type',
+      path: 'erm/refdata/TitleInstance/type',
       perRequest: 100,
       limitParam: 'perPage',
     },
