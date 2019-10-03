@@ -119,7 +119,8 @@
           "erm.agreements.view",
           "erm.contacts.view",
           "erm.files.view",
-          "erm.orgs.view"
+          "erm.orgs.view",
+          "licenses.custprops.view"
         ]
       },
       {
