@@ -4,8 +4,9 @@ import { FormattedMessage } from 'react-intl';
 
 import {
   Col,
-  Icon,
+  Headline,
   KeyValue,
+  Layout,
   Row,
 } from '@folio/stripes/components';
 
@@ -34,18 +35,25 @@ export default class PackageInfo extends React.Component {
 
     return (
       <div id="package-info">
-        <Row>
-          <Col xs={6}>
-            <AddToBasketButton
-              key={eresource.id}
-              addLabel={
-                <Icon icon="plus-sign">
-                  <FormattedMessage id="ui-agreements.eresources.addPackage" />
-                </Icon>
-              }
-              item={entitlementOption}
-              buttonProps={{ 'data-test-add-package-to-basket': true }}
-            />
+        <Row between="md">
+          <Col xs={12} md={8}>
+            <Headline
+              size="xx-large"
+              tag="h2"
+            >
+              {eresource.name}
+            </Headline>
+          </Col>
+          <Col>
+            <Layout className="marginTop1">
+              <AddToBasketButton
+                key={eresource.id}
+                addLabel={<FormattedMessage id="ui-agreements.eresources.addPackageToBasket" />}
+                removeLabel={<FormattedMessage id="ui-agreements.eresources.removePackage" />}
+                item={entitlementOption}
+                buttonProps={{ 'data-test-add-package-to-basket': true }}
+              />
+            </Layout>
           </Col>
         </Row>
         <Row>

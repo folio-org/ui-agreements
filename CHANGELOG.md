@@ -1,11 +1,13 @@
 # Change history for ui-agreements
 
 ## 3.3.0 IN PROGRESS
+* Improve the header for the display of e-resources in agreements. ERM-472
 * Update stripes to v2.10.1 to support PaneFooter.
 * Move the Save & close button and add a Cancel button to Pane Footer. ERM-411.
 * Apply the new large headline design to Agreements. ERM-260.
 * Display coverage for Agreement lines on Create Agreement pane. ERM-168.
 * Added ability to manage amendments for linked licenses. ERM-428 ERM-429
+* Added agreement line active from/to dates. ERM-456
 
 ## 3.2.4 2019-09-10
 * Add support for interface `invoice` version `2.0`.

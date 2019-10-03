@@ -12,6 +12,7 @@ import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
 import EResourceType from '../EResourceType';
+import FormattedUTCDate from '../FormattedUTCDate';
 import { getResourceFromEntitlement, urls } from '../utilities';
 
 export default class LinesList extends React.Component {
@@ -35,6 +36,8 @@ export default class LinesList extends React.Component {
     count: <FormattedMessage id="ui-agreements.agreementLines.count" />,
     coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
     isCustomCoverage: ' ',
+    activeFrom: <FormattedMessage id="ui-agreements.eresources.activeFrom" />,
+    activeTo: <FormattedMessage id="ui-agreements.eresources.activeTo" />,
     poLine: <FormattedMessage id="ui-agreements.agreementLines.poline" />,
   }
 
@@ -55,6 +58,8 @@ export default class LinesList extends React.Component {
     },
     provider: line => <EResourceProvider resource={line.resource || line} />,
     type: line => <EResourceType resource={getResourceFromEntitlement(line)} />,
+    activeFrom: line => <div data-test-active-from>{this.renderDate(line.activeFrom)}</div>,
+    activeTo: line => <div data-test-active-to>{this.renderDate(line.activeTo)}</div>,
     count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
     coverage: line => <CoverageStatements statements={line.coverage} />,
     isCustomCoverage: line => {
@@ -79,12 +84,17 @@ export default class LinesList extends React.Component {
     'count',
     'coverage',
     'isCustomCoverage',
+    'activeFrom',
+    'activeTo',
     'poLine',
   ]
 
+  renderDate = date => (
+    date ? <FormattedUTCDate value={date} /> : '-'
+  )
+
   renderPOLine = (line) => {
     const { orderLines } = this.props.agreement;
-
     if (!line.poLineId) return '';
     if (!orderLines) return <Spinner />;
 
@@ -103,10 +113,11 @@ export default class LinesList extends React.Component {
 
   render() {
     const {
-      agreement: { lines },
+      agreement: { lines, orderLines },
       onNeedMoreLines,
     } = this.props;
 
+    const rowUpdater = (rowData) => orderLines.find(orderLine => orderLine.id === rowData.poLineId);
     return (
       <MultiColumnList
         columnMapping={this.columnMapping}
@@ -117,6 +128,7 @@ export default class LinesList extends React.Component {
         interactive={false}
         maxHeight={400}
         onNeedMoreData={onNeedMoreLines}
+        rowUpdater={rowUpdater}
         visibleColumns={this.visibleColumns}
       />
     );
