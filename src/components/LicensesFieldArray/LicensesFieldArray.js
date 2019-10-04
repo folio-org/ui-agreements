@@ -14,6 +14,7 @@ const CONTROLLING_STATUS = 'controlling';
 class LicensesFieldArray extends React.Component {
   static propTypes = {
     amendmentStatusValues: PropTypes.arrayOf(PropTypes.object),
+    form: PropTypes.object,
     items: PropTypes.arrayOf(PropTypes.object),
     name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
@@ -76,8 +77,9 @@ class LicensesFieldArray extends React.Component {
   renderLicenseFields = () => {
     const {
       amendmentStatusValues,
-      licenseStatusValues,
+      form,
       items,
+      licenseStatusValues,
       name,
       onDeleteField
     } = this.props;
@@ -131,6 +133,7 @@ class LicensesFieldArray extends React.Component {
         </Row>
         <FieldArray
           amendmentStatusValues={amendmentStatusValues}
+          form={form}
           license={this.state.licenses[license.remoteId] || license.remoteId_object}
           component={AmendmentsFieldArray}
           name={`${name}[${index}].amendments`}
