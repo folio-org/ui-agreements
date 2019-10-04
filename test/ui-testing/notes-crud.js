@@ -10,7 +10,7 @@ module.exports.test = (uiTestCtx) => {
     name: `Notes Agreement #${number}`,
   };
 
-  describe('Notes crud', function test() {
+  describe('Notes', function test() {
     const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
     nightmare.options.width = 1300; // added this temporarily as MultiSelect doesnt work well with narrow screen sizes
@@ -36,14 +36,14 @@ module.exports.test = (uiTestCtx) => {
           .click('a[href="/settings/notes"]')
           .wait('a[href="/settings/notes/general"]')
           .click('a[href="/settings/notes/general"]')
-          .waitUntilNetworkIdle(1000)
+          .waitUntilNetworkIdle(2000)
           .wait('#clickable-add-noteTypes')
           .click('#clickable-add-noteTypes')
           .wait('input[name="items[0].name"]')
           .type('input[name="items[0].name"]', noteType)
           .wait('#clickable-save-noteTypes-0')
           .click('#clickable-save-noteTypes-0')
-          .wait(222)
+          .waitUntilNetworkIdle(2000)
           .then(done)
           .catch(done);
       });

@@ -134,8 +134,6 @@ module.exports.test = (uiTestCtx) => {
           .insert('#edit-agreement-name', agreementName)
           .click('#period-start-date-0')
           .type('#period-start-date-0', '\u000d') // "Enter" selects current date
-          .insert('#period-end-date-0', '2019-01-31')
-          .insert('#period-cancellation-deadline--0', '2019-01-15')
           .type('#edit-agreement-status', 'draft')
           .then(done)
           .catch(done);
