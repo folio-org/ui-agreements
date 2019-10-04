@@ -3,14 +3,14 @@ const AgreementCRUD = require('./agreement-crud');
 
 module.exports.test = (uiTestCtx) => {
   const number = Math.round(Math.random() * 100000);
-  const testNote = `note${Math.floor(Math.random() * 100000)}`;
-  const editedNote = `editnote${Math.floor(Math.random() * 100000)}`;
-  const noteType = `noteType${Math.floor(Math.random() * 100000)}`;
+  const testNote = `note ${number}`;
+  const editedNote = `${testNote} edited`;
+  const noteType = `noteType ${number}`;
   const agreement = {
     name: `Notes Agreement #${number}`,
   };
 
-  describe('Notes crud', function test() {
+  describe('Notes', function test() {
     const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
     nightmare.options.width = 1300; // added this temporarily as MultiSelect doesnt work well with narrow screen sizes
@@ -36,14 +36,14 @@ module.exports.test = (uiTestCtx) => {
           .click('a[href="/settings/notes"]')
           .wait('a[href="/settings/notes/general"]')
           .click('a[href="/settings/notes/general"]')
-          .waitUntilNetworkIdle(1000)
+          .waitUntilNetworkIdle(2000)
           .wait('#clickable-add-noteTypes')
           .click('#clickable-add-noteTypes')
           .wait('input[name="items[0].name"]')
           .type('input[name="items[0].name"]', noteType)
           .wait('#clickable-save-noteTypes-0')
           .click('#clickable-save-noteTypes-0')
-          .wait(222)
+          .waitUntilNetworkIdle(2000)
           .then(done)
           .catch(done);
       });
@@ -96,7 +96,7 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      it(`should edit note to ${editedNote}`, done => {
+      it('should edit note to append "edited"', done => {
         nightmare
           .evaluate(note => {
             const notesElements = [...document.querySelectorAll('div[role="gridcell"]')];
@@ -112,8 +112,7 @@ module.exports.test = (uiTestCtx) => {
               .click('[data-test-navigate-note-edit]')
               .waitUntilNetworkIdle(2000)
               .wait('[data-test-note-title-field]')
-              .insert('[data-test-note-title-field]', '')
-              .insert('[data-test-note-title-field]', editedNote)
+              .insert('[data-test-note-title-field]', ' edited')
               .wait('[data-test-save-note]')
               .click('[data-test-save-note]')
               .waitUntilNetworkIdle(2000)
@@ -142,8 +141,8 @@ module.exports.test = (uiTestCtx) => {
 
       it('should delete the note', done => {
         nightmare
-          .wait('#notes-list div[aria-rowindex="2"]')
-          .click('#notes-list div[aria-rowindex="2"]')
+          .wait('#notes-list [aria-rowindex="2"]')
+          .click('#notes-list [aria-rowindex="2"]')
           .waitUntilNetworkIdle(2000)
           .wait('[class*=paneHeaderCenterButton]')
           .click('[class*=paneHeaderCenterButton]')

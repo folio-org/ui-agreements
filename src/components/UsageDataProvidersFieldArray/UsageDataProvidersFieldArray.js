@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import { Button, Layout, TextArea } from '@folio/stripes/components';
 import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
@@ -89,7 +89,7 @@ class UsageDataProvidersFieldArray extends React.Component {
         </div>
         <Button
           data-test-udp-fa-add-button
-          onClick={() => onAddField({})}
+          onClick={() => onAddField()}
           id="add-udp-btn"
         >
           <FormattedMessage id="ui-agreements.usageData.addUDP" />

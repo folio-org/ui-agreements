@@ -2,7 +2,7 @@ const Docs = require('./docs');
 
 const DOCS = [{
   name: 'Final Copy',
-  note: 'Signed and filed',
+  note: 'Signed',
   location: 'Filing Cabinet',
   url: 'http://licenses.com/final'
 }, {
@@ -12,10 +12,11 @@ const DOCS = [{
 
 const EDITED_DOC = {
   docToEdit: DOCS[0].name,
-  name: 'Final Copy v2',
-  note: 'Need to sign',
-  location: 'Printer Tray',
-  url: 'http://licenses.com/final2'
+  ...DOCS[0],
+  appendName: ' v2',
+  appendNote: ' and filed',
+  appendLocation: ' in Archives',
+  appendUrl: '2'
 };
 
 const DELETED_DOC = DOCS[1].name;

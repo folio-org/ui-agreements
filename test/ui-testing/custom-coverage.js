@@ -30,6 +30,8 @@ const checkTableForCustomCoverageData = (nightmare, done, tableId, values) => {
       const endIssues = [...document.querySelectorAll(`#${id} [data-test-coverage-statements] [data-test-end] [data-test-issue]`)];
 
       expectedValues.coverage.forEach(ec => {
+        if (!ec.startDate) return;
+
         if (!startDates.find(e => e.textContent === ec.startDateFormatted)) {
           throw Error(`Expected to find start date of ${ec.startDateFormatted} in #${id}`);
         }
@@ -213,7 +215,7 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
-          .wait('[data-test-edit-agreement-info]')
+          .wait('[data-test-ag-line-number]')
           .waitUntilNetworkIdle(2000)
           .then(done)
           .catch(done);

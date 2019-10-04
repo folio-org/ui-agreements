@@ -4,13 +4,14 @@ import { get } from 'lodash';
 import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
+import { LoadingPane } from '@folio/stripes-erm-components';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/views/AgreementForm';
 import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
 
-class AgreementEditRoute extends React.Component {
+class AgreementCreateRoute extends React.Component {
   static manifest = Object.freeze({
     agreements: {
       type: 'okapi',
@@ -163,6 +164,7 @@ class AgreementEditRoute extends React.Component {
     const { handlers, resources } = this.props;
 
     if (!this.state.hasPerms) return <NoPermissions />;
+    if (this.fetchIsPending()) return <LoadingPane onClose={this.handleClose} />;
 
     return (
       <View
@@ -196,4 +198,4 @@ class AgreementEditRoute extends React.Component {
 export default compose(
   withFileHandlers,
   stripesConnect
-)(AgreementEditRoute);
+)(AgreementCreateRoute);

@@ -25,7 +25,9 @@ export default class POLineField extends React.Component {
   }
 
   state = {
-    poLine: {},
+    poLine: {
+      poLineNumber: '?'
+    },
   }
 
   static getDerivedStateFromProps(props, state) {

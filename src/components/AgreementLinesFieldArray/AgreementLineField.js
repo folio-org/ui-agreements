@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Field, FieldArray } from 'redux-form';
+import { Field } from 'react-final-form';
+import { FieldArray } from 'react-final-form-arrays';
 
 import { Col, Datepicker, KeyValue, Row } from '@folio/stripes/components';
 import { EditCard } from '@folio/stripes-erm-components';
@@ -38,16 +39,16 @@ export default class AgreementLineField extends React.Component {
     resource: {},
   }
 
-  validateDateOrder = (value, allValues, _props, name) => {
-    if (value) {
+  validateDateOrder = (value, allValues, meta) => {
+    if (value && meta) {
       let activeFrom;
       let activeTo;
 
-      if (name.indexOf('activeFrom') >= 0) {
+      if (meta.name.indexOf('activeFrom') >= 0) {
         activeFrom = new Date(value);
-        activeTo = new Date(get(allValues, name.replace('activeFrom', 'activeTo')));
-      } else if (name.indexOf('endDate') >= 0) {
-        activeFrom = new Date(get(allValues, name.replace('activeTo', 'activeFrom')));
+        activeTo = new Date(get(allValues, meta.name.replace('activeFrom', 'activeTo')));
+      } else if (meta.name.indexOf('endDate') >= 0) {
+        activeFrom = new Date(get(allValues, meta.name.replace('activeTo', 'activeFrom')));
         activeTo = new Date(value);
       } else {
         return undefined;
@@ -144,7 +145,7 @@ export default class AgreementLineField extends React.Component {
               <div data-test-ag-line-provider>{this.renderLineProvider(resource)}</div>
             </KeyValue>
           </Col>
-          <Col xs={3}>
+          <Col xs={4}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.defaultCoverage" />}>
               <div data-test-ag-line-coverage>{this.renderCoverage(resource)}</div>
             </KeyValue>

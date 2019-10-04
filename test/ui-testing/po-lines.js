@@ -41,8 +41,12 @@ module.exports.test = (uiTestCtx) => {
 
       it('should link a PO line', done => {
         nightmare
+          .click('#clickable-edit-agreement')
+          .waitUntilNetworkIdle(2000)
           .wait('[data-test-ag-line-number="0"] #find-record-trigger')
           .click('[data-test-ag-line-number="0"] #find-record-trigger')
+          .wait('#clickable-filter-receiptStatus-pending')
+          .click('#clickable-filter-receiptStatus-pending')
           .waitUntilNetworkIdle(2000)
           .wait('#list-plugin-find-records [class*=mclScrollable] [aria-rowindex="2"]')
           .evaluate(() => {
