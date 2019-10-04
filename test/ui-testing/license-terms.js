@@ -189,7 +189,7 @@ module.exports.test = (uiTestCtx) => {
               const controllingLicenseElement = document.querySelector('#agreement-controlling-license');
               if (!controllingLicenseElement) throw Error('Failed to find controlling license element');
 
-              const name = controllingLicenseElement.querySelector('[data-test-license-card-name]').innerText;
+              const name = controllingLicenseElement.querySelector('[data-test-license-name]').innerText;
               if (name !== expected.name) throw Error(`Expected controlling license name "${expected.name}" and found "${name}".`);
             }, controllingLicense)
             .then(done)
