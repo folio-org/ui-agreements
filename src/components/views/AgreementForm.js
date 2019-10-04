@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import setFieldData from 'final-form-set-field-data';
 
 import {
   AccordionSet,
@@ -216,5 +217,6 @@ class AgreementForm extends React.Component {
 export default stripesFinalForm({
   initialValuesEqual: (a, b) => isEqual(a, b),
   keepDirtyOnReinitialize: true,
+  mutators: { setFieldData },
   navigationCheck: true,
 })(AgreementForm);

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'react-final-form';
+import { Field, FormSpy } from 'react-final-form';
 import { Card, Col, Headline, KeyValue, Row, Select, TextArea } from '@folio/stripes/components';
 import { LicenseEndDate, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
@@ -14,6 +14,11 @@ import FormattedUTCDate from '../FormattedUTCDate';
 class AmendmentsFieldArray extends React.Component {
   static propTypes = {
     amendmentStatusValues: PropTypes.arrayOf(PropTypes.object),
+    form: PropTypes.shape({
+      mutators: PropTypes.shape({
+        setFieldData: PropTypes.func.isRequired,
+      }).isRequired,
+    }).isRequired,
     items: PropTypes.arrayOf(PropTypes.object),
     license: PropTypes.shape({
       amendments: PropTypes.arrayOf(PropTypes.shape({
@@ -30,33 +35,40 @@ class AmendmentsFieldArray extends React.Component {
     name: PropTypes.string.isRequired,
   };
 
-  warnStatusMismatch = (value, allValues, meta) => {
-    if (!value && !meta) return undefined;
+  warnStatusMismatch = ({ values }) => {
+    const { form, name } = this.props;
 
-    const stringValue = typeof value === 'string' ? value : value.value;
-    if (stringValue !== statuses.CURRENT) return undefined;
+    get(values, name, []).forEach((field, i) => {
+      const { amendmentId, status = {} } = field;
 
-    const amendmentId = get(allValues, meta.name.replace('status', 'amendmentId'));
-    const amendments = get(this.props.license, 'amendments', []);
-    const amendment = amendments.find(a => a.id === amendmentId);
+      const statusString = typeof status === 'string' ? status : status.value;
+      if (!statusString || statusString !== statuses.CURRENT) {
+        form.mutators.setFieldData(`${name}[${i}].status`, { warning: undefined });
+        return;
+      }
 
-    // Amendment start date is in the future
-    if (new Date(amendment.startDate).getTime() > new Date().getTime()) {
-      return <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" />;
-    }
+      const amendment = get(this.props.license, 'amendments', []).find(a => a.id === amendmentId);
 
-    // Amendment end date is in the past
-    if (new Date(amendment.endDate).getTime() < new Date().getTime()) {
-      return <FormattedMessage id="ui-agreements.license.warn.amendmentPast" />;
-    }
+      let warning;
 
-    // Amendment has an invalid status.
-    const status = get(amendment, 'status', {});
-    if (status.value === statuses.EXPIRED || status.value === statuses.REJECTED) {
-      return <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: status.label }} />;
-    }
+      // Amendment start date is in the future
+      if (new Date(amendment.startDate).getTime() > new Date().getTime()) {
+        warning = <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" />;
+      }
 
-    return undefined;
+      // Amendment end date is in the past
+      if (new Date(amendment.endDate).getTime() < new Date().getTime()) {
+        warning = <FormattedMessage id="ui-agreements.license.warn.amendmentPast" />;
+      }
+
+      // Amendment has an invalid status.
+      const linkedStatus = get(amendment, 'status', {});
+      if (linkedStatus.value === statuses.EXPIRED || linkedStatus.value === statuses.REJECTED) {
+        warning = <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: linkedStatus.label }} />;
+      }
+
+      form.mutators.setFieldData(`${name}[${i}].status`, { warning });
+    });
   }
 
   render() {
@@ -126,7 +138,6 @@ class AmendmentsFieldArray extends React.Component {
                     placeholder=" "
                     required
                     validate={validators.required}
-                    warn={this.warnStatusMismatch}
                   />
                 </Col>
                 <Col xs={12} md={8}>
@@ -137,6 +148,10 @@ class AmendmentsFieldArray extends React.Component {
                   />
                 </Col>
               </Row>
+              <FormSpy
+                subscription={{ values: true }}
+                onChange={this.warnStatusMismatch}
+              />
             </Card>
           );
         })}
