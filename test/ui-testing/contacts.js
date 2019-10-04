@@ -302,7 +302,11 @@ module.exports.test = (uiTestCtx) => {
                     throw Error(`Fetched ${count} agreements which is not greater than zero and less than ${_totalAgreements}.`);
                   }
                 }, totalAgreements)
-                .then(done)
+                .then(() => {
+                  nightmare
+                    .click('#internal-contacts-filter button[icon="times-circle-solid"]')
+                    .then(done);
+                })
                 .catch(done);
             })
             .catch(done);
@@ -340,7 +344,11 @@ module.exports.test = (uiTestCtx) => {
                     throw Error(`Fetched ${count} agreements which is not greater than zero and less than ${_totalAgreements}.`);
                   }
                 }, totalAgreements)
-                .then(done)
+                .then(() => {
+                  nightmare
+                    .click('#internal-contacts-role-filter button[icon="times-circle-solid"]')
+                    .then(done);
+                })
                 .catch(done);
             })
             .catch(done);

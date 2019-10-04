@@ -51,6 +51,7 @@ module.exports.test = (uiTestCtx) => {
 
             .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 
+            .wait('#edit-license-name')
             .insert('#edit-license-name', l.name)
             .insert('#edit-license-start-date', l.startDate)
 
@@ -202,6 +203,7 @@ module.exports.test = (uiTestCtx) => {
             .catch(done);
         });
       });
+
       it('should save updated agreement', done => {
         nightmare
           .click('#clickable-update-agreement')
