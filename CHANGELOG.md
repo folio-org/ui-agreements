@@ -7,9 +7,14 @@
 * Display coverage for Agreement lines on Create Agreement pane. ERM-168.
 * Added ability to manage amendments for linked licenses. ERM-428 ERM-429
 * Added agreement line active from/to dates. ERM-456
+* Added ability to manage and view agreement periods. ERM-466 467 468
+* Improve the header for the display of e-resources in agreements. ERM-472
+* Added support for interface `erm` version `2.0`.
+* Added support for interface `licenses` version `2.0`.
+* Updated permission sets. ERM-477
 
 ## 3.2.4 2019-09-10
-* Add support for interface `invoice` version `2.0`.
+* Added support for interface `invoice` version `2.0`.
 
 ## 3.2.3 2019-09-10
 * Added agreement filtering by internal contact role. ERM-422

@@ -37,8 +37,8 @@ module.exports.test = (uiTestCtx,
           .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 
           .insert('#edit-agreement-name', name)
-          .click('#edit-agreement-start-date')
-          .type('#edit-agreement-start-date', '\u000d') // "Enter" selects current date
+          .click('#period-start-date-0')
+          .type('#period-start-date-0', '\u000d') // "Enter" selects current date
           .type('#edit-agreement-status', 'active')
 
           .then(done)

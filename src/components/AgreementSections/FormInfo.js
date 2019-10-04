@@ -2,16 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
+import { FieldArray } from 'react-final-form-arrays';
 
 import {
   Col,
-  Datepicker,
   Row,
   Select,
   TextArea,
   TextField,
 } from '@folio/stripes/components';
 
+import AgreementPeriodsFieldArray from '../AgreementPeriodsFieldArray';
 import { validators } from '../utilities';
 
 export default class FormInfo extends React.Component {
@@ -82,40 +83,6 @@ export default class FormInfo extends React.Component {
         <Row>
           <Col xs={12} md={4}>
             <Field
-              backendDateStandard="YYYY-MM-DD"
-              component={Datepicker}
-              dateFormat="YYYY-MM-DD"
-              id="edit-agreement-start-date"
-              label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
-              name="startDate"
-              required
-              validate={validators.required}
-            />
-          </Col>
-          <Col xs={12} md={4}>
-            <Field
-              backendDateStandard="YYYY-MM-DD"
-              component={Datepicker}
-              dateFormat="YYYY-MM-DD"
-              id="edit-agreement-end-date"
-              label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
-              name="endDate"
-            />
-          </Col>
-          <Col xs={12} md={4}>
-            <Field
-              backendDateStandard="YYYY-MM-DD"
-              component={Datepicker}
-              dateFormat="YYYY-MM-DD"
-              id="edit-agreement-cancellation-deadline"
-              label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}
-              name="cancellationDeadline"
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12} md={4}>
-            <Field
               component={Select}
               dataOptions={agreementStatusValues}
               id="edit-agreement-status"
@@ -145,6 +112,10 @@ export default class FormInfo extends React.Component {
             />
           </Col>
         </Row>
+        <FieldArray
+          component={AgreementPeriodsFieldArray}
+          name="periods"
+        />
       </div>
     );
   }

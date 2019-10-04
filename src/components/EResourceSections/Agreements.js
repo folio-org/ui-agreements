@@ -31,10 +31,10 @@ export default class Agreements extends React.Component {
       <MultiColumnList
         contentData={this.props.data.entitlements}
         formatter={{
-          name: ({ owner }) => <Link to={urls.agreementView(owner.id)}>{owner.name}</Link>,
-          type: ({ owner }) => get(owner, 'agreementStatus.label', ''),
-          startDate: ({ owner }) => owner.startDate && <FormattedUTCDate value={owner.startDate} />,
-          endDate: ({ owner }) => owner.endDate && <FormattedUTCDate value={owner.endDate} />,
+          name: ({ owner: agreement }) => <Link to={urls.agreementView(agreement.id)}>{agreement.name}</Link>,
+          type: ({ owner: agreement }) => get(agreement, 'agreementStatus.label', ''),
+          startDate: ({ owner: agreement }) => agreement.startDate && <FormattedUTCDate value={agreement.startDate} />,
+          endDate: ({ owner: agreement }) => agreement.endDate && <FormattedUTCDate value={agreement.endDate} />,
           package: (line) => <EResourceLink eresource={getResourceFromEntitlement(line)} />,
           acqMethod: ({ resource }) => <EResourceType resource={resource} />,
           coverage: line => <CoverageStatements statements={line.coverage} />,
@@ -43,8 +43,8 @@ export default class Agreements extends React.Component {
         columnMapping={{
           name: <FormattedMessage id="ui-agreements.agreements.name" />,
           type: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
-          startDate: <FormattedMessage id="ui-agreements.agreements.startDate" />,
-          endDate: <FormattedMessage id="ui-agreements.agreements.endDate" />,
+          startDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodStart" />,
+          endDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodEnd" />,
           package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
           acqMethod: <FormattedMessage id="ui-agreements.eresources.acqMethod" />,
           coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
@@ -76,14 +76,15 @@ export default class Agreements extends React.Component {
   }
 
   render() {
-    const { data: { entitlements } } = this.props;
+    const { data: { entitlements, eresource: { type } } } = this.props;
 
     return (
       <div id="eresource-agreements">
         <Headline margin="none" tag="h3" size="large">
-          <FormattedMessage id="ui-agreements.eresources.erAgreements" />
+          {type ? <FormattedMessage id="ui-agreements.eresources.erAgreements" />
+            : <FormattedMessage id="ui-agreements.eresources.packageAgreements" />}
         </Headline>
-        { entitlements ? this.renderAgreements() : this.renderLoading() }
+        {entitlements ? this.renderAgreements() : this.renderLoading()}
       </div>
     );
   }

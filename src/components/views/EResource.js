@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Layout, Pane } from '@folio/stripes/components';
+import { TitleManager } from '@folio/stripes/core';
 import { Spinner } from '@folio/stripes-erm-components';
 
 import Package from './Package';
@@ -61,7 +62,9 @@ export default class EResource extends React.Component {
           dismissible
           onClose={handlers.onClose}
         >
-          <EResourceViewComponent data={data} handlers={handlers} />
+          <TitleManager record={data.eresource.name}>
+            <EResourceViewComponent data={data} handlers={handlers} />
+          </TitleManager>
         </Pane>
         {helperApp}
       </React.Fragment>

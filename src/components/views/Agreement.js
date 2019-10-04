@@ -29,13 +29,13 @@ import {
   InternalContacts,
   Lines,
   Organizations,
+  OtherPeriods,
   SupplementaryInfo,
   Terms,
   UsageData,
 } from '../AgreementSections';
 
 import { urls } from '../utilities';
-
 
 export default class Agreement extends React.Component {
   static propTypes = {
@@ -62,6 +62,7 @@ export default class Agreement extends React.Component {
       lines: false,
       notes: false,
       organizations: false,
+      otherPeriods: false,
       supplementaryInfo: false,
       terms: false,
       usageData: false,
@@ -120,21 +121,21 @@ export default class Agreement extends React.Component {
     } = this.props;
 
     return (
-      <PaneMenu>
-        { handlers.onToggleTags &&
-          <FormattedMessage id="ui-agreements.agreements.showTags">
-            {ariaLabel => (
-              <IconButton
-                icon="tag"
-                id="clickable-show-tags"
-                badgeCount={get(agreement, 'tags.length', 0)}
-                onClick={handlers.onToggleTags}
-                ariaLabel={ariaLabel}
-              />
-            )}
-          </FormattedMessage>
-        }
-        <IfPermission perm="ui-agreements.agreements.edit">
+      <IfPermission perm="ui-agreements.agreements.edit">
+        <PaneMenu>
+          { handlers.onToggleTags &&
+            <FormattedMessage id="ui-agreements.agreements.showTags">
+              {ariaLabel => (
+                <IconButton
+                  icon="tag"
+                  id="clickable-show-tags"
+                  badgeCount={get(agreement, 'tags.length', 0)}
+                  onClick={handlers.onToggleTags}
+                  ariaLabel={ariaLabel}
+                />
+              )}
+            </FormattedMessage>
+          }
           <FormattedMessage id="ui-agreements.agreements.editAgreement">
             {ariaLabel => (
               <Button
@@ -148,8 +149,8 @@ export default class Agreement extends React.Component {
               </Button>
             )}
           </FormattedMessage>
-        </IfPermission>
-      </PaneMenu>
+        </PaneMenu>
+      </IfPermission>
     );
   }
 
@@ -212,6 +213,7 @@ export default class Agreement extends React.Component {
               <ExternalLicenses {...this.getSectionProps('externalLicenses')} />
               <Terms {...this.getSectionProps('terms')} />
               <Organizations {...this.getSectionProps('organizations')} />
+              <OtherPeriods {...this.getSectionProps('otherPeriods')} />
               <SupplementaryInfo {...this.getSectionProps('supplementaryInfo')} />
               <UsageData {...this.getSectionProps('usageData')} />
               <NotesSmartAccordion

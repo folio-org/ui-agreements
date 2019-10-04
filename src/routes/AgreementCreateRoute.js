@@ -21,17 +21,17 @@ class AgreementCreateRoute extends React.Component {
     },
     agreementStatusValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/SubscriptionAgreement/agreementStatus',
+      path: 'erm/refdata/SubscriptionAgreement/agreementStatus',
       shouldRefresh: () => false,
     },
     amendmentStatusValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/LicenseAmendmentStatus/status',
+      path: 'erm/refdata/LicenseAmendmentStatus/status',
       shouldRefresh: () => false,
     },
     contactRoleValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/InternalContact/role',
+      path: 'erm/refdata/InternalContact/role',
       shouldRefresh: () => false,
     },
     externalAgreementLine: {
@@ -46,22 +46,22 @@ class AgreementCreateRoute extends React.Component {
     },
     isPerpetualValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/SubscriptionAgreement/isPerpetual',
+      path: 'erm/refdata/SubscriptionAgreement/isPerpetual',
       shouldRefresh: () => false,
     },
     licenseLinkStatusValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/RemoteLicenseLink/status',
+      path: 'erm/refdata/RemoteLicenseLink/status',
       shouldRefresh: () => false,
     },
     orgRoleValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/SubscriptionAgreementOrg/role',
+      path: 'erm/refdata/SubscriptionAgreementOrg/role',
       shouldRefresh: () => false,
     },
     renewalPriorityValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/SubscriptionAgreement/renewalPriority',
+      path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
       shouldRefresh: () => false,
     },
     basket: { initialValue: [] },
@@ -184,6 +184,9 @@ class AgreementCreateRoute extends React.Component {
         handlers={{
           ...handlers,
           onClose: this.handleClose,
+        }}
+        initialValues={{
+          periods: [{}],
         }}
         isLoading={this.fetchIsPending()}
         onSubmit={this.handleSubmit}

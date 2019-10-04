@@ -12,6 +12,7 @@ import View from '../components/views/Agreement';
 import { urls } from '../components/utilities';
 
 const RECORDS_PER_REQUEST = 100;
+const RECORDS_INCREMENT = 1000;
 
 class AgreementViewRoute extends React.Component {
   static manifest = Object.freeze({
@@ -269,7 +270,7 @@ class AgreementViewRoute extends React.Component {
 
   handleNeedMoreLines = () => {
     const { agreementLinesCount } = this.props.resources;
-    this.props.mutator.agreementLinesCount.replace(agreementLinesCount + RECORDS_PER_REQUEST);
+    this.props.mutator.agreementLinesCount.replace(agreementLinesCount + RECORDS_INCREMENT);
   }
 
   handleFetchCredentials = (id) => {
@@ -279,7 +280,7 @@ class AgreementViewRoute extends React.Component {
 
   handleNeedMoreEResources = () => {
     const { agreementEresourcesCount } = this.props.resources;
-    this.props.mutator.agreementEresourcesCount.replace(agreementEresourcesCount + RECORDS_PER_REQUEST);
+    this.props.mutator.agreementEresourcesCount.replace(agreementEresourcesCount + RECORDS_INCREMENT);
   }
 
   handleToggleHelper = (helper) => {

@@ -48,8 +48,8 @@ module.exports.test = (uiTestCtx) => {
 
           .waitUntilNetworkIdle(1000)
           .insert('#edit-agreement-name', agreementName)
-          .click('#edit-agreement-start-date')
-          .type('#edit-agreement-start-date', '\u000d') // "Enter" selects current date
+          .click('#period-start-date-0')
+          .type('#period-start-date-0', '\u000d') // "Enter" selects current date
           .type('#edit-agreement-status', 'draft')
 
           .then(done)

@@ -33,27 +33,27 @@ class AgreementEditRoute extends React.Component {
     },
     agreementStatusValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/SubscriptionAgreement/agreementStatus',
+      path: 'erm/refdata/SubscriptionAgreement/agreementStatus',
       shouldRefresh: () => false,
     },
     amendmentStatusValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/LicenseAmendmentStatus/status',
+      path: 'erm/refdata/LicenseAmendmentStatus/status',
       shouldRefresh: () => false,
     },
     contactRoleValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/InternalContact/role',
+      path: 'erm/refdata/InternalContact/role',
       shouldRefresh: () => false,
     },
     isPerpetualValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/SubscriptionAgreement/isPerpetual',
+      path: 'erm/refdata/SubscriptionAgreement/isPerpetual',
       shouldRefresh: () => false,
     },
     licenseLinkStatusValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/RemoteLicenseLink/status',
+      path: 'erm/refdata/RemoteLicenseLink/status',
       shouldRefresh: () => false,
     },
     orderLines: {
@@ -72,12 +72,12 @@ class AgreementEditRoute extends React.Component {
     },
     orgRoleValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/SubscriptionAgreementOrg/role',
+      path: 'erm/refdata/SubscriptionAgreementOrg/role',
       shouldRefresh: () => false,
     },
     renewalPriorityValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/SubscriptionAgreement/renewalPriority',
+      path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
       shouldRefresh: () => false,
     },
     users: {
