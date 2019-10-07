@@ -265,5 +265,7 @@
   "settings.hideEResources.result.3": "Hide the \"E-resources covered by this agreement\" accordion in individual agreements",
   "settings.orgRoles": "Organization roles",
   "settings.orgRoles.orgRole": "Organization role",
-  "settings.orgRoles.role": "Role"
+  "settings.orgRoles.role": "Role",
+
+  "warn.clearReasonForClosure": "Reason for closure will be cleared because status is not \"Closed\"."
 }

@@ -58,6 +58,17 @@ class FormInfo extends React.Component {
     return null;
   }
 
+  warnReason = (_value, allValues) => {
+    if (this.props.statusValue !== 'closed' && allValues.reasonForClosure) {
+      return (
+        <div data-test-warn-clear-reason-for-validation>
+          <FormattedMessage id="ui-agreements.warn.clearReasonForClosure" />
+        </div>
+      );
+    }
+    return undefined;
+  }
+
   render() {
     const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues } = this.state;
 
@@ -106,6 +117,7 @@ class FormInfo extends React.Component {
               id="edit-agreement-reason-for-closure"
               label={<FormattedMessage id="ui-agreements.agreements.reasonForClosure" />}
               name="reasonForClosure"
+              warn={this.warnReason}
             />
           </Col>
         </Row>
