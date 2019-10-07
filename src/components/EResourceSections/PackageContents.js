@@ -13,8 +13,8 @@ import FormattedUTCDate from '../FormattedUTCDate';
 export default class PackageContents extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      packageContentsFilter: PropTypes.string,
       packageContents: PropTypes.array,
+      packageContentsFilter: PropTypes.string,
     }),
     onFilterPackageContents: PropTypes.func.isRequired,
   };

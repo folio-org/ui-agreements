@@ -31,6 +31,7 @@
     "test-hide-eresources-func": "stripes test nightmare --run hide-eresources-func",
     "test-supplement": "stripes test nightmare --run supplement",
     "test-notes-crud": "stripes test nightmare --run notes-crud",
+    "test-package-content-filter": "stripes test nightmare --run package-content-filter",
     "test-package-notes": "stripes test nightmare --run package-notes",
     "test-title-notes": "stripes test nightmare --run title-notes",
 
