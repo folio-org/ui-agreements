@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import setFieldData from 'final-form-set-field-data';
 
 import {
   AccordionSet,
@@ -169,9 +168,8 @@ class AgreementForm extends React.Component {
   }
 
   render() {
-    const { form, initialValues: { id, name } } = this.props;
-
-    const hasLoaded = form.getRegisteredFields().length > 0;
+    const { initialValues: { id, name }, isLoading } = this.props;
+    if (isLoading) return this.renderLoadingPane();
 
     return (
       <Paneset>
@@ -221,8 +219,10 @@ class AgreementForm extends React.Component {
   }
 }
 
-export default stripesFinalForm({
-  initialValuesEqual: (a, b) => isEqual(a, b),
+const agreementForm = stripesForm({
+  form: 'EditAgreement',
+  navigationCheck: true,
+  enableReinitialize: true,
   keepDirtyOnReinitialize: true,
   mutators: { setFieldData },
   navigationCheck: true,

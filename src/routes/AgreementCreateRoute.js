@@ -4,14 +4,13 @@ import { get } from 'lodash';
 import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
-import { LoadingPane } from '@folio/stripes-erm-components';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/views/AgreementForm';
 import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
 
-class AgreementCreateRoute extends React.Component {
+class AgreementEditRoute extends React.Component {
   static manifest = Object.freeze({
     agreements: {
       type: 'okapi',
@@ -21,7 +20,7 @@ class AgreementCreateRoute extends React.Component {
     },
     agreementStatusValues: {
       type: 'okapi',
-      path: 'erm/refdata/SubscriptionAgreement/agreementStatus',
+      path: 'erm/refdataValues/SubscriptionAgreement/agreementStatus',
       shouldRefresh: () => false,
     },
     reasonForClosureValues: {
@@ -31,12 +30,12 @@ class AgreementCreateRoute extends React.Component {
     },
     amendmentStatusValues: {
       type: 'okapi',
-      path: 'erm/refdata/LicenseAmendmentStatus/status',
+      path: 'erm/refdataValues/LicenseAmendmentStatus/status',
       shouldRefresh: () => false,
     },
     contactRoleValues: {
       type: 'okapi',
-      path: 'erm/refdata/InternalContact/role',
+      path: 'erm/refdataValues/InternalContact/role',
       shouldRefresh: () => false,
     },
     externalAgreementLine: {
@@ -51,22 +50,22 @@ class AgreementCreateRoute extends React.Component {
     },
     isPerpetualValues: {
       type: 'okapi',
-      path: 'erm/refdata/SubscriptionAgreement/isPerpetual',
+      path: 'erm/refdataValues/SubscriptionAgreement/isPerpetual',
       shouldRefresh: () => false,
     },
     licenseLinkStatusValues: {
       type: 'okapi',
-      path: 'erm/refdata/RemoteLicenseLink/status',
+      path: 'erm/refdataValues/RemoteLicenseLink/status',
       shouldRefresh: () => false,
     },
     orgRoleValues: {
       type: 'okapi',
-      path: 'erm/refdata/SubscriptionAgreementOrg/role',
+      path: 'erm/refdataValues/SubscriptionAgreementOrg/role',
       shouldRefresh: () => false,
     },
     renewalPriorityValues: {
       type: 'okapi',
-      path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
+      path: 'erm/refdataValues/SubscriptionAgreement/renewalPriority',
       shouldRefresh: () => false,
     },
     basket: { initialValue: [] },
@@ -169,7 +168,6 @@ class AgreementCreateRoute extends React.Component {
     const { handlers, resources } = this.props;
 
     if (!this.state.hasPerms) return <NoPermissions />;
-    if (this.fetchIsPending()) return <LoadingPane onClose={this.handleClose} />;
 
     return (
       <View
@@ -191,9 +189,6 @@ class AgreementCreateRoute extends React.Component {
           ...handlers,
           onClose: this.handleClose,
         }}
-        initialValues={{
-          periods: [{}],
-        }}
         isLoading={this.fetchIsPending()}
         onSubmit={this.handleSubmit}
       />
@@ -204,4 +199,4 @@ class AgreementCreateRoute extends React.Component {
 export default compose(
   withFileHandlers,
   stripesConnect
-)(AgreementCreateRoute);
+)(AgreementEditRoute);
