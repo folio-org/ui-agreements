@@ -6,7 +6,7 @@ module.exports.test = (uiTestCtx, { eresource }) => {
   const editedNote = `${testNote}${editText}`;
   const noteType = `noteType${Math.floor(Math.random() * 100000)}`;
 
-  describe('Notes crud', function test() {
+  describe('EResource notes', function test() {
     const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
     nightmare.options.width = 1300; // added this temporarily as MultiSelect doesnt work well with narrow screen sizes
@@ -32,14 +32,14 @@ module.exports.test = (uiTestCtx, { eresource }) => {
           .click('a[href="/settings/notes"]')
           .wait('a[href="/settings/notes/general"]')
           .click('a[href="/settings/notes/general"]')
-          .waitUntilNetworkIdle(1000)
+          .waitUntilNetworkIdle(2000)
           .wait('#clickable-add-noteTypes')
           .click('#clickable-add-noteTypes')
           .wait('input[name="items[0].name"]')
           .type('input[name="items[0].name"]', noteType)
           .wait('#clickable-save-noteTypes-0')
           .click('#clickable-save-noteTypes-0')
-          .wait(222)
+          .waitUntilNetworkIdle(2000)
           .then(done)
           .catch(done);
       });

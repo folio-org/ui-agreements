@@ -15,7 +15,7 @@ import css from './Header.css';
 export default class Header extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
-      endData: PropTypes.string,
+      endDate: PropTypes.string,
       orgs: PropTypes.arrayOf(
         PropTypes.shape({
           org: PropTypes.shape({
@@ -43,14 +43,14 @@ export default class Header extends React.Component {
     return (
       <Row className={css.agreementHeader}>
         <Col xs={2}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.agreements.startDate" />}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.periodStart" />}>
             <div data-test-agreement-start-date>
               {startDate ? <FormattedUTCDate value={startDate} /> : '-'}
             </div>
           </KeyValue>
         </Col>
         <Col xs={2}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.agreements.endDate" />}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.periodEnd" />}>
             <div data-test-agreement-end-date>
               {endDate ? <FormattedUTCDate value={endDate} /> : '-'}
             </div>

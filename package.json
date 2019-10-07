@@ -55,11 +55,16 @@
     "redux": "~3.7.2"
   },
   "dependencies": {
-    "@folio/stripes-erm-components": "^1.7.0",
+    "@folio/stripes-erm-components": "^2.0.0",
     "compose-function": "^3.0.3",
+    "final-form": "^4.18.4",
+    "final-form-arrays": "^3.0.1",
+    "final-form-set-field-data": "^1.0.2",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
     "query-string": "^6.6.0",
+    "react-final-form": "^6.3.0",
+    "react-final-form-arrays": "^3.1.0",
     "react-intl": "^2.4.0",
     "react-router-dom": "^4.1.1",
     "react-router-prop-types": "^1.0.4",
@@ -81,9 +86,9 @@
     "queryResource": "query",
     "okapiInterfaces": {
       "configuration": "2.0 3.0 4.0 5.0",
-      "erm": "1.0",
+      "erm": "2.0",
       "invoice": "1.0 2.0",
-      "licenses": "1.0",
+      "licenses": "1.0 2.0",
       "orders": "6.0 7.0",
       "organizations-storage.interfaces": "2.0",
       "users": "13.0 14.0 15.0"
@@ -92,37 +97,55 @@
       {
         "permissionName": "module.agreements.enabled",
         "displayName": "UI: ui-agreements module is enabled",
-        "visible": true,
         "subPermissions": [
           "configuration.entries.collection.get",
-          "tags.collection.get"
+          "tags.collection.get",
+          "erm.refdata.view",
+          "note.types.collection.get"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.resources.view",
+        "displayName": "Agreements: Search & view e-resources",
+        "visible": true,
+        "subPermissions": [
+          "module.agreements.enabled",
+          "erm.packages.view",
+          "erm.titles.view",
+          "erm.resources.view"
         ]
       },
       {
         "permissionName": "ui-agreements.agreements.view",
-        "displayName": "Agreements: Can view agreements",
+        "displayName": "Agreements: Search & view agreements",
         "visible": true,
         "subPermissions": [
           "module.agreements.enabled",
-          "ui-organizations.view",
-          "organizations-storage.interfaces.all",
-          "tags.item.post"
+          "erm.agreements.view",
+          "erm.contacts.view",
+          "erm.files.view",
+          "erm.orgs.view",
+          "licenses.custprops.view"
         ]
       },
       {
         "permissionName": "ui-agreements.agreements.edit",
-        "displayName": "Agreements: Can edit agreements",
+        "displayName": "Agreements: Edit agreements",
         "visible": true,
         "subPermissions": [
-          "ui-agreements.agreements.view"
+          "ui-agreements.agreements.view",
+          "erm.agreements.edit",
+          "erm.files.edit",
+          "tags.item.post"
         ]
       },
       {
-        "permissionName": "ui-agreements.agreements.create",
-        "displayName": "Agreements: Can create and edit agreements",
+        "permissionName": "ui-agreements.agreements.delete",
+        "displayName": "Agreements: Delete agreements",
         "visible": true,
         "subPermissions": [
-          "ui-agreements.agreements.edit"
+          "ui-agreements.agreements.view",
+          "erm.agreements.item.delete"
         ]
       },
       {

@@ -49,6 +49,7 @@ module.exports.test = (uiTestCtx) => {
 
             .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 
+            .wait('#edit-license-name')
             .insert('#edit-license-name', l.name)
             .insert('#edit-license-start-date', l.startDate)
 
@@ -56,35 +57,11 @@ module.exports.test = (uiTestCtx) => {
             .catch(done);
         });
 
-        it('should count the number of terms', done => {
-          nightmare
-            .evaluate(() => [...document.querySelectorAll('[data-test-term-name]')].length)
-            .then(count => {
-              NUMBER_OF_TERMS = count;
-            })
-            .then(done)
-            .catch(done);
-        });
-
-        it(`should add term ${term.name}`, done => {
+        it(`should add term ${term.name} w/ value ${term.value}`, done => {
           nightmare
             .click('#add-term-btn')
-            .wait(500)
-            .evaluate(() => [...document.querySelectorAll('[data-test-term-name]')].length)
-            .then(count => {
-              if (count !== NUMBER_OF_TERMS + 1) {
-                throw Error(`Expected ${NUMBER_OF_TERMS + 1} terms but found ${count}!`);
-              }
-              NUMBER_OF_TERMS += 1;
-            })
-            .then(done)
-            .catch(done);
-        });
-
-        it(`should set term to: ${term.value}`, done => {
-          nightmare
-            .type(`#edit-term-${NUMBER_OF_TERMS - 1}-name`, term.label)
-            .type(`#edit-term-${NUMBER_OF_TERMS - 1}-value`, term.value)
+            .type('[data-test-term=optional] [data-test-term-name]', term.label)
+            .type('[data-test-term=optional] [data-test-term-value]', term.value)
             .then(done)
             .catch(done);
         });
@@ -197,8 +174,8 @@ module.exports.test = (uiTestCtx) => {
           .click('#clickable-update-agreement')
           .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000)
-          .wait('#accordion-toggle-button-licenses')
-          .click('#accordion-toggle-button-licenses')
+          .wait('#clickable-expand-all')
+          .click('#clickable-expand-all')
           .then(done)
           .catch(done);
       });
@@ -212,33 +189,13 @@ module.exports.test = (uiTestCtx) => {
               const controllingLicenseElement = document.querySelector('#agreement-controlling-license');
               if (!controllingLicenseElement) throw Error('Failed to find controlling license element');
 
-              const name = controllingLicenseElement.querySelector('[data-test-license-card-name]').innerText;
+              const name = controllingLicenseElement.querySelector('[data-test-license-name]').innerText;
               if (name !== expected.name) throw Error(`Expected controlling license name "${expected.name}" and found "${name}".`);
             }, controllingLicense)
             .then(done)
             .catch(done);
         });
       }
-
-      it('should open license and business terms accordion', done => {
-        nightmare
-          .wait('#accordion-toggle-button-terms')
-          .click('#accordion-toggle-button-terms')
-          .then(done)
-          .catch(done);
-      });
-
-      it('should count the number of terms', done => {
-        nightmare
-          .evaluate(() => [...document.querySelectorAll('[data-test-term-label]')].length)
-          .then(count => {
-            if (count !== NUMBER_OF_TERMS) {
-              throw Error(`Expected ${NUMBER_OF_TERMS} terms but found ${count}!`);
-            }
-          })
-          .then(done)
-          .catch(done);
-      });
 
       it(`should find term ${term.name} in terms list`, done => {
         nightmare

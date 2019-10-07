@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
+import { IfPermission } from '@folio/stripes/core';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
 import { InternalContactSelection, OrganizationSelection } from '@folio/stripes-erm-components';
 
@@ -141,25 +142,27 @@ export default class AgreementFilters extends React.Component {
     const contactFilters = activeFilters.contacts || [];
 
     return (
-      <Accordion
-        closedByDefault
-        displayClearButton={contactFilters.length > 0}
-        header={FilterAccordionHeader}
-        id="internal-contacts-filter"
-        label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
-        onClearFilter={() => this.props.filterHandlers.clearGroup('contacts')}
-        separator={false}
-      >
-        <InternalContactSelection
-          path="erm/contacts"
-          id="agreement-internal-contacts-filter"
-          input={{
-            name: 'agreement-contacts-filter',
-            onChange: value => this.props.filterHandlers.state({ ...activeFilters, contacts: [value] }),
-            value: contactFilters[0] || '',
-          }}
-        />
-      </Accordion>
+      <IfPermission perm="users.collection.get">
+        <Accordion
+          closedByDefault
+          displayClearButton={contactFilters.length > 0}
+          header={FilterAccordionHeader}
+          id="internal-contacts-filter"
+          label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
+          onClearFilter={() => this.props.filterHandlers.clearGroup('contacts')}
+          separator={false}
+        >
+          <InternalContactSelection
+            path="erm/contacts"
+            id="agreement-internal-contacts-filter"
+            input={{
+              name: 'agreement-contacts-filter',
+              onChange: value => this.props.filterHandlers.state({ ...activeFilters, contacts: [value] }),
+              value: contactFilters[0] || '',
+            }}
+          />
+        </Accordion>
+      </IfPermission>
     );
   }
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field, FieldArray } from 'redux-form';
+import { Field } from 'react-final-form';
+import { FieldArray } from 'react-final-form-arrays';
 import { Button, Col, Layout, Row, Select, TextArea } from '@folio/stripes/components';
-import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
+import { composeValidators, requiredValidator, EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
-import { validators } from '../utilities';
 import AmendmentsFieldArray from './AmendmentsFieldArray';
 import LicenseField from './LicenseField';
 
@@ -14,6 +14,7 @@ const CONTROLLING_STATUS = 'controlling';
 class LicensesFieldArray extends React.Component {
   static propTypes = {
     amendmentStatusValues: PropTypes.arrayOf(PropTypes.object),
+    form: PropTypes.object,
     items: PropTypes.arrayOf(PropTypes.object),
     name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
@@ -76,8 +77,9 @@ class LicensesFieldArray extends React.Component {
   renderLicenseFields = () => {
     const {
       amendmentStatusValues,
-      licenseStatusValues,
+      form,
       items,
+      licenseStatusValues,
       name,
       onDeleteField
     } = this.props;
@@ -101,7 +103,7 @@ class LicensesFieldArray extends React.Component {
           name={`${name}[${index}].remoteId`}
           onLicenseSelected={selectedLicense => this.handleLicenseSelected(index, selectedLicense)}
           onLicenseUnselected={() => this.handleLicenseUnselected(index, license)}
-          validate={validators.required}
+          validate={requiredValidator}
         />
         <Row>
           <Col xs={12} md={4}>
@@ -114,10 +116,10 @@ class LicensesFieldArray extends React.Component {
               name={`${name}[${index}].status`}
               placeholder=" "
               required
-              validate={[
+              validate={composeValidators(
                 this.validateOnlyOneControllingLicense,
-                validators.required,
-              ]}
+                requiredValidator,
+              )}
             />
           </Col>
           <Col xs={12} md={8}>
@@ -131,6 +133,7 @@ class LicensesFieldArray extends React.Component {
         </Row>
         <FieldArray
           amendmentStatusValues={amendmentStatusValues}
+          form={form}
           license={this.state.licenses[license.remoteId] || license.remoteId_object}
           component={AmendmentsFieldArray}
           name={`${name}[${index}].amendments`}
@@ -148,7 +151,7 @@ class LicensesFieldArray extends React.Component {
         </div>
         <Button
           data-test-license-fa-add-button
-          onClick={() => onAddField({})}
+          onClick={() => onAddField()}
           id="add-license-btn"
         >
           <FormattedMessage id="ui-agreements.license.addLicense" />

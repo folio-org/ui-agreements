@@ -4,6 +4,7 @@ import { cloneDeep, get } from 'lodash';
 import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
+import { LoadingPane } from '@folio/stripes-erm-components';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/views/AgreementForm';
@@ -32,7 +33,7 @@ class AgreementEditRoute extends React.Component {
     },
     agreementStatusValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/SubscriptionAgreement/agreementStatus',
+      path: 'erm/refdata/SubscriptionAgreement/agreementStatus',
       shouldRefresh: () => false,
     },
     reasonForClosureValues: {
@@ -42,22 +43,22 @@ class AgreementEditRoute extends React.Component {
     },
     amendmentStatusValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/LicenseAmendmentStatus/status',
+      path: 'erm/refdata/LicenseAmendmentStatus/status',
       shouldRefresh: () => false,
     },
     contactRoleValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/InternalContact/role',
+      path: 'erm/refdata/InternalContact/role',
       shouldRefresh: () => false,
     },
     isPerpetualValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/SubscriptionAgreement/isPerpetual',
+      path: 'erm/refdata/SubscriptionAgreement/isPerpetual',
       shouldRefresh: () => false,
     },
     licenseLinkStatusValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/RemoteLicenseLink/status',
+      path: 'erm/refdata/RemoteLicenseLink/status',
       shouldRefresh: () => false,
     },
     orderLines: {
@@ -76,12 +77,12 @@ class AgreementEditRoute extends React.Component {
     },
     orgRoleValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/SubscriptionAgreementOrg/role',
+      path: 'erm/refdata/SubscriptionAgreementOrg/role',
       shouldRefresh: () => false,
     },
     renewalPriorityValues: {
       type: 'okapi',
-      path: 'erm/refdataValues/SubscriptionAgreement/renewalPriority',
+      path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
       shouldRefresh: () => false,
     },
     users: {
@@ -146,7 +147,78 @@ class AgreementEditRoute extends React.Component {
 
     this.state = {
       hasPerms: props.stripes.hasPerm('ui-agreements.agreements.edit'),
+      initialValues: {},
     };
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    let updated = false;
+
+    const agreement = get(props.resources, 'agreement.records[0]', {});
+    const initialValues = cloneDeep(agreement);
+
+    const {
+      agreementStatus = {},
+      contacts = [],
+      isPerpetual = {},
+      items = [],
+      linkedLicenses = [],
+      orgs = [],
+      renewalPriority = {},
+    } = initialValues;
+
+    if (initialValues.id && !state.initialValues.id) {
+      updated = true;
+
+      // Set the values of dropdown-controlled props as values rather than objects.
+      initialValues.agreementStatus = agreementStatus.value;
+      initialValues.isPerpetual = isPerpetual.value;
+      initialValues.renewalPriority = renewalPriority.value;
+      initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
+      initialValues.orgs = orgs.map(o => ({ ...o, role: o.role && o.role.value }));
+      initialValues.linkedLicenses = linkedLicenses.map(l => ({
+        ...l,
+        status: l.status.value,
+        // Init the list of amendments based on the license's amendments to ensure
+        // we display those that have been created since this agreement's license was last
+        // edited. Ensure we provide defaults via amendmentId.
+        amendments: get(l, 'remoteId_object.amendments', [])
+          .map(a => {
+            const assignedAmendment = (l.amendments || []).find(la => la.amendmentId === a.id) || {};
+            return {
+              ...assignedAmendment,
+              amendmentId: a.id,
+              status: assignedAmendment.status ? assignedAmendment.status.value : undefined,
+            };
+          })
+      }));
+    }
+
+    const lines = get(props.resources, 'agreementLines.records', []);
+    if (items.length && lines.length) {
+      updated = true;
+
+      initialValues.items = items.map(item => {
+        if (item.resource) return item;
+
+        const line = lines.find(l => l.id === item.id);
+        if (!line) return item;
+
+        return {
+          id: line.id,
+          coverage: line.customCoverage ? line.coverage : undefined,
+          poLineId: line.poLineId,
+          activeFrom: line.activeFrom,
+          activeTo: line.activeTo
+        };
+      });
+    }
+
+    if (updated) {
+      return { initialValues };
+    }
+
+    return null;
   }
 
   componentWillUnmount() {
@@ -271,6 +343,7 @@ class AgreementEditRoute extends React.Component {
     const { handlers, resources } = this.props;
 
     if (!this.state.hasPerms) return <NoPermissions />;
+    if (this.fetchIsPending()) return <LoadingPane onClose={this.handleClose} />;
 
     return (
       <View
@@ -294,7 +367,7 @@ class AgreementEditRoute extends React.Component {
           ...handlers,
           onClose: this.handleClose,
         }}
-        initialValues={this.getInitialValues()}
+        initialValues={this.state.initialValues}
         isLoading={this.fetchIsPending()}
         onSubmit={this.handleSubmit}
       />

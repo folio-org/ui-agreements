@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import setFieldData from 'final-form-set-field-data';
 
 import {
   AccordionSet,
@@ -9,7 +10,6 @@ import {
   Col,
   ExpandAllButton,
   IconButton,
-  Layout,
   Pane,
   PaneFooter,
   PaneMenu,
@@ -17,9 +17,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager } from '@folio/stripes/core';
-import stripesForm from '@folio/stripes/form';
-
-import { Spinner } from '@folio/stripes-erm-components';
+import stripesFinalForm from '@folio/stripes/final-form';
 
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
@@ -38,9 +36,13 @@ import css from './AgreementForm.css';
 
 class AgreementForm extends React.Component {
   static propTypes = {
-    change: PropTypes.func,
     data: PropTypes.shape({
       agreementLines: PropTypes.array.isRequired,
+      agreementLinesToAdd: PropTypes.array.isRequired,
+    }).isRequired,
+    form: PropTypes.shape({
+      change: PropTypes.func.isRequired,
+      getRegisteredFields: PropTypes.func.isRequired,
     }).isRequired,
     handlers: PropTypes.PropTypes.shape({
       onClose: PropTypes.func.isRequired,
@@ -60,6 +62,7 @@ class AgreementForm extends React.Component {
   }
 
   state = {
+    addedLinesToAdd: false,
     sections: {
       formInternalContacts: true,
       formLines: true,
@@ -70,32 +73,29 @@ class AgreementForm extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    const {
-      data: { agreementLinesToAdd: prevAgreementLinesToAdd },
-      initialValues: prevInitialValues,
-    } = prevProps;
-    const {
-      data: { agreementLinesToAdd: currAgreementLinesToAdd },
-      initialValues: currInitialValues,
-    } = this.props;
-
+  static getDerivedStateFromProps(props, state) {
     if (
-      !isEqual(currInitialValues, prevInitialValues) ||
-      !isEqual(prevAgreementLinesToAdd, currAgreementLinesToAdd)
+      props.data.agreementLinesToAdd.length &&
+      state.addedLinesToAdd === false &&
+      props.form.getRegisteredFields().includes('items')
     ) {
-      this.props.change('items', [
-        ...(currInitialValues.items || []),
-        ...currAgreementLinesToAdd,
+      props.form.change('items', [
+        ...(props.initialValues.items || []),
+        ...props.data.agreementLinesToAdd,
       ]);
+
+      return { addedLinesToAdd: true };
     }
+
+    return null;
   }
 
   getSectionProps(id) {
-    const { data, handlers } = this.props;
+    const { data, form, handlers } = this.props;
 
     return {
       data,
+      form,
       handlers,
       id,
       onToggle: this.handleSectionToggle,
@@ -114,24 +114,6 @@ class AgreementForm extends React.Component {
 
   handleAllSectionsToggle = (sections) => {
     this.setState({ sections });
-  }
-
-  renderLoadingPane = () => {
-    return (
-      <Paneset>
-        <Pane
-          dismissible
-          defaultWidth="100%"
-          id="pane-agreement-form"
-          onClose={this.props.handlers.onClose}
-          paneTitle={<FormattedMessage id="ui-agreements.loading" />}
-        >
-          <Layout className="marginTop1">
-            <Spinner />
-          </Layout>
-        </Pane>
-      </Paneset>
-    );
   }
 
   renderPaneFooter() {
@@ -187,8 +169,9 @@ class AgreementForm extends React.Component {
   }
 
   render() {
-    const { initialValues: { id, name }, isLoading } = this.props;
-    if (isLoading) return this.renderLoadingPane();
+    const { form, initialValues: { id, name } } = this.props;
+
+    const hasLoaded = form.getRegisteredFields().length > 0;
 
     return (
       <Paneset>
@@ -206,6 +189,7 @@ class AgreementForm extends React.Component {
                 <form id="form-agreement">
                   <div className={css.agreementForm}>
                     <AccordionSet>
+                      {hasLoaded ? <div id="form-loaded" /> : null}
                       <Row end="xs">
                         <Col xs>
                           <ExpandAllButton
@@ -237,11 +221,11 @@ class AgreementForm extends React.Component {
   }
 }
 
-const agreementForm = stripesForm({
-  form: 'EditAgreement',
-  navigationCheck: true,
-  enableReinitialize: true,
+export default stripesFinalForm({
+  initialValuesEqual: (a, b) => isEqual(a, b),
   keepDirtyOnReinitialize: true,
+  mutators: { setFieldData },
+  navigationCheck: true,
 })(AgreementForm);
 
 const selector = formValueSelector('EditAgreement');

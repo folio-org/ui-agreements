@@ -8,7 +8,7 @@ const generateAgreementValues = () => {
     description: `This agreement of count #${number} is still in its initial stages.`,
     renewalPriority: 'For review',
     isPerpetual: 'Yes',
-    editedName: `Edited Agreement #${number}`,
+    editedName: ' v2',
     editedRenewalPriority: 'Definitely renew',
     editedStatus: 'In negotiation',
   };
@@ -34,17 +34,16 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
     .click('#clickable-nav-agreements')
     .wait('#clickable-new-agreement')
     .click('#clickable-new-agreement')
-    .waitUntilNetworkIdle(1000)
-    .wait('#edit-agreement-name')
+    .wait('#form-loaded')
 
     .insert('#edit-agreement-name', values.name)
     .insert('#edit-agreement-description', values.description)
 
-    .click('#edit-agreement-start-date')
-    .type('#edit-agreement-start-date', '\u000d') // "Enter" selects current date
+    .click('#period-start-date-0')
+    .type('#period-start-date-0', '\u000d') // "Enter" selects current date
 
-    .insert('#edit-agreement-end-date', '2019-01-31')
-    .insert('#edit-agreement-cancellation-deadline', '2019-01-15')
+    .insert('#period-end-date-0', '2088-01-31')
+    .insert('#period-cancellation-deadline-0', '2088-01-15')
 
     .type('#edit-agreement-status', 'draft')
     .type('#edit-agreement-renewal-priority', 'for')
@@ -71,7 +70,7 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
 
       return nameElement.innerText.trim() === agreementName;
     }, values.name)
-    .evaluate((expectedValues, resourceId, lines) => {
+    .evaluate((expectedValues, _resourceId, _lines) => {
       const foundName = document.querySelector('[data-test-agreement-name]').innerText.trim();
       if (foundName !== expectedValues.name) {
         throw Error(`Name of agreement is incorrect. Expected "${expectedValues.name}" and got "${foundName}" `);
@@ -92,15 +91,15 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
         throw Error(`IsPerpetual of agreement is incorrect. Expected "${expectedValues.isPerpetual}" and got "${foundIsPerpetual}" `);
       }
 
-      if (resourceId) {
+      if (_resourceId) {
         const activeFrom = document.querySelector('[data-test-active-from]').textContent;
-        if (lines.activeFrom && (activeFrom !== lines.formattedActiveFrom)) {
-          throw Error(`Active from date of agreement line is incorrect. Expected "${lines.formattedActiveFrom}" and got "${activeFrom}"`);
+        if (_lines.activeFrom && (activeFrom !== _lines.formattedActiveFrom)) {
+          throw Error(`Active from date of agreement line is incorrect. Expected "${_lines.formattedActiveFrom}" and got "${activeFrom}"`);
         }
 
         const activeTo = document.querySelector('[data-test-active-to]').textContent;
-        if (lines.activeTo && (activeTo !== lines.formattedActiveTo)) {
-          throw Error(`Active to date of agreement line is incorrect. Expected "${lines.formattedActiveTo}" and got "${activeTo}"`);
+        if (_lines.activeTo && (activeTo !== _lines.formattedActiveTo)) {
+          throw Error(`Active to date of agreement line is incorrect. Expected "${_lines.formattedActiveTo}" and got "${activeTo}"`);
         }
       }
     }, values, resourceId, lines)
@@ -168,21 +167,20 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      it(`should edit agreement to: ${values.editedName}`, done => {
+      it(`should edit agreement to: ${values.name}${values.editedName}`, done => {
         nightmare
           .wait('#clickable-edit-agreement')
           .click('#clickable-edit-agreement')
-          .waitUntilNetworkIdle(2000)
-          .wait('#edit-agreement-name')
-          .insert('#edit-agreement-name', '')
+          .wait('#form-loaded')
+
           .insert('#edit-agreement-name', values.editedName)
 
-          .insert('#edit-agreement-start-date', '')
-          .insert('#edit-agreement-start-date', '2019-10-31')
-          .insert('#edit-agreement-end-date', '')
-          .insert('#edit-agreement-end-date', '2019-10-31')
-          .insert('#edit-agreement-cancellation-deadline', '')
-          .insert('#edit-agreement-cancellation-deadline', '2019-10-15')
+          .click('#datepicker-clear-button-period-start-date-0')
+          .insert('#period-start-date-0', '2019-10-31')
+          .click('#datepicker-clear-button-period-end-date-0')
+          .insert('#period-end-date-0', '2020-10-31')
+          .click('#datepicker-clear-button-period-cancellation-deadline-0')
+          .insert('#period-cancellation-deadline-0', '2020-10-15')
 
           .type('#edit-agreement-status', values.editedStatus)
           .type('#edit-agreement-renewal-priority', values.editedRenewalPriority)
@@ -191,8 +189,9 @@ module.exports.test = (uiTestCtx) => {
           .waitUntilNetworkIdle(2000)
           .evaluate(expectedValues => {
             const name = document.querySelector('[data-test-agreement-name]').innerText.trim();
-            if (name !== expectedValues.editedName) {
-              throw Error(`Name of found agreement is incorrect. Expected "${expectedValues.editedName}" and got "${name}" `);
+            const expectedName = (expectedValues.name + expectedValues.editedName);
+            if (name !== expectedName) {
+              throw Error(`Name of found agreement is incorrect. Expected "${expectedName}" and got "${name}" `);
             }
 
             const status = document.querySelector('[data-test-agreement-status]').innerText;

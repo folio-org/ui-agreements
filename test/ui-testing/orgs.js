@@ -53,10 +53,8 @@ module.exports.test = (uiTestCtx) => {
           .waitUntilNetworkIdle(2000)
           .wait('#edit-agreement-name')
           .insert('#edit-agreement-name', name)
-          .click('#edit-agreement-start-date')
-          .type('#edit-agreement-start-date', '\u000d') // "Enter" selects current date
-          .insert('#edit-agreement-end-date', '2019-01-31')
-          .insert('#edit-agreement-cancellation-deadline', '2019-01-15')
+          .click('#period-start-date-0')
+          .type('#period-start-date-0', '\u000d') // "Enter" selects current date
           .type('#edit-agreement-status', 'draft')
           .then(done)
           .catch(done);
@@ -120,7 +118,9 @@ module.exports.test = (uiTestCtx) => {
       it('should create Agreement', done => {
         nightmare
           .click('#clickable-create-agreement')
+          .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
+          .click('#clickable-expand-all')
           .then(done)
           .catch(done);
       });
@@ -128,6 +128,7 @@ module.exports.test = (uiTestCtx) => {
       orgs.forEach(org => {
         it(`should find "${org.name}" in Organizations list with role ${org.role}`, done => {
           nightmare
+            .wait('[data-test-organization-card]')
             .evaluate(o => {
               const rows = [...document.querySelectorAll('[data-test-organization-card]')].map(e => e.textContent);
               const row = rows.find(r => r.indexOf(o.name) >= 0);

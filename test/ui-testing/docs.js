@@ -37,8 +37,8 @@ module.exports.test = (uiTestCtx,
           .waitUntilNetworkIdle(2000) // Wait for the default values to be fetched and set.
 
           .insert('#edit-agreement-name', name)
-          .click('#edit-agreement-start-date')
-          .type('#edit-agreement-start-date', '\u000d') // "Enter" selects current date
+          .click('#period-start-date-0')
+          .type('#period-start-date-0', '\u000d') // "Enter" selects current date
           .type('#edit-agreement-status', 'active')
 
           .then(done)
@@ -67,6 +67,7 @@ module.exports.test = (uiTestCtx,
       it('should create agreement', done => {
         nightmare
           .click('#clickable-create-agreement')
+          .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
           .click('#clickable-expand-all')
           .then(done)
@@ -197,20 +198,18 @@ module.exports.test = (uiTestCtx,
             }, editedDoc, docsFieldName)
             .then(row => {
               let chain = nightmare
-                .insert(`#${docsFieldName}-name-${row}`, '')
-                .insert(`#${docsFieldName}-name-${row}`, editedDoc.name);
+                .insert(`#${docsFieldName}-name-${row}`, editedDoc.appendName);
+
               if (editedDoc.category) {
                 chain = chain
                   .type(`#${docsFieldName}-category-${row}`, '')
                   .type(`#${docsFieldName}-category-${row}`, editedDoc.category);
               }
+
               chain
-                .insert(`#${docsFieldName}-note-${row}`, '')
-                .insert(`#${docsFieldName}-note-${row}`, editedDoc.note)
-                .insert(`#${docsFieldName}-location-${row}`, '')
-                .insert(`#${docsFieldName}-location-${row}`, editedDoc.location)
-                .insert(`#${docsFieldName}-url-${row}`, '')
-                .insert(`#${docsFieldName}-url-${row}`, editedDoc.url);
+                .insert(`#${docsFieldName}-note-${row}`, editedDoc.appendNote)
+                .insert(`#${docsFieldName}-location-${row}`, editedDoc.appendLocation)
+                .insert(`#${docsFieldName}-url-${row}`, editedDoc.appendUrl);
             })
             .then(done)
             .catch(done);
@@ -238,6 +237,7 @@ module.exports.test = (uiTestCtx,
       it('should save updated agreement', done => {
         nightmare
           .click('#clickable-update-agreement')
+          .wait('[data-test-agreement-info]')
           .waitUntilNetworkIdle(2000) // Wait for record to be fetched
           .click('#clickable-expand-all')
           .then(done)
@@ -248,13 +248,18 @@ module.exports.test = (uiTestCtx,
         it(`should find "${editedDoc.name}" in docs list with updated values`, done => {
           nightmare
             .evaluate(d => {
-              const docCard = document.querySelector(`[data-test-doc="${d.name}"]`);
+              const expectedName = d.name + d.appendName;
+              const expectedNote = d.note + d.appendNote;
+              const expectedLocation = d.location + d.appendLocation;
+              const expectedUrl = d.url + d.appendUrl;
+
+              const docCard = document.querySelector(`[data-test-doc="${expectedName}"]`);
               if (!docCard) {
-                throw Error(`Could not find doc card with a doc named ${d.name}`);
+                throw Error(`Could not find doc card with a doc named ${expectedName}`);
               }
               const name = docCard.querySelector('[data-test-doc-name]').innerText.trim();
-              if (name !== d.name) {
-                throw Error(`Expected name to be ${d.name} and found ${name}.`);
+              if (name !== expectedName) {
+                throw Error(`Expected name to be ${expectedName} and found ${name}.`);
               }
 
               if (d.category) {
@@ -264,29 +269,29 @@ module.exports.test = (uiTestCtx,
                 }
               }
 
-              if (d.note) {
+              if (expectedNote) {
                 const note = docCard.querySelector('[data-test-doc-note]').innerText;
-                if (note !== d.note) {
-                  throw Error(`Expected note to be ${d.note} and found ${note}.`);
+                if (note !== expectedNote) {
+                  throw Error(`Expected note to be ${expectedNote} and found ${note}.`);
                 }
               }
 
-              if (d.location) {
+              if (expectedLocation) {
                 const location = docCard.querySelector('[data-test-doc-location]').innerText;
-                if (location !== d.location) {
-                  throw Error(`Expected location to be ${d.location} and found ${location}.`);
+                if (location !== expectedLocation) {
+                  throw Error(`Expected location to be ${expectedLocation} and found ${location}.`);
                 }
               }
 
-              if (d.url) {
+              if (expectedUrl) {
                 const url = docCard.querySelector('[data-test-doc-url]').innerText;
-                if (url !== d.url) {
-                  throw Error(`Expected url to be ${d.url} and found ${url}.`);
+                if (url !== expectedUrl) {
+                  throw Error(`Expected url to be ${expectedUrl} and found ${url}.`);
                 }
 
                 const href = docCard.querySelector('[data-test-doc-url]').href;
-                if (href !== d.url) {
-                  throw Error(`Expected url href to be ${d.url} and found ${href}.`);
+                if (href !== expectedUrl) {
+                  throw Error(`Expected url href to be ${expectedUrl} and found ${href}.`);
                 }
               }
             }, editedDoc)

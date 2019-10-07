@@ -7,14 +7,15 @@ import {
   Button,
   Col,
   Datepicker,
+  Headline,
   Row,
-  TextField,
+  TextArea,
 } from '@folio/stripes/components';
 
 import { composeValidators, EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
 import { validators } from '../utilities';
 
-class CustomCoverageFieldArray extends React.Component {
+class AgreementPeriodsFieldArray extends React.Component {
   static propTypes = {
     items: PropTypes.arrayOf(PropTypes.object),
     name: PropTypes.string.isRequired,
@@ -22,15 +23,19 @@ class CustomCoverageFieldArray extends React.Component {
     onDeleteField: PropTypes.func.isRequired,
   }
 
-  renderCustomCoverages = () => {
+  static defaultProps = {
+    items: [],
+  }
+
+  renderPeriods = () => {
     const { items, name } = this.props;
 
-    return items.map((coverage, index) => (
+    return items.map((period, index) => (
       <EditCard
         data-test-cc-number={index}
-        header={<FormattedMessage id="ui-agreements.agreementLines.customCoverageTitle" values={{ number: index + 1 }} />}
+        header={<FormattedMessage id="ui-agreements.agreementPeriods.periodTitle" values={{ number: index + 1 }} />}
         key={index}
-        onDelete={() => this.props.onDeleteField(index, coverage)}
+        onDelete={index !== 0 ? () => this.props.onDeleteField(index, period) : undefined}
       >
         <div>
           <Row>
@@ -39,43 +44,24 @@ class CustomCoverageFieldArray extends React.Component {
                 backendDateStandard="YYYY-MM-DD"
                 dateFormat="YYYY-MM-DD"
                 component={Datepicker}
-                id={`cc-start-date-${index}`}
-                label="Start date"
+                id={`period-start-date-${index}`}
+                label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
                 name={`${name}[${index}].startDate`}
                 required
                 validate={composeValidators(
                   validators.requiredStartDate,
                   validators.dateOrder,
-                  validators.multipleOpenEnded,
                   validators.overlappingDates,
                 )}
               />
             </Col>
             <Col xs={4}>
               <Field
-                component={TextField}
-                id={`cc-start-volume-${index}`}
-                label="Start volume"
-                name={`${name}[${index}].startVolume`}
-              />
-            </Col>
-            <Col xs={4}>
-              <Field
-                component={TextField}
-                id={`cc-start-issue-${index}`}
-                label="Start issue"
-                name={`${name}[${index}].startIssue`}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={4}>
-              <Field
                 backendDateStandard="YYYY-MM-DD"
                 dateFormat="YYYY-MM-DD"
                 component={Datepicker}
-                id={`cc-end-date-${index}`}
-                label="End date"
+                id={`period-end-date-${index}`}
+                label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
                 name={`${name}[${index}].endDate`}
                 validate={composeValidators(
                   validators.dateOrder,
@@ -86,21 +72,21 @@ class CustomCoverageFieldArray extends React.Component {
             </Col>
             <Col xs={4}>
               <Field
-                component={TextField}
-                id={`cc-end-volume-${index}`}
-                label="End volume"
-                name={`${name}[${index}].endVolume`}
-              />
-            </Col>
-            <Col xs={4}>
-              <Field
-                component={TextField}
-                id={`cc-end-issue-${index}`}
-                label="End issue"
-                name={`${name}[${index}].endIssue`}
+                backendDateStandard="YYYY-MM-DD"
+                dateFormat="YYYY-MM-DD"
+                component={Datepicker}
+                id={`period-cancellation-deadline-${index}`}
+                label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}
+                name={`${name}[${index}].cancellationDeadline`}
               />
             </Col>
           </Row>
+          <Field
+            component={TextArea}
+            id={`period-note-${index}`}
+            label={<FormattedMessage id="ui-agreements.agreementPeriods.periodNote" />}
+            name={`${name}[${index}].note`}
+          />
         </div>
       </EditCard>
     ));
@@ -109,15 +95,18 @@ class CustomCoverageFieldArray extends React.Component {
   render = () => {
     return (
       <div>
-        <div id="agreement-form-custom-coverages">
-          { this.renderCustomCoverages() }
+        <Headline>
+          <FormattedMessage id="ui-agreements.agreementPeriods" />
+        </Headline>
+        <div id="agreement-form-periods">
+          { this.renderPeriods() }
         </div>
-        <Button id="add-agreement-custom-coverage-button" onClick={() => this.props.onAddField()}>
-          <FormattedMessage id="ui-agreements.agreementLines.addCustomCoverage" />
+        <Button id="add-period-button" onClick={() => this.props.onAddField()}>
+          <FormattedMessage id="ui-agreements.agreementPeriods.addPeriod" />
         </Button>
       </div>
     );
   }
 }
 
-export default withKiwtFieldArray(CustomCoverageFieldArray);
+export default withKiwtFieldArray(AgreementPeriodsFieldArray);

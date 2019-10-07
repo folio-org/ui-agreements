@@ -53,8 +53,8 @@ module.exports.test = (uiTestCtx) => {
               .waitUntilNetworkIdle(1000)
 
               .insert('#edit-agreement-name', values.name)
-              .click('#edit-agreement-start-date')
-              .type('#edit-agreement-start-date', '\u000d') // "Enter" selects current date
+              .click('#period-start-date-0')
+              .type('#period-start-date-0', '\u000d') // "Enter" selects current date
               .type('#edit-agreement-status', 'active')
               .then(done)
               .catch(done);
@@ -100,14 +100,13 @@ module.exports.test = (uiTestCtx) => {
               .click('#clickable-create-agreement')
               .wait('[data-test-agreement-info]')
               .waitUntilNetworkIdle(2000)
+              .click('#clickable-expand-all')
               .then(done)
               .catch(done);
           });
 
           it('should have resource info in agreement lines list', done => {
             nightmare
-              .wait('#accordion-toggle-button-lines')
-              .click('#accordion-toggle-button-lines')
               .evaluate(expected => {
                 const cells = [...document.querySelectorAll('#agreement-lines [aria-rowindex="2"] [role="gridcell"]')];
 

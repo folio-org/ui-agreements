@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
+import { FieldArray } from 'react-final-form-arrays';
 
 import {
   Col,
-  Datepicker,
   Row,
   Select,
   TextArea,
   TextField,
 } from '@folio/stripes/components';
 
+import AgreementPeriodsFieldArray from '../AgreementPeriodsFieldArray';
 import { validators } from '../utilities';
 
 class FormInfo extends React.Component {

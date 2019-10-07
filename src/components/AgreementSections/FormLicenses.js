@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field, FieldArray } from 'redux-form';
+import { Field } from 'react-final-form';
+import { FieldArray } from 'react-final-form-arrays';
 
 import { Accordion, KeyValue, TextArea } from '@folio/stripes/components';
 import { DocumentsFieldArray } from '@folio/stripes-erm-components';
@@ -15,6 +16,7 @@ export default class FormLicenses extends React.Component {
       amendmentStatusValues: PropTypes.array,
       licenseLinkStatusValues: PropTypes.array,
     }),
+    form: PropTypes.object,
     handlers: PropTypes.object,
     id: PropTypes.string,
     onToggle: PropTypes.func,
@@ -37,6 +39,7 @@ export default class FormLicenses extends React.Component {
         <FieldArray
           amendmentStatusValues={this.props.data.amendmentStatusValues}
           component={LicensesFieldArray}
+          form={this.props.form}
           licenseStatusValues={this.props.data.licenseLinkStatusValues}
           name="linkedLicenses"
         />
