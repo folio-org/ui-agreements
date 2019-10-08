@@ -87,7 +87,7 @@ class AgreementForm extends React.Component {
   }
 
   getSectionProps(id) {
-    const { data, form, handlers } = this.props;
+    const { data, form, handlers, values={} } = this.props;
 
     return {
       data,
@@ -96,6 +96,7 @@ class AgreementForm extends React.Component {
       id,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
+      values,
     };
   }
 
@@ -217,6 +218,9 @@ class AgreementForm extends React.Component {
 export default stripesFinalForm({
   initialValuesEqual: (a, b) => isEqual(a, b),
   keepDirtyOnReinitialize: true,
+  subscription: {
+    values: true,
+  },
   mutators: { setFieldData },
   navigationCheck: true,
 })(AgreementForm);

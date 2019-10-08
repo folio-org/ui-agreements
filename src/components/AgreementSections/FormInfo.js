@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'react-final-form';
+import { Field, FormSpy } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
-import { OnChange } from 'react-final-form-listeners'
 
 import {
   Col,
@@ -37,7 +36,7 @@ export default class FormInfo extends React.Component {
   // Prepend an empty value to each set of dropdown options to facilitate
   // unselecting a value.
   static getDerivedStateFromProps(props, state) {
-    const { data } = props;
+    const { data, values } = props;
     const newState = {};
 
     if (data.agreementStatusValues.length !== state.agreementStatusValues.length) {
@@ -56,17 +55,43 @@ export default class FormInfo extends React.Component {
       newState.reasonForClosureValues = [{ value: null, label: '' }, ...data.reasonForClosureValues];
     }
 
-    if (Object.keys(newState).length) return newState;
+    //Check if status is closed and, if so, change state to allow reasonForClosure field
+    if (values.agreementStatus === 'closed') {
+      newState.isClosed = true;
+    }
+    else {
+      newState.isClosed = false;
+    }
 
+    if (Object.keys(newState).length) return newState;
+    
     return null;
   }
+
+    warnReason = ({ values }) => {
+      const { form } = this.props;
+
+      if (values.reasonForClosure && values.agreementStatus !== 'closed') {
+        form.mutators.setFieldData('reasonForClosure', {
+          warning: (
+            <div data-test-warn-clear-reason-for-closure>
+              <FormattedMessage id="ui-agreements.warn.clearReasonForClosure" />
+            </div>
+          )
+        });
+      } else {
+        form.mutators.setFieldData('reasonForClosure', {
+          warning: undefined
+        });
+      }
+    }
+
+
 
  
   render() {
     const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues } = this.state;
     const {form: {mutators}} = this.props;
-    var reasonIsEmpty = true;
-
     return (
       <div data-test-edit-agreement-info>
         <Row>
@@ -136,36 +161,14 @@ export default class FormInfo extends React.Component {
             />
           </Col>
         </Row>
+        <FormSpy
+          subscription={{ values: true }}
+          onChange={this.warnReason}
+        />
         <FieldArray
           component={AgreementPeriodsFieldArray}
           name="periods"
         />
-        <OnChange>
-          {(values, previous) => {
-            //Check if status is closed and, if so, change state to allow reasonForClosure field
-            if (values.agreementStatus === 'closed') {
-              this.setState({isClosed: true})
-            }
-            else {
-              this.setState({isClosed: false})
-              }
-            if (values.reasonForClosure) {
-              reasonIsEmpty = false
-            }
-            else {
-              reasonIsEmpty = true
-            }
-            if (values.reasonForClosure && values.agreementStatus !== 'closed') {
-              mutators.setFieldData('reasonForClosure', {
-                warning: (
-                  <div data-test-warn-clear-reason-for-closure>
-                    <FormattedMessage id="ui-agreements.warn.clearReasonForClosure" />
-                  </div>
-                )
-              });
-            }}
-          }
-        </OnChange>
       </div>
     );
   }

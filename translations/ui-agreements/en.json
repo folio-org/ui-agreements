@@ -100,6 +100,8 @@
   "agreementPeriods.periodStart": "Period start",
   "agreementPeriods.periodTitle": "Agreement period #{number}",
 
+  "warn.clearReasonForClosure": "This reason will be cleared as status is not closed",
+
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
 
   "basket.name": "ERM Basket",
