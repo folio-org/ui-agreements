@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty } from 'lodash';
+import { isEmpty, mapValues } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import {
   Button,
@@ -55,9 +55,7 @@ export default class DuplicateAgreementModal extends React.Component {
 
   toggleSelectAll = (e) => {
     if (e.target.checked) {
-      const selectAllObject = Object.keys(this.cloneableProperties).map(item => {
-        return { [item]: true };
-      });
+      const selectAllObject = mapValues(this.cloneableProperties, () => true);
 
       this.setState(() => {
         return {
