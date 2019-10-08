@@ -51,6 +51,7 @@ class AgreementForm extends React.Component {
     invalid: PropTypes.bool,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
+    values: PropTypes.object,
   }
 
   static defaultProps = {
@@ -87,7 +88,7 @@ class AgreementForm extends React.Component {
   }
 
   getSectionProps(id) {
-    const { data, form, handlers, values={} } = this.props;
+    const { data, form, handlers, values = {} } = this.props;
 
     return {
       data,
