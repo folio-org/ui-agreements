@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -17,6 +17,7 @@ import {
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import { LoadingPane } from '@folio/stripes-erm-components';
+import DuplicateAgreementModal from '../DuplicateAgreementModal';
 
 import {
   ControllingLicense,
@@ -53,6 +54,7 @@ export default class Agreement extends React.Component {
   }
 
   state = {
+    showDuplicateAgreementModal: false,
     sections: {
       controllingLicense: false,
       externalLicenses: false,
@@ -85,6 +87,14 @@ export default class Agreement extends React.Component {
     };
   }
 
+  openDuplicateAgreementModal = () => {
+    this.setState({ showDuplicateAgreementModal: true });
+  }
+
+  closeDuplicateAgreementModal = () => {
+    this.setState({ showDuplicateAgreementModal: false });
+  }
+
   handleSectionToggle = ({ id }) => {
     this.setState((prevState) => ({
       sections: {
@@ -98,23 +108,43 @@ export default class Agreement extends React.Component {
     this.setState({ sections });
   }
 
-  getActionMenu = () => (
-    <IfPermission perm="ui-agreements.agreements.edit">
+  getActionMenu = (onToggle) => (
+    <Fragment>
+      <IfPermission perm="ui-agreements.agreements.edit">
+        <FormattedMessage id="ui-agreements.agreements.editAgreement">
+          {ariaLabel => (
+            <Button
+              aria-label={ariaLabel}
+              buttonStyle="dropdownItem"
+              id="clickable-dropdown-edit-agreement"
+              onClick={this.props.handlers.onEdit}
+            >
+              <Icon icon="edit">
+                <FormattedMessage id="ui-agreements.agreements.editAgreement" />
+              </Icon>
+            </Button>
+          )}
+        </FormattedMessage>
+      </IfPermission>
       <FormattedMessage id="ui-agreements.agreements.editAgreement">
         {ariaLabel => (
           <Button
             aria-label={ariaLabel}
             buttonStyle="dropdownItem"
-            id="clickable-dropdown-edit-agreement"
-            onClick={this.props.handlers.onEdit}
+            id="clickable-dropdownduplicate-agreement"
+            onClick={() => {
+              this.openDuplicateAgreementModal();
+              onToggle();
+            }}
           >
-            <Icon icon="edit">
-              <FormattedMessage id="ui-agreements.agreements.editAgreement" />
+            <Icon icon="duplicate">
+              <FormattedMessage id="ui-agreements.duplicate" />
             </Icon>
           </Button>
         )}
       </FormattedMessage>
-    </IfPermission>
+
+    </Fragment>
   )
 
   renderEditAgreementPaneMenu = () => {
@@ -126,7 +156,7 @@ export default class Agreement extends React.Component {
     return (
       <IfPermission perm="ui-agreements.agreements.edit">
         <PaneMenu>
-          { handlers.onToggleTags &&
+          {handlers.onToggleTags &&
             <FormattedMessage id="ui-agreements.agreements.showTags">
               {ariaLabel => (
                 <IconButton
@@ -165,12 +195,18 @@ export default class Agreement extends React.Component {
       helperApp
     } = this.props;
 
+<<<<<<< HEAD
     if (isLoading) return <LoadingPane defaultWidth="60%" onClose={handlers.onClose} />;
+=======
+    const { showDuplicateAgreementModal } = this.state;
+
+    if (isLoading) return this.renderLoadingPane();
+>>>>>>> Initial work to clone an agreement, refs ERM-459
 
     return (
       <React.Fragment>
         <Pane
-          actionMenu={this.getActionMenu}
+          actionMenu={({ onToggle }) => this.getActionMenu(onToggle)}
           appIcon={<AppIcon app="agreements" />}
           defaultWidth="60%"
           dismissible
@@ -217,6 +253,7 @@ export default class Agreement extends React.Component {
           </TitleManager>
         </Pane>
         {helperApp}
+        {showDuplicateAgreementModal && <DuplicateAgreementModal onClose={this.closeDuplicateAgreementModal} />}
       </React.Fragment>
 
     );
