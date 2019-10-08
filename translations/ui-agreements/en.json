@@ -8,11 +8,11 @@
   "create": "Create",
   "notSet": "Not set",
   "saveAndClose": "Save & close",
-
+  "duplicate": "Duplicate",
   "dashboard": "Dashboard",
   "agreements": "Agreements",
   "eresources": "E-resources",
-
+  "selectAll": "Select all / deselect all",
   "status": "Status",
 
   "agreement": "Agreement",
