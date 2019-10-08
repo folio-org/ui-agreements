@@ -50,7 +50,6 @@ const shouldFindContent = (nightmare, content, index, count, listId) => {
       .waitUntilNetworkIdle(2000)
       .evaluate((name, i, list) => {
         const nameRows = [...document.querySelectorAll(`#${list} [class*=mclScrollable] [aria-rowindex]`)];
-        console.log(list);
         const nameElement = nameRows.map(node => ({
           name: node.children[0].textContent,
         }))[i].name;
@@ -214,7 +213,6 @@ module.exports.test = (uiTestCtx) => {
             const lines = [...document.querySelectorAll('#agreement-lines [class*=mclScrollable] [aria-rowindex]')];
             if (lines.length !== 1) throw Error(`Expected to find 1 agreement line and found ${lines.length}`);
             const element = lines.map(node => ({
-              //  id: node.querySelector('[data-test-resource-id]').getAttribute('data-test-resource-id'),
               name: node.children[0].textContent,
             }));
             if (!element) throw Error(`Could not find agreement line for ${pkg.name}`);
