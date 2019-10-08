@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
+import { OnChange } from 'react-final-form-listeners'
 
 import {
   Col,
@@ -19,6 +20,7 @@ export default class FormInfo extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       agreementStatusValues: PropTypes.array,
+      reasonForClosureValues: PropTypes.array,
       renewalPriorityValues: PropTypes.array,
       isPerpetualValues: PropTypes.array,
     }),
@@ -26,8 +28,10 @@ export default class FormInfo extends React.Component {
 
   state = {
     agreementStatusValues: [],
+    reasonForClosureValues: [],
     isPerpetualValues: [],
     renewalPriorityValues: [],
+    isClosed: false
   }
 
   // Prepend an empty value to each set of dropdown options to facilitate
@@ -48,13 +52,20 @@ export default class FormInfo extends React.Component {
       newState.isPerpetualValues = [{ value: null, label: '' }, ...data.isPerpetualValues];
     }
 
+    if (data.reasonForClosureValues.length + 1 !== state.reasonForClosureValues.length) {
+      newState.reasonForClosureValues = [{ value: null, label: '' }, ...data.reasonForClosureValues];
+    }
+
     if (Object.keys(newState).length) return newState;
 
     return null;
   }
 
+ 
   render() {
-    const { agreementStatusValues, isPerpetualValues, renewalPriorityValues } = this.state;
+    const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues } = this.state;
+    const {form: {mutators}} = this.props;
+    var reasonIsEmpty = true;
 
     return (
       <div data-test-edit-agreement-info>
@@ -81,7 +92,7 @@ export default class FormInfo extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={12} md={4}>
+          <Col xs={12} md={6}>
             <Field
               component={Select}
               dataOptions={agreementStatusValues}
@@ -93,7 +104,20 @@ export default class FormInfo extends React.Component {
               validate={validators.required}
             />
           </Col>
-          <Col xs={12} md={4}>
+          <Col xs={12} md={6}>
+            <Field
+              component={Select}
+              dataOptions={reasonForClosureValues}
+              disabled={!this.state.isClosed}
+              id="edit-agreement-reason-for-closure"
+              label={<FormattedMessage id="ui-agreements.agreements.reasonForClosure" />}
+              name="reasonForClosure"
+              placeholder=" "
+            />
+          </Col>
+          </Row>
+          <Row>
+          <Col xs={12} md={6}>
             <Field
               component={Select}
               dataOptions={renewalPriorityValues}
@@ -102,7 +126,7 @@ export default class FormInfo extends React.Component {
               name="renewalPriority"
             />
           </Col>
-          <Col xs={12} md={4}>
+          <Col xs={12} md={6}>
             <Field
               component={Select}
               dataOptions={isPerpetualValues}
@@ -116,6 +140,32 @@ export default class FormInfo extends React.Component {
           component={AgreementPeriodsFieldArray}
           name="periods"
         />
+        <OnChange>
+          {(values, previous) => {
+            //Check if status is closed and, if so, change state to allow reasonForClosure field
+            if (values.agreementStatus === 'closed') {
+              this.setState({isClosed: true})
+            }
+            else {
+              this.setState({isClosed: false})
+              }
+            if (values.reasonForClosure) {
+              reasonIsEmpty = false
+            }
+            else {
+              reasonIsEmpty = true
+            }
+            if (values.reasonForClosure && values.agreementStatus !== 'closed') {
+              mutators.setFieldData('reasonForClosure', {
+                warning: (
+                  <div data-test-warn-clear-reason-for-closure>
+                    <FormattedMessage id="ui-agreements.warn.clearReasonForClosure" />
+                  </div>
+                )
+              });
+            }}
+          }
+        </OnChange>
       </div>
     );
   }
