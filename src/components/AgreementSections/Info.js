@@ -10,6 +10,7 @@ import {
 } from '@folio/stripes/components';
 
 import FormattedUTCDate from '../FormattedUTCDate';
+import { statuses } from '../../constants';
 
 export default class Info extends React.Component {
   static propTypes = {
@@ -28,7 +29,7 @@ export default class Info extends React.Component {
 
   render() {
     const { agreement } = this.props;
-    const agreementIsClosed = (agreement.agreementStatus !== null && (agreement.agreementStatus.value === 'closed'));
+    const agreementIsClosed = (agreement.agreementStatus !== null && (agreement.agreementStatus.value === statuses.CLOSED));
     return (
       <div data-test-agreement-info>
         <Row>

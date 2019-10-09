@@ -14,6 +14,7 @@ import {
 
 import AgreementPeriodsFieldArray from '../AgreementPeriodsFieldArray';
 import { validators } from '../utilities';
+import { statuses } from '../../constants';
 
 export default class FormInfo extends React.Component {
   static propTypes = {
@@ -62,7 +63,7 @@ export default class FormInfo extends React.Component {
     }
 
     // Check if status is closed and, if so, change state to allow reasonForClosure field
-    if (values.agreementStatus === 'closed') {
+    if (values.agreementStatus === statuses.CLOSED) {
       newState.isClosed = true;
     } else {
       newState.isClosed = false;
@@ -76,14 +77,14 @@ export default class FormInfo extends React.Component {
   setWarnings = ({ values }) => {
     let warning;
 
-    if (values.reasonForClosure && values.agreementStatus !== 'closed') {
+    if (values.reasonForClosure && values.agreementStatus !== statuses.CLOSED) {
       warning = (
         <div data-test-warn-clear-reason-for-closure>
           <FormattedMessage id="ui-agreements.warn.clearReasonForClosure" />
         </div>
-      )
+      );
     } else {
-      warning = undefined
+      warning = undefined;
     }
     this.props.form.mutators.setFieldData('reasonForClosure', { warning });
   }
@@ -170,4 +171,4 @@ export default class FormInfo extends React.Component {
       </div>
     );
   }
-};
+}
