@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import { Badge, Accordion, MultiColumnList } from '@folio/stripes/components';
-import { Spinner } from '@folio/stripes-erm-components';
 
 import FormattedUTCDate from '../FormattedUTCDate';
 
-export default class Lines extends React.Component {
+export default class OtherPeriods extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
       periods: PropTypes.arrayOf(PropTypes.shape({
@@ -45,14 +44,13 @@ export default class Lines extends React.Component {
 
   render() {
     const {
-      agreement,
+      agreement: { currentPeriod = {}, periods = [] },
       id,
       onToggle,
       open,
     } = this.props;
 
-    const otherPeriods = (agreement.periods || [])
-      .filter(period => period.startDate !== agreement.startDate);
+    const otherPeriods = periods.filter(period => period.id !== get(currentPeriod, 'id'));
 
     return (
       <Accordion
