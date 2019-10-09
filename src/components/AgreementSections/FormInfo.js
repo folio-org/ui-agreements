@@ -83,8 +83,6 @@ export default class FormInfo extends React.Component {
           <FormattedMessage id="ui-agreements.warn.clearReasonForClosure" />
         </div>
       );
-    } else {
-      warning = undefined;
     }
     this.props.form.mutators.setFieldData('reasonForClosure', { warning });
   }
