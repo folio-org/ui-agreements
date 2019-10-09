@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
 import { Badge, Accordion, MultiColumnList } from '@folio/stripes/components';
-import { Spinner } from '@folio/stripes-erm-components';
 
 import FormattedUTCDate from '../FormattedUTCDate';
 
@@ -46,13 +44,14 @@ export default class Lines extends React.Component {
   render() {
     const {
       agreement,
+      agreement: { currentPeriod },
       id,
       onToggle,
       open,
     } = this.props;
 
     const otherPeriods = (agreement.periods || [])
-      .filter(period => period.startDate !== agreement.startDate);
+      .filter(period => period.id !== (currentPeriod && currentPeriod.id));
 
     return (
       <Accordion
