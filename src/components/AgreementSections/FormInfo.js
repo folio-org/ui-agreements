@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field, FormSpy } from 'react-final-form';
+import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
 import {
@@ -89,6 +89,7 @@ export default class FormInfo extends React.Component {
 
   render() {
     const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues } = this.state;
+    const { values } = this.props;
     return (
       <div data-test-edit-agreement-info>
         <Row>
@@ -115,16 +116,30 @@ export default class FormInfo extends React.Component {
         </Row>
         <Row>
           <Col xs={12} md={6}>
-            <Field
-              component={Select}
-              dataOptions={agreementStatusValues}
-              id="edit-agreement-status"
-              label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
-              name="agreementStatus"
-              placeholder=" "
-              required
-              validate={validators.required}
-            />
+            <Field name="agreementStatus" validate={validators.required}>
+              {props => {
+                return (<Select
+                  dataOptions={agreementStatusValues}
+                  id="edit-agreement-status"
+                  label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
+                  placeholder=" "
+                  required
+                  onChange={(e) => {
+                    props.input.onChange(e);
+                    let warning;
+                    if (values.reasonForClosure && e.target.value !== statuses.CLOSED) {
+                      warning = (
+                        <div data-test-warn-clear-reason-for-closure>
+                          <FormattedMessage id="ui-agreements.warn.clearReasonForClosure" />
+                        </div>
+                      );
+                    }
+                    this.props.form.mutators.setFieldData('reasonForClosure', { warning });
+                  }}
+                  value={props.input.value}
+                />);
+              }}
+            </Field>
           </Col>
           <Col xs={12} md={6}>
             <Field
@@ -158,10 +173,6 @@ export default class FormInfo extends React.Component {
             />
           </Col>
         </Row>
-        <FormSpy
-          subscription={{ values: true }}
-          onChange={this.setWarnings}
-        />
         <FieldArray
           component={AgreementPeriodsFieldArray}
           name="periods"
