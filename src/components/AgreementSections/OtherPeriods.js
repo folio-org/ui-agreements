@@ -44,7 +44,7 @@ export default class Lines extends React.Component {
   render() {
     const {
       agreement,
-      agreement: { currentPeriod },
+      agreement: { currentPeriod = {}, periods = [] },
       id,
       onToggle,
       open,
