@@ -50,8 +50,7 @@ export default class Lines extends React.Component {
       open,
     } = this.props;
 
-    const otherPeriods = (agreement.periods)
-      .filter(period => period.id !== currentPeriod.id);
+    const otherPeriods = periods.filter(period => period.id !== currentPeriod.id);
 
     return (
       <Accordion
