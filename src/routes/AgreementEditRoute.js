@@ -164,6 +164,7 @@ class AgreementEditRoute extends React.Component {
       items = [],
       linkedLicenses = [],
       orgs = [],
+      reasonForClosure = {},
       renewalPriority = {},
     } = initialValues;
 
@@ -173,6 +174,7 @@ class AgreementEditRoute extends React.Component {
       // Set the values of dropdown-controlled props as values rather than objects.
       initialValues.agreementStatus = agreementStatus.value;
       initialValues.isPerpetual = isPerpetual.value;
+      initialValues.reasonForClosure = reasonForClosure.value;
       initialValues.renewalPriority = renewalPriority.value;
       initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
       initialValues.orgs = orgs.map(o => ({ ...o, role: o.role && o.role.value }));

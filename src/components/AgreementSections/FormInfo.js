@@ -37,13 +37,12 @@ export default class FormInfo extends React.Component {
     reasonForClosureValues: [],
     isPerpetualValues: [],
     renewalPriorityValues: [],
-    isClosed: false
   }
 
   // Prepend an empty value to each set of dropdown options to facilitate
   // unselecting a value.
   static getDerivedStateFromProps(props, state) {
-    const { data, values } = props;
+    const { data } = props;
     const newState = {};
 
     if (data.agreementStatusValues.length !== state.agreementStatusValues.length) {
@@ -51,22 +50,15 @@ export default class FormInfo extends React.Component {
     }
 
     if (data.renewalPriorityValues.length + 1 !== state.renewalPriorityValues.length) {
-      newState.renewalPriorityValues = [{ value: null, label: '' }, ...data.renewalPriorityValues];
+      newState.renewalPriorityValues = [{ value: '', label: '' }, ...data.renewalPriorityValues];
     }
 
     if (data.isPerpetualValues.length + 1 !== state.isPerpetualValues.length) {
-      newState.isPerpetualValues = [{ value: null, label: '' }, ...data.isPerpetualValues];
+      newState.isPerpetualValues = [{ value: '', label: '' }, ...data.isPerpetualValues];
     }
 
     if (data.reasonForClosureValues.length + 1 !== state.reasonForClosureValues.length) {
-      newState.reasonForClosureValues = [{ value: null, label: '' }, ...data.reasonForClosureValues];
-    }
-
-    // Check if status is closed and, if so, change state to allow reasonForClosure field
-    if (values.agreementStatus === statuses.CLOSED) {
-      newState.isClosed = true;
-    } else {
-      newState.isClosed = false;
+      newState.reasonForClosureValues = [{ value: '', label: '' }, ...data.reasonForClosureValues];
     }
 
     if (Object.keys(newState).length) return newState;
@@ -90,6 +82,7 @@ export default class FormInfo extends React.Component {
   render() {
     const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues } = this.state;
     const { values } = this.props;
+
     return (
       <div data-test-edit-agreement-info>
         <Row>
@@ -126,7 +119,9 @@ export default class FormInfo extends React.Component {
                   required
                   onChange={(e) => {
                     props.input.onChange(e);
+
                     let warning;
+
                     if (values.reasonForClosure && e.target.value !== statuses.CLOSED) {
                       warning = (
                         <div data-test-warn-clear-reason-for-closure>
@@ -134,6 +129,7 @@ export default class FormInfo extends React.Component {
                         </div>
                       );
                     }
+
                     this.props.form.mutators.setFieldData('reasonForClosure', { warning });
                   }}
                   value={props.input.value}
@@ -143,19 +139,20 @@ export default class FormInfo extends React.Component {
           </Col>
           <Col xs={12} md={6}>
             <Field
+              parse={v => v} // Lets us send an empty string instead of `undefined`
               component={Select}
               dataOptions={reasonForClosureValues}
-              disabled={!this.state.isClosed}
+              disabled={values.agreementStatus !== statuses.CLOSED}
               id="edit-agreement-reason-for-closure"
               label={<FormattedMessage id="ui-agreements.agreements.reasonForClosure" />}
               name="reasonForClosure"
-              placeholder=" "
             />
           </Col>
         </Row>
         <Row>
           <Col xs={12} md={6}>
             <Field
+              parse={v => v} // Lets us pass an empty string instead of `undefined`
               component={Select}
               dataOptions={renewalPriorityValues}
               id="edit-agreement-renewal-priority"
@@ -165,6 +162,7 @@ export default class FormInfo extends React.Component {
           </Col>
           <Col xs={12} md={6}>
             <Field
+              parse={v => v} // Lets us pass an empty string instead of `undefined`
               component={Select}
               dataOptions={isPerpetualValues}
               id="edit-agreement-is-perpetual"
