@@ -15,7 +15,7 @@ import {
 import AgreementPeriodsFieldArray from '../AgreementPeriodsFieldArray';
 import { validators } from '../utilities';
 
-class FormInfo extends React.Component {
+export default class FormInfo extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       agreementStatusValues: PropTypes.array,
@@ -73,107 +73,101 @@ class FormInfo extends React.Component {
     return null;
   }
 
-    warnReason = ({ values }) => {
-      const { form } = this.props;
+  setWarnings = ({ values }) => {
+    let warning;
 
-      if (values.reasonForClosure && values.agreementStatus !== 'closed') {
-        form.mutators.setFieldData('reasonForClosure', {
-          warning: (
-            <div data-test-warn-clear-reason-for-closure>
-              <FormattedMessage id="ui-agreements.warn.clearReasonForClosure" />
-            </div>
-          )
-        });
-      } else {
-        form.mutators.setFieldData('reasonForClosure', {
-          warning: undefined
-        });
-      }
-    }
-
-
-    render() {
-      const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues } = this.state;
-      return (
-        <div data-test-edit-agreement-info>
-          <Row>
-            <Col xs={12}>
-              <Field
-                component={TextField}
-                id="edit-agreement-name"
-                label={<FormattedMessage id="ui-agreements.agreements.name" />}
-                name="name"
-                required
-                validate={validators.required}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <Field
-                component={TextArea}
-                id="edit-agreement-description"
-                label={<FormattedMessage id="ui-agreements.agreements.agreementDescription" />}
-                name="description"
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12} md={6}>
-              <Field
-                component={Select}
-                dataOptions={agreementStatusValues}
-                id="edit-agreement-status"
-                label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
-                name="agreementStatus"
-                placeholder=" "
-                required
-                validate={validators.required}
-              />
-            </Col>
-            <Col xs={12} md={6}>
-              <Field
-                component={Select}
-                dataOptions={reasonForClosureValues}
-                disabled={!this.state.isClosed}
-                id="edit-agreement-reason-for-closure"
-                label={<FormattedMessage id="ui-agreements.agreements.reasonForClosure" />}
-                name="reasonForClosure"
-                placeholder=" "
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12} md={6}>
-              <Field
-                component={Select}
-                dataOptions={renewalPriorityValues}
-                id="edit-agreement-renewal-priority"
-                label={<FormattedMessage id="ui-agreements.agreements.renewalPriority" />}
-                name="renewalPriority"
-              />
-            </Col>
-            <Col xs={12} md={6}>
-              <Field
-                component={Select}
-                dataOptions={isPerpetualValues}
-                id="edit-agreement-is-perpetual"
-                label={<FormattedMessage id="ui-agreements.agreements.isPerpetual" />}
-                name="isPerpetual"
-              />
-            </Col>
-          </Row>
-          <FormSpy
-            subscription={{ values: true }}
-            onChange={this.warnReason}
-          />
-          <FieldArray
-            component={AgreementPeriodsFieldArray}
-            name="periods"
-          />
+    if (values.reasonForClosure && values.agreementStatus !== 'closed') {
+      warning = (
+        <div data-test-warn-clear-reason-for-closure>
+          <FormattedMessage id="ui-agreements.warn.clearReasonForClosure" />
         </div>
-      );
+      )
+    } else {
+      warning = undefined
     }
-}
+    this.props.form.mutators.setFieldData('reasonForClosure', { warning });
+  }
 
-export default FormInfo;
+  render() {
+    const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues } = this.state;
+    return (
+      <div data-test-edit-agreement-info>
+        <Row>
+          <Col xs={12}>
+            <Field
+              component={TextField}
+              id="edit-agreement-name"
+              label={<FormattedMessage id="ui-agreements.agreements.name" />}
+              name="name"
+              required
+              validate={validators.required}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <Field
+              component={TextArea}
+              id="edit-agreement-description"
+              label={<FormattedMessage id="ui-agreements.agreements.agreementDescription" />}
+              name="description"
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} md={6}>
+            <Field
+              component={Select}
+              dataOptions={agreementStatusValues}
+              id="edit-agreement-status"
+              label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
+              name="agreementStatus"
+              placeholder=" "
+              required
+              validate={validators.required}
+            />
+          </Col>
+          <Col xs={12} md={6}>
+            <Field
+              component={Select}
+              dataOptions={reasonForClosureValues}
+              disabled={!this.state.isClosed}
+              id="edit-agreement-reason-for-closure"
+              label={<FormattedMessage id="ui-agreements.agreements.reasonForClosure" />}
+              name="reasonForClosure"
+              placeholder=" "
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} md={6}>
+            <Field
+              component={Select}
+              dataOptions={renewalPriorityValues}
+              id="edit-agreement-renewal-priority"
+              label={<FormattedMessage id="ui-agreements.agreements.renewalPriority" />}
+              name="renewalPriority"
+            />
+          </Col>
+          <Col xs={12} md={6}>
+            <Field
+              component={Select}
+              dataOptions={isPerpetualValues}
+              id="edit-agreement-is-perpetual"
+              label={<FormattedMessage id="ui-agreements.agreements.isPerpetual" />}
+              name="isPerpetual"
+            />
+          </Col>
+        </Row>
+        <FormSpy
+          subscription={{ values: true }}
+          onChange={this.setWarnings}
+        />
+        <FieldArray
+          component={AgreementPeriodsFieldArray}
+          name="periods"
+        />
+      </div>
+    );
+  }
+};
