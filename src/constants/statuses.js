@@ -1,4 +1,5 @@
 const statuses = {
+  CLOSED: 'closed',
   CONTROLLING: 'controlling',
   CURRENT: 'current',
   EXPIRED: 'expired',

@@ -14,18 +14,27 @@ import {
 
 import AgreementPeriodsFieldArray from '../AgreementPeriodsFieldArray';
 import { validators } from '../utilities';
+import { statuses } from '../../constants';
 
 export default class FormInfo extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       agreementStatusValues: PropTypes.array,
+      reasonForClosureValues: PropTypes.array,
       renewalPriorityValues: PropTypes.array,
       isPerpetualValues: PropTypes.array,
     }),
+    form: PropTypes.shape({
+      mutators: PropTypes.shape({
+        setFieldData: PropTypes.func.isRequired,
+      }).isRequired,
+    }),
+    values: PropTypes.object,
   };
 
   state = {
     agreementStatusValues: [],
+    reasonForClosureValues: [],
     isPerpetualValues: [],
     renewalPriorityValues: [],
   }
@@ -41,11 +50,15 @@ export default class FormInfo extends React.Component {
     }
 
     if (data.renewalPriorityValues.length + 1 !== state.renewalPriorityValues.length) {
-      newState.renewalPriorityValues = [{ value: null, label: '' }, ...data.renewalPriorityValues];
+      newState.renewalPriorityValues = [{ value: '', label: '' }, ...data.renewalPriorityValues];
     }
 
     if (data.isPerpetualValues.length + 1 !== state.isPerpetualValues.length) {
-      newState.isPerpetualValues = [{ value: null, label: '' }, ...data.isPerpetualValues];
+      newState.isPerpetualValues = [{ value: '', label: '' }, ...data.isPerpetualValues];
+    }
+
+    if (data.reasonForClosureValues.length + 1 !== state.reasonForClosureValues.length) {
+      newState.reasonForClosureValues = [{ value: '', label: '' }, ...data.reasonForClosureValues];
     }
 
     if (Object.keys(newState).length) return newState;
@@ -53,8 +66,22 @@ export default class FormInfo extends React.Component {
     return null;
   }
 
+  setWarnings = ({ values }) => {
+    let warning;
+
+    if (values.reasonForClosure && values.agreementStatus !== statuses.CLOSED) {
+      warning = (
+        <div data-test-warn-clear-reason-for-closure>
+          <FormattedMessage id="ui-agreements.warn.clearReasonForClosure" />
+        </div>
+      );
+    }
+    this.props.form.mutators.setFieldData('reasonForClosure', { warning });
+  }
+
   render() {
-    const { agreementStatusValues, isPerpetualValues, renewalPriorityValues } = this.state;
+    const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues } = this.state;
+    const { values } = this.props;
 
     return (
       <div data-test-edit-agreement-info>
@@ -81,20 +108,51 @@ export default class FormInfo extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={12} md={4}>
+          <Col xs={12} md={6}>
+            <Field name="agreementStatus" validate={validators.required}>
+              {props => {
+                return (<Select
+                  dataOptions={agreementStatusValues}
+                  id="edit-agreement-status"
+                  label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
+                  placeholder=" "
+                  required
+                  onChange={(e) => {
+                    props.input.onChange(e);
+
+                    let warning;
+
+                    if (values.reasonForClosure && e.target.value !== statuses.CLOSED) {
+                      warning = (
+                        <div data-test-warn-clear-reason-for-closure>
+                          <FormattedMessage id="ui-agreements.warn.clearReasonForClosure" />
+                        </div>
+                      );
+                    }
+
+                    this.props.form.mutators.setFieldData('reasonForClosure', { warning });
+                  }}
+                  value={props.input.value}
+                />);
+              }}
+            </Field>
+          </Col>
+          <Col xs={12} md={6}>
             <Field
+              parse={v => v} // Lets us send an empty string instead of `undefined`
               component={Select}
-              dataOptions={agreementStatusValues}
-              id="edit-agreement-status"
-              label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
-              name="agreementStatus"
-              placeholder=" "
-              required
-              validate={validators.required}
+              dataOptions={reasonForClosureValues}
+              disabled={values.agreementStatus !== statuses.CLOSED}
+              id="edit-agreement-reason-for-closure"
+              label={<FormattedMessage id="ui-agreements.agreements.reasonForClosure" />}
+              name="reasonForClosure"
             />
           </Col>
-          <Col xs={12} md={4}>
+        </Row>
+        <Row>
+          <Col xs={12} md={6}>
             <Field
+              parse={v => v} // Lets us pass an empty string instead of `undefined`
               component={Select}
               dataOptions={renewalPriorityValues}
               id="edit-agreement-renewal-priority"
@@ -102,8 +160,9 @@ export default class FormInfo extends React.Component {
               name="renewalPriority"
             />
           </Col>
-          <Col xs={12} md={4}>
+          <Col xs={12} md={6}>
             <Field
+              parse={v => v} // Lets us pass an empty string instead of `undefined`
               component={Select}
               dataOptions={isPerpetualValues}
               id="edit-agreement-is-perpetual"

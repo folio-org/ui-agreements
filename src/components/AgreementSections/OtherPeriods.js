@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
 import { Badge, Accordion, MultiColumnList } from '@folio/stripes/components';
 
 import FormattedUTCDate from '../FormattedUTCDate';
