@@ -29,7 +29,7 @@ export default class Info extends React.Component {
 
   render() {
     const { agreement } = this.props;
-    const agreementIsClosed = (agreement.agreementStatus !== null && (agreement.agreementStatus.value === statuses.CLOSED));
+    const agreementIsClosed = get(agreement, 'agreementStatus.value') === statuses.CLOSED;
     return (
       <div data-test-agreement-info>
         <Row>
