@@ -252,5 +252,7 @@
     "agreementPeriods.periodStart": "Period start",
     "agreementPeriods.periodTitle": "Agreement period #{number}",
     "errors.multipleOpenEndedPeriods": "Cannot have multiple open-ended agreement periods.",
-    "errors.overlappingPeriod": "The following periods have overlapping dates: {periods}"
+    "errors.overlappingPeriod": "The following periods have overlapping dates: {periods}",
+    "agreements.reasonForClosure": "Reason for closure",
+    "warn.clearReasonForClosure": "This reason will be cleared as status is not closed"
 }

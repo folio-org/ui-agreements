@@ -4,11 +4,13 @@ import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import {
   Button,
+  ButtonGroup,
   Col,
   Dropdown,
   DropdownButton,
   DropdownMenu,
   Headline,
+  Layout,
   MultiColumnList,
   Row,
   Tooltip,
@@ -25,6 +27,8 @@ export default class CoveredEResourcesList extends React.Component {
     agreement: PropTypes.shape({
       eresources: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
+    eresourcesFilterPath: PropTypes.string,
+    onFilterEResources: PropTypes.func.isRequired,
     onExportEResourcesAsJSON: PropTypes.func.isRequired,
     onExportEResourcesAsKBART: PropTypes.func.isRequired,
     onNeedMoreEResources: PropTypes.func.isRequired,
@@ -94,78 +98,109 @@ export default class CoveredEResourcesList extends React.Component {
   )
 
   renderExportDropdown = () => (
-    <Row end="xs">
-      <Col xs>
-        <Dropdown
-          onToggle={() => this.setState(prevState => ({ exportDropdownOpen: !prevState.exportDropdownOpen }))}
-          open={this.state.exportDropdownOpen}
-        >
-          <DropdownButton data-role="toggle">
-            <FormattedMessage id="ui-agreements.eresourcesCovered.exportAs" />
-          </DropdownButton>
-          <DropdownMenu data-role="menu">
-            <FormattedMessage id="ui-agreements.eresourcesCovered.exportAsJSON">
-              {exportAsJson => (
-                <Button
-                  aria-label={exportAsJson}
-                  buttonStyle="dropdownItem"
-                  id="clickable-dropdown-export-eresources-json"
-                  onClick={() => {
-                    this.setState({ exportDropdownOpen: false });
-                    this.props.onExportEResourcesAsJSON();
-                  }}
-                >
-                  <FormattedMessage id="ui-agreements.eresourcesCovered.json" />
-                </Button>
-              )}
-            </FormattedMessage>
-            <FormattedMessage id="ui-agreements.eresourcesCovered.exportAsJSON">
-              {exportAsKbart => (
-                <Button
-                  aria-label={exportAsKbart}
-                  buttonStyle="dropdownItem"
-                  id="clickable-dropdown-export-eresources-kbart"
-                  onClick={() => {
-                    this.setState({ exportDropdownOpen: false });
-                    this.props.onExportEResourcesAsKBART();
-                  }}
-                >
-                  <FormattedMessage id="ui-agreements.eresourcesCovered.kbart" />
-                </Button>
-              )}
-            </FormattedMessage>
-          </DropdownMenu>
-        </Dropdown>
-      </Col>
-    </Row>
+    <Dropdown
+      onToggle={() => this.setState(prevState => ({ exportDropdownOpen: !prevState.exportDropdownOpen }))}
+      open={this.state.exportDropdownOpen}
+    >
+      <DropdownButton data-role="toggle">
+        <FormattedMessage id="ui-agreements.eresourcesCovered.exportAs" />
+      </DropdownButton>
+      <DropdownMenu data-role="menu">
+        <FormattedMessage id="ui-agreements.eresourcesCovered.exportAsJSON">
+          {exportAsJson => (
+            <Button
+              aria-label={exportAsJson}
+              buttonStyle="dropdownItem"
+              id="clickable-dropdown-export-eresources-json"
+              onClick={() => {
+                this.setState({ exportDropdownOpen: false });
+                this.props.onExportEResourcesAsJSON();
+              }}
+            >
+              <FormattedMessage id="ui-agreements.eresourcesCovered.json" />
+            </Button>
+          )}
+        </FormattedMessage>
+        <FormattedMessage id="ui-agreements.eresourcesCovered.exportAsJSON">
+          {exportAsKbart => (
+            <Button
+              aria-label={exportAsKbart}
+              buttonStyle="dropdownItem"
+              id="clickable-dropdown-export-eresources-kbart"
+              onClick={() => {
+                this.setState({ exportDropdownOpen: false });
+                this.props.onExportEResourcesAsKBART();
+              }}
+            >
+              <FormattedMessage id="ui-agreements.eresourcesCovered.kbart" />
+            </Button>
+          )}
+        </FormattedMessage>
+      </DropdownMenu>
+    </Dropdown>
   )
 
-  render() {
+  renderFilterButton = (filter) => (
+    <Button
+      buttonStyle={this.props.eresourcesFilterPath === filter ? 'primary' : 'default'}
+      id={`clickable-pci-${filter || 'all'}`}
+      onClick={() => this.props.onFilterEResources(filter)}
+    >
+      <FormattedMessage id={`ui-agreements.content.${filter || 'all'}`} />
+    </Button>
+  )
+
+  renderFilterButtons = () => (
+    <Layout className="textCentered">
+      <ButtonGroup>
+        {this.renderFilterButton('current')}
+        {this.renderFilterButton('future')}
+        {this.renderFilterButton('dropped')}
+        {this.renderFilterButton('')}
+      </ButtonGroup>
+    </Layout>
+  )
+
+  renderList = () => {
     const {
-      agreement: { eresources, eresourcesCount },
+      agreement: { eresources },
       onNeedMoreEResources,
       visible,
     } = this.props;
+    return (
+      <MultiColumnList
+        columnMapping={this.columnMapping}
+        columnWidths={this.columnWidths}
+        contentData={visible ? eresources : []}
+        formatter={this.formatter}
+        id="eresources-covered"
+        interactive={false}
+        maxHeight={800}
+        onNeedMoreData={onNeedMoreEResources}
+        totalCount={eresources.length}
+        virtualize
+        visibleColumns={this.visibleColumns}
+      />
+    );
+  }
+
+  render() {
+    const { agreement: { eresources } } = this.props;
 
     return (
       <IfEResourcesEnabled>
         <Headline margin="none" tag="h4">
           <FormattedMessage id="ui-agreements.agreements.eresourcesCovered" />
         </Headline>
-        { this.renderExportDropdown() }
-        <MultiColumnList
-          columnMapping={this.columnMapping}
-          columnWidths={this.columnWidths}
-          contentData={visible ? eresources : []}
-          formatter={this.formatter}
-          id="eresources-covered"
-          interactive={false}
-          maxHeight={800}
-          onNeedMoreData={onNeedMoreEResources}
-          totalCount={eresourcesCount}
-          virtualize
-          visibleColumns={this.visibleColumns}
-        />
+        <Row end="xs">
+          <Col xs={10}>
+            { this.renderFilterButtons() }
+          </Col>
+          <Col xs>
+            { this.renderExportDropdown() }
+          </Col>
+        </Row>
+        { eresources ? this.renderList() : this.renderLoading() }
       </IfEResourcesEnabled>
     );
   }

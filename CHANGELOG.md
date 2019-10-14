@@ -13,6 +13,7 @@
 * Added support for interface `licenses` version `2.0`.
 * Updated permission sets. ERM-477
 * Updated forms to use React Final Form instead of Redux Form
+* Added filter buttons to view future, dropped or all content of a package. ERM-394 ERM-396
 
 ## 3.2.4 2019-09-10
 * Added support for interface `invoice` version `2.0`.

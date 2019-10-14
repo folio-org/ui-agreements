@@ -43,19 +43,19 @@ const dateOrder = (value, allValues, meta) => {
   return undefined;
 };
 
-const multipleOpenEnded = (_value, allValues, meta) => {
+const multipleOpenEnded = (_value, allValues, meta, errorMessageKey) => {
   if (meta) {
-    // Name is something like "items[3].coverage[2].endDate" and we want the "items[3].coverage" array
-    const coverages = get(allValues, meta.name.substring(0, meta.name.lastIndexOf('[')), []);
-    let openEndedCoverages = 0;
-    coverages.forEach(c => {
-      if (c.startDate && !c.endDate) openEndedCoverages += 1;
+    // Name is something like "items[3].date[2].endDate" and we want the "items[3].date" array
+    const dates = get(allValues, meta.name.substring(0, meta.name.lastIndexOf('[')), []);
+    let openEndedDates = 0;
+    dates.forEach(c => {
+      if (c.startDate && !c.endDate) openEndedDates += 1;
     });
 
-    if (openEndedCoverages > 1) {
+    if (openEndedDates > 1) {
       return (
         <div data-test-error-multiple-open-ended>
-          <FormattedMessage id="ui-agreements.errors.multipleOpenEndedCoverages" />
+          <FormattedMessage id={errorMessageKey} />
         </div>
       );
     }
@@ -64,13 +64,13 @@ const multipleOpenEnded = (_value, allValues, meta) => {
   return undefined;
 };
 
-const overlappingDates = (value, allValues, meta) => {
+const overlappingDates = (value, allValues, meta, errorMessageKey) => {
   if (meta) {
-    // Name is something like "items[3].coverage[2].endDate" and we want the "items[3].coverage" array
-    const coverages = get(allValues, meta.name.substring(0, meta.name.lastIndexOf('[')), []);
-    const ranges = coverages
+    // Name is something like "items[3].date[2].endDate" and we want the "items[3].date" array
+    const dates = get(allValues, meta.name.substring(0, meta.name.lastIndexOf('[')), []);
+    const ranges = dates
       .map((c, i) => ({
-        coverageIndex: i,
+        dateIndex: i,
         startDate: new Date(c.startDate),
         endDate: c.endDate ? new Date(c.endDate) : new Date('4000-01-01'),
       }))
@@ -86,7 +86,7 @@ const overlappingDates = (value, allValues, meta) => {
 
         if (overlap) {
           accumulator.overlap = true;
-          accumulator.ranges.push([current.coverageIndex, previous.coverageIndex]);
+          accumulator.ranges.push([current.dateIndex, previous.dateIndex]);
         }
 
         return accumulator;
@@ -96,10 +96,10 @@ const overlappingDates = (value, allValues, meta) => {
 
     if (result.overlap) {
       return (
-        <div data-test-error-overlapping-coverage-dates>
+        <div data-test-error-overlapping-dates>
           <FormattedMessage
-            id="ui-agreements.errors.overlappingCoverage"
-            values={{ coverages: result.ranges.map(r => `${r[0] + 1} & ${r[1] + 1}`).join(', ') }}
+            id={errorMessageKey}
+            values={{ fields: result.ranges.map(r => `${r[0] + 1} & ${r[1] + 1}`).join(', ') }}
           />
         </div>
       );
