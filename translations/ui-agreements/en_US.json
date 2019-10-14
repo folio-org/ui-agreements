@@ -137,7 +137,7 @@
     "agreementLines.customCoverageTitle": "Custom coverage #{number}",
     "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
     "errors.multipleOpenEndedCoverages": "Cannot have multiple open-ended coverage statements.",
-    "errors.overlappingCoverage": "The following coverages have overlapping dates: {coverages}",
+    "errors.overlappingCoverage": "The following coverages have overlapping dates: {fields}",
     "identifier.doi": "DOI",
     "identifier.eissn": "ISSN (Online)",
     "identifier.ezb": "EZB",
@@ -252,7 +252,7 @@
     "agreementPeriods.periodStart": "Period start",
     "agreementPeriods.periodTitle": "Agreement period #{number}",
     "errors.multipleOpenEndedPeriods": "Cannot have multiple open-ended agreement periods.",
-    "errors.overlappingPeriod": "The following periods have overlapping dates: {periods}",
+    "errors.overlappingPeriod": "The following periods have overlapping dates: {fields}",
     "agreements.reasonForClosure": "Reason for closure",
     "warn.clearReasonForClosure": "This reason will be cleared as status is not closed"
 }
