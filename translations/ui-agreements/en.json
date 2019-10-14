@@ -178,8 +178,8 @@
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
   "errors.multipleOpenEndedCoverages": "Cannot have multiple open-ended coverage statements.",
   "errors.multipleOpenEndedPeriods": "Cannot have multiple open-ended agreement periods.",
-  "errors.overlappingCoverage": "The following coverages have overlapping dates: {coverages}",
-  "errors.overlappingPeriod": "The following periods have overlapping dates: {periods}",
+  "errors.overlappingCoverage": "The following coverages have overlapping dates: {fields}",
+  "errors.overlappingPeriod": "The following periods have overlapping dates: {fields}",
   "errors.undefinedUDP": "A Usage Data Provider must be selected.",
   "errors.unsetAgreementLines": "Select a resource and create this line, or delete it to continue.",
 
