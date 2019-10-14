@@ -90,15 +90,18 @@ export default class Agreements extends React.Component {
   }
 
   formatter = {
-    name: a => (
-      <AppIcon
-        app="agreements"
-        size="small"
-        className={get(a, 'agreementStatus.value') !== statuses.CLOSED ? '' : css.inactiveAppIcon}
-      >
-        {a.name}
-      </AppIcon>
-    ),
+    name: a => {
+      const iconKey = get(a, 'agreementStatus.value') === statuses.CLOSED ? 'closedAgreement' : 'app';
+      return (
+        <AppIcon
+          size="small"
+          app="agreements"
+          iconKey={iconKey}
+        >
+          {a.name}
+        </AppIcon>
+      );
+    },
     agreementStatus: a => get(a, 'agreementStatus.label'),
     startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : ''),
     endDate: a => (a.endDate ? <FormattedUTCDate value={a.endDate} /> : ''),
