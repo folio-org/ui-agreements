@@ -36,6 +36,11 @@ class AgreementEditRoute extends React.Component {
       path: 'erm/refdata/SubscriptionAgreement/agreementStatus',
       shouldRefresh: () => false,
     },
+    reasonForClosureValues: {
+      type: 'okapi',
+      path: 'erm/refdata/SubscriptionAgreement/reasonForClosure',
+      shouldRefresh: () => false,
+    },
     amendmentStatusValues: {
       type: 'okapi',
       path: 'erm/refdata/LicenseAmendmentStatus/status',
@@ -159,6 +164,7 @@ class AgreementEditRoute extends React.Component {
       items = [],
       linkedLicenses = [],
       orgs = [],
+      reasonForClosure = {},
       renewalPriority = {},
     } = initialValues;
 
@@ -168,6 +174,7 @@ class AgreementEditRoute extends React.Component {
       // Set the values of dropdown-controlled props as values rather than objects.
       initialValues.agreementStatus = agreementStatus.value;
       initialValues.isPerpetual = isPerpetual.value;
+      initialValues.reasonForClosure = reasonForClosure.value;
       initialValues.renewalPriority = renewalPriority.value;
       initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
       initialValues.orgs = orgs.map(o => ({ ...o, role: o.role && o.role.value }));
@@ -344,6 +351,7 @@ class AgreementEditRoute extends React.Component {
           agreementLines: this.getAgreementLines(),
           agreementLinesToAdd: this.getAgreementLinesToAdd(),
           agreementStatusValues: get(resources, 'agreementStatusValues.records', []),
+          reasonForClosureValues: get(resources, 'reasonForClosureValues.records', []),
           amendmentStatusValues: get(resources, 'amendmentStatusValues.records', []),
           basket: get(resources, 'basket', []),
           contactRoleValues: get(resources, 'contactRoleValues.records', []),

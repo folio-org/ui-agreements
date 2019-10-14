@@ -88,9 +88,9 @@
     "okapiInterfaces": {
       "configuration": "2.0 3.0 4.0 5.0",
       "erm": "2.0",
-      "invoice": "1.0 2.0",
+      "invoice": "1.0 2.0 3.0",
       "licenses": "1.0 2.0",
-      "orders": "6.0 7.0",
+      "orders": "6.0 7.0 8.0",
       "organizations-storage.interfaces": "2.0",
       "users": "13.0 14.0 15.0"
     },

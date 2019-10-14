@@ -38,6 +38,7 @@
   "agreements.cancellationDeadline": "Cancellation deadline",
   "agreements.renewalPriority": "Renewal priority",
   "agreements.agreementStatus": "Status",
+  "agreements.reasonForClosure": "Reason for closure",
   "agreements.isPerpetual": "Is perpetual",
   "agreements.internalContacts": "Internal contacts",
   "agreements.internalContactsRole": "Internal contact role",
@@ -98,6 +99,8 @@
   "agreementPeriods.periodNote": "Period note",
   "agreementPeriods.periodStart": "Period start",
   "agreementPeriods.periodTitle": "Agreement period #{number}",
+
+  "warn.clearReasonForClosure": "This reason will be cleared as status is not closed",
 
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
 

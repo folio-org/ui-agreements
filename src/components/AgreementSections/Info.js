@@ -10,6 +10,7 @@ import {
 } from '@folio/stripes/components';
 
 import FormattedUTCDate from '../FormattedUTCDate';
+import { statuses } from '../../constants';
 
 export default class Info extends React.Component {
   static propTypes = {
@@ -28,7 +29,7 @@ export default class Info extends React.Component {
 
   render() {
     const { agreement } = this.props;
-
+    const agreementIsClosed = get(agreement, 'agreementStatus.value') === statuses.CLOSED;
     return (
       <div data-test-agreement-info>
         <Row>
@@ -75,6 +76,24 @@ export default class Info extends React.Component {
             </KeyValue>
           </Col>
         </Row>
+        {agreementIsClosed &&
+          <Row>
+            <Col xs={4}>
+              <KeyValue label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}>
+                <div data-test-agreement-status>
+                  {get(agreement, 'agreementStatus.label', '-')}
+                </div>
+              </KeyValue>
+            </Col>
+            <Col xs={4}>
+              <KeyValue label={<FormattedMessage id="ui-agreements.agreements.reasonForClosure" />}>
+                <div data-test-agreement-reason-for-closure>
+                  {get(agreement, 'reasonForClosure.label', '-')}
+                </div>
+              </KeyValue>
+            </Col>
+          </Row>
+        }
       </div>
     );
   }

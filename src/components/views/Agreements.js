@@ -23,6 +23,7 @@ import {
   SearchAndSortSearchButton as FilterPaneToggle,
 } from '@folio/stripes/smart-components';
 
+import { statuses } from '../../constants';
 import AgreementFilters from '../AgreementFilters';
 import FormattedUTCDate from '../FormattedUTCDate';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
@@ -89,6 +90,15 @@ export default class Agreements extends React.Component {
   }
 
   formatter = {
+    name: a => (
+      <AppIcon
+        app="agreements"
+        size="small"
+        className={get(a, 'agreementStatus.value') !== statuses.CLOSED ? '' : css.inactiveAppIcon}
+      >
+        {a.name}
+      </AppIcon>
+    ),
     agreementStatus: a => get(a, 'agreementStatus.label'),
     startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : ''),
     endDate: a => (a.endDate ? <FormattedUTCDate value={a.endDate} /> : ''),
