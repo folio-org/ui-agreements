@@ -164,11 +164,6 @@
         "name": "app",
         "alt": "ERM agreement functionality for Stripes",
         "title": "Agreements"
-      },
-      {
-        "name": "closedAgreement",
-        "alt": " ",
-        "title": "Closed agreement"
       }
     ]
   }
