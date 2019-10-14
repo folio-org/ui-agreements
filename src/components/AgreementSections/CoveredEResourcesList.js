@@ -140,41 +140,26 @@ export default class CoveredEResourcesList extends React.Component {
     </Dropdown>
   )
 
+  renderFilterButton = (filter) => (
+    <Button
+      buttonStyle={this.props.eresourcesFilterPath === filter ? 'primary' : 'default'}
+      id={`clickable-pci-${filter || 'all'}`}
+      onClick={() => this.props.onFilterEResources(filter)}
+    >
+      <FormattedMessage id={`ui-agreements.content.${filter || 'all'}`} />
+    </Button>
+  )
+
   renderFilterButtons = () => (
     <Layout className="textCentered">
       <ButtonGroup>
-        <Button
-          buttonStyle={this.props.eresourcesFilterPath === 'current' ? 'primary' : 'default'}
-          id="clickable-pci-current"
-          onClick={() => this.props.onFilterEResources('current')}
-        >
-          <FormattedMessage id="ui-agreements.content.current" />
-        </Button>
-        <Button
-          buttonStyle={this.props.eresourcesFilterPath === 'future' ? 'primary' : 'default'}
-          id="clickable-pci-future"
-          onClick={() => this.props.onFilterEResources('future')}
-        >
-          <FormattedMessage id="ui-agreements.content.future" />
-        </Button>
-        <Button
-          buttonStyle={this.props.eresourcesFilterPath === 'dropped' ? 'primary' : 'default'}
-          id="clickable-pci-dropped"
-          onClick={() => this.props.onFilterEResources('dropped')}
-        >
-          <FormattedMessage id="ui-agreements.content.dropped" />
-        </Button>
-        <Button
-          buttonStyle={this.props.eresourcesFilterPath === '' ? 'primary' : 'default'}
-          id="clickable-pci-all"
-          onClick={() => this.props.onFilterEResources('')}
-        >
-          <FormattedMessage id="ui-agreements.content.all" />
-        </Button>
+        {this.renderFilterButton('current')}
+        {this.renderFilterButton('future')}
+        {this.renderFilterButton('dropped')}
+        {this.renderFilterButton('')}
       </ButtonGroup>
     </Layout>
   )
-
 
   renderList = () => {
     const {

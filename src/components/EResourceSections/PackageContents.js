@@ -68,37 +68,23 @@ export default class PackageContents extends React.Component {
     return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
   }
 
+  renderFilterButton = (filter) => (
+    <Button
+      buttonStyle={this.props.data.packageContentsFilter === filter ? 'primary' : 'default'}
+      id={`clickable-pci-${filter || 'all'}`}
+      onClick={() => this.props.onFilterPackageContents(filter)}
+    >
+      <FormattedMessage id={`ui-agreements.content.${filter || 'all'}`} />
+    </Button>
+  )
+
   renderFilterButtons = () => (
     <Layout className="textCentered">
       <ButtonGroup>
-        <Button
-          buttonStyle={this.props.data.packageContentsFilter === 'current' ? 'primary' : 'default'}
-          id="clickable-pci-current"
-          onClick={() => this.props.onFilterPackageContents('current')}
-        >
-          <FormattedMessage id="ui-agreements.content.current" />
-        </Button>
-        <Button
-          buttonStyle={this.props.data.packageContentsFilter === 'future' ? 'primary' : 'default'}
-          id="clickable-pci-future"
-          onClick={() => this.props.onFilterPackageContents('future')}
-        >
-          <FormattedMessage id="ui-agreements.content.future" />
-        </Button>
-        <Button
-          buttonStyle={this.props.data.packageContentsFilter === 'dropped' ? 'primary' : 'default'}
-          id="clickable-pci-dropped"
-          onClick={() => this.props.onFilterPackageContents('dropped')}
-        >
-          <FormattedMessage id="ui-agreements.content.dropped" />
-        </Button>
-        <Button
-          buttonStyle={this.props.data.packageContentsFilter === '' ? 'primary' : 'default'}
-          id="clickable-pci-all"
-          onClick={() => this.props.onFilterPackageContents('')}
-        >
-          <FormattedMessage id="ui-agreements.content.all" />
-        </Button>
+        {this.renderFilterButton('current')}
+        {this.renderFilterButton('future')}
+        {this.renderFilterButton('dropped')}
+        {this.renderFilterButton('')}
       </ButtonGroup>
     </Layout>
   )
@@ -114,7 +100,6 @@ export default class PackageContents extends React.Component {
         label={<FormattedMessage id="ui-agreements.eresources.packageResources" />}
       >
         { this.renderFilterButtons() }
-
         { packageContents ? this.renderList(packageContents) : this.renderLoading() }
       </Accordion>
     );
