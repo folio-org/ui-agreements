@@ -26,13 +26,17 @@ class EResourceViewRoute extends React.Component {
     entitlements: {
       type: 'okapi',
       path: 'erm/resource/:{id}/entitlements',
+      records: 'results',
       perRequest: RECORDS_PER_REQUEST,
       recordsRequired: '%{entitlementsCount}',
       limitParam: 'perPage',
+      params: {
+        stats: 'true',
+      },
     },
     packageContents: {
       type: 'okapi',
-      path: 'erm/resource',
+      path: 'erm/packages/:{id}/content/%{packageContentsFilter}',
       records: 'results',
       limitParam: 'perPage',
       perRequest: RECORDS_PER_REQUEST,
@@ -45,6 +49,7 @@ class EResourceViewRoute extends React.Component {
     },
     query: {},
     entitlementsCount: { initialValue: RECORDS_PER_REQUEST },
+    packageContentsFilter: { initialValue: 'current' },
     packageContentsCount: { initialValue: RECORDS_PER_REQUEST },
   });
 
@@ -75,6 +80,7 @@ class EResourceViewRoute extends React.Component {
     resources: PropTypes.shape({
       entitlementsCount: PropTypes.number,
       eresource: PropTypes.object,
+      packageContentsFilter: PropTypes.string,
       packageContentsCount: PropTypes.number,
       query: PropTypes.object,
     }).isRequired,
@@ -126,6 +132,11 @@ class EResourceViewRoute extends React.Component {
     this.props.history.push(`${urls.eresources()}${this.props.location.search}`);
   }
 
+  handleFilterPackageContents = (path) => {
+    const { mutator } = this.props;
+    mutator.packageContentsFilter.replace(path);
+  }
+
   handleToggleHelper = (helper) => {
     const { mutator, resources } = this.props;
     const currentHelper = resources.query.helper;
@@ -168,10 +179,12 @@ class EResourceViewRoute extends React.Component {
           eresource: get(resources, 'eresource.records[0]', {}),
           entitlementOptions: this.getRecords('entitlementOptions'),
           entitlements: this.getRecords('entitlements'),
+          packageContentsFilter: this.props.resources.packageContentsFilter,
           packageContents: this.getRecords('packageContents'),
         }}
         handlers={{
           ...handlers,
+          onFilterPackageContents: this.handleFilterPackageContents,
           onClose: this.handleClose,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
