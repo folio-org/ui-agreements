@@ -21,6 +21,7 @@ const multipleOpenEndedCoverages = (...rest) => (
 const overlappingCoverages = (...rest) => (
   validators.overlappingDates(...rest, 'ui-agreements.errors.overlappingCoverage')
 );
+
 class CustomCoverageFieldArray extends React.Component {
   static propTypes = {
     items: PropTypes.arrayOf(PropTypes.object),
