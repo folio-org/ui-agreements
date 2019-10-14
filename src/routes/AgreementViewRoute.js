@@ -35,7 +35,7 @@ class AgreementViewRoute extends React.Component {
     },
     agreementEresources: {
       type: 'okapi',
-      path: 'erm/sas/:{id}/resources',
+      path: 'erm/sas/:{id}/resources/%{eresourcesFilterPath}',
       params: {
         sort: 'pti.titleInstance.name;asc',
         stats: 'true',
@@ -45,6 +45,7 @@ class AgreementViewRoute extends React.Component {
       records: 'results',
       recordsRequired: '%{agreementEresourcesCount}',
     },
+    eresourcesFilterPath: { initialValue: 'current' },
     interfaces: {
       type: 'okapi',
       path: 'organizations-storage/interfaces',
@@ -138,6 +139,7 @@ class AgreementViewRoute extends React.Component {
       agreementLinesCount: PropTypes.number,
       agreementEresources: PropTypes.object,
       agreementEresourcesCount: PropTypes.number,
+      eresourcesFilterPath: PropTypes.string,
       interfaces: PropTypes.object,
       orderLines: PropTypes.object,
       query: PropTypes.object,
@@ -221,6 +223,11 @@ class AgreementViewRoute extends React.Component {
     this.props.history.push(`${urls.agreements()}${this.props.location.search}`);
   }
 
+  handleFilterEResources = (path) => {
+    const { mutator } = this.props;
+    mutator.eresourcesFilterPath.replace(path);
+  }
+
   handleEdit = () => {
     const { location, match } = this.props;
     this.props.history.push(`${urls.agreementEdit(match.params.id)}${location.search}`);
@@ -230,7 +237,7 @@ class AgreementViewRoute extends React.Component {
     const { resources, stripes: { okapi } } = this.props;
     const { id, name } = get(resources, 'agreement.records[0]', {});
 
-    return fetch(`${okapi.url}/erm/sas/${id}/export`, {
+    return fetch(`${okapi.url}/erm/sas/${id}/export/${resources.eresourcesFilterPath}`, {
       headers: {
         'X-Okapi-Tenant': okapi.tenant,
         'X-Okapi-Token': okapi.token,
@@ -251,7 +258,7 @@ class AgreementViewRoute extends React.Component {
     const { resources, stripes: { okapi } } = this.props;
     const { id, name } = get(resources, 'agreement.records[0]', {});
 
-    return fetch(`${okapi.url}/erm/sas/${id}/export/kbart`, {
+    return fetch(`${okapi.url}/erm/sas/${id}/export/${resources.eresourcesFilterPath}/kbart`, {
       headers: {
         'X-Okapi-Tenant': okapi.tenant,
         'X-Okapi-Token': okapi.token,
@@ -316,10 +323,12 @@ class AgreementViewRoute extends React.Component {
         canEdit={this.props.stripes.hasPerm('ui-agreements.agreements.edit')}
         data={{
           agreement: this.getCompositeAgreement(),
+          eresourcesFilterPath: this.props.resources.eresourcesFilterPath,
           terms: get(resources, 'terms.records', []),
         }}
         handlers={{
           ...handlers,
+          onFilterEResources: this.handleFilterEResources,
           onClose: this.handleClose,
           onEdit: this.handleEdit,
           onExportEResourcesAsJSON: this.handleExportEResourcesAsJSON,

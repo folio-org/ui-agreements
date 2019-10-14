@@ -120,6 +120,11 @@
 
   "contacts.noContacts": "Agreement has no internal contacts.",
 
+  "content.all": "All",
+  "content.current": "Current",
+  "content.dropped": "Dropped",
+  "content.future": "Future",
+
   "coverage.volumeShort": "Vol:",
   "coverage.issueShort": "Iss:",
 
