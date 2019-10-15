@@ -252,5 +252,7 @@
     "agreementPeriods.periodStart": "بدء الفترة",
     "agreementPeriods.periodTitle": "فترة الاتفاقية # {number}",
     "errors.multipleOpenEndedPeriods": "لا يمكن وجود عدة فترات اتفاقية بنهاية مفتوحة",
-    "errors.overlappingPeriod": "الفترات التالية لها تواريخ متداخلة: {periods}"
+    "errors.overlappingPeriod": "الفترات التالية لها تواريخ متداخلة: {periods}",
+    "agreements.reasonForClosure": "سبب الإغلاق",
+    "warn.clearReasonForClosure": "سيتم مسح هذا السبب حيث أن الحالة غير مغلقة"
 }

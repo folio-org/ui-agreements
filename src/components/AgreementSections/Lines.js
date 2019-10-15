@@ -16,7 +16,9 @@ export default class Lines extends React.Component {
       lines: PropTypes.arrayOf(PropTypes.object),
       orderLines: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
+    eresourcesFilterPath: PropTypes.string,
     handlers: PropTypes.shape({
+      onFilterEResources: PropTypes.func.isRequired,
       onExportEResourcesAsJSON: PropTypes.func.isRequired,
       onExportEResourcesAsKBART: PropTypes.func.isRequired,
       onNeedMoreEResources: PropTypes.func.isRequired,
@@ -37,6 +39,7 @@ export default class Lines extends React.Component {
   render() {
     const {
       agreement,
+      eresourcesFilterPath,
       handlers,
       id,
       onToggle,
@@ -59,6 +62,8 @@ export default class Lines extends React.Component {
         />
         <CoveredEResourcesList
           agreement={agreement}
+          eresourcesFilterPath={eresourcesFilterPath}
+          onFilterEResources={handlers.onFilterEResources}
           onExportEResourcesAsJSON={handlers.onExportEResourcesAsJSON}
           onExportEResourcesAsKBART={handlers.onExportEResourcesAsKBART}
           onNeedMoreEResources={handlers.onNeedMoreEResources}

@@ -15,6 +15,14 @@ import {
 import { composeValidators, EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
 import { validators } from '../utilities';
 
+const multipleOpenEndedPeriods = (...rest) => (
+  validators.multipleOpenEnded(...rest, 'ui-agreements.errors.multipleOpenEndedPeriods')
+);
+
+const overlappingPeriods = (...rest) => (
+  validators.overlappingDates(...rest, 'ui-agreements.errors.overlappingPeriod')
+);
+
 class AgreementPeriodsFieldArray extends React.Component {
   static propTypes = {
     items: PropTypes.arrayOf(PropTypes.object),
@@ -51,7 +59,7 @@ class AgreementPeriodsFieldArray extends React.Component {
                 validate={composeValidators(
                   validators.requiredStartDate,
                   validators.dateOrder,
-                  validators.overlappingDates,
+                  overlappingPeriods,
                 )}
               />
             </Col>
@@ -65,8 +73,8 @@ class AgreementPeriodsFieldArray extends React.Component {
                 name={`${name}[${index}].endDate`}
                 validate={composeValidators(
                   validators.dateOrder,
-                  validators.multipleOpenEnded,
-                  validators.overlappingDates,
+                  multipleOpenEndedPeriods,
+                  overlappingPeriods,
                 )}
               />
             </Col>
