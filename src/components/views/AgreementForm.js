@@ -25,6 +25,7 @@ import {
   FormLicenses,
   FormLines,
   FormOrganizations,
+  FormRelatedAgreements,
   FormSupplementaryInfo,
   FormUsageData,
 } from '../AgreementSections';
@@ -67,6 +68,7 @@ class AgreementForm extends React.Component {
       formOrganizations: true,
       formSupplementaryInfo: true,
       formUsageProviders: true,
+      formRelatedAgreements: true,
     }
   }
 
@@ -204,6 +206,7 @@ class AgreementForm extends React.Component {
                       <FormOrganizations {...this.getSectionProps('formOrganizations')} />
                       <FormSupplementaryInfo {...this.getSectionProps('formSupplementaryInfo')} />
                       <FormUsageData {...this.getSectionProps('formUsageProviders')} />
+                      <FormRelatedAgreements {...this.getSectionProps('formRelatedAgreements')} />
                     </AccordionSet>
                   </div>
                 </form>

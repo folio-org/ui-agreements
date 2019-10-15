@@ -264,6 +264,18 @@
   "poLines.title": "Title in PO line",
   "poLines.unlinkPOLine": "Unlink PO line",
 
+  "relatedAgreements": "Related agreements",
+  "relatedAgreements.addAgreement": "Add agreement",
+  "relatedAgreements.addRelatedAgreement": "Add related agreement",
+  "relatedAgreements.addToStart": "Add a related agreement to get started",
+  "relatedAgreements.agreementHasNone": "Agreement has no related agreements.",
+  "relatedAgreements.noneAdded": "No usage data providers added",
+  "relatedAgreements.noPlugin": "No \"find-agreement\" plugin is installed",
+  "relatedAgreements.relatedAgreementIndex": "Related agreement {index}",
+  "relatedAgreements.relationship": "Relationship",
+  "relatedAgreements.remove": "Remove related agreement",
+  "relatedAgreements.unlink": "Unlink agreement",
+
   "usageData": "Usage data",
   "usageData.addUDP": "Add usage data provider",
   "usageData.addUDPToStart": "Add a usage data provider to get started",
