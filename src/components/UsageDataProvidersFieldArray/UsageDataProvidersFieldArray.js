@@ -62,6 +62,7 @@ class UsageDataProvidersFieldArray extends React.Component {
       >
         <Field
           component={UsageDataProviderField}
+          deleteButtonTooltipText={<FormattedMessage id="ui-agreements.usageData.removeUsageDataProvider" />}
           id={`udp-remoteId-${index}`}
           index={index}
           name={`${this.props.name}[${index}].remoteId`}

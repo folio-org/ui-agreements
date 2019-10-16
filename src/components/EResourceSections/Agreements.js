@@ -66,10 +66,6 @@ export default class Agreements extends React.Component {
     );
   }
 
-  renderLoading = () => (
-    <Spinner />
-  )
-
   renderBadge = () => {
     const count = get(this.props.data, 'entitlementOptions.length');
     return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
@@ -84,7 +80,7 @@ export default class Agreements extends React.Component {
           {type ? <FormattedMessage id="ui-agreements.eresources.erAgreements" />
             : <FormattedMessage id="ui-agreements.eresources.packageAgreements" />}
         </Headline>
-        {entitlements ? this.renderAgreements() : this.renderLoading()}
+        {entitlements ? this.renderAgreements() : <Spinner />}
       </div>
     );
   }
