@@ -155,7 +155,7 @@ class AgreementEditRoute extends React.Component {
     let updated = false;
 
     const agreement = get(props.resources, 'agreement.records[0]', {});
-    const initialValues = cloneDeep(agreement);
+    const initialValues = state.initialValues.id ? state.initialValues : cloneDeep(agreement);
 
     const {
       agreementStatus = {},

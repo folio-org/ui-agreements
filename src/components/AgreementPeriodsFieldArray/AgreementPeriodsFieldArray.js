@@ -41,6 +41,7 @@ class AgreementPeriodsFieldArray extends React.Component {
     return items.map((period, index) => (
       <EditCard
         data-test-cc-number={index}
+        deleteButtonTooltipText={<FormattedMessage id="ui-agreements.agreementPeriods.removePeriod" />}
         header={<FormattedMessage id="ui-agreements.agreementPeriods.periodTitle" values={{ number: index + 1 }} />}
         key={index}
         onDelete={index !== 0 ? () => this.props.onDeleteField(index, period) : undefined}
@@ -107,7 +108,7 @@ class AgreementPeriodsFieldArray extends React.Component {
           <FormattedMessage id="ui-agreements.agreementPeriods" />
         </Headline>
         <div id="agreement-form-periods">
-          { this.renderPeriods() }
+          {this.renderPeriods()}
         </div>
         <Button id="add-period-button" onClick={() => this.props.onAddField()}>
           <FormattedMessage id="ui-agreements.agreementPeriods.addPeriod" />

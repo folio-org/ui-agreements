@@ -59,10 +59,6 @@ export default class PackageContents extends React.Component {
     date ? <FormattedUTCDate value={date} /> : '-'
   )
 
-  renderLoading = () => (
-    <Spinner />
-  )
-
   renderBadge = () => {
     const count = get(this.props.data, 'packageContents.length');
     return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
@@ -100,7 +96,7 @@ export default class PackageContents extends React.Component {
         label={<FormattedMessage id="ui-agreements.eresources.packageResources" />}
       >
         { this.renderFilterButtons() }
-        { packageContents ? this.renderList(packageContents) : this.renderLoading() }
+        { packageContents ? this.renderList(packageContents) : <Spinner /> }
       </Accordion>
     );
   }

@@ -16,6 +16,7 @@ import {
   Tooltip,
 } from '@folio/stripes/components';
 
+import { Spinner } from '@folio/stripes-erm-components';
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
@@ -200,7 +201,7 @@ export default class CoveredEResourcesList extends React.Component {
             { this.renderExportDropdown() }
           </Col>
         </Row>
-        { eresources ? this.renderList() : this.renderLoading() }
+        { eresources ? this.renderList() : <Spinner /> }
       </IfEResourcesEnabled>
     );
   }

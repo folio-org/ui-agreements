@@ -71,10 +71,6 @@ export default class AcquisitionOptions extends React.Component {
     />
   )
 
-  renderLoading = () => (
-    <Spinner />
-  )
-
   renderBadge = () => {
     const count = get(this.props.data, 'entitlementOptions.length');
     return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
@@ -90,7 +86,7 @@ export default class AcquisitionOptions extends React.Component {
         displayWhenOpen={this.renderBadge()}
         label={<FormattedMessage id="ui-agreements.eresources.acqOptions" values={eresource} />}
       >
-        {entitlementOptions ? this.renderOptions() : this.renderLoading()}
+        {entitlementOptions ? this.renderOptions() : <Spinner />}
       </Accordion>
     );
   }
