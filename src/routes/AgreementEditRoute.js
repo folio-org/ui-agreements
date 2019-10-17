@@ -297,6 +297,10 @@ class AgreementEditRoute extends React.Component {
   handleSubmit = (agreement) => {
     const { history, location, mutator } = this.props;
 
+    // const processedAgreement = compose(
+    //   processRelatedAgreements,
+    // )(agreement, this.getData());
+
     mutator.agreement
       .PUT(agreement)
       .then(({ id }) => {

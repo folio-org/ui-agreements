@@ -23,7 +23,7 @@ class RelatedAgreementsFieldArray extends React.Component {
   // }
 
   handleAgreementSelected = (index, agreement) => {
-    this.props.onReplaceField(index, { ...agreement });
+    this.props.onReplaceField(index, { agreement });
 
     // this.setState(prevState => ({
     //   udps: {
@@ -62,9 +62,9 @@ class RelatedAgreementsFieldArray extends React.Component {
       >
         <Field
           component={RelatedAgreementField}
-          id={`ra-id-${index}`}
+          id={`ra-agreement-${index}`}
           index={index}
-          name={`${this.props.name}[${index}].id`}
+          name={`${this.props.name}[${index}].agreement`}
           onAgreementSelected={selectedAgreement => this.handleAgreementSelected(index, selectedAgreement)}
           onAgreementUnselected={() => this.handleAgreementUnselected(index, agreement)}
           agreement={agreement}
@@ -74,10 +74,15 @@ class RelatedAgreementsFieldArray extends React.Component {
           component={Select}
           dataOptions={[
             { value: 'supersedes', label: 'Supersedes' },
+            { value: 'supersedes$$inward$$', label: 'Is superseded by' },
             { value: 'provides_post-cancellation_access_for', label: 'Provides post-cancellation access for' },
+            { value: 'provides_post-cancellation_access_for$$inward$$', label: 'Has post-cancellation access in' },
             { value: 'tracks_demand-driven_acquisitions_for', label: 'Tracks demand-driven acquisitions for' },
+            { value: 'tracks_demand-driven_acquisitions_for$$inward$$', label: 'Has demand-driven acquisitions in' },
           ]}
+          id={`ra-type-${index}`}
           label={<FormattedMessage id="ui-agreements.relatedAgreements.relationship" />}
+          name={`${this.props.name}[${index}].type`}
           required
           validate={validators.required}
         />
