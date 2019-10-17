@@ -1,20 +1,21 @@
 const INWARD = '$$inward$$';
 
-export function splitRelatedAgreements(agreement, data) {
-  const { relationships = [] } = agreement;
+export function splitRelatedAgreements(agreement) {
+  const { relatedAgreements = [] } = agreement;
 
-  const outward = relationships
+  const outward = relatedAgreements
     .filter(r => !r.type.endsWith(INWARD))
     .map(({ agreement:a, ...rest }) => ({
       ...rest,
       inward: a ? a.id : undefined,
     }));
 
-  const inward = relationships
+  const inward = relatedAgreements
     .filter(r => r.type.endsWith(INWARD))
-    .map(({ agreement:a, ...rest }) => ({
+    .map(({ agreement:a, type, ...rest }) => ({
       ...rest,
       outward: a ? a.id : undefined,
+      type: type.substring(0, type.indexOf(INWARD)),
     }));
 
   if (outward) agreement.outwardRelationships = outward;
@@ -23,10 +24,10 @@ export function splitRelatedAgreements(agreement, data) {
   return agreement;
 }
 
-export function joinRelatedAgreements(agreement, data) {
+export function joinRelatedAgreements(agreement) {
   const { inwardRelationships = [], outwardRelationships = [] } = agreement;
 
-  const relationships = [
+  const relatedAgreements = [
     ...inwardRelationships
       .map(({ inward:_, outward, type, ...rest }) => ({
         ...rest,
@@ -41,7 +42,7 @@ export function joinRelatedAgreements(agreement, data) {
       })),
   ];
 
-  agreement.relationships = relationships;
+  agreement.relatedAgreements = relatedAgreements;
 
   return agreement;
 }

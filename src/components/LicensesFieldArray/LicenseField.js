@@ -10,7 +10,7 @@ import { AppIcon, Pluggable } from '@folio/stripes/core';
 
 import { LicenseCard } from '@folio/stripes-erm-components';
 
-import css from './LicenseField.css';
+import css from '../styles.css';
 
 export default class LicenseField extends React.Component {
   static propTypes = {

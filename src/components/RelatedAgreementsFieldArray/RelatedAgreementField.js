@@ -1,14 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
+import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import {
   Button,
   Card,
+  Col,
+  FormattedUTCDate,
+  KeyValue,
   Layout,
+  Row,
 } from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
 
-export default class UsageDataProviderField extends React.Component {
+import { urls } from '../utilities';
+import css from '../styles.css';
+
+export default class RelatedAgreementField extends React.Component {
   static propTypes = {
     id: PropTypes.string,
     index: PropTypes.number.isRequired,
@@ -19,52 +28,75 @@ export default class UsageDataProviderField extends React.Component {
     meta: PropTypes.shape({
       error: PropTypes.node,
     }).isRequired,
-    onUDPSelected: PropTypes.func.isRequired,
-    onUDPUnselected: PropTypes.func.isRequired,
-    udp: PropTypes.shape({
+    onAgreementSelected: PropTypes.func.isRequired,
+    onAgreementUnselected: PropTypes.func.isRequired,
+    agreement: PropTypes.shape({
       label: PropTypes.string,
     }),
   }
 
   static defaultProps = {
-    udp: {},
+    agreement: {},
   }
 
-  renderLinkUDPButton = () => (
+  renderLinkAgreementButton = () => (
     <Pluggable
       aria-haspopup="true"
-      dataKey="udp"
-      id={`udp-${this.props.index}-search-button`}
+      dataKey="agreement"
+      id={`agreement-${this.props.index}-search-button`}
       marginBottom0
-      onUDPSelected={this.props.onUDPSelected}
-      searchLabel={<FormattedMessage id="ui-agreements.usageData.addUDP" />}
+      onAgreementSelected={this.props.onAgreementSelected}
+      searchLabel={<FormattedMessage id="ui-agreements.relatedAgreements.addAgreement" />}
       searchButtonStyle="primary"
-      type="find-erm-usage-data-provider"
+      type="find-agreement"
     >
-      <FormattedMessage id="ui-agreements.usageData.noUDPPlugin" />
+      <FormattedMessage id="ui-agreements.relatedAgreements.noPlugin" />
     </Pluggable>
   )
 
-  renderUnlinkUDPButton = () => (
+  renderUnlinkAgreementButton = () => (
     <Button
       buttonStyle="danger"
-      id={`clickable-unlink-udp-${this.props.index}`}
+      id={`clickable-unlink-agreement-${this.props.index}`}
       marginBottom0
-      onClick={this.props.onUDPUnselected}
+      onClick={this.props.onAgreementUnselected}
     >
-      <FormattedMessage id="ui-agreements.usageData.unlinkUDP" />
+      <FormattedMessage id="ui-agreements.relatedAgreements.unlink" />
     </Button>
   )
 
 
-  renderUDP = () => {
-    const { udp } = this.props;
+  renderAgreement = () => {
+    const { agreement } = this.props;
 
     return (
-      <div data-test-udp-card-name>
-        <AppIcon app="erm-usage" size="small">
-          <strong>{udp.label}</strong>
-        </AppIcon>
+      <div>
+        <Link
+          data-test-agreement-card-name
+          to={urls.agreementView(agreement.id)}
+        >
+          {agreement.name}
+        </Link>
+        <Row>
+          <Col xs={6} md={4}>
+            <KeyValue
+              label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
+              value={agreement.startDate ? <FormattedUTCDate value={agreement.startDate} /> : '-'}
+            />
+          </Col>
+          <Col xs={6} md={4}>
+            <KeyValue
+              label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
+              value={agreement.endDate ? <FormattedUTCDate value={agreement.endDate} /> : '-'}
+            />
+          </Col>
+          <Col xs={12} md={4}>
+            <KeyValue
+              label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
+              value={get(agreement, 'status.label', '-')}
+            />
+          </Col>
+        </Row>
       </div>
     );
   }
@@ -73,11 +105,11 @@ export default class UsageDataProviderField extends React.Component {
     <div>
       <Layout className="textCentered">
         <strong>
-          <FormattedMessage id="ui-agreements.usageData.noUDPAdded" />
+          <FormattedMessage id="ui-agreements.relatedAgreements.noneAdded" />
         </strong>
       </Layout>
       <Layout className="textCentered">
-        <FormattedMessage id="ui-agreements.usageData.addUDPToStart" />
+        <FormattedMessage id="ui-agreements.relatedAgreements.addToStart" />
       </Layout>
     </div>
   )
@@ -102,17 +134,17 @@ export default class UsageDataProviderField extends React.Component {
         cardStyle={value ? 'positive' : 'negative'}
         hasMargin
         headerStart={(
-          <AppIcon app="erm-usage" size="small">
+          <AppIcon app="agreements" size="small">
             <strong>
-              <FormattedMessage id="ui-agreements.usageData.usageDataProvider" />
+              <FormattedMessage id="ui-agreements.agreement" />
             </strong>
           </AppIcon>
         )}
-        headerEnd={value ? this.renderUnlinkUDPButton() : this.renderLinkUDPButton()}
+        headerEnd={value ? this.renderUnlinkAgreementButton() : this.renderLinkAgreementButton()}
         id={id}
         roundedBorder
       >
-        { value ? this.renderUDP() : this.renderEmpty() }
+        { value ? this.renderAgreement() : this.renderEmpty() }
         { touched && error ? this.renderError() : null }
       </Card>
     );

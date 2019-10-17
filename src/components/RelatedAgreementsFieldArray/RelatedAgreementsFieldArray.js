@@ -33,12 +33,12 @@ class RelatedAgreementsFieldArray extends React.Component {
     // }));
   }
 
-  handleAgreementUnselected = (index, udp) => {
+  handleAgreementUnselected = (index, relatedAgreement) => {
     /* handleAgreementUnselected should mark the Agreement to be deleted once we update the form.
     onMarkForDeletion does that job. It pushes the {id: id, _delete: true) into the fields array
     and on update would actually delete the field. onReplaceField takes care
     of replacing the Related Agreement UI with the default Add Agreement UI */
-    this.props.onMarkForDeletion(udp);
+    this.props.onMarkForDeletion(relatedAgreement);
     this.props.onReplaceField(index, {});
   }
 
@@ -49,7 +49,7 @@ class RelatedAgreementsFieldArray extends React.Component {
   );
 
   renderRelatedAgreements = (items) => {
-    return items.map((agreement, index) => (
+    return items.map((relatedAgreement, index) => (
       <EditCard
         deleteBtnProps={{
           'id': `ra-delete-${index}`,
@@ -58,7 +58,7 @@ class RelatedAgreementsFieldArray extends React.Component {
         header={<FormattedMessage id="ui-agreements.relatedAgreements.relatedAgreementIndex" values={{ index: index + 1 }} />}
         id={`edit-ra-card-${index}`}
         key={index}
-        onDelete={() => this.props.onDeleteField(index, agreement)}
+        onDelete={() => this.props.onDeleteField(index, relatedAgreement)}
       >
         <Field
           component={RelatedAgreementField}
@@ -66,8 +66,8 @@ class RelatedAgreementsFieldArray extends React.Component {
           index={index}
           name={`${this.props.name}[${index}].agreement`}
           onAgreementSelected={selectedAgreement => this.handleAgreementSelected(index, selectedAgreement)}
-          onAgreementUnselected={() => this.handleAgreementUnselected(index, agreement)}
-          agreement={agreement}
+          onAgreementUnselected={() => this.handleAgreementUnselected(index, relatedAgreement)}
+          agreement={relatedAgreement.agreement}
           validate={validators.required}
         />
         <Field
