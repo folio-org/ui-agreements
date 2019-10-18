@@ -48,6 +48,7 @@ export default class Agreements extends React.Component {
     queryGetter: PropTypes.func.isRequired,
     querySetter: PropTypes.func.isRequired,
     searchString: PropTypes.string,
+    selectedRecordId: PropTypes.string,
     source: PropTypes.shape({
       loaded: PropTypes.func,
       totalCount: PropTypes.func,
@@ -233,6 +234,7 @@ export default class Agreements extends React.Component {
       onSelectRow,
       queryGetter,
       querySetter,
+      selectedRecordId,
       source,
       syncToLocationSearch,
       visibleColumns,
@@ -362,6 +364,7 @@ export default class Agreements extends React.Component {
                       isEmptyMessage={this.renderIsEmptyMessage(query, source)}
                       onHeaderClick={onSort}
                       onNeedMoreData={onNeedMoreData}
+                      isSelected={({ item }) => item.id === selectedRecordId}
                       onRowClick={onSelectRow}
                       rowFormatter={this.rowFormatter}
                       sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}

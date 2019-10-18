@@ -47,11 +47,11 @@ class App extends React.Component {
           <Switch>
             <Route path={`${path}/agreements/create`} component={AgreementCreateRoute} />
             <Route path={`${path}/agreements/:id/edit`} component={AgreementEditRoute} />
-            <Route path={`${path}/agreements`} component={AgreementsRoute}>
+            <Route path={`${path}/agreements/:id?`} component={AgreementsRoute}>
               <Route path={`${path}/agreements/:id`} component={AgreementViewRoute} />
             </Route>
 
-            <Route path={`${path}/eresources`} component={EResourcesRoute}>
+            <Route path={`${path}/eresources/:id?`} component={EResourcesRoute}>
               <Route path={`${path}/eresources/:id`} component={EResourceViewRoute} />
             </Route>
 
