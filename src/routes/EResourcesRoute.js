@@ -65,6 +65,11 @@ class EResourcesRoute extends React.Component {
       pathname: PropTypes.string,
       search: PropTypes.string,
     }).isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string,
+      }),
+    }),
     mutator: PropTypes.object,
     resources: PropTypes.object,
     stripes: PropTypes.shape({
@@ -141,6 +146,7 @@ class EResourcesRoute extends React.Component {
           tags: get(resources, 'tags.records', []),
           typeValues: get(resources, 'typeValues.records', []),
         }}
+        selectedRecordId={match.params.id}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}
         querySetter={this.querySetter}
