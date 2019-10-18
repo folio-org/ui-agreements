@@ -77,6 +77,11 @@ class AgreementsRoute extends React.Component {
       pathname: PropTypes.string,
       search: PropTypes.string,
     }).isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string,
+      }),
+    }),
     mutator: PropTypes.object,
     resources: PropTypes.object,
     stripes: PropTypes.shape({
@@ -137,7 +142,7 @@ class AgreementsRoute extends React.Component {
   }
 
   render() {
-    const { children, location, resources } = this.props;
+    const { children, location, match, resources } = this.props;
 
     if (this.source) {
       this.source.update(this.props, 'agreements');
@@ -156,6 +161,7 @@ class AgreementsRoute extends React.Component {
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
           tagsValues: get(resources, 'tagsValues.records', []),
         }}
+        selectedRecordId={match.params.id}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}
         querySetter={this.querySetter}
