@@ -234,6 +234,7 @@ export default class Agreements extends React.Component {
       onSelectRow,
       queryGetter,
       querySetter,
+      selectedRecordId,
       source,
       syncToLocationSearch,
       visibleColumns,

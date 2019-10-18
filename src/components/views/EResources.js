@@ -185,6 +185,7 @@ export default class EResources extends React.Component {
       onSelectRow,
       queryGetter,
       querySetter,
+      selectedRecordId,
       source,
       syncToLocationSearch,
     } = this.props;
