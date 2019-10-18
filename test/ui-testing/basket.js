@@ -5,7 +5,6 @@ const AgreementCRUD = require('./agreement-crud');
 const _CONSTANTS = {
   ERESOURCES_NAME_COLUMN: 0,
   ERESOURCES_TYPE_COLUMN: 1,
-  ERESOURCE_ISBN_COLUMN: 2,
   LINES_NAME_COLUMN: 0,
   LINES_TYPE_COLUMN: 2,
 };
