@@ -81,6 +81,8 @@ module.exports.test = (uiTestCtx) => {
     const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 
+    console.log(`\n These tests require you to upload the package ${PKG.name}.`);
+
     this.timeout(Number(config.test_timeout));
 
     describe('Login > Find eresource > Filter contents > Logout\n', () => {
@@ -173,7 +175,7 @@ module.exports.test = (uiTestCtx) => {
           .wait('#basket-contents')
           .wait('[data-test-basket-create-agreement]')
           .click('[data-test-basket-create-agreement]')
-        // Ensure agreement line 0 has been auto-added for the basket item
+          // Ensure agreement line 0 has been auto-added for the basket item
           .wait('#agreement-form-lines [data-test-ag-line-number="0"]')
           .insert('#edit-agreement-name', AGREEMENT.name)
           .insert('#edit-agreement-start-date', AGREEMENT.startDate)
