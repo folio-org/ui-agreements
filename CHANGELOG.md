@@ -14,6 +14,7 @@
 * Updated permission sets. ERM-477
 * Updated forms to use React Final Form instead of Redux Form
 * Added filter buttons to view future, dropped or all content of a package. ERM-394 ERM-396
+* Added ability to search E-resources by identifier. ERM-519
 
 ## 3.2.4 2019-09-10
 * Added support for interface `invoice` version `2.0`.
