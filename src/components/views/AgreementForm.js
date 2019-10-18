@@ -60,7 +60,7 @@ class AgreementForm extends React.Component {
   }
 
   state = {
-    addedLinesToAdd: false,
+    addedLinesToAdd: false, // eslint-disable-line react/no-unused-state
     sections: {
       formInternalContacts: true,
       formLines: true,

@@ -5,8 +5,9 @@ import { Field } from 'react-final-form';
 import { Button, Layout, Select, TextArea } from '@folio/stripes/components';
 import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
-import { validators } from '../utilities';
 import RelatedAgreementField from './RelatedAgreementField';
+import { validators } from '../utilities';
+import { agreementRelationshipTypes } from '../../constants';
 
 class RelatedAgreementsFieldArray extends React.Component {
   static propTypes = {
@@ -18,19 +19,19 @@ class RelatedAgreementsFieldArray extends React.Component {
     onReplaceField: PropTypes.func.isRequired,
   };
 
-  // state = {
-  //   udps: {},
-  // }
+  constructor(props) {
+    super(props);
+
+    this.relationshipTypes = [{ label: '', value: '' }];
+
+    agreementRelationshipTypes.forEach(type => {
+      this.relationshipTypes.push(type.outward);
+      this.relationshipTypes.push(type.inward);
+    });
+  }
 
   handleAgreementSelected = (index, agreement) => {
     this.props.onReplaceField(index, { agreement });
-
-    // this.setState(prevState => ({
-    //   udps: {
-    //     ...prevState.udps,
-    //     [udp.id]: udp,
-    //   }
-    // }));
   }
 
   handleAgreementUnselected = (index, relatedAgreement) => {
@@ -38,7 +39,7 @@ class RelatedAgreementsFieldArray extends React.Component {
     onMarkForDeletion does that job. It pushes the {id: id, _delete: true) into the fields array
     and on update would actually delete the field. onReplaceField takes care
     of replacing the Related Agreement UI with the default Add Agreement UI */
-    this.props.onMarkForDeletion(relatedAgreement);
+    this.props.onMarkForDeletion(relatedAgreement, ['type']);
     this.props.onReplaceField(index, {});
   }
 
@@ -58,7 +59,7 @@ class RelatedAgreementsFieldArray extends React.Component {
         header={<FormattedMessage id="ui-agreements.relatedAgreements.relatedAgreementIndex" values={{ index: index + 1 }} />}
         id={`edit-ra-card-${index}`}
         key={index}
-        onDelete={() => this.props.onDeleteField(index, relatedAgreement)}
+        onDelete={() => this.props.onDeleteField(index, relatedAgreement, ['type'])}
       >
         <Field
           component={RelatedAgreementField}
@@ -72,14 +73,7 @@ class RelatedAgreementsFieldArray extends React.Component {
         />
         <Field
           component={Select}
-          dataOptions={[
-            { value: 'supersedes', label: 'Supersedes' },
-            { value: 'supersedes$$inward$$', label: 'Is superseded by' },
-            { value: 'provides_post-cancellation_access_for', label: 'Provides post-cancellation access for' },
-            { value: 'provides_post-cancellation_access_for$$inward$$', label: 'Has post-cancellation access in' },
-            { value: 'tracks_demand-driven_acquisitions_for', label: 'Tracks demand-driven acquisitions for' },
-            { value: 'tracks_demand-driven_acquisitions_for$$inward$$', label: 'Has demand-driven acquisitions in' },
-          ]}
+          dataOptions={this.relationshipTypes}
           id={`ra-type-${index}`}
           label={<FormattedMessage id="ui-agreements.relatedAgreements.relationship" />}
           name={`${this.props.name}[${index}].type`}
@@ -89,8 +83,8 @@ class RelatedAgreementsFieldArray extends React.Component {
         <Field
           component={TextArea}
           id={`ra-note-${index}`}
-          label={<FormattedMessage id="ui-agreements.usageData.note" />}
-          name={`${this.props.name}[${index}].usageDataProviderNote`}
+          label={<FormattedMessage id="ui-agreements.note" />}
+          name={`${this.props.name}[${index}].note`}
         />
       </EditCard>
     ));

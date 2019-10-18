@@ -7,6 +7,7 @@ import { stripesConnect } from '@folio/stripes/core';
 import { LoadingPane } from '@folio/stripes-erm-components';
 
 import withFileHandlers from './components/withFileHandlers';
+import { joinRelatedAgreements, splitRelatedAgreements } from './utilities/processRelatedAgreements';
 import View from '../components/views/AgreementForm';
 import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
@@ -194,6 +195,10 @@ class AgreementEditRoute extends React.Component {
             };
           })
       }));
+
+      compose(
+        joinRelatedAgreements,
+      )(initialValues);
     }
 
     const lines = get(props.resources, 'agreementLines.records', []);
@@ -231,64 +236,6 @@ class AgreementEditRoute extends React.Component {
     });
   }
 
-  getInitialValues = () => {
-    const { resources } = this.props;
-    const agreement = get(resources, 'agreement.records[0]', {});
-    const initialValues = cloneDeep(agreement);
-    const {
-      agreementStatus = {},
-      contacts = [],
-      isPerpetual = {},
-      items = [],
-      linkedLicenses = [],
-      orgs = [],
-      renewalPriority = {},
-    } = initialValues;
-
-    // Set the values of dropdown-controlled props as values rather than objects.
-    initialValues.agreementStatus = agreementStatus.value;
-    initialValues.isPerpetual = isPerpetual.value;
-    initialValues.renewalPriority = renewalPriority.value;
-    initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
-    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role && o.role.value }));
-    initialValues.linkedLicenses = linkedLicenses.map(l => ({
-      ...l,
-      status: l.status.value,
-      // Init the list of amendments based on the license's amendments to ensure
-      // we display those that have been created since this agreement's license was last
-      // edited. Ensure we provide defaults via amendmentId.
-      amendments: get(l, 'remoteId_object.amendments', [])
-        .map(a => {
-          const assignedAmendment = (l.amendments || []).find(la => la.amendmentId === a.id) || {};
-          return {
-            ...assignedAmendment,
-            amendmentId: a.id,
-            status: assignedAmendment.status ? assignedAmendment.status.value : undefined,
-          };
-        })
-    }));
-
-    const lines = get(resources, 'agreementLines.records', []);
-    if (items.length && lines.length) {
-      initialValues.items = items.map(item => {
-        if (item.resource) return item;
-
-        const line = lines.find(l => l.id === item.id);
-        if (!line) return item;
-
-        return {
-          id: line.id,
-          coverage: line.customCoverage ? line.coverage : undefined,
-          poLineId: line.poLineId,
-          activeFrom: line.activeFrom,
-          activeTo: line.activeTo
-        };
-      });
-    }
-
-    return initialValues;
-  }
-
   handleClose = () => {
     const { location, match } = this.props;
     this.props.history.push(`${urls.agreementView(match.params.id)}${location.search}`);
@@ -297,9 +244,9 @@ class AgreementEditRoute extends React.Component {
   handleSubmit = (agreement) => {
     const { history, location, mutator } = this.props;
 
-    // const processedAgreement = compose(
-    //   processRelatedAgreements,
-    // )(agreement, this.getData());
+    compose(
+      splitRelatedAgreements,
+    )(agreement);
 
     mutator.agreement
       .PUT(agreement)

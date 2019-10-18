@@ -39,20 +39,29 @@ export default class RelatedAgreementField extends React.Component {
     agreement: {},
   }
 
-  renderLinkAgreementButton = () => (
-    <Pluggable
-      aria-haspopup="true"
-      dataKey="agreement"
-      id={`agreement-${this.props.index}-search-button`}
-      marginBottom0
-      onAgreementSelected={this.props.onAgreementSelected}
-      searchLabel={<FormattedMessage id="ui-agreements.relatedAgreements.addAgreement" />}
-      searchButtonStyle="primary"
-      type="find-agreement"
-    >
-      <FormattedMessage id="ui-agreements.relatedAgreements.noPlugin" />
-    </Pluggable>
-  )
+  renderLinkAgreementButton = () => {
+    const { id, onAgreementSelected } = this.props;
+
+    return (
+      <Pluggable
+        aria-haspopup="true"
+        dataKey={id}
+        onAgreementSelected={onAgreementSelected}
+        renderTrigger={(props) => (
+          <Button
+            buttonStyle="primary"
+            id={`${id}-find-agreement-btn`}
+            onClick={props.onClick}
+          >
+            <FormattedMessage id="ui-agreements.relatedAgreements.addAgreement" />
+          </Button>
+        )}
+        type="find-agreement"
+      >
+        <FormattedMessage id="ui-agreements.relatedAgreements.noPlugin" />
+      </Pluggable>
+    );
+  }
 
   renderUnlinkAgreementButton = () => (
     <Button
