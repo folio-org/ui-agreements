@@ -30,7 +30,7 @@ export default class PackageContents extends React.Component {
   formatter = {
     name: pci => <EResourceLink eresource={pci.pti.titleInstance} />,
     platform: pci => get(pci, 'pti.platform.name', ''),
-    coverage: pci => <CoverageStatements statements={pci.pti.coverage} />,
+    coverage: pci => <CoverageStatements statements={pci.coverage} />,
     accessStart: pci => this.renderDate(pci.accessStart),
     accessEnd: pci => this.renderDate(pci.accessEnd),
   }
@@ -95,8 +95,8 @@ export default class PackageContents extends React.Component {
         displayWhenOpen={this.renderBadge()}
         label={<FormattedMessage id="ui-agreements.eresources.packageResources" />}
       >
-        { this.renderFilterButtons() }
-        { packageContents ? this.renderList(packageContents) : <Spinner /> }
+        {this.renderFilterButtons()}
+        {packageContents ? this.renderList(packageContents) : <Spinner />}
       </Accordion>
     );
   }
