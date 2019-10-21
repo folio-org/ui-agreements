@@ -23,7 +23,7 @@ export default class RelatedAgreementField extends React.Component {
     index: PropTypes.number.isRequired,
     input: PropTypes.shape({
       onChange: PropTypes.func.isRequired,
-      value: PropTypes.string,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     }).isRequired,
     meta: PropTypes.shape({
       error: PropTypes.node,

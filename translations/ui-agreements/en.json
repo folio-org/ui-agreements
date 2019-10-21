@@ -278,6 +278,7 @@
   "relatedAgreements.noPlugin": "No \"find-agreement\" plugin is installed",
   "relatedAgreements.relatedAgreementIndex": "Related agreement {index}",
   "relatedAgreements.relationship": "Relationship",
+  "relatedAgreements.relationshipToThisAgreement": "Linked agreement's relationship to the agreement being edited",
   "relatedAgreements.relationship.has-demand-driven-acquisitions-in": "Has demand-driven acquisitions in \"{agreement}\"",
   "relatedAgreements.relationship.has-post-cancellation-access-in": "Has post-cancellation access in \"{agreement}\"",
   "relatedAgreements.relationship.is-superseded-by": "Is superseded by \"{agreement}\"",

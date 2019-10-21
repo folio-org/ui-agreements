@@ -75,7 +75,7 @@ class RelatedAgreementsFieldArray extends React.Component {
           component={Select}
           dataOptions={this.relationshipTypes}
           id={`ra-type-${index}`}
-          label={<FormattedMessage id="ui-agreements.relatedAgreements.relationship" />}
+          label={<FormattedMessage id="ui-agreements.relatedAgreements.relationshipToThisAgreement" />}
           name={`${this.props.name}[${index}].type`}
           required
           validate={validators.required}

@@ -78,7 +78,7 @@ export default class RelatedAgreements extends React.Component {
   );
 
   renderBadge = () => (
-    <Badge>{get(this.props.agreement, 'relaatedAgreements.length', 0)}</Badge>
+    <Badge>{get(this.props.agreement, 'relatedAgreements.length', 0)}</Badge>
   )
 
   render() {
