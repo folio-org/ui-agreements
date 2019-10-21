@@ -128,9 +128,41 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
+      it('should search for eresource by identifier', done => {
+        nightmare
+          .wait('#list-eresources')
+          .evaluate(() => {
+            const element = [...document.querySelectorAll('#list-eresources [class*=mclScrollable] [aria-rowindex]')]
+              .find((item) => {
+                const identifier = item.children[2];
+                return identifier && identifier.innerText;
+              });
+            return element.children[2].innerText;
+          })
+          .then((ISBN) => {
+            nightmare
+              .insert('#input-eresource-search', ISBN)
+              .click('#clickable-search-eresources')
+              .waitUntilNetworkIdle(2000)
+              .wait('#list-eresources')
+              .evaluate((ISBNNumber) => {
+                const resultCount = [...document.querySelectorAll('#list-eresources [class*=mclScrollable] [aria-rowindex]')].length;
+                if (resultCount !== 1) throw Error(`Expected to find an eresource with ISBN ${ISBNNumber}`);
+              }, ISBN)
+              .then(done)
+              .catch(done);
+          })
+          .catch(done);
+      });
+
       it(`should search for "${values.search}"`, done => {
         nightmare
+          .click('#clickable-reset-all')
           .wait('#input-eresource-search')
+          .wait(() => {
+            const resultCount = [...document.querySelectorAll('#list-eresources [class*=mclScrollable] [aria-rowindex]')].length;
+            return resultCount > 1;
+          })
           .insert('#input-eresource-search', values.search)
           .click('#clickable-search-eresources')
           .waitUntilNetworkIdle(2000)

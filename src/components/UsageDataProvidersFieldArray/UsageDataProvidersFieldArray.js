@@ -51,6 +51,7 @@ class UsageDataProvidersFieldArray extends React.Component {
   renderUDPFields = (items) => {
     return items.map((udp, index) => (
       <EditCard
+        deleteButtonTooltipText={<FormattedMessage id="ui-agreements.usageData.removeUsageDataProvider" />}
         deleteBtnProps={{
           'id': `udp-delete-${index}`,
           'data-test-delete-field-button': true
