@@ -6,15 +6,18 @@ import { Accordion } from '@folio/stripes/components';
 
 import RelatedAgreementsFieldArray from '../RelatedAgreementsFieldArray';
 
-export default class FormUsageData extends React.Component {
+export default class FormRelatedAgreements extends React.Component {
   static propTypes = {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
+    values: PropTypes.shape({
+      id: PropTypes.string,
+    }),
   };
 
   render() {
-    const { id, onToggle, open } = this.props;
+    const { id, onToggle, open, values = {} } = this.props;
 
     return (
       <Accordion
@@ -26,6 +29,7 @@ export default class FormUsageData extends React.Component {
         <FieldArray
           name="relatedAgreements"
           component={RelatedAgreementsFieldArray}
+          currentAgreementId={values.id}
         />
       </Accordion>
     );

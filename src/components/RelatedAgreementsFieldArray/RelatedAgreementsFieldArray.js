@@ -3,14 +3,19 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import { Button, Layout, Select, TextArea } from '@folio/stripes/components';
-import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
+import {
+  EditCard,
+  composeValidators,
+  requiredValidator,
+  withKiwtFieldArray
+} from '@folio/stripes-erm-components';
 
 import RelatedAgreementField from './RelatedAgreementField';
-import { validators } from '../utilities';
 import { agreementRelationshipTypes } from '../../constants';
 
 class RelatedAgreementsFieldArray extends React.Component {
   static propTypes = {
+    currentAgreementId: PropTypes.string,
     items: PropTypes.arrayOf(PropTypes.object),
     name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
@@ -43,6 +48,14 @@ class RelatedAgreementsFieldArray extends React.Component {
     this.props.onReplaceField(index, {});
   }
 
+  validateSelfLinking = (value) => {
+    if (value && value.id === this.props.currentAgreementId) {
+      return <FormattedMessage id="ui-agreements.errors.cannotLinkAgreementToItself" />;
+    }
+
+    return undefined;
+  };
+
   renderEmpty = () => (
     <Layout className="padding-bottom-gutter" data-test-ra-empty-message>
       <FormattedMessage id="ui-agreements.relatedAgreements.agreementHasNone" />
@@ -69,7 +82,10 @@ class RelatedAgreementsFieldArray extends React.Component {
           onAgreementSelected={selectedAgreement => this.handleAgreementSelected(index, selectedAgreement)}
           onAgreementUnselected={() => this.handleAgreementUnselected(index, relatedAgreement)}
           agreement={relatedAgreement.agreement}
-          validate={validators.required}
+          validate={composeValidators(
+            requiredValidator,
+            this.validateSelfLinking,
+          )}
         />
         <Field
           component={Select}
@@ -78,7 +94,7 @@ class RelatedAgreementsFieldArray extends React.Component {
           label={<FormattedMessage id="ui-agreements.relatedAgreements.relationshipToThisAgreement" />}
           name={`${this.props.name}[${index}].type`}
           required
-          validate={validators.required}
+          validate={requiredValidator}
         />
         <Field
           component={TextArea}
