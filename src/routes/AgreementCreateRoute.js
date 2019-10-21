@@ -7,6 +7,7 @@ import { stripesConnect } from '@folio/stripes/core';
 import { LoadingPane } from '@folio/stripes-erm-components';
 
 import withFileHandlers from './components/withFileHandlers';
+import { splitRelatedAgreements } from './utilities/processRelatedAgreements';
 import View from '../components/views/AgreementForm';
 import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
@@ -129,6 +130,10 @@ class AgreementCreateRoute extends React.Component {
 
   handleSubmit = (agreement) => {
     const { history, location, mutator } = this.props;
+
+    compose(
+      splitRelatedAgreements,
+    )(agreement);
 
     mutator.agreements
       .POST(agreement)

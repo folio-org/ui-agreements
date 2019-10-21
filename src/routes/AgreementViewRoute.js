@@ -11,6 +11,8 @@ import withFileHandlers from './components/withFileHandlers';
 import View from '../components/views/Agreement';
 import { urls } from '../components/utilities';
 
+import { joinRelatedAgreements } from './utilities/processRelatedAgreements';
+
 const RECORDS_PER_REQUEST = 100;
 const RECORDS_INCREMENT = 1000;
 
@@ -183,6 +185,8 @@ class AgreementViewRoute extends React.Component {
           credentials: interfacesCredentials.find(cred => cred.interfaceId === id)
         })),
     }));
+
+    joinRelatedAgreements(agreement);
 
     return {
       ...agreement,

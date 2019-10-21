@@ -30,6 +30,7 @@ import {
   Lines,
   Organizations,
   OtherPeriods,
+  RelatedAgreements,
   SupplementaryInfo,
   Terms,
   UsageData,
@@ -64,6 +65,7 @@ export default class Agreement extends React.Component {
       notes: false,
       organizations: false,
       otherPeriods: false,
+      relatedAgreements: false,
       supplementaryInfo: false,
       terms: false,
       usageData: false,
@@ -218,6 +220,7 @@ export default class Agreement extends React.Component {
               <OtherPeriods {...this.getSectionProps('otherPeriods')} />
               <SupplementaryInfo {...this.getSectionProps('supplementaryInfo')} />
               <UsageData {...this.getSectionProps('usageData')} />
+              <RelatedAgreements {...this.getSectionProps('relatedAgreements')} />
               <NotesSmartAccordion
                 {...this.getSectionProps('notes')}
                 domainName="agreements"

@@ -8,7 +8,7 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
 
-import css from './UsageDataProviderField.css';
+import css from '../styles.css';
 
 export default class UsageDataProviderField extends React.Component {
   static propTypes = {
