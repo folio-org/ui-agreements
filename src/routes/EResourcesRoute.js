@@ -23,7 +23,7 @@ class EResourcesRoute extends React.Component {
       perRequest: 100,
       limitParam: 'perPage',
       params: getSASParams({
-        searchKey: 'name',
+        searchKey: 'name,identifiers.identifier.value',
         filterConfig: [{
           name: 'class',
           values: [
