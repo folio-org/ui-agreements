@@ -47,11 +47,6 @@ class EResourcesRoute extends React.Component {
       perRequest: 100,
       limitParam: 'perPage',
     },
-    tagsValues: {
-      type: 'okapi',
-      path: 'tags?limit=100',
-      records: 'tags',
-    },
     query: { initialValue: {} },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
   });
@@ -143,7 +138,6 @@ class EResourcesRoute extends React.Component {
         data={{
           eresources: get(resources, 'eresources.records', []),
           sourceValues: get(resources, 'sourceValues.records', []),
-          tags: get(resources, 'tags.records', []),
           typeValues: get(resources, 'typeValues.records', []),
         }}
         selectedRecordId={match.params.id}
