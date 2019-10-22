@@ -36,7 +36,6 @@ export default class EResources extends React.Component {
     contentRef: PropTypes.object,
     data: PropTypes.shape({
       eresources: PropTypes.array.isRequired,
-      tags: PropTypes.array.isRequired,
     }),
     disableRecordCreation: PropTypes.bool,
     onNeedMoreData: PropTypes.func.isRequired,

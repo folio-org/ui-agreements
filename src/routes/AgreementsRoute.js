@@ -60,7 +60,11 @@ class AgreementsRoute extends React.Component {
     },
     tagsValues: {
       type: 'okapi',
-      path: 'tags?limit=100',
+      path: 'tags',
+      params: {
+        limit: '1000',
+        query: 'cql.allRecords=1 sortby label',
+      },
       records: 'tags',
     },
     basket: { initialValue: [] },
