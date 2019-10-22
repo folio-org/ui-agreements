@@ -17,6 +17,7 @@ import {
 } from '@folio/stripes/components';
 
 import { Spinner } from '@folio/stripes-erm-components';
+import { getResourceIdentifier } from '../utilities';
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
@@ -42,6 +43,7 @@ export default class CoveredEResourcesList extends React.Component {
 
   columnMapping = {
     name: <FormattedMessage id="ui-agreements.eresources.name" />,
+    issn: <FormattedMessage id="ui-agreements.identifier.eissn" />,
     platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
     package: <FormattedMessage id="ui-agreements.eresources.package" />,
     coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
@@ -60,6 +62,10 @@ export default class CoveredEResourcesList extends React.Component {
     name: e => {
       const titleInstance = get(e._object, 'pti.titleInstance', {});
       return <EResourceLink eresource={titleInstance} />;
+    },
+    issn: e => {
+      const titleInstance = get(e._object, 'pti.titleInstance', {});
+      return getResourceIdentifier(titleInstance, 'eissn');
     },
     platform: e => get(e._object, 'pti.platform.name', '-'),
     package: e => get(e._object, 'pkg.name', '-'),
@@ -82,6 +88,7 @@ export default class CoveredEResourcesList extends React.Component {
 
   visibleColumns = [
     'name',
+    'issn',
     'platform',
     'package',
     'coverage',
@@ -195,13 +202,13 @@ export default class CoveredEResourcesList extends React.Component {
         </Headline>
         <Row end="xs">
           <Col xs={10}>
-            { this.renderFilterButtons() }
+            {this.renderFilterButtons()}
           </Col>
           <Col xs>
-            { this.renderExportDropdown() }
+            {this.renderExportDropdown()}
           </Col>
         </Row>
-        { eresources ? this.renderList() : <Spinner /> }
+        {eresources ? this.renderList() : <Spinner />}
       </IfEResourcesEnabled>
     );
   }
