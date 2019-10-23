@@ -43,7 +43,7 @@ export default class CoveredEResourcesList extends React.Component {
 
   columnMapping = {
     name: <FormattedMessage id="ui-agreements.eresources.name" />,
-    issn: <FormattedMessage id="ui-agreements.identifier.eissn" />,
+    issn: <FormattedMessage id="ui-agreements.identifier.issn" />,
     platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
     package: <FormattedMessage id="ui-agreements.eresources.package" />,
     coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
@@ -65,7 +65,8 @@ export default class CoveredEResourcesList extends React.Component {
     },
     issn: e => {
       const titleInstance = get(e._object, 'pti.titleInstance', {});
-      return getResourceIdentifier(titleInstance, 'eissn');
+      const eissn = getResourceIdentifier(titleInstance, 'eissn');
+      return (eissn !== '') ? eissn : getResourceIdentifier(titleInstance, 'pissn');
     },
     platform: e => get(e._object, 'pti.platform.name', '-'),
     package: e => get(e._object, 'pkg.name', '-'),
