@@ -190,6 +190,7 @@
   "finances.none": "Agreement has no order lines.",
 
   "identifier.doi": "DOI",
+  "identifier.issn": "eISSN/ISSN",
   "identifier.eissn": "ISSN (Online)",
   "identifier.ezb": "EZB",
   "identifier.isbn": "ISBN",
