@@ -69,6 +69,7 @@ class RelatedAgreementsFieldArray extends React.Component {
           'id': `ra-delete-${index}`,
           'data-test-delete-field-button': true
         }}
+        deleteButtonTooltipText={<FormattedMessage id="ui-agreements.relatedAgreements.remove" />}
         header={<FormattedMessage id="ui-agreements.relatedAgreements.relatedAgreementIndex" values={{ index: index + 1 }} />}
         id={`edit-ra-card-${index}`}
         key={index}
