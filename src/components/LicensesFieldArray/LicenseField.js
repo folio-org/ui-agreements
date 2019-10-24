@@ -32,6 +32,18 @@ export default class LicenseField extends React.Component {
     license: {},
   }
 
+  constructor(props) {
+    super(props);
+
+    this.findLicenseButtonRef = React.createRef();
+  }
+
+  componentDidMount() {
+    if (!this.props.input.value) {
+      this.findLicenseButtonRef.current.focus();
+    }
+  }
+
   renderLinkLicenseButton = () => {
     const { id, onLicenseSelected } = this.props;
 
@@ -43,6 +55,7 @@ export default class LicenseField extends React.Component {
         renderTrigger={(props) => (
           <Button
             buttonStyle="primary"
+            buttonRef={this.findLicenseButtonRef}
             id={`${id}-find-license-btn`}
             onClick={props.onClick}
           >
