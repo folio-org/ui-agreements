@@ -39,7 +39,7 @@ export default class LicenseField extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.props.input.value) {
+    if (!this.props.input.value && this.findLicenseButtonRef.current) {
       this.findLicenseButtonRef.current.focus();
     }
   }
