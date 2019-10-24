@@ -39,6 +39,18 @@ export default class RelatedAgreementField extends React.Component {
     agreement: {},
   }
 
+  constructor(props) {
+    super(props);
+
+    this.findAgreementButtonRef = React.createRef();
+  }
+
+  componentDidMount() {
+    if (!get(this.props, 'input.value.id') && this.findAgreementButtonRef.current) {
+      this.findAgreementButtonRef.current.focus();
+    }
+  }
+
   renderLinkAgreementButton = () => {
     const { id, onAgreementSelected } = this.props;
 
@@ -50,6 +62,7 @@ export default class RelatedAgreementField extends React.Component {
         renderTrigger={(props) => (
           <Button
             buttonStyle="primary"
+            buttonRef={this.findAgreementButtonRef}
             id={`${id}-find-agreement-btn`}
             onClick={props.onClick}
           >
