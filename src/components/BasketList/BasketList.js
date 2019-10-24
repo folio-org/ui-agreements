@@ -27,18 +27,26 @@ class BasketList extends React.Component {
 
     return (
       <MultiColumnList
+        columnMapping={{
+          selected: (
+            <Checkbox
+              name="selected-all"
+              checked={Object.values(selectedItems).includes(false) !== true}
+              onChange={this.props.onToggleAll}
+            />
+          ),
+          name: <FormattedMessage id="ui-agreements.eresources.name" />,
+          type: <FormattedMessage id="ui-agreements.eresources.type" />,
+          package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
+          publisher: <FormattedMessage id="ui-agreements.eresources.publisher" />,
+          platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
+          coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
+          remove: <FormattedMessage id="ui-agreements.remove" />,
+        }}
+        columnWidths={{
+          name: 300,
+        }}
         contentData={basket}
-        interactive={false}
-        maxHeight={400}
-        visibleColumns={[
-          'selected',
-          'name',
-          'type',
-          'package',
-          'platform',
-          'coverage',
-          'remove'
-        ]}
         formatter={{
           selected: resource => (
             <Checkbox
@@ -73,25 +81,18 @@ class BasketList extends React.Component {
             </FormattedMessage>
           )
         }}
-        columnMapping={{
-          selected: (
-            <Checkbox
-              name="selected-all"
-              checked={Object.values(selectedItems).includes(false) !== true}
-              onChange={this.props.onToggleAll}
-            />
-          ),
-          name: <FormattedMessage id="ui-agreements.eresources.name" />,
-          type: <FormattedMessage id="ui-agreements.eresources.type" />,
-          package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
-          publisher: <FormattedMessage id="ui-agreements.eresources.publisher" />,
-          platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
-          coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
-          remove: <FormattedMessage id="ui-agreements.remove" />,
-        }}
-        columnWidths={{
-          name: 300,
-        }}
+        interactive={false}
+        maxHeight={400}
+        rowUpdater={resource => selectedItems[resource.id]}
+        visibleColumns={[
+          'selected',
+          'name',
+          'type',
+          'package',
+          'platform',
+          'coverage',
+          'remove'
+        ]}
       />
     );
   }
