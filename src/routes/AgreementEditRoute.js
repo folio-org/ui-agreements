@@ -156,7 +156,17 @@ class AgreementEditRoute extends React.Component {
     let updated = false;
 
     const agreement = get(props.resources, 'agreement.records[0]', {});
-    const initialValues = state.initialValues.id ? state.initialValues : cloneDeep(agreement);
+
+    // Start with the existing initialValues. However, if we've just fetched a new agreement
+    // then use that as the baseline. This would be the case if we didn't have an agreement in
+    // resources at first, but also if we pulled stale agreement data from `resources` when this
+    // component was inited. Eg, when viewing one agreement and then entering the Edit screen
+    // for another agreement without viewing it first. This would occur when adding to an agreement
+    // via the Basket.
+    let initialValues = state.initialValues;
+    if (initialValues.id !== agreement.id) {
+      initialValues = cloneDeep(agreement);
+    }
 
     const {
       agreementStatus = {},
@@ -169,7 +179,7 @@ class AgreementEditRoute extends React.Component {
       renewalPriority = {},
     } = initialValues;
 
-    if (initialValues.id && !state.initialValues.id) {
+    if (initialValues.id !== state.initialValues.id) {
       updated = true;
 
       // Set the values of dropdown-controlled props as values rather than objects.
@@ -228,7 +238,7 @@ class AgreementEditRoute extends React.Component {
     return null;
   }
 
-  componentWillUnmount() {
+  handleBasketLinesAdded = () => {
     this.props.mutator.query.update({
       addFromBasket: null,
       authority: null,
@@ -316,6 +326,7 @@ class AgreementEditRoute extends React.Component {
         }}
         handlers={{
           ...handlers,
+          onBasketLinesAdded: this.handleBasketLinesAdded,
           onClose: this.handleClose,
         }}
         initialValues={this.state.initialValues}

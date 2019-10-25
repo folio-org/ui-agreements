@@ -115,7 +115,7 @@ class AgreementCreateRoute extends React.Component {
     };
   }
 
-  componentWillUnmount() {
+  handleBasketLinesAdded = () => {
     this.props.mutator.query.update({
       addFromBasket: null,
       authority: null,
@@ -194,6 +194,7 @@ class AgreementCreateRoute extends React.Component {
         }}
         handlers={{
           ...handlers,
+          onBasketLinesAdded: this.handleBasketLinesAdded,
           onClose: this.handleClose,
         }}
         initialValues={{

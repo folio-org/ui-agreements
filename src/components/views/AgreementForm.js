@@ -43,6 +43,7 @@ class AgreementForm extends React.Component {
       getRegisteredFields: PropTypes.func.isRequired,
     }).isRequired,
     handlers: PropTypes.PropTypes.shape({
+      onBasketLinesAdded: PropTypes.func.isRequired,
       onClose: PropTypes.func.isRequired,
     }),
     initialValues: PropTypes.object,
@@ -72,6 +73,9 @@ class AgreementForm extends React.Component {
     }
   }
 
+  // The `agreementLinesToAdd` must be added here rather than in the parent route
+  // handler because we don't want them to be part of the initialValues.
+  // After all, they're being _added_, so their presence must dirty the form.
   static getDerivedStateFromProps(props, state) {
     if (
       props.data.agreementLinesToAdd.length &&
@@ -82,6 +86,8 @@ class AgreementForm extends React.Component {
         ...(props.initialValues.items || []),
         ...props.data.agreementLinesToAdd,
       ]);
+
+      props.handlers.onBasketLinesAdded();
 
       return { addedLinesToAdd: true };
     }
