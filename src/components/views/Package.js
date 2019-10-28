@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {
+  AccordionSet,
+  Col,
+  ExpandAllButton,
+  Row,
+} from '@folio/stripes/components';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
 import {
@@ -19,7 +25,10 @@ export default class Package extends React.Component {
 
   state = {
     sections: {
+      eresourceAgreements: true,
+      info: true,
       notes: false,
+      packageContents: true,
     },
   }
 
@@ -36,6 +45,10 @@ export default class Package extends React.Component {
     };
   }
 
+  handleAllSectionsToggle = (sections) => {
+    this.setState({ sections });
+  }
+
   handleSectionToggle = ({ id }) => {
     this.setState((prevState) => ({
       sections: {
@@ -49,22 +62,33 @@ export default class Package extends React.Component {
     const { data, handlers } = this.props;
 
     return (
-      <div id="package">
-        <PackageInfo data={data} />
-        <Agreements data={data} />
-        <PackageContents
-          data={data}
-          onFilterPackageContents={handlers.onFilterPackageContents}
-        />
-        <NotesSmartAccordion
-          {...this.getSectionProps('notes')}
-          domainName="agreements"
-          entityId={data.eresource.id}
-          entityName={data.eresource.name}
-          entityType="eresource"
-          pathToNoteCreate={urls.noteCreate()}
-          pathToNoteDetails={urls.notes()}
-        />
+      <div id="eresource-package">
+        <PackageInfo {...this.getSectionProps('info')} />
+        <AccordionSet>
+          <Row end="xs">
+            <Col xs>
+              <ExpandAllButton
+                accordionStatus={this.state.sections}
+                id="clickable-expand-all"
+                onToggle={this.handleAllSectionsToggle}
+              />
+            </Col>
+          </Row>
+          <Agreements {...this.getSectionProps('eresourceAgreements')} />
+          <PackageContents
+            {...this.getSectionProps('packageContents')}
+            onFilterPackageContents={handlers.onFilterPackageContents}
+          />
+          <NotesSmartAccordion
+            {...this.getSectionProps('notes')}
+            domainName="agreements"
+            entityId={data.eresource.id}
+            entityName={data.eresource.name}
+            entityType="eresource"
+            pathToNoteCreate={urls.noteCreate()}
+            pathToNoteDetails={urls.notes()}
+          />
+        </AccordionSet>
       </div>
     );
   }

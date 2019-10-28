@@ -16,7 +16,10 @@ export default class PackageContents extends React.Component {
       packageContents: PropTypes.array,
       packageContentsFilter: PropTypes.string,
     }),
+    id: PropTypes.string,
     onFilterPackageContents: PropTypes.func.isRequired,
+    onToggle: PropTypes.func,
+    open: PropTypes.bool,
   };
 
   columnMapping = {
@@ -86,14 +89,21 @@ export default class PackageContents extends React.Component {
   )
 
   render() {
-    const { data: { packageContents } } = this.props;
+    const {
+      data: { packageContents },
+      id,
+      onToggle,
+      open
+    } = this.props;
 
     return (
       <Accordion
-        id="eresource-acquisition-options"
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
+        id={id}
         label={<FormattedMessage id="ui-agreements.eresources.packageResources" />}
+        onToggle={onToggle}
+        open={open}
       >
         {this.renderFilterButtons()}
         {packageContents ? this.renderList(packageContents) : <Spinner />}
