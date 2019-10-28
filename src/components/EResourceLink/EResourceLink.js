@@ -48,9 +48,11 @@ class EResourceLink extends React.Component {
     if (!path) return name;
 
     return (
-      <FolioLink {...rest} path={this.getPath(eresource)}>
-        {name}
-      </FolioLink>
+      <div data-test-eresource-name>
+        <FolioLink {...rest} path={this.getPath(eresource)}>
+          {name}
+        </FolioLink>
+      </div>
     );
   }
 }
