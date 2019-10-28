@@ -255,7 +255,7 @@ module.exports.test = (uiTestCtx) => {
       it('should follow agreement line\'s link to eresource', done => {
         nightmare
           .click('#agreement-form-lines [data-test-ag-line-name] a')
-          .wait('#eresource-agreements [role="row"]')
+          .wait('#eresourceAgreements [role="row"]')
           .then(done)
           .catch(done);
       });
@@ -263,7 +263,7 @@ module.exports.test = (uiTestCtx) => {
       it('should find custom coverage info in "agreements for this eresource" list', done => {
         nightmare
           .evaluate((expectedValues) => {
-            const rows = [...document.querySelectorAll('#eresource-agreements [role="row"]')];
+            const rows = [...document.querySelectorAll('#eresourceAgreements [role="row"]')];
             const row = rows.find(r => r.textContent.indexOf(expectedValues.name) > -1);
             if (!row) throw Error(`Failed to find agreement ${expectedValues.name} in list`);
 

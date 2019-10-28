@@ -174,7 +174,7 @@ class AgreementCreateRoute extends React.Component {
     const { handlers, resources } = this.props;
 
     if (!this.state.hasPerms) return <NoPermissions />;
-    if (this.fetchIsPending()) return <LoadingPane onClose={this.handleClose} />;
+    if (this.fetchIsPending()) return <LoadingPane onClose={this.handleClose} renderPaneset />;
 
     return (
       <View

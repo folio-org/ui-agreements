@@ -10,7 +10,7 @@ module.exports.test = (uiTestCtx) => {
     name: `Notes Agreement #${number}`,
   };
 
-  describe('Notes', function test() {
+  describe('Agreement Notes', function test() {
     const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
     nightmare.options.width = 1300; // added this temporarily as MultiSelect doesnt work well with narrow screen sizes
@@ -150,6 +150,7 @@ module.exports.test = (uiTestCtx) => {
           .click('[data-test-note-delete]')
           .wait('#clickable-confirm-delete-note-confirm')
           .click('#clickable-confirm-delete-note-confirm')
+          .waitUntilNetworkIdle(2000)
           .evaluate(note => {
             const notesRows = [...document.querySelectorAll('#notes-list')].map(e => e.textContent);
             const noteElement = notesRows.find(r => r.indexOf(note) >= 0);
@@ -158,6 +159,66 @@ module.exports.test = (uiTestCtx) => {
               throw Error(`Should not find row with the edited note ${note}`);
             }
           }, editedNote)
+          .then(done)
+          .catch(done);
+      });
+
+      it('should open Settings', done => {
+        helpers.clickSettings(nightmare, done);
+      });
+
+      it(`should find and delete note type ${noteType}`, done => {
+        nightmare
+          .wait('a[href="/settings/notes"]')
+          .click('a[href="/settings/notes"]')
+          .wait('a[href="/settings/notes/general"]')
+          .click('a[href="/settings/notes/general"]')
+          .wait('#editList-noteTypes')
+          .evaluate(type => {
+            let rowIndex = document.evaluate(
+              `//*[@id="editList-noteTypes"]//div[.="${type}"]`,
+              document,
+              null,
+              XPathResult.FIRST_ORDERED_NODE_TYPE
+            ).singleNodeValue.parentNode.attributes['aria-rowindex'].value;
+            rowIndex -= 2;
+
+            return rowIndex;
+          }, noteType)
+
+          .then(rowIndex => {
+            nightmare
+              .wait(`#clickable-delete-noteTypes-${rowIndex}`)
+              .click(`#clickable-delete-noteTypes-${rowIndex}`)
+              .waitUntilNetworkIdle(2000)
+              .wait('[data-test-confirmation-modal-confirm-button]')
+              .click('[data-test-confirmation-modal-confirm-button]')
+              .waitUntilNetworkIdle(2000)
+              .then(done)
+              .catch(done);
+          })
+          .catch(done);
+      });
+
+      it(`should not find note type ${noteType}`, done => {
+        nightmare
+          .wait('a[href="/settings/notes"]')
+          .click('a[href="/settings/notes"]')
+          .wait('a[href="/settings/notes/general"]')
+          .click('a[href="/settings/notes/general"]')
+          .waitUntilNetworkIdle(2000)
+          .evaluate(type => {
+            const row = document.evaluate(
+              `//*[@id="editList-noteTypes"]//div[.="${type}"]`,
+              document,
+              null,
+              XPathResult.FIRST_ORDERED_NODE_TYPE
+            ).singleNodeValue;
+            if (row != null) {
+              throw Error(`Should not find row with type ${type}`);
+            }
+          }, noteType)
+
           .then(done)
           .catch(done);
       });

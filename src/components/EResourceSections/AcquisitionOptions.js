@@ -21,6 +21,9 @@ export default class AcquisitionOptions extends React.Component {
         name: PropTypes.string,
       }),
     }),
+    id: PropTypes.string,
+    onToggle: PropTypes.func,
+    open: PropTypes.bool,
   };
 
   renderOptions = () => (
@@ -77,14 +80,21 @@ export default class AcquisitionOptions extends React.Component {
   }
 
   render() {
-    const { data: { entitlementOptions, eresource } } = this.props;
+    const {
+      data: { entitlementOptions, eresource },
+      id,
+      onToggle,
+      open
+    } = this.props;
 
     return (
       <Accordion
-        id="eresource-acquisition-options"
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
+        id={id}
         label={<FormattedMessage id="ui-agreements.eresources.acqOptions" values={eresource} />}
+        onToggle={onToggle}
+        open={open}
       >
         {entitlementOptions ? this.renderOptions() : <Spinner />}
       </Accordion>

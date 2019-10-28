@@ -10,14 +10,13 @@ import {
   ExpandAllButton,
   Icon,
   IconButton,
-  Layout,
   Pane,
   PaneMenu,
   Row,
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
-import { Spinner } from '@folio/stripes-erm-components';
+import { LoadingPane } from '@folio/stripes-erm-components';
 
 import {
   ControllingLicense,
@@ -158,22 +157,6 @@ export default class Agreement extends React.Component {
     );
   }
 
-  renderLoadingPane = () => {
-    return (
-      <Pane
-        defaultWidth="60%"
-        dismissible
-        id="pane-view-agreement"
-        onClose={this.props.handlers.onClose}
-        paneTitle={<FormattedMessage id="ui-agreements.loading" />}
-      >
-        <Layout className="marginTop1">
-          <Spinner />
-        </Layout>
-      </Pane>
-    );
-  }
-
   render() {
     const {
       data,
@@ -182,7 +165,7 @@ export default class Agreement extends React.Component {
       helperApp
     } = this.props;
 
-    if (isLoading) return this.renderLoadingPane();
+    if (isLoading) return <LoadingPane defaultWidth="60%" onClose={handlers.onClose} />;
 
     return (
       <React.Fragment>
