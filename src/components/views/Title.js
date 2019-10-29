@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {
+  AccordionSet,
+  Col,
+  ExpandAllButton,
+  Row,
+} from '@folio/stripes/components';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
 import {
@@ -19,6 +25,9 @@ export default class Title extends React.Component {
 
   state = {
     sections: {
+      acquisitionOptions: true,
+      eresourceAgreements: true,
+      info: true,
       notes: false,
     },
   }
@@ -36,6 +45,10 @@ export default class Title extends React.Component {
     };
   }
 
+  handleAllSectionsToggle = (sections) => {
+    this.setState({ sections });
+  }
+
   handleSectionToggle = ({ id }) => {
     this.setState((prevState) => ({
       sections: {
@@ -49,19 +62,30 @@ export default class Title extends React.Component {
     const { data } = this.props;
 
     return (
-      <div id="package">
-        <TitleInfo data={data} />
-        <Agreements data={data} />
-        <AcquisitionOptions data={data} />
-        <NotesSmartAccordion
-          {...this.getSectionProps('notes')}
-          domainName="agreements"
-          entityId={data.eresource.id}
-          entityName={data.eresource.name}
-          entityType="eresource"
-          pathToNoteCreate={urls.noteCreate()}
-          pathToNoteDetails={urls.notes()}
-        />
+      <div id="eresource-title">
+        <TitleInfo {...this.getSectionProps('info')} />
+        <AccordionSet>
+          <Row end="xs">
+            <Col xs>
+              <ExpandAllButton
+                accordionStatus={this.state.sections}
+                id="clickable-expand-all"
+                onToggle={this.handleAllSectionsToggle}
+              />
+            </Col>
+          </Row>
+          <Agreements {...this.getSectionProps('eresourceAgreements')} />
+          <AcquisitionOptions {...this.getSectionProps('acquisitionOptions')} />
+          <NotesSmartAccordion
+            {...this.getSectionProps('notes')}
+            domainName="agreements"
+            entityId={data.eresource.id}
+            entityName={data.eresource.name}
+            entityType="eresource"
+            pathToNoteCreate={urls.noteCreate()}
+            pathToNoteDetails={urls.notes()}
+          />
+        </AccordionSet>
       </div>
     );
   }
