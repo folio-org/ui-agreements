@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
-import { Button, Layout, Select, TextArea } from '@folio/stripes/components';
+import { Button, Layout, MessageBanner, Select, TextArea } from '@folio/stripes/components';
 import {
   EditCard,
   composeValidators,
@@ -16,6 +17,7 @@ import { agreementRelationshipTypes } from '../../constants';
 class RelatedAgreementsFieldArray extends React.Component {
   static propTypes = {
     currentAgreementId: PropTypes.string,
+    currentAgreementName: PropTypes.string,
     items: PropTypes.arrayOf(PropTypes.object),
     name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
@@ -62,6 +64,23 @@ class RelatedAgreementsFieldArray extends React.Component {
     </Layout>
   );
 
+  renderRelationshipSummary = (relatedAgreement) => {
+    const { agreement = {}, type } = relatedAgreement;
+    if (!agreement.id || !type) return null;
+
+    const source = agreement.name;
+    const relationship = this.relationshipTypes.find(t => t.value === type).label;
+    const target = this.props.currentAgreementName;
+
+    const translationKey = `ui-agreements.relatedAgreements.${target ? 'relationshipSummary' : 'relationshipSummaryForNewAgreement'}`;
+
+    return (
+      <MessageBanner>
+        <FormattedMessage id={translationKey} values={{ source, relationship, target }} />
+      </MessageBanner>
+    );
+  }
+
   renderRelatedAgreements = (items) => {
     return items.map((relatedAgreement, index) => (
       <EditCard
@@ -91,12 +110,14 @@ class RelatedAgreementsFieldArray extends React.Component {
         <Field
           component={Select}
           dataOptions={this.relationshipTypes}
+          disabled={!get(relatedAgreement, 'agreement.id')}
           id={`ra-type-${index}`}
           label={<FormattedMessage id="ui-agreements.relatedAgreements.relationshipToThisAgreement" />}
           name={`${this.props.name}[${index}].type`}
           required
           validate={requiredValidator}
         />
+        { this.renderRelationshipSummary(relatedAgreement) }
         <Field
           component={TextArea}
           id={`ra-note-${index}`}
