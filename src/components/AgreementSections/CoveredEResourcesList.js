@@ -71,7 +71,7 @@ export default class CoveredEResourcesList extends React.Component {
     package: e => get(e._object, 'pkg.name', '-'),
     coverage: e => <CoverageStatements statements={e.coverage} />,
     accessStart: e => this.renderDate(get(e._object, 'accessStart')),
-    accessEnd: e => this.renderDate(get(e._object, ' ')),
+    accessEnd: e => this.renderDate(get(e._object, 'accessEnd')),
     isCustomCoverage: line => {
       if (!line.customCoverage) return '';
       return (

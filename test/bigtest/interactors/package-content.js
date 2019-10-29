@@ -27,4 +27,11 @@ export default @interactor class PackageContentInteractor {
 
   processDate = fillable('#period-start-date-0');
   createAgreement = clickable('#clickable-create-agreement');
+
+  isViewAgreement = isPresent('#pane-view-agreement');
+  clickLinesAccordion = clickable('#accordion-toggle-button-lines');
+
+  whenLoaded() {
+    return this.when(() => this.isViewAgreement);
+  }
 }

@@ -159,7 +159,7 @@ export default function config() {
 
   this.post('erm/sas', (_, request) => {
     const body = JSON.parse(request.requestBody);
-    return this.create('agreement', body);
+    return this.create('agreement', body).attrs;
   });
 
   this.get('/erm/org', () => []);
@@ -175,13 +175,40 @@ export default function config() {
   this.get('/note-types', () => { });
 
   this.get('/erm/sas/:id', (schema, request) => {
-    return schema.agreements.where({
-      id: request.params.id
-    }).attrs;
+    return schema.agreements.find(request.params.id).attrs;
   });
 
-  this.get('/erm/sas/:id/resources/current', (_, request) => {
-    console.log(request, 'id sulli');
+  this.get('/erm/sas/:id/resources/current', (schema, request) => {
+    const agreement = schema.agreements.find(request.params.id).attrs;
+    return {
+      results: agreement.items.map(item => {
+        return {
+          _object: schema.pcis.all().models.find(pci => pci.pkg.id === item.resource.id && !pci.accessEnd && new Date(pci.accessStart).getTime() < new Date().getTime())
+        };
+      })
+    };
+  });
+
+  this.get('/erm/sas/:id/resources/future', (schema, request) => {
+    const agreement = schema.agreements.find(request.params.id).attrs;
+    return {
+      results: agreement.items.map(item => {
+        return {
+          _object: schema.pcis.all().models.find(pci => pci.pkg.id === item.resource.id && !pci.accessEnd && new Date(pci.accessStart).getTime() > new Date().getTime())
+        };
+      })
+    };
+  });
+
+  this.get('/erm/sas/:id/resources/dropped', (schema, request) => {
+    const agreement = schema.agreements.find(request.params.id).attrs;
+    return {
+      results: agreement.items.map(item => {
+        return {
+          _object: schema.pcis.all().models.find(pci => pci.pkg.id === item.resource.id && !pci.accessStart && new Date(pci.accessEnd).getTime() < new Date().getTime())
+        };
+      })
+    };
   });
 
   this.get('/erm/entitlements', {
@@ -190,6 +217,7 @@ export default function config() {
 
   this.get('/licenses/custprops', () => []);
 
-  this.get('/tags', () => { });
-
+  this.get('/tags', {
+    tags: []
+  });
 }
