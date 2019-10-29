@@ -3,7 +3,6 @@ import {
   clickable,
   fillable,
   isPresent,
-  selectable,
   text,
 } from '@bigtest/interactor';
 
@@ -17,21 +16,4 @@ export default @interactor class PackageContentInteractor {
   eresourceName = text('[data-test-eresource-name]');
   clickFuture = clickable('#clickable-pci-future');
   clickDropped = clickable('#clickable-pci-dropped');
-
-  addToBasketButtion = clickable('[data-test-add-package-to-basket]');
-  clickOpenBasket = clickable('#open-basket-button');
-  clickCreateNewAgreement = clickable('[data-test-basket-create-agreement]');
-
-  fillName = fillable('#edit-agreement-name');
-  selectStatus = selectable('#edit-agreement-status');
-
-  processDate = fillable('#period-start-date-0');
-  createAgreement = clickable('#clickable-create-agreement');
-
-  isViewAgreement = isPresent('#pane-view-agreement');
-  clickLinesAccordion = clickable('#accordion-toggle-button-lines');
-
-  whenLoaded() {
-    return this.when(() => this.isViewAgreement);
-  }
 }
