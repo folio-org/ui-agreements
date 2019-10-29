@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 
-import { Layout, Pane } from '@folio/stripes/components';
+import { Pane } from '@folio/stripes/components';
 import { TitleManager } from '@folio/stripes/core';
-import { Spinner } from '@folio/stripes-erm-components';
+import { LoadingPane } from '@folio/stripes-erm-components';
 
 import Package from './Package';
 import Title from './Title';
@@ -25,22 +24,6 @@ export default class EResource extends React.Component {
     isLoading: PropTypes.bool,
   }
 
-  renderLoadingPane = () => {
-    return (
-      <Pane
-        defaultWidth="55%"
-        dismissible
-        id="pane-view-eresource"
-        onClose={this.props.handlers.onClose}
-        paneTitle={<FormattedMessage id="ui-agreements.loading" />}
-      >
-        <Layout className="marginTop1">
-          <Spinner />
-        </Layout>
-      </Pane>
-    );
-  }
-
   render() {
     const {
       data,
@@ -49,17 +32,17 @@ export default class EResource extends React.Component {
       isLoading,
     } = this.props;
 
-    if (isLoading) return this.renderLoadingPane();
+    if (isLoading) return <LoadingPane onClose={handlers.onClose} />;
 
     const EResourceViewComponent = data.eresource.type ? Title : Package;
 
     return (
       <React.Fragment>
         <Pane
-          id="pane-view-eresource"
           defaultWidth="55%"
-          paneTitle={data.eresource.name}
           dismissible
+          id="pane-view-eresource"
+          paneTitle={data.eresource.name}
           onClose={handlers.onClose}
         >
           <TitleManager record={data.eresource.name}>

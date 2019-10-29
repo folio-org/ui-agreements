@@ -4,7 +4,7 @@ import { get } from 'lodash';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
-import { Badge, Headline, MultiColumnList } from '@folio/stripes/components';
+import { Accordion, Badge, MultiColumnList } from '@folio/stripes/components';
 import { Spinner } from '@folio/stripes-erm-components';
 
 import CoverageStatements from '../CoverageStatements';
@@ -22,6 +22,9 @@ export default class Agreements extends React.Component {
         type: PropTypes.object,
       }),
     }),
+    id: PropTypes.string,
+    onToggle: PropTypes.func,
+    open: PropTypes.bool,
   };
 
   renderAgreements = () => {
@@ -67,21 +70,33 @@ export default class Agreements extends React.Component {
   }
 
   renderBadge = () => {
-    const count = get(this.props.data, 'entitlementOptions.length');
+    const count = get(this.props.data, 'entitlements.length');
     return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
   }
 
   render() {
-    const { data: { entitlements, eresource: { type } } } = this.props;
+    const {
+      data: { entitlements, eresource: { type } },
+      id,
+      onToggle,
+      open,
+    } = this.props;
+
+    const label = type ?
+      <FormattedMessage id="ui-agreements.eresources.erAgreements" /> :
+      <FormattedMessage id="ui-agreements.eresources.packageAgreements" />;
 
     return (
-      <div id="eresource-agreements">
-        <Headline margin="none" tag="h3" size="large">
-          {type ? <FormattedMessage id="ui-agreements.eresources.erAgreements" />
-            : <FormattedMessage id="ui-agreements.eresources.packageAgreements" />}
-        </Headline>
+      <Accordion
+        displayWhenClosed={this.renderBadge()}
+        displayWhenOpen={this.renderBadge()}
+        id={id}
+        label={label}
+        onToggle={onToggle}
+        open={open}
+      >
         {entitlements ? this.renderAgreements() : <Spinner />}
-      </div>
+      </Accordion>
     );
   }
 }
