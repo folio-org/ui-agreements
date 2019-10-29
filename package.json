@@ -13,7 +13,10 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "stripes test nightmare --run nav/agreement-crud/contacts/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/notes-crud/package-notes/title-notes/related-agreements",
+    "test": "stripes test karma --karma.singleRun; stripes test nightmare --run nav/agreement-crud/contacts/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/notes-crud/package-notes/title-notes/related-agreements",
+    "test-nightmare": "stripes test nightmare --run nav/agreement-crud/contacts/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/notes-crud/package-notes/title-notes/related-agreements",
+    "test-bigtest": "stripes test karma",
+    "test-bigtest-once": "stripes test karma --karma.singleRun",
     "test-erm": "stripes test nightmare --run nav/agreement-crud/contacts/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/notes-crud/package-notes/title-notes/related-agreements/linked-licenses/license-terms",
     "test-licenses-int": "stripes test nightmare --run linked-licenses/license-terms",
     "test-folio-int": "stripes test nightmare --run ekb-int/po-lines/eusage",
