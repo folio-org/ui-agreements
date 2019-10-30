@@ -4,7 +4,6 @@ import { faker } from '@bigtest/mirage';
 import { expect } from 'chai';
 
 import setupApplication from '../helpers/setup-application';
-import PackageContentInteractor from '../interactors/package-content';
 import BasketInteractor from '../interactors/basket';
 import AgreementFormInteractor from '../interactors/agreement-form';
 import AgreementViewInteractor from '../interactors/agreement-view';
@@ -31,7 +30,6 @@ const droppedResource = {
 
 describe('Package Content Filters', () => {
   setupApplication();
-  const packageContent = new PackageContentInteractor();
   const basket = new BasketInteractor();
   const agreementForm = new AgreementFormInteractor();
   const agreementView = new AgreementViewInteractor();
@@ -54,26 +52,26 @@ describe('Package Content Filters', () => {
       });
 
       it('should render the expected current eresource', () => {
-        expect(packageContent.eresourceName).to.equal(currentResource.pti.titleInstance.name);
+        expect(eresourceView.packageContent.eresourceName).to.equal(currentResource.pti.titleInstance.name);
       });
 
       describe('clicking the future eresource tab', () => {
         beforeEach(async function () {
-          await packageContent.clickFuture();
+          await eresourceView.packageContent.clickFuture();
         });
 
         it('should render the expected future resource', () => {
-          expect(packageContent.eresourceName).to.equal(futureResource.pti.titleInstance.name);
+          expect(eresourceView.packageContent.eresourceName).to.equal(futureResource.pti.titleInstance.name);
         });
       });
 
       describe('clicking the dropped eresource tab', () => {
         beforeEach(async function () {
-          await packageContent.clickDropped();
+          await eresourceView.packageContent.clickDropped();
         });
 
         it('should render the expected dropped resource', () => {
-          expect(packageContent.eresourceName).to.equal(droppedResource.pti.titleInstance.name);
+          expect(eresourceView.packageContent.eresourceName).to.equal(droppedResource.pti.titleInstance.name);
         });
       });
 
@@ -92,33 +90,33 @@ describe('Package Content Filters', () => {
         describe('open agreement view pane', () => {
           describe('clicking the lines accordion', () => {
             beforeEach(async function () {
-              await agreementView.clickLinesAccordion();
+              await agreementView.lines.clickLinesAccordion();
             });
 
             it('should render the expected current eresource', () => {
-              expect(packageContent.eresourceName).to.equal(currentResource.pti.titleInstance.name);
+              expect(agreementView.lines.coveredEresourcesList.eresourceName).to.equal(currentResource.pti.titleInstance.name);
             });
           });
 
           describe('clicking future eresource', () => {
             beforeEach(async function () {
-              await agreementView.clickLinesAccordion();
-              await agreementView.coveredEresourcesList.clickFuture();
+              await agreementView.lines.clickLinesAccordion();
+              await agreementView.lines.coveredEresourcesList.clickFuture();
             });
 
             it('should render the expected future eresource', () => {
-              expect(packageContent.eresourceName).to.equal(futureResource.pti.titleInstance.name);
+              expect(agreementView.lines.coveredEresourcesList.eresourceName).to.equal(futureResource.pti.titleInstance.name);
             });
           });
 
           describe('clicking dropped eresource', () => {
             beforeEach(async function () {
-              await agreementView.clickLinesAccordion();
-              await agreementView.coveredEresourcesList.clickDropped();
+              await agreementView.lines.clickLinesAccordion();
+              await agreementView.lines.coveredEresourcesList.clickDropped();
             });
 
             it('should render the expected dropped eresource', () => {
-              expect(packageContent.eresourceName).to.equal(droppedResource.pti.titleInstance.name);
+              expect(agreementView.lines.coveredEresourcesList.eresourceName).to.equal(droppedResource.pti.titleInstance.name);
             });
           });
         });
