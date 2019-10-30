@@ -14,11 +14,14 @@
     "start": "stripes serve",
     "build": "stripes build --output ./output",
 
-    "test": "stripes test nightmare --run nav/agreement-crud/contacts/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/agreement-notes/package-notes/title-notes/related-agreements",
-    "test-erm": "stripes test nightmare --run nav/agreement-crud/contacts/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/agreement-notes/package-notes/title-notes/related-agreements/linked-licenses/license-terms",
+    "test": "yarn run test-bigtest-once; yarn run test-nightmare",
+    "test-nightmare": "stripes test nightmare --run nav/agreement-crud/contacts/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/notes-crud/package-notes/title-notes/related-agreements",
+    "test-bigtest": "stripes test karma",
+    "test-bigtest-once": "stripes test karma --karma.singleRun",
+    "test-erm": "yarn run test-nightmare; yarn run test-licenses-int",
+
     "test-licenses-int": "stripes test nightmare --run linked-licenses/license-terms",
     "test-folio-int": "stripes test nightmare --run ekb-int/po-lines/eusage",
-
     "test-nav": "stripes test nightmare --run nav",
     "test-agreement-crud": "stripes test nightmare --run agreement-crud",
     "test-contacts": "stripes test nightmare --run contacts",
@@ -35,26 +38,31 @@
     "test-package-notes": "stripes test nightmare --run package-notes",
     "test-title-notes": "stripes test nightmare --run title-notes",
     "test-related-agreements": "stripes test nightmare --run related-agreements",
-
     "test-linked-licenses": "stripes test nightmare --run linked-licenses",
     "test-license-terms": "stripes test nightmare --run license-terms",
-
     "test-ekb-int": "stripes test nightmare --run ekb-int",
     "test-po-lines": "stripes test nightmare --run po-lines",
     "test-eusage": "stripes test nightmare --run eusage",
-
     "lint": "eslint src"
   },
   "devDependencies": {
+    "@bigtest/interactor": "^0.9.3",
+    "@bigtest/mirage": "^0.0.1",
+    "@bigtest/mocha": "^0.5.2",
+    "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^4.2.0",
-    "@folio/stripes-cli": "^1.8.0",
     "@folio/stripes": "^2.10.1",
+    "@folio/stripes-cli": "^1.8.0",
     "babel-eslint": "^9.0.0",
+    "babel-polyfill": "^6.26.0",
+    "chai": "^4.2.0",
     "eslint": "^5.5.0",
+    "mocha": "^6.2.2",
     "react": "~16.6.3",
     "react-dom": "~16.6.3",
     "react-redux": "~5.1.1",
-    "redux": "~3.7.2"
+    "redux": "~3.7.2",
+    "sinon": "^7.5.0"
   },
   "dependencies": {
     "@folio/stripes-erm-components": "^2.0.0",
