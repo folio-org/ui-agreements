@@ -14,6 +14,8 @@ export default @interactor class PackageContentInteractor {
 
   headline = text('#package-info [data-test-headline]');
   eresourceName = text('[data-test-eresource-name]');
+  clickAll = clickable('#clickable-pci-all');
+  clickCurrent = clickable('#clickable-pci-current');
   clickFuture = clickable('#clickable-pci-future');
   clickDropped = clickable('#clickable-pci-dropped');
 }
