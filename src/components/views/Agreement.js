@@ -195,14 +195,9 @@ export default class Agreement extends React.Component {
       helperApp
     } = this.props;
 
-<<<<<<< HEAD
-    if (isLoading) return <LoadingPane defaultWidth="60%" onClose={handlers.onClose} />;
-=======
     const { showDuplicateAgreementModal } = this.state;
 
-    if (isLoading) return this.renderLoadingPane();
->>>>>>> Initial work to clone an agreement, refs ERM-459
-
+    if (isLoading) return <LoadingPane defaultWidth="60%" onClose={handlers.onClose} />;
     return (
       <React.Fragment>
         <Pane
