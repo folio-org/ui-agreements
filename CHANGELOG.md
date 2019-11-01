@@ -16,6 +16,7 @@
 * Added filter buttons to view future, dropped or all content of a package. ERM-394 ERM-396
 * Added ability to search E-resources by identifier. ERM-519
 * Added ability to manage and view linked agreements. ERM-460
+* Updated linked Agreements, Contacts, Licenses, Organizations, PO Lines, and UDPs with new "link" and "replace" verbiage. ERM-451 452 453
 
 ## 3.2.4 2019-09-10
 * Added support for interface `invoice` version `2.0`.
