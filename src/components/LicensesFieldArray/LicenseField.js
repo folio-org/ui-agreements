@@ -15,9 +15,7 @@ import css from '../styles.css';
 export default class LicenseField extends React.Component {
   static propTypes = {
     id: PropTypes.string,
-    index: PropTypes.number.isRequired,
     input: PropTypes.shape({
-      onChange: PropTypes.func.isRequired,
       value: PropTypes.string,
     }).isRequired,
     license: PropTypes.object,
@@ -25,7 +23,6 @@ export default class LicenseField extends React.Component {
       error: PropTypes.node,
     }).isRequired,
     onLicenseSelected: PropTypes.func.isRequired,
-    onLicenseUnselected: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -44,7 +41,7 @@ export default class LicenseField extends React.Component {
     }
   }
 
-  renderLinkLicenseButton = () => {
+  renderLinkLicenseButton = (value) => {
     const { id, onLicenseSelected } = this.props;
 
     return (
@@ -54,12 +51,13 @@ export default class LicenseField extends React.Component {
         onLicenseSelected={onLicenseSelected}
         renderTrigger={(props) => (
           <Button
-            buttonStyle="primary"
+            buttonStyle={value ? 'default' : 'primary'}
             buttonRef={this.findLicenseButtonRef}
             id={`${id}-find-license-btn`}
+            marginBottom0
             onClick={props.onClick}
           >
-            <FormattedMessage id="ui-agreements.license.prop.lookup" />
+            <FormattedMessage id={`ui-agreements.license.${value ? 'replace' : 'link'}License`} />
           </Button>
         )}
       >
@@ -67,17 +65,6 @@ export default class LicenseField extends React.Component {
       </Pluggable>
     );
   }
-
-  renderUnlinkLicenseButton = () => (
-    <Button
-      buttonStyle="danger"
-      id={`clickable-unlink-license-${this.props.index}`}
-      marginBottom0
-      onClick={this.props.onLicenseUnselected}
-    >
-      <FormattedMessage id="ui-agreements.license.unlinkLicense" />
-    </Button>
-  )
 
   renderLicense = () => {
     return (
@@ -91,11 +78,11 @@ export default class LicenseField extends React.Component {
     <div>
       <Layout className="textCentered">
         <strong>
-          <FormattedMessage id="ui-agreements.license.noLicenseAdded" />
+          <FormattedMessage id="ui-agreements.license.noLicenseLinked" />
         </strong>
       </Layout>
       <Layout className="textCentered">
-        <FormattedMessage id="ui-agreements.license.addLicenseToStart" />
+        <FormattedMessage id="ui-agreements.license.linkLicenseToStart" />
       </Layout>
     </div>
   )
@@ -126,7 +113,7 @@ export default class LicenseField extends React.Component {
             </strong>
           </AppIcon>
         )}
-        headerEnd={value ? this.renderUnlinkLicenseButton() : this.renderLinkLicenseButton()}
+        headerEnd={this.renderLinkLicenseButton(value)}
         id={id}
         roundedBorder
       >

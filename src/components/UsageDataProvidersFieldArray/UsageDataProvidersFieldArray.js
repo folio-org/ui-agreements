@@ -14,8 +14,7 @@ class UsageDataProvidersFieldArray extends React.Component {
     name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
     onDeleteField: PropTypes.func.isRequired,
-    onMarkForDeletion: PropTypes.func.isRequired,
-    onReplaceField: PropTypes.func.isRequired,
+    onUpdateField: PropTypes.func.isRequired,
   };
 
   state = {
@@ -23,7 +22,7 @@ class UsageDataProvidersFieldArray extends React.Component {
   }
 
   handleUDPSelected = (index, udp) => {
-    this.props.onReplaceField(index, { remoteId: udp.id });
+    this.props.onUpdateField(index, { remoteId: udp.id });
 
     this.setState(prevState => ({
       udps: {
@@ -31,15 +30,6 @@ class UsageDataProvidersFieldArray extends React.Component {
         [udp.id]: udp,
       }
     }));
-  }
-
-  handleUDPUnselected = (index, udp) => {
-    /* handleUDPUnselected should mark the UDP to be deleted once we update the form.
-    onMarkForDeletion does that job. It pushes the {id: id, _delete: true) into the fields array
-    and on update would actually delete the field. onReplaceField takes care
-    of replacing the linked UDP UI with the default Add UDP UI */
-    this.props.onMarkForDeletion(udp);
-    this.props.onReplaceField(index, {});
   }
 
   renderEmpty = () => (
@@ -68,7 +58,6 @@ class UsageDataProvidersFieldArray extends React.Component {
           index={index}
           name={`${this.props.name}[${index}].remoteId`}
           onUDPSelected={selectedUDP => this.handleUDPSelected(index, selectedUDP)}
-          onUDPUnselected={() => this.handleUDPUnselected(index, udp)}
           udp={this.state.udps[udp.remoteId] || udp.remoteId_object}
           validate={validators.required}
         />

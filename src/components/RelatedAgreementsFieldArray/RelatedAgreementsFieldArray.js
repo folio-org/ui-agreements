@@ -22,7 +22,6 @@ class RelatedAgreementsFieldArray extends React.Component {
     name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
     onDeleteField: PropTypes.func.isRequired,
-    onMarkForDeletion: PropTypes.func.isRequired,
     onReplaceField: PropTypes.func.isRequired,
   };
 
@@ -39,15 +38,6 @@ class RelatedAgreementsFieldArray extends React.Component {
 
   handleAgreementSelected = (index, agreement) => {
     this.props.onReplaceField(index, { agreement });
-  }
-
-  handleAgreementUnselected = (index, relatedAgreement) => {
-    /* handleAgreementUnselected should mark the Agreement to be deleted once we update the form.
-    onMarkForDeletion does that job. It pushes the {id: id, _delete: true) into the fields array
-    and on update would actually delete the field. onReplaceField takes care
-    of replacing the Related Agreement UI with the default Add Agreement UI */
-    this.props.onMarkForDeletion(relatedAgreement, ['type']);
-    this.props.onReplaceField(index, {});
   }
 
   validateSelfLinking = (value) => {
@@ -92,7 +82,7 @@ class RelatedAgreementsFieldArray extends React.Component {
         header={<FormattedMessage id="ui-agreements.relatedAgreements.relatedAgreementIndex" values={{ index: index + 1 }} />}
         id={`edit-ra-card-${index}`}
         key={index}
-        onDelete={() => this.props.onDeleteField(index, relatedAgreement, ['type'])}
+        onDelete={() => this.props.onDeleteField(index, relatedAgreement)}
       >
         <Field
           component={RelatedAgreementField}
@@ -100,7 +90,6 @@ class RelatedAgreementsFieldArray extends React.Component {
           index={index}
           name={`${this.props.name}[${index}].agreement`}
           onAgreementSelected={selectedAgreement => this.handleAgreementSelected(index, selectedAgreement)}
-          onAgreementUnselected={() => this.handleAgreementUnselected(index, relatedAgreement)}
           agreement={relatedAgreement.agreement}
           validate={composeValidators(
             requiredValidator,

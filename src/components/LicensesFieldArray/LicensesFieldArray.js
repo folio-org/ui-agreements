@@ -19,40 +19,20 @@ class LicensesFieldArray extends React.Component {
     name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
     onDeleteField: PropTypes.func.isRequired,
-    onMarkForDeletion: PropTypes.func.isRequired,
-    onReplaceField: PropTypes.func.isRequired,
+    onUpdateField: PropTypes.func.isRequired,
     licenseStatusValues: PropTypes.arrayOf(PropTypes.object),
   };
-
-  state = {
-    licenses: {},
-  }
 
   handleLicenseSelected = (index, license = {}) => {
     const amendments = (license.amendments || []).map(a => ({
       amendmentId: a.id,
     }));
 
-    this.props.onReplaceField(index, {
+    this.props.onUpdateField(index, {
       amendments,
       remoteId: license.id,
+      remoteId_object: license,
     });
-
-    this.setState(prevState => ({
-      licenses: {
-        ...prevState.licenses,
-        [license.id]: license,
-      }
-    }));
-  }
-
-  handleLicenseUnselected = (index, license) => {
-    /* handleLicenseUnselected should mark the license to be deleted once we update the form.
-    onMarkForDeletion does that job. It pushes the {id: id, _delete: true) into the fields array
-    and on update would actually delete the field. onReplaceField takes care
-    of replacing the linked license UI with the default Add license UI */
-    this.props.onMarkForDeletion(license);
-    this.props.onReplaceField(index, {});
   }
 
   renderEmpty = () => (
@@ -100,10 +80,9 @@ class LicensesFieldArray extends React.Component {
           component={LicenseField}
           id={`${name}-remoteId-${index}`}
           index={index}
-          license={this.state.licenses[license.remoteId] || license.remoteId_object}
+          license={license.remoteId_object}
           name={`${name}[${index}].remoteId`}
           onLicenseSelected={selectedLicense => this.handleLicenseSelected(index, selectedLicense)}
-          onLicenseUnselected={() => this.handleLicenseUnselected(index, license)}
           validate={requiredValidator}
         />
         <Row>
@@ -135,7 +114,7 @@ class LicensesFieldArray extends React.Component {
         <FieldArray
           amendmentStatusValues={amendmentStatusValues}
           form={form}
-          license={this.state.licenses[license.remoteId] || license.remoteId_object}
+          license={license.remoteId_object}
           component={AmendmentsFieldArray}
           name={`${name}[${index}].amendments`}
         />

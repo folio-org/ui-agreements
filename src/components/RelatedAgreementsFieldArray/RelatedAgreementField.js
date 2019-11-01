@@ -20,16 +20,13 @@ import css from '../styles.css';
 export default class RelatedAgreementField extends React.Component {
   static propTypes = {
     id: PropTypes.string,
-    index: PropTypes.number.isRequired,
     input: PropTypes.shape({
-      onChange: PropTypes.func.isRequired,
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     }).isRequired,
     meta: PropTypes.shape({
       error: PropTypes.node,
     }).isRequired,
     onAgreementSelected: PropTypes.func.isRequired,
-    onAgreementUnselected: PropTypes.func.isRequired,
     agreement: PropTypes.shape({
       label: PropTypes.string,
     }),
@@ -51,22 +48,23 @@ export default class RelatedAgreementField extends React.Component {
     }
   }
 
-  renderLinkAgreementButton = () => {
+  renderLinkAgreementButton = value => {
     const { id, onAgreementSelected } = this.props;
 
     return (
       <Pluggable
-        aria-haspopup="true"
         dataKey={id}
         onAgreementSelected={onAgreementSelected}
         renderTrigger={(props) => (
           <Button
-            buttonStyle="primary"
+            aria-haspopup="true"
             buttonRef={this.findAgreementButtonRef}
+            buttonStyle={value ? 'default' : 'primary'}
             id={`${id}-find-agreement-btn`}
+            marginBottom0
             onClick={props.onClick}
           >
-            <FormattedMessage id="ui-agreements.relatedAgreements.addAgreement" />
+            <FormattedMessage id={`ui-agreements.relatedAgreements.${value ? 'replace' : 'link'}Agreement`} />
           </Button>
         )}
         type="find-agreement"
@@ -75,18 +73,6 @@ export default class RelatedAgreementField extends React.Component {
       </Pluggable>
     );
   }
-
-  renderUnlinkAgreementButton = () => (
-    <Button
-      buttonStyle="danger"
-      id={`clickable-unlink-agreement-${this.props.index}`}
-      marginBottom0
-      onClick={this.props.onAgreementUnselected}
-    >
-      <FormattedMessage id="ui-agreements.relatedAgreements.unlink" />
-    </Button>
-  )
-
 
   renderAgreement = () => {
     const { agreement } = this.props;
@@ -127,11 +113,11 @@ export default class RelatedAgreementField extends React.Component {
     <div>
       <Layout className="textCentered">
         <strong>
-          <FormattedMessage id="ui-agreements.relatedAgreements.noneAdded" />
+          <FormattedMessage id="ui-agreements.relatedAgreements.noneLinked" />
         </strong>
       </Layout>
       <Layout className="textCentered">
-        <FormattedMessage id="ui-agreements.relatedAgreements.addToStart" />
+        <FormattedMessage id="ui-agreements.relatedAgreements.linkToStart" />
       </Layout>
     </div>
   )
@@ -162,7 +148,7 @@ export default class RelatedAgreementField extends React.Component {
             </strong>
           </AppIcon>
         )}
-        headerEnd={value ? this.renderUnlinkAgreementButton() : this.renderLinkAgreementButton()}
+        headerEnd={this.renderLinkAgreementButton(value)}
         id={id}
         roundedBorder
       >
