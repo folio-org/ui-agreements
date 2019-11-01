@@ -285,5 +285,7 @@
     "relatedAgreements.relationship.tracks_demand-driven_acquisitions_for": "Rastreia aquisições direcionadas por demanda (DDA) para \"{agreement}\"",
     "relatedAgreements.remove": "Remover contrato relacionado",
     "relatedAgreements.unlink": "Desvincular contrato",
-    "identifier.issn": "eISSN/ISSN"
+    "identifier.issn": "eISSN/ISSN",
+    "relatedAgreements.relationshipSummary": "\"{source}\" {relationship} \"{target}\"",
+    "relatedAgreements.relationshipSummaryForNewAgreement": "\"{source}\" {relationship} o contrato que está sendo criado"
 }
