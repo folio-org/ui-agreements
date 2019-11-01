@@ -295,7 +295,7 @@ module.exports.test = (uiTestCtx) => {
             .waitUntilNetworkIdle(2000) // Wait for _all_ the agreements to come back
             .click('#select-agreement-for-basket')
             .insert('#sl-container-select-agreement-for-basket input', agreement.name)
-            .wait(250)
+            .waitUntilNetworkIdle(2000)
             .click('#sl-container-select-agreement-for-basket li')
             .wait(250)
             .click('[data-test-basket-add-to-agreement]')
