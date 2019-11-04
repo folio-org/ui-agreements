@@ -178,7 +178,6 @@ class AgreementForm extends React.Component {
     const { form, initialValues: { id, name } } = this.props;
 
     const hasLoaded = form.getRegisteredFields().length > 0;
-    console.log("Props: %o", this.props)
     return (
       <Paneset>
         <FormattedMessage id="ui-agreements.create">

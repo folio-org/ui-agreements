@@ -34,6 +34,40 @@ class AmendmentsFieldArray extends React.Component {
     }),
     name: PropTypes.string.isRequired,
   };
+  constructor(props) {
+    super(props);
+    this.state = { statusWarnings: [] };
+
+    if(props.items) {
+      if(props.items.length){
+        for(var i=0; i < props.items.length; i++){
+          this.state.statusWarnings[i] = { warningId: "", warningValuesStatus: null};
+        }
+      }
+    }
+  }
+
+  RenderWarningStatus(id, valuesStatus) {
+    if(!id) {
+      return null;
+    } else {
+      if(!valuesStatus) {
+        return(
+          <MessageBanner type="warning">
+            <FormattedMessage id={id} />
+          </MessageBanner>
+        );
+      } else {
+        return(
+          <MessageBanner type="warning">
+            <FormattedMessage id={id} values={{status: `${valuesStatus}`}} />
+          </MessageBanner>
+        );
+      }
+    }
+  }
+
+
 
   /* warnStatusMismatch = ({ values }) => {
     const { form, name } = this.props;
@@ -70,6 +104,7 @@ class AmendmentsFieldArray extends React.Component {
       form.mutators.setFieldData(`${name}[${i}].status`, { warning });
     });
   } */
+  
 
   render() {
     const {
@@ -78,15 +113,20 @@ class AmendmentsFieldArray extends React.Component {
       license = {},
       name
     } = this.props;
+    var { statusWarnings } = this.state;
     const { amendments = [] } = license;
-    if (!items.length) return null;
-
+    if (!items.length) {
+      return null;
+    }
+    console.log("statusWarnings: %o", statusWarnings)
     return (
       <div data-test-amendments-fa>
         <Headline>
           <FormattedMessage id="ui-agreements.license.licenseAmendments" />
         </Headline>
         {items.map((item, i) => {
+
+          {console.log("Status Warning Id: %o", statusWarnings[i].warningId, "Status Warning Value Status: %o", statusWarnings[i].warningValuesStatus )}
           const amendment = amendments.find(a => item.amendmentId === a.id) || {};
           return (
             <Card
@@ -128,61 +168,44 @@ class AmendmentsFieldArray extends React.Component {
               </Row>
               <Row>
                 <Col xs={12} md={4}>
-                  <Field name={`${name}[${i}].status`} validate={validators.required}>
-                    {props => {
-                      return (<Select
+                <Field
+                    name={`${name}[${i}].status`}
+                    validate={validators.required}
+                  >
+                    {props => (
+                      <Select
+                        {...props}
                         dataOptions={amendmentStatusValues}
-                        id="edit-amendment-status"
                         label={<FormattedMessage id="ui-agreements.license.prop.status" />}
-                        placeholder=" "
-                        required
                         onChange={(e) => {
-                          props.input.onChange(e);
+                          const { value } = e.target;
+                          let warning;
+                          let warningValuesStatus;
 
-                          
-
-                          const statusString = typeof e === 'string' ? status : e;
-                          if (!statusString || statusString !== statuses.CURRENT) {
-                            this.props.form.mutators.setFieldData(`${name}[${i}].status`, { warning: undefined });
-                          } else {
-
-                            let warning;
-
-
-                            // Amendment start date is in the future
+                          if (value === statuses.CURRENT) {
                             if (new Date(amendment.startDate).getTime() > new Date().getTime()) {
-                              warning = (
-                                <div data-test-warn-amendment-future>
-                                  <MessageBanner type="warning"> <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" /> </MessageBanner>
-                                </div>
-                              );
+                              warning = "ui-agreements.license.warn.amendmentFuture"
                             }
-
                             // Amendment end date is in the past
                             if (new Date(amendment.endDate).getTime() < new Date().getTime()) {
-                              warning = (
-                                <div data-test-warn-amendment-past>
-                                  <MessageBanner type="warning"> <FormattedMessage id="ui-agreements.license.warn.amendmentPast" /> </MessageBanner>
-                                </div>
-                              );
+                              warning = "ui-agreements.license.warn.amendmentPast"
                             }
-
                             // Amendment has an invalid status.
                             const linkedStatus = get(amendment, 'status', {});
                             if (linkedStatus.value === statuses.EXPIRED || linkedStatus.value === statuses.REJECTED) {
-                              warning = (
-                                <div data-test-warn-amendment-status>
-                                  <MessageBanner type="warning"><FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: linkedStatus.label }} /> </MessageBanner>
-                                </div>
-                              );
+                              warning = "ui-agreements.license.warn.amendmentStatus"
+                              warningValuesStatus = linkedStatus.label
                             }
-
-                            this.props.form.mutators.setFieldData(`${name}[${i}].status`, { warning });
                           }
+                          //this.props.form.mutators.setFieldData(`${name}[${i}].status`, { warning });
+                          statusWarnings[i].warningId = warning
+                          statusWarnings[i].warningValuesStatus = warningValuesStatus
+                          props.input.onChange(e);
                         }}
-                        value={props.input.value}
-                      />);
-                    }}
+                        placeholder=" "
+                        required
+                      />
+                    )}
                   </Field>
                 </Col>
                 <Col xs={12} md={8}>
@@ -193,6 +216,7 @@ class AmendmentsFieldArray extends React.Component {
                   />
                 </Col>
               </Row>
+                { this.RenderWarningStatus(statusWarnings[i].warningId, statusWarnings[i].warningValuesStatus) }
               {/* <FormSpy
                 subscription={{ values: true }}
                 onChange={this.warnStatusMismatch}
