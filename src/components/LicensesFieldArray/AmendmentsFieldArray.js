@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
-import { Field, FormSpy } from 'react-final-form';
+import { Field } from 'react-final-form';
 import { Card, Col, Headline, MessageBanner, KeyValue, Row, Select, TextArea } from '@folio/stripes/components';
 import { LicenseEndDate, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
@@ -34,39 +34,38 @@ class AmendmentsFieldArray extends React.Component {
     }),
     name: PropTypes.string.isRequired,
   };
+
   constructor(props) {
     super(props);
     this.state = { statusWarnings: [] };
 
-    if(props.items) {
-      if(props.items.length){
-        for(var i=0; i < props.items.length; i++){
-          this.state.statusWarnings[i] = { warningId: "", warningValuesStatus: null};
+    if (props.items) {
+      if (props.items.length) {
+        for (let i = 0; i < props.items.length; i++) {
+          this.state.statusWarnings[i] = { warningId: '', warningValuesStatus: null };
         }
       }
     }
   }
 
   RenderWarningStatus(id, valuesStatus) {
-    if(!id) {
+    if (!id) {
       return null;
-    } else {
-      if(!valuesStatus) {
-        return(
-          <MessageBanner type="warning">
-            <FormattedMessage id={id} />
-          </MessageBanner>
-        );
-      } else {
-        return(
-          <MessageBanner type="warning">
-            <FormattedMessage id={id} values={{status: `${valuesStatus}`}} />
-          </MessageBanner>
-        );
-      }
     }
+    if (!valuesStatus) {
+      return (
+        <MessageBanner type="warning">
+          <FormattedMessage id={id} />
+        </MessageBanner>
+      );
+    }
+    return (
+      <MessageBanner type="warning">
+        <FormattedMessage id={id} values={{ status: `${valuesStatus}` }} />
+      </MessageBanner>
+    );
   }
-  
+
   render() {
     const {
       amendmentStatusValues,
@@ -74,7 +73,7 @@ class AmendmentsFieldArray extends React.Component {
       license = {},
       name
     } = this.props;
-    var { statusWarnings } = this.state;
+    const { statusWarnings } = this.state;
     const { amendments = [] } = license;
     if (!items.length) {
       return null;
@@ -126,7 +125,7 @@ class AmendmentsFieldArray extends React.Component {
               </Row>
               <Row>
                 <Col xs={12} md={4}>
-                <Field
+                  <Field
                     name={`${name}[${i}].status`}
                     validate={validators.required}
                   >
@@ -139,24 +138,23 @@ class AmendmentsFieldArray extends React.Component {
                           const { value } = e.target;
                           let warning;
                           let warningValuesStatus;
-
                           if (value === statuses.CURRENT) {
                             if (new Date(amendment.startDate).getTime() > new Date().getTime()) {
-                              warning = "ui-agreements.license.warn.amendmentFuture"
+                              warning = 'ui-agreements.license.warn.amendmentFuture';
                             }
                             // Amendment end date is in the past
                             if (new Date(amendment.endDate).getTime() < new Date().getTime()) {
-                              warning = "ui-agreements.license.warn.amendmentPast"
+                              warning = 'ui-agreements.license.warn.amendmentPast';
                             }
                             // Amendment has an invalid status.
                             const linkedStatus = get(amendment, 'status', {});
                             if (linkedStatus.value === statuses.EXPIRED || linkedStatus.value === statuses.REJECTED) {
-                              warning = "ui-agreements.license.warn.amendmentStatus"
-                              warningValuesStatus = linkedStatus.label
+                              warning = 'ui-agreements.license.warn.amendmentStatus';
+                              warningValuesStatus = linkedStatus.label;
                             }
                           }
-                          statusWarnings[i].warningId = warning
-                          statusWarnings[i].warningValuesStatus = warningValuesStatus
+                          statusWarnings[i].warningId = warning;
+                          statusWarnings[i].warningValuesStatus = warningValuesStatus;
                           props.input.onChange(e);
                         }}
                         placeholder=" "
@@ -173,7 +171,7 @@ class AmendmentsFieldArray extends React.Component {
                   />
                 </Col>
               </Row>
-                { this.RenderWarningStatus(statusWarnings[i].warningId, statusWarnings[i].warningValuesStatus) }
+              { this.RenderWarningStatus(statusWarnings[i].warningId, statusWarnings[i].warningValuesStatus) }
             </Card>
           );
         })}
