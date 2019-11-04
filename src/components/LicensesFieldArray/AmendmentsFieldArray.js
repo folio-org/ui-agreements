@@ -4,10 +4,10 @@ import { get } from 'lodash';
 import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
 import { Field, FormSpy } from 'react-final-form';
-import { Card, Col, Headline, KeyValue, Row, Select, TextArea } from '@folio/stripes/components';
+import { Card, Col, Headline, MessageBanner, KeyValue, Row, Select, TextArea } from '@folio/stripes/components';
 import { LicenseEndDate, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
-import { MessageBanner } from '../../../../stripes-components/lib/MessageBanner';
+/* import { MessageBanner } from '../../../../stripes-components/lib/MessageBanner'; */
 
 import { urls, validators } from '../utilities';
 import { statuses } from '../../constants';
