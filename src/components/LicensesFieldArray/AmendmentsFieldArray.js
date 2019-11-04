@@ -128,12 +128,12 @@ class AmendmentsFieldArray extends React.Component {
                   <Field
                     name={`${name}[${i}].status`}
                     validate={validators.required}
+                    label={<FormattedMessage id="ui-agreements.license.prop.status" />}
                   >
                     {props => (
                       <Select
                         {...props}
                         dataOptions={amendmentStatusValues}
-                        label={<FormattedMessage id="ui-agreements.license.prop.status" />}
                         onChange={(e) => {
                           const { value } = e.target;
                           let warning;
