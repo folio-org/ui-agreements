@@ -7,8 +7,6 @@ import { Field, FormSpy } from 'react-final-form';
 import { Card, Col, Headline, MessageBanner, KeyValue, Row, Select, TextArea } from '@folio/stripes/components';
 import { LicenseEndDate, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
-/* import { MessageBanner } from '../../../../stripes-components/lib/MessageBanner'; */
-
 import { urls, validators } from '../utilities';
 import { statuses } from '../../constants';
 import FormattedUTCDate from '../FormattedUTCDate';
@@ -52,7 +50,7 @@ class AmendmentsFieldArray extends React.Component {
       const amendment = get(this.props.license, 'amendments', []).find(a => a.id === amendmentId);
 
       let warning;
-
+      
       // Amendment start date is in the future
       if (new Date(amendment.startDate).getTime() > new Date().getTime()) {
         warning = <MessageBanner type="warning"> <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" /> </MessageBanner>;
@@ -81,6 +79,7 @@ class AmendmentsFieldArray extends React.Component {
       name
     } = this.props;
     const { amendments = [] } = license;
+    console.log("Props: %o", this.props)
 
     if (!items.length) return null;
 
