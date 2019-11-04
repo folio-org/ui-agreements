@@ -79,8 +79,6 @@ class AmendmentsFieldArray extends React.Component {
       name
     } = this.props;
     const { amendments = [] } = license;
-    console.log("Props: %o", this.props)
-
     if (!items.length) return null;
 
     return (
@@ -90,7 +88,6 @@ class AmendmentsFieldArray extends React.Component {
         </Headline>
         {items.map((item, i) => {
           const amendment = amendments.find(a => item.amendmentId === a.id) || {};
-
           return (
             <Card
               data-test-amendment={amendment.name}
@@ -142,31 +139,46 @@ class AmendmentsFieldArray extends React.Component {
                         onChange={(e) => {
                           props.input.onChange(e);
 
-                          let warning;
-      
-                          // Amendment start date is in the future
-                          if (new Date(amendment.startDate).getTime() > new Date().getTime()) {
-                            warning = (
-                              <MessageBanner type="warning"> <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" /> </MessageBanner>
-                            );
-                          }
+                          
 
-                          // Amendment end date is in the past
-                          if (new Date(amendment.endDate).getTime() < new Date().getTime()) {
-                            warning = (
-                              <MessageBanner type="warning"> <FormattedMessage id="ui-agreements.license.warn.amendmentPast" /> </MessageBanner>
-                            );
-                          }
+                          const statusString = typeof e === 'string' ? status : e;
+                          if (!statusString || statusString !== statuses.CURRENT) {
+                            this.props.form.mutators.setFieldData(`${name}[${i}].status`, { warning: undefined });
+                          } else {
 
-                          // Amendment has an invalid status.
-                          const linkedStatus = get(amendment, 'status', {});
-                          if (linkedStatus.value === statuses.EXPIRED || linkedStatus.value === statuses.REJECTED) {
-                            warning = (
-                              <MessageBanner type="warning"><FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: linkedStatus.label }} /> </MessageBanner>
-                            );
-                          }
+                            let warning;
 
-                          form.mutators.setFieldData(`${name}[${i}].status`, { warning });
+
+                            // Amendment start date is in the future
+                            if (new Date(amendment.startDate).getTime() > new Date().getTime()) {
+                              warning = (
+                                <div data-test-warn-amendment-future>
+                                  <MessageBanner type="warning"> <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" /> </MessageBanner>
+                                </div>
+                              );
+                            }
+
+                            // Amendment end date is in the past
+                            if (new Date(amendment.endDate).getTime() < new Date().getTime()) {
+                              warning = (
+                                <div data-test-warn-amendment-past>
+                                  <MessageBanner type="warning"> <FormattedMessage id="ui-agreements.license.warn.amendmentPast" /> </MessageBanner>
+                                </div>
+                              );
+                            }
+
+                            // Amendment has an invalid status.
+                            const linkedStatus = get(amendment, 'status', {});
+                            if (linkedStatus.value === statuses.EXPIRED || linkedStatus.value === statuses.REJECTED) {
+                              warning = (
+                                <div data-test-warn-amendment-status>
+                                  <MessageBanner type="warning"><FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: linkedStatus.label }} /> </MessageBanner>
+                                </div>
+                              );
+                            }
+
+                            this.props.form.mutators.setFieldData(`${name}[${i}].status`, { warning });
+                          }
                         }}
                         value={props.input.value}
                       />);
