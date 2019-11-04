@@ -7,6 +7,8 @@ import { Field, FormSpy } from 'react-final-form';
 import { Card, Col, Headline, KeyValue, Row, Select, TextArea } from '@folio/stripes/components';
 import { LicenseEndDate, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
+import { MessageBanner } from '../../../../stripes-components/lib/MessageBanner';
+
 import { urls, validators } from '../utilities';
 import { statuses } from '../../constants';
 import FormattedUTCDate from '../FormattedUTCDate';
@@ -53,18 +55,18 @@ class AmendmentsFieldArray extends React.Component {
 
       // Amendment start date is in the future
       if (new Date(amendment.startDate).getTime() > new Date().getTime()) {
-        warning = <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" />;
+        warning = <MessageBanner type="warning"> <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" /> </MessageBanner>;
       }
 
       // Amendment end date is in the past
       if (new Date(amendment.endDate).getTime() < new Date().getTime()) {
-        warning = <FormattedMessage id="ui-agreements.license.warn.amendmentPast" />;
+        warning = <MessageBanner type="warning"> <FormattedMessage id="ui-agreements.license.warn.amendmentPast" /> </MessageBanner>;
       }
 
       // Amendment has an invalid status.
       const linkedStatus = get(amendment, 'status', {});
       if (linkedStatus.value === statuses.EXPIRED || linkedStatus.value === statuses.REJECTED) {
-        warning = <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: linkedStatus.label }} />;
+        warning = <MessageBanner type="warning"><FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: linkedStatus.label }} /> </MessageBanner>;
       }
 
       form.mutators.setFieldData(`${name}[${i}].status`, { warning });
