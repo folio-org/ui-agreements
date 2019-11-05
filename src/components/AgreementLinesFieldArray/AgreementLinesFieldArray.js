@@ -28,11 +28,6 @@ class AgreementLinesFieldArray extends React.Component {
     onReplaceField: PropTypes.func.isRequired,
   }
 
-  getLinePOLine = (line) => {
-    if (!line.poLineId || !this.props.data.orderLines) return undefined;
-    return this.props.data.orderLines.find(orderLine => orderLine.id === line.poLineId);
-  }
-
   getLineResource = (line) => {
     const { data: { agreementLines } } = this.props;
 
@@ -80,7 +75,7 @@ class AgreementLinesFieldArray extends React.Component {
         name={`${this.props.name}[${i}]`}
         onDelete={() => this.props.onDeleteField(i, line)}
         onResourceSelected={this.handleResourceSelected}
-        poLine={this.getLinePOLine(line)}
+        poLines={this.props.data.orderLines || []}
         resource={this.getLineResource(line)}
         validate={this.validateResourceIsSelected}
       />

@@ -2,20 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-
+import {
+  Button,
+  Card,
+  Col,
+  KeyValue,
+  Layout,
+  Row,
+} from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
-import { Button, Card, Col, KeyValue, Layout, Row } from '@folio/stripes/components';
+
+import css from '../styles.css';
 
 export default class POLineField extends React.Component {
   static propTypes = {
-    index: PropTypes.number.isRequired,
+    id: PropTypes.string,
     input: PropTypes.shape({
-      onChange: PropTypes.func.isRequired,
-      value: PropTypes.string,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     }).isRequired,
+    meta: PropTypes.shape({
+      error: PropTypes.node,
+    }).isRequired,
+    onPOLineSelected: PropTypes.func.isRequired,
     poLine: PropTypes.shape({
       acquisitionMethod: PropTypes.string,
-      id: PropTypes.string,
       poLineNumber: PropTypes.string,
       title: PropTypes.string,
     }),
@@ -31,73 +41,41 @@ export default class POLineField extends React.Component {
     this.findPOLineButtonRef = React.createRef();
   }
 
-  state = {
-    poLine: {
-      poLineNumber: '?'
-    },
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    if (!state.poLine.id && props.poLine.id) {
-      return { poLine: props.poLine };
-    }
-
-    return null;
-  }
-
   componentDidMount() {
-    if (!this.props.input.value && this.findPOLineButtonRef.current) {
+    if (!get(this.props, 'input.value.id') && this.findPOLineButtonRef.current) {
       this.findPOLineButtonRef.current.focus();
     }
   }
 
-  handlePOLineSelected = ([poLine]) => {
-    this.props.input.onChange(poLine.id);
-    this.setState({ poLine });
+  renderLinkPOLineButton = value => {
+    const { id, onPOLineSelected } = this.props;
+
+    return (
+      <Pluggable
+        addLines={poLines => onPOLineSelected(poLines[0])}
+        dataKey={id}
+        isSingleSelect
+        renderTrigger={(props) => (
+          <Button
+            aria-haspopup="true"
+            buttonRef={this.findPOLineButtonRef}
+            buttonStyle={value ? 'default' : 'primary'}
+            id={`${id}-find-poline-btn`}
+            marginBottom0
+            onClick={props.onClick}
+          >
+            <FormattedMessage id={`ui-agreements.poLines.${value ? 'replace' : 'link'}POLine`} />
+          </Button>
+        )}
+        type="find-po-line"
+      >
+        <FormattedMessage id="ui-agreements.poLines.noPOLinePlugin" />
+      </Pluggable>
+    );
   }
 
-  handlePOLineUnselected = () => {
-    this.props.input.onChange(null);
-    this.setState({ poLine: {} });
-  }
-
-  renderLinkPOLineButton = () => (
-    <Pluggable
-      addLines={this.handlePOLineSelected}
-      dataKey="poline"
-      disableRecordCreation
-      isSingleSelect
-      renderTrigger={(props) => (
-        <Button
-          aria-haspopup="true"
-          buttonRef={this.findPOLineButtonRef}
-          buttonStyle="primary"
-          id={`poline-${this.props.index}-search-button`}
-          marginBottom0
-          onClick={props.onClick}
-        >
-          <FormattedMessage id="ui-agreements.poLines.linkPOLine" />
-        </Button>
-      )}
-      type="find-po-line"
-    >
-      <FormattedMessage id="ui-agreements.poLines.noPOLinePlugin" />
-    </Pluggable>
-  )
-
-  renderUnlinkPOLineButton = () => (
-    <Button
-      buttonStyle="danger"
-      id={`clickable-unlink-poline-${this.props.index}`}
-      marginBottom0
-      onClick={this.handlePOLineUnselected}
-    >
-      <FormattedMessage id="ui-agreements.poLines.unlinkPOLine" />
-    </Button>
-  )
-
-  renderPOLineInfo = () => {
-    const { poLine } = this.state;
+  renderPOLine = () => {
+    const { poLine } = this.props;
 
     return (
       <div>
@@ -134,32 +112,44 @@ export default class POLineField extends React.Component {
         <FormattedMessage id="ui-agreements.poLines.linkPOLineToStart" />
       </Layout>
     </div>
-  );
+  )
+
+  renderError = () => (
+    <Layout className={`textCentered ${css.error}`}>
+      <strong>
+        {this.props.meta.error}
+      </strong>
+    </Layout>
+  )
 
   render() {
-    const { input: { value } } = this.props;
+    const {
+      id,
+      input: { value },
+      meta: { error, touched },
+      poLine = {},
+    } = this.props;
 
     return (
       <Card
         cardStyle={value ? 'positive' : 'negative'}
         hasMargin
         headerStart={(
-          <span>
-            <AppIcon app="orders" size="small">
-              <strong>
-                { value ?
-                  <FormattedMessage id="ui-agreements.poLines.poLineWithNumber" values={this.state.poLine} /> :
-                  <FormattedMessage id="ui-agreements.poLines.poLine" />
-                }
-              </strong>
-            </AppIcon>
-          </span>
+          <AppIcon app="orders" size="small">
+            <strong>
+              { poLine.poLineNumber ?
+                <FormattedMessage id="ui-agreements.poLines.poLineWithNumber" values={{ poLineNumber: poLine.poLineNumber }} /> :
+                <FormattedMessage id="ui-agreements.poLines.poLine" />
+              }
+            </strong>
+          </AppIcon>
         )}
-        headerEnd={value ? this.renderUnlinkPOLineButton() : this.renderLinkPOLineButton()}
-        id={`edit-poline-card-${this.props.index}`}
+        headerEnd={this.renderLinkPOLineButton(value)}
+        id={id}
         roundedBorder
       >
-        { value ? this.renderPOLineInfo() : this.renderEmpty() }
+        { value ? this.renderPOLine() : this.renderEmpty() }
+        { touched && error ? this.renderError() : null }
       </Card>
     );
   }
