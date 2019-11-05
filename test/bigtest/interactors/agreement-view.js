@@ -1,5 +1,6 @@
 import {
   clickable,
+  collection,
   interactor,
   isPresent,
 } from '@bigtest/interactor';
@@ -8,6 +9,16 @@ import AgreementLinesInteractor from './agreement-lines';
 
 @interactor class HeaderDropdown {
   click = clickable('button');
+}
+
+@interactor class CheckboxInteractor {
+  click = clickable('input[type="checkbox"]');
+}
+
+@interactor class DuplicateAgreementModalInteractor {
+  isDuplcateModalPresent = isPresent('#duplicate-agreement');
+  checkBoxList = collection('#duplicate-agreement-content', CheckboxInteractor);
+  clickSaveAndClose = clickable('#duplicate-agreement-modal-save-button');
 }
 
 @interactor class HeaderDropdownMenu {
@@ -20,9 +31,9 @@ export default @interactor class AgreementViewInteractor {
   lines = new AgreementLinesInteractor();
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
-  isDuplcateModalPresent = isPresent('#duplicate-agreement');
+  duplicateAgreementModal = new DuplicateAgreementModalInteractor();
 
   whenLoaded() {
-    return this.when(() => this.isViewAgreement).timeout(4000);
+    return this.when(() => this.isViewAgreement).timeout(5000);
   }
 }

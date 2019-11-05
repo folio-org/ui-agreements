@@ -158,7 +158,6 @@ export default function config() {
   });
 
   this.post('erm/sas', (_, request) => {
-    console.log(request, 'request');
     const body = JSON.parse(request.requestBody);
     return this.create('agreement', body).attrs;
   });
@@ -222,5 +221,9 @@ export default function config() {
 
   this.get('/tags', {
     tags: []
+  });
+
+  this.post('erm/sas/:id/clone', (schema, request) => {
+    return schema.agreements.find(request.params.id).attrs;
   });
 }

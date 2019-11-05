@@ -9,5 +9,4 @@ export default Factory.extend({
   usageDataProviders: () => [],
   tags: () => [],
   supplementaryDocs: () => [],
-
 });
