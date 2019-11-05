@@ -114,27 +114,26 @@ class AmendmentsFieldArray extends React.Component {
                           let warning;
                           if (value === statuses.CURRENT) {
                             if (new Date(amendment.startDate).getTime() > new Date().getTime()) {
-                              warning = <FormattedMessage id='ui-agreements.license.warn.amendmentFuture' />;
+                              warning = <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" />;
                             }
 
                             // Amendment end date is in the past
                             if (new Date(amendment.endDate).getTime() < new Date().getTime()) {
-                              warning = <FormattedMessage id='ui-agreements.license.warn.amendmentPast' />;
+                              warning = <FormattedMessage id="ui-agreements.license.warn.amendmentPast" />;
                             }
 
                             // Amendment has an invalid status.
                             const linkedStatus = get(amendment, 'status', {});
                             if (linkedStatus.value === statuses.EXPIRED || linkedStatus.value === statuses.REJECTED) {
-                              warning = <FormattedMessage id='ui-agreements.license.warn.amendmentStatus' values={{status: linkedStatus.label}} />;
+                              warning = <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: linkedStatus.label }} />;
                             }
-
                           }
 
                           this.setState(prevState => {
                             const warnings = [...prevState.warnings];
                             warnings[i] = warning;
-                            return {warnings: warnings};
-                          })
+                            return { warnings };
+                          });
                           props.input.onChange(e);
                         }}
                         placeholder=" "
@@ -151,7 +150,12 @@ class AmendmentsFieldArray extends React.Component {
                   />
                 </Col>
               </Row>
-              { this.state.warnings[i] ? <MessageBanner> {this.state.warnings[i]} </MessageBanner> : null }
+              {
+                this.state.warnings[i] ?
+                  <MessageBanner type="warning">
+                    {this.state.warnings[i]}
+                  </MessageBanner> : null
+              }
             </Card>
           );
         })}
