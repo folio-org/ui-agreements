@@ -35,35 +35,8 @@ class AmendmentsFieldArray extends React.Component {
     name: PropTypes.string.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = { statusWarnings: [] };
-
-    if (props.items) {
-      if (props.items.length) {
-        for (let i = 0; i < props.items.length; i++) {
-          this.state.statusWarnings[i] = { warningId: '', warningValuesStatus: null };
-        }
-      }
-    }
-  }
-
-  RenderWarningStatus(id, valuesStatus) {
-    if (!id) {
-      return null;
-    }
-    if (!valuesStatus) {
-      return (
-        <MessageBanner type="warning">
-          <FormattedMessage id={id} />
-        </MessageBanner>
-      );
-    }
-    return (
-      <MessageBanner type="warning">
-        <FormattedMessage id={id} values={{ status: `${valuesStatus}` }} />
-      </MessageBanner>
-    );
+  state = {
+    warnings: []
   }
 
   render() {
@@ -73,11 +46,12 @@ class AmendmentsFieldArray extends React.Component {
       license = {},
       name
     } = this.props;
-    const { statusWarnings } = this.state;
     const { amendments = [] } = license;
+
     if (!items.length) {
       return null;
     }
+
     return (
       <div data-test-amendments-fa>
         <Headline>
@@ -136,25 +110,31 @@ class AmendmentsFieldArray extends React.Component {
                         dataOptions={amendmentStatusValues}
                         onChange={(e) => {
                           const { value } = e.target;
+
                           let warning;
-                          let warningValuesStatus;
                           if (value === statuses.CURRENT) {
                             if (new Date(amendment.startDate).getTime() > new Date().getTime()) {
-                              warning = 'ui-agreements.license.warn.amendmentFuture';
+                              warning = <FormattedMessage id='ui-agreements.license.warn.amendmentFuture' />;
                             }
+
                             // Amendment end date is in the past
                             if (new Date(amendment.endDate).getTime() < new Date().getTime()) {
-                              warning = 'ui-agreements.license.warn.amendmentPast';
+                              warning = <FormattedMessage id='ui-agreements.license.warn.amendmentPast' />;
                             }
+
                             // Amendment has an invalid status.
                             const linkedStatus = get(amendment, 'status', {});
                             if (linkedStatus.value === statuses.EXPIRED || linkedStatus.value === statuses.REJECTED) {
-                              warning = 'ui-agreements.license.warn.amendmentStatus';
-                              warningValuesStatus = linkedStatus.label;
+                              warning = <FormattedMessage id='ui-agreements.license.warn.amendmentStatus' values={{status: linkedStatus.label}} />;
                             }
+
                           }
-                          statusWarnings[i].warningId = warning;
-                          statusWarnings[i].warningValuesStatus = warningValuesStatus;
+
+                          this.setState(prevState => {
+                            const warnings = [...prevState.warnings];
+                            warnings[i] = warning;
+                            return {warnings: warnings};
+                          })
                           props.input.onChange(e);
                         }}
                         placeholder=" "
@@ -171,7 +151,7 @@ class AmendmentsFieldArray extends React.Component {
                   />
                 </Col>
               </Row>
-              { this.RenderWarningStatus(statusWarnings[i].warningId, statusWarnings[i].warningValuesStatus) }
+              { this.state.warnings[i] ? <MessageBanner> {this.state.warnings[i]} </MessageBanner> : null }
             </Card>
           );
         })}
