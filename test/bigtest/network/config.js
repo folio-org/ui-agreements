@@ -158,6 +158,7 @@ export default function config() {
   });
 
   this.post('erm/sas', (_, request) => {
+    console.log(request, 'request');
     const body = JSON.parse(request.requestBody);
     return this.create('agreement', body).attrs;
   });
@@ -180,8 +181,10 @@ export default function config() {
 
   this.get('/erm/sas/:id/resources/current', (schema, request) => {
     const agreement = schema.agreements.find(request.params.id).attrs;
+    const items = agreement.items;
+    if (!items) return { results: [] };
     return {
-      results: agreement.items.map(item => {
+      results: items.map(item => {
         return {
           _object: schema.pcis.all().models.find(pci => pci.pkg.id === item.resource.id && !pci.accessEnd && new Date(pci.accessStart).getTime() < new Date().getTime())
         };

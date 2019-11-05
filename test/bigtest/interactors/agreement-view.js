@@ -1,15 +1,28 @@
 import {
+  clickable,
   interactor,
   isPresent,
 } from '@bigtest/interactor';
 
 import AgreementLinesInteractor from './agreement-lines';
 
+@interactor class HeaderDropdown {
+  click = clickable('button');
+}
+
+@interactor class HeaderDropdownMenu {
+  isDuplicateButtonPresent = isPresent('#clickable-dropdownduplicate-agreement')
+  clickDuplicate = clickable('#clickable-dropdownduplicate-agreement');
+}
+
 export default @interactor class AgreementViewInteractor {
   isViewAgreement = isPresent('#pane-view-agreement');
   lines = new AgreementLinesInteractor();
+  headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
+  headerDropdownMenu = new HeaderDropdownMenu();
+  isDuplcateModalPresent = isPresent('#duplicate-agreement');
 
   whenLoaded() {
-    return this.when(() => this.isViewAgreement);
-  };
+    return this.when(() => this.isViewAgreement).timeout(4000);
+  }
 }

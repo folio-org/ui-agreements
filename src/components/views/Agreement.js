@@ -248,7 +248,12 @@ export default class Agreement extends React.Component {
           </TitleManager>
         </Pane>
         {helperApp}
-        {showDuplicateAgreementModal && <DuplicateAgreementModal onClose={this.closeDuplicateAgreementModal} />}
+        {showDuplicateAgreementModal &&
+          <DuplicateAgreementModal
+            onClone={(obj) => handlers.onClone(obj)}
+            onClose={this.closeDuplicateAgreementModal}
+          />
+        }
       </React.Fragment>
 
     );

@@ -47,6 +47,14 @@ class AgreementViewRoute extends React.Component {
       records: 'results',
       recordsRequired: '%{agreementEresourcesCount}',
     },
+    cloneAgreement: {
+      type: 'okapi',
+      POST: {
+        path: 'erm/sas/:{id}/clone',
+      },
+      clientGeneratePk: false,
+      fetch: false,
+    },
     eresourcesFilterPath: { initialValue: 'current' },
     interfaces: {
       type: 'okapi',
@@ -131,6 +139,9 @@ class AgreementViewRoute extends React.Component {
       agreementEresourcesCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
+      cloneAgreement: PropTypes.shape({
+        POST: PropTypes.func.isRequired,
+      }).isRequired,
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
       }).isRequired,
@@ -221,6 +232,17 @@ class AgreementViewRoute extends React.Component {
   getRecord = (id, resourceType) => {
     return get(this.props.resources, `${resourceType}.records`, [])
       .find(i => i.id === id);
+  }
+
+  handleClone = (cloneableProperties) => {
+    const { history, location, mutator } = this.props;
+
+    mutator.cloneAgreement
+      .POST(cloneableProperties)
+      .then(({ id }) => {
+        console.log(id, 'id');
+        history.push(`${urls.agreementEdit(id)}${location.search}`);
+      });
   }
 
   handleClose = () => {
@@ -334,6 +356,7 @@ class AgreementViewRoute extends React.Component {
           ...handlers,
           onFilterEResources: this.handleFilterEResources,
           onClose: this.handleClose,
+          onClone: this.handleClone,
           onEdit: this.handleEdit,
           onExportEResourcesAsJSON: this.handleExportEResourcesAsJSON,
           onExportEResourcesAsKBART: this.handleExportEResourcesAsKBART,

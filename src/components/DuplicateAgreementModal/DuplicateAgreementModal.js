@@ -21,9 +21,7 @@ export default class DuplicateAgreementModal extends React.Component {
       'agreementInfo': 'Agreement information',
       'internalContacts': 'Internal contacts',
       'agreementLines': 'Agreement lines',
-      'controllingLicense': 'Controlling license',
-      'futureLicenses': 'Future licenses',
-      'historicalLicenses': 'Historical licenses',
+      'linkedLicenses': 'Linked licenses',
       'externalLicenses': 'External licenses',
       'organizations': 'Organizations',
       'supplementaryInformation': 'Supplementary information',
@@ -81,7 +79,7 @@ export default class DuplicateAgreementModal extends React.Component {
           buttonStyle="primary"
           disabled={isEmpty(selected) || Object.values(selected).every(item => item === false)}
           id="duplicate-agreement-modal-save-button"
-          onClick={() => { }}
+          onClick={() => this.props.onClone(selected)}
         >
           <FormattedMessage id="stripes-components.saveAndClose" />
         </Button>
