@@ -84,7 +84,7 @@
   "agreementLines.net": "YTD Net",
   "agreementLines.noLines": "Agreement has no agreement lines.",
   "agreementLines.noPoLines": "Agreement has no agreement lines.",
-  "agreementLines.poline": "PO Line",
+  "agreementLines.polines": "PO Line",
   "agreementLines.removeCustomCoverage": "Remove custom coverage",
   "agreementLines.removeItem": "Remove line from agreement",
   "agreementLines.removeLine": "Remove agreement line",

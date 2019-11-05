@@ -38,7 +38,7 @@ export default class LinesList extends React.Component {
     isCustomCoverage: ' ',
     activeFrom: <FormattedMessage id="ui-agreements.eresources.activeFrom" />,
     activeTo: <FormattedMessage id="ui-agreements.eresources.activeTo" />,
-    poLine: <FormattedMessage id="ui-agreements.agreementLines.poline" />,
+    poLines: <FormattedMessage id="ui-agreements.agreementLines.polines" />,
   }
 
   formatter = {
@@ -74,7 +74,7 @@ export default class LinesList extends React.Component {
         </Tooltip>
       );
     },
-    poLine: line => this.renderPOLines(line),
+    poLines: line => this.renderPOLines(line),
   }
 
   visibleColumns = [
@@ -86,7 +86,7 @@ export default class LinesList extends React.Component {
     'isCustomCoverage',
     'activeFrom',
     'activeTo',
-    'poLine',
+    'poLines',
   ]
 
   renderDate = date => (
@@ -96,21 +96,39 @@ export default class LinesList extends React.Component {
   renderPOLines = (line) => {
     const { orderLines } = this.props.agreement;
     if (!line.poLines || !line.poLines.length) return '';
-    if (!orderLines) return <Spinner />;
+    if (!orderLines || !orderLines.length) return <Spinner />;
 
-    const poLines = orderLines.filter(orderLine => line.poLines.find(linePOL => linePOL.poLineId === orderLine.id));
+    const poLines = line.poLines.map(linePOL => orderLines.find(orderLine => orderLine.id === linePOL.poLineId));
     if (!poLines.length) return <Spinner />;
 
-    return poLines.map(poLine => (
-      <div key={poLine.id}>
-        <Link
-          data-test-po-line
-          to={urls.poLineView(line.poLineId)}
-        >
-          {poLine.poLineNumber}
-        </Link>
+    return (
+      <div>
+        {poLines.map((poLine = {}) => (
+          !poLine.id ? <Spinner /> : (
+            <Tooltip
+              id={`tooltip-${line.id}-${poLine.id}`}
+              key={poLine.id}
+              placement="left"
+              text={poLine.title}
+            >
+              {({ ref, ariaIds }) => (
+                <div
+                  ref={ref}
+                  aria-labelledby={ariaIds.text}
+                >
+                  <Link
+                    data-test-po-line
+                    to={urls.poLineView(poLine.id)}
+                  >
+                    {poLine.poLineNumber}
+                  </Link>
+                </div>
+              )}
+            </Tooltip>
+          )
+        ))}
       </div>
-    ));
+    );
   }
 
   render() {
