@@ -103,8 +103,8 @@ export default class LinesList extends React.Component {
 
     return (
       <div>
-        {poLines.map((poLine = {}) => (
-          !poLine.id ? <Spinner /> : (
+        {poLines.map((poLine = {}, i) => (
+          !poLine.id ? <Spinner key={i} /> : (
             <Tooltip
               id={`tooltip-${line.id}-${poLine.id}`}
               key={poLine.id}

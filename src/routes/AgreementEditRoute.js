@@ -227,7 +227,7 @@ class AgreementEditRoute extends React.Component {
         return {
           id: line.id,
           coverage: line.customCoverage ? line.coverage : undefined,
-          poLineId: line.poLineId,
+          poLines: line.poLines,
           activeFrom: line.activeFrom,
           activeTo: line.activeTo
         };
