@@ -74,7 +74,7 @@ export default class LinesList extends React.Component {
         </Tooltip>
       );
     },
-    poLine: line => this.renderPOLine(line),
+    poLine: line => this.renderPOLines(line),
   }
 
   visibleColumns = [
@@ -93,22 +93,24 @@ export default class LinesList extends React.Component {
     date ? <FormattedUTCDate value={date} /> : '-'
   )
 
-  renderPOLine = (line) => {
+  renderPOLines = (line) => {
     const { orderLines } = this.props.agreement;
-    if (!line.poLineId) return '';
+    if (!line.poLines || !line.poLines.length) return '';
     if (!orderLines) return <Spinner />;
 
-    const poLine = orderLines.find(orderLine => orderLine.id === line.poLineId);
-    if (!poLine) return <Spinner />;
+    const poLines = orderLines.filter(orderLine => line.poLines.find(linePOL => linePOL.poLineId === orderLine.id));
+    if (!poLines.length) return <Spinner />;
 
-    return (
-      <Link
-        data-test-po-line
-        to={urls.poLineView(line.poLineId)}
-      >
-        {poLine.poLineNumber}
-      </Link>
-    );
+    return poLines.map(poLine => (
+      <div key={poLine.id}>
+        <Link
+          data-test-po-line
+          to={urls.poLineView(line.poLineId)}
+        >
+          {poLine.poLineNumber}
+        </Link>
+      </div>
+    ));
   }
 
   render() {
