@@ -6,7 +6,11 @@ export default Factory.extend({
   customCoverage: () => false,
 
   afterCreate(eresource, server) {
-    eresource.pcis.forEach(pci => {
+    const {
+      pcis = [],
+    } = eresource;
+
+    pcis.forEach(pci => {
       server.create('pci', {
         'class': 'org.olf.kb.PackageContentItem',
         'pti': pci.pti,

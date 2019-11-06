@@ -23,17 +23,18 @@ export default function config() {
       });
     }).flat();
 
+    let results;
     if (parsed) {
-      return {
-        results: schema.eresources.where((eresource) => {
-          return parsed.reduce((acc, { name, value }) => {
-            return acc || get(eresource, name) === value;
-          }, false);
-        }).models
-      };
+      results = schema.eresources.where((eresource) => {
+        return parsed.reduce((acc, { name, value }) => {
+          return acc || get(eresource, name) === value;
+        }, false);
+      }).models;
     } else {
-      return { results: schema.eresources.all().models };
+      results = schema.eresources.all().models;
     }
+
+    return { results, totalRecords: results.length };
   });
 
   this.get('erm/resource/:id', (schema, request) => {

@@ -77,7 +77,7 @@ describe('Package Content Filters', () => {
 
       describe('Add eresource to basket and create agreement', () => {
         beforeEach(async function () {
-          await basket.addToBasketButtion();
+          await eresourceView.addToBasket();
           await basket.clickOpenBasket();
           await basket.clickCreateNewAgreement();
           await agreementForm.fillName('testAgreement');
