@@ -18,7 +18,7 @@ const eresourcesToCreate = [
 ];
 
 
-describe.only('PO Lines', () => {
+describe('PO Lines', () => {
   setupApplication();
   const basketInteractor = new BasketInteractor();
   const agreementForm = new AgreementFormInteractor();

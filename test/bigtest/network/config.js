@@ -52,41 +52,17 @@ export default function config() {
 
   this.get('/erm/resource/:id/entitlements', () => ({ results: [] }));
 
-  this.get('/erm/packages/:id/content/current', (schema) => {
-    return {
-      results: schema.pcis.where(pci => {
-        if (!pci.accessEnd && new Date(pci.accessStart).getTime() < new Date().getTime()) {
-          return pci;
-        }
+  this.get('/erm/packages/:id/content/current', (schema) => ({
+    results: schema.pcis.where(pci => new Date(pci.accessStart).getTime() < new Date().getTime() && new Date(pci.accessEnd).getTime() > new Date().getTime()).models,
+  }));
 
-        return undefined;
-      }).models
-    };
-  });
+  this.get('/erm/packages/:id/content/future', (schema) => ({
+    results: schema.pcis.where(pci => !pci.accessEnd && new Date(pci.accessStart).getTime() > new Date().getTime()).models,
+  }));
 
-  this.get('/erm/packages/:id/content/future', (schema) => {
-    return {
-      results: schema.pcis.where(pci => {
-        if (!pci.accessEnd && new Date(pci.accessStart).getTime() > new Date().getTime()) {
-          return pci;
-        }
-
-        return undefined;
-      }).models
-    };
-  });
-
-  this.get('/erm/packages/:id/content/dropped', (schema) => {
-    return {
-      results: schema.pcis.where(pci => {
-        if (!pci.accessStart && new Date(pci.accessEnd).getTime() < new Date().getTime()) {
-          return pci;
-        }
-
-        return undefined;
-      }).models
-    };
-  });
+  this.get('/erm/packages/:id/content/dropped', (schema) => ({
+    results: schema.pcis.where(pci => !pci.accessStart && new Date(pci.accessEnd).getTime() < new Date().getTime()).models,
+  }));
 
   this.get('/note-links/domain/agreements/type/eresource/id/:id', () => []);
 
@@ -103,37 +79,36 @@ export default function config() {
     return schema.agreements.find(request.params.id).attrs;
   });
 
-  this.get('/erm/sas/:id/resources/current', (schema, request) => {
+  const getAgreementCoveredResources = (schema, request, shouldInclude) => {
     const agreement = schema.agreements.find(request.params.id).attrs;
+    const itemIds = agreement.items.map(item => item.resource.id);
+    const resources = schema.pcis.all().models.filter(pci => itemIds.includes(pci.pkg.id) && shouldInclude(pci));
+
     return {
-      results: agreement.items.map(item => {
-        return {
-          _object: schema.pcis.all().models.find(pci => pci.pkg.id === item.resource.id && !pci.accessEnd && new Date(pci.accessStart).getTime() < new Date().getTime())
-        };
-      })
+      results: resources.map(resource => ({
+        class: 'org.olf.kb.PackageContentItem',
+        coverage: [],
+        customCoverage: false,
+        id: resource.id,
+        _object: resource
+      }))
     };
+  };
+
+  this.get('/erm/sas/:id/resources', (schema, request) => {
+    return getAgreementCoveredResources(schema, request, () => true);
+  });
+
+  this.get('/erm/sas/:id/resources/current', (schema, request) => {
+    return getAgreementCoveredResources(schema, request, pci => (new Date(pci.accessStart).getTime() < new Date().getTime() && new Date(pci.accessEnd).getTime() > new Date().getTime()));
   });
 
   this.get('/erm/sas/:id/resources/future', (schema, request) => {
-    const agreement = schema.agreements.find(request.params.id).attrs;
-    return {
-      results: agreement.items.map(item => {
-        return {
-          _object: schema.pcis.all().models.find(pci => pci.pkg.id === item.resource.id && !pci.accessEnd && new Date(pci.accessStart).getTime() > new Date().getTime())
-        };
-      })
-    };
+    return getAgreementCoveredResources(schema, request, pci => (new Date(pci.accessStart).getTime() > new Date().getTime()));
   });
 
   this.get('/erm/sas/:id/resources/dropped', (schema, request) => {
-    const agreement = schema.agreements.find(request.params.id).attrs;
-    return {
-      results: agreement.items.map(item => {
-        return {
-          _object: schema.pcis.all().models.find(pci => pci.pkg.id === item.resource.id && !pci.accessStart && new Date(pci.accessEnd).getTime() < new Date().getTime())
-        };
-      })
-    };
+    return getAgreementCoveredResources(schema, request, pci => (new Date(pci.accessEnd).getTime() < new Date().getTime()));
   });
 
   this.get('/erm/entitlements', (schema, request) => {
