@@ -6,19 +6,10 @@ import {
 } from '@bigtest/interactor';
 
 import AgreementLinesInteractor from './agreement-lines';
+import DuplicateAgreementModalInteractor from './duplicate-agreement-modal';
 
 @interactor class HeaderDropdown {
   click = clickable('button');
-}
-
-@interactor class CheckboxInteractor {
-  click = clickable();
-}
-
-@interactor class DuplicateAgreementModalInteractor {
-  isDuplcateModalPresent = isPresent('#duplicate-agreement');
-  checkBoxList = collection('input[type="checkbox"]', CheckboxInteractor);
-  clickSaveAndClose = clickable('#duplicate-agreement-modal-save-button');
 }
 
 @interactor class HeaderDropdownMenu {
