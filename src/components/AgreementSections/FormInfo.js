@@ -131,6 +131,7 @@ export default class FormInfo extends React.Component {
 
                     this.props.form.mutators.setFieldData('reasonForClosure', { warning });
                   }}
+                  required
                   value={props.input.value}
                 />);
               }}

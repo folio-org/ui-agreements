@@ -1,4 +1,4 @@
-import { Factory } from '@bigtest/mirage';
+import { Factory, trait } from '@bigtest/mirage';
 
 export default Factory.extend({
   contacts: () => [],
@@ -9,4 +9,14 @@ export default Factory.extend({
   usageDataProviders: () => [],
   tags: () => [],
   supplementaryDocs: () => [],
+
+  withContacts: trait({
+    afterCreate(agreement, server) {
+      const contact = server.create('contact', agreement.internalContactData);
+      agreement.update({
+        contacts: [contact]
+      });
+      agreement.save();
+    }
+  })
 });

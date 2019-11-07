@@ -12,12 +12,12 @@ import AgreementLinesInteractor from './agreement-lines';
 }
 
 @interactor class CheckboxInteractor {
-  click = clickable('input[type="checkbox"]');
+  click = clickable();
 }
 
 @interactor class DuplicateAgreementModalInteractor {
   isDuplcateModalPresent = isPresent('#duplicate-agreement');
-  checkBoxList = collection('#duplicate-agreement-content', CheckboxInteractor);
+  checkBoxList = collection('input[type="checkbox"]', CheckboxInteractor);
   clickSaveAndClose = clickable('#duplicate-agreement-modal-save-button');
 }
 

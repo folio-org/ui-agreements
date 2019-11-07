@@ -240,7 +240,6 @@ class AgreementViewRoute extends React.Component {
     mutator.cloneAgreement
       .POST(cloneableProperties)
       .then(({ id }) => {
-        console.log(id, 'id');
         history.push(`${urls.agreementEdit(id)}${location.search}`);
       });
   }

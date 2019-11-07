@@ -1,3 +1,5 @@
-import { Model } from '@bigtest/mirage';
+import { Model, hasMany } from '@bigtest/mirage';
 
-export default Model.extend();
+export default Model.extend({
+  contacts: hasMany('contact')
+});

@@ -168,14 +168,17 @@ export default function config() {
     results: []
   });
 
-  this.get('/users', () => { });
+  this.get('/users', (schema, request) => {
+    console.log(request.queryParams, 'nattuga');
+    return schema.contacts.all();
+  });
 
   this.get('note-links/domain/agreements/type/agreement/id/:id', () => { });
 
   this.get('/note-types', () => { });
 
   this.get('/erm/sas/:id', (schema, request) => {
-    return schema.agreements.find(request.params.id).attrs;
+    return schema.agreements.find(request.params.id);
   });
 
   this.get('/erm/sas/:id/resources/current', (schema, request) => {
@@ -224,6 +227,7 @@ export default function config() {
   });
 
   this.post('erm/sas/:id/clone', (schema, request) => {
+    const body = JSON.parse(request.requestBody);
     return schema.agreements.find(request.params.id).attrs;
   });
 }

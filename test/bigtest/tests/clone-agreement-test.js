@@ -8,11 +8,21 @@ import AgreementViewInteractor from '../interactors/agreement-view';
 
 const agreementData = {
   id: '1234',
-  name: 'cloneable agreement',
+  name: 'cloneablee agreement',
   agreementStatus: { value: 'active' },
   periods: [{
     startDate: '2019-11-13'
-  }]
+  }],
+};
+
+const internalContactData = {
+  user: '333',
+  personal: {
+    firstName: 'John',
+    middleName: 'paul',
+    lastName: 'parker'
+  },
+  role: { label: 'Agreement owner', value: 'agreement_owner' },
 };
 
 describe('Clone Agreement test', () => {
@@ -22,13 +32,37 @@ describe('Clone Agreement test', () => {
   let agreement;
 
   beforeEach(async function () {
-    agreement = this.server.create('agreement', agreementData);
+    agreementData.internalContactData = internalContactData;
+    agreement = this.server.create('agreement', 'withContacts', agreementData);
   });
 
   describe('click duplicate agreement button', () => {
+
+    const { firstName = '', lastName = '-', middleName = '' } = internalContactData.personal;
+    const name = `${lastName}${firstName ? ', ' : ' '}${firstName} ${middleName}`;
+
     beforeEach(async function () {
       await this.visit(`erm/agreements/${agreement.id}`);
       await agreementView.whenLoaded();
+    });
+
+    describe('select only the agreementInfo checkbox to duplicate', () => {
+      beforeEach(async function () {
+        await agreementView.whenLoaded();
+        await agreementView.headerDropdown.click();
+        await agreementView.headerDropdownMenu.clickDuplicate();
+        await agreementView.duplicateAgreementModal.checkBoxList(1).click();
+        await agreementView.duplicateAgreementModal.clickSaveAndClose();
+        await agreementEdit.whenLoaded();
+      });
+
+      it('should render the expected name on the edit page', () => {
+        expect(agreementEdit.name).to.equal(agreementData.name);
+      });
+
+      it('should not render an internalContact card', () => {
+        expect(agreementEdit.isInternalContactPresent).to.be.false;
+      });
     });
 
     describe('slect all properties to duplicate', () => {
@@ -42,6 +76,14 @@ describe('Clone Agreement test', () => {
 
       it('should render the expected name on the edit page', () => {
         expect(agreementEdit.name).to.equal(agreementData.name);
+      });
+
+      it('should render an internalContact card', () => {
+        expect(agreementEdit.isInternalContactPresent).to.be.true;
+      });
+
+      it('should render the expected users name on the internalContact card', () => {
+        expect(agreementEdit.internalContacts(0).userName).to.equal(name);
       });
     });
   });

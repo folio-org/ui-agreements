@@ -181,7 +181,6 @@ class AgreementEditRoute extends React.Component {
 
     if (initialValues.id !== state.initialValues.id) {
       updated = true;
-
       // Set the values of dropdown-controlled props as values rather than objects.
       initialValues.agreementStatus = agreementStatus.value;
       initialValues.isPerpetual = isPerpetual.value;

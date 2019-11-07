@@ -9,6 +9,7 @@
   "notSet": "Not set",
   "saveAndClose": "Save & close",
   "duplicate": "Duplicate",
+  "duplicateAgreement": "Duplicate agreement",
   "dashboard": "Dashboard",
   "agreements": "Agreements",
   "eresources": "E-resources",
@@ -26,7 +27,7 @@
   "note": "Note",
 
   "agreements.edit": "Edit",
-  "agreements.showTags": "Show Tags",
+  "agreements.showTags": "Show tags",
   "agreements.vendor": "Vendor",
   "agreements.visitPlatform": "Visit platform",
   "agreements.agreementInfo": "Agreement information",

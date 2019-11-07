@@ -12,6 +12,7 @@ import {
 export default class DuplicateAgreementModal extends React.Component {
   static propTypes = {
     onClose: PropTypes.func,
+    onClone: PropTypes.func,
   };
 
   constructor() {
@@ -99,7 +100,7 @@ export default class DuplicateAgreementModal extends React.Component {
         dismissible
         footer={footer}
         id="duplicate-agreement"
-        label="Duplicate Agreement"
+        label={<FormattedMessage id="ui-agreements.duplicateAgreement" />}
         onClose={this.props.onClose}
         size="small"
       >
