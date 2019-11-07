@@ -144,7 +144,7 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .click('#add-org-btn')
           .evaluate((r) => {
-            if (!document.querySelector(`#orgs-nameOrg-${r}-search-button`)) {
+            if (!document.querySelector(`#orgs-link-${r}-search-button`)) {
               throw Error('Expected organization picker button to exist.');
             }
 
@@ -158,7 +158,7 @@ module.exports.test = (uiTestCtx) => {
 
       it('should select org', done => {
         nightmare
-          .click(`#orgs-nameOrg-${row}-search-button`)
+          .click(`#orgs-link-${row}-search-button`)
           .wait('#input-organization-search')
           .type('#input-organization-search', orgName)
           .wait('[data-test-search-and-sort-submit]')

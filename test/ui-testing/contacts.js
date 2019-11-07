@@ -186,14 +186,12 @@ module.exports.test = (uiTestCtx) => {
             }, EDIT_CONTACT)
             .then(row => {
               return nightmare
-                .click(`#contacts-user-${row}-unlink-button`)
                 .wait(`#contacts-user-${row}-search-button`)
                 .click(`#contacts-user-${row}-search-button`)
                 .wait('#clickable-filter-active-active')
                 .click('#clickable-filter-active-active')
                 .wait('#list-plugin-find-user [aria-rowindex="10"]')
                 .click('#list-plugin-find-user [aria-rowindex="10"]')
-                .wait(`#contacts-user-${row}-unlink-button`)
                 .wait(1000)
                 .type(`#contacts-role-${row}`, EDIT_CONTACT.editedRole)
                 .evaluate(_row => {

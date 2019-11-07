@@ -66,19 +66,6 @@ export default class FormInfo extends React.Component {
     return null;
   }
 
-  setWarnings = ({ values }) => {
-    let warning;
-
-    if (values.reasonForClosure && values.agreementStatus !== statuses.CLOSED) {
-      warning = (
-        <div data-test-warn-clear-reason-for-closure>
-          <FormattedMessage id="ui-agreements.warn.clearReasonForClosure" />
-        </div>
-      );
-    }
-    this.props.form.mutators.setFieldData('reasonForClosure', { warning });
-  }
-
   render() {
     const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues } = this.state;
     const { values } = this.props;

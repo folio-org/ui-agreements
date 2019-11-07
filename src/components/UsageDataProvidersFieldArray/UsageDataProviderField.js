@@ -1,11 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import {
-  Button,
-  Card,
-  Layout,
-} from '@folio/stripes/components';
+import { Card, Layout } from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
 
 import css from '../styles.css';
@@ -22,7 +18,6 @@ export default class UsageDataProviderField extends React.Component {
       error: PropTypes.node,
     }).isRequired,
     onUDPSelected: PropTypes.func.isRequired,
-    onUDPUnselected: PropTypes.func.isRequired,
     udp: PropTypes.shape({
       label: PropTypes.string,
     }),
@@ -32,32 +27,20 @@ export default class UsageDataProviderField extends React.Component {
     udp: {},
   }
 
-  renderLinkUDPButton = () => (
+  renderLinkUDPButton = value => (
     <Pluggable
       aria-haspopup="true"
       dataKey="udp"
       id={`udp-${this.props.index}-search-button`}
       marginBottom0
       onUDPSelected={this.props.onUDPSelected}
-      searchLabel={<FormattedMessage id="ui-agreements.usageData.addUDP" />}
-      searchButtonStyle="primary"
+      searchLabel={<FormattedMessage id={`ui-agreements.usageData.${value ? 'replace' : 'link'}UDP`} />}
+      searchButtonStyle={value ? 'default' : 'primary'}
       type="find-erm-usage-data-provider"
     >
       <FormattedMessage id="ui-agreements.usageData.noUDPPlugin" />
     </Pluggable>
   )
-
-  renderUnlinkUDPButton = () => (
-    <Button
-      buttonStyle="danger"
-      id={`clickable-unlink-udp-${this.props.index}`}
-      marginBottom0
-      onClick={this.props.onUDPUnselected}
-    >
-      <FormattedMessage id="ui-agreements.usageData.unlinkUDP" />
-    </Button>
-  )
-
 
   renderUDP = () => {
     const { udp } = this.props;
@@ -75,11 +58,11 @@ export default class UsageDataProviderField extends React.Component {
     <div>
       <Layout className="textCentered">
         <strong>
-          <FormattedMessage id="ui-agreements.usageData.noUDPAdded" />
+          <FormattedMessage id="ui-agreements.usageData.noUDPLinked" />
         </strong>
       </Layout>
       <Layout className="textCentered">
-        <FormattedMessage id="ui-agreements.usageData.addUDPToStart" />
+        <FormattedMessage id="ui-agreements.usageData.linkUDPToStart" />
       </Layout>
     </div>
   )
@@ -110,7 +93,7 @@ export default class UsageDataProviderField extends React.Component {
             </strong>
           </AppIcon>
         )}
-        headerEnd={value ? this.renderUnlinkUDPButton() : this.renderLinkUDPButton()}
+        headerEnd={this.renderLinkUDPButton(value)}
         id={id}
         roundedBorder
       >
