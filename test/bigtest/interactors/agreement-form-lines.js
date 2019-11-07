@@ -1,12 +1,28 @@
 import {
   interactor,
+  clickable,
   collection,
   count,
+  isPresent,
   text,
 } from '@bigtest/interactor';
 
+@interactor class POLineFieldInteractor {
+  isSelected = isPresent('[data-test-poline-title]');
+  hasError = isPresent('[data-test-error]');
+
+  clickSelectPOLine = clickable('[data-test-po-line-select-po-line]');
+
+  acquisitionMethod = text('[data-test-poline-acq-method]');
+  poLineNumber = text('[data-test-po-line-number]');
+  title = text('[data-test-poline-title]');
+}
+
 @interactor class AgreementFormLineInteractor {
-  name = text('[data-test-ag-line-name]')
+  name = text('[data-test-ag-line-name]');
+  clickAddPOLine = clickable('[data-test-poline-fa-add-button]');
+
+  poLines = collection('[data-test-po-line]', POLineFieldInteractor);
 }
 
 export default @interactor class AgreementFormLinesInteractor {

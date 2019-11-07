@@ -60,6 +60,7 @@ export default class POLineField extends React.Component {
             aria-haspopup="true"
             buttonRef={this.findPOLineButtonRef}
             buttonStyle={value ? 'default' : 'primary'}
+            data-test-po-line-select-po-line
             id={`${id}-find-poline-btn`}
             marginBottom0
             onClick={props.onClick}
@@ -115,7 +116,10 @@ export default class POLineField extends React.Component {
   )
 
   renderError = () => (
-    <Layout className={`textCentered ${css.error}`}>
+    <Layout
+      className={`textCentered ${css.error}`}
+      data-test-error
+    >
       <strong>
         {this.props.meta.error}
       </strong>
@@ -136,7 +140,7 @@ export default class POLineField extends React.Component {
         hasMargin
         headerStart={(
           <AppIcon app="orders" size="small">
-            <strong>
+            <strong data-test-po-line-number>
               { poLine.poLineNumber ?
                 <FormattedMessage id="ui-agreements.poLines.poLineWithNumber" values={{ poLineNumber: poLine.poLineNumber }} /> :
                 <FormattedMessage id="ui-agreements.poLines.poLine" />

@@ -1,4 +1,5 @@
 import { beforeEach, describe, it } from '@bigtest/mocha';
+import { faker } from '@bigtest/mirage';
 
 import { expect } from 'chai';
 
@@ -16,6 +17,7 @@ const eresourcesToCreate = [
   { name: 'Package of Bananas', class: 'org.olf.kb.Pkg' }
 ];
 
+
 describe.only('PO Lines', () => {
   setupApplication();
   const basketInteractor = new BasketInteractor();
@@ -25,6 +27,16 @@ describe.only('PO Lines', () => {
   const eresourceInteractor = new EresourceViewInteractor();
 
   let eresources = [];
+  const poLines = [];
+
+  const shouldRenderCorrectPOLineInfo = (agreementLineIndex, poLineIndex) => {
+    const poLine = getCurrentPOLine();
+    poLines.push(poLine);
+
+    expect(agreementForm.linesSection.lines(agreementLineIndex).poLines(poLineIndex).acquisitionMethod).to.equal(poLine.acquisitionMethod);
+    expect(agreementForm.linesSection.lines(agreementLineIndex).poLines(poLineIndex).poLineNumber).to.include(poLine.poLineNumber);
+    expect(agreementForm.linesSection.lines(agreementLineIndex).poLines(poLineIndex).title).to.equal(poLine.title);
+  };
 
   beforeEach(async function () {
     eresources = await eresourcesToCreate.map(eresource => this.server.create('eresource', eresource));
@@ -62,87 +74,66 @@ describe.only('PO Lines', () => {
       });
 
       describe('add PO line to first agreement line', () => {
-        beforeEach(async function() {
+        beforeEach(async function () {
+          await agreementForm.linesSection.lines(0).clickAddPOLine();
+        });
 
+        it('should have empty PO Line card', () => {
+          expect(agreementForm.linesSection.lines(0).poLines(0).isSelected).to.be.false;
+        });
+
+        describe('link PO line to PO line card', () => {
+          beforeEach(async function () {
+            await agreementForm.linesSection.lines(0).poLines(0).clickSelectPOLine();
+          });
+
+          it('should render correct PO line info for first PO line', () => {
+            shouldRenderCorrectPOLineInfo(0, 0);
+          });
+
+          describe('add and link second PO line to first agreement line', () => {
+            beforeEach(async function () {
+              await agreementForm.linesSection.lines(0).clickAddPOLine();
+              await agreementForm.linesSection.lines(0).poLines(1).clickSelectPOLine();
+            });
+
+            it('should render correct PO line info for second PO line', () => {
+              shouldRenderCorrectPOLineInfo(0, 1);
+            });
+
+            describe('add and link PO line to second agreement line', () => {
+              beforeEach(async function () {
+                await agreementForm.linesSection.lines(1).clickAddPOLine();
+                await agreementForm.linesSection.lines(1).poLines(0).clickSelectPOLine();
+              });
+
+              it('should render correct PO line info for third PO line', () => {
+                shouldRenderCorrectPOLineInfo(1, 0);
+              });
+
+              describe('save agreement', () => {
+                beforeEach(async function () {
+                  await agreementForm.fillName(faker.company.companyName());
+                  await agreementForm.fillStartDate('2019-01-01');
+                  await agreementForm.selectStatus('Draft');
+                  await agreementForm.createAgreement();
+
+                  await agreementView.whenLoaded();
+                  await agreementView.expandAll();
+                });
+
+                it('should have two agreement lines', () => {
+                  expect(agreementView.linesSection.linesCount()).to.equal(2);
+                });
+
+                it('should have three PO lines', () => {
+                  expect(agreementView.linesSection.poLinesCount).to.equal(3);
+                })
+              });
+            });
+          });
         });
       });
     });
-
-    // describe('visiting the eresource pane', () => {
-    //   it('should render expected package', () => {
-    //     expect(eresourceView.headline).to.equal(PKG.name);
-    //   });
-
-    //   it('should render the expected current eresource', () => {
-    //     expect(eresourceView.packageContent.eresourceName).to.equal(currentResource.pti.titleInstance.name);
-    //   });
-
-    //   describe('clicking the future eresource tab', () => {
-    //     beforeEach(async function () {
-    //       await eresourceView.packageContent.clickFuture();
-    //     });
-
-    //     it('should render the expected future resource', () => {
-    //       expect(eresourceView.packageContent.eresourceName).to.equal(futureResource.pti.titleInstance.name);
-    //     });
-    //   });
-
-    //   describe('clicking the dropped eresource tab', () => {
-    //     beforeEach(async function () {
-    //       await eresourceView.packageContent.clickDropped();
-    //     });
-
-    //     it('should render the expected dropped resource', () => {
-    //       expect(eresourceView.packageContent.eresourceName).to.equal(droppedResource.pti.titleInstance.name);
-    //     });
-    //   });
-
-    //   describe('Add eresource to basket and create agreement', () => {
-    //     beforeEach(async function () {
-    //       await basket.addToBasketButtion();
-    //       await basket.clickOpenBasket();
-    //       await basket.clickCreateNewAgreement();
-    //       await agreementForm.fillName('testAgreement');
-    //       await agreementForm.selectStatus('Draft');
-    //       await agreementForm.fillStartDate('2020-04-01');
-    //       await agreementForm.createAgreement();
-    //       await agreementView.whenLoaded();
-    //     });
-
-    //     describe('open agreement view pane', () => {
-    //       describe('clicking the lines accordion', () => {
-    //         beforeEach(async function () {
-    //           await agreementView.lines.clickLinesAccordion();
-    //         });
-
-    //         it('should render the expected current eresource', () => {
-    //           expect(agreementView.lines.coveredEresourcesList.eresourceName).to.equal(currentResource.pti.titleInstance.name);
-    //         });
-    //       });
-
-    //       describe('clicking future eresource', () => {
-    //         beforeEach(async function () {
-    //           await agreementView.lines.clickLinesAccordion();
-    //           await agreementView.lines.coveredEresourcesList.clickFuture();
-    //         });
-
-    //         it('should render the expected future eresource', () => {
-    //           expect(agreementView.lines.coveredEresourcesList.eresourceName).to.equal(futureResource.pti.titleInstance.name);
-    //         });
-    //       });
-
-    //       describe('clicking dropped eresource', () => {
-    //         beforeEach(async function () {
-    //           await agreementView.lines.clickLinesAccordion();
-    //           await agreementView.lines.coveredEresourcesList.clickDropped();
-    //         });
-
-    //         it('should render the expected dropped eresource', () => {
-    //           expect(agreementView.lines.coveredEresourcesList.eresourceName).to.equal(droppedResource.pti.titleInstance.name);
-    //         });
-    //       });
-    //     });
-    //   });
-    // });
   });
 });
