@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import { AppIcon, Pluggable } from '@folio/stripes/core';
@@ -24,6 +25,12 @@ export default class POLineField extends React.Component {
     poLine: {},
   }
 
+  constructor(props) {
+    super(props);
+
+    this.findPOLineButtonRef = React.createRef();
+  }
+
   state = {
     poLine: {
       poLineNumber: '?'
@@ -38,6 +45,12 @@ export default class POLineField extends React.Component {
     return null;
   }
 
+  componentDidMount() {
+    if (!this.props.input.value && this.findPOLineButtonRef.current) {
+      this.findPOLineButtonRef.current.focus();
+    }
+  }
+
   handlePOLineSelected = ([poLine]) => {
     this.props.input.onChange(poLine.id);
     this.setState({ poLine });
@@ -50,16 +63,22 @@ export default class POLineField extends React.Component {
 
   renderLinkPOLineButton = () => (
     <Pluggable
-      aria-haspopup="true"
-      buttonProps={{ marginBottom0: true }}
+      addLines={this.handlePOLineSelected}
       dataKey="poline"
       disableRecordCreation
-      id={`poline-${this.props.index}-search-button`}
       isSingleSelect
-      marginBottom0
-      searchLabel={<FormattedMessage id="ui-agreements.poLines.addPOLine" />}
-      searchButtonStyle="primary"
-      addLines={this.handlePOLineSelected}
+      renderTrigger={(props) => (
+        <Button
+          aria-haspopup="true"
+          buttonRef={this.findPOLineButtonRef}
+          buttonStyle="primary"
+          id={`poline-${this.props.index}-search-button`}
+          marginBottom0
+          onClick={props.onClick}
+        >
+          <FormattedMessage id="ui-agreements.poLines.linkPOLine" />
+        </Button>
+      )}
       type="find-po-line"
     >
       <FormattedMessage id="ui-agreements.poLines.noPOLinePlugin" />
@@ -108,11 +127,11 @@ export default class POLineField extends React.Component {
     <div>
       <Layout className="textCentered">
         <strong>
-          <FormattedMessage id="ui-agreements.poLines.noPOLineAdded" />
+          <FormattedMessage id="ui-agreements.poLines.noPOLineLinked" />
         </strong>
       </Layout>
       <Layout className="textCentered">
-        <FormattedMessage id="ui-agreements.poLines.addPOLineToStart" />
+        <FormattedMessage id="ui-agreements.poLines.linkPOLineToStart" />
       </Layout>
     </div>
   );

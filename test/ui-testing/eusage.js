@@ -10,8 +10,8 @@ const itShouldLinkUDP = (nightmare, index) => {
     nightmare
       .wait('#add-udp-btn')
       .click('#add-udp-btn')
-      .wait('#clickable-plugin-find-erm-usage-data-provider')
-      .click('#clickable-plugin-find-erm-usage-data-provider')
+      .wait(`#udp-${index}-search-button`)
+      .click(`#udp-${index}-search-button`)
       .waitUntilNetworkIdle(2000)
       .wait('#clickable-filter-harvesting-status-active')
       .evaluate(() => document.querySelector('#clickable-filter-harvesting-status-active').checked)
@@ -28,7 +28,7 @@ const itShouldLinkUDP = (nightmare, index) => {
 
             nightmare
               .click(`#list-erm-usage [aria-rowindex="${index + 2}"] a`)
-              .wait(`#clickable-unlink-udp-${index}`)
+              .waitUntilNetworkIdle(2000)
               .insert(`#udp-note-${index}`, `Note for UDP ${udpName} at index ${index}`)
               .evaluate((_index, _udpName) => {
                 const name = document.querySelector(`#edit-udp-card-${_index} [data-test-udp-card-name]`).innerText.trim();
@@ -78,7 +78,7 @@ module.exports.test = (uiTestCtx) => {
 
     this.timeout(Number(config.test_timeout));
 
-    describe('create agreement > link UDPs > unlink UDP > link other UDP', () => {
+    describe('create agreement > link UDPs > replace with other UDP', () => {
       before((done) => {
         helpers.login(nightmare, config, done);
       });
@@ -134,10 +134,8 @@ module.exports.test = (uiTestCtx) => {
 
       it('should change linked UDP to another', done => {
         nightmare
-          .wait('#clickable-unlink-udp-0')
-          .click('#clickable-unlink-udp-0')
-          .wait('#clickable-plugin-find-erm-usage-data-provider')
-          .click('#clickable-plugin-find-erm-usage-data-provider')
+          .wait('#udp-0-search-button')
+          .click('#udp-0-search-button')
           .waitUntilNetworkIdle(2000)
           .wait('#clickable-filter-harvesting-status-active')
           .evaluate(() => document.querySelector('#clickable-filter-harvesting-status-active').checked)
@@ -154,7 +152,7 @@ module.exports.test = (uiTestCtx) => {
 
                 nightmare
                   .click('#list-erm-usage [aria-rowindex="5"] a')
-                  .wait('#clickable-unlink-udp-0')
+                  .waitUntilNetworkIdle(2000)
                   .insert('#udp-note-0', `Note for UDP ${udpName} at index 0`)
                   .evaluate(_udpName => {
                     const name = document.querySelector('#edit-udp-card-0 [data-test-udp-card-name]').innerText.trim();

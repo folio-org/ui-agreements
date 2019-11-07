@@ -29,6 +29,7 @@ export default class FormOrganizations extends React.Component {
           name="orgs"
           component={OrganizationsFieldArray}
           addOrganizationBtnLabel={addOrganizationBtnLabel}
+          isEmptyMessage={<FormattedMessage id="ui-agreements.organizations.agreementHasNone" />}
           roles={data.orgRoleValues}
           uniqueRole="vendor"
         />

@@ -65,7 +65,7 @@ module.exports.test = (uiTestCtx) => {
           nightmare
             .click('#add-org-btn')
             .evaluate((r) => {
-              if (!document.querySelector(`#orgs-nameOrg-${r}-search-button`)) {
+              if (!document.querySelector(`#orgs-link-${r}-search-button`)) {
                 throw Error('Expected organization picker button to exist.');
               }
 
@@ -79,12 +79,12 @@ module.exports.test = (uiTestCtx) => {
 
         it('should select org', done => {
           nightmare
-            .click(`#orgs-nameOrg-${row}-search-button`)
+            .click(`#orgs-link-${row}-search-button`)
             .wait(`#list-plugin-find-organization [aria-rowindex="${row + 3}"] > a`)
             .click(`#list-plugin-find-organization [aria-rowindex="${row + 3}"] > a`)
             .waitUntilNetworkIdle(2000)
             .evaluate((r, _orgs) => {
-              const orgElement = document.querySelector(`#orgs-nameOrg-${r}`);
+              const orgElement = document.querySelector(`#orgs-name-${r}`);
               const name = orgElement.textContent;
               if (!name) {
                 throw Error('Org name is not displayed');
@@ -157,13 +157,13 @@ module.exports.test = (uiTestCtx) => {
         it(`should find correctly loaded values for org ${i}`, done => {
           nightmare
             .evaluate(o => {
-              const orgElements = [...document.querySelectorAll('[id^=orgs-nameOrg-]')];
+              const orgElements = [...document.querySelectorAll('[id^=orgs-name-]')];
               const orgElement = orgElements.find(e => e.textContent === o.name);
               if (!orgElement) {
                 throw Error(`Failed to find org name picker with loaded org of ${o.name}`);
               }
 
-              const roleElementId = orgElement.id.replace('nameOrg', 'role');
+              const roleElementId = orgElement.id.replace('name', 'role');
               const roleElement = document.getElementById(roleElementId);
               const roleValue = roleElement.selectedOptions[0].textContent;
               if (roleValue !== o.role) {
@@ -176,10 +176,10 @@ module.exports.test = (uiTestCtx) => {
       });
 
       if (orgToEdit) {
-        it('should edit Agreement', done => {
+        it('should edit agreement', done => {
           nightmare
             .evaluate(o => {
-              const nameElements = [...document.querySelectorAll('[id^=orgs-nameOrg-]')];
+              const nameElements = [...document.querySelectorAll('[id^=orgs-name-]')];
               const index = nameElements.findIndex(e => e.textContent === o.name);
               if (index === -1) {
                 throw Error(`Failed to find org value of ${o.name}`);
@@ -189,10 +189,8 @@ module.exports.test = (uiTestCtx) => {
             }, orgToEdit)
             .then(row => {
               return nightmare
-                .wait(`#orgs-unlink-${row}`)
-                .click(`#orgs-unlink-${row}`)
-                .wait(`#orgs-nameOrg-${row}-search-button`)
-                .click(`#orgs-nameOrg-${row}-search-button`)
+                .wait(`#orgs-link-${row}-search-button`)
+                .click(`#orgs-link-${row}-search-button`)
                 .wait('#list-plugin-find-organization [aria-rowindex="12"] > a')
                 .click('#list-plugin-find-organization [aria-rowindex="12"] > a')
                 .waitUntilNetworkIdle(2000)
@@ -200,7 +198,7 @@ module.exports.test = (uiTestCtx) => {
                 .click(`#orgs-role-${row}`)
                 .type(`#orgs-role-${row}`, orgToEdit.editedRole)
                 .evaluate((r, _orgs) => {
-                  const orgElement = document.querySelector(`#orgs-nameOrg-${r}`);
+                  const orgElement = document.querySelector(`#orgs-name-${r}`);
                   const name = orgElement.textContent;
                   if (!name) {
                     throw Error('Org name field has no value!');
@@ -220,7 +218,7 @@ module.exports.test = (uiTestCtx) => {
         it('should delete org', done => {
           nightmare
             .evaluate(o => {
-              const nameElements = [...document.querySelectorAll('[id^=orgs-nameOrg-]')];
+              const nameElements = [...document.querySelectorAll('[id^=orgs-name-]')];
               const index = nameElements.findIndex(e => e.textContent === o.name);
               if (index === -1) {
                 throw Error(`Failed to find org with name ${o.name}`);

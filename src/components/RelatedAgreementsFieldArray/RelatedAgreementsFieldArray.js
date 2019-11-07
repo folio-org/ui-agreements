@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
-import { Button, Layout, Select, TextArea } from '@folio/stripes/components';
+import { Button, Layout, MessageBanner, Select, TextArea } from '@folio/stripes/components';
 import {
   EditCard,
   composeValidators,
@@ -16,11 +17,11 @@ import { agreementRelationshipTypes } from '../../constants';
 class RelatedAgreementsFieldArray extends React.Component {
   static propTypes = {
     currentAgreementId: PropTypes.string,
+    currentAgreementName: PropTypes.string,
     items: PropTypes.arrayOf(PropTypes.object),
     name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
     onDeleteField: PropTypes.func.isRequired,
-    onMarkForDeletion: PropTypes.func.isRequired,
     onReplaceField: PropTypes.func.isRequired,
   };
 
@@ -39,15 +40,6 @@ class RelatedAgreementsFieldArray extends React.Component {
     this.props.onReplaceField(index, { agreement });
   }
 
-  handleAgreementUnselected = (index, relatedAgreement) => {
-    /* handleAgreementUnselected should mark the Agreement to be deleted once we update the form.
-    onMarkForDeletion does that job. It pushes the {id: id, _delete: true) into the fields array
-    and on update would actually delete the field. onReplaceField takes care
-    of replacing the Related Agreement UI with the default Add Agreement UI */
-    this.props.onMarkForDeletion(relatedAgreement, ['type']);
-    this.props.onReplaceField(index, {});
-  }
-
   validateSelfLinking = (value) => {
     if (value && value.id === this.props.currentAgreementId) {
       return <FormattedMessage id="ui-agreements.errors.cannotLinkAgreementToItself" />;
@@ -62,6 +54,23 @@ class RelatedAgreementsFieldArray extends React.Component {
     </Layout>
   );
 
+  renderRelationshipSummary = (relatedAgreement) => {
+    const { agreement = {}, type } = relatedAgreement;
+    if (!agreement.id || !type) return null;
+
+    const source = agreement.name;
+    const relationship = this.relationshipTypes.find(t => t.value === type).label;
+    const target = this.props.currentAgreementName;
+
+    const translationKey = `ui-agreements.relatedAgreements.${target ? 'relationshipSummary' : 'relationshipSummaryForNewAgreement'}`;
+
+    return (
+      <MessageBanner>
+        <FormattedMessage id={translationKey} values={{ source, relationship, target }} />
+      </MessageBanner>
+    );
+  }
+
   renderRelatedAgreements = (items) => {
     return items.map((relatedAgreement, index) => (
       <EditCard
@@ -73,7 +82,7 @@ class RelatedAgreementsFieldArray extends React.Component {
         header={<FormattedMessage id="ui-agreements.relatedAgreements.relatedAgreementIndex" values={{ index: index + 1 }} />}
         id={`edit-ra-card-${index}`}
         key={index}
-        onDelete={() => this.props.onDeleteField(index, relatedAgreement, ['type'])}
+        onDelete={() => this.props.onDeleteField(index, relatedAgreement)}
       >
         <Field
           component={RelatedAgreementField}
@@ -81,7 +90,6 @@ class RelatedAgreementsFieldArray extends React.Component {
           index={index}
           name={`${this.props.name}[${index}].agreement`}
           onAgreementSelected={selectedAgreement => this.handleAgreementSelected(index, selectedAgreement)}
-          onAgreementUnselected={() => this.handleAgreementUnselected(index, relatedAgreement)}
           agreement={relatedAgreement.agreement}
           validate={composeValidators(
             requiredValidator,
@@ -91,12 +99,14 @@ class RelatedAgreementsFieldArray extends React.Component {
         <Field
           component={Select}
           dataOptions={this.relationshipTypes}
+          disabled={!get(relatedAgreement, 'agreement.id')}
           id={`ra-type-${index}`}
           label={<FormattedMessage id="ui-agreements.relatedAgreements.relationshipToThisAgreement" />}
           name={`${this.props.name}[${index}].type`}
           required
           validate={requiredValidator}
         />
+        { this.renderRelationshipSummary(relatedAgreement) }
         <Field
           component={TextArea}
           id={`ra-note-${index}`}

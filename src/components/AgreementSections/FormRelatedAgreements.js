@@ -13,6 +13,7 @@ export default class FormRelatedAgreements extends React.Component {
     open: PropTypes.bool,
     values: PropTypes.shape({
       id: PropTypes.string,
+      name: PropTypes.string,
     }),
   };
 
@@ -30,6 +31,7 @@ export default class FormRelatedAgreements extends React.Component {
           name="relatedAgreements"
           component={RelatedAgreementsFieldArray}
           currentAgreementId={values.id}
+          currentAgreementName={values.name}
         />
       </Accordion>
     );
