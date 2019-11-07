@@ -8,9 +8,7 @@ import DuplicateAgreementModalInteractor from '../interactors/duplicate-agreemen
 
 chai.use(spies);
 const { expect, spy } = chai;
-
 const interactor = new DuplicateAgreementModalInteractor();
-
 
 const checkBoxes = {
   'selectAll': 0,

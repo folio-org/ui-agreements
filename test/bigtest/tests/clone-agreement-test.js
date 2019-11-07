@@ -6,9 +6,11 @@ import setupApplication from '../helpers/setup-application';
 import AgreementFormInteractor from '../interactors/agreement-form';
 import AgreementViewInteractor from '../interactors/agreement-view';
 
+const number = Math.round(Math.random() * 100000);
+
 const agreementData = {
   id: '1234',
-  name: 'cloneablee agreement',
+  name: `agreement clone #${number}`,
   agreementStatus: { value: 'active' },
   periods: [{
     startDate: '2019-11-13'
@@ -25,7 +27,7 @@ const internalContactData = {
   role: { label: 'Agreement owner', value: 'agreement_owner' },
 };
 
-describe.only('Clone Agreement test', () => {
+describe('Clone Agreement test', () => {
   setupApplication();
   const agreementView = new AgreementViewInteractor();
   const agreementEdit = new AgreementFormInteractor();
