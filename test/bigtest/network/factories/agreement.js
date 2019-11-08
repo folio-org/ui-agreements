@@ -10,4 +10,15 @@ export default Factory.extend({
   tags: () => [],
   supplementaryDocs: () => [],
 
+  afterCreate(agreement, server) {
+    const { items = [] } = agreement;
+    items.forEach(agreementLine => {
+      server.create('agreement-line', {
+        ...agreementLine,
+        owner: {
+          id: agreement.id,
+        },
+      });
+    });
+  }
 });

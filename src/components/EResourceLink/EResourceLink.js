@@ -45,7 +45,7 @@ class EResourceLink extends React.Component {
 
     const name = this.getName(eresource);
     const path = this.getPath(eresource);
-    if (!path) return name;
+    if (!path) return name || '-';
 
     return (
       <div data-test-eresource-name>
