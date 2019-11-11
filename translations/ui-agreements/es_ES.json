@@ -126,7 +126,6 @@
     "agreementLines.gross": "YTD Gross",
     "agreementLines.net": "YTD Net",
     "agreementLines.noPoLines": "Agreement has no agreement lines.",
-    "agreementLines.poline": "PO Line",
     "agreementLines.tax": "YTD Tax",
     "agreementLines.addLine": "Añadir línea de acuerdo",
     "agreementLines.lineTitle": "Línea de acuerdo # {number}",
@@ -287,5 +286,11 @@
     "usageData.linkUDP": "Proveedor de datos de uso de enlace",
     "usageData.linkUDPToStart": "Enlace un proveedor de datos de uso para comenzar",
     "usageData.noUDPLinked": "Ningún proveedor de datos de uso vinculado",
-    "usageData.replaceUDP": "Reemplazar proveedor de datos de uso"
+    "usageData.replaceUDP": "Reemplazar proveedor de datos de uso",
+    "agreementLines.polines": "PO Line",
+    "poLines.addPOLine": "Add PO line",
+    "polines.lineHasNone": "Agreement line has no PO lines",
+    "poLines.poLineIndex": "PO line {index}",
+    "poLines.remove": "Remove PO line",
+    "poLines.replacePOLine": "Replace PO line"
 }
