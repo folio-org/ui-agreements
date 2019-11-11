@@ -38,38 +38,22 @@ export default class DuplicateAgreementModal extends React.Component {
   updateSelection = (e) => {
     const name = e.target.name;
     const isChecked = e.target.checked;
-    if (isChecked) {
-      this.setState(prevState => (
-        {
-          selected: { ...prevState.selected, [name]: isChecked },
-        }));
-    } else {
-      this.setState(prevState => (
-        {
-          selected: { ...prevState.selected, [name]: isChecked },
-          allSelected: false
-        }));
-    }
+    this.setState(prevState => (
+      {
+        selected: { ...prevState.selected, [name]: isChecked },
+        allSelected: isChecked ? prevState.allSelected : false,
+      }));
   };
 
   toggleSelectAll = (e) => {
-    if (e.target.checked) {
-      const selectAllObject = mapValues(this.cloneableProperties, () => true);
+    const selectAllObject = mapValues(this.cloneableProperties, () => true);
+    const isChecked = e.target.checked;
 
-      this.setState(() => {
-        return {
-          selected: selectAllObject,
-          allSelected: true,
-        };
-      });
-    } else {
-      this.setState(() => {
-        return {
-          selected: [],
-          allSelected: false
-        };
-      });
-    }
+    this.setState(() => (
+      {
+        selected: isChecked ? selectAllObject : [],
+        allSelected: isChecked === true,
+      }));
   }
 
   render() {
@@ -110,16 +94,16 @@ export default class DuplicateAgreementModal extends React.Component {
           onChange={this.toggleSelectAll}
           checked={this.state.allSelected}
         />
-        {Object.entries(this.cloneableProperties).map(([key, prop], index) => {
+        {Object.entries(this.cloneableProperties).map(([prop, value], index) => {
           return (
             <Checkbox
               key={index}
-              label={prop}
-              value={key}
-              name={key}
+              label={value}
+              value={prop}
+              name={prop}
               onChange={this.updateSelection}
               checked={this.state.allSelected ||
-                this.state.selected[key]
+                this.state.selected[prop]
               }
             />
           );
