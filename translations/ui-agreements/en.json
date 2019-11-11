@@ -132,6 +132,15 @@
   "coverage.volumeShort": "Vol:",
   "coverage.issueShort": "Iss:",
 
+  "duplicateAgreementModal.agreementInfo": "Agreement information",
+  "duplicateAgreementModal.internalContacts": "Internal contacts",
+  "duplicateAgreementModal.agreementLines": "Agreement lines",
+  "duplicateAgreementModal.linkedLicenses": "Linked licenses",
+  "duplicateAgreementModal.externalLicenses": "External licenses",
+  "duplicateAgreementModal.organizations": "Organizations",
+  "duplicateAgreementModal.supplementaryInformation": "Supplementary information",
+  "duplicateAgreementModal.usageData": "Usage data",
+
   "eresources.name": "Name",
   "eresources.type": "Type",
   "eresources.titles": "Titles",

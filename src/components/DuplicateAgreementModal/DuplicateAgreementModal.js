@@ -19,14 +19,14 @@ export default class DuplicateAgreementModal extends React.Component {
     super();
 
     this.cloneableProperties = {
-      'agreementInfo': 'Agreement information',
-      'internalContacts': 'Internal contacts',
-      'agreementLines': 'Agreement lines',
-      'linkedLicenses': 'Linked licenses',
-      'externalLicenses': 'External licenses',
-      'organizations': 'Organizations',
-      'supplementaryInformation': 'Supplementary information',
-      'usageData': 'Usage data'
+      'agreementInfo': <FormattedMessage id="ui-agreements.duplicateAgreementModal.agreementInfo" />,
+      'internalContacts': <FormattedMessage id="ui-agreements.duplicateAgreementModal.internalContacts" />,
+      'agreementLines': <FormattedMessage id="ui-agreements.duplicateAgreementModal.agreementLines" />,
+      'linkedLicenses': <FormattedMessage id="ui-agreements.duplicateAgreementModal.linkedLicenses" />,
+      'externalLicenses': <FormattedMessage id="ui-agreements.duplicateAgreementModal.externalLicenses" />,
+      'organizations': <FormattedMessage id="ui-agreements.duplicateAgreementModal.organizations" />,
+      'supplementaryInformation': <FormattedMessage id="ui-agreements.duplicateAgreementModal.supplementaryInformation" />,
+      'usageData': <FormattedMessage id="ui-agreements.duplicateAgreementModal.usageData" />
     };
 
     this.state = {
