@@ -131,7 +131,7 @@ export default class Agreement extends React.Component {
           <Button
             aria-label={ariaLabel}
             buttonStyle="dropdownItem"
-            id="clickable-dropdownduplicate-agreement"
+            id="clickable-dropdown-duplicate-agreement"
             onClick={() => {
               this.openDuplicateAgreementModal();
               onToggle();
