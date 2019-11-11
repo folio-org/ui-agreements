@@ -2,6 +2,7 @@ import {
   clickable,
   collection,
   interactor,
+  clickable,
   isPresent,
 } from '@bigtest/interactor';
 
@@ -23,6 +24,9 @@ export default @interactor class AgreementViewInteractor {
   headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
   headerDropdownMenu = new HeaderDropdownMenu();
   duplicateAgreementModal = new DuplicateAgreementModalInteractor();
+  expandAll = clickable('#clickable-expand-all');
+
+  linesSection = new AgreementLinesInteractor('#lines');
 
   whenLoaded() {
     return this.when(() => this.isViewAgreement).timeout(5000);

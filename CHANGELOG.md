@@ -18,6 +18,7 @@
 * Added ability to manage and view linked agreements. ERM-460
 * Updated linked Agreements, Contacts, Licenses, Organizations, PO Lines, and UDPs with new "link" and "replace" verbiage. ERM-451 452 453
 * Added ability to duplicate an agreement. ERM-459
+* Added ability to link multiple PO lines to a single agreement line. ERM-508
 
 ## 3.2.4 2019-09-10
 * Added support for interface `invoice` version `2.0`.

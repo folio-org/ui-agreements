@@ -17,7 +17,7 @@ import EResourceType from '../EResourceType';
 import { isExternal, isPackage } from '../utilities';
 
 import CustomCoverageFieldArray from './CustomCoverageFieldArray';
-import POLineField from './POLineField';
+import POLinesFieldArray from './POLinesFieldArray';
 
 export default class AgreementLineField extends React.Component {
   static propTypes = {
@@ -31,7 +31,7 @@ export default class AgreementLineField extends React.Component {
     }).isRequired,
     onDelete: PropTypes.func,
     onResourceSelected: PropTypes.func,
-    poLine: PropTypes.object,
+    poLines: PropTypes.arrayOf(PropTypes.object),
     resource: PropTypes.object,
   }
 
@@ -88,19 +88,19 @@ export default class AgreementLineField extends React.Component {
     return <CoverageStatement statements={coverage} />;
   }
 
-  renderPOLineField = () => {
+  renderPOLinesFieldArray = () => {
     const {
       index,
       input: { name },
-      poLine,
+      poLines,
     } = this.props;
 
     return (
-      <Field
-        component={POLineField}
-        index={index}
-        name={`${name}.poLineId`}
-        poLine={poLine}
+      <FieldArray
+        agreementLineIndex={index}
+        component={POLinesFieldArray}
+        name={`${name}.poLines`}
+        poLines={poLines}
       />
     );
   }
@@ -175,7 +175,7 @@ export default class AgreementLineField extends React.Component {
             />
           </Col>
         </Row>
-        {this.renderPOLineField()}
+        {this.renderPOLinesFieldArray()}
         {this.renderCustomCoverageFieldArray()}
       </div>
     );

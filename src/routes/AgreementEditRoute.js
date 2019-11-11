@@ -67,8 +67,11 @@ class AgreementEditRoute extends React.Component {
       path: 'orders/order-lines',
       params: (_q, _p, _r, _l, props) => {
         const query = get(props.resources, 'agreementLines.records', [])
-          .filter(line => line.poLineId)
-          .map(line => `id==${line.poLineId}`)
+          .filter(line => line.poLines && line.poLines.length)
+          .map(line => (line.poLines
+            .map(poLine => `id==${poLine.poLineId}`)
+            .join(' or ')
+          ))
           .join(' or ');
 
         return query ? { query } : null;
@@ -223,7 +226,7 @@ class AgreementEditRoute extends React.Component {
         return {
           id: line.id,
           coverage: line.customCoverage ? line.coverage : undefined,
-          poLineId: line.poLineId,
+          poLines: line.poLines,
           activeFrom: line.activeFrom,
           activeTo: line.activeTo
         };

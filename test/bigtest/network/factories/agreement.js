@@ -18,5 +18,17 @@ export default Factory.extend({
       });
       agreement.save();
     }
-  })
+  }),
+  
+  afterCreate(agreement, server) {
+    const { items = [] } = agreement;
+    items.forEach(agreementLine => {
+      server.create('agreement-line', {
+        ...agreementLine,
+        owner: {
+          id: agreement.id,
+        },
+      });
+    });
+  }
 });

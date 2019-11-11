@@ -78,6 +78,7 @@ export default class FormInfo extends React.Component {
               component={TextField}
               id="edit-agreement-name"
               label={<FormattedMessage id="ui-agreements.agreements.name" />}
+              maxLength={255}
               name="name"
               required
               validate={validators.required}

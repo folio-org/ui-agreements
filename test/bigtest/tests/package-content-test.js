@@ -14,8 +14,9 @@ const PKG = {
 };
 
 const currentResource = {
-  'pti': { titleInstance: { id: '1234', name: 'Accounts of chemical research' } },
-  'accessStart': () => faker.date.recent().toISOString(),
+  pti: { titleInstance: { id: '1234', name: 'Accounts of chemical research' } },
+  accessStart: () => faker.date.recent().toISOString(),
+  accessEnd: () => faker.date.future().toISOString()
 };
 
 const futureResource = {
@@ -41,83 +42,81 @@ describe('Package Content Filters', () => {
     eresource = this.server.create('eresource', { name: PKG.name, class: 'org.olf.kb.Pkg', pcis: [droppedResource, currentResource, futureResource] });
   });
 
-  describe('packagecontent tests', () => {
+  describe('visiting the eresource pane', () => {
     beforeEach(async function () {
       this.visit(`/erm/eresources/${eresource.id}`);
     });
 
-    describe('visiting the eresource pane', () => {
-      it('should render expected package', () => {
-        expect(eresourceView.headline).to.equal(PKG.name);
+    it('should render expected package', () => {
+      expect(eresourceView.headline).to.equal(PKG.name);
+    });
+
+    it('should render the expected current eresource', () => {
+      expect(eresourceView.packageContent.eresourceName(0)).to.equal(currentResource.pti.titleInstance.name);
+    });
+
+    describe('clicking the future eresource tab', () => {
+      beforeEach(async function () {
+        await eresourceView.packageContent.clickFuture();
       });
 
-      it('should render the expected current eresource', () => {
-        expect(eresourceView.packageContent.eresourceName).to.equal(currentResource.pti.titleInstance.name);
+      it('should render the expected future resource', () => {
+        expect(eresourceView.packageContent.eresourceName(0)).to.equal(futureResource.pti.titleInstance.name);
+      });
+    });
+
+    describe('clicking the dropped eresource tab', () => {
+      beforeEach(async function () {
+        await eresourceView.packageContent.clickDropped();
       });
 
-      describe('clicking the future eresource tab', () => {
-        beforeEach(async function () {
-          await eresourceView.packageContent.clickFuture();
-        });
+      it('should render the expected dropped resource', () => {
+        expect(eresourceView.packageContent.eresourceName(0)).to.equal(droppedResource.pti.titleInstance.name);
+      });
+    });
 
-        it('should render the expected future resource', () => {
-          expect(eresourceView.packageContent.eresourceName).to.equal(futureResource.pti.titleInstance.name);
-        });
+    describe('Add eresource to basket and create agreement', () => {
+      beforeEach(async function () {
+        await eresourceView.clickAddToBasket();
+        await basket.clickOpenBasket();
+        await basket.clickCreateNewAgreement();
+        await agreementForm.fillName('testAgreement');
+        await agreementForm.selectStatus('Draft');
+        await agreementForm.fillStartDate('2020-04-01');
+        await agreementForm.createAgreement();
+        await agreementView.whenLoaded();
       });
 
-      describe('clicking the dropped eresource tab', () => {
-        beforeEach(async function () {
-          await eresourceView.packageContent.clickDropped();
-        });
-
-        it('should render the expected dropped resource', () => {
-          expect(eresourceView.packageContent.eresourceName).to.equal(droppedResource.pti.titleInstance.name);
-        });
-      });
-
-      describe('Add eresource to basket and create agreement', () => {
-        beforeEach(async function () {
-          await basket.addToBasketButtion();
-          await basket.clickOpenBasket();
-          await basket.clickCreateNewAgreement();
-          await agreementForm.fillName('testAgreement');
-          await agreementForm.selectStatus('Draft');
-          await agreementForm.fillStartDate('2020-04-01');
-          await agreementForm.createAgreement();
-          await agreementView.whenLoaded();
-        });
-
-        describe('open agreement view pane', () => {
-          describe('clicking the lines accordion', () => {
-            beforeEach(async function () {
-              await agreementView.lines.clickLinesAccordion();
-            });
-
-            it('should render the expected current eresource', () => {
-              expect(agreementView.lines.coveredEresourcesList.eresourceName).to.equal(currentResource.pti.titleInstance.name);
-            });
+      describe('open agreement view pane', () => {
+        describe('clicking the lines accordion', () => {
+          beforeEach(async function () {
+            await agreementView.linesSection.clickLinesAccordion();
           });
 
-          describe('clicking future eresource', () => {
-            beforeEach(async function () {
-              await agreementView.lines.clickLinesAccordion();
-              await agreementView.lines.coveredEresourcesList.clickFuture();
-            });
+          it('should render the expected current eresource', () => {
+            expect(agreementView.linesSection.coveredEresourcesList.eresourceName(0)).to.equal(currentResource.pti.titleInstance.name);
+          });
+        });
 
-            it('should render the expected future eresource', () => {
-              expect(agreementView.lines.coveredEresourcesList.eresourceName).to.equal(futureResource.pti.titleInstance.name);
-            });
+        describe('clicking future eresource', () => {
+          beforeEach(async function () {
+            await agreementView.linesSection.clickLinesAccordion();
+            await agreementView.linesSection.coveredEresourcesList.clickFuture();
           });
 
-          describe('clicking dropped eresource', () => {
-            beforeEach(async function () {
-              await agreementView.lines.clickLinesAccordion();
-              await agreementView.lines.coveredEresourcesList.clickDropped();
-            });
+          it('should render the expected future eresource', () => {
+            expect(agreementView.linesSection.coveredEresourcesList.eresourceName(0)).to.equal(futureResource.pti.titleInstance.name);
+          });
+        });
 
-            it('should render the expected dropped eresource', () => {
-              expect(agreementView.lines.coveredEresourcesList.eresourceName).to.equal(droppedResource.pti.titleInstance.name);
-            });
+        describe('clicking dropped eresource', () => {
+          beforeEach(async function () {
+            await agreementView.linesSection.clickLinesAccordion();
+            await agreementView.linesSection.coveredEresourcesList.clickDropped();
+          });
+
+          it('should render the expected dropped eresource', () => {
+            expect(agreementView.linesSection.coveredEresourcesList.eresourceName(0)).to.equal(droppedResource.pti.titleInstance.name);
           });
         });
       });
