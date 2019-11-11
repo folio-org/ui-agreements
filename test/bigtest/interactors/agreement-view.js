@@ -1,8 +1,6 @@
 import {
   clickable,
-  collection,
   interactor,
-  clickable,
   isPresent,
 } from '@bigtest/interactor';
 

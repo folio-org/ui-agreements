@@ -27,7 +27,6 @@ export default @interactor class AgreementFormInteractor {
   clickCloseWithoutSave = clickable('[data-test-confirmation-modal-cancel-button]');
   clickSaveAndClose = clickable('#clickable-update-agreement');
 
-  isInternalContactPresent = isPresent('[data-test-internal-contact]');
   internalContacts = collection('[data-test-internal-contact]', InternalContactCardInteractor)
 
   whenLoaded() {

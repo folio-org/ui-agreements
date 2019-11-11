@@ -4,9 +4,9 @@ export default Factory.extend({
   user: () => faker.random.uuid(),
   personal: () => {
     return {
-      firstName: faker.random.words(),
+      firstName: faker.name.firstName(),
       middleName: faker.random.words(),
-      lastName: faker.random.words(),
+      lastName: faker.name.lastName(),
     };
   },
   role: () => {

@@ -27,7 +27,7 @@ const internalContactData = {
   role: { label: 'Agreement owner', value: 'agreement_owner' },
 };
 
-describe('Clone Agreement test', () => {
+describe.only('Clone Agreement test', () => {
   setupApplication();
   const agreementView = new AgreementViewInteractor();
   const agreementEdit = new AgreementFormInteractor();
@@ -67,7 +67,7 @@ describe('Clone Agreement test', () => {
       });
     });
 
-    describe('slect all properties to duplicate', () => {
+    describe('select all properties to duplicate', () => {
       beforeEach(async function () {
         await agreementView.headerDropdown.click();
         await agreementView.headerDropdownMenu.clickDuplicate();
@@ -81,7 +81,7 @@ describe('Clone Agreement test', () => {
       });
 
       it('should render an internalContact card', () => {
-        expect(agreementEdit.isInternalContactPresent).to.be.true;
+        expect(agreementEdit.internalContacts(0)).is.not.undefined;
       });
 
       it('should render the expected users name on the internalContact card', () => {

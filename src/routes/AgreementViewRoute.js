@@ -356,13 +356,13 @@ class AgreementViewRoute extends React.Component {
         }}
         handlers={{
           ...handlers,
-          onFilterEResources: this.handleFilterEResources,
-          onClose: this.handleClose,
           onClone: this.handleClone,
+          onClose: this.handleClose,
           onEdit: this.handleEdit,
           onExportEResourcesAsJSON: this.handleExportEResourcesAsJSON,
           onExportEResourcesAsKBART: this.handleExportEResourcesAsKBART,
           onFetchCredentials: this.handleFetchCredentials,
+          onFilterEResources: this.handleFilterEResources,
           onNeedMoreEResources: this.handleNeedMoreEResources,
           onNeedMoreLines: this.handleNeedMoreLines,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,

@@ -8,7 +8,6 @@
   "create": "Create",
   "notSet": "Not set",
   "saveAndClose": "Save & close",
-  "duplicate": "Duplicate",
   "duplicateAgreement": "Duplicate agreement",
   "dashboard": "Dashboard",
   "agreements": "Agreements",
@@ -26,6 +25,7 @@
 
   "note": "Note",
 
+  "agreement.duplicate": "Duplicate",
   "agreements.edit": "Edit",
   "agreements.showTags": "Show tags",
   "agreements.vendor": "Vendor",

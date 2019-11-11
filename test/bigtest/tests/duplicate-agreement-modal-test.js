@@ -2,9 +2,10 @@ import React from 'react';
 import { describe, beforeEach, it } from '@bigtest/mocha';
 import chai from 'chai';
 import spies from 'chai-spies';
-import { mountWithContext } from '../helpers';
+import { mountWithContext } from '@folio/stripes-components/tests/helpers';
 import DuplicateAgreementModal from '../../../src/components/DuplicateAgreementModal';
 import DuplicateAgreementModalInteractor from '../interactors/duplicate-agreement-modal';
+import translations from '../../../translations/ui-agreements/en';
 
 chai.use(spies);
 const { expect, spy } = chai;
@@ -40,7 +41,8 @@ describe('DuplicateAgreementModal', () => {
 
     beforeEach(async () => {
       await mountWithContext(
-        <DuplicateAgreementModal onClone={onClone} onClose={onClose} />
+        <DuplicateAgreementModal onClone={onClone} onClose={onClose} />,
+        [{ translations, prefix: 'ui-agreements' }]
       );
       await interactor.checkBoxList(checkBoxes.selectAll).click();
       await interactor.clickSaveAndClose();
@@ -63,7 +65,8 @@ describe('DuplicateAgreementModal', () => {
 
     beforeEach(async () => {
       await mountWithContext(
-        <DuplicateAgreementModal onClone={onClone} onClose={onClose} />
+        <DuplicateAgreementModal onClone={onClone} onClose={onClose} />,
+        [{ translations, prefix: 'ui-agreements' }]
       );
       await interactor.checkBoxList(checkBoxes.internalContacts).click();
       await interactor.checkBoxList(checkBoxes.supplementaryInformation).click();
@@ -87,7 +90,8 @@ describe('DuplicateAgreementModal', () => {
 
     beforeEach(async () => {
       await mountWithContext(
-        <DuplicateAgreementModal onClone={onClone} onClose={onClose} />
+        <DuplicateAgreementModal onClone={onClone} onClose={onClose} />,
+        [{ translations, prefix: 'ui-agreements' }]
       );
       await interactor.checkBoxList(checkBoxes.internalContacts).click();
       await interactor.checkBoxList(checkBoxes.supplementaryInformation).click();
@@ -107,7 +111,8 @@ describe('DuplicateAgreementModal', () => {
   describe('Close the modal by clicking the X button', () => {
     beforeEach(async () => {
       await mountWithContext(
-        <DuplicateAgreementModal onClone={onClone} onClose={onClose} />
+        <DuplicateAgreementModal onClone={onClone} onClose={onClose} />,
+        [{ translations, prefix: 'ui-agreements' }]
       );
       await interactor.clickClose();
     });
@@ -120,7 +125,8 @@ describe('DuplicateAgreementModal', () => {
   describe('Close the modal by clicking the cancel button', () => {
     beforeEach(async () => {
       await mountWithContext(
-        <DuplicateAgreementModal onClone={onClone} onClose={onClose} />
+        <DuplicateAgreementModal onClone={onClone} onClose={onClose} />,
+        [{ translations, prefix: 'ui-agreements' }]
       );
       await interactor.clickCancelButton();
     });

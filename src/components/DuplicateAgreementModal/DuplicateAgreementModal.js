@@ -30,7 +30,6 @@ export default class DuplicateAgreementModal extends React.Component {
     };
 
     this.state = {
-      allSelected: false,
       selected: {},
     };
   }
@@ -40,8 +39,7 @@ export default class DuplicateAgreementModal extends React.Component {
     const isChecked = e.target.checked;
     this.setState(prevState => (
       {
-        selected: { ...prevState.selected, [name]: isChecked },
-        allSelected: isChecked ? prevState.allSelected : false,
+        selected: { ...prevState.selected, [name]: isChecked }
       }));
   };
 
@@ -51,13 +49,13 @@ export default class DuplicateAgreementModal extends React.Component {
 
     this.setState(() => (
       {
-        selected: isChecked ? selectAllObject : [],
-        allSelected: isChecked === true,
+        selected: isChecked ? selectAllObject : []
       }));
   }
 
   render() {
     const { selected } = this.state;
+    const cloneablePropertiesLength = Object.keys(this.cloneableProperties).length;
     const footer = (
       <ModalFooter>
         <Button
@@ -80,31 +78,29 @@ export default class DuplicateAgreementModal extends React.Component {
 
     return (
       <Modal
-        open
         dismissible
         footer={footer}
         id="duplicate-agreement"
         label={<FormattedMessage id="ui-agreements.duplicateAgreement" />}
         onClose={this.props.onClose}
+        open
         size="small"
       >
         <Checkbox
+          checked={Object.keys(selected).length === cloneablePropertiesLength && Object.values(selected).includes(false) !== true}
           label={<FormattedMessage id="ui-agreements.selectAll" />}
-          value="selectAll"
           onChange={this.toggleSelectAll}
-          checked={this.state.allSelected}
+          value="selectAll"
         />
         {Object.entries(this.cloneableProperties).map(([prop, value], index) => {
           return (
             <Checkbox
+              checked={this.state.selected[prop]}
               key={index}
               label={value}
-              value={prop}
               name={prop}
               onChange={this.updateSelection}
-              checked={this.state.allSelected ||
-                this.state.selected[prop]
-              }
+              value={prop}
             />
           );
         })

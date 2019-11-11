@@ -10,7 +10,7 @@ import {
 }
 
 export default @interactor class DuplicateAgreementModalInteractor {
-  isDuplcateModalPresent = isPresent('#duplicate-agreement');
+  isDuplicateModalPresent = isPresent('#duplicate-agreement');
   checkBoxList = collection('input[type="checkbox"]', CheckboxInteractor);
   clickSaveAndClose = clickable('#duplicate-agreement-modal-save-button');
   clickClose = clickable('#duplicate-agreement-close-button');

@@ -108,7 +108,7 @@ export default class Agreement extends React.Component {
     this.setState({ sections });
   }
 
-  getActionMenu = (onToggle) => (
+  getActionMenu = ({ onToggle }) => (
     <Fragment>
       <IfPermission perm="ui-agreements.agreements.edit">
         <FormattedMessage id="ui-agreements.agreements.editAgreement">
@@ -125,25 +125,24 @@ export default class Agreement extends React.Component {
             </Button>
           )}
         </FormattedMessage>
+        <FormattedMessage id="ui-agreements.agreements.duplicate">
+          {ariaLabel => (
+            <Button
+              aria-label={ariaLabel}
+              buttonStyle="dropdownItem"
+              id="clickable-dropdownduplicate-agreement"
+              onClick={() => {
+                this.openDuplicateAgreementModal();
+                onToggle();
+              }}
+            >
+              <Icon icon="duplicate">
+                <FormattedMessage id="ui-agreements.duplicate" />
+              </Icon>
+            </Button>
+          )}
+        </FormattedMessage>
       </IfPermission>
-      <FormattedMessage id="ui-agreements.agreements.editAgreement">
-        {ariaLabel => (
-          <Button
-            aria-label={ariaLabel}
-            buttonStyle="dropdownItem"
-            id="clickable-dropdown-duplicate-agreement"
-            onClick={() => {
-              this.openDuplicateAgreementModal();
-              onToggle();
-            }}
-          >
-            <Icon icon="duplicate">
-              <FormattedMessage id="ui-agreements.duplicate" />
-            </Icon>
-          </Button>
-        )}
-      </FormattedMessage>
-
     </Fragment>
   )
 
@@ -201,7 +200,7 @@ export default class Agreement extends React.Component {
     return (
       <React.Fragment>
         <Pane
-          actionMenu={({ onToggle }) => this.getActionMenu(onToggle)}
+          actionMenu={this.getActionMenu}
           appIcon={<AppIcon app="agreements" />}
           defaultWidth="60%"
           dismissible
