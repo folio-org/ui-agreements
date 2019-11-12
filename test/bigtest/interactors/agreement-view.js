@@ -12,8 +12,8 @@ import DuplicateAgreementModalInteractor from './duplicate-agreement-modal';
 }
 
 @interactor class HeaderDropdownMenu {
-  isDuplicateButtonPresent = isPresent('#clickable-dropdownduplicate-agreement')
-  clickDuplicate = clickable('#clickable-dropdownduplicate-agreement');
+  isDuplicateButtonPresent = isPresent('#clickable-dropdown-duplicate-agreement')
+  clickDuplicate = clickable('#clickable-dropdown-duplicate-agreement');
 }
 
 export default @interactor class AgreementViewInteractor {
