@@ -126,7 +126,6 @@
     "agreementLines.gross": "الإجمالي السنوي",
     "agreementLines.net": "الصافي السنوي",
     "agreementLines.noPoLines": "لا توجد أي بنود اتفاق بالاتفاقية",
-    "agreementLines.poline": "سطر أمر الشراء",
     "agreementLines.tax": "الضريبة السنوية",
     "agreementLines.addLine": "إضافة بند اتفاقية",
     "agreementLines.lineTitle": "بند الاتفاقية # {number}",
@@ -277,9 +276,9 @@
     "license.linkLicenseToStart": "قم بربط الرخصة للبدء",
     "license.noLicenseLinked": "لم يتم ربط رخصة",
     "license.replaceLicense": "استبدال الرخصة",
-    "poLines.linkPOLine": "ربط سطر خط الشراء",
-    "poLines.linkPOLineToStart": "قم بربط خط أمر الشراء للبدء",
-    "poLines.noPOLineLinked": "لم يتم ربط خط أمر شراء",
+    "poLines.linkPOLine": "ربط سطر أمر الشراء",
+    "poLines.linkPOLineToStart": "قم بربط سطر أمر الشراء للبدء",
+    "poLines.noPOLineLinked": "لم يتم ربط سطر أمر شراء",
     "relatedAgreements.linkAgreement": "ربط اتفاقية",
     "relatedAgreements.linkToStart": "قم بربط اتفاقية للبدء",
     "relatedAgreements.noneLinked": "لم يتم ربط الاتفاقية",
@@ -287,5 +286,11 @@
     "usageData.linkUDP": "ربط مزود بيانات الاستخدام",
     "usageData.linkUDPToStart": "قم بربط مزود بيانات الاستخدام للبدء",
     "usageData.noUDPLinked": "لم يتم ربط مزود بيانات الاستخدام",
-    "usageData.replaceUDP": "استبدال مزود بيانات الاستخدام"
+    "usageData.replaceUDP": "استبدال مزود بيانات الاستخدام",
+    "agreementLines.polines": "سطر أمر الشراء",
+    "poLines.addPOLine": "إضافة سطر أمر شراء",
+    "polines.lineHasNone": "لا يوجد للاتفاقية سطور أمر شراء",
+    "poLines.poLineIndex": "سطر أمر الشراء {index}",
+    "poLines.remove": "إزالة سطر أمر الشراء",
+    "poLines.replacePOLine": "استبدال سطر أمر الشراء"
 }

@@ -126,7 +126,6 @@
     "agreementLines.gross": "No acumulado do ano",
     "agreementLines.net": "Acumulado do ano liquido",
     "agreementLines.noPoLines": "Contrato não tem linhas de contrato.",
-    "agreementLines.poline": "Linha do pedido",
     "agreementLines.tax": "Acumulado no ano fiscal",
     "agreementLines.addLine": "Adicionar linha de contrato",
     "agreementLines.lineTitle": "Linha de contrato núm. {number}",
@@ -287,5 +286,11 @@
     "usageData.linkUDP": "Relacionar provedor de dados de uso",
     "usageData.linkUDPToStart": "Vincule um provedor de dados de uso para começar",
     "usageData.noUDPLinked": "Nenhum provedor de dados de uso vinculado",
-    "usageData.replaceUDP": "Substituir provedor de dados de uso"
+    "usageData.replaceUDP": "Substituir provedor de dados de uso",
+    "agreementLines.polines": "Linha de pedido",
+    "poLines.addPOLine": "Adicionar linha de pedido",
+    "polines.lineHasNone": "A linha do contrato não possui linhas de pedido",
+    "poLines.poLineIndex": "Linha de pedido {index}",
+    "poLines.remove": "Remover linha de pedido",
+    "poLines.replacePOLine": "Substituir linha de pedido"
 }
