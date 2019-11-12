@@ -85,7 +85,6 @@ describe('DuplicateAgreementModal', () => {
   describe('Check and uncheck supplementaryInformation checkbox', () => {
     const expectedPayLoad = {
       'internalContacts': true,
-      'supplementaryInformation': false,
     };
 
     beforeEach(async () => {

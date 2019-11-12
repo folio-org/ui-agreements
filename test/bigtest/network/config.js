@@ -76,7 +76,7 @@ export default function config() {
   });
 
   this.get('/erm/sas/:id', (schema, request) => {
-    return schema.agreements.find(request.params.id).attrs;
+    return schema.agreements.find(request.params.id);
   });
 
   const getAgreementCoveredResources = (schema, request, shouldInclude) => {
@@ -225,7 +225,18 @@ export default function config() {
   this.get('note-links/domain/agreements/type/agreement/id/:id', () => { });
 
   this.post('erm/sas/:id/clone', (schema, request) => {
-    return schema.agreements.find(request.params.id).attrs;
+    const agreement = schema.agreements.find(request.params.id);
+
+    if (request.requestBody.internalContacts === false) {
+      return this.create('agreement', { name: agreement.name });
+    }
+
+    const agreementData = {
+      name: agreement.name,
+      internalContactData: agreement.internalContactData
+    };
+
+    return this.create('agreement', 'withContacts', agreementData);
   });
 
   this.get('/_/proxy/tenants/diku/modules', () => [{

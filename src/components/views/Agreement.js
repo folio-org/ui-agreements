@@ -111,37 +111,28 @@ export default class Agreement extends React.Component {
   getActionMenu = ({ onToggle }) => (
     <Fragment>
       <IfPermission perm="ui-agreements.agreements.edit">
-        <FormattedMessage id="ui-agreements.agreements.editAgreement">
-          {ariaLabel => (
-            <Button
-              aria-label={ariaLabel}
-              buttonStyle="dropdownItem"
-              id="clickable-dropdown-edit-agreement"
-              onClick={this.props.handlers.onEdit}
-            >
-              <Icon icon="edit">
-                <FormattedMessage id="ui-agreements.agreements.editAgreement" />
-              </Icon>
-            </Button>
-          )}
-        </FormattedMessage>
-        <FormattedMessage id="ui-agreements.agreements.duplicate">
-          {ariaLabel => (
-            <Button
-              aria-label={ariaLabel}
-              buttonStyle="dropdownItem"
-              id="clickable-dropdownduplicate-agreement"
-              onClick={() => {
-                this.openDuplicateAgreementModal();
-                onToggle();
-              }}
-            >
-              <Icon icon="duplicate">
-                <FormattedMessage id="ui-agreements.duplicate" />
-              </Icon>
-            </Button>
-          )}
-        </FormattedMessage>
+        <Button
+          buttonStyle="dropdownItem"
+          id="clickable-dropdown-edit-agreement"
+          onClick={this.props.handlers.onEdit}
+        >
+          <Icon icon="edit">
+            <FormattedMessage id="ui-agreements.agreements.editAgreement" />
+          </Icon>
+        </Button>
+        <Button
+          buttonStyle="dropdownItem"
+          id="clickable-dropdown-duplicate-agreement"
+          onClick={() => {
+            this.openDuplicateAgreementModal();
+            onToggle();
+          }}
+        >
+          <Icon icon="duplicate">
+            <FormattedMessage id="ui-agreements.agreements.duplicateAgreement" />
+          </Icon>
+        </Button>
+
       </IfPermission>
     </Fragment>
   )

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, mapValues } from 'lodash';
+import { isEmpty, mapValues, pickBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import {
   Button,
@@ -62,7 +62,7 @@ export default class DuplicateAgreementModal extends React.Component {
           buttonStyle="primary"
           disabled={isEmpty(selected) || Object.values(selected).every(item => item === false)}
           id="duplicate-agreement-modal-save-button"
-          onClick={() => this.props.onClone(selected)}
+          onClick={() => this.props.onClone(pickBy(selected))}
         >
           <FormattedMessage id="stripes-components.saveAndClose" />
         </Button>

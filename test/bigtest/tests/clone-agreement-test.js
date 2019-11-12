@@ -27,7 +27,7 @@ const internalContactData = {
   role: { label: 'Agreement owner', value: 'agreement_owner' },
 };
 
-describe.only('Clone Agreement test', () => {
+describe('Clone Agreement test', () => {
   setupApplication();
   const agreementView = new AgreementViewInteractor();
   const agreementEdit = new AgreementFormInteractor();
@@ -63,7 +63,7 @@ describe.only('Clone Agreement test', () => {
       });
 
       it('should not render an internalContact card', () => {
-        expect(agreementEdit.isInternalContactPresent).to.be.false;
+        expect(agreementEdit.internalContacts(0)).to.be.empty;
       });
     });
 

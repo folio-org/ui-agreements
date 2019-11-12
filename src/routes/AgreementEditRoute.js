@@ -182,7 +182,7 @@ class AgreementEditRoute extends React.Component {
       renewalPriority = {},
     } = initialValues;
 
-    if (initialValues.id !== state.initialValues.id) {
+    if ((initialValues.id !== state.initialValues.id) && (initialValues.id === props.match.params.id)) {
       updated = true;
 
       // Set the values of dropdown-controlled props as values rather than objects.
