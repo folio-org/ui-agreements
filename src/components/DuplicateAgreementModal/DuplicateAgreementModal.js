@@ -6,8 +6,9 @@ import {
   Button,
   Checkbox,
   Modal,
-  ModalFooter
 } from '@folio/stripes/components';
+
+import css from './DuplicateAgreementModal.css';
 
 export default class DuplicateAgreementModal extends React.Component {
   static propTypes = {
@@ -59,7 +60,14 @@ export default class DuplicateAgreementModal extends React.Component {
     const { selected } = this.state;
     const cloneablePropertiesLength = Object.keys(this.cloneableProperties).length;
     const footer = (
-      <ModalFooter>
+      <div className={css.modalFooter}>
+        <Button
+          buttonStyle="default"
+          id="duplicate-agreement-modal-cancel-button"
+          onClick={this.props.onClose}
+        >
+          <FormattedMessage id="stripes-components.cancel" />
+        </Button>
         <Button
           buttonStyle="primary"
           disabled={isEmpty(selected) || Object.values(selected).every(item => item === false)}
@@ -68,14 +76,7 @@ export default class DuplicateAgreementModal extends React.Component {
         >
           <FormattedMessage id="stripes-components.saveAndClose" />
         </Button>
-        <Button
-          buttonStyle="default"
-          id="duplicate-agreement-modal-cancel-button"
-          onClick={this.props.onClose}
-        >
-          <FormattedMessage id="stripes-components.cancel" />
-        </Button>
-      </ModalFooter>
+      </div>
     );
 
     return (
@@ -88,12 +89,17 @@ export default class DuplicateAgreementModal extends React.Component {
         open
         size="small"
       >
-        <Checkbox
-          checked={Object.keys(selected).length === cloneablePropertiesLength && Object.values(selected).includes(false) !== true}
-          label={<FormattedMessage id="ui-agreements.selectAll" />}
-          onChange={this.toggleSelectAll}
-          value="selectAll"
-        />
+        <div className={css.message}>
+          <FormattedMessage id="ui-agreements.duplicateAgreementModal.message" />
+        </div>
+        <div className={css.selectAll}>
+          <Checkbox
+            checked={Object.keys(selected).length === cloneablePropertiesLength && Object.values(selected).includes(false) !== true}
+            label={<FormattedMessage id="ui-agreements.selectAll" />}
+            onChange={this.toggleSelectAll}
+            value="selectAll"
+          />
+        </div>
         {Object.entries(this.cloneableProperties).map(([prop, value], index) => {
           return (
             <Checkbox

@@ -132,6 +132,7 @@
   "coverage.volumeShort": "Vol:",
   "coverage.issueShort": "Iss:",
 
+  "duplicateAgreementModal.message": "Please select which sections of the agreement to duplicate",
   "duplicateAgreementModal.agreementInfo": "Agreement information",
   "duplicateAgreementModal.internalContacts": "Internal contacts",
   "duplicateAgreementModal.agreementLines": "Agreement lines",
