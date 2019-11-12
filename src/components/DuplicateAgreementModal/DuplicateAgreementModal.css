@@ -1,11 +1,7 @@
 @import "@folio/stripes-components/lib/variables.css";
 
 .message {
-  margin-bottom: 20px;
-}
-
-.modalContent {
-  border: 1px solid var(--color-border);
+  margin-bottom: 2rem;
 }
 
 .modalFooter {
@@ -17,6 +13,6 @@
 .selectAll {
   font-weight: bold;
   border-bottom: 1px solid var(--color-border);
-  padding-bottom: 5px;
-  margin-bottom: 5px;
+  padding-bottom: .5rem;
+  margin-bottom: .5rem;
 }
