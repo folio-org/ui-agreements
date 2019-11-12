@@ -129,7 +129,7 @@ export default class Agreement extends React.Component {
           }}
         >
           <Icon icon="duplicate">
-            <FormattedMessage id="ui-agreements.agreements.duplicateAgreement" />
+            <FormattedMessage id="ui-agreements.agreements.duplicate" />
           </Icon>
         </Button>
 

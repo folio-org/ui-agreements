@@ -29,8 +29,10 @@ export default class DuplicateAgreementModal extends React.Component {
       'usageData': <FormattedMessage id="ui-agreements.duplicateAgreementModal.usageData" />
     };
 
+    const initialSelectedObject = mapValues(this.cloneableProperties, () => false);
+
     this.state = {
-      selected: {},
+      selected: initialSelectedObject
     };
   }
 
