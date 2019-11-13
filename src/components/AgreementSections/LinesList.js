@@ -137,7 +137,8 @@ export default class LinesList extends React.Component {
       onNeedMoreLines,
     } = this.props;
 
-    const rowUpdater = (rowData) => orderLines.find(orderLine => orderLine.id === rowData.poLineId);
+    const rowUpdater = () => orderLines.map(orderLine => orderLine.id);
+
     return (
       <MultiColumnList
         columnMapping={this.columnMapping}

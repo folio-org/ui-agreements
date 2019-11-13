@@ -8,11 +8,11 @@
   "create": "Create",
   "notSet": "Not set",
   "saveAndClose": "Save & close",
-
   "dashboard": "Dashboard",
+  "duplicateAgreement": "Duplicate agreement",
   "agreements": "Agreements",
   "eresources": "E-resources",
-
+  "selectAll": "Select all / deselect all",
   "status": "Status",
 
   "agreement": "Agreement",
@@ -25,8 +25,9 @@
 
   "note": "Note",
 
+  "agreements.duplicate": "Duplicate",
   "agreements.edit": "Edit",
-  "agreements.showTags": "Show Tags",
+  "agreements.showTags": "Show tags",
   "agreements.vendor": "Vendor",
   "agreements.visitPlatform": "Visit platform",
   "agreements.agreementInfo": "Agreement information",
@@ -130,6 +131,16 @@
 
   "coverage.volumeShort": "Vol:",
   "coverage.issueShort": "Iss:",
+
+  "duplicateAgreementModal.message": "Please select which sections of the agreement to duplicate",
+  "duplicateAgreementModal.agreementInfo": "Agreement information",
+  "duplicateAgreementModal.internalContacts": "Internal contacts",
+  "duplicateAgreementModal.agreementLines": "Agreement lines",
+  "duplicateAgreementModal.linkedLicenses": "Linked licenses",
+  "duplicateAgreementModal.externalLicenses": "External licenses",
+  "duplicateAgreementModal.organizations": "Organizations",
+  "duplicateAgreementModal.supplementaryInformation": "Supplementary information",
+  "duplicateAgreementModal.usageData": "Usage data",
 
   "eresources.name": "Name",
   "eresources.type": "Type",

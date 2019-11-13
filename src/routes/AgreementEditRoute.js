@@ -74,7 +74,7 @@ class AgreementEditRoute extends React.Component {
           ))
           .join(' or ');
 
-        return query ? { query } : null;
+        return query ? { query } : {};
       },
       fetch: props => !!props.stripes.hasInterface('orders', '6.0 7.0'),
       records: 'poLines',
@@ -98,7 +98,7 @@ class AgreementEditRoute extends React.Component {
           .map(contact => `id==${contact.user}`)
           .join(' or ');
 
-        return query ? { query } : null;
+        return query ? { query } : {};
       },
       fetch: props => !!props.stripes.hasInterface('users', '15.0'),
       records: 'users',
@@ -167,7 +167,7 @@ class AgreementEditRoute extends React.Component {
     // for another agreement without viewing it first. This would occur when adding to an agreement
     // via the Basket.
     let initialValues = state.initialValues;
-    if (initialValues.id !== agreement.id) {
+    if (agreement.id === props.match.params.id && !initialValues.id) {
       initialValues = cloneDeep(agreement);
     }
 
@@ -215,7 +215,7 @@ class AgreementEditRoute extends React.Component {
     }
 
     const lines = get(props.resources, 'agreementLines.records', []);
-    if (items.length && lines.length) {
+    if (items.length && lines.length && (lines[0].owner.id === props.match.params.id)) {
       updated = true;
 
       initialValues.items = items.map(item => {

@@ -50,7 +50,7 @@ export default class InternalContacts extends React.Component {
         onToggle={onToggle}
         open={open}
       >
-        { this.renderContacts() }
+        {this.renderContacts()}
       </Accordion>
     );
   }

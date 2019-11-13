@@ -20,7 +20,7 @@ class AgreementViewRoute extends React.Component {
   static manifest = Object.freeze({
     agreement: {
       type: 'okapi',
-      path: 'erm/sas/:{id}'
+      path: 'erm/sas/:{id}',
     },
     agreementLines: {
       type: 'okapi',
@@ -58,7 +58,7 @@ class AgreementViewRoute extends React.Component {
           ...new Set(interfaces.map(i => `id==${i}`))
         ].join(' or ');
 
-        return query ? { query } : null;
+        return query ? { query } : {};
       },
       fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '2.0'),
       records: 'interfaces',
@@ -75,7 +75,7 @@ class AgreementViewRoute extends React.Component {
           ))
           .join(' or ');
 
-        return query ? { query } : null;
+        return query ? { query } : {};
       },
       fetch: props => !!props.stripes.hasInterface('orders', '6.0 7.0 8.0'),
       records: 'poLines',
@@ -94,7 +94,7 @@ class AgreementViewRoute extends React.Component {
           .map(contact => `id==${contact.user}`)
           .join(' or ');
 
-        return query ? { query } : null;
+        return query ? { query } : {};
       },
       fetch: props => !!props.stripes.hasInterface('users', '15.0'),
       records: 'users',
@@ -226,6 +226,23 @@ class AgreementViewRoute extends React.Component {
       .find(i => i.id === id);
   }
 
+  handleClone = (cloneableProperties) => {
+    const { history, location, match, stripes: { okapi } } = this.props;
+
+    return fetch(`${okapi.url}/erm/sas/${match.params.id}/clone`, {
+      method: 'POST',
+      headers: {
+        'X-Okapi-Tenant': okapi.tenant,
+        'X-Okapi-Token': okapi.token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(cloneableProperties),
+    }).then(response => response.json())
+      .then(({ id }) => {
+        history.push(`${urls.agreementEdit(id)}${location.search}`);
+      });
+  }
+
   handleClose = () => {
     this.props.history.push(`${urls.agreements()}${this.props.location.search}`);
   }
@@ -236,8 +253,8 @@ class AgreementViewRoute extends React.Component {
   }
 
   handleEdit = () => {
-    const { location, match } = this.props;
-    this.props.history.push(`${urls.agreementEdit(match.params.id)}${location.search}`);
+    const { history, location, match } = this.props;
+    history.push(`${urls.agreementEdit(match.params.id)}${location.search}`);
   }
 
   handleExportEResourcesAsJSON = () => {
@@ -335,12 +352,13 @@ class AgreementViewRoute extends React.Component {
         }}
         handlers={{
           ...handlers,
-          onFilterEResources: this.handleFilterEResources,
+          onClone: this.handleClone,
           onClose: this.handleClose,
           onEdit: this.handleEdit,
           onExportEResourcesAsJSON: this.handleExportEResourcesAsJSON,
           onExportEResourcesAsKBART: this.handleExportEResourcesAsKBART,
           onFetchCredentials: this.handleFetchCredentials,
+          onFilterEResources: this.handleFilterEResources,
           onNeedMoreEResources: this.handleNeedMoreEResources,
           onNeedMoreLines: this.handleNeedMoreLines,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,

@@ -4,8 +4,9 @@ function decodeQueryParamPart(part) {
 
 // function to help parse multiple query parameter with same name correctly
 export default function parseQueryString(queryString) {
-  const pairs = queryString.split('&'),
-    queryParams = {};
+  const pairs = queryString.split('&');
+  const queryParams = {};
+
   for (let i = 0; i < pairs.length; i++) {
     const pair = pairs[i].split('=');
     let key = decodeQueryParamPart(pair[0]);

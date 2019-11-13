@@ -101,7 +101,7 @@ export default class RelatedAgreementField extends React.Component {
           <Col xs={12} md={4}>
             <KeyValue
               label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
-              value={get(agreement, 'status.label', '-')}
+              value={get(agreement, 'agreementStatus.label', '-')}
             />
           </Col>
         </Row>

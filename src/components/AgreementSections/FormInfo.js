@@ -104,7 +104,6 @@ export default class FormInfo extends React.Component {
                   id="edit-agreement-status"
                   label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
                   placeholder=" "
-                  required
                   onChange={(e) => {
                     props.input.onChange(e);
 
@@ -120,6 +119,7 @@ export default class FormInfo extends React.Component {
 
                     this.props.form.mutators.setFieldData('reasonForClosure', { warning });
                   }}
+                  required
                   value={props.input.value}
                 />);
               }}
