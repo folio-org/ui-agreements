@@ -147,7 +147,7 @@
     "settings.general.hideEResourcesFunctionality.description": "Si está utilizando otra aplicación (por ejemplo, eHoldings) como su base de conocimientos y desea ocultar la base de conocimientos de acuerdos internos, puede verificar esta configuración. Específicamente, esto va a:",
     "agreementLines.hasCustomCoverage": "Has custom coverage",
     "eresources.provider": "Provider",
-    "agreements.showTags": "Show Tags",
+    "agreements.showTags": "Show tags",
     "agreements.tags": "Tags",
     "settings.hideEResources.result.1": "Oculta la pestaña E-resources en la aplicación de acuerdos.",
     "settings.hideEResources.result.2": "Ocultar el icono de la cesta en la aplicación de acuerdos",
@@ -292,5 +292,17 @@
     "polines.lineHasNone": "Agreement line has no PO lines",
     "poLines.poLineIndex": "PO line {index}",
     "poLines.remove": "Remove PO line",
-    "poLines.replacePOLine": "Replace PO line"
+    "poLines.replacePOLine": "Replace PO line",
+    "duplicateAgreement": "Duplicate agreement",
+    "selectAll": "Select all / deselect all",
+    "agreements.duplicate": "Duplicate",
+    "duplicateAgreementModal.message": "Please select which sections of the agreement to duplicate",
+    "duplicateAgreementModal.agreementInfo": "Agreement information",
+    "duplicateAgreementModal.internalContacts": "Internal contacts",
+    "duplicateAgreementModal.agreementLines": "Agreement lines",
+    "duplicateAgreementModal.linkedLicenses": "Linked licenses",
+    "duplicateAgreementModal.externalLicenses": "External licenses",
+    "duplicateAgreementModal.organizations": "Organizations",
+    "duplicateAgreementModal.supplementaryInformation": "Supplementary information",
+    "duplicateAgreementModal.usageData": "Usage data"
 }
