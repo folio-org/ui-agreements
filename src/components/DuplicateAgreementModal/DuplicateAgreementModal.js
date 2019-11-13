@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, mapValues, pickBy } from 'lodash';
+import { mapValues, pickBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import {
   Button,
   Checkbox,
+  Layout,
   Modal,
+  ModalFooter,
 } from '@folio/stripes/components';
 
 import css from './DuplicateAgreementModal.css';
@@ -20,47 +22,50 @@ export default class DuplicateAgreementModal extends React.Component {
     super();
 
     this.cloneableProperties = {
-      'agreementInfo': <FormattedMessage id="ui-agreements.duplicateAgreementModal.agreementInfo" />,
-      'internalContacts': <FormattedMessage id="ui-agreements.duplicateAgreementModal.internalContacts" />,
-      'agreementLines': <FormattedMessage id="ui-agreements.duplicateAgreementModal.agreementLines" />,
-      'linkedLicenses': <FormattedMessage id="ui-agreements.duplicateAgreementModal.linkedLicenses" />,
-      'externalLicenses': <FormattedMessage id="ui-agreements.duplicateAgreementModal.externalLicenses" />,
-      'organizations': <FormattedMessage id="ui-agreements.duplicateAgreementModal.organizations" />,
-      'supplementaryInformation': <FormattedMessage id="ui-agreements.duplicateAgreementModal.supplementaryInformation" />,
-      'usageData': <FormattedMessage id="ui-agreements.duplicateAgreementModal.usageData" />
+      agreementInfo: <FormattedMessage id="ui-agreements.duplicateAgreementModal.agreementInfo" />,
+      internalContacts: <FormattedMessage id="ui-agreements.duplicateAgreementModal.internalContacts" />,
+      agreementLines: <FormattedMessage id="ui-agreements.duplicateAgreementModal.agreementLines" />,
+      linkedLicenses: <FormattedMessage id="ui-agreements.duplicateAgreementModal.linkedLicenses" />,
+      externalLicenses: <FormattedMessage id="ui-agreements.duplicateAgreementModal.externalLicenses" />,
+      organizations: <FormattedMessage id="ui-agreements.duplicateAgreementModal.organizations" />,
+      supplementaryInformation: <FormattedMessage id="ui-agreements.duplicateAgreementModal.supplementaryInformation" />,
+      usageData: <FormattedMessage id="ui-agreements.duplicateAgreementModal.usageData" />
     };
 
-    const initialSelectedObject = mapValues(this.cloneableProperties, () => false);
-
     this.state = {
-      selected: initialSelectedObject
+      selected: mapValues(this.cloneableProperties, () => false),
     };
   }
 
   updateSelection = (e) => {
-    const name = e.target.name;
-    const isChecked = e.target.checked;
-    this.setState(prevState => (
-      {
-        selected: { ...prevState.selected, [name]: isChecked }
-      }));
+    const { checked, name } = e.target;
+
+    this.setState(prevState => ({
+      selected: { ...prevState.selected, [name]: checked }
+    }));
   };
 
   toggleSelectAll = (e) => {
-    const selectAllObject = mapValues(this.cloneableProperties, () => true);
-    const isChecked = e.target.checked;
+    const { checked } = e.target;
 
-    this.setState(() => (
-      {
-        selected: isChecked ? selectAllObject : []
-      }));
+    this.setState(() => ({
+      selected: mapValues(this.cloneableProperties, () => checked),
+    }));
   }
 
   render() {
     const { selected } = this.state;
-    const cloneablePropertiesLength = Object.keys(this.cloneableProperties).length;
+
     const footer = (
-      <div className={css.modalFooter}>
+      <ModalFooter>
+        <Button
+          buttonStyle="primary"
+          disabled={Object.values(selected).every(item => item === false)}
+          id="duplicate-agreement-modal-save-button"
+          onClick={() => this.props.onClone(pickBy(selected))}
+        >
+          <FormattedMessage id="stripes-components.saveAndClose" />
+        </Button>
         <Button
           buttonStyle="default"
           id="duplicate-agreement-modal-cancel-button"
@@ -68,15 +73,7 @@ export default class DuplicateAgreementModal extends React.Component {
         >
           <FormattedMessage id="stripes-components.cancel" />
         </Button>
-        <Button
-          buttonStyle="primary"
-          disabled={isEmpty(selected) || Object.values(selected).every(item => item === false)}
-          id="duplicate-agreement-modal-save-button"
-          onClick={() => this.props.onClone(pickBy(selected))}
-        >
-          <FormattedMessage id="stripes-components.saveAndClose" />
-        </Button>
-      </div>
+      </ModalFooter>
     );
 
     return (
@@ -89,19 +86,20 @@ export default class DuplicateAgreementModal extends React.Component {
         open
         size="small"
       >
-        <div className={css.message}>
+        <Layout className="padding-bottom-gutter">
           <FormattedMessage id="ui-agreements.duplicateAgreementModal.message" />
-        </div>
-        <div className={css.selectAll}>
+        </Layout>
+        <Layout className="padding-bottom-gutter">
           <Checkbox
-            checked={Object.keys(selected).length === cloneablePropertiesLength && Object.values(selected).includes(false) !== true}
-            label={<FormattedMessage id="ui-agreements.selectAll" />}
+            checked={Object.values(selected).includes(false) !== true}
+            label={<strong><FormattedMessage id="ui-agreements.selectAll" /></strong>}
             onChange={this.toggleSelectAll}
             value="selectAll"
           />
-        </div>
-        {Object.entries(this.cloneableProperties).map(([prop, value], index) => {
-          return (
+        </Layout>
+        <div className={css.separator} />
+        <Layout className="padding-top-gutter">
+          {Object.entries(this.cloneableProperties).map(([prop, value], index) => (
             <Checkbox
               checked={this.state.selected[prop]}
               key={index}
@@ -110,9 +108,8 @@ export default class DuplicateAgreementModal extends React.Component {
               onChange={this.updateSelection}
               value={prop}
             />
-          );
-        })
-        }
+          ))}
+        </Layout>
       </Modal>
     );
   }

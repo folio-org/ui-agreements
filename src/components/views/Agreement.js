@@ -185,9 +185,8 @@ export default class Agreement extends React.Component {
       helperApp
     } = this.props;
 
-    const { showDuplicateAgreementModal } = this.state;
-
     if (isLoading) return <LoadingPane defaultWidth="60%" onClose={handlers.onClose} />;
+
     return (
       <React.Fragment>
         <Pane
@@ -238,7 +237,7 @@ export default class Agreement extends React.Component {
           </TitleManager>
         </Pane>
         {helperApp}
-        {showDuplicateAgreementModal &&
+        {this.state.showDuplicateAgreementModal &&
           <DuplicateAgreementModal
             onClone={(obj) => handlers.onClone(obj)}
             onClose={this.closeDuplicateAgreementModal}

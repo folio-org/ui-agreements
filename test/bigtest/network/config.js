@@ -126,7 +126,11 @@ export default function config() {
 
   this.get('/orders/order-lines', (schema, request) => {
     // query will look something like `id==123 or id==456`
-    const poLineIds = request.queryParams.query.split(' or ')
+    const { query } = request.queryParams;
+
+    if (!query) return { poLines: [], totalRecords: 0 };
+
+    const poLineIds = query.split(' or ')
       .map(idEquality => idEquality.substring('id=='.length)); // strip leading `id==`
 
     const { number, words } = faker.random;
@@ -219,7 +223,12 @@ export default function config() {
 
 
   this.get('/users', (schema) => {
-    return schema.contacts.all();
+    const users = schema.contacts.all().models;
+
+    return {
+      users,
+      totalRecords: users.length,
+    };
   });
 
   this.get('note-links/domain/agreements/type/agreement/id/:id', () => { });
