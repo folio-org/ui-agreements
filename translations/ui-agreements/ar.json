@@ -292,5 +292,17 @@
     "polines.lineHasNone": "لا يوجد للاتفاقية سطور أمر شراء",
     "poLines.poLineIndex": "سطر أمر الشراء {index}",
     "poLines.remove": "إزالة سطر أمر الشراء",
-    "poLines.replacePOLine": "استبدال سطر أمر الشراء"
+    "poLines.replacePOLine": "استبدال سطر أمر الشراء",
+    "duplicateAgreement": "Duplicate agreement",
+    "selectAll": "Select all / deselect all",
+    "agreements.duplicate": "Duplicate",
+    "duplicateAgreementModal.message": "Please select which sections of the agreement to duplicate",
+    "duplicateAgreementModal.agreementInfo": "Agreement information",
+    "duplicateAgreementModal.internalContacts": "Internal contacts",
+    "duplicateAgreementModal.agreementLines": "Agreement lines",
+    "duplicateAgreementModal.linkedLicenses": "Linked licenses",
+    "duplicateAgreementModal.externalLicenses": "External licenses",
+    "duplicateAgreementModal.organizations": "Organizations",
+    "duplicateAgreementModal.supplementaryInformation": "Supplementary information",
+    "duplicateAgreementModal.usageData": "Usage data"
 }

@@ -292,5 +292,17 @@
     "polines.lineHasNone": "Agreement line has no PO lines",
     "poLines.poLineIndex": "PO line {index}",
     "poLines.remove": "Remove PO line",
-    "poLines.replacePOLine": "Replace PO line"
+    "poLines.replacePOLine": "Replace PO line",
+    "duplicateAgreement": "Duplicate agreement",
+    "selectAll": "Select all / deselect all",
+    "agreements.duplicate": "Duplicate",
+    "duplicateAgreementModal.message": "Please select which sections of the agreement to duplicate",
+    "duplicateAgreementModal.agreementInfo": "Agreement information",
+    "duplicateAgreementModal.internalContacts": "Internal contacts",
+    "duplicateAgreementModal.agreementLines": "Agreement lines",
+    "duplicateAgreementModal.linkedLicenses": "Linked licenses",
+    "duplicateAgreementModal.externalLicenses": "External licenses",
+    "duplicateAgreementModal.organizations": "Organizations",
+    "duplicateAgreementModal.supplementaryInformation": "Supplementary information",
+    "duplicateAgreementModal.usageData": "Usage data"
 }
