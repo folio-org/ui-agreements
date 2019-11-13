@@ -22,7 +22,7 @@ class RelatedAgreementsFieldArray extends React.Component {
     name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
     onDeleteField: PropTypes.func.isRequired,
-    onReplaceField: PropTypes.func.isRequired,
+    onUpdateField: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -37,7 +37,7 @@ class RelatedAgreementsFieldArray extends React.Component {
   }
 
   handleAgreementSelected = (index, agreement) => {
-    this.props.onReplaceField(index, { agreement });
+    this.props.onUpdateField(index, { agreement });
   }
 
   validateSelfLinking = (value) => {
