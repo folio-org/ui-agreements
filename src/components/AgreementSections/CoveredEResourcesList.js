@@ -28,6 +28,7 @@ export default class CoveredEResourcesList extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
       eresources: PropTypes.arrayOf(PropTypes.object),
+      eresourcesCount: PropTypes.number,
     }).isRequired,
     eresourcesFilterPath: PropTypes.string,
     onFilterEResources: PropTypes.func.isRequired,
@@ -171,7 +172,7 @@ export default class CoveredEResourcesList extends React.Component {
 
   renderList = () => {
     const {
-      agreement: { eresources },
+      agreement: { eresources, eresourcesCount },
       onNeedMoreEResources,
       visible,
     } = this.props;
@@ -185,7 +186,7 @@ export default class CoveredEResourcesList extends React.Component {
         interactive={false}
         maxHeight={800}
         onNeedMoreData={onNeedMoreEResources}
-        totalCount={eresources.length}
+        totalCount={eresourcesCount}
         virtualize
         visibleColumns={this.visibleColumns}
       />
