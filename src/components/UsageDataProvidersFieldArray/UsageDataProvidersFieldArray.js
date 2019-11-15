@@ -66,6 +66,7 @@ class UsageDataProvidersFieldArray extends React.Component {
           id={`udp-note-${index}`}
           label={<FormattedMessage id="ui-agreements.usageData.note" />}
           name={`${this.props.name}[${index}].usageDataProviderNote`}
+          parse={v => v} // Lets us send an empty string instead of `undefined`
         />
       </EditCard>
     ));

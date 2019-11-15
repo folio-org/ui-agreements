@@ -112,6 +112,7 @@ class RelatedAgreementsFieldArray extends React.Component {
           id={`ra-note-${index}`}
           label={<FormattedMessage id="ui-agreements.note" />}
           name={`${this.props.name}[${index}].note`}
+          parse={v => v} // Lets us send an empty string instead of `undefined`
         />
       </EditCard>
     ));

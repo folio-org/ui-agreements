@@ -66,6 +66,7 @@ class CustomCoverageFieldArray extends React.Component {
                 id={`cc-start-volume-${index}`}
                 label="Start volume"
                 name={`${name}[${index}].startVolume`}
+                parse={v => v} // Lets us send an empty string instead of `undefined`
               />
             </Col>
             <Col xs={4}>
@@ -74,6 +75,7 @@ class CustomCoverageFieldArray extends React.Component {
                 id={`cc-start-issue-${index}`}
                 label="Start issue"
                 name={`${name}[${index}].startIssue`}
+                parse={v => v} // Lets us send an empty string instead of `undefined`
               />
             </Col>
           </Row>
@@ -86,6 +88,7 @@ class CustomCoverageFieldArray extends React.Component {
                 id={`cc-end-date-${index}`}
                 label="End date"
                 name={`${name}[${index}].endDate`}
+                parse={v => v} // Lets us send an empty string instead of `undefined`
                 validate={composeValidators(
                   validators.dateOrder,
                   multipleOpenEndedCoverages,
@@ -99,6 +102,7 @@ class CustomCoverageFieldArray extends React.Component {
                 id={`cc-end-volume-${index}`}
                 label="End volume"
                 name={`${name}[${index}].endVolume`}
+                parse={v => v} // Lets us send an empty string instead of `undefined`
               />
             </Col>
             <Col xs={4}>
@@ -107,6 +111,7 @@ class CustomCoverageFieldArray extends React.Component {
                 id={`cc-end-issue-${index}`}
                 label="End issue"
                 name={`${name}[${index}].endIssue`}
+                parse={v => v} // Lets us send an empty string instead of `undefined`
               />
             </Col>
           </Row>

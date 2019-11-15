@@ -147,6 +147,7 @@ class AmendmentsFieldArray extends React.Component {
                     component={TextArea}
                     label={<FormattedMessage id="ui-agreements.license.amendmentNote" />}
                     name={`${name}[${i}].note`}
+                    parse={v => v} // Lets us send an empty string instead of `undefined`
                   />
                 </Col>
               </Row>
