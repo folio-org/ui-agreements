@@ -108,6 +108,7 @@ class LicensesFieldArray extends React.Component {
               id={`${name}-note-${index}`}
               label={<FormattedMessage id="ui-agreements.license.prop.note" />}
               name={`${name}[${index}].note`}
+              parse={v => v} // Lets us send an empty string instead of `undefined`
             />
           </Col>
         </Row>

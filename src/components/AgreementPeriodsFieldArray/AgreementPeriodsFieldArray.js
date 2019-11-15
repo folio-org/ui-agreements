@@ -72,6 +72,7 @@ class AgreementPeriodsFieldArray extends React.Component {
                 id={`period-end-date-${index}`}
                 label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
                 name={`${name}[${index}].endDate`}
+                parse={v => v} // Lets us send an empty string instead of `undefined`
                 validate={composeValidators(
                   validators.dateOrder,
                   multipleOpenEndedPeriods,
@@ -87,6 +88,7 @@ class AgreementPeriodsFieldArray extends React.Component {
                 id={`period-cancellation-deadline-${index}`}
                 label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}
                 name={`${name}[${index}].cancellationDeadline`}
+                parse={v => v} // Lets us send an empty string instead of `undefined`
               />
             </Col>
           </Row>
@@ -95,6 +97,7 @@ class AgreementPeriodsFieldArray extends React.Component {
             id={`period-note-${index}`}
             label={<FormattedMessage id="ui-agreements.agreementPeriods.periodNote" />}
             name={`${name}[${index}].note`}
+            parse={v => v} // Lets us send an empty string instead of `undefined`
           />
         </div>
       </EditCard>

@@ -92,6 +92,7 @@ export default class FormInfo extends React.Component {
               id="edit-agreement-description"
               label={<FormattedMessage id="ui-agreements.agreements.agreementDescription" />}
               name="description"
+              parse={v => v} // Lets us send an empty string instead of `undefined`
             />
           </Col>
         </Row>
@@ -127,35 +128,35 @@ export default class FormInfo extends React.Component {
           </Col>
           <Col xs={12} md={6}>
             <Field
-              parse={v => v} // Lets us send an empty string instead of `undefined`
               component={Select}
               dataOptions={reasonForClosureValues}
               disabled={values.agreementStatus !== statuses.CLOSED}
               id="edit-agreement-reason-for-closure"
               label={<FormattedMessage id="ui-agreements.agreements.reasonForClosure" />}
               name="reasonForClosure"
+              parse={v => v} // Lets us send an empty string instead of `undefined`
             />
           </Col>
         </Row>
         <Row>
           <Col xs={12} md={6}>
             <Field
-              parse={v => v} // Lets us pass an empty string instead of `undefined`
               component={Select}
               dataOptions={renewalPriorityValues}
               id="edit-agreement-renewal-priority"
               label={<FormattedMessage id="ui-agreements.agreements.renewalPriority" />}
               name="renewalPriority"
+              parse={v => v} // Lets us pass an empty string instead of `undefined`
             />
           </Col>
           <Col xs={12} md={6}>
             <Field
-              parse={v => v} // Lets us pass an empty string instead of `undefined`
               component={Select}
               dataOptions={isPerpetualValues}
               id="edit-agreement-is-perpetual"
               label={<FormattedMessage id="ui-agreements.agreements.isPerpetual" />}
               name="isPerpetual"
+              parse={v => v} // Lets us pass an empty string instead of `undefined`
             />
           </Col>
         </Row>

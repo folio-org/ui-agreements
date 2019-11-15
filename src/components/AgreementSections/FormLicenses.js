@@ -25,11 +25,12 @@ export default class FormLicenses extends React.Component {
 
   renderNote = () => (
     <Field
-      maxLength={255}
-      id="edit-agreement-licenseNote"
-      name="licenseNote"
-      label={<FormattedMessage id="ui-agreements.license.generalNotes" />}
       component={TextArea}
+      id="edit-agreement-licenseNote"
+      label={<FormattedMessage id="ui-agreements.license.generalNotes" />}
+      maxLength={255}
+      name="licenseNote"
+      parse={v => v} // Lets us send an empty string instead of `undefined`
     />
   )
 

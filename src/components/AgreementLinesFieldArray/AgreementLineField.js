@@ -160,6 +160,7 @@ export default class AgreementLineField extends React.Component {
               id={`agreement-line-${index}-active-from`}
               label={<FormattedMessage id="ui-agreements.eresources.activeFrom" />}
               name={`${name}.activeFrom`}
+              parse={v => v} // Lets us send an empty string instead of `undefined`
               validate={this.validateDateOrder}
             />
           </Col>
@@ -171,6 +172,7 @@ export default class AgreementLineField extends React.Component {
               id={`agreement-line-${index}-active-to`}
               label={<FormattedMessage id="ui-agreements.eresources.activeTo" />}
               name={`${name}.activeTo`}
+              parse={v => v} // Lets us send an empty string instead of `undefined`
               validate={this.validateDateOrder}
             />
           </Col>
