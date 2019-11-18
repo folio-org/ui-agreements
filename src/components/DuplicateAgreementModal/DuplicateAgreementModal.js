@@ -53,7 +53,25 @@ export default class DuplicateAgreementModal extends React.Component {
     }));
   }
 
-  render() {
+  closeErrorModal = () => {
+    this.setState({ error: '' });
+  }
+
+  renderErrorModal = () => {
+    return (
+      <Modal
+        dismissible
+        label={<FormattedMessage id="ui-agreements.duplicateAgreement" />}
+        onClose={this.closeErrorModal}
+        open
+        size="small"
+      >
+        TODO
+      </Modal>
+    );
+  }
+
+  renderDuplicateAgreementModal = () => {
     const { selected } = this.state;
 
     const footer = (
@@ -62,7 +80,7 @@ export default class DuplicateAgreementModal extends React.Component {
           buttonStyle="primary"
           disabled={Object.values(selected).every(item => item === false)}
           id="duplicate-agreement-modal-save-button"
-          onClick={() => this.props.onClone(pickBy(selected))}
+          onClick={() => this.props.onClone(pickBy(selected)).then(error => this.setState({ error }))}
         >
           <FormattedMessage id="stripes-components.saveAndClose" />
         </Button>
@@ -111,6 +129,16 @@ export default class DuplicateAgreementModal extends React.Component {
           ))}
         </Layout>
       </Modal>
+    );
+  }
+
+  render() {
+    const { error } = this.state;
+
+    return (
+      <div>
+        {error ? this.renderErrorModal() : this.renderDuplicateAgreementModal()}
+      </div>
     );
   }
 }
