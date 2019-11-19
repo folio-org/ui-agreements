@@ -110,8 +110,12 @@ export default class CoveredEResourcesList extends React.Component {
     <Dropdown
       onToggle={() => this.setState(prevState => ({ exportDropdownOpen: !prevState.exportDropdownOpen }))}
       open={this.state.exportDropdownOpen}
+      disabled={this.props.eresourcesFilterPath === 'dropped' || this.props.eresourcesFilterPath === 'future'}
     >
-      <DropdownButton data-role="toggle">
+
+      <DropdownButton
+        data-role="toggle"
+      >
         <FormattedMessage id="ui-agreements.eresourcesCovered.exportAs" />
       </DropdownButton>
       <DropdownMenu data-role="menu">
