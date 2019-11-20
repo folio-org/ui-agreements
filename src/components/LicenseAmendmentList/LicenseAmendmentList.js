@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
 
-import { IconButton, InfoPopover, MultiColumnList, Tooltip } from '@folio/stripes/components';
+import { IconButton, MultiColumnList, Tooltip } from '@folio/stripes/components';
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 
 import { statuses } from '../../constants';
@@ -90,7 +90,9 @@ export default class LicenseAmendmentList extends React.Component {
           startDate: <FormattedMessage id="ui-agreements.license.prop.startDate" />,
           endDate: <FormattedMessage id="ui-agreements.license.prop.endDate" />,
         }}
-        columnWidths={{note: '350px'}}
+        /* columnWidths={{
+          note: '350px'
+        }} */
         contentData={amendments}
         formatter={{
           //warning: a => (this.renderStatusMismatchWarnings(a) ? <InfoPopover contentClass={css.note} content={this.renderStatusMismatchWarnings(a)} /> : ''),
