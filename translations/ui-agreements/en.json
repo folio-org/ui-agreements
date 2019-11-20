@@ -236,7 +236,7 @@
   "license.historicalLicenses": "Historical licenses",
   "license.inactiveLicenses": "Inactive licenses",
   "license.licenseAmendments": "License amendments",
-  "license.unsetAmendments": "Unset amendments",
+  "license.unsetAmendments": "Unassigned amendments",
   "license.licenseIndex": "License {index}",
   "license.linkLicense": "Link license",
   "license.linkLicenseToStart": "Link a license to get started",

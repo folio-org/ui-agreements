@@ -70,7 +70,7 @@ export default class ControllingLicense extends React.Component {
         roundedBorder
       >
         { unsetAmendments.length ?
-          <MessageBanner type='warning'>
+          <MessageBanner type="warning">
             <FormattedMessage id="ui-agreements.license.warn.unassignedAmendments" />
           </MessageBanner>
           : null
@@ -98,14 +98,13 @@ export default class ControllingLicense extends React.Component {
           : null
         }
         { unsetAmendments.length ?
-          <KeyValue label={<FormattedMessage id={`ui-agreements.license.unsetAmendments`} />}>
-          <LicenseAmendmentList
-            amendments={unsetAmendments}
-            id={`controlling-license-unset-amendments`}
+          <KeyValue label={<FormattedMessage id="ui-agreements.license.unsetAmendments" />}>
+            <LicenseAmendmentList
+              amendments={unsetAmendments}
+              id="controlling-license-unset-amendments"
               license={licenseRecord}
-              license={linkedLicense.remoteId_object}
-          />
-        </KeyValue>
+            />
+          </KeyValue>
           : null
         }
       </Card>
