@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
 
-import { InfoPopover, MultiColumnList, Tooltip } from '@folio/stripes/components';
+import { Icon, InfoPopover, MultiColumnList, Tooltip } from '@folio/stripes/components';
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 
 import { statuses } from '../../constants';
@@ -35,6 +35,7 @@ export default class LicenseAmendmentList extends React.Component {
     const agreementStatus = amendment.statusForThisAgreement ? amendment.statusForThisAgreement.value : null;
     const startDate = amendment.startDate ? amendment.startDate : null;
     const endDate = amendment.endDate ? amendment.endDate : null;
+
     if (agreementStatus) {
       // Warnings only show up for current amendments
       if (agreementStatus === statuses.CURRENT) {
@@ -44,7 +45,7 @@ export default class LicenseAmendmentList extends React.Component {
           return <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: licenseStatusLabel }} />
         }
         // If amendment has a startDate, check it's not in the future 
-        if (startDate) {
+        else if (startDate) {
           if (new Date(amendment.startDate).getTime() > new Date().getTime()) {
             return <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" />;
           } else {
@@ -52,7 +53,7 @@ export default class LicenseAmendmentList extends React.Component {
           }
         }
         // If amendment has a endDate, check it's not in the past
-        if (endDate) {
+        else if (endDate) {
           if (new Date(amendment.endDate).getTime() < new Date().getTime()) {
             return <FormattedMessage id="ui-agreements.license.warn.amendmentPast" />;
           } else {
@@ -79,7 +80,6 @@ export default class LicenseAmendmentList extends React.Component {
     } = this.props;
 
     console.log("Props: %o", this.props)
-
     return (
       <MultiColumnList
         columnMapping={{
@@ -94,7 +94,20 @@ export default class LicenseAmendmentList extends React.Component {
         contentData={amendments}
         formatter={{
           //warning: a => (this.renderStatusMismatchWarnings(a) ? <InfoPopover contentClass={css.note} content={this.renderStatusMismatchWarnings(a)} /> : ''),
-          warning: a => (this.renderStatusMismatchWarnings(a) ? <InfoPopover contentClass={css.note} content={this.renderStatusMismatchWarnings(a)} /> : ''),
+          warning: a => (
+            this.renderStatusMismatchWarnings(a) ? 
+              <Tooltip
+                text={this.renderStatusMismatchWarnings(a)}
+              >
+                {({ ariaIds }) =>(
+                  <Icon 
+                    icon='exclamation-circle'
+                    size='small'
+                    ariaLabel={ariaIds.text}
+                  />
+                )}
+              </Tooltip> : ''
+            ),
           note: a => (a.note ? a.note : ''),
           name: a => <Link to={urls.amendmentView(license.id, a.id)}>{a.name}</Link>,
           status: a => (a.status ? a.status.label : '-'),
@@ -106,7 +119,7 @@ export default class LicenseAmendmentList extends React.Component {
         visibleColumns={
           renderStatuses ?
             ['warning', 'name', 'status', 'startDate', 'endDate', 'note'] :
-            ['warning', 'name', 'startDate', 'endDate', 'note']
+            ['name', 'startDate', 'endDate', 'note']
         }
       />
     );
