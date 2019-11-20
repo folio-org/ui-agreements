@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
 
-import { Icon, InfoPopover, MultiColumnList, Tooltip } from '@folio/stripes/components';
+import { IconButton, InfoPopover, MultiColumnList, Tooltip } from '@folio/stripes/components';
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 
 import { statuses } from '../../constants';
@@ -97,13 +97,15 @@ export default class LicenseAmendmentList extends React.Component {
           warning: a => (
             this.renderStatusMismatchWarnings(a) ? 
               <Tooltip
+                id={`warning-tooltip-${a.id}`}
                 text={this.renderStatusMismatchWarnings(a)}
               >
-                {({ ariaIds }) =>(
-                  <Icon 
+                {({ ref, ariaIds }) => (
+                  <IconButton
                     icon='exclamation-circle'
-                    size='small'
                     ariaLabel={ariaIds.text}
+                    className={css.tooltipIcon}
+                    ref={ref}
                   />
                 )}
               </Tooltip> : ''
