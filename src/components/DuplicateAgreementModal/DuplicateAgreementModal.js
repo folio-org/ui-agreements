@@ -5,12 +5,14 @@ import { FormattedMessage } from 'react-intl';
 import {
   Button,
   Checkbox,
+  Icon,
   Layout,
   Modal,
   ModalFooter,
 } from '@folio/stripes/components';
 
 import css from './DuplicateAgreementModal.css';
+import { errorTypes } from '../../constants';
 
 export default class DuplicateAgreementModal extends React.Component {
   static propTypes = {
@@ -53,7 +55,42 @@ export default class DuplicateAgreementModal extends React.Component {
     }));
   }
 
-  render() {
+  closeErrorModal = () => {
+    this.setState({ errorMessage: '' });
+  }
+
+  renderErrorModal = () => {
+    const footer = (
+      <ModalFooter>
+        <Button
+          buttonStyle="primary"
+          id="duplicate-agreement-error-modal-close-button"
+          onClick={this.closeErrorModal}
+        >
+          <FormattedMessage id="ui-agreements.close" />
+        </Button>
+      </ModalFooter>
+    );
+
+    return (
+      <Modal
+        footer={footer}
+        label={
+          <Layout className="flex">
+            <Icon size="medium" icon="exclamation-circle" status="error" />
+            &nbsp;
+            <FormattedMessage id="ui-agreements.duplicateAgreementModal.error" />
+          </Layout>
+        }
+        open
+        size="small"
+      >
+        {this.state.errorMessage}
+      </Modal>
+    );
+  }
+
+  renderDuplicateAgreementModal = () => {
     const { selected } = this.state;
 
     const footer = (
@@ -62,7 +99,25 @@ export default class DuplicateAgreementModal extends React.Component {
           buttonStyle="primary"
           disabled={Object.values(selected).every(item => item === false)}
           id="duplicate-agreement-modal-save-button"
-          onClick={() => this.props.onClone(pickBy(selected))}
+          onClick={() => {
+            this.props.onClone(pickBy(selected))
+              .catch(error => {
+                const errorMessage = (
+                  <Layout className="display-flex flex-direction-column">
+                    {error.message === errorTypes.INVALID_JSON_ERROR ?
+                      <FormattedMessage id="ui-agreements.duplicateAgreementModal.errors.invalidResponseError" /> :
+                      <FormattedMessage id="ui-agreements.duplicateAgreementModal.errors.cloneEndpointError" />
+                    }
+                    <Layout className="padding-top-gutter padding-bottom-gutter">
+                      <strong><FormattedMessage id="ui-agreements.duplicateAgreementModal.errors.tryAgain" /></strong>
+                    </Layout>
+                    <FormattedMessage id="ui-agreements.duplicateAgreementModal.errors.systemAdministrator" />
+                  </Layout>
+                );
+
+                this.setState({ errorMessage });
+              });
+          }}
         >
           <FormattedMessage id="stripes-components.saveAndClose" />
         </Button>
@@ -111,6 +166,16 @@ export default class DuplicateAgreementModal extends React.Component {
           ))}
         </Layout>
       </Modal>
+    );
+  }
+
+  render() {
+    const { errorMessage } = this.state;
+
+    return (
+      <div>
+        {errorMessage ? this.renderErrorModal() : this.renderDuplicateAgreementModal()}
+      </div>
     );
   }
 }
