@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
 
-import { IconButton, Icon, MultiColumnList, Tooltip } from '@folio/stripes/components';
+import { Icon, MultiColumnList, Tooltip } from '@folio/stripes/components';
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 
 import { statuses } from '../../constants';
@@ -110,6 +110,7 @@ export default class LicenseAmendmentList extends React.Component {
                 placement="left"
               >
                 {({ ref, ariaIds }) => (
+                  // For the time being I'm using the workaround of a <span> while we wait to see what can/should be added to the 'Icon' component
                   <span ref={ref} aria-label={ariaIds.text}>
                     <Icon
                       icon='exclamation-circle'
