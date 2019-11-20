@@ -203,6 +203,7 @@
     "eresourcesCovered.exportAsKBART": "Export as KBART",
     "eresourcesCovered.json": "JSON",
     "eresourcesCovered.kbart": "KBART",
+    "eresourcesCovered.exportButton.tooltip": "Exports only supported for current or all resources",
     "license.selectStatus": "Select a status",
     "saveAndClose": "Save & close",
     "license.agreementHasNone": "Agreement has no licenses.",
