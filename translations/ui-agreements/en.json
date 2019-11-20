@@ -236,6 +236,7 @@
   "license.historicalLicenses": "Historical licenses",
   "license.inactiveLicenses": "Inactive licenses",
   "license.licenseAmendments": "License amendments",
+  "license.unsetAmendments": "Unset amendments",
   "license.licenseIndex": "License {index}",
   "license.linkLicense": "Link license",
   "license.linkLicenseToStart": "Link a license to get started",
@@ -259,6 +260,7 @@
   "license.warn.amendmentFuture": "Amendment starts in the future while \"Status (this agreement)\" is \"Current.\"",
   "license.warn.amendmentPast": "Amendment has ended while \"Status (this agreement)\" is \"Current.\"",
   "license.warn.amendmentStatus": "Conflicting statuses: Amendment status is \"{status}\" while \"Status (this agreement)\" is \"Current.\"",
+  "license.warn.unassignedAmendments": "This license has unassigned amendments. Please edit the agreement to rectify.",
 
   "organizations.edit": "Edit organizations",
   "organizations.add": "Add organization to agreement",

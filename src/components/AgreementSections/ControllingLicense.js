@@ -9,6 +9,7 @@ import {
   Badge,
   KeyValue,
   Layout,
+  MessageBanner,
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 import { LicenseCard } from '@folio/stripes-erm-components';
@@ -51,6 +52,7 @@ export default class ControllingLicense extends React.Component {
 
   renderLicense = linkedLicense => {
     const currentAmendments = getLicenseAmendments(linkedLicense, statuses.CURRENT);
+    const unsetAmendments = getLicenseAmendments(linkedLicense, null);
     const licenseRecord = linkedLicense.remoteId_object || {};
 
     return (
@@ -67,6 +69,12 @@ export default class ControllingLicense extends React.Component {
         id="agreement-controlling-license"
         roundedBorder
       >
+        { unsetAmendments.length ?
+          <MessageBanner type='warning'>
+            <FormattedMessage id="ui-agreements.license.warn.unassignedAmendments" />
+          </MessageBanner>
+          : null
+        }
         <LicenseCard
           license={licenseRecord}
           renderName={false}
@@ -85,6 +93,17 @@ export default class ControllingLicense extends React.Component {
               renderStatuses
             />
           </KeyValue>
+          : null
+        }
+        { unsetAmendments.length ?
+          <KeyValue label={<FormattedMessage id={`ui-agreements.license.unsetAmendments`} />}>
+          <LicenseAmendmentList
+            amendments={unsetAmendments}
+            id={`controlling-license-unset-amendments`}
+              license={licenseRecord}
+              license={linkedLicense.remoteId_object}
+          />
+        </KeyValue>
           : null
         }
       </Card>
@@ -130,7 +149,6 @@ export default class ControllingLicense extends React.Component {
             {this.renderLicense(license)}
             {this.renderAmendments(license, statuses.FUTURE)}
             {this.renderAmendments(license, statuses.HISTORICAL)}
-            {this.renderAmendments(license, null)}
           </div>
           :
           <Layout className="padding-bottom-gutter">
