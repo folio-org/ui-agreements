@@ -28,6 +28,23 @@ export default class LicenseAmendmentList extends React.Component {
     renderStatuses: PropTypes.bool,
   }
 
+  renderStatusMismatchWarnings(amendment) {
+    const licenseStatus = amendment.status ? amendment.status.value : null;
+    const agreementStatus = amendment.statusForThisAgreement ? amendment.statusForThisAgreement : null;
+    if (agreementStatus) {
+      if (agreementStatus === 'current') {
+        if (licenseStatus === 'expired') {
+          return 
+        }
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+
+  }
+
   render() {
     const {
       amendments,
@@ -36,18 +53,22 @@ export default class LicenseAmendmentList extends React.Component {
       renderStatuses,
     } = this.props;
 
+    console.log("Props: %o", this.props)
+
     return (
       <MultiColumnList
         columnMapping={{
-          note: '',
+          note: <FormattedMessage id="ui-agreements.note" />,
           name: <FormattedMessage id="ui-agreements.license.amendment" />,
           status: <FormattedMessage id="ui-agreements.status" />,
           startDate: <FormattedMessage id="ui-agreements.license.prop.startDate" />,
           endDate: <FormattedMessage id="ui-agreements.license.prop.endDate" />,
         }}
+        columnWidths={{note: '350px'}}
         contentData={amendments}
         formatter={{
-          note: a => (a.note ? <InfoPopover contentClass={css.note} content={a.note} /> : ''),
+          //note: a => (a.note ? <InfoPopover contentClass={css.note} content={a.note} /> : ''),
+          note: a => (a.note ? a.note : ''),
           name: a => <Link to={urls.amendmentView(license.id, a.id)}>{a.name}</Link>,
           status: a => (a.status ? a.status.label : '-'),
           startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : '-'),
@@ -57,8 +78,8 @@ export default class LicenseAmendmentList extends React.Component {
         interactive={false}
         visibleColumns={
           renderStatuses ?
-            ['note', 'name', 'status', 'startDate', 'endDate'] :
-            ['note', 'name', 'startDate', 'endDate']
+            ['name', 'status', 'startDate', 'endDate', 'note'] :
+            ['name', 'startDate', 'endDate', 'note']
         }
       />
     );
