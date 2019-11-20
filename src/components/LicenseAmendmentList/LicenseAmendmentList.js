@@ -27,6 +27,8 @@ export default class LicenseAmendmentList extends React.Component {
       id: PropTypes.string.isRequired,
     }),
     renderStatuses: PropTypes.bool,
+    renderWarnings: PropTypes.bool,
+    renderNotes: PropTypes.bool,
   }
 
   renderStatusMismatchWarnings(amendment) {
@@ -39,28 +41,24 @@ export default class LicenseAmendmentList extends React.Component {
     if (agreementStatus) {
       // Warnings only show up for current amendments
       if (agreementStatus === statuses.CURRENT) {
-
         // Check if there is a conflict of status expired or rejected
         if (licenseStatus === statuses.EXPIRED || licenseStatus === statuses.REJECTED) {
-          return <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: licenseStatusLabel }} />
-        }
-        // If amendment has a startDate, check it's not in the future 
-        else if (startDate) {
+          return <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: licenseStatusLabel }} />;
+        } else if (startDate) {
+          // If amendment has a startDate, check it's not in the future
           if (new Date(amendment.startDate).getTime() > new Date().getTime()) {
             return <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" />;
           } else {
             return null;
           }
-        }
-        // If amendment has a endDate, check it's not in the past
-        else if (endDate) {
+        } else if (endDate) {
+          // If amendment has a endDate, check it's not in the past
           if (new Date(amendment.endDate).getTime() < new Date().getTime()) {
             return <FormattedMessage id="ui-agreements.license.warn.amendmentPast" />;
           } else {
             return null;
           }
-        }               
-        else {
+        } else {
           return null;
         }
       } else {
@@ -86,7 +84,6 @@ export default class LicenseAmendmentList extends React.Component {
     columns = renderWarnings ? columns : columns.filter(column => column !== 'warning');
     columns = renderNotes ? columns : columns.filter(column => column !== 'note');
 
-    console.log("Props: %o", this.props)
     return (
       <MultiColumnList
         columnMapping={{
@@ -103,7 +100,7 @@ export default class LicenseAmendmentList extends React.Component {
         contentData={amendments}
         formatter={{
           warning: a => (
-            this.renderStatusMismatchWarnings(a) ? 
+            this.renderStatusMismatchWarnings(a) ?
               <Tooltip
                 id={`warning-tooltip-${a.id}`}
                 text={this.renderStatusMismatchWarnings(a)}
@@ -113,13 +110,13 @@ export default class LicenseAmendmentList extends React.Component {
                   // For the time being I'm using the workaround of a <span> while we wait to see what can/should be added to the 'Icon' component
                   <span ref={ref} aria-label={ariaIds.text}>
                     <Icon
-                      icon='exclamation-circle'
+                      icon="exclamation-circle"
                       iconClassName={css.tooltipIcon}
                     />
                   </span>
                 )}
               </Tooltip> : ''
-            ),
+          ),
           note: a => (a.note ? a.note : ''),
           name: a => <Link to={urls.amendmentView(license.id, a.id)}>{a.name}</Link>,
           status: a => (a.status ? a.status.label : '-'),
