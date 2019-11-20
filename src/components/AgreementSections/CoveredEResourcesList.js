@@ -112,18 +112,20 @@ export default class CoveredEResourcesList extends React.Component {
       open={this.state.exportDropdownOpen}
       disabled={this.props.eresourcesFilterPath === 'dropped' || this.props.eresourcesFilterPath === 'future'}
     >
-
       <DropdownButton
         data-role="toggle"
       >
         <FormattedMessage id="ui-agreements.eresourcesCovered.exportAs" />
       </DropdownButton>
-      <DropdownMenu data-role="menu">
+      <DropdownMenu
+        data-role="menu"
+      >
         <FormattedMessage id="ui-agreements.eresourcesCovered.exportAsJSON">
           {exportAsJson => (
             <Button
               aria-label={exportAsJson}
               buttonStyle="dropdownItem"
+              disabled={this.props.eresourcesFilterPath === 'dropped' || this.props.eresourcesFilterPath === 'future'}
               id="clickable-dropdown-export-eresources-json"
               onClick={() => {
                 this.setState({ exportDropdownOpen: false });
@@ -139,6 +141,7 @@ export default class CoveredEResourcesList extends React.Component {
             <Button
               aria-label={exportAsKbart}
               buttonStyle="dropdownItem"
+              disabled={this.props.eresourcesFilterPath === 'dropped' || this.props.eresourcesFilterPath === 'future'}
               id="clickable-dropdown-export-eresources-kbart"
               onClick={() => {
                 this.setState({ exportDropdownOpen: false });
