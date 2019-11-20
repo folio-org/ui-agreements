@@ -131,7 +131,7 @@ export default class CoveredEResourcesList extends React.Component {
             {({ ref, ariaIds }) => (
               <div
                 ref={ref}
-                aria-labelledby={ariaIds.text}
+                aria-describedby={ariaIds.text}
               >
                 {this.renderDropdownButton(disabled)}
               </div>
