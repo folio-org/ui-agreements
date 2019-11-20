@@ -242,10 +242,14 @@ class AgreementViewRoute extends React.Component {
     try {
       const text = await response.text(); // Parse it as text
       const data = JSON.parse(text); // Try to parse it as json
-      if (response.ok && data.id) history.push(`${urls.agreementEdit(data.id)}${location.search}`);
-      return 'json error';
+      if (response.ok) {
+        if (data.id) history.push(`${urls.agreementEdit(data.id)}${location.search}`);
+        else throw new Error('invalidJsonError'); // when the json response body doesn't contain an id
+      } else {
+        throw new Error('jsonError'); // when a json error is sent up from the backend
+      }
     } catch (error) {
-      return error;
+      throw error; // will also catch the text errors from the backend
     }
   }
 
