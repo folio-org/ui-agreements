@@ -33,13 +33,33 @@ export default class LicenseAmendmentList extends React.Component {
     const licenseStatus = amendment.status ? amendment.status.value : null;
     const licenseStatusLabel = amendment.status ? amendment.status.label : null;
     const agreementStatus = amendment.statusForThisAgreement ? amendment.statusForThisAgreement.value : null;
+    const startDate = amendment.startDate ? amendment.startDate : null;
+    const endDate = amendment.endDate ? amendment.endDate : null;
     if (agreementStatus) {
+      // Warnings only show up for current amendments
       if (agreementStatus === statuses.CURRENT) {
-        console.log("Agreement status is current")
+
+        // Check if there is a conflict of status expired or rejected
         if (licenseStatus === statuses.EXPIRED || licenseStatus === statuses.REJECTED) {
-          console.log("Conflict detected")
           return <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: licenseStatusLabel }} />
-        } else {
+        }
+        // If amendment has a startDate, check it's not in the future 
+        if (startDate) {
+          if (new Date(amendment.startDate).getTime() > new Date().getTime()) {
+            return <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" />;
+          } else {
+            return null;
+          }
+        }
+        // If amendment has a endDate, check it's not in the past
+        if (endDate) {
+          if (new Date(amendment.endDate).getTime() < new Date().getTime()) {
+            return <FormattedMessage id="ui-agreements.license.warn.amendmentPast" />;
+          } else {
+            return null;
+          }
+        }               
+        else {
           return null;
         }
       } else {
@@ -48,7 +68,6 @@ export default class LicenseAmendmentList extends React.Component {
     } else {
       return null;
     }
-
   }
 
   render() {
