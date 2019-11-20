@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
 
-import { InfoPopover, MultiColumnList } from '@folio/stripes/components';
+import { InfoPopover, MultiColumnList, Tooltip } from '@folio/stripes/components';
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 
+import { statuses } from '../../constants';
 import FormattedUTCDate from '../FormattedUTCDate';
 import { urls } from '../utilities';
 import css from './LicenseAmendmentList.css';
@@ -30,11 +31,16 @@ export default class LicenseAmendmentList extends React.Component {
 
   renderStatusMismatchWarnings(amendment) {
     const licenseStatus = amendment.status ? amendment.status.value : null;
-    const agreementStatus = amendment.statusForThisAgreement ? amendment.statusForThisAgreement : null;
+    const licenseStatusLabel = amendment.status ? amendment.status.label : null;
+    const agreementStatus = amendment.statusForThisAgreement ? amendment.statusForThisAgreement.value : null;
     if (agreementStatus) {
-      if (agreementStatus === 'current') {
-        if (licenseStatus === 'expired') {
-          return 
+      if (agreementStatus === statuses.CURRENT) {
+        console.log("Agreement status is current")
+        if (licenseStatus === statuses.EXPIRED || licenseStatus === statuses.REJECTED) {
+          console.log("Conflict detected")
+          return <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: licenseStatusLabel }} />
+        } else {
+          return null;
         }
       } else {
         return null;
@@ -58,6 +64,7 @@ export default class LicenseAmendmentList extends React.Component {
     return (
       <MultiColumnList
         columnMapping={{
+          warning: '',
           note: <FormattedMessage id="ui-agreements.note" />,
           name: <FormattedMessage id="ui-agreements.license.amendment" />,
           status: <FormattedMessage id="ui-agreements.status" />,
@@ -67,7 +74,8 @@ export default class LicenseAmendmentList extends React.Component {
         columnWidths={{note: '350px'}}
         contentData={amendments}
         formatter={{
-          //note: a => (a.note ? <InfoPopover contentClass={css.note} content={a.note} /> : ''),
+          //warning: a => (this.renderStatusMismatchWarnings(a) ? <InfoPopover contentClass={css.note} content={this.renderStatusMismatchWarnings(a)} /> : ''),
+          warning: a => (this.renderStatusMismatchWarnings(a) ? <InfoPopover contentClass={css.note} content={this.renderStatusMismatchWarnings(a)} /> : ''),
           note: a => (a.note ? a.note : ''),
           name: a => <Link to={urls.amendmentView(license.id, a.id)}>{a.name}</Link>,
           status: a => (a.status ? a.status.label : '-'),
@@ -78,8 +86,8 @@ export default class LicenseAmendmentList extends React.Component {
         interactive={false}
         visibleColumns={
           renderStatuses ?
-            ['name', 'status', 'startDate', 'endDate', 'note'] :
-            ['name', 'startDate', 'endDate', 'note']
+            ['warning', 'name', 'status', 'startDate', 'endDate', 'note'] :
+            ['warning', 'name', 'startDate', 'endDate', 'note']
         }
       />
     );
