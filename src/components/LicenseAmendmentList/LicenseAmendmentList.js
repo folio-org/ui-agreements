@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
 
-import { IconButton, MultiColumnList, Tooltip } from '@folio/stripes/components';
+import { IconButton, Icon, MultiColumnList, Tooltip } from '@folio/stripes/components';
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 
 import { statuses } from '../../constants';
@@ -77,7 +77,14 @@ export default class LicenseAmendmentList extends React.Component {
       id,
       license,
       renderStatuses,
+      renderWarnings,
+      renderNotes,
     } = this.props;
+
+    let columns = ['warning', 'name', 'status', 'startDate', 'endDate', 'note'];
+    columns = renderStatuses ? columns : columns.filter(column => column !== 'status');
+    columns = renderWarnings ? columns : columns.filter(column => column !== 'warning');
+    columns = renderNotes ? columns : columns.filter(column => column !== 'note');
 
     console.log("Props: %o", this.props)
     return (
@@ -95,20 +102,21 @@ export default class LicenseAmendmentList extends React.Component {
         }} */
         contentData={amendments}
         formatter={{
-          //warning: a => (this.renderStatusMismatchWarnings(a) ? <InfoPopover contentClass={css.note} content={this.renderStatusMismatchWarnings(a)} /> : ''),
           warning: a => (
             this.renderStatusMismatchWarnings(a) ? 
               <Tooltip
                 id={`warning-tooltip-${a.id}`}
-                text={this.renderStatusMismatchWarnings(a)}
+                //text={this.renderStatusMismatchWarnings(a)}
+                text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                placement="left"
               >
                 {({ ref, ariaIds }) => (
-                  <IconButton
-                    icon='exclamation-circle'
-                    ariaLabel={ariaIds.text}
-                    className={css.tooltipIcon}
-                    ref={ref}
-                  />
+                  <span ref={ref} aria-label={ariaIds.text}>
+                    <Icon
+                      icon='exclamation-circle'
+                      iconClassName={css.tooltipIcon}
+                    />
+                  </span>
                 )}
               </Tooltip> : ''
             ),
@@ -120,11 +128,7 @@ export default class LicenseAmendmentList extends React.Component {
         }}
         id={id}
         interactive={false}
-        visibleColumns={
-          renderStatuses ?
-            ['warning', 'name', 'status', 'startDate', 'endDate', 'note'] :
-            ['name', 'startDate', 'endDate', 'note']
-        }
+        visibleColumns={columns}
       />
     );
   }
