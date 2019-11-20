@@ -12,6 +12,7 @@ import {
 } from '@folio/stripes/components';
 
 import css from './DuplicateAgreementModal.css';
+import { errorTypes } from '../../constants';
 
 export default class DuplicateAgreementModal extends React.Component {
   static propTypes = {
@@ -103,7 +104,7 @@ export default class DuplicateAgreementModal extends React.Component {
               .catch(error => {
                 const errorMessage = (
                   <Layout className="display-flex flex-direction-column">
-                    {error.message === 'invalidJsonError' ?
+                    {error.message === errorTypes.INVALID_JSON_ERROR ?
                       <FormattedMessage id="ui-agreements.duplicateAgreementModal.errors.invalidResponseError" /> :
                       <FormattedMessage id="ui-agreements.duplicateAgreementModal.errors.cloneEndpointError" />
                     }

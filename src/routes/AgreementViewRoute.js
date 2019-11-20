@@ -10,6 +10,7 @@ import { Tags } from '@folio/stripes-erm-components';
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/views/Agreement';
 import { urls } from '../components/utilities';
+import { errorTypes } from '../constants';
 
 import { joinRelatedAgreements } from './utilities/processRelatedAgreements';
 
@@ -244,9 +245,9 @@ class AgreementViewRoute extends React.Component {
       const data = JSON.parse(text); // Try to parse it as json
       if (response.ok) {
         if (data.id) history.push(`${urls.agreementEdit(data.id)}${location.search}`);
-        else throw new Error('invalidJsonError'); // when the json response body doesn't contain an id
+        else throw new Error(errorTypes.INVALID_JSON_ERROR); // when the json response body doesn't contain an id
       } else {
-        throw new Error('jsonError'); // when a json error is sent up from the backend
+        throw new Error(errorTypes.JSON_ERROR); // when a json error is sent up from the backend
       }
     } catch (error) {
       throw error; // will also catch the text errors from the backend
