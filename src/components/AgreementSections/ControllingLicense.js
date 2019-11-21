@@ -124,8 +124,9 @@ export default class ControllingLicense extends React.Component {
           amendments={amendments}
           id={`controlling-license-${statusString}-amendments`}
           license={linkedLicense.remoteId_object}
-          renderStatuses={status !== statuses.HISTORICAL}
-          renderNotes={status !== null}
+          renderWarnings={statusString === statuses.CURRENT}
+          renderStatuses={statusString !== statuses.HISTORICAL}
+          renderNotes={statusString !== statuses.UNSET}
         />
       </KeyValue>
     );
