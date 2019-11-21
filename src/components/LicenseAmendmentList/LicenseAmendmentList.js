@@ -7,10 +7,8 @@ import { get } from 'lodash';
 import { Icon, MultiColumnList, Tooltip } from '@folio/stripes/components';
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 
-import { statuses } from '../../constants';
-import { validators } from '../utilities';
 import FormattedUTCDate from '../FormattedUTCDate';
-import { urls } from '../utilities';
+import { urls, validators } from '../utilities';
 import css from './LicenseAmendmentList.css';
 
 export default class LicenseAmendmentList extends React.Component {
@@ -37,12 +35,10 @@ export default class LicenseAmendmentList extends React.Component {
     const statusInLicense = get(amendment, 'status.value');
     const statusInLicenseLabel = get(amendment, 'status.label');
     const statusInAgreement = get(amendment, 'statusForThisAgreement.value');
-    const { startDate, endDate} = amendment;
+    const { startDate, endDate } = amendment;
 
     return validators.amendmentWarning(statusInAgreement, statusInLicense, statusInLicenseLabel, startDate, endDate);
   }
-
-
 
 
   render() {
