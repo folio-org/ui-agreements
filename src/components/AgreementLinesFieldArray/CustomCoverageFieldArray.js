@@ -40,6 +40,7 @@ class CustomCoverageFieldArray extends React.Component {
         header={<FormattedMessage id="ui-agreements.agreementLines.customCoverageTitle" values={{ number: index + 1 }} />}
         key={index}
         onDelete={() => this.props.onDeleteField(index, coverage)}
+        hasMargin
       >
         <div>
           <Row>
