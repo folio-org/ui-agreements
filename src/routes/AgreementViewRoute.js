@@ -10,6 +10,7 @@ import { Tags } from '@folio/stripes-erm-components';
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/views/Agreement';
 import { urls } from '../components/utilities';
+import { errorTypes } from '../constants';
 
 import { joinRelatedAgreements } from './utilities/processRelatedAgreements';
 
@@ -226,10 +227,10 @@ class AgreementViewRoute extends React.Component {
       .find(i => i.id === id);
   }
 
-  handleClone = (cloneableProperties) => {
+  handleClone = async (cloneableProperties) => {
     const { history, location, match, stripes: { okapi } } = this.props;
 
-    return fetch(`${okapi.url}/erm/sas/${match.params.id}/clone`, {
+    const response = await fetch(`${okapi.url}/erm/sas/${match.params.id}/clone`, {
       method: 'POST',
       headers: {
         'X-Okapi-Tenant': okapi.tenant,
@@ -237,10 +238,20 @@ class AgreementViewRoute extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(cloneableProperties),
-    }).then(response => response.json())
-      .then(({ id }) => {
-        history.push(`${urls.agreementEdit(id)}${location.search}`);
-      });
+    });
+
+    try {
+      const text = await response.text(); // Parse it as text
+      const data = JSON.parse(text); // Try to parse it as json
+      if (response.ok) {
+        if (data.id) history.push(`${urls.agreementEdit(data.id)}${location.search}`);
+        else throw new Error(errorTypes.INVALID_JSON_ERROR); // when the json response body doesn't contain an id
+      } else {
+        throw new Error(errorTypes.JSON_ERROR); // when a json error is sent up from the backend
+      }
+    } catch (error) {
+      throw error; // will also catch the text errors from the backend
+    }
   }
 
   handleClose = () => {
