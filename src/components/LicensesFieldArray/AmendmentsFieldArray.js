@@ -111,24 +111,8 @@ class AmendmentsFieldArray extends React.Component {
                         onChange={(e) => {
                           const { value } = e.target;
 
-                          let warning;
-                          warning = validators.amendmentWarning(value, )
-                          if (value === statuses.CURRENT) {
-                            if (new Date(amendment.startDate).getTime() > new Date().getTime()) {
-                              warning = <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" />;
-                            }
-
-                            // Amendment end date is in the past
-                            if (new Date(amendment.endDate).getTime() < new Date().getTime()) {
-                              warning = <FormattedMessage id="ui-agreements.license.warn.amendmentPast" />;
-                            }
-
-                            // Amendment has an invalid status.
-                            const linkedStatus = get(amendment, 'status', {});
-                            if (linkedStatus.value === statuses.EXPIRED || linkedStatus.value === statuses.REJECTED) {
-                              warning = <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: linkedStatus.label }} />;
-                            }
-                          }
+                          const linkedStatus = get(amendment, 'status', {});
+                          const warning = validators.amendmentWarning(value, linkedStatus.value, linkedStatus.value, amendment.startDate, amendment.endDate)
 
                           this.setState(prevState => {
                             const warnings = [...prevState.warnings];
