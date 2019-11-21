@@ -101,17 +101,15 @@ export default class ControllingLicense extends React.Component {
 
     if (!amendments.length) return null;
 
-    const statusString = status || 'unset';
-
     return (
-      <KeyValue label={<FormattedMessage id={`ui-agreements.license.${statusString}Amendments`} />}>
+      <KeyValue label={<FormattedMessage id={`ui-agreements.license.${status}Amendments`} />}>
         <LicenseAmendmentList
           amendments={amendments}
-          id={`controlling-license-${statusString}-amendments`}
+          id={`controlling-license-${status}-amendments`}
           license={linkedLicense.remoteId_object}
-          renderWarnings={statusString === statuses.CURRENT}
-          renderStatuses={statusString !== statuses.HISTORICAL}
-          renderNotes={statusString !== statuses.UNSET}
+          renderWarnings={status === statuses.CURRENT}
+          renderStatuses={status !== statuses.HISTORICAL}
+          renderNotes={status !== statuses.UNSET}
         />
       </KeyValue>
     );
