@@ -75,6 +75,7 @@ class LicensesFieldArray extends React.Component {
         id={`${name}-remoteId-${index}-license-card`}
         key={index}
         onDelete={() => onDeleteField(index, license)}
+        hasMargin
       >
         <Field
           component={LicenseField}
