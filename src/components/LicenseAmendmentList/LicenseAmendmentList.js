@@ -37,20 +37,9 @@ export default class LicenseAmendmentList extends React.Component {
     const statusInLicense = get(amendment, 'status.value');
     const statusInLicenseLabel = get(amendment, 'status.label');
     const statusInAgreement = get(amendment, 'statusForThisAgreement.value');
-    const startDate = get(amendment, 'startDate')
-    const endDate = get(amendment, 'endDate')
+    const { startDate, endDate} = amendment;
 
     return validators.amendmentWarning(statusInAgreement, statusInLicense, statusInLicenseLabel, startDate, endDate);
-    /* if (statusInAgreement === statuses.CURRENT) {
-      if (statusInLicense === statuses.EXPIRED || statusInLicense === statuses.REJECTED) {
-        return <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: statusInLicenseLabel }} />;
-      } else if (startDate && new Date(startDate).getTime() > new Date().getTime()) {
-        return <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" />;
-      } else if (endDate && new Date(endDate).getTime() < new Date().getTime()) {
-        return <FormattedMessage id="ui-agreements.license.warn.amendmentPast" />;
-      }
-    }
-    return null; */
   }
 
 
