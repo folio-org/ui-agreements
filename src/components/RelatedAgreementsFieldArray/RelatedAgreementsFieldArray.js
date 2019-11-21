@@ -83,6 +83,7 @@ class RelatedAgreementsFieldArray extends React.Component {
         id={`edit-ra-card-${index}`}
         key={index}
         onDelete={() => this.props.onDeleteField(index, relatedAgreement)}
+        hasMargin
       >
         <Field
           component={RelatedAgreementField}
