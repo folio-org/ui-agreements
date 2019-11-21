@@ -1,4 +1,5 @@
 import { get } from 'lodash';
+import statuses from '../../constants/statuses';
 
 export default (linkedLicense, status) => {
   const linkedAmendments = linkedLicense.amendments || [];
@@ -20,7 +21,7 @@ export default (linkedLicense, status) => {
     });
 
   if (status !== undefined) {
-    return amendments.filter(a => get(a, 'statusForThisAgreement.value', null) === status);
+    return amendments.filter(a => get(a, 'statusForThisAgreement.value', statuses.UNSET) === status);
   }
 
   return amendments;

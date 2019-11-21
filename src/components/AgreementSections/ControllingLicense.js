@@ -52,7 +52,7 @@ export default class ControllingLicense extends React.Component {
 
   renderLicense = linkedLicense => {
     const currentAmendments = getLicenseAmendments(linkedLicense, statuses.CURRENT);
-    const unsetAmendments = getLicenseAmendments(linkedLicense, null);
+    const unsetAmendments = getLicenseAmendments(linkedLicense, statuses.UNSET);
     const licenseRecord = linkedLicense.remoteId_object || {};
 
     return (
@@ -89,7 +89,7 @@ export default class ControllingLicense extends React.Component {
           : null
         }
         { unsetAmendments.length ?
-          this.renderAmendments(linkedLicense, null)
+          this.renderAmendments(linkedLicense, statuses.UNSET)
           : null
         }
       </Card>
@@ -137,7 +137,6 @@ export default class ControllingLicense extends React.Component {
             {this.renderLicense(license)}
             {this.renderAmendments(license, statuses.FUTURE)}
             {this.renderAmendments(license, statuses.HISTORICAL)}
-            {this.renderAmendments(license, statuses.UNSET)}
           </div>
           :
           <Layout className="padding-bottom-gutter">
