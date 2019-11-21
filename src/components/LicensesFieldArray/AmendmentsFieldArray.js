@@ -112,6 +112,7 @@ class AmendmentsFieldArray extends React.Component {
                           const { value } = e.target;
 
                           let warning;
+                          warning = validators.amendmentWarning(value, )
                           if (value === statuses.CURRENT) {
                             if (new Date(amendment.startDate).getTime() > new Date().getTime()) {
                               warning = <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" />;

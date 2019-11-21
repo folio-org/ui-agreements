@@ -8,6 +8,7 @@ import { Icon, MultiColumnList, Tooltip } from '@folio/stripes/components';
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 
 import { statuses } from '../../constants';
+import { validators } from '../utilities';
 import FormattedUTCDate from '../FormattedUTCDate';
 import { urls } from '../utilities';
 import css from './LicenseAmendmentList.css';
@@ -39,7 +40,8 @@ export default class LicenseAmendmentList extends React.Component {
     const startDate = get(amendment, 'startDate')
     const endDate = get(amendment, 'endDate')
 
-    if (statusInAgreement === statuses.CURRENT) {
+    return validators.amendmentWarning(statusInAgreement, statusInLicense, statusInLicenseLabel, startDate, endDate);
+    /* if (statusInAgreement === statuses.CURRENT) {
       if (statusInLicense === statuses.EXPIRED || statusInLicense === statuses.REJECTED) {
         return <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: statusInLicenseLabel }} />;
       } else if (startDate && new Date(startDate).getTime() > new Date().getTime()) {
@@ -48,7 +50,7 @@ export default class LicenseAmendmentList extends React.Component {
         return <FormattedMessage id="ui-agreements.license.warn.amendmentPast" />;
       }
     }
-    return null;
+    return null; */
   }
 
 
