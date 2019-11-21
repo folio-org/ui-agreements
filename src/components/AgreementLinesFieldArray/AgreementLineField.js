@@ -205,6 +205,7 @@ export default class AgreementLineField extends React.Component {
         deleteButtonTooltipText={<FormattedMessage id="ui-agreements.agreementLines.removeLine" />}
         header={<FormattedMessage id="ui-agreements.agreementLines.lineTitle" values={{ number: index + 1 }} />}
         onDelete={this.props.onDelete}
+        hasMargin
       >
         <React.Fragment>
           {

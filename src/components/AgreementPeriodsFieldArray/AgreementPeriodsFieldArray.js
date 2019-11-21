@@ -45,6 +45,7 @@ class AgreementPeriodsFieldArray extends React.Component {
         header={<FormattedMessage id="ui-agreements.agreementPeriods.periodTitle" values={{ number: index + 1 }} />}
         key={index}
         onDelete={index !== 0 ? () => this.props.onDeleteField(index, period) : undefined}
+        hasMargin
       >
         <div>
           <Row>
