@@ -67,6 +67,7 @@ class POLinesFieldArray extends React.Component {
         id={`edit-ra-card-${agreementLineIndex}-${index}`}
         key={index}
         onDelete={() => this.props.onDeleteField(index, poLine)}
+        hasMargin
       >
         <Field
           component={POLineField}
