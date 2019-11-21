@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
+import { get } from 'lodash';
 
 import { Icon, MultiColumnList, Tooltip } from '@folio/stripes/components';
 import { LicenseEndDate } from '@folio/stripes-erm-components';
@@ -32,42 +33,26 @@ export default class LicenseAmendmentList extends React.Component {
   }
 
   renderStatusMismatchWarnings(amendment) {
-    const licenseStatus = amendment.status ? amendment.status.value : null;
-    const licenseStatusLabel = amendment.status ? amendment.status.label : null;
-    const agreementStatus = amendment.statusForThisAgreement ? amendment.statusForThisAgreement.value : null;
-    const startDate = amendment.startDate ? amendment.startDate : null;
-    const endDate = amendment.endDate ? amendment.endDate : null;
+    const statusInLicense = get(amendment, 'status.value');
+    const statusInLicenseLabel = get(amendment, 'status.label');
+    const statusInAgreement = get(amendment, 'statusForThisAgreement.value');
+    const startDate = get(amendment, 'startDate')
+    const endDate = get(amendment, 'endDate')
 
-    if (agreementStatus) {
-      // Warnings only show up for current amendments
-      if (agreementStatus === statuses.CURRENT) {
-        // Check if there is a conflict of status expired or rejected
-        if (licenseStatus === statuses.EXPIRED || licenseStatus === statuses.REJECTED) {
-          return <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: licenseStatusLabel }} />;
-        } else if (startDate) {
-          // If amendment has a startDate, check it's not in the future
-          if (new Date(amendment.startDate).getTime() > new Date().getTime()) {
-            return <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" />;
-          } else {
-            return null;
-          }
-        } else if (endDate) {
-          // If amendment has a endDate, check it's not in the past
-          if (new Date(amendment.endDate).getTime() < new Date().getTime()) {
-            return <FormattedMessage id="ui-agreements.license.warn.amendmentPast" />;
-          } else {
-            return null;
-          }
-        } else {
-          return null;
-        }
-      } else {
-        return null;
+    if (statusInAgreement === statuses.CURRENT) {
+      if (statusInLicense === statuses.EXPIRED || statusInLicense === statuses.REJECTED) {
+        return <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: statusInLicenseLabel }} />;
+      } else if (startDate && new Date(startDate).getTime() > new Date().getTime()) {
+        return <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" />;
+      } else if (endDate && new Date(endDate).getTime() < new Date().getTime()) {
+        return <FormattedMessage id="ui-agreements.license.warn.amendmentPast" />;
       }
-    } else {
-      return null;
     }
+    return null;
   }
+
+
+
 
   render() {
     const {
