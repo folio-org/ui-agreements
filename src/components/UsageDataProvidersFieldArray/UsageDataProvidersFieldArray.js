@@ -50,6 +50,7 @@ class UsageDataProvidersFieldArray extends React.Component {
         id={`edit-udp-card-${index}`}
         key={index}
         onDelete={() => this.props.onDeleteField(index, udp)}
+        hasMargin
       >
         <Field
           component={UsageDataProviderField}
