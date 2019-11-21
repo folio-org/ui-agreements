@@ -227,10 +227,10 @@ class AgreementViewRoute extends React.Component {
       .find(i => i.id === id);
   }
 
-  handleClone = async (cloneableProperties) => {
+  handleClone = (cloneableProperties) => {
     const { history, location, match, stripes: { okapi } } = this.props;
 
-    const response = await fetch(`${okapi.url}/erm/sas/${match.params.id}/clone`, {
+    return fetch(`${okapi.url}/erm/sas/${match.params.id}/clone`, {
       method: 'POST',
       headers: {
         'X-Okapi-Tenant': okapi.tenant,
@@ -238,20 +238,22 @@ class AgreementViewRoute extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(cloneableProperties),
-    });
-
-    try {
-      const text = await response.text(); // Parse it as text
-      const data = JSON.parse(text); // Try to parse it as json
+    }).then(response => {
       if (response.ok) {
-        if (data.id) history.push(`${urls.agreementEdit(data.id)}${location.search}`);
-        else throw new Error(errorTypes.INVALID_JSON_ERROR); // when the json response body doesn't contain an id
+        return response.text(); // Parse it as text
       } else {
-        throw new Error(errorTypes.JSON_ERROR); // when a json error is sent up from the backend
+        throw new Error(errorTypes.JSON_ERROR);
       }
-    } catch (error) {
-      throw error; // will also catch the text errors from the backend
-    }
+    }).then(text => {
+      const data = JSON.parse(text); // Try to parse it as json
+      if (data.id) {
+        return Promise.resolve(history.push(`${urls.agreementEdit(data.id)}${location.search}`));
+      } else {
+        throw new Error(errorTypes.INVALID_JSON_ERROR); // when the json response body doesn't contain an id
+      }
+    }).catch(error => {
+      throw error;
+    });
   }
 
   handleClose = () => {
