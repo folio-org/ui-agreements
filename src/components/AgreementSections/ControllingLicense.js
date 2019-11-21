@@ -85,26 +85,11 @@ export default class ControllingLicense extends React.Component {
           </KeyValue>
         }
         { currentAmendments.length ?
-          <KeyValue label={<FormattedMessage id="ui-agreements.license.currentAmendments" />}>
-            <LicenseAmendmentList
-              amendments={currentAmendments}
-              id="controlling-license-current-amendments"
-              license={licenseRecord}
-              renderStatuses
-              renderWarnings
-              renderNotes
-            />
-          </KeyValue>
+          this.renderAmendments(linkedLicense, statuses.CURRENT)
           : null
         }
         { unsetAmendments.length ?
-          <KeyValue label={<FormattedMessage id="ui-agreements.license.unsetAmendments" />}>
-            <LicenseAmendmentList
-              amendments={unsetAmendments}
-              id="controlling-license-unset-amendments"
-              license={licenseRecord}
-            />
-          </KeyValue>
+          this.renderAmendments(linkedLicense, null)
           : null
         }
       </Card>
@@ -152,6 +137,7 @@ export default class ControllingLicense extends React.Component {
             {this.renderLicense(license)}
             {this.renderAmendments(license, statuses.FUTURE)}
             {this.renderAmendments(license, statuses.HISTORICAL)}
+            {this.renderAmendments(license, statuses.UNSET)}
           </div>
           :
           <Layout className="padding-bottom-gutter">
