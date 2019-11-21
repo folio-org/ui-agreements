@@ -23,7 +23,7 @@ const checkBoxes = {
   'usageData': 8
 };
 
-const onClone = spy();
+const onClone = spy(() => Promise.resolve());
 const onClose = spy();
 
 describe('DuplicateAgreementModal', () => {
