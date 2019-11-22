@@ -110,8 +110,7 @@ class AmendmentsFieldArray extends React.Component {
                         onChange={(e) => {
                           const { value } = e.target;
 
-                          const linkedStatus = get(amendment, 'status', {});
-                          const warning = getConflictWarnings.amendmentWarning(value, linkedStatus.value, linkedStatus.value, amendment.startDate, amendment.endDate);
+                          const warning = getConflictWarnings.amendmentWarning(amendment, value);
 
                           this.setState(prevState => {
                             const warnings = [...prevState.warnings];

@@ -1,11 +1,16 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { get } from 'lodash';
+
 import statuses from '../../constants/statuses';
 
-const amendmentWarning = (statusInAgreement, statusInLicense, statusInLicenseLabel, startDate, endDate) => {
+const amendmentWarning = (amendment, statusInAgreement) => {
+  const statusInLicense = get(amendment, 'status');
+  const { startDate, endDate } = amendment;
+
   if (statusInAgreement === statuses.CURRENT) {
-    if (statusInLicense === statuses.EXPIRED || statusInLicense === statuses.REJECTED) {
-      return <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: statusInLicenseLabel }} />;
+    if (statusInLicense.value === statuses.EXPIRED || statusInLicense.value === statuses.REJECTED) {
+      return <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: statusInLicense.label }} />;
     } else if (startDate && new Date(startDate).getTime() > new Date().getTime()) {
       return <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" />;
     } else if (endDate && new Date(endDate).getTime() < new Date().getTime()) {

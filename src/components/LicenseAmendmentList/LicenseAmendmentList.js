@@ -32,12 +32,8 @@ export default class LicenseAmendmentList extends React.Component {
   }
 
   renderStatusMismatchWarnings(amendment) {
-    const statusInLicense = get(amendment, 'status.value');
-    const statusInLicenseLabel = get(amendment, 'status.label');
     const statusInAgreement = get(amendment, 'statusForThisAgreement.value');
-    const { startDate, endDate } = amendment;
-
-    return getConflictWarnings.amendmentWarning(statusInAgreement, statusInLicense, statusInLicenseLabel, startDate, endDate);
+    return getConflictWarnings.amendmentWarning(amendment, statusInAgreement);
   }
 
 
