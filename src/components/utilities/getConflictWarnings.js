@@ -4,11 +4,12 @@ import { get } from 'lodash';
 
 import statuses from '../../constants/statuses';
 
-const amendmentWarning = (amendment, statusInAgreement) => {
+const amendmentWarning = (amendment) => {
+  const statusInAgreement = get(amendment, 'statusForThisAgreement')
   const statusInLicense = get(amendment, 'status');
   const { startDate, endDate } = amendment;
 
-  if (statusInAgreement === statuses.CURRENT) {
+  if (statusInAgreement.value === statuses.CURRENT) {
     if (statusInLicense.value === statuses.EXPIRED || statusInLicense.value === statuses.REJECTED) {
       return <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: statusInLicense.label }} />;
     } else if (startDate && new Date(startDate).getTime() > new Date().getTime()) {

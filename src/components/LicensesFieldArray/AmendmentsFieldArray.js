@@ -110,7 +110,10 @@ class AmendmentsFieldArray extends React.Component {
                         onChange={(e) => {
                           const { value } = e.target;
 
-                          const warning = getConflictWarnings.amendmentWarning(amendment, value);
+                          const warning = getConflictWarnings.amendmentWarning({
+                            ...amendment,
+                            statusForThisAgreement: { value },
+                          });
 
                           this.setState(prevState => {
                             const warnings = [...prevState.warnings];

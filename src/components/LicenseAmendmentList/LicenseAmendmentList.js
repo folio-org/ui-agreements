@@ -33,7 +33,7 @@ export default class LicenseAmendmentList extends React.Component {
 
   renderStatusMismatchWarnings(amendment) {
     const statusInAgreement = get(amendment, 'statusForThisAgreement.value');
-    return getConflictWarnings.amendmentWarning(amendment, statusInAgreement);
+    return getConflictWarnings.amendmentWarning(amendment);
   }
 
 
