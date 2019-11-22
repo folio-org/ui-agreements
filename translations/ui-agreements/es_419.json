@@ -301,8 +301,14 @@
     "duplicateAgreementModal.internalContacts": "Internal contacts",
     "duplicateAgreementModal.agreementLines": "Agreement lines",
     "duplicateAgreementModal.linkedLicenses": "Linked licenses",
-    "duplicateAgreementModal.externalLicenses": "External licenses",
+    "duplicateAgreementModal.externalLicenses": "Licencias externas",
     "duplicateAgreementModal.organizations": "Organizations",
     "duplicateAgreementModal.supplementaryInformation": "Supplementary information",
-    "duplicateAgreementModal.usageData": "Usage data"
+    "duplicateAgreementModal.usageData": "Datos de uso",
+    "close": "Cerrar",
+    "duplicateAgreementModal.error": "Error: the agreement was not duplicated",
+    "duplicateAgreementModal.errors.cloneEndpointError": "Unable to duplicate the agreement. The clone endpoint could not be accessed.",
+    "duplicateAgreementModal.errors.invalidResponseError": "Unable to duplicate the agreement. The response received from the server was invalid.",
+    "duplicateAgreementModal.errors.systemAdministrator": "If the problem persists contact your system administrator.",
+    "duplicateAgreementModal.errors.tryAgain": "Por favor, intenta de nuevo."
 }
