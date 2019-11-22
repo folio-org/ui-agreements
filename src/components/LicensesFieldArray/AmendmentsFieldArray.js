@@ -7,7 +7,7 @@ import { Field } from 'react-final-form';
 import { Card, Col, Headline, MessageBanner, KeyValue, Row, Select, TextArea } from '@folio/stripes/components';
 import { LicenseEndDate, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
-import { urls, validators } from '../utilities';
+import { urls, getConflictWarnings, validators } from '../utilities';
 import FormattedUTCDate from '../FormattedUTCDate';
 
 class AmendmentsFieldArray extends React.Component {
@@ -111,7 +111,7 @@ class AmendmentsFieldArray extends React.Component {
                           const { value } = e.target;
 
                           const linkedStatus = get(amendment, 'status', {});
-                          const warning = validators.amendmentWarning(value, linkedStatus.value, linkedStatus.value, amendment.startDate, amendment.endDate);
+                          const warning = getConflictWarnings.amendmentWarning(value, linkedStatus.value, linkedStatus.value, amendment.startDate, amendment.endDate);
 
                           this.setState(prevState => {
                             const warnings = [...prevState.warnings];
