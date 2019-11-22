@@ -25,9 +25,9 @@ export default class LicenseAmendmentList extends React.Component {
     license: PropTypes.shape({
       id: PropTypes.string.isRequired,
     }),
+    renderNotes: PropTypes.bool,
     renderStatuses: PropTypes.bool,
     renderWarnings: PropTypes.bool,
-    renderNotes: PropTypes.bool,
   }
 
   renderStatusMismatchWarnings(amendment) {
@@ -73,12 +73,11 @@ export default class LicenseAmendmentList extends React.Component {
                 placement="left"
               >
                 {({ ref, ariaIds }) => (
-                  // For the time being I'm using the workaround of a <span> while we wait to see what can/should be added to the 'Icon' component
                   <Icon
+                    aria-labelledby={ariaIds.text}
                     icon="exclamation-circle"
                     iconClassName={css.tooltipIcon}
                     ref={ref}
-                    aria-labelledby={ariaIds.text}
                     tabIndex="0"
                   />
                 )}
