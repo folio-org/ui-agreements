@@ -304,5 +304,11 @@
     "duplicateAgreementModal.externalLicenses": "Licenças externas",
     "duplicateAgreementModal.organizations": "Organizações",
     "duplicateAgreementModal.supplementaryInformation": "Informação suplementar",
-    "duplicateAgreementModal.usageData": "Dados de uso"
+    "duplicateAgreementModal.usageData": "Dados de uso",
+    "close": "Fechar",
+    "duplicateAgreementModal.error": "Erro: o contrato não foi duplicado",
+    "duplicateAgreementModal.errors.cloneEndpointError": "Não foi possível duplicar o contrato. O ponto final do clone não pôde ser acessado.",
+    "duplicateAgreementModal.errors.invalidResponseError": "Não foi possível duplicar o contrato. A resposta recebida do servidor era inválida.",
+    "duplicateAgreementModal.errors.systemAdministrator": "Se o problema persistir, entre em contato com o administrador do sistema.",
+    "duplicateAgreementModal.errors.tryAgain": "Por favor, tente novamente."
 }

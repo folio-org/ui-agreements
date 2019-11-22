@@ -134,7 +134,7 @@
     "agreementLines.addCustomCoverage": "Aggiungi una copertura personalizzata",
     "agreementLines.customCoverageTitle": "Copertura personalizzata #{numero}",
     "errors.endDateGreaterThanStartDate": "La data di fine deve essere successiva alla data di inizio.",
-    "errors.multipleOpenEndedCoverages": "Cannot have multiple open-ended coverage statements.",
+    "errors.multipleOpenEndedCoverages": "Non è possibile avere più indicazioni di copertura aperte",
     "errors.overlappingCoverage": "The following coverages have overlapping dates: {fields}",
     "identifier.doi": "DOI",
     "identifier.eissn": "ISSN (online)",
@@ -239,7 +239,7 @@
     "agreementPeriods.periodNote": "Period note",
     "agreementPeriods.periodStart": "Period start",
     "agreementPeriods.periodTitle": "Agreement period #{number}",
-    "errors.multipleOpenEndedPeriods": "Cannot have multiple open-ended agreement periods.",
+    "errors.multipleOpenEndedPeriods": "Non è possibile avere più periodi di contratto aperti",
     "errors.overlappingPeriod": "The following periods have overlapping dates: {fields}",
     "agreements.reasonForClosure": "Motivo della cancellazione",
     "warn.clearReasonForClosure": "This reason will be cleared as status is not closed",
@@ -304,5 +304,11 @@
     "duplicateAgreementModal.externalLicenses": "External licenses",
     "duplicateAgreementModal.organizations": "Organizations",
     "duplicateAgreementModal.supplementaryInformation": "Supplementary information",
-    "duplicateAgreementModal.usageData": "Usage data"
+    "duplicateAgreementModal.usageData": "Usage data",
+    "close": "Close",
+    "duplicateAgreementModal.error": "Error: the agreement was not duplicated",
+    "duplicateAgreementModal.errors.cloneEndpointError": "Unable to duplicate the agreement. The clone endpoint could not be accessed.",
+    "duplicateAgreementModal.errors.invalidResponseError": "Unable to duplicate the agreement. The response received from the server was invalid.",
+    "duplicateAgreementModal.errors.systemAdministrator": "If the problem persists contact your system administrator.",
+    "duplicateAgreementModal.errors.tryAgain": "Riprova."
 }

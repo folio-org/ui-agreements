@@ -304,5 +304,11 @@
     "duplicateAgreementModal.externalLicenses": "التراخيص الخارجية",
     "duplicateAgreementModal.organizations": "المؤسسات",
     "duplicateAgreementModal.supplementaryInformation": "معلومات تكميلية",
-    "duplicateAgreementModal.usageData": "بيانات الاستخدام"
+    "duplicateAgreementModal.usageData": "بيانات الاستخدام",
+    "close": "إغلاق",
+    "duplicateAgreementModal.error": "خطأ: لم يتم نسخ الاتفاقية",
+    "duplicateAgreementModal.errors.cloneEndpointError": "تعذر نسخ الاتفاقية. تعذر الوصول إلى نقطة نهاية النسخة",
+    "duplicateAgreementModal.errors.invalidResponseError": "تعذر نسخ الاتفاقية. الاستجابة الواردة من الخادم غير صالحة.",
+    "duplicateAgreementModal.errors.systemAdministrator": "إذا استمرت المشكلة، اتصل بمسؤول النظام.",
+    "duplicateAgreementModal.errors.tryAgain": "برجى إعادة المحاولة مرة أخرى"
 }
