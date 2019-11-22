@@ -51,7 +51,6 @@ export default class ControllingLicense extends React.Component {
   };
 
   renderLicense = linkedLicense => {
-    const currentAmendments = getLicenseAmendments(linkedLicense, statuses.CURRENT);
     const unsetAmendments = getLicenseAmendments(linkedLicense, statuses.UNSET);
     const licenseRecord = linkedLicense.remoteId_object || {};
 
@@ -84,10 +83,7 @@ export default class ControllingLicense extends React.Component {
             {linkedLicense.note}
           </KeyValue>
         }
-        { currentAmendments.length ?
-          this.renderAmendments(linkedLicense, statuses.CURRENT)
-          : null
-        }
+        {this.renderAmendments(linkedLicense, statuses.CURRENT)}
         { unsetAmendments.length ?
           this.renderAmendments(linkedLicense, statuses.UNSET)
           : null
