@@ -80,7 +80,7 @@ export default class LicenseAmendmentList extends React.Component {
                     icon="exclamation-circle"
                     iconClassName={css.tooltipIcon}
                     ref={ref}
-                    aria-label={ariaIds.text}
+                    aria-labelledby={ariaIds.text}
                     tabIndex="0"
                   />
                 )}
