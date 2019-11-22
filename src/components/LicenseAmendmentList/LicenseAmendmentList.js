@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
-import { get } from 'lodash';
 
 import { Icon, MultiColumnList, Tooltip } from '@folio/stripes/components';
 import { LicenseEndDate } from '@folio/stripes-erm-components';
@@ -32,7 +31,6 @@ export default class LicenseAmendmentList extends React.Component {
   }
 
   renderStatusMismatchWarnings(amendment) {
-    const statusInAgreement = get(amendment, 'statusForThisAgreement.value');
     return getConflictWarnings.amendmentWarning(amendment);
   }
 
