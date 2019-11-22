@@ -80,12 +80,13 @@ export default class LicenseAmendmentList extends React.Component {
               >
                 {({ ref, ariaIds }) => (
                   // For the time being I'm using the workaround of a <span> while we wait to see what can/should be added to the 'Icon' component
-                  <span ref={ref} aria-label={ariaIds.text} tabindex="0">
                     <Icon
                       icon="exclamation-circle"
                       iconClassName={css.tooltipIcon}
+                      ref={ref}
+                      aria-label={ariaIds.text}
+                      tabIndex="0"
                     />
-                  </span>
                 )}
               </Tooltip> : ''
           ),
