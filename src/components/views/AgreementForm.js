@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEqual } from 'lodash';
+import { get, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import setFieldData from 'final-form-set-field-data';
 
@@ -41,6 +41,7 @@ class AgreementForm extends React.Component {
     form: PropTypes.shape({
       change: PropTypes.func.isRequired,
       getRegisteredFields: PropTypes.func.isRequired,
+      getState: PropTypes.func.isRequired,
     }).isRequired,
     handlers: PropTypes.PropTypes.shape({
       onBasketLinesAdded: PropTypes.func.isRequired,
@@ -77,13 +78,15 @@ class AgreementForm extends React.Component {
   // handler because we don't want them to be part of the initialValues.
   // After all, they're being _added_, so their presence must dirty the form.
   static getDerivedStateFromProps(props, state) {
+    const formState = props.form.getState();
+
     if (
       props.data.agreementLinesToAdd.length &&
       state.addedLinesToAdd === false &&
       props.form.getRegisteredFields().includes('items')
     ) {
       props.form.change('items', [
-        ...(props.initialValues.items || []),
+        ...get(formState, 'initialValues.items', []),
         ...props.data.agreementLinesToAdd,
       ]);
 
