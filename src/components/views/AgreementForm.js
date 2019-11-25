@@ -123,36 +123,38 @@ class AgreementForm extends React.Component {
   }
 
   renderPaneFooter() {
-    const { handleSubmit, initialValues = {}, pristine, submitting } = this.props;
-
-    const startButton = (
-      <Button
-        buttonStyle="default mega"
-        id="clickable-cancel"
-        marginBottom0
-        onClick={this.props.handlers.onClose}
-      >
-        <FormattedMessage id="stripes-components.cancel" />
-      </Button>
-    );
-
-    const endButton = (
-      <Button
-        buttonStyle="primary mega"
-        disabled={pristine || submitting}
-        id={initialValues.id ? 'clickable-update-agreement' : 'clickable-create-agreement'}
-        marginBottom0
-        onClick={handleSubmit}
-        type="submit"
-      >
-        <FormattedMessage id="stripes-components.saveAndClose" />
-      </Button>
-    );
+    const {
+      handlers,
+      handleSubmit,
+      pristine,
+      submitting,
+      values,
+    } = this.props;
 
     return (
       <PaneFooter
-        renderStart={startButton}
-        renderEnd={endButton}
+        renderStart={(
+          <Button
+            buttonStyle="default mega"
+            id="clickable-cancel"
+            marginBottom0
+            onClick={handlers.onClose}
+          >
+            <FormattedMessage id="stripes-components.cancel" />
+          </Button>
+        )}
+        renderEnd={(
+          <Button
+            buttonStyle="primary mega"
+            disabled={pristine || submitting}
+            id={values.id ? 'clickable-update-agreement' : 'clickable-create-agreement'}
+            marginBottom0
+            onClick={handleSubmit}
+            type="submit"
+          >
+            <FormattedMessage id="stripes-components.saveAndClose" />
+          </Button>
+        )}
       />
     );
   }
@@ -175,7 +177,7 @@ class AgreementForm extends React.Component {
   }
 
   render() {
-    const { form, initialValues: { id, name } } = this.props;
+    const { form, values: { id, name } } = this.props;
 
     const hasLoaded = form.getRegisteredFields().length > 0;
 
