@@ -20,6 +20,22 @@ module.exports.test = (uiTestCtx) => {
     startDate: '2008-07-01',
   }];
 
+  const amendments = [{
+    name: 'Current Amendment',
+  }, {
+    name: 'Expired Amendment',
+    status: 'expired',
+  }, {
+    name: 'Rejected Amendment',
+    status: 'rejected',
+  }, {
+    name: 'Start Date Amendment',
+    startDate: '2119-11-26',
+  }, {
+    name: 'End Date Amendment',
+    endDate: '1919-11-26',
+  }];
+
   const agreement = {
     name: `Linked License Warnings Agreement #${number}`,
   };
@@ -46,7 +62,7 @@ module.exports.test = (uiTestCtx) => {
       // Create licenses and add amendments
       licenses.forEach(l => {
         it(`should create new license: ${l.name}`, done => {
-          nightmare
+          let chain = nightmare 
             .wait('#clickable-new-license')
             .click('#clickable-new-license')
 
@@ -59,57 +75,37 @@ module.exports.test = (uiTestCtx) => {
             .click('#clickable-create-license')
 
             .waitUntilNetworkIdle(2000)
-            .wait('#clickable-expand-all')
-            .click('#clickable-expand-all')
-            .click('#add-amendment-button')
-            .wait('#edit-amendment-name')
-            .insert('#edit-amendment-name', 'Current Amendment')
-            .click('#clickable-create-amendment')
-            .waitUntilNetworkIdle(2000)
 
-            .wait('#clickable-expand-all')
-            .click('#clickable-expand-all')
-            .click('#add-amendment-button')
-            .wait('#edit-amendment-name')
-            .insert('#edit-amendment-name', 'Rejected Amendment')
-            .wait('#edit-amendment-status')
-            .type('#edit-amendment-status', 'rejected')
-            .click('#clickable-create-amendment')
-            .waitUntilNetworkIdle(2000)
-
-            .wait('#clickable-expand-all')
-            .click('#clickable-expand-all')
-            .click('#add-amendment-button')
-            .wait('#edit-amendment-name')
-            .insert('#edit-amendment-name', 'Expired Amendment')
-            .wait('#edit-amendment-status')
-            .type('#edit-amendment-status', 'expired')
-            .click('#clickable-create-amendment')
-            .waitUntilNetworkIdle(2000)
-
-            .wait('#clickable-expand-all')
-            .click('#clickable-expand-all')
-            .click('#add-amendment-button')
-            .wait('#edit-amendment-name')
-            .insert('#edit-amendment-name', 'StartDate Amendment')
-            .wait('#edit-amendment-start-date')
-            .insert('#edit-amendment-start-date', '2119-11-26')
-            .click('#clickable-create-amendment')
-            .waitUntilNetworkIdle(2000)
-
-            .wait('#clickable-expand-all')
-            .click('#clickable-expand-all')
-            .click('#add-amendment-button')
-            .wait('#edit-amendment-name')
-            .insert('#edit-amendment-name', 'EndDate Amendment')
-            .wait('#edit-amendment-end-date')
-            .insert('#edit-amendment-end-date', '1919-11-26')
-            .click('#clickable-create-amendment')
-            .waitUntilNetworkIdle(2000)
-
-            .then(() => nightmare.click('#pane-view-license button[icon=times]'))
-            .then(done)
-            .catch(done);
+            amendments.forEach(a => {
+              chain = chain
+                .wait('#clickable-expand-all')
+                .click('#clickable-expand-all')
+                .click('#add-amendment-button')
+                .wait('#edit-amendment-name')
+                .insert('#edit-amendment-name', a.name)
+                if (a.status) {
+                  chain = chain
+                    .wait('#edit-amendment-status')
+                    .type('#edit-amendment-status', a.status)
+                }
+                if (a.startDate) {
+                  chain = chain
+                    .wait('#edit-amendment-start-date')
+                    .insert('#edit-amendment-start-date', a.startDate)
+                }
+                if (a.endDate) {
+                  chain = chain
+                    .wait('#edit-amendment-end-date')
+                    .insert('#edit-amendment-end-date', a.endDate)
+                }
+                chain = chain
+                  .click('#clickable-create-amendment')
+                  .waitUntilNetworkIdle(2000)
+            });
+            chain = chain
+              .then(() => nightmare.click('#pane-view-license button[icon=times]'))
+              .then(done)
+              .catch(done);
         });
       });
 
@@ -169,17 +165,24 @@ module.exports.test = (uiTestCtx) => {
 
       licenses.forEach((l, i) => {
         it(`should set amendment statuses for ${l.name}`, done => {
-          nightmare
-            .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="Current Amendment"] select`, 'Current')
+          let chain = nightmare
+            amendments.forEach(a => {
+              chain = chain
+                .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="${a.name}"] select`, 'Current')
+            });
+            chain = chain
+            /* .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="Current Amendment"] select`, 'Current')
             .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="Rejected Amendment"] select`, 'Current')
             .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="Expired Amendment"] select`, 'Current')
             .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="StartDate Amendment"] select`, 'Current')
-            .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="EndDate Amendment"] select`, 'Current')
+            .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="EndDate Amendment"] select`, 'Current') */
 
             .then(done)
             .catch(done);
         });
       });
+
+
 
       it('should save updated agreement', done => {
         nightmare
