@@ -96,6 +96,14 @@ describe('Package Content Filters', () => {
           it('should render the expected current eresource', () => {
             expect(agreementView.linesSection.coveredEresourcesList.eresourceName(0)).to.equal(currentResource.pti.titleInstance.name);
           });
+
+          it('should find export button', () => {
+            expect(agreementView.linesSection.coveredEresourcesList.exportButton.isPresent).to.be.true;
+          });
+
+          it('should find enabled export button', () => {
+            expect(agreementView.linesSection.coveredEresourcesList.exportButton.disabled).to.equal(null);
+          });
         });
 
         describe('clicking future eresource', () => {
@@ -106,6 +114,10 @@ describe('Package Content Filters', () => {
 
           it('should render the expected future eresource', () => {
             expect(agreementView.linesSection.coveredEresourcesList.eresourceName(0)).to.equal(futureResource.pti.titleInstance.name);
+          });
+
+          it('should find enabled export button', () => {
+            expect(agreementView.linesSection.coveredEresourcesList.exportButton.disabled).to.equal('');
           });
         });
 
@@ -118,6 +130,10 @@ describe('Package Content Filters', () => {
           it('should render the expected dropped eresource', () => {
             expect(agreementView.linesSection.coveredEresourcesList.eresourceName(0)).to.equal(droppedResource.pti.titleInstance.name);
           });
+
+          /* it('should show disabled export button', () => {
+            expect(agreementView.linesSection.coveredEresourcesList.exportButton.attribute('disabled')).to.be.true;
+          }); */
         });
       });
     });
