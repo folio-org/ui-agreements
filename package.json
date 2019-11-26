@@ -38,6 +38,7 @@
     "test-title-notes": "stripes test nightmare --run title-notes",
     "test-related-agreements": "stripes test nightmare --run related-agreements",
     "test-linked-licenses": "stripes test nightmare --run linked-licenses",
+    "test-linked-license-warnings": "stripes test nightmare --run linked-license-warnings",
     "test-license-terms": "stripes test nightmare --run license-terms",
     "test-ekb-int": "stripes test nightmare --run ekb-int",
     "test-po-lines": "stripes test nightmare --run po-lines",
