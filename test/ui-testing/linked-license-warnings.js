@@ -246,7 +246,7 @@ module.exports.test = (uiTestCtx) => {
           rows.forEach(row => {
             if (row[1].includes("Current") && row[0]) {
               throw Error('Warning found in amendment with non conflicting status')
-            } else if (!r[0]) {
+            } else if (!row[0]) {
               throw Error(`Warning expected and not found for amendment ${row[1]} in Controlling License`)
             }
           })
