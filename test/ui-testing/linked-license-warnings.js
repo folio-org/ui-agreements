@@ -188,7 +188,7 @@ module.exports.test = (uiTestCtx) => {
                 .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="${a.name}"] select`, 'Current')
               }
               chain = chain
-              .input(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="${a.name}"] textArea`, a.note)
+              .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="${a.name}"] textArea`, a.note)
                 
             });
             chain = chain
@@ -197,8 +197,6 @@ module.exports.test = (uiTestCtx) => {
             .catch(done);
         });
       });
-
-
 
       it('should save updated agreement', done => {
         nightmare
@@ -214,9 +212,47 @@ module.exports.test = (uiTestCtx) => {
       
       it('should check warnings column exists inside Controlling Licenses current amendments MCL, but not inside its future/historical amendments MCLs', done => {
         let chain = nightmare
-          .wait('#accordion-toggle-button-controllingLicense')
-          .click('#accordion-toggle-button-controllingLicense')
-          .wait('')
+          .on ('console', console.log.bind (console))
+          .wait('#clickable-expand-all')
+          .click('#clickable-expand-all')
+          .wait('#controlling-license-current-amendments')
+          .evaluate(() => {
+            let columnheaders = [...document.querySelectorAll('#controlling-license-current-amendments [class*=mclHeaderRow] [role=columnheader]')].map(r => r.id.replace('list-column-', ''))
+            if (!columnheaders.find(h => h === "warning")) {
+              throw Error(`Failed to find warning column in current amendments list`)
+            }
+          })
+          .evaluate(() => {
+            let columnheaders = [...document.querySelectorAll('#controlling-license-future-amendments [class*=mclHeaderRow] [role=columnheader]')].map(r => r.id.replace('list-column-', ''))
+            if (columnheaders.find(h => h === "warning")) {
+              throw Error(`Found warning column in future amendments list`)
+            }
+          })
+          .evaluate(() => {
+            let columnheaders = [...document.querySelectorAll('#controlling-license-historical-amendments [class*=mclHeaderRow] [role=columnheader]')].map(r => r.id.replace('list-column-', ''))
+            if (columnheaders.find(h => h === "warning")) {
+              throw Error(`Found warning column in historical amendments list`)
+            }
+          })
+          .then(done)
+          .catch(done);
+      });
+
+      it('should check warnings exist for conflicting status amendments in controlling licenses, and not for non-conflicting ones', done => {
+        let chain = nightmare
+        .evaluate(() => {
+          // The below line returns an array containing, for each row, the contents of the first index (warning) and the contents of the second index (amendment name)
+          let rows = [...document.querySelectorAll('#controlling-license-current-amendments [class*=mclRowContainer] [role=row]')].map(r => [...r.childNodes].slice(0,2).map(r => r.textContent))
+          rows.forEach(row => {
+            if (row[1].includes("Current") && row[0]) {
+              throw Error('Warning found in amendment with non conflicting status')
+            } else if (!r[0]) {
+              throw Error(`Warning expected and not found for amendment ${row[1]} in Controlling License`)
+            }
+          })
+        })
+          .then(done)
+          .catch(done);
       });
 
       /*
@@ -225,8 +261,6 @@ module.exports.test = (uiTestCtx) => {
               
             });
           });  */
-      
-
 
       
     });
