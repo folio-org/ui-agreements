@@ -171,11 +171,6 @@ module.exports.test = (uiTestCtx) => {
                 .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="${a.name}"] select`, 'Current')
             });
             chain = chain
-            /* .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="Current Amendment"] select`, 'Current')
-            .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="Rejected Amendment"] select`, 'Current')
-            .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="Expired Amendment"] select`, 'Current')
-            .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="StartDate Amendment"] select`, 'Current')
-            .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="EndDate Amendment"] select`, 'Current') */
 
             .then(done)
             .catch(done);
