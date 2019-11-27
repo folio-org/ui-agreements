@@ -10,6 +10,7 @@ import {
   DropdownButton,
   DropdownMenu,
   Headline,
+  Icon,
   Layout,
   MultiColumnList,
   Row,
@@ -106,78 +107,54 @@ export default class CoveredEResourcesList extends React.Component {
     date ? <FormattedUTCDate value={date} /> : '-'
   )
 
-  renderDropdownButton = (disabled) => (
-    <DropdownButton
-      data-test-export-button
-      data-role="toggle"
+  renderExportDropdown = (disabled) => (
+    <Dropdown
+      onToggle={() => this.setState(prevState => ({ exportDropdownOpen: !prevState.exportDropdownOpen }))}
+      open={this.state.exportDropdownOpen}
       disabled={disabled}
     >
-      <FormattedMessage id="ui-agreements.eresourcesCovered.exportAs" />
-    </DropdownButton>
-  )
-
-  renderExportDropdown = () => {
-    const disabled = this.props.eresourcesFilterPath === 'dropped' || this.props.eresourcesFilterPath === 'future';
-    return (
-      <Dropdown
-        onToggle={() => this.setState(prevState => ({ exportDropdownOpen: !prevState.exportDropdownOpen }))}
-        open={this.state.exportDropdownOpen}
+      <DropdownButton
+        data-role="toggle"
+        disabled={disabled}
       >
-        {disabled ?
-          <Tooltip
-            id="covered-eresources-export-tooltip"
-            placement="top"
-            text={<FormattedMessage id="ui-agreements.eresourcesCovered.exportButton.tooltip" />}
-          >
-            {({ ref, ariaIds }) => (
-              <div
-                ref={ref}
-                aria-describedby={ariaIds.text}
-              >
-                {this.renderDropdownButton(disabled)}
-              </div>
-            )}
-          </Tooltip> :
-          this.renderDropdownButton(disabled)
-        }
-
-        <DropdownMenu
-          data-role="menu"
-        >
-          <FormattedMessage id="ui-agreements.eresourcesCovered.exportAsJSON">
-            {exportAsJson => (
-              <Button
-                aria-label={exportAsJson}
-                buttonStyle="dropdownItem"
-                id="clickable-dropdown-export-eresources-json"
-                onClick={() => {
-                  this.setState({ exportDropdownOpen: false });
-                  this.props.onExportEResourcesAsJSON();
-                }}
-              >
-                <FormattedMessage id="ui-agreements.eresourcesCovered.json" />
-              </Button>
-            )}
-          </FormattedMessage>
-          <FormattedMessage id="ui-agreements.eresourcesCovered.exportAsKBART">
-            {exportAsKbart => (
-              <Button
-                aria-label={exportAsKbart}
-                buttonStyle="dropdownItem"
-                id="clickable-dropdown-export-eresources-kbart"
-                onClick={() => {
-                  this.setState({ exportDropdownOpen: false });
-                  this.props.onExportEResourcesAsKBART();
-                }}
-              >
-                <FormattedMessage id="ui-agreements.eresourcesCovered.kbart" />
-              </Button>
-            )}
-          </FormattedMessage>
-        </DropdownMenu>
-      </Dropdown>
-    );
-  }
+        <FormattedMessage id="ui-agreements.eresourcesCovered.exportAs" />
+      </DropdownButton>
+      <DropdownMenu data-role="menu">
+        <FormattedMessage id="ui-agreements.eresourcesCovered.exportAsJSON">
+          {exportAsJson => (
+            <Button
+              aria-label={exportAsJson}
+              buttonStyle="dropdownItem"
+              disabled={disabled}
+              id="clickable-dropdown-export-eresources-json"
+              onClick={() => {
+                this.setState({ exportDropdownOpen: false });
+                this.props.onExportEResourcesAsJSON();
+              }}
+            >
+              <FormattedMessage id="ui-agreements.eresourcesCovered.json" />
+            </Button>
+          )}
+        </FormattedMessage>
+        <FormattedMessage id="ui-agreements.eresourcesCovered.exportAsJSON">
+          {exportAsKbart => (
+            <Button
+              aria-label={exportAsKbart}
+              buttonStyle="dropdownItem"
+              disabled={disabled}
+              id="clickable-dropdown-export-eresources-kbart"
+              onClick={() => {
+                this.setState({ exportDropdownOpen: false });
+                this.props.onExportEResourcesAsKBART();
+              }}
+            >
+              <FormattedMessage id="ui-agreements.eresourcesCovered.kbart" />
+            </Button>
+          )}
+        </FormattedMessage>
+      </DropdownMenu>
+    </Dropdown>
+  )
 
   renderFilterButton = (filter) => (
     <Button
@@ -224,19 +201,37 @@ export default class CoveredEResourcesList extends React.Component {
   }
 
   render() {
-    const { agreement: { eresources } } = this.props;
+    const { agreement: { eresources }, eresourcesFilterPath } = this.props;
+    const disabled = eresourcesFilterPath === 'dropped' || eresourcesFilterPath === 'future';
 
     return (
       <IfEResourcesEnabled>
         <Headline margin="none" tag="h4">
           <FormattedMessage id="ui-agreements.agreements.eresourcesCovered" />
         </Headline>
-        <Row end="xs">
-          <Col xs={10}>
+        <Row center="xs" end="md">
+          <Col xs={12} md={9}>
             {this.renderFilterButtons()}
           </Col>
-          <Col xs>
-            {this.renderExportDropdown()}
+          <Col xs={12} md={3}>
+            {this.renderExportDropdown(disabled)}
+            {disabled ?
+              <Tooltip
+                id="covered-eresources-export-tooltip"
+                placement="top"
+                text={<FormattedMessage id="ui-agreements.eresourcesCovered.exportButton.tooltip" />}
+              >
+                {({ ref, ariaIds }) => (
+                  <Icon
+                    aria-describedby={ariaIds.text}
+                    icon="exclamation-circle"
+                    ref={ref}
+                    tabIndex="0"
+                  />
+                )}
+              </Tooltip> :
+              ''
+            }
           </Col>
         </Row>
         {eresources ? this.renderList() : <Spinner />}
