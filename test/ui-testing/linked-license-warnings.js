@@ -22,18 +22,31 @@ module.exports.test = (uiTestCtx) => {
 
   const amendments = [{
     name: 'Current Amendment',
+    note: 'This is a current amendment',
   }, {
     name: 'Expired Amendment',
     status: 'expired',
+    note: 'This is an expired amendment',
   }, {
     name: 'Rejected Amendment',
     status: 'rejected',
+    note: 'This is a rejected amendment',
   }, {
     name: 'Start Date Amendment',
     startDate: '2119-11-26',
+    note: 'This is an amendment with start date in the future',
   }, {
     name: 'End Date Amendment',
     endDate: '1919-11-26',
+    note: 'This is an amendment with end date in the past',
+  }, {
+    name: 'Future Amendment',
+    statusInAgreement: 'Future',
+    note: 'This is a future amendment',
+  }, {
+    name: 'Historical Amendment',
+    statusInAgreement: 'Historical',
+    note: 'This is a historical amendment',
   }];
 
   const agreement = {
@@ -164,11 +177,19 @@ module.exports.test = (uiTestCtx) => {
       });
 
       licenses.forEach((l, i) => {
-        it(`should set amendment statuses for ${l.name}`, done => {
+        it(`should set amendment statuses and notes for ${l.name}`, done => {
           let chain = nightmare
             amendments.forEach(a => {
-              chain = chain
+              if (a.statusInAgreement) {
+                chain = chain
+                .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="${a.name}"] select`, a.statusInAgreement)
+              } else {
+                chain = chain
                 .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="${a.name}"] select`, 'Current')
+              }
+              chain = chain
+              .input(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="${a.name}"] textArea`, a.note)
+                
             });
             chain = chain
 
@@ -189,6 +210,25 @@ module.exports.test = (uiTestCtx) => {
           .then(done)
           .catch(done);
       });
+
+      
+      it('should check warnings column exists inside Controlling Licenses current amendments MCL, but not inside its future/historical amendments MCLs', done => {
+        let chain = nightmare
+          .wait('#accordion-toggle-button-controllingLicense')
+          .click('#accordion-toggle-button-controllingLicense')
+          .wait('')
+      });
+
+      /*
+          amendments.forEach(a => {
+            it(`should check correct warning appears for ${a.name} in Controlling Licenses Accordion`, done => {
+              
+            });
+          });  */
+      
+
+
+      
     });
   });
 };
