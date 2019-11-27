@@ -310,5 +310,7 @@
     "duplicateAgreementModal.errors.cloneEndpointError": "Não foi possível duplicar o contrato. O ponto final do clone não pôde ser acessado.",
     "duplicateAgreementModal.errors.invalidResponseError": "Não foi possível duplicar o contrato. A resposta recebida do servidor era inválida.",
     "duplicateAgreementModal.errors.systemAdministrator": "Se o problema persistir, entre em contato com o administrador do sistema.",
-    "duplicateAgreementModal.errors.tryAgain": "Por favor, tente novamente."
+    "duplicateAgreementModal.errors.tryAgain": "Por favor, tente novamente.",
+    "agreements.export": "Export",
+    "agreements.view": "View"
 }
