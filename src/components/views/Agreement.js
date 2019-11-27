@@ -111,7 +111,7 @@ export default class Agreement extends React.Component {
 
   getActionMenu = ({ onToggle }) => (
     <Fragment>
-      <IfPermission perm="ui-agreements.agreements.edit">
+      <IfPermission perm="ui-agreements.agreements.editAgreement">
         <Button
           buttonStyle="dropdownItem"
           id="clickable-dropdown-edit-agreement"

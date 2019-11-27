@@ -292,9 +292,7 @@ class AgreementViewRoute extends React.Component {
         'X-Okapi-Token': okapi.token,
       },
     }).then(response => response.blob())
-      .then(
-        this.downloadBlob(name)
-      );
+      .then(this.downloadBlob(name));
   }
 
   handleExportEResourcesAsJSON = () => {
@@ -307,9 +305,7 @@ class AgreementViewRoute extends React.Component {
         'X-Okapi-Token': okapi.token,
       },
     }).then(response => response.blob())
-      .then(
-        this.downloadBlob(name)
-      );
+      .then(this.downloadBlob(name));
   }
 
   handleExportEResourcesAsKBART = () => {
@@ -322,9 +318,7 @@ class AgreementViewRoute extends React.Component {
         'X-Okapi-Token': okapi.token,
       },
     }).then(response => response.blob())
-      .then(
-        this.downloadBlob(name)
-      );
+      .then(this.downloadBlob(name));
   }
 
   handleNeedMoreLines = () => {
