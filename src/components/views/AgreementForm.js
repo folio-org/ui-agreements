@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEqual } from 'lodash';
+import { get, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import setFieldData from 'final-form-set-field-data';
 
@@ -41,6 +41,7 @@ class AgreementForm extends React.Component {
     form: PropTypes.shape({
       change: PropTypes.func.isRequired,
       getRegisteredFields: PropTypes.func.isRequired,
+      getState: PropTypes.func.isRequired,
     }).isRequired,
     handlers: PropTypes.PropTypes.shape({
       onBasketLinesAdded: PropTypes.func.isRequired,
@@ -77,13 +78,15 @@ class AgreementForm extends React.Component {
   // handler because we don't want them to be part of the initialValues.
   // After all, they're being _added_, so their presence must dirty the form.
   static getDerivedStateFromProps(props, state) {
+    const formState = props.form.getState();
+
     if (
       props.data.agreementLinesToAdd.length &&
       state.addedLinesToAdd === false &&
       props.form.getRegisteredFields().includes('items')
     ) {
       props.form.change('items', [
-        ...(props.initialValues.items || []),
+        ...get(formState, 'initialValues.items', []),
         ...props.data.agreementLinesToAdd,
       ]);
 
@@ -123,36 +126,38 @@ class AgreementForm extends React.Component {
   }
 
   renderPaneFooter() {
-    const { handleSubmit, initialValues = {}, pristine, submitting } = this.props;
-
-    const startButton = (
-      <Button
-        buttonStyle="default mega"
-        id="clickable-cancel"
-        marginBottom0
-        onClick={this.props.handlers.onClose}
-      >
-        <FormattedMessage id="stripes-components.cancel" />
-      </Button>
-    );
-
-    const endButton = (
-      <Button
-        buttonStyle="primary mega"
-        disabled={pristine || submitting}
-        id={initialValues.id ? 'clickable-update-agreement' : 'clickable-create-agreement'}
-        marginBottom0
-        onClick={handleSubmit}
-        type="submit"
-      >
-        <FormattedMessage id="stripes-components.saveAndClose" />
-      </Button>
-    );
+    const {
+      handlers,
+      handleSubmit,
+      pristine,
+      submitting,
+      values,
+    } = this.props;
 
     return (
       <PaneFooter
-        renderStart={startButton}
-        renderEnd={endButton}
+        renderStart={(
+          <Button
+            buttonStyle="default mega"
+            id="clickable-cancel"
+            marginBottom0
+            onClick={handlers.onClose}
+          >
+            <FormattedMessage id="stripes-components.cancel" />
+          </Button>
+        )}
+        renderEnd={(
+          <Button
+            buttonStyle="primary mega"
+            disabled={pristine || submitting}
+            id={values.id ? 'clickable-update-agreement' : 'clickable-create-agreement'}
+            marginBottom0
+            onClick={handleSubmit}
+            type="submit"
+          >
+            <FormattedMessage id="stripes-components.saveAndClose" />
+          </Button>
+        )}
       />
     );
   }
@@ -175,7 +180,7 @@ class AgreementForm extends React.Component {
   }
 
   render() {
-    const { form, initialValues: { id, name } } = this.props;
+    const { form, values: { id, name } } = this.props;
 
     const hasLoaded = form.getRegisteredFields().length > 0;
 
