@@ -108,9 +108,9 @@ export default class CoveredEResourcesList extends React.Component {
 
   renderDropdownButton = (disabled) => (
     <DropdownButton
+      data-test-export-button
       data-role="toggle"
       disabled={disabled}
-      id="clickable-dropdown-export-eresources"
     >
       <FormattedMessage id="ui-agreements.eresourcesCovered.exportAs" />
     </DropdownButton>
