@@ -87,7 +87,7 @@
     "license.editLicenseOrganizations": "Éditer les organisations de la licence",
     "license.noLicenseOrganizations": "L'accord n'a pas d'organisations de licence",
     "organizations.edit": "Éditer les organisations",
-    "organizations.add": "Ajouter l'organisation à l'accord",
+    "organizations.add": "Ajouter une organisation à l'accord",
     "organizations.agreementHasNone": "L'accord n'a pas d'organisations.",
     "organizations.name": "Nom",
     "organizations.role": "Rôle",
@@ -180,7 +180,7 @@
     "agreements.closeEdit": "Fermer l'édition de l'accord",
     "eresources.packageResources": "Ressources électroniques dans le bouquet",
     "finances.none": "L'accord n'a pas de lignes de commande.",
-    "organizations.addOrganizationToAgreement": "Ajouter l'organisation à l'accord",
+    "organizations.addOrganizationToAgreement": "Ajouter une organisation à l'accord",
     "eresource": "Ressource électronique",
     "eresourcePluralizable": "{count} {count, plural, one { ressource électronique } other { ressources électroniques }}",
     "poLines.acqMethod": "Méthode d'acquisition",
@@ -310,5 +310,7 @@
     "duplicateAgreementModal.errors.cloneEndpointError": "Impossible de dupliquer l'accord. L'accès au *clone endpoint* n'a pas pu être effectué.",
     "duplicateAgreementModal.errors.invalidResponseError": "Impossible de dupliquer l'accord. La réponse reçue du serveur était incorrecte.",
     "duplicateAgreementModal.errors.systemAdministrator": "Si le problème persiste, contactez votre administrateur système.",
-    "duplicateAgreementModal.errors.tryAgain": "Merci de réessayer."
+    "duplicateAgreementModal.errors.tryAgain": "Merci de réessayer.",
+    "agreements.export": "Exporter",
+    "agreements.view": "Afficher"
 }
