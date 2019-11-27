@@ -174,7 +174,7 @@ export default class Agreement extends React.Component {
               )}
             </FormattedMessage>
           }
-          <FormattedMessage id="ui-agreements.agreements.edit">
+          <FormattedMessage id="ui-agreements.agreements.editAgreement">
             {ariaLabel => (
               <Button
                 aria-label={ariaLabel}

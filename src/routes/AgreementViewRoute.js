@@ -167,6 +167,18 @@ class AgreementViewRoute extends React.Component {
     handlers: {},
   }
 
+  downloadBlob = (name) => (
+    blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+  )
+
   getCompositeAgreement = () => {
     const { resources } = this.props;
     const agreement = get(resources, 'agreement.records[0]', {
@@ -280,15 +292,9 @@ class AgreementViewRoute extends React.Component {
         'X-Okapi-Token': okapi.token,
       },
     }).then(response => response.blob())
-      .then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = name;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      });
+      .then(
+        this.downloadBlob(name)
+      );
   }
 
   handleExportEResourcesAsJSON = () => {
@@ -301,15 +307,9 @@ class AgreementViewRoute extends React.Component {
         'X-Okapi-Token': okapi.token,
       },
     }).then(response => response.blob())
-      .then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = name;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      });
+      .then(
+        this.downloadBlob(name)
+      );
   }
 
   handleExportEResourcesAsKBART = () => {
@@ -322,15 +322,9 @@ class AgreementViewRoute extends React.Component {
         'X-Okapi-Token': okapi.token,
       },
     }).then(response => response.blob())
-      .then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = name;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      });
+      .then(
+        this.downloadBlob(name)
+      );
   }
 
   handleNeedMoreLines = () => {
