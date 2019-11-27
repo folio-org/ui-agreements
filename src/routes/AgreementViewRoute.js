@@ -167,6 +167,18 @@ class AgreementViewRoute extends React.Component {
     handlers: {},
   }
 
+  downloadBlob = (name) => (
+    blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+  )
+
   getCompositeAgreement = () => {
     const { resources } = this.props;
     const agreement = get(resources, 'agreement.records[0]', {
@@ -270,46 +282,43 @@ class AgreementViewRoute extends React.Component {
     history.push(`${urls.agreementEdit(match.params.id)}${location.search}`);
   }
 
-  handleExportEResourcesAsJSON = () => {
+  handleExportAgreement = () => {
     const { resources, stripes: { okapi } } = this.props;
     const { id, name } = get(resources, 'agreement.records[0]', {});
 
-    return fetch(`${okapi.url}/erm/sas/${id}/export/${resources.eresourcesFilterPath}`, {
+    return fetch(`${okapi.url}/erm/sas/${id}/export/current`, {
       headers: {
         'X-Okapi-Tenant': okapi.tenant,
         'X-Okapi-Token': okapi.token,
       },
     }).then(response => response.blob())
-      .then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = name;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      });
+      .then(this.downloadBlob(name));
+  }
+
+  handleExportEResourcesAsJSON = () => {
+    const { resources, stripes: { okapi } } = this.props;
+    const { id, name } = get(resources, 'agreement.records[0]', {});
+
+    return fetch(`${okapi.url}/erm/sas/${id}/resources/export/${resources.eresourcesFilterPath}`, {
+      headers: {
+        'X-Okapi-Tenant': okapi.tenant,
+        'X-Okapi-Token': okapi.token,
+      },
+    }).then(response => response.blob())
+      .then(this.downloadBlob(name));
   }
 
   handleExportEResourcesAsKBART = () => {
     const { resources, stripes: { okapi } } = this.props;
     const { id, name } = get(resources, 'agreement.records[0]', {});
 
-    return fetch(`${okapi.url}/erm/sas/${id}/export/${resources.eresourcesFilterPath}/kbart`, {
+    return fetch(`${okapi.url}/erm/sas/${id}/resources/export/${resources.eresourcesFilterPath}/kbart`, {
       headers: {
         'X-Okapi-Tenant': okapi.tenant,
         'X-Okapi-Token': okapi.token,
       },
     }).then(response => response.blob())
-      .then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = name;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      });
+      .then(this.downloadBlob(name));
   }
 
   handleNeedMoreLines = () => {
@@ -368,6 +377,7 @@ class AgreementViewRoute extends React.Component {
           onClone: this.handleClone,
           onClose: this.handleClose,
           onEdit: this.handleEdit,
+          onExportAgreement: this.handleExportAgreement,
           onExportEResourcesAsJSON: this.handleExportEResourcesAsJSON,
           onExportEResourcesAsKBART: this.handleExportEResourcesAsKBART,
           onFetchCredentials: this.handleFetchCredentials,

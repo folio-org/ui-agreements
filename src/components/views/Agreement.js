@@ -48,6 +48,7 @@ export default class Agreement extends React.Component {
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
       onEdit: PropTypes.func,
+      onExportAgreement: PropTypes.func,
     }).isRequired,
     helperApp: PropTypes.node,
     isLoading: PropTypes.bool.isRequired,
@@ -117,7 +118,7 @@ export default class Agreement extends React.Component {
           onClick={this.props.handlers.onEdit}
         >
           <Icon icon="edit">
-            <FormattedMessage id="ui-agreements.agreements.editAgreement" />
+            <FormattedMessage id="ui-agreements.agreements.edit" />
           </Icon>
         </Button>
         <Button
@@ -132,8 +133,22 @@ export default class Agreement extends React.Component {
             <FormattedMessage id="ui-agreements.agreements.duplicate" />
           </Icon>
         </Button>
-
       </IfPermission>
+      <IfPermission perm="ui-agreements.agreements.view">
+        <Button
+          buttonStyle="dropdownItem"
+          id="clickable-dropdown-export-agreement"
+          onClick={() => {
+            this.props.handlers.onExportAgreement();
+            onToggle();
+          }}
+        >
+          <Icon icon="arrow-down">
+            <FormattedMessage id="ui-agreements.agreements.export" />
+          </Icon>
+        </Button>
+      </IfPermission>
+
     </Fragment>
   )
 
