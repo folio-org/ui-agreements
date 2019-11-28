@@ -315,8 +315,6 @@ module.exports.test = (uiTestCtx) => {
         let chain = nightmare
           .wait('#list-licenses')
           .click(`#list-licenses [class*=mclRowContainer] [data-label*='#${number}']`)
-          .then(done)
-          .catch(done);
       });
 
       it('should add a new amendment to the Controlling License', done => {
@@ -338,8 +336,21 @@ module.exports.test = (uiTestCtx) => {
         let chain = nightmare
           .wait('#list-agreements')
           .click(`#list-agreements [class*=mclRowContainer] [data-label*='#${number}']`)
-          .then(done)
-          .catch(done);
+      });
+      
+      it('should check that a banner has appeared to warn the user about unassigned amendments', done => {
+        let chain = nightmare
+        .wait('#clickable-expand-all')
+        .click('#clickable-expand-all')
+        .wait('#agreement-controlling-license')
+        .evaluate(() => {
+          let alert = [...document.querySelectorAll('#agreement-controlling-license [class*=body] [role=alert]')].map(r => r.textContent)
+          if (!alert) {
+            throw Error('Warning banner not found for unassigned amendments in Controlling license')
+          }
+        })
+        .then(done)
+        .catch(done);
       });
 
     });
