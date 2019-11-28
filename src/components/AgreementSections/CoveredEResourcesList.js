@@ -114,8 +114,8 @@ export default class CoveredEResourcesList extends React.Component {
       disabled={disabled}
     >
       <DropdownButton
+        data-test-export-button
         data-role="toggle"
-        disabled={disabled}
       >
         <FormattedMessage id="ui-agreements.eresourcesCovered.exportAs" />
       </DropdownButton>
@@ -209,7 +209,7 @@ export default class CoveredEResourcesList extends React.Component {
         <Headline margin="none" tag="h4">
           <FormattedMessage id="ui-agreements.agreements.eresourcesCovered" />
         </Headline>
-        <Row center="xs" end="md">
+        <Row end="xs">
           <Col xs={12} md={9}>
             {this.renderFilterButtons()}
           </Col>
