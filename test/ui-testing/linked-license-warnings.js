@@ -53,6 +53,34 @@ module.exports.test = (uiTestCtx) => {
     name: `Linked License Warnings Agreement #${number}`,
   };
 
+  const indices = {
+    WARNING_INDEX: 0,
+    AMENDMENT_NAME_INDEX: 1,
+    NOTE_INDEX: 5
+  };
+  
+  const checkWarningColumn = (nightmare, table, shouldExist, done) => {
+    let chain = nightmare
+    .wait('#clickable-expand-all')
+    .click('#clickable-expand-all')
+    .wait(`${table}`)
+    .evaluate((table, shouldExist) => {
+      let columnheaders = [...document.querySelectorAll(`${table} [class*=mclHeaderRow] [role=columnheader]`)].map(r => r.id.replace('list-column-', ''))
+      if (shouldExist === true) {
+        if (!columnheaders.find(h => h === "warning")) {
+          throw Error(`Failed to find warning column in table: ${table}`)
+        }
+      } else {
+        if (columnheaders.find(h => h === "warning")) {
+          throw Error(`Warning column unexpectedly found in table: ${table}`)
+        }
+      }
+    })
+    .then(done)
+    .catch(done);
+  };
+
+
   describe('ui-agreements: linked license warnings', function test() {
     const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
@@ -209,60 +237,111 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-      
-      it('should check warnings column exists inside Controlling Licenses current amendments MCL, but not inside its future/historical amendments MCLs', done => {
-        let chain = nightmare
-          .on ('console', console.log.bind (console))
-          .wait('#clickable-expand-all')
-          .click('#clickable-expand-all')
-          .wait('#controlling-license-current-amendments')
-          .evaluate(() => {
-            let columnheaders = [...document.querySelectorAll('#controlling-license-current-amendments [class*=mclHeaderRow] [role=columnheader]')].map(r => r.id.replace('list-column-', ''))
-            if (!columnheaders.find(h => h === "warning")) {
-              throw Error(`Failed to find warning column in current amendments list`)
-            }
-          })
-          .evaluate(() => {
-            let columnheaders = [...document.querySelectorAll('#controlling-license-future-amendments [class*=mclHeaderRow] [role=columnheader]')].map(r => r.id.replace('list-column-', ''))
-            if (columnheaders.find(h => h === "warning")) {
-              throw Error(`Found warning column in future amendments list`)
-            }
-          })
-          .evaluate(() => {
-            let columnheaders = [...document.querySelectorAll('#controlling-license-historical-amendments [class*=mclHeaderRow] [role=columnheader]')].map(r => r.id.replace('list-column-', ''))
-            if (columnheaders.find(h => h === "warning")) {
-              throw Error(`Found warning column in historical amendments list`)
-            }
-          })
-          .then(done)
-          .catch(done);
+      it('should check warnings column exists inside Controlling License: current amendment table', done => {
+        checkWarningColumn(nightmare, '#controlling-license-current-amendments', true, done)
       });
+
+      it('should check warnings column doesnt exist inside Controlling License: future amendment table', done => {
+        checkWarningColumn(nightmare, '#controlling-license-future-amendments', false, done)
+      });
+
+      it('should check warnings column doesnt exist inside Controlling License: historical amendment table', done => {
+        checkWarningColumn(nightmare, '#controlling-license-historical-amendments', false, done)
+      });
+
+      it('should check warnings column doesnt exist inside Future License Accordion', done => {
+        checkWarningColumn(nightmare, '#agreement-future-license-0-amendments', false, done)
+      });
+
+      it('should check warnings column doesnt exist inside Historical License Accordion', done => {
+        checkWarningColumn(nightmare, '#agreement-historical-license-0-amendments', false, done)
+      });
+
+
 
       it('should check warnings exist for conflicting status amendments in controlling licenses, and not for non-conflicting ones', done => {
         let chain = nightmare
-        .evaluate(() => {
+        .evaluate((indices) => {
+
+          // Bit of code to allow the choosing of certain indices in an array
+          const arrayPicker = (array, listOfIndices) => {
+            pickedArray = []
+            listOfIndices.forEach(i => pickedArray.push(array[i]))
+            return (pickedArray)
+          };
+
           // The below line returns an array containing, for each row, the contents of the first index (warning) and the contents of the second index (amendment name)
-          let rows = [...document.querySelectorAll('#controlling-license-current-amendments [class*=mclRowContainer] [role=row]')].map(r => [...r.childNodes].slice(0,2).map(r => r.textContent))
+          let rows = [...document.querySelectorAll('#controlling-license-current-amendments [class*=mclRowContainer] [role=row]')].map(r => arrayPicker([...r.childNodes], [indices.WARNING_INDEX, indices.AMENDMENT_NAME_INDEX]).map(r => r.textContent))
           rows.forEach(row => {
-            if (row[1].includes("Current") && row[0]) {
-              throw Error('Warning found in amendment with non conflicting status')
+            if (row[1].includes("Current")) {
+              if (row[0]) {
+                throw Error('Warning found in amendment with non conflicting status')
+              }
             } else if (!row[0]) {
               throw Error(`Warning expected and not found for amendment ${row[1]} in Controlling License`)
             }
           })
-        })
+        }, indices)
           .then(done)
           .catch(done);
       });
 
-      /*
-          amendments.forEach(a => {
-            it(`should check correct warning appears for ${a.name} in Controlling Licenses Accordion`, done => {
-              
-            });
-          });  */
 
-      
+      it('should check notes are showing up in the table', done => {
+        let chain = nightmare
+        .evaluate(( indices) => {
+
+          // Bit of code to allow the choosing of certain indices in an array
+          const arrayPicker = (array, listOfIndices) => {
+            pickedArray = []
+            listOfIndices.forEach(i => pickedArray.push(array[i]))
+            return (pickedArray)
+          };
+
+          // The below line returns an array containing, for each row, the amendment note
+          let notes = [...document.querySelectorAll('#controlling-license-current-amendments [class*=mclRowContainer] [role=row]')].map(r => arrayPicker([...r.childNodes], [indices.NOTE_INDEX, indices.AMENDMENT_NAME_INDEX]).map(r => r.textContent))
+          notes.forEach(row => {
+            if (!row[0]) {
+              throw Error(`Note not found for ${row[1]}`)
+            }
+          })
+        }, indices)
+          .then(done)
+          .catch(done);
+      });
+
+      it('should open Licenses App, find and open the relevant Controlling License', done => {
+        helpers.clickApp(nightmare, done, 'licenses');
+        let chain = nightmare
+          .wait('#list-licenses')
+          .click(`#list-licenses [class*=mclRowContainer] [data-label*='#${number}']`)
+          .then(done)
+          .catch(done);
+      });
+
+      it('should add a new amendment to the Controlling License', done => {
+        let chain = nightmare
+          .wait('#clickable-expand-all')
+          .click('#clickable-expand-all')
+          .click('#add-amendment-button')
+          .wait('#edit-amendment-name')
+          .insert('#edit-amendment-name', 'Unassigned Amendment')
+          .click('#clickable-create-amendment')
+          .waitUntilNetworkIdle(2000)
+          .then(() => nightmare.click('#pane-view-license button[icon=times]'))
+          .then(done)
+          .catch(done);
+      });
+
+      it('should open Agreements App, find and open the relevant Agreement', done => {
+        helpers.clickApp(nightmare, done, 'agreements');
+        let chain = nightmare
+          .wait('#list-agreements')
+          .click(`#list-agreements [class*=mclRowContainer] [data-label*='#${number}']`)
+          .then(done)
+          .catch(done);
+      });
+
     });
   });
 };
