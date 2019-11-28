@@ -336,12 +336,12 @@ module.exports.test = (uiTestCtx) => {
         let chain = nightmare
           .wait('#list-agreements')
           .click(`#list-agreements [class*=mclRowContainer] [data-label*='#${number}']`)
+          .wait('#clickable-expand-all')
+          .click('#clickable-expand-all')
       });
       
       it('should check that a banner has appeared to warn the user about unassigned amendments', done => {
         let chain = nightmare
-        .wait('#clickable-expand-all')
-        .click('#clickable-expand-all')
         .wait('#agreement-controlling-license')
         .evaluate(() => {
           let alert = [...document.querySelectorAll('#agreement-controlling-license [class*=body] [role=alert]')].map(r => r.textContent)
@@ -353,6 +353,18 @@ module.exports.test = (uiTestCtx) => {
         .catch(done);
       });
 
+      it('should check that a table containing the unassigned amendments has appeared', done => {
+        let chain = nightmare
+        .wait('#agreement-controlling-license')
+        .evaluate(() => {
+          let unassignedAmendments = [...document.querySelectorAll('#agreement-controlling-license [class*=body] [id=controlling-license-unset-amendments]')].map(r => r.textContent)
+          if (!unassignedAmendments) {
+            throw Error('Unassigned amendment table not found in Controlling license')
+          }
+        })
+        .then(done)
+        .catch(done);
+      });
     });
   });
 };
