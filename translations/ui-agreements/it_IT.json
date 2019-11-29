@@ -305,10 +305,12 @@
     "duplicateAgreementModal.organizations": "Organizations",
     "duplicateAgreementModal.supplementaryInformation": "Supplementary information",
     "duplicateAgreementModal.usageData": "Usage data",
-    "close": "Close",
-    "duplicateAgreementModal.error": "Error: the agreement was not duplicated",
-    "duplicateAgreementModal.errors.cloneEndpointError": "Unable to duplicate the agreement. The clone endpoint could not be accessed.",
-    "duplicateAgreementModal.errors.invalidResponseError": "Unable to duplicate the agreement. The response received from the server was invalid.",
-    "duplicateAgreementModal.errors.systemAdministrator": "If the problem persists contact your system administrator.",
-    "duplicateAgreementModal.errors.tryAgain": "Riprova."
+    "close": "Chiudi",
+    "duplicateAgreementModal.error": "Errore: il contratto non è stato duplicato.",
+    "duplicateAgreementModal.errors.cloneEndpointError": "Impossibile duplicare il contratto. Messaggio di errore \"The clone endpoint could not be accessed\".",
+    "duplicateAgreementModal.errors.invalidResponseError": "Impossibile duplicare il contratto. La risposta ricevuta dal server non è valida.",
+    "duplicateAgreementModal.errors.systemAdministrator": "Se il problema persiste, contattare l'amministratore di sistema.",
+    "duplicateAgreementModal.errors.tryAgain": "Riprova.",
+    "agreements.export": "Export",
+    "agreements.view": "View"
 }

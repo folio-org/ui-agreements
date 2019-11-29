@@ -28,8 +28,10 @@
 
   "agreements.duplicate": "Duplicate",
   "agreements.edit": "Edit",
+  "agreements.export": "Export",
   "agreements.showTags": "Show tags",
   "agreements.vendor": "Vendor",
+  "agreements.view": "View",
   "agreements.visitPlatform": "Visit platform",
   "agreements.agreementInfo": "Agreement information",
   "agreements.name": "Name",

@@ -310,5 +310,7 @@
     "duplicateAgreementModal.errors.cloneEndpointError": "تعذر نسخ الاتفاقية. تعذر الوصول إلى نقطة نهاية النسخة",
     "duplicateAgreementModal.errors.invalidResponseError": "تعذر نسخ الاتفاقية. الاستجابة الواردة من الخادم غير صالحة.",
     "duplicateAgreementModal.errors.systemAdministrator": "إذا استمرت المشكلة، اتصل بمسؤول النظام.",
-    "duplicateAgreementModal.errors.tryAgain": "برجى إعادة المحاولة مرة أخرى"
+    "duplicateAgreementModal.errors.tryAgain": "برجى إعادة المحاولة مرة أخرى",
+    "agreements.export": "Export",
+    "agreements.view": "View"
 }

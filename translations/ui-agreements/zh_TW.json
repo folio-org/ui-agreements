@@ -310,5 +310,7 @@
     "duplicateAgreementModal.errors.cloneEndpointError": "Unable to duplicate the agreement. The clone endpoint could not be accessed.",
     "duplicateAgreementModal.errors.invalidResponseError": "Unable to duplicate the agreement. The response received from the server was invalid.",
     "duplicateAgreementModal.errors.systemAdministrator": "If the problem persists contact your system administrator.",
-    "duplicateAgreementModal.errors.tryAgain": "Please try again."
+    "duplicateAgreementModal.errors.tryAgain": "Please try again.",
+    "agreements.export": "Export",
+    "agreements.view": "View"
 }
