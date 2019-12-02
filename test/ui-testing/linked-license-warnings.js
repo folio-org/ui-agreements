@@ -60,20 +60,20 @@ module.exports.test = (uiTestCtx) => {
   };
 
   const checkWarningColumn = (nightmare, table, shouldExist, done) => {
-    const chain = nightmare
+    nightmare
       .wait('#clickable-expand-all')
       .click('#clickable-expand-all')
       .wait(`${table}`)
-      .evaluate((table, shouldExist) => {
-        const columnheaders = [...document.querySelectorAll(`${table} [class*=mclHeaderRow] [role=columnheader]`)].map(r => r.id.replace('list-column-', ''));
-        if (shouldExist === true) {
+      .evaluate((_table, _shouldExist) => {
+        const columnheaders = [...document.querySelectorAll(`${_table} [class*=mclHeaderRow] [role=columnheader]`)].map(r => r.id.replace('list-column-', ''));
+        if (_shouldExist === true) {
           if (!columnheaders.find(h => h === 'warning')) {
-            throw Error(`Failed to find warning column in table: ${table}`);
+            throw Error(`Failed to find warning column in table: ${_table}`);
           }
         } else if (columnheaders.find(h => h === 'warning')) {
-          throw Error(`Warning column unexpectedly found in table: ${table}`);
+          throw Error(`Warning column unexpectedly found in table: ${_table}`);
         }
-      })
+      }, table, shouldExist)
       .then(done)
       .catch(done);
   };
@@ -253,17 +253,17 @@ module.exports.test = (uiTestCtx) => {
 
 
       it('should check warnings exist for conflicting status amendments in controlling licenses, and not for non-conflicting ones', done => {
-        const chain = nightmare
-          .evaluate((indices) => {
+        nightmare
+          .evaluate((_indices) => {
           // Bit of code to allow the choosing of certain indices in an array
             const arrayPicker = (array, listOfIndices) => {
-              pickedArray = [];
+              const pickedArray = [];
               listOfIndices.forEach(i => pickedArray.push(array[i]));
               return (pickedArray);
             };
 
             // The below line returns an array containing, for each row, the contents of the first index (warning) and the contents of the second index (amendment name)
-            const rows = [...document.querySelectorAll('#controlling-license-current-amendments [class*=mclRowContainer] [role=row]')].map(r => arrayPicker([...r.childNodes], [indices.WARNING_INDEX, indices.AMENDMENT_NAME_INDEX]).map(r => r.textContent));
+            const rows = [...document.querySelectorAll('#controlling-license-current-amendments [class*=mclRowContainer] [role=row]')].map(row => arrayPicker([...row.childNodes], [_indices.WARNING_INDEX, _indices.AMENDMENT_NAME_INDEX]).map(r => r.textContent));
             rows.forEach(row => {
               if (row[1].includes('Current')) {
                 if (row[0]) {
@@ -280,17 +280,17 @@ module.exports.test = (uiTestCtx) => {
 
 
       it('should check notes are showing up in the table', done => {
-        const chain = nightmare
-          .evaluate((indices) => {
+        nightmare
+          .evaluate((_indices) => {
           // Bit of code to allow the choosing of certain indices in an array
             const arrayPicker = (array, listOfIndices) => {
-              pickedArray = [];
+              const pickedArray = [];
               listOfIndices.forEach(i => pickedArray.push(array[i]));
               return (pickedArray);
             };
 
             // The below line returns an array containing, for each row, the amendment note
-            const notes = [...document.querySelectorAll('#controlling-license-current-amendments [class*=mclRowContainer] [role=row]')].map(r => arrayPicker([...r.childNodes], [indices.NOTE_INDEX, indices.AMENDMENT_NAME_INDEX]).map(r => r.textContent));
+            const notes = [...document.querySelectorAll('#controlling-license-current-amendments [class*=mclRowContainer] [role=row]')].map(row => arrayPicker([...row.childNodes], [_indices.NOTE_INDEX, _indices.AMENDMENT_NAME_INDEX]).map(r => r.textContent));
             notes.forEach(row => {
               if (!row[0]) {
                 throw Error(`Note not found for ${row[1]}`);
@@ -303,13 +303,13 @@ module.exports.test = (uiTestCtx) => {
 
       it('should open Licenses App, find and open the relevant Controlling License', done => {
         helpers.clickApp(nightmare, done, 'licenses');
-        const chain = nightmare
+        nightmare
           .wait('#list-licenses')
           .click(`#list-licenses [class*=mclRowContainer] [data-label*='#${number}']`);
       });
 
       it('should add a new amendment to the Controlling License', done => {
-        const chain = nightmare
+        nightmare
           .wait('#clickable-expand-all')
           .click('#clickable-expand-all')
           .click('#add-amendment-button')
@@ -324,7 +324,7 @@ module.exports.test = (uiTestCtx) => {
 
       it('should open Agreements App, find and open the relevant Agreement', done => {
         helpers.clickApp(nightmare, done, 'agreements');
-        const chain = nightmare
+        nightmare
           .wait('#list-agreements')
           .click(`#list-agreements [class*=mclRowContainer] [data-label*='#${number}']`)
           .wait('#clickable-expand-all')
@@ -332,7 +332,7 @@ module.exports.test = (uiTestCtx) => {
       });
 
       it('should check that a banner has appeared to warn the user about unassigned amendments', done => {
-        const chain = nightmare
+        nightmare
           .wait('#agreement-controlling-license')
           .evaluate(() => {
             const alert = [...document.querySelectorAll('#agreement-controlling-license [class*=body] [role=alert]')].map(r => r.textContent);
@@ -345,7 +345,7 @@ module.exports.test = (uiTestCtx) => {
       });
 
       it('should check that a table containing the unassigned amendments has appeared', done => {
-        const chain = nightmare
+        nightmare
           .wait('#agreement-controlling-license')
           .evaluate(() => {
             const unassignedAmendments = [...document.querySelectorAll('#agreement-controlling-license [class*=body] [id=controlling-license-unset-amendments]')].map(r => r.textContent);
