@@ -10,6 +10,7 @@ import {
   DropdownButton,
   DropdownMenu,
   Headline,
+  Icon,
   Layout,
   MultiColumnList,
   Row,
@@ -106,12 +107,17 @@ export default class CoveredEResourcesList extends React.Component {
     date ? <FormattedUTCDate value={date} /> : '-'
   )
 
-  renderExportDropdown = () => (
+  renderExportDropdown = (disabled) => (
     <Dropdown
       onToggle={() => this.setState(prevState => ({ exportDropdownOpen: !prevState.exportDropdownOpen }))}
       open={this.state.exportDropdownOpen}
+      disabled={disabled}
     >
-      <DropdownButton data-role="toggle">
+      <DropdownButton
+        data-test-export-button
+        data-role="toggle"
+        marginBottom0
+      >
         <FormattedMessage id="ui-agreements.eresourcesCovered.exportAs" />
       </DropdownButton>
       <DropdownMenu data-role="menu">
@@ -120,6 +126,7 @@ export default class CoveredEResourcesList extends React.Component {
             <Button
               aria-label={exportAsJson}
               buttonStyle="dropdownItem"
+              disabled={disabled}
               id="clickable-dropdown-export-eresources-json"
               onClick={() => {
                 this.setState({ exportDropdownOpen: false });
@@ -135,6 +142,7 @@ export default class CoveredEResourcesList extends React.Component {
             <Button
               aria-label={exportAsKbart}
               buttonStyle="dropdownItem"
+              disabled={disabled}
               id="clickable-dropdown-export-eresources-kbart"
               onClick={() => {
                 this.setState({ exportDropdownOpen: false });
@@ -153,6 +161,7 @@ export default class CoveredEResourcesList extends React.Component {
     <Button
       buttonStyle={this.props.eresourcesFilterPath === filter ? 'primary' : 'default'}
       id={`clickable-pci-${filter || 'all'}`}
+      marginBottom0
       onClick={() => this.props.onFilterEResources(filter)}
     >
       <FormattedMessage id={`ui-agreements.content.${filter || 'all'}`} />
@@ -194,7 +203,8 @@ export default class CoveredEResourcesList extends React.Component {
   }
 
   render() {
-    const { agreement: { eresources } } = this.props;
+    const { agreement: { eresources }, eresourcesFilterPath } = this.props;
+    const exportDisabled = eresourcesFilterPath === 'dropped' || eresourcesFilterPath === 'future';
 
     return (
       <IfEResourcesEnabled>
@@ -202,11 +212,28 @@ export default class CoveredEResourcesList extends React.Component {
           <FormattedMessage id="ui-agreements.agreements.eresourcesCovered" />
         </Headline>
         <Row end="xs">
-          <Col xs={10}>
+          <Col xs={12} md={9}>
             {this.renderFilterButtons()}
           </Col>
-          <Col xs>
-            {this.renderExportDropdown()}
+          <Col xs={12} md={3}>
+            {this.renderExportDropdown(exportDisabled)}
+            {exportDisabled ?
+              <Tooltip
+                id="covered-eresources-export-tooltip"
+                placement="top"
+                text={<FormattedMessage id="ui-agreements.eresourcesCovered.exportButton.tooltip" />}
+              >
+                {({ ref, ariaIds }) => (
+                  <Icon
+                    aria-labelledby={ariaIds.text}
+                    icon="exclamation-circle"
+                    ref={ref}
+                    tabIndex="0"
+                  />
+                )}
+              </Tooltip> :
+              ''
+            }
           </Col>
         </Row>
         {eresources ? this.renderList() : <Spinner />}
