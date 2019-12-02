@@ -311,6 +311,6 @@
     "duplicateAgreementModal.errors.invalidResponseError": "تعذر نسخ الاتفاقية. الاستجابة الواردة من الخادم غير صالحة.",
     "duplicateAgreementModal.errors.systemAdministrator": "إذا استمرت المشكلة، اتصل بمسؤول النظام.",
     "duplicateAgreementModal.errors.tryAgain": "برجى إعادة المحاولة مرة أخرى",
-    "agreements.export": "Export",
-    "agreements.view": "View"
+    "agreements.export": "تصدير",
+    "agreements.view": "عرض"
 }
