@@ -74,6 +74,7 @@ export default class LinkedLicenseCard extends React.Component {
             amendments={amendments}
             id={id ? `${id}-amendments` : undefined}
             license={licenseRecord}
+            renderNotes
           />
           : null
         }

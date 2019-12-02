@@ -100,7 +100,7 @@ module.exports.test = (uiTestCtx) => {
 
       agreements.forEach(agreement => {
         it(`should create "${agreement.name}"`, done => {
-          AgreementCRUD.createAgreement(nightmare, done, agreement)
+          AgreementCRUD.createAgreement(nightmare, done, agreement);
         });
       });
 

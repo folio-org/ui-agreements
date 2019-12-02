@@ -1,8 +1,6 @@
 /* global describe, it, before, after, Nightmare */
 const AgreementCRUD = require('./agreement-crud');
 
-let NUMBER_OF_TERMS;
-
 module.exports.test = (uiTestCtx) => {
   const number = Math.round(Math.random() * 100000);
   const licenses = [{

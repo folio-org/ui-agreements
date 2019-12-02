@@ -1,3 +1,5 @@
-.note {
-  white-space: pre-wrap;
+@import "@folio/stripes-components/lib/variables";
+
+.tooltipIcon {
+  color: var(--warn);
 }

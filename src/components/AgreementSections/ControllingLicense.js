@@ -9,6 +9,7 @@ import {
   Badge,
   KeyValue,
   Layout,
+  MessageBanner,
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 import { LicenseCard } from '@folio/stripes-erm-components';
@@ -50,7 +51,7 @@ export default class ControllingLicense extends React.Component {
   };
 
   renderLicense = linkedLicense => {
-    const currentAmendments = getLicenseAmendments(linkedLicense, statuses.CURRENT);
+    const unsetAmendments = getLicenseAmendments(linkedLicense, statuses.UNSET);
     const licenseRecord = linkedLicense.remoteId_object || {};
 
     return (
@@ -67,6 +68,12 @@ export default class ControllingLicense extends React.Component {
         id="agreement-controlling-license"
         roundedBorder
       >
+        { unsetAmendments.length ?
+          <MessageBanner type="warning">
+            <FormattedMessage id="ui-agreements.license.warn.unassignedAmendments" />
+          </MessageBanner>
+          : null
+        }
         <LicenseCard
           license={licenseRecord}
           renderName={false}
@@ -76,15 +83,9 @@ export default class ControllingLicense extends React.Component {
             {linkedLicense.note}
           </KeyValue>
         }
-        { currentAmendments.length ?
-          <KeyValue label={<FormattedMessage id="ui-agreements.license.currentAmendments" />}>
-            <LicenseAmendmentList
-              amendments={currentAmendments}
-              id="controlling-license-current-amendments"
-              license={licenseRecord}
-              renderStatuses
-            />
-          </KeyValue>
+        {this.renderAmendments(linkedLicense, statuses.CURRENT)}
+        { unsetAmendments.length ?
+          this.renderAmendments(linkedLicense, statuses.UNSET)
           : null
         }
       </Card>
@@ -96,15 +97,15 @@ export default class ControllingLicense extends React.Component {
 
     if (!amendments.length) return null;
 
-    const statusString = status || 'unset';
-
     return (
-      <KeyValue label={<FormattedMessage id={`ui-agreements.license.${statusString}Amendments`} />}>
+      <KeyValue label={<FormattedMessage id={`ui-agreements.license.${status}Amendments`} />}>
         <LicenseAmendmentList
           amendments={amendments}
-          id={`controlling-license-${statusString}-amendments`}
+          id={`controlling-license-${status}-amendments`}
           license={linkedLicense.remoteId_object}
+          renderNotes={status !== statuses.UNSET}
           renderStatuses={status !== statuses.HISTORICAL}
+          renderWarnings={status === statuses.CURRENT}
         />
       </KeyValue>
     );
@@ -130,7 +131,6 @@ export default class ControllingLicense extends React.Component {
             {this.renderLicense(license)}
             {this.renderAmendments(license, statuses.FUTURE)}
             {this.renderAmendments(license, statuses.HISTORICAL)}
-            {this.renderAmendments(license, null)}
           </div>
           :
           <Layout className="padding-bottom-gutter">

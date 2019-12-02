@@ -7,8 +7,7 @@ import { Field } from 'react-final-form';
 import { Card, Col, Headline, MessageBanner, KeyValue, Row, Select, TextArea } from '@folio/stripes/components';
 import { LicenseEndDate, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
-import { urls, validators } from '../utilities';
-import { statuses } from '../../constants';
+import { urls, getConflictWarnings, validators } from '../utilities';
 import FormattedUTCDate from '../FormattedUTCDate';
 
 class AmendmentsFieldArray extends React.Component {
@@ -111,23 +110,10 @@ class AmendmentsFieldArray extends React.Component {
                         onChange={(e) => {
                           const { value } = e.target;
 
-                          let warning;
-                          if (value === statuses.CURRENT) {
-                            if (new Date(amendment.startDate).getTime() > new Date().getTime()) {
-                              warning = <FormattedMessage id="ui-agreements.license.warn.amendmentFuture" />;
-                            }
-
-                            // Amendment end date is in the past
-                            if (new Date(amendment.endDate).getTime() < new Date().getTime()) {
-                              warning = <FormattedMessage id="ui-agreements.license.warn.amendmentPast" />;
-                            }
-
-                            // Amendment has an invalid status.
-                            const linkedStatus = get(amendment, 'status', {});
-                            if (linkedStatus.value === statuses.EXPIRED || linkedStatus.value === statuses.REJECTED) {
-                              warning = <FormattedMessage id="ui-agreements.license.warn.amendmentStatus" values={{ status: linkedStatus.label }} />;
-                            }
-                          }
+                          const warning = getConflictWarnings.amendmentWarning({
+                            ...amendment,
+                            statusForThisAgreement: { value },
+                          });
 
                           this.setState(prevState => {
                             const warnings = [...prevState.warnings];

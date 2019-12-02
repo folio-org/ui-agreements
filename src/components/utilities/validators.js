@@ -12,7 +12,6 @@ const requiredStartDate = (value, allValues, meta) => {
       return <FormattedMessage id="stripes-core.label.missingRequiredField" />;
     }
   }
-
   return undefined;
 };
 

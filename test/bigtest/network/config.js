@@ -179,7 +179,7 @@ export default function config() {
       { 'id': '188389636d9ece46016d9ed018bd0033', 'value': 'current', 'label': 'Current' },
       { 'id': '188389636d9ece46016d9ed018ca0034', 'value': 'future', 'label': 'Future' },
       { 'id': '188389636d9ece46016d9ed018d30035', 'value': 'historical', 'label': 'Historical' },
-      { 'id': '188389636d9ece46016d9ed018dc0036', 'value': 'does_not_apply', 'label': 'Does not apply' }]
+      { 'id': '188389636d9ece46016d9ed018dc0036', 'value': 'does_not_apply', 'label': 'Does not apply' }];
   });
 
   this.get('/erm/refdata/InternalContact/role', () => {

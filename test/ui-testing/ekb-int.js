@@ -7,6 +7,7 @@ const getCreateAgreementUrl = ({ authority, referenceId }) => (
 const getEHoldingsUrl = ({ authority, referenceId }) => {
   if (authority === 'EKB-PACKAGE') return `/eholdings/packages/${referenceId}`;
   if (authority === 'EKB-TITLE') return `/eholdings/resources/${referenceId}`;
+  return null;
 };
 
 module.exports.test = (uiTestCtx) => {
