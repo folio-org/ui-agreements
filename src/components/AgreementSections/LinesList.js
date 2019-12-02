@@ -58,8 +58,8 @@ export default class LinesList extends React.Component {
     },
     provider: line => <EResourceProvider resource={line.resource || line} />,
     type: line => <EResourceType resource={getResourceFromEntitlement(line)} />,
-    activeFrom: line => <div data-test-active-from>{this.renderDate(line.activeFrom)}</div>,
-    activeTo: line => <div data-test-active-to>{this.renderDate(line.activeTo)}</div>,
+    activeFrom: line => <div data-test-active-from>{this.renderDate(line.startDate)}</div>,
+    activeTo: line => <div data-test-active-to>{this.renderDate(line.endDate)}</div>,
     count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
     coverage: line => <CoverageStatements statements={line.coverage} />,
     isCustomCoverage: line => {
