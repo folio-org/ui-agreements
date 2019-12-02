@@ -58,26 +58,24 @@ module.exports.test = (uiTestCtx) => {
     AMENDMENT_NAME_INDEX: 1,
     NOTE_INDEX: 5
   };
-  
+
   const checkWarningColumn = (nightmare, table, shouldExist, done) => {
-    let chain = nightmare
-    .wait('#clickable-expand-all')
-    .click('#clickable-expand-all')
-    .wait(`${table}`)
-    .evaluate((table, shouldExist) => {
-      let columnheaders = [...document.querySelectorAll(`${table} [class*=mclHeaderRow] [role=columnheader]`)].map(r => r.id.replace('list-column-', ''))
-      if (shouldExist === true) {
-        if (!columnheaders.find(h => h === "warning")) {
-          throw Error(`Failed to find warning column in table: ${table}`)
+    const chain = nightmare
+      .wait('#clickable-expand-all')
+      .click('#clickable-expand-all')
+      .wait(`${table}`)
+      .evaluate((table, shouldExist) => {
+        const columnheaders = [...document.querySelectorAll(`${table} [class*=mclHeaderRow] [role=columnheader]`)].map(r => r.id.replace('list-column-', ''));
+        if (shouldExist === true) {
+          if (!columnheaders.find(h => h === 'warning')) {
+            throw Error(`Failed to find warning column in table: ${table}`);
+          }
+        } else if (columnheaders.find(h => h === 'warning')) {
+          throw Error(`Warning column unexpectedly found in table: ${table}`);
         }
-      } else {
-        if (columnheaders.find(h => h === "warning")) {
-          throw Error(`Warning column unexpectedly found in table: ${table}`)
-        }
-      }
-    })
-    .then(done)
-    .catch(done);
+      })
+      .then(done)
+      .catch(done);
   };
 
 
@@ -103,7 +101,7 @@ module.exports.test = (uiTestCtx) => {
       // Create licenses and add amendments
       licenses.forEach(l => {
         it(`should create new license: ${l.name}`, done => {
-          let chain = nightmare 
+          let chain = nightmare
             .wait('#clickable-new-license')
             .click('#clickable-new-license')
 
@@ -115,38 +113,38 @@ module.exports.test = (uiTestCtx) => {
 
             .click('#clickable-create-license')
 
-            .waitUntilNetworkIdle(2000)
+            .waitUntilNetworkIdle(2000);
 
-            amendments.forEach(a => {
-              chain = chain
-                .wait('#clickable-expand-all')
-                .click('#clickable-expand-all')
-                .click('#add-amendment-button')
-                .wait('#edit-amendment-name')
-                .insert('#edit-amendment-name', a.name)
-                if (a.status) {
-                  chain = chain
-                    .wait('#edit-amendment-status')
-                    .type('#edit-amendment-status', a.status)
-                }
-                if (a.startDate) {
-                  chain = chain
-                    .wait('#edit-amendment-start-date')
-                    .insert('#edit-amendment-start-date', a.startDate)
-                }
-                if (a.endDate) {
-                  chain = chain
-                    .wait('#edit-amendment-end-date')
-                    .insert('#edit-amendment-end-date', a.endDate)
-                }
-                chain = chain
-                  .click('#clickable-create-amendment')
-                  .waitUntilNetworkIdle(2000)
-            });
+          amendments.forEach(a => {
             chain = chain
-              .then(() => nightmare.click('#pane-view-license button[icon=times]'))
-              .then(done)
-              .catch(done);
+              .wait('#clickable-expand-all')
+              .click('#clickable-expand-all')
+              .click('#add-amendment-button')
+              .wait('#edit-amendment-name')
+              .insert('#edit-amendment-name', a.name);
+            if (a.status) {
+              chain = chain
+                .wait('#edit-amendment-status')
+                .type('#edit-amendment-status', a.status);
+            }
+            if (a.startDate) {
+              chain = chain
+                .wait('#edit-amendment-start-date')
+                .insert('#edit-amendment-start-date', a.startDate);
+            }
+            if (a.endDate) {
+              chain = chain
+                .wait('#edit-amendment-end-date')
+                .insert('#edit-amendment-end-date', a.endDate);
+            }
+            chain = chain
+              .click('#clickable-create-amendment')
+              .waitUntilNetworkIdle(2000);
+          });
+          chain = chain
+            .then(() => nightmare.click('#pane-view-license button[icon=times]'))
+            .then(done)
+            .catch(done);
         });
       });
 
@@ -206,20 +204,16 @@ module.exports.test = (uiTestCtx) => {
 
       licenses.forEach((l, i) => {
         it(`should set amendment statuses and notes for ${l.name}`, done => {
-          let chain = nightmare
-            amendments.forEach(a => {
-              if (a.statusInAgreement) {
-                chain = chain
-                .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="${a.name}"] select`, a.statusInAgreement)
-              } else {
-                chain = chain
-                .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="${a.name}"] select`, 'Current')
-              }
-              chain = chain
-              .type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="${a.name}"] textArea`, a.note)
-                
-            });
-            chain = chain
+          let chain = nightmare;
+          amendments.forEach(a => {
+            if (a.statusInAgreement) {
+              chain = chain.type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="${a.name}"] select`, a.statusInAgreement);
+            } else {
+              chain = chain.type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="${a.name}"] select`, 'Current');
+            }
+            chain = chain.type(`#linkedLicenses-remoteId-${i}-license-card [data-test-amendment="${a.name}"] textArea`, a.note);
+          });
+          chain = chain
 
             .then(done)
             .catch(done);
@@ -238,87 +232,84 @@ module.exports.test = (uiTestCtx) => {
       });
 
       it('should check warnings column exists inside Controlling License: current amendment table', done => {
-        checkWarningColumn(nightmare, '#controlling-license-current-amendments', true, done)
+        checkWarningColumn(nightmare, '#controlling-license-current-amendments', true, done);
       });
 
       it('should check warnings column doesnt exist inside Controlling License: future amendment table', done => {
-        checkWarningColumn(nightmare, '#controlling-license-future-amendments', false, done)
+        checkWarningColumn(nightmare, '#controlling-license-future-amendments', false, done);
       });
 
       it('should check warnings column doesnt exist inside Controlling License: historical amendment table', done => {
-        checkWarningColumn(nightmare, '#controlling-license-historical-amendments', false, done)
+        checkWarningColumn(nightmare, '#controlling-license-historical-amendments', false, done);
       });
 
       it('should check warnings column doesnt exist inside Future License Accordion', done => {
-        checkWarningColumn(nightmare, '#agreement-future-license-0-amendments', false, done)
+        checkWarningColumn(nightmare, '#agreement-future-license-0-amendments', false, done);
       });
 
       it('should check warnings column doesnt exist inside Historical License Accordion', done => {
-        checkWarningColumn(nightmare, '#agreement-historical-license-0-amendments', false, done)
+        checkWarningColumn(nightmare, '#agreement-historical-license-0-amendments', false, done);
       });
 
 
-
       it('should check warnings exist for conflicting status amendments in controlling licenses, and not for non-conflicting ones', done => {
-        let chain = nightmare
-        .evaluate((indices) => {
-
+        const chain = nightmare
+          .evaluate((indices) => {
           // Bit of code to allow the choosing of certain indices in an array
-          const arrayPicker = (array, listOfIndices) => {
-            pickedArray = []
-            listOfIndices.forEach(i => pickedArray.push(array[i]))
-            return (pickedArray)
-          };
+            const arrayPicker = (array, listOfIndices) => {
+              pickedArray = [];
+              listOfIndices.forEach(i => pickedArray.push(array[i]));
+              return (pickedArray);
+            };
 
-          // The below line returns an array containing, for each row, the contents of the first index (warning) and the contents of the second index (amendment name)
-          let rows = [...document.querySelectorAll('#controlling-license-current-amendments [class*=mclRowContainer] [role=row]')].map(r => arrayPicker([...r.childNodes], [indices.WARNING_INDEX, indices.AMENDMENT_NAME_INDEX]).map(r => r.textContent))
-          rows.forEach(row => {
-            if (row[1].includes("Current")) {
-              if (row[0]) {
-                throw Error('Warning found in amendment with non conflicting status')
+            // The below line returns an array containing, for each row, the contents of the first index (warning) and the contents of the second index (amendment name)
+            const rows = [...document.querySelectorAll('#controlling-license-current-amendments [class*=mclRowContainer] [role=row]')].map(r => arrayPicker([...r.childNodes], [indices.WARNING_INDEX, indices.AMENDMENT_NAME_INDEX]).map(r => r.textContent));
+            rows.forEach(row => {
+              if (row[1].includes('Current')) {
+                if (row[0]) {
+                  throw Error('Warning found in amendment with non conflicting status');
+                }
+              } else if (!row[0]) {
+                throw Error(`Warning expected and not found for amendment ${row[1]} in Controlling License`);
               }
-            } else if (!row[0]) {
-              throw Error(`Warning expected and not found for amendment ${row[1]} in Controlling License`)
-            }
-          })
-        }, indices)
+            });
+          }, indices)
           .then(done)
           .catch(done);
       });
 
 
       it('should check notes are showing up in the table', done => {
-        let chain = nightmare
-        .evaluate(( indices) => {
-
+        const chain = nightmare
+          .evaluate((indices) => {
           // Bit of code to allow the choosing of certain indices in an array
-          const arrayPicker = (array, listOfIndices) => {
-            pickedArray = []
-            listOfIndices.forEach(i => pickedArray.push(array[i]))
-            return (pickedArray)
-          };
+            const arrayPicker = (array, listOfIndices) => {
+              pickedArray = [];
+              listOfIndices.forEach(i => pickedArray.push(array[i]));
+              return (pickedArray);
+            };
 
-          // The below line returns an array containing, for each row, the amendment note
-          let notes = [...document.querySelectorAll('#controlling-license-current-amendments [class*=mclRowContainer] [role=row]')].map(r => arrayPicker([...r.childNodes], [indices.NOTE_INDEX, indices.AMENDMENT_NAME_INDEX]).map(r => r.textContent))
-          notes.forEach(row => {
-            if (!row[0]) {
-              throw Error(`Note not found for ${row[1]}`)
-            }
-          })
-        }, indices)
+            // The below line returns an array containing, for each row, the amendment note
+            const notes = [...document.querySelectorAll('#controlling-license-current-amendments [class*=mclRowContainer] [role=row]')].map(r => arrayPicker([...r.childNodes], [indices.NOTE_INDEX, indices.AMENDMENT_NAME_INDEX]).map(r => r.textContent));
+            notes.forEach(row => {
+              if (!row[0]) {
+                throw Error(`Note not found for ${row[1]}`);
+              }
+            });
+          }, indices)
           .then(done)
           .catch(done);
       });
 
       it('should open Licenses App, find and open the relevant Controlling License', done => {
         helpers.clickApp(nightmare, done, 'licenses');
-        let chain = nightmare
+        const chain = nightmare
           .wait('#list-licenses')
-          .click(`#list-licenses [class*=mclRowContainer] [data-label*='#${number}']`)
+          .click(`#list-licenses [class*=mclRowContainer] [data-label*='#${number}']`);
       });
 
       it('should add a new amendment to the Controlling License', done => {
-        let chain = nightmare
+        const chain = nightmare
           .wait('#clickable-expand-all')
           .click('#clickable-expand-all')
           .click('#add-amendment-button')
@@ -333,37 +324,37 @@ module.exports.test = (uiTestCtx) => {
 
       it('should open Agreements App, find and open the relevant Agreement', done => {
         helpers.clickApp(nightmare, done, 'agreements');
-        let chain = nightmare
+        const chain = nightmare
           .wait('#list-agreements')
           .click(`#list-agreements [class*=mclRowContainer] [data-label*='#${number}']`)
           .wait('#clickable-expand-all')
-          .click('#clickable-expand-all')
+          .click('#clickable-expand-all');
       });
-      
+
       it('should check that a banner has appeared to warn the user about unassigned amendments', done => {
-        let chain = nightmare
-        .wait('#agreement-controlling-license')
-        .evaluate(() => {
-          let alert = [...document.querySelectorAll('#agreement-controlling-license [class*=body] [role=alert]')].map(r => r.textContent)
-          if (!alert) {
-            throw Error('Warning banner not found for unassigned amendments in Controlling license')
-          }
-        })
-        .then(done)
-        .catch(done);
+        const chain = nightmare
+          .wait('#agreement-controlling-license')
+          .evaluate(() => {
+            const alert = [...document.querySelectorAll('#agreement-controlling-license [class*=body] [role=alert]')].map(r => r.textContent);
+            if (!alert) {
+              throw Error('Warning banner not found for unassigned amendments in Controlling license');
+            }
+          })
+          .then(done)
+          .catch(done);
       });
 
       it('should check that a table containing the unassigned amendments has appeared', done => {
-        let chain = nightmare
-        .wait('#agreement-controlling-license')
-        .evaluate(() => {
-          let unassignedAmendments = [...document.querySelectorAll('#agreement-controlling-license [class*=body] [id=controlling-license-unset-amendments]')].map(r => r.textContent)
-          if (!unassignedAmendments) {
-            throw Error('Unassigned amendment table not found in Controlling license')
-          }
-        })
-        .then(done)
-        .catch(done);
+        const chain = nightmare
+          .wait('#agreement-controlling-license')
+          .evaluate(() => {
+            const unassignedAmendments = [...document.querySelectorAll('#agreement-controlling-license [class*=body] [id=controlling-license-unset-amendments]')].map(r => r.textContent);
+            if (!unassignedAmendments) {
+              throw Error('Unassigned amendment table not found in Controlling license');
+            }
+          })
+          .then(done)
+          .catch(done);
       });
     });
   });

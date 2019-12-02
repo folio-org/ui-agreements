@@ -43,7 +43,7 @@
     "test-ekb-int": "stripes test nightmare --run ekb-int",
     "test-po-lines": "stripes test nightmare --run po-lines",
     "test-eusage": "stripes test nightmare --run eusage",
-    "lint": "eslint src"
+    "lint": "eslint src test"
   },
   "devDependencies": {
     "@bigtest/interactor": "^0.9.3",

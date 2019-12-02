@@ -39,7 +39,6 @@ describe('Clone Agreement test', () => {
   });
 
   describe('click duplicate agreement button', () => {
-
     const { firstName = '', lastName = '-', middleName = '' } = internalContactData.personal;
     const name = `${lastName}${firstName ? ', ' : ' '}${firstName} ${middleName}`;
 
