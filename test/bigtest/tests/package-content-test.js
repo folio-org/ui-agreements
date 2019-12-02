@@ -98,7 +98,7 @@ describe('Package Content Filters', () => {
           });
 
           it('should find enabled export button', () => {
-            expect(agreementView.linesSection.coveredEresourcesList.isBtnDisabled).to.be.false;
+            expect(agreementView.linesSection.coveredEresourcesList.isExportBtnDisabled).to.be.false;
           });
         });
 
@@ -113,7 +113,7 @@ describe('Package Content Filters', () => {
           });
 
           it('should find disabled export button', () => {
-            expect(agreementView.linesSection.coveredEresourcesList.isBtnDisabled).to.be.true;
+            expect(agreementView.linesSection.coveredEresourcesList.isExportBtnDisabled).to.be.true;
           });
         });
 
@@ -128,7 +128,7 @@ describe('Package Content Filters', () => {
           });
 
           it('should find disabled export button', () => {
-            expect(agreementView.linesSection.coveredEresourcesList.isBtnDisabled).to.be.true;
+            expect(agreementView.linesSection.coveredEresourcesList.isExportBtnDisabled).to.be.true;
           });
         });
       });

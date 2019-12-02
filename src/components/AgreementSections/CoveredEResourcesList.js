@@ -116,6 +116,7 @@ export default class CoveredEResourcesList extends React.Component {
       <DropdownButton
         data-test-export-button
         data-role="toggle"
+        marginBottom0
       >
         <FormattedMessage id="ui-agreements.eresourcesCovered.exportAs" />
       </DropdownButton>
@@ -160,6 +161,7 @@ export default class CoveredEResourcesList extends React.Component {
     <Button
       buttonStyle={this.props.eresourcesFilterPath === filter ? 'primary' : 'default'}
       id={`clickable-pci-${filter || 'all'}`}
+      marginBottom0
       onClick={() => this.props.onFilterEResources(filter)}
     >
       <FormattedMessage id={`ui-agreements.content.${filter || 'all'}`} />
@@ -202,7 +204,7 @@ export default class CoveredEResourcesList extends React.Component {
 
   render() {
     const { agreement: { eresources }, eresourcesFilterPath } = this.props;
-    const disabled = eresourcesFilterPath === 'dropped' || eresourcesFilterPath === 'future';
+    const exportDisabled = eresourcesFilterPath === 'dropped' || eresourcesFilterPath === 'future';
 
     return (
       <IfEResourcesEnabled>
@@ -214,8 +216,8 @@ export default class CoveredEResourcesList extends React.Component {
             {this.renderFilterButtons()}
           </Col>
           <Col xs={12} md={3}>
-            {this.renderExportDropdown(disabled)}
-            {disabled ?
+            {this.renderExportDropdown(exportDisabled)}
+            {exportDisabled ?
               <Tooltip
                 id="covered-eresources-export-tooltip"
                 placement="top"
@@ -223,7 +225,7 @@ export default class CoveredEResourcesList extends React.Component {
               >
                 {({ ref, ariaIds }) => (
                   <Icon
-                    aria-describedby={ariaIds.text}
+                    aria-labelledby={ariaIds.text}
                     icon="exclamation-circle"
                     ref={ref}
                     tabIndex="0"
