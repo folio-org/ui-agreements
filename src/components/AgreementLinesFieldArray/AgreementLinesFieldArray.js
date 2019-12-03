@@ -19,9 +19,6 @@ class AgreementLinesFieldArray extends React.Component {
       orderLines: PropTypes.array,
     }),
     items: PropTypes.arrayOf(PropTypes.object),
-    meta: PropTypes.shape({
-      error: PropTypes.object,
-    }),
     name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
     onDeleteField: PropTypes.func.isRequired,

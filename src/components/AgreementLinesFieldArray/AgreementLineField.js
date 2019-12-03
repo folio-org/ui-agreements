@@ -27,7 +27,7 @@ export default class AgreementLineField extends React.Component {
       name: PropTypes.string.isRequired,
     }).isRequired,
     meta: PropTypes.shape({
-      error: PropTypes.node,
+      error: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
     }).isRequired,
     onDelete: PropTypes.func,
     onResourceSelected: PropTypes.func,
@@ -45,16 +45,16 @@ export default class AgreementLineField extends React.Component {
       let activeTo;
 
       if (meta.name.indexOf('activeFrom') >= 0) {
-        activeFrom = new Date(value);
-        activeTo = new Date(get(allValues, meta.name.replace('activeFrom', 'activeTo')));
+        activeFrom = value;
+        activeTo = get(allValues, meta.name.replace('activeFrom', 'activeTo'));
       } else if (meta.name.indexOf('endDate') >= 0) {
-        activeFrom = new Date(get(allValues, meta.name.replace('activeTo', 'activeFrom')));
-        activeTo = new Date(value);
+        activeFrom = get(allValues, meta.name.replace('activeTo', 'activeFrom'));
+        activeTo = value;
       } else {
         return undefined;
       }
 
-      if (activeFrom >= activeTo) {
+      if (activeFrom && activeTo && new Date(activeFrom) >= new Date(activeTo)) {
         return (
           <div data-test-error-end-date-too-early>
             <FormattedMessage id="ui-agreements.errors.endDateGreaterThanStartDate" />
