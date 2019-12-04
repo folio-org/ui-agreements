@@ -312,5 +312,8 @@
     "duplicateAgreementModal.errors.systemAdministrator": "If the problem persists contact your system administrator.",
     "duplicateAgreementModal.errors.tryAgain": "Please try again.",
     "agreements.export": "Export",
-    "agreements.view": "View"
+    "agreements.view": "View",
+    "eresourcesCovered.exportButton.tooltip": "現在またはすべてのリソースでのみサポートされるエクスポート",
+    "license.unsetAmendments": "未割り当ての修正",
+    "license.warn.unassignedAmendments": "このライセンスには未割り当ての修正があります。契約を編集して修正してください。"
 }

@@ -312,5 +312,8 @@
     "duplicateAgreementModal.errors.systemAdministrator": "Si le problème persiste, contactez votre administrateur système.",
     "duplicateAgreementModal.errors.tryAgain": "Merci de réessayer.",
     "agreements.export": "Exporter",
-    "agreements.view": "Afficher"
+    "agreements.view": "Afficher",
+    "eresourcesCovered.exportButton.tooltip": "Exports only supported for current or all resources",
+    "license.unsetAmendments": "Unassigned amendments",
+    "license.warn.unassignedAmendments": "This license has unassigned amendments. Please edit the agreement to rectify."
 }
