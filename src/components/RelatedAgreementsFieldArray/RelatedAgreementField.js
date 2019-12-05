@@ -58,7 +58,7 @@ export default class RelatedAgreementField extends React.Component {
         renderTrigger={(props) => (
           <Button
             aria-haspopup="true"
-            buttonRef={this.findAgreementButtonRef}
+            buttonRef={props.buttonRef || this.findAgreementButtonRef}
             buttonStyle={value ? 'default' : 'primary'}
             id={`${id}-find-agreement-btn`}
             marginBottom0
@@ -152,8 +152,8 @@ export default class RelatedAgreementField extends React.Component {
         id={id}
         roundedBorder
       >
-        { value ? this.renderAgreement() : this.renderEmpty() }
-        { touched && error ? this.renderError() : null }
+        {value ? this.renderAgreement() : this.renderEmpty()}
+        {touched && error ? this.renderError() : null}
       </Card>
     );
   }
