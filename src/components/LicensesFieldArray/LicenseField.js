@@ -52,7 +52,7 @@ export default class LicenseField extends React.Component {
         renderTrigger={(props) => (
           <Button
             buttonStyle={value ? 'default' : 'primary'}
-            buttonRef={this.findLicenseButtonRef}
+            buttonRef={props.buttonRef || this.findLicenseButtonRef}
             id={`${id}-find-license-btn`}
             marginBottom0
             onClick={props.onClick}
@@ -117,8 +117,8 @@ export default class LicenseField extends React.Component {
         id={id}
         roundedBorder
       >
-        { value ? this.renderLicense() : this.renderEmpty() }
-        { touched && error ? this.renderError() : null }
+        {value ? this.renderLicense() : this.renderEmpty()}
+        {touched && error ? this.renderError() : null}
       </Card>
     );
   }
