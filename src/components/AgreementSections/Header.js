@@ -5,11 +5,11 @@ import { FormattedMessage } from 'react-intl';
 
 import {
   Col,
+  FormattedUTCDate,
   KeyValue,
   Row,
 } from '@folio/stripes/components';
 
-import FormattedUTCDate from '../FormattedUTCDate';
 import css from './Header.css';
 
 export default class Header extends React.Component {

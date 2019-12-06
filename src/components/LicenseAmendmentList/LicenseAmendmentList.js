@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
 
-import { Icon, MultiColumnList, Tooltip } from '@folio/stripes/components';
+import {
+  Icon,
+  FormattedUTCDate,
+  MultiColumnList,
+  Tooltip
+} from '@folio/stripes/components';
 import { LicenseEndDate } from '@folio/stripes-erm-components';
 
-import FormattedUTCDate from '../FormattedUTCDate';
 import { urls, getConflictWarnings } from '../utilities';
 import css from './LicenseAmendmentList.css';
 

@@ -1,5 +1,9 @@
 # Change history for ui-agreements
 
+##  3.4.0 IN PROGRESS
+* Switched to using `<FormattedUTCDate>` from Stripes. ERM-635
+* Switched to using `<Spinner>` from Stripes. ERM-635
+
 ## 3.3.0 2019-12-04
 * Update stripes to v2.10.1 to support PaneFooter.
 * Move the Save & close button and add a Cancel button to Pane Footer. ERM-411.
