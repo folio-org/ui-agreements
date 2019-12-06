@@ -4,8 +4,7 @@ import { get } from 'lodash';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, Badge, MultiColumnList } from '@folio/stripes/components';
-import { Spinner } from '@folio/stripes-erm-components';
+import { Accordion, Badge, MultiColumnList, Spinner } from '@folio/stripes/components';
 
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';

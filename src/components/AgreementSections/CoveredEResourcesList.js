@@ -14,10 +14,10 @@ import {
   Layout,
   MultiColumnList,
   Row,
+  Spinner,
   Tooltip,
 } from '@folio/stripes/components';
 
-import { Spinner } from '@folio/stripes-erm-components';
 import { getResourceIdentifier } from '../utilities';
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
