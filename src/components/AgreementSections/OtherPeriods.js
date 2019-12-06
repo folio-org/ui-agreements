@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Badge, Accordion, MultiColumnList } from '@folio/stripes/components';
-
-import FormattedUTCDate from '../FormattedUTCDate';
+import {
+  Accordion,
+  Badge,
+  FormattedUTCDate,
+  MultiColumnList,
+} from '@folio/stripes/components';
 
 export default class OtherPeriods extends React.Component {
   static propTypes = {

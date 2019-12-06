@@ -4,11 +4,20 @@ import { get } from 'lodash';
 import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
-import { Card, Col, Headline, MessageBanner, KeyValue, Row, Select, TextArea } from '@folio/stripes/components';
+import {
+  Card,
+  Col,
+  FormattedUTCDate,
+  Headline,
+  MessageBanner,
+  KeyValue,
+  Row,
+  Select,
+  TextArea
+} from '@folio/stripes/components';
 import { LicenseEndDate, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
 import { urls, getConflictWarnings, validators } from '../utilities';
-import FormattedUTCDate from '../FormattedUTCDate';
 
 class AmendmentsFieldArray extends React.Component {
   static propTypes = {

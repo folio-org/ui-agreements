@@ -8,6 +8,7 @@ import {
   Badge,
   Button,
   ButtonGroup,
+  FormattedUTCDate,
   Layout,
   MultiColumnList,
   Spinner,
@@ -15,7 +16,6 @@ import {
 
 import CoverageStatements from '../CoverageStatements';
 import EResourceLink from '../EResourceLink';
-import FormattedUTCDate from '../FormattedUTCDate';
 
 export default class PackageContents extends React.Component {
   static propTypes = {

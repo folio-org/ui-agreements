@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
-import { MultiColumnList, Spinner, Tooltip } from '@folio/stripes/components';
+import {
+  FormattedUTCDate,
+  MultiColumnList,
+  Spinner,
+  Tooltip
+} from '@folio/stripes/components';
 
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
@@ -11,7 +16,6 @@ import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
 import EResourceType from '../EResourceType';
-import FormattedUTCDate from '../FormattedUTCDate';
 import { getResourceFromEntitlement, urls } from '../utilities';
 
 export default class LinesList extends React.Component {

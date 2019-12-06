@@ -4,13 +4,18 @@ import { get } from 'lodash';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, Badge, MultiColumnList, Spinner } from '@folio/stripes/components';
+import {
+  Accordion,
+  Badge,
+  FormattedUTCDate,
+  MultiColumnList,
+  Spinner
+} from '@folio/stripes/components';
 
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import EResourceType from '../EResourceType';
-import FormattedUTCDate from '../FormattedUTCDate';
 import { getResourceFromEntitlement, urls } from '../utilities';
 
 export default class Agreements extends React.Component {

@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Icon, Layout } from '@folio/stripes/components';
-
-import FormattedUTCDate from '../FormattedUTCDate';
+import { FormattedUTCDate, Icon, Layout } from '@folio/stripes/components';
 
 export default class CoverageStatements extends React.Component {
   static propTypes = {
