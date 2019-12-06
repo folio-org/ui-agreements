@@ -43,8 +43,8 @@ export default class RelatedAgreementField extends React.Component {
   }
 
   componentDidMount() {
-    if (!get(this.props, 'input.value.id') && this.findAgreementButtonRef.current) {
-      this.findAgreementButtonRef.current.focus();
+    if (!get(this.props, 'input.value.id') && this.triggerButton.current) {
+      this.triggerButton.current.focus();
     }
   }
 
@@ -55,18 +55,21 @@ export default class RelatedAgreementField extends React.Component {
       <Pluggable
         dataKey={id}
         onAgreementSelected={onAgreementSelected}
-        renderTrigger={(props) => (
-          <Button
-            aria-haspopup="true"
-            buttonRef={props.buttonRef || this.findAgreementButtonRef}
-            buttonStyle={value ? 'default' : 'primary'}
-            id={`${id}-find-agreement-btn`}
-            marginBottom0
-            onClick={props.onClick}
-          >
-            <FormattedMessage id={`ui-agreements.relatedAgreements.${value ? 'replace' : 'link'}Agreement`} />
-          </Button>
-        )}
+        renderTrigger={(props) => {
+          this.triggerButton = props.buttonRef;
+          return (
+            <Button
+              aria-haspopup="true"
+              buttonRef={props.buttonRef || this.findAgreementButtonRef}
+              buttonStyle={value ? 'default' : 'primary'}
+              id={`${id}-find-agreement-btn`}
+              marginBottom0
+              onClick={props.onClick}
+            >
+              <FormattedMessage id={`ui-agreements.relatedAgreements.${value ? 'replace' : 'link'}Agreement`} />
+            </Button>
+          );
+        }}
         type="find-agreement"
       >
         <FormattedMessage id="ui-agreements.relatedAgreements.noPlugin" />
