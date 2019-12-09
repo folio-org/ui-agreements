@@ -4,12 +4,12 @@ import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 import {
   Col,
+  FormattedUTCDate,
   Headline,
   KeyValue,
   Row,
 } from '@folio/stripes/components';
 
-import FormattedUTCDate from '../FormattedUTCDate';
 import { statuses } from '../../constants';
 
 export default class Info extends React.Component {

@@ -5,17 +5,17 @@ import { FormattedMessage } from 'react-intl';
 import {
   Button,
   Col,
+  FormattedUTCDate,
   Headline,
   IconButton,
   Pane,
   PaneMenu,
+  Paneset,
   Row,
   Selection,
-  Paneset,
 } from '@folio/stripes/components';
 
 import BasketList from '../BasketList';
-import FormattedUTCDate from '../FormattedUTCDate';
 
 export default class Basket extends React.Component {
   static propTypes = {

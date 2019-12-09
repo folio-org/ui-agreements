@@ -9,20 +9,20 @@ import {
   Dropdown,
   DropdownButton,
   DropdownMenu,
+  FormattedUTCDate,
   Headline,
   Icon,
   Layout,
   MultiColumnList,
   Row,
+  Spinner,
   Tooltip,
 } from '@folio/stripes/components';
 
-import { Spinner } from '@folio/stripes-erm-components';
 import { getResourceIdentifier } from '../utilities';
 import CoverageStatements from '../CoverageStatements';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
-import FormattedUTCDate from '../FormattedUTCDate';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
 
 export default class CoveredEResourcesList extends React.Component {
