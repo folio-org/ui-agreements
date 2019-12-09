@@ -225,8 +225,8 @@
   "interface.notes": "Notes",
   "interface.notFound": "No interfaces found",
 
-  "license.addExternalLicense": "Add external license to agreement",
-  "license.addLicense": "Add license to agreement",
+  "license.addExternalLicense": "Add external license",
+  "license.addLicense": "Add license",
   "license.agreementHasNone": "Agreement has no licenses.",
   "license.allLicenses": "All licenses",
   "license.amendment": "Amendment",
@@ -280,7 +280,7 @@
   "organizations.createNew": "Create new organization",
   "organizations.alreadyExists": "An organization with this name already exists!",
   "organizations.typeToSearch": "Begin typing to search for an organization",
-  "organizations.addOrganizationToAgreement": "Add organization to agreement",
+  "organizations.addOrganizationToAgreement": "Add organization",
 
   "poLines.acqMethod": "Acquisition method",
   "poLines.addPOLine": "Add PO line",
@@ -331,8 +331,8 @@
   "usageData.usageDataProvider": "Usage data provider",
   "usageData.usageDataProviderIndex": "Usage data provider {index}",
 
-  "supplementaryInfo.agreementHasNone": "Agreement has no supplementary info",
-  "supplementaryInfo.addSupplementaryInfo": "Add supplementary information to agreement",
+  "supplementaryInfo.agreementHasNone": "Agreement has no supplementary documents",
+  "supplementaryInfo.addSupplementaryInfo": "Add supplementary document",
   "supplementaryInfo.removeSupplementaryInfo": "Remove document",
   "settings.general": "General",
   "settings.general.hideEResourcesFunctionality.title": "Hide internal agreements knowledgebase",
