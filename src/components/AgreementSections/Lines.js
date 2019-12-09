@@ -2,12 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
-import { Badge, Accordion } from '@folio/stripes/components';
-import { Spinner } from '@folio/stripes-erm-components';
+import { Accordion, Badge, Spinner } from '@folio/stripes/components';
 
 import CoveredEResourcesList from './CoveredEResourcesList';
 import LinesList from './LinesList';
-
 
 export default class Lines extends React.Component {
   static propTypes = {

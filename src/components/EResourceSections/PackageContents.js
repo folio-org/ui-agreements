@@ -3,12 +3,19 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, Badge, Button, ButtonGroup, Layout, MultiColumnList } from '@folio/stripes/components';
-import { Spinner } from '@folio/stripes-erm-components';
+import {
+  Accordion,
+  Badge,
+  Button,
+  ButtonGroup,
+  FormattedUTCDate,
+  Layout,
+  MultiColumnList,
+  Spinner,
+} from '@folio/stripes/components';
 
 import CoverageStatements from '../CoverageStatements';
 import EResourceLink from '../EResourceLink';
-import FormattedUTCDate from '../FormattedUTCDate';
 
 export default class PackageContents extends React.Component {
   static propTypes = {

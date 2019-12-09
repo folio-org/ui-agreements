@@ -5,14 +5,15 @@ import { get, noop } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
-  MultiColumnList,
-  SearchField,
-  Pane,
-  Icon,
   Button,
   ButtonGroup,
+  FormattedUTCDate,
+  Icon,
+  MultiColumnList,
+  Pane,
   PaneMenu,
   Paneset,
+  SearchField,
 } from '@folio/stripes/components';
 
 import { AppIcon, IfPermission } from '@folio/stripes/core';
@@ -25,7 +26,6 @@ import {
 
 import { statuses } from '../../constants';
 import AgreementFilters from '../AgreementFilters';
-import FormattedUTCDate from '../FormattedUTCDate';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
 import { urls } from '../utilities';
 import css from './Agreements.css';
