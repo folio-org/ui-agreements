@@ -109,8 +109,8 @@
     "license.externalLicenses": "External licenses",
     "license.generalNotes": "General notes about the agreement's license",
     "license.noExternalLicenses": "Agreement has no external licenses.",
-    "license.addExternalLicense": "Add external license to agreement",
-    "license.addLicense": "Add license to agreement",
+    "license.addExternalLicense": "Add external license",
+    "license.addLicense": "Add license",
     "license.allLicenses": "All licenses",
     "license.controllingLicense": "Controlling license",
     "license.error.multipleControllingLicenses": "Only one Controlling License per agreement is allowed.",
@@ -180,7 +180,7 @@
     "agreements.closeEdit": "Close edit agreement",
     "eresources.packageResources": "E-resources in package",
     "finances.none": "Agreement has no order lines.",
-    "organizations.addOrganizationToAgreement": "Add organization to agreement",
+    "organizations.addOrganizationToAgreement": "Add organization",
     "eresource": "E-resource",
     "eresourcePluralizable": "{count} {count, plural, one {e-resource} other {e-resources}}",
     "poLines.acqMethod": "Acquisition method",
@@ -312,5 +312,8 @@
     "duplicateAgreementModal.errors.systemAdministrator": "If the problem persists contact your system administrator.",
     "duplicateAgreementModal.errors.tryAgain": "Please try again.",
     "agreements.export": "Export",
-    "agreements.view": "View"
+    "agreements.view": "View",
+    "eresourcesCovered.exportButton.tooltip": "Exports only supported for current or all resources",
+    "license.unsetAmendments": "Unassigned amendments",
+    "license.warn.unassignedAmendments": "This license has unassigned amendments. Please edit the agreement to rectify."
 }

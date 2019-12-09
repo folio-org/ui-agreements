@@ -312,5 +312,8 @@
     "duplicateAgreementModal.errors.systemAdministrator": "إذا استمرت المشكلة، اتصل بمسؤول النظام.",
     "duplicateAgreementModal.errors.tryAgain": "برجى إعادة المحاولة مرة أخرى",
     "agreements.export": "تصدير",
-    "agreements.view": "عرض"
+    "agreements.view": "عرض",
+    "eresourcesCovered.exportButton.tooltip": "التصديرات المدعومة فقط للموارد الحالية أو كل الموارد",
+    "license.unsetAmendments": "تعديلات غير معينة",
+    "license.warn.unassignedAmendments": "هذه الرخصة بها تعديلات غير معينة. يرجى تحرير الاتفاقية للتصحيح."
 }
