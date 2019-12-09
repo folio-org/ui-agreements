@@ -99,14 +99,15 @@ export default class FormInfo extends React.Component {
         <Row>
           <Col xs={12} md={6}>
             <Field name="agreementStatus" validate={validators.required}>
-              {props => {
+              {({ input, meta }) => {
                 return (<Select
                   dataOptions={agreementStatusValues}
+                  error={meta && meta.touched && meta.error}
                   id="edit-agreement-status"
                   label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
                   placeholder=" "
                   onChange={(e) => {
-                    props.input.onChange(e);
+                    input.onChange(e);
 
                     let warning;
 
@@ -121,7 +122,7 @@ export default class FormInfo extends React.Component {
                     this.props.form.mutators.setFieldData('reasonForClosure', { warning });
                   }}
                   required
-                  value={props.input.value}
+                  value={input.value}
                 />);
               }}
             </Field>

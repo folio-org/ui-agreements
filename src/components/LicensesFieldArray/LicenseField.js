@@ -29,15 +29,9 @@ export default class LicenseField extends React.Component {
     license: {},
   }
 
-  constructor(props) {
-    super(props);
-
-    this.findLicenseButtonRef = React.createRef();
-  }
-
   componentDidMount() {
-    if (!this.props.input.value && this.findLicenseButtonRef.current) {
-      this.findLicenseButtonRef.current.focus();
+    if (!this.props.input.value && this.triggerButton.current) {
+      this.triggerButton.current.focus();
     }
   }
 
@@ -49,17 +43,20 @@ export default class LicenseField extends React.Component {
         dataKey={id}
         type="find-license"
         onLicenseSelected={onLicenseSelected}
-        renderTrigger={(props) => (
-          <Button
-            buttonStyle={value ? 'default' : 'primary'}
-            buttonRef={this.findLicenseButtonRef}
-            id={`${id}-find-license-btn`}
-            marginBottom0
-            onClick={props.onClick}
-          >
-            <FormattedMessage id={`ui-agreements.license.${value ? 'replace' : 'link'}License`} />
-          </Button>
-        )}
+        renderTrigger={(props) => {
+          this.triggerButton = props.buttonRef;
+          return (
+            <Button
+              buttonStyle={value ? 'default' : 'primary'}
+              buttonRef={this.triggerButton}
+              id={`${id}-find-license-btn`}
+              marginBottom0
+              onClick={props.onClick}
+            >
+              <FormattedMessage id={`ui-agreements.license.${value ? 'replace' : 'link'}License`} />
+            </Button>
+          );
+        }}
       >
         <FormattedMessage id="ui-agreements.license.noFindLicensePlugin" />
       </Pluggable>
@@ -117,8 +114,8 @@ export default class LicenseField extends React.Component {
         id={id}
         roundedBorder
       >
-        { value ? this.renderLicense() : this.renderEmpty() }
-        { touched && error ? this.renderError() : null }
+        {value ? this.renderLicense() : this.renderEmpty()}
+        {touched && error ? this.renderError() : null}
       </Card>
     );
   }
