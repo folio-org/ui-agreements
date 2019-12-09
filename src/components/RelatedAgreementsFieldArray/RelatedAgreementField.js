@@ -60,7 +60,7 @@ export default class RelatedAgreementField extends React.Component {
           return (
             <Button
               aria-haspopup="true"
-              buttonRef={props.buttonRef || this.findAgreementButtonRef}
+              buttonRef={this.triggerButton}
               buttonStyle={value ? 'default' : 'primary'}
               id={`${id}-find-agreement-btn`}
               marginBottom0
