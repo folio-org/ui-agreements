@@ -156,7 +156,7 @@
     "interface.name": "Nom de l'interface",
     "interface.username": "Nom d'utilisateur",
     "interface.password": "Mot de passe",
-    "interface.uri": "URI",
+    "interface.uri": "URL",
     "interface.type": "Type d'interface",
     "interface.notes": "Commentaires",
     "interface.notFound": "Aucune interface trouvée",
@@ -312,5 +312,8 @@
     "duplicateAgreementModal.errors.systemAdministrator": "Si le problème persiste, contactez votre administrateur système.",
     "duplicateAgreementModal.errors.tryAgain": "Merci de réessayer.",
     "agreements.export": "Exporter",
-    "agreements.view": "Afficher"
+    "agreements.view": "Afficher",
+    "eresourcesCovered.exportButton.tooltip": "Exports only supported for current or all resources",
+    "license.unsetAmendments": "Unassigned amendments",
+    "license.warn.unassignedAmendments": "This license has unassigned amendments. Please edit the agreement to rectify."
 }
