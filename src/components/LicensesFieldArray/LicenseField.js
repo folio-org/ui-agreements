@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import {
   Button,
@@ -30,7 +31,7 @@ export default class LicenseField extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.props.input.value && this.triggerButton.current) {
+    if (!this.props.input.value && get(this.triggerButton, 'current')) {
       this.triggerButton.current.focus();
     }
   }
