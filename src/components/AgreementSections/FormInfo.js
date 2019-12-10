@@ -101,11 +101,11 @@ export default class FormInfo extends React.Component {
             <Field name="agreementStatus" validate={validators.required}>
               {({ input, meta }) => {
                 return (<Select
+                  {...input}
                   dataOptions={agreementStatusValues}
                   error={meta && meta.touched && meta.error}
                   id="edit-agreement-status"
                   label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
-                  name={input.name}
                   onChange={(e) => {
                     input.onChange(e);
 
@@ -123,7 +123,6 @@ export default class FormInfo extends React.Component {
                   }}
                   placeholder=" "
                   required
-                  value={input.value}
                 />);
               }}
             </Field>
