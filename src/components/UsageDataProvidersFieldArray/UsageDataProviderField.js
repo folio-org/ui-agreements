@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Card, Layout } from '@folio/stripes/components';
+import { get } from 'lodash';
+import { Button, Card, Layout } from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
 
 import css from '../styles.css';
@@ -27,15 +28,31 @@ export default class UsageDataProviderField extends React.Component {
     udp: {},
   }
 
+  componentDidMount() {
+    if (!get(this.props, 'input.value.id') && get(this.triggerButton, 'current')) {
+      this.triggerButton.current.focus();
+    }
+  }
+
   renderLinkUDPButton = value => (
     <Pluggable
-      aria-haspopup="true"
       dataKey="udp"
-      id={`udp-${this.props.index}-search-button`}
-      marginBottom0
       onUDPSelected={this.props.onUDPSelected}
-      searchLabel={<FormattedMessage id={`ui-agreements.usageData.${value ? 'replace' : 'link'}UDP`} />}
-      searchButtonStyle={value ? 'default' : 'primary'}
+      renderTrigger={(props) => {
+        this.triggerButton = props.buttonRef;
+        return (
+          <Button
+            aria-haspopup="true"
+            buttonRef={this.triggerButton}
+            buttonStyle={value ? 'default' : 'primary'}
+            id={`udp-${this.props.index}-search-button`}
+            marginBottom0
+            onClick={props.onClick}
+          >
+            <FormattedMessage id={`ui-agreements.usageData.${value ? 'replace' : 'link'}UDP`} />
+          </Button>
+        );
+      }}
       type="find-erm-usage-data-provider"
     >
       <FormattedMessage id="ui-agreements.usageData.noUDPPlugin" />
@@ -97,8 +114,8 @@ export default class UsageDataProviderField extends React.Component {
         id={id}
         roundedBorder
       >
-        { value ? this.renderUDP() : this.renderEmpty() }
-        { touched && error ? this.renderError() : null }
+        {value ? this.renderUDP() : this.renderEmpty()}
+        {touched && error ? this.renderError() : null}
       </Card>
     );
   }
