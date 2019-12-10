@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { get } from 'lodash';
 import { Field } from 'react-final-form';
 
 import { Button, Layout } from '@folio/stripes/components';
@@ -72,6 +73,7 @@ class POLinesFieldArray extends React.Component {
           component={POLineField}
           id={`edit-poline-${agreementLineIndex}-${index}`}
           name={`${name}[${index}].poLineId`}
+          ownerId={get(poLine, 'owner.id')}
           onPOLineSelected={selectedLine => this.handlePOLineSelected(index, selectedLine)}
           poLine={this.state.poLines.find(l => l.id === poLine.poLineId)}
         />

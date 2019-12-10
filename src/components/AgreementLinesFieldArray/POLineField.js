@@ -42,8 +42,8 @@ export default class POLineField extends React.Component {
   }
 
   componentDidMount() {
-    if (!get(this.props, 'input.value.id') && this.findPOLineButtonRef.current) {
-      this.findPOLineButtonRef.current.focus();
+    if (!get(this.props, 'ownerId') && get(this.triggerButton, 'current')) {
+      this.triggerButton.current.focus();
     }
   }
 
@@ -141,7 +141,7 @@ export default class POLineField extends React.Component {
         headerStart={(
           <AppIcon app="orders" size="small">
             <strong data-test-po-line-number>
-              { poLine.poLineNumber ?
+              {poLine.poLineNumber ?
                 <FormattedMessage id="ui-agreements.poLines.poLineWithNumber" values={{ poLineNumber: poLine.poLineNumber }} /> :
                 <FormattedMessage id="ui-agreements.poLines.poLine" />
               }
@@ -152,8 +152,8 @@ export default class POLineField extends React.Component {
         id={id}
         roundedBorder
       >
-        { value ? this.renderPOLine() : this.renderEmpty() }
-        { touched && error ? this.renderError() : null }
+        {value ? this.renderPOLine() : this.renderEmpty()}
+        {touched && error ? this.renderError() : null}
       </Card>
     );
   }
