@@ -35,12 +35,6 @@ export default class POLineField extends React.Component {
     poLine: {},
   }
 
-  constructor(props) {
-    super(props);
-
-    this.findPOLineButtonRef = React.createRef();
-  }
-
   componentDidMount() {
     if (!get(this.props, 'input.value') && get(this.triggerButton, 'current')) {
       this.triggerButton.current.focus();
@@ -55,19 +49,22 @@ export default class POLineField extends React.Component {
         addLines={poLines => onPOLineSelected(poLines[0])}
         dataKey={id}
         isSingleSelect
-        renderTrigger={(props) => (
-          <Button
-            aria-haspopup="true"
-            buttonRef={this.findPOLineButtonRef}
-            buttonStyle={value ? 'default' : 'primary'}
-            data-test-po-line-select-po-line
-            id={`${id}-find-poline-btn`}
-            marginBottom0
-            onClick={props.onClick}
-          >
-            <FormattedMessage id={`ui-agreements.poLines.${value ? 'replace' : 'link'}POLine`} />
-          </Button>
-        )}
+        renderTrigger={(props) => {
+          this.triggerButton = props.buttonRef;
+          return (
+            <Button
+              aria-haspopup="true"
+              buttonRef={this.triggerButton}
+              buttonStyle={value ? 'default' : 'primary'}
+              data-test-po-line-select-po-line
+              id={`${id}-find-poline-btn`}
+              marginBottom0
+              onClick={props.onClick}
+            >
+              <FormattedMessage id={`ui-agreements.poLines.${value ? 'replace' : 'link'}POLine`} />
+            </Button>
+          );
+        }}
         type="find-po-line"
       >
         <FormattedMessage id="ui-agreements.poLines.noPOLinePlugin" />
