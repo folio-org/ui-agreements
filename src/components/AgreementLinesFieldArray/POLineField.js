@@ -36,7 +36,7 @@ export default class POLineField extends React.Component {
   }
 
   componentDidMount() {
-    if (!get(this.props, 'input.value.id') && get(this.triggerButton, 'current')) {
+    if (!get(this.props, 'input.value') && get(this.triggerButton, 'current')) {
       this.triggerButton.current.focus();
     }
   }
