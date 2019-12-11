@@ -3,7 +3,7 @@ import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 const required = value => (
-  !value ? <FormattedMessage id="stripes-core.label.missingRequiredField" /> : undefined
+  (value || value === false || value === 0) ? undefined : <FormattedMessage id="stripes-core.label.missingRequiredField" />
 );
 
 const requiredStartDate = (value, allValues, meta) => {
