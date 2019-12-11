@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
 import { Field } from 'react-final-form';
 import { Button, Layout, TextArea } from '@folio/stripes/components';
 import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
@@ -54,7 +53,6 @@ class UsageDataProvidersFieldArray extends React.Component {
       >
         <Field
           component={UsageDataProviderField}
-          agreementId={get(udp, 'owner.id')}
           deleteButtonTooltipText={<FormattedMessage id="ui-agreements.usageData.removeUsageDataProvider" />}
           id={`udp-remoteId-${index}`}
           index={index}

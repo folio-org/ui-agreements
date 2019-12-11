@@ -29,7 +29,7 @@ export default class UsageDataProviderField extends React.Component {
   }
 
   componentDidMount() {
-    if (!get(this.props, 'agreementId') && get(this.triggerButton, 'current')) {
+    if (!get(this.props, 'input.value') && get(this.triggerButton, 'current')) {
       this.triggerButton.current.focus();
     }
   }

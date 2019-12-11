@@ -37,7 +37,7 @@ export default class RelatedAgreementField extends React.Component {
   }
 
   componentDidMount() {
-    if (!get(this.props, 'agreement.id') && get(this.triggerButton, 'current')) {
+    if (!get(this.props, 'input.value.id') && get(this.triggerButton, 'current')) {
       this.triggerButton.current.focus();
     }
   }
