@@ -21,6 +21,7 @@ export default class RelatedAgreementField extends React.Component {
   static propTypes = {
     id: PropTypes.string,
     input: PropTypes.shape({
+      name: PropTypes.string,
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     }).isRequired,
     meta: PropTypes.shape({
@@ -43,7 +44,11 @@ export default class RelatedAgreementField extends React.Component {
   }
 
   renderLinkAgreementButton = value => {
-    const { id, onAgreementSelected } = this.props;
+    const {
+      id,
+      input: { name },
+      onAgreementSelected,
+    } = this.props;
 
     return (
       <Pluggable
@@ -58,6 +63,7 @@ export default class RelatedAgreementField extends React.Component {
               buttonStyle={value ? 'default' : 'primary'}
               id={`${id}-find-agreement-btn`}
               marginBottom0
+              name={name}
               onClick={props.onClick}
             >
               <FormattedMessage id={`ui-agreements.relatedAgreements.${value ? 'replace' : 'link'}Agreement`} />
