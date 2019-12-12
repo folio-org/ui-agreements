@@ -49,16 +49,16 @@ module.exports.test = (uiTestCtx,
         it(`should add doc ${doc.name}`, done => {
           let chain = nightmare
             .click(`#add-${docsFieldName}-btn`)
-            .insert(`#${docsFieldName}-name-${row}`, doc.name);
+            .insert(`#${docsFieldName}-${row}-name`, doc.name);
 
           if (doc.category) {
-            chain = chain.type(`#${docsFieldName}-category-${row}`, doc.category);
+            chain = chain.type(`#${docsFieldName}-${row}-category`, doc.category);
           }
 
           chain
-            .insert(`#${docsFieldName}-note-${row}`, doc.note)
-            .insert(`#${docsFieldName}-location-${row}`, doc.location)
-            .insert(`#${docsFieldName}-url-${row}`, doc.url)
+            .insert(`#${docsFieldName}-${row}-note`, doc.note)
+            .insert(`#${docsFieldName}-${row}-location`, doc.location)
+            .insert(`#${docsFieldName}-${row}-url`, doc.url)
             .then(done)
             .catch(done);
         });
@@ -135,18 +135,18 @@ module.exports.test = (uiTestCtx,
           .catch(done);
       });
 
-      docs.forEach(doc => {
+      docs.forEach((doc, index) => {
         it(`should find correctly loaded values for ${doc.name}`, done => {
           nightmare
-            .evaluate((d, field) => {
-              const nameElements = [...document.querySelectorAll(`[id^=${field}-name-]`)];
+            .evaluate(d => {
+              const nameElements = [...document.querySelectorAll('[data-test-document-field-name]')];
               const nameElement = nameElements.find(e => e.value === d.name);
               if (!nameElement) {
                 throw Error(`Failed to find doc name text field with loaded value of ${d.name}`);
               }
 
               if (d.category) {
-                const categoryElements = [...document.querySelectorAll(`select[id^=${field}-category-]`)];
+                const categoryElements = [...document.querySelectorAll('[data-test-document-field-category]')];
                 const categoryElement = categoryElements.find(e => e.selectedOptions[0].textContent == d.category); // eslint-disable-line eqeqeq
                 if (!categoryElement) {
                   throw Error(`Failed to find doc category field with loaded value of ${d.category}`);
@@ -155,7 +155,7 @@ module.exports.test = (uiTestCtx,
               }
 
               if (d.note) {
-                const noteElements = [...document.querySelectorAll(`[id^=${field}-note-]`)];
+                const noteElements = [...document.querySelectorAll('[data-test-document-field-note]')];
                 const noteElement = noteElements.find(e => e.value == d.note); // eslint-disable-line eqeqeq
                 if (!noteElement) {
                   throw Error(`Failed to find doc note text field with loaded value of ${d.note}`);
@@ -163,7 +163,7 @@ module.exports.test = (uiTestCtx,
               }
 
               if (d.location) {
-                const locationElements = [...document.querySelectorAll(`[id^=${field}-location-]`)];
+                const locationElements = [...document.querySelectorAll('[data-test-document-field-location]')];
                 const locationElement = locationElements.find(e => e.value == d.location); // eslint-disable-line eqeqeq
                 if (!locationElement) {
                   throw Error(`Failed to find doc location text field with loaded value of ${d.location}`);
@@ -171,13 +171,13 @@ module.exports.test = (uiTestCtx,
               }
 
               if (d.url) {
-                const urlElements = [...document.querySelectorAll(`[id^=${field}-url-]`)];
+                const urlElements = [...document.querySelectorAll('[data-test-document-field-url]')];
                 const urlElement = urlElements.find(e => e.value == d.url); // eslint-disable-line eqeqeq
                 if (!urlElement) {
                   throw Error(`Failed to find doc url text field with loaded value of ${d.url}`);
                 }
               }
-            }, doc, docsFieldName)
+            }, doc, docsFieldName, index)
             .wait(5000)
             .then(done)
             .catch(done);
@@ -187,29 +187,29 @@ module.exports.test = (uiTestCtx,
       if (editedDoc) {
         it(`should edit agreement with changed doc ${editedDoc.name}`, done => {
           nightmare
-            .evaluate((d, field) => {
-              const nameElements = [...document.querySelectorAll(`[id^=${field}-name-]`)];
+            .evaluate(d => {
+              const nameElements = [...document.querySelectorAll('[data-test-document-field-name]')];
               const index = nameElements.findIndex(e => e.value === d.docToEdit);
               if (index === -1) {
                 throw Error(`Failed to find doc name text field with loaded value of ${d.docToEdit}`);
               }
 
               return index;
-            }, editedDoc, docsFieldName)
+            }, editedDoc)
             .then(row => {
               let chain = nightmare
-                .insert(`#${docsFieldName}-name-${row}`, editedDoc.appendName);
+                .insert(`#${docsFieldName}-${row}-name`, editedDoc.appendName);
 
               if (editedDoc.category) {
                 chain = chain
-                  .type(`#${docsFieldName}-category-${row}`, '')
-                  .type(`#${docsFieldName}-category-${row}`, editedDoc.category);
+                  .type(`#${docsFieldName}-${row}-category`, '')
+                  .type(`#${docsFieldName}-${row}-category`, editedDoc.category);
               }
 
               chain
-                .insert(`#${docsFieldName}-note-${row}`, editedDoc.appendNote)
-                .insert(`#${docsFieldName}-location-${row}`, editedDoc.appendLocation)
-                .insert(`#${docsFieldName}-url-${row}`, editedDoc.appendUrl);
+                .insert(`#${docsFieldName}-${row}-note`, editedDoc.appendNote)
+                .insert(`#${docsFieldName}-${row}-location`, editedDoc.appendLocation)
+                .insert(`#${docsFieldName}-${row}-url`, editedDoc.appendUrl);
             })
             .then(done)
             .catch(done);
@@ -219,15 +219,15 @@ module.exports.test = (uiTestCtx,
       if (deletedDoc) {
         it(`should delete doc ${deletedDoc}`, done => {
           nightmare
-            .evaluate((d, field) => {
-              const nameElements = [...document.querySelectorAll(`[id^=${field}-name-]`)];
+            .evaluate(d => {
+              const nameElements = [...document.querySelectorAll('[data-test-document-field-name]')];
               const index = nameElements.findIndex(e => e.value === d);
               if (index === -1) {
                 throw Error(`Failed to find doc name text field with loaded value of ${d}`);
               }
 
               return index;
-            }, deletedDoc, docsFieldName)
+            }, deletedDoc)
             .then(row => nightmare.click(`#${docsFieldName}-delete-${row}`))
             .then(done)
             .catch(done);
