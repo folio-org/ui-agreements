@@ -19,7 +19,6 @@ import { isExternal, isPackage } from '../utilities';
 import CustomCoverageFieldArray from './CustomCoverageFieldArray';
 import POLinesFieldArray from './POLinesFieldArray';
 
-
 export default class AgreementLineField extends React.Component {
   static propTypes = {
     basket: PropTypes.arrayOf(PropTypes.object),
