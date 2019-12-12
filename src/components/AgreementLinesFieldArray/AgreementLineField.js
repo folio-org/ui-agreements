@@ -188,6 +188,7 @@ export default class AgreementLineField extends React.Component {
 
     return (
       <BasketSelector
+        autoFocus
         addButtonLabel={<FormattedMessage id="ui-agreements.agreementLines.createLine" />}
         basket={this.props.basket}
         error={React.isValidElement(error) ? error : undefined}

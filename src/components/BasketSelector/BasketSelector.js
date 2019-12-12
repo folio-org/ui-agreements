@@ -13,6 +13,7 @@ import {
 export default class BasketSelector extends React.Component {
   static propTypes = {
     addButtonLabel: PropTypes.node,
+    autoFocus: PropTypes.bool,
     basket: PropTypes.arrayOf(PropTypes.object),
     error: PropTypes.node,
     onAdd: PropTypes.func,
@@ -45,6 +46,7 @@ export default class BasketSelector extends React.Component {
       <Row>
         <Col xs={12} md={8}>
           <Selection
+            autoFocus={this.props.autoFocus}
             dataOptions={dataOptions}
             error={error}
             id="basket-selector"
