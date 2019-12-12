@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import { Button, Layout } from '@folio/stripes/components';
-import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
+import { EditCard, withKiwtFieldArray, requiredValidator } from '@folio/stripes-erm-components';
 
 import POLineField from './POLineField';
 
@@ -74,6 +74,7 @@ class POLinesFieldArray extends React.Component {
           name={`${name}[${index}].poLineId`}
           onPOLineSelected={selectedLine => this.handlePOLineSelected(index, selectedLine)}
           poLine={this.state.poLines.find(l => l.id === poLine.poLineId)}
+          validate={requiredValidator}
         />
       </EditCard>
     ));
