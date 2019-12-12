@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
@@ -36,7 +36,13 @@ export default class AgreementPeriodField extends React.Component {
   }
 
   componentDidMount() {
-    if (!get(this.props, 'input.value.id') && get(this.inputRef, 'current')) {
+    const value = get(this.props, 'input.value');
+
+    /* Focus only when add agreement period button is clicked in which case the value object
+    would look like value:{ _delete: false }. Prevent focus on initial mount (value === {}) or
+    when value.id is defined */
+
+    if (!isEmpty(value) && !value.id && get(this.inputRef, 'current')) {
       this.inputRef.current.focus();
     }
   }
