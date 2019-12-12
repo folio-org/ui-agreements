@@ -43,7 +43,7 @@ export default class UsageData extends React.Component {
               data-test-udp-link
               to={urls.udpView(udp.remoteId)}
             >
-              {get(udp, 'remoteId_object.label', udp.remoteId)}
+              <strong>{get(udp, 'remoteId_object.label', udp.remoteId)}</strong>
             </Link>
           </AppIcon>
         )}
