@@ -36,7 +36,6 @@ class AgreementPeriodsFieldArray extends React.Component {
       >
         <Field
           component={AgreementPeriodField}
-          id={`ra-agreement-${index}`}
           index={index}
           name={`${name}[${index}]`}
         />

@@ -98,6 +98,12 @@
   "agreementLines.hasCustomCoverage": "Has custom coverage",
   "agreementLines.customCoverageTitle": "Custom coverage #{number}",
 
+  "agreementLines.customCoverage.startIssue": "Start issue",
+  "agreementLines.customCoverage.endIssue": "End issue",
+  "agreementLines.customCoverage.startVolume": "Start Volume",
+  "agreementLines.customCoverage.endVolume": "End Volume",
+
+
   "agreementPeriods": "Agreement periods",
   "agreementPeriods.addPeriod": "Add agreement period",
   "agreementPeriods.removePeriod": "Remove agreement period",
