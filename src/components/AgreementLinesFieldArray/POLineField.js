@@ -42,7 +42,7 @@ export default class POLineField extends React.Component {
   }
 
   renderLinkPOLineButton = value => {
-    const { id, onPOLineSelected } = this.props;
+    const { id, input: { name }, onPOLineSelected } = this.props;
 
     return (
       <Pluggable
@@ -59,6 +59,7 @@ export default class POLineField extends React.Component {
               data-test-po-line-select-po-line
               id={`${id}-find-poline-btn`}
               marginBottom0
+              name={name}
               onClick={props.onClick}
             >
               <FormattedMessage id={`ui-agreements.poLines.${value ? 'replace' : 'link'}POLine`} />

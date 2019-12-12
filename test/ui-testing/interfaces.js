@@ -144,11 +144,11 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .click('#add-org-btn')
           .evaluate((r) => {
-            if (!document.querySelector(`#orgs-link-${r}-search-button`)) {
+            if (!document.querySelector(`#orgs-${r}-link-button`)) {
               throw Error('Expected organization picker button to exist.');
             }
 
-            if (!document.querySelector(`#orgs-role-${r}`)) {
+            if (!document.querySelector(`#orgs-${r}-role`)) {
               throw Error('Expected role dropdown to exist.');
             }
           }, row)
@@ -158,7 +158,7 @@ module.exports.test = (uiTestCtx) => {
 
       it('should select org', done => {
         nightmare
-          .click(`#orgs-link-${row}-search-button`)
+          .click(`#orgs-${row}-link-button`)
           .wait('#input-organization-search')
           .type('#input-organization-search', orgName)
           .wait('[data-test-search-and-sort-submit]')
@@ -177,10 +177,10 @@ module.exports.test = (uiTestCtx) => {
 
       it(`should assign role: ${org.role}`, done => {
         nightmare
-          .wait(`#orgs-role-${row}`)
-          .type(`#orgs-role-${row}`, org.role)
+          .wait(`#orgs-${row}-role`)
+          .type(`#orgs-${row}-role`, org.role)
           .evaluate((r, o) => {
-            const roleElement = document.querySelector(`#orgs-role-${r}`);
+            const roleElement = document.querySelector(`#orgs-${r}-role`);
             const role = roleElement.selectedOptions[0].textContent;
             if (role !== o.role) {
               throw Error(`Expected role to be ${o.role} but is ${role}`);
@@ -232,7 +232,7 @@ module.exports.test = (uiTestCtx) => {
       it(`should find uri "${uri}"`, done => {
         nightmare
           .evaluate(_uri => {
-            const uriElements = [...document.querySelectorAll('#organizations span a')];
+            const uriElements = [...document.querySelectorAll('#organizations [data-test-interfaces] a')];
             const uriFound = uriElements.find(e => e.attributes.href.nodeValue === _uri);
             if (!uriFound) {
               throw Error(`Could not find row with uri ${_uri}`);

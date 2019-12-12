@@ -24,6 +24,7 @@ class AgreementEditRoute extends React.Component {
       path: 'erm/entitlements',
       params: {
         match: 'owner.id',
+        sort: 'resource.name',
         stats: 'true',
         term: ':{id}',
       },
