@@ -17,6 +17,7 @@ export default class LicenseField extends React.Component {
   static propTypes = {
     id: PropTypes.string,
     input: PropTypes.shape({
+      name: PropTypes.string,
       value: PropTypes.string,
     }).isRequired,
     license: PropTypes.object,
@@ -37,7 +38,7 @@ export default class LicenseField extends React.Component {
   }
 
   renderLinkLicenseButton = (value) => {
-    const { id, onLicenseSelected } = this.props;
+    const { id, input: { name }, onLicenseSelected } = this.props;
 
     return (
       <Pluggable
@@ -52,6 +53,7 @@ export default class LicenseField extends React.Component {
               buttonRef={this.triggerButton}
               id={`${id}-find-license-btn`}
               marginBottom0
+              name={name}
               onClick={props.onClick}
             >
               <FormattedMessage id={`ui-agreements.license.${value ? 'replace' : 'link'}License`} />

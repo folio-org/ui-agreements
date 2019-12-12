@@ -75,6 +75,7 @@ export default class FormInfo extends React.Component {
         <Row>
           <Col xs={12}>
             <Field
+              autoFocus
               component={TextField}
               id="edit-agreement-name"
               label={<FormattedMessage id="ui-agreements.agreements.name" />}

@@ -12,6 +12,7 @@ export default class UsageDataProviderField extends React.Component {
     id: PropTypes.string,
     index: PropTypes.number.isRequired,
     input: PropTypes.shape({
+      name: PropTypes.string,
       onChange: PropTypes.func.isRequired,
       value: PropTypes.string,
     }).isRequired,
@@ -47,6 +48,7 @@ export default class UsageDataProviderField extends React.Component {
             buttonStyle={value ? 'default' : 'primary'}
             id={`udp-${this.props.index}-search-button`}
             marginBottom0
+            name={this.props.input.name}
             onClick={props.onClick}
           >
             <FormattedMessage id={`ui-agreements.usageData.${value ? 'replace' : 'link'}UDP`} />
