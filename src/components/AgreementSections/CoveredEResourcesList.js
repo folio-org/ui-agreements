@@ -208,9 +208,11 @@ export default class CoveredEResourcesList extends React.Component {
 
     return (
       <IfEResourcesEnabled>
-        <Headline margin="none" tag="h4">
-          <FormattedMessage id="ui-agreements.agreements.eresourcesCovered" />
-        </Headline>
+        <Layout className="marginTop1">
+          <Headline margin="small" tag="h4">
+            <FormattedMessage id="ui-agreements.agreements.eresourcesCovered" />
+          </Headline>
+        </Layout>
         <Row end="xs">
           <Col xs={12} md={9}>
             {this.renderFilterButtons()}
