@@ -315,5 +315,10 @@
     "agreements.view": "View",
     "eresourcesCovered.exportButton.tooltip": "Exports only supported for current or all resources",
     "license.unsetAmendments": "Unassigned amendments",
-    "license.warn.unassignedAmendments": "This license has unassigned amendments. Please edit the agreement to rectify."
+    "license.warn.unassignedAmendments": "This license has unassigned amendments. Please edit the agreement to rectify.",
+    "agreementLines.customCoverage.startIssue": "Start issue",
+    "agreementLines.customCoverage.endIssue": "End issue",
+    "agreementLines.customCoverage.startVolume": "Start volume",
+    "agreementLines.customCoverage.endVolume": "End volume",
+    "viewUDP.name": "Name"
 }
