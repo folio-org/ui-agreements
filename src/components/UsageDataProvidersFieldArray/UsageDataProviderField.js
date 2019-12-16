@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
-import { Button, Card, Col, KeyValue, Layout, Row } from '@folio/stripes/components';
+import { Button, Card, KeyValue, Layout } from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
 
 import css from '../styles.css';
@@ -64,15 +64,11 @@ export default class UsageDataProviderField extends React.Component {
   renderUDP = () => {
     const { udp } = this.props;
     return (
-      <Row>
-        <Col>
-          <KeyValue label={<FormattedMessage id="ui-agreements.viewUDP.name" />}>
-            <span data-test-udp-card-name>
-              {udp.label}
-            </span>
-          </KeyValue>
-        </Col>
-      </Row>
+      <KeyValue label={<FormattedMessage id="ui-agreements.viewUDP.name" />}>
+        <span data-test-udp-card-name>
+          {udp.label}
+        </span>
+      </KeyValue>
     );
   }
 
