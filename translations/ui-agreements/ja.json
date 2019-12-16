@@ -315,5 +315,10 @@
     "agreements.view": "View",
     "eresourcesCovered.exportButton.tooltip": "現在またはすべてのリソースでのみサポートされるエクスポート",
     "license.unsetAmendments": "未割り当ての修正",
-    "license.warn.unassignedAmendments": "このライセンスには未割り当ての修正があります。契約を編集して修正してください。"
+    "license.warn.unassignedAmendments": "このライセンスには未割り当ての修正があります。契約を編集して修正してください。",
+    "agreementLines.customCoverage.startIssue": "Start issue",
+    "agreementLines.customCoverage.endIssue": "End issue",
+    "agreementLines.customCoverage.startVolume": "Start volume",
+    "agreementLines.customCoverage.endVolume": "End volume",
+    "viewUDP.name": "Name"
 }
