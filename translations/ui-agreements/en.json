@@ -336,6 +336,8 @@
   "usageData.usageDataProvider": "Usage data provider",
   "usageData.usageDataProviderIndex": "Usage data provider {index}",
 
+  "viewUDP.name": "Name",
+
   "supplementaryInfo.agreementHasNone": "Agreement has no supplementary documents",
   "supplementaryInfo.addSupplementaryInfo": "Add supplementary document",
   "supplementaryInfo.removeSupplementaryInfo": "Remove document",
