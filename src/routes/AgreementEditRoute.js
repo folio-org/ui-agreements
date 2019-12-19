@@ -75,7 +75,7 @@ class AgreementEditRoute extends React.Component {
           ))
           .join(' or ');
 
-        return query ? { query } : {};
+        return query ? { query } : null;
       },
       fetch: props => !!props.stripes.hasInterface('orders', '6.0 7.0 8.0'),
       records: 'poLines',
@@ -99,7 +99,7 @@ class AgreementEditRoute extends React.Component {
           .map(contact => `id==${contact.user}`)
           .join(' or ');
 
-        return query ? { query } : {};
+        return query ? { query } : null;
       },
       fetch: props => !!props.stripes.hasInterface('users', '15.0'),
       records: 'users',
