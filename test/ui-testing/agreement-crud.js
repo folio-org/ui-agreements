@@ -16,7 +16,7 @@ const generateAgreementValues = () => {
 
 const agreementLines = () => {
   const activeFrom = '2019-10-13';
-  const activeTo = '2019-10-31';
+  const activeTo = '2030-10-31';
   return {
     activeFrom,
     activeTo,

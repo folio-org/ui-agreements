@@ -5,9 +5,9 @@ import { FormattedMessage } from 'react-intl';
 import {
   Button,
   ButtonGroup,
+  Callout,
   Col,
   Dropdown,
-  DropdownButton,
   DropdownMenu,
   FormattedUTCDate,
   Headline,
@@ -39,8 +39,10 @@ export default class CoveredEResourcesList extends React.Component {
     visible: PropTypes.bool,
   };
 
-  state = {
-    exportDropdownOpen: false,
+  constructor(props) {
+    super(props);
+
+    this.callout = React.createRef();
   }
 
   columnMapping = {
@@ -99,8 +101,13 @@ export default class CoveredEResourcesList extends React.Component {
     'accessEnd',
   ]
 
-  handleToggleExportDropdown = () => {
-    this.setState(prevState => ({ exportDropdownOpen: prevState.exportDropdownOpen }));
+  export = (exportCallback) => {
+    const calloutId = this.callout.current.sendCallout({
+      message: <FormattedMessage id="ui-agreements.eresourcesCovered.preparingExport" />,
+      timeout: 0,
+    });
+
+    exportCallback().then(() => this.callout.current.removeCallout(calloutId));
   }
 
   renderDate = date => (
@@ -109,29 +116,22 @@ export default class CoveredEResourcesList extends React.Component {
 
   renderExportDropdown = (disabled) => (
     <Dropdown
-      onToggle={() => this.setState(prevState => ({ exportDropdownOpen: !prevState.exportDropdownOpen }))}
-      open={this.state.exportDropdownOpen}
-      disabled={disabled}
+      buttonProps={{
+        'data-test-export-button': true,
+        'disabled': disabled,
+        'marginBottom0': true,
+      }}
+      label={<FormattedMessage id="ui-agreements.eresourcesCovered.exportAs" />}
     >
-      <DropdownButton
-        data-test-export-button
-        data-role="toggle"
-        marginBottom0
-      >
-        <FormattedMessage id="ui-agreements.eresourcesCovered.exportAs" />
-      </DropdownButton>
-      <DropdownMenu data-role="menu">
+      <DropdownMenu role="menu">
         <FormattedMessage id="ui-agreements.eresourcesCovered.exportAsJSON">
           {exportAsJson => (
             <Button
               aria-label={exportAsJson}
               buttonStyle="dropdownItem"
-              disabled={disabled}
               id="clickable-dropdown-export-eresources-json"
-              onClick={() => {
-                this.setState({ exportDropdownOpen: false });
-                this.props.onExportEResourcesAsJSON();
-              }}
+              onClick={() => this.export(this.props.onExportEResourcesAsJSON)}
+              role="menuitem"
             >
               <FormattedMessage id="ui-agreements.eresourcesCovered.json" />
             </Button>
@@ -142,12 +142,9 @@ export default class CoveredEResourcesList extends React.Component {
             <Button
               aria-label={exportAsKbart}
               buttonStyle="dropdownItem"
-              disabled={disabled}
               id="clickable-dropdown-export-eresources-kbart"
-              onClick={() => {
-                this.setState({ exportDropdownOpen: false });
-                this.props.onExportEResourcesAsKBART();
-              }}
+              onClick={() => this.export(this.props.onExportEResourcesAsKBART)}
+              role="menuitem"
             >
               <FormattedMessage id="ui-agreements.eresourcesCovered.kbart" />
             </Button>
@@ -239,6 +236,7 @@ export default class CoveredEResourcesList extends React.Component {
           </Col>
         </Row>
         {eresources ? this.renderList() : <Spinner />}
+        <Callout ref={this.callout} />
       </IfEResourcesEnabled>
     );
   }

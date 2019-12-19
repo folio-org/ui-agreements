@@ -60,7 +60,7 @@ class AgreementViewRoute extends React.Component {
           ...new Set(interfaces.map(i => `id==${i}`))
         ].join(' or ');
 
-        return query ? { query } : {};
+        return query ? { query } : null;
       },
       fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '2.0'),
       records: 'interfaces',
@@ -77,7 +77,7 @@ class AgreementViewRoute extends React.Component {
           ))
           .join(' or ');
 
-        return query ? { query } : {};
+        return query ? { query } : null;
       },
       fetch: props => !!props.stripes.hasInterface('orders', '6.0 7.0 8.0'),
       records: 'poLines',
@@ -96,7 +96,7 @@ class AgreementViewRoute extends React.Component {
           .map(contact => `id==${contact.user}`)
           .join(' or ');
 
-        return query ? { query } : {};
+        return query ? { query } : null;
       },
       fetch: props => !!props.stripes.hasInterface('users', '15.0'),
       records: 'users',
