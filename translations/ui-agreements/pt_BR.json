@@ -320,5 +320,6 @@
     "agreementLines.customCoverage.endIssue": "Fascículo final",
     "agreementLines.customCoverage.startVolume": "Volume inicial",
     "agreementLines.customCoverage.endVolume": "Volume final",
-    "viewUDP.name": "Nome"
+    "viewUDP.name": "Nome",
+    "eresourcesCovered.preparingExport": "Criando arquivo de exportação ... isso pode levar alguns minutos para grandes contratos"
 }

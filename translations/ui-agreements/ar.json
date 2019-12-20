@@ -316,9 +316,10 @@
     "eresourcesCovered.exportButton.tooltip": "التصديرات المدعومة فقط للموارد الحالية أو كل الموارد",
     "license.unsetAmendments": "تعديلات غير معينة",
     "license.warn.unassignedAmendments": "هذه الرخصة بها تعديلات غير معينة. يرجى تحرير الاتفاقية للتصحيح.",
-    "agreementLines.customCoverage.startIssue": "بدء العدد",
-    "agreementLines.customCoverage.endIssue": "إنهاء العدد",
-    "agreementLines.customCoverage.startVolume": "بدء المجلد",
-    "agreementLines.customCoverage.endVolume": "إنهاء المجلد",
-    "viewUDP.name": "الاسم"
+    "agreementLines.customCoverage.startIssue": "عدد البداية",
+    "agreementLines.customCoverage.endIssue": "عدد النهاية",
+    "agreementLines.customCoverage.startVolume": "مجلد البداية",
+    "agreementLines.customCoverage.endVolume": "مجلد النهاية",
+    "viewUDP.name": "الاسم",
+    "eresourcesCovered.preparingExport": "يتم الآن إنشاء ملف التصدير... قد يستغرق هذا بضع دقائق بالنسبة للاتفاقيات كبيرة الحجم"
 }
