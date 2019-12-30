@@ -152,7 +152,6 @@
       {
         "permissionName": "ui-agreements.agreements.delete",
         "displayName": "Agreements: Delete agreements",
-        "visible": true,
         "subPermissions": [
           "ui-agreements.agreements.view",
           "erm.agreements.item.delete"
