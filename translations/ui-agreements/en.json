@@ -91,7 +91,7 @@
   "agreementLines.polines": "PO Line",
   "agreementLines.removeCustomCoverage": "Remove custom coverage",
   "agreementLines.removeItem": "Remove line from agreement",
-  "agreementLines.removeLine": "Remove agreement line",
+  "agreementLines.removeLine": "Remove agreement line {index}",
   "agreementLines.tax": "YTD Tax",
   "agreementLines.createLine": "Create agreement line",
   "agreementLines.lineTitle": "Agreement line #{number}",
