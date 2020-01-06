@@ -94,9 +94,9 @@
   "agreementLines.removeLine": "Remove agreement line {index}",
   "agreementLines.tax": "YTD Tax",
   "agreementLines.createLine": "Create agreement line",
-  "agreementLines.lineTitle": "Agreement line #{number}",
+  "agreementLines.lineTitle": "Agreement line {number}",
   "agreementLines.hasCustomCoverage": "Has custom coverage",
-  "agreementLines.customCoverageTitle": "Custom coverage #{number}",
+  "agreementLines.customCoverageTitle": "Custom coverage {number}",
 
   "agreementLines.customCoverage.startIssue": "Start issue",
   "agreementLines.customCoverage.endIssue": "End issue",
@@ -111,7 +111,7 @@
   "agreementPeriods.periodEnd": "Period end",
   "agreementPeriods.periodNote": "Period note",
   "agreementPeriods.periodStart": "Period start",
-  "agreementPeriods.periodTitle": "Agreement period #{number}",
+  "agreementPeriods.periodTitle": "Agreement period {number}",
 
   "warn.clearReasonForClosure": "This reason will be cleared as status is not closed",
 
@@ -299,7 +299,7 @@
   "poLines.poLine": "PO line",
   "poLines.poLineIndex": "PO line {index}",
   "poLines.poLineWithNumber": "PO line: {poLineNumber}",
-  "poLines.remove": "Remove PO line",
+  "poLines.remove": "Remove PO line {index}",
   "poLines.replacePOLine": "Replace PO line",
   "poLines.title": "Title in PO line",
   "poLines.unlinkPOLine": "Unlink PO line",
