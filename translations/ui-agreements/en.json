@@ -322,7 +322,7 @@
   "relatedAgreements.relationshipSummary": "\"{source}\" {relationship} \"{target}\"",
   "relatedAgreements.relationshipSummaryForNewAgreement": "\"{source}\" {relationship} the agreement being created",
   "relatedAgreements.relationshipToThisAgreement": "Linked agreement's relationship to the agreement being edited",
-  "relatedAgreements.remove": "Remove related agreement",
+  "relatedAgreements.remove": "Remove related agreement {index}",
   "relatedAgreements.replaceAgreement": "Replace agreement",
 
   "usageData": "Usage data",
