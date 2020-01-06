@@ -70,7 +70,7 @@ class LicensesFieldArray extends React.Component {
           'id': `license-delete-${index}`,
           'data-test-delete-field-button': true
         }}
-        deleteButtonTooltipText={<FormattedMessage id="ui-agreements.license.removeLicense" />}
+        deleteButtonTooltipText={<FormattedMessage id="ui-agreements.license.removeLicense" values={{ index: index + 1 }}/>}
         header={<FormattedMessage id="ui-agreements.license.licenseIndex" values={{ index: index + 1 }} />}
         id={`${name}-remoteId-${index}-license-card`}
         key={index}

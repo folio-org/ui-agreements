@@ -264,7 +264,7 @@
   "license.noLicenseOrganizations": "Agreement has no license organizations",
   "license.noLicenses": "Agreement has no licenses.",
   "license.noLicenseLinked": "No license linked",
-  "license.removeLicense": "Remove license",
+  "license.removeLicense": "Remove license {index}",
   "license.removeExternalLicense": "Remove external license",
   "license.prop.endDate": "End date",
   "license.prop.name": "Name",
