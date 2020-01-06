@@ -54,7 +54,9 @@ export default class FormLicenses extends React.Component {
         <FieldArray
           addDocBtnLabel={<FormattedMessage id="ui-agreements.license.addExternalLicense" />}
           component={DocumentsFieldArray}
-          deleteButtonTooltipText={<FormattedMessage id="ui-agreements.license.removeExternalLicense" />}
+          // DEPRECATED
+          // deleteButtonTooltipText={<FormattedMessage id="ui-agreements.license.removeExternalLicense" />}
+          deleteBtnTooltipMsgId="ui-agreements.doc.removeExternalLicense"
           onDownloadFile={this.props.handlers.onDownloadFile}
           onUploadFile={this.props.handlers.onUploadFile}
           isEmptyMessage={<FormattedMessage id="ui-agreements.license.noExternalLicenses" />}

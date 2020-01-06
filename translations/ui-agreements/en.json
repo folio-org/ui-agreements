@@ -339,6 +339,8 @@
   "usageData.usageDataProviderIndex": "Usage data provider {index}",
 
   "viewUDP.name": "Name",
+  
+  "doc.removeExternalLicense": "Remove external license {index}",
 
   "supplementaryInfo.agreementHasNone": "Agreement has no supplementary documents",
   "supplementaryInfo.addSupplementaryInfo": "Add supplementary document",
