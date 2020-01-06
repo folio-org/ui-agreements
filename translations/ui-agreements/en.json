@@ -105,7 +105,8 @@
 
   "agreementPeriods": "Agreement periods",
   "agreementPeriods.addPeriod": "Add agreement period",
-  "agreementPeriods.removePeriod": "Remove agreement period",
+  "agreementPeriods.removePeriod": "Remove agreement period {periodNum}",
+
   "agreementPeriods.otherPeriods": "Other periods",
   "agreementPeriods.periodEnd": "Period end",
   "agreementPeriods.periodNote": "Period note",
