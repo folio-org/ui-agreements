@@ -21,7 +21,7 @@ class CustomCoverageFieldArray extends React.Component {
     return items.map((coverage, index) => (
       <EditCard
         data-test-cc-number={index}
-        deleteButtonTooltipText={<FormattedMessage id="ui-agreements.agreementLines.removeCustomCoverage" />}
+        deleteButtonTooltipText={<FormattedMessage id="ui-agreements.agreementLines.removeCustomCoverage" values={{ index: index + 1 }}/>}
         header={<FormattedMessage id="ui-agreements.agreementLines.customCoverageTitle" values={{ number: index + 1 }} />}
         key={index}
         onDelete={() => this.props.onDeleteField(index, coverage)}
