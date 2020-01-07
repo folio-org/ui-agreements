@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
-import { Button, Card, KeyValue, Layout } from '@folio/stripes/components';
+import { Button, Card, KeyValue, Layout, Tooltip } from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
 
 import css from '../styles.css';
@@ -41,18 +41,40 @@ export default class UsageDataProviderField extends React.Component {
       onUDPSelected={this.props.onUDPSelected}
       renderTrigger={(props) => {
         this.triggerButton = props.buttonRef;
+        const UPDName = this.props.udp ? this.props.udp.label : '';
         return (
-          <Button
-            aria-haspopup="true"
-            buttonRef={this.triggerButton}
-            buttonStyle={value ? 'default' : 'primary'}
-            id={`udp-${this.props.index}-search-button`}
-            marginBottom0
-            name={this.props.input.name}
-            onClick={props.onClick}
-          >
-            <FormattedMessage id={`ui-agreements.usageData.${value ? 'replace' : 'link'}UDP`} />
-          </Button>
+          value ?
+            <Tooltip
+              text={<FormattedMessage id="ui-agreements.usageData.replaceUDPSpecific" values={{ UDPName: UPDName}} />}
+              id={`${this.props.id}-usageDataProvider-button-tooltip`}
+              triggerRef={this.triggerButton}
+            >
+              {({ ariaIds }) => (
+                <Button
+                  aria-haspopup="true"
+                  aria-labelledby={ariaIds.text}
+                  buttonRef={this.triggerButton}
+                  buttonStyle='default'
+                  id={`udp-${this.props.index}-search-button`}
+                  marginBottom0
+                  name={this.props.input.name}
+                  onClick={props.onClick}
+                >
+                  <FormattedMessage id={`ui-agreements.usageData.replaceUDP`} />
+                </Button>
+              )}
+            </Tooltip> :
+            <Button
+              aria-haspopup="true"
+              buttonRef={this.triggerButton}
+              buttonStyle='primary'
+              id={`udp-${this.props.index}-search-button`}
+              marginBottom0
+              name={this.props.input.name}
+              onClick={props.onClick}
+            >
+              <FormattedMessage id={`ui-agreements.usageData.linkUDP`} />
+            </Button>
         );
       }}
       type="find-erm-usage-data-provider"

@@ -11,6 +11,7 @@ import {
   KeyValue,
   Layout,
   Row,
+  Tooltip,
 } from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
 
@@ -56,17 +57,40 @@ export default class RelatedAgreementField extends React.Component {
         onAgreementSelected={onAgreementSelected}
         renderTrigger={(props) => {
           this.triggerButton = props.buttonRef;
+          const agreementName = this.props.agreement ? this.props.agreement.name : '';
+
           return (
+            value ?
+            <Tooltip
+                text={<FormattedMessage id="ui-agreements.relatedAgreements.replaceAgreementSpecific" values={{ agreementName: agreementName }} />}
+                id={`${this.props.id}-license-button-tooltip`}
+                triggerRef={this.triggerButton}
+              >
+                {({ ariaIds }) => (
+                  <Button
+                    aria-haspopup="true"
+                    aria-labelledby={ariaIds.text}
+                    buttonRef={this.triggerButton}
+                    buttonStyle='default'
+                    id={`${id}-find-agreement-btn`}
+                    marginBottom0
+                    name={name}
+                    onClick={props.onClick}
+                  >
+                    <FormattedMessage id={`ui-agreements.relatedAgreements.replaceAgreement`} />
+                  </Button>
+                )}
+              </Tooltip> :
             <Button
               aria-haspopup="true"
               buttonRef={this.triggerButton}
-              buttonStyle={value ? 'default' : 'primary'}
+              buttonStyle='primary'
               id={`${id}-find-agreement-btn`}
               marginBottom0
               name={name}
               onClick={props.onClick}
             >
-              <FormattedMessage id={`ui-agreements.relatedAgreements.${value ? 'replace' : 'link'}Agreement`} />
+              <FormattedMessage id={`ui-agreements.relatedAgreements.linkAgreement`} />
             </Button>
           );
         }}

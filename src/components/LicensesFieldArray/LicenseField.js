@@ -49,7 +49,7 @@ export default class LicenseField extends React.Component {
           this.triggerButton = props.buttonRef;
           return (
             value ?
-            <Tooltip
+              <Tooltip
                 text={<FormattedMessage id="ui-agreements.license.replaceLicenseSpecific" values={{ licenseName: this.props.license ? this.props.license.name : ''}} />}
                 id={`${this.props.id}-license-button-tooltip`}
                 triggerRef={this.triggerButton}

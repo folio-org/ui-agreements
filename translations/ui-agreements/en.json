@@ -326,6 +326,7 @@
   "relatedAgreements.relationshipToThisAgreement": "Linked agreement's relationship to the agreement being edited",
   "relatedAgreements.remove": "Remove related agreement {index}",
   "relatedAgreements.replaceAgreement": "Replace agreement",
+  "relatedAgreements.replaceAgreementSpecific": "Replace agreement {agreementName}",
 
   "usageData": "Usage data",
   "usageData.addUDP": "Add usage data provider",
@@ -337,6 +338,7 @@
   "usageData.noUDPPlugin": "No \"find-erm-usage-data-provider\" plugin is installed",
   "usageData.removeUsageDataProvider": "Remove usage data provider {index}",
   "usageData.replaceUDP": "Replace usage data provider",
+  "usageData.replaceUDPSpecific": "Replace usage data provider {UDPName}",
   "usageData.usageDataProvider": "Usage data provider",
   "usageData.usageDataProviderIndex": "Usage data provider {index}",
 
