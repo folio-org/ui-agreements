@@ -53,9 +53,9 @@ export default class POLineField extends React.Component {
         renderTrigger={(props) => {
           this.triggerButton = props.buttonRef;
           return (
-            value ? 
+            value ?
               <Tooltip
-                text={<FormattedMessage id="ui-agreements.poLines.replacePOLineSpecific" values={{ POLineTitle: this.props.poLine ? this.props.poLine.title : ''}} />}
+                text={<FormattedMessage id="ui-agreements.poLines.replacePOLineSpecific" values={{ POLineTitle: this.props.poLine ? this.props.poLine.title : '' }} />}
                 id={`${this.props.id}-po-line-button-tooltip`}
                 triggerRef={this.triggerButton}
               >
@@ -64,14 +64,14 @@ export default class POLineField extends React.Component {
                     aria-haspopup="true"
                     aria-labelledby={ariaIds.text}
                     buttonRef={this.triggerButton}
-                    buttonStyle='default'
+                    buttonStyle="default"
                     data-test-po-line-select-po-line
                     id={`${id}-find-poline-btn`}
                     marginBottom0
                     name={name}
                     onClick={props.onClick}
                   >
-                    <FormattedMessage id={`ui-agreements.poLines.replacePOLine`} />
+                    <FormattedMessage id="ui-agreements.poLines.replacePOLine" />
                   </Button>
                 )}
               </Tooltip> :
@@ -85,7 +85,7 @@ export default class POLineField extends React.Component {
               name={name}
               onClick={props.onClick}
               >
-                <FormattedMessage id={`ui-agreements.poLines.linkPOLine`} />
+                <FormattedMessage id="ui-agreements.poLines.linkPOLine" />
               </Button>
           );
         }}
