@@ -30,8 +30,6 @@ export default class FormSupplementaryInfo extends React.Component {
         <FieldArray
           addDocBtnLabel={<FormattedMessage id="ui-agreements.supplementaryInfo.addSupplementaryInfo" />}
           component={DocumentsFieldArray}
-          // DEPRECATED
-          //deleteButtonTooltipText={<FormattedMessage id="ui-agreements.supplementaryInfo.removeSupplementaryInfo" />}
           deleteBtnTooltipMsgId="ui-agreements.doc.removeSupplementaryInformation"
           onDownloadFile={handlers.onDownloadFile}
           onUploadFile={handlers.onUploadFile}
