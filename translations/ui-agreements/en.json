@@ -272,6 +272,7 @@
   "license.prop.status": "Status (this agreement)",
   "license.prop.startDate": "Start date",
   "license.replaceLicense": "Replace license",
+  "license.replaceLicenseSpecific": "Replace license {licenseName}",
   "license.selectStatus": "Select a status",
   "license.warn.amendmentFuture": "Amendment starts in the future while \"Status (this agreement)\" is \"Current.\"",
   "license.warn.amendmentPast": "Amendment has ended while \"Status (this agreement)\" is \"Current.\"",
@@ -301,6 +302,7 @@
   "poLines.poLineWithNumber": "PO line: {poLineNumber}",
   "poLines.remove": "Remove PO line {index}",
   "poLines.replacePOLine": "Replace PO line",
+  "poLines.replacePOLineSpecific": "Replace PO line {POLineTitle}",
   "poLines.title": "Title in PO line",
   "poLines.unlinkPOLine": "Unlink PO line",
 

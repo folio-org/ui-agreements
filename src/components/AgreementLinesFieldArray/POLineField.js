@@ -8,6 +8,7 @@ import {
   Col,
   KeyValue,
   Layout,
+  Tooltip,
   Row,
 } from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
@@ -52,18 +53,40 @@ export default class POLineField extends React.Component {
         renderTrigger={(props) => {
           this.triggerButton = props.buttonRef;
           return (
-            <Button
+            value ? 
+              <Tooltip
+                text={<FormattedMessage id="ui-agreements.poLines.replacePOLineSpecific" values={{ POLineTitle: this.props.poLine ? this.props.poLine.title : ''}} />}
+                id={`${this.props.id}-po-line-button-tooltip`}
+                triggerRef={this.triggerButton}
+              >
+                {({ ariaIds }) => (
+                  <Button
+                    aria-haspopup="true"
+                    aria-labelledby={ariaIds.text}
+                    buttonRef={this.triggerButton}
+                    buttonStyle='default'
+                    data-test-po-line-select-po-line
+                    id={`${id}-find-poline-btn`}
+                    marginBottom0
+                    name={name}
+                    onClick={props.onClick}
+                  >
+                    <FormattedMessage id={`ui-agreements.poLines.replacePOLine`} />
+                  </Button>
+                )}
+              </Tooltip> :
+              <Button
               aria-haspopup="true"
               buttonRef={this.triggerButton}
-              buttonStyle={value ? 'default' : 'primary'}
+              buttonStyle='primary'
               data-test-po-line-select-po-line
               id={`${id}-find-poline-btn`}
               marginBottom0
               name={name}
               onClick={props.onClick}
-            >
-              <FormattedMessage id={`ui-agreements.poLines.${value ? 'replace' : 'link'}POLine`} />
-            </Button>
+              >
+                <FormattedMessage id={`ui-agreements.poLines.linkPOLine`} />
+              </Button>
           );
         }}
         type="find-po-line"

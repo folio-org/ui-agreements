@@ -6,6 +6,7 @@ import {
   Button,
   Card,
   Layout,
+  Tooltip,
 } from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
 
@@ -39,7 +40,7 @@ export default class LicenseField extends React.Component {
 
   renderLinkLicenseButton = (value) => {
     const { id, input: { name }, onLicenseSelected } = this.props;
-
+    console.log("Props: %o", this.props)
     return (
       <Pluggable
         dataKey={id}
@@ -48,15 +49,35 @@ export default class LicenseField extends React.Component {
         renderTrigger={(props) => {
           this.triggerButton = props.buttonRef;
           return (
+            value ?
+            <Tooltip
+                text={<FormattedMessage id="ui-agreements.license.replaceLicenseSpecific" values={{ licenseName: this.props.license ? this.props.license.name : ''}} />}
+                id={`${this.props.id}-po-line-button-tooltip`}
+                triggerRef={this.triggerButton}
+              >
+                {({ ariaIds }) => (
+                  <Button
+                    buttonStyle='default'
+                    aria-labelledby={ariaIds.text}
+                    buttonRef={this.triggerButton}
+                    id={`${id}-find-license-btn`}
+                    marginBottom0
+                    name={name}
+                    onClick={props.onClick}
+                  >
+                    <FormattedMessage id={`ui-agreements.license.replaceLicense`} />
+                  </Button> 
+                )}
+              </Tooltip> :
             <Button
-              buttonStyle={value ? 'default' : 'primary'}
+              buttonStyle='primary'
               buttonRef={this.triggerButton}
               id={`${id}-find-license-btn`}
               marginBottom0
               name={name}
               onClick={props.onClick}
             >
-              <FormattedMessage id={`ui-agreements.license.${value ? 'replace' : 'link'}License`} />
+              <FormattedMessage id={`ui-agreements.license.linkLicense`} />
             </Button>
           );
         }}
