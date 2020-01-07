@@ -40,7 +40,6 @@ export default class LicenseField extends React.Component {
 
   renderLinkLicenseButton = (value) => {
     const { id, input: { name }, onLicenseSelected } = this.props;
-    console.log("Props: %o", this.props)
     return (
       <Pluggable
         dataKey={id}
@@ -52,7 +51,7 @@ export default class LicenseField extends React.Component {
             value ?
             <Tooltip
                 text={<FormattedMessage id="ui-agreements.license.replaceLicenseSpecific" values={{ licenseName: this.props.license ? this.props.license.name : ''}} />}
-                id={`${this.props.id}-po-line-button-tooltip`}
+                id={`${this.props.id}-license-button-tooltip`}
                 triggerRef={this.triggerButton}
               >
                 {({ ariaIds }) => (
