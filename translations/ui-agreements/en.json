@@ -341,6 +341,7 @@
   "viewUDP.name": "Name",
   
   "doc.removeExternalLicense": "Remove external license {index}",
+  "doc.removeSupplementaryInformation": "Remove document {index}",
 
   "supplementaryInfo.agreementHasNone": "Agreement has no supplementary documents",
   "supplementaryInfo.addSupplementaryInfo": "Add supplementary document",
