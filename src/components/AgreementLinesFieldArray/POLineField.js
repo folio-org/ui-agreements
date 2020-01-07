@@ -76,14 +76,14 @@ export default class POLineField extends React.Component {
                 )}
               </Tooltip> :
               <Button
-              aria-haspopup="true"
-              buttonRef={this.triggerButton}
-              buttonStyle='primary'
-              data-test-po-line-select-po-line
-              id={`${id}-find-poline-btn`}
-              marginBottom0
-              name={name}
-              onClick={props.onClick}
+                aria-haspopup="true"
+                buttonRef={this.triggerButton}
+                buttonStyle="primary"
+                data-test-po-line-select-po-line
+                id={`${id}-find-poline-btn`}
+                marginBottom0
+                name={name}
+                onClick={props.onClick}
               >
                 <FormattedMessage id="ui-agreements.poLines.linkPOLine" />
               </Button>
