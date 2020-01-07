@@ -249,7 +249,7 @@
     "content.future": "Future",
     "agreementLines.removeCustomCoverage": "Remove custom coverage {index}",
     "agreementLines.removeLine": "Remove agreement line {index}",
-    "agreementPeriods.removePeriod": "Remove agreement period {index}",
+    "agreementPeriods.removePeriod": "Remove agreement period {periodNum}",
     "license.removeLicense": "Remove license {index}",
     "license.removeExternalLicense": "Remove external license",
     "usageData.removeUsageDataProvider": "Remove usage data provider {index}",
