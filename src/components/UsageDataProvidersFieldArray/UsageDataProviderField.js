@@ -45,7 +45,7 @@ export default class UsageDataProviderField extends React.Component {
         return (
           value ?
             <Tooltip
-              text={<FormattedMessage id="ui-agreements.usageData.replaceUDPSpecific" values={{ UDPName: UPDName}} />}
+              text={<FormattedMessage id="ui-agreements.usageData.replaceUDPSpecific" values={{ UPDName }} />}
               id={`${this.props.id}-usageDataProvider-button-tooltip`}
               triggerRef={this.triggerButton}
             >
@@ -54,26 +54,26 @@ export default class UsageDataProviderField extends React.Component {
                   aria-haspopup="true"
                   aria-labelledby={ariaIds.text}
                   buttonRef={this.triggerButton}
-                  buttonStyle='default'
+                  buttonStyle="default"
                   id={`udp-${this.props.index}-search-button`}
                   marginBottom0
                   name={this.props.input.name}
                   onClick={props.onClick}
                 >
-                  <FormattedMessage id={`ui-agreements.usageData.replaceUDP`} />
+                  <FormattedMessage id="ui-agreements.usageData.replaceUDP" />
                 </Button>
               )}
             </Tooltip> :
             <Button
               aria-haspopup="true"
               buttonRef={this.triggerButton}
-              buttonStyle='primary'
+              buttonStyle="primary"
               id={`udp-${this.props.index}-search-button`}
               marginBottom0
               name={this.props.input.name}
               onClick={props.onClick}
             >
-              <FormattedMessage id={`ui-agreements.usageData.linkUDP`} />
+              <FormattedMessage id="ui-agreements.usageData.linkUDP" />
             </Button>
         );
       }}
