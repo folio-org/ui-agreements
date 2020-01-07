@@ -62,7 +62,7 @@ class POLinesFieldArray extends React.Component {
           'id': `poline-delete-${agreementLineIndex}-${index}`,
           'data-test-delete-field-button': true
         }}
-        deleteButtonTooltipText={<FormattedMessage id="ui-agreements.poLines.remove" values={{ index: index + 1 }}/>}
+        deleteButtonTooltipText={<FormattedMessage id="ui-agreements.poLines.remove" values={{ index: index + 1 }} />}
         header={<FormattedMessage id="ui-agreements.poLines.poLineIndex" values={{ index: index + 1 }} />}
         id={`edit-ra-card-${agreementLineIndex}-${index}`}
         key={index}

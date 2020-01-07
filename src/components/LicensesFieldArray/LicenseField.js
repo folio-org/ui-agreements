@@ -50,13 +50,13 @@ export default class LicenseField extends React.Component {
           return (
             value ?
               <Tooltip
-                text={<FormattedMessage id="ui-agreements.license.replaceLicenseSpecific" values={{ licenseName: this.props.license ? this.props.license.name : ''}} />}
+                text={<FormattedMessage id="ui-agreements.license.replaceLicenseSpecific" values={{ licenseName: this.props.license ? this.props.license.name : '' }} />}
                 id={`${this.props.id}-license-button-tooltip`}
                 triggerRef={this.triggerButton}
               >
                 {({ ariaIds }) => (
                   <Button
-                    buttonStyle='default'
+                    buttonStyle="default"
                     aria-labelledby={ariaIds.text}
                     buttonRef={this.triggerButton}
                     id={`${id}-find-license-btn`}
@@ -64,20 +64,20 @@ export default class LicenseField extends React.Component {
                     name={name}
                     onClick={props.onClick}
                   >
-                    <FormattedMessage id={`ui-agreements.license.replaceLicense`} />
-                  </Button> 
+                    <FormattedMessage id="ui-agreements.license.replaceLicense" />
+                  </Button>
                 )}
               </Tooltip> :
-            <Button
-              buttonStyle='primary'
-              buttonRef={this.triggerButton}
-              id={`${id}-find-license-btn`}
-              marginBottom0
-              name={name}
-              onClick={props.onClick}
-            >
-              <FormattedMessage id={`ui-agreements.license.linkLicense`} />
-            </Button>
+              <Button
+                buttonStyle="primary"
+                buttonRef={this.triggerButton}
+                id={`${id}-find-license-btn`}
+                marginBottom0
+                name={name}
+                onClick={props.onClick}
+              >
+                <FormattedMessage id="ui-agreements.license.linkLicense" />
+              </Button>
           );
         }}
       >
