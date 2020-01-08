@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
-import { Button, Card, KeyValue, Layout } from '@folio/stripes/components';
+import { Button, Card, KeyValue, Layout, Tooltip } from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
 
 import css from '../styles.css';
@@ -41,17 +41,40 @@ export default class UsageDataProviderField extends React.Component {
       onUDPSelected={this.props.onUDPSelected}
       renderTrigger={(props) => {
         this.triggerButton = props.buttonRef;
+
+        const UDPName = get(this.props.udp, 'label');
+        const buttonProps = {
+          'aria-haspopup': 'true',
+          'buttonRef': this.triggerButton,
+          'buttonStyle': value ? 'default' : 'primary',
+          'id': `udp-${this.props.index}-search-button`,
+          'marginBottom0': true,
+          'name': this.props.input.name,
+          'onClick': props.onClick
+        };
+        if (value) {
+          return (
+            <Tooltip
+              text={<FormattedMessage id="ui-agreements.usageData.replaceUDPSpecific" values={{ UDPName }} />}
+              id={`${this.props.id}-usageDataProvider-button-tooltip`}
+              triggerRef={this.triggerButton}
+            >
+              {({ ariaIds }) => (
+                <Button
+                  aria-labelledby={ariaIds.text}
+                  {...buttonProps}
+                >
+                  <FormattedMessage id="ui-agreements.usageData.replaceUDP" />
+                </Button>
+              )}
+            </Tooltip>
+          );
+        }
         return (
           <Button
-            aria-haspopup="true"
-            buttonRef={this.triggerButton}
-            buttonStyle={value ? 'default' : 'primary'}
-            id={`udp-${this.props.index}-search-button`}
-            marginBottom0
-            name={this.props.input.name}
-            onClick={props.onClick}
+            {...buttonProps}
           >
-            <FormattedMessage id={`ui-agreements.usageData.${value ? 'replace' : 'link'}UDP`} />
+            <FormattedMessage id="ui-agreements.usageData.linkUDP" />
           </Button>
         );
       }}
