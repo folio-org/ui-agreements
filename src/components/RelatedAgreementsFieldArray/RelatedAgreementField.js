@@ -78,7 +78,10 @@ export default class RelatedAgreementField extends React.Component {
                 triggerRef={this.triggerButton}
               >
                 {({ ariaIds }) => (
-                  <Button aria-labelledby={ariaIds.text} {...buttonProps}>
+                  <Button
+                    aria-labelledby={ariaIds.text}
+                    {...buttonProps}
+                  >
                     <FormattedMessage id="ui-agreements.relatedAgreements.replaceAgreement" />
                   </Button>
                 )}
@@ -86,7 +89,9 @@ export default class RelatedAgreementField extends React.Component {
             );
           }
           return (
-            <Button {...buttonProps}>
+            <Button
+              {...buttonProps}
+            >
               <FormattedMessage id="ui-agreements.relatedAgreements.linkAgreement" />
             </Button>
           );

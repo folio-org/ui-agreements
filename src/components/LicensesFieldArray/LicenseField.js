@@ -65,7 +65,10 @@ export default class LicenseField extends React.Component {
                 triggerRef={this.triggerButton}
               >
                 {({ ariaIds }) => (
-                  <Button aria-labelledby={ariaIds.text} {...buttonProps}>
+                  <Button
+                    aria-labelledby={ariaIds.text}
+                    {...buttonProps}
+                  >
                     <FormattedMessage id="ui-agreements.license.replaceLicense" />
                   </Button>
                 )}
@@ -74,7 +77,9 @@ export default class LicenseField extends React.Component {
           }
 
           return (
-            <Button {...buttonProps}>
+            <Button
+              {...buttonProps}
+            >
               <FormattedMessage id="ui-agreements.license.linkLicense" />
             </Button>
           );

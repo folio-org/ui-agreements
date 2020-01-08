@@ -71,7 +71,11 @@ export default class POLineField extends React.Component {
                 triggerRef={this.triggerButton}
               >
                 {({ ariaIds }) => (
-                  <Button aria-labelledby={ariaIds.text} data-test-po-line-select-po-line {...buttonProps}>
+                  <Button
+                    aria-labelledby={ariaIds.text}
+                    data-test-po-line-select-po-line
+                    {...buttonProps}
+                  >
                     <FormattedMessage id="ui-agreements.poLines.replacePOLine" />
                   </Button>
                 )}
@@ -79,7 +83,10 @@ export default class POLineField extends React.Component {
             );
           }
           return (
-            <Button data-test-po-line-select-po-line {...buttonProps}>
+            <Button
+              data-test-po-line-select-po-line
+              {...buttonProps}
+            >
               <FormattedMessage id="ui-agreements.poLines.linkPOLine" />
             </Button>
           );
