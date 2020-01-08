@@ -47,37 +47,35 @@ export default class LicenseField extends React.Component {
         onLicenseSelected={onLicenseSelected}
         renderTrigger={(props) => {
           this.triggerButton = props.buttonRef;
-          return (
-            value ?
+
+          const buttonProps = {
+            'buttonStyle': value ? 'default' : 'primary',
+            'buttonRef': this.triggerButton,
+            'id': `${id}-find-license-btn`,
+            'marginBottom0': 'true',
+            'name': name,
+            'onClick': props.onClick
+          };
+
+          if (value) {
+            return (
               <Tooltip
-                text={<FormattedMessage id="ui-agreements.license.replaceLicenseSpecific" values={{ licenseName: this.props.license ? this.props.license.name : '' }} />}
+                text={<FormattedMessage id="ui-agreements.license.replaceLicenseSpecific" values={{ licenseName: get(this.props.license, 'name') }} />}
                 id={`${this.props.id}-license-button-tooltip`}
                 triggerRef={this.triggerButton}
               >
                 {({ ariaIds }) => (
-                  <Button
-                    buttonStyle="default"
-                    aria-labelledby={ariaIds.text}
-                    buttonRef={this.triggerButton}
-                    id={`${id}-find-license-btn`}
-                    marginBottom0
-                    name={name}
-                    onClick={props.onClick}
-                  >
+                  <Button aria-labelledby={ariaIds.text} {...buttonProps}>
                     <FormattedMessage id="ui-agreements.license.replaceLicense" />
                   </Button>
                 )}
-              </Tooltip> :
-              <Button
-                buttonStyle="primary"
-                buttonRef={this.triggerButton}
-                id={`${id}-find-license-btn`}
-                marginBottom0
-                name={name}
-                onClick={props.onClick}
-              >
-                <FormattedMessage id="ui-agreements.license.linkLicense" />
-              </Button>
+              </Tooltip>
+            );
+          }
+          return (
+            <Button {...buttonProps}>
+              <FormattedMessage id="ui-agreements.license.linkLicense" />
+            </Button>
           );
         }}
       >
