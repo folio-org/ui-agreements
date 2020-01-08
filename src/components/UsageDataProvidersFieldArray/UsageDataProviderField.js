@@ -41,8 +41,39 @@ export default class UsageDataProviderField extends React.Component {
       onUDPSelected={this.props.onUDPSelected}
       renderTrigger={(props) => {
         this.triggerButton = props.buttonRef;
-        const UPDName = this.props.udp ? this.props.udp.label : '';
+
+        const UDPName = get(this.props.udp, 'label');
+        const buttonProps = {
+          'aria-haspopup': 'true',
+          'buttonRef': this.triggerButton,
+          'buttonStyle': value ? 'default' : 'primary',
+          'id': `udp-${this.props.index}-search-button`,
+          'marginBottom0': 'true',
+          'name': this.props.input.name,
+          'onClick': props.onClick
+        };
+        if (value) {
+          return (
+            <Tooltip
+              text={<FormattedMessage id="ui-agreements.usageData.replaceUDPSpecific" values={{ UDPName }} />}
+              id={`${this.props.id}-usageDataProvider-button-tooltip`}
+              triggerRef={this.triggerButton}
+            >
+              {({ ariaIds }) => (
+                <Button aria-labelledby={ariaIds.text} {...buttonProps}>
+                  <FormattedMessage id="ui-agreements.usageData.replaceUDP" />
+                </Button>
+              )}
+            </Tooltip>
+          );
+        }
         return (
+          <Button {...buttonProps}>
+            <FormattedMessage id="ui-agreements.usageData.linkUDP" />
+          </Button>
+        );
+
+        /* return (
           value ?
             <Tooltip
               text={<FormattedMessage id="ui-agreements.usageData.replaceUDPSpecific" values={{ UPDName }} />}
@@ -75,7 +106,8 @@ export default class UsageDataProviderField extends React.Component {
             >
               <FormattedMessage id="ui-agreements.usageData.linkUDP" />
             </Button>
-        );
+        ); */
+
       }}
       type="find-erm-usage-data-provider"
     >
