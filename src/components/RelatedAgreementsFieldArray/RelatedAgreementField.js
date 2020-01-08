@@ -65,7 +65,7 @@ export default class RelatedAgreementField extends React.Component {
             'buttonRef': this.triggerButton,
             'buttonStyle': value ? 'default' : 'primary',
             'id': `${id}-find-agreement-btn`,
-            'marginBottom0': 'true',
+            'marginBottom0': true,
             'name': name,
             'onClick': props.onClick
           };

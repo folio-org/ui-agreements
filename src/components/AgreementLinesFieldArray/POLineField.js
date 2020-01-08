@@ -60,7 +60,7 @@ export default class POLineField extends React.Component {
             'id': `${id}-find-poline-btn`,
             'name': name,
             'onClick': props.onClick,
-            'marginBottom0': 'true'
+            'marginBottom0': true
           };
 
           if (value) {

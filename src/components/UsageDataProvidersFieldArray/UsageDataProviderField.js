@@ -48,7 +48,7 @@ export default class UsageDataProviderField extends React.Component {
           'buttonRef': this.triggerButton,
           'buttonStyle': value ? 'default' : 'primary',
           'id': `udp-${this.props.index}-search-button`,
-          'marginBottom0': 'true',
+          'marginBottom0': true,
           'name': this.props.input.name,
           'onClick': props.onClick
         };

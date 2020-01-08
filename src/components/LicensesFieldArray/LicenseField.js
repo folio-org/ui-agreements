@@ -52,7 +52,7 @@ export default class LicenseField extends React.Component {
             'buttonStyle': value ? 'default' : 'primary',
             'buttonRef': this.triggerButton,
             'id': `${id}-find-license-btn`,
-            'marginBottom0': 'true',
+            'marginBottom0': true,
             'name': name,
             'onClick': props.onClick
           };
