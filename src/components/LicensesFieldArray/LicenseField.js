@@ -72,6 +72,7 @@ export default class LicenseField extends React.Component {
               </Tooltip>
             );
           }
+
           return (
             <Button {...buttonProps}>
               <FormattedMessage id="ui-agreements.license.linkLicense" />
