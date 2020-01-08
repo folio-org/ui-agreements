@@ -8,6 +8,7 @@ import {
   Col,
   KeyValue,
   Layout,
+  Tooltip,
   Row,
 } from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
@@ -51,18 +52,42 @@ export default class POLineField extends React.Component {
         isSingleSelect
         renderTrigger={(props) => {
           this.triggerButton = props.buttonRef;
+
+          const buttonProps = {
+            'aria-haspopup': 'true',
+            'buttonRef': this.triggerButton,
+            'buttonStyle': value ? 'default' : 'primary',
+            'id': `${id}-find-poline-btn`,
+            'name': name,
+            'onClick': props.onClick,
+            'marginBottom0': true
+          };
+
+          if (value) {
+            return (
+              <Tooltip
+                text={<FormattedMessage id="ui-agreements.poLines.replacePOLineSpecific" values={{ POLineTitle: get(this.props.poLine, 'title') }} />}
+                id={`${this.props.id}-po-line-button-tooltip`}
+                triggerRef={this.triggerButton}
+              >
+                {({ ariaIds }) => (
+                  <Button
+                    aria-labelledby={ariaIds.text}
+                    data-test-po-line-select-po-line
+                    {...buttonProps}
+                  >
+                    <FormattedMessage id="ui-agreements.poLines.replacePOLine" />
+                  </Button>
+                )}
+              </Tooltip>
+            );
+          }
           return (
             <Button
-              aria-haspopup="true"
-              buttonRef={this.triggerButton}
-              buttonStyle={value ? 'default' : 'primary'}
               data-test-po-line-select-po-line
-              id={`${id}-find-poline-btn`}
-              marginBottom0
-              name={name}
-              onClick={props.onClick}
+              {...buttonProps}
             >
-              <FormattedMessage id={`ui-agreements.poLines.${value ? 'replace' : 'link'}POLine`} />
+              <FormattedMessage id="ui-agreements.poLines.linkPOLine" />
             </Button>
           );
         }}
