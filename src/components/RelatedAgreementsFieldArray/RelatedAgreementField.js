@@ -58,41 +58,37 @@ export default class RelatedAgreementField extends React.Component {
         onAgreementSelected={onAgreementSelected}
         renderTrigger={(props) => {
           this.triggerButton = props.buttonRef;
-          const agreementName = this.props.agreement ? this.props.agreement.name : '';
 
-          return (
-            value ?
+          const agreementName = get(this.props.agreement, 'name');
+          const buttonProps = {
+            'aria-haspopup': 'true',
+            'buttonRef': this.triggerButton,
+            'buttonStyle': value ? 'default' : 'primary',
+            'id': `${id}-find-agreement-btn`,
+            'marginBottom0': 'true',
+            'name': this.props.input.name,
+            'onClick': props.onClick
+          };
+
+          if (value) {
+            return (
               <Tooltip
                 text={<FormattedMessage id="ui-agreements.relatedAgreements.replaceAgreementSpecific" values={{ agreementName }} />}
                 id={`${this.props.id}-license-button-tooltip`}
                 triggerRef={this.triggerButton}
               >
                 {({ ariaIds }) => (
-                  <Button
-                    aria-haspopup="true"
-                    aria-labelledby={ariaIds.text}
-                    buttonRef={this.triggerButton}
-                    buttonStyle="default"
-                    id={`${id}-find-agreement-btn`}
-                    marginBottom0
-                    name={name}
-                    onClick={props.onClick}
-                  >
+                  <Button aria-labelledby={ariaIds.text} {...buttonProps}>
                     <FormattedMessage id="ui-agreements.relatedAgreements.replaceAgreement" />
                   </Button>
                 )}
-              </Tooltip> :
-              <Button
-                aria-haspopup="true"
-                buttonRef={this.triggerButton}
-                buttonStyle="primary"
-                id={`${id}-find-agreement-btn`}
-                marginBottom0
-                name={name}
-                onClick={props.onClick}
-              >
-                <FormattedMessage id="ui-agreements.relatedAgreements.linkAgreement" />
-              </Button>
+                </Tooltip>
+            );
+          }
+          return (
+            <Button {...buttonProps}>
+              <FormattedMessage id="ui-agreements.relatedAgreements.linkAgreement" />
+            </Button>
           );
         }}
         type="find-agreement"
