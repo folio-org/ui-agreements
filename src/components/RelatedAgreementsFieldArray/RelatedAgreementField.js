@@ -66,7 +66,7 @@ export default class RelatedAgreementField extends React.Component {
             'buttonStyle': value ? 'default' : 'primary',
             'id': `${id}-find-agreement-btn`,
             'marginBottom0': 'true',
-            'name': this.props.input.name,
+            'name': name,
             'onClick': props.onClick
           };
 
@@ -82,7 +82,7 @@ export default class RelatedAgreementField extends React.Component {
                     <FormattedMessage id="ui-agreements.relatedAgreements.replaceAgreement" />
                   </Button>
                 )}
-                </Tooltip>
+              </Tooltip>
             );
           }
           return (
