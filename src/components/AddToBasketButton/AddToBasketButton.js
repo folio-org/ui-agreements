@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Button, Tooltip } from '@folio/stripes/components';
 import { IfPermission, stripesConnect } from '@folio/stripes/core';
-import { get } from 'lodash';
+import { get, uniqueId } from 'lodash';
 
 class AddToBasketButton extends React.Component {
   static manifest = Object.freeze({
@@ -85,7 +85,7 @@ class AddToBasketButton extends React.Component {
       addButtonTooltipText ?
         (
           <Tooltip
-            id="sdfd"
+            id={uniqueId('addtobasketbutton')}
             text={itemExistsInBasket ? removeButtonTooltipText : addButtonTooltipText}
           >
             {({ ref, ariaIds }) => (
