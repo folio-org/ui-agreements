@@ -10,7 +10,7 @@ import EResourceLink from '../EResourceLink';
 import EResourceKB from '../EResourceKB';
 import EResourceType from '../EResourceType';
 
-import { isPackage } from '../utilities';
+import { isExternal, isPackage } from '../utilities';
 
 export default class AcquisitionOptions extends React.Component {
   static propTypes = {
@@ -37,10 +37,19 @@ export default class AcquisitionOptions extends React.Component {
         acqMethod: option => <EResourceType resource={option} />,
         add: option => {
           const optionIsPackage = isPackage(option);
+          const packageName = isExternal(option) ? option.reference_object.label : option.name;
 
           const addLabel = optionIsPackage ?
             <FormattedMessage id="ui-agreements.eresources.addPackage" /> :
             <FormattedMessage id="ui-agreements.eresources.addTitle" />;
+
+          const addButtonTooltipText = optionIsPackage ?
+            <FormattedMessage id="ui-agreements.eresources.addPackageButtonTooltip" values={{ packageName }} /> :
+            <FormattedMessage id="ui-agreements.eresources.addTitleButtonTooltip" values={{ packageName }} />;
+
+          const removeButtonTooltipText = optionIsPackage ?
+            <FormattedMessage id="ui-agreements.eresources.removePackageButtonTooltip" values={{ packageName }} /> :
+            <FormattedMessage id="ui-agreements.eresources.removeTitleButtonTooltip" values={{ packageName }} />;
 
           const buttonProps = optionIsPackage ?
             { 'data-test-add-package-to-basket': true } :
@@ -49,9 +58,11 @@ export default class AcquisitionOptions extends React.Component {
           return (
             <AddToBasketButton
               key={option.id}
+              addButtonTooltipText={addButtonTooltipText}
               addLabel={addLabel}
-              item={option}
               buttonProps={buttonProps}
+              item={option}
+              removeButtonTooltipText={removeButtonTooltipText}
             />
           );
         },
