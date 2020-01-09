@@ -90,50 +90,46 @@ class AddToBasketButton extends React.Component {
 
     const coverage = JSON.stringify(get(item, '_object.coverage[0]', {}));
 
-    return (
-      addButtonTooltipText ?
-        (
-          <Tooltip
-            id={uniqueId('addtobasketbutton')}
-            text={itemExistsInBasket ? removeButtonTooltipText : addButtonTooltipText}
-          >
-            {({ ref, ariaIds }) => (
-              <IfPermission perm="ui-agreements.agreements.edit">
-                <Button
-                  {...buttonProps}
-                  aria-labelledby={ariaIds.text}
-                  buttonStyle={itemExistsInBasket ? 'default' : 'primary'}
-                  data-test-basket-add-button={itemExistsInBasket ? undefined : true}
-                  data-test-basket-remove-button={itemExistsInBasket ? true : undefined}
-                  data-test-coverage-details={coverage}
-                  data-test-entitlement-option-id={item.id}
-                  disabled={disabled}
-                  onClick={itemExistsInBasket ? this.removeFromBasket : this.addToBasket}
-                  ref={ref}
-                >
-                  {itemExistsInBasket ? removeLabel : addLabel}
-                </Button>
-              </IfPermission>
+    const baseProps = {
+      buttonStyle: itemExistsInBasket ? 'default' : 'primary',
+      'data-test-basket-add-button': itemExistsInBasket ? undefined : true,
+      'data-test-basket-remove-button': itemExistsInBasket ? true : undefined,
+      'data-test-coverage-details': coverage,
+      'data-test-entitlement-option-id': item.id,
+      disabled,
+      onClick: itemExistsInBasket ? this.removeFromBasket : this.addToBasket
+    };
 
-            )}
-          </Tooltip>
-        ) : (
-          <IfPermission perm="ui-agreements.agreements.edit">
+    const button = addButtonTooltipText ?
+      (
+        <Tooltip
+          id={uniqueId('addtobasketbutton')}
+          text={itemExistsInBasket ? removeButtonTooltipText : addButtonTooltipText}
+        >
+          {({ ref, ariaIds }) => (
             <Button
+              {...baseProps}
               {...buttonProps}
-              buttonStyle={itemExistsInBasket ? 'default' : 'primary'}
-              data-test-basket-add-button={itemExistsInBasket ? undefined : true}
-              data-test-basket-remove-button={itemExistsInBasket ? true : undefined}
-              data-test-coverage-details={coverage}
-              data-test-entitlement-option-id={item.id}
-              disabled={disabled}
-              onClick={itemExistsInBasket ? this.removeFromBasket : this.addToBasket}
+              aria-labelledby={ariaIds.text}
+              ref={ref}
             >
               {itemExistsInBasket ? removeLabel : addLabel}
             </Button>
-          </IfPermission>
-        )
+          )}
+        </Tooltip>
+      ) : (
+        <Button
+          {...baseProps}
+          {...buttonProps}
+        >
+          {itemExistsInBasket ? removeLabel : addLabel}
+        </Button>
+      );
 
+    return (
+      <IfPermission perm="ui-agreements.agreements.edit">
+        {button}
+      </IfPermission>
     );
   }
 }
