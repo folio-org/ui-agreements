@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Tooltip } from '@folio/stripes/components';
+import { Button } from '@folio/stripes/components';
 import { IfPermission, stripesConnect } from '@folio/stripes/core';
-import { get, uniqueId } from 'lodash';
+import { get } from 'lodash';
 
 class AddToBasketButton extends React.Component {
   static manifest = Object.freeze({
@@ -13,7 +13,6 @@ class AddToBasketButton extends React.Component {
   });
 
   static propTypes = {
-    addButtonTooltipText: PropTypes.node,
     addLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
     buttonProps: PropTypes.object,
     removeLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
@@ -26,17 +25,14 @@ class AddToBasketButton extends React.Component {
         replace: PropTypes.func,
       }),
     }),
-    removeButtonTooltipText: PropTypes.node,
     resources: PropTypes.shape({
       basket: PropTypes.array,
     }),
   }
 
   static defaultProps = {
-    addButtonTooltipText: '',
     addLabel: 'Add to basket',
     buttonProps: {},
-    removeButtonTooltipText: '',
     removeLabel: 'Remove from basket',
   }
 
@@ -78,62 +74,24 @@ class AddToBasketButton extends React.Component {
 
   render() {
     const { itemExistsInBasket } = this.state;
-    const {
-      addButtonTooltipText,
-      addLabel,
-      buttonProps,
-      disabled,
-      item,
-      removeButtonTooltipText,
-      removeLabel,
-    } = this.props;
-
+    const { addLabel, buttonProps, disabled, item, removeLabel } = this.props;
     const coverage = JSON.stringify(get(item, '_object.coverage[0]', {}));
 
     return (
-      addButtonTooltipText ?
-        (
-          <Tooltip
-            id={uniqueId('addtobasketbutton')}
-            text={itemExistsInBasket ? removeButtonTooltipText : addButtonTooltipText}
-          >
-            {({ ref, ariaIds }) => (
-              <IfPermission perm="ui-agreements.agreements.edit">
-                <Button
-                  {...buttonProps}
-                  aria-labelledby={ariaIds.text}
-                  buttonStyle={itemExistsInBasket ? 'default' : 'primary'}
-                  data-test-basket-add-button={itemExistsInBasket ? undefined : true}
-                  data-test-basket-remove-button={itemExistsInBasket ? true : undefined}
-                  data-test-coverage-details={coverage}
-                  data-test-entitlement-option-id={item.id}
-                  disabled={disabled}
-                  onClick={itemExistsInBasket ? this.removeFromBasket : this.addToBasket}
-                  ref={ref}
-                >
-                  {itemExistsInBasket ? removeLabel : addLabel}
-                </Button>
-              </IfPermission>
-
-            )}
-          </Tooltip>
-        ) : (
-          <IfPermission perm="ui-agreements.agreements.edit">
-            <Button
-              {...buttonProps}
-              buttonStyle={itemExistsInBasket ? 'default' : 'primary'}
-              data-test-basket-add-button={itemExistsInBasket ? undefined : true}
-              data-test-basket-remove-button={itemExistsInBasket ? true : undefined}
-              data-test-coverage-details={coverage}
-              data-test-entitlement-option-id={item.id}
-              disabled={disabled}
-              onClick={itemExistsInBasket ? this.removeFromBasket : this.addToBasket}
-            >
-              {itemExistsInBasket ? removeLabel : addLabel}
-            </Button>
-          </IfPermission>
-        )
-
+      <IfPermission perm="ui-agreements.agreements.edit">
+        <Button
+          {...buttonProps}
+          buttonStyle={itemExistsInBasket ? 'default' : 'primary'}
+          data-test-basket-add-button={itemExistsInBasket ? undefined : true}
+          data-test-basket-remove-button={itemExistsInBasket ? true : undefined}
+          data-test-coverage-details={coverage}
+          data-test-entitlement-option-id={item.id}
+          disabled={disabled}
+          onClick={itemExistsInBasket ? this.removeFromBasket : this.addToBasket}
+        >
+          {itemExistsInBasket ? removeLabel : addLabel}
+        </Button>
+      </IfPermission>
     );
   }
 }
