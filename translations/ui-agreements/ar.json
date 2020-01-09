@@ -321,5 +321,11 @@
     "agreementLines.customCoverage.startVolume": "مجلد البداية",
     "agreementLines.customCoverage.endVolume": "مجلد النهاية",
     "viewUDP.name": "الاسم",
-    "eresourcesCovered.preparingExport": "يتم الآن إنشاء ملف التصدير... قد يستغرق هذا بضع دقائق بالنسبة للاتفاقيات كبيرة الحجم"
+    "eresourcesCovered.preparingExport": "يتم الآن إنشاء ملف التصدير... قد يستغرق هذا بضع دقائق بالنسبة للاتفاقيات كبيرة الحجم",
+    "license.replaceLicenseSpecific": "Replace license {licenseName}",
+    "poLines.replacePOLineSpecific": "Replace PO line {POLineTitle}",
+    "relatedAgreements.replaceAgreementSpecific": "Replace agreement {agreementName}",
+    "usageData.replaceUDPSpecific": "Replace usage data provider {UDPName}",
+    "doc.removeExternalLicense": "Remove external license {index}",
+    "doc.removeSupplementaryInformation": "Remove document {index}"
 }

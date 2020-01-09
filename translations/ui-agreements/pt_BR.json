@@ -321,5 +321,11 @@
     "agreementLines.customCoverage.startVolume": "Volume inicial",
     "agreementLines.customCoverage.endVolume": "Volume final",
     "viewUDP.name": "Nome",
-    "eresourcesCovered.preparingExport": "Criando arquivo de exportação ... isso pode levar alguns minutos para grandes contratos"
+    "eresourcesCovered.preparingExport": "Criando arquivo de exportação ... isso pode levar alguns minutos para grandes contratos",
+    "license.replaceLicenseSpecific": "Substituir licença {licenseName}",
+    "poLines.replacePOLineSpecific": "Substituir a linha do pedido {POLineTitle}",
+    "relatedAgreements.replaceAgreementSpecific": "Substituir contrato {agreementName}",
+    "usageData.replaceUDPSpecific": "Substituir o provedor de dados de uso {UDPName}",
+    "doc.removeExternalLicense": "Remover licença externa {index}",
+    "doc.removeSupplementaryInformation": "Remover documento {index}"
 }
