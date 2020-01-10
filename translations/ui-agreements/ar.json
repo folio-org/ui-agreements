@@ -322,10 +322,14 @@
     "agreementLines.customCoverage.endVolume": "مجلد النهاية",
     "viewUDP.name": "الاسم",
     "eresourcesCovered.preparingExport": "يتم الآن إنشاء ملف التصدير... قد يستغرق هذا بضع دقائق بالنسبة للاتفاقيات كبيرة الحجم",
-    "license.replaceLicenseSpecific": "Replace license {licenseName}",
-    "poLines.replacePOLineSpecific": "Replace PO line {POLineTitle}",
-    "relatedAgreements.replaceAgreementSpecific": "Replace agreement {agreementName}",
-    "usageData.replaceUDPSpecific": "Replace usage data provider {UDPName}",
-    "doc.removeExternalLicense": "Remove external license {index}",
-    "doc.removeSupplementaryInformation": "Remove document {index}"
+    "license.replaceLicenseSpecific": "استبدال الترخيص {licenseName}",
+    "poLines.replacePOLineSpecific": "استبدال سطر أمر الشراء {POLineTitle}",
+    "relatedAgreements.replaceAgreementSpecific": "استبدال الاتفاقية {agreementName}",
+    "usageData.replaceUDPSpecific": "استبدال مزود بيانات الاستخدام {UDPName}",
+    "doc.removeExternalLicense": "إزالة الترخيص الخارجي {index}",
+    "doc.removeSupplementaryInformation": "إزالة المستند {index}",
+    "eresources.addPackageButtonTooltip": "إضافة حزمة \"{packageName}\"",
+    "eresources.removePackageButtonTooltip": "إزالة الحزمة \"{packageName}\"",
+    "eresources.addTitleButtonTooltip": "إضافة عنوان إلى الحزمة \"{packageName}\"",
+    "eresources.removeTitleButtonTooltip": "إزالة عنوان من الحزمة \"{packageName}\""
 }

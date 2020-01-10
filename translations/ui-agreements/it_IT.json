@@ -327,5 +327,9 @@
     "relatedAgreements.replaceAgreementSpecific": "Sostituisci contratto {agreementName}",
     "usageData.replaceUDPSpecific": "Replace usage data provider {UDPName}",
     "doc.removeExternalLicense": "Rimuovi licenza esterna {index}",
-    "doc.removeSupplementaryInformation": "Rimuovi documento {index}"
+    "doc.removeSupplementaryInformation": "Rimuovi documento {index}",
+    "eresources.addPackageButtonTooltip": "Aggiungi pacchetto \"{packageName}\"",
+    "eresources.removePackageButtonTooltip": "Rimuovi pacchetto \"{packageName}\"",
+    "eresources.addTitleButtonTooltip": "Aggiungi titolo nel pacchetto \"{packageName}\"",
+    "eresources.removeTitleButtonTooltip": "Rimuovi titolo nel pacchetto \"{packageName}\""
 }
