@@ -198,6 +198,11 @@
   "eresources.provider": "Provider",
   "eresources.addToBasketHeader": "E-resource basket",
   "eresources.sourceKb": "External data source",
+  "eresources.datePublished": "Print publication date",
+  "eresources.dateOnline": "Online publication date",
+  "eresources.edition": "Edition",
+  "eresources.volume": "Volume",
+  "eresources.firstAuthor": "First author",
 
   "customcoverages.tooltip": "Custom Coverage",
 
