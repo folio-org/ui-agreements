@@ -20,7 +20,7 @@ class EResourcesRoute extends React.Component {
       path: 'erm/resource/electronic',
       records: 'results',
       resultOffset: '%{resultOffset}',
-      perRequest: 100,
+      perRequest: resultCount.RESULT_COUNT_INCREMENT,
       limitParam: 'perPage',
       params: getSASParams({
         searchKey: 'name,identifiers.identifier.value',
