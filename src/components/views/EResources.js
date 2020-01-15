@@ -313,6 +313,8 @@ export default class EResources extends React.Component {
                       onNeedMoreData={onNeedMoreData}
                       isSelected={({ item }) => item.id === selectedRecordId}
                       onRowClick={onSelectRow}
+                      pageAmount={100}
+                      pagingType="scroll"
                       rowFormatter={this.rowFormatter}
                       sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                       sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
