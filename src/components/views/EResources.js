@@ -28,6 +28,8 @@ import EResourceFilters from '../EResourceFilters';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
 
 import { getResourceIdentifier, urls } from '../utilities';
+import { resultCount } from '../../constants';
+
 import css from './Agreements.css';
 
 export default class EResources extends React.Component {
@@ -313,7 +315,7 @@ export default class EResources extends React.Component {
                       onNeedMoreData={onNeedMoreData}
                       isSelected={({ item }) => item.id === selectedRecordId}
                       onRowClick={onSelectRow}
-                      pageAmount={100}
+                      pageAmount={resultCount.RESULT_COUNT_INCREMENT}
                       pagingType="scroll"
                       rowFormatter={this.rowFormatter}
                       sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
