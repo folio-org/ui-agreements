@@ -91,13 +91,13 @@ class AddToBasketButton extends React.Component {
     const coverage = JSON.stringify(get(item, '_object.coverage[0]', {}));
 
     const baseProps = {
-      buttonStyle: itemExistsInBasket ? 'default' : 'primary',
+      'buttonStyle': itemExistsInBasket ? 'default' : 'primary',
       'data-test-basket-add-button': itemExistsInBasket ? undefined : true,
       'data-test-basket-remove-button': itemExistsInBasket ? true : undefined,
       'data-test-coverage-details': coverage,
       'data-test-entitlement-option-id': item.id,
       disabled,
-      onClick: itemExistsInBasket ? this.removeFromBasket : this.addToBasket
+      'onClick': itemExistsInBasket ? this.removeFromBasket : this.addToBasket
     };
 
     const button = addButtonTooltipText ?

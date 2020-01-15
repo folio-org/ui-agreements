@@ -139,7 +139,9 @@ module.exports.test = (uiTestCtx) => {
             }
             chain = chain
               .click('#clickable-create-amendment')
-              .waitUntilNetworkIdle(2000);
+              .waitUntilNetworkIdle(2000)
+              .click('#pane-view-amendment [icon="times"]')
+              .wait('#licenseAmendments');
           });
           chain = chain
             .then(() => nightmare.click('#pane-view-license button[icon=times]'))
@@ -317,6 +319,8 @@ module.exports.test = (uiTestCtx) => {
           .insert('#edit-amendment-name', 'Unassigned Amendment')
           .click('#clickable-create-amendment')
           .waitUntilNetworkIdle(2000)
+          .click('#pane-view-amendment [icon="times"]')
+          .wait('#licenseAmendments')
           .then(() => nightmare.click('#pane-view-license button[icon=times]'))
           .then(done)
           .catch(done);
