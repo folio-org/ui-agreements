@@ -21,6 +21,7 @@ export default class Package extends React.Component {
   static propTypes = {
     data: PropTypes.object,
     handlers: PropTypes.object,
+    isPending: PropTypes.bool,
   }
 
   state = {
@@ -33,7 +34,7 @@ export default class Package extends React.Component {
   }
 
   getSectionProps = (id) => {
-    const { data, handlers } = this.props;
+    const { data, handlers, isPending } = this.props;
 
     return {
       eresource: data.eresource,
@@ -42,6 +43,7 @@ export default class Package extends React.Component {
       handlers,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
+      isPending,
     };
   }
 
@@ -78,6 +80,7 @@ export default class Package extends React.Component {
           <PackageContents
             {...this.getSectionProps('packageContents')}
             onFilterPackageContents={handlers.onFilterPackageContents}
+            onNeedMorePackageContents={handlers.onNeedMorePackageContents}
           />
           <NotesSmartAccordion
             {...this.getSectionProps('notes')}

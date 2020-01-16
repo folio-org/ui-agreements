@@ -16,6 +16,7 @@ import {
 
 import CoverageStatements from '../CoverageStatements';
 import EResourceLink from '../EResourceLink';
+import { resultCount } from '../../constants';
 
 export default class PackageContents extends React.Component {
   static propTypes = {
@@ -24,10 +25,22 @@ export default class PackageContents extends React.Component {
       packageContentsFilter: PropTypes.string,
     }),
     id: PropTypes.string,
+    isPending: PropTypes.bool,
     onFilterPackageContents: PropTypes.func.isRequired,
+    onNeedMorePackageContents: PropTypes.func.isRequired,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
+
+  state = {};
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.data.packageContentsFilter !== state.currentFilter) {
+      return { currentFilter: props.data.packageContentsFilter, previousFilter: state.currentFilter };
+    }
+
+    return null;
+  }
 
   columnMapping = {
     name: <FormattedMessage id="ui-agreements.eresources.name" />,
@@ -53,13 +66,19 @@ export default class PackageContents extends React.Component {
     'accessEnd',
   ]
 
-  renderList = (packageContents) => {
+  renderList = (packageContents = [], packageContentsCount) => {
     return (
       <MultiColumnList
         columnMapping={this.columnMapping}
         contentData={packageContents}
         formatter={this.formatter}
         id="package-contents-list"
+        maxHeight={800}
+        onNeedMoreData={this.props.onNeedMorePackageContents}
+        pageAmount={resultCount.RESULT_COUNT_INCREMENT}
+        pagingType="scroll"
+        totalCount={packageContentsCount}
+        virtualize
         visibleColumns={this.visibleColumns}
       />
     );
@@ -70,7 +89,7 @@ export default class PackageContents extends React.Component {
   )
 
   renderBadge = () => {
-    const count = get(this.props.data, 'packageContents.length');
+    const count = get(this.props.data, 'packageContentsCount');
     return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
   }
 
@@ -97,11 +116,14 @@ export default class PackageContents extends React.Component {
 
   render() {
     const {
-      data: { packageContents },
+      data: { packageContents, packageContentsFilter, packageContentsCount },
       id,
+      isPending,
       onToggle,
       open
     } = this.props;
+
+    const { previousFilter } = this.state;
 
     return (
       <Accordion
@@ -113,7 +135,10 @@ export default class PackageContents extends React.Component {
         open={open}
       >
         {this.renderFilterButtons()}
-        {packageContents ? this.renderList(packageContents) : <Spinner />}
+        {
+          ((previousFilter !== packageContentsFilter) && isPending) ? <Spinner /> :
+            this.renderList(packageContents, packageContentsCount)
+        }
       </Accordion>
     );
   }
