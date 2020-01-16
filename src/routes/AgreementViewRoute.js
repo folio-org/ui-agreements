@@ -28,7 +28,8 @@ class AgreementViewRoute extends React.Component {
       path: 'erm/entitlements',
       params: {
         match: 'owner.id',
-        sort: 'resource.name',
+        // Sort is disabled until ERM-655 is fixed
+        // sort: 'resource.name',
         stats: 'true',
         term: ':{id}',
       },
