@@ -41,7 +41,7 @@ class EResourceViewRoute extends React.Component {
       records: 'results',
       limitParam: 'perPage',
       perRequest: resultCount.RESULT_COUNT_INCREMENT,
-      resultOffset: '%{resultOffset}',
+      resultOffset: '%{packageContentsOffset}',
       params: {
         filters: 'pkg.id==:{id}',
         sort: 'pti.titleInstance.name;asc',
@@ -51,8 +51,7 @@ class EResourceViewRoute extends React.Component {
     query: {},
     entitlementsCount: { initialValue: resultCount.INITIAL_RESULT_COUNT },
     packageContentsFilter: { initialValue: 'current' },
-    resultOffset: { initialValue: 0 },
-    resultCount: { initialValue: resultCount.INITIAL_RESULT_COUNT },
+    packageContentsOffset: { initialValue: 0 },
   });
 
   static propTypes = {
@@ -132,17 +131,12 @@ class EResourceViewRoute extends React.Component {
   handleFilterPackageContents = (path) => {
     const { mutator } = this.props;
     mutator.packageContentsFilter.replace(path);
-    mutator.resultOffset.replace(0);
-    mutator.resultCount.replace(resultCount.INITIAL_RESULT_COUNT);
+    mutator.packageContentsOffset.replace(0);
   }
 
   handleNeedMorePackageContents = (_askAmount, index) => {
-    const { mutator, resources } = this.props;
-    if (index > 0) {
-      mutator.resultOffset.replace(index);
-    } else {
-      mutator.resultCount.replace(resources.resultCount + resultCount.RESULT_COUNT_INCREMENT);
-    }
+    const { mutator } = this.props;
+    mutator.packageContentsOffset.replace(index);
   }
 
   handleToggleHelper = (helper) => {
@@ -166,15 +160,21 @@ class EResourceViewRoute extends React.Component {
     );
   }
 
-  getRecords = (resource) => {
-    const records = get(this.props.resources, `${resource}.records`, []);
-    const isPending = get(this.props.resources, `${resource}.isPending`, true);
+  getPackageContentsRecords = () => {
+    const { resources } = this.props;
+    return get(resources, 'packageContents.url', '').indexOf(`content/${resources.packageContentsFilter}?`) > -1
+      ?
+      get(resources, 'packageContents.records')
+      :
+      undefined;
+  }
 
-    /* We want to send any records if we've fetched them, and only send an empty array
-    if the fetch is complete. */
-    if (records.length) return records;
-    else if (!isPending) return [];
-    else return undefined;
+  getRecords = (resource) => {
+    return get(this.props.resources, `${resource}.isPending`, true)
+      ?
+      undefined
+      :
+      get(this.props.resources, `${resource}.records`);
   }
 
   render() {
@@ -191,7 +191,7 @@ class EResourceViewRoute extends React.Component {
           entitlementOptions: this.getRecords('entitlementOptions'),
           entitlements: this.getRecords('entitlements'),
           packageContentsFilter: this.props.resources.packageContentsFilter,
-          packageContents: this.getRecords('packageContents'),
+          packageContents: this.getPackageContentsRecords(),
           packageContentsCount: get(this.props.resources, 'packageContents.other.totalRecords', 0),
         }}
         handlers={{
@@ -203,7 +203,6 @@ class EResourceViewRoute extends React.Component {
         }}
         helperApp={this.getHelperApp()}
         isLoading={this.isLoading()}
-        isPending={get(resources, 'packageContents.isPending', true)}
         key={get(resources, 'eresource.loadedAt', 'loading')}
       />
     );

@@ -23,7 +23,6 @@ export default class EResource extends React.Component {
     }).isRequired,
     helperApp: PropTypes.node,
     isLoading: PropTypes.bool,
-    isPending: PropTypes.bool,
   }
 
   render() {
@@ -32,7 +31,6 @@ export default class EResource extends React.Component {
       handlers,
       helperApp,
       isLoading,
-      isPending,
     } = this.props;
 
     if (isLoading) return <LoadingPane onClose={handlers.onClose} />;
@@ -49,7 +47,7 @@ export default class EResource extends React.Component {
           onClose={handlers.onClose}
         >
           <TitleManager record={data.eresource.name}>
-            <EResourceViewComponent data={data} handlers={handlers} isPending={isPending} />
+            <EResourceViewComponent data={data} handlers={handlers} />
           </TitleManager>
         </Pane>
         {helperApp}

@@ -25,22 +25,11 @@ export default class PackageContents extends React.Component {
       packageContentsFilter: PropTypes.string,
     }),
     id: PropTypes.string,
-    isPending: PropTypes.bool,
     onFilterPackageContents: PropTypes.func.isRequired,
     onNeedMorePackageContents: PropTypes.func.isRequired,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
-
-  state = {};
-
-  static getDerivedStateFromProps(props, state) {
-    if (props.data.packageContentsFilter !== state.currentFilter) {
-      return { currentFilter: props.data.packageContentsFilter, previousFilter: state.currentFilter };
-    }
-
-    return null;
-  }
 
   columnMapping = {
     name: <FormattedMessage id="ui-agreements.eresources.name" />,
@@ -116,14 +105,11 @@ export default class PackageContents extends React.Component {
 
   render() {
     const {
-      data: { packageContents, packageContentsFilter, packageContentsCount },
+      data: { packageContents, packageContentsCount },
       id,
-      isPending,
       onToggle,
       open
     } = this.props;
-
-    const { previousFilter } = this.state;
 
     return (
       <Accordion
@@ -135,10 +121,7 @@ export default class PackageContents extends React.Component {
         open={open}
       >
         {this.renderFilterButtons()}
-        {
-          ((previousFilter !== packageContentsFilter) && isPending) ? <Spinner /> :
-            this.renderList(packageContents, packageContentsCount)
-        }
+        {packageContents ? this.renderList(packageContents, packageContentsCount) : <Spinner />}
       </Accordion>
     );
   }

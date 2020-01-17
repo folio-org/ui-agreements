@@ -21,7 +21,6 @@ export default class Package extends React.Component {
   static propTypes = {
     data: PropTypes.object,
     handlers: PropTypes.object,
-    isPending: PropTypes.bool,
   }
 
   state = {
@@ -34,7 +33,7 @@ export default class Package extends React.Component {
   }
 
   getSectionProps = (id) => {
-    const { data, handlers, isPending } = this.props;
+    const { data, handlers } = this.props;
 
     return {
       eresource: data.eresource,
@@ -43,7 +42,6 @@ export default class Package extends React.Component {
       handlers,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
-      isPending,
     };
   }
 
