@@ -65,6 +65,8 @@ module.exports.test = (uiTestCtx) => {
             .insert('#edit-amendment-name', 'Current Amendment')
             .click('#clickable-create-amendment')
             .waitUntilNetworkIdle(2000)
+            .click('#pane-view-amendment [icon="times"]')
+            .wait('#licenseAmendments')
 
             .wait('#clickable-expand-all')
             .click('#clickable-expand-all')
@@ -73,6 +75,8 @@ module.exports.test = (uiTestCtx) => {
             .insert('#edit-amendment-name', 'Future Amendment')
             .click('#clickable-create-amendment')
             .waitUntilNetworkIdle(2000)
+            .click('#pane-view-amendment [icon="times"]')
+            .wait('#licenseAmendments')
 
             .wait('#clickable-expand-all')
             .click('#clickable-expand-all')
@@ -81,6 +85,8 @@ module.exports.test = (uiTestCtx) => {
             .insert('#edit-amendment-name', 'Historical Amendment')
             .click('#clickable-create-amendment')
             .waitUntilNetworkIdle(2000)
+            .click('#pane-view-amendment [icon="times"]')
+            .wait('#licenseAmendments')
 
             .then(() => nightmare.click('#pane-view-license button[icon=times]'))
             .then(done)
