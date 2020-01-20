@@ -107,8 +107,8 @@ export default class TitleInfo extends React.Component {
           {this.renderIdentifier('zdb')}
         </Row>
         <Row>
-          {this.renderIdentifier('pissn', 2)}
-          {this.renderIdentifier('eissn', 2)}
+          {this.renderIdentifier('pissn')}
+          {this.renderIdentifier('eissn')}
         </Row>
       </div>
     );
