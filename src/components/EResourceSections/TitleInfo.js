@@ -55,49 +55,19 @@ export default class TitleInfo extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={4}>
+          <Col xs={3}>
             <KeyValue
               label={<FormattedMessage id="ui-agreements.eresources.erType" />}
               value={get(eresource, 'type.label', '-')}
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={3}>
             <KeyValue
               label={<FormattedMessage id="ui-agreements.eresources.publisher" />}
               value={get(eresource, 'publisher.label', '-')}
             />
           </Col>
-          {this.renderIdentifier('pissn', 2)}
-          {this.renderIdentifier('eissn', 2)}
-        </Row>
-        <Row>
-          <Col xs={4}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.datePublished" />}
-              value={get(eresource, 'dateMonographPublishedPrint', '-')}
-            />
-          </Col>
-          <Col xs={4}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.datePublishedOnline" />}
-              value={get(eresource, 'dateMonographPublishedOnline', '-')}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={4}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.edition" />}
-              value={get(eresource, 'monographEdition', '-')}
-            />
-          </Col>
-          <Col xs={4}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.volume" />}
-              value={get(eresource, 'monographVolume', '-')}
-            />
-          </Col>
-          <Col xs={4}>
+          <Col xs={3}>
             <KeyValue
               label={<FormattedMessage id="ui-agreements.eresources.firstAuthor" />}
               value={get(eresource, 'firstAuthor', '-')}
@@ -105,10 +75,40 @@ export default class TitleInfo extends React.Component {
           </Col>
         </Row>
         <Row>
+          <Col xs={3}>
+            <KeyValue
+              label={<FormattedMessage id="ui-agreements.eresources.datePublished" />}
+              value={get(eresource, 'dateMonographPublishedPrint', '-')}
+            />
+          </Col>
+          <Col xs={3}>
+            <KeyValue
+              label={<FormattedMessage id="ui-agreements.eresources.datePublishedOnline" />}
+              value={get(eresource, 'dateMonographPublishedOnline', '-')}
+            />
+          </Col>
+          <Col xs={3}>
+            <KeyValue
+              label={<FormattedMessage id="ui-agreements.eresources.edition" />}
+              value={get(eresource, 'monographEdition', '-')}
+            />
+          </Col>
+          <Col xs={3}>
+            <KeyValue
+              label={<FormattedMessage id="ui-agreements.eresources.volume" />}
+              value={get(eresource, 'monographVolume', '-')}
+            />
+          </Col>
+        </Row>
+        <Row>
           {this.renderIdentifier('doi')}
+          {this.renderIdentifier('isbn')}
           {this.renderIdentifier('ezb')}
           {this.renderIdentifier('zdb')}
-          {this.renderIdentifier('isbn')}
+        </Row>
+        <Row>
+          {this.renderIdentifier('pissn', 2)}
+          {this.renderIdentifier('eissn', 2)}
         </Row>
       </div>
     );
