@@ -18,6 +18,7 @@ export default class EResource extends React.Component {
     }),
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
+      onNeedMorePackageContents: PropTypes.func.isRequired,
       onToggleTags: PropTypes.func.isRequired
     }).isRequired,
     helperApp: PropTypes.node,

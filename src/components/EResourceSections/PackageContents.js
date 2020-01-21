@@ -16,6 +16,7 @@ import {
 
 import CoverageStatements from '../CoverageStatements';
 import EResourceLink from '../EResourceLink';
+import { resultCount } from '../../constants';
 
 export default class PackageContents extends React.Component {
   static propTypes = {
@@ -25,6 +26,7 @@ export default class PackageContents extends React.Component {
     }),
     id: PropTypes.string,
     onFilterPackageContents: PropTypes.func.isRequired,
+    onNeedMorePackageContents: PropTypes.func.isRequired,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
@@ -53,13 +55,19 @@ export default class PackageContents extends React.Component {
     'accessEnd',
   ]
 
-  renderList = (packageContents) => {
+  renderList = (packageContents, packageContentsCount) => {
     return (
       <MultiColumnList
         columnMapping={this.columnMapping}
         contentData={packageContents}
         formatter={this.formatter}
         id="package-contents-list"
+        maxHeight={800}
+        onNeedMoreData={this.props.onNeedMorePackageContents}
+        pageAmount={resultCount.RESULT_COUNT_INCREMENT}
+        pagingType="scroll"
+        totalCount={packageContentsCount}
+        virtualize
         visibleColumns={this.visibleColumns}
       />
     );
@@ -70,17 +78,17 @@ export default class PackageContents extends React.Component {
   )
 
   renderBadge = () => {
-    const count = get(this.props.data, 'packageContents.length');
+    const count = get(this.props.data, 'packageContentsCount');
     return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
   }
 
   renderFilterButton = (filter) => (
     <Button
       buttonStyle={this.props.data.packageContentsFilter === filter ? 'primary' : 'default'}
-      id={`clickable-pci-${filter || 'all'}`}
+      id={`clickable-pci-${filter}`}
       onClick={() => this.props.onFilterPackageContents(filter)}
     >
-      <FormattedMessage id={`ui-agreements.content.${filter || 'all'}`} />
+      <FormattedMessage id={`ui-agreements.content.${filter}`} />
     </Button>
   )
 
@@ -90,14 +98,14 @@ export default class PackageContents extends React.Component {
         {this.renderFilterButton('current')}
         {this.renderFilterButton('future')}
         {this.renderFilterButton('dropped')}
-        {this.renderFilterButton('')}
+        {this.renderFilterButton('all')}
       </ButtonGroup>
     </Layout>
   )
 
   render() {
     const {
-      data: { packageContents },
+      data: { packageContents, packageContentsCount },
       id,
       onToggle,
       open
@@ -113,7 +121,7 @@ export default class PackageContents extends React.Component {
         open={open}
       >
         {this.renderFilterButtons()}
-        {packageContents ? this.renderList(packageContents) : <Spinner />}
+        {packageContents ? this.renderList(packageContents, packageContentsCount) : <Spinner />}
       </Accordion>
     );
   }

@@ -9,6 +9,7 @@ import { Tags } from '@folio/stripes-erm-components';
 
 import View from '../components/views/EResource';
 import { urls } from '../components/utilities';
+import { resultCount } from '../constants';
 
 const RECORDS_PER_REQUEST = 100;
 
@@ -39,8 +40,8 @@ class EResourceViewRoute extends React.Component {
       path: 'erm/packages/:{id}/content/%{packageContentsFilter}',
       records: 'results',
       limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
-      recordsRequired: '%{packageContentsCount}',
+      perRequest: resultCount.RESULT_COUNT_INCREMENT,
+      resultOffset: '%{packageContentsOffset}',
       params: {
         filters: 'pkg.id==:{id}',
         sort: 'pti.titleInstance.name;asc',
@@ -48,9 +49,9 @@ class EResourceViewRoute extends React.Component {
       },
     },
     query: {},
-    entitlementsCount: { initialValue: RECORDS_PER_REQUEST },
+    entitlementsCount: { initialValue: resultCount.INITIAL_RESULT_COUNT },
     packageContentsFilter: { initialValue: 'current' },
-    packageContentsCount: { initialValue: RECORDS_PER_REQUEST },
+    packageContentsOffset: { initialValue: 0 },
   });
 
   static propTypes = {
@@ -97,15 +98,10 @@ class EResourceViewRoute extends React.Component {
   componentDidUpdate() {
     const { mutator, resources } = this.props;
     const totalEntitlements = get(resources, 'entitlements.other.totalRecords', RECORDS_PER_REQUEST);
-    const totalPackageContents = get(resources, 'packageContents.other.totalRecords', RECORDS_PER_REQUEST);
-    const { entitlementsCount, packageContentsCount } = resources;
+    const { entitlementsCount } = resources;
 
     if (totalEntitlements > entitlementsCount) {
       mutator.entitlementsCount.replace(totalEntitlements);
-    }
-
-    if (totalPackageContents > packageContentsCount) {
-      mutator.packageContentsCount.replace(totalPackageContents);
     }
   }
 
@@ -135,6 +131,12 @@ class EResourceViewRoute extends React.Component {
   handleFilterPackageContents = (path) => {
     const { mutator } = this.props;
     mutator.packageContentsFilter.replace(path);
+    mutator.packageContentsOffset.replace(0);
+  }
+
+  handleNeedMorePackageContents = (_askAmount, index) => {
+    const { mutator } = this.props;
+    mutator.packageContentsOffset.replace(index);
   }
 
   handleToggleHelper = (helper) => {
@@ -156,6 +158,15 @@ class EResourceViewRoute extends React.Component {
       match.params.id !== get(resources, 'eresource.records[0].id') &&
       get(resources, 'eresource.isPending', true)
     );
+  }
+
+  getPackageContentsRecords = () => {
+    const { resources } = this.props;
+    return get(resources, 'packageContents.url', '').indexOf(`content/${resources.packageContentsFilter}`) > -1
+      ?
+      get(resources, 'packageContents.records')
+      :
+      undefined;
   }
 
   getRecords = (resource) => {
@@ -180,11 +191,13 @@ class EResourceViewRoute extends React.Component {
           entitlementOptions: this.getRecords('entitlementOptions'),
           entitlements: this.getRecords('entitlements'),
           packageContentsFilter: this.props.resources.packageContentsFilter,
-          packageContents: this.getRecords('packageContents'),
+          packageContents: this.getPackageContentsRecords(),
+          packageContentsCount: get(this.props.resources, 'packageContents.other.totalRecords', 0),
         }}
         handlers={{
           ...handlers,
           onFilterPackageContents: this.handleFilterPackageContents,
+          onNeedMorePackageContents: this.handleNeedMorePackageContents,
           onClose: this.handleClose,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
