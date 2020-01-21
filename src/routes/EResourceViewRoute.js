@@ -160,13 +160,24 @@ class EResourceViewRoute extends React.Component {
     );
   }
 
-  getPackageContentsRecords = () => {
-    const { resources } = this.props;
-    return get(resources, 'packageContents.url', '').indexOf(`content/${resources.packageContentsFilter}`) > -1
+  getPackageContentsRecordsCount() {
+    return this.getPackageContentsRecords()
       ?
-      get(resources, 'packageContents.records')
+      get(this.props.resources, 'packageContents.other.totalRecords', 0)
       :
-      undefined;
+      0;
+  }
+
+  getPackageContentsRecords = () => {
+    const { resources, match } = this.props;
+
+    if (get(resources, 'packageContents.url', '').indexOf(`${match.params.id}`) === -1) {
+      return undefined;
+    } else if (get(resources, 'packageContents.url', '').indexOf(`content/${resources.packageContentsFilter}`) === -1) {
+      return undefined;
+    }
+
+    return get(resources, 'packageContents.records');
   }
 
   getRecords = (resource) => {
@@ -192,7 +203,7 @@ class EResourceViewRoute extends React.Component {
           entitlements: this.getRecords('entitlements'),
           packageContentsFilter: this.props.resources.packageContentsFilter,
           packageContents: this.getPackageContentsRecords(),
-          packageContentsCount: get(this.props.resources, 'packageContents.other.totalRecords', 0),
+          packageContentsCount: this.getPackageContentsRecordsCount(),
         }}
         handlers={{
           ...handlers,
