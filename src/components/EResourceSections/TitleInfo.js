@@ -73,18 +73,18 @@ export default class TitleInfo extends React.Component {
               value={get(eresource, 'firstAuthor', '-')}
             />
           </Col>
+          <Col xs={3}>
+            <KeyValue
+              label={<FormattedMessage id="ui-agreements.eresources.firstEditor" />}
+              value={get(eresource, 'firstEditor', '-')}
+            />
+          </Col>
         </Row>
         <Row>
           <Col xs={3}>
             <KeyValue
               label={<FormattedMessage id="ui-agreements.eresources.datePublished" />}
-              value={get(eresource, 'dateMonographPublishedPrint', '-')}
-            />
-          </Col>
-          <Col xs={3}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.datePublishedOnline" />}
-              value={get(eresource, 'dateMonographPublishedOnline', '-')}
+              value={get(eresource, 'dateMonographPublished', '-')}
             />
           </Col>
           <Col xs={3}>
