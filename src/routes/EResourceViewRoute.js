@@ -162,7 +162,7 @@ class EResourceViewRoute extends React.Component {
 
   getPackageContentsRecords = () => {
     const { resources } = this.props;
-    return get(resources, 'packageContents.url', '').indexOf(`content/${resources.packageContentsFilter}?`) > -1
+    return get(resources, 'packageContents.url', '').indexOf(`content/${resources.packageContentsFilter}`) > -1
       ?
       get(resources, 'packageContents.records')
       :

@@ -85,10 +85,10 @@ export default class PackageContents extends React.Component {
   renderFilterButton = (filter) => (
     <Button
       buttonStyle={this.props.data.packageContentsFilter === filter ? 'primary' : 'default'}
-      id={`clickable-pci-${filter || 'all'}`}
+      id={`clickable-pci-${filter}`}
       onClick={() => this.props.onFilterPackageContents(filter)}
     >
-      <FormattedMessage id={`ui-agreements.content.${filter || 'all'}`} />
+      <FormattedMessage id={`ui-agreements.content.${filter}`} />
     </Button>
   )
 
@@ -98,7 +98,7 @@ export default class PackageContents extends React.Component {
         {this.renderFilterButton('current')}
         {this.renderFilterButton('future')}
         {this.renderFilterButton('dropped')}
-        {this.renderFilterButton('')}
+        {this.renderFilterButton('all')}
       </ButtonGroup>
     </Layout>
   )
