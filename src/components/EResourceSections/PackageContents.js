@@ -55,7 +55,7 @@ export default class PackageContents extends React.Component {
     'accessEnd',
   ]
 
-  renderList = (packageContents = [], packageContentsCount) => {
+  renderList = (packageContents, packageContentsCount) => {
     return (
       <MultiColumnList
         columnMapping={this.columnMapping}
