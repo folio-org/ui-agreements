@@ -9,9 +9,9 @@ import { getSASParams } from '@folio/stripes-erm-components';
 import View from '../components/views/EResources';
 import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
+import { resultCount } from '../constants';
 
-const INITIAL_RESULT_COUNT = 100;
-const RESULT_COUNT_INCREMENT = 100;
+const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT;
 
 class EResourcesRoute extends React.Component {
   static manifest = Object.freeze({
@@ -19,8 +19,8 @@ class EResourcesRoute extends React.Component {
       type: 'okapi',
       path: 'erm/resource/electronic',
       records: 'results',
-      recordsRequired: '%{resultCount}',
-      perRequest: 100,
+      resultOffset: '%{resultOffset}',
+      perRequest: resultCount.RESULT_COUNT_INCREMENT,
       limitParam: 'perPage',
       params: getSASParams({
         searchKey: 'name,identifiers.identifier.value',
@@ -48,7 +48,7 @@ class EResourcesRoute extends React.Component {
       limitParam: 'perPage',
     },
     query: { initialValue: {} },
-    resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    resultOffset: { initialValue: 0 },
   });
 
   static propTypes = {
@@ -110,8 +110,10 @@ class EResourcesRoute extends React.Component {
     }
   }
 
-  handleNeedMoreData = () => {
-    if (this.source) {
+  handleNeedMoreData = (_askAmount, index) => {
+    if (this.source && index > 0) {
+      this.source.fetchOffset(index);
+    } else {
       this.source.fetchMore(RESULT_COUNT_INCREMENT);
     }
   }
