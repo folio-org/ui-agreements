@@ -172,13 +172,13 @@ class EResourceViewRoute extends React.Component {
     const { resources, match } = this.props;
     const packageContentsUrl = get(resources, 'packageContents.url', '');
 
-    if (packageContentsUrl.indexOf(`${match.params.id}`) === -1) {
-      return undefined;
-    } else if (packageContentsUrl.indexOf(`content/${resources.packageContentsFilter}`) === -1) {
-      return undefined;
-    }
-
-    return get(resources, 'packageContents.records');
+    // If a new eresource is selected or if the filter has changed return undefined
+    return (packageContentsUrl.indexOf(`${match.params.id}`) === -1 ||
+      packageContentsUrl.indexOf(`content/${resources.packageContentsFilter}`) === -1)
+      ?
+      undefined
+      :
+      get(resources, 'packageContents.records');
   }
 
   getRecords = (resource) => {
