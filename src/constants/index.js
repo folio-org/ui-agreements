@@ -3,4 +3,5 @@ export { default as entityTypeTranslationKeys } from './entityTypeTranslationKey
 export { default as entityTypePluralizedTranslationKeys } from './entityTypePluralizedTranslationKeys';
 export { default as statuses } from './statuses';
 export { default as errorTypes } from './errorTypes';
+export { default as resultCount } from './resultCount';
 export { default as agreementRelationshipTypes } from './agreementRelationshipTypes';
