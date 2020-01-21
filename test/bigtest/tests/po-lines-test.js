@@ -35,7 +35,7 @@ describe('PO Lines', () => {
 
     expect(agreementForm.linesSection.lines(agreementLineIndex).poLines(poLineIndex).acquisitionMethod).to.equal(poLine.acquisitionMethod);
     expect(agreementForm.linesSection.lines(agreementLineIndex).poLines(poLineIndex).poLineNumber).to.include(poLine.poLineNumber);
-    expect(agreementForm.linesSection.lines(agreementLineIndex).poLines(poLineIndex).title).to.equal(poLine.title);
+    expect(agreementForm.linesSection.lines(agreementLineIndex).poLines(poLineIndex).titleOrPackage).to.equal(poLine.titleOrPackage);
   };
 
   beforeEach(async function () {
