@@ -112,7 +112,7 @@ export default class LinesList extends React.Component {
               id={`tooltip-${line.id}-${poLine.id}`}
               key={poLine.id}
               placement="left"
-              text={poLine.title}
+              text={poLine.titleOrPackage}
             >
               {({ ref, ariaIds }) => (
                 <div

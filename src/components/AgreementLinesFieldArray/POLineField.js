@@ -28,7 +28,7 @@ export default class POLineField extends React.Component {
     poLine: PropTypes.shape({
       acquisitionMethod: PropTypes.string,
       poLineNumber: PropTypes.string,
-      title: PropTypes.string,
+      titleOrPackage: PropTypes.string,
     }),
   }
 
@@ -107,7 +107,7 @@ export default class POLineField extends React.Component {
           <Col xs={12}>
             <KeyValue label={<FormattedMessage id="ui-agreements.poLines.title" />}>
               <div data-test-poline-title>
-                {poLine.title || '-'}
+                {poLine.titleOrPackage || '-'}
               </div>
             </KeyValue>
           </Col>
