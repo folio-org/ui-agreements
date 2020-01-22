@@ -37,6 +37,7 @@ export default class RelatedAgreements extends React.Component {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
+    searchString: PropTypes.string,
   }
 
   renderRelatedAgreements = () => (
@@ -48,7 +49,7 @@ export default class RelatedAgreements extends React.Component {
           <AppIcon app="agreements" size="small">
             <Link
               data-test-agreement-link
-              to={urls.agreementView(ra.agreement.id)}
+              to={`${urls.agreementView(ra.agreement.id)}${this.props.searchString}`}
             >
               <strong>{ra.agreement.name}</strong>
             </Link>

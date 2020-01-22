@@ -44,6 +44,7 @@ export default class Agreement extends React.Component {
     data: PropTypes.shape({
       agreement: PropTypes.object.isRequired,
       eresourcesFilterPath: PropTypes.string,
+      searchString: PropTypes.string,
     }).isRequired,
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
@@ -85,6 +86,7 @@ export default class Agreement extends React.Component {
       handlers,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
+      searchString: data.searchString,
     };
   }
 
