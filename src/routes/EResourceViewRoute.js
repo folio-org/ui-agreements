@@ -174,7 +174,7 @@ class EResourceViewRoute extends React.Component {
   }
 
   getPackageContentsRecords = () => {
-    const { resources, match, mutator } = this.props;
+    const { resources, match } = this.props;
     const packageContentsUrl = get(resources, 'packageContents.url', '');
 
     // If a new eresource is selected or if the filter has changed return undefined
