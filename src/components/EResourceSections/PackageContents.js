@@ -65,7 +65,7 @@ export default class PackageContents extends React.Component {
         maxHeight={800}
         onNeedMoreData={this.props.onNeedMorePackageContents}
         pageAmount={resultCount.RESULT_COUNT_INCREMENT}
-        pagingType="scroll"
+        pagingType="click"
         totalCount={packageContentsCount}
         virtualize
         visibleColumns={this.visibleColumns}
