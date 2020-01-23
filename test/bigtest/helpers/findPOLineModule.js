@@ -12,7 +12,7 @@ for (let i = 0; i < 100; i++) {
     acquisitionMethod: faker.finance.transactionType(),
     id: uuid(),
     poLineNumber: `${number()}-${number()}`,
-    title: words(),
+    titleOrPackage: words(),
   };
 }
 
