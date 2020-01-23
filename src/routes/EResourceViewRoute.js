@@ -41,7 +41,12 @@ class EResourceViewRoute extends React.Component {
       records: 'results',
       limitParam: 'perPage',
       perRequest: resultCount.RESULT_COUNT_INCREMENT,
-      resultOffset: '%{packageContentsOffset}',
+      resultOffset: (_q, _p, _r, _l, props) => {
+        const { match, resources } = props;
+        const resultOffset = get(resources, 'packageContentsOffset');
+        const eresourceId = get(resources, 'eresource.records[0].id');
+        return eresourceId !== match.params.id ? 0 : resultOffset;
+      },
       params: {
         filters: 'pkg.id==:{id}',
         sort: 'pti.titleInstance.name;asc',
