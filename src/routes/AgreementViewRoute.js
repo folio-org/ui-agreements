@@ -80,7 +80,7 @@ class AgreementViewRoute extends React.Component {
 
         return query ? { query } : null;
       },
-      fetch: props => !!props.stripes.hasInterface('orders', '6.0 7.0 8.0'),
+      fetch: props => !!props.stripes.hasInterface('order-lines', '1.0'),
       records: 'poLines',
     },
     terms: {
