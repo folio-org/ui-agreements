@@ -11,11 +11,11 @@ import {
   FormattedUTCDate,
   Layout,
   MultiColumnList,
-  Row,
   Spinner,
 } from '@folio/stripes/components';
 
 import CoverageStatements from '../CoverageStatements';
+import CoverageStatementsMonograph from '../CoverageStatementsMonograph';
 import EResourceLink from '../EResourceLink';
 import { resultCount } from '../../constants';
 
@@ -63,40 +63,10 @@ export default class PackageContents extends React.Component {
   }
 
   coverageFormatter = (pci) => {
-    const titleInstance = get(pci, 'pti.titleInstance');
-
-    // Date can take the forms yyyy, yyyy-mm or yyyy-mm-dd, and is stored as a string.
-    const date = get(titleInstance, 'dateMonographPublished');
-    const volume = get(titleInstance, 'monographVolume');
-    const edition = get(titleInstance, 'monographEdition');
-
-    if (get(titleInstance, 'type.value') === 'monograph') {
-      if (!date && !volume && !edition) {
-        return '*';
-      } else {
-        return (
-          <Layout
-            className="full"
-            data-test-statement={titleInstance.name}
-          >
-            <Layout
-              className="margin-end-gutter textRight"
-              data-test-start
-              style={{ width: '40%' }}
-            >
-              { date }
-              <div
-                data-test-edition={edition}
-                data-test-volume={volume}
-              >
-                {this.renderEdition(edition)}
-                {volume && edition ? <React.Fragment>&nbsp;</React.Fragment> : null}
-                {this.renderVolume(volume)}
-              </div>
-            </Layout>
-          </Layout>
-        );
-      }
+    if (get(pci, 'pti.titleInstance.type.value') === 'monograph') {
+      return (
+        <CoverageStatementsMonograph pci={pci} />
+      );
     } else {
       return (
         <CoverageStatements statements={pci.coverage} />
