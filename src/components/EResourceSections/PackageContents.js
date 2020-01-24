@@ -40,28 +40,6 @@ export default class PackageContents extends React.Component {
     accessEnd: <FormattedMessage id="ui-agreements.eresources.accessEnd" />,
   }
 
-  renderEdition = (edition) => {
-    if (!edition) return null;
-
-    return (
-      <React.Fragment>
-        <FormattedMessage id="ui-agreements.coverage.editionShort" />
-        {edition}
-      </React.Fragment>
-    );
-  }
-
-  renderVolume = (volume) => {
-    if (!volume) return null;
-
-    return (
-      <React.Fragment>
-        <FormattedMessage id="ui-agreements.coverage.volumeShort" />
-        {volume}
-      </React.Fragment>
-    );
-  }
-
   coverageFormatter = (pci) => {
     if (get(pci, 'pti.titleInstance.type.value') === 'monograph') {
       return (
