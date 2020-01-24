@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import PropTypes from 'prop-types';
 import Switch from 'react-router-dom/Switch';
 import { Route } from '@folio/stripes/core';
-import { Layout, Spinner } from '@folio/stripes/components';
+import { Layout } from '@folio/stripes/components';
 
 import css from './index.css';
 
@@ -35,7 +35,7 @@ class App extends React.Component {
   render() {
     if (this.props.showSettings) {
       return (
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={null}>
           <Settings {...this.props} />
         </Suspense>
       );
@@ -45,7 +45,7 @@ class App extends React.Component {
 
     return (
       <div className={css.container}>
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={null}>
           <IfEResourcesEnabled>
             <Layout className={`${css.header} display-flex justify-end full padding-top-gutter padding-start-gutter padding-end-gutter`}>
               <OpenBasketButton />
@@ -56,11 +56,15 @@ class App extends React.Component {
               <Route path={`${path}/agreements/create`} component={AgreementCreateRoute} />
               <Route path={`${path}/agreements/:id/edit`} component={AgreementEditRoute} />
               <Route path={`${path}/agreements/:id?`} component={AgreementsRoute}>
-                <Route path={`${path}/agreements/:id`} component={AgreementViewRoute} />
+                <Suspense fallback={null}>
+                  <Route path={`${path}/agreements/:id`} component={AgreementViewRoute} />
+                </Suspense>
               </Route>
 
               <Route path={`${path}/eresources/:id?`} component={EResourcesRoute}>
-                <Route path={`${path}/eresources/:id`} component={EResourceViewRoute} />
+                <Suspense fallback={null}>
+                  <Route path={`${path}/eresources/:id`} component={EResourceViewRoute} />
+                </Suspense>
               </Route>
 
               <Route path={`${path}/notes/create`} component={NoteCreateRoute} />
