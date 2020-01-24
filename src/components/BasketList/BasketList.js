@@ -10,6 +10,7 @@ import {
 } from '@folio/stripes/components';
 
 import CoverageStatements from '../CoverageStatements';
+import CoverageStatementsMonograph from '../CoverageStatementsMonograph';
 import EResourceLink from '../EResourceLink';
 import EResourceType from '../EResourceType';
 
@@ -20,6 +21,18 @@ class BasketList extends React.Component {
     onToggleAll: PropTypes.func,
     onToggleItem: PropTypes.func,
     selectedItems: PropTypes.object,
+  }
+
+  coverageFormatter = (pci) => {
+    if (get(pci, 'pti.titleInstance.type.value') === 'monograph') {
+      return (
+        <CoverageStatementsMonograph pci={pci} />
+      );
+    } else {
+      return (
+        <CoverageStatements statements={pci.coverage} />
+      );
+    }
   }
 
   render() {
@@ -68,7 +81,7 @@ class BasketList extends React.Component {
             get(resource, '_object.pti.platform.name') ||
             get(resource, '_object.nominalPlatform.name') || '-'
           ),
-          coverage: resource => <CoverageStatements statements={resource._object.coverage} />,
+          coverage: resource => this.coverageFormatter(resource._object),
           remove: resource => (
             <FormattedMessage id="ui-agreements.basket.removeItem">
               {ariaLabel => (
