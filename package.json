@@ -59,10 +59,10 @@
     "chai-spies": "^1.0.0",
     "eslint": "^5.5.0",
     "mocha": "^6.2.2",
-    "react": "~16.6.3",
-    "react-dom": "~16.6.3",
-    "react-redux": "~5.1.1",
-    "redux": "~3.7.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-redux": "^5.1.1",
+    "redux": "^3.7.2",
     "sinon": "^7.5.0"
   },
   "dependencies": {
