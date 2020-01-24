@@ -75,38 +75,26 @@ export default class PackageContents extends React.Component {
         return '*';
       } else {
         return (
-          <React.Fragment>
+          <Layout
+            className="full"
+            data-test-statement={titleInstance.name}
+          >
             <Layout
-              className="full"
-              data-test-statement={titleInstance.name}
+              className="margin-end-gutter textRight"
+              data-test-start
+              style={{ width: '40%' }}
             >
-              <Layout
-                className="flex justified"
-                data-test-statement={titleInstance.name}
+              { date }
+              <div
+                data-test-edition={edition}
+                data-test-volume={volume}
               >
-                <Layout
-                  className="margin-end-gutter textRight"
-                  data-test-start
-                  style={{ width: '40%' }}
-                >
-                  { date ? <div data-test-date={date}><FormattedUTCDate value={date} /></div> : null }
-                  <div
-                    data-test-edition={edition}
-                    data-test-volume={volume}
-                  >
-                    {this.renderEdition(edition)}
-                    {volume && edition ? <React.Fragment>&nbsp;</React.Fragment> : null}
-                    {this.renderVolume(volume)}
-                  </div>
-                </Layout>
-                <Layout
-                  className="margin-start-gutter"
-                  data-test-start
-                  style={{ width: '40%' }}
-                />
-              </Layout>
+                {this.renderEdition(edition)}
+                {volume && edition ? <React.Fragment>&nbsp;</React.Fragment> : null}
+                {this.renderVolume(volume)}
+              </div>
             </Layout>
-          </React.Fragment>
+          </Layout>
         );
       }
     } else {
