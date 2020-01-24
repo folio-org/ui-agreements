@@ -11,6 +11,7 @@ import {
   FormattedUTCDate,
   Layout,
   MultiColumnList,
+  Row,
   Spinner,
 } from '@folio/stripes/components';
 
@@ -39,10 +40,86 @@ export default class PackageContents extends React.Component {
     accessEnd: <FormattedMessage id="ui-agreements.eresources.accessEnd" />,
   }
 
+  renderEdition = (edition) => {
+    if (!edition) return null;
+
+    return (
+      <React.Fragment>
+        <FormattedMessage id="ui-agreements.coverage.editionShort" />
+        {edition}
+      </React.Fragment>
+    );
+  }
+
+  renderVolume = (volume) => {
+    if (!volume) return null;
+
+    return (
+      <React.Fragment>
+        <FormattedMessage id="ui-agreements.coverage.volumeShort" />
+        {volume}
+      </React.Fragment>
+    );
+  }
+
+  coverageFormatter = (pci) => {
+    const titleInstance = get(pci, 'pti.titleInstance');
+
+    // Date can take the forms yyyy, yyyy-mm or yyyy-mm-dd, and is stored as a string.
+    const date = get(titleInstance, 'dateMonographPublished');
+    const volume = get(titleInstance, 'monographVolume');
+    const edition = get(titleInstance, 'monographEdition');
+
+    if (get(titleInstance, 'type.value') === 'monograph') {
+      if (!date && !volume && !edition) {
+        return '*';
+      } else {
+        return (
+          <React.Fragment>
+            <Layout
+              className="full"
+              data-test-statement={titleInstance.name}
+            >
+              <Layout
+                className="flex justified"
+                data-test-statement={titleInstance.name}
+              >
+                <Layout
+                  className="margin-end-gutter textRight"
+                  data-test-start
+                  style={{ width: '40%' }}
+                >
+                  { date ? <div data-test-date={date}><FormattedUTCDate value={date} /></div> : null }
+                  <div
+                    data-test-edition={edition}
+                    data-test-volume={volume}
+                  >
+                    {this.renderEdition(edition)}
+                    {volume && edition ? <React.Fragment>&nbsp;</React.Fragment> : null}
+                    {this.renderVolume(volume)}
+                  </div>
+                </Layout>
+                <Layout
+                  className="margin-start-gutter"
+                  data-test-start
+                  style={{ width: '40%' }}
+                />
+              </Layout>
+            </Layout>
+          </React.Fragment>
+        );
+      }
+    } else {
+      return (
+        <CoverageStatements statements={pci.coverage} />
+      );
+    }
+  }
+
   formatter = {
     name: pci => <EResourceLink eresource={pci.pti.titleInstance} />,
     platform: pci => get(pci, 'pti.platform.name', ''),
-    coverage: pci => <CoverageStatements statements={pci.coverage} />,
+    coverage: pci => this.coverageFormatter(pci),
     accessStart: pci => this.renderDate(pci.accessStart),
     accessEnd: pci => this.renderDate(pci.accessEnd),
   }
