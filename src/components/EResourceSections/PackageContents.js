@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -22,6 +21,7 @@ export default class PackageContents extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       packageContents: PropTypes.array,
+      packageContentsCount: PropTypes.number,
       packageContentsFilter: PropTypes.string,
     }),
     id: PropTypes.string,
@@ -41,7 +41,7 @@ export default class PackageContents extends React.Component {
 
   formatter = {
     name: pci => <EResourceLink eresource={pci.pti.titleInstance} />,
-    platform: pci => get(pci, 'pti.platform.name', ''),
+    platform: pci => pci?.pti?.platform?.name,
     coverage: pci => <CoverageStatements statements={pci.coverage} />,
     accessStart: pci => this.renderDate(pci.accessStart),
     accessEnd: pci => this.renderDate(pci.accessEnd),
@@ -78,7 +78,7 @@ export default class PackageContents extends React.Component {
   )
 
   renderBadge = () => {
-    const count = get(this.props.data, 'packageContentsCount');
+    const count = this.props.data?.packageContentsCount;
     return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
   }
 
