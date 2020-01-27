@@ -48,25 +48,24 @@ export default class CoverageStatementsMonograph extends React.Component {
 
     if (!date && !volume && !edition) {
       return '*';
-    } else {
-      return (
-        <Layout
-          className="margin-end-gutter textRight"
-          data-test-start
-          style={{ width: '40%' }}
-        >
-          { date }
-          <div
-            data-test-edition={edition}
-            data-test-volume={volume}
-          >
-            {this.renderEdition(edition)}
-            {volume && edition ? <React.Fragment>&nbsp;</React.Fragment> : null}
-            {this.renderVolume(volume)}
-          </div>
-        </Layout>
-      );
     }
+    return (
+      <Layout
+        className="margin-end-gutter textRight"
+        data-test-start
+        style={{ width: '40%' }}
+      >
+        { date }
+        <div
+          data-test-edition={edition}
+          data-test-volume={volume}
+        >
+          {this.renderEdition(edition)}
+          {volume && edition ? <React.Fragment>&nbsp;</React.Fragment> : null}
+          {this.renderVolume(volume)}
+        </div>
+      </Layout>
+    );
   }
 
   render() {
