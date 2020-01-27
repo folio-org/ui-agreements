@@ -20,7 +20,7 @@ import {
 } from '@folio/stripes/components';
 
 import { getResourceIdentifier } from '../utilities';
-import { Coverage } from '../Coverage'
+import { Coverage } from '../Coverage';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';

@@ -9,7 +9,7 @@ import { Col, Datepicker, KeyValue, Row } from '@folio/stripes/components';
 import { EditCard } from '@folio/stripes-erm-components';
 
 import BasketSelector from '../BasketSelector';
-import { Coverage } from '../Coverage';
+import { SerialCoverage } from '../Coverage';
 import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
@@ -84,7 +84,7 @@ export default class AgreementLineField extends React.Component {
   }
 
   renderCoverage = (resource) => {
-    return <Coverage pci={resource._object} />;
+    return <SerialCoverage statements={resource.coverage} />;
   }
 
   renderPOLinesFieldArray = () => {
