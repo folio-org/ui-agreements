@@ -13,10 +13,9 @@ import {
   Spinner,
 } from '@folio/stripes/components';
 
-import CoverageStatements from '../CoverageStatements';
-import CoverageStatementsMonograph from '../CoverageStatementsMonograph';
+import { Coverage } from '../Coverage';
 import EResourceLink from '../EResourceLink';
-import { resourceTypes, resultCount } from '../../constants';
+import { resultCount } from '../../constants';
 
 export default class PackageContents extends React.Component {
   static propTypes = {
@@ -43,7 +42,7 @@ export default class PackageContents extends React.Component {
   formatter = {
     name: pci => <EResourceLink eresource={pci.pti.titleInstance} />,
     platform: pci => pci?.pti?.platform?.name,
-    coverage: pci => this.coverageFormatter(pci),
+    coverage: pci => <Coverage pci={pci} />,
     accessStart: pci => this.renderDate(pci.accessStart),
     accessEnd: pci => this.renderDate(pci.accessEnd),
   }
@@ -77,18 +76,6 @@ export default class PackageContents extends React.Component {
   renderDate = date => (
     date ? <FormattedUTCDate value={date} /> : '-'
   )
-
-  coverageFormatter = (pci) => {
-    if (pci?.pti?.titleInstance?.type?.value === resourceTypes.MONOGRAPH) {
-      return (
-        <CoverageStatementsMonograph pci={pci} />
-      );
-    } else {
-      return (
-        <CoverageStatements statements={pci.coverage} />
-      );
-    }
-  }
 
   renderBadge = () => {
     const count = this.props.data?.packageContentsCount;

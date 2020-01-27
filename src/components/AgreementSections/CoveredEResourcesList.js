@@ -21,8 +21,6 @@ import {
 
 import { getResourceIdentifier } from '../utilities';
 import { Coverage } from '../Coverage'
-//import CoverageStatements from '../CoverageStatements';
-//import CoverageStatementsMonograph from '../CoverageStatementsMonograph';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
@@ -63,18 +61,6 @@ export default class CoveredEResourcesList extends React.Component {
     platform: 150,
     package: 150,
   }
-
-/*   coverageFormatter = (pci) => {
-    if (get(pci, 'pti.titleInstance.type.value') === 'monograph') {
-      return (
-        <CoverageStatementsMonograph pci={pci} />
-      );
-    } else {
-      return (
-        <CoverageStatements statements={pci.coverage} />
-      );
-    }
-  } */
 
   formatter = {
     name: e => {
