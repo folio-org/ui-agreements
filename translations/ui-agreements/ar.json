@@ -331,5 +331,10 @@
     "eresources.addPackageButtonTooltip": "إضافة حزمة \"{packageName}\"",
     "eresources.removePackageButtonTooltip": "إزالة الحزمة \"{packageName}\"",
     "eresources.addTitleButtonTooltip": "إضافة عنوان إلى الحزمة \"{packageName}\"",
-    "eresources.removeTitleButtonTooltip": "إزالة عنوان من الحزمة \"{packageName}\""
+    "eresources.removeTitleButtonTooltip": "إزالة عنوان من الحزمة \"{packageName}\"",
+    "eresources.datePublished": "تاريخ النشر",
+    "eresources.edition": "طبعة",
+    "eresources.volume": "المجلد",
+    "eresources.firstAuthor": "المؤلف الأول",
+    "eresources.firstEditor": "المحرر الأول"
 }

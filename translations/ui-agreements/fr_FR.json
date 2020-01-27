@@ -331,5 +331,10 @@
     "eresources.addPackageButtonTooltip": "Ajouter le package \" {packageName} \"",
     "eresources.removePackageButtonTooltip": "Supprimer le bouquet \" {packageName} \"",
     "eresources.addTitleButtonTooltip": "Ajouter le titre au bouquet \" {packageName} \"",
-    "eresources.removeTitleButtonTooltip": "Supprimer le titre du bouquet \" {packageName} \""
+    "eresources.removeTitleButtonTooltip": "Supprimer le titre du bouquet \" {packageName} \"",
+    "eresources.datePublished": "Date de publication",
+    "eresources.edition": "Édition",
+    "eresources.volume": "Volume",
+    "eresources.firstAuthor": "Premier auteur",
+    "eresources.firstEditor": "First editor"
 }
