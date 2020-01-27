@@ -16,7 +16,7 @@ import {
 import CoverageStatements from '../CoverageStatements';
 import CoverageStatementsMonograph from '../CoverageStatementsMonograph';
 import EResourceLink from '../EResourceLink';
-import { resourceType, resultCount } from '../../constants';
+import { resourceTypes, resultCount } from '../../constants';
 
 export default class PackageContents extends React.Component {
   static propTypes = {
@@ -79,7 +79,7 @@ export default class PackageContents extends React.Component {
   )
 
   coverageFormatter = (pci) => {
-    if (pci?.pti?.titleInstance?.type?.value === resourceType.MONOGRAPH) {
+    if (pci?.pti?.titleInstance?.type?.value === resourceTypes.MONOGRAPH) {
       return (
         <CoverageStatementsMonograph pci={pci} />
       );

@@ -20,8 +20,9 @@ import {
 } from '@folio/stripes/components';
 
 import { getResourceIdentifier } from '../utilities';
-import CoverageStatements from '../CoverageStatements';
-import CoverageStatementsMonograph from '../CoverageStatementsMonograph';
+import { Coverage } from '../Coverage'
+//import CoverageStatements from '../CoverageStatements';
+//import CoverageStatementsMonograph from '../CoverageStatementsMonograph';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
@@ -63,7 +64,7 @@ export default class CoveredEResourcesList extends React.Component {
     package: 150,
   }
 
-  coverageFormatter = (pci) => {
+/*   coverageFormatter = (pci) => {
     if (get(pci, 'pti.titleInstance.type.value') === 'monograph') {
       return (
         <CoverageStatementsMonograph pci={pci} />
@@ -73,7 +74,7 @@ export default class CoveredEResourcesList extends React.Component {
         <CoverageStatements statements={pci.coverage} />
       );
     }
-  }
+  } */
 
   formatter = {
     name: e => {
@@ -86,7 +87,7 @@ export default class CoveredEResourcesList extends React.Component {
     },
     platform: e => get(e._object, 'pti.platform.name', '-'),
     package: e => get(e._object, 'pkg.name', '-'),
-    coverage: e => this.coverageFormatter(e._object),
+    coverage:  e => <Coverage pci={e._object} />,
     accessStart: e => this.renderDate(get(e._object, 'accessStart')),
     accessEnd: e => this.renderDate(get(e._object, 'accessEnd')),
     isCustomCoverage: line => {
