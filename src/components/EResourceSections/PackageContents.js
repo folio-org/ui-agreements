@@ -16,7 +16,7 @@ import {
 import CoverageStatements from '../CoverageStatements';
 import CoverageStatementsMonograph from '../CoverageStatementsMonograph';
 import EResourceLink from '../EResourceLink';
-import { resultCount } from '../../constants';
+import { resourceType, resultCount } from '../../constants';
 
 export default class PackageContents extends React.Component {
   static propTypes = {
@@ -38,18 +38,6 @@ export default class PackageContents extends React.Component {
     coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
     accessStart: <FormattedMessage id="ui-agreements.eresources.accessStart" />,
     accessEnd: <FormattedMessage id="ui-agreements.eresources.accessEnd" />,
-  }
-
-  coverageFormatter = (pci) => {
-    if (get(pci, 'pti.titleInstance.type.value') === 'monograph') {
-      return (
-        <CoverageStatementsMonograph pci={pci} />
-      );
-    } else {
-      return (
-        <CoverageStatements statements={pci.coverage} />
-      );
-    }
   }
 
   formatter = {
@@ -89,6 +77,18 @@ export default class PackageContents extends React.Component {
   renderDate = date => (
     date ? <FormattedUTCDate value={date} /> : '-'
   )
+
+  coverageFormatter = (pci) => {
+    if (pci?.pti?.titleInstance?.type?.value === resourceType.MONOGRAPH) {
+      return (
+        <CoverageStatementsMonograph pci={pci} />
+      );
+    } else {
+      return (
+        <CoverageStatements statements={pci.coverage} />
+      );
+    }
+  }
 
   renderBadge = () => {
     const count = this.props.data?.packageContentsCount;
