@@ -7,7 +7,7 @@ import { Layout } from '@folio/stripes/components';
 import css from './index.css';
 
 const AgreementsRoute = lazy(() => import('./routes/AgreementsRoute'));
-const AgreementCreateRoute = React.lazy(() => import('./routes/AgreementCreateRoute'));
+const AgreementCreateRoute = lazy(() => import('./routes/AgreementCreateRoute'));
 const AgreementEditRoute = lazy(() => import('./routes/AgreementEditRoute'));
 const AgreementViewRoute = lazy(() => import('./routes/AgreementViewRoute'));
 
