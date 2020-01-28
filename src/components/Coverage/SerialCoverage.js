@@ -100,6 +100,6 @@ export default class SerialCoverage extends React.Component {
     const { statements } = this.props;
     if (!statements || !statements.length) return '-';
 
-    return <Layout className="full" data-test-coverage-statements>{statements.map(this.renderStatement)}</Layout>;
+    return <Layout className="full" data-test-serial-coverage>{statements.map(this.renderStatement)}</Layout>;
   }
 }

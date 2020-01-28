@@ -55,7 +55,9 @@ export default class MonographCoverage extends React.Component {
         data-test-start
         style={{ width: '40%' }}
       >
-        { date }
+        <div data-test-date={date}>
+          { date }
+        </div>
         <div
           data-test-edition={edition}
           data-test-volume={volume}
@@ -73,6 +75,6 @@ export default class MonographCoverage extends React.Component {
     const titleName = get(pci, 'pti.titleInstance.name');
 
     if (!pci) return '-';
-    return <Layout className="full" data-test-coverage-statements={titleName}>{this.renderCoverage(pci)}</Layout>;
+    return <Layout className="full" data-test-monograph-coverage={titleName}>{this.renderCoverage(pci)}</Layout>;
   }
 }
