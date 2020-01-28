@@ -32,6 +32,7 @@ export default class EResource extends React.Component {
       helperApp,
       isLoading,
     } = this.props;
+
     if (isLoading) return <LoadingPane onClose={handlers.onClose} />;
 
     const EResourceViewComponent = data.eresource.type ? Title : Package;
