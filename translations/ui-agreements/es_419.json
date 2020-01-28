@@ -331,5 +331,10 @@
     "eresources.addPackageButtonTooltip": "Add package \"{packageName}\"",
     "eresources.removePackageButtonTooltip": "Remove package \"{packageName}\"",
     "eresources.addTitleButtonTooltip": "Add title in package \"{packageName}\"",
-    "eresources.removeTitleButtonTooltip": "Remove title in package \"{packageName}\""
+    "eresources.removeTitleButtonTooltip": "Remove title in package \"{packageName}\"",
+    "eresources.datePublished": "Fecha de publicación",
+    "eresources.edition": "Edición",
+    "eresources.volume": "Volumen",
+    "eresources.firstAuthor": "Primer autor",
+    "eresources.firstEditor": "First editor"
 }
