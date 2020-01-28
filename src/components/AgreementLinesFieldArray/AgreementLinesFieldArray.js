@@ -82,7 +82,6 @@ class AgreementLinesFieldArray extends React.Component {
   render() {
     return (
       <div>
-        {/* { this.renderError() } */}
         <div id="agreement-form-lines">
           {this.props.items.length ? this.renderLines() : this.renderEmpty()}
         </div>
