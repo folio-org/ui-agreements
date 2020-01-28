@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Field } from 'react-final-form';
 
 import {
   Button,
@@ -9,6 +10,9 @@ import {
   Row,
   Selection,
 } from '@folio/stripes/components';
+
+import { validators } from '../utilities';
+
 
 export default class BasketSelector extends React.Component {
   static propTypes = {
@@ -45,15 +49,25 @@ export default class BasketSelector extends React.Component {
     return (
       <Row>
         <Col xs={12} md={8}>
-          <Selection
-            autoFocus={this.props.autoFocus}
-            dataOptions={dataOptions}
-            error={error}
-            id="basket-selector"
-            label={<FormattedMessage id="ui-agreements.basketSelector.selectLabel" />}
-            onChange={this.handleChange}
-            value={item.id}
-          />
+          <Field
+            name="basket-selector-field"
+            validate={validators.required}
+          >
+            {props => (
+              <Selection
+                {...props}
+                autoFocus={this.props.autoFocus}
+                dataOptions={dataOptions}
+                error={error}
+                id="basket-selector"
+                label={<FormattedMessage id="ui-agreements.basketSelector.selectLabel" />}
+                onChange={this.handleChange}
+                required
+                useValidStyle
+                value={item.id}
+              />
+            )}
+          </Field>
         </Col>
         <Col xs={12} md={4}>
           <Layout style={{ height: '100%' }} className="flex flex-align-items-center">
