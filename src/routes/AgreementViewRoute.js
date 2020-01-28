@@ -209,7 +209,8 @@ class AgreementViewRoute extends React.Component {
     return {
       ...agreement,
       contacts,
-      eresources: get(resources, 'agreementEresources.records'),
+      //  eresources: get(resources, 'agreementEresources.records'),
+      eresources: this.getAgreementEresourcesRecords(),
       eresourcesCount: get(resources, 'agreementEresources.other.totalRecords'),
       lines: get(resources, 'agreementLines.records'),
       orderLines: get(resources, 'orderLines.records'),
@@ -234,6 +235,18 @@ class AgreementViewRoute extends React.Component {
         onToggle={() => this.handleToggleHelper(helper)}
       />
     );
+  }
+
+  getAgreementEresourcesRecords = () => {
+    const { resources, match } = this.props;
+    const agreementEresourcesUrl = get(resources, 'agreementEresources.url', '');
+    // If a new agreement is selected or if the filter has changed return undefined
+    return (agreementEresourcesUrl.indexOf(`${match.params.id}`) === -1 ||
+    agreementEresourcesUrl.indexOf(`resources/${resources.eresourcesFilterPath}`) === -1)
+      ?
+      undefined
+      :
+      get(resources, 'agreementEresources.records');
   }
 
   getRecord = (id, resourceType) => {
