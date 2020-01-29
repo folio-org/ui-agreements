@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
-import { Col, Datepicker, KeyValue, Layout, Row } from '@folio/stripes/components';
+import { Col, Datepicker, KeyValue, Row } from '@folio/stripes/components';
 import { EditCard } from '@folio/stripes-erm-components';
 
 import BasketSelector from '../BasketSelector';
@@ -18,8 +18,6 @@ import { isExternal, isPackage } from '../utilities';
 
 import CustomCoverageFieldArray from './CustomCoverageFieldArray';
 import POLinesFieldArray from './POLinesFieldArray';
-
-import css from '../styles.css';
 
 export default class AgreementLineField extends React.Component {
   static propTypes = {
@@ -121,14 +119,6 @@ export default class AgreementLineField extends React.Component {
     );
   }
 
-  renderError = () => (
-    <Layout className={`textCentered ${css.error}`}>
-      <strong>
-        {this.props.meta.error}
-      </strong>
-    </Layout>
-  )
-
   renderLineResource = () => {
     const { resource = {}, index, input: { name } } = this.props;
 
@@ -201,15 +191,14 @@ export default class AgreementLineField extends React.Component {
         autoFocus
         addButtonLabel={<FormattedMessage id="ui-agreements.agreementLines.createLine" />}
         basket={this.props.basket}
-        //  error={React.isValidElement(error) ? error : undefined}
-        error={error}
+        error={React.isValidElement(error) ? error : undefined}
         onAdd={resource => this.props.onResourceSelected(this.props.index, resource)}
       />
     );
   }
 
   render() {
-    const { index, meta: { error, touched }, resource = {} } = this.props;
+    const { index, resource = {} } = this.props;
 
     return (
       <EditCard
@@ -224,7 +213,6 @@ export default class AgreementLineField extends React.Component {
               this.renderLineResource() :
               this.renderLineSelector()
           }
-          {touched && error ? this.renderError() : null}
         </React.Fragment>
       </EditCard>
     );
