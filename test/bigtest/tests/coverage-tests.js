@@ -69,15 +69,15 @@ describe('Coverage tests', () => {
     });
 
     it('correctly renders the date', () => {
-      expect(monographInteractor.date).to.have.string(monograph._object.pti.titleInstance.dateMonographPublished);
+      expect(monographInteractor.date).to.have.string(monograph.pti.titleInstance.dateMonographPublished);
     });
 
     it('correctly renders the edition', () => {
-      expect(monographInteractor.edition).to.have.string(monograph._object.pti.titleInstance.monographEdition);
+      expect(monographInteractor.edition).to.have.string(monograph.pti.titleInstance.monographEdition);
     });
 
     it('correctly renders the volume', () => {
-      expect(monographInteractor.volume).to.have.string(monograph._object.pti.titleInstance.monographVolume);
+      expect(monographInteractor.volume).to.have.string(monograph.pti.titleInstance.monographVolume);
     });
   });
 
@@ -107,16 +107,16 @@ describe('Coverage tests', () => {
       expect(serialInteractorEnd.endDate).to.have.string('10/5/2007');
     });
     it('renders the correct start issue', () => {
-      expect(serialInteractorStart.startIssue).to.have.string(serial._object.coverage[0].startIssue);
+      expect(serialInteractorStart.startIssue).to.have.string(serial.coverage[0].startIssue);
     });
     it('renders the correct end issue', () => {
-      expect(serialInteractorEnd.endIssue).to.have.string(serial._object.coverage[0].endIssue);
+      expect(serialInteractorEnd.endIssue).to.have.string(serial.coverage[0].endIssue);
     });
     it('renders the correct start volume', () => {
-      expect(serialInteractorStart.startVolume).to.have.string(serial._object.coverage[0].startVolume);
+      expect(serialInteractorStart.startVolume).to.have.string(serial.coverage[0].startVolume);
     });
     it('renders the correct end volume', () => {
-      expect(serialInteractorEnd.endVolume).to.have.string(serial._object.coverage[0].endVolume);
+      expect(serialInteractorEnd.endVolume).to.have.string(serial.coverage[0].endVolume);
     });
   });
 });
