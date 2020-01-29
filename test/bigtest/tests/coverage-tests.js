@@ -56,8 +56,29 @@ const serial = {
   }]
 };
 
-describe('Coverage tests', () => {
-  describe('Rendering coverage component for a monograph', () => {
+// We also want to test the other two possible shapes for passing this data through to Coverage
+
+const monographCoveredEResource = {
+  _object: monograph
+};
+
+const serialCoveredEResource = {
+  _object: serial,
+  coverage: serial.coverage
+};
+
+const monographLine = {
+  resource: monographCoveredEResource
+};
+
+const serialLine = {
+  resource: serialCoveredEResource._object,
+  coverage: serial.coverage
+};
+
+
+describe.only('Coverage tests', () => {
+  describe('Rendering coverage component for a monograph pci', () => {
     beforeEach(async function () {
       await mountWithContext(
         <Coverage pci={monograph} />
@@ -81,7 +102,55 @@ describe('Coverage tests', () => {
     });
   });
 
-  describe('Rendering coverage component for a serial', () => {
+  describe('Rendering coverage component for a monograph coveredEresource', () => {
+    beforeEach(async function () {
+      await mountWithContext(
+        <Coverage coveredEResource={monographCoveredEResource} />
+      );
+    });
+
+    it('renders the monograph coverage', () => {
+      expect(monographInteractor.exists).to.be.true;
+    });
+
+    it('correctly renders the date', () => {
+      expect(monographInteractor.date).to.have.string(monographCoveredEResource._object.pti.titleInstance.dateMonographPublished);
+    });
+
+    it('correctly renders the edition', () => {
+      expect(monographInteractor.edition).to.have.string(monographCoveredEResource._object.pti.titleInstance.monographEdition);
+    });
+
+    it('correctly renders the volume', () => {
+      expect(monographInteractor.volume).to.have.string(monographCoveredEResource._object.pti.titleInstance.monographVolume);
+    });
+  });
+
+  describe('Rendering coverage component for a monograph line', () => {
+    beforeEach(async function () {
+      await mountWithContext(
+        <Coverage line={monographLine} />
+      );
+    });
+
+    it('renders the monograph coverage', () => {
+      expect(monographInteractor.exists).to.be.true;
+    });
+
+    it('correctly renders the date', () => {
+      expect(monographInteractor.date).to.have.string(monographLine.resource._object.pti.titleInstance.dateMonographPublished);
+    });
+
+    it('correctly renders the edition', () => {
+      expect(monographInteractor.edition).to.have.string(monographLine.resource._object.pti.titleInstance.monographEdition);
+    });
+
+    it('correctly renders the volume', () => {
+      expect(monographInteractor.volume).to.have.string(monographLine.resource._object.pti.titleInstance.monographVolume);
+    });
+  });
+
+  describe('Rendering coverage component for a serial pci', () => {
     beforeEach(async function () {
       await mountWithContext(
         <Coverage pci={serial} />
@@ -117,6 +186,84 @@ describe('Coverage tests', () => {
     });
     it('renders the correct end volume', () => {
       expect(serialInteractorEnd.endVolume).to.have.string(serial.coverage[0].endVolume);
+    });
+  });
+
+  describe('Rendering coverage component for a serial coveredEResource', () => {
+    beforeEach(async function () {
+      await mountWithContext(
+        <Coverage coveredEResource={serialCoveredEResource} />
+      );
+    });
+
+    it('renders the serial coverage', () => {
+      expect(serialInteractor.exists).to.be.true;
+    });
+    it('renders the first set of data', () => {
+      expect(serialInteractor.first).to.be.true;
+    });
+    it('renders the last set of data', () => {
+      expect(serialInteractor.end).to.be.true;
+    });
+    it('renders the arrow icon', () => {
+      expect(serialInteractor.icon).to.be.true;
+    });
+    it('renders the correct start date', () => {
+      expect(serialInteractorStart.startDate).to.have.string('12/6/2001');
+    });
+    it('renders the correct end date', () => {
+      expect(serialInteractorEnd.endDate).to.have.string('10/5/2007');
+    });
+    it('renders the correct start issue', () => {
+      expect(serialInteractorStart.startIssue).to.have.string(serialCoveredEResource.coverage[0].startIssue);
+    });
+    it('renders the correct end issue', () => {
+      expect(serialInteractorEnd.endIssue).to.have.string(serialCoveredEResource.coverage[0].endIssue);
+    });
+    it('renders the correct start volume', () => {
+      expect(serialInteractorStart.startVolume).to.have.string(serialCoveredEResource.coverage[0].startVolume);
+    });
+    it('renders the correct end volume', () => {
+      expect(serialInteractorEnd.endVolume).to.have.string(serialCoveredEResource.coverage[0].endVolume);
+    });
+  });
+
+  describe('Rendering coverage component for a serial line', () => {
+    beforeEach(async function () {
+      await mountWithContext(
+        <Coverage line={serialLine} />
+      );
+    });
+
+    it('renders the serial coverage', () => {
+      expect(serialInteractor.exists).to.be.true;
+    });
+    it('renders the first set of data', () => {
+      expect(serialInteractor.first).to.be.true;
+    });
+    it('renders the last set of data', () => {
+      expect(serialInteractor.end).to.be.true;
+    });
+    it('renders the arrow icon', () => {
+      expect(serialInteractor.icon).to.be.true;
+    });
+    it('renders the correct start date', () => {
+      expect(serialInteractorStart.startDate).to.have.string('12/6/2001');
+    });
+    it('renders the correct end date', () => {
+      expect(serialInteractorEnd.endDate).to.have.string('10/5/2007');
+    });
+    it('renders the correct start issue', () => {
+      expect(serialInteractorStart.startIssue).to.have.string(serialLine.coverage[0].startIssue);
+    });
+    it('renders the correct end issue', () => {
+      expect(serialInteractorEnd.endIssue).to.have.string(serialLine.coverage[0].endIssue);
+    });
+    it('renders the correct start volume', () => {
+      expect(serialInteractorStart.startVolume).to.have.string(serialLine.coverage[0].startVolume);
+    });
+    it('renders the correct end volume', () => {
+      expect(serialInteractorEnd.endVolume).to.have.string(serialLine.coverage[0].endVolume);
     });
   });
 });
