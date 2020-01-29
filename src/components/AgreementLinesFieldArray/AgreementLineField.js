@@ -84,6 +84,7 @@ export default class AgreementLineField extends React.Component {
   }
 
   renderCoverage = (resource) => {
+    // This is intentional, after talking to Gill a decision was made that behaviour of coverage in the edit screen was to remain blank for monographs.
     return <SerialCoverage statements={resource.coverage} />;
   }
 

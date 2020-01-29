@@ -153,9 +153,7 @@ export default function config() {
   this.get('/erm/refdata/TitleInstance/type', () => {
     return [
       { 'id': '188389636d9ece46016d9ed0184b0027', 'value': 'journal', 'label': 'Journal' },
-      { 'id': '188389636d9ece46016d9ed018550028', 'value': 'book', 'label': 'Book' },
-      { 'id': '170227012020671001', 'value': 'serial', 'label': 'Serial' },
-      { 'id': '170227012020671002', 'value': 'monograph', 'label': 'Monograph' }
+      { 'id': '188389636d9ece46016d9ed018550028', 'value': 'book', 'label': 'Book' }
     ];
   });
 
