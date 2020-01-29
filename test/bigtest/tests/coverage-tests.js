@@ -15,49 +15,45 @@ const serialInteractorStart = new SerialCoverageInteractor('[data-test-start]');
 const serialInteractorEnd = new SerialCoverageInteractor('[data-test-end]');
 
 const monograph = {
-  _object: {
-    pti: {
-      titleInstance: {
-        id: '1501',
-        name: 'This is a monograph',
-        dateMonographPublished: '1996',
-        monographVolume: '5',
-        monographEdition: '2nd',
-        type: {
-          value: 'monograph',
-          label: 'Monograph'
-        },
-        subType: {
-          value: 'electronic',
-          label: 'Electronic'
-        }
+  pti: {
+    titleInstance: {
+      id: '1501',
+      name: 'This is a monograph',
+      dateMonographPublished: '1996',
+      monographVolume: '5',
+      monographEdition: '2nd',
+      type: {
+        value: 'monograph',
+        label: 'Monograph'
+      },
+      subType: {
+        value: 'electronic',
+        label: 'Electronic'
       }
     }
   }
 };
 
 const serial = {
-  _object: {
-    pti: {
-      titleInstance: {
-        id: '2612',
-        name: 'This is a serial',
-        type: { value: 'serial', label: 'Serial' },
-        subType: {
-          value: 'electronic',
-          label: 'Electronic'
-        }
+  pti: {
+    titleInstance: {
+      id: '2612',
+      name: 'This is a serial',
+      type: { value: 'serial', label: 'Serial' },
+      subType: {
+        value: 'electronic',
+        label: 'Electronic'
       }
-    },
-    coverage: [{
-      startDate: '2001-12-06',
-      endDate: '2007-10-05',
-      startVolume: '76',
-      startIssue: '1',
-      endVolume: '79',
-      endIssue: '2'
-    }]
-  }
+    }
+  },
+  coverage: [{
+    startDate: '2001-12-06',
+    endDate: '2007-10-05',
+    startVolume: '76',
+    startIssue: '1',
+    endVolume: '79',
+    endIssue: '2'
+  }]
 };
 
 describe('Coverage tests', () => {

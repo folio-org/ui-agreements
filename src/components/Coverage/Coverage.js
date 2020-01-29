@@ -6,6 +6,7 @@ import { resourceTypes } from '../../constants';
 
 export default class Coverage extends React.Component {
   static propTypes = {
+    isLine: PropTypes.bool,
     pci: PropTypes.shape({
       resource: PropTypes.shape({
         _object: PropTypes.shape({
@@ -39,10 +40,10 @@ export default class Coverage extends React.Component {
 
     const { pci, isLine } = this.props;
 
-    let isMonograph = false
-    let pciToRender = pci
+    let isMonograph = false;
+    let pciToRender = pci;
 
-    /* Sometimes the objects passed in from agreement view are of the form 
+    /* Sometimes the objects passed in from agreement view are of the form
     * pci: {resource: {_object: pti: {etc}}}
     * which is the case in agreement lines
     * and sometimes of the form
@@ -56,21 +57,19 @@ export default class Coverage extends React.Component {
     if (isLine) {
       if ('resource' in pci) {
         if (pci?.resource?._object?.pti?.titleInstance?.type?.value === resourceTypes.MONOGRAPH) {
-          isMonograph = true
-          pciToRender = pci?.resource?._object
+          isMonograph = true;
+          pciToRender = pci?.resource?._object;
         }
       } else {
         if (pci?._object?.pti?.titleInstance?.type?.value === resourceTypes.MONOGRAPH) {
-          isMonograph = true
-          pciToRender = pci?._object
+          isMonograph = true;
+          pciToRender = pci?._object;
         }
       }
     } else {
-      if (pci?._object?.pti?.titleInstance?.type?.value === resourceTypes.MONOGRAPH) {
-        isMonograph = true
-        pciToRender = pci?._object
-      } else {
-        pciToRender = pci?._object
+      if (pci?.pti?.titleInstance?.type?.value === resourceTypes.MONOGRAPH) {
+        isMonograph = true;
+        pciToRender = pci?._object;
       }
     }
 
