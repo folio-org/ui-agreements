@@ -76,8 +76,7 @@ const serialLine = {
   coverage: serial.coverage
 };
 
-
-describe.only('Coverage tests', () => {
+describe('Coverage tests', () => {
   describe('Rendering coverage component for a monograph pci', () => {
     beforeEach(async function () {
       await mountWithContext(
