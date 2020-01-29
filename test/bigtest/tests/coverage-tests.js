@@ -81,7 +81,7 @@ describe('Coverage tests', () => {
     });
   });
 
-  describe.only('Rendering coverage component for a serial', () => {
+  describe('Rendering coverage component for a serial', () => {
     beforeEach(async function () {
       await mountWithContext(
         <Coverage pci={serial} />
