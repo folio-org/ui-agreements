@@ -30,7 +30,7 @@ export default class Coverage extends React.Component {
             })
           })
         })
-      }) 
+      })
     }),
     coveredEResource: PropTypes.shape({
       _object: PropTypes.shape({
