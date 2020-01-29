@@ -157,11 +157,11 @@ export default class CoveredEResourcesList extends React.Component {
   renderFilterButton = (filter) => (
     <Button
       buttonStyle={this.props.eresourcesFilterPath === filter ? 'primary' : 'default'}
-      id={`clickable-pci-${filter || 'all'}`}
+      id={`clickable-pci-${filter}`}
       marginBottom0
       onClick={() => this.props.onFilterEResources(filter)}
     >
-      <FormattedMessage id={`ui-agreements.content.${filter || 'all'}`} />
+      <FormattedMessage id={`ui-agreements.content.${filter}`} />
     </Button>
   )
 
@@ -171,7 +171,7 @@ export default class CoveredEResourcesList extends React.Component {
         {this.renderFilterButton('current')}
         {this.renderFilterButton('future')}
         {this.renderFilterButton('dropped')}
-        {this.renderFilterButton('')}
+        {this.renderFilterButton('all')}
       </ButtonGroup>
     </Layout>
   )
