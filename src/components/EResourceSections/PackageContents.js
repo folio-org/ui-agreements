@@ -42,11 +42,7 @@ export default class PackageContents extends React.Component {
   formatter = {
     name: pci => <EResourceLink eresource={pci.pti.titleInstance} />,
     platform: pci => pci?.pti?.platform?.name,
-    coverage: pci => {
-      console.log("PCI: %o", pci)
-      return(<Coverage pci={pci} />)
-    
-    },
+    coverage: pci => <Coverage pci={pci} />,
     accessStart: pci => this.renderDate(pci.accessStart),
     accessEnd: pci => this.renderDate(pci.accessEnd),
   }

@@ -68,7 +68,8 @@ class BasketList extends React.Component {
             get(resource, '_object.pti.platform.name') ||
             get(resource, '_object.nominalPlatform.name') || '-'
           ),
-          coverage: resource => <Coverage pci={resource} />,
+          // The resource below fits the same shape as the eresources in an agreement line, so we pass the isLine prop.
+          coverage: resource => <Coverage pci={resource} isLine />,
           remove: resource => (
             <FormattedMessage id="ui-agreements.basket.removeItem">
               {ariaLabel => (
