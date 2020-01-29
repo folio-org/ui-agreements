@@ -20,6 +20,11 @@ class AgreementCreateRoute extends React.Component {
       fetch: false,
       shouldRefresh: () => false,
     },
+    terms: {
+      type: 'okapi',
+      path: 'erm/custprops',
+      shouldRefresh: () => false,
+    },
     agreementStatusValues: {
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreement/agreementStatus',
@@ -170,6 +175,19 @@ class AgreementCreateRoute extends React.Component {
       .some(r => r.isPending);
   }
 
+  getInitialValues = () => {
+    const customProperties = {};
+    get(this.props.resources, 'terms.records', [])
+      .filter(term => term.primary)
+      .forEach(term => { customProperties[term.name] = ''; });
+    const periods = [{}];
+
+    return {
+      periods,
+      customProperties,
+    };
+  }
+
   render() {
     const { handlers, resources } = this.props;
 
@@ -185,6 +203,7 @@ class AgreementCreateRoute extends React.Component {
           reasonForClosureValues: get(resources, 'reasonForClosureValues.records', []),
           amendmentStatusValues: get(resources, 'amendmentStatusValues.records', []),
           basket: get(resources, 'basket', []),
+          terms: get(resources, 'terms.records', []),
           contactRoleValues: get(resources, 'contactRoleValues.records', []),
           isPerpetualValues: get(resources, 'isPerpetualValues.records', []),
           licenseLinkStatusValues: get(resources, 'licenseLinkStatusValues.records', []),
@@ -197,9 +216,7 @@ class AgreementCreateRoute extends React.Component {
           onBasketLinesAdded: this.handleBasketLinesAdded,
           onClose: this.handleClose,
         }}
-        initialValues={{
-          periods: [{}],
-        }}
+        initialValues={this.getInitialValues()}
         isLoading={this.fetchIsPending()}
         onSubmit={this.handleSubmit}
       />

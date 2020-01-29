@@ -91,6 +91,11 @@ class AgreementEditRoute extends React.Component {
       path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
       shouldRefresh: () => false,
     },
+    terms: {
+      type: 'okapi',
+      path: 'erm/custprops',
+      shouldRefresh: () => false,
+    },
     users: {
       type: 'okapi',
       path: 'users',
@@ -211,6 +216,13 @@ class AgreementEditRoute extends React.Component {
           })
       }));
 
+      // Add the default terms to the already-set terms.
+      initialValues.customProperties = initialValues.customProperties || {};
+      const terms = get(props.resources, 'terms.records', []);
+      terms
+        .filter(t => t.primary && initialValues.customProperties[t.name] === undefined)
+        .forEach(t => { initialValues.customProperties[t.name] = ''; });
+
       compose(
         joinRelatedAgreements,
       )(initialValues);
@@ -327,6 +339,7 @@ class AgreementEditRoute extends React.Component {
           orderLines: get(resources, 'orderLines.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
           renewalPriorityValues: get(resources, 'renewalPriorityValues.records', []),
+          terms: get(resources, 'terms.records', []),
           users: get(resources, 'users.records', []),
         }}
         handlers={{

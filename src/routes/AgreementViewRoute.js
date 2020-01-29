@@ -85,7 +85,7 @@ class AgreementViewRoute extends React.Component {
     },
     terms: {
       type: 'okapi',
-      path: 'licenses/custprops',
+      path: 'erm/custprops',
       throwErrors: false,
     },
     users: {

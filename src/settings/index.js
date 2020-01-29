@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 
 import GeneralSettings from './GeneralSettings';
+import { TermsConfigRoute } from './routes';
 
 export default class ErmSettings extends React.Component {
   pages = [
@@ -11,6 +12,12 @@ export default class ErmSettings extends React.Component {
       label: <FormattedMessage id="ui-agreements.settings.general" />,
       component: GeneralSettings,
     },
+    {
+      component: TermsConfigRoute,
+      label: <FormattedMessage id="ui-licenses.section.terms" />,
+      perm: 'ui-agreements.terms.manage',
+      route: 'terms',
+    }
   ];
 
   render() {

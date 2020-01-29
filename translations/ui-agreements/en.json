@@ -352,13 +352,16 @@
   "usageData.usageDataProviderIndex": "Usage data provider {index}",
 
   "viewUDP.name": "Name",
-  
+
   "doc.removeExternalLicense": "Remove external license {index}",
   "doc.removeSupplementaryInformation": "Remove document {index}",
 
   "supplementaryInfo.agreementHasNone": "Agreement has no supplementary documents",
   "supplementaryInfo.addSupplementaryInfo": "Add supplementary document",
   "supplementaryInfo.removeSupplementaryInfo": "Remove document",
+  "supplementaryInfo.supplementaryDocuments": "Supplementary documents",
+  "supplementaryInfo.supplementaryProperties": "Supplementary properties",
+
   "settings.general": "General",
   "settings.general.hideEResourcesFunctionality.title": "Hide internal agreements knowledgebase",
   "settings.general.hideEResourcesFunctionality.description": "If you are using another app (e.g. eHoldings) as your knowledge base and wish to hide the internal agreements knowledge base, you can check this setting. Specifically, this will:",

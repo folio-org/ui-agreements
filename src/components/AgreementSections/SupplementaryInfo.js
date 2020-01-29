@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, Badge } from '@folio/stripes/components';
+import { Accordion, Badge, KeyValue } from '@folio/stripes/components';
 import { DocumentCard } from '@folio/stripes-erm-components';
+import AgreementTerms from './AgreementTerms';
 
 export default class SupplementaryInfo extends React.Component {
   static propTypes = {
@@ -45,7 +46,9 @@ export default class SupplementaryInfo extends React.Component {
 
   render() {
     const {
+      agreement,
       agreement: { supplementaryDocs = [] },
+      data: { terms },
       id,
       onToggle,
       open,
@@ -60,10 +63,18 @@ export default class SupplementaryInfo extends React.Component {
         open={open}
         onToggle={onToggle}
       >
-        {supplementaryDocs.length ?
-          this.renderDocs(supplementaryDocs) :
-          <FormattedMessage id="ui-agreements.supplementaryInfo.agreementHasNone" />
-        }
+        <KeyValue label={<FormattedMessage id="ui-agreements.supplementaryInfo.supplementaryProperties" />}>
+          <AgreementTerms
+            record={agreement}
+            terms={terms}
+          />
+        </KeyValue>
+        <KeyValue label={<FormattedMessage id="ui-agreements.supplementaryInfo.supplementaryDocuments" />}>
+          {supplementaryDocs.length ?
+            this.renderDocs(supplementaryDocs) :
+            <FormattedMessage id="ui-agreements.supplementaryInfo.agreementHasNone" />
+          }
+        </KeyValue>
       </Accordion>
     );
   }
