@@ -7,26 +7,80 @@ import { resourceTypes } from '../../constants';
 export default class Coverage extends React.Component {
   static propTypes = {
     pci: PropTypes.shape({
-      pti: PropTypes.shape({
-        titleInstance: PropTypes.shape({
-          dateMonographPublished: PropTypes.string,
-          monographVolume: PropTypes.string,
-          monographEdition: PropTypes.string,
-          name: PropTypes.string
-        }),
-      }).isRequired
-    }),
+      resource: PropTypes.shape({
+        _object: PropTypes.shape({
+          pti: PropTypes.shape({
+            titleInstance: PropTypes.shape({
+              dateMonographPublished: PropTypes.string,
+              monographVolume: PropTypes.string,
+              monographEdition: PropTypes.string,
+              name: PropTypes.string
+            }),
+          })
+        })
+      }),
+      _object: PropTypes.shape({
+        pti: PropTypes.shape({
+          titleInstance: PropTypes.shape({
+            dateMonographPublished: PropTypes.string,
+            monographVolume: PropTypes.string,
+            monographEdition: PropTypes.string,
+            name: PropTypes.string
+          }),
+        })
+      })
+    })
   }
 
   render() {
-    const { pci } = this.props;
-    if (pci?.pti?.titleInstance?.type?.value === resourceTypes.MONOGRAPH) {
+    /* This component can be called from an agreement line context or from an eresource context. If we're looking at an agreement line,
+    * we need to take the possibility of custom coverage into account.
+    */
+
+    const { pci, isLine } = this.props;
+
+    let isMonograph = false
+    let pciToRender = pci
+
+    /* Sometimes the objects passed in from agreement view are of the form 
+    * pci: {resource: {_object: pti: {etc}}}
+    * which is the case in agreement lines
+    * and sometimes of the form
+    * pci: {_object: pti: {etc}}
+    * which is the case in covered eresources
+    * so we need a way to figure out which case we're in.
+    *
+    * This could alternatively be accomplished with another prop, or in the individual components called here.
+    */
+
+    if (isLine) {
+      if ('resource' in pci) {
+        if (pci?.resource?._object?.pti?.titleInstance?.type?.value === resourceTypes.MONOGRAPH) {
+          isMonograph = true
+          pciToRender = pci?.resource?._object
+        }
+      } else {
+        if (pci?._object?.pti?.titleInstance?.type?.value === resourceTypes.MONOGRAPH) {
+          isMonograph = true
+          pciToRender = pci?._object
+        }
+      }
+    } else {
+      if (pci?._object?.pti?.titleInstance?.type?.value === resourceTypes.MONOGRAPH) {
+        isMonograph = true
+        pciToRender = pci?._object
+      } else {
+        pciToRender = pci?._object
+      }
+    }
+
+    if (isMonograph) {
       return (
-        <MonographCoverage pci={pci} />
+        <MonographCoverage pci={pciToRender} />
       );
     } else {
       return (
-        <SerialCoverage statements={pci.coverage} />
+        <SerialCoverage statements={pciToRender.coverage} />
       );
     }
   }
