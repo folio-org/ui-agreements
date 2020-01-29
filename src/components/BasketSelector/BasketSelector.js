@@ -52,6 +52,7 @@ export default class BasketSelector extends React.Component {
             id="basket-selector"
             label={<FormattedMessage id="ui-agreements.basketSelector.selectLabel" />}
             onChange={this.handleChange}
+            required
             value={item.id}
           />
         </Col>
