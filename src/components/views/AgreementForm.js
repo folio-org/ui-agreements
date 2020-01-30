@@ -20,13 +20,14 @@ import { AppIcon, TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
 
 import {
+  FormCustomProperties,
   FormInfo,
   FormInternalContacts,
   FormLicenses,
   FormLines,
   FormOrganizations,
   FormRelatedAgreements,
-  FormSupplementaryInfo,
+  FormSupplementaryDocuments,
   FormUsageData,
 } from '../AgreementSections';
 
@@ -64,11 +65,12 @@ class AgreementForm extends React.Component {
   state = {
     addedLinesToAdd: false, // eslint-disable-line react/no-unused-state
     sections: {
+      formCustomProperties: true,
       formInternalContacts: true,
       formLines: true,
       formLicenses: true,
       formOrganizations: true,
-      formSupplementaryInfo: true,
+      formSupplementarydocs: true,
       formUsageProviders: true,
       formRelatedAgreements: true,
     }
@@ -215,7 +217,8 @@ class AgreementForm extends React.Component {
                       <FormLines {...this.getSectionProps('formLines')} />
                       <FormLicenses {...this.getSectionProps('formLicenses')} />
                       <FormOrganizations {...this.getSectionProps('formOrganizations')} />
-                      <FormSupplementaryInfo {...this.getSectionProps('formSupplementaryInfo')} />
+                      <FormCustomProperties {...this.getSectionProps('formCustomProperties')} />
+                      <FormSupplementaryDocuments {...this.getSectionProps('formSupplementarydocs')} />
                       <FormUsageData {...this.getSectionProps('formUsageProviders')} />
                       <FormRelatedAgreements {...this.getSectionProps('formRelatedAgreements')} />
                     </AccordionSet>

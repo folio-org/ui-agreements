@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, Badge, KeyValue } from '@folio/stripes/components';
+import { Accordion, Badge } from '@folio/stripes/components';
 import { DocumentCard } from '@folio/stripes-erm-components';
-import AgreementTerms from './AgreementTerms';
 
-export default class SupplementaryInfo extends React.Component {
+export default class SupplementaryDocs extends React.Component {
   static propTypes = {
     handlers: PropTypes.shape({
       onDownloadFile: PropTypes.func,
@@ -46,9 +45,7 @@ export default class SupplementaryInfo extends React.Component {
 
   render() {
     const {
-      agreement,
       agreement: { supplementaryDocs = [] },
-      data: { terms },
       id,
       onToggle,
       open,
@@ -59,22 +56,14 @@ export default class SupplementaryInfo extends React.Component {
         id={id}
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
-        label={<FormattedMessage id="ui-agreements.agreements.supplementaryInfo" />}
+        label={<FormattedMessage id="ui-agreements.supplementaryInfo.supplementaryDocuments" />}
         open={open}
         onToggle={onToggle}
       >
-        <KeyValue label={<FormattedMessage id="ui-agreements.supplementaryInfo.supplementaryProperties" />}>
-          <AgreementTerms
-            record={agreement}
-            terms={terms}
-          />
-        </KeyValue>
-        <KeyValue label={<FormattedMessage id="ui-agreements.supplementaryInfo.supplementaryDocuments" />}>
-          {supplementaryDocs.length ?
-            this.renderDocs(supplementaryDocs) :
-            <FormattedMessage id="ui-agreements.supplementaryInfo.agreementHasNone" />
-          }
-        </KeyValue>
+        {supplementaryDocs.length ?
+          this.renderDocs(supplementaryDocs) :
+          <FormattedMessage id="ui-agreements.supplementaryInfo.agreementHasNone" />
+        }
       </Accordion>
     );
   }

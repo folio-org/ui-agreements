@@ -1,21 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import { CustomPropertiesList } from '@folio/stripes-erm-components';
+import { Accordion } from '@folio/stripes/components';
 
 export default class AgreementTerms extends React.Component {
   static propTypes = {
-    record: PropTypes.shape({ customProperties: PropTypes.object }),
-    terms: PropTypes.arrayOf(PropTypes.object),
+    id: PropTypes.string,
+    onToggle: PropTypes.func,
+    open: PropTypes.bool,
+    agreement: PropTypes.shape({ customProperties: PropTypes.object }),
+    data: PropTypes.shape({ terms: PropTypes.object }),
   }
 
   render() {
-    const { record, terms } = this.props;
+    const {
+      id,
+      onToggle,
+      open,
+      agreement,
+      data: { terms }
+    } = this.props;
 
     return (
-      <CustomPropertiesList
-        resource={record}
-        customProperties={terms}
-      />
+      <Accordion
+        id={id}
+        label={<FormattedMessage id="ui-agreements.supplementaryInfo.supplementaryProperties" />}
+        open={open}
+        onToggle={onToggle}
+      >
+        <CustomPropertiesList
+          resource={agreement}
+          customProperties={terms}
+        />
+      </Accordion>
     );
   }
 }

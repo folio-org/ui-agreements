@@ -141,6 +141,9 @@
   "coverage.volumeShort": "Vol:",
   "coverage.issueShort": "Iss:",
 
+  "customProperties.optionalProperties": "Optional properties",
+  "customProperties.primaryProperties": "Primary properties",
+
   "duplicateAgreementModal.message": "Please select which sections of the agreement to duplicate",
   "duplicateAgreementModal.agreementInfo": "Agreement information",
   "duplicateAgreementModal.internalContacts": "Internal contacts",
@@ -370,5 +373,6 @@
   "settings.hideEResources.result.3": "Hide the \"E-resources covered by this agreement\" accordion in individual agreements",
   "settings.orgRoles": "Organization roles",
   "settings.orgRoles.orgRole": "Organization role",
-  "settings.orgRoles.role": "Role"
+  "settings.orgRoles.role": "Role",
+  "settings.terms": "Terms"
 }

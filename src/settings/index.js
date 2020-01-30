@@ -14,7 +14,7 @@ export default class ErmSettings extends React.Component {
     },
     {
       component: TermsConfigRoute,
-      label: <FormattedMessage id="ui-licenses.section.terms" />,
+      label: <FormattedMessage id="ui-agreements.settings.terms" />,
       perm: 'ui-agreements.terms.manage',
       route: 'terms',
     }
