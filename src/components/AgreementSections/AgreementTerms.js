@@ -7,32 +7,32 @@ import { Accordion } from '@folio/stripes/components';
 
 export default class AgreementTerms extends React.Component {
   static propTypes = {
+    agreement: PropTypes.shape({ customProperties: PropTypes.object }),
     id: PropTypes.string,
+    data: PropTypes.shape({ terms: PropTypes.object }),
     onToggle: PropTypes.func,
     open: PropTypes.bool,
-    agreement: PropTypes.shape({ customProperties: PropTypes.object }),
-    data: PropTypes.shape({ terms: PropTypes.object }),
   }
 
   render() {
     const {
+      agreement,
+      data: { terms },
       id,
       onToggle,
       open,
-      agreement,
-      data: { terms }
     } = this.props;
 
     return (
       <Accordion
         id={id}
-        label={<FormattedMessage id="ui-agreements.supplementaryInfo.supplementaryProperties" />}
+        label={<FormattedMessage id="ui-agreements.supplementaryProperties" />}
         open={open}
         onToggle={onToggle}
       >
         <CustomPropertiesList
-          resource={agreement}
           customProperties={terms}
+          resource={agreement}
         />
       </Accordion>
     );
