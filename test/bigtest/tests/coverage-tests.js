@@ -58,21 +58,21 @@ const serial = {
 
 // We also want to test the other two possible shapes for passing this data through to Coverage
 
-const monographCoveredEResource = {
+const monographEResource = {
   _object: monograph
 };
 
-const serialCoveredEResource = {
+const serialEResource = {
   _object: serial,
   coverage: serial.coverage
 };
 
 const monographLine = {
-  resource: monographCoveredEResource
+  resource: monographEResource
 };
 
 const serialLine = {
-  resource: serialCoveredEResource._object,
+  resource: serialEResource._object,
   coverage: serial.coverage
 };
 
@@ -101,10 +101,10 @@ describe('Coverage tests', () => {
     });
   });
 
-  describe('Rendering coverage component for a monograph coveredEresource', () => {
+  describe('Rendering coverage component for a monograph eresource', () => {
     beforeEach(async function () {
       await mountWithContext(
-        <Coverage coveredEResource={monographCoveredEResource} />
+        <Coverage eResource={monographEResource} />
       );
     });
 
@@ -113,15 +113,15 @@ describe('Coverage tests', () => {
     });
 
     it('correctly renders the date', () => {
-      expect(monographInteractor.date).to.have.string(monographCoveredEResource._object.pti.titleInstance.dateMonographPublished);
+      expect(monographInteractor.date).to.have.string(monographEResource._object.pti.titleInstance.dateMonographPublished);
     });
 
     it('correctly renders the edition', () => {
-      expect(monographInteractor.edition).to.have.string(monographCoveredEResource._object.pti.titleInstance.monographEdition);
+      expect(monographInteractor.edition).to.have.string(monographEResource._object.pti.titleInstance.monographEdition);
     });
 
     it('correctly renders the volume', () => {
-      expect(monographInteractor.volume).to.have.string(monographCoveredEResource._object.pti.titleInstance.monographVolume);
+      expect(monographInteractor.volume).to.have.string(monographEResource._object.pti.titleInstance.monographVolume);
     });
   });
 
@@ -188,10 +188,10 @@ describe('Coverage tests', () => {
     });
   });
 
-  describe('Rendering coverage component for a serial coveredEResource', () => {
+  describe('Rendering coverage component for a serial eResource', () => {
     beforeEach(async function () {
       await mountWithContext(
-        <Coverage coveredEResource={serialCoveredEResource} />
+        <Coverage eResource={serialEResource} />
       );
     });
 
@@ -214,16 +214,16 @@ describe('Coverage tests', () => {
       expect(serialInteractorEnd.endDate).to.have.string('10/5/2007');
     });
     it('renders the correct start issue', () => {
-      expect(serialInteractorStart.startIssue).to.have.string(serialCoveredEResource.coverage[0].startIssue);
+      expect(serialInteractorStart.startIssue).to.have.string(serialEResource.coverage[0].startIssue);
     });
     it('renders the correct end issue', () => {
-      expect(serialInteractorEnd.endIssue).to.have.string(serialCoveredEResource.coverage[0].endIssue);
+      expect(serialInteractorEnd.endIssue).to.have.string(serialEResource.coverage[0].endIssue);
     });
     it('renders the correct start volume', () => {
-      expect(serialInteractorStart.startVolume).to.have.string(serialCoveredEResource.coverage[0].startVolume);
+      expect(serialInteractorStart.startVolume).to.have.string(serialEResource.coverage[0].startVolume);
     });
     it('renders the correct end volume', () => {
-      expect(serialInteractorEnd.endVolume).to.have.string(serialCoveredEResource.coverage[0].endVolume);
+      expect(serialInteractorEnd.endVolume).to.have.string(serialEResource.coverage[0].endVolume);
     });
   });
 

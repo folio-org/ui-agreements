@@ -73,7 +73,7 @@ export default class CoveredEResourcesList extends React.Component {
     },
     platform: e => get(e._object, 'pti.platform.name', '-'),
     package: e => get(e._object, 'pkg.name', '-'),
-    coverage:  e => <Coverage coveredEResource={e} />,
+    coverage:  e => <Coverage eResource={e} />,
     accessStart: e => this.renderDate(get(e._object, 'accessStart')),
     accessEnd: e => this.renderDate(get(e._object, 'accessEnd')),
     isCustomCoverage: line => {

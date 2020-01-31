@@ -69,7 +69,7 @@ class BasketList extends React.Component {
             get(resource, '_object.nominalPlatform.name') || '-'
           ),
           // The resource below fits the same shape as the eresources in an agreement line, so we pass them in the coveredEResource prop.
-          coverage: resource => <Coverage coveredEResource={resource} />,
+          coverage: resource => <Coverage eResource={resource} />,
           remove: resource => (
             <FormattedMessage id="ui-agreements.basket.removeItem">
               {ariaLabel => (

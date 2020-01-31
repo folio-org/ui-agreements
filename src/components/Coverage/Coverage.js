@@ -32,7 +32,7 @@ export default class Coverage extends React.Component {
         })
       })
     }),
-    coveredEResource: PropTypes.shape({
+    eResource: PropTypes.shape({
       _object: PropTypes.shape({
         pci: PropTypes.shape({
           pti: PropTypes.shape({
@@ -53,7 +53,7 @@ export default class Coverage extends React.Component {
   */
 
   render() {
-    const { pci, line, coveredEResource } = this.props;
+    const { pci, line, eResource } = this.props;
     let isMonograph = false;
     let dataToRender;
 
@@ -69,11 +69,11 @@ export default class Coverage extends React.Component {
       } else {
         dataToRender = line;
       }
-    } else if (coveredEResource?._object?.pti?.titleInstance?.type?.value === resourceTypes.MONOGRAPH) {
+    } else if (eResource?._object?.pti?.titleInstance?.type?.value === resourceTypes.MONOGRAPH) {
       isMonograph = true;
-      dataToRender = coveredEResource?._object;
+      dataToRender = eResource?._object;
     } else {
-      dataToRender = coveredEResource;
+      dataToRender = eResource;
     }
 
     if (isMonograph) {
