@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { FormattedUTCDate, Icon, Layout } from '@folio/stripes/components';
 
-export default class CoverageStatements extends React.Component {
+export default class SerialCoverage extends React.Component {
   static propTypes = {
     statements: PropTypes.arrayOf(
       PropTypes.shape({
@@ -100,6 +100,6 @@ export default class CoverageStatements extends React.Component {
     const { statements } = this.props;
     if (!statements || !statements.length) return '-';
 
-    return <Layout className="full" data-test-coverage-statements>{statements.map(this.renderStatement)}</Layout>;
+    return <Layout className="full" data-test-serial-coverage>{statements.map(this.renderStatement)}</Layout>;
   }
 }

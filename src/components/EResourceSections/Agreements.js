@@ -12,7 +12,7 @@ import {
   Spinner
 } from '@folio/stripes/components';
 
-import CoverageStatements from '../CoverageStatements';
+import { SerialCoverage } from '../Coverage';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import EResourceType from '../EResourceType';
@@ -44,7 +44,7 @@ export default class Agreements extends React.Component {
           endDate: ({ owner: agreement }) => agreement.endDate && <FormattedUTCDate value={agreement.endDate} />,
           package: (line) => <EResourceLink eresource={getResourceFromEntitlement(line)} />,
           acqMethod: ({ resource }) => <EResourceType resource={resource} />,
-          coverage: line => <CoverageStatements statements={line.coverage} />,
+          coverage: line => <SerialCoverage statements={line.coverage} />,
           isCustomCoverage: line => line.customCoverage && <CustomCoverageIcon />,
         }}
         columnMapping={{
