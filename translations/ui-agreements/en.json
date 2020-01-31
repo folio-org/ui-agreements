@@ -221,7 +221,6 @@
   "errors.overlappingCoverage": "The following coverages have overlapping dates: {fields}",
   "errors.overlappingPeriod": "The following periods have overlapping dates: {fields}",
   "errors.undefinedUDP": "A Usage Data Provider must be selected.",
-  "errors.unsetAgreementLines": "Select a resource and create this line, or delete it to continue.",
   "errors.cannotLinkAgreementToItself": "An agreement cannot be linked to itself.",
 
   "finances.none": "Agreement has no order lines.",
