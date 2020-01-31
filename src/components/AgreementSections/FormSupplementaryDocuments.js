@@ -22,7 +22,7 @@ export default class FormSupplementaryDocuments extends React.Component {
     return (
       <Accordion
         id={id}
-        label={<FormattedMessage id="ui-agreements.agreements.supplementaryDocuments" />}
+        label={<FormattedMessage id="ui-agreements.supplementaryDocuments" />}
         open={open}
         onToggle={onToggle}
       >
