@@ -4,7 +4,7 @@ import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import TermsConfigForm from '../components/TermsConfig/TermsConfigForm';
+import { TermsConfigForm } from '@folio/stripes-erm-components';
 
 class TermsConfigRoute extends React.Component {
   static manifest = Object.freeze({
