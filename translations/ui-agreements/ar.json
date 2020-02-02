@@ -152,7 +152,6 @@
     "settings.hideEResources.result.1": "إخفاء تبويب الموارد الإلكترونية في تطبيق الاتفاقيات",
     "settings.hideEResources.result.2": "إخفاء أيقونة السلة في تطبيق الاتفاقيات",
     "settings.hideEResources.result.3": "إخفاء أكورديون \"الموارد الإلكترونية التي تغطيها هذه الاتفاقية\" في الاتفاقيات الفردية",
-    "errors.unsetAgreementLines": "قم بتحديد مورد وإنشاء هذا السطر، أو حذفه للمتابعة.",
     "interface.name": "اسم الواجهة",
     "interface.username": "اسم المستخدم",
     "interface.password": "كلمة المرور",
@@ -336,5 +335,6 @@
     "eresources.edition": "طبعة",
     "eresources.volume": "المجلد",
     "eresources.firstAuthor": "المؤلف الأول",
-    "eresources.firstEditor": "المحرر الأول"
+    "eresources.firstEditor": "المحرر الأول",
+    "coverage.editionShort": "الطبعة:"
 }
