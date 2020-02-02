@@ -152,7 +152,6 @@
     "settings.hideEResources.result.1": "Ocultar a aba E-recursos no aplicativo de contratos",
     "settings.hideEResources.result.2": "Ocultar o ícone de cesta no aplicativo de contratos",
     "settings.hideEResources.result.3": "Ocultar a aba \"E-recursos cobertos por este acordo\" em acordos individuais",
-    "errors.unsetAgreementLines": "Selecione um recurso e crie essa linha ou exclua-a para continuar.",
     "interface.name": "Nome da interface",
     "interface.username": "Nome de usuário",
     "interface.password": "Senha",
@@ -336,5 +335,6 @@
     "eresources.edition": "Edição",
     "eresources.volume": "Volume",
     "eresources.firstAuthor": "Primeiro autor",
-    "eresources.firstEditor": "Primeiro editor"
+    "eresources.firstEditor": "Primeiro editor",
+    "coverage.editionShort": "Ed:"
 }

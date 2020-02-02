@@ -152,7 +152,6 @@
     "settings.hideEResources.result.1": "Oculta la pestaña E-resources en la aplicación de acuerdos.",
     "settings.hideEResources.result.2": "Ocultar el icono de la cesta en la aplicación de acuerdos",
     "settings.hideEResources.result.3": "Ocultar el pliego \"E-recursos cubiertos por este acuerdo\" en acuerdos individuales",
-    "errors.unsetAgreementLines": "Acuerdo {count, plural, one { line } other { lines }} {list} {count, plural, one { has } other { have }} no {count, plural, one { resource } other { resources }} . Seleccione y cree el {count, plural, one { line } other { lines }} , o elimine {count, plural, one { it } other { them }} .",
     "interface.name": "Nombre de la interfaz",
     "interface.username": "Nombre de usuario",
     "interface.password": "Contraseña",
@@ -336,5 +335,6 @@
     "eresources.edition": "Edition",
     "eresources.volume": "Volume",
     "eresources.firstAuthor": "First author",
-    "eresources.firstEditor": "First editor"
+    "eresources.firstEditor": "First editor",
+    "coverage.editionShort": "Ed:"
 }
