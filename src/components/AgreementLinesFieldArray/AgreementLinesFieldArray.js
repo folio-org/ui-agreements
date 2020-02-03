@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import { Button, Layout } from '@folio/stripes/components';
-import { withKiwtFieldArray } from '@folio/stripes-erm-components';
+import { requiredObjectValidator, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
 import { isExternal } from '../utilities';
@@ -48,14 +48,6 @@ class AgreementLinesFieldArray extends React.Component {
     this.props.onReplaceField(index, { resource });
   }
 
-  validateResourceIsSelected = (value = {}) => {
-    if (Object.keys(value).length === 0) {
-      return <FormattedMessage id="ui-agreements.errors.unsetAgreementLines" />;
-    }
-
-    return undefined;
-  }
-
   renderEmpty = () => (
     <Layout className="padding-bottom-gutter">
       <FormattedMessage id="ui-agreements.agreementLines.noLines" />
@@ -74,7 +66,7 @@ class AgreementLinesFieldArray extends React.Component {
         onResourceSelected={this.handleResourceSelected}
         poLines={this.props.data.orderLines || []}
         resource={this.getLineResource(line)}
-        validate={this.validateResourceIsSelected}
+        validate={requiredObjectValidator}
       />
     ));
   }
@@ -82,7 +74,6 @@ class AgreementLinesFieldArray extends React.Component {
   render() {
     return (
       <div>
-        {/* { this.renderError() } */}
         <div id="agreement-form-lines">
           {this.props.items.length ? this.renderLines() : this.renderEmpty()}
         </div>
