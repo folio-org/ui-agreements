@@ -128,7 +128,7 @@
     "agreementLines.noPoLines": "Contrato não tem linhas de contrato.",
     "agreementLines.tax": "Acumulado no ano fiscal",
     "agreementLines.addLine": "Adicionar linha de contrato",
-    "agreementLines.lineTitle": "Linha de contrato núm. {number}",
+    "agreementLines.lineTitle": "Linha de contrato {number}",
     "eresources.titles": "Títulos",
     "agreements.showInvoicesLink": "Mostrar faturas",
     "agreementLines.addCustomCoverage": "Adicionar cobertura personalizada",
@@ -336,5 +336,5 @@
     "eresources.volume": "Volume",
     "eresources.firstAuthor": "Primeiro autor",
     "eresources.firstEditor": "Primeiro editor",
-    "coverage.editionShort": "Ed:"
+    "coverage.editionShort": "Ed.:"
 }
