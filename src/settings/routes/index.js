@@ -1,1 +1,1 @@
-export { default as TermsConfigRoute } from './TermsConfigRoute'; // eslint-disable-line import/prefer-default-export
+export { default as SupplementaryPropertiesConfigRoute } from './SupplementaryPropertiesConfigRoute'; // eslint-disable-line import/prefer-default-export

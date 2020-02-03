@@ -4,11 +4,11 @@ import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import { TermsConfigForm } from '@folio/stripes-erm-components';
+import { CustomPropertiesConfigForm } from '@folio/stripes-erm-components';
 
-class TermsConfigRoute extends React.Component {
+class SupplementaryPropertiesConfigRoute extends React.Component {
   static manifest = Object.freeze({
-    terms: {
+    supplementaryProperties: {
       type: 'okapi',
       path: 'erm/custprops',
       params: {
@@ -21,10 +21,10 @@ class TermsConfigRoute extends React.Component {
 
   static propTypes = {
     resources: PropTypes.shape({
-      terms: PropTypes.object,
+      supplementaryProperties: PropTypes.object,
     }),
     mutator: PropTypes.shape({
-      terms: PropTypes.shape({
+      supplementaryProperties: PropTypes.shape({
         DELETE: PropTypes.func.isRequired,
         POST: PropTypes.func.isRequired,
         PUT: PropTypes.func.isRequired,
@@ -35,16 +35,16 @@ class TermsConfigRoute extends React.Component {
   state = {
     // loadedAt is used in gDSFP to determine whether to reinit form values
     loadedAt: new Date(), // eslint-disable-line react/no-unused-state
-    terms: [],
+    supplementaryProperties: [],
   }
 
   static getDerivedStateFromProps(props, state) {
     const newState = {};
 
-    const terms = get(props, 'resources.terms'); // can't use default value bc of `null`
-    if (terms && terms.hasLoaded && terms.loadedAt > state.loadedAt) {
-      newState.loadedAt = terms.loadedAt;
-      newState.terms = terms.records.map(term => ({
+    const supplementaryProperties = get(props, 'resources.supplementaryProperties'); // can't use default value bc of `null`
+    if (supplementaryProperties && supplementaryProperties.hasLoaded && supplementaryProperties.loadedAt > state.loadedAt) {
+      newState.loadedAt = supplementaryProperties.loadedAt;
+      newState.supplementaryProperties = supplementaryProperties.records.map(term => ({
         ...term,
         category: term.category ? term.category.id : undefined,
       }));
@@ -54,11 +54,11 @@ class TermsConfigRoute extends React.Component {
   }
 
   handleDelete = (term) => {
-    return this.props.mutator.terms.DELETE(term);
+    return this.props.mutator.supplementaryProperties.DELETE(term);
   }
 
   handleSave = (term) => {
-    const mutator = this.props.mutator.terms;
+    const mutator = this.props.mutator.supplementaryProperties;
 
     const promise = term.id ?
       mutator.PUT(term, { pk: term.id }) :
@@ -68,11 +68,11 @@ class TermsConfigRoute extends React.Component {
   }
 
   render() {
-    const { terms } = this.state;
+    const { supplementaryProperties } = this.state;
 
     return (
-      <TermsConfigForm
-        initialValues={{ terms }}
+      <CustomPropertiesConfigForm
+        initialValues={{ customProperties: supplementaryProperties }}
         onDelete={this.handleDelete}
         onSave={this.handleSave}
         onSubmit={this.handleSave}
@@ -81,4 +81,4 @@ class TermsConfigRoute extends React.Component {
   }
 }
 
-export default stripesConnect(TermsConfigRoute);
+export default stripesConnect(SupplementaryPropertiesConfigRoute);

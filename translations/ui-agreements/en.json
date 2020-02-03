@@ -140,8 +140,8 @@
   "coverage.volumeShort": "Vol:",
   "coverage.issueShort": "Iss:",
 
-  "customProperties.optionalProperties": "Optional properties",
-  "customProperties.primaryProperties": "Primary properties",
+  "supplementaryProperties.optionalProperties": "Optional properties",
+  "supplementaryProperties.primaryProperties": "Primary properties",
 
   "duplicateAgreementModal.message": "Please select which sections of the agreement to duplicate",
   "duplicateAgreementModal.agreementInfo": "Agreement information",
@@ -372,5 +372,5 @@
   "settings.orgRoles": "Organization roles",
   "settings.orgRoles.orgRole": "Organization role",
   "settings.orgRoles.role": "Role",
-  "settings.terms": "Terms"
+  "settings.supplementaryProperties": "Supplementary properties"
 }

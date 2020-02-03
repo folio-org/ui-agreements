@@ -24,11 +24,10 @@ export default class Terms extends React.Component {
 
   renderTermsList = (controllingLicense) => {
     const license = controllingLicense.remoteId_object;
-
     return (
       <CustomPropertiesList
-        resource={license}
         customProperties={this.props.data.terms}
+        resource={license}
       />
     );
   }

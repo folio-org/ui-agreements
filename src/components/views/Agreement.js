@@ -20,7 +20,7 @@ import { LoadingPane } from '@folio/stripes-erm-components';
 import DuplicateAgreementModal from '../DuplicateAgreementModal';
 
 import {
-  AgreementTerms,
+  SupplementaryProperties,
   ControllingLicense,
   ExternalLicenses,
   FutureLicenses,
@@ -59,7 +59,7 @@ export default class Agreement extends React.Component {
   state = {
     showDuplicateAgreementModal: false,
     sections: {
-      agreementTerms: false,
+      supplementaryProperties: false,
       controllingLicense: false,
       externalLicenses: false,
       futureLicenses: false,
@@ -240,7 +240,7 @@ export default class Agreement extends React.Component {
               <Terms {...this.getSectionProps('terms')} />
               <Organizations {...this.getSectionProps('organizations')} />
               <OtherPeriods {...this.getSectionProps('otherPeriods')} />
-              <AgreementTerms {...this.getSectionProps('agreementTerms')} />
+              <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} />
               <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} />
               <UsageData {...this.getSectionProps('usageData')} />
               <RelatedAgreements {...this.getSectionProps('relatedAgreements')} />

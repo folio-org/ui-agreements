@@ -57,9 +57,9 @@ module.exports.test = (uiTestCtx) => {
 
         it(`should add term ${term.name} w/ value ${term.value}`, done => {
           nightmare
-            .click('#add-term-btn')
-            .type('[data-test-term=optional] [data-test-term-name]', term.label)
-            .type('[data-test-term=optional] [data-test-term-value]', term.value)
+            .click('#add-customproperty-btn')
+            .type('[data-test-customproperty=optional] [data-test-customproperty-name]', 'o')
+            .type('[data-test-customproperty=optional] [data-test-customproperty-value]', term.value)
             .then(done)
             .catch(done);
         });
@@ -76,8 +76,8 @@ module.exports.test = (uiTestCtx) => {
         it('should find new term in terms list', done => {
           nightmare
             .evaluate((expectedTerm) => {
-              const nameElement = document.querySelector(`[data-test-term-label=${expectedTerm.name}]`);
-              const valueElement = document.querySelector(`[data-test-term-value=${expectedTerm.name}]`);
+              const nameElement = document.querySelector(`[data-test-customproperty-label=${expectedTerm.name}]`);
+              const valueElement = document.querySelector(`[data-test-customproperty-value=${expectedTerm.name}]`);
 
               if (!nameElement) {
                 throw Error(`Expected to find ${expectedTerm.name} label`);
@@ -198,8 +198,8 @@ module.exports.test = (uiTestCtx) => {
       it(`should find term ${term.name} in terms list`, done => {
         nightmare
           .evaluate((expectedTerm) => {
-            const nameElement = document.querySelector(`[data-test-term-label=${expectedTerm.name}]`);
-            const valueElement = document.querySelector(`[data-test-term-value=${expectedTerm.name}]`);
+            const nameElement = document.querySelector(`[data-test-customproperty-label=${expectedTerm.name}]`);
+            const valueElement = document.querySelector(`[data-test-customproperty-value=${expectedTerm.name}]`);
 
             if (!nameElement) {
               throw Error(`Expected to find ${expectedTerm.name} label`);

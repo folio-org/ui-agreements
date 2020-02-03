@@ -41,7 +41,7 @@ export default class PackageContents extends React.Component {
 
   formatter = {
     name: pci => <EResourceLink eresource={pci.pti.titleInstance} />,
-    platform: pci => pci?.pti?.platform?.name,
+    platform: pci => pci ?.pti ?.platform ?.name,
     coverage: pci => <CoverageStatements statements={pci.coverage} />,
     accessStart: pci => this.renderDate(pci.accessStart),
     accessEnd: pci => this.renderDate(pci.accessEnd),
@@ -78,7 +78,7 @@ export default class PackageContents extends React.Component {
   )
 
   renderBadge = () => {
-    const count = this.props.data?.packageContentsCount;
+    const count = this.props.data ?.packageContentsCount;
     return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
   }
 

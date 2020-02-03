@@ -20,7 +20,7 @@ class AgreementCreateRoute extends React.Component {
       fetch: false,
       shouldRefresh: () => false,
     },
-    terms: {
+    supplementaryProperties: {
       type: 'okapi',
       path: 'erm/custprops',
       shouldRefresh: () => false,
@@ -99,7 +99,7 @@ class AgreementCreateRoute extends React.Component {
       agreement: PropTypes.object,
       orgRoleValues: PropTypes.object,
       statusValues: PropTypes.object,
-      terms: PropTypes.object,
+      supplementaryProperties: PropTypes.object,
       typeValues: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
@@ -177,7 +177,7 @@ class AgreementCreateRoute extends React.Component {
 
   getInitialValues = () => {
     const customProperties = {};
-    get(this.props.resources, 'terms.records', [])
+    get(this.props.resources, 'supplementaryProperties.records', [])
       .filter(term => term.primary)
       .forEach(term => { customProperties[term.name] = ''; });
     const periods = [{}];
@@ -203,7 +203,7 @@ class AgreementCreateRoute extends React.Component {
           reasonForClosureValues: get(resources, 'reasonForClosureValues.records', []),
           amendmentStatusValues: get(resources, 'amendmentStatusValues.records', []),
           basket: get(resources, 'basket', []),
-          terms: get(resources, 'terms.records', []),
+          supplementaryProperties: get(resources, 'supplementaryProperties.records', []),
           contactRoleValues: get(resources, 'contactRoleValues.records', []),
           isPerpetualValues: get(resources, 'isPerpetualValues.records', []),
           licenseLinkStatusValues: get(resources, 'licenseLinkStatusValues.records', []),

@@ -1,7 +1,7 @@
-export { default as AgreementTerms } from './AgreementTerms';
+export { default as SupplementaryProperties } from './SupplementaryProperties';
 export { default as ControllingLicense } from './ControllingLicense';
 export { default as ExternalLicenses } from './ExternalLicenses';
-export { default as FormCustomProperties } from './FormCustomProperties';
+export { default as FormSupplementaryProperties } from './FormSupplementaryProperties';
 export { default as FormInfo } from './FormInfo';
 export { default as FormInternalContacts } from './FormInternalContacts';
 export { default as FormLicenses } from './FormLicenses';

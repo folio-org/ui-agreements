@@ -5,11 +5,11 @@ import { FormattedMessage } from 'react-intl';
 import { CustomPropertiesList } from '@folio/stripes-erm-components';
 import { Accordion } from '@folio/stripes/components';
 
-export default class AgreementTerms extends React.Component {
+export default class SupplementaryProperties extends React.Component {
   static propTypes = {
-    agreement: PropTypes.shape({ customProperties: PropTypes.object }),
+    agreement: PropTypes.object,
     id: PropTypes.string,
-    data: PropTypes.shape({ terms: PropTypes.object }),
+    data: PropTypes.shape({ supplementaryProperties: PropTypes.object }),
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   }
@@ -17,7 +17,7 @@ export default class AgreementTerms extends React.Component {
   render() {
     const {
       agreement,
-      data: { terms },
+      data: { supplementaryProperties },
       id,
       onToggle,
       open,
@@ -31,7 +31,7 @@ export default class AgreementTerms extends React.Component {
         onToggle={onToggle}
       >
         <CustomPropertiesList
-          customProperties={terms}
+          customProperties={supplementaryProperties}
           resource={agreement}
         />
       </Accordion>
