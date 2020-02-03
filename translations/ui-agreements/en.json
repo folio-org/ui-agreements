@@ -140,6 +140,8 @@
   "coverage.volumeShort": "Vol:",
   "coverage.issueShort": "Iss:",
 
+  "supplementaryProperties.count": "{count, number} saved {count, plural, one {supplementary property} other {supplementary properties}}",
+
   "supplementaryProperties.optionalProperties": "Optional properties",
   "supplementaryProperties.primaryProperties": "Primary properties",
 
@@ -337,6 +339,13 @@
   "relatedAgreements.remove": "Remove related agreement {index}",
   "relatedAgreements.replaceAgreement": "Replace agreement",
   "relatedAgreements.replaceAgreementSpecific": "Replace agreement {agreementName}",
+
+  "supplementaryProperties.callout.delete.error": "There was an error deleting the supplementary property. {error}",
+  "supplementaryProperties.callout.delete.success": "Supplementary property successfully deleted.",
+  "supplementaryProperties.callout.save.error": "There was an error saving the supplementary property. {error}",
+  "supplementaryProperties.callout.save.success": "Supplementary property successfully saved.",
+  "supplementaryProperties.callout.delete.supplementaryPropertyInUse": "<strong>Supplementary property</strong> was not deleted because it is in use on one or more agreements.",
+  "section.supplementaryProperties": "Supplementary properties",
 
   "usageData": "Usage data",
   "usageData.addUDP": "Add usage data provider",

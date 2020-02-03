@@ -4,7 +4,7 @@ import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import { CustomPropertiesConfigForm } from '@folio/stripes-erm-components';
+import SupplementaryPropertiesConfigForm from '../components';
 
 class SupplementaryPropertiesConfigRoute extends React.Component {
   static manifest = Object.freeze({
@@ -71,7 +71,7 @@ class SupplementaryPropertiesConfigRoute extends React.Component {
     const { supplementaryProperties } = this.state;
 
     return (
-      <CustomPropertiesConfigForm
+      <SupplementaryPropertiesConfigForm
         initialValues={{ customProperties: supplementaryProperties }}
         onDelete={this.handleDelete}
         onSave={this.handleSave}
