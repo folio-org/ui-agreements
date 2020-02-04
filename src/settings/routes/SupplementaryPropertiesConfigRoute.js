@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-
 import { stripesConnect } from '@folio/stripes/core';
-
 import SupplementaryPropertiesConfigForm from '../components';
 
 class SupplementaryPropertiesConfigRoute extends React.Component {
@@ -44,25 +42,25 @@ class SupplementaryPropertiesConfigRoute extends React.Component {
     const supplementaryProperties = get(props, 'resources.supplementaryProperties'); // can't use default value bc of `null`
     if (supplementaryProperties && supplementaryProperties.hasLoaded && supplementaryProperties.loadedAt > state.loadedAt) {
       newState.loadedAt = supplementaryProperties.loadedAt;
-      newState.supplementaryProperties = supplementaryProperties.records.map(term => ({
-        ...term,
-        category: term.category ? term.category.id : undefined,
+      newState.supplementaryProperties = supplementaryProperties.records.map(supplementaryProperty => ({
+        ...supplementaryProperty,
+        category: supplementaryProperty.category ? supplementaryProperty.category.id : undefined,
       }));
     }
 
     return Object.keys(newState).length ? newState : null;
   }
 
-  handleDelete = (term) => {
-    return this.props.mutator.supplementaryProperties.DELETE(term);
+  handleDelete = (supplementaryProperty) => {
+    return this.props.mutator.supplementaryProperties.DELETE(supplementaryProperty);
   }
 
-  handleSave = (term) => {
+  handleSave = (supplementaryProperty) => {
     const mutator = this.props.mutator.supplementaryProperties;
 
-    const promise = term.id ?
-      mutator.PUT(term, { pk: term.id }) :
-      mutator.POST(term);
+    const promise = supplementaryProperty.id ?
+      mutator.PUT(supplementaryProperty, { pk: supplementaryProperty.id }) :
+      mutator.POST(supplementaryProperty);
 
     return promise;
   }

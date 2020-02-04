@@ -28,7 +28,7 @@ class FormSupplementaryProperties extends React.Component {
           name="customProperties"
           optionalSectionLabel={<FormattedMessage id="ui-agreements.supplementaryProperties.optionalProperties" />}
           primarySectionLabel={<FormattedMessage id="ui-agreements.supplementaryProperties.primaryProperties" />}
-          type="SupplementaryProperties"
+          translationKey="supplementaryProperty"
         />
       </Accordion>
     );

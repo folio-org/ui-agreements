@@ -37,23 +37,17 @@ export default class PackageContents extends React.Component {
     coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
     accessStart: <FormattedMessage id="ui-agreements.eresources.accessStart" />,
     accessEnd: <FormattedMessage id="ui-agreements.eresources.accessEnd" />,
-  }
+  };
 
   formatter = {
     name: pci => <EResourceLink eresource={pci.pti.titleInstance} />,
-    platform: pci => pci ?.pti ?.platform ?.name,
+    platform: pci => pci?.pti?.platform?.name,
     coverage: pci => <CoverageStatements statements={pci.coverage} />,
     accessStart: pci => this.renderDate(pci.accessStart),
     accessEnd: pci => this.renderDate(pci.accessEnd),
-  }
+  };
 
-  visibleColumns = [
-    'name',
-    'platform',
-    'coverage',
-    'accessStart',
-    'accessEnd',
-  ]
+  visibleColumns = ['name', 'platform', 'coverage', 'accessStart', 'accessEnd'];
 
   renderList = (packageContents, packageContentsCount) => {
     return (
@@ -71,26 +65,26 @@ export default class PackageContents extends React.Component {
         visibleColumns={this.visibleColumns}
       />
     );
-  }
+  };
 
-  renderDate = date => (
-    date ? <FormattedUTCDate value={date} /> : '-'
-  )
+  renderDate = date => (date ? <FormattedUTCDate value={date} /> : '-');
 
   renderBadge = () => {
-    const count = this.props.data ?.packageContentsCount;
+    const count = this.props.data?.packageContentsCount;
     return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
-  }
+  };
 
-  renderFilterButton = (filter) => (
+  renderFilterButton = filter => (
     <Button
-      buttonStyle={this.props.data.packageContentsFilter === filter ? 'primary' : 'default'}
+      buttonStyle={
+        this.props.data.packageContentsFilter === filter ? 'primary' : 'default'
+      }
       id={`clickable-pci-${filter}`}
       onClick={() => this.props.onFilterPackageContents(filter)}
     >
       <FormattedMessage id={`ui-agreements.content.${filter}`} />
     </Button>
-  )
+  );
 
   renderFilterButtons = () => (
     <Layout className="textCentered">
@@ -101,14 +95,14 @@ export default class PackageContents extends React.Component {
         {this.renderFilterButton('all')}
       </ButtonGroup>
     </Layout>
-  )
+  );
 
   render() {
     const {
       data: { packageContents, packageContentsCount },
       id,
       onToggle,
-      open
+      open,
     } = this.props;
 
     return (
@@ -116,12 +110,18 @@ export default class PackageContents extends React.Component {
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
         id={id}
-        label={<FormattedMessage id="ui-agreements.eresources.packageResources" />}
+        label={
+          <FormattedMessage id="ui-agreements.eresources.packageResources" />
+        }
         onToggle={onToggle}
         open={open}
       >
         {this.renderFilterButtons()}
-        {packageContents ? this.renderList(packageContents, packageContentsCount) : <Spinner />}
+        {packageContents ? (
+          this.renderList(packageContents, packageContentsCount)
+        ) : (
+          <Spinner />
+        )}
       </Accordion>
     );
   }

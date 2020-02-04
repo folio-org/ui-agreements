@@ -140,8 +140,13 @@
   "coverage.volumeShort": "Vol:",
   "coverage.issueShort": "Iss:",
 
+  "supplementaryProperties": "Supplementary properties",
   "supplementaryProperties.count": "{count, number} saved {count, plural, one {supplementary property} other {supplementary properties}}",
-
+  "supplementaryProperties.callout.delete.error": "There was an error deleting the supplementary property. {error}",
+  "supplementaryProperties.callout.delete.success": "Supplementary property successfully deleted.",
+  "supplementaryProperties.callout.save.error": "There was an error saving the supplementary property. {error}",
+  "supplementaryProperties.callout.save.success": "Supplementary property successfully saved.",
+  "supplementaryProperties.callout.delete.supplementaryPropertyInUse": "<strong>Supplementary property</strong> was not deleted because it is in use on one or more agreements.",
   "supplementaryProperties.optionalProperties": "Optional properties",
   "supplementaryProperties.primaryProperties": "Primary properties",
 
@@ -340,11 +345,6 @@
   "relatedAgreements.replaceAgreement": "Replace agreement",
   "relatedAgreements.replaceAgreementSpecific": "Replace agreement {agreementName}",
 
-  "supplementaryProperties.callout.delete.error": "There was an error deleting the supplementary property. {error}",
-  "supplementaryProperties.callout.delete.success": "Supplementary property successfully deleted.",
-  "supplementaryProperties.callout.save.error": "There was an error saving the supplementary property. {error}",
-  "supplementaryProperties.callout.save.success": "Supplementary property successfully saved.",
-  "supplementaryProperties.callout.delete.supplementaryPropertyInUse": "<strong>Supplementary property</strong> was not deleted because it is in use on one or more agreements.",
   "section.supplementaryProperties": "Supplementary properties",
 
   "usageData": "Usage data",
@@ -369,7 +369,6 @@
   "supplementaryDocs.agreementHasNone": "Agreement has no supplementary documents",
   "supplementaryDocs.addSupplementaryDoc": "Add supplementary document",
   "supplementaryDocuments": "Supplementary documents",
-  "supplementaryProperties": "Supplementary properties",
 
   "settings.general": "General",
   "settings.general.hideEResourcesFunctionality.title": "Hide internal agreements knowledgebase",

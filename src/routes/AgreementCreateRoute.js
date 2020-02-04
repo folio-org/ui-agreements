@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
@@ -151,11 +150,11 @@ class AgreementCreateRoute extends React.Component {
     const { resources } = this.props;
     const { query: { addFromBasket } } = resources;
 
-    const externalAgreementLines = get(resources, 'externalAgreementLine.records', []);
+    const externalAgreementLines = resources?.externalAgreementLine?.records ?? [];
 
     let basketLines = [];
     if (resources.query.addFromBasket) {
-      const basket = get(resources, 'basket', []);
+      const basket = resources?.basket ?? [];
 
       basketLines = addFromBasket
         .split(',')
@@ -177,7 +176,7 @@ class AgreementCreateRoute extends React.Component {
 
   getInitialValues = () => {
     const customProperties = {};
-    get(this.props.resources, 'supplementaryProperties.records', [])
+    (this.props.resources?.supplementaryProperties?.records || [])
       .filter(term => term.primary)
       .forEach(term => { customProperties[term.name] = ''; });
     const periods = [{}];
@@ -199,16 +198,16 @@ class AgreementCreateRoute extends React.Component {
         data={{
           agreementLines: this.getAgreementLinesToAdd(),
           agreementLinesToAdd: this.getAgreementLinesToAdd(),
-          agreementStatusValues: get(resources, 'agreementStatusValues.records', []),
-          reasonForClosureValues: get(resources, 'reasonForClosureValues.records', []),
-          amendmentStatusValues: get(resources, 'amendmentStatusValues.records', []),
-          basket: get(resources, 'basket', []),
-          supplementaryProperties: get(resources, 'supplementaryProperties.records', []),
-          contactRoleValues: get(resources, 'contactRoleValues.records', []),
-          isPerpetualValues: get(resources, 'isPerpetualValues.records', []),
-          licenseLinkStatusValues: get(resources, 'licenseLinkStatusValues.records', []),
-          orgRoleValues: get(resources, 'orgRoleValues.records', []),
-          renewalPriorityValues: get(resources, 'renewalPriorityValues.records', []),
+          agreementStatusValues: (resources?.agreementStatusValues?.records ?? []),
+          reasonForClosureValues: (resources?.reasonForClosureValues?.records ?? []),
+          amendmentStatusValues: (resources?.amendmentStatusValues?.records ?? []),
+          basket: (resources?.basket ?? []),
+          supplementaryProperties: (resources?.supplementaryProperties?.records ?? []),
+          contactRoleValues: (resources?.contactRoleValues?.records ?? []),
+          isPerpetualValues: (resources?.isPerpetualValues?.records ?? []),
+          licenseLinkStatusValues: (resources?.licenseLinkStatusValues?.records ?? []),
+          orgRoleValues: (resources?.orgRoleValues?.records ?? []),
+          renewalPriorityValues: (resources?.renewalPriorityValues?.records ?? []),
           users: [],
         }}
         handlers={{
