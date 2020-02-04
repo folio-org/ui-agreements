@@ -163,6 +163,7 @@ module.exports.test = (uiTestCtx) => {
           .click(`#orgs-${row}-link-button`)
           .wait('[data-test-single-search-form] input[type="search"]')
           .type('[data-test-single-search-form] input[type="search"]', org.name)
+          .click('[data-test-single-search-form-submit]')
           .waitUntilNetworkIdle(1000)
           .evaluate((name) => {
             const nameElements = [...document.querySelectorAll('div[role="gridcell"]')];
