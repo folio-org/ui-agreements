@@ -182,8 +182,8 @@ module.exports.test = (uiTestCtx, { eresource }) => {
           }, editedNote)
           .then(() => {
             nightmare
-              .wait('[class*=paneHeaderCenterButton]')
-              .click('[class*=paneHeaderCenterButton]')
+              .wait('[data-test-pane-header-actions-button]')
+              .click('[data-test-pane-header-actions-button]')
               .wait('[data-test-note-delete]')
               .click('[data-test-note-delete]')
               .wait('#clickable-confirm-delete-note-confirm')
