@@ -152,7 +152,6 @@
     "settings.hideEResources.result.1": "隐藏协议应用中的电子资源选项卡",
     "settings.hideEResources.result.2": "隐藏协议应用中的购物篮图标",
     "settings.hideEResources.result.3": "在个别协议中隐藏“本协议涵盖的电子资源”",
-    "errors.unsetAgreementLines": "选择资源并创建此行，或删除它以继续。",
     "interface.name": "界面名称",
     "interface.username": "用户名",
     "interface.password": "密码",
@@ -336,5 +335,6 @@
     "eresources.edition": "Edition",
     "eresources.volume": "Volume",
     "eresources.firstAuthor": "First author",
-    "eresources.firstEditor": "First editor"
+    "eresources.firstEditor": "First editor",
+    "coverage.editionShort": "Ed:"
 }

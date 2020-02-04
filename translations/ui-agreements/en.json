@@ -139,6 +139,7 @@
 
   "coverage.volumeShort": "Vol:",
   "coverage.issueShort": "Iss:",
+  "coverage.editionShort": "Ed:",
 
   "supplementaryProperties": "Supplementary properties",
   "supplementaryProperties.count": "{count, number} saved {count, plural, one {supplementary property} other {supplementary properties}}",

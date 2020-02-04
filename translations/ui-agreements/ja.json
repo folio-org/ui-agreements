@@ -152,7 +152,6 @@
     "settings.hideEResources.result.1": "Hide the E-resources tab in the agreements app",
     "settings.hideEResources.result.2": "Hide the basket icon in the agreements app",
     "settings.hideEResources.result.3": "Hide the \"E-resources covered by this agreement\" accordion in individual agreements",
-    "errors.unsetAgreementLines": "Select a resource and create this line, or delete it to continue.",
     "interface.name": "Interface name",
     "interface.username": "Username",
     "interface.password": "Password",
@@ -336,5 +335,6 @@
     "eresources.edition": "Edition",
     "eresources.volume": "Volume",
     "eresources.firstAuthor": "First author",
-    "eresources.firstEditor": "First editor"
+    "eresources.firstEditor": "First editor",
+    "coverage.editionShort": "Ed:"
 }

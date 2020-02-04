@@ -10,7 +10,7 @@ import {
   Tooltip
 } from '@folio/stripes/components';
 
-import CoverageStatements from '../CoverageStatements';
+import { Coverage } from '../Coverage';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
@@ -64,7 +64,7 @@ export default class LinesList extends React.Component {
     activeFrom: line => <div data-test-active-from>{this.renderDate(line.startDate)}</div>,
     activeTo: line => <div data-test-active-to>{this.renderDate(line.endDate)}</div>,
     count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
-    coverage: line => <CoverageStatements statements={line.coverage} />,
+    coverage: line => <Coverage line={line} />,
     isCustomCoverage: line => {
       if (!line.customCoverage) return '';
       return (

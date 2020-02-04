@@ -9,7 +9,7 @@ import {
   MultiColumnList,
 } from '@folio/stripes/components';
 
-import CoverageStatements from '../CoverageStatements';
+import { Coverage } from '../Coverage';
 import EResourceLink from '../EResourceLink';
 import EResourceType from '../EResourceType';
 
@@ -68,7 +68,8 @@ class BasketList extends React.Component {
             get(resource, '_object.pti.platform.name') ||
             get(resource, '_object.nominalPlatform.name') || '-'
           ),
-          coverage: resource => <CoverageStatements statements={resource._object.coverage} />,
+          // The resource below fits the same shape as the eresources in an agreement line, so we pass them in the eResource prop.
+          coverage: resource => <Coverage eResource={resource} />,
           remove: resource => (
             <FormattedMessage id="ui-agreements.basket.removeItem">
               {ariaLabel => (

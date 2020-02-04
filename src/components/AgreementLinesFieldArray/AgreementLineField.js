@@ -9,7 +9,7 @@ import { Col, Datepicker, KeyValue, Row } from '@folio/stripes/components';
 import { EditCard } from '@folio/stripes-erm-components';
 
 import BasketSelector from '../BasketSelector';
-import CoverageStatement from '../CoverageStatements';
+import { SerialCoverage } from '../Coverage';
 import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
@@ -84,8 +84,8 @@ export default class AgreementLineField extends React.Component {
   }
 
   renderCoverage = (resource) => {
-    const coverage = get(resource, 'coverage');
-    return <CoverageStatement statements={coverage} />;
+    // This is intentional, after talking to Gill a decision was made that behaviour of coverage in the edit screen was to remain blank for monographs.
+    return <SerialCoverage statements={resource.coverage} />;
   }
 
   renderPOLinesFieldArray = () => {

@@ -22,12 +22,12 @@ const checkTableForCustomCoverageIcon = (nightmare, done, tableId) => {
 const checkTableForCustomCoverageData = (nightmare, done, tableId, values) => {
   nightmare
     .evaluate((expectedValues, id) => {
-      const startDates = [...document.querySelectorAll(`#${id} [data-test-coverage-statements] [data-test-start] [data-test-date]`)];
-      const startVolumes = [...document.querySelectorAll(`#${id} [data-test-coverage-statements] [data-test-start] [data-test-volume]`)];
-      const startIssues = [...document.querySelectorAll(`#${id} [data-test-coverage-statements] [data-test-start] [data-test-issue]`)];
-      const endDates = [...document.querySelectorAll(`#${id} [data-test-coverage-statements] [data-test-end] [data-test-date]`)];
-      const endVolumes = [...document.querySelectorAll(`#${id} [data-test-coverage-statements] [data-test-end] [data-test-volume]`)];
-      const endIssues = [...document.querySelectorAll(`#${id} [data-test-coverage-statements] [data-test-end] [data-test-issue]`)];
+      const startDates = [...document.querySelectorAll(`#${id} [data-test-serial-coverage] [data-test-start] [data-test-date]`)];
+      const startVolumes = [...document.querySelectorAll(`#${id} [data-test-serial-coverage] [data-test-start] [data-test-volume]`)];
+      const startIssues = [...document.querySelectorAll(`#${id} [data-test-serial-coverage] [data-test-start] [data-test-issue]`)];
+      const endDates = [...document.querySelectorAll(`#${id} [data-test-serial-coverage] [data-test-end] [data-test-date]`)];
+      const endVolumes = [...document.querySelectorAll(`#${id} [data-test-serial-coverage] [data-test-end] [data-test-volume]`)];
+      const endIssues = [...document.querySelectorAll(`#${id} [data-test-serial-coverage] [data-test-end] [data-test-issue]`)];
 
       expectedValues.coverage.forEach(ec => {
         if (!ec.startDate) return;
