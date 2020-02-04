@@ -112,7 +112,8 @@ module.exports.test = (uiTestCtx) => {
           .click('[aria-rowindex="2"] input[type="checkbox"]')
           .click('[data-test-find-records-modal-save]')
           .wait('#interface-list[aria-rowcount="2"]')
-          .click('#clickable-create-organization')
+          .click('#organization-form-save')
+          .wait(2000)
           .then(done)
           .catch(done);
       });
@@ -125,6 +126,7 @@ module.exports.test = (uiTestCtx) => {
         console.log(`\tCreating ${agreementName}`);
 
         nightmare
+          .wait(5000)
           .wait('#agreements-module-display')
           .click('#clickable-nav-agreements')
           .wait('#clickable-new-agreement')
@@ -159,10 +161,8 @@ module.exports.test = (uiTestCtx) => {
       it('should select org', done => {
         nightmare
           .click(`#orgs-${row}-link-button`)
-          .wait('#input-organization-search')
-          .type('#input-organization-search', orgName)
-          .wait('[data-test-search-and-sort-submit]')
-          .click('[data-test-search-and-sort-submit]')
+          .wait('[data-test-single-search-form] input[type="search"]')
+          .type('[data-test-single-search-form] input[type="search"]', org.name)
           .waitUntilNetworkIdle(1000)
           .evaluate((name) => {
             const nameElements = [...document.querySelectorAll('div[role="gridcell"]')];
