@@ -30,7 +30,6 @@ export default class Info extends React.Component {
   render() {
     const { agreement } = this.props;
     const agreementIsClosed = get(agreement, 'agreementStatus.value') === statuses.CLOSED;
-    const currentPeriodNote = get(agreement.currentPeriod, 'note');
     return (
       <div data-test-agreement-info>
         <Row>
@@ -77,15 +76,11 @@ export default class Info extends React.Component {
             </KeyValue>
           </Col>
         </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.agreements.currentPeriodNote" />}>
-              <div data-test-agreement-current-period-note style={{ whiteSpace: 'pre-wrap' }}>
-                {currentPeriodNote || '-'}
-              </div>
-            </KeyValue>
-          </Col>
-        </Row>
+        <KeyValue label={<FormattedMessage id="ui-agreements.agreements.currentPeriodNote" />}>
+          <div data-test-agreement-current-period-note style={{ whiteSpace: 'pre-wrap' }}>
+            {agreement?.currentPeriod?.note ?? '-'}
+          </div>
+        </KeyValue>
         {agreementIsClosed &&
           <Row>
             <Col xs={4}>
