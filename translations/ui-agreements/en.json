@@ -40,6 +40,7 @@
   "agreements.endDate": "End date",
   "agreements.dateAgreementBegan": "Date agreement began",
   "agreements.cancellationDeadline": "Cancellation deadline",
+  "agreements.currentPeriodNote": "Agreement period note",
   "agreements.renewalPriority": "Renewal priority",
   "agreements.agreementStatus": "Status",
   "agreements.reasonForClosure": "Reason for closure",
