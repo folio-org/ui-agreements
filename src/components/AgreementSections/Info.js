@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
 import {
   Col,
   FormattedUTCDate,
   Headline,
   KeyValue,
+  NoValue,
   Row,
 } from '@folio/stripes/components';
 
@@ -29,7 +29,6 @@ export default class Info extends React.Component {
 
   render() {
     const { agreement } = this.props;
-    const agreementIsClosed = get(agreement, 'agreementStatus.value') === statuses.CLOSED;
     return (
       <div data-test-agreement-info>
         <Row>
@@ -48,7 +47,7 @@ export default class Info extends React.Component {
           <Col xs={12}>
             <KeyValue label={<FormattedMessage id="ui-agreements.agreements.agreementDescription" />}>
               <div data-test-agreement-description style={{ whiteSpace: 'pre-wrap' }}>
-                {agreement.description || '-'}
+                {agreement.description || <NoValue />}
               </div>
             </KeyValue>
           </Col>
@@ -57,43 +56,43 @@ export default class Info extends React.Component {
           <Col xs={4}>
             <KeyValue label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}>
               <div data-test-agreement-cancellation-deadline>
-                {agreement.cancellationDeadline ? <FormattedUTCDate value={agreement.cancellationDeadline} /> : '-'}
+                {agreement.cancellationDeadline ? <FormattedUTCDate value={agreement.cancellationDeadline} /> : <NoValue />}
               </div>
             </KeyValue>
           </Col>
           <Col xs={4}>
             <KeyValue label={<FormattedMessage id="ui-agreements.agreements.renewalPriority" />}>
               <div data-test-agreement-renewal-priority>
-                {get(agreement, 'renewalPriority.label', '-')}
+                {agreement?.renewalPriority?.label ?? <NoValue />}
               </div>
             </KeyValue>
           </Col>
           <Col xs={4}>
             <KeyValue label={<FormattedMessage id="ui-agreements.agreements.isPerpetual" />}>
               <div data-test-agreement-is-perpetual>
-                {get(agreement, 'isPerpetual.label', '-')}
+                {agreement?.isPerpetual?.label ?? <NoValue />}
               </div>
             </KeyValue>
           </Col>
         </Row>
         <KeyValue label={<FormattedMessage id="ui-agreements.agreements.currentPeriodNote" />}>
           <div data-test-agreement-current-period-note style={{ whiteSpace: 'pre-wrap' }}>
-            {agreement?.currentPeriod?.note ?? '-'}
+            {agreement?.currentPeriod?.note ?? <NoValue />}
           </div>
         </KeyValue>
-        {agreementIsClosed &&
+        {agreement?.agreementStatus?.value === statuses.CLOSED &&
           <Row>
             <Col xs={4}>
               <KeyValue label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}>
                 <div data-test-agreement-status>
-                  {get(agreement, 'agreementStatus.label', '-')}
+                  {agreement?.agreementStatus?.label ?? <NoValue />}
                 </div>
               </KeyValue>
             </Col>
             <Col xs={4}>
               <KeyValue label={<FormattedMessage id="ui-agreements.agreements.reasonForClosure" />}>
                 <div data-test-agreement-reason-for-closure>
-                  {get(agreement, 'reasonForClosure.label', '-')}
+                  {agreement?.reasonForClosure?.label ?? <NoValue />}
                 </div>
               </KeyValue>
             </Col>
