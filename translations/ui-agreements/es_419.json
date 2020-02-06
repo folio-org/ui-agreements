@@ -336,5 +336,6 @@
     "eresources.volume": "Volumen",
     "eresources.firstAuthor": "Primer autor",
     "eresources.firstEditor": "First editor",
-    "coverage.editionShort": "Ed:"
+    "coverage.editionShort": "Ed:",
+    "agreements.currentPeriodNote": "Agreement period note"
 }
