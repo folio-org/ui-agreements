@@ -336,5 +336,6 @@
     "eresources.volume": "المجلد",
     "eresources.firstAuthor": "المؤلف الأول",
     "eresources.firstEditor": "المحرر الأول",
-    "coverage.editionShort": "الطبعة:"
+    "coverage.editionShort": "الطبعة:",
+    "agreements.currentPeriodNote": "Agreement period note"
 }
