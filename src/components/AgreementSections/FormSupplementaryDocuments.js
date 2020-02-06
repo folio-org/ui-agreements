@@ -6,7 +6,7 @@ import { FieldArray } from 'react-final-form-arrays';
 import { Accordion } from '@folio/stripes/components';
 import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 
-export default class FormSupplementaryInfo extends React.Component {
+export default class FormSupplementaryDocuments extends React.Component {
   static propTypes = {
     handlers: PropTypes.shape({
       onDownloadFile: PropTypes.func.isRequired,
@@ -19,21 +19,20 @@ export default class FormSupplementaryInfo extends React.Component {
 
   render() {
     const { id, handlers, onToggle, open } = this.props;
-
     return (
       <Accordion
         id={id}
-        label={<FormattedMessage id="ui-agreements.agreements.supplementaryInfo" />}
+        label={<FormattedMessage id="ui-agreements.supplementaryDocuments" />}
         open={open}
         onToggle={onToggle}
       >
         <FieldArray
-          addDocBtnLabel={<FormattedMessage id="ui-agreements.supplementaryInfo.addSupplementaryInfo" />}
+          addDocBtnLabel={<FormattedMessage id="ui-agreements.supplementaryDocs.addSupplementaryDoc" />}
           component={DocumentsFieldArray}
           deleteBtnTooltipMsgId="ui-agreements.doc.removeSupplementaryInformation"
           onDownloadFile={handlers.onDownloadFile}
           onUploadFile={handlers.onUploadFile}
-          isEmptyMessage={<FormattedMessage id="ui-agreements.supplementaryInfo.agreementHasNone" />}
+          isEmptyMessage={<FormattedMessage id="ui-agreements.supplementaryDocs.agreementHasNone" />}
           name="supplementaryDocs"
         />
       </Accordion>

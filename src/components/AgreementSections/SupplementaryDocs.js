@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { Accordion, Badge } from '@folio/stripes/components';
 import { DocumentCard } from '@folio/stripes-erm-components';
 
-export default class SupplementaryInfo extends React.Component {
+export default class SupplementaryDocs extends React.Component {
   static propTypes = {
     handlers: PropTypes.shape({
       onDownloadFile: PropTypes.func,
@@ -56,13 +56,13 @@ export default class SupplementaryInfo extends React.Component {
         id={id}
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
-        label={<FormattedMessage id="ui-agreements.agreements.supplementaryInfo" />}
+        label={<FormattedMessage id="ui-agreements.supplementaryDocuments" />}
         open={open}
         onToggle={onToggle}
       >
         {supplementaryDocs.length ?
           this.renderDocs(supplementaryDocs) :
-          <FormattedMessage id="ui-agreements.supplementaryInfo.agreementHasNone" />
+          <FormattedMessage id="ui-agreements.supplementaryDocs.agreementHasNone" />
         }
       </Accordion>
     );

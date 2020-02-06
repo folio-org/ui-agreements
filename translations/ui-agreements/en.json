@@ -71,7 +71,6 @@
   "agreements.licenseAndBusTerms": "License and business terms",
   "agreements.licenseInfo": "License information",
   "agreements.organizations": "Organizations",
-  "agreements.supplementaryInfo": "Supplementary information",
   "agreements.eresourceAgreementLines": "E-resources - agreement lines",
   "agreements.eresourcesCovered": "E-resources covered by this agreement",
   "agreements.assocAgreements": "Associated agreements",
@@ -142,6 +141,16 @@
   "coverage.volumeShort": "Vol:",
   "coverage.issueShort": "Iss:",
   "coverage.editionShort": "Ed:",
+
+  "supplementaryProperties": "Supplementary properties",
+  "supplementaryProperties.count": "{count, number} saved {count, plural, one {supplementary property} other {supplementary properties}}",
+  "supplementaryProperties.callout.delete.error": "There was an error deleting the supplementary property. {error}",
+  "supplementaryProperties.callout.delete.success": "Supplementary property successfully deleted.",
+  "supplementaryProperties.callout.save.error": "There was an error saving the supplementary property. {error}",
+  "supplementaryProperties.callout.save.success": "Supplementary property successfully saved.",
+  "supplementaryProperties.callout.delete.supplementaryPropertyInUse": "<strong>Supplementary property</strong> was not deleted because it is in use on one or more agreements.",
+  "supplementaryProperties.optionalProperties": "Optional properties",
+  "supplementaryProperties.primaryProperties": "Primary properties",
 
   "duplicateAgreementModal.message": "Please select which sections of the agreement to duplicate",
   "duplicateAgreementModal.agreementInfo": "Agreement information",
@@ -338,6 +347,8 @@
   "relatedAgreements.replaceAgreement": "Replace agreement",
   "relatedAgreements.replaceAgreementSpecific": "Replace agreement {agreementName}",
 
+  "section.supplementaryProperties": "Supplementary properties",
+
   "usageData": "Usage data",
   "usageData.addUDP": "Add usage data provider",
   "usageData.agreementHasNone": "Agreement has no usage data providers.",
@@ -353,13 +364,14 @@
   "usageData.usageDataProviderIndex": "Usage data provider {index}",
 
   "viewUDP.name": "Name",
-  
+
   "doc.removeExternalLicense": "Remove external license {index}",
   "doc.removeSupplementaryInformation": "Remove document {index}",
 
-  "supplementaryInfo.agreementHasNone": "Agreement has no supplementary documents",
-  "supplementaryInfo.addSupplementaryInfo": "Add supplementary document",
-  "supplementaryInfo.removeSupplementaryInfo": "Remove document",
+  "supplementaryDocs.agreementHasNone": "Agreement has no supplementary documents",
+  "supplementaryDocs.addSupplementaryDoc": "Add supplementary document",
+  "supplementaryDocuments": "Supplementary documents",
+
   "settings.general": "General",
   "settings.general.hideEResourcesFunctionality.title": "Hide internal agreements knowledgebase",
   "settings.general.hideEResourcesFunctionality.description": "If you are using another app (e.g. eHoldings) as your knowledge base and wish to hide the internal agreements knowledge base, you can check this setting. Specifically, this will:",
@@ -368,5 +380,6 @@
   "settings.hideEResources.result.3": "Hide the \"E-resources covered by this agreement\" accordion in individual agreements",
   "settings.orgRoles": "Organization roles",
   "settings.orgRoles.orgRole": "Organization role",
-  "settings.orgRoles.role": "Role"
+  "settings.orgRoles.role": "Role",
+  "settings.supplementaryProperties": "Supplementary properties"
 }

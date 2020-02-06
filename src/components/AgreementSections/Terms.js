@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Accordion } from '@folio/stripes/components';
-import { LicenseTermsList } from '@folio/stripes-erm-components';
+import { CustomPropertiesList } from '@folio/stripes-erm-components';
 
 export default class Terms extends React.Component {
   static propTypes = {
@@ -24,11 +24,10 @@ export default class Terms extends React.Component {
 
   renderTermsList = (controllingLicense) => {
     const license = controllingLicense.remoteId_object;
-
     return (
-      <LicenseTermsList
-        license={license}
-        terms={this.props.data.terms}
+      <CustomPropertiesList
+        customProperties={this.props.data.terms}
+        resource={license}
       />
     );
   }
@@ -50,7 +49,7 @@ export default class Terms extends React.Component {
         open={open}
         onToggle={onToggle}
       >
-        { controllingLicense ?
+        {controllingLicense ?
           this.renderTermsList(controllingLicense) :
           <FormattedMessage id="ui-agreements.license.noControllingLicense" />
         }

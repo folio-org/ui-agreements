@@ -15,7 +15,7 @@
     "build": "stripes build --output ./output",
 
     "test": "yarn run test-bigtest-once; yarn run test-nightmare",
-    "test-nightmare": "stripes test nightmare --run nav/agreement-crud/contacts/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/agreement-notes/package-notes/title-notes/related-agreements",
+    "test-nightmare": "stripes test nightmare --run nav/agreement-crud/contacts/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/agreement-notes/package-notes/title-notes/related-agreements/supplementary-property-config",
     "test-bigtest": "stripes test karma",
     "test-bigtest-once": "stripes test karma --karma.singleRun",
     "test-erm": "yarn run test-nightmare; yarn run test-licenses-int",
@@ -42,6 +42,7 @@
     "test-license-terms": "stripes test nightmare --run license-terms",
     "test-ekb-int": "stripes test nightmare --run ekb-int",
     "test-po-lines": "stripes test nightmare --run po-lines",
+    "test-supplementary-property-config": "stripes test nightmare --run supplementary-property-config",
     "test-eusage": "stripes test nightmare --run eusage",
     "lint": "eslint src test"
   },
@@ -67,7 +68,8 @@
     "sinon": "^7.5.0"
   },
   "dependencies": {
-    "@folio/stripes-erm-components": "^2.0.0",
+    "@folio/stripes-erm-components": "^2.3.0",
+    "@folio/react-intl-safe-html": "^1.0.3",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
     "final-form-arrays": "^3.0.1",
@@ -134,6 +136,7 @@
           "module.agreements.enabled",
           "erm.agreements.view",
           "erm.contacts.view",
+          "erm.custprops.view",
           "erm.files.view",
           "erm.orgs.view",
           "licenses.custprops.view"
@@ -166,6 +169,15 @@
           "module.agreements.enabled",
           "settings.enabled",
           "configuration.all"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.supplementaryProperties.manage",
+        "displayName": "Settings (Agreements): Manage agreement supplementary properties",
+        "visible": true,
+        "subPermissions": [
+          "settings.agreements.enabled",
+          "erm.custprops.manage"
         ]
       }
     ],

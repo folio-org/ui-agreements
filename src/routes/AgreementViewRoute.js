@@ -83,6 +83,11 @@ class AgreementViewRoute extends React.Component {
       fetch: props => !!props.stripes.hasInterface('order-lines', '1.0'),
       records: 'poLines',
     },
+    supplementaryProperties: {
+      type: 'okapi',
+      path: 'erm/custprops',
+      throwErrors: false,
+    },
     terms: {
       type: 'okapi',
       path: 'licenses/custprops',
@@ -241,7 +246,7 @@ class AgreementViewRoute extends React.Component {
     const agreementEresourcesUrl = get(resources, 'agreementEresources.url', '');
     // If a new agreement is selected or if the filter has changed return undefined
     return (agreementEresourcesUrl.indexOf(`${match.params.id}`) === -1 ||
-    agreementEresourcesUrl.indexOf(`resources/${resources.eresourcesFilterPath}`) === -1)
+      agreementEresourcesUrl.indexOf(`resources/${resources.eresourcesFilterPath}`) === -1)
       ?
       undefined
       :
@@ -385,6 +390,7 @@ class AgreementViewRoute extends React.Component {
           agreement: this.getCompositeAgreement(),
           eresourcesFilterPath: this.props.resources.eresourcesFilterPath,
           searchString: this.props.location.search,
+          supplementaryProperties: get(resources, 'supplementaryProperties.records', []),
           terms: get(resources, 'terms.records', []),
         }}
         handlers={{

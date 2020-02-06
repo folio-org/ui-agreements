@@ -91,6 +91,11 @@ class AgreementEditRoute extends React.Component {
       path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
       shouldRefresh: () => false,
     },
+    supplementaryProperties: {
+      type: 'okapi',
+      path: 'erm/custprops',
+      shouldRefresh: () => false,
+    },
     users: {
       type: 'okapi',
       path: 'users',
@@ -134,7 +139,7 @@ class AgreementEditRoute extends React.Component {
       agreement: PropTypes.object,
       orgRoleValues: PropTypes.object,
       statusValues: PropTypes.object,
-      terms: PropTypes.object,
+      supplementaryProperties: PropTypes.object,
       typeValues: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
@@ -210,6 +215,13 @@ class AgreementEditRoute extends React.Component {
             };
           })
       }));
+
+      // Add the default supplementaryProperties to the already-set supplementaryProperties.
+      initialValues.customProperties = initialValues.customProperties || {};
+      const supplementaryProperties = get(props.resources, 'supplementaryProperties.records', []);
+      supplementaryProperties
+        .filter(t => t.primary && initialValues.customProperties[t.name] === undefined)
+        .forEach(t => { initialValues.customProperties[t.name] = ''; });
 
       compose(
         joinRelatedAgreements,
@@ -327,6 +339,7 @@ class AgreementEditRoute extends React.Component {
           orderLines: get(resources, 'orderLines.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
           renewalPriorityValues: get(resources, 'renewalPriorityValues.records', []),
+          supplementaryProperties: get(resources, 'supplementaryProperties.records', []),
           users: get(resources, 'users.records', []),
         }}
         handlers={{

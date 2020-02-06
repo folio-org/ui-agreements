@@ -31,7 +31,8 @@ import {
   Organizations,
   OtherPeriods,
   RelatedAgreements,
-  SupplementaryInfo,
+  SupplementaryDocs,
+  SupplementaryProperties,
   Terms,
   UsageData,
 } from '../AgreementSections';
@@ -69,7 +70,8 @@ export default class Agreement extends React.Component {
       organizations: false,
       otherPeriods: false,
       relatedAgreements: false,
-      supplementaryInfo: false,
+      supplementaryProperties: false,
+      supplementaryDocs: false,
       terms: false,
       usageData: false,
     },
@@ -238,7 +240,8 @@ export default class Agreement extends React.Component {
               <Terms {...this.getSectionProps('terms')} />
               <Organizations {...this.getSectionProps('organizations')} />
               <OtherPeriods {...this.getSectionProps('otherPeriods')} />
-              <SupplementaryInfo {...this.getSectionProps('supplementaryInfo')} />
+              <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} />
+              <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} />
               <UsageData {...this.getSectionProps('usageData')} />
               <RelatedAgreements {...this.getSectionProps('relatedAgreements')} />
               <NotesSmartAccordion
