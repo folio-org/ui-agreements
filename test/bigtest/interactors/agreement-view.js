@@ -19,7 +19,7 @@ import DuplicateAgreementModalInteractor from './duplicate-agreement-modal';
 export default @interactor class AgreementViewInteractor {
   isViewAgreement = isPresent('#pane-view-agreement');
   lines = new AgreementLinesInteractor();
-  headerDropdown = new HeaderDropdown('[class*=paneHeaderCenterInner---] [class*=dropdown---]');
+  headerDropdown = new HeaderDropdown('[data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
   duplicateAgreementModal = new DuplicateAgreementModalInteractor();
   expandAll = clickable('#clickable-expand-all');

@@ -1,16 +1,20 @@
 /* global describe, it, before, after, Nightmare */
 
 const generateNumber = () => Math.round(Math.random() * 100000);
-
+const agreementName = `Orgs Agreement #${generateNumber()}`;
 const ORGS = [{
+  code: `Code #${generateNumber()}`,
   name: `Content Provider ${generateNumber()}`,
   role: 'Content Provider',
+  status: 'Active',
   toDelete: true,
 }, {
+  code: `Code #${generateNumber()}`,
   name: `Vendor ${generateNumber()}`,
   role: 'Vendor',
-  editedName: `Subscription Agent ${generateNumber()}`,
+  editedName: ` turned into Subscription Agent ${generateNumber()}`,
   editedRole: 'Subscription Agent',
+  status: 'Active',
 }];
 
 
@@ -35,15 +39,38 @@ module.exports.test = (uiTestCtx) => {
         helpers.logout(nightmare, config, done);
       });
 
+      it('should open organizations app', done => {
+        helpers.clickApp(nightmare, done, 'organizations');
+      });
+
+      orgs.forEach((org) => {
+        it(`should create org ${org.name}`, done => {
+          nightmare
+            .wait('#organizations-module-display')
+            .wait('#clickable-neworganization')
+            .click('#clickable-neworganization')
+            .waitUntilNetworkIdle(2000)
+            .wait('input[name="name"]')
+            .wait('input[name="name"]')
+            .insert('input[name="name"]', org.name)
+            .wait('input[name="code"]')
+            .insert('input[name="code"]', org.code)
+            .wait('select[name="status"]')
+            .type('select[name="status"]', org.status)
+            .waitUntilNetworkIdle(2000)
+            .click('#organization-form-save')
+            .wait(2000)
+            .then(done)
+            .catch(done);
+        });
+      });
+
       it('should open agreements app', done => {
         helpers.clickApp(nightmare, done, 'agreements');
       });
 
-
-      it('should navigate to create agreements page', done => {
-        const name = `Orgs Agreement #${generateNumber()}`;
-
-        console.log(`\tCreating ${name}`);
+      it(`should navigate to create agreements page and create agreement ${agreementName}`, done => {
+        console.log(`\tCreating ${agreementName}`);
 
         nightmare
           .wait('#agreements-module-display')
@@ -52,7 +79,7 @@ module.exports.test = (uiTestCtx) => {
           .click('#clickable-new-agreement')
           .waitUntilNetworkIdle(2000)
           .wait('#edit-agreement-name')
-          .insert('#edit-agreement-name', name)
+          .insert('#edit-agreement-name', agreementName)
           .click('#period-start-date-0')
           .type('#period-start-date-0', '\u000d') // "Enter" selects current date
           .type('#edit-agreement-status', 'draft')
@@ -79,21 +106,20 @@ module.exports.test = (uiTestCtx) => {
 
         it('should select org', done => {
           nightmare
+            .wait(`#orgs-${row}-link-button`)
             .click(`#orgs-${row}-link-button`)
-            .wait(`#list-plugin-find-organization [aria-rowindex="${row + 3}"] > a`)
-            .click(`#list-plugin-find-organization [aria-rowindex="${row + 3}"] > a`)
+            .wait('[data-test-single-search-form] input[type="search"]')
+            .type('[data-test-single-search-form] input[type="search"]', org.name)
             .waitUntilNetworkIdle(2000)
-            .evaluate((r, _orgs) => {
-              const orgElement = document.querySelector(`#orgs-${r}-name`);
-              const name = orgElement.textContent;
-              if (!name) {
-                throw Error('Org name is not displayed');
-              }
-              return name;
-            }, row, orgs)
-            .then(name => {
-              orgs[row].name = name;
-            })
+            .click('[data-test-single-search-form-submit]')
+            .waitUntilNetworkIdle(2000)
+            .evaluate((name) => {
+              const nameElements = [...document.querySelectorAll('div[role="gridcell"]')];
+              const organization = nameElements.find(e => e.textContent === name);
+              if (!organization) throw new Error(`Could not find the organization ${name}`);
+              organization.click();
+            }, org.name)
+            .waitUntilNetworkIdle(2000)
             .then(done)
             .catch(done);
         });
@@ -144,38 +170,44 @@ module.exports.test = (uiTestCtx) => {
         });
       });
 
-      it('should open edit Agreement', done => {
-        nightmare
-          .wait('#clickable-edit-agreement')
-          .click('#clickable-edit-agreement')
-          .waitUntilNetworkIdle(2000)
-          .then(done)
-          .catch(done);
-      });
+      if (orgToEdit) {
+        it('should open organizations app', done => {
+          helpers.clickApp(nightmare, done, 'organizations');
+        });
 
-      orgs.forEach((org, i) => {
-        it(`should find correctly loaded values for org ${i}`, done => {
+        it(`should edit org ${orgToEdit.name}`, done => {
           nightmare
-            .evaluate(o => {
-              const orgElements = [...document.querySelectorAll('[data-test-org-name]')];
-              const orgElement = orgElements.find(e => e.textContent === o.name);
-              if (!orgElement) {
-                throw Error(`Failed to find org name picker with loaded org of ${o.name}`);
-              }
-
-              const roleElementId = orgElement.id.replace('name', 'role');
-              const roleElement = document.getElementById(roleElementId);
-              const roleValue = roleElement.selectedOptions[0].textContent;
-              if (roleValue !== o.role) {
-                throw Error(`Expected ${o.name}'s role to be ${o.role}. It is ${roleValue}.`);
-              }
-            }, org)
+            .wait('[data-test-single-search-form] input[type="search"]')
+            .type('[data-test-single-search-form] input[type="search"]', orgToEdit.name)
+            .click('[data-test-single-search-form-submit]')
+            .waitUntilNetworkIdle(2000)
+            .wait('[data-test-button-edit-organization]')
+            .click('[data-test-button-edit-organization]')
+            .waitUntilNetworkIdle(2000)
+            .wait('input[name="name"]')
+            .wait('input[name="name"]')
+            .insert('input[name="name"]', orgToEdit.editedName)
+            .wait('input[name="code"]')
+            .waitUntilNetworkIdle(2000)
+            .click('#organization-form-save')
+            .waitUntilNetworkIdle(2000)
             .then(done)
             .catch(done);
         });
-      });
 
-      if (orgToEdit) {
+        it('should open agreements app', done => {
+          helpers.clickApp(nightmare, done, 'agreements');
+        });
+
+        it('should open edit Agreement', done => {
+          nightmare
+            .wait('#clickable-edit-agreement')
+            .click('#clickable-edit-agreement')
+            .waitUntilNetworkIdle(2000)
+            .then(done)
+            .catch(done);
+        });
+
         it('should edit agreement', done => {
           nightmare
             .evaluate(o => {
@@ -184,15 +216,23 @@ module.exports.test = (uiTestCtx) => {
               if (index === -1) {
                 throw Error(`Failed to find org value of ${o.name}`);
               }
-
               return index;
             }, orgToEdit)
             .then(row => {
               return nightmare
                 .wait(`#orgs-${row}-link-button`)
                 .click(`#orgs-${row}-link-button`)
-                .wait('#list-plugin-find-organization [aria-rowindex="12"] > a')
-                .click('#list-plugin-find-organization [aria-rowindex="12"] > a')
+                .wait('[data-test-single-search-form] input[type="search"]')
+                .type('[data-test-single-search-form] input[type="search"]', orgToEdit.name + orgToEdit.editedName)
+                .waitUntilNetworkIdle(2000)
+                .click('[data-test-single-search-form-submit]')
+                .waitUntilNetworkIdle(2000)
+                .evaluate((name, editedName) => {
+                  const nameElements = [...document.querySelectorAll('div[role="gridcell"]')];
+                  const organization = nameElements.find(e => e.textContent === name + editedName);
+                  if (!organization) throw new Error(`Could not find the organization ${name}${editedName}`);
+                  organization.click();
+                }, orgToEdit.name, orgToEdit.editedName)
                 .waitUntilNetworkIdle(2000)
                 .wait(`#orgs-${row}-role`)
                 .click(`#orgs-${row}-role`)

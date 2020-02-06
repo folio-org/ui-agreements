@@ -43,12 +43,14 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .click('#clickable-edit-agreement')
           .waitUntilNetworkIdle(2000)
-          .wait('[data-test-ag-line-number="0"] #find-record-trigger')
-          .click('[data-test-ag-line-number="0"] #find-record-trigger')
+          .wait('#agreement-form-lines [data-test-ag-line-number="0"] #add-poline-btn-0')
+          .click('#agreement-form-lines [data-test-ag-line-number="0"] #add-poline-btn-0')
+          .waitUntilNetworkIdle(2000)
+          .wait('#edit-poline-0-0-find-poline-btn')
+          .click('#edit-poline-0-0-find-poline-btn')
           .wait('#clickable-filter-receiptStatus-pending')
           .click('#clickable-filter-receiptStatus-pending')
           .waitUntilNetworkIdle(2000)
-          .wait('#list-plugin-find-records [class*=mclScrollable] [aria-rowindex="2"]')
           .evaluate(() => {
             const row = document.querySelector('#list-plugin-find-records [class*=mclScrollable] [aria-rowindex="2"]');
             return {
@@ -56,14 +58,17 @@ module.exports.test = (uiTestCtx) => {
               title: row.children[1].textContent,
             };
           })
+          .waitUntilNetworkIdle(2000)
           .then(selectedPOLine => {
             poLine = { ...selectedPOLine };
 
             nightmare
               .click('#list-plugin-find-records [class*=mclScrollable] [aria-rowindex="2"]')
-              .wait('#clickable-unlink-poline-0')
+              //  .wait('#clickable-unlink-poline-0')
+              //  .wait('#poline-delete-0-0')
+              .wait(5000)
               .evaluate(_selectedPOLine => {
-                const header = document.querySelector('#edit-poline-card-0 [data-test-card-header-start]').innerText;
+                const header = document.querySelector('[data-test-po-line-number]').innerText;
                 const title = document.querySelector('[data-test-poline-title]').innerText;
 
                 if (header.indexOf(_selectedPOLine.poLineNumber) < 0) {
@@ -93,6 +98,7 @@ module.exports.test = (uiTestCtx) => {
           .wait('#accordion-toggle-button-lines')
           .click('#accordion-toggle-button-lines')
           .wait('#agreement-lines a[data-test-po-line]')
+          .waitUntilNetworkIdle(2000)
           .evaluate(_poLine => {
             const poLineLink = document.querySelector('#agreement-lines a[data-test-po-line]');
             if (!poLineLink) {
