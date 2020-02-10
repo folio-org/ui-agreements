@@ -22,6 +22,7 @@ class SupplementaryPropertiesConfigForm extends React.Component {
     }).isRequired,
     onDelete: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
+    pickLists: PropTypes.arrayOf(PropTypes.object),
   };
 
   sendCallout = (operation, outcome, error = '') => {
@@ -94,6 +95,7 @@ class SupplementaryPropertiesConfigForm extends React.Component {
   render() {
     const {
       form: { mutators },
+      pickLists,
     } = this.props;
 
     const count = get(this.props, 'initialValues.customProperties.length', 0);
@@ -119,6 +121,7 @@ class SupplementaryPropertiesConfigForm extends React.Component {
             name="customProperties"
             onDelete={customProperty => this.handleDelete(customProperty)}
             onSave={customProperty => this.handleSave(customProperty)}
+            pickLists={pickLists}
             translationKey="supplementaryProperty"
           />
         </form>

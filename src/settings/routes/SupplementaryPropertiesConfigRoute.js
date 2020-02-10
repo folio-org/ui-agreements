@@ -15,6 +15,14 @@ class SupplementaryPropertiesConfigRoute extends React.Component {
       clientGeneratePk: false,
       throwErrors: false,
     },
+    pickLists: {
+      type: 'okapi',
+      path: 'erm/refdata',
+      params: {
+        perPage: '100',
+        sort: 'desc;asc',
+      }
+    }
   });
 
   static propTypes = {
@@ -33,6 +41,7 @@ class SupplementaryPropertiesConfigRoute extends React.Component {
   state = {
     // loadedAt is used in gDSFP to determine whether to reinit form values
     loadedAt: new Date(), // eslint-disable-line react/no-unused-state
+    pickLists: [],
     supplementaryProperties: [],
   }
 
@@ -45,6 +54,14 @@ class SupplementaryPropertiesConfigRoute extends React.Component {
       newState.supplementaryProperties = supplementaryProperties.records.map(supplementaryProperty => ({
         ...supplementaryProperty,
         category: supplementaryProperty.category ? supplementaryProperty.category.id : undefined,
+      }));
+    }
+
+    const pickLists = get(props, 'resources.pickLists.records', []);
+    if (pickLists.length !== state.pickLists.length) {
+      newState.pickLists = pickLists.map(p => ({
+        label: p.desc,
+        value: p.id,
       }));
     }
 
@@ -66,7 +83,7 @@ class SupplementaryPropertiesConfigRoute extends React.Component {
   }
 
   render() {
-    const { supplementaryProperties } = this.state;
+    const { pickLists, supplementaryProperties } = this.state;
 
     return (
       <SupplementaryPropertiesConfigForm
@@ -74,6 +91,7 @@ class SupplementaryPropertiesConfigRoute extends React.Component {
         onDelete={this.handleDelete}
         onSave={this.handleSave}
         onSubmit={this.handleSave}
+        pickLists={pickLists}
       />
     );
   }
