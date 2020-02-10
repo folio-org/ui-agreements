@@ -15,7 +15,7 @@
     "build": "stripes build --output ./output",
 
     "test": "yarn run test-bigtest-once; yarn run test-nightmare",
-    "test-nightmare": "stripes test nightmare --run nav/agreement-crud/contacts/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/agreement-notes/package-notes/title-notes/related-agreements/supplementary-property-config",
+    "test-nightmare": "stripes test nightmare --run nav/agreement-crud/contacts/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/agreement-notes/package-notes/title-notes/related-agreements/pick-lists/supplementary-property-config",
     "test-bigtest": "stripes test karma",
     "test-bigtest-once": "stripes test karma --karma.singleRun",
     "test-erm": "yarn run test-nightmare; yarn run test-licenses-int",
@@ -41,6 +41,7 @@
     "test-linked-license-warnings": "stripes test nightmare --run linked-license-warnings",
     "test-license-terms": "stripes test nightmare --run license-terms",
     "test-ekb-int": "stripes test nightmare --run ekb-int",
+    "test-pick-lists": "stripes test nightmare --run pick-lists",
     "test-po-lines": "stripes test nightmare --run po-lines",
     "test-supplementary-property-config": "stripes test nightmare --run supplementary-property-config",
     "test-eusage": "stripes test nightmare --run eusage",
@@ -169,6 +170,15 @@
           "module.agreements.enabled",
           "settings.enabled",
           "configuration.all"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.picklists.manage",
+        "displayName": "Settings (Agreements): Manage pick lists and values",
+        "visible": true,
+        "subPermissions": [
+          "settings.agreements.enabled",
+          "erm.refdata.manage"
         ]
       },
       {

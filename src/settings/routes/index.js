@@ -1,1 +1,3 @@
-export { default as SupplementaryPropertiesConfigRoute } from './SupplementaryPropertiesConfigRoute'; // eslint-disable-line import/prefer-default-export
+export { default as PickListSettings } from './PickListSettings';
+export { default as PickListValueSettings } from './PickListValueSettings';
+export { default as SupplementaryPropertiesConfigRoute } from './SupplementaryPropertiesConfigRoute';
