@@ -60,7 +60,7 @@ export default class PackageInfo extends React.Component {
           <Col xs={4}>
             <KeyValue
               label="Provider"
-              value="-"
+              value={eresource?.vendor?.name || '-'}
             />
           </Col>
           <Col xs={4}>
