@@ -12,7 +12,7 @@ import {
 } from '@folio/stripes/components';
 
 import { composeValidators } from '@folio/stripes-erm-components';
-import { validators } from '../utilities';
+import { parseDateOnlyString, validators } from '../utilities';
 
 const multipleOpenEndedCoverages = (...rest) => (
   validators.multipleOpenEnded(...rest, 'ui-agreements.errors.multipleOpenEndedCoverages')
@@ -51,12 +51,12 @@ export default class CustomCoverageField extends React.Component {
           <Col xs={4}>
             <Field
               backendDateStandard="YYYY-MM-DD"
-              dateFormat="YYYY-MM-DD"
               component={Datepicker}
               id={`cc-start-date-${index}`}
               inputRef={this.inputRef}
               label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
               name={`${name}.startDate`}
+              parser={parseDateOnlyString}
               required
               validate={composeValidators(
                 validators.requiredStartDate,
@@ -89,12 +89,12 @@ export default class CustomCoverageField extends React.Component {
           <Col xs={4}>
             <Field
               backendDateStandard="YYYY-MM-DD"
-              dateFormat="YYYY-MM-DD"
               component={Datepicker}
               id={`cc-end-date-${index}`}
               label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
               name={`${name}.endDate`}
               parse={v => v} // Lets us send an empty string instead of `undefined`
+              parser={parseDateOnlyString}
               validate={composeValidators(
                 validators.dateOrder,
                 multipleOpenEndedCoverages,

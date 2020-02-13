@@ -82,7 +82,7 @@ describe('Package Content Filters', () => {
         await basket.clickCreateNewAgreement();
         await agreementForm.fillName('testAgreement');
         await agreementForm.selectStatus('Draft');
-        await agreementForm.fillStartDate('2020-04-01');
+        await agreementForm.fillStartDate('04/01/2020');
         await agreementForm.createAgreement();
         await agreementView.whenLoaded();
       });

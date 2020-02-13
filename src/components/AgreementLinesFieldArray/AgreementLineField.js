@@ -14,7 +14,7 @@ import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
 import EResourceType from '../EResourceType';
-import { isExternal, isPackage } from '../utilities';
+import { isExternal, isPackage, parseDateOnlyString } from '../utilities';
 
 import CustomCoverageFieldArray from './CustomCoverageFieldArray';
 import POLinesFieldArray from './POLinesFieldArray';
@@ -156,11 +156,11 @@ export default class AgreementLineField extends React.Component {
             <Field
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
-              dateFormat="YYYY-MM-DD"
               id={`agreement-line-${index}-active-from`}
               label={<FormattedMessage id="ui-agreements.eresources.activeFrom" />}
               name={`${name}.activeFrom`}
               parse={v => v} // Lets us send an empty string instead of `undefined`
+              parser={parseDateOnlyString}
               validate={this.validateDateOrder}
             />
           </Col>
@@ -168,11 +168,11 @@ export default class AgreementLineField extends React.Component {
             <Field
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
-              dateFormat="YYYY-MM-DD"
               id={`agreement-line-${index}-active-to`}
               label={<FormattedMessage id="ui-agreements.eresources.activeTo" />}
               name={`${name}.activeTo`}
               parse={v => v} // Lets us send an empty string instead of `undefined`
+              parser={parseDateOnlyString}
               validate={this.validateDateOrder}
             />
           </Col>

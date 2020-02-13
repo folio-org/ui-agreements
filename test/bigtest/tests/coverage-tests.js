@@ -47,8 +47,8 @@ const serial = {
     }
   },
   coverage: [{
-    startDate: '2001-12-06',
-    endDate: '2007-10-05',
+    startDate: '12/06/2001',
+    endDate: '10/05/2007',
     startVolume: '76',
     startIssue: '1',
     endVolume: '79',

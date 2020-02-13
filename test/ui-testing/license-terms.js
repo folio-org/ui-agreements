@@ -7,7 +7,7 @@ module.exports.test = (uiTestCtx) => {
     name: `Controlling License #${number}`,
     note: `This controlling license was automatically created and linked for run ${number}`,
     status: 'Controlling',
-    startDate: '2018-07-01',
+    startDate: '07/01/2018',
   }];
 
   const term = {

@@ -50,6 +50,8 @@ export default function config() {
 
   this.get('/erm/resource/:id/entitlementOptions', () => []);
 
+  this.get('/erm/custprops', () => []);
+
   this.get('/erm/resource/:id/entitlements', () => ({ results: [] }));
 
   this.get('/erm/packages/:id/content/current', (schema) => ({
