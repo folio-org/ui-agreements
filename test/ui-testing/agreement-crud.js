@@ -15,8 +15,8 @@ const generateAgreementValues = () => {
 };
 
 const agreementLines = () => {
-  const activeFrom = '2019-10-13';
-  const activeTo = '2030-10-31';
+  const activeFrom = '10/13/2019';
+  const activeTo = '10/31/2020';
   return {
     activeFrom,
     activeTo,
@@ -42,8 +42,8 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
     .click('#period-start-date-0')
     .type('#period-start-date-0', '\u000d') // "Enter" selects current date
 
-    .insert('#period-end-date-0', '2088-01-31')
-    .insert('#period-cancellation-deadline-0', '2088-01-15')
+    .insert('#period-end-date-0', '01/31/2088')
+    .insert('#period-cancellation-deadline-0', '01/15/2088')
 
     .type('#edit-agreement-status', 'draft')
     .type('#edit-agreement-renewal-priority', 'for')
@@ -176,11 +176,11 @@ module.exports.test = (uiTestCtx) => {
           .insert('#edit-agreement-name', values.editedName)
 
           .click('#datepicker-clear-button-period-start-date-0')
-          .insert('#period-start-date-0', '2019-10-31')
+          .insert('#period-start-date-0', '10/31/2019')
           .click('#datepicker-clear-button-period-end-date-0')
-          .insert('#period-end-date-0', '2020-10-31')
+          .insert('#period-end-date-0', '10/31/2020')
           .click('#datepicker-clear-button-period-cancellation-deadline-0')
-          .insert('#period-cancellation-deadline-0', '2020-10-15')
+          .insert('#period-cancellation-deadline-0', '10/15/2020')
 
           .type('#edit-agreement-status', values.editedStatus)
           .type('#edit-agreement-renewal-priority', values.editedRenewalPriority)

@@ -114,7 +114,7 @@ describe('PO Lines', () => {
               describe('save agreement', () => {
                 beforeEach(async function () {
                   await agreementForm.fillName(faker.company.companyName());
-                  await agreementForm.fillStartDate('2019-01-01');
+                  await agreementForm.fillStartDate('01/01/2019');
                   await agreementForm.selectStatus('Draft');
                   await agreementForm.createAgreement();
 

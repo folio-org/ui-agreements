@@ -65,18 +65,18 @@ module.exports.test = (uiTestCtx) => {
       name: `Custom Coverage Agreement #${Math.round(Math.random() * 100000)}`,
       coverage: [
         {
-          startDate: '2001-01-01',
+          startDate: '01/01/2001',
           startVolume: '1',
           startIssue: '11',
-          endDate: '2010-12-31',
+          endDate: '12/31/2010',
           endVolume: '10',
           endIssue: '12',
         },
         {
-          startDate: '2021-01-01',
+          startDate: '01/01/2021',
           startVolume: 'A',
           startIssue: 'AA',
-          endDate: '2030-12-31',
+          endDate: '12/31/2030',
           endVolume: 'B',
           endIssue: 'Z',
         }

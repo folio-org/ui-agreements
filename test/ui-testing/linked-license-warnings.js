@@ -7,17 +7,17 @@ module.exports.test = (uiTestCtx) => {
     name: `Controlling Warnings License #${number}`,
     note: `This controlling license was automatically created and linked for run ${number}`,
     status: 'Controlling',
-    startDate: '2018-07-01',
+    startDate: '07/01/2018',
   }, {
     name: `Future Warnings License #${number}`,
     note: `This future license was automatically created and linked for run ${number}`,
     status: 'Future',
-    startDate: '2028-07-01',
+    startDate: '07/01/2028',
   }, {
     name: `Historical Warnings License #${number}`,
     note: `This historical license was automatically created and linked for run ${number}`,
     status: 'Historical',
-    startDate: '2008-07-01',
+    startDate: '07/01/2008',
   }];
 
   const amendments = [{
@@ -33,11 +33,11 @@ module.exports.test = (uiTestCtx) => {
     note: 'This is a rejected amendment',
   }, {
     name: 'Start Date Amendment',
-    startDate: '2119-11-26',
+    startDate: '11/26/2019',
     note: 'This is an amendment with start date in the future',
   }, {
     name: 'End Date Amendment',
-    endDate: '1919-11-26',
+    endDate: '11/26/1919',
     note: 'This is an amendment with end date in the past',
   }, {
     name: 'Future Amendment',

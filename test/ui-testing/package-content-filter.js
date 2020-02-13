@@ -38,7 +38,7 @@ const PKG = {
 
 const AGREEMENT = {
   name: `Pkg Filter Agreement #${number}`,
-  startDate: '2019-01-31',
+  startDate: '01/31/2019',
   renewalPriority: 'Definitely renew',
   status: 'In negotiation',
 };
