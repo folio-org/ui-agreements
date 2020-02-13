@@ -347,5 +347,13 @@
     "supplementaryDocs.agreementHasNone": "L'accord n'a pas de documents complémentaires",
     "supplementaryDocs.addSupplementaryDoc": "Ajouter un document complémentaire",
     "supplementaryDocuments": "Documents complémentaires",
-    "settings.supplementaryProperties": "Propriétés complémentaires"
+    "settings.supplementaryProperties": "Propriétés complémentaires",
+    "settings.actions": "Actions",
+    "settings.pickList": "Pick list",
+    "settings.pickLists": "Pick lists",
+    "settings.pickListSelect": "Select pick list",
+    "settings.pickListValues": "Pick list values",
+    "settings.supplementaryPropertyPickList": "Supplementary property pick list setup",
+    "settings.values": "valeurs",
+    "settings.value": "Valeur"
 }
