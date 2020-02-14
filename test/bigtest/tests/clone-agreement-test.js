@@ -13,7 +13,7 @@ const agreementData = {
   name: `agreement clone #${number}`,
   agreementStatus: { value: 'active' },
   periods: [{
-    startDate: '2019-11-13'
+    startDate: '11/13/2019'
   }],
 };
 

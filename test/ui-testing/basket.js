@@ -99,7 +99,7 @@ module.exports.test = (uiTestCtx) => {
     const values = {
       search: 's',
       agreementName: `Basketforged Agreement #${number}`,
-      agreementStartDate: '2019-01-31',
+      agreementStartDate: '01/31/2019',
       agreementRenewalPriority: 'Definitely renew',
       agreementStatus: 'In negotiation',
     };
@@ -257,9 +257,9 @@ module.exports.test = (uiTestCtx) => {
             .waitUntilNetworkIdle(2000)
             .insert('#edit-agreement-name', 'Invalid Date')
             .click('#datepicker-clear-button-agreement-line-0-active-from')
-            .insert('#agreement-line-0-active-from', '2019-10-31')
+            .insert('#agreement-line-0-active-from', '10/31/2019')
             .click('#datepicker-clear-button-agreement-line-0-active-to')
-            .type('#agreement-line-0-active-to', '2019-10-30')
+            .type('#agreement-line-0-active-to', '10/30/2019')
             .click('#clickable-update-agreement')
             .evaluate(() => {
               if (!document.querySelector('[data-test-error-end-date-too-early]')) {

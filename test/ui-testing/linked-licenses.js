@@ -7,17 +7,17 @@ module.exports.test = (uiTestCtx) => {
     name: `Controlling License #${number}`,
     note: `This controlling license was automatically created and linked for run ${number}`,
     status: 'Controlling',
-    startDate: '2018-07-01',
+    startDate: '07/01/2018',
   }, {
     name: `Future License #${number}`,
     note: `This future license was automatically created and linked for run ${number}`,
     status: 'Future',
-    startDate: '2028-07-01',
+    startDate: '07/01/2028',
   }, {
     name: `Historical License #${number}`,
     note: `This historical license was automatically created and linked for run ${number}`,
     status: 'Historical',
-    startDate: '2008-07-01',
+    startDate: '07/01/2008',
   }];
 
   const agreement = {
