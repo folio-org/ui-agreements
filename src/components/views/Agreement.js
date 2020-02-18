@@ -80,6 +80,7 @@ export default class Agreement extends React.Component {
   getSectionProps = (id) => {
     const { data, handlers } = this.props;
 
+
     return {
       agreement: data.agreement,
       data,

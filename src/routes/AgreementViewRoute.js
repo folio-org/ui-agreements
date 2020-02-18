@@ -243,14 +243,16 @@ class AgreementViewRoute extends React.Component {
 
   getAgreementEresourcesRecords = () => {
     const { resources, match } = this.props;
-    const agreementEresourcesUrl = get(resources, 'agreementEresources.url', '');
+    const agreementEresourcesUrl = resources?.agreementEresources?.url ?? '';
+    const isPending = resources?.agreementEresources?.isPending;
     // If a new agreement is selected or if the filter has changed return undefined
-    return (agreementEresourcesUrl.indexOf(`${match.params.id}`) === -1 ||
-      agreementEresourcesUrl.indexOf(`resources/${resources.eresourcesFilterPath}`) === -1)
-      ?
-      undefined
-      :
-      get(resources, 'agreementEresources.records');
+    if (agreementEresourcesUrl.indexOf(`${match.params.id}`) === -1 ||
+      agreementEresourcesUrl.indexOf(`resources/${resources.eresourcesFilterPath}`) === -1) {
+      return undefined;
+    } else {
+      // If adding an eresource via basket return records only after the isPending state turns false
+      return isPending ? undefined : resources?.agreementEresources?.records;
+    }
   }
 
   getRecord = (id, resourceType) => {
