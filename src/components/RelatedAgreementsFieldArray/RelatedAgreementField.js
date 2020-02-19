@@ -27,11 +27,15 @@ export default class RelatedAgreementField extends React.Component {
     }).isRequired,
     meta: PropTypes.shape({
       error: PropTypes.node,
+      touched: PropTypes.bool,
     }).isRequired,
     onAgreementSelected: PropTypes.func.isRequired,
     agreement: PropTypes.shape({
+      endDate: PropTypes.string,
+      id: PropTypes.string,
       name: PropTypes.string,
       label: PropTypes.string,
+      startDate: PropTypes.string,
     }),
   }
 

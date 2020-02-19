@@ -18,6 +18,9 @@ export default class OtherPeriods extends React.Component {
         note: PropTypes.string,
         startDate: PropTypes.string,
       })),
+      currentPeriod: PropTypes.shape({
+        id: PropTypes.string,
+      }),
     }).isRequired,
     id: PropTypes.string,
     onToggle: PropTypes.func,
