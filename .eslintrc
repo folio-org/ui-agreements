@@ -1,17 +1,4 @@
 {
   "parser": "babel-eslint",
   "extends": "@folio/eslint-config-stripes",
-  "rules":{
-    "react/jsx-curly-newline": "off",
-    "react/state-in-constructor": "off"
-  },
-  "overrides": [
-    {
-      "files": ["test/**"],
-      "rules": {
-        "import/no-extraneous-dependencies": "off",
-        "max-classes-per-file": "off"
-      }
-    }
-  ]
 }
