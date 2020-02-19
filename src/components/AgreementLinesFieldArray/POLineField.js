@@ -19,10 +19,12 @@ export default class POLineField extends React.Component {
   static propTypes = {
     id: PropTypes.string,
     input: PropTypes.shape({
+      name: PropTypes.string,
       value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     }).isRequired,
     meta: PropTypes.shape({
       error: PropTypes.node,
+      touched: PropTypes.bool,
     }).isRequired,
     onPOLineSelected: PropTypes.func.isRequired,
     poLine: PropTypes.shape({
