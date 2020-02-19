@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -48,9 +48,11 @@ export default class Agreement extends React.Component {
       searchString: PropTypes.string,
     }).isRequired,
     handlers: PropTypes.shape({
+      onClone: PropTypes.func,
       onClose: PropTypes.func.isRequired,
       onEdit: PropTypes.func,
       onExportAgreement: PropTypes.func,
+      onToggleTags: PropTypes.func,
     }).isRequired,
     helperApp: PropTypes.node,
     isLoading: PropTypes.bool.isRequired,
@@ -115,7 +117,7 @@ export default class Agreement extends React.Component {
   }
 
   getActionMenu = ({ onToggle }) => (
-    <Fragment>
+    <>
       <IfPermission perm="ui-agreements.agreements.edit">
         <Button
           buttonStyle="dropdownItem"
@@ -154,7 +156,7 @@ export default class Agreement extends React.Component {
         </Button>
       </IfPermission>
 
-    </Fragment>
+    </>
   )
 
   renderEditAgreementPaneMenu = () => {
@@ -208,7 +210,7 @@ export default class Agreement extends React.Component {
     if (isLoading) return <LoadingPane defaultWidth="60%" onClose={handlers.onClose} />;
 
     return (
-      <React.Fragment>
+      <>
         <Pane
           actionMenu={this.getActionMenu}
           appIcon={<AppIcon app="agreements" />}
@@ -264,7 +266,7 @@ export default class Agreement extends React.Component {
             onClose={this.closeDuplicateAgreementModal}
           />
         }
-      </React.Fragment>
+      </>
 
     );
   }

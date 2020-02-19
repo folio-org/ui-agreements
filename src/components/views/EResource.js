@@ -38,7 +38,7 @@ export default class EResource extends React.Component {
     const EResourceViewComponent = data.eresource.type ? Title : Package;
 
     return (
-      <React.Fragment>
+      <>
         <Pane
           defaultWidth="55%"
           dismissible
@@ -51,7 +51,7 @@ export default class EResource extends React.Component {
           </TitleManager>
         </Pane>
         {helperApp}
-      </React.Fragment>
+      </>
     );
   }
 }

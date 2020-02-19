@@ -14,6 +14,7 @@ export default function withFileHandlers(WrappedComponent) {
         okapi: PropTypes.shape({
           tenant: PropTypes.string.isRequired,
           token: PropTypes.string.isRequired,
+          url: PropTypes.string,
         }).isRequired,
       }).isRequired,
     };

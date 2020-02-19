@@ -128,6 +128,9 @@ class AgreementEditRoute extends React.Component {
       }).isRequired,
     }).isRequired,
     mutator: PropTypes.shape({
+      agreement: PropTypes.shape({
+        PUT: PropTypes.func.isRequired,
+      }),
       agreements: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
       }),
@@ -138,6 +141,9 @@ class AgreementEditRoute extends React.Component {
     resources: PropTypes.shape({
       agreement: PropTypes.object,
       orgRoleValues: PropTypes.object,
+      query: PropTypes.shape({
+        addFromBasket: PropTypes.string,
+      }),
       statusValues: PropTypes.object,
       supplementaryProperties: PropTypes.object,
       typeValues: PropTypes.object,
