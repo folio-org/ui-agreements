@@ -18,6 +18,7 @@ export default class UsageDataProviderField extends React.Component {
     }).isRequired,
     meta: PropTypes.shape({
       error: PropTypes.node,
+      touched: PropTypes.bool,
     }).isRequired,
     onUDPSelected: PropTypes.func.isRequired,
     udp: PropTypes.shape({

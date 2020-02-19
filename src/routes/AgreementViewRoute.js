@@ -142,6 +142,12 @@ class AgreementViewRoute extends React.Component {
       agreementEresourcesCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
+      eresourcesFilterPath: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
+      interfaceRecord: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
       }).isRequired,

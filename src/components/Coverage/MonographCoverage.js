@@ -22,10 +22,10 @@ export default class MonographCoverage extends React.Component {
     if (!edition) return null;
 
     return (
-      <React.Fragment>
+      <>
         <FormattedMessage id="ui-agreements.coverage.editionShort" />
         {edition}
-      </React.Fragment>
+      </>
     );
   }
 
@@ -33,10 +33,10 @@ export default class MonographCoverage extends React.Component {
     if (!volume) return null;
 
     return (
-      <React.Fragment>
+      <>
         <FormattedMessage id="ui-agreements.coverage.volumeShort" />
         {volume}
-      </React.Fragment>
+      </>
     );
   }
 
@@ -63,7 +63,7 @@ export default class MonographCoverage extends React.Component {
           data-test-volume={volume}
         >
           {this.renderEdition(edition)}
-          {volume && edition ? <React.Fragment>&nbsp;</React.Fragment> : null}
+          {volume && edition ? <>&nbsp;</> : null}
           {this.renderVolume(volume)}
         </div>
       </Layout>

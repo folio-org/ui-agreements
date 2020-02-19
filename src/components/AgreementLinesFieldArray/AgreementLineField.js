@@ -207,13 +207,13 @@ export default class AgreementLineField extends React.Component {
         header={<FormattedMessage id="ui-agreements.agreementLines.lineTitle" values={{ number: index + 1 }} />}
         onDelete={this.props.onDelete}
       >
-        <React.Fragment>
+        <>
           {
             (resource.id || resource.reference) ?
               this.renderLineResource() :
               this.renderLineSelector()
           }
-        </React.Fragment>
+        </>
       </EditCard>
     );
   }

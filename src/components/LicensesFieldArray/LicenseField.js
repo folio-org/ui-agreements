@@ -24,6 +24,7 @@ export default class LicenseField extends React.Component {
     license: PropTypes.object,
     meta: PropTypes.shape({
       error: PropTypes.node,
+      touched: PropTypes.bool,
     }).isRequired,
     onLicenseSelected: PropTypes.func.isRequired,
   }

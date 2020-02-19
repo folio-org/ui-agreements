@@ -24,6 +24,7 @@ export default class LinkedLicenseCard extends React.Component {
         }),
       })),
       endDate: PropTypes.string,
+      id: PropTypes.string,
       name: PropTypes.string,
       note: PropTypes.string,
       remoteId_object: PropTypes.shape({

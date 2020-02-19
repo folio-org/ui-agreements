@@ -16,6 +16,7 @@ export default class TitleInfo extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       eresource: PropTypes.shape({
+        name: PropTypes.string,
         type: PropTypes.shape({
           label: PropTypes.string,
         }),
