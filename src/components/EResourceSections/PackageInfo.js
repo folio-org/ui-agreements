@@ -8,6 +8,7 @@ import {
   KeyValue,
   Layout,
   Row,
+  NoValue,
 } from '@folio/stripes/components';
 
 import AddToBasketButton from '../AddToBasketButton';
@@ -60,19 +61,19 @@ export default class PackageInfo extends React.Component {
           <Col xs={4}>
             <KeyValue
               label="Provider"
-              value={eresource?.vendor?.name || '-'}
+              value={eresource?.vendor?.name || <NoValue />}
             />
           </Col>
           <Col xs={4}>
             <KeyValue
               label="Source"
-              value={eresource.source || '-'}
+              value={eresource.source || <NoValue />}
             />
           </Col>
           <Col xs={4}>
             <KeyValue
               label="Reference"
-              value={eresource.reference || '-'}
+              value={eresource.reference || <NoValue />}
             />
           </Col>
         </Row>
