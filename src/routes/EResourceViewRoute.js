@@ -79,6 +79,12 @@ class EResourceViewRoute extends React.Component {
       packageContentsCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
+      packageContentsFilter: PropTypes.shape({
+        replace: PropTypes.func.isRequired,
+      }),
+      packageContentsOffset: PropTypes.shape({
+        replace: PropTypes.func.isRequired,
+      }),
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
       }).isRequired,

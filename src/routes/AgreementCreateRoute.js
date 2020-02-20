@@ -97,6 +97,9 @@ class AgreementCreateRoute extends React.Component {
     resources: PropTypes.shape({
       agreement: PropTypes.object,
       orgRoleValues: PropTypes.object,
+      query: PropTypes.shape({
+        addFromBasket: PropTypes.string,
+      }),
       statusValues: PropTypes.object,
       supplementaryProperties: PropTypes.object,
       typeValues: PropTypes.object,

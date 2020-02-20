@@ -21,10 +21,10 @@ export default class SerialCoverage extends React.Component {
     if (!volume) return null;
 
     return (
-      <React.Fragment>
+      <>
         <FormattedMessage id="ui-agreements.coverage.volumeShort" />
         {volume}
-      </React.Fragment>
+      </>
     );
   }
 
@@ -32,10 +32,10 @@ export default class SerialCoverage extends React.Component {
     if (!issue) return null;
 
     return (
-      <React.Fragment>
+      <>
         <FormattedMessage id="ui-agreements.coverage.issueShort" />
         {issue}
-      </React.Fragment>
+      </>
     );
   }
 
@@ -43,17 +43,17 @@ export default class SerialCoverage extends React.Component {
     if (!date && !volume && !issue) return '*';
 
     return (
-      <React.Fragment>
+      <>
         { date ? <div data-test-date={date}><FormattedUTCDate value={date} /></div> : null }
         <div
           data-test-issue={issue}
           data-test-volume={volume}
         >
           {this.renderVolume(volume)}
-          {volume && issue ? <React.Fragment>&nbsp;</React.Fragment> : null}
+          {volume && issue ? <>&nbsp;</> : null}
           {this.renderIssue(issue)}
         </div>
-      </React.Fragment>
+      </>
     );
   }
 
