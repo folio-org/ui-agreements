@@ -52,9 +52,9 @@ const createAgreement = (nightmare, done, defaultValues, resourceId) => {
   if (resourceId) {
     chain = chain
       .click('#add-agreement-line-button')
-      .click('#basket-selector')
+      .click('[id*="-basket-selector"]')
       .click(`[id*="${resourceId}"]`)
-      .click('#basket-selector-add-button')
+      .click('[id*="basket-selector-add-button"]')
       .wait('#agreement-line-0-active-from')
       .insert('#agreement-line-0-active-from', lines.activeFrom)
       .insert('#agreement-line-0-active-to', lines.activeTo)

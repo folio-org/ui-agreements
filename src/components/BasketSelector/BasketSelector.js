@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Field } from 'react-final-form';
 
 import {
   Button,
@@ -10,12 +11,15 @@ import {
   Selection,
 } from '@folio/stripes/components';
 
+import { requiredValidator } from '@folio/stripes-erm-components';
+
 export default class BasketSelector extends React.Component {
   static propTypes = {
     addButtonLabel: PropTypes.node,
     autoFocus: PropTypes.bool,
     basket: PropTypes.arrayOf(PropTypes.object),
     error: PropTypes.node,
+    name: PropTypes.string,
     onAdd: PropTypes.func,
   }
 
@@ -31,7 +35,7 @@ export default class BasketSelector extends React.Component {
   }
 
   render() {
-    const { addButtonLabel, basket, error, onAdd } = this.props;
+    const { addButtonLabel, basket, error, name, onAdd } = this.props;
     const { item } = this.state;
 
     const dataOptions = [
@@ -45,14 +49,17 @@ export default class BasketSelector extends React.Component {
     return (
       <Row>
         <Col xs={12} md={8}>
-          <Selection
+          <Field
+            component={Selection}
             autoFocus={this.props.autoFocus}
             dataOptions={dataOptions}
             error={error}
-            id="basket-selector"
+            id={`${name}-basket-selector`}
             label={<FormattedMessage id="ui-agreements.basketSelector.selectLabel" />}
+            name={`${name}.selection`}
             onChange={this.handleChange}
             required
+            validate={requiredValidator}
             value={item.id}
           />
         </Col>
@@ -62,7 +69,7 @@ export default class BasketSelector extends React.Component {
               buttonStyle="primary"
               disabled={!item.id}
               fullWidth
-              id="basket-selector-add-button"
+              id={`${name}-basket-selector-add-button`}
               onClick={() => { onAdd(item); }}
             >
               {addButtonLabel}
