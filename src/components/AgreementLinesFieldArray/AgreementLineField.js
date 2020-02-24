@@ -184,7 +184,7 @@ export default class AgreementLineField extends React.Component {
   }
 
   renderLineSelector = () => {
-    const { meta: { error } } = this.props;
+    const { input: { name }, meta: { error } } = this.props;
 
     return (
       <BasketSelector
@@ -192,6 +192,7 @@ export default class AgreementLineField extends React.Component {
         addButtonLabel={<FormattedMessage id="ui-agreements.agreementLines.createLine" />}
         basket={this.props.basket}
         error={React.isValidElement(error) ? error : undefined}
+        name={`${name}.basketSelector`}
         onAdd={resource => this.props.onResourceSelected(this.props.index, resource)}
       />
     );
