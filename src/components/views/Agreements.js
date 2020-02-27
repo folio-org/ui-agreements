@@ -83,7 +83,6 @@ export default class Agreements extends React.Component {
   }
 
   columnWidths = {
-    name: 300,
     agreementStatus: 150,
     startDate: 120,
     endDate: 120,
