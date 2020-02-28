@@ -79,6 +79,9 @@
   "agreements.createAgreement": "Create agreement",
   "agreements.editAgreement": "Edit agreement",
 
+  "agreements.create.callout": "<strong>Agreement created:</strong> {name}",
+  "agreements.update.callout": "<strong>Agreement updated:</strong> {name}",
+
   "agreementLines.addLine": "Add agreement line",
   "agreementLines.addCustomCoverage": "Add custom coverage",
   "agreementLines.costType": "Cost type",
