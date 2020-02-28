@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import compose from 'compose-function';
 
-import { stripesConnect } from '@folio/stripes/core';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { LoadingPane } from '@folio/stripes-erm-components';
 
 import withFileHandlers from './components/withFileHandlers';
@@ -114,6 +115,8 @@ class AgreementCreateRoute extends React.Component {
     handlers: {},
   }
 
+  static contextType = CalloutContext;
+
   constructor(props) {
     super(props);
 
@@ -137,7 +140,7 @@ class AgreementCreateRoute extends React.Component {
 
   handleSubmit = (agreement) => {
     const { history, location, mutator } = this.props;
-
+    const name = agreement?.name;
     compose(
       splitRelatedAgreements,
     )(agreement);
@@ -145,6 +148,7 @@ class AgreementCreateRoute extends React.Component {
     mutator.agreements
       .POST(agreement)
       .then(({ id }) => {
+        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
         history.push(`${urls.agreementView(id)}${location.search}`);
       });
   }
