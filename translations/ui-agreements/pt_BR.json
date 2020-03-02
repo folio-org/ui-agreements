@@ -355,5 +355,7 @@
     "settings.pickListValues": "Valores da lista de seleção",
     "settings.supplementaryPropertyPickList": "Configuração da lista de seleção de propriedades suplementares",
     "settings.values": "valores",
-    "settings.value": "Valor"
+    "settings.value": "Valor",
+    "agreements.create.callout": "<strong>Contrato criado:</strong> {name}",
+    "agreements.update.callout": "<strong>Contrato atualizado:</strong> {name}"
 }

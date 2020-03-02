@@ -355,5 +355,7 @@
     "settings.pickListValues": "قيم قائمة الاختيار",
     "settings.supplementaryPropertyPickList": "تنصيب قائمة اختيار الخاصية التكميلية",
     "settings.values": "قيم",
-    "settings.value": "قيمة"
+    "settings.value": "قيمة",
+    "agreements.create.callout": "<strong>تم إنشاء الاتفاقية:</strong> {name}",
+    "agreements.update.callout": "<strong>تم تحديث الاتفاقية:</strong> {name}"
 }

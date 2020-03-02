@@ -355,5 +355,7 @@
     "settings.pickListValues": "Pick list values",
     "settings.supplementaryPropertyPickList": "Supplementary property pick list setup",
     "settings.values": "values",
-    "settings.value": "Value"
+    "settings.value": "Value",
+    "agreements.create.callout": "<strong>Agreement created:</strong> {name}",
+    "agreements.update.callout": "<strong>Agreement updated:</strong> {name}"
 }
