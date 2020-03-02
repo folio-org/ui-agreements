@@ -149,7 +149,7 @@ export default class Agreement extends React.Component {
             onToggle();
           }}
         >
-          <Icon icon="arrow-down">
+          <Icon icon="download">
             <FormattedMessage id="ui-agreements.agreements.export" />
           </Icon>
         </Button>
