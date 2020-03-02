@@ -96,6 +96,7 @@ export default class Agreements extends React.Component {
         <AppIcon
           size="small"
           app="agreements"
+          iconAlignment="baseline"
           iconKey={iconKey}
         >
           {a.name}
