@@ -67,7 +67,7 @@ export default class Organizations extends React.Component {
   }
 
   renderNoOrganizations = () => (
-    <FormattedMessage id="ui-agreements.organizations.agreementHasNone" />
+    <FormattedMessage id="ui-agreements.emptyAccordion.organizations" />
   );
 
   renderBadge = () => {
