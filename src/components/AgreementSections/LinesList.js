@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
+import { IfPermission } from '@folio/stripes/core';
 import {
   FormattedUTCDate,
   MultiColumnList,
@@ -77,7 +78,14 @@ export default class LinesList extends React.Component {
         </Tooltip>
       );
     },
-    poLines: line => this.renderPOLines(line),
+    poLines: line => (
+      <IfPermission perm="orders.po-lines.collection.get">
+        {({ hasPermission }) => (hasPermission ?
+          this.renderPOLines(line)
+          :
+          <FormattedMessage id="ui-agreements.agreementLines.noPoLinePerm" />)}
+      </IfPermission>
+    )
   }
 
   visibleColumns = [

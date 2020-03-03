@@ -82,6 +82,7 @@ class AgreementViewRoute extends React.Component {
       },
       fetch: props => !!props.stripes.hasInterface('order-lines', '1.0'),
       records: 'poLines',
+      throwErrors: false,
     },
     supplementaryProperties: {
       type: 'okapi',
