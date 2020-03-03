@@ -50,7 +50,7 @@ export default class ExternalLicenses extends React.Component {
         displayWhenClosed={<Badge>{externalLicenses.length}</Badge>}
         displayWhenOpen={<Badge>{externalLicenses.length}</Badge>}
         id={id}
-        label={<FormattedMessage id="ui-agreements.emptyAccordion.externalLicenses" />}
+        label={<FormattedMessage id="ui-agreements.license.externalLicenses" />}
         open={open}
         onToggle={onToggle}
       >
