@@ -134,7 +134,7 @@ export default class ControllingLicense extends React.Component {
           </div>
           :
           <Layout className="padding-bottom-gutter">
-            <FormattedMessage id="ui-agreements.license.noControllingLicense" />
+            <FormattedMessage id="ui-agreements.emptyAccordion.controllingLicense" />
           </Layout>
         }
       </Accordion>

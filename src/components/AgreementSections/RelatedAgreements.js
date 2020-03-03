@@ -75,7 +75,7 @@ export default class RelatedAgreements extends React.Component {
   )
 
   renderEmpty = () => (
-    <FormattedMessage id="ui-agreements.relatedAgreements.agreementHasNone" />
+    <FormattedMessage id="ui-agreements.emptyAccordion.relatedAgreements" />
   );
 
   renderBadge = () => (

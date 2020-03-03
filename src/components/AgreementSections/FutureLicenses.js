@@ -36,7 +36,7 @@ export default class FutureLicenses extends React.Component {
 
   renderEmpty = () => (
     <Layout className="padding-bottom-gutter">
-      <FormattedMessage id="ui-agreements.license.noFutureLicenses" />
+      <FormattedMessage id="ui-agreements.emptyAccordion.futureLicenses" />
     </Layout>
   )
 

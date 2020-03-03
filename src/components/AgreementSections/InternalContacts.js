@@ -28,7 +28,7 @@ export default class InternalContacts extends React.Component {
   renderContacts = () => {
     const { contacts = [] } = this.props.agreement;
 
-    if (!contacts.length) return <FormattedMessage id="ui-agreements.contacts.noContacts" />;
+    if (!contacts.length) return <FormattedMessage id="ui-agreements.emptyAccordion.internalContacts" />;
 
     return contacts.map(contact => (
       <InternalContactCard

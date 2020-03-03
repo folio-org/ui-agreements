@@ -37,7 +37,7 @@ export default class ExternalLicenses extends React.Component {
 
   renderEmpty = () => (
     <Layout className="padding-bottom-gutter">
-      <FormattedMessage id="ui-agreements.license.noExternalLicenses" />
+      <FormattedMessage id="ui-agreements.emptyAccordion.externalLicenses" />
     </Layout>
   )
 
@@ -50,7 +50,7 @@ export default class ExternalLicenses extends React.Component {
         displayWhenClosed={<Badge>{externalLicenses.length}</Badge>}
         displayWhenOpen={<Badge>{externalLicenses.length}</Badge>}
         id={id}
-        label={<FormattedMessage id="ui-agreements.license.externalLicenses" />}
+        label={<FormattedMessage id="ui-agreements.emptyAccordion.externalLicenses" />}
         open={open}
         onToggle={onToggle}
       >

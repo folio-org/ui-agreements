@@ -62,7 +62,7 @@ export default class SupplementaryDocs extends React.Component {
       >
         {supplementaryDocs.length ?
           this.renderDocs(supplementaryDocs) :
-          <FormattedMessage id="ui-agreements.supplementaryDocs.agreementHasNone" />
+          <FormattedMessage id="ui-agreements.emptyAccordion.supplementaryDocuments" />
         }
       </Accordion>
     );

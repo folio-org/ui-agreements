@@ -36,7 +36,7 @@ export default class HistoricalLicenses extends React.Component {
 
   renderEmpty = () => (
     <Layout className="padding-bottom-gutter">
-      <FormattedMessage id="ui-agreements.license.noHistoricalLicenses" />
+      <FormattedMessage id="ui-agreements.emptyAccordion.historicalLicenses" />
     </Layout>
   )
 

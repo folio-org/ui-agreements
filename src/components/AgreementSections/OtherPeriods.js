@@ -63,7 +63,7 @@ export default class OtherPeriods extends React.Component {
         displayWhenClosed={<Badge>{otherPeriods.length}</Badge>}
         displayWhenOpen={<Badge>{otherPeriods.length}</Badge>}
         id={id}
-        label={<FormattedMessage id="ui-agreements.agreementPeriods.otherPeriods" />}
+        label={<FormattedMessage id="ui-agreements.emptyAccordion.otherPeriods" />}
         onToggle={onToggle}
         open={open}
       >
