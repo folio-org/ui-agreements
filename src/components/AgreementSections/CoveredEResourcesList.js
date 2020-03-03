@@ -200,10 +200,10 @@ export default class CoveredEResourcesList extends React.Component {
   }
 
   render() {
-    const { agreement: { eresources }, eresourcesFilterPath } = this.props;
+    const { agreement: { eresources, lines }, eresourcesFilterPath } = this.props;
     const exportDisabled = eresourcesFilterPath === 'dropped' || eresourcesFilterPath === 'future';
 
-    return (
+    return lines?.length ? (
       <IfEResourcesEnabled>
         <Layout className="marginTop1">
           <Headline margin="small" tag="h4">
@@ -238,6 +238,6 @@ export default class CoveredEResourcesList extends React.Component {
         {eresources ? this.renderList() : <Spinner />}
         <Callout ref={this.callout} />
       </IfEResourcesEnabled>
-    );
+    ) : null;
   }
 }
