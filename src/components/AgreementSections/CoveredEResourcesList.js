@@ -30,6 +30,7 @@ export default class CoveredEResourcesList extends React.Component {
     agreement: PropTypes.shape({
       eresources: PropTypes.arrayOf(PropTypes.object),
       eresourcesCount: PropTypes.number,
+      lines: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
     eresourcesFilterPath: PropTypes.string,
     onFilterEResources: PropTypes.func.isRequired,
