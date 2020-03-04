@@ -76,7 +76,7 @@
   "agreements.assocAgreements": "Associated agreements",
   "agreements.tags": "Tags",
   "agreements.closeEdit": "Close edit agreement",
-  "agreements.createAgreement": "Create agreement",
+  "agreements.createAgreement": "New agreement",
   "agreements.editAgreement": "Edit agreement",
 
   "agreements.create.callout": "<strong>Agreement created:</strong> {name}",
