@@ -63,7 +63,7 @@ export default class OtherPeriods extends React.Component {
         displayWhenClosed={<Badge>{otherPeriods.length}</Badge>}
         displayWhenOpen={<Badge>{otherPeriods.length}</Badge>}
         id={id}
-        label={<FormattedMessage id="ui-agreements.emptyAccordion.otherPeriods" />}
+        label={<FormattedMessage id="ui-agreements.agreementPeriods.otherPeriods" />}
         onToggle={onToggle}
         open={open}
       >
@@ -73,6 +73,7 @@ export default class OtherPeriods extends React.Component {
           formatter={this.formatter}
           id="agreement-periods-list"
           interactive={false}
+          isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.otherPeriods" />}
           visibleColumns={this.visibleColumns}
         />
       </Accordion>
