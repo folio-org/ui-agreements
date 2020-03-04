@@ -83,6 +83,7 @@ export default class Agreements extends React.Component {
   }
 
   columnWidths = {
+    name: 500,
     agreementStatus: 150,
     startDate: 120,
     endDate: 120,
@@ -99,7 +100,9 @@ export default class Agreements extends React.Component {
           iconAlignment="baseline"
           iconKey={iconKey}
         >
-          {a.name}
+          <div style={{ wordBreak: 'break-all' }}>
+            {a.name}
+          </div>
         </AppIcon>
       );
     },
