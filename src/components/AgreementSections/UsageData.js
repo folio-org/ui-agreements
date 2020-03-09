@@ -62,7 +62,7 @@ export default class UsageData extends React.Component {
   )
 
   renderEmpty = () => (
-    <FormattedMessage id="ui-agreements.usageData.agreementHasNone" />
+    <FormattedMessage id="ui-agreements.emptyAccordion.usageData" />
   );
 
   renderBadge = () => (

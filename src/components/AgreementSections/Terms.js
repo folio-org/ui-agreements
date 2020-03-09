@@ -51,7 +51,7 @@ export default class Terms extends React.Component {
       >
         {controllingLicense ?
           this.renderTermsList(controllingLicense) :
-          <FormattedMessage id="ui-agreements.license.noControllingLicense" />
+          <FormattedMessage id="ui-agreements.emptyAccordion.licenseAndBusinessTerms" />
         }
       </Accordion>
     );

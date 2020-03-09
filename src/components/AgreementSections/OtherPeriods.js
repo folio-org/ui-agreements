@@ -73,6 +73,7 @@ export default class OtherPeriods extends React.Component {
           formatter={this.formatter}
           id="agreement-periods-list"
           interactive={false}
+          isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.otherPeriods" />}
           visibleColumns={this.visibleColumns}
         />
       </Accordion>

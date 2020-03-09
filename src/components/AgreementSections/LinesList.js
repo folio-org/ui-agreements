@@ -158,6 +158,7 @@ export default class LinesList extends React.Component {
         formatter={this.formatter}
         id="agreement-lines"
         interactive={false}
+        isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.agreementLines" />}
         maxHeight={400}
         onNeedMoreData={onNeedMoreLines}
         rowUpdater={rowUpdater}

@@ -37,7 +37,7 @@ export default class ExternalLicenses extends React.Component {
 
   renderEmpty = () => (
     <Layout className="padding-bottom-gutter">
-      <FormattedMessage id="ui-agreements.license.noExternalLicenses" />
+      <FormattedMessage id="ui-agreements.emptyAccordion.externalLicenses" />
     </Layout>
   )
 
