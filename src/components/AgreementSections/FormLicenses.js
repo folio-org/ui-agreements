@@ -55,10 +55,10 @@ export default class FormLicenses extends React.Component {
           addDocBtnLabel={<FormattedMessage id="ui-agreements.license.addExternalLicense" />}
           component={DocumentsFieldArray}
           deleteBtnTooltipMsgId="ui-agreements.doc.removeExternalLicense"
-          onDownloadFile={this.props.handlers.onDownloadFile}
-          onUploadFile={this.props.handlers.onUploadFile}
           isEmptyMessage={<FormattedMessage id="ui-agreements.license.noExternalLicenses" />}
           name="externalLicenseDocs"
+          onDownloadFile={this.props.handlers.onDownloadFile}
+          onUploadFile={this.props.handlers.onUploadFile}
         />
       </KeyValue>
     </div>
@@ -75,8 +75,8 @@ export default class FormLicenses extends React.Component {
       <Accordion
         id={id}
         label={<FormattedMessage id="ui-agreements.agreements.licenseInfo" />}
-        open={open}
         onToggle={onToggle}
+        open={open}
       >
         {this.renderNote()}
         {this.renderLinkedLicenses()}

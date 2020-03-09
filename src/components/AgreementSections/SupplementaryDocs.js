@@ -53,12 +53,12 @@ export default class SupplementaryDocs extends React.Component {
 
     return (
       <Accordion
-        id={id}
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
+        id={id}
         label={<FormattedMessage id="ui-agreements.supplementaryDocuments" />}
-        open={open}
         onToggle={onToggle}
+        open={open}
       >
         {supplementaryDocs.length ?
           this.renderDocs(supplementaryDocs) :

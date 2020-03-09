@@ -41,14 +41,14 @@ class UsageDataProvidersFieldArray extends React.Component {
   renderUDPFields = (items) => {
     return items.map((udp, index) => (
       <EditCard
-        deleteButtonTooltipText={<FormattedMessage id="ui-agreements.usageData.removeUsageDataProvider" values={{ index: index + 1 }} />}
+        key={index}
         deleteBtnProps={{
           'id': `udp-delete-${index}`,
           'data-test-delete-field-button': true
         }}
+        deleteButtonTooltipText={<FormattedMessage id="ui-agreements.usageData.removeUsageDataProvider" values={{ index: index + 1 }} />}
         header={<FormattedMessage id="ui-agreements.usageData.usageDataProviderIndex" values={{ index: index + 1 }} />}
         id={`edit-udp-card-${index}`}
-        key={index}
         onDelete={() => this.props.onDeleteField(index, udp)}
       >
         <Field
@@ -80,8 +80,8 @@ class UsageDataProvidersFieldArray extends React.Component {
         </div>
         <Button
           data-test-udp-fa-add-button
-          onClick={() => onAddField()}
           id="add-udp-btn"
+          onClick={() => onAddField()}
         >
           <FormattedMessage id="ui-agreements.usageData.addUDP" />
         </Button>

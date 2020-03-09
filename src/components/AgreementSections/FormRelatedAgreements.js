@@ -24,14 +24,14 @@ export default class FormRelatedAgreements extends React.Component {
       <Accordion
         id={id}
         label={<FormattedMessage id="ui-agreements.relatedAgreements" />}
-        open={open}
         onToggle={onToggle}
+        open={open}
       >
         <FieldArray
-          name="relatedAgreements"
           component={RelatedAgreementsFieldArray}
           currentAgreementId={values.id}
           currentAgreementName={values.name}
+          name="relatedAgreements"
         />
       </Accordion>
     );

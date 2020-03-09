@@ -57,6 +57,7 @@ class POLinesFieldArray extends React.Component {
 
     return items.map((poLine, index) => (
       <EditCard
+        key={index}
         data-test-po-line
         deleteBtnProps={{
           'id': `poline-delete-${agreementLineIndex}-${index}`,
@@ -65,7 +66,6 @@ class POLinesFieldArray extends React.Component {
         deleteButtonTooltipText={<FormattedMessage id="ui-agreements.poLines.remove" values={{ index: index + 1 }} />}
         header={<FormattedMessage id="ui-agreements.poLines.poLineIndex" values={{ index: index + 1 }} />}
         id={`edit-ra-card-${agreementLineIndex}-${index}`}
-        key={index}
         onDelete={() => this.props.onDeleteField(index, poLine)}
       >
         <Field
@@ -90,8 +90,8 @@ class POLinesFieldArray extends React.Component {
         </div>
         <Button
           data-test-poline-fa-add-button
-          onClick={() => onAddField()}
           id={`add-poline-btn-${agreementLineIndex}`}
+          onClick={() => onAddField()}
         >
           <FormattedMessage id="ui-agreements.poLines.addPOLine" />
         </Button>

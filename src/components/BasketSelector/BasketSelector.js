@@ -48,10 +48,10 @@ export default class BasketSelector extends React.Component {
 
     return (
       <Row>
-        <Col xs={12} md={8}>
+        <Col md={8} xs={12}>
           <Field
-            component={Selection}
             autoFocus={this.props.autoFocus}
+            component={Selection}
             dataOptions={dataOptions}
             error={error}
             id={`${name}-basket-selector`}
@@ -63,8 +63,8 @@ export default class BasketSelector extends React.Component {
             value={item.id}
           />
         </Col>
-        <Col xs={12} md={4}>
-          <Layout style={{ height: '100%' }} className="flex flex-align-items-center">
+        <Col md={4} xs={12}>
+          <Layout className="flex flex-align-items-center" style={{ height: '100%' }}>
             <Button
               buttonStyle="primary"
               disabled={!item.id}

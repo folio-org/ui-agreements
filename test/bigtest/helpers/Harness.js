@@ -7,7 +7,7 @@ import translations from '../../../translations/ui-agreements/en';
 // mimics the StripesTranslationPlugin in @folio/stripes-core
 function prefixKeys(obj) {
   const res = {};
-  for (const key of Object.keys(obj)) {
+  for (const key of Object.keys(obj)) { // eslint-disable-line no-unused-vars
     res[`ui-agreements.${key}`] = obj[key];
   }
   return res;
@@ -16,7 +16,7 @@ function prefixKeys(obj) {
 class Harness extends React.Component {
   render() {
     return (
-      <IntlProvider locale="en" key="en" timeZone="UTC" messages={prefixKeys(translations)}>
+      <IntlProvider key="en" locale="en" messages={prefixKeys(translations)} timeZone="UTC">
         {this.props.children}
       </IntlProvider>
     );

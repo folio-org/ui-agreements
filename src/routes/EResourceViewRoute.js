@@ -209,6 +209,7 @@ class EResourceViewRoute extends React.Component {
 
     return (
       <View
+        key={get(resources, 'eresource.loadedAt', 'loading')}
         data={{
           eresource: get(resources, 'eresource.records[0]', {}),
           entitlementOptions: this.getRecords('entitlementOptions'),
@@ -226,7 +227,6 @@ class EResourceViewRoute extends React.Component {
         }}
         helperApp={this.getHelperApp()}
         isLoading={this.isLoading()}
-        key={get(resources, 'eresource.loadedAt', 'loading')}
       />
     );
   }

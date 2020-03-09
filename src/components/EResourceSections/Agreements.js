@@ -36,17 +36,6 @@ export default class Agreements extends React.Component {
 
     return (
       <MultiColumnList
-        contentData={this.props.data.entitlements}
-        formatter={{
-          name: ({ owner: agreement }) => <Link to={urls.agreementView(agreement.id)}>{agreement.name}</Link>,
-          type: ({ owner: agreement }) => get(agreement, 'agreementStatus.label', ''),
-          startDate: ({ owner: agreement }) => agreement.startDate && <FormattedUTCDate value={agreement.startDate} />,
-          endDate: ({ owner: agreement }) => agreement.endDate && <FormattedUTCDate value={agreement.endDate} />,
-          package: (line) => <EResourceLink eresource={getResourceFromEntitlement(line)} />,
-          acqMethod: ({ resource }) => <EResourceType resource={resource} />,
-          coverage: line => <SerialCoverage statements={line.coverage} />,
-          isCustomCoverage: line => line.customCoverage && <CustomCoverageIcon />,
-        }}
         columnMapping={{
           name: <FormattedMessage id="ui-agreements.agreements.name" />,
           type: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
@@ -60,6 +49,17 @@ export default class Agreements extends React.Component {
         columnWidths={{
           startDate: 120,
           endDate: 120,
+        }}
+        contentData={this.props.data.entitlements}
+        formatter={{
+          name: ({ owner: agreement }) => <Link to={urls.agreementView(agreement.id)}>{agreement.name}</Link>,
+          type: ({ owner: agreement }) => get(agreement, 'agreementStatus.label', ''),
+          startDate: ({ owner: agreement }) => agreement.startDate && <FormattedUTCDate value={agreement.startDate} />,
+          endDate: ({ owner: agreement }) => agreement.endDate && <FormattedUTCDate value={agreement.endDate} />,
+          package: (line) => <EResourceLink eresource={getResourceFromEntitlement(line)} />,
+          acqMethod: ({ resource }) => <EResourceType resource={resource} />,
+          coverage: line => <SerialCoverage statements={line.coverage} />,
+          isCustomCoverage: line => line.customCoverage && <CustomCoverageIcon />,
         }}
         interactive={false}
         visibleColumns={[

@@ -104,14 +104,14 @@ class SupplementaryPropertiesConfigForm extends React.Component {
       <Pane
         defaultWidth="fill"
         id="settings-supplementaryProperties"
-        paneTitle={
-          <FormattedMessage id="ui-agreements.section.supplementaryProperties" />
-        }
         paneSub={
           <FormattedMessage
             id="ui-agreements.supplementaryProperties.count"
             values={{ count }}
           />
+        }
+        paneTitle={
+          <FormattedMessage id="ui-agreements.section.supplementaryProperties" />
         }
       >
         <form>

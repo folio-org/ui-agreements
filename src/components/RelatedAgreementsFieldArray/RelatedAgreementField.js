@@ -77,8 +77,8 @@ export default class RelatedAgreementField extends React.Component {
           if (value) {
             return (
               <Tooltip
-                text={<FormattedMessage id="ui-agreements.relatedAgreements.replaceAgreementSpecific" values={{ agreementName }} />}
                 id={`${this.props.id}-license-button-tooltip`}
+                text={<FormattedMessage id="ui-agreements.relatedAgreements.replaceAgreementSpecific" values={{ agreementName }} />}
                 triggerRef={this.triggerButton}
               >
                 {({ ariaIds }) => (
@@ -119,19 +119,19 @@ export default class RelatedAgreementField extends React.Component {
           {agreement.name}
         </Link>
         <Row>
-          <Col xs={6} md={4}>
+          <Col md={4} xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
               value={agreement.startDate ? <FormattedUTCDate value={agreement.startDate} /> : '-'}
             />
           </Col>
-          <Col xs={6} md={4}>
+          <Col md={4} xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
               value={agreement.endDate ? <FormattedUTCDate value={agreement.endDate} /> : '-'}
             />
           </Col>
-          <Col xs={12} md={4}>
+          <Col md={4} xs={12}>
             <KeyValue
               label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
               value={get(agreement, 'agreementStatus.label', '-')}
@@ -174,6 +174,7 @@ export default class RelatedAgreementField extends React.Component {
       <Card
         cardStyle={value ? 'positive' : 'negative'}
         hasMargin
+        headerEnd={this.renderLinkAgreementButton(value)}
         headerStart={(
           <AppIcon app="agreements" size="small">
             <strong>
@@ -181,7 +182,6 @@ export default class RelatedAgreementField extends React.Component {
             </strong>
           </AppIcon>
         )}
-        headerEnd={this.renderLinkAgreementButton(value)}
         id={id}
         roundedBorder
       >

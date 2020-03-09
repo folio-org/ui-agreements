@@ -47,6 +47,7 @@ export default class LinkedLicenseCard extends React.Component {
 
     return (
       <Card
+        key={license.id}
         cardStyle="positive"
         data-test-linked-license-card
         hasMargin
@@ -58,7 +59,6 @@ export default class LinkedLicenseCard extends React.Component {
           </AppIcon>
         )}
         id={id}
-        key={license.id}
         roundedBorder
       >
         <LicenseCard

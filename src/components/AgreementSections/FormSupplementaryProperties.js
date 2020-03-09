@@ -20,8 +20,8 @@ class FormSupplementaryProperties extends React.Component {
       <Accordion
         id={id}
         label={<FormattedMessage id="ui-agreements.supplementaryProperties" />}
-        open={open}
         onToggle={onToggle}
+        open={open}
       >
         <FormCustomProperties
           customProperties={supplementaryProperties}

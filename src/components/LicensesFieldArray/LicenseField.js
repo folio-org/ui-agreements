@@ -44,7 +44,6 @@ export default class LicenseField extends React.Component {
     return (
       <Pluggable
         dataKey={id}
-        type="find-license"
         onLicenseSelected={onLicenseSelected}
         renderTrigger={(props) => {
           this.triggerButton = props.buttonRef;
@@ -61,8 +60,8 @@ export default class LicenseField extends React.Component {
           if (value) {
             return (
               <Tooltip
-                text={<FormattedMessage id="ui-agreements.license.replaceLicenseSpecific" values={{ licenseName: get(this.props.license, 'name') }} />}
                 id={`${this.props.id}-license-button-tooltip`}
+                text={<FormattedMessage id="ui-agreements.license.replaceLicenseSpecific" values={{ licenseName: get(this.props.license, 'name') }} />}
                 triggerRef={this.triggerButton}
               >
                 {({ ariaIds }) => (
@@ -85,6 +84,7 @@ export default class LicenseField extends React.Component {
             </Button>
           );
         }}
+        type="find-license"
       >
         <FormattedMessage id="ui-agreements.license.noFindLicensePlugin" />
       </Pluggable>
@@ -131,6 +131,7 @@ export default class LicenseField extends React.Component {
       <Card
         cardStyle={value ? 'positive' : 'negative'}
         hasMargin
+        headerEnd={this.renderLinkLicenseButton(value)}
         headerStart={(
           <AppIcon app="licenses" size="small">
             <strong>
@@ -138,7 +139,6 @@ export default class LicenseField extends React.Component {
             </strong>
           </AppIcon>
         )}
-        headerEnd={this.renderLinkLicenseButton(value)}
         id={id}
         roundedBorder
       >

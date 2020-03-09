@@ -171,11 +171,11 @@ export default class Agreement extends React.Component {
             <FormattedMessage id="ui-agreements.agreements.showTags">
               {ariaLabel => (
                 <IconButton
+                  ariaLabel={ariaLabel}
+                  badgeCount={get(agreement, 'tags.length', 0)}
                   icon="tag"
                   id="clickable-show-tags"
-                  badgeCount={get(agreement, 'tags.length', 0)}
                   onClick={handlers.onToggleTags}
-                  ariaLabel={ariaLabel}
                 />
               )}
             </FormattedMessage>

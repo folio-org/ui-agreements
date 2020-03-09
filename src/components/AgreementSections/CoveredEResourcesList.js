@@ -212,10 +212,10 @@ export default class CoveredEResourcesList extends React.Component {
           </Headline>
         </Layout>
         <Row end="xs">
-          <Col xs={12} md={9}>
+          <Col md={9} xs={12}>
             {this.renderFilterButtons()}
           </Col>
-          <Col xs={12} md={3}>
+          <Col md={3} xs={12}>
             {this.renderExportDropdown(exportDisabled)}
             {exportDisabled ?
               <Tooltip
@@ -225,9 +225,9 @@ export default class CoveredEResourcesList extends React.Component {
               >
                 {({ ref, ariaIds }) => (
                   <Icon
+                    ref={ref}
                     aria-labelledby={ariaIds.text}
                     icon="exclamation-circle"
-                    ref={ref}
                     tabIndex="0"
                   />
                 )}

@@ -43,6 +43,7 @@ export default class RelatedAgreements extends React.Component {
   renderRelatedAgreements = () => (
     this.props.agreement.relatedAgreements.map((ra, index) => (
       <Card
+        key={index}
         cardStyle="positive"
         hasMargin
         headerStart={(
@@ -56,7 +57,6 @@ export default class RelatedAgreements extends React.Component {
           </AppIcon>
         )}
         id={`ra-card-${ra.agreement.id}`}
-        key={index}
         roundedBorder
       >
         <KeyValue

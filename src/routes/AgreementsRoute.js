@@ -165,11 +165,11 @@ class AgreementsRoute extends React.Component {
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
           tagsValues: get(resources, 'tagsValues.records', []),
         }}
-        selectedRecordId={match.params.id}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}
         querySetter={this.querySetter}
         searchString={location.search}
+        selectedRecordId={match.params.id}
         source={this.source}
       >
         {children}

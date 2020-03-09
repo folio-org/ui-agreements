@@ -35,6 +35,7 @@ export default class UsageData extends React.Component {
   renderUDPs = () => (
     this.props.agreement.usageDataProviders.map((udp, index) => (
       <Card
+        key={index}
         cardStyle="positive"
         hasMargin
         headerStart={(
@@ -48,7 +49,6 @@ export default class UsageData extends React.Component {
           </AppIcon>
         )}
         id={`udp-card-${udp.remoteId}`}
-        key={index}
         roundedBorder
       >
         <KeyValue

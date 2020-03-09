@@ -47,9 +47,9 @@ export default class Organizations extends React.Component {
 
       return (
         <ViewOrganizationCard
+          key={`${org.orgsUuid}-${role.value}`}
           data-test-organizations-org
           fetchCredentials={this.props.handlers.onFetchCredentials}
-          key={`${org.orgsUuid}-${role.value}`}
           headerStart={
             <span>
               <AppIcon app="organizations" size="small">
@@ -79,12 +79,12 @@ export default class Organizations extends React.Component {
     const { agreement: { orgs = [] }, id, open, onToggle } = this.props;
     return (
       <Accordion
-        id={id}
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
+        id={id}
         label={<FormattedMessage id="ui-agreements.agreements.organizations" />}
-        open={open}
         onToggle={onToggle}
+        open={open}
       >
         <Layout className="padding-bottom-gutter">
           {orgs.length ? this.renderOrganizations() : this.renderNoOrganizations()}

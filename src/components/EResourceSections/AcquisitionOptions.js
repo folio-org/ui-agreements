@@ -27,9 +27,21 @@ export default class AcquisitionOptions extends React.Component {
 
   renderOptions = () => (
     <MultiColumnList
+      columnMapping={{
+        sourceKb: <FormattedMessage id="ui-agreements.eresources.sourceKb" />,
+        package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
+        platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
+        acqMethod: <FormattedMessage id="ui-agreements.eresources.acqMethod" />,
+        add: <FormattedMessage id="ui-agreements.eresources.addToBasketHeader" />,
+      }}
+      columnWidths={{
+        sourceKb: '10%',
+        package: '25%',
+        platform: '25%',
+        acqMethod: '10%',
+        add: '25%',
+      }}
       contentData={this.props.data.entitlementOptions}
-      interactive={false}
-      visibleColumns={['sourceKb', 'package', 'platform', 'acqMethod', 'add']}
       formatter={{
         sourceKb: option => <EResourceKB resource={option} />,
         package: option => <EResourceLink eresource={option} />,
@@ -67,20 +79,8 @@ export default class AcquisitionOptions extends React.Component {
           );
         },
       }}
-      columnMapping={{
-        sourceKb: <FormattedMessage id="ui-agreements.eresources.sourceKb" />,
-        package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
-        platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
-        acqMethod: <FormattedMessage id="ui-agreements.eresources.acqMethod" />,
-        add: <FormattedMessage id="ui-agreements.eresources.addToBasketHeader" />,
-      }}
-      columnWidths={{
-        sourceKb: '10%',
-        package: '25%',
-        platform: '25%',
-        acqMethod: '10%',
-        add: '25%',
-      }}
+      interactive={false}
+      visibleColumns={['sourceKb', 'package', 'platform', 'acqMethod', 'add']}
     />
   )
 
