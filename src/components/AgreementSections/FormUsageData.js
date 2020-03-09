@@ -20,12 +20,12 @@ export default class FormUsageData extends React.Component {
       <Accordion
         id={id}
         label={<FormattedMessage id="ui-agreements.usageData" />}
-        open={open}
         onToggle={onToggle}
+        open={open}
       >
         <FieldArray
-          name="usageDataProviders"
           component={UsageDataProvidersFieldArray}
+          name="usageDataProviders"
         />
       </Accordion>
     );

@@ -110,8 +110,8 @@ class AddToBasketButton extends React.Component {
             <Button
               {...baseProps}
               {...buttonProps}
-              aria-labelledby={ariaIds.text}
               ref={ref}
+              aria-labelledby={ariaIds.text}
             >
               {itemExistsInBasket ? removeLabel : addLabel}
             </Button>

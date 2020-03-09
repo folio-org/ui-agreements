@@ -60,16 +60,16 @@ class GeneralSettingsForm extends React.Component {
 
     return (
       <form id="agreement-general-settings-form" onSubmit={handleSubmit(this.handleSave)}>
-        <Pane defaultWidth="fill" fluidContentWidth paneTitle={label} lastMenu={this.getLastMenu()}>
+        <Pane defaultWidth="fill" fluidContentWidth lastMenu={this.getLastMenu()} paneTitle={label}>
           <Row>
             <Col xs={12}>
               <Field
-                label={<FormattedMessage id="ui-agreements.settings.general.hideEResourcesFunctionality.title" />}
-                id="hideEResourcesFunctionality"
-                name="hideEResourcesFunctionality"
                 component={Checkbox}
-                type="checkbox"
+                id="hideEResourcesFunctionality"
+                label={<FormattedMessage id="ui-agreements.settings.general.hideEResourcesFunctionality.title" />}
+                name="hideEResourcesFunctionality"
                 normalize={v => !!v}
+                type="checkbox"
               />
             </Col>
           </Row>
@@ -78,8 +78,8 @@ class GeneralSettingsForm extends React.Component {
           </Layout>
           <Layout className="margin-both-gutter">
             <List
-              items={[1, 2, 3]}
               itemFormatter={item => <FormattedMessage id={`ui-agreements.settings.hideEResources.result.${item}`} tagName="li" />}
+              items={[1, 2, 3]}
               listStyle="bullets"
             />
           </Layout>

@@ -107,10 +107,10 @@ export default class EResources extends React.Component {
 
     return (
       <RowComponent
+        key={`row-${rowIndex}`}
         aria-rowindex={rowIndex + 2}
         className={rowClass}
         data-label={rowData.name}
-        key={`row-${rowIndex}`}
         role="row"
         {...rowProps}
       >
@@ -133,9 +133,9 @@ export default class EResources extends React.Component {
     return (
       <div data-test-eresources-no-results-message>
         <NoResultsMessage
-          source={source}
-          searchTerm={query.query || ''}
           filterPaneIsVisible
+          searchTerm={query.query || ''}
+          source={source}
           toggleFilterPane={noop}
         />
       </div>
@@ -155,10 +155,10 @@ export default class EResources extends React.Component {
             <FormattedMessage id={hideOrShowMessageId}>
               {hideOrShowMessage => (
                 <FilterPaneToggle
-                  visible={filterPaneIsVisible}
                   aria-label={`${hideOrShowMessage}...${appliedFiltersMessage}`}
-                  onClick={this.toggleFilterPane}
                   badge={!filterPaneIsVisible && filterCount ? filterCount : undefined}
+                  onClick={this.toggleFilterPane}
+                  visible={filterPaneIsVisible}
                 />
               )}
             </FormattedMessage>
@@ -196,11 +196,11 @@ export default class EResources extends React.Component {
     const sortOrder = query.sort || '';
 
     return (
-      <div data-test-eresources ref={contentRef}>
+      <div ref={contentRef} data-test-eresources>
         <SearchAndSortQuery
           initialFilterState={{}}
-          initialSortState={{ sort: 'name' }}
           initialSearchState={{ query: '' }}
+          initialSortState={{ sort: 'name' }}
           queryGetter={queryGetter}
           querySetter={querySetter}
           sortableColumns={['name', 'type']}
@@ -238,8 +238,8 @@ export default class EResources extends React.Component {
                               <FormattedMessage id="ui-agreements.agreements" />
                             </Button>
                             <Button
-                              id="clickable-nav-eresources"
                               buttonStyle="primary"
+                              id="clickable-nav-eresources"
                             >
                               <FormattedMessage id="ui-agreements.eresources" />
                             </Button>
@@ -278,8 +278,8 @@ export default class EResources extends React.Component {
                         <div className={css.resetButtonWrap}>
                           <Button
                             buttonStyle="none"
-                            id="clickable-reset-all"
                             disabled={disableReset()}
+                            id="clickable-reset-all"
                             onClick={resetAll}
                           >
                             <Icon icon="times-circle-solid">
@@ -300,8 +300,8 @@ export default class EResources extends React.Component {
                     defaultWidth="fill"
                     firstMenu={this.renderResultsFirstMenu(activeFilters)}
                     padContent={false}
-                    paneTitle={<FormattedMessage id="ui-agreements.eresources" />}
                     paneSub={this.renderResultsPaneSubtitle(source)}
+                    paneTitle={<FormattedMessage id="ui-agreements.eresources" />}
                   >
                     <MultiColumnList
                       autosize
@@ -311,9 +311,9 @@ export default class EResources extends React.Component {
                       formatter={this.formatter}
                       id="list-eresources"
                       isEmptyMessage={this.renderIsEmptyMessage(query, source)}
+                      isSelected={({ item }) => item.id === selectedRecordId}
                       onHeaderClick={onSort}
                       onNeedMoreData={onNeedMoreData}
-                      isSelected={({ item }) => item.id === selectedRecordId}
                       onRowClick={onSelectRow}
                       pageAmount={resultCount.RESULT_COUNT_INCREMENT}
                       pagingType="click"

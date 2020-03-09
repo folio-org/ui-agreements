@@ -37,12 +37,12 @@ class GeneralSettings extends React.Component {
   render() {
     return (
       <this.connectedConfigManager
-        label={<FormattedMessage id="ui-agreements.settings.general" />}
-        moduleName="AGREEMENTS"
+        configFormComponent={GeneralSettingsForm}
         configName="general"
         getInitialValues={this.getInitialValues}
+        label={<FormattedMessage id="ui-agreements.settings.general" />}
+        moduleName="AGREEMENTS"
         onBeforeSave={this.handleBeforeSave}
-        configFormComponent={GeneralSettingsForm}
         stripes={this.props.stripes}
       />
     );

@@ -57,10 +57,10 @@ class AgreementLinesFieldArray extends React.Component {
   renderLines = () => {
     return this.props.items.map((line, i) => (
       <Field
+        key={i}
         basket={this.props.data.basket}
         component={AgreementLineField}
         index={i}
-        key={i}
         name={`${this.props.name}[${i}]`}
         onDelete={() => this.props.onDeleteField(i, line)}
         onResourceSelected={this.handleResourceSelected}

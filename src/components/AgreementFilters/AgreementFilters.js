@@ -130,8 +130,8 @@ export default class AgreementFilters extends React.Component {
         <Selection
           dataOptions={dataOptions}
           disabled={orgFilters.length === 0}
-          value={roleFilters[0] || ''}
           onChange={value => this.props.filterHandlers.state({ ...activeFilters, role: [value] })}
+          value={roleFilters[0] || ''}
         />
       </Accordion>
     );
@@ -153,13 +153,13 @@ export default class AgreementFilters extends React.Component {
           separator={false}
         >
           <InternalContactSelection
-            path="erm/contacts"
             id="agreement-internal-contacts-filter"
             input={{
               name: 'agreement-contacts-filter',
               onChange: value => this.props.filterHandlers.state({ ...activeFilters, contacts: [value] }),
               value: contactFilters[0] || '',
             }}
+            path="erm/contacts"
           />
         </Accordion>
       </IfPermission>
@@ -189,8 +189,8 @@ export default class AgreementFilters extends React.Component {
         <Selection
           dataOptions={dataOptions}
           id="agreement-internal-contacts-role-filter"
-          value={contactRoleFilters[0] || ''}
           onChange={value => this.props.filterHandlers.state({ ...activeFilters, contactRole: [value] })}
+          value={contactRoleFilters[0] || ''}
         />
       </Accordion>
     );
@@ -203,9 +203,9 @@ export default class AgreementFilters extends React.Component {
     return (
       <Accordion
         closedByDefault
-        id="clickable-tags-filter"
         displayClearButton={tagFilters.length > 0}
         header={FilterAccordionHeader}
+        id="clickable-tags-filter"
         label={<FormattedMessage id="ui-agreements.agreements.tags" />}
         onClearFilter={() => { this.props.filterHandlers.clearGroup('tags'); }}
         separator={false}

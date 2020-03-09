@@ -95,10 +95,10 @@ export default class Agreements extends React.Component {
       const iconKey = get(a, 'agreementStatus.value') === statuses.CLOSED ? 'closedAgreement' : 'app';
       return (
         <AppIcon
-          size="small"
           app="agreements"
           iconAlignment="baseline"
           iconKey={iconKey}
+          size="small"
         >
           <div style={{ overflowWrap: 'break-word', width: 460 }}>
             {a.name}
@@ -125,13 +125,13 @@ export default class Agreements extends React.Component {
 
     return (
       <RowComponent
+        key={`row-${rowIndex}`}
         aria-rowindex={rowIndex + 2}
         className={rowClass}
         data-label={[
           rowData.name,
           this.formatter.agreementStatus(rowData),
         ].join('...')}
-        key={`row-${rowIndex}`}
         role="row"
         {...rowProps}
       >
@@ -158,9 +158,9 @@ export default class Agreements extends React.Component {
     return (
       <div data-test-agreements-no-results-message>
         <NoResultsMessage
-          source={source}
-          searchTerm={query.query || ''}
           filterPaneIsVisible
+          searchTerm={query.query || ''}
+          source={source}
           toggleFilterPane={noop}
         />
       </div>
@@ -180,10 +180,10 @@ export default class Agreements extends React.Component {
             <FormattedMessage id={hideOrShowMessageId}>
               {hideOrShowMessage => (
                 <FilterPaneToggle
-                  visible={filterPaneIsVisible}
                   aria-label={`${hideOrShowMessage}...${appliedFiltersMessage}`}
-                  onClick={this.toggleFilterPane}
                   badge={!filterPaneIsVisible && filterCount ? filterCount : undefined}
+                  onClick={this.toggleFilterPane}
+                  visible={filterPaneIsVisible}
                 />
               )}
             </FormattedMessage>
@@ -248,13 +248,13 @@ export default class Agreements extends React.Component {
     const sortOrder = query.sort || '';
 
     return (
-      <div data-test-agreements ref={contentRef}>
+      <div ref={contentRef} data-test-agreements>
         <SearchAndSortQuery
           initialFilterState={{
             agreementStatus: ['Active', 'Draft', 'In negotiation', 'Requested']
           }}
-          initialSortState={{ sort: 'name' }}
           initialSearchState={{ query: '' }}
+          initialSortState={{ sort: 'name' }}
           queryGetter={queryGetter}
           querySetter={querySetter}
           syncToLocationSearch={syncToLocationSearch}
@@ -331,8 +331,8 @@ export default class Agreements extends React.Component {
                         <div className={css.resetButtonWrap}>
                           <Button
                             buttonStyle="none"
-                            id="clickable-reset-all"
                             disabled={disableReset()}
+                            id="clickable-reset-all"
                             onClick={resetAll}
                           >
                             <Icon icon="times-circle-solid">
@@ -354,8 +354,8 @@ export default class Agreements extends React.Component {
                     firstMenu={this.renderResultsFirstMenu(activeFilters)}
                     lastMenu={this.renderResultsLastMenu()}
                     padContent={false}
-                    paneTitle={<FormattedMessage id="ui-agreements.agreements" />}
                     paneSub={this.renderResultsPaneSubtitle(source)}
+                    paneTitle={<FormattedMessage id="ui-agreements.agreements" />}
                   >
                     <MultiColumnList
                       autosize
@@ -365,9 +365,9 @@ export default class Agreements extends React.Component {
                       formatter={this.formatter}
                       id="list-agreements"
                       isEmptyMessage={this.renderIsEmptyMessage(query, source)}
+                      isSelected={({ item }) => item.id === selectedRecordId}
                       onHeaderClick={onSort}
                       onNeedMoreData={onNeedMoreData}
-                      isSelected={({ item }) => item.id === selectedRecordId}
                       onRowClick={onSelectRow}
                       rowFormatter={this.rowFormatter}
                       sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}

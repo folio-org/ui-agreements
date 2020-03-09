@@ -39,13 +39,13 @@ export default class NoteEditRoute extends Component {
 
     return (
       <NoteEditPage
-        referredEntityData={formatNoteReferrerEntityData(location.state)}
-        entityTypeTranslationKeys={entityTypeTranslationKeys}
-        entityTypePluralizedTranslationKeys={entityTypePluralizedTranslationKeys}
-        paneHeaderAppIcon="agreement"
         domain="agreements"
+        entityTypePluralizedTranslationKeys={entityTypePluralizedTranslationKeys}
+        entityTypeTranslationKeys={entityTypeTranslationKeys}
         navigateBack={this.goToNoteView}
         noteId={match.params.id}
+        paneHeaderAppIcon="agreement"
+        referredEntityData={formatNoteReferrerEntityData(location.state)}
       />
     );
   }

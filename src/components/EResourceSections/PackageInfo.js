@@ -37,7 +37,7 @@ export default class PackageInfo extends React.Component {
     return (
       <div id="package-info">
         <Row between="md">
-          <Col xs={12} md={8}>
+          <Col md={8} xs={12}>
             <Headline
               size="xx-large"
               tag="h2"
@@ -50,9 +50,9 @@ export default class PackageInfo extends React.Component {
               <AddToBasketButton
                 key={eresource.id}
                 addLabel={<FormattedMessage id="ui-agreements.eresources.addPackageToBasket" />}
-                removeLabel={<FormattedMessage id="ui-agreements.eresources.removePackage" />}
-                item={entitlementOption}
                 buttonProps={{ 'data-test-add-package-to-basket': true }}
+                item={entitlementOption}
+                removeLabel={<FormattedMessage id="ui-agreements.eresources.removePackage" />}
               />
             </Layout>
           </Col>

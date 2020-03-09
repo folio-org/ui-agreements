@@ -73,9 +73,9 @@ export default class SerialCoverage extends React.Component {
 
     return (
       <Layout
+        key={i}
         className="flex justified"
         data-test-statement={i}
-        key={i}
       >
         <Layout
           className="margin-end-gutter textRight"

@@ -27,8 +27,8 @@ export default class HistoricalLicenses extends React.Component {
   renderLicense = (linkedLicense, i) => {
     return (
       <LinkedLicenseCard
-        id={`agreement-historical-license-${i}`}
         key={linkedLicense.id}
+        id={`agreement-historical-license-${i}`}
         license={linkedLicense}
       />
     );
@@ -52,8 +52,8 @@ export default class HistoricalLicenses extends React.Component {
         displayWhenOpen={<Badge>{licenses.length}</Badge>}
         id={id}
         label={<FormattedMessage id="ui-agreements.license.historicalLicenses" />}
-        open={open}
         onToggle={onToggle}
+        open={open}
       >
         { licenses.length ? licenses.map(this.renderLicense) : this.renderEmpty() }
       </Accordion>

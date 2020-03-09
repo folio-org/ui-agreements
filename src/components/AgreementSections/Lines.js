@@ -61,9 +61,9 @@ export default class Lines extends React.Component {
         <CoveredEResourcesList
           agreement={agreement}
           eresourcesFilterPath={eresourcesFilterPath}
-          onFilterEResources={handlers.onFilterEResources}
           onExportEResourcesAsJSON={handlers.onExportEResourcesAsJSON}
           onExportEResourcesAsKBART={handlers.onExportEResourcesAsKBART}
+          onFilterEResources={handlers.onFilterEResources}
           onNeedMoreEResources={handlers.onNeedMoreEResources}
           visible={open}
         />

@@ -98,7 +98,7 @@ export default class FormInfo extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={12} md={6}>
+          <Col md={6} xs={12}>
             <Field name="agreementStatus" validate={validators.required}>
               {({ input, meta }) => {
                 return (<Select
@@ -128,7 +128,7 @@ export default class FormInfo extends React.Component {
               }}
             </Field>
           </Col>
-          <Col xs={12} md={6}>
+          <Col md={6} xs={12}>
             <Field
               component={Select}
               dataOptions={reasonForClosureValues}
@@ -141,7 +141,7 @@ export default class FormInfo extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={12} md={6}>
+          <Col md={6} xs={12}>
             <Field
               component={Select}
               dataOptions={renewalPriorityValues}
@@ -151,7 +151,7 @@ export default class FormInfo extends React.Component {
               parse={v => v} // Lets us pass an empty string instead of `undefined`
             />
           </Col>
-          <Col xs={12} md={6}>
+          <Col md={6} xs={12}>
             <Field
               component={Select}
               dataOptions={isPerpetualValues}

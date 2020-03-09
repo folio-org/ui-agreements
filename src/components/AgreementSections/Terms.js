@@ -46,8 +46,8 @@ export default class Terms extends React.Component {
       <Accordion
         id={id}
         label={<FormattedMessage id="ui-agreements.agreements.licenseAndBusTerms" />}
-        open={open}
         onToggle={onToggle}
+        open={open}
       >
         {controllingLicense ?
           this.renderTermsList(controllingLicense) :

@@ -25,11 +25,11 @@ export default class NoteCreateRoute extends Component {
 
     return (
       <NoteCreatePage
-        referredEntityData={formatNoteReferrerEntityData(this.props.location.state)}
-        entityTypeTranslationKeys={entityTypeTranslationKeys}
-        paneHeaderAppIcon="agreements"
         domain="agreements"
+        entityTypeTranslationKeys={entityTypeTranslationKeys}
         navigateBack={history.goBack}
+        paneHeaderAppIcon="agreements"
+        referredEntityData={formatNoteReferrerEntityData(this.props.location.state)}
       />
     );
   }

@@ -138,16 +138,6 @@ class AgreementForm extends React.Component {
 
     return (
       <PaneFooter
-        renderStart={(
-          <Button
-            buttonStyle="default mega"
-            id="clickable-cancel"
-            marginBottom0
-            onClick={handlers.onClose}
-          >
-            <FormattedMessage id="stripes-components.cancel" />
-          </Button>
-        )}
         renderEnd={(
           <Button
             buttonStyle="primary mega"
@@ -160,6 +150,16 @@ class AgreementForm extends React.Component {
             <FormattedMessage id="stripes-components.saveAndClose" />
           </Button>
         )}
+        renderStart={(
+          <Button
+            buttonStyle="default mega"
+            id="clickable-cancel"
+            marginBottom0
+            onClick={handlers.onClose}
+          >
+            <FormattedMessage id="stripes-components.cancel" />
+          </Button>
+        )}
       />
     );
   }
@@ -170,10 +170,10 @@ class AgreementForm extends React.Component {
         <FormattedMessage id="ui-agreements.agreements.closeEdit">
           {ariaLabel => (
             <IconButton
+              aria-label={ariaLabel}
               icon="times"
               id="close-agreement-form-button"
               onClick={this.props.handlers.onClose}
-              aria-label={ariaLabel}
             />
           )}
         </FormattedMessage>
@@ -193,9 +193,9 @@ class AgreementForm extends React.Component {
             <Pane
               appIcon={<AppIcon app="agreements" />}
               defaultWidth="100%"
+              firstMenu={this.renderFirstMenu()}
               footer={this.renderPaneFooter()}
               id="pane-agreement-form"
-              firstMenu={this.renderFirstMenu()}
               paneTitle={id ? name : <FormattedMessage id="ui-agreements.agreements.createAgreement" />}
             >
               <TitleManager record={id ? name : create}>

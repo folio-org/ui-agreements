@@ -43,8 +43,8 @@ export default class EResource extends React.Component {
           defaultWidth="55%"
           dismissible
           id="pane-view-eresource"
-          paneTitle={data.eresource.name}
           onClose={handlers.onClose}
+          paneTitle={data.eresource.name}
         >
           <TitleManager record={data.eresource.name}>
             <EResourceViewComponent data={data} handlers={handlers} />

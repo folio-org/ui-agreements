@@ -68,8 +68,8 @@ export default class POLineField extends React.Component {
           if (value) {
             return (
               <Tooltip
-                text={<FormattedMessage id="ui-agreements.poLines.replacePOLineSpecific" values={{ POLineTitle: get(this.props.poLine, 'title') }} />}
                 id={`${this.props.id}-po-line-button-tooltip`}
+                text={<FormattedMessage id="ui-agreements.poLines.replacePOLineSpecific" values={{ POLineTitle: get(this.props.poLine, 'title') }} />}
                 triggerRef={this.triggerButton}
               >
                 {({ ariaIds }) => (
@@ -163,6 +163,7 @@ export default class POLineField extends React.Component {
       <Card
         cardStyle={value ? 'positive' : 'negative'}
         hasMargin
+        headerEnd={this.renderLinkPOLineButton(value)}
         headerStart={(
           <AppIcon app="orders" size="small">
             <strong data-test-po-line-number>
@@ -173,7 +174,6 @@ export default class POLineField extends React.Component {
             </strong>
           </AppIcon>
         )}
-        headerEnd={this.renderLinkPOLineButton(value)}
         id={id}
         roundedBorder
       >

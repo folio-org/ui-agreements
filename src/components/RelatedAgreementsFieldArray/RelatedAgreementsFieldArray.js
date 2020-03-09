@@ -74,6 +74,7 @@ class RelatedAgreementsFieldArray extends React.Component {
   renderRelatedAgreements = (items) => {
     return items.map((relatedAgreement, index) => (
       <EditCard
+        key={index}
         deleteBtnProps={{
           'id': `ra-delete-${index}`,
           'data-test-delete-field-button': true
@@ -81,16 +82,15 @@ class RelatedAgreementsFieldArray extends React.Component {
         deleteButtonTooltipText={<FormattedMessage id="ui-agreements.relatedAgreements.remove" values={{ index: index + 1 }} />}
         header={<FormattedMessage id="ui-agreements.relatedAgreements.relatedAgreementIndex" values={{ index: index + 1 }} />}
         id={`edit-ra-card-${index}`}
-        key={index}
         onDelete={() => this.props.onDeleteField(index, relatedAgreement)}
       >
         <Field
+          agreement={relatedAgreement.agreement}
           component={RelatedAgreementField}
           id={`ra-agreement-${index}`}
           index={index}
           name={`${this.props.name}[${index}].agreement`}
           onAgreementSelected={selectedAgreement => this.handleAgreementSelected(index, selectedAgreement)}
-          agreement={relatedAgreement.agreement}
           validate={composeValidators(
             requiredValidator,
             this.validateSelfLinking,
@@ -127,8 +127,8 @@ class RelatedAgreementsFieldArray extends React.Component {
         </div>
         <Button
           data-test-ra-fa-add-button
-          onClick={() => onAddField()}
           id="add-ra-btn"
+          onClick={() => onAddField()}
         >
           <FormattedMessage id="ui-agreements.relatedAgreements.addRelatedAgreement" />
         </Button>

@@ -53,25 +53,25 @@ class App extends React.Component {
           </IfEResourcesEnabled>
           <div className={css.body}>
             <Switch>
-              <Route path={`${path}/agreements/create`} component={AgreementCreateRoute} />
-              <Route path={`${path}/agreements/:id/edit`} component={AgreementEditRoute} />
-              <Route path={`${path}/agreements/:id?`} component={AgreementsRoute}>
+              <Route component={AgreementCreateRoute} path={`${path}/agreements/create`} />
+              <Route component={AgreementEditRoute} path={`${path}/agreements/:id/edit`} />
+              <Route component={AgreementsRoute} path={`${path}/agreements/:id?`}>
                 <Suspense fallback={null}>
-                  <Route path={`${path}/agreements/:id`} component={AgreementViewRoute} />
+                  <Route component={AgreementViewRoute} path={`${path}/agreements/:id`} />
                 </Suspense>
               </Route>
 
-              <Route path={`${path}/eresources/:id?`} component={EResourcesRoute}>
+              <Route component={EResourcesRoute} path={`${path}/eresources/:id?`}>
                 <Suspense fallback={null}>
-                  <Route path={`${path}/eresources/:id`} component={EResourceViewRoute} />
+                  <Route component={EResourceViewRoute} path={`${path}/eresources/:id`} />
                 </Suspense>
               </Route>
 
-              <Route path={`${path}/notes/create`} component={NoteCreateRoute} />
-              <Route path={`${path}/notes/:id/edit`} component={NoteEditRoute} />
-              <Route path={`${path}/notes/:id`} component={NoteViewRoute} />
+              <Route component={NoteCreateRoute} path={`${path}/notes/create`} />
+              <Route component={NoteEditRoute} path={`${path}/notes/:id/edit`} />
+              <Route component={NoteViewRoute} path={`${path}/notes/:id`} />
 
-              <Route path={`${path}/basket`} component={BasketRoute} />
+              <Route component={BasketRoute} path={`${path}/basket`} />
             </Switch>
           </div>
         </Suspense>

@@ -87,10 +87,10 @@ export default class Basket extends React.Component {
         <FormattedMessage id="ui-agreements.basket.close">
           {ariaLabel => (
             <IconButton
+              aria-label={ariaLabel}
               icon="times"
               id="clickable-close-basket"
               onClick={this.props.handlers.onClose}
-              aria-label={ariaLabel}
             />
           )}
         </FormattedMessage>
@@ -145,13 +145,12 @@ export default class Basket extends React.Component {
 
     return (
       <div>
-        <FormattedMessage tagName="div" id="ui-agreements.basket.addToExistingAgreement" />
+        <FormattedMessage id="ui-agreements.basket.addToExistingAgreement" tagName="div" />
         <Row>
-          <Col xs={12} md={8}>
+          <Col md={8} xs={12}>
             <FormattedMessage id="ui-agreements.basket.clickToSelectAgreement">
               {placeholder => (
                 <Selection
-                  id="select-agreement-for-basket"
                   dataOptions={this.state.openAgreements}
                   formatter={({ option }) => (
                     <div
@@ -164,6 +163,7 @@ export default class Basket extends React.Component {
                       </div>
                     </div>
                   )}
+                  id="select-agreement-for-basket"
                   onChange={(selectedAgreementId) => { this.setState({ selectedAgreementId }); }}
                   onFilter={(searchString, agreements) => {
                     return agreements.filter(agreement => {
@@ -182,7 +182,7 @@ export default class Basket extends React.Component {
               )}
             </FormattedMessage>
           </Col>
-          <Col xs={12} md={4}>
+          <Col md={4} xs={12}>
             { this.renderAddToAgreementButton() }
           </Col>
         </Row>
@@ -197,17 +197,17 @@ export default class Basket extends React.Component {
       <Paneset id="basket-paneset">
         <Pane
           defaultWidth="100%"
-          id="basket-pane"
           firstMenu={this.renderPaneFirstMenu()}
-          paneTitle={<FormattedMessage id="ui-agreements.basket.name" />}
+          id="basket-pane"
           paneSub={<FormattedMessage id="ui-agreements.basket.recordCount" values={{ count: data.basket.length }} />}
+          paneTitle={<FormattedMessage id="ui-agreements.basket.name" />}
         >
           <div id="basket-contents">
             <BasketList
               basket={data.basket}
+              onRemoveItem={handlers.onRemoveBasketItem}
               onToggleAll={this.handleToggleAll}
               onToggleItem={this.handleToggleItem}
-              onRemoveItem={handlers.onRemoveBasketItem}
               selectedItems={this.state.selectedItems}
             />
             { this.renderCreateAgreementButton() }

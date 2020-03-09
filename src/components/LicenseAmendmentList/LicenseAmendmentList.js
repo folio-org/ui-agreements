@@ -73,15 +73,15 @@ export default class LicenseAmendmentList extends React.Component {
             this.renderStatusMismatchWarnings(a) ?
               <Tooltip
                 id={`warning-tooltip-${a.id}`}
-                text={this.renderStatusMismatchWarnings(a)}
                 placement="left"
+                text={this.renderStatusMismatchWarnings(a)}
               >
                 {({ ref, ariaIds }) => (
                   <Icon
+                    ref={ref}
                     aria-labelledby={ariaIds.text}
                     icon="exclamation-circle"
                     iconClassName={css.tooltipIcon}
-                    ref={ref}
                     tabIndex="0"
                   />
                 )}

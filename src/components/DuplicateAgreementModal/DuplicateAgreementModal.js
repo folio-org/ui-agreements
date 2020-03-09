@@ -77,7 +77,7 @@ export default class DuplicateAgreementModal extends React.Component {
         footer={footer}
         label={
           <Layout className="flex">
-            <Icon size="medium" icon="exclamation-circle" status="error" />
+            <Icon icon="exclamation-circle" size="medium" status="error" />
             &nbsp;
             <FormattedMessage id="ui-agreements.duplicateAgreementModal.error" />
           </Layout>
@@ -156,8 +156,8 @@ export default class DuplicateAgreementModal extends React.Component {
         <Layout className="padding-top-gutter">
           {Object.entries(this.cloneableProperties).map(([prop, value], index) => (
             <Checkbox
-              checked={this.state.selected[prop]}
               key={index}
+              checked={this.state.selected[prop]}
               label={value}
               name={prop}
               onChange={this.updateSelection}

@@ -23,17 +23,17 @@ export default class FormSupplementaryDocuments extends React.Component {
       <Accordion
         id={id}
         label={<FormattedMessage id="ui-agreements.supplementaryDocuments" />}
-        open={open}
         onToggle={onToggle}
+        open={open}
       >
         <FieldArray
           addDocBtnLabel={<FormattedMessage id="ui-agreements.supplementaryDocs.addSupplementaryDoc" />}
           component={DocumentsFieldArray}
           deleteBtnTooltipMsgId="ui-agreements.doc.removeSupplementaryInformation"
-          onDownloadFile={handlers.onDownloadFile}
-          onUploadFile={handlers.onUploadFile}
           isEmptyMessage={<FormattedMessage id="ui-agreements.supplementaryDocs.agreementHasNone" />}
           name="supplementaryDocs"
+          onDownloadFile={handlers.onDownloadFile}
+          onUploadFile={handlers.onUploadFile}
         />
       </Accordion>
     );

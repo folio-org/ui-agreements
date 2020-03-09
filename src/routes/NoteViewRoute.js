@@ -49,13 +49,13 @@ class NoteViewRoute extends Component {
 
     return (
       <NoteViewPage
-        entityTypeTranslationKeys={entityTypeTranslationKeys}
         entityTypePluralizedTranslationKeys={entityTypePluralizedTranslationKeys}
+        entityTypeTranslationKeys={entityTypeTranslationKeys}
         navigateBack={this.navigateBack}
+        noteId={match.params.id}
         onEdit={this.onEdit}
         paneHeaderAppIcon="agreement"
         referredEntityData={formatNoteReferrerEntityData(location.state)}
-        noteId={match.params.id}
       />
     );
   }

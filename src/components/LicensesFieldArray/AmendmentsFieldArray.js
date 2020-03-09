@@ -69,6 +69,7 @@ class AmendmentsFieldArray extends React.Component {
           const amendment = amendments.find(a => item.amendmentId === a.id) || {};
           return (
             <Card
+              key={amendment.id}
               data-test-amendment={amendment.name}
               headerStart={
                 <Link
@@ -78,17 +79,16 @@ class AmendmentsFieldArray extends React.Component {
                   <strong>{amendment.name}</strong>
                 </Link>
               }
-              key={amendment.id}
             >
               <Row>
-                <Col xs={12} md={4}>
+                <Col md={4} xs={12}>
                   <KeyValue
                     data-test-amendment-status
                     label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
                     value={get(amendment, 'status.label', '-')}
                   />
                 </Col>
-                <Col xs={6} md={4}>
+                <Col md={4} xs={6}>
                   <KeyValue
                     data-test-amendment-start-date
                     label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
@@ -96,7 +96,7 @@ class AmendmentsFieldArray extends React.Component {
                     {amendment.startDate ? <FormattedUTCDate value={amendment.startDate} /> : '-'}
                   </KeyValue>
                 </Col>
-                <Col xs={6} md={4}>
+                <Col md={4} xs={6}>
                   <KeyValue
                     data-test-amendment-end-date
                     label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
@@ -106,7 +106,7 @@ class AmendmentsFieldArray extends React.Component {
                 </Col>
               </Row>
               <Row>
-                <Col xs={12} md={4}>
+                <Col md={4} xs={12}>
                   <Field
                     name={`${name}[${i}].status`}
                     validate={validators.required}
@@ -137,7 +137,7 @@ class AmendmentsFieldArray extends React.Component {
                     )}
                   </Field>
                 </Col>
-                <Col xs={12} md={8}>
+                <Col md={8} xs={12}>
                   <Field
                     component={TextArea}
                     label={<FormattedMessage id="ui-agreements.license.amendmentNote" />}

@@ -22,14 +22,14 @@ export default class FormOrganizations extends React.Component {
       <Accordion
         id={id}
         label={<FormattedMessage id="ui-agreements.agreements.organizations" />}
-        open={open}
         onToggle={onToggle}
+        open={open}
       >
         <FieldArray
-          name="orgs"
-          component={OrganizationsFieldArray}
           addOrganizationBtnLabel={addOrganizationBtnLabel}
+          component={OrganizationsFieldArray}
           isEmptyMessage={<FormattedMessage id="ui-agreements.organizations.agreementHasNone" />}
+          name="orgs"
           roles={data.orgRoleValues}
           uniqueRole="vendor"
         />

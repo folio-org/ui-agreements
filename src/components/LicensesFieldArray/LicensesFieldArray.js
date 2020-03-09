@@ -66,6 +66,7 @@ class LicensesFieldArray extends React.Component {
 
     return items.map((license, index) => (
       <EditCard
+        key={index}
         deleteBtnProps={{
           'id': `license-delete-${index}`,
           'data-test-delete-field-button': true
@@ -73,7 +74,6 @@ class LicensesFieldArray extends React.Component {
         deleteButtonTooltipText={<FormattedMessage id="ui-agreements.license.removeLicense" values={{ index: index + 1 }} />}
         header={<FormattedMessage id="ui-agreements.license.licenseIndex" values={{ index: index + 1 }} />}
         id={`${name}-remoteId-${index}-license-card`}
-        key={index}
         onDelete={() => onDeleteField(index, license)}
       >
         <Field
@@ -86,12 +86,12 @@ class LicensesFieldArray extends React.Component {
           validate={requiredValidator}
         />
         <Row>
-          <Col xs={12} md={4}>
+          <Col md={4} xs={12}>
             <Field
+              key={index}
               component={Select}
               dataOptions={licenseStatusValues}
               id={`${name}-status-${index}`}
-              key={index}
               label={<FormattedMessage id="ui-agreements.license.prop.status" />}
               name={`${name}[${index}].status`}
               placeholder=" "
@@ -102,7 +102,7 @@ class LicensesFieldArray extends React.Component {
               )}
             />
           </Col>
-          <Col xs={12} md={8}>
+          <Col md={8} xs={12}>
             <Field
               component={TextArea}
               id={`${name}-note-${index}`}
@@ -114,9 +114,9 @@ class LicensesFieldArray extends React.Component {
         </Row>
         <FieldArray
           amendmentStatusValues={amendmentStatusValues}
+          component={AmendmentsFieldArray}
           form={form}
           license={license.remoteId_object}
-          component={AmendmentsFieldArray}
           name={`${name}[${index}].amendments`}
         />
       </EditCard>
@@ -132,8 +132,8 @@ class LicensesFieldArray extends React.Component {
         </div>
         <Button
           data-test-license-fa-add-button
-          onClick={() => onAddField()}
           id="add-license-btn"
+          onClick={() => onAddField()}
         >
           <FormattedMessage id="ui-agreements.license.addLicense" />
         </Button>

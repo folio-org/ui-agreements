@@ -32,8 +32,8 @@ export default class SupplementaryProperties extends React.Component {
       <Accordion
         id={id}
         label={<FormattedMessage id="ui-agreements.supplementaryProperties" />}
-        open={open}
         onToggle={onToggle}
+        open={open}
       >
         {
           supplementaryProperties?.length ?

@@ -30,8 +30,8 @@ class BasketList extends React.Component {
         columnMapping={{
           selected: (
             <Checkbox
-              name="selected-all"
               checked={Object.values(selectedItems).includes(false) !== true}
+              name="selected-all"
               onChange={this.props.onToggleAll}
             />
           ),
@@ -50,8 +50,8 @@ class BasketList extends React.Component {
         formatter={{
           selected: resource => (
             <Checkbox
-              name={`selected-${resource.id}`}
               checked={!!(selectedItems[resource.id])}
+              name={`selected-${resource.id}`}
               onChange={() => this.props.onToggleItem(resource)}
             />
           ),

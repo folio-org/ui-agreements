@@ -125,22 +125,22 @@ export default class AgreementLineField extends React.Component {
     return (
       <div>
         <Row>
-          <Col xs={12} md={5}>
+          <Col md={5} xs={12}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.name" />}>
               <div data-test-ag-line-name>{this.renderLineName(resource)}</div>
             </KeyValue>
           </Col>
-          <Col xs={12} md={2}>
+          <Col md={2} xs={12}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.type" />}>
               <div data-test-ag-line-type>{this.renderLineType(resource)}</div>
             </KeyValue>
           </Col>
-          <Col xs={12} md={2}>
+          <Col md={2} xs={12}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.titles" />}>
               <div data-test-ag-line-titles>{this.renderLineTitles(resource)}</div>
             </KeyValue>
           </Col>
-          <Col xs={12} md={3}>
+          <Col md={3} xs={12}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.provider" />}>
               <div data-test-ag-line-provider>{this.renderLineProvider(resource)}</div>
             </KeyValue>
@@ -152,7 +152,7 @@ export default class AgreementLineField extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={12} md={4}>
+          <Col md={4} xs={12}>
             <Field
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
@@ -164,7 +164,7 @@ export default class AgreementLineField extends React.Component {
               validate={this.validateDateOrder}
             />
           </Col>
-          <Col xs={12} md={4}>
+          <Col md={4} xs={12}>
             <Field
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
@@ -188,8 +188,8 @@ export default class AgreementLineField extends React.Component {
 
     return (
       <BasketSelector
-        autoFocus
         addButtonLabel={<FormattedMessage id="ui-agreements.agreementLines.createLine" />}
+        autoFocus
         basket={this.props.basket}
         error={React.isValidElement(error) ? error : undefined}
         name={`${name}.basketSelector`}

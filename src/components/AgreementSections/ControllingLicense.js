@@ -123,8 +123,8 @@ export default class ControllingLicense extends React.Component {
         displayWhenOpen={<Badge>{license ? 1 : 0}</Badge>}
         id={id}
         label={<FormattedMessage id="ui-agreements.license.controllingLicense" />}
-        open={open}
         onToggle={onToggle}
+        open={open}
       >
         { license ?
           <div>

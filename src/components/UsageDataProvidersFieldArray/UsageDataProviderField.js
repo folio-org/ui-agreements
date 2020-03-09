@@ -56,8 +56,8 @@ export default class UsageDataProviderField extends React.Component {
         if (value) {
           return (
             <Tooltip
-              text={<FormattedMessage id="ui-agreements.usageData.replaceUDPSpecific" values={{ UDPName }} />}
               id={`${this.props.id}-usageDataProvider-button-tooltip`}
+              text={<FormattedMessage id="ui-agreements.usageData.replaceUDPSpecific" values={{ UDPName }} />}
               triggerRef={this.triggerButton}
             >
               {({ ariaIds }) => (
@@ -129,6 +129,7 @@ export default class UsageDataProviderField extends React.Component {
       <Card
         cardStyle={value ? 'positive' : 'negative'}
         hasMargin
+        headerEnd={this.renderLinkUDPButton(value)}
         headerStart={(
           <AppIcon app="erm-usage" size="small">
             <strong>
@@ -136,7 +137,6 @@ export default class UsageDataProviderField extends React.Component {
             </strong>
           </AppIcon>
         )}
-        headerEnd={this.renderLinkUDPButton(value)}
         id={id}
         roundedBorder
       >
