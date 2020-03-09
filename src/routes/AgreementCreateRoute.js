@@ -145,7 +145,7 @@ class AgreementCreateRoute extends React.Component {
       splitRelatedAgreements,
     )(agreement);
 
-    mutator.agreements
+    return mutator.agreements
       .POST(agreement)
       .then(({ id }) => {
         this.context.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
