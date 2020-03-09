@@ -100,7 +100,7 @@ export default class Agreements extends React.Component {
           iconAlignment="baseline"
           iconKey={iconKey}
         >
-          <div style={{ overflowWrap: 'break-word' }}>
+          <div style={{ overflowWrap: 'break-word', width: 460 }}>
             {a.name}
           </div>
         </AppIcon>

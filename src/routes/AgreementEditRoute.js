@@ -284,7 +284,7 @@ class AgreementEditRoute extends React.Component {
       splitRelatedAgreements,
     )(agreement);
 
-    mutator.agreement
+    return mutator.agreement
       .PUT(agreement)
       .then(({ id }) => {
         this.context.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
