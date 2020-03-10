@@ -7,18 +7,6 @@ import { Select } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
 
 export default class PickListValueSettings extends React.Component {
-  static manifest = {
-    categories: {
-      type: 'okapi',
-      path: 'erm/refdata',
-      params: {
-        perPage: '100',
-        sort: 'desc;asc',
-      },
-      accumulate: true,
-    },
-  };
-
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
@@ -42,6 +30,18 @@ export default class PickListValueSettings extends React.Component {
     })
   };
 
+  static manifest = {
+    categories: {
+      type: 'okapi',
+      path: 'erm/refdata',
+      params: {
+        perPage: '100',
+        sort: 'desc;asc',
+      },
+      accumulate: true,
+    },
+  };
+
   constructor(props) {
     super(props);
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
@@ -60,6 +60,11 @@ export default class PickListValueSettings extends React.Component {
   componentDidMount() {
     this.props.mutator.categories.reset();
     this.props.mutator.categories.GET();
+  }
+
+  isInternal = () => {
+    const records = this.props?.resources?.categories?.records ?? [];
+    return records.find(item => item.id === this.state.categoryId)?.internal;
   }
 
   onChangeCategory = (e) => {
@@ -91,6 +96,7 @@ export default class PickListValueSettings extends React.Component {
         {intl => (
           <this.connectedControlledVocab
             {...this.props}
+            actionSuppressor={{ edit: this.isInternal, delete: this.isInternal }}
             actuatorType="refdata"
             baseUrl={`erm/refdata/${this.state.categoryId}`}
             columnMapping={{
