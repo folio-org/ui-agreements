@@ -1,6 +1,6 @@
 # Change history for ui-agreements
 
-##  3.4.0 2019-03-11
+##  3.4.0 2020-03-11
 * Switched to using `<FormattedUTCDate>` from Stripes. ERM-635
 * Switched to using `<Spinner>` from Stripes. ERM-635
 * Keyboard navigation and focus improvements. ERM-416 613 620 624
