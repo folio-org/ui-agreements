@@ -30,7 +30,7 @@ export default class FormInternalContacts extends React.Component {
         <FieldArray
           component={InternalContactsFieldArray}
           contactRoles={this.props.data.contactRoleValues}
-          isEmptyMessage={<FormattedMessage id="ui-agreements.contacts.noContacts" />}
+          isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.internalContacts" />}
           name="contacts"
           users={this.props.data.users}
         />
