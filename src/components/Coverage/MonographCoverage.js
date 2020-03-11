@@ -42,13 +42,14 @@ export default class MonographCoverage extends React.Component {
 
   renderCoverage(pci) {
     // Date can take the forms yyyy, yyyy-mm or yyyy-mm-dd, and is stored as a string.
-    const date = get(pci, 'pti.titleInstance.dateMonographPublished');
-    const volume = get(pci, 'pti.titleInstance.monographVolume');
-    const edition = get(pci, 'pti.titleInstance.monographEdition');
+    const date = pci?.pti?.titleInstance?.dateMonographPublished;
+    const volume = pci?.pti?.titleInstance?.monographVolume;
+    const edition = pci?.pti?.titleInstance?.monographEdition;
 
     if (!date && !volume && !edition) {
       return '*';
     }
+
     return (
       <Layout
         className="full indent"
@@ -71,9 +72,14 @@ export default class MonographCoverage extends React.Component {
 
   render() {
     const { pci } = this.props;
-    const titleName = get(pci, 'pti.titleInstance.name');
+    const titleName = pci?.pti?.titleInstance?.name;
 
-    if (!pci) return '-';
-    return <Layout className="full" data-test-monograph-coverage={titleName}>{this.renderCoverage(pci)}</Layout>;
+    if (!pci) return null;
+
+    return (
+      <Layout className="full" data-test-monograph-coverage={titleName}>
+        {this.renderCoverage(pci)}
+      </Layout>
+    );
   }
 }
