@@ -83,7 +83,8 @@ export default class LinesList extends React.Component {
         {({ hasPermission }) => (hasPermission ?
           this.renderPOLines(line)
           :
-          <FormattedMessage id="ui-agreements.agreementLines.noPoLinePerm" />)}
+          line?.poLines?.length ? <FormattedMessage id="ui-agreements.agreementLines.noPoLinePerm" /> : null
+        )}
       </IfPermission>
     )
   }
