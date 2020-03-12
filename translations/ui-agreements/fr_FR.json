@@ -366,5 +366,6 @@
     "emptyAccordion.supplementaryDocuments": "Pas de documents complémentaires  pour cet accord",
     "emptyAccordion.usageData": "Aucune donnée d'utilisation pour cet accord",
     "emptyAccordion.relatedAgreements": "Aucun accord connexe pour cet accord",
-    "agreementPeriods.otherPeriods": "Autres périodes"
+    "agreementPeriods.otherPeriods": "Autres périodes",
+    "agreementLines.noPoLinePerm": "Aucune autorisation pour afficher la ligne de commande"
 }
