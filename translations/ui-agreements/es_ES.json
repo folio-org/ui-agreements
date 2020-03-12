@@ -366,5 +366,6 @@
     "emptyAccordion.supplementaryDocuments": "No supplementary documents for this agreement",
     "emptyAccordion.usageData": "No usage data for this agreement",
     "emptyAccordion.relatedAgreements": "No related agreements for this agreement",
-    "agreementPeriods.otherPeriods": "Other periods"
+    "agreementPeriods.otherPeriods": "Other periods",
+    "agreementLines.noPoLinePerm": "No permission to view PO line"
 }
