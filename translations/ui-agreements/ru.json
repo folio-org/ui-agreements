@@ -229,7 +229,7 @@
     "agreementPeriods.periodEnd": "Конец периода",
     "agreementPeriods.periodNote": "Заметка периода",
     "agreementPeriods.periodStart": "Начало периода",
-    "agreementPeriods.periodTitle": "Период действия соглашения #{number}",
+    "agreementPeriods.periodTitle": "Период действия соглашения #{дата}",
     "errors.multipleOpenEndedPeriods": "Cannot have multiple open-ended agreement periods.",
     "errors.overlappingPeriod": "The following periods have overlapping dates: {fields}",
     "agreements.reasonForClosure": "Причина закрытия",
@@ -366,5 +366,6 @@
     "emptyAccordion.supplementaryDocuments": "No supplementary documents for this agreement",
     "emptyAccordion.usageData": "No usage data for this agreement",
     "emptyAccordion.relatedAgreements": "Нет соответствующих договорённостей по данному соглашению",
-    "agreementPeriods.otherPeriods": "Other periods"
+    "agreementPeriods.otherPeriods": "Other periods",
+    "agreementLines.noPoLinePerm": "No permission to view PO line"
 }
