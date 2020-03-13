@@ -1,5 +1,8 @@
 # Change history for ui-agreements
 
+##  3.4.1 2020-03-12
+* Set coverage columns to be fixed-width.
+
 ##  3.4.0 2020-03-11
 * Switched to using `<FormattedUTCDate>` from Stripes. ERM-635
 * Switched to using `<Spinner>` from Stripes. ERM-635
