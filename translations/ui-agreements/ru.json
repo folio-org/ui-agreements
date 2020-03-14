@@ -258,7 +258,7 @@
     "relatedAgreements.relationship.provides_post-cancellation_access_for": "Provides post-cancellation access for \"{agreement}\"",
     "relatedAgreements.relationship.supersedes": "Supersedes \"{agreement}\"",
     "relatedAgreements.relationship.tracks_demand-driven_acquisitions_for": "Tracks demand-driven acquisitions for \"{agreement}\"",
-    "relatedAgreements.remove": "Remove related agreement {index}",
+    "relatedAgreements.remove": "Удалить соответствующее соглашение {индекс}",
     "identifier.issn": "eISSN / ISSN",
     "relatedAgreements.relationshipSummary": "\"{source}\" {relationship} \"{target}\"",
     "relatedAgreements.relationshipSummaryForNewAgreement": "\"{source}\" {relationship} the agreement being created",
