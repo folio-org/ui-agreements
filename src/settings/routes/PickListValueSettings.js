@@ -89,14 +89,16 @@ export default class PickListValueSettings extends React.Component {
   }
 
   render() {
+    const { selectedCategory } = this.state;
+
     return (
       <IntlConsumer>
         {intl => (
           <this.connectedControlledVocab
             {...this.props}
-            actionSuppressor={{ edit: this.state.selectedCategory?.internal, delete: this.state.selectedCategory?.internal }}
+            actionSuppressor={{ edit: () => selectedCategory?.internal, delete: () => selectedCategory?.internal }}
             actuatorType="refdata"
-            baseUrl={`erm/refdata/${this.state.selectedCategory?.id}`}
+            baseUrl={`erm/refdata/${selectedCategory?.id}`}
             columnMapping={{
               label: intl.formatMessage({ id: 'ui-agreements.settings.value' }),
               actions: intl.formatMessage({ id: 'ui-agreements.settings.actions' }),
@@ -108,7 +110,7 @@ export default class PickListValueSettings extends React.Component {
             id="pick-list-values"
             label={<FormattedMessage id="ui-agreements.settings.pickListValues" />}
             labelSingular={intl.formatMessage({ id: 'ui-agreements.settings.value' })}
-            listSuppressor={() => !this.state.selectedCategory?.id}
+            listSuppressor={() => !selectedCategory?.id}
             nameKey="label"
             objectLabel={<FormattedMessage id="ui-agreements.settings.values" />}
             records="values"
