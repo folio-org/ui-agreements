@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "3.4.1",
+  "version": "3.5.0",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -160,6 +160,7 @@
       {
         "permissionName": "ui-agreements.agreements.delete",
         "displayName": "Agreements: Delete agreements",
+        "visible": true,
         "subPermissions": [
           "ui-agreements.agreements.view",
           "erm.agreements.item.delete"

@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { get, flatten, uniqBy } from 'lodash';
 import compose from 'compose-function';
 
-import { stripesConnect } from '@folio/stripes/core';
+import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
 import { Tags } from '@folio/stripes-erm-components';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/views/Agreement';
@@ -136,6 +137,9 @@ class AgreementViewRoute extends React.Component {
       }).isRequired
     }).isRequired,
     mutator: PropTypes.shape({
+      agreement: PropTypes.shape({
+        DELETE: PropTypes.func.isRequired,
+      }),
       agreementLinesCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
@@ -179,6 +183,8 @@ class AgreementViewRoute extends React.Component {
   static defaultProps = {
     handlers: {},
   }
+
+  static contextType = CalloutContext;
 
   downloadBlob = (name) => (
     blob => {
@@ -299,6 +305,33 @@ class AgreementViewRoute extends React.Component {
     this.props.history.push(`${urls.agreements()}${this.props.location.search}`);
   }
 
+  handleDelete = () => {
+    const { sendCallout } = this.context;
+    const { history, location, mutator } = this.props;
+    const agreement = this.getCompositeAgreement();
+
+    if (agreement.items?.length) {
+      sendCallout({ type: 'error', message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasAgreementLines" /> });
+    }
+
+    if (agreement.linkedLicenses?.length) {
+      sendCallout({ type: 'error', message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasLicenses" /> });
+    }
+
+    if (agreement.relatedAgreements?.length) {
+      sendCallout({ type: 'error', message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasRelatedAgreements" /> });
+    }
+
+    mutator.agreement.DELETE()
+      .then(() => {
+        sendCallout({ type: 'error', message: <SafeHTMLMessage id="ui-agreements.agreements.deletedAgreement" /> });
+        history.push(`${urls.agreements()}${location.search}`);
+      })
+      .catch(error => {
+        sendCallout({ type: 'error', message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteAgreementBackendError" values={{ message: error.message }} /> });
+      });
+  }
+
   handleFilterEResources = (path) => {
     const { mutator } = this.props;
     mutator.eresourcesFilterPath.replace(path);
@@ -406,6 +439,7 @@ class AgreementViewRoute extends React.Component {
           ...handlers,
           onClone: this.handleClone,
           onClose: this.handleClose,
+          onDelete: this.handleDelete,
           onEdit: this.handleEdit,
           onExportAgreement: this.handleExportAgreement,
           onExportEResourcesAsJSON: this.handleExportEResourcesAsJSON,
