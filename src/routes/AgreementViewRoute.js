@@ -322,9 +322,9 @@ class AgreementViewRoute extends React.Component {
       sendCallout({ type: 'error', message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasRelatedAgreements" /> });
     }
 
-    mutator.agreement.DELETE()
+    mutator.agreement.DELETE(agreement, { silent: true })
       .then(() => {
-        sendCallout({ type: 'error', message: <SafeHTMLMessage id="ui-agreements.agreements.deletedAgreement" /> });
+        sendCallout({ message: <SafeHTMLMessage id="ui-agreements.agreements.deletedAgreement" values={{ name : agreement.name }} /> });
         history.push(`${urls.agreements()}${location.search}`);
       })
       .catch(error => {
