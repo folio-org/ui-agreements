@@ -23,6 +23,7 @@ class AgreementViewRoute extends React.Component {
     agreement: {
       type: 'okapi',
       path: 'erm/sas/:{id}',
+      shouldRefresh: () => false,
     },
     agreementLines: {
       type: 'okapi',
@@ -322,10 +323,11 @@ class AgreementViewRoute extends React.Component {
       sendCallout({ type: 'error', message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasRelatedAgreements" /> });
     }
 
-    mutator.agreement.DELETE(agreement, { silent: true })
+    mutator.agreement.DELETE(agreement)
       .then(() => {
-        sendCallout({ message: <SafeHTMLMessage id="ui-agreements.agreements.deletedAgreement" values={{ name : agreement.name }} /> });
+        // history.replace({ pathname: urls.agreements() });
         history.push(`${urls.agreements()}${location.search}`);
+        sendCallout({ message: <SafeHTMLMessage id="ui-agreements.agreements.deletedAgreement" values={{ name : agreement.name }} /> });
       })
       .catch(error => {
         sendCallout({ type: 'error', message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteAgreementBackendError" values={{ message: error.message }} /> });

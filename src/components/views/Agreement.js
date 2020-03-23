@@ -114,6 +114,19 @@ export default class Agreement extends React.Component {
     this.setState({ showDuplicateAgreementModal: false });
   }
 
+  handleSectionToggle = ({ id }) => {
+    this.setState((prevState) => ({
+      sections: {
+        ...prevState.sections,
+        [id]: !prevState.sections[id],
+      }
+    }));
+  }
+
+  handleAllSectionsToggle = (sections) => {
+    this.setState({ sections });
+  }
+
   getActionMenu = ({ onToggle }) => (
     <>
       <IfPermission perm="ui-agreements.agreements.edit">
@@ -286,7 +299,7 @@ export default class Agreement extends React.Component {
           heading={<FormattedMessage id="ui-agreements.agreements.deleteAgreement" />}
           id="delete-agreement-confirmation"
           message={<SafeHTMLMessage id="ui-agreements.agreements.deleteConfirmMessage" values={{ name: data.agreement?.name }} />}
-          onCancel={this.hideDeleteConfirmationModal}
+          onCancel={this.closeDeleteConfirmationModal}
           onConfirm={() => {
             handlers.onDelete();
             this.closeDeleteConfirmationModal();
