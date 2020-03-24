@@ -13,12 +13,6 @@ export default class SupplementaryProperties extends React.Component {
     open: PropTypes.bool,
   }
 
-  renderNosupplementaryProperties = () => (
-    <Layout className="padding-bottom-gutter">
-      <FormattedMessage id="ui-agreements.emptyAccordion.supplementaryProperties" />
-    </Layout>
-  );
-
   render() {
     const {
       agreement,
@@ -35,14 +29,11 @@ export default class SupplementaryProperties extends React.Component {
         onToggle={onToggle}
         open={open}
       >
-        {
-          supplementaryProperties?.length ?
-            <CustomPropertiesList
-              customProperties={supplementaryProperties}
-              resource={agreement}
-            /> : this.renderNosupplementaryProperties()
-        }
-
+        <CustomPropertiesList
+          customProperties={supplementaryProperties}
+          isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.supplementaryProperties" />}
+          resource={agreement}
+        />
       </Accordion>
     );
   }
