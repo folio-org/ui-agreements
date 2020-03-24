@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { CustomPropertiesList } from '@folio/stripes-erm-components';
-import { Accordion, Layout } from '@folio/stripes/components';
+import { Accordion } from '@folio/stripes/components';
 
 export default class SupplementaryProperties extends React.Component {
   static propTypes = {
