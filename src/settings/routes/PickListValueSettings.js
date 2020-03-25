@@ -96,15 +96,16 @@ export default class PickListValueSettings extends React.Component {
         {intl => (
           <this.connectedControlledVocab
             {...this.props}
-            actionSuppressor={{ edit: () => selectedCategory?.internal, delete: () => selectedCategory?.internal }}
+            actionSuppressor={{ edit: () => false, delete: () => selectedCategory?.internal }}
             actuatorType="refdata"
             baseUrl={`erm/refdata/${selectedCategory?.id}`}
+            canCreate={!selectedCategory?.internal}
+            // We have to unset the dataKey to prevent the props.resources in
+            // <ControlledVocab> from being overwritten by the props.resources here.
             columnMapping={{
               label: intl.formatMessage({ id: 'ui-agreements.settings.value' }),
               actions: intl.formatMessage({ id: 'ui-agreements.settings.actions' }),
             }}
-            // We have to unset the dataKey to prevent the props.resources in
-            // <ControlledVocab> from being overwritten by the props.resources here.
             dataKey={undefined}
             hiddenFields={['lastUpdated', 'numberOfObjects']}
             id="pick-list-values"
