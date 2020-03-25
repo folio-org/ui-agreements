@@ -23,7 +23,10 @@ class AgreementViewRoute extends React.Component {
     agreement: {
       type: 'okapi',
       path: 'erm/sas/:{id}',
-      shouldRefresh: () => false,
+      shouldRefresh: (resource, action) => {
+        if (resource.name !== 'agreement') return true;
+        return !action.meta.originatingActionType?.includes('DELETE');
+      },
     },
     agreementLines: {
       type: 'okapi',
@@ -312,25 +315,27 @@ class AgreementViewRoute extends React.Component {
     const agreement = this.getCompositeAgreement();
 
     if (agreement.items?.length) {
-      sendCallout({ type: 'error', message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasAgreementLines" /> });
+      sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasAgreementLines" /> });
+      return;
     }
 
     if (agreement.linkedLicenses?.length) {
-      sendCallout({ type: 'error', message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasLicenses" /> });
+      sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasLicenses" /> });
+      return;
     }
 
     if (agreement.relatedAgreements?.length) {
-      sendCallout({ type: 'error', message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasRelatedAgreements" /> });
+      sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasRelatedAgreements" /> });
+      return;
     }
 
     mutator.agreement.DELETE(agreement)
       .then(() => {
-        // history.replace({ pathname: urls.agreements() });
         history.push(`${urls.agreements()}${location.search}`);
         sendCallout({ message: <SafeHTMLMessage id="ui-agreements.agreements.deletedAgreement" values={{ name : agreement.name }} /> });
       })
       .catch(error => {
-        sendCallout({ type: 'error', message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteAgreementBackendError" values={{ message: error.message }} /> });
+        sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteAgreementBackendError" values={{ message: error.message }} /> });
       });
   }
 
