@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { CustomPropertiesList } from '@folio/stripes-erm-components';
-import { Accordion, Layout } from '@folio/stripes/components';
+import { Accordion } from '@folio/stripes/components';
 
 export default class SupplementaryProperties extends React.Component {
   static propTypes = {
@@ -12,12 +12,6 @@ export default class SupplementaryProperties extends React.Component {
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   }
-
-  renderNosupplementaryProperties = () => (
-    <Layout className="padding-bottom-gutter">
-      <FormattedMessage id="ui-agreements.emptyAccordion.supplementaryProperties" />
-    </Layout>
-  );
 
   render() {
     const {
@@ -35,14 +29,11 @@ export default class SupplementaryProperties extends React.Component {
         onToggle={onToggle}
         open={open}
       >
-        {
-          supplementaryProperties?.length ?
-            <CustomPropertiesList
-              customProperties={supplementaryProperties}
-              resource={agreement}
-            /> : this.renderNosupplementaryProperties()
-        }
-
+        <CustomPropertiesList
+          customProperties={supplementaryProperties}
+          isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.supplementaryProperties" />}
+          resource={agreement}
+        />
       </Accordion>
     );
   }
