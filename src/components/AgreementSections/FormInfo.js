@@ -12,8 +12,9 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
+import { requiredValidator } from '@folio/stripes-erm-components';
+
 import AgreementPeriodsFieldArray from '../AgreementPeriodsFieldArray';
-import { validators } from '../utilities';
 import { statuses } from '../../constants';
 
 export default class FormInfo extends React.Component {
@@ -82,7 +83,7 @@ export default class FormInfo extends React.Component {
               maxLength={255}
               name="name"
               required
-              validate={validators.required}
+              validate={requiredValidator}
             />
           </Col>
         </Row>
@@ -99,7 +100,7 @@ export default class FormInfo extends React.Component {
         </Row>
         <Row>
           <Col md={6} xs={12}>
-            <Field name="agreementStatus" validate={validators.required}>
+            <Field name="agreementStatus" validate={requiredValidator}>
               {({ input, meta }) => {
                 return (<Select
                   {...input}
