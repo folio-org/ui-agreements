@@ -108,6 +108,5 @@ export default {
   dateOrder,
   multipleOpenEnded,
   overlappingDates,
-  required,
   requiredStartDate,
 };
