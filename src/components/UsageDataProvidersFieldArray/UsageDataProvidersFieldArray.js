@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import { Button, Layout, TextArea } from '@folio/stripes/components';
-import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
+import { EditCard, requiredValidator, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
-import { validators } from '../utilities';
 import UsageDataProviderField from './UsageDataProviderField';
 
 class UsageDataProvidersFieldArray extends React.Component {
@@ -58,7 +57,7 @@ class UsageDataProvidersFieldArray extends React.Component {
           name={`${this.props.name}[${index}].remoteId`}
           onUDPSelected={selectedUDP => this.handleUDPSelected(index, selectedUDP)}
           udp={this.state.udps[udp.remoteId] || udp.remoteId_object}
-          validate={validators.required}
+          validate={requiredValidator}
         />
         <Field
           component={TextArea}
