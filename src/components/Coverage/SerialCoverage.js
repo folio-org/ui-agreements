@@ -68,7 +68,7 @@ export default class SerialCoverage extends React.Component {
     } = statement;
 
     if (!startDate && !startVolume && !startIssue && !endDate && !endVolume && !endIssue) {
-      return '';
+      return null;
     }
 
     return (
@@ -98,8 +98,12 @@ export default class SerialCoverage extends React.Component {
 
   render() {
     const { statements } = this.props;
-    if (!statements || !statements.length) return '-';
+    if (!statements || !statements.length) return null;
 
-    return <Layout className="full" data-test-serial-coverage>{statements.map(this.renderStatement)}</Layout>;
+    return (
+      <Layout className="full" data-test-serial-coverage>
+        {statements.map(this.renderStatement)}
+      </Layout>
+    );
   }
 }

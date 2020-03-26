@@ -366,5 +366,6 @@
     "emptyAccordion.supplementaryDocuments": "Nenhum documento suplementar para este contrato",
     "emptyAccordion.usageData": "Não há dados de uso para este contrato",
     "emptyAccordion.relatedAgreements": "Nenhum contrato relacionado para este contrato",
-    "agreementPeriods.otherPeriods": "Outros períodos"
+    "agreementPeriods.otherPeriods": "Outros períodos",
+    "agreementLines.noPoLinePerm": "Sem permissão para visualizar a linha do pedido"
 }

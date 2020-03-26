@@ -15,9 +15,9 @@ import {
   Select,
   TextArea
 } from '@folio/stripes/components';
-import { LicenseEndDate, withKiwtFieldArray } from '@folio/stripes-erm-components';
+import { LicenseEndDate, requiredValidator, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
-import { urls, getConflictWarnings, validators } from '../utilities';
+import { urls, getConflictWarnings } from '../utilities';
 
 class AmendmentsFieldArray extends React.Component {
   static propTypes = {
@@ -109,7 +109,7 @@ class AmendmentsFieldArray extends React.Component {
                 <Col md={4} xs={12}>
                   <Field
                     name={`${name}[${i}].status`}
-                    validate={validators.required}
+                    validate={requiredValidator}
                   >
                     {props => (
                       <Select

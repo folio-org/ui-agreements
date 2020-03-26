@@ -2,10 +2,6 @@ import React from 'react';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
-const required = value => (
-  (value || value === false || value === 0) ? undefined : <FormattedMessage id="stripes-core.label.missingRequiredField" />
-);
-
 const requiredStartDate = (value, allValues, meta) => {
   if (!value && meta) {
     if (get(allValues, meta.name.replace('startDate', '_delete'), false) !== true) {
@@ -112,6 +108,5 @@ export default {
   dateOrder,
   multipleOpenEnded,
   overlappingDates,
-  required,
   requiredStartDate,
 };

@@ -31,6 +31,7 @@ export default class LinesList extends React.Component {
   columnWidths = {
     name: 250,
     provider: 150,
+    coverage: 250,
   }
 
   columnMapping = {
@@ -83,7 +84,8 @@ export default class LinesList extends React.Component {
         {({ hasPermission }) => (hasPermission ?
           this.renderPOLines(line)
           :
-          <FormattedMessage id="ui-agreements.agreementLines.noPoLinePerm" />)}
+          line?.poLines?.length ? <FormattedMessage id="ui-agreements.agreementLines.noPoLinePerm" /> : null
+        )}
       </IfPermission>
     )
   }
