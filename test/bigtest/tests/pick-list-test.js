@@ -6,7 +6,7 @@ import setupApplication from '../helpers/setup-application';
 import PickListInteractor from '../interactors/pick-list';
 
 
-describe('Pick list', () => {
+describe.only('Pick list', () => {
   let refDataCategories = [
     {
       'id': 'd91793df38e17007a6a50dd41be595c3',
@@ -101,17 +101,17 @@ describe('Pick list', () => {
       });
 
       it('list has 3 items', () => {
-        expect(interactor.list.rowCount).to.equal(refDataCategories.length);
+        expect(interactor.pickList.rowCount).to.equal(refDataCategories.length);
       });
 
       refDataCategories.forEach((refDataCategory, index) => {
         describe(`${refDataCategory.desc} of type ${refDataCategory.internal ? 'Internal' : 'User'}`, () => {
           it(`should ${refDataCategory.internal ? 'not have' : 'have'} an edit action button`, () => {
-            expect(interactor.list.rows(index).isEditPickListButtonPresent).to.equal(!refDataCategory.internal);
+            expect(interactor.pickList.rows(index).isEditPickListButtonPresent).to.equal(!refDataCategory.internal);
           });
 
           it(`should ${refDataCategory.internal ? 'not have' : 'have'} a delete action button`, () => {
-            expect(interactor.list.rows(index).isDeletePickListButtonPresent).to.equal(!refDataCategory.internal);
+            expect(interactor.pickList.rows(index).isDeletePickListButtonPresent).to.equal(!refDataCategory.internal);
           });
         });
       });
