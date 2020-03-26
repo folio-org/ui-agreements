@@ -1,5 +1,8 @@
 # Change history for ui-agreements
 
+##  3.5.0 IN PROGRESS
+* Added permission set and ability to delete agreements. ERM-777
+
 ##  3.4.1 2020-03-12
 * Set coverage columns to be fixed-width.
 
