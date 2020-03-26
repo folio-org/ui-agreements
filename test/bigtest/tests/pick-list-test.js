@@ -6,7 +6,7 @@ import setupApplication from '../helpers/setup-application';
 import PickListInteractor from '../interactors/pick-list';
 
 
-describe.only('Pick list', () => {
+describe('Pick list', () => {
   let refDataCategories = [
     {
       'id': 'd91793df38e17007a6a50dd41be595c3',
