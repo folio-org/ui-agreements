@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { get, flatten, uniqBy } from 'lodash';
 import compose from 'compose-function';
 
-import { stripesConnect } from '@folio/stripes/core';
+import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
 import { Tags } from '@folio/stripes-erm-components';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/views/Agreement';
@@ -22,6 +23,10 @@ class AgreementViewRoute extends React.Component {
     agreement: {
       type: 'okapi',
       path: 'erm/sas/:{id}',
+      shouldRefresh: (resource, action) => {
+        if (resource.name !== 'agreement') return true;
+        return !action.meta.originatingActionType?.includes('DELETE');
+      },
     },
     agreementLines: {
       type: 'okapi',
@@ -136,6 +141,9 @@ class AgreementViewRoute extends React.Component {
       }).isRequired
     }).isRequired,
     mutator: PropTypes.shape({
+      agreement: PropTypes.shape({
+        DELETE: PropTypes.func.isRequired,
+      }),
       agreementLinesCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
@@ -179,6 +187,8 @@ class AgreementViewRoute extends React.Component {
   static defaultProps = {
     handlers: {},
   }
+
+  static contextType = CalloutContext;
 
   downloadBlob = (name) => (
     blob => {
@@ -299,6 +309,36 @@ class AgreementViewRoute extends React.Component {
     this.props.history.push(`${urls.agreements()}${this.props.location.search}`);
   }
 
+  handleDelete = () => {
+    const { sendCallout } = this.context;
+    const { history, location, mutator } = this.props;
+    const agreement = this.getCompositeAgreement();
+
+    if (agreement.items?.length) {
+      sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasAgreementLines" /> });
+      return;
+    }
+
+    if (agreement.linkedLicenses?.length) {
+      sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasLicenses" /> });
+      return;
+    }
+
+    if (agreement.relatedAgreements?.length) {
+      sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasRelatedAgreements" /> });
+      return;
+    }
+
+    mutator.agreement.DELETE(agreement)
+      .then(() => {
+        history.push(`${urls.agreements()}${location.search}`);
+        sendCallout({ message: <SafeHTMLMessage id="ui-agreements.agreements.deletedAgreement" values={{ name : agreement.name }} /> });
+      })
+      .catch(error => {
+        sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteAgreementBackendError" values={{ message: error.message }} /> });
+      });
+  }
+
   handleFilterEResources = (path) => {
     const { mutator } = this.props;
     mutator.eresourcesFilterPath.replace(path);
@@ -406,6 +446,7 @@ class AgreementViewRoute extends React.Component {
           ...handlers,
           onClone: this.handleClone,
           onClose: this.handleClose,
+          onDelete: this.handleDelete,
           onEdit: this.handleEdit,
           onExportAgreement: this.handleExportAgreement,
           onExportEResourcesAsJSON: this.handleExportEResourcesAsJSON,

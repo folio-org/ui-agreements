@@ -363,6 +363,7 @@ export default class Agreements extends React.Component {
                       columnWidths={this.columnWidths}
                       contentData={data.agreements}
                       formatter={this.formatter}
+                      hasMargin
                       id="list-agreements"
                       isEmptyMessage={this.renderIsEmptyMessage(query, source)}
                       isSelected={({ item }) => item.id === selectedRecordId}
