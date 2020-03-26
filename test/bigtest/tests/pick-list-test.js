@@ -5,7 +5,6 @@ import { sortBy } from 'lodash';
 import setupApplication from '../helpers/setup-application';
 import PickListInteractor from '../interactors/pick-list';
 
-
 describe('Pick list', () => {
   let refDataCategories = [
     {
