@@ -78,6 +78,12 @@ describe('Pick list', () => {
         }
       ]
     },
+    {
+      'id': '12345',
+      'desc': 'userCreated',
+      'internal': false,
+      'values': []
+    }
   ];
 
   refDataCategories = sortBy(refDataCategories, [(item) => item.desc]);
@@ -86,6 +92,7 @@ describe('Pick list', () => {
     this.server.create('pickList', refDataCategories[0]);
     this.server.create('pickList', refDataCategories[1]);
     this.server.create('pickList', refDataCategories[2]);
+    this.server.create('pickList', refDataCategories[3]);
   }
 
   describe('Pick lists', () => {
@@ -99,18 +106,18 @@ describe('Pick list', () => {
         await this.visit('settings/erm/pick-lists');
       });
 
-      it('list has 3 items', () => {
+      it(`list has ${refDataCategories.length} items`, () => {
         expect(interactor.pickList.rowCount).to.equal(refDataCategories.length);
       });
 
       refDataCategories.forEach((refDataCategory, index) => {
         describe(`${refDataCategory.desc} of type ${refDataCategory.internal ? 'Internal' : 'User'}`, () => {
-          it(`should ${refDataCategory.internal ? 'not have' : 'have'} an edit action button`, () => {
-            expect(interactor.pickList.rows(index).isEditPickListButtonPresent).to.equal(!refDataCategory.internal);
+          it('should not have an edit action button', () => {
+            expect(interactor.pickList.rows(index).isEditPickListButtonPresent).to.equal(false);
           });
 
-          it(`should ${refDataCategory.internal ? 'not have' : 'have'} a delete action button`, () => {
-            expect(interactor.pickList.rows(index).isDeletePickListButtonPresent).to.equal(!refDataCategory.internal);
+          it(`should ${(!refDataCategory.internal && !refDataCategory.values.length) ? 'have' : 'not have'} a delete action button`, () => {
+            expect(interactor.pickList.rows(index).isDeletePickListButtonPresent).to.equal(!refDataCategory.internal && !refDataCategory.values.length);
           });
         });
       });
@@ -145,7 +152,7 @@ describe('Pick list', () => {
         });
       });
 
-      describe('Selecting an Internal refDataCategory', () => {
+      describe('Selecting a User type refDataCategory', () => {
         const internalRefData = refDataCategories.find(category => !category.internal);
         beforeEach(async function () {
           await interactor.pickListDropdown.selectOption(internalRefData.desc);

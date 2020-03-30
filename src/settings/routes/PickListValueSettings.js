@@ -7,6 +7,18 @@ import { Select } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
 
 export default class PickListValueSettings extends React.Component {
+  static manifest = {
+    categories: {
+      type: 'okapi',
+      path: 'erm/refdata',
+      params: {
+        perPage: '100',
+        sort: 'desc;asc',
+      },
+      accumulate: true,
+    },
+  };
+
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
@@ -29,18 +41,6 @@ export default class PickListValueSettings extends React.Component {
         reset: PropTypes.func.isRequired,
       }),
     })
-  };
-
-  static manifest = {
-    categories: {
-      type: 'okapi',
-      path: 'erm/refdata',
-      params: {
-        perPage: '100',
-        sort: 'desc;asc',
-      },
-      accumulate: true,
-    },
   };
 
   constructor(props) {
@@ -100,12 +100,12 @@ export default class PickListValueSettings extends React.Component {
             actuatorType="refdata"
             baseUrl={`erm/refdata/${selectedCategory?.id}`}
             canCreate={!selectedCategory?.internal}
-            // We have to unset the dataKey to prevent the props.resources in
-            // <ControlledVocab> from being overwritten by the props.resources here.
             columnMapping={{
               label: intl.formatMessage({ id: 'ui-agreements.settings.value' }),
               actions: intl.formatMessage({ id: 'ui-agreements.settings.actions' }),
             }}
+            // We have to unset the dataKey to prevent the props.resources in
+            // <ControlledVocab> from being overwritten by the props.resources here.
             dataKey={undefined}
             hiddenFields={['lastUpdated', 'numberOfObjects']}
             id="pick-list-values"

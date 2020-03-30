@@ -17,6 +17,12 @@ export default class PickListSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
+  suppressDelete = (category) => {
+    const { internal, values = [] } = category;
+
+    return !(!internal && !values.length);
+  }
+
   render() {
     const { stripes } = this.props;
 
@@ -24,7 +30,7 @@ export default class PickListSettings extends React.Component {
       <IntlConsumer>
         {intl => (
           <this.connectedControlledVocab
-            actionSuppressor={{ edit: (category) => category?.internal, delete: (category) => category?.internal }}
+            actionSuppressor={{ edit: () => true, delete: this.suppressDelete }}
             baseUrl="erm/refdata"
             columnMapping={{
               desc: intl.formatMessage({ id: 'ui-agreements.settings.pickList' }),
