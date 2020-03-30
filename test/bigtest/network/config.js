@@ -126,6 +126,14 @@ export default function config() {
 
   this.get('/note-types', () => { });
 
+  this.get('/erm/refdata', ({ pickLists }) => {
+    return pickLists.all().models;
+  });
+
+  this.get('/erm/refdata/:id', (schema, request) => {
+    return (request.params.id !== 'undefined') && schema.pickLists.find(request.params.id).attrs;
+  });
+
   this.get('/orders/order-lines', (schema, request) => {
     // query will look something like `id==123 or id==456`
     const { query } = request.queryParams;

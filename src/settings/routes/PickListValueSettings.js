@@ -25,8 +25,9 @@ export default class PickListValueSettings extends React.Component {
     }).isRequired,
     resources: PropTypes.shape({
       categories: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
         desc: PropTypes.string,
+        id: PropTypes.string,
+        internal: PropTypes.bool,
         values: PropTypes.arrayOf({
           id: PropTypes.string,
           value: PropTypes.string,
@@ -47,7 +48,7 @@ export default class PickListValueSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
 
     this.state = {
-      categoryId: null,
+      selectedCategory: null,
     };
   }
 
@@ -63,7 +64,9 @@ export default class PickListValueSettings extends React.Component {
   }
 
   onChangeCategory = (e) => {
-    this.setState({ categoryId: e.target.value });
+    const records = this.props?.resources?.categories?.records ?? [];
+    const selectedCategory = records.find(item => item.id === e.target.value);
+    this.setState({ selectedCategory });
   }
 
   renderCategories(intl) {
@@ -86,13 +89,17 @@ export default class PickListValueSettings extends React.Component {
   }
 
   render() {
+    const { selectedCategory } = this.state;
+
     return (
       <IntlConsumer>
         {intl => (
           <this.connectedControlledVocab
             {...this.props}
+            actionSuppressor={{ edit: () => false, delete: () => selectedCategory?.internal }}
             actuatorType="refdata"
-            baseUrl={`erm/refdata/${this.state.categoryId}`}
+            baseUrl={`erm/refdata/${selectedCategory?.id}`}
+            canCreate={!selectedCategory?.internal}
             columnMapping={{
               label: intl.formatMessage({ id: 'ui-agreements.settings.value' }),
               actions: intl.formatMessage({ id: 'ui-agreements.settings.actions' }),
@@ -104,7 +111,7 @@ export default class PickListValueSettings extends React.Component {
             id="pick-list-values"
             label={<FormattedMessage id="ui-agreements.settings.pickListValues" />}
             labelSingular={intl.formatMessage({ id: 'ui-agreements.settings.value' })}
-            listSuppressor={() => !this.state.categoryId}
+            listSuppressor={() => !selectedCategory?.id}
             nameKey="label"
             objectLabel={<FormattedMessage id="ui-agreements.settings.values" />}
             records="values"
