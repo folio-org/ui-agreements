@@ -129,7 +129,7 @@ describe('Pick list', () => {
       });
 
       refDataCategories.forEach(refDataCategory => {
-        describe(`Selecting ${refDataCategory.desc} refData cateogory`, () => {
+        describe(`Selecting ${refDataCategory.desc} refData category`, () => {
           beforeEach(async function () {
             await interactor.pickListDropdown.selectOption(refDataCategory.desc);
           });
