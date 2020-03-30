@@ -37,7 +37,7 @@ export default class LinesList extends React.Component {
   columnMapping = {
     name: <FormattedMessage id="ui-agreements.eresources.name" />,
     provider: <FormattedMessage id="ui-agreements.eresources.provider" />,
-    type: <FormattedMessage id="ui-agreements.eresources.erType" />,
+    type: <FormattedMessage id="ui-agreements.eresources.type" />,
     count: <FormattedMessage id="ui-agreements.agreementLines.count" />,
     coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
     isCustomCoverage: ' ',
@@ -103,7 +103,7 @@ export default class LinesList extends React.Component {
   ]
 
   renderDate = date => (
-    date ? <FormattedUTCDate value={date} /> : '-'
+    date ? <FormattedUTCDate value={date} /> : ''
   )
 
   renderPOLines = (line) => {
