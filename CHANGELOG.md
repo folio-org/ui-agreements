@@ -1,10 +1,19 @@
 # Change history for ui-agreements
 
-##  3.4.0 IN PROGRESS
+##  3.5.0 IN PROGRESS
+* Added permission set and ability to delete agreements. ERM-777
+
+##  3.4.1 2020-03-12
+* Set coverage columns to be fixed-width.
+
+##  3.4.0 2020-03-11
 * Switched to using `<FormattedUTCDate>` from Stripes. ERM-635
 * Switched to using `<Spinner>` from Stripes. ERM-635
 * Keyboard navigation and focus improvements. ERM-416 613 620 624
 * Hid "Delete Agreement" permission set. ERM-617
+* Added support for monograph fields. ERM-481 482 485 486 678
+* Display callouts and confirmation modals. ERM-726
+* Upgrade to Stripes 3.0
 
 ## 3.3.0 2019-12-04
 * Update stripes to v2.10.1 to support PaneFooter.

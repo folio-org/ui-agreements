@@ -229,7 +229,7 @@
     "agreementPeriods.periodEnd": "Конец периода",
     "agreementPeriods.periodNote": "Заметка периода",
     "agreementPeriods.periodStart": "Начало периода",
-    "agreementPeriods.periodTitle": "Период действия соглашения #{number}",
+    "agreementPeriods.periodTitle": "Период действия соглашения #{дата}",
     "errors.multipleOpenEndedPeriods": "Cannot have multiple open-ended agreement periods.",
     "errors.overlappingPeriod": "The following periods have overlapping dates: {fields}",
     "agreements.reasonForClosure": "Причина закрытия",
@@ -258,7 +258,7 @@
     "relatedAgreements.relationship.provides_post-cancellation_access_for": "Provides post-cancellation access for \"{agreement}\"",
     "relatedAgreements.relationship.supersedes": "Supersedes \"{agreement}\"",
     "relatedAgreements.relationship.tracks_demand-driven_acquisitions_for": "Tracks demand-driven acquisitions for \"{agreement}\"",
-    "relatedAgreements.remove": "Remove related agreement {index}",
+    "relatedAgreements.remove": "Удалить соответствующее соглашение {индекс}",
     "identifier.issn": "eISSN / ISSN",
     "relatedAgreements.relationshipSummary": "\"{source}\" {relationship} \"{target}\"",
     "relatedAgreements.relationshipSummaryForNewAgreement": "\"{source}\" {relationship} the agreement being created",
@@ -366,5 +366,6 @@
     "emptyAccordion.supplementaryDocuments": "No supplementary documents for this agreement",
     "emptyAccordion.usageData": "No usage data for this agreement",
     "emptyAccordion.relatedAgreements": "Нет соответствующих договорённостей по данному соглашению",
-    "agreementPeriods.otherPeriods": "Other periods"
+    "agreementPeriods.otherPeriods": "Other periods",
+    "agreementLines.noPoLinePerm": "No permission to view PO line"
 }

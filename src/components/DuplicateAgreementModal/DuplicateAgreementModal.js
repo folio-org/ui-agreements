@@ -136,7 +136,7 @@ export default class DuplicateAgreementModal extends React.Component {
         dismissible
         footer={footer}
         id="duplicate-agreement"
-        label={<FormattedMessage id="ui-agreements.duplicateAgreement" />}
+        label={<FormattedMessage id="ui-agreements.agreements.duplicateAgreement" />}
         onClose={this.props.onClose}
         open
         size="small"

@@ -7,6 +7,7 @@ import {
   AccordionSet,
   Button,
   Col,
+  ConfirmationModal,
   ExpandAllButton,
   Icon,
   IconButton,
@@ -17,6 +18,7 @@ import {
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import { LoadingPane } from '@folio/stripes-erm-components';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import DuplicateAgreementModal from '../DuplicateAgreementModal';
 
 import {
@@ -48,8 +50,9 @@ export default class Agreement extends React.Component {
       searchString: PropTypes.string,
     }).isRequired,
     handlers: PropTypes.shape({
-      onClone: PropTypes.func,
+      onClone: PropTypes.func.isRequired,
       onClose: PropTypes.func.isRequired,
+      onDelete: PropTypes.func.isRequired,
       onEdit: PropTypes.func,
       onExportAgreement: PropTypes.func,
       onToggleTags: PropTypes.func,
@@ -59,6 +62,7 @@ export default class Agreement extends React.Component {
   }
 
   state = {
+    showDeleteConfirmationModal: false,
     showDuplicateAgreementModal: false,
     sections: {
       controllingLicense: false,
@@ -92,6 +96,14 @@ export default class Agreement extends React.Component {
       open: this.state.sections[id],
       searchString: data.searchString,
     };
+  }
+
+  openDeleteConfirmationModal = () => {
+    this.setState({ showDeleteConfirmationModal: true });
+  }
+
+  closeDeleteConfirmationModal = () => {
+    this.setState({ showDeleteConfirmationModal: false });
   }
 
   openDuplicateAgreementModal = () => {
@@ -154,7 +166,20 @@ export default class Agreement extends React.Component {
           </Icon>
         </Button>
       </IfPermission>
-
+      <IfPermission perm="ui-agreements.agreements.delete">
+        <Button
+          buttonStyle="dropdownItem"
+          id="clickable-dropdown-delete-agreement"
+          onClick={() => {
+            this.openDeleteConfirmationModal();
+            onToggle();
+          }}
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="ui-agreements.delete" />
+          </Icon>
+        </Button>
+      </IfPermission>
     </>
   )
 
@@ -205,6 +230,8 @@ export default class Agreement extends React.Component {
       handlers,
       helperApp
     } = this.props;
+
+    const { showDeleteConfirmationModal, showDuplicateAgreementModal } = this.state;
 
     if (isLoading) return <LoadingPane defaultWidth="60%" onClose={handlers.onClose} />;
 
@@ -259,12 +286,26 @@ export default class Agreement extends React.Component {
           </TitleManager>
         </Pane>
         {helperApp}
-        {this.state.showDuplicateAgreementModal &&
+        { showDuplicateAgreementModal &&
           <DuplicateAgreementModal
             onClone={(obj) => handlers.onClone(obj)}
             onClose={this.closeDuplicateAgreementModal}
           />
         }
+        <ConfirmationModal
+          buttonStyle="danger"
+          confirmLabel={<FormattedMessage id="ui-agreements.delete" />}
+          data-test-delete-confirmation-modal
+          heading={<FormattedMessage id="ui-agreements.agreements.deleteAgreement" />}
+          id="delete-agreement-confirmation"
+          message={<SafeHTMLMessage id="ui-agreements.agreements.deleteConfirmMessage" values={{ name: data.agreement?.name }} />}
+          onCancel={this.closeDeleteConfirmationModal}
+          onConfirm={() => {
+            handlers.onDelete();
+            this.closeDeleteConfirmationModal();
+          }}
+          open={showDeleteConfirmationModal}
+        />
       </>
 
     );

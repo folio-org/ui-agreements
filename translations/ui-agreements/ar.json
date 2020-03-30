@@ -366,5 +366,6 @@
     "emptyAccordion.supplementaryDocuments": "لا توجد مستندات تكميلية لهذه الاتفاقية",
     "emptyAccordion.usageData": "لا توجد بيانات استخدام لهذه الاتفاقية",
     "emptyAccordion.relatedAgreements": "لا توجد اتفاقيات ذات صلة لهذه الاتفاقية",
-    "agreementPeriods.otherPeriods": "فترات أخرى"
+    "agreementPeriods.otherPeriods": "فترات أخرى",
+    "agreementLines.noPoLinePerm": "لا توجد صلاحية لعرض سطر أمر الشراء"
 }
