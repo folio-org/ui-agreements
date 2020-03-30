@@ -20,7 +20,7 @@ export default class PickListSettings extends React.Component {
   suppressDelete = (category) => {
     const { internal, values = [] } = category;
 
-    return !(!internal && !values.length);
+    return internal || values.length;
   }
 
   render() {

@@ -116,8 +116,8 @@ describe('Pick list', () => {
             expect(interactor.pickList.rows(index).isEditPickListButtonPresent).to.equal(false);
           });
 
-          it(`should ${(!refDataCategory.internal && !refDataCategory.values.length) ? 'have' : 'not have'} a delete action button`, () => {
-            expect(interactor.pickList.rows(index).isDeletePickListButtonPresent).to.equal(!refDataCategory.internal && !refDataCategory.values.length);
+          it(`should ${(refDataCategory.internal || refDataCategory.values.length) ? 'not have' : 'have'} a delete action button`, () => {
+            expect(interactor.pickList.rows(index).isDeletePickListButtonPresent).to.equal(!(refDataCategory.internal || refDataCategory.values.length));
           });
         });
       });
