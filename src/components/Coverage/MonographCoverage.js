@@ -51,7 +51,7 @@ export default class MonographCoverage extends React.Component {
 
     return (
       <Layout
-        className="full indent"
+        className="full"
         data-test-start
       >
         <div data-test-date={date}>

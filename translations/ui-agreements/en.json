@@ -32,6 +32,10 @@
   "permission.generalSettings.manage": "Settings (Agreements): Can view and edit general settings",
   "permission.picklists.manage": "Settings (Agreements): Manage pick lists and values",
   "permission.supplementaryProperties.manage": "Settings (Agreements): Manage agreement supplementary properties",
+  
+  "days": "{count, number} {count, plural, one {day} other {days}}",
+  "months": "{count, number} {count, plural, one {month} other {months}}",
+  "years": "{count, number} {count, plural, one {year} other {years}}",
 
   "agreements.deletedAgreement": "<strong>Agreement deleted:</strong> {name}",
   "agreements.deleteAgreement": "Delete agreement",
@@ -167,6 +171,9 @@
   "duplicateAgreementModal.organizations": "Organizations",
   "duplicateAgreementModal.supplementaryInformation": "Supplementary information",
   "duplicateAgreementModal.usageData": "Usage data",
+
+  "embargo.start": "Moving wall start: ",
+  "embargo.end": "Moving wall end: ",
 
   "emptyAccordion.internalContacts": "No internal contacts for this agreement",
   "emptyAccordion.agreementLines": "No agreement lines for this agreement",

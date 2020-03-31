@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SerialCoverage from './SerialCoverage';
 import MonographCoverage from './MonographCoverage';
+import Embargo from '../Embargo';
 import { resourceTypes } from '../../constants';
 
 export default class Coverage extends React.Component {
@@ -78,11 +79,17 @@ export default class Coverage extends React.Component {
 
     if (isMonograph) {
       return (
-        <MonographCoverage pci={dataToRender} />
+        <div>
+          <MonographCoverage pci={dataToRender} />
+          <Embargo embargo={dataToRender.embargo} />
+        </div>
       );
     } else {
       return (
-        <SerialCoverage statements={dataToRender.coverage} />
+        <div>
+          <SerialCoverage statements={dataToRender.coverage} />
+          <Embargo embargo={dataToRender.embargo} />
+        </div>
       );
     }
   }
