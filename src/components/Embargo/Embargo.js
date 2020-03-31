@@ -19,7 +19,7 @@ export default class Embargo extends React.Component {
 
     renderEmbargoEnd(embargo) {
       if (embargo.movingWallEnd) {
-        const unitId = 'ui-agreements.' + embargo.movingWallEnd.unit;
+        const unitId = `ui-agreements.${embargo.movingWallEnd.unit}`;
         const number = embargo.movingWallEnd.length;
         return (
           <Layout
@@ -37,7 +37,7 @@ export default class Embargo extends React.Component {
 
     renderEmbargoStart(embargo) {
       if (embargo.movingWallStart) {
-        const unitId = 'ui-agreements.' + embargo.movingWallStart.unit;
+        const unitId = `ui-agreements.${embargo.movingWallStart.unit}`;
         const number = embargo.movingWallStart.length;
         return (
           <Layout

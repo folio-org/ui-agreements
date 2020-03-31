@@ -79,17 +79,17 @@ export default class Coverage extends React.Component {
 
     if (isMonograph) {
       return (
-        <div>
+        <>
           <MonographCoverage pci={dataToRender} />
           <Embargo embargo={dataToRender.embargo} />
-        </div>
+        </>
       );
     } else {
       return (
-        <div>
+        <>
           <SerialCoverage statements={dataToRender.coverage} />
           <Embargo embargo={dataToRender.embargo} />
-        </div>
+        </>
       );
     }
   }
