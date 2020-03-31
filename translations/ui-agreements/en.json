@@ -26,6 +26,10 @@
 
   "note": "Note",
 
+  "days": "{count, number} {count, plural, one {day} other {days}}",
+  "months": "{count, number} {count, plural, one {month} other {months}}",
+  "years": "{count, number} {count, plural, one {year} other {years}}",
+
   "agreements.deletedAgreement": "<strong>Agreement deleted:</strong> {name}",
   "agreements.deleteAgreement": "Delete agreement",
   "agreements.deleteConfirmMessage": "Agreement <strong>{name}</strong> will be <strong>deleted</strong>.",
@@ -172,6 +176,9 @@
   "duplicateAgreementModal.errors.invalidResponseError": "Unable to duplicate the agreement. The response received from the server was invalid.",
   "duplicateAgreementModal.errors.systemAdministrator": "If the problem persists contact your system administrator.",
   "duplicateAgreementModal.errors.tryAgain": "Please try again.",
+
+  "embargo.start": "Moving wall start: ",
+  "embargo.end": "Moving wall end: ",
 
   "emptyAccordion.internalContacts": "No internal contacts for this agreement",
   "emptyAccordion.agreementLines": "No agreement lines for this agreement",
