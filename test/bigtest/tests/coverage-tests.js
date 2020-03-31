@@ -7,6 +7,9 @@ import { mountWithContext } from '../helpers/mountWithContext';
 import { Coverage } from '../../../src/components/Coverage';
 import MonographCoverageInteractor from '../interactors/monograph-coverage';
 import SerialCoverageInteractor from '../interactors/serial-coverage';
+import EmbargoInteractor from '../interactors/embargo';
+
+const embargoInteractor = new EmbargoInteractor();
 
 const monographInteractor = new MonographCoverageInteractor();
 
@@ -31,7 +34,11 @@ const monograph = {
         label: 'Electronic'
       }
     }
-  }
+  },
+  embargo: {
+    movingWallStart: { length: 3, unit: 'months' },
+    movingWallEnd: { length: 90, unit: 'days' },
+  },
 };
 
 const serial = {
@@ -53,27 +60,33 @@ const serial = {
     startIssue: '1',
     endVolume: '79',
     endIssue: '2'
-  }]
+  }],
+  embargo: {
+    movingWallStart: { length: 730, unit: 'days' },
+    movingWallEnd: { length: 2, unit: 'years' },
+  },
 };
 
 // We also want to test the other two possible shapes for passing this data through to Coverage
 
 const monographEResource = {
-  _object: monograph
+  _object: monograph,
 };
 
 const serialEResource = {
   _object: serial,
-  coverage: serial.coverage
+  coverage: serial.coverage,
+  embargo: serial.embargo
 };
 
 const monographLine = {
-  resource: monographEResource
+  resource: monographEResource,
 };
 
 const serialLine = {
   resource: serialEResource._object,
-  coverage: serial.coverage
+  coverage: serial.coverage,
+  embargo: serial.embargo
 };
 
 describe('Coverage tests', () => {
@@ -99,6 +112,30 @@ describe('Coverage tests', () => {
     it('correctly renders the volume', () => {
       expect(monographInteractor.volume).to.have.string(monograph.pti.titleInstance.monographVolume);
     });
+
+    it('renders the embargo moving wall start', () => {
+      expect(embargoInteractor.movingWallStartExists).to.be.true;
+    });
+
+    it('correctly renders the embargo start length', () => {
+      expect(embargoInteractor.startLength).to.have.string(monograph.embargo.movingWallStart.length);
+    });
+
+    it('correctly renders the embargo start unit', () => {
+      expect(embargoInteractor.startUnit).to.have.string(monograph.embargo.movingWallStart.unit);
+    });
+
+    it('renders the embargo moving wall end', () => {
+      expect(embargoInteractor.movingWallEndExists).to.be.true;
+    });
+
+    it('correctly renders the embargo end length', () => {
+      expect(embargoInteractor.endLength).to.have.string(monograph.embargo.movingWallEnd.length);
+    });
+
+    it('correctly renders the embargo end unit', () => {
+      expect(embargoInteractor.endUnit).to.have.string(monograph.embargo.movingWallEnd.unit);
+    });
   });
 
   describe('Rendering coverage component for a monograph eresource', () => {
@@ -123,6 +160,30 @@ describe('Coverage tests', () => {
     it('correctly renders the volume', () => {
       expect(monographInteractor.volume).to.have.string(monographEResource._object.pti.titleInstance.monographVolume);
     });
+
+    it('renders the embargo moving wall start', () => {
+      expect(embargoInteractor.movingWallStartExists).to.be.true;
+    });
+
+    it('correctly renders the embargo start length', () => {
+      expect(embargoInteractor.startLength).to.have.string(monographEResource._object.embargo.movingWallStart.length);
+    });
+
+    it('correctly renders the embargo start unit', () => {
+      expect(embargoInteractor.startUnit).to.have.string(monographEResource._object.embargo.movingWallStart.unit);
+    });
+
+    it('renders the embargo moving wall end', () => {
+      expect(embargoInteractor.movingWallEndExists).to.be.true;
+    });
+
+    it('correctly renders the embargo end length', () => {
+      expect(embargoInteractor.endLength).to.have.string(monographEResource._object.embargo.movingWallEnd.length);
+    });
+
+    it('correctly renders the embargo end unit', () => {
+      expect(embargoInteractor.endUnit).to.have.string(monographEResource._object.embargo.movingWallEnd.unit);
+    });
   });
 
   describe('Rendering coverage component for a monograph line', () => {
@@ -146,6 +207,30 @@ describe('Coverage tests', () => {
 
     it('correctly renders the volume', () => {
       expect(monographInteractor.volume).to.have.string(monographLine.resource._object.pti.titleInstance.monographVolume);
+    });
+
+    it('renders the embargo moving wall start', () => {
+      expect(embargoInteractor.movingWallStartExists).to.be.true;
+    });
+
+    it('correctly renders the embargo start length', () => {
+      expect(embargoInteractor.startLength).to.have.string(monographLine.resource._object.embargo.movingWallStart.length);
+    });
+
+    it('correctly renders the embargo start unit', () => {
+      expect(embargoInteractor.startUnit).to.have.string(monographLine.resource._object.embargo.movingWallStart.unit);
+    });
+
+    it('renders the embargo moving wall end', () => {
+      expect(embargoInteractor.movingWallEndExists).to.be.true;
+    });
+
+    it('correctly renders the embargo end length', () => {
+      expect(embargoInteractor.endLength).to.have.string(monographLine.resource._object.embargo.movingWallEnd.length);
+    });
+
+    it('correctly renders the embargo end unit', () => {
+      expect(embargoInteractor.endUnit).to.have.string(monographLine.resource._object.embargo.movingWallEnd.unit);
     });
   });
 
@@ -186,6 +271,29 @@ describe('Coverage tests', () => {
     it('renders the correct end volume', () => {
       expect(serialInteractorEnd.endVolume).to.have.string(serial.coverage[0].endVolume);
     });
+    it('renders the embargo moving wall start', () => {
+      expect(embargoInteractor.movingWallStartExists).to.be.true;
+    });
+
+    it('correctly renders the embargo start length', () => {
+      expect(embargoInteractor.startLength).to.have.string(serial.embargo.movingWallStart.length);
+    });
+
+    it('correctly renders the embargo start unit', () => {
+      expect(embargoInteractor.startUnit).to.have.string(serial.embargo.movingWallStart.unit);
+    });
+
+    it('renders the embargo moving wall end', () => {
+      expect(embargoInteractor.movingWallEndExists).to.be.true;
+    });
+
+    it('correctly renders the embargo end length', () => {
+      expect(embargoInteractor.endLength).to.have.string(serial.embargo.movingWallEnd.length);
+    });
+
+    it('correctly renders the embargo end unit', () => {
+      expect(embargoInteractor.endUnit).to.have.string(serial.embargo.movingWallEnd.unit);
+    });
   });
 
   describe('Rendering coverage component for a serial eResource', () => {
@@ -225,6 +333,30 @@ describe('Coverage tests', () => {
     it('renders the correct end volume', () => {
       expect(serialInteractorEnd.endVolume).to.have.string(serialEResource.coverage[0].endVolume);
     });
+
+    it('renders the embargo moving wall start', () => {
+      expect(embargoInteractor.movingWallStartExists).to.be.true;
+    });
+
+    it('correctly renders the embargo start length', () => {
+      expect(embargoInteractor.startLength).to.have.string(serialEResource.embargo.movingWallStart.length);
+    });
+
+    it('correctly renders the embargo start unit', () => {
+      expect(embargoInteractor.startUnit).to.have.string(serialEResource.embargo.movingWallStart.unit);
+    });
+
+    it('renders the embargo moving wall end', () => {
+      expect(embargoInteractor.movingWallEndExists).to.be.true;
+    });
+
+    it('correctly renders the embargo end length', () => {
+      expect(embargoInteractor.endLength).to.have.string(serialEResource.embargo.movingWallEnd.length);
+    });
+
+    it('correctly renders the embargo end unit', () => {
+      expect(embargoInteractor.endUnit).to.have.string(serialEResource.embargo.movingWallEnd.unit);
+    });
   });
 
   describe('Rendering coverage component for a serial line', () => {
@@ -263,6 +395,30 @@ describe('Coverage tests', () => {
     });
     it('renders the correct end volume', () => {
       expect(serialInteractorEnd.endVolume).to.have.string(serialLine.coverage[0].endVolume);
+    });
+
+    it('renders the embargo moving wall start', () => {
+      expect(embargoInteractor.movingWallStartExists).to.be.true;
+    });
+
+    it('correctly renders the embargo start length', () => {
+      expect(embargoInteractor.startLength).to.have.string(serialLine.embargo.movingWallStart.length);
+    });
+
+    it('correctly renders the embargo start unit', () => {
+      expect(embargoInteractor.startUnit).to.have.string(serialLine.embargo.movingWallStart.unit);
+    });
+
+    it('renders the embargo moving wall end', () => {
+      expect(embargoInteractor.movingWallEndExists).to.be.true;
+    });
+
+    it('correctly renders the embargo end length', () => {
+      expect(embargoInteractor.endLength).to.have.string(serialLine.embargo.movingWallEnd.length);
+    });
+
+    it('correctly renders the embargo end unit', () => {
+      expect(embargoInteractor.endUnit).to.have.string(serialLine.embargo.movingWallEnd.unit);
     });
   });
 });
