@@ -283,7 +283,6 @@
     "poLines.poLineIndex": "PO line {index}",
     "poLines.remove": "Remove PO line {index}",
     "poLines.replacePOLine": "Replace PO line",
-    "duplicateAgreement": "Duplicate agreement",
     "selectAll": "Select all / deselect all",
     "agreements.duplicate": "Дубликат",
     "duplicateAgreementModal.message": "Please select which sections of the agreement to duplicate",
@@ -367,5 +366,14 @@
     "emptyAccordion.usageData": "No usage data for this agreement",
     "emptyAccordion.relatedAgreements": "Нет соответствующих договорённостей по данному соглашению",
     "agreementPeriods.otherPeriods": "Other periods",
-    "agreementLines.noPoLinePerm": "No permission to view PO line"
+    "agreementLines.noPoLinePerm": "No permission to view PO line",
+    "delete": "Удалить",
+    "agreements.deletedAgreement": "<strong>Соглашение удалено:</strong> {имя}",
+    "agreements.deleteAgreement": "Удалить соглашение",
+    "agreements.deleteConfirmMessage": "Соглашение <strong>{name}</strong> будет <strong>удалено</strong>.",
+    "agreements.duplicateAgreement": "Соглашение в двух экземплярах",
+    "errors.noDeleteHasAgreementLines": "<strong>Agreement was not deleted</strong> because it has one or more agreement lines.",
+    "errors.noDeleteHasLicenses": "<strong>Agreement was not deleted</strong> because it has one or more licenses attached.",
+    "errors.noDeleteHasRelatedAgreements": "<strong>Agreement was not deleted</strong> because it has one or more related agreements.",
+    "errors.noDeleteAgreementBackendError": "<strong>Соглашение не было удалено:</strong> {сообщение}"
 }
