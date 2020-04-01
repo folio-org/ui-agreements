@@ -400,6 +400,7 @@
   "settings.hideEResources.result.1": "Hide the E-resources tab in the agreements app",
   "settings.hideEResources.result.2": "Hide the basket icon in the agreements app",
   "settings.hideEResources.result.3": "Hide the \"E-resources covered by this agreement\" accordion in individual agreements",
+  "settings.label": "Label",
   "settings.orgRoles": "Organization roles",
   "settings.orgRoles.orgRole": "Organization role",
   "settings.orgRoles.role": "Role",

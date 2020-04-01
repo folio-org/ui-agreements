@@ -101,7 +101,8 @@ export default class PickListValueSettings extends React.Component {
             baseUrl={`erm/refdata/${selectedCategory?.id}`}
             canCreate={!selectedCategory?.internal}
             columnMapping={{
-              label: intl.formatMessage({ id: 'ui-agreements.settings.value' }),
+              label: intl.formatMessage({ id: 'ui-agreements.settings.label' }),
+              value: intl.formatMessage({ id: 'ui-agreements.settings.value' }),
               actions: intl.formatMessage({ id: 'ui-agreements.settings.actions' }),
             }}
             // We have to unset the dataKey to prevent the props.resources in
@@ -110,15 +111,16 @@ export default class PickListValueSettings extends React.Component {
             hiddenFields={['lastUpdated', 'numberOfObjects']}
             id="pick-list-values"
             label={<FormattedMessage id="ui-agreements.settings.pickListValues" />}
-            labelSingular={intl.formatMessage({ id: 'ui-agreements.settings.value' })}
+            labelSingular={intl.formatMessage({ id: 'ui-agreements.settings.label' })}
             listSuppressor={() => !selectedCategory?.id}
             nameKey="label"
             objectLabel={<FormattedMessage id="ui-agreements.settings.values" />}
+            readOnlyFields={['value']}
             records="values"
             rowFilter={this.renderRowFilter(intl)}
             sortby="label"
             stripes={this.props.stripes}
-            visibleFields={['label']}
+            visibleFields={['label', 'value']}
           />
         )}
       </IntlConsumer>
