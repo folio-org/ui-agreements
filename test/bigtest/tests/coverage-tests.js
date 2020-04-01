@@ -41,6 +41,26 @@ const monograph = {
   },
 };
 
+const noEmbargoMonograph = {
+  pti: {
+    titleInstance: {
+      id: '1502',
+      name: 'This is a monograph with no embargo',
+      dateMonographPublished: '2020',
+      monographVolume: '1',
+      monographEdition: '1st',
+      type: {
+        value: 'monograph',
+        label: 'Monograph'
+      },
+      subType: {
+        value: 'electronic',
+        label: 'Electronic'
+      }
+    }
+  },
+};
+
 const serial = {
   pti: {
     titleInstance: {
@@ -76,7 +96,9 @@ const monographEResource = {
 const serialEResource = {
   _object: serial,
   coverage: serial.coverage,
-  embargo: serial.embargo
+  embargo: {
+    movingWallStart: { length: 2, unit: 'years' },
+  },
 };
 
 const monographLine = {
@@ -135,6 +157,34 @@ describe('Coverage tests', () => {
 
     it('correctly renders the embargo end unit', () => {
       expect(embargoInteractor.endUnit).to.have.string(monograph.embargo.movingWallEnd.unit);
+    });
+  });
+
+  describe('Rendering coverage component for a monograph pci without embargo', () => {
+    beforeEach(async function () {
+      await mountWithContext(
+        <Coverage pci={noEmbargoMonograph} />
+      );
+    });
+
+    it('renders the monograph coverage', () => {
+      expect(monographInteractor.exists).to.be.true;
+    });
+
+    it('correctly renders the date', () => {
+      expect(monographInteractor.date).to.have.string(noEmbargoMonograph.pti.titleInstance.dateMonographPublished);
+    });
+
+    it('correctly renders the edition', () => {
+      expect(monographInteractor.edition).to.have.string(noEmbargoMonograph.pti.titleInstance.monographEdition);
+    });
+
+    it('correctly renders the volume', () => {
+      expect(monographInteractor.volume).to.have.string(noEmbargoMonograph.pti.titleInstance.monographVolume);
+    });
+
+    it('does not render the embargo', () => {
+      expect(embargoInteractor.exists).to.be.false;
     });
   });
 
@@ -296,7 +346,7 @@ describe('Coverage tests', () => {
     });
   });
 
-  describe('Rendering coverage component for a serial eResource', () => {
+  describe('Rendering coverage component for a serial eResource without movingWallEnd', () => {
     beforeEach(async function () {
       await mountWithContext(
         <Coverage eResource={serialEResource} />
@@ -346,16 +396,8 @@ describe('Coverage tests', () => {
       expect(embargoInteractor.startUnit).to.have.string(serialEResource.embargo.movingWallStart.unit);
     });
 
-    it('renders the embargo moving wall end', () => {
-      expect(embargoInteractor.movingWallEndExists).to.be.true;
-    });
-
-    it('correctly renders the embargo end length', () => {
-      expect(embargoInteractor.endLength).to.have.string(serialEResource.embargo.movingWallEnd.length);
-    });
-
-    it('correctly renders the embargo end unit', () => {
-      expect(embargoInteractor.endUnit).to.have.string(serialEResource.embargo.movingWallEnd.unit);
+    it('does not render the embargo moving wall end', () => {
+      expect(embargoInteractor.movingWallEndExists).to.be.false;
     });
   });
 
