@@ -78,7 +78,7 @@ export default class SerialCoverage extends React.Component {
         data-test-statement={i}
       >
         <Layout
-          className="margin-end-gutter textLeft"
+          className="margin-end-gutter textRight"
           data-test-start
           style={{ width: '40%' }}
         >
