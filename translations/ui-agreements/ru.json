@@ -375,5 +375,6 @@
     "errors.noDeleteHasAgreementLines": "<strong>Agreement was not deleted</strong> because it has one or more agreement lines.",
     "errors.noDeleteHasLicenses": "<strong>Agreement was not deleted</strong> because it has one or more licenses attached.",
     "errors.noDeleteHasRelatedAgreements": "<strong>Agreement was not deleted</strong> because it has one or more related agreements.",
-    "errors.noDeleteAgreementBackendError": "<strong>Соглашение не было удалено:</strong> {сообщение}"
+    "errors.noDeleteAgreementBackendError": "<strong>Соглашение не было удалено:</strong> {сообщение}",
+    "settings.label": "Label"
 }

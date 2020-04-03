@@ -375,5 +375,6 @@
     "errors.noDeleteHasAgreementLines": "<strong>لم يتم حذف الاتفاقية</strong> لأن بها بند اتفاقية أو أكثر",
     "errors.noDeleteHasLicenses": "<strong>لم يتم حذف الاتفاقية</strong> لأن هناك رخصة أو أكثر مرفقة بها",
     "errors.noDeleteHasRelatedAgreements": "<strong>لم يتم حذف الاتفاقية</strong> لأنها متصلة باتفاقية أو أكثر",
-    "errors.noDeleteAgreementBackendError": "<strong>لم يتم حذف الاتفاقية:</strong> {message}"
+    "errors.noDeleteAgreementBackendError": "<strong>لم يتم حذف الاتفاقية:</strong> {message}",
+    "settings.label": "ملصق التسمية"
 }
