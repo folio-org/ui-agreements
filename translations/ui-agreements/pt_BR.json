@@ -376,5 +376,6 @@
     "errors.noDeleteHasLicenses": "<strong>Agreement was not deleted</strong> because it has one or more licenses attached.",
     "errors.noDeleteHasRelatedAgreements": "<strong>O contrato não foi excluído</strong> porque possui um ou mais contratos relacionados.",
     "errors.noDeleteAgreementBackendError": "<strong>O contrato não foi excluído:</strong> {message}",
-    "settings.label": "Rótulo"
+    "settings.label": "Rótulo",
+    "usageData.noUsageDetailsPerm": "You do not have permission to view ERM Usage details"
 }

@@ -376,5 +376,6 @@
     "errors.noDeleteHasLicenses": "<strong>لم يتم حذف الاتفاقية</strong> لأن هناك رخصة أو أكثر مرفقة بها",
     "errors.noDeleteHasRelatedAgreements": "<strong>لم يتم حذف الاتفاقية</strong> لأنها متصلة باتفاقية أو أكثر",
     "errors.noDeleteAgreementBackendError": "<strong>لم يتم حذف الاتفاقية:</strong> {message}",
-    "settings.label": "ملصق التسمية"
+    "settings.label": "ملصق التسمية",
+    "usageData.noUsageDetailsPerm": "ليس لديك صلاحية عرض تفاصل استخدام إدارة الموارد الإلكترونية"
 }

@@ -376,5 +376,6 @@
     "errors.noDeleteHasLicenses": "<strong>Agreement was not deleted</strong> because it has one or more licenses attached.",
     "errors.noDeleteHasRelatedAgreements": "<strong>Agreement was not deleted</strong> because it has one or more related agreements.",
     "errors.noDeleteAgreementBackendError": "<strong>Agreement was not deleted:</strong> {message}",
-    "settings.label": "Label"
+    "settings.label": "Label",
+    "usageData.noUsageDetailsPerm": "You do not have permission to view ERM Usage details"
 }
