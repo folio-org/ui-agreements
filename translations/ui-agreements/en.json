@@ -13,7 +13,6 @@
   "delete": "Delete",
   "agreements": "Agreements",
   "eresources": "E-resources",
-  "selectAll": "Select all / deselect all",
   "status": "Status",
 
   "agreement": "Agreement",
@@ -30,7 +29,6 @@
   "agreements.deleteAgreement": "Delete agreement",
   "agreements.deleteConfirmMessage": "Agreement <strong>{name}</strong> will be <strong>deleted</strong>.",
   "agreements.duplicate": "Duplicate",
-  "agreements.duplicateAgreement": "Duplicate agreement",
   "agreements.edit": "Edit",
   "agreements.export": "Export",
   "agreements.showTags": "Show tags",
@@ -158,7 +156,6 @@
   "supplementaryProperties.optionalProperties": "Optional properties",
   "supplementaryProperties.primaryProperties": "Primary properties",
 
-  "duplicateAgreementModal.message": "Please select which sections of the agreement to duplicate",
   "duplicateAgreementModal.agreementInfo": "Agreement information",
   "duplicateAgreementModal.internalContacts": "Internal contacts",
   "duplicateAgreementModal.agreementLines": "Agreement lines",
@@ -167,11 +164,6 @@
   "duplicateAgreementModal.organizations": "Organizations",
   "duplicateAgreementModal.supplementaryInformation": "Supplementary information",
   "duplicateAgreementModal.usageData": "Usage data",
-  "duplicateAgreementModal.error": "Error: the agreement was not duplicated",
-  "duplicateAgreementModal.errors.cloneEndpointError": "Unable to duplicate the agreement. The clone endpoint could not be accessed.",
-  "duplicateAgreementModal.errors.invalidResponseError": "Unable to duplicate the agreement. The response received from the server was invalid.",
-  "duplicateAgreementModal.errors.systemAdministrator": "If the problem persists contact your system administrator.",
-  "duplicateAgreementModal.errors.tryAgain": "Please try again.",
 
   "emptyAccordion.internalContacts": "No internal contacts for this agreement",
   "emptyAccordion.agreementLines": "No agreement lines for this agreement",
