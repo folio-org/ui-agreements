@@ -39,6 +39,7 @@ export default class LinesList extends React.Component {
     provider: <FormattedMessage id="ui-agreements.eresources.provider" />,
     type: <FormattedMessage id="ui-agreements.eresources.type" />,
     count: <FormattedMessage id="ui-agreements.agreementLines.count" />,
+    note: <FormattedMessage id="ui-agreements.note" />,
     coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
     isCustomCoverage: ' ',
     activeFrom: <FormattedMessage id="ui-agreements.eresources.activeFrom" />,
@@ -66,6 +67,7 @@ export default class LinesList extends React.Component {
     activeFrom: line => <div data-test-active-from>{this.renderDate(line.startDate)}</div>,
     activeTo: line => <div data-test-active-to>{this.renderDate(line.endDate)}</div>,
     count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
+    note: line => line.note,
     coverage: line => <Coverage line={line} />,
     isCustomCoverage: line => {
       if (!line.customCoverage) return '';
@@ -95,6 +97,7 @@ export default class LinesList extends React.Component {
     'provider',
     'type',
     'count',
+    'note',
     'coverage',
     'isCustomCoverage',
     'activeFrom',

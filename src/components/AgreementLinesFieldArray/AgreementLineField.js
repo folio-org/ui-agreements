@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
-import { Col, Datepicker, KeyValue, Row } from '@folio/stripes/components';
+import { Col, Datepicker, KeyValue, Row, TextArea } from '@folio/stripes/components';
 import { EditCard } from '@folio/stripes-erm-components';
 
 import BasketSelector from '../BasketSelector';
@@ -177,6 +177,14 @@ export default class AgreementLineField extends React.Component {
             />
           </Col>
         </Row>
+        <Field
+          component={TextArea}
+          id={`agreement-line-${index}-note`}
+          label={<FormattedMessage id="ui-agreements.note" />}
+          maxLength={255}
+          name={`${name}.note`}
+          parse={v => v} // Lets us send an empty string instead of `undefined`
+        />
         {this.renderPOLinesFieldArray()}
         {this.renderCustomCoverageFieldArray()}
       </div>
