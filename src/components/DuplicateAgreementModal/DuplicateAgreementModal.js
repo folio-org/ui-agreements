@@ -14,12 +14,20 @@ export default class DuplicateAgreementModal extends React.Component {
     { key: 'usageData', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.usageData" /> },
   ];
 
+  translationIds = {
+    cloneEndpointError: 'ui-agreements.duplicateAgreementModal.cloneEndpointError',
+    duplicateModalLabel: 'ui-agreements.duplicateAgreementModal.duplicateAgreement',
+    duplicateModalMessage: 'ui-agreements.duplicateAgreementModal.duplicateMessage',
+    duplicateModalError: 'ui-agreements.duplicateAgreementModal.duplicateModalError',
+    invalidResponseError: 'ui-agreements.duplicateAgreementModal.invalidResponseError',
+  };
+
   render() {
     return (
       <DuplicateModal
         {...this.props}
         cloneableProperties={this.cloneableProperties}
-        translationKey="agreement"
+        translationIds={this.translationIds}
       />
     );
   }
