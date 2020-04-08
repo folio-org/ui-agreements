@@ -45,6 +45,11 @@ class AgreementCreateRoute extends React.Component {
       path: 'erm/refdata/InternalContact/role',
       shouldRefresh: () => false,
     },
+    documentCategories: {
+      type: 'okapi',
+      path: 'erm/refdata/DocumentAttachment/atType',
+      shouldRefresh: () => false,
+    },
     externalAgreementLine: {
       type: 'okapi',
       path: 'erm/entitlements/external',
@@ -211,6 +216,7 @@ class AgreementCreateRoute extends React.Component {
           basket: (resources?.basket ?? []),
           supplementaryProperties: (resources?.supplementaryProperties?.records ?? []),
           contactRoleValues: (resources?.contactRoleValues?.records ?? []),
+          documentCategories: (resources?.documentCategories?.records ?? []),
           isPerpetualValues: (resources?.isPerpetualValues?.records ?? []),
           licenseLinkStatusValues: (resources?.licenseLinkStatusValues?.records ?? []),
           orgRoleValues: (resources?.orgRoleValues?.records ?? []),
