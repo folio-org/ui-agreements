@@ -111,6 +111,8 @@
   "agreementLines.customCoverage.startVolume": "Start volume",
   "agreementLines.customCoverage.endVolume": "End volume",
 
+  "alternateNames": "Alternative names",
+
   "agreementPeriods": "Agreement periods",
   "agreementPeriods.addPeriod": "Add agreement period",
   "agreementPeriods.removePeriod": "Remove agreement period {periodNum}",

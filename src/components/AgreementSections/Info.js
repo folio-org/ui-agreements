@@ -6,6 +6,7 @@ import {
   FormattedUTCDate,
   Headline,
   KeyValue,
+  MultiColumnList,
   NoValue,
   Row,
 } from '@folio/stripes/components';
@@ -15,6 +16,7 @@ import { statuses } from '../../constants';
 export default class Info extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
+      alternateNames: PropTypes.array,
       cancellationDeadline: PropTypes.string,
       description: PropTypes.string,
       isPerpetual: PropTypes.shape({
@@ -97,6 +99,13 @@ export default class Info extends React.Component {
               </KeyValue>
             </Col>
           </Row>
+        }
+        {agreement?.alternateNames?.length !== 0 &&
+          <MultiColumnList
+            columnMapping={{ name: <FormattedMessage id="ui-agreements.alternateNames" /> }}
+            contentData={agreement.alternateNames}
+            visibleColumns={['name']}
+          />
         }
       </div>
     );
