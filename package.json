@@ -165,9 +165,8 @@
         ]
       },
       {
-        "permissionName": "ui-agreements.settings.enabled",
+        "permissionName": "settings.agreements.enabled",
         "displayName": "Settings (Agreements): Can view and edit settings",
-        "visible": true,
         "subPermissions": [
           "module.agreements.enabled",
           "settings.enabled",
@@ -175,11 +174,19 @@
         ]
       },
       {
+        "permissionName": "ui-agreements.generalSettings.manage",
+        "displayName": "Settings (Agreements): Can view and edit general settings",
+        "visible": true,
+        "subPermissions": [
+          "settings.agreements.enabled"
+        ]
+      },
+      {
         "permissionName": "ui-agreements.picklists.manage",
         "displayName": "Settings (Agreements): Manage pick lists and values",
         "visible": true,
         "subPermissions": [
-          "ui-agreements.settings.enabled",
+          "settings.agreements.enabled",
           "erm.refdata.manage"
         ]
       },
@@ -188,7 +195,7 @@
         "displayName": "Settings (Agreements): Manage agreement supplementary properties",
         "visible": true,
         "subPermissions": [
-          "ui-agreements.settings.enabled",
+          "settings.agreements.enabled",
           "erm.custprops.manage"
         ]
       }
