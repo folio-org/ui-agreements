@@ -372,10 +372,10 @@
     "agreements.deleteAgreement": "Excluir contrato",
     "agreements.deleteConfirmMessage": "O contrato <strong>{name}</strong> será <strong>excluído</strong>.",
     "agreements.duplicateAgreement": "Duplicar contrato",
-    "errors.noDeleteHasAgreementLines": "<strong>Agreement was not deleted</strong> because it has one or more agreement lines.",
-    "errors.noDeleteHasLicenses": "<strong>Agreement was not deleted</strong> because it has one or more licenses attached.",
+    "errors.noDeleteHasAgreementLines": "<strong>O contrato não foi excluído</strong> porque possui uma ou mais linhas de contrato.",
+    "errors.noDeleteHasLicenses": "<strong>O contrato não foi excluído</strong> porque possui uma ou mais licenças anexadas.",
     "errors.noDeleteHasRelatedAgreements": "<strong>O contrato não foi excluído</strong> porque possui um ou mais contratos relacionados.",
     "errors.noDeleteAgreementBackendError": "<strong>O contrato não foi excluído:</strong> {message}",
     "settings.label": "Rótulo",
-    "usageData.noUsageDetailsPerm": "You do not have permission to view ERM Usage details"
+    "usageData.noUsageDetailsPerm": "Você não tem permissão para visualizar os detalhes de uso do ERM"
 }
