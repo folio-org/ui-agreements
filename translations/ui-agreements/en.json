@@ -25,6 +25,14 @@
 
   "note": "Note",
 
+  "permission.resources.view": "Agreements: Search & view e-resources",
+  "permission.agreements.view": "Agreements: Search & view agreements",
+  "permission.agreements.edit": "Agreements: Edit agreements",
+  "permission.agreements.delete": "Agreements: Delete agreements",
+  "permission.generalSettings.manage": "Settings (Agreements): Can view and edit general settings",
+  "permission.picklists.manage": "Settings (Agreements): Manage pick lists and values",
+  "permission.supplementaryProperties.manage": "Settings (Agreements): Manage agreement supplementary properties",
+
   "agreements.deletedAgreement": "<strong>Agreement deleted:</strong> {name}",
   "agreements.deleteAgreement": "Delete agreement",
   "agreements.deleteConfirmMessage": "Agreement <strong>{name}</strong> will be <strong>deleted</strong>.",

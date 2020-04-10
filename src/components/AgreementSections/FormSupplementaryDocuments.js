@@ -8,6 +8,9 @@ import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 
 export default class FormSupplementaryDocuments extends React.Component {
   static propTypes = {
+    data: PropTypes.shape({
+      documentCategories: PropTypes.array,
+    }).isRequired,
     handlers: PropTypes.shape({
       onDownloadFile: PropTypes.func.isRequired,
       onUploadFile: PropTypes.func.isRequired,
@@ -18,7 +21,7 @@ export default class FormSupplementaryDocuments extends React.Component {
   };
 
   render() {
-    const { id, handlers, onToggle, open } = this.props;
+    const { data, handlers, id, onToggle, open } = this.props;
     return (
       <Accordion
         id={id}
@@ -30,6 +33,7 @@ export default class FormSupplementaryDocuments extends React.Component {
           addDocBtnLabel={<FormattedMessage id="ui-agreements.supplementaryDocs.addSupplementaryDoc" />}
           component={DocumentsFieldArray}
           deleteBtnTooltipMsgId="ui-agreements.doc.removeSupplementaryInformation"
+          documentCategories={data.documentCategories}
           isEmptyMessage={<FormattedMessage id="ui-agreements.supplementaryDocs.agreementHasNone" />}
           name="supplementaryDocs"
           onDownloadFile={handlers.onDownloadFile}
