@@ -4,7 +4,7 @@ import {
   isPresent,
 } from '@bigtest/interactor';
 
-// import DuplicateModalInteractor from '@folio/stripes-erm-components/lib/DuplicateModal/tests/interactor';
+import DuplicateModalInteractor from '@folio/stripes-erm-components/lib/DuplicateModal/tests/interactor';
 import AgreementLinesInteractor from './agreement-lines';
 
 @interactor class HeaderDropdown {
@@ -21,7 +21,7 @@ export default @interactor class AgreementViewInteractor {
   lines = new AgreementLinesInteractor();
   headerDropdown = new HeaderDropdown('[data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
-  // duplicateAgreementModal = new DuplicateModalInteractor();
+  duplicateAgreementModal = new DuplicateModalInteractor();
   expandAll = clickable('#clickable-expand-all');
 
   linesSection = new AgreementLinesInteractor('#lines');

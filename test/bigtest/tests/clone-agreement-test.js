@@ -27,7 +27,7 @@ const internalContactData = {
   role: { label: 'Agreement owner', value: 'agreement_owner' },
 };
 
-describe.skip('Clone Agreement test', () => {
+describe('Clone Agreement test', () => {
   setupApplication();
   const agreementView = new AgreementViewInteractor();
   const agreementEdit = new AgreementFormInteractor();
