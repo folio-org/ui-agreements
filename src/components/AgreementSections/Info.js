@@ -102,7 +102,7 @@ export default class Info extends React.Component {
         }
         {agreement?.alternateNames?.length !== 0 &&
           <MultiColumnList
-            columnMapping={{ name: <FormattedMessage id="ui-agreements.alternateNames" /> }}
+            columnMapping={{ name: <FormattedMessage id="ui-agreements.alternativeNames" /> }}
             contentData={agreement.alternateNames}
             visibleColumns={['name']}
           />
