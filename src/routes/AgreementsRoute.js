@@ -23,7 +23,7 @@ class AgreementsRoute extends React.Component {
       perRequest: 100,
       limitParam: 'perPage',
       params: getSASParams({
-        searchKey: 'name', // ,alternateNames.name',
+        searchKey: 'name,alternateNames.name',
         filterKeys: {
           contacts: 'contacts.user',
           contactRole: 'contacts.role',
