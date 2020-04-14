@@ -100,12 +100,12 @@ const noMovingWallEndSerial = {
     }
   },
   coverage: [{
-    startDate: '12/06/2000',
-    endDate: '10/05/2019',
-    startVolume: '71',
+    startDate: '12/06/2001',
+    endDate: '10/05/2007',
+    startVolume: '76',
     startIssue: '1',
-    endVolume: '80',
-    endIssue: '3'
+    endVolume: '79',
+    endIssue: '2'
   }],
   embargo: {
     movingWallStart: { length: 5, unit: 'months' },
