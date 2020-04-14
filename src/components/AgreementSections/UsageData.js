@@ -9,8 +9,9 @@ import {
   Badge,
   Card,
   KeyValue,
+  Layout
 } from '@folio/stripes/components';
-import { AppIcon } from '@folio/stripes/core';
+import { IfPermission, AppIcon } from '@folio/stripes/core';
 
 import { urls } from '../utilities';
 
@@ -61,6 +62,12 @@ export default class UsageData extends React.Component {
     ))
   )
 
+  renderNoPermission = () => (
+    <Layout className="padding-bottom-gutter">
+      <FormattedMessage id="ui-agreements.usageData.noUsageDetailsPerm" />
+    </Layout>
+  )
+
   renderEmpty = () => (
     <FormattedMessage id="ui-agreements.emptyAccordion.usageData" />
   );
@@ -86,7 +93,13 @@ export default class UsageData extends React.Component {
         onToggle={onToggle}
         open={open}
       >
-        { usageDataProviders.length ? this.renderUDPs() : this.renderEmpty() }
+        <IfPermission perm="usagedataproviders.collection.get">
+          {({ hasPermission }) => (hasPermission ?
+            usageDataProviders.length ? this.renderUDPs() : this.renderEmpty()
+            :
+            this.renderNoPermission()
+          )}
+        </IfPermission>
       </Accordion>
     );
   }
