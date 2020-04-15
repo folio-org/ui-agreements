@@ -2,6 +2,7 @@
 
 ##  3.5.0 IN PROGRESS
 * Added permission set and ability to delete agreements. ERM-777
+* Added ability to set and view agreement line notes. ERM-779
 
 ##  3.4.1 2020-03-12
 * Set coverage columns to be fixed-width.
