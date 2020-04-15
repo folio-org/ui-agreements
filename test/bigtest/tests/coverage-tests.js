@@ -134,7 +134,7 @@ const serialLine = {
   embargo: serial.embargo
 };
 
-describe.only('Coverage tests', () => {
+describe('Coverage tests', () => {
   describe('Rendering coverage component for a monograph pci', () => {
     beforeEach(async function () {
       await mountWithContext(
@@ -424,7 +424,7 @@ describe.only('Coverage tests', () => {
     });
   });
 
-  describe.only('Rendering coverage component for a serial line', () => {
+  describe('Rendering coverage component for a serial line', () => {
     beforeEach(async function () {
       await mountWithContext(
         <Coverage line={serialLine} />
