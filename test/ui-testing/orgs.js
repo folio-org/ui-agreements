@@ -3,13 +3,13 @@
 const generateNumber = () => Math.round(Math.random() * 100000);
 const agreementName = `Orgs Agreement #${generateNumber()}`;
 const ORGS = [{
-  code: `Code #${generateNumber()}`,
+  code: `code-${generateNumber()}`,
   name: `Content Provider ${generateNumber()}`,
   role: 'Content Provider',
   status: 'Active',
   toDelete: true,
 }, {
-  code: `Code #${generateNumber()}`,
+  code: `code-${generateNumber()}`,
   name: `Vendor ${generateNumber()}`,
   role: 'Vendor',
   editedName: ` turned into Subscription Agent ${generateNumber()}`,
