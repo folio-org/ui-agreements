@@ -57,24 +57,28 @@ export default class Coverage extends React.Component {
     const { pci, line, eResource } = this.props;
     let isMonograph = false;
     let dataToRender;
+    let embargo;
 
     if (pci) {
       if (pci?.pti?.titleInstance?.type?.value === resourceTypes.MONOGRAPH) {
         isMonograph = true;
       }
       dataToRender = pci;
+      embargo = dataToRender.embargo;
     } else if (line) {
       if (line?.resource?._object?.pti?.titleInstance?.type?.value === resourceTypes.MONOGRAPH) {
         isMonograph = true;
         dataToRender = line?.resource?._object;
       } else {
         dataToRender = line;
+        embargo = line?.resource?._object.embargo;
       }
     } else if (eResource?._object?.pti?.titleInstance?.type?.value === resourceTypes.MONOGRAPH) {
       isMonograph = true;
       dataToRender = eResource?._object;
     } else {
       dataToRender = eResource;
+      embargo = eResource?._object.embargo;
     }
 
     if (isMonograph) {
@@ -88,7 +92,7 @@ export default class Coverage extends React.Component {
       return (
         <div>
           <SerialCoverage statements={dataToRender.coverage} />
-          <Embargo embargo={dataToRender?.embargo ?? dataToRender?._object?.embargo ?? dataToRender?.resource?._object.embargo} />
+          <Embargo embargo={embargo} />
         </div>
       );
     }
