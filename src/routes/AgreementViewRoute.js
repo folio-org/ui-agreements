@@ -32,10 +32,9 @@ class AgreementViewRoute extends React.Component {
       type: 'okapi',
       path: 'erm/entitlements',
       params: {
-        match: 'owner.id',
+        filters: 'owner=:{id}',
         sort: 'resource.name',
         stats: 'true',
-        term: ':{id}',
       },
       limitParam: 'perPage',
       perRequest: RECORDS_PER_REQUEST,

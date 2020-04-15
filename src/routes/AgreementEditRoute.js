@@ -24,10 +24,9 @@ class AgreementEditRoute extends React.Component {
       type: 'okapi',
       path: 'erm/entitlements',
       params: {
-        match: 'owner.id',
+        filters: 'owner=:{id}',
         sort: 'resource.name',
         stats: 'true',
-        term: ':{id}',
       },
       limitParam: 'perPage',
       perRequest: 100,
@@ -257,7 +256,8 @@ class AgreementEditRoute extends React.Component {
           coverage: line.customCoverage ? line.coverage : undefined,
           poLines: line.poLines,
           activeFrom: line.startDate,
-          activeTo: line.endDate
+          activeTo: line.endDate,
+          note: line.note
         };
       });
     }
