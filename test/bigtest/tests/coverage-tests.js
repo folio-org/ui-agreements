@@ -41,26 +41,6 @@ const monograph = {
   },
 };
 
-const noEmbargoMonograph = {
-  pti: {
-    titleInstance: {
-      id: '1502',
-      name: 'This is a monograph with no embargo',
-      dateMonographPublished: '2020',
-      monographVolume: '1',
-      monographEdition: '1st',
-      type: {
-        value: 'monograph',
-        label: 'Monograph'
-      },
-      subType: {
-        value: 'electronic',
-        label: 'Electronic'
-      }
-    }
-  },
-};
-
 const serial = {
   pti: {
     titleInstance: {
@@ -87,54 +67,40 @@ const serial = {
   },
 };
 
-const noMovingWallEndSerial = {
-  pti: {
-    titleInstance: {
-      id: '2613',
-      name: 'This is a serial without moving wall end',
-      type: { value: 'serial', label: 'Serial' },
-      subType: {
-        value: 'electronic',
-        label: 'Electronic'
-      }
-    }
-  },
-  coverage: [{
-    startDate: '12/06/2001',
-    endDate: '10/05/2007',
-    startVolume: '76',
-    startIssue: '1',
-    endVolume: '79',
-    endIssue: '2'
-  }],
-  embargo: {
-    movingWallStart: { length: 5, unit: 'months' },
-  },
-};
-
-// We also want to test the other two possible shapes for passing this data through to Coverage
+// We also want to test the other possible shapes for passing this data through to Coverage and Embargo
 
 const monographEResource = {
   _object: monograph,
 };
 
 const serialEResource = {
-  _object: noMovingWallEndSerial,
-  coverage: noMovingWallEndSerial.coverage,
-  embargo: noMovingWallEndSerial.embargo,
+  _object: serial,
+  coverage: serial.coverage,
 };
 
 const monographLine = {
   resource: monographEResource,
 };
 
-const serialLine = {
-  resource: serial,
-  coverage: serial.coverage,
-  embargo: serial.embargo
+const noEmbargoMonograph = {
+  pti: monograph.pti,
+  embargo: undefined,
 };
 
-describe('Coverage tests', () => {
+const serialLine = {
+  resource: serialEResource,
+  coverage: serial.coverage,
+};
+
+const noMovingWallEndSerial = {
+  pti: serial.pti,
+  coverage: serial.coverage,
+  embargo: {
+    movingWallStart: serial.embargo.movingWallStart
+  }
+};
+
+describe.only('Coverage tests', () => {
   describe('Rendering coverage component for a monograph pci', () => {
     beforeEach(async function () {
       await mountWithContext(
@@ -369,7 +335,62 @@ describe('Coverage tests', () => {
     });
   });
 
-  describe('Rendering coverage component for a serial eResource without movingWallEnd', () => {
+  describe('Rendering coverage component for a serial pci without movingWallEnd', () => {
+    beforeEach(async function () {
+      await mountWithContext(
+        <Coverage pci={noMovingWallEndSerial} />
+      );
+    });
+
+    it('renders the serial coverage', () => {
+      expect(serialInteractor.exists).to.be.true;
+    });
+    it('renders the first set of data', () => {
+      expect(serialInteractor.first).to.be.true;
+    });
+    it('renders the last set of data', () => {
+      expect(serialInteractor.end).to.be.true;
+    });
+    it('renders the arrow icon', () => {
+      expect(serialInteractor.icon).to.be.true;
+    });
+    it('renders the correct start date', () => {
+      expect(serialInteractorStart.startDate).to.have.string('12/6/2001');
+    });
+    it('renders the correct end date', () => {
+      expect(serialInteractorEnd.endDate).to.have.string('10/5/2007');
+    });
+    it('renders the correct start issue', () => {
+      expect(serialInteractorStart.startIssue).to.have.string(noMovingWallEndSerial.coverage[0].startIssue);
+    });
+    it('renders the correct end issue', () => {
+      expect(serialInteractorEnd.endIssue).to.have.string(noMovingWallEndSerial.coverage[0].endIssue);
+    });
+    it('renders the correct start volume', () => {
+      expect(serialInteractorStart.startVolume).to.have.string(noMovingWallEndSerial.coverage[0].startVolume);
+    });
+    it('renders the correct end volume', () => {
+      expect(serialInteractorEnd.endVolume).to.have.string(noMovingWallEndSerial.coverage[0].endVolume);
+    });
+
+    it('renders the embargo moving wall start', () => {
+      expect(embargoInteractor.movingWallStartExists).to.be.true;
+    });
+
+    it('correctly renders the embargo start length', () => {
+      expect(embargoInteractor.startLength).to.have.string(noMovingWallEndSerial.embargo.movingWallStart.length);
+    });
+
+    it('correctly renders the embargo start unit', () => {
+      expect(embargoInteractor.startUnit).to.have.string(noMovingWallEndSerial.embargo.movingWallStart.unit);
+    });
+
+    it('does not render the embargo moving wall end', () => {
+      expect(embargoInteractor.movingWallEndExists).to.be.false;
+    });
+  });
+
+  describe('Rendering coverage component for a serial eResource', () => {
     beforeEach(async function () {
       await mountWithContext(
         <Coverage eResource={serialEResource} />
@@ -412,17 +433,26 @@ describe('Coverage tests', () => {
     });
 
     it('correctly renders the embargo start length', () => {
-      expect(embargoInteractor.startLength).to.have.string(serialEResource.embargo.movingWallStart.length);
+      expect(embargoInteractor.startLength).to.have.string(serialEResource._object.embargo.movingWallStart.length);
     });
 
     it('correctly renders the embargo start unit', () => {
-      expect(embargoInteractor.startUnit).to.have.string(serialEResource.embargo.movingWallStart.unit);
+      expect(embargoInteractor.startUnit).to.have.string(serialEResource._object.embargo.movingWallStart.unit);
     });
 
-    it('does not render the embargo moving wall end', () => {
-      expect(embargoInteractor.movingWallEndExists).to.be.false;
+    it('renders the embargo moving wall end', () => {
+      expect(embargoInteractor.movingWallEndExists).to.be.true;
+    });
+
+    it('correctly renders the embargo end length', () => {
+      expect(embargoInteractor.endLength).to.have.string(serialEResource._object.embargo.movingWallEnd.length);
+    });
+
+    it('correctly renders the embargo end unit', () => {
+      expect(embargoInteractor.endUnit).to.have.string(serialEResource._object.embargo.movingWallEnd.unit);
     });
   });
+
 
   describe('Rendering coverage component for a serial line', () => {
     beforeEach(async function () {
@@ -467,11 +497,11 @@ describe('Coverage tests', () => {
     });
 
     it('correctly renders the embargo start length', () => {
-      expect(embargoInteractor.startLength).to.have.string(serialLine.embargo.movingWallStart.length);
+      expect(embargoInteractor.startLength).to.have.string(serialLine.resource._object.embargo.movingWallStart.length);
     });
 
     it('correctly renders the embargo start unit', () => {
-      expect(embargoInteractor.startUnit).to.have.string(serialLine.embargo.movingWallStart.unit);
+      expect(embargoInteractor.startUnit).to.have.string(serialLine.resource._object.embargo.movingWallStart.unit);
     });
 
     it('renders the embargo moving wall end', () => {
@@ -479,11 +509,11 @@ describe('Coverage tests', () => {
     });
 
     it('correctly renders the embargo end length', () => {
-      expect(embargoInteractor.endLength).to.have.string(serialLine.embargo.movingWallEnd.length);
+      expect(embargoInteractor.endLength).to.have.string(serialLine.resource._object.embargo.movingWallEnd.length);
     });
 
     it('correctly renders the embargo end unit', () => {
-      expect(embargoInteractor.endUnit).to.have.string(serialLine.embargo.movingWallEnd.unit);
+      expect(embargoInteractor.endUnit).to.have.string(serialLine.resource._object.embargo.movingWallEnd.unit);
     });
   });
 });
