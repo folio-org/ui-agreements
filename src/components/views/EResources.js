@@ -301,6 +301,7 @@ export default class EResources extends React.Component {
                     defaultWidth="fill"
                     firstMenu={this.renderResultsFirstMenu(activeFilters)}
                     id="pane-eresources-list"
+                    noOverflow
                     padContent={false}
                     paneSub={this.renderResultsPaneSubtitle(source)}
                     paneTitle={<FormattedMessage id="ui-agreements.eresources" />}
