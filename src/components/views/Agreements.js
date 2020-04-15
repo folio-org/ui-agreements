@@ -278,6 +278,7 @@ export default class Agreements extends React.Component {
                   {this.state.filterPaneIsVisible &&
                     <Pane
                       defaultWidth="20%"
+                      id="pane-agreement-search"
                       onClose={this.toggleFilterPane}
                       paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                     >
@@ -351,6 +352,7 @@ export default class Agreements extends React.Component {
                   <Pane
                     appIcon={<AppIcon app="agreements" />}
                     defaultWidth="fill"
+                    id="pane-agreement-list"
                     firstMenu={this.renderResultsFirstMenu(activeFilters)}
                     lastMenu={this.renderResultsLastMenu()}
                     padContent={false}
