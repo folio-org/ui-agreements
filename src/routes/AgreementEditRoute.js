@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { cloneDeep, get } from 'lodash';
+import { cloneDeep } from 'lodash';
 import compose from 'compose-function';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
@@ -53,6 +53,11 @@ class AgreementEditRoute extends React.Component {
       path: 'erm/refdata/InternalContact/role',
       shouldRefresh: () => false,
     },
+    documentCategories: {
+      type: 'okapi',
+      path: 'erm/refdata/DocumentAttachment/atType',
+      shouldRefresh: () => false,
+    },
     isPerpetualValues: {
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreement/isPerpetual',
@@ -67,7 +72,7 @@ class AgreementEditRoute extends React.Component {
       type: 'okapi',
       path: 'orders/order-lines',
       params: (_q, _p, _r, _l, props) => {
-        const query = get(props.resources, 'agreementLines.records', [])
+        const query = (props?.resources?.agreementLines?.records ?? [])
           .filter(line => line.poLines && line.poLines.length)
           .map(line => (line.poLines
             .map(poLine => `id==${poLine.poLineId}`)
@@ -99,7 +104,7 @@ class AgreementEditRoute extends React.Component {
       type: 'okapi',
       path: 'users',
       params: (_q, _p, _r, _l, props) => {
-        const query = get(props.resources, 'agreement.records[0].contacts', [])
+        const query = (props?.resources?.agreement?.records?.[0]?.contacts ?? [])
           .filter(contact => contact.user)
           .map(contact => `id==${contact.user}`)
           .join(' or ');
@@ -172,7 +177,7 @@ class AgreementEditRoute extends React.Component {
   static getDerivedStateFromProps(props, state) {
     let updated = false;
 
-    const agreement = get(props.resources, 'agreement.records[0]', {});
+    const agreement = props?.resources?.agreement?.records?.[0] ?? {};
 
     // Start with the existing initialValues. However, if we've just fetched a new agreement
     // then use that as the baseline. This would be the case if we didn't have an agreement in
@@ -212,7 +217,8 @@ class AgreementEditRoute extends React.Component {
         // Init the list of amendments based on the license's amendments to ensure
         // we display those that have been created since this agreement's license was last
         // edited. Ensure we provide defaults via amendmentId.
-        amendments: get(l, 'remoteId_object.amendments', [])
+        // eslint-disable-next-line camelcase
+        amendments: (l?.remoteId_object?.amendments ?? [])
           .map(a => {
             const assignedAmendment = (l.amendments || []).find(la => la.amendmentId === a.id) || {};
             return {
@@ -225,7 +231,7 @@ class AgreementEditRoute extends React.Component {
 
       // Add the default supplementaryProperties to the already-set supplementaryProperties.
       initialValues.customProperties = initialValues.customProperties || {};
-      const supplementaryProperties = get(props.resources, 'supplementaryProperties.records', []);
+      const supplementaryProperties = (props?.resources?.supplementaryProperties?.records ?? []);
       supplementaryProperties
         .filter(t => t.primary && initialValues.customProperties[t.name] === undefined)
         .forEach(t => { initialValues.customProperties[t.name] = ''; });
@@ -235,7 +241,7 @@ class AgreementEditRoute extends React.Component {
       )(initialValues);
     }
 
-    const lines = get(props.resources, 'agreementLines.records', []);
+    const lines = (props?.resources?.agreementLines?.records ?? []);
     if (items.length && lines.length && (lines[0].owner.id === props.match.params.id)) {
       updated = true;
 
@@ -293,7 +299,7 @@ class AgreementEditRoute extends React.Component {
 
   getAgreementLines = () => {
     return [
-      ...get(this.props.resources, 'agreementLines.records', []),
+      ...(this.props.resources?.agreementLines?.records ?? []),
       ...this.getAgreementLinesToAdd(),
     ];
   }
@@ -302,11 +308,11 @@ class AgreementEditRoute extends React.Component {
     const { resources } = this.props;
     const { query: { addFromBasket } } = resources;
 
-    const externalAgreementLines = get(resources, 'externalAgreementLine.records', []);
+    const externalAgreementLines = resources?.externalAgreementLine?.records ?? [];
 
     let basketLines = [];
     if (resources.query.addFromBasket) {
-      const basket = get(resources, 'basket', []);
+      const basket = resources?.basket ?? [];
 
       basketLines = addFromBasket
         .split(',')
@@ -337,19 +343,20 @@ class AgreementEditRoute extends React.Component {
         data={{
           agreementLines: this.getAgreementLines(),
           agreementLinesToAdd: this.getAgreementLinesToAdd(),
-          agreementStatusValues: get(resources, 'agreementStatusValues.records', []),
-          reasonForClosureValues: get(resources, 'reasonForClosureValues.records', []),
-          amendmentStatusValues: get(resources, 'amendmentStatusValues.records', []),
-          basket: get(resources, 'basket', []),
-          contactRoleValues: get(resources, 'contactRoleValues.records', []),
-          externalAgreementLine: get(resources, 'externalAgreementLine.records', []),
-          isPerpetualValues: get(resources, 'isPerpetualValues.records', []),
-          licenseLinkStatusValues: get(resources, 'licenseLinkStatusValues.records', []),
-          orderLines: get(resources, 'orderLines.records', []),
-          orgRoleValues: get(resources, 'orgRoleValues.records', []),
-          renewalPriorityValues: get(resources, 'renewalPriorityValues.records', []),
-          supplementaryProperties: get(resources, 'supplementaryProperties.records', []),
-          users: get(resources, 'users.records', []),
+          agreementStatusValues: resources?.agreementStatusValues?.records ?? [],
+          reasonForClosureValues: resources?.reasonForClosureValues?.records ?? [],
+          amendmentStatusValues: resources?.amendmentStatusValues?.records ?? [],
+          basket: resources?.basket ?? [],
+          contactRoleValues: resources?.contactRoleValues?.records ?? [],
+          documentCategories: resources?.documentCategories?.records ?? [],
+          externalAgreementLine: resources?.externalAgreementLine?.records ?? [],
+          isPerpetualValues: resources?.isPerpetualValues?.records ?? [],
+          licenseLinkStatusValues: resources?.licenseLinkStatusValues?.records ?? [],
+          orderLines: resources?.orderLines?.records ?? [],
+          orgRoleValues: resources?.orgRoleValues?.records ?? [],
+          renewalPriorityValues: resources?.renewalPriorityValues?.records ?? [],
+          supplementaryProperties: resources?.supplementaryProperties?.records ?? [],
+          users: resources?.users?.records ?? [],
         }}
         handlers={{
           ...handlers,
