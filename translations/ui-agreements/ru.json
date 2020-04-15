@@ -378,7 +378,7 @@
     "permission.picklists.manage": "Settings (Agreements): Manage pick lists and values",
     "permission.supplementaryProperties.manage": "Settings (Agreements): Manage agreement supplementary properties",
     "duplicateAgreementModal.cloneEndpointError": "Unable to duplicate the agreement. The clone endpoint could not be accessed.",
-    "duplicateAgreementModal.duplicateAgreement": "Duplicate agreement",
+    "duplicateAgreementModal.duplicateAgreement": "Соглашение в двух экземплярах",
     "duplicateAgreementModal.duplicateMessage": "Please select which sections of the agreement to duplicate",
     "duplicateAgreementModal.duplicateModalError": "Error: the agreement was not duplicated",
     "duplicateAgreementModal.invalidResponseError": "Unable to duplicate the agreement. The response received from the server was invalid."
