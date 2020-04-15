@@ -6,11 +6,9 @@ import { Field } from 'redux-form';
 import {
   Button,
   Checkbox,
-  Col,
   Layout,
   List,
   Pane,
-  Row
 } from '@folio/stripes/components';
 
 

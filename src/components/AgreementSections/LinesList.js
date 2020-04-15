@@ -67,7 +67,7 @@ export default class LinesList extends React.Component {
     activeFrom: line => <div data-test-active-from>{this.renderDate(line.startDate)}</div>,
     activeTo: line => <div data-test-active-to>{this.renderDate(line.endDate)}</div>,
     count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
-    note: line => line.note,
+    note: line => <div style={{ overflowWrap: 'break-word', maxWidth: 250, whiteSpace: 'pre-wrap' }}>{line.note}</div>,
     coverage: line => <Coverage line={line} />,
     isCustomCoverage: line => {
       if (!line.customCoverage) return '';

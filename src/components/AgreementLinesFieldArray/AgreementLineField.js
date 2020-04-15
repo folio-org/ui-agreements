@@ -181,7 +181,6 @@ export default class AgreementLineField extends React.Component {
           component={TextArea}
           id={`agreement-line-${index}-note`}
           label={<FormattedMessage id="ui-agreements.note" />}
-          maxLength={255}
           name={`${name}.note`}
           parse={v => v} // Lets us send an empty string instead of `undefined`
         />

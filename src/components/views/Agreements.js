@@ -352,8 +352,8 @@ export default class Agreements extends React.Component {
                   <Pane
                     appIcon={<AppIcon app="agreements" />}
                     defaultWidth="fill"
-                    id="pane-agreement-list"
                     firstMenu={this.renderResultsFirstMenu(activeFilters)}
+                    id="pane-agreement-list"
                     lastMenu={this.renderResultsLastMenu()}
                     padContent={false}
                     paneSub={this.renderResultsPaneSubtitle(source)}

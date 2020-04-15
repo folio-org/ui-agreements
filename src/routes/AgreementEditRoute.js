@@ -250,7 +250,8 @@ class AgreementEditRoute extends React.Component {
           coverage: line.customCoverage ? line.coverage : undefined,
           poLines: line.poLines,
           activeFrom: line.startDate,
-          activeTo: line.endDate
+          activeTo: line.endDate,
+          note: line.note
         };
       });
     }
