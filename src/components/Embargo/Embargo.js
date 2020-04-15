@@ -53,7 +53,6 @@ export default class Embargo extends React.Component {
       return null;
     }
 
-
     render() {
       const { embargo } = this.props;
       if (!embargo) return null;

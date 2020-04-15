@@ -355,6 +355,7 @@ export default class Agreements extends React.Component {
                     firstMenu={this.renderResultsFirstMenu(activeFilters)}
                     id="pane-agreement-list"
                     lastMenu={this.renderResultsLastMenu()}
+                    noOverflow
                     padContent={false}
                     paneSub={this.renderResultsPaneSubtitle(source)}
                     paneTitle={<FormattedMessage id="ui-agreements.agreements" />}
