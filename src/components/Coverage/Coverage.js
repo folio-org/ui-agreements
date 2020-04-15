@@ -88,7 +88,7 @@ export default class Coverage extends React.Component {
       return (
         <div>
           <SerialCoverage statements={dataToRender.coverage} />
-          <Embargo embargo={dataToRender?.embargo ?? dataToRender?._object?.embargo} />
+          <Embargo embargo={dataToRender?.embargo ?? dataToRender?._object?.embargo ?? dataToRender?.resource?._object.embargo} />
         </div>
       );
     }
