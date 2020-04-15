@@ -100,7 +100,7 @@ export default class Info extends React.Component {
             </Col>
           </Row>
         }
-        {agreement?.alternateNames?.length !== 0 &&
+        {agreement.alternateNames !== undefined && agreement?.alternateNames?.length !== 0 &&
           <MultiColumnList
             columnMapping={{ name: <FormattedMessage id="ui-agreements.alternativeNames" /> }}
             contentData={agreement.alternateNames}
