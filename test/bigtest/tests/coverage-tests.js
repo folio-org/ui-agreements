@@ -131,9 +131,10 @@ const monographLine = {
 const serialLine = {
   resource: serial,
   coverage: serial.coverage,
+  embargo: serial.embargo
 };
 
-describe('Coverage tests', () => {
+describe.only('Coverage tests', () => {
   describe('Rendering coverage component for a monograph pci', () => {
     beforeEach(async function () {
       await mountWithContext(
@@ -423,7 +424,7 @@ describe('Coverage tests', () => {
     });
   });
 
-  describe('Rendering coverage component for a serial line', () => {
+  describe.only('Rendering coverage component for a serial line', () => {
     beforeEach(async function () {
       await mountWithContext(
         <Coverage line={serialLine} />
@@ -459,6 +460,30 @@ describe('Coverage tests', () => {
     });
     it('renders the correct end volume', () => {
       expect(serialInteractorEnd.endVolume).to.have.string(serialLine.coverage[0].endVolume);
+    });
+
+    it('renders the embargo moving wall start', () => {
+      expect(embargoInteractor.movingWallStartExists).to.be.true;
+    });
+
+    it('correctly renders the embargo start length', () => {
+      expect(embargoInteractor.startLength).to.have.string(serialLine.embargo.movingWallStart.length);
+    });
+
+    it('correctly renders the embargo start unit', () => {
+      expect(embargoInteractor.startUnit).to.have.string(serialLine.embargo.movingWallStart.unit);
+    });
+
+    it('renders the embargo moving wall end', () => {
+      expect(embargoInteractor.movingWallEndExists).to.be.true;
+    });
+
+    it('correctly renders the embargo end length', () => {
+      expect(embargoInteractor.endLength).to.have.string(serialLine.embargo.movingWallEnd.length);
+    });
+
+    it('correctly renders the embargo end unit', () => {
+      expect(embargoInteractor.endUnit).to.have.string(serialLine.embargo.movingWallEnd.unit);
     });
   });
 });
