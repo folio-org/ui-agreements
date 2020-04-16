@@ -360,7 +360,7 @@
     "emptyAccordion.relatedAgreements": "No related agreements for this agreement",
     "agreementPeriods.otherPeriods": "Other periods",
     "agreementLines.noPoLinePerm": "No permission to view PO line",
-    "delete": "Delete",
+    "delete": "Eliminar",
     "agreements.deletedAgreement": "<strong>Agreement deleted:</strong> {name}",
     "agreements.deleteAgreement": "Delete agreement",
     "agreements.deleteConfirmMessage": "Agreement <strong>{name}</strong> will be <strong>deleted</strong>.",
