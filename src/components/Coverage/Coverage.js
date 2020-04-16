@@ -8,25 +8,51 @@ import { resourceTypes } from '../../constants';
 export default class Coverage extends React.Component {
   static propTypes = {
     pci: PropTypes.shape({
+      embargo: PropTypes.shape({
+        movingWallStart: PropTypes.shape({
+          length: PropTypes.number,
+          unit: PropTypes.string
+        }),
+        movingWallEnd: PropTypes.shape({
+          length: PropTypes.number,
+          unit: PropTypes.string
+        })
+      }),
       pti: PropTypes.shape({
         titleInstance: PropTypes.shape({
           dateMonographPublished: PropTypes.string,
           monographVolume: PropTypes.string,
           monographEdition: PropTypes.string,
-          name: PropTypes.string
+          name: PropTypes.string,
+          type: PropTypes.shape({
+            value: PropTypes.string,
+          })
         }),
       })
     }),
     line: PropTypes.shape({
       resource: PropTypes.shape({
         _object: PropTypes.shape({
+          embargo: PropTypes.shape({
+            movingWallStart: PropTypes.shape({
+              length: PropTypes.number,
+              unit: PropTypes.string
+            }),
+            movingWallEnd: PropTypes.shape({
+              length: PropTypes.number,
+              unit: PropTypes.string
+            })
+          }),
           pci: PropTypes.shape({
             pti: PropTypes.shape({
               titleInstance: PropTypes.shape({
                 dateMonographPublished: PropTypes.string,
                 monographVolume: PropTypes.string,
                 monographEdition: PropTypes.string,
-                name: PropTypes.string
+                name: PropTypes.string,
+                type: PropTypes.shape({
+                  value: PropTypes.string,
+                })
               })
             })
           })
@@ -35,13 +61,26 @@ export default class Coverage extends React.Component {
     }),
     eResource: PropTypes.shape({
       _object: PropTypes.shape({
+        embargo: PropTypes.shape({
+          movingWallStart: PropTypes.shape({
+            length: PropTypes.number,
+            unit: PropTypes.string
+          }),
+          movingWallEnd: PropTypes.shape({
+            length: PropTypes.number,
+            unit: PropTypes.string
+          })
+        }),
         pci: PropTypes.shape({
           pti: PropTypes.shape({
             titleInstance: PropTypes.shape({
               dateMonographPublished: PropTypes.string,
               monographVolume: PropTypes.string,
               monographEdition: PropTypes.string,
-              name: PropTypes.string
+              name: PropTypes.string,
+              type: PropTypes.shape({
+                value: PropTypes.string,
+              })
             })
           })
         })
@@ -64,7 +103,7 @@ export default class Coverage extends React.Component {
         isMonograph = true;
       }
       dataToRender = pci;
-      embargo = dataToRender.embargo;
+      embargo = pci?.embargo;
     } else if (line) {
       if (line?.resource?._object?.pti?.titleInstance?.type?.value === resourceTypes.MONOGRAPH) {
         isMonograph = true;

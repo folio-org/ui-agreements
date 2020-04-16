@@ -84,7 +84,6 @@ const monographLine = {
 
 const noEmbargoMonograph = {
   pti: monograph.pti,
-  embargo: undefined,
 };
 
 const serialLine = {
