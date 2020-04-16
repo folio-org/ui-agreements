@@ -23,6 +23,7 @@ export default class Embargo extends React.Component {
         const number = embargo.movingWallEnd.length;
         return (
           <Layout
+            className="flex"
             data-test-embargo-end
             data-test-embargo-end-length={number}
             data-test-embargo-end-unit={embargo.movingWallEnd.unit}
@@ -41,6 +42,7 @@ export default class Embargo extends React.Component {
         const number = embargo.movingWallStart.length;
         return (
           <Layout
+            className="flex"
             data-test-embargo-start
             data-test-embargo-start-length={number}
             data-test-embargo-start-unit={embargo.movingWallStart.unit}
