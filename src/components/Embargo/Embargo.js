@@ -28,8 +28,8 @@ export default class Embargo extends React.Component {
             data-test-embargo-end-length={number}
             data-test-embargo-end-unit={embargo.movingWallEnd.unit}
           >
-            <FormattedMessage id="ui-agreements.embargo.end" />
-            <FormattedMessage id={unitId} values={{ count: number }} />
+            <FormattedMessage id="ui-agreements.embargo.end" tagName="div" />
+            <FormattedMessage id={unitId} tagName="div" values={{ count: number }} />
           </Layout>
         );
       }
@@ -47,8 +47,8 @@ export default class Embargo extends React.Component {
             data-test-embargo-start-length={number}
             data-test-embargo-start-unit={embargo.movingWallStart.unit}
           >
-            <FormattedMessage id="ui-agreements.embargo.start" />
-            <FormattedMessage id={unitId} values={{ count: number }} />
+            <FormattedMessage id="ui-agreements.embargo.start" tagName="div" />
+            <FormattedMessage id={unitId} tagName="div" values={{ count: number }} />
           </Layout>
         );
       }
