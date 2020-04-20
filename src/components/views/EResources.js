@@ -225,6 +225,7 @@ export default class EResources extends React.Component {
                   {this.state.filterPaneIsVisible &&
                     <Pane
                       defaultWidth="20%"
+                      id="pane-eresources-search"
                       onClose={this.toggleFilterPane}
                       paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                     >
@@ -299,6 +300,8 @@ export default class EResources extends React.Component {
                     appIcon={<AppIcon app="agreements" />}
                     defaultWidth="fill"
                     firstMenu={this.renderResultsFirstMenu(activeFilters)}
+                    id="pane-eresources-list"
+                    noOverflow
                     padContent={false}
                     paneSub={this.renderResultsPaneSubtitle(source)}
                     paneTitle={<FormattedMessage id="ui-agreements.eresources" />}

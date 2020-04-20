@@ -78,8 +78,8 @@ module.exports.test = (uiTestCtx) => {
             .click(`#contacts-user-${row}-search-button`)
             .wait('#clickable-filter-active-active')
             .click('#clickable-filter-active-active')
-            .wait(`#list-plugin-find-user [aria-rowindex="${row + 3}"]`)
-            .click(`#list-plugin-find-user [aria-rowindex="${row + 3}"]`)
+            .wait(`#list-plugin-find-user [aria-rowindex="${row + 6}"]`)
+            .click(`#list-plugin-find-user [aria-rowindex="${row + 6}"]`)
             .wait('[data-test-user-name]')
             .wait(1000)
             .evaluate(_row => {

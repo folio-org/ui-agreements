@@ -17,7 +17,7 @@
     "test-all": "yarn run test-bigtest-once; yarn run test-int",
     "test-int": "stripes test nightmare --run nav/agreement-crud/contacts/orgs/interfaces/basket/tags-crud/external-licenses/custom-coverage/hide-eresources-func/supplement/agreement-notes/package-notes/title-notes/related-agreements/pick-lists/supplementary-property-config",
     "test-bigtest-once": "stripes test karma --karma.singleRun",
-    "test-erm": "yarn run test-nightmare; yarn run test-licenses-int",
+    "test-erm": "yarn run test-int; yarn run test-licenses-int",
     "test-licenses-int": "stripes test nightmare --run linked-licenses/license-terms",
     "test-folio-int": "stripes test nightmare --run ekb-int/po-lines/eusage",
     "test-nav": "stripes test nightmare --run nav",
@@ -167,11 +167,18 @@
       {
         "permissionName": "settings.agreements.enabled",
         "displayName": "Settings (Agreements): Can view and edit settings",
-        "visible": true,
         "subPermissions": [
           "module.agreements.enabled",
           "settings.enabled",
           "configuration.all"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.generalSettings.manage",
+        "displayName": "Settings (Agreements): Can view and edit general settings",
+        "visible": true,
+        "subPermissions": [
+          "settings.agreements.enabled"
         ]
       },
       {

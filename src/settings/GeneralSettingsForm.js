@@ -6,11 +6,9 @@ import { Field } from 'redux-form';
 import {
   Button,
   Checkbox,
-  Col,
   Layout,
   List,
   Pane,
-  Row
 } from '@folio/stripes/components';
 
 
@@ -60,19 +58,21 @@ class GeneralSettingsForm extends React.Component {
 
     return (
       <form id="agreement-general-settings-form" onSubmit={handleSubmit(this.handleSave)}>
-        <Pane defaultWidth="fill" fluidContentWidth lastMenu={this.getLastMenu()} paneTitle={label}>
-          <Row>
-            <Col xs={12}>
-              <Field
-                component={Checkbox}
-                id="hideEResourcesFunctionality"
-                label={<FormattedMessage id="ui-agreements.settings.general.hideEResourcesFunctionality.title" />}
-                name="hideEResourcesFunctionality"
-                normalize={v => !!v}
-                type="checkbox"
-              />
-            </Col>
-          </Row>
+        <Pane
+          defaultWidth="fill"
+          fluidContentWidth
+          id="pane-agreements-settings-general"
+          lastMenu={this.getLastMenu()}
+          paneTitle={label}
+        >
+          <Field
+            component={Checkbox}
+            id="hideEResourcesFunctionality"
+            label={<FormattedMessage id="ui-agreements.settings.general.hideEResourcesFunctionality.title" />}
+            name="hideEResourcesFunctionality"
+            normalize={v => !!v}
+            type="checkbox"
+          />
           <Layout className="padding-bottom-gutter padding-top-gutter">
             <FormattedMessage id="ui-agreements.settings.general.hideEResourcesFunctionality.description" />
           </Layout>

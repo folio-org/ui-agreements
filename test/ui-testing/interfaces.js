@@ -7,7 +7,7 @@ const agreementName = `Interface Agreement #${generateNumber()}`;
 const org = {
   name: `Org #${generateNumber()}`,
   role: 'Content Provider',
-  code: `Code #${generateNumber()}`,
+  code: `code-${generateNumber()}`,
   status: 'Active'
 };
 const row = 0;
