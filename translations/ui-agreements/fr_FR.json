@@ -373,13 +373,13 @@
     "permission.resources.view": "Agreements: Search & view e-resources",
     "permission.agreements.view": "Agreements: Search & view agreements",
     "permission.agreements.edit": "Agreements: Edit agreements",
-    "permission.agreements.delete": "Agreements: Delete agreements",
+    "permission.agreements.delete": "Accords: Supprimer les accords",
     "permission.generalSettings.manage": "Settings (Agreements): Can view and edit general settings",
     "permission.picklists.manage": "Settings (Agreements): Manage pick lists and values",
     "permission.supplementaryProperties.manage": "Settings (Agreements): Manage agreement supplementary properties",
-    "duplicateAgreementModal.cloneEndpointError": "Unable to duplicate the agreement. The clone endpoint could not be accessed.",
-    "duplicateAgreementModal.duplicateAgreement": "Duplicate agreement",
+    "duplicateAgreementModal.cloneEndpointError": "Impossible de dupliquer l'accord. Impossible d'accéder au point de terminaison.",
+    "duplicateAgreementModal.duplicateAgreement": "Dupliquer l'accord",
     "duplicateAgreementModal.duplicateMessage": "Please select which sections of the agreement to duplicate",
-    "duplicateAgreementModal.duplicateModalError": "Error: the agreement was not duplicated",
+    "duplicateAgreementModal.duplicateModalError": "Erreur: l'accord n'a pas été dupliqué",
     "duplicateAgreementModal.invalidResponseError": "Unable to duplicate the agreement. The response received from the server was invalid."
 }
