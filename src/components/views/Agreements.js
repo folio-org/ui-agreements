@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
+import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
 import {
   Button,
@@ -65,6 +66,7 @@ const Agreements = ({
 
   const searchField = useRef(null);
 
+  const [storedPanesetLayout] = useLocalStorage('agreementsPanesetLayout');
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(true);
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
@@ -100,6 +102,8 @@ const Agreements = ({
             return (
               <Paneset
                 id="agreements-paneset"
+                initialLayouts={storedPanesetLayout}
+                onResize={({ layoutCache }) => writeStorage('agreementsPanesetLayout', layoutCache)}
               >
                 {filterPaneIsVisible &&
                   <Pane
