@@ -82,21 +82,9 @@ const monographLine = {
   resource: monographEResource,
 };
 
-const noEmbargoMonograph = {
-  pti: monograph.pti,
-};
-
 const serialLine = {
   resource: serialEResource,
   coverage: serial.coverage,
-};
-
-const noMovingWallEndSerial = {
-  pti: serial.pti,
-  coverage: serial.coverage,
-  embargo: {
-    movingWallStart: serial.embargo.movingWallStart
-  }
 };
 
 describe('Coverage tests', () => {
@@ -145,34 +133,6 @@ describe('Coverage tests', () => {
 
     it('correctly renders the embargo end unit', () => {
       expect(embargoInteractor.endUnit).to.have.string(monograph.embargo.movingWallEnd.unit);
-    });
-  });
-
-  describe('Rendering coverage component for a monograph pci without embargo', () => {
-    beforeEach(async function () {
-      await mountWithContext(
-        <Coverage pci={noEmbargoMonograph} />
-      );
-    });
-
-    it('renders the monograph coverage', () => {
-      expect(monographInteractor.exists).to.be.true;
-    });
-
-    it('correctly renders the date', () => {
-      expect(monographInteractor.date).to.have.string(noEmbargoMonograph.pti.titleInstance.dateMonographPublished);
-    });
-
-    it('correctly renders the edition', () => {
-      expect(monographInteractor.edition).to.have.string(noEmbargoMonograph.pti.titleInstance.monographEdition);
-    });
-
-    it('correctly renders the volume', () => {
-      expect(monographInteractor.volume).to.have.string(noEmbargoMonograph.pti.titleInstance.monographVolume);
-    });
-
-    it('does not render the embargo', () => {
-      expect(embargoInteractor.exists).to.be.false;
     });
   });
 
@@ -331,61 +291,6 @@ describe('Coverage tests', () => {
 
     it('correctly renders the embargo end unit', () => {
       expect(embargoInteractor.endUnit).to.have.string(serial.embargo.movingWallEnd.unit);
-    });
-  });
-
-  describe('Rendering coverage component for a serial pci without movingWallEnd', () => {
-    beforeEach(async function () {
-      await mountWithContext(
-        <Coverage pci={noMovingWallEndSerial} />
-      );
-    });
-
-    it('renders the serial coverage', () => {
-      expect(serialInteractor.exists).to.be.true;
-    });
-    it('renders the first set of data', () => {
-      expect(serialInteractor.first).to.be.true;
-    });
-    it('renders the last set of data', () => {
-      expect(serialInteractor.end).to.be.true;
-    });
-    it('renders the arrow icon', () => {
-      expect(serialInteractor.icon).to.be.true;
-    });
-    it('renders the correct start date', () => {
-      expect(serialInteractorStart.startDate).to.have.string('12/6/2001');
-    });
-    it('renders the correct end date', () => {
-      expect(serialInteractorEnd.endDate).to.have.string('10/5/2007');
-    });
-    it('renders the correct start issue', () => {
-      expect(serialInteractorStart.startIssue).to.have.string(noMovingWallEndSerial.coverage[0].startIssue);
-    });
-    it('renders the correct end issue', () => {
-      expect(serialInteractorEnd.endIssue).to.have.string(noMovingWallEndSerial.coverage[0].endIssue);
-    });
-    it('renders the correct start volume', () => {
-      expect(serialInteractorStart.startVolume).to.have.string(noMovingWallEndSerial.coverage[0].startVolume);
-    });
-    it('renders the correct end volume', () => {
-      expect(serialInteractorEnd.endVolume).to.have.string(noMovingWallEndSerial.coverage[0].endVolume);
-    });
-
-    it('renders the embargo moving wall start', () => {
-      expect(embargoInteractor.movingWallStartExists).to.be.true;
-    });
-
-    it('correctly renders the embargo start length', () => {
-      expect(embargoInteractor.startLength).to.have.string(noMovingWallEndSerial.embargo.movingWallStart.length);
-    });
-
-    it('correctly renders the embargo start unit', () => {
-      expect(embargoInteractor.startUnit).to.have.string(noMovingWallEndSerial.embargo.movingWallStart.unit);
-    });
-
-    it('does not render the embargo moving wall end', () => {
-      expect(embargoInteractor.movingWallEndExists).to.be.false;
     });
   });
 
