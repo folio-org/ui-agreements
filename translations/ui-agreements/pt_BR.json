@@ -381,5 +381,11 @@
     "duplicateAgreementModal.duplicateAgreement": "Duplicar contrato",
     "duplicateAgreementModal.duplicateMessage": "Selecione quais seções do contrato duplicar",
     "duplicateAgreementModal.duplicateModalError": "Erro: o contrato não foi duplicado",
-    "duplicateAgreementModal.invalidResponseError": "Não foi possível duplicar o contrato. A resposta recebida do servidor foi inválida."
+    "duplicateAgreementModal.invalidResponseError": "Não foi possível duplicar o contrato. A resposta recebida do servidor foi inválida.",
+    "alternativeNames": "Alternative names",
+    "days": "{count, number} {count, plural, one {day} other {days}}",
+    "months": "{count, number} {count, plural, one {month} other {months}}",
+    "years": "{count, number} {count, plural, one {year} other {years}}",
+    "embargo.start": "Moving wall start: ",
+    "embargo.end": "Moving wall end: "
 }
