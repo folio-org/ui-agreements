@@ -12,7 +12,7 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-import { requiredValidator } from '@folio/stripes-erm-components';
+import { AlternativeNamesFieldArray, requiredValidator } from '@folio/stripes-erm-components';
 
 import AgreementPeriodsFieldArray from '../AgreementPeriodsFieldArray';
 import { statuses } from '../../constants';
@@ -163,6 +163,10 @@ export default class FormInfo extends React.Component {
             />
           </Col>
         </Row>
+        <FieldArray
+          component={AlternativeNamesFieldArray}
+          name="alternateNames"
+        />
         <FieldArray
           component={AgreementPeriodsFieldArray}
           name="periods"
