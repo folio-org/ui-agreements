@@ -67,6 +67,7 @@ class AgreementViewRoute extends React.Component {
         return query ? { query } : null;
       },
       fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '2.0'),
+      permissionsRequired: 'organizations-storage.interfaces.collection.get',
       records: 'interfaces',
     },
     orderLines: {
@@ -109,6 +110,7 @@ class AgreementViewRoute extends React.Component {
         return query ? { query } : null;
       },
       fetch: props => !!props.stripes.hasInterface('users', '15.0'),
+      permissionsRequired: 'users.collection.get',
       records: 'users',
     },
     agreementLinesCount: { initialValue: RECORDS_PER_REQUEST },
