@@ -381,5 +381,11 @@
     "duplicateAgreementModal.duplicateAgreement": "复制协议",
     "duplicateAgreementModal.duplicateMessage": "请选择要复制的协议部分",
     "duplicateAgreementModal.duplicateModalError": "错误：协议未复制",
-    "duplicateAgreementModal.invalidResponseError": "无法复制协议。从服务器收到的响应无效。"
+    "duplicateAgreementModal.invalidResponseError": "无法复制协议。从服务器收到的响应无效。",
+    "alternativeNames": "Alternative names",
+    "days": "{count, number} {count, plural, one {day} other {days}}",
+    "months": "{count, number} {count, plural, one {month} other {months}}",
+    "years": "{count, number} {count, plural, one {year} other {years}}",
+    "embargo.start": "Moving wall start: ",
+    "embargo.end": "Moving wall end: "
 }
