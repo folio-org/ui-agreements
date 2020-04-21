@@ -67,9 +67,11 @@ const Agreements = ({
   const searchField = useRef(null);
 
   const [storedPanesetLayout] = useLocalStorage('agreementsPanesetLayout');
-  const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(true);
+  const [storedFilterPaneVisibility] = useLocalStorage('agreementsFilterPaneIsVisible');
+  const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
+    writeStorage('agreementsFilterPaneIsVisible', !filterPaneIsVisible);
   };
 
   return (
