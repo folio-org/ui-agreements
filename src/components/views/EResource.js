@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Pane } from '@folio/stripes/components';
+import { LoadingPane, Pane } from '@folio/stripes/components';
 import { TitleManager } from '@folio/stripes/core';
-import { LoadingPane } from '@folio/stripes-erm-components';
 
 import Package from './Package';
 import Title from './Title';
@@ -33,18 +32,22 @@ export default class EResource extends React.Component {
       isLoading,
     } = this.props;
 
-    if (isLoading) return <LoadingPane id="pane-view-eresource" onClose={handlers.onClose} />;
+    const paneProps = {
+      defaultWidth: '55%',
+      dismissible: true,
+      onClose: handlers.onClose,
+    };
+
+    if (isLoading) return <LoadingPane id="pane-view-eresource" {...paneProps} />;
 
     const EResourceViewComponent = data.eresource.type ? Title : Package;
 
     return (
       <>
         <Pane
-          defaultWidth="55%"
-          dismissible
           id="pane-view-eresource"
-          onClose={handlers.onClose}
           paneTitle={data.eresource.name}
+          {...paneProps}
         >
           <TitleManager record={data.eresource.name}>
             <EResourceViewComponent data={data} handlers={handlers} />

@@ -11,13 +11,13 @@ import {
   ExpandAllButton,
   Icon,
   IconButton,
+  LoadingPane,
   Pane,
   PaneMenu,
   Row,
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
-import { LoadingPane } from '@folio/stripes-erm-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import DuplicateAgreementModal from '../DuplicateAgreementModal';
 
@@ -233,27 +233,23 @@ export default class Agreement extends React.Component {
 
     const { showDeleteConfirmationModal, showDuplicateAgreementModal } = this.state;
 
-    if (isLoading) {
-      return (
-        <LoadingPane
-          defaultWidth="60%"
-          id="pane-view-agreement"
-          onClose={handlers.onClose}
-        />
-      );
-    }
+    const paneProps = {
+      defaultWidth: '55%',
+      dismissible: true,
+      onClose: handlers.onClose,
+    };
+
+    if (isLoading) return <LoadingPane id="pane-view-agreement" {...paneProps} />;
 
     return (
       <>
         <Pane
           actionMenu={this.getActionMenu}
           appIcon={<AppIcon app="agreements" />}
-          defaultWidth="60%"
-          dismissible
           id="pane-view-agreement"
           lastMenu={this.renderEditAgreementPaneMenu()}
-          onClose={handlers.onClose}
           paneTitle={data.agreement.name}
+          {...paneProps}
         >
           <TitleManager record={data.agreement.name}>
             <Header {...this.getSectionProps()} />

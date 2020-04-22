@@ -31,8 +31,6 @@ import {
   FormUsageData,
 } from '../AgreementSections';
 
-import css from './AgreementForm.css';
-
 class AgreementForm extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
