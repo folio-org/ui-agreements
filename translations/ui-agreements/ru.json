@@ -381,5 +381,11 @@
     "duplicateAgreementModal.duplicateAgreement": "Соглашение в двух экземплярах",
     "duplicateAgreementModal.duplicateMessage": "Please select which sections of the agreement to duplicate",
     "duplicateAgreementModal.duplicateModalError": "Error: the agreement was not duplicated",
-    "duplicateAgreementModal.invalidResponseError": "Unable to duplicate the agreement. The response received from the server was invalid."
+    "duplicateAgreementModal.invalidResponseError": "Unable to duplicate the agreement. The response received from the server was invalid.",
+    "alternativeNames": "Alternative names",
+    "days": "{count, number} {count, plural, one {day} other {days}}",
+    "months": "{count, number} {count, plural, one {month} other {months}}",
+    "years": "{count, number} {count, plural, one {year} other {years}}",
+    "embargo.start": "Moving wall start: ",
+    "embargo.end": "Moving wall end: "
 }
