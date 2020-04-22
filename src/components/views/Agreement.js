@@ -233,7 +233,15 @@ export default class Agreement extends React.Component {
 
     const { showDeleteConfirmationModal, showDuplicateAgreementModal } = this.state;
 
-    if (isLoading) return <LoadingPane defaultWidth="60%" onClose={handlers.onClose} />;
+    if (isLoading) {
+      return (
+        <LoadingPane
+          defaultWidth="60%"
+          id="pane-view-agreement"
+          onClose={handlers.onClose}
+        />
+      );
+    }
 
     return (
       <>
