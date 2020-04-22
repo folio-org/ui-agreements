@@ -192,6 +192,7 @@ class AgreementForm extends React.Component {
           {create => (
             <Pane
               appIcon={<AppIcon app="agreements" />}
+              centerContent
               defaultWidth="100%"
               firstMenu={this.renderFirstMenu()}
               footer={this.renderPaneFooter()}
@@ -200,29 +201,27 @@ class AgreementForm extends React.Component {
             >
               <TitleManager record={id ? name : create}>
                 <form id="form-agreement">
-                  <div className={css.agreementForm}>
-                    <AccordionSet>
-                      {hasLoaded ? <div id="form-loaded" /> : null}
-                      <Row end="xs">
-                        <Col xs>
-                          <ExpandAllButton
-                            accordionStatus={this.state.sections}
-                            id="clickable-expand-all"
-                            onToggle={this.handleAllSectionsToggle}
-                          />
-                        </Col>
-                      </Row>
-                      <FormInfo {...this.getSectionProps('formInfo')} />
-                      <FormInternalContacts {...this.getSectionProps('formInternalContacts')} />
-                      <FormLines {...this.getSectionProps('formLines')} />
-                      <FormLicenses {...this.getSectionProps('formLicenses')} />
-                      <FormOrganizations {...this.getSectionProps('formOrganizations')} />
-                      <FormSupplementaryProperties {...this.getSectionProps('formSupplementaryProperties')} />
-                      <FormSupplementaryDocuments {...this.getSectionProps('formSupplementaryDocs')} />
-                      <FormUsageData {...this.getSectionProps('formUsageProviders')} />
-                      <FormRelatedAgreements {...this.getSectionProps('formRelatedAgreements')} />
-                    </AccordionSet>
-                  </div>
+                  <AccordionSet>
+                    {hasLoaded ? <div id="form-loaded" /> : null}
+                    <Row end="xs">
+                      <Col xs>
+                        <ExpandAllButton
+                          accordionStatus={this.state.sections}
+                          id="clickable-expand-all"
+                          onToggle={this.handleAllSectionsToggle}
+                        />
+                      </Col>
+                    </Row>
+                    <FormInfo {...this.getSectionProps('formInfo')} />
+                    <FormInternalContacts {...this.getSectionProps('formInternalContacts')} />
+                    <FormLines {...this.getSectionProps('formLines')} />
+                    <FormLicenses {...this.getSectionProps('formLicenses')} />
+                    <FormOrganizations {...this.getSectionProps('formOrganizations')} />
+                    <FormSupplementaryProperties {...this.getSectionProps('formSupplementaryProperties')} />
+                    <FormSupplementaryDocuments {...this.getSectionProps('formSupplementaryDocs')} />
+                    <FormUsageData {...this.getSectionProps('formUsageProviders')} />
+                    <FormRelatedAgreements {...this.getSectionProps('formRelatedAgreements')} />
+                  </AccordionSet>
                 </form>
               </TitleManager>
             </Pane>
