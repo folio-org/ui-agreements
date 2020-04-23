@@ -383,9 +383,9 @@
     "duplicateAgreementModal.duplicateModalError": "خطأ: لم يتم نسخ الاتفاقية",
     "duplicateAgreementModal.invalidResponseError": "تعذر نسخ الاتفاقية. الاستجابة الواردة من الخادم غير صالحة.",
     "alternativeNames": "اسماء بديلة",
-    "days": "{count, number} {count, plural, one {day} other {days}}",
-    "months": "{count, number} {count, plural, one {month} other {months}}",
-    "years": "{count, number} {count, plural, one {year} other {years}}",
+    "days": "{count, number} {count, plural, one {يوماً} other {يوماً}}",
+    "months": "{count, number} {count, plural, one {شهراً} other {شهراً}}",
+    "years": "{count, number} {count, plural, one {عاماً} other {عاماً}}",
     "embargo.start": "Moving wall start: ",
     "embargo.end": "Moving wall end: "
 }
