@@ -382,10 +382,10 @@
     "duplicateAgreementModal.duplicateMessage": "Selecione quais seções do contrato duplicar",
     "duplicateAgreementModal.duplicateModalError": "Erro: o contrato não foi duplicado",
     "duplicateAgreementModal.invalidResponseError": "Não foi possível duplicar o contrato. A resposta recebida do servidor foi inválida.",
-    "alternativeNames": "Alternative names",
-    "days": "{count, number} {count, plural, one {day} other {days}}",
-    "months": "{count, number} {count, plural, one {month} other {months}}",
-    "years": "{count, number} {count, plural, one {year} other {years}}",
-    "embargo.start": "Moving wall start: ",
-    "embargo.end": "Moving wall end: "
+    "alternativeNames": "Nomes alternativos",
+    "days": "{count, number} {count, plural, one {dia} other {dias}}",
+    "months": "{count, number} {count, plural, one {mês} other {meses}}",
+    "years": "{count, number} {count, plural, one {ano} other {anos}}",
+    "embargo.start": "Início do moving wall: ",
+    "embargo.end": "Fim do moving wall: "
 }
