@@ -231,6 +231,11 @@ export default function config() {
     ];
   });
 
+  this.get('/erm/refdata/DocumentAttachment/atType', () => ([
+    { 'id': '18836ea8717e097901717e1c09370027', 'value': 'license', 'label': 'License' },
+    { 'id': '18836ea8717e097901717e1c093d0028', 'value': 'misc', 'label': 'Misc' },
+    { 'id': '18836ea8717e097901717e1c09440029', 'value': 'consortium_negotiation_document', 'label': 'Consortium negotiation document' },
+  ]));
 
   this.get('/users', (schema) => {
     const users = schema.contacts.all().models;
