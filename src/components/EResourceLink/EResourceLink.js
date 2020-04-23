@@ -48,7 +48,7 @@ class EResourceLink extends React.Component {
     if (!path) return name || '-';
 
     return (
-      <div data-test-eresource-name>
+      <div data-test-eresource-name style={{ overflowWrap: 'break-word', width: 180 }}>
         <FolioLink {...rest} path={this.getPath(eresource)}>
           {name}
         </FolioLink>

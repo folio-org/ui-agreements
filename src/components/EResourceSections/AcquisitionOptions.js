@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { Accordion, Badge, MultiColumnList, Spinner } from '@folio/stripes/components';
 
 import AddToBasketButton from '../AddToBasketButton';
+import { Coverage } from '../Coverage';
 import EResourceLink from '../EResourceLink';
 import EResourceKB from '../EResourceKB';
 import EResourceType from '../EResourceType';
@@ -30,21 +31,20 @@ export default class AcquisitionOptions extends React.Component {
       columnMapping={{
         sourceKb: <FormattedMessage id="ui-agreements.eresources.sourceKb" />,
         package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
+        coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
         platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
         acqMethod: <FormattedMessage id="ui-agreements.eresources.acqMethod" />,
         add: <FormattedMessage id="ui-agreements.eresources.addToBasketHeader" />,
       }}
       columnWidths={{
-        sourceKb: '10%',
-        package: '25%',
-        platform: '25%',
-        acqMethod: '10%',
-        add: '25%',
+        package: 200,
+        coverage: 250
       }}
       contentData={this.props.data.entitlementOptions}
       formatter={{
         sourceKb: option => <EResourceKB resource={option} />,
         package: option => <EResourceLink eresource={option} />,
+        coverage: option => <Coverage pci={option} />,
         platform: option => get(option, '_object.pti.platform.name', '-'),
         acqMethod: option => <EResourceType resource={option} />,
         add: option => {
@@ -80,7 +80,7 @@ export default class AcquisitionOptions extends React.Component {
         },
       }}
       interactive={false}
-      visibleColumns={['sourceKb', 'package', 'platform', 'acqMethod', 'add']}
+      visibleColumns={['sourceKb', 'package', 'coverage', 'platform', 'acqMethod', 'add']}
     />
   )
 
