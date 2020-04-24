@@ -54,8 +54,8 @@ const serial = {
     }
   },
   coverage: [{
-    startDate: '12/06/2001',
-    endDate: '10/05/2007',
+    startDate: '2001-06-12',
+    endDate: '2007-05-10',
     startVolume: '76',
     startIssue: '1',
     endVolume: '79',
@@ -252,10 +252,10 @@ describe('Coverage tests', () => {
       expect(serialInteractor.icon).to.be.true;
     });
     it('renders the correct start date', () => {
-      expect(serialInteractorStart.startDate).to.have.string('12/6/2001');
+      expect(serialInteractorStart.startDate).to.have.string('6/12/2001');
     });
     it('renders the correct end date', () => {
-      expect(serialInteractorEnd.endDate).to.have.string('10/5/2007');
+      expect(serialInteractorEnd.endDate).to.have.string('5/10/2007');
     });
     it('renders the correct start issue', () => {
       expect(serialInteractorStart.startIssue).to.have.string(serial.coverage[0].startIssue);
@@ -314,10 +314,10 @@ describe('Coverage tests', () => {
       expect(serialInteractor.icon).to.be.true;
     });
     it('renders the correct start date', () => {
-      expect(serialInteractorStart.startDate).to.have.string('12/6/2001');
+      expect(serialInteractorStart.startDate).to.have.string('6/12/2001');
     });
     it('renders the correct end date', () => {
-      expect(serialInteractorEnd.endDate).to.have.string('10/5/2007');
+      expect(serialInteractorEnd.endDate).to.have.string('5/10/2007');
     });
     it('renders the correct start issue', () => {
       expect(serialInteractorStart.startIssue).to.have.string(serialEResource.coverage[0].startIssue);
@@ -378,10 +378,10 @@ describe('Coverage tests', () => {
       expect(serialInteractor.icon).to.be.true;
     });
     it('renders the correct start date', () => {
-      expect(serialInteractorStart.startDate).to.have.string('12/6/2001');
+      expect(serialInteractorStart.startDate).to.have.string('6/12/2001');
     });
     it('renders the correct end date', () => {
-      expect(serialInteractorEnd.endDate).to.have.string('10/5/2007');
+      expect(serialInteractorEnd.endDate).to.have.string('5/10/2007');
     });
     it('renders the correct start issue', () => {
       expect(serialInteractorStart.startIssue).to.have.string(serialLine.coverage[0].startIssue);
