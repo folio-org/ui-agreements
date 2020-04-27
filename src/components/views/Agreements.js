@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
@@ -12,7 +11,6 @@ import {
   MultiColumnList,
   Pane,
   PaneMenu,
-  Paneset,
   SearchField,
 } from '@folio/stripes/components';
 
@@ -21,6 +19,7 @@ import { AppIcon, IfPermission } from '@folio/stripes/core';
 import {
   CollapseFilterPaneButton,
   ExpandFilterPaneButton,
+  PersistedPaneset,
   SearchAndSortNoResultsMessage,
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
@@ -51,6 +50,8 @@ const propTypes = {
   }),
 };
 
+const filterPaneVisibilityKey = '@folio/agreements/filterPaneVisibility';
+
 const Agreements = ({
   children,
   data = {},
@@ -66,12 +67,12 @@ const Agreements = ({
 
   const searchField = useRef(null);
 
-  const [storedPanesetLayout] = useLocalStorage('agreementsPanesetLayout');
-  const [storedFilterPaneVisibility] = useLocalStorage('agreementsFilterPaneIsVisible');
+  const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
+
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
-    writeStorage('agreementsFilterPaneIsVisible', !filterPaneIsVisible);
+    writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
   };
 
   return (
@@ -102,10 +103,9 @@ const Agreements = ({
             const filterCount = activeFilters.string ? activeFilters.string.split(',').length : 0;
 
             return (
-              <Paneset
+              <PersistedPaneset
+                appId="@folio/agreements"
                 id="agreements-paneset"
-                initialLayouts={storedPanesetLayout}
-                onResize={({ layoutCache }) => writeStorage('agreementsPanesetLayout', layoutCache)}
               >
                 {filterPaneIsVisible &&
                   <Pane
@@ -202,7 +202,7 @@ const Agreements = ({
                       null
                   }
                   id="pane-agreement-list"
-                  lastMenu={() => (
+                  lastMenu={(
                     <IfPermission perm="ui-agreements.agreements.edit">
                       <PaneMenu>
                         <FormattedMessage id="ui-agreements.agreements.createAgreement">
@@ -285,25 +285,9 @@ const Agreements = ({
                     }
                     onHeaderClick={onSort}
                     onNeedMoreData={onNeedMoreData}
-                    rowFormatter={(row) => {
-                      const { rowClass, rowData, rowIndex, rowProps = {}, cells } = row;
-
-                      return (
-                        <Link
-                          key={`row-${rowIndex}`}
-                          aria-rowindex={rowIndex + 2}
-                          className={rowClass}
-                          data-label={[
-                            rowData.name,
-                            rowData.agreementStatus?.label
-                          ].join('...')}
-                          role="row"
-                          to={`${urls.agreementView(rowData.id)}${searchString}`}
-                          {...rowProps}
-                        >
-                          {cells}
-                        </Link>
-                      );
+                    rowProps={{
+                      to: id => `${urls.agreementView(id)}${searchString}`,
+                      labelStrings: ({ rowData }) => ([rowData.name, rowData.agreementStatus?.label]),
                     }}
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
@@ -319,7 +303,7 @@ const Agreements = ({
                   />
                 </Pane>
                 {children}
-              </Paneset>
+              </PersistedPaneset>
             );
           }
         }
