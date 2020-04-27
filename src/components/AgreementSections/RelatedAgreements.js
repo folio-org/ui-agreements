@@ -45,7 +45,6 @@ export default class RelatedAgreements extends React.Component {
       <Card
         key={index}
         cardStyle="positive"
-        hasMargin
         headerStart={(
           <AppIcon app="agreements" size="small">
             <Link
