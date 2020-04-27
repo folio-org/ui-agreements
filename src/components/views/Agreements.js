@@ -50,7 +50,7 @@ const propTypes = {
   }),
 };
 
-const filterPaneVisibilityKey = '@folio/agreements/filterPaneVisibility';
+const filterPaneVisibilityKey = '@folio/agreements/agreementsFilterPaneVisibility';
 
 const Agreements = ({
   children,
