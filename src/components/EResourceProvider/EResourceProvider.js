@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
-
 
 export default class EResourceProvider extends React.Component {
   static propTypes = {
@@ -26,9 +24,9 @@ export default class EResourceProvider extends React.Component {
     const { resource } = this.props;
 
     return (
-      get(resource, '_object.pti.platform.name') ||
-      get(resource, '_object.nominalPlatform.name') ||
-      get(resource, 'reference_object.provider') ||
+      resource?._object?.pkg?.vendor?.name ||
+      resource?._object?.vendor?.name ||
+      resource?.reference_object?.provider || // eslint-disable-line camelcase
       null
     );
   }

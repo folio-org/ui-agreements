@@ -381,5 +381,11 @@
     "duplicateAgreementModal.duplicateAgreement": "Dupliquer l'accord",
     "duplicateAgreementModal.duplicateMessage": "Please select which sections of the agreement to duplicate",
     "duplicateAgreementModal.duplicateModalError": "Erreur: l'accord n'a pas été dupliqué",
-    "duplicateAgreementModal.invalidResponseError": "Unable to duplicate the agreement. The response received from the server was invalid."
+    "duplicateAgreementModal.invalidResponseError": "Unable to duplicate the agreement. The response received from the server was invalid.",
+    "alternativeNames": "Noms alternatifs",
+    "days": "{count, number} {count, plural, one { jour } other { jours }}",
+    "months": "{count, number} {count, plural, one { mois } other { mois }}",
+    "years": "{count, number} {count, plural, one { année } other { années }}",
+    "embargo.start": "Début de barrière mobile",
+    "embargo.end": "Fin de barrière mobile"
 }
