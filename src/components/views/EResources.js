@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
 import {
   MultiColumnList,
@@ -10,7 +11,6 @@ import {
   Button,
   ButtonGroup,
   PaneMenu,
-  Paneset,
 } from '@folio/stripes/components';
 
 import { AppIcon } from '@folio/stripes/core';
@@ -18,6 +18,7 @@ import { AppIcon } from '@folio/stripes/core';
 import {
   CollapseFilterPaneButton,
   ExpandFilterPaneButton,
+  PersistedPaneset,
   SearchAndSortNoResultsMessage,
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
@@ -47,6 +48,8 @@ const propTypes = {
   }),
 };
 
+const filterPaneVisibilityKey = '@folio/agreements/eresourcesFilterPaneVisibility';
+
 const EResources = ({
   children,
   data = {},
@@ -63,9 +66,11 @@ const EResources = ({
 
   const searchField = useRef(null);
 
-  const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(true);
+  const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
+  const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
+    writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
   };
 
   return (
@@ -94,7 +99,7 @@ const EResources = ({
             const filterCount = activeFilters.string ? activeFilters.string.split(',').length : 0;
 
             return (
-              <Paneset id="eresources-paneset">
+              <PersistedPaneset appId="@folio/agreements" id="eresources-paneset">
                 {filterPaneIsVisible &&
                   <Pane
                     defaultWidth="20%"
@@ -253,7 +258,7 @@ const EResources = ({
                   />
                 </Pane>
                 {children}
-              </Paneset>
+              </PersistedPaneset>
             );
           }
         }
