@@ -247,8 +247,8 @@ const EResources = ({
                     pageAmount={resultCount.RESULT_COUNT_INCREMENT}
                     pagingType="click"
                     rowProps={{
-                      to: id => `${urls.eresourceView(id)}${searchString}`,
                       labelStrings: ({ rowData }) => [rowData.name],
+                      to: id => `${urls.eresourceView(id)}${searchString}`,
                     }}
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
