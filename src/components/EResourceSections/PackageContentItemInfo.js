@@ -23,7 +23,7 @@ export default class PackageContentItemInfo extends React.Component {
   renderAddTitleToBasketButton = (pci) => {
     const { name: packageName } = pci;
 
-    const addLabel = <FormattedMessage id="ui-agreements.eresources.addTitle" />;
+    const addLabel = <FormattedMessage id="ui-agreements.eresources.addTitleToBasket" />;
     const addButtonTooltipText = <FormattedMessage id="ui-agreements.eresources.addTitleButtonTooltip" values={{ packageName }} />;
     const removeButtonTooltipText = <FormattedMessage id="ui-agreements.eresources.removeTitleButtonTooltip" values={{ packageName }} />;
 
@@ -65,7 +65,7 @@ export default class PackageContentItemInfo extends React.Component {
           </Col>
         </Row>
         <Layout className="display-flex justified">
-          <Headline>
+          <Headline size="large" tag="h3">
             <FormattedMessage id="ui-agreements.eresources.titleAvailability" />
           </Headline>
           <Layout>

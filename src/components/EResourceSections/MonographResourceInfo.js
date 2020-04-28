@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import {
   Card,
   Col,
+  FormattedUTCDate,
   KeyValue,
   NoValue,
   Row,
@@ -41,7 +42,7 @@ export default class MonographResourceInfo extends React.Component {
           <Link
             to={urls.eresourceView(titleInstance.id)}
           >
-            {titleInstance.name || <NoValue />}
+            <strong>{titleInstance.name || <NoValue />}</strong>
           </Link>
         )}
         id="title-details-monograph"
@@ -73,7 +74,7 @@ export default class MonographResourceInfo extends React.Component {
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.datePublished" />}>
               {titleInstance.dateMonographPublished ?
-                <FormattedDate value={titleInstance.dateMonographPublished} />
+                <FormattedUTCDate value={titleInstance.dateMonographPublished} />
                 :
                 <NoValue />
               }

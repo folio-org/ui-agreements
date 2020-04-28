@@ -174,6 +174,7 @@
   "duplicateAgreementModal.supplementaryInformation": "Supplementary information",
   "duplicateAgreementModal.usageData": "Usage data",
 
+  "embargo": "Embargo",
   "embargo.start": "Moving wall start: ",
   "embargo.end": "Moving wall end: ",
 
@@ -190,6 +191,7 @@
   "emptyAccordion.supplementaryDocuments": "No supplementary documents for this agreement",
   "emptyAccordion.usageData": "No usage data for this agreement",
   "emptyAccordion.relatedAgreements": "No related agreements for this agreement",
+  "emptyAccordion.pciCoverage": "No coverage for this title",
 
   "eresources.count": "Count",
   "eresources.name": "Name",
@@ -228,6 +230,7 @@
   "eresources.addTitleButtonTooltip": "Add title in package \"{packageName}\"",
   "eresources.removeTitleButtonTooltip": "Remove title in package \"{packageName}\"",
   "eresources.addTitle": "Add title",
+  "eresources.addTitleToBasket": "Add title to basket",
   "eresources.removePackage": "Remove package from basket",
   "eresources.removeTitle": "Remove title",
   "eresources.parentPackage": "Parent package",
@@ -343,6 +346,13 @@
   "organizations.alreadyExists": "An organization with this name already exists!",
   "organizations.typeToSearch": "Begin typing to search for an organization",
   "organizations.addOrganizationToAgreement": "Add organization",
+
+  "pci.coverage.startDate": "Start date",
+  "pci.coverage.startVolume": "Start volume",
+  "pci.coverage.startIssue": "Start issue",
+  "pci.coverage.endDate": "End date",
+  "pci.coverage.endVolume": "End volume",
+  "pci.coverage.endIssue": "End issue",
 
   "poLines.acqMethod": "Acquisition method",
   "poLines.addPOLine": "Add PO line",

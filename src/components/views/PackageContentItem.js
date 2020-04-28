@@ -18,6 +18,7 @@ import {
 // import { IfPermission } from '@folio/stripes/core';
 
 import {
+  Agreements,
   PackageContentItemCoverage,
   PackageContentItemInfo,
   ParentPackageDetails,
@@ -47,17 +48,18 @@ export default class PackageContentItem extends React.Component {
 
   state = {
     sections: {
-      coverage: false
+      coverage: false,
+      agreements: false
     },
   }
 
   getSectionProps = (id) => {
-    const { data, handlers } = this.props;
+    const { data } = this.props;
 
     return {
+      data,
       pci: data.eresource,
       id,
-      handlers,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
     };
@@ -113,7 +115,7 @@ export default class PackageContentItem extends React.Component {
 
   renderParentPackageDetails = ({ pkg = {} }) => (
     <div data-test-parent-package-details>
-      <Headline margin="small" tag="h4">
+      <Headline margin="small" size="large" tag="h3">
         <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
       </Headline>
       <ParentPackageDetails pkg={pkg} />
@@ -122,7 +124,7 @@ export default class PackageContentItem extends React.Component {
 
   renderTitleDetails = () => (
     <div id="title-info">
-      <Headline margin="small" tag="h4">
+      <Headline margin="small" size="large" tag="h3">
         <FormattedMessage id="ui-agreements.eresources.titleDetails" />
       </Headline>
       <TitleInfo data={this.props.data} />
@@ -153,6 +155,7 @@ export default class PackageContentItem extends React.Component {
             </Col>
           </Row>
           <PackageContentItemCoverage {...this.getSectionProps('coverage')} />
+          <Agreements {...this.getSectionProps('agreements')} />
         </AccordionSet>
       </div>
     );

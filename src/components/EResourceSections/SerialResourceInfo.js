@@ -36,7 +36,7 @@ export default class MonographResourceInfo extends React.Component {
           <Link
             to={urls.eresourceView(titleInstance.id)}
           >
-            {titleInstance.name || <NoValue />}
+            <strong>{titleInstance.name || <NoValue />}</strong>
           </Link>
         )}
         id="title-details-monograph"

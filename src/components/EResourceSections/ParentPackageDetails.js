@@ -36,7 +36,7 @@ export default class ParentPackageDetails extends React.Component {
             data-test-agreement-link
             to={urls.eresourceView(pkg?.id)}
           >
-            {pkg?.name ?? <NoValue />}
+            <strong>{pkg?.name || <NoValue />}</strong>
           </Link>
             )}
         id="parent-package-details"
@@ -45,22 +45,22 @@ export default class ParentPackageDetails extends React.Component {
         <Row>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.count" />}>
-              {pkg?.resourceCount ?? <NoValue />}
+              {pkg?.resourceCount || <NoValue />}
             </KeyValue>
           </Col>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.provider" />}>
-              {pkg?.vendor?.name ?? <NoValue />}
+              {pkg?.vendor?.name || <NoValue />}
             </KeyValue>
           </Col>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.source" />}>
-              {pkg?.source ?? <NoValue />}
+              {pkg?.source || <NoValue />}
             </KeyValue>
           </Col>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.reference" />}>
-              {pkg?.reference ?? <NoValue />}
+              {pkg?.reference || <NoValue />}
             </KeyValue>
           </Col>
         </Row>
