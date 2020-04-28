@@ -24,7 +24,6 @@ class BasketList extends React.Component {
 
   render() {
     const { basket, onRemoveItem, selectedItems } = this.props;
-
     return (
       <MultiColumnList
         columnMapping={{

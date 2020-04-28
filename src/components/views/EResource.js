@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
-import { Pane } from '@folio/stripes/components';
-import { TitleManager } from '@folio/stripes/core';
+import { Button, Pane, PaneMenu } from '@folio/stripes/components';
+import { TitleManager, IfPermission } from '@folio/stripes/core';
 import { LoadingPane } from '@folio/stripes-erm-components';
+
 
 import Package from './Package';
 import Title from './Title';
+import PackageContentItem from './PackageContentItem';
 
 export default class EResource extends React.Component {
   static propTypes = {
@@ -14,15 +17,44 @@ export default class EResource extends React.Component {
       eresource: PropTypes.shape({
         name: PropTypes.string,
         type: PropTypes.object,
+        class: PropTypes.string,
       }),
     }),
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
+      onEdit: PropTypes.func.isRequired,
       onNeedMorePackageContents: PropTypes.func.isRequired,
       onToggleTags: PropTypes.func.isRequired
     }).isRequired,
     helperApp: PropTypes.node,
     isLoading: PropTypes.bool,
+  }
+
+  renderEditPCIPaneMenu = () => {
+    const {
+      data: { eresource },
+      handlers,
+    } = this.props;
+
+    return (eresource?.class === 'org.olf.kb.PackageContentItem') ? (
+      <IfPermission perm="ui-agreements.eresources.edit">
+        <PaneMenu>
+          <FormattedMessage id="ui-agreements.eresources.edit">
+            {ariaLabel => (
+              <Button
+                aria-label={ariaLabel}
+                buttonStyle="primary"
+                id="clickable-edit-eresource"
+                marginBottom0
+                onClick={handlers.onEdit}
+              >
+                <FormattedMessage id="stripes-components.button.edit" />
+              </Button>
+            )}
+          </FormattedMessage>
+        </PaneMenu>
+      </IfPermission>
+    ) : null;
   }
 
   render() {
@@ -35,7 +67,13 @@ export default class EResource extends React.Component {
 
     if (isLoading) return <LoadingPane onClose={handlers.onClose} />;
 
-    const EResourceViewComponent = data.eresource.type ? Title : Package;
+    let EResourceViewComponent = Package;
+
+    if (data?.eresource?.class === 'org.olf.kb.TitleInstance') {
+      EResourceViewComponent = Title;
+    } else if (data?.eresource?.class === 'org.olf.kb.PackageContentItem') {
+      EResourceViewComponent = PackageContentItem;
+    }
 
     return (
       <>
@@ -43,6 +81,7 @@ export default class EResource extends React.Component {
           defaultWidth="55%"
           dismissible
           id="pane-view-eresource"
+          lastMenu={this.renderEditPCIPaneMenu()}
           onClose={handlers.onClose}
           paneTitle={data.eresource.name}
         >

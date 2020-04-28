@@ -5,6 +5,7 @@ import {
   AccordionSet,
   Col,
   ExpandAllButton,
+  Headline,
   Row,
 } from '@folio/stripes/components';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
@@ -58,12 +59,29 @@ export default class Title extends React.Component {
     }));
   }
 
+  renderTitleInfo = (eresource) => (
+    <div id="title-info">
+      <Row>
+        <Col xs={12}>
+          <Headline
+            margin="small"
+            size="xx-large"
+            tag="h2"
+          >
+            {eresource.name}
+          </Headline>
+        </Col>
+      </Row>
+      <TitleInfo {...this.getSectionProps('info')} />
+    </div>
+  );
+
   render() {
     const { data } = this.props;
 
     return (
       <div id="eresource-title">
-        <TitleInfo {...this.getSectionProps('info')} />
+        {this.renderTitleInfo(data.eresource)}
         <AccordionSet>
           <Row end="xs">
             <Col xs>

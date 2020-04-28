@@ -200,6 +200,10 @@ class EResourceViewRoute extends React.Component {
       get(this.props.resources, `${resource}.records`);
   }
 
+  viewPackageContentItem = (id) => {
+    this.props.history.push(urls.eresourceView(id));
+  }
+
   render() {
     const {
       handlers,
@@ -223,6 +227,7 @@ class EResourceViewRoute extends React.Component {
           onFilterPackageContents: this.handleFilterPackageContents,
           onNeedMorePackageContents: this.handleNeedMorePackageContents,
           onClose: this.handleClose,
+          onPackageContentItemClick: this.viewPackageContentItem,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
         helperApp={this.getHelperApp()}
