@@ -386,6 +386,6 @@
     "days": "{count, number} {count, plural, one {يوماً} other {يوماً}}",
     "months": "{count, number} {count, plural, one {شهراً} other {شهراً}}",
     "years": "{count, number} {count, plural, one {عاماً} other {عاماً}}",
-    "embargo.start": "Moving wall start: ",
-    "embargo.end": "Moving wall end: "
+    "embargo.start": "تحريك بداية الجدار:",
+    "embargo.end": "تحريك نهاية الجدار:"
 }
