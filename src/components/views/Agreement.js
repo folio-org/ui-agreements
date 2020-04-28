@@ -236,17 +236,17 @@ export default class Agreement extends React.Component {
     const paneProps = {
       defaultWidth: '55%',
       dismissible: true,
+      id: 'pane-view-agreement',
       onClose: handlers.onClose,
     };
 
-    if (isLoading) return <LoadingPane id="pane-view-agreement" {...paneProps} />;
+    if (isLoading) return <LoadingPane {...paneProps} />;
 
     return (
       <>
         <Pane
           actionMenu={this.getActionMenu}
           appIcon={<AppIcon app="agreements" />}
-          id="pane-view-agreement"
           lastMenu={this.renderEditAgreementPaneMenu()}
           paneTitle={data.agreement.name}
           {...paneProps}
