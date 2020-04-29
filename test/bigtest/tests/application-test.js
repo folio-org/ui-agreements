@@ -9,8 +9,8 @@ describe('Application', () => {
 
   setupApplication();
 
-  beforeEach(function () {
-    this.visit('/');
+  beforeEach(async function () {
+    await this.visit('/');
   });
 
   it('renders', () => {

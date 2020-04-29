@@ -5,11 +5,14 @@ const warnBlacklist = [
   /componentWillReceiveProps has been renamed/,
   /componentWillUpdate has been renamed/,
   /componentWillMount has been renamed/,
+  /Cannot update a component from inside the function body of a different component/,
 ];
 
 const error = console.error;
 const errorBlacklist = [
   /\[React Intl\]/,
+  /Cannot update a component from inside the function body of a different component/,
+  /Can't perform a React state update on an unmounted component./,
 ];
 
 export default function turnOffWarnings() {

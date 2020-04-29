@@ -4,8 +4,8 @@ import { cloneDeep } from 'lodash';
 import compose from 'compose-function';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
-import { LoadingPane } from '@folio/stripes-erm-components';
 
 import withFileHandlers from './components/withFileHandlers';
 import { joinRelatedAgreements, splitRelatedAgreements } from './utilities/processRelatedAgreements';
@@ -336,7 +336,7 @@ class AgreementEditRoute extends React.Component {
     const { handlers, resources } = this.props;
 
     if (!this.state.hasPerms) return <NoPermissions />;
-    if (this.fetchIsPending()) return <LoadingPane onClose={this.handleClose} renderPaneset />;
+    if (this.fetchIsPending()) return <LoadingView dismissible onClose={this.handleClose} />;
 
     return (
       <View

@@ -173,7 +173,6 @@ export default class RelatedAgreementField extends React.Component {
     return (
       <Card
         cardStyle={value ? 'positive' : 'negative'}
-        hasMargin
         headerEnd={this.renderLinkAgreementButton(value)}
         headerStart={(
           <AppIcon app="agreements" size="small">

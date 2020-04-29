@@ -57,7 +57,6 @@ export default class ControllingLicense extends React.Component {
     return (
       <Card
         cardStyle="positive"
-        hasMargin
         headerStart={(
           <AppIcon app="licenses" size="small">
             <Link to={urls.licenseView(licenseRecord.id)}>

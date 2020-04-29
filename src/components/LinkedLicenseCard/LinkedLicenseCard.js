@@ -50,7 +50,6 @@ export default class LinkedLicenseCard extends React.Component {
         key={license.id}
         cardStyle="positive"
         data-test-linked-license-card
-        hasMargin
         headerStart={(
           <AppIcon app="licenses" size="small">
             <Link to={urls.licenseView(licenseRecord.id)}>
