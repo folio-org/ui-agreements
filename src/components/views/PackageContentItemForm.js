@@ -17,7 +17,7 @@ import {
   Row,
   Spinner,
 } from '@folio/stripes/components';
-import { AppIcon, TitleManager } from '@folio/stripes/core';
+import { TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
 import css from './PackageContentItemForm.css';
 
@@ -133,7 +133,7 @@ class PackageContentItemForm extends React.Component {
         <Pane
           defaultWidth="100%"
           dismissible
-          id="pane-license-form"
+          id="pane-pci-form"
           onClose={this.props.handlers.onClose}
           paneTitle={<FormattedMessage id="ui-agreements.loading" />}
         >
@@ -153,7 +153,6 @@ class PackageContentItemForm extends React.Component {
     return (
       <Paneset>
         <Pane
-          appIcon={<AppIcon app="agreements" />}
           centerContent
           defaultWidth="100%"
           firstMenu={this.renderFirstMenu()}

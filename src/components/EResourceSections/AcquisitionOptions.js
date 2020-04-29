@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { stripesConnect } from '@folio/stripes/core';
 
@@ -43,9 +42,9 @@ class AcquisitionOptions extends React.Component {
     open: PropTypes.bool,
   };
 
-  getName = (eresource) => {
+  getName = (eresource = {}) => {
     if (isExternal(eresource)) {
-      return eresource.reference_object.label;
+      return eresource.reference_object?.label;
     }
 
     return eresource.name;
@@ -55,16 +54,15 @@ class AcquisitionOptions extends React.Component {
     const { id } = row;
     const { handlers: { onPackageContentItemClick } } = this.props;
 
-    // Check if authority logic needs to be added here
-    // const { authority, reference } = row;
-    // if (authority === 'EKB-PACKAGE') path = urls.eholdingsPackageView(reference);
-    // if (authority === 'EKB-TITLE') path = urls.eholdingsResourceView(reference);
-    if (row.class === 'org.olf.kb.PackageContentItem') onPackageContentItemClick(id);
-    else this.props.mutator.query.update({ _path: urls.eresourceView(id) });
+    if (row.class === 'org.olf.kb.PackageContentItem') {
+      onPackageContentItemClick(id);
+    } else {
+      this.props.mutator.query.update({ _path: urls.eresourceView(id) });
+    }
   }
 
   renderBadge = () => {
-    const count = get(this.props.data, 'entitlementOptions.length');
+    const count = this.props?.data?.entitlementOptions?.length;
     return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
   }
 
@@ -97,7 +95,7 @@ class AcquisitionOptions extends React.Component {
         sourceKb: option => <EResourceKB resource={option} />,
         package: option => this.renderParentPackage(option),
         coverage: option => <Coverage pci={option} />,
-        platform: option => get(option, '_object.pti.platform.name', '-'),
+        platform: option => option?._object?.pti?.platform?.name || '-',
         acqMethod: option => <EResourceType resource={option} />,
         add: option => {
           const optionIsPackage = isPackage(option);

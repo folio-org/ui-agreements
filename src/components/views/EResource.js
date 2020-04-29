@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Button, Pane, PaneMenu } from '@folio/stripes/components';
-import { TitleManager, IfPermission } from '@folio/stripes/core';
+import { IfPermission, TitleManager } from '@folio/stripes/core';
 import { LoadingPane } from '@folio/stripes-erm-components';
 
 
@@ -15,9 +15,9 @@ export default class EResource extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       eresource: PropTypes.shape({
+        class: PropTypes.string,
         name: PropTypes.string,
         type: PropTypes.object,
-        class: PropTypes.string,
       }),
     }),
     handlers: PropTypes.shape({
@@ -59,7 +59,7 @@ export default class EResource extends React.Component {
 
   render() {
     const {
-      data,
+      data = {},
       handlers,
       helperApp,
       isLoading,
@@ -69,9 +69,9 @@ export default class EResource extends React.Component {
 
     let EResourceViewComponent = Package;
 
-    if (data?.eresource?.class === 'org.olf.kb.TitleInstance') {
+    if (data.eresource?.class === 'org.olf.kb.TitleInstance') {
       EResourceViewComponent = Title;
-    } else if (data?.eresource?.class === 'org.olf.kb.PackageContentItem') {
+    } else if (data.eresource?.class === 'org.olf.kb.PackageContentItem') {
       EResourceViewComponent = PackageContentItem;
     }
 

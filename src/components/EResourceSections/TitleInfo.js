@@ -43,7 +43,12 @@ export default class TitleInfo extends React.Component {
 
   render() {
     const { data: { eresource } } = this.props;
-    const titleInstance = eresource.class === 'org.olf.kb.TitleInstance' ? eresource : eresource?.pti?.titleInstance;
+
+    const titleInstance = (eresource.class === 'org.olf.kb.TitleInstance') ?
+      eresource
+      :
+      eresource?.pti?.titleInstance;
+
     const { label } = titleInstance?.type;
 
     let ResourceInfoComponent;

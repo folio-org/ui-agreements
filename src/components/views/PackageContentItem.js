@@ -38,12 +38,8 @@ export default class PackageContentItem extends React.Component {
     }),
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
-      onDelete: PropTypes.func,
     }),
     isLoading: PropTypes.bool,
-    urls: PropTypes.shape({
-      editAmendment: PropTypes.func,
-    }),
   }
 
   state = {
@@ -58,8 +54,8 @@ export default class PackageContentItem extends React.Component {
 
     return {
       data,
-      pci: data.eresource,
       id,
+      pci: data.eresource,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
     };
@@ -85,7 +81,7 @@ export default class PackageContentItem extends React.Component {
         dismissible
         id="pane-view-pci"
         onClose={this.props.handlers.onClose}
-        paneTitle={<FormattedMessage id="ui-licenses.loading" />}
+        paneTitle={<FormattedMessage id="ui-agreements.loading" />}
       >
         <Layout className="marginTop1">
           <Spinner />
@@ -96,7 +92,7 @@ export default class PackageContentItem extends React.Component {
 
   renderEditMenu = () => (
     <PaneMenu>
-      <FormattedMessage id="ui-licenses.amendments.create">
+      <FormattedMessage id="ui-agreements.eresources.edit">
         {ariaLabel => (
           <Button
             aria-label={ariaLabel}

@@ -21,7 +21,7 @@ export default class PCIFormInfo extends React.Component {
               component={TextField}
               disabled
               id="edit-pci-name"
-              label={<FormattedMessage id="ui-agreements.agreements.name" />}
+              label={<FormattedMessage id="ui-agreements.eresources.name" />}
               maxLength={255}
               name="name"
               required
@@ -34,7 +34,7 @@ export default class PCIFormInfo extends React.Component {
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
               disabled
-              id="pci-accessible-from"
+              id="pci-access-from"
               label={<FormattedMessage id="ui-agreements.eresources.accessibleFrom" />}
               name="accessStart"
               parser={parseDateOnlyString}
@@ -45,7 +45,7 @@ export default class PCIFormInfo extends React.Component {
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
               disabled
-              id="pci-accessible-until"
+              id="pci-access-end"
               label={<FormattedMessage id="ui-agreements.eresources.accessibleUntil" />}
               name="accessEnd"
               parser={parseDateOnlyString}

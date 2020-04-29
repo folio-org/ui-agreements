@@ -33,7 +33,7 @@ export default class ParentPackageDetails extends React.Component {
         hasMargin
         headerStart={(
           <Link
-            data-test-agreement-link
+            data-test-parent-package-link
             to={urls.eresourceView(pkg?.id)}
           >
             <strong>{pkg?.name || <NoValue />}</strong>

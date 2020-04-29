@@ -197,6 +197,7 @@
   "eresources.count": "Count",
   "pci.editPci": "Edit {name}",
   "pci.closeEdit": "Close edit pci",
+  "eresources.edit": "Edit",
   "eresources.name": "Name",
   "eresources.type": "Type",
   "eresources.titles": "Titles",

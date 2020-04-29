@@ -33,7 +33,7 @@ export default class MonographResourceInfo extends React.Component {
   }
 
   render() {
-    const { renderIdentifier, titleInstance } = this.props;
+    const { renderIdentifier, titleInstance = {} } = this.props;
     return (
       <Card
         cardStyle="positive"
