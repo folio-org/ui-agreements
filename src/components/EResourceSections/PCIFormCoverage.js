@@ -9,7 +9,7 @@ import {
 import { FieldArray } from 'react-final-form-arrays';
 import Embargo from '../Embargo';
 
-import CustomCoverageFieldArray from '../CustomCoverageFieldArray';
+import CoverageFieldArray from '../CoverageFieldArray';
 
 export default class PCIFormInfo extends React.Component {
   static propTypes = {
@@ -19,12 +19,23 @@ export default class PCIFormInfo extends React.Component {
     values: PropTypes.object,
   };
 
-  renderCustomCoverageFieldArray = () => (
-    <FieldArray
-      component={CustomCoverageFieldArray}
-      name="coverage"
-    />
-  );
+  renderCoverageFieldArray = () => {
+    const coverageProps = {
+      'addButtonId': 'edit-pci-add-coverage-button',
+      'addLabelId': 'ui-agreements.pci.addCoverage',
+      'deleteButtonTooltipId': 'ui-agreements.pci.removeCoverage',
+      'headerId': 'ui-agreements.pci.coverageTitle',
+      'id': 'pci-form-coverages',
+      'name': 'coverage',
+    };
+
+    return (
+      <FieldArray
+        component={CoverageFieldArray}
+        {...coverageProps}
+      />
+    );
+  }
 
   renderEmbargo = (values) => {
     return values?.embargo ? (
@@ -45,7 +56,7 @@ export default class PCIFormInfo extends React.Component {
         open={open}
       >
         {this.renderEmbargo(values)}
-        {this.renderCustomCoverageFieldArray()}
+        {this.renderCoverageFieldArray()}
       </Accordion>
     );
   }

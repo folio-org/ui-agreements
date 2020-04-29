@@ -87,8 +87,10 @@ class AcquisitionOptions extends React.Component {
         add: <FormattedMessage id="ui-agreements.eresources.addToBasketHeader" />,
       }}
       columnWidths={{
+        sourceKb: 90,
         package: 200,
-        coverage: 250
+        coverage: 260,
+        acqMethod: 100
       }}
       contentData={this.props.data.entitlementOptions}
       formatter={{

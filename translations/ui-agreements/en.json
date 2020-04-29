@@ -186,6 +186,7 @@
   "emptyAccordion.historicalLicenses": "No historical licenses for this agreement",
   "emptyAccordion.externalLicenses": "No external licenses for this agreement",
   "emptyAccordion.licenseAndBusinessTerms": "No license and business terms for this agreement",
+  "emptyAccordion.noAgreements": "No agreements for this package",
   "emptyAccordion.organizations": "No organizations for this agreement",
   "emptyAccordion.otherPeriods": "No other periods for this agreement",
   "emptyAccordion.supplementaryProperties": "No supplementary properties for this agreement",
@@ -194,9 +195,13 @@
   "emptyAccordion.relatedAgreements": "No related agreements for this agreement",
   "emptyAccordion.pciCoverage": "No coverage for this title",
 
-  "eresources.count": "Count",
+  "pci.addCoverage": "Add coverage",
   "pci.editPci": "Edit {name}",
   "pci.closeEdit": "Close edit pci",
+  "pci.removeCoverage": "Remove coverage",
+  "pci.coverageTitle": "Coverage { number }",
+
+  "eresources.count": "Count",
   "eresources.edit": "Edit",
   "eresources.name": "Name",
   "eresources.type": "Type",
