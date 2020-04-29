@@ -29,7 +29,7 @@ const droppedResource = {
   accessEnd: () => faker.date.recent().toISOString()
 };
 
-describe.only('Package Content Filters', () => {
+describe('Package Content Filters', () => {
   setupApplication();
   const basket = new BasketInteractor();
   const agreementForm = new AgreementFormInteractor();
