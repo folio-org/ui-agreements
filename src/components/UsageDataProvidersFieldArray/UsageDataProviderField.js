@@ -128,7 +128,6 @@ export default class UsageDataProviderField extends React.Component {
     return (
       <Card
         cardStyle={value ? 'positive' : 'negative'}
-        hasMargin
         headerEnd={this.renderLinkUDPButton(value)}
         headerStart={(
           <AppIcon app="erm-usage" size="small">

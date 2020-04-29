@@ -42,92 +42,115 @@ describe('PO Lines', () => {
     eresources = await eresourcesToCreate.map(eresource => this.server.create('eresource', eresource));
   });
 
-  describe('loading e-resources list', () => {
+  describe('visiting the E-Resources page', () => {
     beforeEach(async function () {
-      this.visit('/erm/eresources');
+      await this.visit('/erm/eresources');
     });
 
-    it('should list the created eresources', () => {
-      expect(eresourcesInteractor.list.rowCount).to.equal(eresourcesToCreate.length);
-    });
-
-    describe('begin creating new agreement with two agreement lines', () => {
+    describe('loading e-resources list', () => {
       beforeEach(async function () {
-        await eresourcesInteractor.list.rows(0).click();
-        await eresourceInteractor.clickAddToBasket();
-
-        await eresourcesInteractor.list.rows(1).click();
-        await eresourceInteractor.clickAddToBasket();
-
-        await basketInteractor.clickOpenBasket();
-        await basketInteractor.clickCreateNewAgreement();
+        await eresourcesInteractor.whenLoaded();
       });
 
-      it('should have two agreement lines', () => {
-        expect(agreementForm.linesSection.lineCount).to.equal(2);
+      it('should list the created eresources', () => {
+        expect(eresourcesInteractor.list.rowCount).to.equal(eresourcesToCreate.length);
       });
 
-      it('should have correct eresource names for each agreement line', () => {
-        const names = eresources.map(e => e.name);
-        expect(names).to.include(agreementForm.linesSection.lines(0).name);
-        expect(names).to.include(agreementForm.linesSection.lines(1).name);
-      });
-
-      describe('add PO line to first agreement line', () => {
+      describe('add first eresource to basket', () => {
         beforeEach(async function () {
-          await agreementForm.linesSection.lines(0).clickAddPOLine();
+          await eresourcesInteractor.list.rows(0).click();
+          await eresourceInteractor.clickAddToBasket();
         });
 
-        it('should have empty PO Line card', () => {
-          expect(agreementForm.linesSection.lines(0).poLines(0).isSelected).to.be.false;
-        });
-
-        describe('link PO line to PO line card', () => {
+        describe('add second eresource to basket', () => {
           beforeEach(async function () {
-            await agreementForm.linesSection.lines(0).poLines(0).clickSelectPOLine();
+            await eresourcesInteractor.list.rows(1).click();
+            await eresourceInteractor.clickAddToBasket();
           });
 
-          it('should render correct PO line info for first PO line', () => {
-            shouldRenderCorrectPOLineInfo(0, 0);
-          });
-
-          describe('add and link second PO line to first agreement line', () => {
+          describe('open basket', () => {
             beforeEach(async function () {
-              await agreementForm.linesSection.lines(0).clickAddPOLine();
-              await agreementForm.linesSection.lines(0).poLines(1).clickSelectPOLine();
+              await basketInteractor.clickOpenBasket();
             });
 
-            it('should render correct PO line info for second PO line', () => {
-              shouldRenderCorrectPOLineInfo(0, 1);
-            });
-
-            describe('add and link PO line to second agreement line', () => {
+            describe('begin creating new agreement with the basket contents', () => {
               beforeEach(async function () {
-                await agreementForm.linesSection.lines(1).clickAddPOLine();
-                await agreementForm.linesSection.lines(1).poLines(0).clickSelectPOLine();
+                await basketInteractor.clickCreateNewAgreement();
               });
 
-              it('should render correct PO line info for third PO line', () => {
-                shouldRenderCorrectPOLineInfo(1, 0);
+              it('should have two agreement lines', () => {
+                expect(agreementForm.linesSection.lineCount).to.equal(2);
               });
 
-              describe('save agreement', () => {
+              it('should have correct eresource names for each agreement line', () => {
+                const names = eresources.map(e => e.name);
+                expect(names).to.include(agreementForm.linesSection.lines(0).name);
+                expect(names).to.include(agreementForm.linesSection.lines(1).name);
+              });
+
+              describe('add PO line to first agreement line', () => {
                 beforeEach(async function () {
-                  await agreementForm.fillName(faker.company.companyName());
-                  await agreementForm.fillStartDate('01/01/2019');
-                  await agreementForm.selectStatus('Draft');
-                  await agreementForm.createAgreement();
-
-                  await agreementView.whenLoaded();
-                  await agreementView.expandAll();
+                  await agreementForm.linesSection.lines(0).clickAddPOLine();
                 });
 
-                it('should have two agreement lines', () => {
-                  expect(agreementView.linesSection.linesCount()).to.equal(2);
+                it('should have empty PO Line card', () => {
+                  expect(agreementForm.linesSection.lines(0).poLines(0).isSelected).to.be.false;
                 });
 
-                it('should have three PO lines', () => {
-                  expect(agreementView.linesSection.poLinesCount).to.equal(3);
+                describe('link PO line to PO line card', () => {
+                  beforeEach(async function () {
+                    await agreementForm.linesSection.lines(0).poLines(0).clickSelectPOLine();
+                  });
+
+                  it('should render correct PO line info for first PO line', () => {
+                    shouldRenderCorrectPOLineInfo(0, 0);
+                  });
+
+                  describe('add and link second PO line to first agreement line', () => {
+                    beforeEach(async function () {
+                      await agreementForm.linesSection.lines(0).clickAddPOLine();
+                      await agreementForm.linesSection.lines(0).poLines(1).clickSelectPOLine();
+                    });
+
+                    it('should render correct PO line info for second PO line', () => {
+                      shouldRenderCorrectPOLineInfo(0, 1);
+                    });
+
+                    describe('add and link PO line to second agreement line', () => {
+                      beforeEach(async function () {
+                        await agreementForm.linesSection.lines(1).clickAddPOLine();
+                        await agreementForm.linesSection.lines(1).poLines(0).clickSelectPOLine();
+                      });
+
+                      it('should render correct PO line info for third PO line', () => {
+                        shouldRenderCorrectPOLineInfo(1, 0);
+                      });
+
+                      describe('fill out required agreement fields', () => {
+                        beforeEach(async function () {
+                          await agreementForm.fillName(faker.company.companyName());
+                          await agreementForm.fillStartDate('01/01/2019');
+                          await agreementForm.selectStatus('Draft');
+                          await agreementForm.createAgreement();
+                        });
+
+                        describe('save agreement', () => {
+                          beforeEach(async function () {
+                            await agreementView.whenLoaded();
+                            await agreementView.expandAll();
+                          });
+
+                          it('should have two agreement lines', () => {
+                            expect(agreementView.linesSection.linesCount()).to.equal(2);
+                          });
+
+                          it('should have three PO lines', () => {
+                            expect(agreementView.linesSection.poLinesCount).to.equal(3);
+                          });
+                        });
+                      });
+                    });
+                  });
                 });
               });
             });

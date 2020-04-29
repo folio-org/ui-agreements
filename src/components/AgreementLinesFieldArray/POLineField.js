@@ -162,7 +162,6 @@ export default class POLineField extends React.Component {
     return (
       <Card
         cardStyle={value ? 'positive' : 'negative'}
-        hasMargin
         headerEnd={this.renderLinkPOLineButton(value)}
         headerStart={(
           <AppIcon app="orders" size="small">
