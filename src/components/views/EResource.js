@@ -38,7 +38,7 @@ export default class EResource extends React.Component {
       onClose: handlers.onClose,
     };
 
-    if (isLoading) return <LoadingPane id="pane-view-eresource" {...paneProps} />;
+    if (isLoading) return <LoadingPane data-loading id="pane-view-eresource" {...paneProps} />;
 
     const EResourceViewComponent = data.eresource.type ? Title : Package;
 
