@@ -6,5 +6,7 @@ export { default as PackageInfo } from './PackageInfo';
 export { default as PackageContentItemCoverage } from './PackageContentItemCoverage';
 export { default as PackageContentItemInfo } from './PackageContentItemInfo';
 export { default as ParentPackageDetails } from './ParentPackageDetails';
+export { default as PCIFormCoverage } from './PCIFormCoverage';
+export { default as PCIFormInfo } from './PCIFormInfo';
 export { default as SerialResourceInfo } from './SerialResourceInfo';
 export { default as TitleInfo } from './TitleInfo';

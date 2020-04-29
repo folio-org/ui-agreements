@@ -37,7 +37,7 @@ export default class EResource extends React.Component {
     } = this.props;
 
     return (eresource?.class === 'org.olf.kb.PackageContentItem') ? (
-      <IfPermission perm="ui-agreements.eresources.edit">
+      <IfPermission perm="ui-agreements.resources.edit">
         <PaneMenu>
           <FormattedMessage id="ui-agreements.eresources.edit">
             {ariaLabel => (

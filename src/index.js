@@ -15,6 +15,7 @@ const BasketRoute = lazy(() => import('./routes/BasketRoute'));
 
 const EResourcesRoute = lazy(() => import('./routes/EResourcesRoute'));
 const EResourceViewRoute = lazy(() => import('./routes/EResourceViewRoute'));
+const EResourceEditRoute = lazy(() => import('./routes/EResourceEditRoute'));
 
 const NoteCreateRoute = lazy(() => import('./routes/NoteCreateRoute'));
 const NoteEditRoute = lazy(() => import('./routes/NoteEditRoute'));
@@ -61,6 +62,7 @@ class App extends React.Component {
                 </Suspense>
               </Route>
 
+              <Route component={EResourceEditRoute} path={`${path}/eresources/:id/edit`} />
               <Route component={EResourcesRoute} path={`${path}/eresources/:id?`}>
                 <Suspense fallback={null}>
                   <Route component={EResourceViewRoute} path={`${path}/eresources/:id`} />

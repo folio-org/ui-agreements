@@ -127,7 +127,16 @@
           "module.agreements.enabled",
           "erm.packages.view",
           "erm.titles.view",
-          "erm.resources.view"
+          "erm.resources.view",
+          "erm.pci.view"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.resources.edit",
+        "displayName": "Agreements: Edit e-resources",
+        "visible": true,
+        "subPermissions": [
+          "erm.pci.edit"
         ]
       },
       {

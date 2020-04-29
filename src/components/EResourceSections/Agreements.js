@@ -62,6 +62,7 @@ export default class Agreements extends React.Component {
           isCustomCoverage: line => line.customCoverage && <CustomCoverageIcon />,
         }}
         interactive={false}
+        isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreements" />}
         visibleColumns={[
           'name',
           'type',

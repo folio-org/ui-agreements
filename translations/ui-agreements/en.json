@@ -30,6 +30,7 @@
   "years": "{count, number} {count, plural, one {year} other {years}}",
 
   "permission.resources.view": "Agreements: Search & view e-resources",
+  "permission.resources.edit": "Agreements: Edit e-resources",
   "permission.agreements.view": "Agreements: Search & view agreements",
   "permission.agreements.edit": "Agreements: Edit agreements",
   "permission.agreements.delete": "Agreements: Delete agreements",
@@ -194,6 +195,8 @@
   "emptyAccordion.pciCoverage": "No coverage for this title",
 
   "eresources.count": "Count",
+  "pci.editPci": "Edit {name}",
+  "pci.closeEdit": "Close edit pci",
   "eresources.name": "Name",
   "eresources.type": "Type",
   "eresources.titles": "Titles",

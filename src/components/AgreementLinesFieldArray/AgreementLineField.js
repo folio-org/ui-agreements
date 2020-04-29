@@ -16,7 +16,7 @@ import EResourceProvider from '../EResourceProvider';
 import EResourceType from '../EResourceType';
 import { isExternal, isPackage, parseDateOnlyString } from '../utilities';
 
-import CustomCoverageFieldArray from './CustomCoverageFieldArray';
+import CustomCoverageFieldArray from '../CustomCoverageFieldArray';
 import POLinesFieldArray from './POLinesFieldArray';
 
 export default class AgreementLineField extends React.Component {
