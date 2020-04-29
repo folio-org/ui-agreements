@@ -240,7 +240,7 @@ export default class Agreement extends React.Component {
       onClose: handlers.onClose,
     };
 
-    if (isLoading) return <LoadingPane {...paneProps} />;
+    if (isLoading) return <LoadingPane data-loading {...paneProps} />;
 
     return (
       <>
