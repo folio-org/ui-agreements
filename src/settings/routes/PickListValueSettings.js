@@ -24,16 +24,18 @@ export default class PickListValueSettings extends React.Component {
       connect: PropTypes.func.isRequired,
     }).isRequired,
     resources: PropTypes.shape({
-      categories: PropTypes.arrayOf(PropTypes.shape({
-        desc: PropTypes.string,
-        id: PropTypes.string,
-        internal: PropTypes.bool,
-        values: PropTypes.arrayOf({
+      categories: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.shape({
+          desc: PropTypes.string,
           id: PropTypes.string,
-          value: PropTypes.string,
-          label: PropTypes.string,
-        }),
-      })),
+          internal: PropTypes.bool,
+          values: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.string,
+            value: PropTypes.string,
+            label: PropTypes.string,
+          })),
+        }))
+      }),
     }),
     mutator: PropTypes.shape({
       categories: PropTypes.shape({

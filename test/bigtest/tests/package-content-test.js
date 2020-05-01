@@ -39,7 +39,11 @@ describe('Package Content Filters', () => {
   let eresource;
 
   beforeEach(async function () {
-    eresource = this.server.create('eresource', { name: PKG.name, class: 'org.olf.kb.Pkg', pcis: [droppedResource, currentResource, futureResource] });
+    eresource = this.server.create('eresource', {
+      name: PKG.name,
+      class: 'org.olf.kb.Pkg',
+      pcis: [droppedResource, currentResource, futureResource]
+    });
   });
 
   describe('visiting the eresource pane', () => {

@@ -13,6 +13,7 @@ const errorBlacklist = [
   /\[React Intl\]/,
   /Cannot update a component from inside the function body of a different component/,
   /Can't perform a React state update on an unmounted component./,
+  /Invalid prop `component` supplied to.*Field/,
 ];
 
 export default function turnOffWarnings() {
