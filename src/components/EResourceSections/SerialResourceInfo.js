@@ -15,7 +15,7 @@ export default class MonographResourceInfo extends React.Component {
   static propTypes = {
     renderIdentifier: PropTypes.func,
     titleInstance: PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.string,
       name: PropTypes.string,
       subType: PropTypes.shape({
         label: PropTypes.string,
@@ -31,12 +31,11 @@ export default class MonographResourceInfo extends React.Component {
     return (
       <Card
         cardStyle="positive"
-        hasMargin
         headerStart={(
           <Link
             to={urls.eresourceView(titleInstance.id)}
           >
-            <strong>{titleInstance.name || <NoValue />}</strong>
+            <strong data-test-title-instance-name>{titleInstance.name || <NoValue />}</strong>
           </Link>
         )}
         id="title-details-monograph"
@@ -45,12 +44,12 @@ export default class MonographResourceInfo extends React.Component {
         <Row>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.type" />}>
-              {titleInstance.type?.label || <NoValue />}
+              <div data-test-title-instance-type>{titleInstance.type?.label || <NoValue />}</div>
             </KeyValue>
           </Col>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.materialType" />}>
-              {titleInstance.subType?.label || <NoValue />}
+              <div data-test-title-instance-sub-type>{titleInstance.subType?.label || <NoValue />}</div>
             </KeyValue>
           </Col>
         </Row>

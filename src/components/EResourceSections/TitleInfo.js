@@ -6,7 +6,7 @@ import {
   KeyValue,
   NoValue,
 } from '@folio/stripes/components';
-import { resourceTypes } from '../../constants';
+import { resourceTypes, resourceClasses } from '../../constants';
 import { getResourceIdentifier } from '../utilities';
 import MonographResourceInfo from './MonographResourceInfo';
 import SerialResourceInfo from './SerialResourceInfo';
@@ -35,7 +35,7 @@ export default class TitleInfo extends React.Component {
         <KeyValue
           label={<FormattedMessage id={`ui-agreements.identifier.${type}`} />}
         >
-          {identifier || <NoValue />}
+          <div {...{ [`data-test-${type}`]: true }}>{identifier || <NoValue />}</div>
         </KeyValue>
       </Col>
     );
@@ -44,7 +44,7 @@ export default class TitleInfo extends React.Component {
   render() {
     const { data: { eresource } } = this.props;
 
-    const titleInstance = (eresource.class === 'org.olf.kb.TitleInstance') ?
+    const titleInstance = (eresource.class === resourceClasses.TITLEINSTANCE) ?
       eresource
       :
       eresource?.pti?.titleInstance;

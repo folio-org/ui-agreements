@@ -19,6 +19,7 @@ import {
 
 import {
   Agreements,
+  AgreementsList,
   PackageContentItemCoverage,
   PackageContentItemInfo,
   ParentPackageDetails,
@@ -35,6 +36,7 @@ export default class PackageContentItem extends React.Component {
           label: PropTypes.string,
         }),
       }).isRequired,
+      relatedEntitlements: PropTypes.array,
     }),
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
@@ -44,8 +46,8 @@ export default class PackageContentItem extends React.Component {
 
   state = {
     sections: {
-      coverage: false,
-      agreements: false
+      coverage: true,
+      pciagreements: true
     },
   }
 
@@ -129,7 +131,7 @@ export default class PackageContentItem extends React.Component {
 
   render() {
     const {
-      data: { eresource },
+      data: { eresource, relatedEntitlements = [] },
       isLoading,
     } = this.props;
 
@@ -151,7 +153,13 @@ export default class PackageContentItem extends React.Component {
             </Col>
           </Row>
           <PackageContentItemCoverage {...this.getSectionProps('coverage')} />
-          <Agreements {...this.getSectionProps('agreements')} />
+          <Agreements {...this.getSectionProps('pciagreements')} />
+          <AgreementsList
+            eresource={eresource}
+            id="pcirelatedagreements"
+            isRelatedEntitlement
+            resources={relatedEntitlements}
+          />
         </AccordionSet>
       </div>
     );

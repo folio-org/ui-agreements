@@ -45,7 +45,7 @@ export default class PackageContentItemCoverage extends React.Component {
     startIssue: coverage => <div data-test-start-issue>{coverage?.startIssue || '-'}</div>,
     endDate: coverage => <div data-test-end-date>{this.renderDate(coverage?.endDate)}</div>,
     endVolume: coverage => <div data-test-end-volume>{coverage?.endVolume || '-'}</div>,
-    endIssue: coverage => <div data-test-start-issue>{coverage?.endIssue || '-'}</div>,
+    endIssue: coverage => <div data-test-end-issue>{coverage?.endIssue || '-'}</div>,
   }
 
   visibleColumns = [

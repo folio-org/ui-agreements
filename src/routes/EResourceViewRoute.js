@@ -35,6 +35,14 @@ class EResourceViewRoute extends React.Component {
         stats: 'true',
       },
     },
+    relatedEntitlements: {
+      type: 'okapi',
+      path: 'erm/resource/:{id}/entitlements/related',
+      perRequest: RECORDS_PER_REQUEST,
+      recordsRequired: '%{entitlementsCount}',
+      limitParam: 'perPage',
+      throwErrors: false,
+    },
     packageContents: {
       type: 'okapi',
       path: 'erm/packages/:{id}/content/%{packageContentsFilter}',
@@ -220,12 +228,13 @@ class EResourceViewRoute extends React.Component {
       <View
         key={get(resources, 'eresource.loadedAt', 'loading')}
         data={{
-          eresource: get(resources, 'eresource.records[0]', {}),
+          eresource: resources?.eresource?.records?.[0] ?? {},
           entitlementOptions: this.getRecords('entitlementOptions'),
           entitlements: this.getRecords('entitlements'),
           packageContentsFilter: this.props.resources.packageContentsFilter,
           packageContents: this.getPackageContentsRecords(),
           packageContentsCount: this.getPackageContentsRecordsCount(),
+          relatedEntitlements: this.getRecords('relatedEntitlements'),
         }}
         handlers={{
           ...handlers,

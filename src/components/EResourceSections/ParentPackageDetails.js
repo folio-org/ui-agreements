@@ -30,7 +30,6 @@ export default class ParentPackageDetails extends React.Component {
     return (
       <Card
         cardStyle="positive"
-        hasMargin
         headerStart={(
           <Link
             data-test-parent-package-link
@@ -45,22 +44,22 @@ export default class ParentPackageDetails extends React.Component {
         <Row>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.count" />}>
-              {pkg?.resourceCount || <NoValue />}
+              <div data-test-resource-count>{pkg?.resourceCount || <NoValue />}</div>
             </KeyValue>
           </Col>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.provider" />}>
-              {pkg?.vendor?.name || <NoValue />}
+              <div data-test-vendor-name>{pkg?.vendor?.name || <NoValue />}</div>
             </KeyValue>
           </Col>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.source" />}>
-              {pkg?.source || <NoValue />}
+              <div data-test-package-source>{pkg?.source || <NoValue />}</div>
             </KeyValue>
           </Col>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.reference" />}>
-              {pkg?.reference || <NoValue />}
+              <div data-test-package-reference>{pkg?.reference || <NoValue />}</div>
             </KeyValue>
           </Col>
         </Row>

@@ -10,6 +10,7 @@ import { LoadingPane } from '@folio/stripes-erm-components';
 import Package from './Package';
 import Title from './Title';
 import PackageContentItem from './PackageContentItem';
+import { resourceClasses } from '../../constants';
 
 export default class EResource extends React.Component {
   static propTypes = {
@@ -36,7 +37,7 @@ export default class EResource extends React.Component {
       handlers,
     } = this.props;
 
-    return (eresource?.class === 'org.olf.kb.PackageContentItem') ? (
+    return (eresource?.class === resourceClasses.PCI) ? (
       <IfPermission perm="ui-agreements.resources.edit">
         <PaneMenu>
           <FormattedMessage id="ui-agreements.eresources.edit">
@@ -69,9 +70,9 @@ export default class EResource extends React.Component {
 
     let EResourceViewComponent = Package;
 
-    if (data.eresource?.class === 'org.olf.kb.TitleInstance') {
+    if (data.eresource?.class === resourceClasses.TITLEINSTANCE) {
       EResourceViewComponent = Title;
-    } else if (data.eresource?.class === 'org.olf.kb.PackageContentItem') {
+    } else if (data.eresource?.class === resourceClasses.PCI) {
       EResourceViewComponent = PackageContentItem;
     }
 

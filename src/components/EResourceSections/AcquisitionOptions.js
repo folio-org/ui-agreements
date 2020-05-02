@@ -11,6 +11,7 @@ import EResourceKB from '../EResourceKB';
 import EResourceType from '../EResourceType';
 
 import { isExternal, isPackage, urls } from '../utilities';
+import { resourceClasses } from '../../constants';
 
 class AcquisitionOptions extends React.Component {
   static manifest = Object.freeze({
@@ -54,7 +55,7 @@ class AcquisitionOptions extends React.Component {
     const { id } = row;
     const { handlers: { onPackageContentItemClick } } = this.props;
 
-    if (row.class === 'org.olf.kb.PackageContentItem') {
+    if (row.class === resourceClasses.PCI) {
       onPackageContentItemClick(id);
     } else {
       this.props.mutator.query.update({ _path: urls.eresourceView(id) });
