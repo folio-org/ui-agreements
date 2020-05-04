@@ -41,7 +41,7 @@ export default class Agreements extends React.Component {
 
   renderBadge = () => {
     const { entitlements, relatedEntitlements = [] } = this.props.data;
-    const count = entitlements.length + relatedEntitlements.length;
+    const count = entitlements?.length + relatedEntitlements?.length;
     return entitlements?.length ? <Badge>{count}</Badge> : <Spinner />;
   }
 
