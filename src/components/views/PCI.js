@@ -4,18 +4,13 @@ import { FormattedMessage } from 'react-intl';
 
 import {
   AccordionSet,
-  Button,
+  AccordionStatus,
   Col,
   ExpandAllButton,
   Headline,
-  Layout,
-  Pane,
-  PaneMenu,
+  LoadingPane,
   Row,
-  Spinner,
 } from '@folio/stripes/components';
-
-import { IfPermission } from '@folio/stripes/core';
 
 import {
   Agreements,
@@ -44,13 +39,6 @@ export default class PCI extends React.Component {
     isLoading: PropTypes.bool,
   }
 
-  state = {
-    sections: {
-      coverage: true,
-      pciagreements: true
-    },
-  }
-
   getSectionProps = (id) => {
     const { data } = this.props;
 
@@ -58,111 +46,73 @@ export default class PCI extends React.Component {
       data,
       id,
       pci: data.eresource,
-      onToggle: this.handleSectionToggle,
-      open: this.state.sections[id],
     };
   }
-
-  handleSectionToggle = ({ id }) => {
-    this.setState((prevState) => ({
-      sections: {
-        ...prevState.sections,
-        [id]: !prevState.sections[id],
-      }
-    }));
-  }
-
-  handleAllSectionsToggle = (sections) => {
-    this.setState({ sections });
-  }
-
-  renderLoadingPane = () => {
-    return (
-      <Pane
-        defaultWidth="45%"
-        dismissible
-        id="pane-view-pci"
-        onClose={this.props.handlers.onClose}
-        paneTitle={<FormattedMessage id="ui-agreements.loading" />}
-      >
-        <Layout className="marginTop1">
-          <Spinner />
-        </Layout>
-      </Pane>
-    );
-  }
-
-  renderEditMenu = () => (
-    <PaneMenu>
-      <IfPermission perm="ui-agreements.resources.edit">
-        <FormattedMessage id="ui-agreements.eresources.edit">
-          {ariaLabel => (
-            <Button
-              aria-label={ariaLabel}
-              buttonStyle="primary"
-              id="clickable-edit-pci"
-              marginBottom0
-            >
-              <FormattedMessage id="stripes-components.button.edit" />
-            </Button>
-          )}
-        </FormattedMessage>
-      </IfPermission>
-    </PaneMenu>
-  );
-
-  renderPCIInfo = (eresource) => <PCIInfo pci={eresource} />;
-
-  renderParentPackageDetails = ({ pkg = {} }) => (
-    <div data-test-parent-package-details>
-      <Headline margin="small" size="large" tag="h3">
-        <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
-      </Headline>
-      <ParentPackageDetails pkg={pkg} />
-    </div>
-  );
-
-  renderTitleDetails = () => (
-    <div id="title-info">
-      <Headline margin="small" size="large" tag="h3">
-        <FormattedMessage id="ui-agreements.eresources.titleDetails" />
-      </Headline>
-      <TitleInfo data={this.props.data} />
-    </div>
-  );
 
   render() {
     const {
       data: { eresource, relatedEntitlements = [] },
+      handlers,
       isLoading,
     } = this.props;
 
-    if (isLoading) return this.renderLoadingPane();
+    const paneProps = {
+      defaultWidth: '45%',
+      dismissible: true,
+      id: 'pane-view-pci',
+      onClose: handlers.onClose,
+    };
+
+    if (isLoading) return <LoadingPane data-loading {...paneProps} />;
+
+    const initial = {
+      'coverage': true,
+      'pci-agreements': true
+    };
 
     return (
       <div id="eresource-pci">
-        {this.renderPCIInfo(eresource)}
-        {this.renderParentPackageDetails(eresource)}
-        {this.renderTitleDetails()}
-        <AccordionSet>
+        <PCIInfo pci={eresource} />
+        <div data-test-parent-package-details>
+          <Headline margin="small" size="large" tag="h3">
+            <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
+          </Headline>
+          <ParentPackageDetails pkg={eresource?.pkg ?? {}} />
+        </div>
+        <div id="title-info">
+          <Headline margin="small" size="large" tag="h3">
+            <FormattedMessage id="ui-agreements.eresources.titleDetails" />
+          </Headline>
+          <TitleInfo data={this.props.data} />
+        </div>
+        <AccordionStatus initialStatus={initial}>
           <Row end="xs">
             <Col xs>
-              <ExpandAllButton
-                accordionStatus={this.state.sections}
-                id="clickable-expand-all"
-                onToggle={this.handleAllSectionsToggle}
-              />
+              <ExpandAllButton />
             </Col>
           </Row>
-          <PCICoverage {...this.getSectionProps('coverage')} />
-          <Agreements {...this.getSectionProps('pciagreements')} />
-          <AgreementsList
-            eresource={eresource}
-            id="pcirelatedagreements"
-            isRelatedEntitlement
-            resources={relatedEntitlements}
-          />
-        </AccordionSet>
+          <AccordionSet>
+            <PCICoverage {...this.getSectionProps('coverage')} />
+            <Agreements
+              {...this.getSectionProps('pci-agreements')}
+              headline={eresource.name}
+              visibleColumns={['name', 'type', 'startDate', 'endDate']}
+            />
+            <AgreementsList
+              eresource={eresource}
+              headline={<FormattedMessage
+                id="ui-agreements.eresources.otherPlatformPackages"
+                values={{ name: eresource?.pti?.titleInstance?.name }}
+              />}
+              id="pci-related-agreements"
+              isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsOtherPackages" />}
+              resources={relatedEntitlements}
+              visibleColumns={['name', 'type', 'package', 'startDate', 'endDate']}
+            />
+          </AccordionSet>
+        </AccordionStatus>
+
+
       </div>
     );
   }

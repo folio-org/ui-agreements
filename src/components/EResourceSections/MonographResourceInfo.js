@@ -11,10 +11,10 @@ import {
 } from '@folio/stripes/components';
 import Link from 'react-router-dom/Link';
 import { urls } from '../utilities';
+import Identifier from './Identifier';
 
 export default class MonographResourceInfo extends React.Component {
   static propTypes = {
-    renderIdentifier: PropTypes.func,
     titleInstance: PropTypes.shape({
       dateMonographPublished: PropTypes.string,
       id: PropTypes.string,
@@ -33,7 +33,7 @@ export default class MonographResourceInfo extends React.Component {
   }
 
   render() {
-    const { renderIdentifier, titleInstance = {} } = this.props;
+    const { titleInstance = {} } = this.props;
     return (
       <Card
         cardStyle="positive"
@@ -93,8 +93,8 @@ export default class MonographResourceInfo extends React.Component {
           </Col>
         </Row>
         <Row>
-          {renderIdentifier('isbn')}
-          {renderIdentifier('doi')}
+          <Identifier titleInstance={titleInstance} type="isbn" />
+          <Identifier titleInstance={titleInstance} type="doi" />
         </Row>
       </Card>
     );

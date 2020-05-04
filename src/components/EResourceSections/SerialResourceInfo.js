@@ -10,10 +10,10 @@ import {
 } from '@folio/stripes/components';
 import Link from 'react-router-dom/Link';
 import { urls } from '../utilities';
+import Identifier from './Identifier';
 
 export default class SerialResourceInfo extends React.Component {
   static propTypes = {
-    renderIdentifier: PropTypes.func,
     titleInstance: PropTypes.shape({
       id: PropTypes.string,
       name: PropTypes.string,
@@ -27,7 +27,7 @@ export default class SerialResourceInfo extends React.Component {
   }
 
   render() {
-    const { renderIdentifier, titleInstance } = this.props;
+    const { titleInstance } = this.props;
     return (
       <Card
         cardStyle="positive"
@@ -54,10 +54,10 @@ export default class SerialResourceInfo extends React.Component {
           </Col>
         </Row>
         <Row>
-          {renderIdentifier('ezb')}
-          {renderIdentifier('zdb')}
-          {renderIdentifier('eissn')}
-          {renderIdentifier('pissn')}
+          <Identifier titleInstance={titleInstance} type="ezb" />
+          <Identifier titleInstance={titleInstance} type="zdb" />
+          <Identifier titleInstance={titleInstance} type="eissn" />
+          <Identifier titleInstance={titleInstance} type="pissn" />
         </Row>
       </Card>
     );

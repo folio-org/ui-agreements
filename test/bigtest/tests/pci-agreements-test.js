@@ -3,6 +3,7 @@ import { describe, beforeEach, it } from '@bigtest/mocha';
 import chai from 'chai';
 import spies from 'chai-spies';
 import { StaticRouter as Router } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import { mountWithContext } from '../helpers/mountWithContext';
 
 import Agreements from '../../../src/components/EResourceSections/Agreements';
@@ -25,7 +26,9 @@ describe('PCI agreements information', () => {
         <Router context={{}}>
           <Agreements
             data={data}
-            id="pciagreements"
+            headline={data.eresource.name}
+            id="pci-agreements"
+            visibleColumns={['name', 'type', 'startDate', 'endDate']}
           />
         </Router>
       );
@@ -54,9 +57,11 @@ describe('PCI agreements information', () => {
         <Router context={{}}>
           <AgreementsList
             eresource={eresource}
-            id="pcirelatedagreements"
+            id="pci-related-agreements"
+            isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsOtherPackages" />}
             isRelatedEntitlement
             resources={relatedEntitlements}
+            visibleColumns={['name', 'type', 'package', 'startDate', 'endDate']}
           />
         </Router>
       );

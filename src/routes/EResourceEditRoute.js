@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { cloneDeep } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
-import { LoadingPane } from '@folio/stripes-erm-components';
+import { LoadingView } from '@folio/stripes/components';
 
 import View from '../components/views/PCIForm';
 import NoPermissions from '../components/NoPermissions';
@@ -81,7 +81,7 @@ class EResourceEditRoute extends React.Component {
 
   render() {
     if (!this.state.hasPerms) return <NoPermissions />;
-    if (this.fetchIsPending()) return <LoadingPane onClose={this.handleClose} renderPaneset />;
+    if (this.fetchIsPending()) return <LoadingView dismissible onClose={this.handleClose} />;
 
     return (
       <View

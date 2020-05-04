@@ -22,35 +22,40 @@ export default class Agreements extends React.Component {
       relatedEntitlements: PropTypes.array,
     }),
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
+    headline: PropTypes.node,
+    isEmptyMessage: PropTypes.node,
+    visibleColumns: PropTypes.arrayOf(PropTypes.string),
   };
 
   renderAgreements = (eresource) => {
     const { entitlements = [] } = this.props.data;
-    const { id } = this.props;
+    const { headline, id, isEmptyMessage, visibleColumns } = this.props;
 
     return (
       <AgreementsList
         eresource={eresource}
+        headline={headline}
         id={id}
+        isEmptyMessage={isEmptyMessage}
         resources={entitlements}
+        visibleColumns={visibleColumns}
       />
     );
   }
 
   renderBadge = () => {
-    const { entitlements, relatedEntitlements = [] } = this.props.data;
-    const count = entitlements?.length + relatedEntitlements?.length;
-    return entitlements?.length ? <Badge>{count}</Badge> : <Spinner />;
+    const { entitlements, relatedEntitlements } = this.props.data;
+
+    return (entitlements && relatedEntitlements) ?
+      <Badge>{entitlements?.length + relatedEntitlements?.length}</Badge>
+      :
+      <Spinner />;
   }
 
   render() {
     const {
       data: { entitlements, eresource },
       id,
-      onToggle,
-      open,
     } = this.props;
 
     const label = (eresource.class === resourceClasses.PKG) ?
@@ -63,8 +68,6 @@ export default class Agreements extends React.Component {
         displayWhenOpen={this.renderBadge()}
         id={id}
         label={label}
-        onToggle={onToggle}
-        open={open}
       >
         {entitlements ? this.renderAgreements(eresource) : <Spinner />}
       </Accordion>

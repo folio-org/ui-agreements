@@ -6,8 +6,8 @@ import {
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 
 export default @interactor class PCIAgreementsInteractor {
-  agreementsList = new MultiColumnListInteractor('#pciagreements-agreements');
-  relatedAgreementsList = new MultiColumnListInteractor('#pcirelatedagreements-agreements');
+  agreementsList = new MultiColumnListInteractor('#pci-agreements-agreements');
+  relatedAgreementsList = new MultiColumnListInteractor('#pci-related-agreements-agreements');
 
   eresourceName = text('[data-test-eresource-name]');
 

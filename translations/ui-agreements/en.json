@@ -199,6 +199,7 @@
 
   "pci.addCoverage": "Add coverage",
   "pci.editPci": "Edit {name}",
+  "pci.edit": "Edit pci",
   "pci.closeEdit": "Close edit pci",
   "pci.removeCoverage": "Remove coverage",
   "pci.coverageTitle": "Coverage { number }",

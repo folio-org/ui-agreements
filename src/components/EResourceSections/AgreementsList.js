@@ -15,11 +15,14 @@ import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import EResourceType from '../EResourceType';
 import { getResourceFromEntitlement, urls } from '../utilities';
-import { resourceClasses } from '../../constants';
 
-const AgreementsList = ({ eresource, id, isRelatedEntitlement, resources }) => {
-  const isTitle = eresource.type !== undefined;
-
+const AgreementsList = (
+  { headline,
+    id,
+    isEmptyMessage,
+    resources,
+    visibleColumns }
+) => {
   const columnMapping = {
     name: <FormattedMessage id="ui-agreements.agreements.name" />,
     type: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
@@ -49,38 +52,11 @@ const AgreementsList = ({ eresource, id, isRelatedEntitlement, resources }) => {
     isCustomCoverage: res => res.customCoverage && <CustomCoverageIcon />,
   };
 
-  const visibleColumns = [
-    'name',
-    'type',
-    ...(isRelatedEntitlement ? ['package'] : []),
-    'startDate',
-    'endDate',
-    ...(isTitle ? ['parentPackage', 'acqMethod', 'coverage', 'isCustomCoverage'] : []),
-  ];
-
-  const renderEmpty = () => {
-    if (eresource.class === resourceClasses.PACKAGE) {
-      return <FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsPackage" />;
-    }
-
-    return isRelatedEntitlement ?
-      <FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsOtherPackages" />
-      :
-      <FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsEresource" />;
-  };
-
   const renderHeadline = () => {
-    return eresource.class === resourceClasses.PCI ? (
+    return headline ? (
       <div data-test-eresource-name>
         <Headline margin="small" tag="h4">
-          {isRelatedEntitlement ?
-            (
-              <FormattedMessage
-                id="ui-agreements.eresources.otherPlatformPackages"
-                values={{ name: eresource?.pti?.titleInstance?.name }}
-              />
-            ) : eresource.name
-          }
+          {headline}
         </Headline>
       </div>
     ) : null;
@@ -96,22 +72,24 @@ const AgreementsList = ({ eresource, id, isRelatedEntitlement, resources }) => {
         formatter={formatter}
         id={`${id}-agreements`}
         interactive={false}
-        isEmptyMessage={renderEmpty()}
+        isEmptyMessage={isEmptyMessage}
         visibleColumns={visibleColumns}
       />
     </div>
   );
 };
 
+AgreementsList.defaultProps = {
+  isEmptyMessage: <FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsEresource" />,
+  visibleColumns: ['name', 'type', 'startDate', 'endDate']
+};
+
 AgreementsList.propTypes = {
   resources: PropTypes.arrayOf(PropTypes.object),
-  eresource: PropTypes.shape({
-    class: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.object,
-  }),
+  headline: PropTypes.node,
   id: PropTypes.string,
-  isRelatedEntitlement: PropTypes.bool
+  isEmptyMessage: PropTypes.node,
+  visibleColumns: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default AgreementsList;

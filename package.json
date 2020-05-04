@@ -140,7 +140,8 @@
         "displayName": "Agreements: Edit e-resources",
         "visible": true,
         "subPermissions": [
-          "erm.pci.edit"
+          "erm.pci.edit",
+          "ui-agreements.resources.view"
         ]
       },
       {

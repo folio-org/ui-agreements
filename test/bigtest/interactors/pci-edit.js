@@ -17,7 +17,7 @@ import {
 }
 
 export default @interactor class PCIEditPaneInteractor {
-  isCoverageAccordionPresent = isPresent('#accordion-toggle-button-pciformcoverage');
+  isCoverageAccordionPresent = isPresent('#accordion-toggle-button-pci-form-coverage');
   isAddButtonPresent = isPresent('#edit-pci-add-coverage-button')
   pciName = value('[data-test-pci-name]');
   accessFrom = value('#pci-access-from');

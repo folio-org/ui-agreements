@@ -15,8 +15,6 @@ import Embargo from '../Embargo';
 export default class PCICoverage extends React.Component {
   static propTypes = {
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
     pci: PropTypes.shape({
       embargo: PropTypes.shape({
         movingWallStart: PropTypes.shape({
@@ -88,7 +86,7 @@ export default class PCICoverage extends React.Component {
   }
 
   render() {
-    const { id, onToggle, open, pci = {} } = this.props;
+    const { id, pci = {} } = this.props;
 
     return (
       <Accordion
@@ -96,8 +94,6 @@ export default class PCICoverage extends React.Component {
         displayWhenOpen={this.renderBadge()}
         id={id}
         label={<FormattedMessage id="ui-agreements.eresources.coverage" />}
-        onToggle={onToggle}
-        open={open}
       >
         {this.renderEmbargo(pci)}
         {this.renderCoverage(pci)}

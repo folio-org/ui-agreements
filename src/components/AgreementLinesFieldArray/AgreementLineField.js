@@ -111,19 +111,15 @@ export default class AgreementLineField extends React.Component {
     if (isPackage(resource)) return null;
     if (isExternal(resource)) return null;
 
-    const coverageProps = {
-      'addButtonId': 'add-agreement-custom-coverage-button',
-      'addLabelId': 'ui-agreements.agreementLines.addCustomCoverage',
-      'deleteButtonTooltipId': 'ui-agreements.agreementLines.removeCustomCoverage',
-      'headerId': 'ui-agreements.agreementLines.customCoverageTitle',
-      'id': 'agreement-form-custom-coverages',
-      'name': `${name}.coverage`,
-    };
-
     return (
       <FieldArray
+        addButtonId="add-agreement-custom-coverage-button"
+        addLabelId="ui-agreements.agreementLines.addCustomCoverage"
         component={CoverageFieldArray}
-        {...coverageProps}
+        deleteButtonTooltipId="ui-agreements.agreementLines.removeCustomCoverage"
+        headerId="ui-agreements.agreementLines.customCoverageTitle"
+        id="agreement-form-custom-coverages"
+        name={`${name}.coverage`}
       />
     );
   }

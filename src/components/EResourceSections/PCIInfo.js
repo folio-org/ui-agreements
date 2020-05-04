@@ -23,16 +23,12 @@ export default class PCIInfo extends React.Component {
   renderAddTitleToBasketButton = (pci) => {
     const { name: packageName } = pci;
 
-    const addLabel = <FormattedMessage id="ui-agreements.eresources.addTitleToBasket" />;
-    const addButtonTooltipText = <FormattedMessage id="ui-agreements.eresources.addTitleButtonTooltip" values={{ packageName }} />;
-    const removeButtonTooltipText = <FormattedMessage id="ui-agreements.eresources.removeTitleButtonTooltip" values={{ packageName }} />;
-
     return (
       <AddToBasketButton
-        addButtonTooltipText={addButtonTooltipText}
-        addLabel={addLabel}
+        addButtonTooltipText={<FormattedMessage id="ui-agreements.eresources.addTitleButtonTooltip" values={{ packageName }} />}
+        addLabel={<FormattedMessage id="ui-agreements.eresources.addTitleToBasket" />}
         item={pci}
-        removeButtonTooltipText={removeButtonTooltipText}
+        removeButtonTooltipText={<FormattedMessage id="ui-agreements.eresources.removeTitleButtonTooltip" values={{ packageName }} />}
       />
     );
   }

@@ -45,7 +45,7 @@ describe('PCI edit form', () => {
       await mountWithContext(
         <TestForm initialValues={pci}>
           <PCIFormCoverage
-            id="pciformcoverage"
+            id="pci-form-coverage"
             values={pci}
           />
         </TestForm>
@@ -117,7 +117,7 @@ describe('PCI edit form', () => {
         await pciEditPaneInteractor.clickAddButton();
       });
 
-      it('renderes a new coverage card', () => {
+      it('renders a new coverage card', () => {
         expect(pciEditPaneInteractor.coverageCount).to.equal(2);
       });
     });

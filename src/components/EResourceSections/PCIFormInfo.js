@@ -14,21 +14,17 @@ export default class PCIFormInfo extends React.Component {
   render() {
     return (
       <div data-test-edit-pci-info>
-        <Row>
-          <Col xs={12}>
-            <Field
-              autoFocus
-              component={TextField}
-              data-test-pci-name
-              disabled
-              id="edit-pci-name"
-              label={<FormattedMessage id="ui-agreements.eresources.name" />}
-              maxLength={255}
-              name="name"
-              required
-            />
-          </Col>
-        </Row>
+        <Field
+          autoFocus
+          component={TextField}
+          data-test-pci-name
+          disabled
+          id="edit-pci-name"
+          label={<FormattedMessage id="ui-agreements.eresources.name" />}
+          maxLength={255}
+          name="name"
+          required
+        />
         <Row>
           <Col xs={4}>
             <Field

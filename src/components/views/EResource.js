@@ -38,7 +38,7 @@ export default class EResource extends React.Component {
     return (eresource?.class === resourceClasses.PCI) ? (
       <IfPermission perm="ui-agreements.resources.edit">
         <PaneMenu>
-          <FormattedMessage id="ui-agreements.eresources.edit">
+          <FormattedMessage id="ui-agreements.pci.edit">
             {ariaLabel => (
               <Button
                 aria-label={ariaLabel}

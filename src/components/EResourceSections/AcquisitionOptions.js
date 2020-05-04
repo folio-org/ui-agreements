@@ -19,7 +19,7 @@ class AcquisitionOptions extends React.Component {
       }),
     }),
     handlers: PropTypes.shape({
-      onEresourceClick: PropTypes.func,
+      onEResourceClick: PropTypes.func,
     }),
     id: PropTypes.string,
     onToggle: PropTypes.func,
@@ -36,9 +36,9 @@ class AcquisitionOptions extends React.Component {
 
   onRowClick = (_, row) => {
     const { id } = row;
-    const { handlers: { onEresourceClick } } = this.props;
+    const { handlers: { onEResourceClick } } = this.props;
 
-    onEresourceClick(id);
+    onEResourceClick(id);
   }
 
   renderBadge = () => {

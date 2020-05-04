@@ -242,7 +242,7 @@ class EResourceViewRoute extends React.Component {
           onNeedMorePackageContents: this.handleNeedMorePackageContents,
           onClose: this.handleClose,
           onEdit: this.handleEdit,
-          onEresourceClick: this.handleEresourceClick,
+          onEResourceClick: this.handleEResourceClick,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
         helperApp={this.getHelperApp()}
