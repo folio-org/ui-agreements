@@ -11,7 +11,7 @@ import {
 import Link from 'react-router-dom/Link';
 import { urls } from '../utilities';
 
-export default class MonographResourceInfo extends React.Component {
+export default class SerialResourceInfo extends React.Component {
   static propTypes = {
     renderIdentifier: PropTypes.func,
     titleInstance: PropTypes.shape({
