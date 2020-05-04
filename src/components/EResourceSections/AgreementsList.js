@@ -7,6 +7,7 @@ import {
   FormattedUTCDate,
   Headline,
   MultiColumnList,
+  NoValue,
 } from '@folio/stripes/components';
 
 import { SerialCoverage } from '../Coverage';
@@ -38,8 +39,8 @@ const AgreementsList = ({ eresource, id, isRelatedEntitlement, resources }) => {
 
   const formatter = {
     name: res => <div data-test-agreement-name><Link to={urls.agreementView(res?.owner?.id)}>{res?.owner.name}</Link></div>,
-    type: res => <div data-test-agreement-status>{res?.owner?.agreementStatus?.label || '-'}</div>,
-    package: res => <div data-test-agreement-package>{res?.resource?._object?.pkg?.name || '-'}</div>,
+    type: res => <div data-test-agreement-status>{res?.owner?.agreementStatus?.label ?? <NoValue />}</div>,
+    package: res => <div data-test-agreement-package>{res?.resource?._object?.pkg?.name ?? <NoValue />}</div>,
     startDate: res => <div data-test-agreement-start-date>{res?.owner?.startDate && <FormattedUTCDate value={res?.owner?.startDate} />}</div>,
     endDate: res => <div data-test-agreement-start-date>{res?.owner?.endDate && <FormattedUTCDate value={res?.owner?.endDate} />}</div>,
     parentPackage: res => <EResourceLink eresource={getResourceFromEntitlement(res)} />,
@@ -58,14 +59,14 @@ const AgreementsList = ({ eresource, id, isRelatedEntitlement, resources }) => {
   ];
 
   const renderEmpty = () => {
-    return (eresource.class === resourceClasses.PACKAGE) ?
-      <FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsPackage" />
+    if (eresource.class === resourceClasses.PACKAGE) {
+      return <FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsPackage" />;
+    }
+
+    return isRelatedEntitlement ?
+      <FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsOtherPackages" />
       :
-      (isRelatedEntitlement ?
-        <FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsOtherPackages" />
-        :
-        <FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsEresource" />
-      );
+      <FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsEresource" />;
   };
 
   const renderHeadline = () => {
@@ -73,11 +74,13 @@ const AgreementsList = ({ eresource, id, isRelatedEntitlement, resources }) => {
       <div data-test-eresource-name>
         <Headline margin="small" tag="h4">
           {isRelatedEntitlement ?
-            <FormattedMessage
-              id="ui-agreements.eresources.otherPlatformPackages"
-              values={{ name: eresource?.pti?.titleInstance?.name }}
-            />
-            : eresource.name}
+            (
+              <FormattedMessage
+                id="ui-agreements.eresources.otherPlatformPackages"
+                values={{ name: eresource?.pti?.titleInstance?.name }}
+              />
+            ) : eresource.name
+          }
         </Headline>
       </div>
     ) : null;

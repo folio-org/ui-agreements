@@ -5,8 +5,6 @@ import { FormattedMessage } from 'react-intl';
 import { Button, Pane, PaneMenu } from '@folio/stripes/components';
 import { IfPermission, TitleManager } from '@folio/stripes/core';
 import { LoadingPane } from '@folio/stripes-erm-components';
-
-
 import Package from './Package';
 import Title from './Title';
 import PackageContentItem from './PackageContentItem';

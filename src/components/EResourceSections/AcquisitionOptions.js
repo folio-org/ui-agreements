@@ -1,23 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { stripesConnect } from '@folio/stripes/core';
-
-import { Accordion, Badge, MultiColumnList, Spinner } from '@folio/stripes/components';
+import { Accordion, Badge, MultiColumnList, NoValue, Spinner } from '@folio/stripes/components';
 
 import AddToBasketButton from '../AddToBasketButton';
 import { Coverage } from '../Coverage';
 import EResourceKB from '../EResourceKB';
 import EResourceType from '../EResourceType';
 
-import { isExternal, isPackage, urls } from '../utilities';
-import { resourceClasses } from '../../constants';
+import { isExternal, isPackage } from '../utilities';
 
 class AcquisitionOptions extends React.Component {
-  static manifest = Object.freeze({
-    query: {},
-  });
-
   static propTypes = {
     data: PropTypes.shape({
       entitlementOptions: PropTypes.array,
@@ -26,19 +19,9 @@ class AcquisitionOptions extends React.Component {
       }),
     }),
     handlers: PropTypes.shape({
-      onPackageContentItemClick: PropTypes.func,
+      onEresourceClick: PropTypes.func,
     }),
     id: PropTypes.string,
-    mutator: PropTypes.shape({
-      query: PropTypes.shape({
-        update: PropTypes.func,
-      }),
-    }),
-    resources: PropTypes.shape({
-      query: PropTypes.shape({
-        _path: PropTypes.string,
-      }),
-    }),
     onToggle: PropTypes.func,
     open: PropTypes.bool,
   };
@@ -53,13 +36,9 @@ class AcquisitionOptions extends React.Component {
 
   onRowClick = (_, row) => {
     const { id } = row;
-    const { handlers: { onPackageContentItemClick } } = this.props;
+    const { handlers: { onEresourceClick } } = this.props;
 
-    if (row.class === resourceClasses.PCI) {
-      onPackageContentItemClick(id);
-    } else {
-      this.props.mutator.query.update({ _path: urls.eresourceView(id) });
-    }
+    onEresourceClick(id);
   }
 
   renderBadge = () => {
@@ -72,7 +51,7 @@ class AcquisitionOptions extends React.Component {
 
     return (
       <div data-test-eresource-name style={{ overflowWrap: 'break-word', width: 180 }}>
-        {name || '-'}
+        {name || <NoValue />}
       </div>
     );
   };
@@ -98,7 +77,7 @@ class AcquisitionOptions extends React.Component {
         sourceKb: option => <EResourceKB resource={option} />,
         package: option => this.renderParentPackage(option),
         coverage: option => <Coverage pci={option} />,
-        platform: option => option?._object?.pti?.platform?.name || '-',
+        platform: option => option?._object?.pti?.platform?.name ?? <NoValue />,
         acqMethod: option => <EResourceType resource={option} />,
         add: option => {
           const optionIsPackage = isPackage(option);
@@ -160,4 +139,4 @@ class AcquisitionOptions extends React.Component {
   }
 }
 
-export default stripesConnect(AcquisitionOptions);
+export default AcquisitionOptions;

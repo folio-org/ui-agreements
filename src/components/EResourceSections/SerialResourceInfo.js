@@ -35,7 +35,7 @@ export default class MonographResourceInfo extends React.Component {
           <Link
             to={urls.eresourceView(titleInstance.id)}
           >
-            <strong data-test-title-instance-name>{titleInstance.name || <NoValue />}</strong>
+            <strong data-test-title-instance-name>{titleInstance.name ?? <NoValue />}</strong>
           </Link>
         )}
         id="title-details-monograph"
@@ -44,12 +44,12 @@ export default class MonographResourceInfo extends React.Component {
         <Row>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.type" />}>
-              <div data-test-title-instance-type>{titleInstance.type?.label || <NoValue />}</div>
+              <div data-test-title-instance-type>{titleInstance.type?.label ?? <NoValue />}</div>
             </KeyValue>
           </Col>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.materialType" />}>
-              <div data-test-title-instance-sub-type>{titleInstance.subType?.label || <NoValue />}</div>
+              <div data-test-title-instance-sub-type>{titleInstance.subType?.label ?? <NoValue />}</div>
             </KeyValue>
           </Col>
         </Row>

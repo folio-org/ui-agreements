@@ -35,7 +35,7 @@ export default class ParentPackageDetails extends React.Component {
             data-test-parent-package-link
             to={urls.eresourceView(pkg?.id)}
           >
-            <strong>{pkg?.name || <NoValue />}</strong>
+            <strong>{pkg?.name ?? <NoValue />}</strong>
           </Link>
             )}
         id="parent-package-details"
@@ -44,22 +44,22 @@ export default class ParentPackageDetails extends React.Component {
         <Row>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.count" />}>
-              <div data-test-resource-count>{pkg?.resourceCount || <NoValue />}</div>
+              <div data-test-resource-count>{pkg?.resourceCount ?? <NoValue />}</div>
             </KeyValue>
           </Col>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.provider" />}>
-              <div data-test-vendor-name>{pkg?.vendor?.name || <NoValue />}</div>
+              <div data-test-vendor-name>{pkg?.vendor?.name ?? <NoValue />}</div>
             </KeyValue>
           </Col>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.source" />}>
-              <div data-test-package-source>{pkg?.source || <NoValue />}</div>
+              <div data-test-package-source>{pkg?.source ?? <NoValue />}</div>
             </KeyValue>
           </Col>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.reference" />}>
-              <div data-test-package-reference>{pkg?.reference || <NoValue />}</div>
+              <div data-test-package-reference>{pkg?.reference ?? <NoValue />}</div>
             </KeyValue>
           </Col>
         </Row>

@@ -8,6 +8,7 @@ import {
   FormattedUTCDate,
   KeyValue,
   MultiColumnList,
+  NoValue,
 } from '@folio/stripes/components';
 import Embargo from '../Embargo';
 
@@ -41,11 +42,11 @@ export default class PackageContentItemCoverage extends React.Component {
 
   formatter = {
     startDate: coverage => <div data-test-start-date>{this.renderDate(coverage.startDate)}</div>,
-    startVolume: coverage => <div data-test-start-volume>{coverage?.startVolume || '-'}</div>,
-    startIssue: coverage => <div data-test-start-issue>{coverage?.startIssue || '-'}</div>,
+    startVolume: coverage => <div data-test-start-volume>{coverage?.startVolume ?? <NoValue />}</div>,
+    startIssue: coverage => <div data-test-start-issue>{coverage?.startIssue ?? <NoValue />}</div>,
     endDate: coverage => <div data-test-end-date>{this.renderDate(coverage?.endDate)}</div>,
-    endVolume: coverage => <div data-test-end-volume>{coverage?.endVolume || '-'}</div>,
-    endIssue: coverage => <div data-test-end-issue>{coverage?.endIssue || '-'}</div>,
+    endVolume: coverage => <div data-test-end-volume>{coverage?.endVolume ?? <NoValue />}</div>,
+    endIssue: coverage => <div data-test-end-issue>{coverage?.endIssue ?? <NoValue />}</div>,
   }
 
   visibleColumns = [
@@ -75,7 +76,7 @@ export default class PackageContentItemCoverage extends React.Component {
   );
 
   renderDate = date => (
-    date ? <FormattedUTCDate value={date} /> : '-'
+    date ? <FormattedUTCDate value={date} /> : <NoValue />
   );
 
   renderEmbargo = (pci) => {

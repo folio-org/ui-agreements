@@ -35,7 +35,7 @@ export default class TitleInfo extends React.Component {
         <KeyValue
           label={<FormattedMessage id={`ui-agreements.identifier.${type}`} />}
         >
-          <div {...{ [`data-test-${type}`]: true }}>{identifier || <NoValue />}</div>
+          <div {...{ [`data-test-${type}`]: true }}>{identifier ?? <NoValue />}</div>
         </KeyValue>
       </Col>
     );
@@ -51,12 +51,9 @@ export default class TitleInfo extends React.Component {
 
     const { label } = titleInstance?.type;
 
-    let ResourceInfoComponent;
-    if (label === resourceTypes.MONOGRAPH || label === resourceTypes.BOOK) {
-      ResourceInfoComponent = MonographResourceInfo;
-    } else {
-      ResourceInfoComponent = SerialResourceInfo;
-    }
+    const ResourceInfoComponent = (
+      label === resourceTypes.MONOGRAPH || label === resourceTypes.BOOK
+    ) ? MonographResourceInfo : SerialResourceInfo;
 
     return (
       <ResourceInfoComponent

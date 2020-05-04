@@ -11,7 +11,7 @@ import Embargo from '../Embargo';
 
 import CoverageFieldArray from '../CoverageFieldArray';
 
-export default class PCIFormInfo extends React.Component {
+export default class PCIFormCoverage extends React.Component {
   static propTypes = {
     id: PropTypes.string,
     open: PropTypes.bool,

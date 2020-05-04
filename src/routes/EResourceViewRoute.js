@@ -152,6 +152,10 @@ class EResourceViewRoute extends React.Component {
     history.push(`${urls.eresourceEdit(match.params.id)}${location.search}`);
   }
 
+  handleEresourceClick = (id) => {
+    this.props.history.push(urls.eresourceView(id));
+  }
+
   handleFilterPackageContents = (path) => {
     const { mutator } = this.props;
     mutator.packageContentsFilter.replace(path);
@@ -213,10 +217,6 @@ class EResourceViewRoute extends React.Component {
       get(this.props.resources, `${resource}.records`);
   }
 
-  viewPackageContentItem = (id) => {
-    this.props.history.push(urls.eresourceView(id));
-  }
-
   render() {
     const {
       handlers,
@@ -242,7 +242,7 @@ class EResourceViewRoute extends React.Component {
           onNeedMorePackageContents: this.handleNeedMorePackageContents,
           onClose: this.handleClose,
           onEdit: this.handleEdit,
-          onPackageContentItemClick: this.viewPackageContentItem,
+          onEresourceClick: this.handleEresourceClick,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
         helperApp={this.getHelperApp()}

@@ -15,7 +15,7 @@ import {
   Spinner,
 } from '@folio/stripes/components';
 
-// import { IfPermission } from '@folio/stripes/core';
+import { IfPermission } from '@folio/stripes/core';
 
 import {
   Agreements,
@@ -94,18 +94,20 @@ export default class PackageContentItem extends React.Component {
 
   renderEditMenu = () => (
     <PaneMenu>
-      <FormattedMessage id="ui-agreements.eresources.edit">
-        {ariaLabel => (
-          <Button
-            aria-label={ariaLabel}
-            buttonStyle="primary"
-            id="clickable-edit-pci"
-            marginBottom0
-          >
-            <FormattedMessage id="stripes-components.button.edit" />
-          </Button>
-        )}
-      </FormattedMessage>
+      <IfPermission perm="ui-agreements.resources.edit">
+        <FormattedMessage id="ui-agreements.eresources.edit">
+          {ariaLabel => (
+            <Button
+              aria-label={ariaLabel}
+              buttonStyle="primary"
+              id="clickable-edit-pci"
+              marginBottom0
+            >
+              <FormattedMessage id="stripes-components.button.edit" />
+            </Button>
+          )}
+        </FormattedMessage>
+      </IfPermission>
     </PaneMenu>
   );
 

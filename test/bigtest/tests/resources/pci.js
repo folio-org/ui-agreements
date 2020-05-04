@@ -5,12 +5,23 @@ const pci = {
   'dateCreated': '2020-04-24T15:20:16Z',
   'lastUpdated': '2020-04-24T15:20:16Z',
   'depth': 'full text',
+  'embargo': {
+    'movingWallEnd': {
+      'length': 2,
+      'unit': 'months'
+    },
+    'movingWallStart': {
+      'length': 10,
+      'unit': 'years'
+    }
+  },
   'coverage': [{
     'id': 'f74c8234-1b86-47a1-bf7b-33c3c726caa0',
     'startDate': '1963-01-01',
     'endDate': '1965-01-01',
     'endVolume': '3',
     'startIssue': '1',
+    'endIssue': '2',
     'startVolume': '6',
     'summary': 'v6/i1/1963-01-01 - v*/i*/*',
   }],

@@ -31,10 +31,6 @@ describe('PCI agreements information', () => {
       );
     });
 
-    it('renders the eresource name', () => {
-      expect(pciAgreementsInteractor.eresourceName).to.equal(eresource.name);
-    });
-
     it('renders the agreement name', () => {
       expect(pciAgreementsInteractor.agreementName(0)).to.equal(entitlements?.[0]?.owner?.name);
     });

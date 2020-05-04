@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-
 import {
   AccordionSet,
   Button,
@@ -79,7 +78,6 @@ class PackageContentItemForm extends React.Component {
       handleSubmit,
       pristine,
       submitting,
-      values,
     } = this.props;
 
     return (
@@ -88,7 +86,7 @@ class PackageContentItemForm extends React.Component {
           <Button
             buttonStyle="primary mega"
             disabled={pristine || submitting}
-            id={values.id ? 'clickable-update-pci' : 'clickable-create-pci'}
+            id="clickable-update-pci"
             marginBottom0
             onClick={handleSubmit}
             type="submit"
@@ -118,7 +116,7 @@ class PackageContentItemForm extends React.Component {
             <IconButton
               aria-label={ariaLabel}
               icon="times"
-              id="close-agreement-form-button"
+              id="close-pci-form-button"
               onClick={this.props.handlers.onClose}
             />
           )}
