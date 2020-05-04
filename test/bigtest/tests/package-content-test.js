@@ -39,96 +39,114 @@ describe('Package Content Filters', () => {
   let eresource;
 
   beforeEach(async function () {
-    eresource = this.server.create('eresource', { name: PKG.name, class: 'org.olf.kb.Pkg', pcis: [droppedResource, currentResource, futureResource] });
+    eresource = this.server.create('eresource', {
+      name: PKG.name,
+      class: 'org.olf.kb.Pkg',
+      pcis: [droppedResource, currentResource, futureResource]
+    });
   });
 
   describe('visiting the eresource pane', () => {
     beforeEach(async function () {
-      this.visit(`/erm/eresources/${eresource.id}`);
+      await this.visit(`/erm/eresources/${eresource.id}`);
     });
 
-    it('should render expected package', () => {
-      expect(eresourceView.headline).to.equal(PKG.name);
-    });
-
-    it('should render the expected current eresource', () => {
-      expect(eresourceView.packageContent.eresourceName(0)).to.equal(currentResource.pti.titleInstance.name);
-    });
-
-    describe('clicking the future eresource tab', () => {
+    describe('loading the eresource view pane', () => {
       beforeEach(async function () {
-        await eresourceView.packageContent.clickFuture();
+        await eresourceView.whenLoaded();
       });
 
-      it('should render the expected future resource', () => {
-        expect(eresourceView.packageContent.eresourceName(0)).to.equal(futureResource.pti.titleInstance.name);
-      });
-    });
-
-    describe('clicking the dropped eresource tab', () => {
-      beforeEach(async function () {
-        await eresourceView.packageContent.clickDropped();
+      it('should render expected package', () => {
+        expect(eresourceView.headline).to.equal(PKG.name);
       });
 
-      it('should render the expected dropped resource', () => {
-        expect(eresourceView.packageContent.eresourceName(0)).to.equal(droppedResource.pti.titleInstance.name);
-      });
-    });
-
-    describe('Add eresource to basket and create agreement', () => {
-      beforeEach(async function () {
-        await eresourceView.clickAddToBasket();
-        await basket.clickOpenBasket();
-        await basket.clickCreateNewAgreement();
-        await agreementForm.fillName('testAgreement');
-        await agreementForm.selectStatus('Draft');
-        await agreementForm.fillStartDate('04/01/2020');
-        await agreementForm.createAgreement();
-        await agreementView.whenLoaded();
+      it('should render the expected current eresource', () => {
+        expect(eresourceView.packageContent.eresourceName(0)).to.equal(currentResource.pti.titleInstance.name);
       });
 
-      describe('open agreement view pane', () => {
-        describe('clicking the lines accordion', () => {
-          beforeEach(async function () {
-            await agreementView.linesSection.clickLinesAccordion();
-          });
-
-          it('should render the expected current eresource', () => {
-            expect(agreementView.linesSection.coveredEresourcesList.eresourceName(0)).to.equal(currentResource.pti.titleInstance.name);
-          });
-
-          it('should find enabled export button', () => {
-            expect(agreementView.linesSection.coveredEresourcesList.isExportBtnDisabled).to.be.false;
-          });
+      describe('clicking the future eresource tab', () => {
+        beforeEach(async function () {
+          await eresourceView.packageContent.clickFuture();
         });
 
-        describe('clicking future eresource', () => {
-          beforeEach(async function () {
-            await agreementView.linesSection.clickLinesAccordion();
-            await agreementView.linesSection.coveredEresourcesList.clickFuture();
-          });
+        it('should render the expected future resource', () => {
+          expect(eresourceView.packageContent.eresourceName(0)).to.equal(futureResource.pti.titleInstance.name);
+        });
+      });
 
-          it('should render the expected future eresource', () => {
-            expect(agreementView.linesSection.coveredEresourcesList.eresourceName(0)).to.equal(futureResource.pti.titleInstance.name);
-          });
-
-          it('should find disabled export button', () => {
-            expect(agreementView.linesSection.coveredEresourcesList.isExportBtnDisabled).to.be.true;
-          });
+      describe('clicking the dropped eresource tab', () => {
+        beforeEach(async function () {
+          await eresourceView.packageContent.clickDropped();
         });
 
-        describe('clicking dropped eresource', () => {
+        it('should render the expected dropped resource', () => {
+          expect(eresourceView.packageContent.eresourceName(0)).to.equal(droppedResource.pti.titleInstance.name);
+        });
+      });
+
+      describe('add eresource to basket and open basket', () => {
+        beforeEach(async function () {
+          await eresourceView.clickAddToBasket();
+          await basket.clickOpenBasket();
+        });
+
+        describe('begin creating new agreement', () => {
           beforeEach(async function () {
-            await agreementView.linesSection.clickLinesAccordion();
-            await agreementView.linesSection.coveredEresourcesList.clickDropped();
+            await basket.clickCreateNewAgreement();
+            await agreementForm.fillName('testAgreement');
+            await agreementForm.selectStatus('Draft');
+            await agreementForm.fillStartDate('04/01/2020');
           });
 
-          it('should render the expected dropped eresource', () => {
-            expect(agreementView.linesSection.coveredEresourcesList.eresourceName(0)).to.equal(droppedResource.pti.titleInstance.name);
-          });
+          describe('save and view agreement', () => {
+            beforeEach(async function () {
+              await agreementForm.createAgreement();
+              await agreementView.whenLoaded();
+            });
 
-          it('should find disabled export button', () => {
-            expect(agreementView.linesSection.coveredEresourcesList.isExportBtnDisabled).to.be.true;
+            describe('clicking the lines accordion', () => {
+              beforeEach(async function () {
+                await agreementView.expandAll();
+              });
+
+              it('should render the expected current eresource', () => {
+                expect(agreementView.linesSection.coveredEresourcesList.eresourceName(0)).to.equal(currentResource.pti.titleInstance.name);
+              });
+
+              it('should find enabled export button', () => {
+                expect(agreementView.linesSection.coveredEresourcesList.isExportBtnDisabled).to.be.false;
+              });
+            });
+
+            describe('clicking future eresource', () => {
+              beforeEach(async function () {
+                await agreementView.expandAll();
+                await agreementView.linesSection.coveredEresourcesList.clickFuture();
+              });
+
+              it('should render the expected future eresource', () => {
+                expect(agreementView.linesSection.coveredEresourcesList.eresourceName(0)).to.equal(futureResource.pti.titleInstance.name);
+              });
+
+              it('should find disabled export button', () => {
+                expect(agreementView.linesSection.coveredEresourcesList.isExportBtnDisabled).to.be.true;
+              });
+            });
+
+            describe('clicking dropped eresource', () => {
+              beforeEach(async function () {
+                await agreementView.expandAll();
+                await agreementView.linesSection.coveredEresourcesList.clickDropped();
+              });
+
+              it('should render the expected dropped eresource', () => {
+                expect(agreementView.linesSection.coveredEresourcesList.eresourceName(0)).to.equal(droppedResource.pti.titleInstance.name);
+              });
+
+              it('should find disabled export button', () => {
+                expect(agreementView.linesSection.coveredEresourcesList.isExportBtnDisabled).to.be.true;
+              });
+            });
           });
         });
       });

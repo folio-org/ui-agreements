@@ -130,7 +130,6 @@ export default class LicenseField extends React.Component {
     return (
       <Card
         cardStyle={value ? 'positive' : 'negative'}
-        hasMargin
         headerEnd={this.renderLinkLicenseButton(value)}
         headerStart={(
           <AppIcon app="licenses" size="small">

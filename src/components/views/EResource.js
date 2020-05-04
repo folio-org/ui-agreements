@@ -4,7 +4,8 @@ import { FormattedMessage } from 'react-intl';
 
 import { Button, Pane, PaneMenu } from '@folio/stripes/components';
 import { IfPermission, TitleManager } from '@folio/stripes/core';
-import { LoadingPane } from '@folio/stripes-erm-components';
+import { LoadingPane, Pane } from '@folio/stripes/components';
+
 import Package from './Package';
 import Title from './Title';
 import PCI from './PCI';
@@ -64,7 +65,13 @@ export default class EResource extends React.Component {
       isLoading,
     } = this.props;
 
-    if (isLoading) return <LoadingPane onClose={handlers.onClose} />;
+    const paneProps = {
+      defaultWidth: '55%',
+      dismissible: true,
+      onClose: handlers.onClose,
+    };
+
+    if (isLoading) return <LoadingPane data-loading id="pane-view-eresource" {...paneProps} />;
 
     let EResourceViewComponent = Package;
 
@@ -77,12 +84,11 @@ export default class EResource extends React.Component {
     return (
       <>
         <Pane
-          defaultWidth="55%"
-          dismissible
           id="pane-view-eresource"
           lastMenu={this.renderEditPCIPaneMenu()}
           onClose={handlers.onClose}
           paneTitle={data.eresource.name}
+          {...paneProps}
         >
           <TitleManager record={data.eresource.name}>
             <EResourceViewComponent data={data} handlers={handlers} />

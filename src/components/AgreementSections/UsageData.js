@@ -38,7 +38,6 @@ export default class UsageData extends React.Component {
       <Card
         key={index}
         cardStyle="positive"
-        hasMargin
         headerStart={(
           <AppIcon app="erm-usage" size="small">
             <Link

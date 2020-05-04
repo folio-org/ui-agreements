@@ -27,7 +27,7 @@ const internalContactData = {
   role: { label: 'Agreement owner', value: 'agreement_owner' },
 };
 
-describe('Clone Agreement test', () => {
+describe.skip('Clone Agreement test', () => {
   setupApplication();
   const agreementView = new AgreementViewInteractor();
   const agreementEdit = new AgreementFormInteractor();
@@ -49,7 +49,6 @@ describe('Clone Agreement test', () => {
 
     describe('select only the agreementInfo checkbox to duplicate', () => {
       beforeEach(async function () {
-        await agreementView.whenLoaded();
         await agreementView.headerDropdown.click();
         await agreementView.headerDropdownMenu.clickDuplicate();
         await agreementView.duplicateAgreementModal.checkBoxList(1).click();

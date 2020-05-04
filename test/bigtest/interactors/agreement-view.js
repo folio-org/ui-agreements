@@ -18,6 +18,7 @@ import AgreementLinesInteractor from './agreement-lines';
 
 export default @interactor class AgreementViewInteractor {
   isViewAgreement = isPresent('#pane-view-agreement');
+  isLoading = isPresent('#pane-view-agreement[data-loading]');
   lines = new AgreementLinesInteractor();
   headerDropdown = new HeaderDropdown('[data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
@@ -27,6 +28,6 @@ export default @interactor class AgreementViewInteractor {
   linesSection = new AgreementLinesInteractor('#lines');
 
   whenLoaded() {
-    return this.when(() => this.isViewAgreement).timeout(5000);
+    return this.when(() => this.isLoading === false).timeout(5000);
   }
 }
