@@ -5,7 +5,7 @@ import { cloneDeep } from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 import { LoadingPane } from '@folio/stripes-erm-components';
 
-import View from '../components/views/PackageContentItemForm';
+import View from '../components/views/PCIForm';
 import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
 

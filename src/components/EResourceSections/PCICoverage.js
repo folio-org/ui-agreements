@@ -12,7 +12,7 @@ import {
 } from '@folio/stripes/components';
 import Embargo from '../Embargo';
 
-export default class PackageContentItemCoverage extends React.Component {
+export default class PCICoverage extends React.Component {
   static propTypes = {
     id: PropTypes.string,
     onToggle: PropTypes.func,

@@ -7,7 +7,7 @@ import { IfPermission, TitleManager } from '@folio/stripes/core';
 import { LoadingPane } from '@folio/stripes-erm-components';
 import Package from './Package';
 import Title from './Title';
-import PackageContentItem from './PackageContentItem';
+import PCI from './PCI';
 import { resourceClasses } from '../../constants';
 
 export default class EResource extends React.Component {
@@ -71,7 +71,7 @@ export default class EResource extends React.Component {
     if (data.eresource?.class === resourceClasses.TITLEINSTANCE) {
       EResourceViewComponent = Title;
     } else if (data.eresource?.class === resourceClasses.PCI) {
-      EResourceViewComponent = PackageContentItem;
+      EResourceViewComponent = PCI;
     }
 
     return (

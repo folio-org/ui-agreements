@@ -5,7 +5,7 @@ import spies from 'chai-spies';
 import { StaticRouter as Router } from 'react-router-dom';
 import { mountWithContext } from '../helpers/mountWithContext';
 
-import PackageContentItemCoverage from '../../../src/components/EResourceSections/PackageContentItemCoverage';
+import PCICoverage from '../../../src/components/EResourceSections/PCICoverage';
 
 import { serialResource } from './resources';
 import EmbargoInteractor from '../interactors/embargo';
@@ -21,7 +21,7 @@ describe('PCI coverage information', () => {
   beforeEach(async () => {
     await mountWithContext(
       <Router context={{}}>
-        <PackageContentItemCoverage
+        <PCICoverage
           pci={serialResource}
         />
       </Router>

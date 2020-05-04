@@ -20,13 +20,13 @@ import { IfPermission } from '@folio/stripes/core';
 import {
   Agreements,
   AgreementsList,
-  PackageContentItemCoverage,
-  PackageContentItemInfo,
+  PCICoverage,
+  PCIInfo,
   ParentPackageDetails,
   TitleInfo,
 } from '../EResourceSections';
 
-export default class PackageContentItem extends React.Component {
+export default class PCI extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       eresource: PropTypes.shape({
@@ -111,7 +111,7 @@ export default class PackageContentItem extends React.Component {
     </PaneMenu>
   );
 
-  renderPackageContentItemInfo = (eresource) => <PackageContentItemInfo pci={eresource} />;
+  renderPCIInfo = (eresource) => <PCIInfo pci={eresource} />;
 
   renderParentPackageDetails = ({ pkg = {} }) => (
     <div data-test-parent-package-details>
@@ -141,7 +141,7 @@ export default class PackageContentItem extends React.Component {
 
     return (
       <div id="eresource-pci">
-        {this.renderPackageContentItemInfo(eresource)}
+        {this.renderPCIInfo(eresource)}
         {this.renderParentPackageDetails(eresource)}
         {this.renderTitleDetails()}
         <AccordionSet>
@@ -154,7 +154,7 @@ export default class PackageContentItem extends React.Component {
               />
             </Col>
           </Row>
-          <PackageContentItemCoverage {...this.getSectionProps('coverage')} />
+          <PCICoverage {...this.getSectionProps('coverage')} />
           <Agreements {...this.getSectionProps('pciagreements')} />
           <AgreementsList
             eresource={eresource}

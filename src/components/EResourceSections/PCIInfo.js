@@ -13,7 +13,7 @@ import {
 
 import AddToBasketButton from '../AddToBasketButton';
 
-export default class PackageContentItemInfo extends React.Component {
+export default class PCIInfo extends React.Component {
   static propTypes = {
     pci: PropTypes.shape({
       name: PropTypes.string,

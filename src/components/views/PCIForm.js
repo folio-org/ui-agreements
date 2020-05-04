@@ -18,11 +18,11 @@ import {
 } from '@folio/stripes/components';
 import { TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
-import css from './PackageContentItemForm.css';
+import css from './PCIForm.css';
 
 import { PCIFormCoverage, PCIFormInfo } from '../EResourceSections';
 
-class PackageContentItemForm extends React.Component {
+class PCIForm extends React.Component {
   static propTypes = {
     form: PropTypes.shape({
       getRegisteredFields: PropTypes.func.isRequired,
@@ -190,4 +190,4 @@ export default stripesFinalForm({
     values: true,
   },
   navigationCheck: true,
-})(PackageContentItemForm);
+})(PCIForm);
