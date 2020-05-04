@@ -38,19 +38,14 @@ export default class EResource extends React.Component {
     return (eresource?.class === resourceClasses.PCI) ? (
       <IfPermission perm="ui-agreements.resources.edit">
         <PaneMenu>
-          <FormattedMessage id="ui-agreements.pci.edit">
-            {ariaLabel => (
-              <Button
-                aria-label={ariaLabel}
-                buttonStyle="primary"
-                id="clickable-edit-eresource"
-                marginBottom0
-                onClick={handlers.onEdit}
-              >
-                <FormattedMessage id="stripes-components.button.edit" />
-              </Button>
-            )}
-          </FormattedMessage>
+          <Button
+            buttonStyle="primary"
+            id="clickable-edit-eresource"
+            marginBottom0
+            onClick={handlers.onEdit}
+          >
+            <FormattedMessage id="stripes-components.button.edit" />
+          </Button>
         </PaneMenu>
       </IfPermission>
     ) : null;
