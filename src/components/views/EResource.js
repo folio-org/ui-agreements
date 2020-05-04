@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Button, Pane, PaneMenu } from '@folio/stripes/components';
+import { Button, LoadingPane, Pane, PaneMenu } from '@folio/stripes/components';
 import { IfPermission, TitleManager } from '@folio/stripes/core';
-import { LoadingPane, Pane } from '@folio/stripes/components';
 
 import Package from './Package';
 import Title from './Title';
