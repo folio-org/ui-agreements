@@ -76,7 +76,7 @@
     "final-form-arrays": "^3.0.1",
     "final-form-set-field-data": "^1.0.2",
     "lodash": "^4.17.11",
-    "moment": "^2.22.2",
+    "moment": "~2.24.0",
     "prop-types": "^15.6.0",
     "query-string": "^6.6.0",
     "react-final-form": "^6.3.0",
@@ -92,6 +92,9 @@
     "react-redux": "*",
     "react-router-dom": "^4.1.1",
     "redux": "*"
+  },
+  "resolutions": {
+    "moment": "~2.24.0"
   },
   "stripes": {
     "type": "app",
