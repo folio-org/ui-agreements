@@ -40,9 +40,9 @@ export default class Agreements extends React.Component {
   }
 
   renderBadge = () => {
-    const { entitlements = [], relatedEntitlements = [] } = this.props.data;
+    const { entitlements, relatedEntitlements = [] } = this.props.data;
     const count = entitlements.length + relatedEntitlements.length;
-    return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
+    return entitlements.length ? <Badge>{count}</Badge> : <Spinner />;
   }
 
   render() {
