@@ -10,7 +10,7 @@ import {
 } from '@folio/stripes/components';
 import Link from 'react-router-dom/Link';
 import { urls } from '../utilities';
-import Identifier from './Identifier';
+import EResourceIdentifier from '../EResourceIdentifier';
 
 export default class SerialResourceInfo extends React.Component {
   static propTypes = {
@@ -54,10 +54,10 @@ export default class SerialResourceInfo extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Identifier titleInstance={titleInstance} type="ezb" />
-          <Identifier titleInstance={titleInstance} type="zdb" />
-          <Identifier titleInstance={titleInstance} type="eissn" />
-          <Identifier titleInstance={titleInstance} type="pissn" />
+          <EResourceIdentifier titleInstance={titleInstance} type="ezb" />
+          <EResourceIdentifier titleInstance={titleInstance} type="zdb" />
+          <EResourceIdentifier titleInstance={titleInstance} type="eissn" />
+          <EResourceIdentifier titleInstance={titleInstance} type="pissn" />
         </Row>
       </Card>
     );

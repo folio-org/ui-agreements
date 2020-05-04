@@ -4,7 +4,6 @@ import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import {
   AccordionSet,
-  AccordionStatus,
   Button,
   Col,
   ExpandAllButton,
@@ -40,6 +39,11 @@ class PCIForm extends React.Component {
     initialValues: {},
   }
 
+  state = {
+    sections: {
+      pciFormCoverage: true,
+    }
+  }
 
   getSectionProps(id) {
     const { form, values = {} } = this.props;
@@ -47,8 +51,23 @@ class PCIForm extends React.Component {
     return {
       form,
       id,
+      onToggle: this.handleSectionToggle,
+      open: this.state.sections[id],
       values,
     };
+  }
+
+  handleSectionToggle = ({ id }) => {
+    this.setState((prevState) => ({
+      sections: {
+        ...prevState.sections,
+        [id]: !prevState.sections[id],
+      }
+    }));
+  }
+
+  handleAllSectionsToggle = (sections) => {
+    this.setState({ sections });
   }
 
   renderPaneFooter() {
@@ -122,18 +141,20 @@ class PCIForm extends React.Component {
           <TitleManager record={name}>
             <form id="form-pci">
               <PCIFormInfo />
-              <AccordionStatus initialStatus={{ 'pci-form-coverage': true }}>
+              <AccordionSet>
                 {hasLoaded ? <div id="form-loaded" /> : null}
                 <Row end="xs">
                   <Col xs>
-                    <ExpandAllButton />
+                    <ExpandAllButton
+                      accordionStatus={this.state.sections}
+                      id="clickable-expand-all"
+                      onToggle={this.handleAllSectionsToggle}
+                    />
                   </Col>
                 </Row>
-                <AccordionSet>
-                  <div className={css.separator} />
-                  <PCIFormCoverage {...this.getSectionProps('pci-form-coverage')} />
-                </AccordionSet>
-              </AccordionStatus>
+                <div className={css.separator} />
+                <PCIFormCoverage {...this.getSectionProps('pciFormCoverage')} />
+              </AccordionSet>
             </form>
           </TitleManager>
         </Pane>

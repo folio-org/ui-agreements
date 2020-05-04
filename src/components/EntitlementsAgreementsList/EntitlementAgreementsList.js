@@ -16,11 +16,11 @@ import EResourceLink from '../EResourceLink';
 import EResourceType from '../EResourceType';
 import { getResourceFromEntitlement, urls } from '../utilities';
 
-const AgreementsList = (
+const EntitlementAgreementsList = (
   { headline,
     id,
     isEmptyMessage,
-    resources,
+    entitlements,
     visibleColumns }
 ) => {
   const columnMapping = {
@@ -41,15 +41,15 @@ const AgreementsList = (
   };
 
   const formatter = {
-    name: res => <div data-test-agreement-name><Link to={urls.agreementView(res?.owner?.id)}>{res?.owner.name}</Link></div>,
-    type: res => <div data-test-agreement-status>{res?.owner?.agreementStatus?.label ?? <NoValue />}</div>,
-    package: res => <div data-test-agreement-package>{res?.resource?._object?.pkg?.name ?? <NoValue />}</div>,
-    startDate: res => <div data-test-agreement-start-date>{res?.owner?.startDate && <FormattedUTCDate value={res?.owner?.startDate} />}</div>,
-    endDate: res => <div data-test-agreement-start-date>{res?.owner?.endDate && <FormattedUTCDate value={res?.owner?.endDate} />}</div>,
-    parentPackage: res => <EResourceLink eresource={getResourceFromEntitlement(res)} />,
-    acqMethod: res => <EResourceType resource={res?.resource} />,
-    coverage: res => <SerialCoverage statements={res?.coverage} />,
-    isCustomCoverage: res => res.customCoverage && <CustomCoverageIcon />,
+    name: e => <div data-test-agreement-name><Link to={urls.agreementView(e?.owner?.id)}>{e?.owner.name}</Link></div>,
+    type: e => <div data-test-agreement-status>{e?.owner?.agreementStatus?.label ?? <NoValue />}</div>,
+    package: e => <div data-test-agreement-package>{e?.resource?._object?.pkg?.name ?? <NoValue />}</div>,
+    startDate: e => <div data-test-agreement-start-date>{e?.owner?.startDate && <FormattedUTCDate value={e?.owner?.startDate} />}</div>,
+    endDate: e => <div data-test-agreement-start-date>{e?.owner?.endDate && <FormattedUTCDate value={e?.owner?.endDate} />}</div>,
+    parentPackage: e => <EResourceLink eresource={getResourceFromEntitlement(e)} />,
+    acqMethod: e => <EResourceType resource={e?.resource} />,
+    coverage: e => <SerialCoverage statements={e?.coverage} />,
+    isCustomCoverage: e => e.customCoverage && <CustomCoverageIcon />,
   };
 
   const renderHeadline = () => {
@@ -68,7 +68,7 @@ const AgreementsList = (
       <MultiColumnList
         columnMapping={columnMapping}
         columnWidths={columnWidths}
-        contentData={resources}
+        contentData={entitlements}
         formatter={formatter}
         id={`${id}-agreements`}
         interactive={false}
@@ -79,17 +79,17 @@ const AgreementsList = (
   );
 };
 
-AgreementsList.defaultProps = {
+EntitlementAgreementsList.defaultProps = {
   isEmptyMessage: <FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsEresource" />,
   visibleColumns: ['name', 'type', 'startDate', 'endDate']
 };
 
-AgreementsList.propTypes = {
-  resources: PropTypes.arrayOf(PropTypes.object),
+EntitlementAgreementsList.propTypes = {
+  entitlements: PropTypes.arrayOf(PropTypes.object),
   headline: PropTypes.node,
   id: PropTypes.string,
   isEmptyMessage: PropTypes.node,
   visibleColumns: PropTypes.arrayOf(PropTypes.string),
 };
 
-export default AgreementsList;
+export default EntitlementAgreementsList;

@@ -14,7 +14,6 @@ import {
 
 import {
   Agreements,
-  AgreementsList,
   PCICoverage,
   PCIInfo,
   ParentPackageDetails,
@@ -51,7 +50,7 @@ export default class PCI extends React.Component {
 
   render() {
     const {
-      data: { eresource, relatedEntitlements = [] },
+      data: { eresource },
       handlers,
       isLoading,
     } = this.props;
@@ -96,23 +95,11 @@ export default class PCI extends React.Component {
             <Agreements
               {...this.getSectionProps('pci-agreements')}
               headline={eresource.name}
+              renderRelatedEntitlements
               visibleColumns={['name', 'type', 'startDate', 'endDate']}
-            />
-            <AgreementsList
-              eresource={eresource}
-              headline={<FormattedMessage
-                id="ui-agreements.eresources.otherPlatformPackages"
-                values={{ name: eresource?.pti?.titleInstance?.name }}
-              />}
-              id="pci-related-agreements"
-              isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsOtherPackages" />}
-              resources={relatedEntitlements}
-              visibleColumns={['name', 'type', 'package', 'startDate', 'endDate']}
             />
           </AccordionSet>
         </AccordionStatus>
-
-
       </div>
     );
   }

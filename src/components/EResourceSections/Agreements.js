@@ -9,7 +9,7 @@ import {
 } from '@folio/stripes/components';
 
 import { resourceClasses } from '../../constants';
-import AgreementsList from './AgreementsList';
+import EntitlementAgreementsList from '../EntitlementsAgreementsList';
 
 export default class Agreements extends React.Component {
   static propTypes = {
@@ -24,21 +24,38 @@ export default class Agreements extends React.Component {
     id: PropTypes.string,
     headline: PropTypes.node,
     isEmptyMessage: PropTypes.node,
+    renderRelatedEntitlements: PropTypes.bool,
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
   };
 
-  renderAgreements = (eresource) => {
+  renderEntitlementAgreements = () => {
     const { entitlements = [] } = this.props.data;
     const { headline, id, isEmptyMessage, visibleColumns } = this.props;
 
     return (
-      <AgreementsList
-        eresource={eresource}
+      <EntitlementAgreementsList
+        entitlements={entitlements}
         headline={headline}
         id={id}
         isEmptyMessage={isEmptyMessage}
-        resources={entitlements}
         visibleColumns={visibleColumns}
+      />
+    );
+  }
+
+  renderRelatedEntitlementAgreements = () => {
+    const { eresource, relatedEntitlements = [] } = this.props.data;
+
+    return (
+      <EntitlementAgreementsList
+        entitlements={relatedEntitlements}
+        headline={<FormattedMessage
+          id="ui-agreements.eresources.otherPlatformPackages"
+          values={{ name: eresource?.pti?.titleInstance?.name }}
+        />}
+        id="related-agreements"
+        isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsOtherPackages" />}
+        visibleColumns={['name', 'type', 'package', 'startDate', 'endDate']}
       />
     );
   }
@@ -54,8 +71,9 @@ export default class Agreements extends React.Component {
 
   render() {
     const {
-      data: { entitlements, eresource },
+      data: { entitlements, eresource, relatedEntitlements },
       id,
+      renderRelatedEntitlements,
     } = this.props;
 
     const label = (eresource.class === resourceClasses.PKG) ?
@@ -69,7 +87,8 @@ export default class Agreements extends React.Component {
         id={id}
         label={label}
       >
-        {entitlements ? this.renderAgreements(eresource) : <Spinner />}
+        {entitlements ? this.renderEntitlementAgreements(entitlements) : <Spinner />}
+        {renderRelatedEntitlements && relatedEntitlements ? this.renderRelatedEntitlementAgreements() : <Spinner />}
       </Accordion>
     );
   }

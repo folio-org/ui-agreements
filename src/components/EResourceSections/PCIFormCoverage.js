@@ -14,16 +14,20 @@ import CoverageFieldArray from '../CoverageFieldArray';
 export default class PCIFormCoverage extends React.Component {
   static propTypes = {
     id: PropTypes.string,
+    open: PropTypes.bool,
+    onToggle: PropTypes.func,
     values: PropTypes.object,
   };
 
   render() {
-    const { id, values } = this.props;
+    const { id, open, onToggle, values } = this.props;
 
     return (
       <Accordion
         id={id}
         label={<FormattedMessage id="ui-agreements.eresources.coverage" />}
+        onToggle={onToggle}
+        open={open}
       >
         {values?.embargo ?
           (

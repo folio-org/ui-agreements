@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import { mountWithContext } from '../helpers/mountWithContext';
 
 import Agreements from '../../../src/components/EResourceSections/Agreements';
-import AgreementsList from '../../../src/components/EResourceSections/AgreementsList';
+import EntitlementAgreementsList from '../../../src/components/EntitlementsAgreementsList';
 
 import { pci as eresource, entitlements, relatedEntitlements } from './resources';
 import PCIAgreementsInteractor from '../interactors/pci-agreements';
@@ -55,12 +55,11 @@ describe('PCI agreements information', () => {
     beforeEach(async () => {
       await mountWithContext(
         <Router context={{}}>
-          <AgreementsList
-            eresource={eresource}
-            id="pci-related-agreements"
+          <EntitlementAgreementsList
+            entitlements={relatedEntitlements}
+            id="related-agreements"
             isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsOtherPackages" />}
             isRelatedEntitlement
-            resources={relatedEntitlements}
             visibleColumns={['name', 'type', 'package', 'startDate', 'endDate']}
           />
         </Router>

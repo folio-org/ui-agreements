@@ -1,7 +1,5 @@
 export { default as AcquisitionOptions } from './AcquisitionOptions';
 export { default as Agreements } from './Agreements';
-export { default as AgreementsList } from './AgreementsList';
-export { default as Identifier } from './Identifier';
 export { default as MonographResourceInfo } from './MonographResourceInfo';
 export { default as PackageContents } from './PackageContents';
 export { default as PackageInfo } from './PackageInfo';

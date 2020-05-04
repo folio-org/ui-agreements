@@ -11,7 +11,7 @@ import {
 } from '@folio/stripes/components';
 import Link from 'react-router-dom/Link';
 import { urls } from '../utilities';
-import Identifier from './Identifier';
+import EResourceIdentifier from '../EResourceIdentifier';
 
 export default class MonographResourceInfo extends React.Component {
   static propTypes = {
@@ -93,8 +93,8 @@ export default class MonographResourceInfo extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Identifier titleInstance={titleInstance} type="isbn" />
-          <Identifier titleInstance={titleInstance} type="doi" />
+          <EResourceIdentifier titleInstance={titleInstance} type="isbn" />
+          <EResourceIdentifier titleInstance={titleInstance} type="doi" />
         </Row>
       </Card>
     );

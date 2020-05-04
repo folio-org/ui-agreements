@@ -8,7 +8,7 @@ import {
 
 import { getResourceIdentifier } from '../utilities';
 
-const Identifier = (
+const EResourceIdentifier = (
   { type, titleInstance, width = 3 }
 ) => {
   const identifier = getResourceIdentifier(titleInstance, type);
@@ -26,10 +26,10 @@ const Identifier = (
   );
 };
 
-Identifier.propTypes = {
-  titleInstance: PropTypes.string,
+EResourceIdentifier.propTypes = {
+  titleInstance: PropTypes.object,
   type: PropTypes.string,
   width: PropTypes.number
 };
 
-export default Identifier;
+export default EResourceIdentifier;

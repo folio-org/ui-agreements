@@ -152,7 +152,7 @@ class EResourceViewRoute extends React.Component {
     history.push(`${urls.eresourceEdit(match.params.id)}${location.search}`);
   }
 
-  handleEresourceClick = (id) => {
+  handleEResourceClick = (id) => {
     this.props.history.push(urls.eresourceView(id));
   }
 

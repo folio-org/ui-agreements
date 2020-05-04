@@ -45,7 +45,7 @@ describe('PCI edit form', () => {
       await mountWithContext(
         <TestForm initialValues={pci}>
           <PCIFormCoverage
-            id="pci-form-coverage"
+            id="pciFormCoverage"
             values={pci}
           />
         </TestForm>
