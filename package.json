@@ -110,6 +110,9 @@
       "organizations-storage.interfaces": "2.0",
       "users": "13.0 14.0 15.0"
     },
+    "stripesDeps": [
+      "@folio/stripes-erm-components"
+    ],
     "permissionSets": [
       {
         "permissionName": "module.agreements.enabled",
