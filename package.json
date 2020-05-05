@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "3.5.0",
+  "version": "4.0.0",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -51,7 +51,7 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.2.0",
-    "@folio/stripes": "^3.0.0",
+    "@folio/stripes": "^4.0.0",
     "@folio/stripes-cli": "^1.8.0",
     "babel-eslint": "^9.0.0",
     "chai": "^4.2.0",
@@ -59,9 +59,10 @@
     "core-js": "^3.6.1",
     "eslint": "^6.2.1",
     "mocha": "^6.2.2",
+    "moment": "^2.22.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
-    "react-intl": "^2.4.0",
+    "react-intl": "^4.5.1",
     "react-redux": "^5.1.1",
     "react-router-dom": "^4.1.1",
     "redux": "^3.7.2",
@@ -70,14 +71,13 @@
   },
   "dependencies": {
     "@folio/stripes-erm-components": "^2.3.0",
-    "@folio/react-intl-safe-html": "^1.0.3",
+    "@folio/react-intl-safe-html": "^2.0.0",
     "@rehooks/local-storage": "^2.3.0",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
     "final-form-arrays": "^3.0.1",
     "final-form-set-field-data": "^1.0.2",
     "lodash": "^4.17.11",
-    "moment": "^2.22.2",
     "prop-types": "^15.6.0",
     "query-string": "^6.6.0",
     "react-final-form": "^6.3.0",
@@ -86,10 +86,11 @@
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
-    "@folio/stripes": "^3.0.0",
+    "@folio/stripes": "^4.0.0",
+    "moment": "^2.22.2",
     "react": "*",
     "react-dom": "*",
-    "react-intl": "^2.4.0",
+    "react-intl": "^4.5.1",
     "react-redux": "*",
     "react-router-dom": "^4.1.1",
     "redux": "*"
