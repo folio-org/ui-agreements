@@ -28,23 +28,23 @@ describe('PCI title information', () => {
     });
 
     it('should render expected title', () => {
-      expect(interactor.titleInstanceName).to.equal(monographResource.pti?.titleInstance?.name);
+      expect(interactor.titleInstanceName).to.equal(monographResource.pti.titleInstance.name);
     });
 
     it('should render expected title instance type', () => {
-      expect(interactor.titleInstanceType).to.equal(monographResource.pti?.titleInstance?.type?.label);
+      expect(interactor.titleInstanceType).to.equal(monographResource.pti.titleInstance.type.label);
     });
 
     it('should render expected subType', () => {
-      expect(interactor.titleInstanceSubType).to.equal(monographResource.pti?.titleInstance?.subType?.label);
+      expect(interactor.titleInstanceSubType).to.equal(monographResource.pti.titleInstance.subType.label);
     });
 
     it('should render expected first author', () => {
-      expect(interactor.titleInstanceFirstAuthor).to.equal(monographResource.pti?.titleInstance?.firstAuthor);
+      expect(interactor.titleInstanceFirstAuthor).to.equal(monographResource.pti.titleInstance.firstAuthor);
     });
 
     it('should render expected first editor', () => {
-      expect(interactor.titleInstanceFirstEditor).to.equal(monographResource.pti?.titleInstance?.firstEditor);
+      expect(interactor.titleInstanceFirstEditor).to.equal(monographResource.pti.titleInstance.firstEditor);
     });
 
     it('should render expected publication date', () => {
@@ -52,11 +52,11 @@ describe('PCI title information', () => {
     });
 
     it('should render expected monograph edition', () => {
-      expect(interactor.titleInstanceMonographEdition).to.equal(monographResource.pti?.titleInstance?.monographEdition);
+      expect(interactor.titleInstanceMonographEdition).to.equal(monographResource.pti.titleInstance.monographEdition);
     });
 
     it('should render expected monograph volume', () => {
-      expect(interactor.titleInstanceMonographVolume).to.equal(monographResource.pti?.titleInstance?.monographVolume);
+      expect(interactor.titleInstanceMonographVolume).to.equal(monographResource.pti.titleInstance.monographVolume);
     });
 
     it('should render expected ISBN', () => {
@@ -80,15 +80,15 @@ describe('PCI title information', () => {
     });
 
     it('should render expected title', () => {
-      expect(interactor.titleInstanceName).to.equal(serialResource.pti?.titleInstance?.name);
+      expect(interactor.titleInstanceName).to.equal(serialResource.pti.titleInstance.name);
     });
 
     it('should render expected title instance type', () => {
-      expect(interactor.titleInstanceType).to.equal(serialResource.pti?.titleInstance?.type?.label);
+      expect(interactor.titleInstanceType).to.equal(serialResource.pti.titleInstance.type.label);
     });
 
     it('should render expected subType', () => {
-      expect(interactor.titleInstanceSubType).to.equal(serialResource.pti?.titleInstance?.subType?.label);
+      expect(interactor.titleInstanceSubType).to.equal(serialResource.pti.titleInstance.subType.label);
     });
 
     it('should render expected EZB', () => {

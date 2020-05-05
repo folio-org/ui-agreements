@@ -2,10 +2,14 @@ import {
   clickable,
   collection,
   count,
+  fillable,
   interactor,
   isPresent,
   value,
+  blurrable,
 } from '@bigtest/interactor';
+
+import DatepickerInteractor from '@folio/stripes-components/lib/Datepicker/tests/interactor'; // eslint-disable-line
 
 @interactor class coverageCardInteractor {
   startDate = value('[id^="cc-start-date"]');
@@ -14,6 +18,34 @@ import {
   endVolume = value('[id^="cc-end-volume"]');
   startIssue = value('[id^="cc-start-issue"]');
   endIssue = value('[id^="cc-end-issue"]');
+  clickDeleteButton = clickable('[data-test-card-header-end] > button');
+
+  fillStartDate = fillable('[id^="cc-start-date"]');
+  blurStartDate = blurrable('[id^="cc-start-date"]');
+
+  fillEndDate = fillable('[id^="cc-end-date"]');
+  blurEndDate = blurrable('[id^="cc-end-date"]');
+
+  fillStartVolume = fillable('[id^="cc-start-volume"]');
+  fillEndVolume = fillable('[id^="cc-end-volume"]');
+  fillStartIssue = fillable('[id^="cc-start-issue"]');
+  fillEndIssue = fillable('[id^="cc-end-issue"]');
+
+  fillAndBlurStartDate(val) {
+    return this
+      .fillStartDate(val)
+      .blurStartDate();
+  }
+
+  fillAndBlurEndDate(val) {
+    return this
+      .fillEndDate(val)
+      .blurEndDate();
+  }
+
+  hasError = isPresent('div[class^="feedbackError"]')
+  isTooEarlyErrorPresent = isPresent('[data-test-error-end-date-too-early]');
+  isOverlappingErrorPresent = isPresent('[data-test-error-overlapping-dates]');
 }
 
 export default @interactor class PCIEditPaneInteractor {
@@ -23,7 +55,9 @@ export default @interactor class PCIEditPaneInteractor {
   accessFrom = value('#pci-access-from');
   accessUntil = value('#pci-access-end');
 
-  coverageCards = collection('#pci-form-coverages', coverageCardInteractor)
+  coverageCards = collection('[data-test-coverage-number]', coverageCardInteractor)
   coverageCount = count('[data-test-coverage-number]');
   clickAddButton = clickable('#edit-pci-add-coverage-button');
+
+  submit = clickable('#submit')
 }

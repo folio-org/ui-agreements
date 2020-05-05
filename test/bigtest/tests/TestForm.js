@@ -2,28 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
+import { Button } from '@folio/stripes/components';
 
 export default class TestForm extends React.Component {
   static propTypes = {
     children: PropTypes.node,
     initialValues: PropTypes.object,
+    onSubmit: PropTypes.func,
   };
 
   static defaultProps = {
-    initialValues: {}
+    initialValues: {},
+    onSubmit: () => {},
   };
 
   render() {
-    console.log;
     return (
       <Form
         initialValues={this.props.initialValues}
         mutators={arrayMutators}
-        onSubmit={() => {}}
+        onSubmit={this.props.onSubmit}
       >
         {props => (
-          <form onSubmit={props.onSubmit}>
+          <form onSubmit={props.handleSubmit}>
             {this.props.children}
+            <Button id="submit" type="submit">
+              Submit
+            </Button>
           </form>
         )}
       </Form>

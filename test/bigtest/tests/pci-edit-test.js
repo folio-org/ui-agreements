@@ -12,7 +12,9 @@ import PCIEditPaneInteractor from '../interactors/pci-edit';
 import EmbargoInteractor from '../interactors/embargo';
 
 chai.use(spies);
-const { expect } = chai;
+const { expect, spy } = chai;
+
+const onSubmit = spy();
 
 describe('PCI edit form', () => {
   const embargoInteractor = new EmbargoInteractor();
@@ -41,9 +43,24 @@ describe('PCI edit form', () => {
   });
 
   describe('PCI information', () => {
+    let submissions = 0;
+
+    const testSubmit = (values) => (
+      describe('submitting the form', () => {
+        beforeEach(async () => {
+          await pciEditPaneInteractor.submit();
+          submissions += 1;
+        });
+
+        it('should have correct form values', () => {
+          expect(onSubmit).on.nth(submissions).be.called.with(values);
+        });
+      })
+    );
+
     beforeEach(async () => {
       await mountWithContext(
-        <TestForm initialValues={pci}>
+        <TestForm initialValues={pci} onSubmit={onSubmit}>
           <PCIFormCoverage
             id="pciFormCoverage"
             values={pci}
@@ -84,41 +101,142 @@ describe('PCI edit form', () => {
       expect(embargoInteractor.endUnit).to.have.string(pci.embargo.movingWallEnd.unit);
     });
 
-    it('correctly renders the coverage start date', () => {
+    it('correctly renders the first coverage start date', () => {
       expect(pciEditPaneInteractor.coverageCards(0).startDate).to.equal('01/01/1963');
     });
 
-    it('correctly renders the coverage end date', () => {
+    it('correctly renders the first coverage end date', () => {
       expect(pciEditPaneInteractor.coverageCards(0).endDate).to.equal('01/01/1965');
     });
 
-    it('correctly renders the coverage start volume', () => {
+    it('correctly renders the first coverage start volume', () => {
       expect(pciEditPaneInteractor.coverageCards(0).startVolume).to.equal(pci.coverage[0].startVolume);
     });
 
-    it('correctly renders the coverage end volume', () => {
+    it('correctly renders the first coverage end volume', () => {
       expect(pciEditPaneInteractor.coverageCards(0).endVolume).to.equal(pci.coverage[0].endVolume);
     });
 
-    it('correctly renders the coverage start issue', () => {
+    it('correctly renders the first coverage start issue', () => {
       expect(pciEditPaneInteractor.coverageCards(0).startIssue).to.equal(pci.coverage[0].startIssue);
     });
 
-    it('correctly renders the coverage end issue', () => {
+    it('correctly renders the first coverage end issue', () => {
       expect(pciEditPaneInteractor.coverageCards(0).endIssue).to.equal(pci.coverage[0].endIssue);
+    });
+
+    it('correctly renders the second coverage start date', () => {
+      expect(pciEditPaneInteractor.coverageCards(1).startDate).to.equal('01/01/1967');
+    });
+
+    it('correctly renders the second coverage end date', () => {
+      expect(pciEditPaneInteractor.coverageCards(1).endDate).to.equal('01/01/1969');
+    });
+
+    it('correctly renders the second coverage start volume', () => {
+      expect(pciEditPaneInteractor.coverageCards(1).startVolume).to.equal(pci.coverage[1].startVolume);
+    });
+
+    it('correctly renders the second coverage end volume', () => {
+      expect(pciEditPaneInteractor.coverageCards(1).endVolume).to.equal(pci.coverage[1].endVolume);
+    });
+
+    it('correctly renders the second coverage start issue', () => {
+      expect(pciEditPaneInteractor.coverageCards(1).startIssue).to.equal(pci.coverage[1].startIssue);
+    });
+
+    it('correctly renders the second coverage end issue', () => {
+      expect(pciEditPaneInteractor.coverageCards(1).endIssue).to.equal(pci.coverage[1].endIssue);
     });
 
     it('correctly renders the add coverage button', () => {
       expect(pciEditPaneInteractor.isAddButtonPresent).to.be.true;
     });
 
-    describe('clicking the add coverage button', () => {
+    describe('Clicking the add coverage button', () => {
       beforeEach(async () => {
         await pciEditPaneInteractor.clickAddButton();
       });
 
       it('renders a new coverage card', () => {
-        expect(pciEditPaneInteractor.coverageCount).to.equal(2);
+        expect(pciEditPaneInteractor.coverageCount).to.equal(3);
+      });
+    });
+
+    describe('Deleting a coverage card', () => {
+      beforeEach(async () => {
+        await pciEditPaneInteractor.coverageCards(1).clickDeleteButton();
+      });
+
+      it('should reduce the card count by 1', () => {
+        expect(pciEditPaneInteractor.coverageCount).to.equal(1);
+      });
+    });
+
+    describe('Adding new coverage', () => {
+      beforeEach(async () => {
+        await pciEditPaneInteractor.clickAddButton();
+      });
+
+      describe('Entering empty start date with an empty date', () => {
+        beforeEach(async () => {
+          await pciEditPaneInteractor.coverageCards(2).fillAndBlurStartDate('');
+        });
+
+        it('should render an error message', () => {
+          expect(pciEditPaneInteractor.coverageCards(2).hasError).to.be.true;
+        });
+      });
+
+      describe('Entering start date greater than end date', () => {
+        beforeEach(async () => {
+          await pciEditPaneInteractor.coverageCards(2).fillAndBlurStartDate('02/02/2012');
+          await pciEditPaneInteractor.coverageCards(2).fillAndBlurEndDate('02/02/2010');
+        });
+
+        it('should render start date greater than end date error message', () => {
+          expect(pciEditPaneInteractor.coverageCards(2).isTooEarlyErrorPresent).to.be.true;
+        });
+      });
+
+      describe('Entering overlapping dates', () => {
+        beforeEach(async () => {
+          await pciEditPaneInteractor.coverageCards(2).fillAndBlurStartDate('02/02/2010');
+          await pciEditPaneInteractor.coverageCards(2).fillAndBlurEndDate('02/02/2012');
+          await pciEditPaneInteractor.clickAddButton();
+          await pciEditPaneInteractor.coverageCards(3).fillAndBlurStartDate('02/02/2009');
+        });
+
+        it('should render overlapping dates error message', () => {
+          expect(pciEditPaneInteractor.coverageCards(3).isOverlappingErrorPresent).to.be.true;
+        });
+      });
+    });
+
+    describe('Adding new coverage and submitting the form', () => {
+      const newCoverage = {
+        '_delete': false,
+        'endDate': '2022-01-01',
+        'endIssue': '16',
+        'endVolume': '225',
+        'startDate': '2021-01-01',
+        'startIssue': '36',
+        'startVolume': '25',
+      };
+
+      beforeEach(async () => {
+        await pciEditPaneInteractor.clickAddButton();
+        await pciEditPaneInteractor.coverageCards(2).fillStartDate('01/01/2021');
+        await pciEditPaneInteractor.coverageCards(2).fillEndDate('01/01/2022');
+        await pciEditPaneInteractor.coverageCards(2).fillStartVolume(newCoverage.startVolume);
+        await pciEditPaneInteractor.coverageCards(2).fillStartIssue(newCoverage.startIssue);
+        await pciEditPaneInteractor.coverageCards(2).fillEndIssue(newCoverage.endIssue);
+        await pciEditPaneInteractor.coverageCards(2).fillEndVolume(newCoverage.endVolume);
+      });
+
+      testSubmit({
+        ...pci,
+        'coverage': [...pci.coverage, newCoverage]
       });
     });
   });
