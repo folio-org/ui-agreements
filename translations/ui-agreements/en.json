@@ -95,6 +95,7 @@
 
   "agreements.create.callout": "<strong>Agreement created:</strong> {name}",
   "agreements.update.callout": "<strong>Agreement updated:</strong> {name}",
+  "lines.update.callout": "Agreement line updated",
 
   "agreementLines.addLine": "Add agreement line",
   "agreementLines.addCustomCoverage": "Add custom coverage",

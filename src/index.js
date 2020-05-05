@@ -12,6 +12,7 @@ const AgreementEditRoute = lazy(() => import('./routes/AgreementEditRoute'));
 const AgreementViewRoute = lazy(() => import('./routes/AgreementViewRoute'));
 
 const AgreementLineViewRoute = lazy(() => import('./routes/AgreementLineViewRoute'));
+const AgreementLineEditRoute = lazy(() => import('./routes/AgreementLineEditRoute'));
 
 const BasketRoute = lazy(() => import('./routes/BasketRoute'));
 
@@ -55,6 +56,7 @@ class App extends React.Component {
           </IfEResourcesEnabled>
           <div className={css.body}>
             <Switch>
+              <Route component={AgreementLineEditRoute} path={`${path}/agreements/:agreementId/line/:lineId/edit`} />
               <Route component={AgreementLineViewRoute} path={`${path}/agreements/:agreementId/line/:lineId`} />
 
               <Route component={AgreementCreateRoute} path={`${path}/agreements/create`} />
