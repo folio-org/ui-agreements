@@ -11,6 +11,8 @@ const AgreementCreateRoute = lazy(() => import('./routes/AgreementCreateRoute'))
 const AgreementEditRoute = lazy(() => import('./routes/AgreementEditRoute'));
 const AgreementViewRoute = lazy(() => import('./routes/AgreementViewRoute'));
 
+const AgreementLineViewRoute = lazy(() => import('./routes/AgreementLineViewRoute'));
+
 const BasketRoute = lazy(() => import('./routes/BasketRoute'));
 
 const EResourcesRoute = lazy(() => import('./routes/EResourcesRoute'));
@@ -53,6 +55,8 @@ class App extends React.Component {
           </IfEResourcesEnabled>
           <div className={css.body}>
             <Switch>
+              <Route component={AgreementLineViewRoute} path={`${path}/agreements/:agreementId/line/:lineId`} />
+
               <Route component={AgreementCreateRoute} path={`${path}/agreements/create`} />
               <Route component={AgreementEditRoute} path={`${path}/agreements/:id/edit`} />
               <Route component={AgreementsRoute} path={`${path}/agreements/:id?`}>
