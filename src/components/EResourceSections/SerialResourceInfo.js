@@ -14,6 +14,7 @@ import EResourceIdentifier from '../EResourceIdentifier';
 
 export default class SerialResourceInfo extends React.Component {
   static propTypes = {
+    eresourceClass: PropTypes.string,
     titleInstance: PropTypes.shape({
       id: PropTypes.string,
       name: PropTypes.string,
@@ -26,21 +27,9 @@ export default class SerialResourceInfo extends React.Component {
     }).isRequired,
   }
 
-  render() {
-    const { titleInstance } = this.props;
+  renderSerialResourceInfo = (titleInstance) => {
     return (
-      <Card
-        cardStyle="positive"
-        headerStart={(
-          <Link
-            to={urls.eresourceView(titleInstance.id)}
-          >
-            <strong data-test-title-instance-name>{titleInstance.name ?? <NoValue />}</strong>
-          </Link>
-        )}
-        id="title-details-monograph"
-        roundedBorder
-      >
+      <>
         <Row>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.type" />}>
@@ -59,7 +48,33 @@ export default class SerialResourceInfo extends React.Component {
           <EResourceIdentifier titleInstance={titleInstance} type="eissn" />
           <EResourceIdentifier titleInstance={titleInstance} type="pissn" />
         </Row>
-      </Card>
+      </>
     );
+  };
+
+  render() {
+    const { eresourceClass, titleInstance } = this.props;
+    return eresourceClass === 'org.olf.kb.TitleInstance' ?
+      (
+        <div>
+          {this.renderSerialResourceInfo(titleInstance)}
+        </div>
+      ) :
+      (
+        <Card
+          cardStyle="positive"
+          headerStart={(
+            <Link
+              to={urls.eresourceView(titleInstance.id)}
+            >
+              <strong data-test-title-instance-name>{titleInstance.name ?? <NoValue />}</strong>
+            </Link>
+          )}
+          id="title-details-monograph"
+          roundedBorder
+        >
+          {this.renderSerialResourceInfo(titleInstance)}
+        </Card>
+      );
   }
 }

@@ -15,6 +15,7 @@ import EResourceIdentifier from '../EResourceIdentifier';
 
 export default class MonographResourceInfo extends React.Component {
   static propTypes = {
+    eresourceClass: PropTypes.string,
     titleInstance: PropTypes.shape({
       dateMonographPublished: PropTypes.string,
       id: PropTypes.string,
@@ -32,21 +33,9 @@ export default class MonographResourceInfo extends React.Component {
     }).isRequired,
   }
 
-  render() {
-    const { titleInstance = {} } = this.props;
+  renderMonographResourceInfo = (titleInstance) => {
     return (
-      <Card
-        cardStyle="positive"
-        headerStart={(
-          <Link
-            to={urls.eresourceView(titleInstance.id)}
-          >
-            <strong data-test-title-instance-name>{titleInstance.name ?? <NoValue />}</strong>
-          </Link>
-        )}
-        id="title-details-monograph"
-        roundedBorder
-      >
+      <>
         <Row>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.type" />}>
@@ -96,7 +85,33 @@ export default class MonographResourceInfo extends React.Component {
           <EResourceIdentifier titleInstance={titleInstance} type="isbn" />
           <EResourceIdentifier titleInstance={titleInstance} type="doi" />
         </Row>
-      </Card>
+      </>
     );
+  };
+
+  render() {
+    const { eresourceClass, titleInstance = {} } = this.props;
+    return eresourceClass === 'org.olf.kb.TitleInstance' ?
+      (
+        <div>
+          {this.renderMonographResourceInfo(titleInstance)}
+        </div>
+      ) :
+      (
+        <Card
+          cardStyle="positive"
+          headerStart={(
+            <Link
+              to={urls.eresourceView(titleInstance.id)}
+            >
+              <strong data-test-title-instance-name>{titleInstance.name ?? <NoValue />}</strong>
+            </Link>
+        )}
+          id="title-details-monograph"
+          roundedBorder
+        >
+          {this.renderMonographResourceInfo(titleInstance)}
+        </Card>
+      );
   }
 }

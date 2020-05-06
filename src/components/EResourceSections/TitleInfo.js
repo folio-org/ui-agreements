@@ -22,7 +22,6 @@ export default class TitleInfo extends React.Component {
 
   render() {
     const { data: { eresource } } = this.props;
-
     const titleInstance = (eresource.class === resourceClasses.TITLEINSTANCE) ?
       eresource
       :
@@ -36,6 +35,7 @@ export default class TitleInfo extends React.Component {
 
     return (
       <ResourceInfoComponent
+        eresourceClass={eresource.class}
         titleInstance={titleInstance}
       />
     );

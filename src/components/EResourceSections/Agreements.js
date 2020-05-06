@@ -88,7 +88,10 @@ export default class Agreements extends React.Component {
         label={label}
       >
         {entitlements ? this.renderEntitlementAgreements(entitlements) : <Spinner />}
-        {renderRelatedEntitlements && relatedEntitlements ? this.renderRelatedEntitlementAgreements() : <Spinner />}
+        {renderRelatedEntitlements ? (
+          relatedEntitlements ?
+            this.renderRelatedEntitlementAgreements() :
+            <Spinner />) : null}
       </Accordion>
     );
   }
