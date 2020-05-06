@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   FormattedUTCDate,
   Headline,
+  Layout,
   MultiColumnList,
   NoValue,
 } from '@folio/stripes/components';
@@ -54,11 +55,11 @@ const EntitlementAgreementsList = (
 
   const renderHeadline = () => {
     return headline ? (
-      <div data-test-eresource-name>
+      <Layout className="padding-top-gutter" data-test-eresource-name>
         <Headline margin="small" tag="h4">
           {headline}
         </Headline>
-      </div>
+      </Layout>
     ) : null;
   };
 
