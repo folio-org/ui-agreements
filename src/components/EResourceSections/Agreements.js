@@ -21,7 +21,6 @@ export default class Agreements extends React.Component {
       }),
       relatedEntitlements: PropTypes.array,
     }),
-    id: PropTypes.string,
     headline: PropTypes.node,
     isEmptyMessage: PropTypes.node,
     renderRelatedEntitlements: PropTypes.bool,
@@ -30,13 +29,13 @@ export default class Agreements extends React.Component {
 
   renderEntitlementAgreements = () => {
     const { entitlements = [] } = this.props.data;
-    const { headline, id, isEmptyMessage, visibleColumns } = this.props;
+    const { headline, isEmptyMessage, visibleColumns } = this.props;
 
     return (
       <EntitlementAgreementsList
         entitlements={entitlements}
         headline={headline}
-        id={id}
+        id="pci-agreements-list"
         isEmptyMessage={isEmptyMessage}
         visibleColumns={visibleColumns}
       />
@@ -72,7 +71,6 @@ export default class Agreements extends React.Component {
   render() {
     const {
       data: { entitlements, eresource, relatedEntitlements },
-      id,
       renderRelatedEntitlements,
     } = this.props;
 
@@ -84,7 +82,7 @@ export default class Agreements extends React.Component {
       <Accordion
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
-        id={id}
+        id="pci-agreements"
         label={label}
       >
         {entitlements ? this.renderEntitlementAgreements(entitlements) : <Spinner />}

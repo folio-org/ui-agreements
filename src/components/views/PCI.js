@@ -8,7 +8,6 @@ import {
   Col,
   ExpandAllButton,
   Headline,
-  LoadingPane,
   Row,
 } from '@folio/stripes/components';
 
@@ -32,42 +31,11 @@ export default class PCI extends React.Component {
       }).isRequired,
       relatedEntitlements: PropTypes.array,
     }),
-    handlers: PropTypes.shape({
-      onClose: PropTypes.func.isRequired,
-    }),
-    isLoading: PropTypes.bool,
-  }
-
-  getSectionProps = (id) => {
-    const { data } = this.props;
-
-    return {
-      data,
-      id,
-      pci: data.eresource,
-    };
   }
 
   render() {
-    const {
-      data: { eresource },
-      handlers,
-      isLoading,
-    } = this.props;
-
-    const paneProps = {
-      defaultWidth: '45%',
-      dismissible: true,
-      id: 'pane-view-pci',
-      onClose: handlers.onClose,
-    };
-
-    if (isLoading) return <LoadingPane data-loading {...paneProps} />;
-
-    const initial = {
-      'coverage': true,
-      'pci-agreements': true
-    };
+    const { data } = this.props;
+    const { eresource } = data;
 
     return (
       <div id="eresource-pci">
@@ -82,18 +50,18 @@ export default class PCI extends React.Component {
           <Headline margin="small" size="large" tag="h3">
             <FormattedMessage id="ui-agreements.eresources.titleDetails" />
           </Headline>
-          <TitleInfo data={this.props.data} />
+          <TitleInfo data={data} />
         </div>
-        <AccordionStatus initialStatus={initial}>
+        <AccordionStatus>
           <Row end="xs">
             <Col xs>
               <ExpandAllButton />
             </Col>
           </Row>
           <AccordionSet>
-            <PCICoverage {...this.getSectionProps('coverage')} />
+            <PCICoverage data={data} />
             <Agreements
-              {...this.getSectionProps('pci-agreements')}
+              data={data}
               headline={eresource.name}
               renderRelatedEntitlements
               visibleColumns={['name', 'type', 'startDate', 'endDate']}

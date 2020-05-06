@@ -14,19 +14,20 @@ import Embargo from '../Embargo';
 
 export default class PCICoverage extends React.Component {
   static propTypes = {
-    id: PropTypes.string,
-    pci: PropTypes.shape({
-      embargo: PropTypes.shape({
-        movingWallStart: PropTypes.shape({
-          length: PropTypes.number,
-          unit: PropTypes.string
+    data: PropTypes.shape({
+      eresource: PropTypes.shape({
+        embargo: PropTypes.shape({
+          movingWallStart: PropTypes.shape({
+            length: PropTypes.number,
+            unit: PropTypes.string
+          }),
+          movingWallEnd: PropTypes.shape({
+            length: PropTypes.number,
+            unit: PropTypes.string
+          })
         }),
-        movingWallEnd: PropTypes.shape({
-          length: PropTypes.number,
-          unit: PropTypes.string
-        })
       }),
-    })
+    }),
   }
 
   columnMapping = {
@@ -57,7 +58,7 @@ export default class PCICoverage extends React.Component {
   ];
 
   renderBadge = () => {
-    const count = this.props?.pci?.coverage?.length ?? 0;
+    const count = this.props.data.eresource?.coverage?.length ?? 0;
     return <Badge>{count}</Badge>;
   }
 
@@ -66,7 +67,7 @@ export default class PCICoverage extends React.Component {
       columnMapping={this.columnMapping}
       contentData={pci.coverage}
       formatter={this.formatter}
-      id="pci-coverage"
+      id="pci-coverage-list"
       interactive={false}
       isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.pciCoverage" />}
       visibleColumns={this.visibleColumns}
@@ -86,17 +87,17 @@ export default class PCICoverage extends React.Component {
   }
 
   render() {
-    const { id, pci = {} } = this.props;
+    const { eresource = {} } = this.props.data;
 
     return (
       <Accordion
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
-        id={id}
+        id="pci-coverage"
         label={<FormattedMessage id="ui-agreements.eresources.coverage" />}
       >
-        {this.renderEmbargo(pci)}
-        {this.renderCoverage(pci)}
+        {this.renderEmbargo(eresource)}
+        {this.renderCoverage(eresource)}
       </Accordion>
     );
   }
