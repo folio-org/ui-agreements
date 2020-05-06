@@ -22,10 +22,11 @@ export default class ParentPackageDetails extends React.Component {
       source: PropTypes.string,
       reference: PropTypes.string,
     }).isRequired,
+    searchString: PropTypes.string,
   }
 
   render() {
-    const { pkg } = this.props;
+    const { pkg, searchString } = this.props;
 
     return (
       <Card
@@ -33,7 +34,7 @@ export default class ParentPackageDetails extends React.Component {
         headerStart={(
           <Link
             data-test-parent-package-link
-            to={urls.eresourceView(pkg?.id)}
+            to={`${urls.eresourceView(pkg?.id)}${searchString}`}
           >
             <strong>{pkg?.name ?? <NoValue />}</strong>
           </Link>

@@ -52,7 +52,7 @@ export default class Agreements extends React.Component {
           id="ui-agreements.eresources.otherPlatformPackages"
           values={{ name: eresource?.pti?.titleInstance?.name }}
         />}
-        id="related-agreements"
+        id="related-agreements-list"
         isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsOtherPackages" />}
         visibleColumns={['name', 'type', 'package', 'startDate', 'endDate']}
       />

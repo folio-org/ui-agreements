@@ -27,7 +27,6 @@ describe('PCI agreements information', () => {
           <Agreements
             data={data}
             headline={data.eresource.name}
-            id="pci-agreements"
             visibleColumns={['name', 'type', 'startDate', 'endDate']}
           />
         </Router>
@@ -57,7 +56,7 @@ describe('PCI agreements information', () => {
         <Router context={{}}>
           <EntitlementAgreementsList
             entitlements={relatedEntitlements}
-            id="related-agreements"
+            id="related-agreements-list"
             isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsOtherPackages" />}
             isRelatedEntitlement
             visibleColumns={['name', 'type', 'package', 'startDate', 'endDate']}

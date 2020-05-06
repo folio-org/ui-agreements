@@ -16,12 +16,13 @@ export default class TitleInfo extends React.Component {
         publisher: PropTypes.shape({
           label: PropTypes.string,
         }),
-      })
+      }),
+      searchString: PropTypes.string,
     }).isRequired,
   }
 
   render() {
-    const { data: { eresource } } = this.props;
+    const { data: { eresource, searchString } } = this.props;
     const titleInstance = (eresource.class === resourceClasses.TITLEINSTANCE) ?
       eresource
       :
@@ -36,6 +37,7 @@ export default class TitleInfo extends React.Component {
     return (
       <ResourceInfoComponent
         eresourceClass={eresource.class}
+        searchString={searchString}
         titleInstance={titleInstance}
       />
     );

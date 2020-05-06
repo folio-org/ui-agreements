@@ -15,6 +15,7 @@ import EResourceIdentifier from '../EResourceIdentifier';
 export default class SerialResourceInfo extends React.Component {
   static propTypes = {
     eresourceClass: PropTypes.string,
+    searchString: PropTypes.string,
     titleInstance: PropTypes.shape({
       id: PropTypes.string,
       name: PropTypes.string,
@@ -53,7 +54,7 @@ export default class SerialResourceInfo extends React.Component {
   };
 
   render() {
-    const { eresourceClass, titleInstance } = this.props;
+    const { eresourceClass, searchString, titleInstance } = this.props;
     return eresourceClass === 'org.olf.kb.TitleInstance' ?
       (
         <div>
@@ -65,7 +66,7 @@ export default class SerialResourceInfo extends React.Component {
           cardStyle="positive"
           headerStart={(
             <Link
-              to={urls.eresourceView(titleInstance.id)}
+              to={`${urls.eresourceView(titleInstance.id)}${searchString}`}
             >
               <strong data-test-title-instance-name>{titleInstance.name ?? <NoValue />}</strong>
             </Link>

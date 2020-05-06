@@ -52,7 +52,11 @@ export default function config() {
 
   this.get('/erm/custprops', () => []);
 
+  this.get('/erm/resource/:id/entitlements/related', () => ({ results: [] }));
+
   this.get('/erm/resource/:id/entitlements', () => ({ results: [] }));
+
+  this.get('/erm/resource/:id/related', () => ({ results: [] }));
 
   this.get('/erm/packages/:id/content/current', (schema) => ({
     results: schema.pcis.where(pci => new Date(pci.accessStart).getTime() < new Date().getTime() && new Date(pci.accessEnd).getTime() > new Date().getTime()).models,

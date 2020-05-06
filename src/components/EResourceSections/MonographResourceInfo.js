@@ -16,6 +16,7 @@ import EResourceIdentifier from '../EResourceIdentifier';
 export default class MonographResourceInfo extends React.Component {
   static propTypes = {
     eresourceClass: PropTypes.string,
+    searchString: PropTypes.string,
     titleInstance: PropTypes.shape({
       dateMonographPublished: PropTypes.string,
       id: PropTypes.string,
@@ -90,7 +91,7 @@ export default class MonographResourceInfo extends React.Component {
   };
 
   render() {
-    const { eresourceClass, titleInstance = {} } = this.props;
+    const { eresourceClass, searchString, titleInstance = {} } = this.props;
     return eresourceClass === 'org.olf.kb.TitleInstance' ?
       (
         <div>
@@ -102,7 +103,7 @@ export default class MonographResourceInfo extends React.Component {
           cardStyle="positive"
           headerStart={(
             <Link
-              to={urls.eresourceView(titleInstance.id)}
+              to={`${urls.eresourceView(titleInstance.id)}${searchString}`}
             >
               <strong data-test-title-instance-name>{titleInstance.name ?? <NoValue />}</strong>
             </Link>

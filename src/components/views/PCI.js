@@ -30,12 +30,13 @@ export default class PCI extends React.Component {
         }),
       }).isRequired,
       relatedEntitlements: PropTypes.array,
+      searchString: PropTypes.string,
     }),
   }
 
   render() {
     const { data } = this.props;
-    const { eresource } = data;
+    const { eresource, searchString } = data;
 
     return (
       <div id="eresource-pci">
@@ -44,7 +45,7 @@ export default class PCI extends React.Component {
           <Headline margin="small" size="large" tag="h3">
             <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
           </Headline>
-          <ParentPackageDetails pkg={eresource?.pkg ?? {}} />
+          <ParentPackageDetails pkg={eresource?.pkg ?? {}} searchString={searchString} />
         </div>
         <div id="title-info">
           <Headline margin="small" size="large" tag="h3">

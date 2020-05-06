@@ -22,7 +22,7 @@ describe('PCI coverage information', () => {
     await mountWithContext(
       <Router context={{}}>
         <PCICoverage
-          pci={serialResource}
+          data={{ eresource : serialResource }}
         />
       </Router>
     );

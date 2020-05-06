@@ -235,6 +235,7 @@ class EResourceViewRoute extends React.Component {
           packageContents: this.getPackageContentsRecords(),
           packageContentsCount: this.getPackageContentsRecordsCount(),
           relatedEntitlements: this.getRecords('relatedEntitlements'),
+          searchString: this.props.location.search,
         }}
         handlers={{
           ...handlers,
