@@ -44,7 +44,7 @@ export default class AcquisitionOptions extends React.Component {
       formatter={{
         sourceKb: option => <EResourceKB resource={option} />,
         package: option => <EResourceLink eresource={option} />,
-        coverage: option => <Coverage pci={option} />,
+        coverage: option => <Coverage eResource={option} />,
         platform: option => get(option, '_object.pti.platform.name', '-'),
         acqMethod: option => <EResourceType resource={option} />,
         add: option => {
