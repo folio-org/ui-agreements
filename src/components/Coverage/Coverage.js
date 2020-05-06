@@ -110,14 +110,14 @@ export default class Coverage extends React.Component {
         dataToRender = line?.resource?._object;
       } else {
         dataToRender = line;
-        embargo = line?.resource?._object.embargo;
+        embargo = line?.resource?._object?.embargo;
       }
     } else if (eResource?._object?.pti?.titleInstance?.type?.value === resourceTypes.MONOGRAPH) {
       isMonograph = true;
       dataToRender = eResource?._object;
     } else {
       dataToRender = eResource;
-      embargo = eResource?._object.embargo;
+      embargo = eResource?._object?.embargo;
     }
 
     if (isMonograph) {

@@ -56,6 +56,7 @@ export default class PackageContents extends React.Component {
         contentData={packageContents}
         formatter={this.formatter}
         id="package-contents-list"
+        interactive={false}
         maxHeight={800}
         onNeedMoreData={this.props.onNeedMorePackageContents}
         pageAmount={resultCount.RESULT_COUNT_INCREMENT}

@@ -58,7 +58,8 @@ class AddToBasketButton extends React.Component {
     return null;
   }
 
-  addToBasket = () => {
+  addToBasket = (e) => {
+    e.stopPropagation();
     const { item, mutator, resources } = this.props;
 
     const basket = [...resources.basket];
@@ -67,7 +68,8 @@ class AddToBasketButton extends React.Component {
     mutator.basket.replace(basket);
   }
 
-  removeFromBasket = () => {
+  removeFromBasket = (e) => {
+    e.stopPropagation();
     const { item, mutator, resources } = this.props;
 
     const basket = resources.basket || [];

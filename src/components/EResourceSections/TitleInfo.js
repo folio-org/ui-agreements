@@ -1,21 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
-
-import {
-  Col,
-  Headline,
-  KeyValue,
-  Row,
-} from '@folio/stripes/components';
-
-import { getResourceIdentifier } from '../utilities';
+import { resourceTypes, resourceClasses } from '../../constants';
+import MonographResourceInfo from './MonographResourceInfo';
+import SerialResourceInfo from './SerialResourceInfo';
 
 export default class TitleInfo extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       eresource: PropTypes.shape({
+        class: PropTypes.string,
         name: PropTypes.string,
         type: PropTypes.shape({
           label: PropTypes.string,
@@ -23,95 +16,30 @@ export default class TitleInfo extends React.Component {
         publisher: PropTypes.shape({
           label: PropTypes.string,
         }),
-      })
+      }),
+      searchString: PropTypes.string,
     }).isRequired,
   }
 
-  renderIdentifier(type, width = 3) {
-    const identifier = getResourceIdentifier(this.props.data.eresource, type);
-    if (!identifier) return null;
-
-    return (
-      <Col xs={width}>
-        <KeyValue
-          label={<FormattedMessage id={`ui-agreements.identifier.${type}`} />}
-          value={identifier}
-        />
-      </Col>
-    );
-  }
-
   render() {
-    const { data: { eresource } } = this.props;
+    const { data: { eresource, searchString } } = this.props;
+    const titleInstance = (eresource.class === resourceClasses.TITLEINSTANCE) ?
+      eresource
+      :
+      eresource?.pti?.titleInstance;
+
+    const { label } = titleInstance?.type;
+
+    const ResourceInfoComponent = (
+      label === resourceTypes.MONOGRAPH || label === resourceTypes.BOOK
+    ) ? MonographResourceInfo : SerialResourceInfo;
+
     return (
-      <div id="title-info">
-        <Row>
-          <Col xs={12}>
-            <Headline
-              size="xx-large"
-              tag="h2"
-            >
-              {eresource.name}
-            </Headline>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={3}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.erType" />}
-              value={get(eresource, 'type.label', '-')}
-            />
-          </Col>
-          <Col xs={3}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.publisher" />}
-              value={get(eresource, 'publisher.label', '-')}
-            />
-          </Col>
-          <Col xs={3}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.firstAuthor" />}
-              value={get(eresource, 'firstAuthor', '-')}
-            />
-          </Col>
-          <Col xs={3}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.firstEditor" />}
-              value={get(eresource, 'firstEditor', '-')}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={3}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.datePublished" />}
-              value={get(eresource, 'dateMonographPublished', '-')}
-            />
-          </Col>
-          <Col xs={3}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.edition" />}
-              value={get(eresource, 'monographEdition', '-')}
-            />
-          </Col>
-          <Col xs={3}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.eresources.volume" />}
-              value={get(eresource, 'monographVolume', '-')}
-            />
-          </Col>
-        </Row>
-        <Row>
-          {this.renderIdentifier('doi')}
-          {this.renderIdentifier('isbn')}
-          {this.renderIdentifier('ezb')}
-          {this.renderIdentifier('zdb')}
-        </Row>
-        <Row>
-          {this.renderIdentifier('pissn')}
-          {this.renderIdentifier('eissn')}
-        </Row>
-      </div>
+      <ResourceInfoComponent
+        eresourceClass={eresource.class}
+        searchString={searchString}
+        titleInstance={titleInstance}
+      />
     );
   }
 }
