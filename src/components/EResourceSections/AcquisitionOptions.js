@@ -76,7 +76,7 @@ class AcquisitionOptions extends React.Component {
       formatter={{
         sourceKb: option => <EResourceKB resource={option} />,
         package: option => this.renderParentPackage(option),
-        coverage: option => <Coverage pci={option} />,
+        coverage: option => <Coverage eResource={option} />,
         platform: option => option?._object?.pti?.platform?.name ?? <NoValue />,
         acqMethod: option => <EResourceType resource={option} />,
         add: option => {
