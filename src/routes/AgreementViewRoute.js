@@ -416,6 +416,11 @@ class AgreementViewRoute extends React.Component {
     this.handleToggleHelper('tags');
   }
 
+  handleViewAgreementLine = (lineId) => {
+    const { history, location, match } = this.props;
+    history.push(`${urls.agreementLineView(match.params.id, lineId)}${location.search}`);
+  }
+
   isLoading = () => {
     const { match, resources } = this.props;
 
@@ -457,6 +462,7 @@ class AgreementViewRoute extends React.Component {
           onNeedMoreEResources: this.handleNeedMoreEResources,
           onNeedMoreLines: this.handleNeedMoreLines,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
+          onViewAgreementLine: this.handleViewAgreementLine,
         }}
         helperApp={this.getHelperApp()}
         isLoading={this.isLoading()}

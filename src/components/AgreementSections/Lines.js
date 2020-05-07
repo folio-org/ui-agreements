@@ -16,6 +16,7 @@ export default class Lines extends React.Component {
     }).isRequired,
     eresourcesFilterPath: PropTypes.string,
     handlers: PropTypes.shape({
+      onViewAgreementLine: PropTypes.func.isRequired,
       onFilterEResources: PropTypes.func.isRequired,
       onExportEResourcesAsJSON: PropTypes.func.isRequired,
       onExportEResourcesAsKBART: PropTypes.func.isRequired,
@@ -56,6 +57,7 @@ export default class Lines extends React.Component {
         <LinesList
           agreement={agreement}
           onNeedMoreLines={handlers.onNeedMoreLines}
+          onViewAgreementLine={handlers.onViewAgreementLine}
           visible={open}
         />
         <CoveredEResourcesList
