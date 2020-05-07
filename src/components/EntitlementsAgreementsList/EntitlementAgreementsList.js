@@ -11,7 +11,7 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
-import { SerialCoverage } from '../Coverage';
+import { Coverage } from '../Coverage';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import EResourceType from '../EResourceType';
@@ -49,7 +49,7 @@ const EntitlementAgreementsList = (
     endDate: e => <div data-test-agreement-start-date>{e?.owner?.endDate && <FormattedUTCDate value={e?.owner?.endDate} />}</div>,
     parentPackage: e => <EResourceLink eresource={getResourceFromEntitlement(e)} />,
     acqMethod: e => <EResourceType resource={e?.resource} />,
-    coverage: e => <SerialCoverage statements={e?.coverage} />,
+    coverage: e => <Coverage line={e} />,
     isCustomCoverage: e => e.customCoverage && <CustomCoverageIcon />,
   };
 
