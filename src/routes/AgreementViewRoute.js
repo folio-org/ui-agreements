@@ -10,7 +10,7 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/views/Agreement';
-import { urls } from '../components/utilities';
+import { preventResourceRefresh, urls } from '../components/utilities';
 import { errorTypes } from '../constants';
 
 import { joinRelatedAgreements } from './utilities/processRelatedAgreements';
@@ -23,10 +23,7 @@ class AgreementViewRoute extends React.Component {
     agreement: {
       type: 'okapi',
       path: 'erm/sas/:{id}',
-      shouldRefresh: (resource, action) => {
-        if (resource.name !== 'agreement') return true;
-        return !action.meta.originatingActionType?.includes('DELETE');
-      },
+      shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
     agreementLines: {
       type: 'okapi',
@@ -40,6 +37,7 @@ class AgreementViewRoute extends React.Component {
       perRequest: RECORDS_PER_REQUEST,
       records: 'results',
       recordsRequired: '%{agreementLinesCount}',
+      shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
     agreementEresources: {
       type: 'okapi',

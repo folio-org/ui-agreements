@@ -6,5 +6,6 @@ export { default as formatNoteReferrerEntityData } from './formatNoteReferrerEnt
 export { default as isExternal } from './isExternal';
 export { default as isPackage } from './isPackage';
 export { default as parseDateOnlyString } from './parseDateOnlyString';
+export { default as preventResourceRefresh } from './preventResourceRefresh';
 export { default as urls } from './urls';
 export { default as validators } from './validators';
