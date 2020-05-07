@@ -22,7 +22,7 @@ const overlappingCoverages = (...rest) => (
   validators.overlappingDates(...rest, 'ui-agreements.errors.overlappingCoverage')
 );
 
-export default class CustomCoverageField extends React.Component {
+export default class CoverageField extends React.Component {
   static propTypes = {
     index: PropTypes.number.isRequired,
     input: PropTypes.shape({
