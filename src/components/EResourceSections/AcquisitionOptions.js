@@ -1,19 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-
-import { Accordion, Badge, MultiColumnList, Spinner } from '@folio/stripes/components';
+import { Accordion, Badge, MultiColumnList, NoValue, Spinner } from '@folio/stripes/components';
 
 import AddToBasketButton from '../AddToBasketButton';
 import { Coverage } from '../Coverage';
-import EResourceLink from '../EResourceLink';
 import EResourceKB from '../EResourceKB';
 import EResourceType from '../EResourceType';
 
 import { isExternal, isPackage } from '../utilities';
 
-export default class AcquisitionOptions extends React.Component {
+class AcquisitionOptions extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       entitlementOptions: PropTypes.array,
@@ -21,9 +18,42 @@ export default class AcquisitionOptions extends React.Component {
         name: PropTypes.string,
       }),
     }),
+    handlers: PropTypes.shape({
+      onEResourceClick: PropTypes.func,
+    }),
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
+  };
+
+  getName = (eresource = {}) => {
+    if (isExternal(eresource)) {
+      return eresource.reference_object?.label;
+    }
+
+    return eresource.name;
+  }
+
+  onRowClick = (_, row) => {
+    const { id } = row;
+    const { handlers: { onEResourceClick } } = this.props;
+
+    onEResourceClick(id);
+  }
+
+  renderBadge = () => {
+    const count = this.props?.data?.entitlementOptions?.length;
+    return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
+  }
+
+  renderParentPackage = (eresource) => {
+    const name = this.getName(eresource);
+
+    return (
+      <div data-test-eresource-name style={{ overflowWrap: 'break-word', width: 180 }}>
+        {name || <NoValue />}
+      </div>
+    );
   };
 
   renderOptions = () => (
@@ -37,15 +67,17 @@ export default class AcquisitionOptions extends React.Component {
         add: <FormattedMessage id="ui-agreements.eresources.addToBasketHeader" />,
       }}
       columnWidths={{
+        sourceKb: 90,
         package: 200,
-        coverage: 250
+        coverage: 260,
+        acqMethod: 100
       }}
       contentData={this.props.data.entitlementOptions}
       formatter={{
         sourceKb: option => <EResourceKB resource={option} />,
-        package: option => <EResourceLink eresource={option} />,
+        package: option => this.renderParentPackage(option),
         coverage: option => <Coverage eResource={option} />,
-        platform: option => get(option, '_object.pti.platform.name', '-'),
+        platform: option => option?._object?.pti?.platform?.name ?? <NoValue />,
         acqMethod: option => <EResourceType resource={option} />,
         add: option => {
           const optionIsPackage = isPackage(option);
@@ -79,15 +111,10 @@ export default class AcquisitionOptions extends React.Component {
           );
         },
       }}
-      interactive={false}
+      onRowClick={this.onRowClick}
       visibleColumns={['sourceKb', 'package', 'coverage', 'platform', 'acqMethod', 'add']}
     />
   )
-
-  renderBadge = () => {
-    const count = get(this.props.data, 'entitlementOptions.length');
-    return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
-  }
 
   render() {
     const {
@@ -111,3 +138,5 @@ export default class AcquisitionOptions extends React.Component {
     );
   }
 }
+
+export default AcquisitionOptions;
