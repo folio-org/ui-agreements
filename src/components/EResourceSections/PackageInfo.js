@@ -11,6 +11,8 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
+import { resourceClasses } from '../../constants';
+
 import AddToBasketButton from '../AddToBasketButton';
 
 export default class PackageInfo extends React.Component {
@@ -28,7 +30,7 @@ export default class PackageInfo extends React.Component {
   render() {
     const { data: { eresource } } = this.props;
     const entitlementOption = {
-      class: 'org.olf.kb.Pkg',
+      class: resourceClasses.PKG,
       id: eresource.id,
       name: eresource.name,
       _object: eresource,

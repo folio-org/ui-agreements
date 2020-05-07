@@ -13,6 +13,7 @@ const urls = {
 
   eresources: () => '/erm/eresources',
   eresourceView: id => `/erm/eresources/${id}`,
+  eresourceEdit: id => `/erm/eresources/${id}/edit`,
 
   licenseView: id => `/licenses/${id}`,
 
