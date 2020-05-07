@@ -4,6 +4,7 @@ import { get } from 'lodash';
 
 import FolioLink from '../FolioLink';
 import { isExternal, urls } from '../utilities';
+import { resourceClasses } from '../../constants';
 
 class EResourceLink extends React.Component {
   static propTypes = {
@@ -31,7 +32,7 @@ class EResourceLink extends React.Component {
 
     let { id } = eresource;
 
-    if (eresource.class === 'org.olf.kb.PackageContentItem') {
+    if (eresource.class === resourceClasses.PCI) {
       // We don't really want to show an URL to the item itself,
       // we want the eresource/title that the PCI is referring to.
       id = get(eresource, '_object.pti.titleInstance.id');

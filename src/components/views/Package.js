@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import {
   AccordionSet,
@@ -74,7 +75,11 @@ export default class Package extends React.Component {
               />
             </Col>
           </Row>
-          <Agreements {...this.getSectionProps('eresourceAgreements')} />
+          <Agreements
+            {...this.getSectionProps('eresourceAgreements')}
+            isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsPackage" />}
+            visibleColumns={['name', 'type', 'startDate', 'endDate']}
+          />
           <PackageContents
             {...this.getSectionProps('packageContents')}
             onFilterPackageContents={handlers.onFilterPackageContents}
