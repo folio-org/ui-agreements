@@ -223,11 +223,11 @@ const EResources = ({
                     }}
                     contentData={data.eresources}
                     formatter={{
+                      name: e => e._object?.longName ?? e.name,
                       type: e => <EResourceType resource={e} />,
                       isbn: e => getResourceIdentifier(e._object, 'isbn'),
                       eissn: e => getResourceIdentifier(e._object, 'eissn'),
                       pissn: e => getResourceIdentifier(e._object, 'pissn'),
-                      name: e => e._object?.longName ?? e.name,
                     }}
                     id="list-eresources"
                     isEmptyMessage={
