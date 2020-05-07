@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   Accordion,
 } from '@folio/stripes/components';
+import POLineCard from '../POLineCard';
 
 const propTypes = {
   line: PropTypes.shape({
@@ -26,14 +27,24 @@ const propTypes = {
 };
 
 const POLines = ({
-  line,
+  line: { poLines = [] },
 }) => {
   return (
     <Accordion
       id="agreement-line-po-lines"
       label={<FormattedMessage id="ui-agreements.poLines.poLines" />}
     >
-      Here be the PO lines
+      {poLines.length ?
+        poLines.map(poLine => (
+          <POLineCard
+            key={poLine.id}
+            id={`ag-line-pol-card-${poLine.id}`}
+            poLine={poLine}
+          />
+        ))
+        :
+        <FormattedMessage id="ui-agreements.polines.lineHasNone" />
+      }
     </Accordion>
   );
 };

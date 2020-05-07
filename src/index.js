@@ -57,15 +57,14 @@ class App extends React.Component {
           </IfEResourcesEnabled>
           <div className={css.body}>
             <Switch>
-              <Route component={AgreementLineEditRoute} path={`${path}/agreements/:agreementId/line/:lineId/edit`} />
-              <Route component={AgreementLineViewRoute} path={`${path}/agreements/:agreementId/line/:lineId`} />
-
               <Route component={AgreementCreateRoute} path={`${path}/agreements/create`} />
               <Route component={AgreementEditRoute} path={`${path}/agreements/:id/edit`} />
               <Route component={AgreementsRoute} path={`${path}/agreements/:id?`}>
-                <Suspense fallback={null}>
+                <Switch>
+                  <Route component={AgreementLineEditRoute} path={`${path}/agreements/:agreementId/line/:lineId/edit`} />
+                  <Route component={AgreementLineViewRoute} path={`${path}/agreements/:agreementId/line/:lineId`} />
                   <Route component={AgreementViewRoute} path={`${path}/agreements/:id`} />
-                </Suspense>
+                </Switch>
               </Route>
 
               <Route component={EResourceEditRoute} path={`${path}/eresources/:id/edit`} />

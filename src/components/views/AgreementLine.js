@@ -6,9 +6,11 @@ import {
   AccordionSet,
   AccordionStatus,
   Button,
+  Col,
   ExpandAllButton,
   LoadingPane,
-  Pane
+  Pane,
+  Row,
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
@@ -69,7 +71,11 @@ const AgreementLine = ({
     >
       <Info line={line} />
       <AccordionStatus>
-        <ExpandAllButton id="clickable-expand-all" />
+        <Row end="xs">
+          <Col xs>
+            <ExpandAllButton id="clickable-expand-all" />
+          </Col>
+        </Row>
         <AccordionSet>
           <POLines line={line} />
           <Coverage line={line} />

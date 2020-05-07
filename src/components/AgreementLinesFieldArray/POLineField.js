@@ -13,6 +13,7 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
 
+import POLineCard from '../POLineCard';
 import css from '../styles.css';
 
 export default class POLineField extends React.Component {
@@ -127,19 +128,6 @@ export default class POLineField extends React.Component {
     );
   }
 
-  renderEmpty = () => (
-    <div>
-      <Layout className="textCentered">
-        <strong>
-          <FormattedMessage id="ui-agreements.poLines.noPOLineLinked" />
-        </strong>
-      </Layout>
-      <Layout className="textCentered">
-        <FormattedMessage id="ui-agreements.poLines.linkPOLineToStart" />
-      </Layout>
-    </div>
-  )
-
   renderError = () => (
     <Layout
       className={`textCentered ${css.error}`}
@@ -155,29 +143,49 @@ export default class POLineField extends React.Component {
     const {
       id,
       input: { value },
-      meta: { error, touched },
+      meta,
       poLine = {},
     } = this.props;
 
+    const error = meta.touched && meta.error ? this.renderError() : null;
+
+    if (value) {
+      return (
+        <POLineCard
+          headerEnd={this.renderLinkPOLineButton(value)}
+          id={id}
+          poLine={poLine}
+        >
+          {error}
+        </POLineCard>
+      );
+    }
+
     return (
       <Card
-        cardStyle={value ? 'positive' : 'negative'}
+        cardStyle="negative"
         headerEnd={this.renderLinkPOLineButton(value)}
         headerStart={(
           <AppIcon app="orders" size="small">
             <strong data-test-po-line-number>
-              {poLine.poLineNumber ?
-                <FormattedMessage id="ui-agreements.poLines.poLineWithNumber" values={{ poLineNumber: poLine.poLineNumber }} /> :
-                <FormattedMessage id="ui-agreements.poLines.poLine" />
-              }
+              <FormattedMessage id="ui-agreements.poLines.poLine" />
             </strong>
           </AppIcon>
         )}
         id={id}
         roundedBorder
       >
-        {value ? this.renderPOLine() : this.renderEmpty()}
-        {touched && error ? this.renderError() : null}
+        <div>
+          <Layout className="textCentered">
+            <strong>
+              <FormattedMessage id="ui-agreements.poLines.noPOLineLinked" />
+            </strong>
+          </Layout>
+          <Layout className="textCentered">
+            <FormattedMessage id="ui-agreements.poLines.linkPOLineToStart" />
+          </Layout>
+        </div>
+        {error}
       </Card>
     );
   }

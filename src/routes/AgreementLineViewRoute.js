@@ -15,7 +15,7 @@ class AgreementLineViewRoute extends React.Component {
       type: 'okapi',
       path: 'orders/order-lines',
       params: (_q, _p, _r, _l, props) => {
-        const query = props.resources.line?.poLines ?? []
+        const query = (props.resources.line?.records?.[0]?.poLines ?? [])
           .map(poLine => `id==${poLine.poLineId}`)
           .join(' or ');
 
@@ -55,13 +55,16 @@ class AgreementLineViewRoute extends React.Component {
   getCompositeLine = () => {
     const { resources } = this.props;
     const line = resources.line?.records?.[0] ?? {};
-
     const orderLines = resources.orderLines?.records || [];
 
-    line.poLines = (line.poLines || [])
-      .map(linePOL => orderLines.find(orderLine => orderLine.id === linePOL.poLineId));
+    const poLines = (line.poLines || [])
+      .map(linePOL => orderLines.find(orderLine => orderLine.id === linePOL.poLineId))
+      .filter(poLine => poLine);
 
-    return line;
+    return {
+      ...line,
+      poLines,
+    };
   }
 
   handleClose = () => {
