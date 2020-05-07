@@ -1,105 +1,95 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
-import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
 import {
   Accordion,
   Badge,
-  FormattedUTCDate,
-  MultiColumnList,
   Spinner
 } from '@folio/stripes/components';
 
-import { Coverage } from '../Coverage';
-import CustomCoverageIcon from '../CustomCoverageIcon';
-import EResourceLink from '../EResourceLink';
-import EResourceType from '../EResourceType';
-import { getResourceFromEntitlement, urls } from '../utilities';
+import { resourceClasses } from '../../constants';
+import EntitlementAgreementsList from '../EntitlementsAgreementsList';
 
 export default class Agreements extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       entitlements: PropTypes.array,
       eresource: PropTypes.shape({
+        class: PropTypes.string,
         type: PropTypes.object,
       }),
+      relatedEntitlements: PropTypes.array,
     }),
-    id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
+    headline: PropTypes.node,
+    isEmptyMessage: PropTypes.node,
+    renderRelatedEntitlements: PropTypes.bool,
+    visibleColumns: PropTypes.arrayOf(PropTypes.string),
   };
 
-  renderAgreements = () => {
-    const isTitle = this.props.data.eresource.type !== undefined;
+  renderEntitlementAgreements = () => {
+    const { entitlements = [] } = this.props.data;
+    const { headline, isEmptyMessage, visibleColumns } = this.props;
 
     return (
-      <MultiColumnList
-        columnMapping={{
-          name: <FormattedMessage id="ui-agreements.agreements.name" />,
-          type: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
-          startDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodStart" />,
-          endDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodEnd" />,
-          package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
-          acqMethod: <FormattedMessage id="ui-agreements.eresources.acqMethod" />,
-          coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
-          isCustomCoverage: ' ',
-        }}
-        columnWidths={{
-          startDate: 120,
-          endDate: 120,
-        }}
-        contentData={this.props.data.entitlements}
-        formatter={{
-          name: ({ owner: agreement }) => <Link to={urls.agreementView(agreement.id)}>{agreement.name}</Link>,
-          type: ({ owner: agreement }) => get(agreement, 'agreementStatus.label', ''),
-          startDate: ({ owner: agreement }) => agreement.startDate && <FormattedUTCDate value={agreement.startDate} />,
-          endDate: ({ owner: agreement }) => agreement.endDate && <FormattedUTCDate value={agreement.endDate} />,
-          package: (line) => <EResourceLink eresource={getResourceFromEntitlement(line)} />,
-          acqMethod: ({ resource }) => <EResourceType resource={resource} />,
-          coverage: line => <Coverage line={line} />,
-          isCustomCoverage: line => line.customCoverage && <CustomCoverageIcon />,
-        }}
-        interactive={false}
-        visibleColumns={[
-          'name',
-          'type',
-          'startDate',
-          'endDate',
-          ...(isTitle ? ['package', 'acqMethod', 'coverage', 'isCustomCoverage'] : []),
-        ]}
+      <EntitlementAgreementsList
+        entitlements={entitlements}
+        headline={headline}
+        id="pci-agreements-list"
+        isEmptyMessage={isEmptyMessage}
+        visibleColumns={visibleColumns}
+      />
+    );
+  }
+
+  renderRelatedEntitlementAgreements = () => {
+    const { eresource, relatedEntitlements = [] } = this.props.data;
+
+    return (
+      <EntitlementAgreementsList
+        entitlements={relatedEntitlements}
+        headline={<FormattedMessage
+          id="ui-agreements.eresources.otherPlatformPackages"
+          values={{ name: eresource?.pti?.titleInstance?.name }}
+        />}
+        id="related-agreements-list"
+        isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsOtherPackages" />}
+        visibleColumns={['name', 'type', 'package', 'startDate', 'endDate']}
       />
     );
   }
 
   renderBadge = () => {
-    const count = get(this.props.data, 'entitlements.length');
-    return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
+    const { entitlements, relatedEntitlements } = this.props.data;
+
+    return (entitlements && relatedEntitlements) ?
+      <Badge>{entitlements?.length + relatedEntitlements?.length}</Badge>
+      :
+      <Spinner />;
   }
 
   render() {
     const {
-      data: { entitlements, eresource: { type } },
-      id,
-      onToggle,
-      open,
+      data: { entitlements, eresource, relatedEntitlements },
+      renderRelatedEntitlements,
     } = this.props;
 
-    const label = type ?
-      <FormattedMessage id="ui-agreements.eresources.erAgreements" /> :
-      <FormattedMessage id="ui-agreements.eresources.packageAgreements" />;
+    const label = (eresource.class === resourceClasses.PKG) ?
+      <FormattedMessage id="ui-agreements.eresources.packageAgreements" /> :
+      <FormattedMessage id="ui-agreements.eresources.erAgreements" />;
 
     return (
       <Accordion
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
-        id={id}
+        id="pci-agreements"
         label={label}
-        onToggle={onToggle}
-        open={open}
       >
-        {entitlements ? this.renderAgreements() : <Spinner />}
+        {entitlements ? this.renderEntitlementAgreements(entitlements) : <Spinner />}
+        {renderRelatedEntitlements ? (
+          relatedEntitlements ?
+            this.renderRelatedEntitlementAgreements() :
+            <Spinner />) : null}
       </Accordion>
     );
   }
