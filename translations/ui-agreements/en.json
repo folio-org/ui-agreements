@@ -95,7 +95,6 @@
 
   "agreements.create.callout": "<strong>Agreement created:</strong> {name}",
   "agreements.update.callout": "<strong>Agreement updated:</strong> {name}",
-  "lines.update.callout": "Agreement line updated",
 
   "agreementLines.addLine": "Add agreement line",
   "agreementLines.addCustomCoverage": "Add custom coverage",
@@ -324,6 +323,12 @@
   "license.warn.amendmentStatus": "Conflicting statuses: Amendment status is \"{status}\" while \"Status (this agreement)\" is \"Current.\"",
   "license.warn.unassignedAmendments": "This license has unassigned amendments. Please edit the agreement to rectify.",
 
+  "line.update.callout": "Agreement line updated",
+  "line.lineInformation": "Agreement line information",
+  "line.parentAgreement": "Parent agreement",
+  "line.poLines": "PO lines",
+
+
   "organizations.edit": "Edit organizations",
   "organizations.add": "Add organization to agreement",
   "organizations.agreementHasNone": "Agreement has no organizations.",
@@ -345,6 +350,7 @@
   "poLines.poLine": "PO line",
   "poLines.poLineIndex": "PO line {index}",
   "poLines.poLineWithNumber": "PO line: {poLineNumber}",
+  "poLines.poLines": "PO lines",
   "poLines.remove": "Remove PO line {index}",
   "poLines.replacePOLine": "Replace PO line",
   "poLines.replacePOLineSpecific": "Replace PO line {POLineTitle}",

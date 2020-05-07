@@ -73,7 +73,7 @@ class AgreementLineViewRoute extends React.Component {
     const {
       history,
       location,
-      match: { params: { agreementId, lineId }}
+      match: { params: { agreementId, lineId } },
     } = this.props;
 
     history.push(`${urls.agreementLineEdit(agreementId, lineId)}${location.search}`);

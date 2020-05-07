@@ -87,7 +87,7 @@ class AgreementLineEditRoute extends React.Component {
     return mutator.line
       .PUT(line)
       .then(() => {
-        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.lines.update.callout" /> });
+        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.line.update.callout" /> });
         history.push(`${urls.agreementLineView(agreementId, lineId)}${location.search}`);
       });
   }

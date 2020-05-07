@@ -1,19 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import {
-  Accordion,
   AccordionSet,
   AccordionStatus,
   Button,
   ExpandAllButton,
-  Headline,
-  KeyValue,
   LoadingPane,
-  NoValue,
   Pane
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission } from '@folio/stripes/core';
+import { AppIcon } from '@folio/stripes/core';
+
+import { Info, POLines, Coverage } from '../AgreementLineSections';
 
 const propTypes = {
   data: PropTypes.shape({
@@ -41,7 +40,7 @@ const propTypes = {
 };
 
 const AgreementLine = ({
-  data,
+  data: { line },
   handlers,
   isLoading,
 }) => {
@@ -62,29 +61,18 @@ const AgreementLine = ({
           buttonStyle="primary"
           marginBottom0
         >
-          Edit
+          <FormattedMessage id="ui-agreements.agreements.edit" />
         </Button>
       )}
       paneTitle="Agreement line"
       {...paneProps}
     >
-      <Headline size="x-large" tag="h2">
-        Agreement line information
-      </Headline>
-      <KeyValue label="Parent agreement">
-        <div data-test-agreement-line-agreement>
-          {data.line.owner?.name ?? <NoValue />}
-        </div>
-      </KeyValue>
+      <Info line={line} />
       <AccordionStatus>
         <ExpandAllButton id="clickable-expand-all" />
         <AccordionSet>
-          <Accordion id="agreement-line-po-lines" label="PO lines">
-            Here be the PO lines
-          </Accordion>
-          <Accordion id="agreement-line-coverage" label="Coverage">
-            Here be the coverages and embargoes
-          </Accordion>
+          <POLines line={line} />
+          <Coverage line={line} />
         </AccordionSet>
       </AccordionStatus>
     </Pane>
