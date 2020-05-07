@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 import {
   Card,
   Col,
@@ -10,12 +11,15 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
+import { urls } from '../utilities';
+
 const propTypes = {
   children: PropTypes.node,
   headerEnd: PropTypes.node,
   id: PropTypes.string,
   poLine: PropTypes.shape({
     acquisitionMethod: PropTypes.string,
+    id: PropTypes.string,
     poLineNumber: PropTypes.string,
     titleOrPackage: PropTypes.string,
   }).isRequired,
@@ -31,11 +35,13 @@ const POLineCard = ({
     cardStyle="positive"
     headerEnd={headerEnd}
     headerStart={(
-      <AppIcon app="orders" size="small">
-        <strong data-test-po-line-number>
-          <FormattedMessage id="ui-agreements.poLines.poLineWithNumber" values={{ poLineNumber: poLine.poLineNumber }} />
-        </strong>
-      </AppIcon>
+      <Link to={urls.poLineView(poLine.id)}>
+        <AppIcon app="orders" size="small">
+          <strong data-test-po-line-number>
+            <FormattedMessage id="ui-agreements.poLines.poLineWithNumber" values={{ poLineNumber: poLine.poLineNumber }} />
+          </strong>
+        </AppIcon>
+      </Link>
     )}
     id={id}
     roundedBorder
@@ -49,8 +55,6 @@ const POLineCard = ({
             </div>
           </KeyValue>
         </Col>
-      </Row>
-      <Row>
         <Col xs={9}>
           <KeyValue label={<FormattedMessage id="ui-agreements.poLines.title" />}>
             <div data-test-poline-title>

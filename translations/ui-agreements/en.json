@@ -116,11 +116,13 @@
   "agreementLines.lineTitle": "Agreement line {number}",
   "agreementLines.hasCustomCoverage": "Has custom coverage",
   "agreementLines.customCoverageTitle": "Custom coverage {number}",
+  "agreementLines.custom": "Custom",
 
   "agreementLines.customCoverage.startIssue": "Start issue",
   "agreementLines.customCoverage.endIssue": "End issue",
   "agreementLines.customCoverage.startVolume": "Start volume",
   "agreementLines.customCoverage.endVolume": "End volume",
+  "agreementLines.customCoverage.coverageType": "Coverage type",
 
   "alternativeNames": "Alternative names",
 

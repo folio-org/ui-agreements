@@ -9,20 +9,11 @@ import POLineCard from '../POLineCard';
 
 const propTypes = {
   line: PropTypes.shape({
-    coverage: PropTypes.array,
-    customCoverage: PropTypes.bool,
-    endDate: PropTypes.string,
-    id: PropTypes.string,
-    note: PropTypes.string,
-    owner: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }),
     poLines: PropTypes.PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string,
       titleOrPackage: PropTypes.string,
       poLineNumber: PropTypes.string,
     })),
-    startDate: PropTypes.string,
   }).isRequired,
 };
 
