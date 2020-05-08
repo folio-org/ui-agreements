@@ -17,6 +17,7 @@
 
   "agreement": "Agreement",
   "agreementPluralizable": "{count} {count, plural, one {agreement} other {agreements}}",
+  "agreementLinePluralizable": "{count} {count, plural, one {agreement line} other {agreement lines}}",
   "eresource": "E-resource",
   "eresourcePluralizable": "{count} {count, plural, one {e-resource} other {e-resources}}",
 
@@ -97,6 +98,7 @@
   "agreements.create.callout": "<strong>Agreement created:</strong> {name}",
   "agreements.update.callout": "<strong>Agreement updated:</strong> {name}",
 
+  "agreementLine": "Agreement line",
   "agreementLines.addLine": "Add agreement line",
   "agreementLines.addCustomCoverage": "Add custom coverage",
   "agreementLines.costType": "Cost type",
@@ -116,11 +118,13 @@
   "agreementLines.lineTitle": "Agreement line {number}",
   "agreementLines.hasCustomCoverage": "Has custom coverage",
   "agreementLines.customCoverageTitle": "Custom coverage {number}",
+  "agreementLines.custom": "Custom",
 
   "agreementLines.customCoverage.startIssue": "Start issue",
   "agreementLines.customCoverage.endIssue": "End issue",
   "agreementLines.customCoverage.startVolume": "Start volume",
   "agreementLines.customCoverage.endVolume": "End volume",
+  "agreementLines.customCoverage.coverageType": "Coverage type",
 
   "alternativeNames": "Alternative names",
 
@@ -259,6 +263,7 @@
   "eresources.volume": "Volume",
   "eresources.firstAuthor": "First author",
   "eresources.firstEditor": "First editor",
+  "eresources.packageDetails": "Package details",
   "eresources.parentPackageDetails": "Parent package details",
   "eresources.materialType": "Material type",
   "eresources.titleAvailability": "Title availability in package",
@@ -349,6 +354,14 @@
   "license.warn.amendmentStatus": "Conflicting statuses: Amendment status is \"{status}\" while \"Status (this agreement)\" is \"Current.\"",
   "license.warn.unassignedAmendments": "This license has unassigned amendments. Please edit the agreement to rectify.",
 
+  "line.update.callout": "Agreement line updated",
+  "line.delete.callout": "Agreement line deleted",
+  "line.deleteFailed.callout": "Agreement line failed to delete: {message}",
+  "line.lineInformation": "Agreement line information",
+  "line.parentAgreement": "Parent agreement",
+  "line.lineForAgreement": "Agreement line in {agreementName}",
+  "line.poLines": "PO lines",
+
   "organizations.edit": "Edit organizations",
   "organizations.add": "Add organization to agreement",
   "organizations.agreementHasNone": "Agreement has no organizations.",
@@ -377,6 +390,7 @@
   "poLines.poLine": "PO line",
   "poLines.poLineIndex": "PO line {index}",
   "poLines.poLineWithNumber": "PO line: {poLineNumber}",
+  "poLines.poLines": "PO lines",
   "poLines.remove": "Remove PO line {index}",
   "poLines.replacePOLine": "Replace PO line",
   "poLines.replacePOLineSpecific": "Replace PO line {POLineTitle}",

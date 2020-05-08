@@ -69,7 +69,7 @@ module.exports.test = (uiTestCtx) => {
               .wait(5000)
               .evaluate(_selectedPOLine => {
                 const header = document.querySelector('[data-test-po-line-number]').innerText;
-                const title = document.querySelector('[data-test-poline-title]').innerText;
+                const title = document.querySelector('[data-test-po-line-title]').innerText;
 
                 if (header.indexOf(_selectedPOLine.poLineNumber) < 0) {
                   throw Error(`Expected to find PO Line Number of ${_selectedPOLine.poLineNumber} in card header.`);

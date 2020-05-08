@@ -5,24 +5,22 @@ import spies from 'chai-spies';
 import { StaticRouter as Router } from 'react-router-dom';
 import { mountWithContext } from '../helpers/mountWithContext';
 
-import TitleInfo from '../../../src/components/EResourceSections/TitleInfo';
+import TitleCard from '../../../src/components/TitleCard';
 
 import { monographResource, serialResource } from './resources';
-import PCITitleInfoInteractor from '../interactors/pci-title-info';
+import TitleCardInteractor from '../interactors/title-card';
 
 chai.use(spies);
 const { expect } = chai;
 
-describe('PCI title information', () => {
-  const interactor = new PCITitleInfoInteractor();
+describe('TitleCard', () => {
+  const interactor = new TitleCardInteractor();
 
   describe('monograph resource', () => {
     beforeEach(async () => {
       await mountWithContext(
         <Router context={{}}>
-          <TitleInfo
-            data={{ eresource: monographResource }}
-          />
+          <TitleCard title={monographResource} />
         </Router>
       );
     });
@@ -72,9 +70,7 @@ describe('PCI title information', () => {
     beforeEach(async () => {
       await mountWithContext(
         <Router context={{}}>
-          <TitleInfo
-            data={{ eresource: serialResource }}
-          />
+          <TitleCard title={serialResource} />
         </Router>
       );
     });

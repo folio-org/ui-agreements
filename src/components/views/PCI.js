@@ -15,9 +15,10 @@ import {
   Agreements,
   PCICoverage,
   PCIInfo,
-  ParentPackageDetails,
-  TitleInfo,
 } from '../EResourceSections';
+
+import PackageCard from '../PackageCard';
+import TitleCard from '../TitleCard';
 
 export default class PCI extends React.Component {
   static propTypes = {
@@ -45,13 +46,13 @@ export default class PCI extends React.Component {
           <Headline margin="small" size="large" tag="h3">
             <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
           </Headline>
-          <ParentPackageDetails pkg={eresource?.pkg ?? {}} searchString={searchString} />
+          <PackageCard pkg={eresource?.pkg ?? {}} searchString={searchString} />
         </div>
         <div id="title-info">
           <Headline margin="small" size="large" tag="h3">
             <FormattedMessage id="ui-agreements.eresources.titleDetails" />
           </Headline>
-          <TitleInfo data={data} />
+          <TitleCard searchString={searchString} title={data.eresource} />
         </div>
         <AccordionStatus>
           <Row end="xs">
