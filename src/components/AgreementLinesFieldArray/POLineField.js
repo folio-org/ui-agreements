@@ -109,7 +109,7 @@ export default class POLineField extends React.Component {
         <Row>
           <Col xs={12}>
             <KeyValue label={<FormattedMessage id="ui-agreements.poLines.title" />}>
-              <div data-test-poline-title>
+              <div data-test-po-line-title>
                 {poLine.titleOrPackage || '-'}
               </div>
             </KeyValue>
@@ -118,7 +118,7 @@ export default class POLineField extends React.Component {
         <Row>
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.poLines.acqMethod" />}>
-              <div data-test-poline-acq-method>
+              <div data-test-po-line-acq-method>
                 {poLine.acquisitionMethod || '-'}
               </div>
             </KeyValue>

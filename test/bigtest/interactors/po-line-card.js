@@ -5,12 +5,12 @@ import {
 } from '@bigtest/interactor';
 
 export default @interactor class POLineCardInteractor {
-  static defaultScope = '[data-test-poline-card]';
+  static defaultScope = '[data-test-po-line-card]';
 
   textContent = text();
 
   id = attribute('id');
-  acqMethod = text('[data-test-poline-acq-method]');
-  title = text('[data-test-poline-title]');
-  poLineNumber = text('[data-test-poline-number]');
+  acqMethod = text('[data-test-po-line-acq-method]');
+  title = text('[data-test-po-line-title]');
+  poLineNumber = text('[data-test-po-line-number]');
 }

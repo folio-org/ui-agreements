@@ -8,14 +8,14 @@ import {
 } from '@bigtest/interactor';
 
 @interactor class POLineFieldInteractor {
-  isSelected = isPresent('[data-test-poline-title]');
+  isSelected = isPresent('[data-test-po-line-title]');
   hasError = isPresent('[data-test-error]');
 
   clickSelectPOLine = clickable('[data-test-po-line-select-po-line]');
 
-  acquisitionMethod = text('[data-test-poline-acq-method]');
+  acquisitionMethod = text('[data-test-po-line-acq-method]');
   poLineNumber = text('[data-test-po-line-number]');
-  title = text('[data-test-poline-title]');
+  title = text('[data-test-po-line-title]');
 }
 
 @interactor class AgreementFormLineInteractor {

@@ -33,12 +33,12 @@ const POLineCard = ({
 }) => (
   <Card
     cardStyle="positive"
-    data-test-poline-card
+    data-test-po-line-card
     headerEnd={headerEnd}
     headerStart={(
       <Link to={urls.poLineView(poLine.id)}>
         <AppIcon app="orders" size="small">
-          <strong data-test-poline-number>
+          <strong data-test-po-line-number>
             <FormattedMessage id="ui-agreements.poLines.poLineWithNumber" values={{ poLineNumber: poLine.poLineNumber }} />
           </strong>
         </AppIcon>
@@ -51,14 +51,14 @@ const POLineCard = ({
       <Row>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.poLines.acqMethod" />}>
-            <div data-test-poline-acq-method>
+            <div data-test-po-line-acq-method>
               {poLine.acquisitionMethod ?? <NoValue />}
             </div>
           </KeyValue>
         </Col>
         <Col xs={9}>
           <KeyValue label={<FormattedMessage id="ui-agreements.poLines.title" />}>
-            <div data-test-poline-title>
+            <div data-test-po-line-title>
               {poLine.titleOrPackage ?? <NoValue />}
             </div>
           </KeyValue>
