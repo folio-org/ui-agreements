@@ -3,8 +3,8 @@ import {
   text,
 } from '@bigtest/interactor';
 
-export default @interactor class ParentPackageDetailsInteractor {
-  packageName = text('[data-test-parent-package-link]');
+export default @interactor class PackageCardInteractor {
+  packageName = text('[data-test-package-link]');
   resourceCount = text('[data-test-resource-count]');
   vendorName = text('[data-test-vendor-name]');
   packageSource = text('[data-test-package-source]');

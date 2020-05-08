@@ -14,9 +14,9 @@ import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import {
   AcquisitionOptions,
   Agreements,
-  TitleInfo,
 } from '../EResourceSections';
 
+import TitleCardInfo from '../TitleCard/TitleCardInfo';
 import { urls } from '../utilities';
 
 export default class Title extends React.Component {
@@ -62,18 +62,14 @@ export default class Title extends React.Component {
 
   renderTitleInfo = (eresource) => (
     <div id="title-info">
-      <Row>
-        <Col xs={12}>
-          <Headline
-            margin="small"
-            size="xx-large"
-            tag="h2"
-          >
-            {eresource.name}
-          </Headline>
-        </Col>
-      </Row>
-      <TitleInfo {...this.getSectionProps('info')} />
+      <Headline
+        margin="small"
+        size="xx-large"
+        tag="h2"
+      >
+        {eresource.name}
+      </Headline>
+      <TitleCardInfo {...this.getSectionProps('info')} title={eresource} />
     </div>
   );
 

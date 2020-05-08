@@ -4,23 +4,21 @@ import chai from 'chai';
 import spies from 'chai-spies';
 import { StaticRouter as Router } from 'react-router-dom';
 import { mountWithContext } from '../helpers/mountWithContext';
-import ParentPackageDetails from '../../../src/components/EResourceSections/ParentPackageDetails';
+import PackageCard from '../../../src/components/PackageCard';
 
 import { pci } from './resources';
-import ParentPackageDetailsInteractor from '../interactors/pci-parent-package-details';
+import PackageCardInteractor from '../interactors/package-card';
 
 chai.use(spies);
 const { expect } = chai;
 
-describe('Parent package details', () => {
-  const interactor = new ParentPackageDetailsInteractor();
+describe('PackageCard', () => {
+  const interactor = new PackageCardInteractor();
 
   beforeEach(async () => {
     await mountWithContext(
       <Router context={{}}>
-        <ParentPackageDetails
-          pkg={pci.pkg}
-        />
+        <PackageCard pkg={pci.pkg} />
       </Router>
     );
   });
