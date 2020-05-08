@@ -5,7 +5,7 @@ import compose from 'compose-function';
 
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
-import { Tags } from '@folio/stripes-erm-components';
+import { preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from './components/withFileHandlers';
@@ -23,10 +23,7 @@ class AgreementViewRoute extends React.Component {
     agreement: {
       type: 'okapi',
       path: 'erm/sas/:{id}',
-      shouldRefresh: (resource, action) => {
-        if (resource.name !== 'agreement') return true;
-        return !action.meta.originatingActionType?.includes('DELETE');
-      },
+      shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
     agreementLines: {
       type: 'okapi',
@@ -40,6 +37,7 @@ class AgreementViewRoute extends React.Component {
       perRequest: RECORDS_PER_REQUEST,
       records: 'results',
       recordsRequired: '%{agreementLinesCount}',
+      shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
     agreementEresources: {
       type: 'okapi',
@@ -52,6 +50,7 @@ class AgreementViewRoute extends React.Component {
       perRequest: RECORDS_PER_REQUEST,
       records: 'results',
       recordsRequired: '%{agreementEresourcesCount}',
+      shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
     eresourcesFilterPath: { initialValue: 'current' },
     interfaces: {
@@ -91,12 +90,11 @@ class AgreementViewRoute extends React.Component {
     supplementaryProperties: {
       type: 'okapi',
       path: 'erm/custprops',
-      throwErrors: false,
+      shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
     terms: {
       type: 'okapi',
       path: 'licenses/custprops',
-      throwErrors: false,
     },
     users: {
       type: 'okapi',
