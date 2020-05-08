@@ -33,11 +33,12 @@ const POLineCard = ({
 }) => (
   <Card
     cardStyle="positive"
+    data-test-poline-card
     headerEnd={headerEnd}
     headerStart={(
       <Link to={urls.poLineView(poLine.id)}>
         <AppIcon app="orders" size="small">
-          <strong data-test-po-line-number>
+          <strong data-test-poline-number>
             <FormattedMessage id="ui-agreements.poLines.poLineWithNumber" values={{ poLineNumber: poLine.poLineNumber }} />
           </strong>
         </AppIcon>
