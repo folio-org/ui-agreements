@@ -6,7 +6,6 @@ import { StaticRouter as Router } from 'react-router-dom';
 import { mountWithContext } from '../helpers/mountWithContext';
 import POLineCard from '../../../src/components/POLineCard';
 
-import { pci } from './resources';
 import POLineCardInteractor from '../interactors/po-line-card';
 
 chai.use(spies);
@@ -19,7 +18,7 @@ const poLine = {
   titleOrPackage: 'How to write tests',
 };
 
-describe.only('POLineCard', () => {
+describe('POLineCard', () => {
   const interactor = new POLineCardInteractor();
 
   describe('when rendered with limited data', () => {
