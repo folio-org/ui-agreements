@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import View from '../components/views/AgreementLine';
@@ -40,6 +41,11 @@ class AgreementLineViewRoute extends React.Component {
         lineId: PropTypes.string.isRequired,
       }).isRequired
     }).isRequired,
+    mutator: PropTypes.shape({
+      line: PropTypes.shape({
+        DELETE: PropTypes.func.isRequired,
+      }).isRequired,
+    }).isRequired,
     resources: PropTypes.shape({
       line: PropTypes.object,
       orderLines: PropTypes.object,
@@ -72,6 +78,20 @@ class AgreementLineViewRoute extends React.Component {
     history.push(`${urls.agreementView(match.params.agreementId)}${location.search}`);
   }
 
+  handleDelete = () => {
+    const { history, location, mutator } = this.props;
+    const { sendCallout } = this.context;
+
+    mutator.line.DELETE()
+      .then(() => {
+        history.push(`${urls.agreements()}${location.search}`);
+        sendCallout({ message: <FormattedMessage id="ui-agreements.line.delete.callout" /> });
+      })
+      .catch(error => {
+        sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.line.deleteFailed.callout" values={{ message: error.message }} /> });
+      });
+  }
+
   handleEdit = () => {
     const {
       history,
@@ -92,20 +112,17 @@ class AgreementLineViewRoute extends React.Component {
   }
 
   render() {
-    const {
-      resources,
-      stripes,
-    } = this.props;
+    const { resources } = this.props;
 
     return (
       <View
         key={resources.line?.loadedAt ?? 'loading'}
-        canEdit={stripes.hasPerm('ui-agreements.agreements.edit')}
         data={{
           line: this.getCompositeLine()
         }}
         handlers={{
           onClose: this.handleClose,
+          onDelete: this.handleDelete,
           onEdit: this.handleEdit,
         }}
         isLoading={this.isLoading()}

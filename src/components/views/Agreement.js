@@ -43,7 +43,6 @@ import { urls } from '../utilities';
 
 export default class Agreement extends React.Component {
   static propTypes = {
-    canEdit: PropTypes.bool,
     data: PropTypes.shape({
       agreement: PropTypes.object.isRequired,
       eresourcesFilterPath: PropTypes.string,

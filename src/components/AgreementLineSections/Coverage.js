@@ -57,7 +57,8 @@ const Coverage = ({
               ?
               (
                 <>
-                  Custom&nbsp;
+                  <FormattedMessage id="ui-agreements.agreementLines.custom" />
+                  &nbsp;
                   <CustomCoverageIcon />
                 </>
               )
@@ -68,6 +69,9 @@ const Coverage = ({
           startDate: c => (c.startDate ? <FormattedDate value={c.startDate} /> : ''),
         }}
         interactive={false}
+        rowProps={{
+          labelStrings: ({ rowData }) => ([rowData.summary]),
+        }}
         visibleColumns={[
           'startDate',
           'startVolume',

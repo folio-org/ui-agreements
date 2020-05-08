@@ -97,6 +97,7 @@
   "agreements.create.callout": "<strong>Agreement created:</strong> {name}",
   "agreements.update.callout": "<strong>Agreement updated:</strong> {name}",
 
+  "agreementLine": "Agreement line",
   "agreementLines.addLine": "Add agreement line",
   "agreementLines.addCustomCoverage": "Add custom coverage",
   "agreementLines.costType": "Cost type",
@@ -352,6 +353,8 @@
   "license.warn.unassignedAmendments": "This license has unassigned amendments. Please edit the agreement to rectify.",
 
   "line.update.callout": "Agreement line updated",
+  "line.delete.callout": "Agreement line deleted",
+  "line.deleteFailed.callout": "Agreement line failed to delete: {message}",
   "line.lineInformation": "Agreement line information",
   "line.parentAgreement": "Parent agreement",
   "line.poLines": "PO lines",

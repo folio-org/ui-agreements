@@ -8,11 +8,12 @@ import {
   Button,
   Col,
   ExpandAllButton,
+  Icon,
   LoadingPane,
   Pane,
   Row,
 } from '@folio/stripes/components';
-import { AppIcon } from '@folio/stripes/core';
+import { AppIcon, IfPermission } from '@folio/stripes/core';
 
 import { Info, POLines, Coverage } from '../AgreementLineSections';
 
@@ -37,6 +38,8 @@ const propTypes = {
   }),
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onEdit: PropTypes.func.isRequired,
   }).isRequired,
   isLoading: PropTypes.bool,
 };
@@ -57,16 +60,30 @@ const AgreementLine = ({
 
   return (
     <Pane
-      appIcon={<AppIcon app="agreements" />}
-      lastMenu={(
-        <Button
-          buttonStyle="primary"
-          marginBottom0
-        >
-          <FormattedMessage id="ui-agreements.agreements.edit" />
-        </Button>
+      actionMenu={() => (
+        <IfPermission perm="ui-agreements.agreements.edit">
+          <Button
+            buttonStyle="dropdownItem"
+            id="clickable-dropdown-edit-agreement-line"
+            onClick={handlers.onEdit}
+          >
+            <Icon icon="edit">
+              <FormattedMessage id="ui-agreements.agreements.edit" />
+            </Icon>
+          </Button>
+          <Button
+            buttonStyle="dropdownItem"
+            id="clickable-dropdown-delete-agreement-line"
+            onClick={handlers.onDelete}
+          >
+            <Icon icon="trash">
+              <FormattedMessage id="ui-agreements.delete" />
+            </Icon>
+          </Button>
+        </IfPermission>
       )}
-      paneTitle="Agreement line"
+      appIcon={<AppIcon app="agreements" />}
+      paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
       {...paneProps}
     >
       <Info line={line} />

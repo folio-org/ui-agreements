@@ -440,7 +440,6 @@ class AgreementViewRoute extends React.Component {
     return (
       <View
         key={get(resources, 'agreement.loadedAt', 'loading')}
-        canEdit={this.props.stripes.hasPerm('ui-agreements.agreements.edit')}
         data={{
           agreement: this.getCompositeAgreement(),
           eresourcesFilterPath: this.props.resources.eresourcesFilterPath,

@@ -97,17 +97,13 @@ class AgreementLineEditRoute extends React.Component {
   }
 
   render() {
-    const {
-      resources,
-      stripes,
-    } = this.props;
+    const { resources } = this.props;
 
     if (this.isLoading()) return <LoadingView dismissible onClose={this.handleClose} />;
 
     return (
       <View
         key={resources.line?.loadedAt ?? 'loading'}
-        canEdit={stripes.hasPerm('ui-agreements.agreements.edit')}
         data={{
           line: this.getCompositeLine()
         }}
