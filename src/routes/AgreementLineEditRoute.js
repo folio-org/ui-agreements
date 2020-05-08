@@ -80,7 +80,7 @@ class AgreementLineEditRoute extends React.Component {
     const {
       history,
       location,
-      match: { params: { agreementId, lineId }},
+      match: { params: { agreementId, lineId } },
       mutator,
     } = this.props;
 

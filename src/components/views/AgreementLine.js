@@ -5,15 +5,13 @@ import { FormattedMessage } from 'react-intl';
 import {
   AccordionSet,
   AccordionStatus,
-  Button,
   Col,
   ExpandAllButton,
-  Icon,
   LoadingPane,
   Pane,
   Row,
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission } from '@folio/stripes/core';
+import { AppIcon } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
 import { Info, POLines, Coverage } from '../AgreementLineSections';
