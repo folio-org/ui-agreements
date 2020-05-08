@@ -263,6 +263,7 @@
   "eresources.volume": "Volume",
   "eresources.firstAuthor": "First author",
   "eresources.firstEditor": "First editor",
+  "eresources.packageDetails": "Package details",
   "eresources.parentPackageDetails": "Parent package details",
   "eresources.materialType": "Material type",
   "eresources.titleAvailability": "Title availability in package",
