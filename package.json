@@ -98,11 +98,13 @@
     "moment": "~2.24.0"
   },
   "stripes": {
-    "type": "app",
+    "actsAs": [
+      "app",
+      "settings"
+    ],
     "displayName": "ui-agreements.meta.title",
     "route": "/erm",
     "home": "/erm/agreements",
-    "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {
       "configuration": "2.0 3.0 4.0 5.0",
