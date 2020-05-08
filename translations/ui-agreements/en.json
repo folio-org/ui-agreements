@@ -17,6 +17,7 @@
 
   "agreement": "Agreement",
   "agreementPluralizable": "{count} {count, plural, one {agreement} other {agreements}}",
+  "agreementLinePluralizable": "{count} {count, plural, one {agreement line} other {agreement lines}}",
   "eresource": "E-resource",
   "eresourcePluralizable": "{count} {count, plural, one {e-resource} other {e-resources}}",
 
@@ -357,8 +358,8 @@
   "line.deleteFailed.callout": "Agreement line failed to delete: {message}",
   "line.lineInformation": "Agreement line information",
   "line.parentAgreement": "Parent agreement",
+  "line.lineForAgreement": "Agreement line in {agreementName}",
   "line.poLines": "PO lines",
-
 
   "organizations.edit": "Edit organizations",
   "organizations.add": "Add organization to agreement",

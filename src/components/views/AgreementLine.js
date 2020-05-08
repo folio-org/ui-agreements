@@ -14,8 +14,10 @@ import {
   Row,
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission } from '@folio/stripes/core';
+import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
 import { Info, POLines, Coverage } from '../AgreementLineSections';
+import { urls } from '../utilities';
 
 const propTypes = {
   data: PropTypes.shape({
@@ -96,6 +98,19 @@ const AgreementLine = ({
         <AccordionSet>
           <POLines line={line} />
           <Coverage line={line} />
+          <FormattedMessage id="ui-agreements.line.lineForAgreement" values={{ agreementName: line.owner?.name }}>
+            {title => (
+              <NotesSmartAccordion
+                domainName="agreements"
+                entityId={line.id}
+                entityName={title}
+                entityType="agreementLine"
+                id="agreement-line-notes"
+                pathToNoteCreate={urls.noteCreate()}
+                pathToNoteDetails={urls.notes()}
+              />
+            )}
+          </FormattedMessage>
         </AccordionSet>
       </AccordionStatus>
     </Pane>
