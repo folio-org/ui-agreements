@@ -1,6 +1,6 @@
 # Change history for ui-agreements
 
-##  3.5.0 IN PROGRESS
+##  4.0.0 IN PROGRESS
 * Added permission set and ability to delete agreements. ERM-777
 * Added ability to set and view agreement line notes. ERM-779
 
