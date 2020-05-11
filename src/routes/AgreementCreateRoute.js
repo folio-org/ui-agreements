@@ -160,15 +160,15 @@ class AgreementCreateRoute extends React.Component {
 
   getAgreementLinesToAdd = () => {
     const { resources } = this.props;
-    const { query: { addFromBasket } } = resources;
+    const { query = {} } = resources;
 
     const externalAgreementLines = resources?.externalAgreementLine?.records ?? [];
 
     let basketLines = [];
-    if (resources.query.addFromBasket) {
+    if (query.addFromBasket) {
       const basket = resources?.basket ?? [];
 
-      basketLines = addFromBasket
+      basketLines = query.addFromBasket
         .split(',')
         .map(index => ({ resource: basket[parseInt(index, 10)] }))
         .filter(line => line.resource); // check that there _was_ a basket item at that index

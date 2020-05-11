@@ -22,7 +22,7 @@ const overlappingCoverages = (...rest) => (
   validators.overlappingDates(...rest, 'ui-agreements.errors.overlappingCoverage')
 );
 
-export default class CustomCoverageField extends React.Component {
+export default class CoverageField extends React.Component {
   static propTypes = {
     index: PropTypes.number.isRequired,
     input: PropTypes.shape({
@@ -48,7 +48,7 @@ export default class CustomCoverageField extends React.Component {
     return (
       <div>
         <Row>
-          <Col xs={4}>
+          <Col md={2} xs={4}>
             <Field
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
@@ -66,7 +66,7 @@ export default class CustomCoverageField extends React.Component {
               )}
             />
           </Col>
-          <Col xs={4}>
+          <Col md={2} xs={4}>
             <Field
               component={TextField}
               id={`cc-start-volume-${index}`}
@@ -75,7 +75,7 @@ export default class CustomCoverageField extends React.Component {
               parse={v => v} // Lets us send an empty string instead of `undefined`
             />
           </Col>
-          <Col xs={4}>
+          <Col md={2} xs={4}>
             <Field
               component={TextField}
               id={`cc-start-issue-${index}`}
@@ -84,9 +84,7 @@ export default class CustomCoverageField extends React.Component {
               parse={v => v} // Lets us send an empty string instead of `undefined`
             />
           </Col>
-        </Row>
-        <Row>
-          <Col xs={4}>
+          <Col md={2} xs={4}>
             <Field
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
@@ -102,7 +100,7 @@ export default class CustomCoverageField extends React.Component {
               )}
             />
           </Col>
-          <Col xs={4}>
+          <Col md={2} xs={4}>
             <Field
               component={TextField}
               id={`cc-end-volume-${index}`}
@@ -111,7 +109,7 @@ export default class CustomCoverageField extends React.Component {
               parse={v => v} // Lets us send an empty string instead of `undefined`
             />
           </Col>
-          <Col xs={4}>
+          <Col md={2} xs={4}>
             <Field
               component={TextField}
               id={`cc-end-issue-${index}`}

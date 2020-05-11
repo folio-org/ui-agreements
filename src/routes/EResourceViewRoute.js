@@ -35,6 +35,14 @@ class EResourceViewRoute extends React.Component {
         stats: 'true',
       },
     },
+    relatedEntitlements: {
+      type: 'okapi',
+      path: 'erm/resource/:{id}/entitlements/related',
+      perRequest: RECORDS_PER_REQUEST,
+      recordsRequired: '%{entitlementsCount}',
+      limitParam: 'perPage',
+      throwErrors: false,
+    },
     packageContents: {
       type: 'okapi',
       path: 'erm/packages/:{id}/content/%{packageContentsFilter}',
@@ -139,6 +147,15 @@ class EResourceViewRoute extends React.Component {
     this.props.history.push(`${urls.eresources()}${this.props.location.search}`);
   }
 
+  handleEdit = () => {
+    const { history, location, match } = this.props;
+    history.push(`${urls.eresourceEdit(match.params.id)}${location.search}`);
+  }
+
+  handleEResourceClick = (id) => {
+    this.props.history.push(`${urls.eresourceView(id)}${this.props.location.search}`);
+  }
+
   handleFilterPackageContents = (path) => {
     const { mutator } = this.props;
     mutator.packageContentsFilter.replace(path);
@@ -211,18 +228,22 @@ class EResourceViewRoute extends React.Component {
       <View
         key={get(resources, 'eresource.loadedAt', 'loading')}
         data={{
-          eresource: get(resources, 'eresource.records[0]', {}),
+          eresource: resources?.eresource?.records?.[0] ?? {},
           entitlementOptions: this.getRecords('entitlementOptions'),
           entitlements: this.getRecords('entitlements'),
           packageContentsFilter: this.props.resources.packageContentsFilter,
           packageContents: this.getPackageContentsRecords(),
           packageContentsCount: this.getPackageContentsRecordsCount(),
+          relatedEntitlements: this.getRecords('relatedEntitlements'),
+          searchString: this.props.location.search,
         }}
         handlers={{
           ...handlers,
           onFilterPackageContents: this.handleFilterPackageContents,
           onNeedMorePackageContents: this.handleNeedMorePackageContents,
           onClose: this.handleClose,
+          onEdit: this.handleEdit,
+          onEResourceClick: this.handleEResourceClick,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
         helperApp={this.getHelperApp()}

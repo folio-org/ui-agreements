@@ -11,10 +11,14 @@ const AgreementCreateRoute = lazy(() => import('./routes/AgreementCreateRoute'))
 const AgreementEditRoute = lazy(() => import('./routes/AgreementEditRoute'));
 const AgreementViewRoute = lazy(() => import('./routes/AgreementViewRoute'));
 
+const AgreementLineViewRoute = lazy(() => import('./routes/AgreementLineViewRoute'));
+const AgreementLineEditRoute = lazy(() => import('./routes/AgreementLineEditRoute'));
+
 const BasketRoute = lazy(() => import('./routes/BasketRoute'));
 
 const EResourcesRoute = lazy(() => import('./routes/EResourcesRoute'));
 const EResourceViewRoute = lazy(() => import('./routes/EResourceViewRoute'));
+const EResourceEditRoute = lazy(() => import('./routes/EResourceEditRoute'));
 
 const NoteCreateRoute = lazy(() => import('./routes/NoteCreateRoute'));
 const NoteEditRoute = lazy(() => import('./routes/NoteEditRoute'));
@@ -28,20 +32,20 @@ const Settings = lazy(() => import('./settings'));
 class App extends React.Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
-    showSettings: PropTypes.bool,
+    actAs: PropTypes.string.isRequired,
     stripes: PropTypes.object.isRequired,
   }
 
   render() {
-    if (this.props.showSettings) {
+    const { actAs, match: { path } } = this.props;
+
+    if (actAs === 'settings') {
       return (
         <Suspense fallback={null}>
           <Settings {...this.props} />
         </Suspense>
       );
     }
-
-    const { match: { path } } = this.props;
 
     return (
       <div className={css.container}>
@@ -56,11 +60,14 @@ class App extends React.Component {
               <Route component={AgreementCreateRoute} path={`${path}/agreements/create`} />
               <Route component={AgreementEditRoute} path={`${path}/agreements/:id/edit`} />
               <Route component={AgreementsRoute} path={`${path}/agreements/:id?`}>
-                <Suspense fallback={null}>
+                <Switch>
+                  <Route component={AgreementLineEditRoute} path={`${path}/agreements/:agreementId/line/:lineId/edit`} />
+                  <Route component={AgreementLineViewRoute} path={`${path}/agreements/:agreementId/line/:lineId`} />
                   <Route component={AgreementViewRoute} path={`${path}/agreements/:id`} />
-                </Suspense>
+                </Switch>
               </Route>
 
+              <Route component={EResourceEditRoute} path={`${path}/eresources/:id/edit`} />
               <Route component={EResourcesRoute} path={`${path}/eresources/:id?`}>
                 <Suspense fallback={null}>
                   <Route component={EResourceViewRoute} path={`${path}/eresources/:id`} />

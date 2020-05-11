@@ -1,22 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
-import { LoadingPane, Pane } from '@folio/stripes/components';
-import { TitleManager } from '@folio/stripes/core';
+import { Button, LoadingPane, Pane, PaneMenu } from '@folio/stripes/components';
+import { IfPermission, TitleManager } from '@folio/stripes/core';
 
 import Package from './Package';
 import Title from './Title';
+import PCI from './PCI';
+import { resourceClasses } from '../../constants';
 
 export default class EResource extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       eresource: PropTypes.shape({
+        class: PropTypes.string,
         name: PropTypes.string,
         type: PropTypes.object,
       }),
     }),
     handlers: PropTypes.shape({
       onClose: PropTypes.func.isRequired,
+      onEdit: PropTypes.func.isRequired,
       onNeedMorePackageContents: PropTypes.func.isRequired,
       onToggleTags: PropTypes.func.isRequired
     }).isRequired,
@@ -24,9 +29,31 @@ export default class EResource extends React.Component {
     isLoading: PropTypes.bool,
   }
 
+  renderEditPCIPaneMenu = () => {
+    const {
+      data: { eresource },
+      handlers,
+    } = this.props;
+
+    return (eresource?.class === resourceClasses.PCI) ? (
+      <IfPermission perm="ui-agreements.resources.edit">
+        <PaneMenu>
+          <Button
+            buttonStyle="primary"
+            id="clickable-edit-eresource"
+            marginBottom0
+            onClick={handlers.onEdit}
+          >
+            <FormattedMessage id="stripes-components.button.edit" />
+          </Button>
+        </PaneMenu>
+      </IfPermission>
+    ) : null;
+  }
+
   render() {
     const {
-      data,
+      data = {},
       handlers,
       helperApp,
       isLoading,
@@ -40,12 +67,20 @@ export default class EResource extends React.Component {
 
     if (isLoading) return <LoadingPane data-loading id="pane-view-eresource" {...paneProps} />;
 
-    const EResourceViewComponent = data.eresource.type ? Title : Package;
+    let EResourceViewComponent = Package;
+
+    if (data.eresource?.class === resourceClasses.TITLEINSTANCE) {
+      EResourceViewComponent = Title;
+    } else if (data.eresource?.class === resourceClasses.PCI) {
+      EResourceViewComponent = PCI;
+    }
 
     return (
       <>
         <Pane
           id="pane-view-eresource"
+          lastMenu={this.renderEditPCIPaneMenu()}
+          onClose={handlers.onClose}
           paneTitle={data.eresource.name}
           {...paneProps}
         >

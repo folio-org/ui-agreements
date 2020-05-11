@@ -95,12 +95,17 @@
     "react-router-dom": "^4.1.1",
     "redux": "*"
   },
+  "resolutions": {
+    "moment": "~2.24.0"
+  },
   "stripes": {
-    "type": "app",
+    "actsAs": [
+      "app",
+      "settings"
+    ],
     "displayName": "ui-agreements.meta.title",
     "route": "/erm",
     "home": "/erm/agreements",
-    "hasSettings": true,
     "queryResource": "query",
     "okapiInterfaces": {
       "configuration": "2.0 3.0 4.0 5.0",
@@ -132,7 +137,17 @@
           "module.agreements.enabled",
           "erm.packages.view",
           "erm.titles.view",
-          "erm.resources.view"
+          "erm.resources.view",
+          "erm.pci.view"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.resources.edit",
+        "displayName": "Agreements: Edit e-resources",
+        "visible": true,
+        "subPermissions": [
+          "erm.pci.edit",
+          "ui-agreements.resources.view"
         ]
       },
       {

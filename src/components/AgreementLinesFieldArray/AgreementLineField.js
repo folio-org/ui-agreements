@@ -16,7 +16,7 @@ import EResourceProvider from '../EResourceProvider';
 import EResourceType from '../EResourceType';
 import { isExternal, isPackage, parseDateOnlyString } from '../utilities';
 
-import CustomCoverageFieldArray from './CustomCoverageFieldArray';
+import CoverageFieldArray from '../CoverageFieldArray';
 import POLinesFieldArray from './POLinesFieldArray';
 
 export default class AgreementLineField extends React.Component {
@@ -113,7 +113,12 @@ export default class AgreementLineField extends React.Component {
 
     return (
       <FieldArray
-        component={CustomCoverageFieldArray}
+        addButtonId="add-agreement-custom-coverage-button"
+        addLabelId="ui-agreements.agreementLines.addCustomCoverage"
+        component={CoverageFieldArray}
+        deleteButtonTooltipId="ui-agreements.agreementLines.removeCustomCoverage"
+        headerId="ui-agreements.agreementLines.customCoverageTitle"
+        id="agreement-form-custom-coverages"
         name={`${name}.coverage`}
       />
     );

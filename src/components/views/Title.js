@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import {
   AccordionSet,
   Col,
   ExpandAllButton,
+  Headline,
   Row,
 } from '@folio/stripes/components';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
@@ -12,9 +14,9 @@ import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import {
   AcquisitionOptions,
   Agreements,
-  TitleInfo,
 } from '../EResourceSections';
 
+import TitleCardInfo from '../TitleCard/TitleCardInfo';
 import { urls } from '../utilities';
 
 export default class Title extends React.Component {
@@ -58,12 +60,25 @@ export default class Title extends React.Component {
     }));
   }
 
+  renderTitleInfo = (eresource) => (
+    <div id="title-info">
+      <Headline
+        margin="small"
+        size="xx-large"
+        tag="h2"
+      >
+        {eresource.name}
+      </Headline>
+      <TitleCardInfo {...this.getSectionProps('info')} title={eresource} />
+    </div>
+  );
+
   render() {
     const { data } = this.props;
 
     return (
       <div id="eresource-title">
-        <TitleInfo {...this.getSectionProps('info')} />
+        {this.renderTitleInfo(data.eresource)}
         <AccordionSet>
           <Row end="xs">
             <Col xs>
@@ -74,7 +89,11 @@ export default class Title extends React.Component {
               />
             </Col>
           </Row>
-          <Agreements {...this.getSectionProps('eresourceAgreements')} />
+          <Agreements
+            {...this.getSectionProps('eresourceAgreements')}
+            isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsEresource" />}
+            visibleColumns={['name', 'type', 'startDate', 'endDate', 'parentPackage', 'acqMethod', 'coverage', 'isCustomCoverage']}
+          />
           <AcquisitionOptions {...this.getSectionProps('acquisitionOptions')} />
           <NotesSmartAccordion
             {...this.getSectionProps('notes')}
