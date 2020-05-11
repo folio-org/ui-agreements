@@ -74,7 +74,7 @@ export default class Agreements extends React.Component {
       renderRelatedEntitlements,
     } = this.props;
 
-    const label = (eresource.class === resourceClasses.PKG) ?
+    const label = (eresource.class === resourceClasses.PACKAGE) ?
       <FormattedMessage id="ui-agreements.eresources.packageAgreements" /> :
       <FormattedMessage id="ui-agreements.eresources.erAgreements" />;
 

@@ -30,7 +30,7 @@ export default class PackageInfo extends React.Component {
   render() {
     const { data: { eresource } } = this.props;
     const entitlementOption = {
-      class: resourceClasses.PKG,
+      class: resourceClasses.PACKAGE,
       id: eresource.id,
       name: eresource.name,
       _object: eresource,
