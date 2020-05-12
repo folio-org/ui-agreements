@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { IfPermission } from '@folio/stripes/core';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { InternalContactSelection, OrganizationSelection } from '@folio/stripes-erm-components';
+import { CustomPropertyFilters, InternalContactSelection, OrganizationSelection } from '@folio/stripes-erm-components';
 
 const FILTERS = [
   'agreementStatus',
@@ -221,6 +221,13 @@ export default class AgreementFilters extends React.Component {
     );
   }
 
+  renderCustomPropertyFilters = () => {
+    return <CustomPropertyFilters
+      {...this.props}
+      name="supplementaryProperty"
+    />;
+  }
+
   render() {
     return (
       <AccordionSet>
@@ -232,6 +239,7 @@ export default class AgreementFilters extends React.Component {
         {this.renderInternalContactFilter()}
         {this.renderInternalContactRoleFilter()}
         {this.renderTagsFilter()}
+        {this.renderCustomPropertyFilters()}
       </AccordionSet>
     );
   }

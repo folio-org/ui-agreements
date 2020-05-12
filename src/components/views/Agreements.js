@@ -35,9 +35,10 @@ const propTypes = {
   data: PropTypes.shape({
     agreements: PropTypes.array.isRequired,
     agreementStatusValues: PropTypes.array.isRequired,
-    renewalPriorityValues: PropTypes.array.isRequired,
     isPerpetualValues: PropTypes.array.isRequired,
     orgRoleValues: PropTypes.array.isRequired,
+    renewalPriorityValues: PropTypes.array.isRequired,
+    supplementaryProperties: PropTypes.array.isRequired,
     tagsValues: PropTypes.array.isRequired,
   }),
   onNeedMoreData: PropTypes.func.isRequired,
