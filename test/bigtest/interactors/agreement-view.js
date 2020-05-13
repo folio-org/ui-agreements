@@ -29,6 +29,6 @@ export default @interactor class AgreementViewInteractor {
   poLinesCount = count('[data-test-po-line]')
 
   whenLoaded() {
-    return this.when(() => this.isLoading === false).timeout(5000);
+    return this.when(() => this.isLoading === false).timeout(10000);
   }
 }
