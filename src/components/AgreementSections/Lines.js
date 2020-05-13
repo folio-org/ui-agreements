@@ -16,11 +16,12 @@ export default class Lines extends React.Component {
     }).isRequired,
     eresourcesFilterPath: PropTypes.string,
     handlers: PropTypes.shape({
-      onFilterEResources: PropTypes.func.isRequired,
       onExportEResourcesAsJSON: PropTypes.func.isRequired,
       onExportEResourcesAsKBART: PropTypes.func.isRequired,
+      onFilterEResources: PropTypes.func.isRequired,
       onNeedMoreEResources: PropTypes.func.isRequired,
       onNeedMoreLines: PropTypes.func.isRequired,
+      onViewAgreementLine: PropTypes.func.isRequired,
     }).isRequired,
     id: PropTypes.string,
     onToggle: PropTypes.func,
@@ -56,6 +57,7 @@ export default class Lines extends React.Component {
         <LinesList
           agreement={agreement}
           onNeedMoreLines={handlers.onNeedMoreLines}
+          onViewAgreementLine={handlers.onViewAgreementLine}
           visible={open}
         />
         <CoveredEResourcesList

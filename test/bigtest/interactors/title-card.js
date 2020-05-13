@@ -3,7 +3,7 @@ import {
   text,
 } from '@bigtest/interactor';
 
-export default @interactor class PCITitleInfoInteractor {
+export default @interactor class TitleCardInteractor {
   titleInstanceName = text('[data-test-title-instance-name]');
   titleInstanceType = text('[data-test-title-instance-type]');
   titleInstanceSubType = text('[data-test-title-instance-sub-type]');

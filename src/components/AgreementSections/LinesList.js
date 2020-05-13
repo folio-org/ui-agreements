@@ -25,6 +25,7 @@ export default class LinesList extends React.Component {
       lines: PropTypes.arrayOf(PropTypes.object),
       orderLines: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
+    onViewAgreementLine: PropTypes.func.isRequired,
     onNeedMoreLines: PropTypes.func.isRequired,
   }
 
@@ -150,6 +151,7 @@ export default class LinesList extends React.Component {
   render() {
     const {
       agreement: { lines, orderLines },
+      onViewAgreementLine,
       onNeedMoreLines,
     } = this.props;
 
@@ -162,10 +164,14 @@ export default class LinesList extends React.Component {
         contentData={lines}
         formatter={this.formatter}
         id="agreement-lines"
-        interactive={false}
         isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.agreementLines" />}
         maxHeight={400}
         onNeedMoreData={onNeedMoreLines}
+        onRowClick={(e, row) => {
+          if (e.target.tagName !== 'A') {
+            onViewAgreementLine(row.id);
+          }
+        }}
         rowUpdater={rowUpdater}
         visibleColumns={this.visibleColumns}
       />
