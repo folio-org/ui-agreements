@@ -1,5 +1,6 @@
 import {
   clickable,
+  count,
   interactor,
   isPresent,
 } from '@bigtest/interactor';
@@ -19,13 +20,13 @@ import AgreementLinesInteractor from './agreement-lines';
 export default @interactor class AgreementViewInteractor {
   isViewAgreement = isPresent('#pane-view-agreement');
   isLoading = isPresent('#pane-view-agreement[data-loading]');
-  lines = new AgreementLinesInteractor();
   headerDropdown = new HeaderDropdown('[data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
   duplicateAgreementModal = new DuplicateModalInteractor();
   expandAll = clickable('#clickable-expand-all');
 
   linesSection = new AgreementLinesInteractor('#lines');
+  poLinesCount = count('[data-test-po-line]')
 
   whenLoaded() {
     return this.when(() => this.isLoading === false).timeout(5000);
