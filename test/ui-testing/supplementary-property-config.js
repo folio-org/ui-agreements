@@ -84,6 +84,8 @@ module.exports.test = (uiTestCtx) => {
             .then(() => {
               nightmare
                 .click(`[data-test-customproperty=${supplementaryProperty.name}] [data-test-customproperty-delete-btn]`)
+                .wait('[data-test-confirmation-modal-confirm-button]')
+                .click('[data-test-confirmation-modal-confirm-button]')
                 .waitUntilNetworkIdle(2000)
                 .then(done)
                 .catch(done);
