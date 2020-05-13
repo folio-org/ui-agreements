@@ -224,7 +224,7 @@ export default class AgreementFilters extends React.Component {
   renderCustomPropertyFilters = () => {
     return <CustomPropertyFilters
       {...this.props}
-      name="supplementaryProperty"
+      custPropName="supplementaryProperty"
     />;
   }
 
