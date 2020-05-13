@@ -12,7 +12,7 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-import { AlternativeNamesFieldArray, requiredValidator } from '@folio/stripes-erm-components';
+import { AlternativeNamesFieldArray, composeValidators, requiredValidator } from '@folio/stripes-erm-components';
 
 import AgreementPeriodsFieldArray from '../AgreementPeriodsFieldArray';
 import { statuses } from '../../constants';
@@ -24,6 +24,9 @@ export default class FormInfo extends React.Component {
       reasonForClosureValues: PropTypes.array,
       renewalPriorityValues: PropTypes.array,
       isPerpetualValues: PropTypes.array,
+    }),
+    handlers: PropTypes.shape({
+      checkUniqueName: PropTypes.func,
     }),
     form: PropTypes.shape({
       mutators: PropTypes.shape({
@@ -67,6 +70,12 @@ export default class FormInfo extends React.Component {
     return null;
   }
 
+  validateUniqueName = async (value) => {
+    const response = await this.props.handlers?.checkUniqueName(value);
+    const results = await response.json();
+    return results.length > 0 ? <FormattedMessage id="ui-agreements.agreements.alreadyExists" /> : '';
+  }
+
   render() {
     const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues } = this.state;
     const { values } = this.props;
@@ -83,7 +92,10 @@ export default class FormInfo extends React.Component {
               maxLength={255}
               name="name"
               required
-              validate={requiredValidator}
+              validate={composeValidators(
+                requiredValidator,
+                this.validateUniqueName,
+              )}
             />
           </Col>
         </Row>

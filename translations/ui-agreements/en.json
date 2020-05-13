@@ -39,6 +39,7 @@
   "permission.picklists.manage": "Settings (Agreements): Manage pick lists and values",
   "permission.supplementaryProperties.manage": "Settings (Agreements): Manage agreement supplementary properties",
 
+  "agreements.alreadyExists": "An agreement with this name already exists",
   "agreements.deletedAgreement": "<strong>Agreement deleted:</strong> {name}",
   "agreements.deleteAgreement": "Delete agreement",
   "agreements.deleteConfirmMessage": "Agreement <strong>{name}</strong> will be <strong>deleted</strong>.",

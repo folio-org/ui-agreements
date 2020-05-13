@@ -138,6 +138,18 @@ class AgreementCreateRoute extends React.Component {
     });
   }
 
+  handleCheckUniqueName = (agreementName) => {
+    const { okapi } = this.props.stripes;
+    return fetch(`${okapi.url}/erm/sas?filters=name%3D${agreementName.split(' ').join('%20')}`,
+      {
+        headers: {
+          'X-Okapi-Tenant': okapi.tenant,
+          'X-Okapi-Token': okapi.token,
+          'Content-Type': 'application/json'
+        }
+      });
+  }
+
   handleClose = () => {
     const { location } = this.props;
     this.props.history.push(`${urls.agreements()}${location.search}`);
@@ -225,6 +237,7 @@ class AgreementCreateRoute extends React.Component {
         }}
         handlers={{
           ...handlers,
+          checkUniqueName: this.handleCheckUniqueName,
           onBasketLinesAdded: this.handleBasketLinesAdded,
           onClose: this.handleClose,
         }}
