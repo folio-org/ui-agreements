@@ -32,23 +32,23 @@ const checkTableForCustomCoverageData = (nightmare, done, tableId, values) => {
       expectedValues.coverage.forEach(ec => {
         if (!ec.startDate) return;
 
-        if (!startDates.find(e => e.textContent === ec.startDateFormatted)) {
+        if (ec.startDate && !startDates.find(e => e.textContent === ec.startDateFormatted)) {
           throw Error(`Expected to find start date of ${ec.startDateFormatted} in #${id}`);
         }
-        if (!startVolumes.find(e => e.textContent.indexOf(ec.startVolumeFormatted) !== -1)) {
+        if (ec.startVolume && !startVolumes.find(e => e.textContent.indexOf(ec.startVolumeFormatted) !== -1)) {
           throw Error(`Expected to find start volume of ${ec.startVolumeFormatted} in #${id}`);
         }
-        if (!startIssues.find(e => e.textContent.indexOf(ec.startIssueFormatted) !== -1)) {
+        if (ec.startIssue && !startIssues.find(e => e.textContent.indexOf(ec.startIssueFormatted) !== -1)) {
           throw Error(`Expected to find start issue of ${ec.startIssueFormatted} in #${id}`);
         }
 
-        if (!endDates.find(e => e.textContent === ec.endDateFormatted)) {
+        if (ec.endDate && !endDates.find(e => e.textContent === ec.endDateFormatted)) {
           throw Error(`Expected to find end date of ${ec.endDateFormatted} in #${id}`);
         }
-        if (!endVolumes.find(e => e.textContent.indexOf(ec.endVolumeFormatted) !== -1)) {
+        if (ec.endVolume && !endVolumes.find(e => e.textContent.indexOf(ec.endVolumeFormatted) !== -1)) {
           throw Error(`Expected to find end volume of ${ec.endVolumeFormatted} in #${id}`);
         }
-        if (!endIssues.find(e => e.textContent.indexOf(ec.endIssueFormatted) !== -1)) {
+        if (ec.endIssue && !endIssues.find(e => e.textContent.indexOf(ec.endIssueFormatted) !== -1)) {
           throw Error(`Expected to find end issue of ${ec.endIssueFormatted} in #${id}`);
         }
       });
@@ -255,7 +255,7 @@ module.exports.test = (uiTestCtx) => {
       it('should follow agreement line\'s link to eresource', done => {
         nightmare
           .click('#agreement-form-lines [data-test-ag-line-name] a')
-          .wait('#eresourceAgreements [role="row"]')
+          .wait('#pci-agreements [data-row-index]')
           .then(done)
           .catch(done);
       });
@@ -263,7 +263,7 @@ module.exports.test = (uiTestCtx) => {
       it('should find custom coverage info in "agreements for this eresource" list', done => {
         nightmare
           .evaluate((expectedValues) => {
-            const rows = [...document.querySelectorAll('#eresourceAgreements [role="row"]')];
+            const rows = [...document.querySelectorAll('#pci-agreements [data-row-index]')];
             const row = rows.find(r => r.textContent.indexOf(expectedValues.name) > -1);
             if (!row) throw Error(`Failed to find agreement ${expectedValues.name} in list`);
 
