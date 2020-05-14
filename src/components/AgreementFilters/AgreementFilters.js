@@ -36,11 +36,15 @@ export default class AgreementFilters extends React.Component {
     const newState = {};
 
     FILTERS.forEach(filter => {
-      const values = props.data[`${filter}Values`] || [];
+      const values = props.data[`${filter}Values`];
       if (values.length !== state[filter].length) {
-        newState[filter] = values.map(({ label }) => ({ label, value: label }));
+        newState[filter] = values;
       }
     });
+
+    if ((props.data?.tagsValues?.length ?? 0) !== state.tags.length) {
+      newState.tags = props.data.tagsValues.map(({ label }) => ({ value: label, label }));
+    }
 
     if (Object.keys(newState).length) return newState;
 
@@ -223,8 +227,10 @@ export default class AgreementFilters extends React.Component {
 
   renderCustomPropertyFilters = () => {
     return <CustomPropertyFilters
-      {...this.props}
+      activeFilters={this.props.activeFilters}
+      customProperties={this.props.data.supplementaryProperties}
       custPropName="supplementaryProperty"
+      filterHandlers={this.props.filterHandlers}
     />;
   }
 

@@ -25,9 +25,12 @@ class AgreementsRoute extends React.Component {
       params: generateQueryParams({
         searchKey: 'name,alternateNames.name',
         filterKeys: {
+          agreementStatus: 'agreementStatus.value',
           contacts: 'contacts.user',
           contactRole: 'contacts.role',
+          isPerpetual: 'isPerpetual.value',
           orgs: 'orgs.org',
+          renewalPriority: 'renewalPriority.value',
           role: 'orgs.role',
           tags: 'tags.value',
         },

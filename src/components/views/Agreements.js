@@ -80,7 +80,7 @@ const Agreements = ({
     <div data-test-agreements>
       <SearchAndSortQuery
         initialFilterState={{
-          agreementStatus: ['Active', 'Draft', 'In negotiation', 'Requested']
+          agreementStatus: ['active', 'draft', 'in_negotiation', 'requested']
         }}
         initialSearchState={{ query: '' }}
         initialSortState={{ sort: 'name' }}
