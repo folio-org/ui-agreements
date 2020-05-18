@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Accordion, Badge, MultiColumnList, NoValue, Spinner } from '@folio/stripes/components';
+import { Accordion, Badge, Icon, MultiColumnList, NoValue, Spinner, Tooltip } from '@folio/stripes/components';
 
 import AddToBasketButton from '../AddToBasketButton';
 import { Coverage } from '../Coverage';
 import EResourceKB from '../EResourceKB';
 import EResourceType from '../EResourceType';
+import { resourceClasses } from '../../constants';
 
 import { isExternal, isPackage } from '../utilities';
 
@@ -34,8 +35,7 @@ class AcquisitionOptions extends React.Component {
     return eresource.name;
   }
 
-  onRowClick = (_, row) => {
-    const { id } = row;
+  onRowClick = (id) => {
     const { handlers: { onEResourceClick } } = this.props;
 
     onEResourceClick(id);
@@ -55,6 +55,41 @@ class AcquisitionOptions extends React.Component {
       </div>
     );
   };
+
+  renderUrl = (option) => {
+    const url = option?._object?.pti?.url;
+    return url ? (
+      <Tooltip
+        key={option.id}
+        id={`tooltip-${option.id}`}
+        placement="bottom"
+        text={<FormattedMessage
+          id="ui-agreements.eresources.accessTitleOnPlatform"
+          values={{
+            name: option?._object?.pti?.name
+          }}
+        />}
+      >
+        {({ ref, ariaIds }) => (
+          <div
+            ref={ref}
+            aria-labelledby={ariaIds.text}
+          >
+            <a
+              href={url}
+              onClick={e => e.stopPropagation()}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <FormattedMessage id="ui-agreements.eresources.titleOnPlatform" />
+              &nbsp;
+              <Icon icon="external-link" />
+            </a>
+          </div>
+        )}
+      </Tooltip>
+    ) : <NoValue />;
+  }
 
   renderOptions = () => (
     <MultiColumnList
@@ -77,7 +112,16 @@ class AcquisitionOptions extends React.Component {
         sourceKb: option => <EResourceKB resource={option} />,
         package: option => this.renderParentPackage(option),
         coverage: option => <Coverage eResource={option} />,
-        platform: option => option?._object?.pti?.platform?.name ?? <NoValue />,
+        platform: option => {
+          return (
+            <div>
+              <div>{option?._object?.pti?.platform?.name ?? <NoValue />}</div>
+              {option.class !== resourceClasses.PACKAGE &&
+                <div>{this.renderUrl(option)}</div>
+              }
+            </div>
+          );
+        },
         acqMethod: option => <EResourceType resource={option} />,
         add: option => {
           const optionIsPackage = isPackage(option);
@@ -111,6 +155,7 @@ class AcquisitionOptions extends React.Component {
           );
         },
       }}
+      interactive={false}
       onRowClick={this.onRowClick}
       visibleColumns={['sourceKb', 'package', 'coverage', 'platform', 'acqMethod', 'add']}
     />

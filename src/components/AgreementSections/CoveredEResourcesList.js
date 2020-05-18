@@ -14,10 +14,12 @@ import {
   Icon,
   Layout,
   MultiColumnList,
+  NoValue,
   Row,
   Spinner,
   Tooltip,
 } from '@folio/stripes/components';
+import { resourceClasses } from '../../constants';
 
 import { getResourceIdentifier } from '../utilities';
 import { Coverage } from '../Coverage';
@@ -73,7 +75,16 @@ export default class CoveredEResourcesList extends React.Component {
       const titleInstance = get(e._object, 'pti.titleInstance', {});
       return getResourceIdentifier(titleInstance, 'eissn') || getResourceIdentifier(titleInstance, 'pissn');
     },
-    platform: e => get(e._object, 'pti.platform.name', '-'),
+    platform: e => {
+      return (
+        <div>
+          <div>{e?._object?.pti?.platform?.name ?? <NoValue />}</div>
+          {e.class !== resourceClasses.PACKAGE &&
+            <div>{this.renderUrl(e)}</div>
+          }
+        </div>
+      );
+    },
     package: e => get(e._object, 'pkg.name', '-'),
     coverage:  e => <Coverage eResource={e} />,
     accessStart: e => this.renderDate(e._object?.accessStart),
@@ -199,6 +210,41 @@ export default class CoveredEResourcesList extends React.Component {
         visibleColumns={this.visibleColumns}
       />
     );
+  }
+
+  renderUrl = (option) => {
+    const url = option?._object?.pti?.url;
+    return url ? (
+      <Tooltip
+        key={option.id}
+        id={`tooltip-${option.id}`}
+        placement="bottom"
+        text={<FormattedMessage
+          id="ui-agreements.eresources.accessTitleOnPlatform"
+          values={{
+            name: option?._object?.pti?.name
+          }}
+        />}
+      >
+        {({ ref, ariaIds }) => (
+          <div
+            ref={ref}
+            aria-labelledby={ariaIds.text}
+          >
+            <a
+              href={url}
+              onClick={e => e.stopPropagation()}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <FormattedMessage id="ui-agreements.eresources.titleOnPlatform" />
+              &nbsp;
+              <Icon icon="external-link" />
+            </a>
+          </div>
+        )}
+      </Tooltip>
+    ) : <NoValue />;
   }
 
   render() {
