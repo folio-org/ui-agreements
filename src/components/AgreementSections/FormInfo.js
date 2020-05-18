@@ -31,9 +31,6 @@ class FormInfo extends React.Component {
       renewalPriorityValues: PropTypes.array,
       isPerpetualValues: PropTypes.array,
     }),
-    handlers: PropTypes.shape({
-      checkUniqueName: PropTypes.func,
-    }),
     form: PropTypes.shape({
       mutators: PropTypes.shape({
         setFieldData: PropTypes.func.isRequired,
