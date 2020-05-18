@@ -12,13 +12,19 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-import { AlternativeNamesFieldArray, composeValidators, requiredValidator } from '@folio/stripes-erm-components';
+import {
+  AlternativeNamesFieldArray,
+  composeValidators,
+  requiredValidator,
+  withAsyncValidation
+} from '@folio/stripes-erm-components';
+import { validationEndPoint, statuses } from '../../constants';
 
 import AgreementPeriodsFieldArray from '../AgreementPeriodsFieldArray';
-import { statuses } from '../../constants';
 
-export default class FormInfo extends React.Component {
+class FormInfo extends React.Component {
   static propTypes = {
+    checkAsyncValidation: PropTypes.func,
     data: PropTypes.shape({
       agreementStatusValues: PropTypes.array,
       reasonForClosureValues: PropTypes.array,
@@ -70,11 +76,12 @@ export default class FormInfo extends React.Component {
     return null;
   }
 
-  validateUniqueName = async (value) => {
-    const response = await this.props.handlers?.checkUniqueName(value);
-    const results = await response.json();
-    return results.length > 0 ? <FormattedMessage id="ui-agreements.agreements.alreadyExists" /> : '';
-  }
+  validateUniqueProperty = (value, _, meta) => {
+    const { checkAsyncValidation, values = {} } = this.props;
+    if (!value || value === values[meta.name]) return '';
+
+    return checkAsyncValidation('ui-agreements', validationEndPoint.PATH, value, meta);
+  };
 
   render() {
     const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues } = this.state;
@@ -94,7 +101,7 @@ export default class FormInfo extends React.Component {
               required
               validate={composeValidators(
                 requiredValidator,
-                this.validateUniqueName,
+                this.validateUniqueProperty,
               )}
             />
           </Col>
@@ -187,3 +194,5 @@ export default class FormInfo extends React.Component {
     );
   }
 }
+
+export default withAsyncValidation(FormInfo);
