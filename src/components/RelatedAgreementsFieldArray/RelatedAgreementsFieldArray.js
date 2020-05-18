@@ -32,7 +32,9 @@ class RelatedAgreementsFieldArray extends React.Component {
 
     agreementRelationshipTypes.forEach(type => {
       this.relationshipTypes.push(type.outward);
-      this.relationshipTypes.push(type.inward);
+      if (type.inward.value !== 'related_to_inward') {
+        this.relationshipTypes.push(type.inward);
+      }
     });
   }
 
