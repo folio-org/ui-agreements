@@ -35,7 +35,8 @@ class AcquisitionOptions extends React.Component {
     return eresource.name;
   }
 
-  onRowClick = (id) => {
+  onRowClick = (_, row) => {
+    const { id } = row;
     const { handlers: { onEResourceClick } } = this.props;
 
     onEResourceClick(id);
@@ -155,7 +156,6 @@ class AcquisitionOptions extends React.Component {
           );
         },
       }}
-      interactive={false}
       onRowClick={this.onRowClick}
       visibleColumns={['sourceKb', 'package', 'coverage', 'platform', 'acqMethod', 'add']}
     />
