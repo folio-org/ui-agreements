@@ -80,7 +80,7 @@ export default class CoveredEResourcesList extends React.Component {
         <div>
           <div>{e?._object?.pti?.platform?.name ?? <NoValue />}</div>
           {e.class !== resourceClasses.PACKAGE &&
-            <div>{this.renderUrl(e)}</div>
+            <div>{this.renderPtiUrl(e)}</div>
           }
         </div>
       );
@@ -212,17 +212,17 @@ export default class CoveredEResourcesList extends React.Component {
     );
   }
 
-  renderUrl = (option) => {
-    const url = option?._object?.pti?.url;
+  renderPtiUrl = (eresource) => {
+    const url = eresource?._object?.pti?.url;
     return url ? (
       <Tooltip
-        key={option.id}
-        id={`tooltip-${option.id}`}
+        key={eresource.id}
+        id={`tooltip-${eresource.id}`}
         placement="bottom"
         text={<FormattedMessage
           id="ui-agreements.eresources.accessTitleOnPlatform"
           values={{
-            name: option?._object?.pti?.name
+            name: eresource?._object?.pti?.name
           }}
         />}
       >

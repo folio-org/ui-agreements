@@ -56,17 +56,17 @@ class AcquisitionOptions extends React.Component {
     );
   };
 
-  renderUrl = (option) => {
-    const url = option?._object?.pti?.url;
+  renderPtiUrl = (entitlementOption) => {
+    const url = entitlementOption?._object?.pti?.url;
     return url ? (
       <Tooltip
-        key={option.id}
-        id={`tooltip-${option.id}`}
+        key={entitlementOption.id}
+        id={`tooltip-${entitlementOption.id}`}
         placement="bottom"
         text={<FormattedMessage
           id="ui-agreements.eresources.accessTitleOnPlatform"
           values={{
-            name: option?._object?.pti?.name
+            name: entitlementOption?._object?.pti?.name
           }}
         />}
       >
@@ -117,7 +117,7 @@ class AcquisitionOptions extends React.Component {
             <div>
               <div>{option?._object?.pti?.platform?.name ?? <NoValue />}</div>
               {option.class !== resourceClasses.PACKAGE &&
-                <div>{this.renderUrl(option)}</div>
+                <div>{this.renderPtiUrl(option)}</div>
               }
             </div>
           );

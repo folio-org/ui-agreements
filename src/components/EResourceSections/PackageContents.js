@@ -48,7 +48,7 @@ export default class PackageContents extends React.Component {
       return (
         <div>
           <div>{pci?.pti?.platform?.name ?? <NoValue />}</div>
-          <div>{this.renderUrl(pci)}</div>
+          <div>{this.renderPtiUrl(pci)}</div>
         </div>
       );
     },
@@ -108,7 +108,7 @@ export default class PackageContents extends React.Component {
     </Layout>
   );
 
-  renderUrl = (pci) => {
+  renderPtiUrl = (pci) => {
     const url = pci?.pti?.url;
     return url ? (
       <Tooltip
