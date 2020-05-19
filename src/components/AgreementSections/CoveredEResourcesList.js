@@ -19,7 +19,6 @@ import {
   Spinner,
   Tooltip,
 } from '@folio/stripes/components';
-import { resourceClasses } from '../../constants';
 
 import { getResourceIdentifier } from '../utilities';
 import { Coverage } from '../Coverage';
@@ -79,9 +78,7 @@ export default class CoveredEResourcesList extends React.Component {
       return (
         <div>
           <div>{e?._object?.pti?.platform?.name ?? <NoValue />}</div>
-          {e.class !== resourceClasses.PACKAGE &&
-            <div>{this.renderPtiUrl(e)}</div>
-          }
+          <div>{this.renderPtiUrl(e)}</div>
         </div>
       );
     },
