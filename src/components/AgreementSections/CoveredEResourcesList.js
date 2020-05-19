@@ -14,7 +14,6 @@ import {
   Icon,
   Layout,
   MultiColumnList,
-  NoValue,
   Row,
   Spinner,
   Tooltip,
@@ -25,6 +24,7 @@ import { Coverage } from '../Coverage';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
+import PlatformTitleLink from '../PlatformTitleLink';
 
 export default class CoveredEResourcesList extends React.Component {
   static propTypes = {
@@ -74,14 +74,7 @@ export default class CoveredEResourcesList extends React.Component {
       const titleInstance = get(e._object, 'pti.titleInstance', {});
       return getResourceIdentifier(titleInstance, 'eissn') || getResourceIdentifier(titleInstance, 'pissn');
     },
-    platform: e => {
-      return (
-        <div>
-          <div>{e?._object?.pti?.platform?.name ?? <NoValue />}</div>
-          <div>{this.renderPtiUrl(e)}</div>
-        </div>
-      );
-    },
+    platform: e => <PlatformTitleLink id={e.id} pti={e?._object?.pti} />,
     package: e => get(e._object, 'pkg.name', '-'),
     coverage:  e => <Coverage eResource={e} />,
     accessStart: e => this.renderDate(e._object?.accessStart),
@@ -207,41 +200,6 @@ export default class CoveredEResourcesList extends React.Component {
         visibleColumns={this.visibleColumns}
       />
     );
-  }
-
-  renderPtiUrl = (eresource) => {
-    const url = eresource?._object?.pti?.url;
-    return url ? (
-      <Tooltip
-        key={eresource.id}
-        id={`tooltip-${eresource.id}`}
-        placement="bottom"
-        text={<FormattedMessage
-          id="ui-agreements.eresources.accessTitleOnPlatform"
-          values={{
-            name: eresource?._object?.pti?.name
-          }}
-        />}
-      >
-        {({ ref, ariaIds }) => (
-          <div
-            ref={ref}
-            aria-labelledby={ariaIds.text}
-          >
-            <a
-              href={url}
-              onClick={e => e.stopPropagation()}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <FormattedMessage id="ui-agreements.eresources.titleOnPlatform" />
-              &nbsp;
-              <Icon icon="external-link" />
-            </a>
-          </div>
-        )}
-      </Tooltip>
-    ) : <NoValue />;
   }
 
   render() {

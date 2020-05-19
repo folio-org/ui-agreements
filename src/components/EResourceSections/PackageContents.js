@@ -8,17 +8,15 @@ import {
   Button,
   ButtonGroup,
   FormattedUTCDate,
-  Icon,
   Layout,
   MultiColumnList,
-  NoValue,
   Spinner,
-  Tooltip,
 } from '@folio/stripes/components';
 
 import { Coverage } from '../Coverage';
 import EResourceLink from '../EResourceLink';
 import { resultCount } from '../../constants';
+import PlatformTitleLink from '../PlatformTitleLink';
 
 export default class PackageContents extends React.Component {
   static propTypes = {
@@ -44,14 +42,7 @@ export default class PackageContents extends React.Component {
 
   formatter = {
     name: pci => <EResourceLink eresource={pci.pti.titleInstance} />,
-    platform: pci => {
-      return (
-        <div>
-          <div>{pci?.pti?.platform?.name ?? <NoValue />}</div>
-          <div>{this.renderPtiUrl(pci)}</div>
-        </div>
-      );
-    },
+    platform: pci => <PlatformTitleLink id={pci.id} pti={pci.pti} />,
     coverage: pci => <Coverage pci={pci} />,
     accessStart: pci => this.renderDate(pci.accessStart),
     accessEnd: pci => this.renderDate(pci.accessEnd),
@@ -107,41 +98,6 @@ export default class PackageContents extends React.Component {
       </ButtonGroup>
     </Layout>
   );
-
-  renderPtiUrl = (pci) => {
-    const url = pci?.pti?.url;
-    return url ? (
-      <Tooltip
-        key={pci.id}
-        id={`tooltip-${pci.id}`}
-        placement="bottom"
-        text={<FormattedMessage
-          id="ui-agreements.eresources.accessTitleOnPlatform"
-          values={{
-            name: pci?.pti?.name
-          }}
-        />}
-      >
-        {({ ref, ariaIds }) => (
-          <div
-            ref={ref}
-            aria-labelledby={ariaIds.text}
-          >
-            <a
-              href={url}
-              onClick={e => e.stopPropagation()}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <FormattedMessage id="ui-agreements.eresources.titleOnPlatform" />
-              &nbsp;
-              <Icon icon="external-link" />
-            </a>
-          </div>
-        )}
-      </Tooltip>
-    ) : <NoValue />;
-  }
 
   render() {
     const {
