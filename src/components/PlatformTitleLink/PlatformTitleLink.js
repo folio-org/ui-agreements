@@ -19,7 +19,7 @@ const PlatformTitleLink = ({ id, pti = {} }) => {
       <div>{platformName ?? null}</div>
       { url ? (
         <Tooltip
-          id={`tooltip-${id}`}
+          id={`pti-link-tooltip-${id}`}
           placement="bottom"
           text={<FormattedMessage
             id="ui-agreements.eresources.accessTitleOnPlatform"
