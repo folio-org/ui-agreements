@@ -132,12 +132,11 @@ module.exports.test = (uiTestCtx) => {
         nightmare
           .wait('#list-eresources')
           .evaluate(() => {
-            const element = [...document.querySelectorAll('#list-eresources [class*=mclScrollable] [aria-rowindex]')]
-              .find((item) => {
-                const identifier = item.children[2];
-                return identifier && identifier.innerText;
-              });
-            return element.children[2].innerText;
+            // Search the ISBN, ISSNO and ISSNP columns for a record that has an identifier.
+            const getIdentifierFromRow = item => item.children[2].innerText || item.children[3].innerText || item.children[4].innerText;
+            const rowWithIdentifier = [...document.querySelectorAll('#list-eresources [class*=mclScrollable] [aria-rowindex]')]
+              .find(getIdentifierFromRow);
+            return getIdentifierFromRow(rowWithIdentifier);
           })
           .then((ISBN) => {
             nightmare
