@@ -9,6 +9,7 @@ import EResourceKB from '../EResourceKB';
 import EResourceType from '../EResourceType';
 
 import { isExternal, isPackage } from '../utilities';
+import PlatformTitleLink from '../PlatformTitleLink';
 
 class AcquisitionOptions extends React.Component {
   static propTypes = {
@@ -77,7 +78,7 @@ class AcquisitionOptions extends React.Component {
         sourceKb: option => <EResourceKB resource={option} />,
         package: option => this.renderParentPackage(option),
         coverage: option => <Coverage eResource={option} />,
-        platform: option => option?._object?.pti?.platform?.name ?? <NoValue />,
+        platform: option => <PlatformTitleLink id={option.id} pti={option?._object?.pti} />,
         acqMethod: option => <EResourceType resource={option} />,
         add: option => {
           const optionIsPackage = isPackage(option);
