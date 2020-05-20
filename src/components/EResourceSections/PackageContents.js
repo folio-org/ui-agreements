@@ -16,6 +16,7 @@ import {
 import { Coverage } from '../Coverage';
 import EResourceLink from '../EResourceLink';
 import { resultCount } from '../../constants';
+import PlatformTitleLink from '../PlatformTitleLink';
 
 export default class PackageContents extends React.Component {
   static propTypes = {
@@ -41,7 +42,7 @@ export default class PackageContents extends React.Component {
 
   formatter = {
     name: pci => <EResourceLink eresource={pci.pti.titleInstance} />,
-    platform: pci => pci?.pti?.platform?.name,
+    platform: pci => <PlatformTitleLink id={pci.id} pti={pci.pti} />,
     coverage: pci => <Coverage pci={pci} />,
     accessStart: pci => this.renderDate(pci.accessStart),
     accessEnd: pci => this.renderDate(pci.accessEnd),
