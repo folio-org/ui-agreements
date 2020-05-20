@@ -32,6 +32,8 @@ class RelatedAgreementsFieldArray extends React.Component {
 
     agreementRelationshipTypes.forEach(type => {
       this.relationshipTypes.push(type.outward);
+      // since for 'related to' outward and inward relation is the same
+      // we should exclude it from the select list the second time
       if (type.inward.value !== 'related_to_inward') {
         this.relationshipTypes.push(type.inward);
       }
