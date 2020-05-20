@@ -267,8 +267,10 @@
   "eresources.parentPackageDetails": "Parent package details",
   "eresources.materialType": "Material type",
   "eresources.titleAvailability": "Title availability in package",
+  "eresources.titleOnPlatform": "Title on platform",
   "eresources.titleOnPlatformURL": "Title on platform URL",
   "eresources.titleDetails": "Title details",
+  "eresources.accessTitleOnPlatform": "Access {name}",
 
   "customcoverages.tooltip": "Custom Coverage",
 
