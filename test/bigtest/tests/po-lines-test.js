@@ -137,6 +137,7 @@ describe('PO Lines', () => {
                           beforeEach(async function () {
                             await agreementView.whenLoaded();
                             await agreementView.expandAll();
+                            await agreementView.linesSection.whenLoaded();
                           });
 
                           it('should have two agreement lines', () => {
