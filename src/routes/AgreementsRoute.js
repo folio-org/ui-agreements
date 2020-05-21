@@ -4,7 +4,7 @@ import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { StripesConnectedSource } from '@folio/stripes/smart-components';
-import { getSASParams } from '@folio/stripes-erm-components';
+import { generateQueryParams, preventResourceRefresh } from '@folio/stripes-erm-components';
 
 import View from '../components/views/Agreements';
 import NoPermissions from '../components/NoPermissions';
@@ -22,12 +22,15 @@ class AgreementsRoute extends React.Component {
       recordsRequired: '%{resultCount}',
       perRequest: 100,
       limitParam: 'perPage',
-      params: getSASParams({
+      params: generateQueryParams({
         searchKey: 'name,alternateNames.name',
         filterKeys: {
+          agreementStatus: 'agreementStatus.value',
           contacts: 'contacts.user',
           contactRole: 'contacts.role',
+          isPerpetual: 'isPerpetual.value',
           orgs: 'orgs.org',
+          renewalPriority: 'renewalPriority.value',
           role: 'orgs.role',
           tags: 'tags.value',
         },
@@ -57,6 +60,11 @@ class AgreementsRoute extends React.Component {
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreementOrg/role',
       shouldRefresh: () => false,
+    },
+    supplementaryProperties: {
+      type: 'okapi',
+      path: 'erm/custprops',
+      shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
     tagsValues: {
       type: 'okapi',
@@ -163,6 +171,7 @@ class AgreementsRoute extends React.Component {
           isPerpetualValues: get(resources, 'isPerpetualValues.records', []),
           contactRoleValues: get(resources, 'contactRoleValues.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
+          supplementaryProperties: resources?.supplementaryProperties?.records ?? [],
           tagsValues: get(resources, 'tagsValues.records', []),
         }}
         onNeedMoreData={this.handleNeedMoreData}

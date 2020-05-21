@@ -32,4 +32,26 @@ export default [
       label: 'has demand-driven acquisitions in',
     },
   },
+  {
+    type: 'has_backfile_in',
+    outward: {
+      value: 'has_backfile_in',
+      label: 'has backfile in',
+    },
+    inward: {
+      value: 'has_frontfile_in',
+      label: 'has frontfile in',
+    },
+  },
+  {
+    type: 'related_to',
+    outward: {
+      value: 'related_to',
+      label: 'related to',
+    },
+    inward: {
+      value: 'related_to_inward',
+      label: 'related to',
+    },
+  },
 ];

@@ -431,5 +431,11 @@
     "line.parentAgreement": "Parent agreement",
     "line.lineForAgreement": "Agreement line in {agreementName}",
     "line.poLines": "PO lines",
-    "poLines.poLines": "PO lines"
+    "poLines.poLines": "PO lines",
+    "eresources.titleOnPlatform": "Title on platform",
+    "eresources.accessTitleOnPlatform": "Access {name}",
+    "relatedAgreements.relationship.has_backfile_in": "Has backfile in \"{agreement}\"",
+    "relatedAgreements.relationship.has_frontfile_in": "Has frontile in \"{agreement}\"",
+    "relatedAgreements.relationship.related_to": "Related to \"{agreement}\"",
+    "relatedAgreements.relationship.related_to_inward": "Related to \"{agreement}\""
 }
