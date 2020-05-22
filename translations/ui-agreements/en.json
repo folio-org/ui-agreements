@@ -190,6 +190,8 @@
   "emptyAccordion.historicalLicenses": "No historical licenses for this agreement",
   "emptyAccordion.externalLicenses": "No external licenses for this agreement",
   "emptyAccordion.licenseAndBusinessTerms": "No license and business terms for this agreement",
+  "emptyAccordion.lineCoverage": "No coverage for this agreement line",
+  "emptyAccordion.linePOLines": "No PO lines for this agreement line",
   "emptyAccordion.noAgreementsPackage": "No agreements for this package",
   "emptyAccordion.noAgreementsEresource": "No agreements for this e-resource",
   "emptyAccordion.organizations": "No organizations for this agreement",

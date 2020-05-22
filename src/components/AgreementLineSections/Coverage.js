@@ -2,13 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 
-import {
-  Accordion,
-  MultiColumnList,
-} from '@folio/stripes/components';
+import { Accordion, Badge, MultiColumnList } from '@folio/stripes/components';
 
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import Embargo from '../Embargo';
+import { isPackage } from '../utilities';
 
 const propTypes = {
   line: PropTypes.shape({
@@ -25,8 +23,12 @@ const propTypes = {
 const Coverage = ({
   line,
 }) => {
+  if (isPackage(line.resource)) return null;
+
   return (
     <Accordion
+      displayWhenClosed={<Badge>{line.coverage?.length}</Badge>}
+      displayWhenOpen={<Badge>{line.coverage?.length}</Badge>}
       id="agreement-line-coverage"
       label={<FormattedMessage id="ui-agreements.eresources.coverage" />}
     >
@@ -69,6 +71,7 @@ const Coverage = ({
           startDate: c => (c.startDate ? <FormattedDate value={c.startDate} /> : ''),
         }}
         interactive={false}
+        isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.lineCoverage" />}
         rowProps={{
           labelStrings: ({ rowData }) => ([rowData.summary]),
         }}
