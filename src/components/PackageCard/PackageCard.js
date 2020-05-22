@@ -42,21 +42,28 @@ const PackageCard = ({
   >
     <Row>
       <Col xs={3}>
+        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.type" />}>
+          <FormattedMessage id="ui-agreements.eresources.package" />
+        </KeyValue>
+      </Col>
+      <Col xs={3}>
         <KeyValue label={<FormattedMessage id="ui-agreements.eresources.count" />}>
           <div data-test-resource-count>{pkg?.resourceCount ?? <NoValue />}</div>
         </KeyValue>
       </Col>
-      <Col xs={3}>
+      <Col xs={6}>
         <KeyValue label={<FormattedMessage id="ui-agreements.eresources.provider" />}>
           <div data-test-vendor-name>{pkg?.vendor?.name ?? <NoValue />}</div>
         </KeyValue>
       </Col>
+    </Row>
+    <Row>
       <Col xs={3}>
         <KeyValue label={<FormattedMessage id="ui-agreements.eresources.source" />}>
           <div data-test-package-source>{pkg?.source ?? <NoValue />}</div>
         </KeyValue>
       </Col>
-      <Col xs={3}>
+      <Col xs={9}>
         <KeyValue label={<FormattedMessage id="ui-agreements.eresources.reference" />}>
           <div data-test-package-reference>{pkg?.reference ?? <NoValue />}</div>
         </KeyValue>

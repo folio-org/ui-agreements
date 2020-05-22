@@ -5,13 +5,15 @@ import { FormattedMessage } from 'react-intl';
 import {
   AccordionSet,
   AccordionStatus,
+  Button,
   Col,
   ExpandAllButton,
+  Icon,
   LoadingPane,
   Pane,
   Row,
 } from '@folio/stripes/components';
-import { AppIcon } from '@folio/stripes/core';
+import { AppIcon, IfPermission } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
 import { Info, POLines, Coverage } from '../AgreementLineSections';
@@ -60,28 +62,28 @@ const AgreementLine = ({
 
   return (
     <Pane
-      // actionMenu={() => (
-      //   <IfPermission perm="ui-agreements.agreements.edit">
-      //     <Button
-      //       buttonStyle="dropdownItem"
-      //       id="clickable-dropdown-edit-agreement-line"
-      //       onClick={handlers.onEdit}
-      //     >
-      //       <Icon icon="edit">
-      //         <FormattedMessage id="ui-agreements.agreements.edit" />
-      //       </Icon>
-      //     </Button>
-      //     <Button
-      //       buttonStyle="dropdownItem"
-      //       id="clickable-dropdown-delete-agreement-line"
-      //       onClick={handlers.onDelete}
-      //     >
-      //       <Icon icon="trash">
-      //         <FormattedMessage id="ui-agreements.delete" />
-      //       </Icon>
-      //     </Button>
-      //   </IfPermission>
-      // )}
+      actionMenu={() => (
+        <IfPermission perm="ui-agreements.agreements.edit">
+          <Button
+            buttonStyle="dropdownItem"
+            id="clickable-dropdown-edit-agreement-line"
+            onClick={handlers.onEdit}
+          >
+            <Icon icon="edit">
+              <FormattedMessage id="ui-agreements.agreements.edit" />
+            </Icon>
+          </Button>
+          <Button
+            buttonStyle="dropdownItem"
+            id="clickable-dropdown-delete-agreement-line"
+            onClick={handlers.onDelete}
+          >
+            <Icon icon="trash">
+              <FormattedMessage id="ui-agreements.delete" />
+            </Icon>
+          </Button>
+        </IfPermission>
+      )}
       appIcon={<AppIcon app="agreements" />}
       paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
       {...paneProps}
