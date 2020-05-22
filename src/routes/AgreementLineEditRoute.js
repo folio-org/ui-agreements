@@ -81,8 +81,12 @@ class AgreementLineEditRoute extends React.Component {
   }
 
   handleClose = () => {
-    const { history, location, match } = this.props;
-    history.push(`${urls.agreementView(match.params.agreementId)}${location.search}`);
+    const {
+      history,
+      location,
+      match: { params: { agreementId, lineId } },
+    } = this.props;
+    history.push(`${urls.agreementLineView(agreementId, lineId)}${location.search}`);
   }
 
   handleSubmit = (line) => {

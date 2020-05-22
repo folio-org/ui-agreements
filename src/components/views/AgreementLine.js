@@ -102,8 +102,8 @@ const AgreementLine = ({
             {title => (
               <NotesSmartAccordion
                 domainName="agreements"
-                entityId={line.id}
-                entityName={title}
+                entityId={line.id ?? '-'}
+                entityName={title ?? '-'}
                 entityType="agreementLine"
                 id="agreement-line-notes"
                 pathToNoteCreate={urls.noteCreate()}
