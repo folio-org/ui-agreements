@@ -8,6 +8,11 @@ import { urls } from '../components/utilities';
 
 class AgreementLineViewRoute extends React.Component {
   static manifest = Object.freeze({
+    agreement: {
+      type: 'okapi',
+      path: 'erm/sas/:{agreementId}',
+      fetch: false,
+    },
     line: {
       type: 'okapi',
       path: 'erm/entitlements/:{lineId}',
@@ -42,8 +47,8 @@ class AgreementLineViewRoute extends React.Component {
       }).isRequired
     }).isRequired,
     mutator: PropTypes.shape({
-      line: PropTypes.shape({
-        DELETE: PropTypes.func.isRequired,
+      agreement: PropTypes.shape({
+        PUT: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
     resources: PropTypes.shape({
@@ -79,10 +84,18 @@ class AgreementLineViewRoute extends React.Component {
   }
 
   handleDelete = () => {
-    const { history, location, mutator } = this.props;
+    const {
+      history,
+      location,
+      match: { params: { agreementId, lineId } },
+      mutator,
+    } = this.props;
     const { sendCallout } = this.context;
 
-    mutator.line.DELETE()
+    mutator.agreement.PUT({
+      id: agreementId,
+      items: [{ id: lineId, _delete: true }]
+    })
       .then(() => {
         history.push(`${urls.agreements()}${location.search}`);
         sendCallout({ message: <FormattedMessage id="ui-agreements.line.delete.callout" /> });

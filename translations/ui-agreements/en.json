@@ -356,6 +356,7 @@
   "license.warn.amendmentStatus": "Conflicting statuses: Amendment status is \"{status}\" while \"Status (this agreement)\" is \"Current.\"",
   "license.warn.unassignedAmendments": "This license has unassigned amendments. Please edit the agreement to rectify.",
 
+  "line.edit": "Edit agreement line",
   "line.update.callout": "Agreement line updated",
   "line.delete.callout": "Agreement line deleted",
   "line.deleteFailed.callout": "Agreement line failed to delete: {message}",
