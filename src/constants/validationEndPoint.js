@@ -1,5 +1,5 @@
 const validationEndPoint = {
-  PATH: 'erm/validate/subscriptionAgreement'
+  AGREEMENTPATH: 'erm/validate/subscriptionAgreement'
 };
 
 export default validationEndPoint;

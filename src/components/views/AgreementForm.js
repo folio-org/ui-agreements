@@ -99,13 +99,14 @@ class AgreementForm extends React.Component {
   }
 
   getSectionProps(id) {
-    const { data, form, handlers, values = {} } = this.props;
+    const { data, form, handlers, initialValues, values = {} } = this.props;
 
     return {
       data,
       form,
       handlers,
       id,
+      initialValues,
       onToggle: this.handleSectionToggle,
       open: this.state.sections[id],
       values,

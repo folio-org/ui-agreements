@@ -16,7 +16,6 @@ import {
   AlternativeNamesFieldArray,
   composeValidators,
   requiredValidator,
-  withAsyncValidation
 } from '@folio/stripes-erm-components';
 import { validationEndPoint, statuses } from '../../constants';
 
@@ -24,7 +23,6 @@ import AgreementPeriodsFieldArray from '../AgreementPeriodsFieldArray';
 
 class FormInfo extends React.Component {
   static propTypes = {
-    checkAsyncValidation: PropTypes.func,
     data: PropTypes.shape({
       agreementStatusValues: PropTypes.array,
       reasonForClosureValues: PropTypes.array,
@@ -36,6 +34,10 @@ class FormInfo extends React.Component {
         setFieldData: PropTypes.func.isRequired,
       }).isRequired,
     }),
+    handlers: PropTypes.shape({
+      onBackendValidate: PropTypes.func,
+    }),
+    initialValues: PropTypes.object,
     values: PropTypes.object,
   };
 
@@ -73,11 +75,11 @@ class FormInfo extends React.Component {
     return null;
   }
 
-  validateUniqueProperty = (value, _, meta) => {
-    const { checkAsyncValidation, values = {} } = this.props;
-    if (!value || value === values[meta.name]) return '';
+  validateAsyncBackend = (value, _, meta) => {
+    const { handlers: { onBackendValidate }, initialValues = {} } = this.props;
+    if (!value || value === initialValues[meta.name]) return '';
 
-    return checkAsyncValidation('ui-agreements', validationEndPoint.PATH, value, meta);
+    return onBackendValidate('ui-agreements', validationEndPoint.AGREEMENTPATH, value, meta);
   };
 
   render() {
@@ -98,7 +100,7 @@ class FormInfo extends React.Component {
               required
               validate={composeValidators(
                 requiredValidator,
-                this.validateUniqueProperty,
+                this.validateAsyncBackend,
               )}
             />
           </Col>
@@ -192,4 +194,4 @@ class FormInfo extends React.Component {
   }
 }
 
-export default withAsyncValidation(FormInfo);
+export default FormInfo;
