@@ -35,7 +35,7 @@ class FormInfo extends React.Component {
       }).isRequired,
     }),
     handlers: PropTypes.shape({
-      onBackendValidate: PropTypes.func,
+      onAsyncValidate: PropTypes.func,
     }),
     initialValues: PropTypes.object,
     values: PropTypes.object,
@@ -76,10 +76,10 @@ class FormInfo extends React.Component {
   }
 
   validateAsyncBackend = (value, _, meta) => {
-    const { handlers: { onBackendValidate }, initialValues = {} } = this.props;
+    const { handlers: { onAsyncValidate }, initialValues = {} } = this.props;
     if (!value || value === initialValues[meta.name]) return '';
 
-    return onBackendValidate('ui-agreements', validationEndPoint.AGREEMENTPATH, value, meta);
+    return onAsyncValidate('ui-agreements', validationEndPoint.AGREEMENTPATH, value, meta);
   };
 
   render() {

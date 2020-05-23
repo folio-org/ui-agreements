@@ -365,7 +365,7 @@ class AgreementEditRoute extends React.Component {
         handlers={{
           ...handlers,
           onBasketLinesAdded: this.handleBasketLinesAdded,
-          onBackendValidate: this.props.checkAsyncValidation,
+          onAsyncValidate: this.props.checkAsyncValidation,
           onClose: this.handleClose,
         }}
         initialValues={this.state.initialValues}
