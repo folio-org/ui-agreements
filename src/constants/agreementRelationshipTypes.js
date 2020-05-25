@@ -47,11 +47,11 @@ export default [
     type: 'related_to',
     outward: {
       value: 'related_to',
-      label: 'related to',
+      label: 'related to (outward)',
     },
     inward: {
       value: 'related_to_inward',
-      label: 'related to',
+      label: 'related to (inward)',
     },
   },
 ];
