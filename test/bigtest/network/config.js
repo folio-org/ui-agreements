@@ -52,6 +52,8 @@ export default function config() {
 
   this.get('/erm/custprops', () => []);
 
+  this.post('/erm/validate/subscriptionAgreement/name', () => []);
+
   this.get('/erm/resource/:id/entitlements/related', () => ({ results: [] }));
 
   this.get('/erm/resource/:id/entitlements', () => ({ results: [] }));

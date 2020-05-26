@@ -375,6 +375,8 @@
   "organizations.typeToSearch": "Begin typing to search for an organization",
   "organizations.addOrganizationToAgreement": "Add organization",
 
+  "org.olf.erm.SubscriptionAgreement.name.unique": "This name already exists",
+
   "pci.coverage.startDate": "Start date",
   "pci.coverage.startVolume": "Start volume",
   "pci.coverage.startIssue": "Start issue",
