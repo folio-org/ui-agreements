@@ -55,11 +55,9 @@ export default class LinesList extends React.Component {
 
       return (
         <EResourceLink
+          data-test-external-reference={line.reference}
+          data-test-resource-id={line?.resource?.id}
           eresource={resource}
-          linkProps={{
-            'data-test-resource-id': get(line, 'resource.id'),
-            'data-test-external-reference': line.reference,
-          }}
         />
       );
     },

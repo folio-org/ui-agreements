@@ -13,7 +13,7 @@ import TitleCardInteractor from '../interactors/title-card';
 chai.use(spies);
 const { expect } = chai;
 
-describe.only('TitleCard', () => {
+describe('TitleCard', () => {
   const interactor = new TitleCardInteractor();
 
   describe('monograph resource', () => {

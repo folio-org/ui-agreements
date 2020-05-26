@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import Link from 'react-router-dom/Link';
 
 import { isExternal, urls } from '../utilities';
-import { resourceClasses } from '../../constants';
 
 class EResourceLink extends React.Component {
   static propTypes = {
