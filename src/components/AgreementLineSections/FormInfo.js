@@ -16,32 +16,26 @@ import TitleCard from '../TitleCard';
 import { isPackage, parseDateOnlyString } from '../utilities';
 
 const propTypes = {
-  line: PropTypes.shape({
-    resource: PropTypes.shape({
-      _object: PropTypes.object,
-      class: PropTypes.string,
-    }),
-  }),
   resource: PropTypes.object,
 };
 
 const validateDateOrder = (value, allValues, meta) => {
-  let activeFrom;
-  let activeTo;
+  let startDate;
+  let endDate;
 
   if (!value) return undefined;
 
-  if (meta.name === 'activeFrom') {
-    activeFrom = value;
-    activeTo = allValues.activeTo;
-  } else if (meta.name === 'activeTo') {
-    activeFrom = allValues.activeFrom;
-    activeTo = value;
+  if (meta.name === 'startDate') {
+    startDate = value;
+    endDate = allValues.endDate;
+  } else if (meta.name === 'endDate') {
+    startDate = allValues.startDate;
+    endDate = value;
   } else {
     return undefined;
   }
 
-  if (activeFrom && activeTo && new Date(activeFrom) >= new Date(activeTo)) {
+  if (startDate && endDate && new Date(startDate) >= new Date(endDate)) {
     return (
       <div data-test-error-end-date-too-early>
         <FormattedMessage id="ui-agreements.errors.endDateGreaterThanStartDate" />
@@ -53,7 +47,6 @@ const validateDateOrder = (value, allValues, meta) => {
 };
 
 const FormInfo = ({
-  line,
   resource,
 }) => (
   <>
@@ -65,7 +58,7 @@ const FormInfo = ({
           component={Datepicker}
           id="agreement-line-active-from"
           label={<FormattedMessage id="ui-agreements.eresources.activeFrom" />}
-          name="activeFrom"
+          name="startDate"
           parse={v => v} // Lets us send an empty string instead of `undefined`
           parser={parseDateOnlyString}
           validate={validateDateOrder}
@@ -77,7 +70,7 @@ const FormInfo = ({
           component={Datepicker}
           id="agreement-line-active-to"
           label={<FormattedMessage id="ui-agreements.eresources.activeTo" />}
-          name="activeTo"
+          name="endDate"
           parse={v => v} // Lets us send an empty string instead of `undefined`
           parser={parseDateOnlyString}
           validate={validateDateOrder}

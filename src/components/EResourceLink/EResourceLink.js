@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
+import Link from 'react-router-dom/Link';
 
-import FolioLink from '../FolioLink';
 import { isExternal, urls } from '../utilities';
 import { resourceClasses } from '../../constants';
 
@@ -22,7 +22,10 @@ class EResourceLink extends React.Component {
       return eresource.reference_object.label;
     }
 
-    return eresource.name;
+    const pti = eresource?._object?.pti ?? eresource?.pti;
+    const name = pti?.titleInstance?.name ?? eresource.name;
+
+    return name;
   }
 
   getPath = (eresource) => {
@@ -31,13 +34,8 @@ class EResourceLink extends React.Component {
     if (authority === 'EKB-PACKAGE') return urls.eholdingsPackageView(reference);
     if (authority === 'EKB-TITLE') return urls.eholdingsResourceView(reference);
 
-    let { id } = eresource;
-
-    if (eresource.class === resourceClasses.PCI) {
-      // We don't really want to show an URL to the item itself,
-      // we want the eresource/title that the PCI is referring to.
-      id = get(eresource, '_object.pti.titleInstance.id');
-    }
+    const pti = eresource?._object?.pti ?? eresource?.pti;
+    const id = pti?.titleInstance?.id ?? eresource.id;
 
     return id ? urls.eresourceView(id) : undefined;
   }
@@ -51,9 +49,9 @@ class EResourceLink extends React.Component {
 
     return (
       <div data-test-eresource-name style={{ overflowWrap: 'break-word', width: 180 }}>
-        <FolioLink {...rest} path={`${this.getPath(eresource)}${searchString}`}>
+        <Link {...rest} to={`${this.getPath(eresource)}${searchString}`}>
           {name}
-        </FolioLink>
+        </Link>
       </div>
     );
   }
