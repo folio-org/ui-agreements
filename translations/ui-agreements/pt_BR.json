@@ -437,5 +437,6 @@
     "relatedAgreements.relationship.has_backfile_in": "Tem backfile em \"{agreement}\"",
     "relatedAgreements.relationship.has_frontfile_in": "Tem frontile em \"{agreement}\"",
     "relatedAgreements.relationship.related_to": "Relacionado com \"{agreement}\"",
-    "relatedAgreements.relationship.related_to_inward": "Relacionado com \"{agreement}\""
+    "relatedAgreements.relationship.related_to_inward": "Relacionado com \"{agreement}\"",
+    "org.olf.erm.SubscriptionAgreement.name.unique": "This name already exists"
 }

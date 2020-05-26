@@ -19,7 +19,6 @@ import AgreementLinesInteractor from './agreement-lines';
 export default @interactor class AgreementViewInteractor {
   isViewAgreement = isPresent('#pane-view-agreement');
   isLoading = isPresent('#pane-view-agreement[data-loading]');
-  lines = new AgreementLinesInteractor();
   headerDropdown = new HeaderDropdown('[data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
   duplicateAgreementModal = new DuplicateModalInteractor();

@@ -12,12 +12,16 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-import { AlternativeNamesFieldArray, requiredValidator } from '@folio/stripes-erm-components';
+import {
+  AlternativeNamesFieldArray,
+  composeValidators,
+  requiredValidator,
+} from '@folio/stripes-erm-components';
+import { validationEndPoint, statuses } from '../../constants';
 
 import AgreementPeriodsFieldArray from '../AgreementPeriodsFieldArray';
-import { statuses } from '../../constants';
 
-export default class FormInfo extends React.Component {
+class FormInfo extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       agreementStatusValues: PropTypes.array,
@@ -30,6 +34,10 @@ export default class FormInfo extends React.Component {
         setFieldData: PropTypes.func.isRequired,
       }).isRequired,
     }),
+    handlers: PropTypes.shape({
+      onAsyncValidate: PropTypes.func,
+    }),
+    initialValues: PropTypes.object,
     values: PropTypes.object,
   };
 
@@ -67,6 +75,13 @@ export default class FormInfo extends React.Component {
     return null;
   }
 
+  validateAsyncBackend = (value, _, meta) => {
+    const { handlers: { onAsyncValidate }, initialValues = {} } = this.props;
+    if (!value || value === initialValues[meta.name]) return '';
+
+    return onAsyncValidate('ui-agreements', validationEndPoint.AGREEMENTPATH, value, meta);
+  };
+
   render() {
     const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues } = this.state;
     const { values } = this.props;
@@ -83,7 +98,10 @@ export default class FormInfo extends React.Component {
               maxLength={255}
               name="name"
               required
-              validate={requiredValidator}
+              validate={composeValidators(
+                requiredValidator,
+                this.validateAsyncBackend,
+              )}
             />
           </Col>
         </Row>
@@ -175,3 +193,5 @@ export default class FormInfo extends React.Component {
     );
   }
 }
+
+export default FormInfo;
