@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
+import { preventResourceRefresh } from '@folio/stripes-erm-components';
 import View from '../components/views/AgreementLine';
 import { urls } from '../components/utilities';
 
@@ -16,6 +17,7 @@ class AgreementLineViewRoute extends React.Component {
     line: {
       type: 'okapi',
       path: 'erm/entitlements/:{lineId}',
+      shouldRefresh: preventResourceRefresh({ line: ['DELETE'] }),
     },
     orderLines: {
       type: 'okapi',
@@ -29,6 +31,7 @@ class AgreementLineViewRoute extends React.Component {
       },
       fetch: props => !!props.stripes.hasInterface('order-lines', '1.0'),
       records: 'poLines',
+      shouldRefresh: preventResourceRefresh({ line: ['DELETE'] }),
       throwErrors: false,
     },
   });
@@ -131,7 +134,7 @@ class AgreementLineViewRoute extends React.Component {
       <View
         key={resources.line?.loadedAt ?? 'loading'}
         data={{
-          line: this.getCompositeLine()
+          line: this.getCompositeLine(),
         }}
         handlers={{
           onClose: this.handleClose,

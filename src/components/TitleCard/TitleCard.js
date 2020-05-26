@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { Card, NoValue } from '@folio/stripes/components';
+import { Card } from '@folio/stripes/components';
 
 import TitleCardInfo from './TitleCardInfo';
-import { urls } from '../utilities';
-import { resourceClasses } from '../../constants';
+import EResourceLink from '../EResourceLink';
 
 const propTypes = {
   searchString: PropTypes.string,
@@ -25,15 +23,13 @@ const TitleCard = ({
   searchString = '',
   title,
 }) => {
-  const titleInstance = (title.class === resourceClasses.TITLEINSTANCE) ? title : title?.pti?.titleInstance;
-
   return (
     <Card
       cardStyle="positive"
       headerStart={(
-        <Link to={`${urls.eresourceView(titleInstance.id)}${searchString}`}>
-          <strong data-test-title-instance-name>{titleInstance.name ?? <NoValue />}</strong>
-        </Link>
+        <strong data-test-title-instance-name>
+          <EResourceLink eresource={title} searchString={searchString} />
+        </strong>
       )}
       roundedBorder
     >

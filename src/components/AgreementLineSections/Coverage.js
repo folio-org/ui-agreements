@@ -18,12 +18,14 @@ const propTypes = {
       }),
     }),
   }).isRequired,
+  resource: PropTypes.object,
 };
 
 const Coverage = ({
   line,
+  resource,
 }) => {
-  if (isPackage(line.resource)) return null;
+  if (isPackage(resource)) return null;
 
   return (
     <Accordion
@@ -32,7 +34,7 @@ const Coverage = ({
       id="agreement-line-coverage"
       label={<FormattedMessage id="ui-agreements.eresources.coverage" />}
     >
-      <Embargo embargo={line.resource?._object?.embargo} />
+      <Embargo embargo={resource?.embargo} />
       <MultiColumnList
         columnMapping={{
           startDate: <FormattedMessage id="ui-agreements.agreements.startDate" />,

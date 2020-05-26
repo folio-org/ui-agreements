@@ -18,10 +18,15 @@ import { AppIcon } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
 
 import { FormInfo, FormPOLines, FormCoverage } from '../AgreementLineSections';
+import { isExternal } from '../utilities';
 
 const propTypes = {
   data: PropTypes.shape({
-    line: PropTypes.object,
+    line: PropTypes.shape({
+      resource: PropTypes.shape({
+        _object: PropTypes.object,
+      }),
+    }),
   }),
   form: PropTypes.shape({
     getRegisteredFields: PropTypes.func.isRequired,
@@ -43,6 +48,7 @@ const AgreementLineForm = ({
   submitting,
 }) => {
   const hasLoaded = form.getRegisteredFields().length > 0;
+  const resource = isExternal(line) ? line : (line.resource?._object ?? {});
 
   return (
     <Paneset>
@@ -89,9 +95,9 @@ const AgreementLineForm = ({
             </Col>
           </Row>
           <AccordionSet>
-            <FormInfo line={line} />
-            <FormPOLines line={line} />
-            <FormCoverage line={line} />
+            <FormInfo line={line} resource={resource} />
+            <FormPOLines line={line} resource={resource} />
+            <FormCoverage line={line} resource={resource} />
           </AccordionSet>
         </AccordionStatus>
       </Pane>

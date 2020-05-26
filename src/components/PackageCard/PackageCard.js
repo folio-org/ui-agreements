@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import Link from 'react-router-dom/Link';
 import {
   Card,
   Col,
@@ -9,7 +8,10 @@ import {
   NoValue,
   Row,
 } from '@folio/stripes/components';
-import { urls } from '../utilities';
+
+import EResourceCount from '../EResourceCount';
+import EResourceLink from '../EResourceLink';
+import EResourceProvider from '../EResourceProvider';
 
 const propTypes = {
   pkg: PropTypes.shape({
@@ -31,12 +33,9 @@ const PackageCard = ({
   <Card
     cardStyle="positive"
     headerStart={(
-      <Link
-        data-test-package-link
-        to={`${urls.eresourceView(pkg?.id)}${searchString}`}
-      >
-        <strong>{pkg?.name ?? <NoValue />}</strong>
-      </Link>
+      <strong data-test-package-link>
+        <EResourceLink eresource={pkg} searchString={searchString} />
+      </strong>
     )}
     roundedBorder
   >
@@ -48,19 +47,23 @@ const PackageCard = ({
       </Col>
       <Col xs={3}>
         <KeyValue label={<FormattedMessage id="ui-agreements.eresources.count" />}>
-          <div data-test-resource-count>{pkg?.resourceCount ?? <NoValue />}</div>
+          <div data-test-resource-count>
+            <EResourceCount resource={pkg} />
+          </div>
         </KeyValue>
       </Col>
       <Col xs={6}>
         <KeyValue label={<FormattedMessage id="ui-agreements.eresources.provider" />}>
-          <div data-test-vendor-name>{pkg?.vendor?.name ?? <NoValue />}</div>
+          <div data-test-vendor-name>
+            <EResourceProvider resource={pkg} />
+          </div>
         </KeyValue>
       </Col>
     </Row>
     <Row>
       <Col xs={3}>
         <KeyValue label={<FormattedMessage id="ui-agreements.eresources.source" />}>
-          <div data-test-package-source>{pkg?.source ?? <NoValue />}</div>
+          <div data-test-package-source>{pkg?.source ?? pkg?.authority ?? <NoValue />}</div>
         </KeyValue>
       </Col>
       <Col xs={9}>

@@ -13,8 +13,7 @@ import {
 import PackageCard from '../PackageCard';
 import TitleCard from '../TitleCard';
 
-import { resourceClasses } from '../../constants';
-import { parseDateOnlyString } from '../utilities';
+import { isPackage, parseDateOnlyString } from '../utilities';
 
 const propTypes = {
   line: PropTypes.shape({
@@ -23,6 +22,7 @@ const propTypes = {
       class: PropTypes.string,
     }),
   }),
+  resource: PropTypes.object,
 };
 
 const validateDateOrder = (value, allValues, meta) => {
@@ -54,56 +54,47 @@ const validateDateOrder = (value, allValues, meta) => {
 
 const FormInfo = ({
   line,
-}) => {
-  const resource = line.resource?._object ?? {};
-  let resourceCard;
-  if (line.resource?.class === resourceClasses.PACKAGE) {
-    resourceCard = <PackageCard pkg={resource} />;
-  } else {
-    resourceCard = <TitleCard title={resource} />;
-  }
-
-  return (
-    <>
-      {resourceCard}
-      <Row>
-        <Col md={2} xs={6}>
-          <Field
-            backendDateStandard="YYYY-MM-DD"
-            component={Datepicker}
-            id="agreement-line-active-from"
-            label={<FormattedMessage id="ui-agreements.eresources.activeFrom" />}
-            name="activeFrom"
-            parse={v => v} // Lets us send an empty string instead of `undefined`
-            parser={parseDateOnlyString}
-            validate={validateDateOrder}
-          />
-        </Col>
-        <Col md={2} xs={6}>
-          <Field
-            backendDateStandard="YYYY-MM-DD"
-            component={Datepicker}
-            id="agreement-line-active-to"
-            label={<FormattedMessage id="ui-agreements.eresources.activeTo" />}
-            name="activeTo"
-            parse={v => v} // Lets us send an empty string instead of `undefined`
-            parser={parseDateOnlyString}
-            validate={validateDateOrder}
-          />
-        </Col>
-        <Col md={8} xs={12}>
-          <Field
-            component={TextArea}
-            id="agreement-line-note"
-            label={<FormattedMessage id="ui-agreements.note" />}
-            name="note"
-            parse={v => v} // Lets us send an empty string instead of `undefined`
-          />
-        </Col>
-      </Row>
-    </>
-  );
-};
+  resource,
+}) => (
+  <>
+    { isPackage(resource) ? <PackageCard pkg={resource} /> : <TitleCard title={resource} /> }
+    <Row>
+      <Col md={2} xs={6}>
+        <Field
+          backendDateStandard="YYYY-MM-DD"
+          component={Datepicker}
+          id="agreement-line-active-from"
+          label={<FormattedMessage id="ui-agreements.eresources.activeFrom" />}
+          name="activeFrom"
+          parse={v => v} // Lets us send an empty string instead of `undefined`
+          parser={parseDateOnlyString}
+          validate={validateDateOrder}
+        />
+      </Col>
+      <Col md={2} xs={6}>
+        <Field
+          backendDateStandard="YYYY-MM-DD"
+          component={Datepicker}
+          id="agreement-line-active-to"
+          label={<FormattedMessage id="ui-agreements.eresources.activeTo" />}
+          name="activeTo"
+          parse={v => v} // Lets us send an empty string instead of `undefined`
+          parser={parseDateOnlyString}
+          validate={validateDateOrder}
+        />
+      </Col>
+      <Col md={8} xs={12}>
+        <Field
+          component={TextArea}
+          id="agreement-line-note"
+          label={<FormattedMessage id="ui-agreements.note" />}
+          name="note"
+          parse={v => v} // Lets us send an empty string instead of `undefined`
+        />
+      </Col>
+    </Row>
+  </>
+);
 
 FormInfo.propTypes = propTypes;
 export default FormInfo;
