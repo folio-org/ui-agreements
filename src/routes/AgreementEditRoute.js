@@ -7,6 +7,7 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
+import { withAsyncValidation } from '@folio/stripes-erm-components';
 import withFileHandlers from './components/withFileHandlers';
 import { joinRelatedAgreements, splitRelatedAgreements } from './utilities/processRelatedAgreements';
 import View from '../components/views/AgreementForm';
@@ -119,6 +120,7 @@ class AgreementEditRoute extends React.Component {
   });
 
   static propTypes = {
+    checkAsyncValidation: PropTypes.func,
     handlers: PropTypes.object,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
@@ -363,6 +365,7 @@ class AgreementEditRoute extends React.Component {
         handlers={{
           ...handlers,
           onBasketLinesAdded: this.handleBasketLinesAdded,
+          onAsyncValidate: this.props.checkAsyncValidation,
           onClose: this.handleClose,
         }}
         initialValues={this.state.initialValues}
@@ -375,5 +378,6 @@ class AgreementEditRoute extends React.Component {
 
 export default compose(
   withFileHandlers,
+  withAsyncValidation,
   stripesConnect
 )(AgreementEditRoute);
