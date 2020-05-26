@@ -437,5 +437,6 @@
     "relatedAgreements.relationship.has_backfile_in": "ذو ملف خلفي في \"{agreement}\"",
     "relatedAgreements.relationship.has_frontfile_in": "ذو ملف أمامي في \"{agreement}\"",
     "relatedAgreements.relationship.related_to": "ذو صلة بـ \"{agreement}\"",
-    "relatedAgreements.relationship.related_to_inward": "ذو صلة بـ \"{agreement}\""
+    "relatedAgreements.relationship.related_to_inward": "ذو صلة بـ \"{agreement}\"",
+    "org.olf.erm.SubscriptionAgreement.name.unique": "This name already exists"
 }
