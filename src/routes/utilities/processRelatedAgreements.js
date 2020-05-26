@@ -1,11 +1,21 @@
 import { agreementRelationshipTypes } from '../../constants';
 
+const identicalRelations = [];
+agreementRelationshipTypes.forEach((type) => {
+  if (type.outward.label === type.inward.label) {
+    identicalRelations.push(type.type);
+  }
+});
+
 const isOutwardRelationship = type => !!(agreementRelationshipTypes.find(t => t.outward.value === type));
 
 const isInwardRelationship = type => !!(agreementRelationshipTypes.find(t => t.inward.value === type));
 
 const getCorrespondingInwardValue = outwardValue => {
   const relationship = agreementRelationshipTypes.find(t => t.outward.value === outwardValue);
+  if (identicalRelations.includes(relationship.type)) {
+    return relationship.outward.value;
+  }
   return relationship ? relationship.inward.value : undefined;
 };
 
