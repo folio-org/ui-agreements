@@ -1,8 +1,8 @@
 const resourceTypes = {
   MONOGRAPH: 'monograph',
   SERIAL: 'serial',
-  BOOK: 'Book',
-  JOURNAL: 'Journal',
+  BOOK: 'book',
+  JOURNAL: 'journal',
 };
 
 export default resourceTypes;

@@ -17,7 +17,7 @@ import { AppIcon, IfPermission } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
 import { Info, POLines, Coverage } from '../AgreementLineSections';
-import { urls } from '../utilities';
+import { isExternal, urls } from '../utilities';
 
 const propTypes = {
   data: PropTypes.shape({
@@ -30,11 +30,14 @@ const propTypes = {
       owner: PropTypes.shape({
         name: PropTypes.string.isRequired,
       }),
-      poLines: PropTypes.PropTypes.arrayOf(PropTypes.shape({
+      poLines: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string,
         titleOrPackage: PropTypes.string,
         poLineNumber: PropTypes.string,
       })),
+      resource: PropTypes.shape({
+        _object: PropTypes.object,
+      }),
       startDate: PropTypes.string,
     }).isRequired,
   }),
@@ -59,6 +62,8 @@ const AgreementLine = ({
   };
 
   if (isLoading) return <LoadingPane data-loading {...paneProps} />;
+
+  const resource = isExternal(line) ? line : (line.resource?._object ?? {});
 
   return (
     <Pane
@@ -88,7 +93,7 @@ const AgreementLine = ({
       paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
       {...paneProps}
     >
-      <Info line={line} />
+      <Info line={line} resource={resource} />
       <AccordionStatus>
         <Row end="xs">
           <Col xs>
@@ -96,8 +101,8 @@ const AgreementLine = ({
           </Col>
         </Row>
         <AccordionSet>
-          <POLines line={line} />
-          <Coverage line={line} />
+          <POLines line={line} resource={resource} />
+          <Coverage line={line} resource={resource} />
           <FormattedMessage id="ui-agreements.line.lineForAgreement" values={{ agreementName: line.owner?.name }}>
             {title => (
               <NotesSmartAccordion

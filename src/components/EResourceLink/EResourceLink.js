@@ -14,6 +14,7 @@ class EResourceLink extends React.Component {
       name: PropTypes.string,
       reference: PropTypes.string,
     }).isRequired,
+    searchString: PropTypes.string,
   }
 
   getName = (eresource) => {
@@ -42,7 +43,7 @@ class EResourceLink extends React.Component {
   }
 
   render() {
-    const { eresource, ...rest } = this.props;
+    const { eresource, searchString = '', ...rest } = this.props;
 
     const name = this.getName(eresource);
     const path = this.getPath(eresource);
@@ -50,7 +51,7 @@ class EResourceLink extends React.Component {
 
     return (
       <div data-test-eresource-name style={{ overflowWrap: 'break-word', width: 180 }}>
-        <FolioLink {...rest} path={this.getPath(eresource)}>
+        <FolioLink {...rest} path={`${this.getPath(eresource)}${searchString}`}>
           {name}
         </FolioLink>
       </div>

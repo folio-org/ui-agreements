@@ -9,16 +9,16 @@ import CoverageFieldArray from '../CoverageFieldArray';
 import { isExternal, isPackage } from '../utilities';
 
 const propTypes = {
-  line: PropTypes.shape({
-    resource: PropTypes.object,
-  }),
+  line: PropTypes.object,
+  resource: PropTypes.object,
 };
 
-const FormPOLines = ({
-  line: { resource = {} },
+const FormCoverage = ({
+  line,
+  resource,
 }) => {
+  if (isExternal(line)) return null;
   if (isPackage(resource)) return null;
-  if (isExternal(resource)) return null;
 
   return (
     <Accordion
@@ -53,5 +53,5 @@ const FormPOLines = ({
   );
 };
 
-FormPOLines.propTypes = propTypes;
-export default FormPOLines;
+FormCoverage.propTypes = propTypes;
+export default FormCoverage;
