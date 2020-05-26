@@ -32,6 +32,7 @@ const PackageCard = ({
 }) => (
   <Card
     cardStyle="positive"
+    data-test-package-card
     headerStart={(
       <strong data-test-package-link>
         <EResourceLink eresource={pkg} searchString={searchString} />

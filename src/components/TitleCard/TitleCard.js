@@ -7,16 +7,7 @@ import EResourceLink from '../EResourceLink';
 
 const propTypes = {
   searchString: PropTypes.string,
-  title: PropTypes.shape({
-    class: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.shape({
-      label: PropTypes.string,
-    }),
-    publisher: PropTypes.shape({
-      label: PropTypes.string,
-    }),
-  }),
+  title: PropTypes.object,
 };
 
 const TitleCard = ({
@@ -26,6 +17,7 @@ const TitleCard = ({
   return (
     <Card
       cardStyle="positive"
+      data-test-title-card
       headerStart={(
         <strong data-test-title-instance-name>
           <EResourceLink eresource={title} searchString={searchString} />

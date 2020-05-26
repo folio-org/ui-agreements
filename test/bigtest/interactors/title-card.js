@@ -4,6 +4,8 @@ import {
 } from '@bigtest/interactor';
 
 export default @interactor class TitleCardInteractor {
+  static defaultScope = '[data-test-title-card]';
+
   titleInstanceName = text('[data-test-title-instance-name]');
   titleInstanceType = text('[data-test-title-instance-type]');
   titleInstanceSubType = text('[data-test-title-instance-sub-type]');
