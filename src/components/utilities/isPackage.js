@@ -1,5 +1,8 @@
-const PACKAGE_CLASS = 'org.olf.kb.Pkg';
+import { resourceClasses } from '../../constants';
 
 export default function isPackage(resource) {
-  return resource.class === PACKAGE_CLASS;
+  return (
+    resource.class === resourceClasses.PACKAGE ||
+    resource.reference_object?.type === 'Package'
+  );
 }

@@ -7,3 +7,4 @@ export { default as resultCount } from './resultCount';
 export { default as agreementRelationshipTypes } from './agreementRelationshipTypes';
 export { default as resourceClasses } from './resourceClasses';
 export { default as resourceTypes } from './resourceTypes';
+export { default as validationEndPoint } from './validationEndPoint';

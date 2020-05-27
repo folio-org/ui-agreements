@@ -4,11 +4,16 @@ import PropTypes from 'prop-types';
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import View from '../components/views/AgreementLine';
+import View from '../components/views/AgreementLineForm';
 import { urls } from '../components/utilities';
 
 class AgreementLineEditRoute extends React.Component {
   static manifest = Object.freeze({
+    agreement: {
+      type: 'okapi',
+      path: 'erm/sas/:{agreementId}',
+      fetch: false,
+    },
     line: {
       type: 'okapi',
       path: 'erm/entitlements/:{lineId}',
@@ -17,12 +22,13 @@ class AgreementLineEditRoute extends React.Component {
       type: 'okapi',
       path: 'orders/order-lines',
       params: (_q, _p, _r, _l, props) => {
-        const query = props.resources.line?.poLines ?? []
+        const query = (props.resources.line?.records?.[0]?.poLines ?? [])
           .map(poLine => `id==${poLine.poLineId}`)
           .join(' or ');
 
         return query ? { query } : null;
       },
+
       fetch: props => !!props.stripes.hasInterface('order-lines', '1.0'),
       records: 'poLines',
       throwErrors: false,
@@ -43,7 +49,7 @@ class AgreementLineEditRoute extends React.Component {
       }).isRequired
     }).isRequired,
     mutator: PropTypes.shape({
-      line: PropTypes.shape({
+      agreement: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
       }),
     }),
@@ -62,18 +68,25 @@ class AgreementLineEditRoute extends React.Component {
   getCompositeLine = () => {
     const { resources } = this.props;
     const line = resources.line?.records?.[0] ?? {};
-
     const orderLines = resources.orderLines?.records || [];
 
-    line.poLines = (line.poLines || [])
-      .map(linePOL => orderLines.find(orderLine => orderLine.id === linePOL.poLineId));
+    const poLines = (line.poLines || [])
+      .map(linePOL => orderLines.find(orderLine => orderLine.id === linePOL.poLineId))
+      .filter(poLine => poLine);
 
-    return line;
+    return {
+      ...line,
+      poLines,
+    };
   }
 
   handleClose = () => {
-    const { history, location, match } = this.props;
-    history.push(`${urls.agreementView(match.params.agreementId)}${location.search}`);
+    const {
+      history,
+      location,
+      match: { params: { agreementId, lineId } },
+    } = this.props;
+    history.push(`${urls.agreementLineView(agreementId, lineId)}${location.search}`);
   }
 
   handleSubmit = (line) => {
@@ -84,8 +97,11 @@ class AgreementLineEditRoute extends React.Component {
       mutator,
     } = this.props;
 
-    return mutator.line
-      .PUT(line)
+    return mutator.agreement
+      .PUT({
+        id: agreementId,
+        items: [{ id: lineId, ...line }]
+      })
       .then(() => {
         this.context.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.line.update.callout" /> });
         history.push(`${urls.agreementLineView(agreementId, lineId)}${location.search}`);
@@ -93,7 +109,7 @@ class AgreementLineEditRoute extends React.Component {
   }
 
   isLoading = () => {
-    return Object.values(this.props.resources).some(r => r.isPending);
+    return Object.values(this.props.resources).some(r => r?.isPending ?? true);
   }
 
   render() {

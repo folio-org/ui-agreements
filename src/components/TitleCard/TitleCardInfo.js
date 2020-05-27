@@ -3,37 +3,33 @@ import PropTypes from 'prop-types';
 
 import MonographResourceInfo from './MonographResourceInfo';
 import SerialResourceInfo from './SerialResourceInfo';
-import { resourceTypes, resourceClasses } from '../../constants';
+import { resourceTypes } from '../../constants';
 
 const propTypes = {
   title: PropTypes.shape({
-    class: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.shape({
-      label: PropTypes.string,
-    }),
-    publisher: PropTypes.shape({
-      label: PropTypes.string,
+    type: PropTypes.oneOfType([
+      PropTypes.shape({ label: PropTypes.string }),
+      PropTypes.string,
+    ]),
+    pti: PropTypes.shape({
+      titleInstance: PropTypes.shape({
+        type: PropTypes.shape({
+          label: PropTypes.string,
+        }),
+      }),
     }),
   }),
 };
 
-const TitleCardInfo = ({
-  title,
-}) => {
-  const titleInstance = (title.class === resourceClasses.TITLEINSTANCE) ? title : title?.pti?.titleInstance;
+const TitleCardInfo = ({ title }) => {
+  const titleInstance = title?.pti?.titleInstance ?? title;
+  const type = (titleInstance?.type?.label ?? titleInstance?.type ?? '').toLowerCase();
 
-  const { label } = titleInstance?.type;
+  if (type === resourceTypes.MONOGRAPH || type === resourceTypes.BOOK) {
+    return <MonographResourceInfo titleInstance={titleInstance} />;
+  }
 
-  const ResourceInfoComponent = (label === resourceTypes.MONOGRAPH || label === resourceTypes.BOOK) ?
-    MonographResourceInfo : SerialResourceInfo;
-
-  return (
-    <ResourceInfoComponent
-      eresourceClass={title.class}
-      titleInstance={titleInstance}
-    />
-  );
+  return <SerialResourceInfo titleInstance={titleInstance} />;
 };
 
 TitleCardInfo.propTypes = propTypes;

@@ -17,7 +17,7 @@ import EResourceType from '../EResourceType';
 import { isExternal, isPackage, parseDateOnlyString } from '../utilities';
 
 import CoverageFieldArray from '../CoverageFieldArray';
-import POLinesFieldArray from './POLinesFieldArray';
+import POLinesFieldArray from '../POLinesFieldArray';
 
 export default class AgreementLineField extends React.Component {
   static propTypes = {
@@ -47,7 +47,7 @@ export default class AgreementLineField extends React.Component {
       if (meta.name.indexOf('activeFrom') >= 0) {
         activeFrom = value;
         activeTo = get(allValues, meta.name.replace('activeFrom', 'activeTo'));
-      } else if (meta.name.indexOf('endDate') >= 0) {
+      } else if (meta.name.indexOf('activeTo') >= 0) {
         activeFrom = get(allValues, meta.name.replace('activeTo', 'activeFrom'));
         activeTo = value;
       } else {

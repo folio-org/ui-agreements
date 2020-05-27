@@ -5,17 +5,19 @@ import { FormattedMessage } from 'react-intl';
 import {
   AccordionSet,
   AccordionStatus,
+  Button,
   Col,
   ExpandAllButton,
+  Icon,
   LoadingPane,
   Pane,
   Row,
 } from '@folio/stripes/components';
-import { AppIcon } from '@folio/stripes/core';
+import { AppIcon, IfPermission } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
 import { Info, POLines, Coverage } from '../AgreementLineSections';
-import { urls } from '../utilities';
+import { isExternal, urls } from '../utilities';
 
 const propTypes = {
   data: PropTypes.shape({
@@ -28,11 +30,14 @@ const propTypes = {
       owner: PropTypes.shape({
         name: PropTypes.string.isRequired,
       }),
-      poLines: PropTypes.PropTypes.arrayOf(PropTypes.shape({
+      poLines: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string,
         titleOrPackage: PropTypes.string,
         poLineNumber: PropTypes.string,
       })),
+      resource: PropTypes.shape({
+        _object: PropTypes.object,
+      }),
       startDate: PropTypes.string,
     }).isRequired,
   }),
@@ -58,35 +63,37 @@ const AgreementLine = ({
 
   if (isLoading) return <LoadingPane data-loading {...paneProps} />;
 
+  const resource = isExternal(line) ? line : (line.resource?._object ?? {});
+
   return (
     <Pane
-      // actionMenu={() => (
-      //   <IfPermission perm="ui-agreements.agreements.edit">
-      //     <Button
-      //       buttonStyle="dropdownItem"
-      //       id="clickable-dropdown-edit-agreement-line"
-      //       onClick={handlers.onEdit}
-      //     >
-      //       <Icon icon="edit">
-      //         <FormattedMessage id="ui-agreements.agreements.edit" />
-      //       </Icon>
-      //     </Button>
-      //     <Button
-      //       buttonStyle="dropdownItem"
-      //       id="clickable-dropdown-delete-agreement-line"
-      //       onClick={handlers.onDelete}
-      //     >
-      //       <Icon icon="trash">
-      //         <FormattedMessage id="ui-agreements.delete" />
-      //       </Icon>
-      //     </Button>
-      //   </IfPermission>
-      // )}
+      actionMenu={() => (
+        <IfPermission perm="ui-agreements.agreements.edit">
+          <Button
+            buttonStyle="dropdownItem"
+            id="clickable-dropdown-edit-agreement-line"
+            onClick={handlers.onEdit}
+          >
+            <Icon icon="edit">
+              <FormattedMessage id="ui-agreements.agreements.edit" />
+            </Icon>
+          </Button>
+          <Button
+            buttonStyle="dropdownItem"
+            id="clickable-dropdown-delete-agreement-line"
+            onClick={handlers.onDelete}
+          >
+            <Icon icon="trash">
+              <FormattedMessage id="ui-agreements.delete" />
+            </Icon>
+          </Button>
+        </IfPermission>
+      )}
       appIcon={<AppIcon app="agreements" />}
       paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
       {...paneProps}
     >
-      <Info line={line} />
+      <Info line={line} resource={resource} />
       <AccordionStatus>
         <Row end="xs">
           <Col xs>
@@ -94,14 +101,14 @@ const AgreementLine = ({
           </Col>
         </Row>
         <AccordionSet>
-          <POLines line={line} />
-          <Coverage line={line} />
+          <POLines line={line} resource={resource} />
+          <Coverage line={line} resource={resource} />
           <FormattedMessage id="ui-agreements.line.lineForAgreement" values={{ agreementName: line.owner?.name }}>
             {title => (
               <NotesSmartAccordion
                 domainName="agreements"
-                entityId={line.id}
-                entityName={title}
+                entityId={line.id ?? '-'}
+                entityName={title ?? '-'}
                 entityType="agreementLine"
                 id="agreement-line-notes"
                 pathToNoteCreate={urls.noteCreate()}

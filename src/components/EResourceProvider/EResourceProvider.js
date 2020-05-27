@@ -5,8 +5,10 @@ export default class EResourceProvider extends React.Component {
   static propTypes = {
     resource: PropTypes.shape({
       _object: PropTypes.shape({
-        nominalPlatform: PropTypes.shape({
-          name: PropTypes.string,
+        pkg: PropTypes.shape({
+          vendor: PropTypes.shape({
+            name: PropTypes.string,
+          }),
         }),
         pti: PropTypes.shape({
           platform: PropTypes.shape({
@@ -23,10 +25,12 @@ export default class EResourceProvider extends React.Component {
   render() {
     const { resource } = this.props;
 
+    const resourceObject = resource._object ?? resource;
+
     return (
-      resource?._object?.pkg?.vendor?.name ||
-      resource?._object?.vendor?.name ||
-      resource?.reference_object?.provider || // eslint-disable-line camelcase
+      resourceObject?.pkg?.vendor?.name ??
+      resourceObject?.vendor?.name ??
+      resourceObject?.reference_object?.provider ?? // eslint-disable-line camelcase
       null
     );
   }

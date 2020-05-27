@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
 import { IfPermission } from '@folio/stripes/core';
 import {
   FormattedUTCDate,
@@ -55,11 +54,9 @@ export default class LinesList extends React.Component {
 
       return (
         <EResourceLink
+          data-test-external-reference={line.reference}
+          data-test-resource-id={line?.resource?.id}
           eresource={resource}
-          linkProps={{
-            'data-test-resource-id': get(line, 'resource.id'),
-            'data-test-external-reference': line.reference,
-          }}
         />
       );
     },

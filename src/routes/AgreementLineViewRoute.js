@@ -3,14 +3,21 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
+import { preventResourceRefresh } from '@folio/stripes-erm-components';
 import View from '../components/views/AgreementLine';
 import { urls } from '../components/utilities';
 
 class AgreementLineViewRoute extends React.Component {
   static manifest = Object.freeze({
+    agreement: {
+      type: 'okapi',
+      path: 'erm/sas/:{agreementId}',
+      fetch: false,
+    },
     line: {
       type: 'okapi',
       path: 'erm/entitlements/:{lineId}',
+      shouldRefresh: preventResourceRefresh({ line: ['DELETE'] }),
     },
     orderLines: {
       type: 'okapi',
@@ -24,6 +31,7 @@ class AgreementLineViewRoute extends React.Component {
       },
       fetch: props => !!props.stripes.hasInterface('order-lines', '1.0'),
       records: 'poLines',
+      shouldRefresh: preventResourceRefresh({ line: ['DELETE'] }),
       throwErrors: false,
     },
   });
@@ -42,8 +50,8 @@ class AgreementLineViewRoute extends React.Component {
       }).isRequired
     }).isRequired,
     mutator: PropTypes.shape({
-      line: PropTypes.shape({
-        DELETE: PropTypes.func.isRequired,
+      agreement: PropTypes.shape({
+        PUT: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
     resources: PropTypes.shape({
@@ -79,10 +87,18 @@ class AgreementLineViewRoute extends React.Component {
   }
 
   handleDelete = () => {
-    const { history, location, mutator } = this.props;
+    const {
+      history,
+      location,
+      match: { params: { agreementId, lineId } },
+      mutator,
+    } = this.props;
     const { sendCallout } = this.context;
 
-    mutator.line.DELETE()
+    mutator.agreement.PUT({
+      id: agreementId,
+      items: [{ id: lineId, _delete: true }]
+    })
       .then(() => {
         history.push(`${urls.agreements()}${location.search}`);
         sendCallout({ message: <FormattedMessage id="ui-agreements.line.delete.callout" /> });
@@ -118,7 +134,7 @@ class AgreementLineViewRoute extends React.Component {
       <View
         key={resources.line?.loadedAt ?? 'loading'}
         data={{
-          line: this.getCompositeLine()
+          line: this.getCompositeLine(),
         }}
         handlers={{
           onClose: this.handleClose,

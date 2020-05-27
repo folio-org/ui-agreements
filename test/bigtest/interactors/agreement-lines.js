@@ -1,5 +1,6 @@
 import {
   interactor,
+  isPresent,
   clickable,
   count,
 } from '@bigtest/interactor';
@@ -10,6 +11,7 @@ import CoveredEresourcesListInteractor from './covered-eresources';
 
 export default @interactor class AgreementLinesInteractor {
   clickLinesAccordion = clickable('#accordion-toggle-button-lines');
+  isLoaded = isPresent('#agreement-lines');
 
   linesList = new MultiColumnListInteractor('#agreement-lines');
   linesCount = () => this.linesList.rowCount
@@ -26,4 +28,8 @@ export default @interactor class AgreementLinesInteractor {
   poLinesCount = count('[data-test-po-line]')
 
   coveredEresourcesList = new CoveredEresourcesListInteractor();
+
+  whenLoaded() {
+    return this.timeout(5000).when(() => this.isLoaded);
+  }
 }

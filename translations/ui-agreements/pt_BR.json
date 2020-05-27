@@ -431,5 +431,12 @@
     "line.parentAgreement": "Contrato pai",
     "line.lineForAgreement": "Linha do contrato em {agreementName}",
     "line.poLines": "Linhas do pedido",
-    "poLines.poLines": "Linhas do pedido"
+    "poLines.poLines": "Linhas do pedido",
+    "eresources.titleOnPlatform": "Título na plataforma",
+    "eresources.accessTitleOnPlatform": "Acesse {name}",
+    "relatedAgreements.relationship.has_backfile_in": "Tem backfile em \"{agreement}\"",
+    "relatedAgreements.relationship.has_frontfile_in": "Tem frontile em \"{agreement}\"",
+    "relatedAgreements.relationship.related_to": "Relacionado com \"{agreement}\"",
+    "relatedAgreements.relationship.related_to_inward": "Relacionado com \"{agreement}\"",
+    "org.olf.erm.SubscriptionAgreement.name.unique": "This name already exists"
 }

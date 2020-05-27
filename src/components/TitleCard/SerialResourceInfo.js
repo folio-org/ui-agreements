@@ -7,16 +7,13 @@ import {
   NoValue,
   Row,
 } from '@folio/stripes/components';
+
 import EResourceIdentifier from '../EResourceIdentifier';
+import EResourceType from '../EResourceType';
 
 const propTypes = {
   titleInstance: PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
     subType: PropTypes.shape({
-      label: PropTypes.string,
-    }),
-    type: PropTypes.shape({
       label: PropTypes.string,
     }),
   }).isRequired,
@@ -29,7 +26,9 @@ const SerialResourceInfo = ({
     <Row>
       <Col xs={3}>
         <KeyValue label={<FormattedMessage id="ui-agreements.eresources.type" />}>
-          <div data-test-title-instance-type>{titleInstance.type?.label ?? <NoValue />}</div>
+          <div data-test-title-instance-type>
+            <EResourceType resource={titleInstance} />
+          </div>
         </KeyValue>
       </Col>
       <Col xs={3}>
