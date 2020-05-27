@@ -438,5 +438,8 @@
     "relatedAgreements.relationship.has_frontfile_in": "ذو ملف أمامي في \"{agreement}\"",
     "relatedAgreements.relationship.related_to": "ذو صلة بـ \"{agreement}\"",
     "relatedAgreements.relationship.related_to_inward": "ذو صلة بـ \"{agreement}\"",
-    "org.olf.erm.SubscriptionAgreement.name.unique": "This name already exists"
+    "org.olf.erm.SubscriptionAgreement.name.unique": "This name already exists",
+    "emptyAccordion.lineCoverage": "No coverage for this agreement line",
+    "emptyAccordion.linePOLines": "No PO lines for this agreement line",
+    "line.edit": "Edit agreement line"
 }
