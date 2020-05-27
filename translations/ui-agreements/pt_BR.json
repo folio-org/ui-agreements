@@ -438,5 +438,8 @@
     "relatedAgreements.relationship.has_frontfile_in": "Tem frontile em \"{agreement}\"",
     "relatedAgreements.relationship.related_to": "Relacionado com \"{agreement}\"",
     "relatedAgreements.relationship.related_to_inward": "Relacionado com \"{agreement}\"",
-    "org.olf.erm.SubscriptionAgreement.name.unique": "This name already exists"
+    "org.olf.erm.SubscriptionAgreement.name.unique": "Este nome já existe",
+    "emptyAccordion.lineCoverage": "Nenhuma cobertura para esta linha de contrato",
+    "emptyAccordion.linePOLines": "Nenhuma linha de pedido para esta linha de contrato",
+    "line.edit": "Editar linha de contrato"
 }
