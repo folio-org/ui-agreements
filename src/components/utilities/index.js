@@ -1,6 +1,7 @@
 export { default as getLicenseAmendments } from './getLicenseAmendments';
 export { default as getResourceFromEntitlement } from './getResourceFromEntitlement';
 export { default as getResourceIdentifier } from './getResourceIdentifier';
+export { default as getSiblingIdentifier } from './getSiblingIdentifier';
 export { default as getConflictWarnings } from './getConflictWarnings';
 export { default as formatNoteReferrerEntityData } from './formatNoteReferrerEntityData';
 export { default as isExternal } from './isExternal';

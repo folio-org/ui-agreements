@@ -27,7 +27,7 @@ import EResourceType from '../EResourceType';
 import EResourceFilters from '../EResourceFilters';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
 
-import { getResourceIdentifier, urls } from '../utilities';
+import { getResourceIdentifier, getSiblingIdentifier, urls } from '../utilities';
 import { resultCount } from '../../constants';
 
 import css from './Agreements.css';
@@ -227,7 +227,7 @@ const EResources = ({
                       type: e => <EResourceType resource={e} />,
                       isbn: e => getResourceIdentifier(e._object, 'isbn'),
                       eissn: e => getResourceIdentifier(e._object, 'eissn'),
-                      pissn: e => getResourceIdentifier(e._object, 'pissn'),
+                      pissn: e => getSiblingIdentifier(e._object, 'issn'),
                     }}
                     id="list-eresources"
                     isEmptyMessage={
