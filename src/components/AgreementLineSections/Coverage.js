@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
-import { Accordion, Badge, MultiColumnList } from '@folio/stripes/components';
+import {
+  Accordion,
+  Badge,
+  FormattedUTCDate,
+  MultiColumnList
+} from '@folio/stripes/components';
 
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import Embargo from '../Embargo';
@@ -69,8 +74,8 @@ const Coverage = ({
               :
               ''
           ),
-          endDate: c => (c.startDate ? <FormattedDate value={c.endDate} /> : ''),
-          startDate: c => (c.startDate ? <FormattedDate value={c.startDate} /> : ''),
+          endDate: c => (c.endDate ? <FormattedUTCDate value={c.endDate} /> : ''),
+          startDate: c => (c.startDate ? <FormattedUTCDate value={c.startDate} /> : ''),
         }}
         interactive={false}
         isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.lineCoverage" />}
