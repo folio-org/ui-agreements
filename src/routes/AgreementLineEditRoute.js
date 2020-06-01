@@ -80,6 +80,15 @@ class AgreementLineEditRoute extends React.Component {
     };
   }
 
+  getInitialValues = () => {
+    const line = this.props.resources.line?.records?.[0];
+
+    return {
+      ...line,
+      coverage: line.customCoverage ? line.coverage : undefined,
+    };
+  }
+
   handleClose = () => {
     const {
       history,
@@ -126,7 +135,7 @@ class AgreementLineEditRoute extends React.Component {
         handlers={{
           onClose: this.handleClose,
         }}
-        initialValues={resources.line?.records?.[0]}
+        initialValues={this.getInitialValues()}
         isLoading={this.isLoading()}
         onSubmit={this.handleSubmit}
       />
