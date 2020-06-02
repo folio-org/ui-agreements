@@ -9,7 +9,8 @@ import { Tags } from '@folio/stripes-erm-components';
 
 import View from '../components/views/EResource';
 import { urls } from '../components/utilities';
-import { resultCount } from '../constants';
+import { resultCount, resourceClasses } from '../constants';
+
 
 const RECORDS_PER_REQUEST = 100;
 
@@ -124,7 +125,7 @@ class EResourceViewRoute extends React.Component {
     }
   }
 
-  getHelperApp = (resource) => {
+  getHelperApp = (eresource = {}) => {
     const { match, resources } = this.props;
     const helper = resources.query.helper;
     if (!helper) return null;
@@ -134,6 +135,13 @@ class EResourceViewRoute extends React.Component {
     if (helper === 'tags') HelperComponent = Tags;
 
     if (!HelperComponent) return null;
+
+    let resource;
+    if (eresource.class === resourceClasses.TITLEINSTANCE) {
+      resource = 'titles';
+    } else if (eresource.class === resourceClasses.PCI) {
+      resource = 'pci';
+    }
 
     return (
       <HelperComponent

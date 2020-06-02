@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import {
   AccordionSet,
@@ -66,6 +66,8 @@ const AgreementLine = ({
     onClose: handlers.onClose,
   };
 
+  const intl = useIntl();
+
   if (isLoading) return <LoadingPane data-loading {...paneProps} />;
 
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
@@ -100,17 +102,13 @@ const AgreementLine = ({
           <IfPermission perm="ui-agreements.agreements.edit">
             <PaneMenu>
               {handlers.onToggleTags &&
-                <FormattedMessage id="ui-agreements.agreements.showTags">
-                  {ariaLabel => (
-                    <IconButton
-                      ariaLabel={ariaLabel}
-                      badgeCount={line?.tags?.length ?? 0}
-                      icon="tag"
-                      id="clickable-show-tags"
-                      onClick={handlers.onToggleTags}
-                    />
-                  )}
-                </FormattedMessage>
+                <IconButton
+                  ariaLabel={intl.formatMessage({ id: 'ui-agreements.agreements.showTags' })}
+                  badgeCount={line?.tags?.length ?? 0}
+                  icon="tag"
+                  id="clickable-show-tags"
+                  onClick={handlers.onToggleTags}
+                />
               }
             </PaneMenu>
           </IfPermission>
