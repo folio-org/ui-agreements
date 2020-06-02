@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import {
+  Checkbox,
   Col,
   Datepicker,
   Row,
@@ -85,6 +86,25 @@ const FormInfo = ({
           parse={v => v} // Lets us send an empty string instead of `undefined`
         />
       </Col>
+    </Row>
+    <Row>
+      <Col xs={12}>
+        <Field
+          name="suppressFromDiscovery"
+          type="checkbox"
+        >
+          {({ input }) => (
+            <Checkbox
+              checked={input.checked}
+              id="agreement-line-suppress-from-discovery"
+              label={<FormattedMessage id="ui-agreements.agreementLines.suppressFromDiscovery" />}
+              onChange={e => input.onChange(e)}
+              type="checkbox"
+            />
+          )}
+        </Field>
+      </Col>
+
     </Row>
   </>
 );
