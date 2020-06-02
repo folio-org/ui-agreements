@@ -124,7 +124,7 @@ class EResourceViewRoute extends React.Component {
     }
   }
 
-  getHelperApp = () => {
+  getHelperApp = (resource) => {
     const { match, resources } = this.props;
     const helper = resources.query.helper;
     if (!helper) return null;
@@ -137,7 +137,7 @@ class EResourceViewRoute extends React.Component {
 
     return (
       <HelperComponent
-        link={`erm/resource/${match.params.id}`}
+        link={`erm/${resource}/${match.params.id}`}
         onToggle={() => this.handleToggleHelper(helper)}
       />
     );
@@ -246,7 +246,7 @@ class EResourceViewRoute extends React.Component {
           onEResourceClick: this.handleEResourceClick,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
-        helperApp={this.getHelperApp()}
+        helperApp={(resource) => this.getHelperApp(resource)}
         isLoading={this.isLoading()}
       />
     );

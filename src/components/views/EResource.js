@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Button, LoadingPane, Pane, PaneMenu } from '@folio/stripes/components';
+import { Button, IconButton, LoadingPane, Pane, PaneMenu } from '@folio/stripes/components';
 import { IfPermission, TitleManager } from '@folio/stripes/core';
 
 import Package from './Package';
@@ -25,30 +25,47 @@ export default class EResource extends React.Component {
       onNeedMorePackageContents: PropTypes.func.isRequired,
       onToggleTags: PropTypes.func.isRequired
     }).isRequired,
-    helperApp: PropTypes.node,
+    helperApp: PropTypes.func,
     isLoading: PropTypes.bool,
   }
 
   renderEditPCIPaneMenu = () => {
     const {
-      data: { eresource },
+      data: { eresource = {} },
       handlers,
     } = this.props;
 
-    return (eresource?.class === resourceClasses.PCI) ? (
-      <IfPermission perm="ui-agreements.resources.edit">
-        <PaneMenu>
-          <Button
-            buttonStyle="primary"
-            id="clickable-edit-eresource"
-            marginBottom0
-            onClick={handlers.onEdit}
-          >
-            <FormattedMessage id="stripes-components.button.edit" />
-          </Button>
-        </PaneMenu>
-      </IfPermission>
-    ) : null;
+    return (eresource.class === resourceClasses.PCI ||
+      eresource.class === resourceClasses.TITLEINSTANCE) ?
+      (
+        <IfPermission perm="ui-agreements.resources.edit">
+          <PaneMenu>
+            {handlers.onToggleTags &&
+              <FormattedMessage id="ui-agreements.agreements.showTags">
+                {ariaLabel => (
+                  <IconButton
+                    ariaLabel={ariaLabel}
+                    badgeCount={eresource?.tags?.length ?? 0}
+                    icon="tag"
+                    id="clickable-show-tags"
+                    onClick={handlers.onToggleTags}
+                  />
+                )}
+              </FormattedMessage>
+            }
+            {eresource.class === resourceClasses.PCI &&
+            <Button
+              buttonStyle="primary"
+              id="clickable-edit-eresource"
+              marginBottom0
+              onClick={handlers.onEdit}
+            >
+              <FormattedMessage id="stripes-components.button.edit" />
+            </Button>
+        }
+          </PaneMenu>
+        </IfPermission>
+      ) : null;
   }
 
   render() {
@@ -68,11 +85,14 @@ export default class EResource extends React.Component {
     if (isLoading) return <LoadingPane data-loading id="pane-view-eresource" {...paneProps} />;
 
     let EResourceViewComponent = Package;
+    let helperAppEndPoint;
 
     if (data.eresource?.class === resourceClasses.TITLEINSTANCE) {
+      helperAppEndPoint = 'titles';
       EResourceViewComponent = Title;
     } else if (data.eresource?.class === resourceClasses.PCI) {
       EResourceViewComponent = PCI;
+      helperAppEndPoint = 'pci';
     }
 
     return (
@@ -88,7 +108,7 @@ export default class EResource extends React.Component {
             <EResourceViewComponent data={data} handlers={handlers} />
           </TitleManager>
         </Pane>
-        {helperApp}
+        {helperApp(helperAppEndPoint)}
       </>
     );
   }
