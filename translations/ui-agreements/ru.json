@@ -438,5 +438,8 @@
     "relatedAgreements.relationship.has_frontfile_in": "Has frontile in \"{agreement}\"",
     "relatedAgreements.relationship.related_to": "Относящийся к \"{соглашению}\"",
     "relatedAgreements.relationship.related_to_inward": "Относящийся к \"{соглашению}\"",
-    "org.olf.erm.SubscriptionAgreement.name.unique": "This name already exists"
+    "org.olf.erm.SubscriptionAgreement.name.unique": "Данное название уже существует",
+    "emptyAccordion.lineCoverage": "No coverage for this agreement line",
+    "emptyAccordion.linePOLines": "Нет строк заказа для данной строки соглашения",
+    "line.edit": "Редактировать строку соглашения"
 }

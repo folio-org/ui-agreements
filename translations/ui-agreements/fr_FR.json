@@ -438,5 +438,8 @@
     "relatedAgreements.relationship.has_frontfile_in": "Has frontile in \"{agreement}\"",
     "relatedAgreements.relationship.related_to": "Lié à \" {agreement} \"",
     "relatedAgreements.relationship.related_to_inward": "Lié à \" {agreement} \"",
-    "org.olf.erm.SubscriptionAgreement.name.unique": "This name already exists"
+    "org.olf.erm.SubscriptionAgreement.name.unique": "Ce nom existe déjà",
+    "emptyAccordion.lineCoverage": "Aucune couverture pour cette ligne d'accord",
+    "emptyAccordion.linePOLines": "Aucune ligne de commande pour cette ligne d'accord",
+    "line.edit": "Modifier la ligne d'accord"
 }
