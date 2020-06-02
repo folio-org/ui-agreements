@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import {
+  Checkbox,
   Col,
   Datepicker,
   Row,
@@ -47,6 +48,25 @@ export default class PCIFormInfo extends React.Component {
               name="accessEnd"
               parser={parseDateOnlyString}
             />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <Field
+              name="suppressFromDiscovery"
+              type="checkbox"
+            >
+              {({ input }) => (
+                <Checkbox
+                  checked={input.checked}
+                  id="pci-suppress-from-discovery"
+                  inline
+                  label={<FormattedMessage id="ui-agreements.eresources.suppressFromDiscovery" />}
+                  onChange={e => input.onChange(e)}
+                  type="checkbox"
+                />
+              )}
+            </Field>
           </Col>
         </Row>
       </div>
