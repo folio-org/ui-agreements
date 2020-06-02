@@ -254,7 +254,7 @@ class EResourceViewRoute extends React.Component {
           onEResourceClick: this.handleEResourceClick,
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
-        helperApp={(resource) => this.getHelperApp(resource)}
+        helperApp={(eresource) => this.getHelperApp(eresource)}
         isLoading={this.isLoading()}
       />
     );
