@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { Button, IconButton, LoadingPane, Pane, PaneMenu } from '@folio/stripes/components';
 import { IfPermission, TitleManager } from '@folio/stripes/core';
@@ -35,32 +35,34 @@ export default class EResource extends React.Component {
       handlers,
     } = this.props;
 
-    const intl = useIntl();
-
     return (eresource.class === resourceClasses.PCI ||
       eresource.class === resourceClasses.TITLEINSTANCE) ?
       (
         <IfPermission perm="ui-agreements.resources.edit">
           <PaneMenu>
             {handlers.onToggleTags &&
-              <IconButton
-                ariaLabel={intl.formatMessage({ id: 'ui-agreements.agreements.showTags' })}
-                badgeCount={eresource?.tags?.length ?? 0}
-                icon="tag"
-                id="clickable-show-tags"
-                onClick={handlers.onToggleTags}
-              />
+              <FormattedMessage id="ui-agreements.agreements.showTags">
+                {ariaLabel => (
+                  <IconButton
+                    ariaLabel={ariaLabel}
+                    badgeCount={eresource?.tags?.length ?? 0}
+                    icon="tag"
+                    id="clickable-show-tags"
+                    onClick={handlers.onToggleTags}
+                  />
+                )}
+              </FormattedMessage>
             }
             {eresource.class === resourceClasses.PCI &&
-              <Button
-                buttonStyle="primary"
-                id="clickable-edit-eresource"
-                marginBottom0
-                onClick={handlers.onEdit}
-              >
-                <FormattedMessage id="stripes-components.button.edit" />
-              </Button>
-            }
+            <Button
+              buttonStyle="primary"
+              id="clickable-edit-eresource"
+              marginBottom0
+              onClick={handlers.onEdit}
+            >
+              <FormattedMessage id="stripes-components.button.edit" />
+            </Button>
+        }
           </PaneMenu>
         </IfPermission>
       ) : null;
