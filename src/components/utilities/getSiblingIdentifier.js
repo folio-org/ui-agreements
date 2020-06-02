@@ -4,11 +4,11 @@ import { Layout } from '@folio/stripes/components';
 
 export default function (eresource = {}, type) {
   const identifiers = eresource?.siblingIdentifiers || [];
-  const entry = identifiers.find(i => i.identifier.ns.value === type);
-  if (!entry) return '';
+  const entry = identifiers.find(i => i.identifier.ns.value === type && i.title.subType.value === 'print');
+  if (!entry) return null;
 
   const value = entry?.identifier?.value;
-  if (!value) return '';
+  if (!value) return null;
 
   if (Array.isArray(value)) {
     return (

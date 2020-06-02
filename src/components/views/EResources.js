@@ -227,7 +227,7 @@ const EResources = ({
                       type: e => <EResourceType resource={e} />,
                       isbn: e => getResourceIdentifier(e._object, 'isbn'),
                       eissn: e => getResourceIdentifier(e._object, 'eissn'),
-                      pissn: e => getSiblingIdentifier(e._object, 'issn'),
+                      pissn: e => getSiblingIdentifier(e._object, 'issn') ?? getResourceIdentifier(e._object, 'pissn'),
                     }}
                     id="list-eresources"
                     isEmptyMessage={
