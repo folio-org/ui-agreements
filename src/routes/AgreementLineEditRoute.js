@@ -86,6 +86,8 @@ class AgreementLineEditRoute extends React.Component {
     return {
       ...line,
       coverage: line.customCoverage ? line.coverage : undefined,
+      activeFrom: line.startDate,
+      activeTo: line.endDate,
     };
   }
 

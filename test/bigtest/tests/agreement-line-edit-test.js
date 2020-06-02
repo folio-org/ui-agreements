@@ -25,7 +25,7 @@ const formProps = {
   onSubmit: spy(),
 };
 
-describe('AgreementLineForm', () => {
+describe.only('AgreementLineForm', () => {
   const interactor = new AgreementLineFormInteractor();
   const packageCardInteractor = new PackageCardInteractor();
   const titleCardInteractor = new TitleCardInteractor();
@@ -648,8 +648,8 @@ describe('AgreementLineForm', () => {
               }
             }}
             initialValues={{
-              startDate: '2020-05-01',
-              endDate: '2020-05-30',
+              activeFrom: '2020-05-01',
+              activeTo: '2020-05-30',
               note: 'a test note',
             }}
           />
