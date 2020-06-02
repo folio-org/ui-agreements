@@ -1,12 +1,13 @@
 import {
+  blurrable,
   clickable,
   collection,
   count,
   fillable,
   interactor,
   isPresent,
+  property,
   value,
-  blurrable,
 } from '@bigtest/interactor';
 
 import DatepickerInteractor from '@folio/stripes-components/lib/Datepicker/tests/interactor'; // eslint-disable-line
@@ -58,6 +59,9 @@ export default @interactor class PCIEditPaneInteractor {
   coverageCards = collection('[data-test-coverage-number]', coverageCardInteractor)
   coverageCount = count('[data-test-coverage-number]');
   clickAddButton = clickable('#edit-pci-add-coverage-button');
+
+  suppressFromDiscoveryCheckboxChecked = property('#pci-suppress-from-discovery', 'checked');
+  clickSuppressFromDiscoveryCheckbox = clickable('#pci-suppress-from-discovery');
 
   submit = clickable('#submit')
 }
