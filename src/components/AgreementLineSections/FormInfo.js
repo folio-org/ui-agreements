@@ -89,6 +89,7 @@ const FormInfo = ({
               label={<FormattedMessage id="ui-agreements.agreementLines.suppressFromDiscovery" />}
               onChange={e => input.onChange(e)}
               type="checkbox"
+              vertical
             />
           )}
         </Field>
