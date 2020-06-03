@@ -4,6 +4,7 @@ const pci = {
   'class': 'org.olf.kb.PackageContentItem',
   'dateCreated': '2020-04-24T15:20:16Z',
   'lastUpdated': '2020-04-24T15:20:16Z',
+  'suppressFromDiscovery': true,
   'depth': 'full text',
   'embargo': {
     'movingWallEnd': {

@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import {
+  Checkbox,
   Col,
   Datepicker,
   Row,
@@ -26,7 +27,7 @@ export default class PCIFormInfo extends React.Component {
           required
         />
         <Row>
-          <Col xs={4}>
+          <Col xs={3}>
             <Field
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
@@ -37,7 +38,7 @@ export default class PCIFormInfo extends React.Component {
               parser={parseDateOnlyString}
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={3}>
             <Field
               backendDateStandard="YYYY-MM-DD"
               component={Datepicker}
@@ -46,6 +47,16 @@ export default class PCIFormInfo extends React.Component {
               label={<FormattedMessage id="ui-agreements.eresources.accessibleUntil" />}
               name="accessEnd"
               parser={parseDateOnlyString}
+            />
+          </Col>
+          <Col xs={3}>
+            <Field
+              component={Checkbox}
+              id="pci-suppress-from-discovery"
+              label={<FormattedMessage id="ui-agreements.eresources.suppressFromDiscovery" />}
+              name="suppressFromDiscovery"
+              type="checkbox"
+              vertical
             />
           </Col>
         </Row>

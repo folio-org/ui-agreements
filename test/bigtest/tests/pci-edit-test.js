@@ -20,10 +20,25 @@ describe('PCI edit form', () => {
   const embargoInteractor = new EmbargoInteractor();
   const pciEditPaneInteractor = new PCIEditPaneInteractor();
 
+  let submissions = 0;
+
+  const testSubmit = (values) => (
+    describe('submitting the form', () => {
+      beforeEach(async () => {
+        await pciEditPaneInteractor.submit();
+        submissions += 1;
+      });
+
+      it('should have correct form values', () => {
+        expect(onSubmit).on.nth(submissions).be.called.with(values);
+      });
+    })
+  );
+
   describe('PCI information', () => {
     beforeEach(async () => {
       await mountWithContext(
-        <TestForm initialValues={pci}>
+        <TestForm initialValues={pci} onSubmit={onSubmit}>
           <PCIFormInfo />
         </TestForm>
       );
@@ -40,24 +55,24 @@ describe('PCI edit form', () => {
     it('renders the expected access until date', () => {
       expect(pciEditPaneInteractor.accessUntil).to.equal('01/01/2015');
     });
+
+    it('renders the expected suppress from discovery status', () => {
+      expect(pciEditPaneInteractor.suppressFromDiscoveryCheckboxChecked).to.equal(pci.suppressFromDiscovery);
+    });
+
+    describe('clicking the suppress from discovery checkbox', () => {
+      beforeEach(async () => {
+        await pciEditPaneInteractor.clickSuppressFromDiscoveryCheckbox();
+      });
+
+      testSubmit({
+        ...pci,
+        'suppressFromDiscovery': !pci.suppressFromDiscovery
+      });
+    });
   });
 
   describe('PCI information', () => {
-    let submissions = 0;
-
-    const testSubmit = (values) => (
-      describe('submitting the form', () => {
-        beforeEach(async () => {
-          await pciEditPaneInteractor.submit();
-          submissions += 1;
-        });
-
-        it('should have correct form values', () => {
-          expect(onSubmit).on.nth(submissions).be.called.with(values);
-        });
-      })
-    );
-
     beforeEach(async () => {
       await mountWithContext(
         <TestForm initialValues={pci} onSubmit={onSubmit}>
