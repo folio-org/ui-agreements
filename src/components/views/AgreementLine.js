@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import {
   AccordionSet,
@@ -9,8 +9,10 @@ import {
   Col,
   ExpandAllButton,
   Icon,
+  IconButton,
   LoadingPane,
   Pane,
+  PaneMenu,
   Row,
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission } from '@folio/stripes/core';
@@ -45,13 +47,16 @@ const propTypes = {
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     onEdit: PropTypes.func.isRequired,
+    onToggleTags: PropTypes.func,
   }).isRequired,
+  helperApp: PropTypes.node,
   isLoading: PropTypes.bool,
 };
 
 const AgreementLine = ({
   data: { line },
   handlers,
+  helperApp,
   isLoading,
 }) => {
   const paneProps = {
@@ -61,64 +66,84 @@ const AgreementLine = ({
     onClose: handlers.onClose,
   };
 
+  const intl = useIntl();
+
   if (isLoading) return <LoadingPane data-loading {...paneProps} />;
 
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
 
   return (
-    <Pane
-      actionMenu={() => (
-        <IfPermission perm="ui-agreements.agreements.edit">
-          <Button
-            buttonStyle="dropdownItem"
-            id="clickable-dropdown-edit-agreement-line"
-            onClick={handlers.onEdit}
-          >
-            <Icon icon="edit">
-              <FormattedMessage id="ui-agreements.agreements.edit" />
-            </Icon>
-          </Button>
-          <Button
-            buttonStyle="dropdownItem"
-            id="clickable-dropdown-delete-agreement-line"
-            onClick={handlers.onDelete}
-          >
-            <Icon icon="trash">
-              <FormattedMessage id="ui-agreements.delete" />
-            </Icon>
-          </Button>
-        </IfPermission>
-      )}
-      appIcon={<AppIcon app="agreements" />}
-      paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
-      {...paneProps}
-    >
-      <Info line={line} resource={resource} />
-      <AccordionStatus>
-        <Row end="xs">
-          <Col xs>
-            <ExpandAllButton id="clickable-expand-all" />
-          </Col>
-        </Row>
-        <AccordionSet>
-          <POLines line={line} resource={resource} />
-          <Coverage line={line} resource={resource} />
-          <FormattedMessage id="ui-agreements.line.lineForAgreement" values={{ agreementName: line.owner?.name }}>
-            {title => (
-              <NotesSmartAccordion
-                domainName="agreements"
-                entityId={line.id ?? '-'}
-                entityName={title ?? '-'}
-                entityType="agreementLine"
-                id="agreement-line-notes"
-                pathToNoteCreate={urls.noteCreate()}
-                pathToNoteDetails={urls.notes()}
-              />
-            )}
-          </FormattedMessage>
-        </AccordionSet>
-      </AccordionStatus>
-    </Pane>
+    <>
+      <Pane
+        actionMenu={() => (
+          <IfPermission perm="ui-agreements.agreements.edit">
+            <Button
+              buttonStyle="dropdownItem"
+              id="clickable-dropdown-edit-agreement-line"
+              onClick={handlers.onEdit}
+            >
+              <Icon icon="edit">
+                <FormattedMessage id="ui-agreements.agreements.edit" />
+              </Icon>
+            </Button>
+            <Button
+              buttonStyle="dropdownItem"
+              id="clickable-dropdown-delete-agreement-line"
+              onClick={handlers.onDelete}
+            >
+              <Icon icon="trash">
+                <FormattedMessage id="ui-agreements.delete" />
+              </Icon>
+            </Button>
+          </IfPermission>
+        )}
+        appIcon={<AppIcon app="agreements" />}
+        lastMenu={
+          <IfPermission perm="ui-agreements.agreements.edit">
+            <PaneMenu>
+              {handlers.onToggleTags &&
+                <IconButton
+                  ariaLabel={intl.formatMessage({ id: 'ui-agreements.agreements.showTags' })}
+                  badgeCount={line?.tags?.length ?? 0}
+                  icon="tag"
+                  id="clickable-show-tags"
+                  onClick={handlers.onToggleTags}
+                />
+              }
+            </PaneMenu>
+          </IfPermission>
+      }
+        paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
+        {...paneProps}
+      >
+        <Info line={line} resource={resource} />
+        <AccordionStatus>
+          <Row end="xs">
+            <Col xs>
+              <ExpandAllButton id="clickable-expand-all" />
+            </Col>
+          </Row>
+          <AccordionSet>
+            <POLines line={line} resource={resource} />
+            <Coverage line={line} resource={resource} />
+            <FormattedMessage id="ui-agreements.line.lineForAgreement" values={{ agreementName: line.owner?.name }}>
+              {title => (
+                <NotesSmartAccordion
+                  domainName="agreements"
+                  entityId={line.id ?? '-'}
+                  entityName={title ?? '-'}
+                  entityType="agreementLine"
+                  id="agreement-line-notes"
+                  pathToNoteCreate={urls.noteCreate()}
+                  pathToNoteDetails={urls.notes()}
+                />
+              )}
+            </FormattedMessage>
+          </AccordionSet>
+        </AccordionStatus>
+      </Pane>
+      {helperApp}
+    </>
   );
 };
 
