@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -7,6 +7,7 @@ import {
   AccordionStatus,
   Button,
   Col,
+  ConfirmationModal,
   ExpandAllButton,
   Icon,
   IconButton,
@@ -17,6 +18,7 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import { Info, POLines, Coverage } from '../AgreementLineSections';
 import { isExternal, urls } from '../utilities';
@@ -67,10 +69,12 @@ const AgreementLine = ({
   };
 
   const intl = useIntl();
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
 
   if (isLoading) return <LoadingPane data-loading {...paneProps} />;
 
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
+  const resourceName = resource.pti?.titleInstance.name ?? resource.reference_object?.label ?? '';
 
   return (
     <>
@@ -89,7 +93,7 @@ const AgreementLine = ({
             <Button
               buttonStyle="dropdownItem"
               id="clickable-dropdown-delete-agreement-line"
-              onClick={handlers.onDelete}
+              onClick={() => setShowDeleteConfirmationModal(true)}
             >
               <Icon icon="trash">
                 <FormattedMessage id="ui-agreements.delete" />
@@ -112,7 +116,7 @@ const AgreementLine = ({
               }
             </PaneMenu>
           </IfPermission>
-      }
+        }
         paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
         {...paneProps}
       >
@@ -143,6 +147,20 @@ const AgreementLine = ({
         </AccordionStatus>
       </Pane>
       {helperApp}
+      <ConfirmationModal
+        buttonStyle="danger"
+        confirmLabel={<FormattedMessage id="ui-agreements.delete" />}
+        data-test-delete-confirmation-modal
+        heading={<FormattedMessage id="ui-agreements.agreementLines.deleteAgreementLine" />}
+        id="delete-agreement-line-confirmation"
+        message={<SafeHTMLMessage id="ui-agreements.agreementLines.deleteConfirmMessage" values={{ name: resourceName }} />}
+        onCancel={() => setShowDeleteConfirmationModal(false)}
+        onConfirm={() => {
+          handlers.onDelete();
+          setShowDeleteConfirmationModal(false);
+        }}
+        open={showDeleteConfirmationModal}
+      />
     </>
   );
 };
