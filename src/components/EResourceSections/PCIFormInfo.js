@@ -49,24 +49,15 @@ export default class PCIFormInfo extends React.Component {
               parser={parseDateOnlyString}
             />
           </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
+          <Col xs={4}>
             <Field
+              component={Checkbox}
+              id="pci-suppress-from-discovery"
+              label={<FormattedMessage id="ui-agreements.eresources.suppressFromDiscovery" />}
               name="suppressFromDiscovery"
               type="checkbox"
-            >
-              {({ input }) => (
-                <Checkbox
-                  checked={input.checked}
-                  id="pci-suppress-from-discovery"
-                  inline
-                  label={<FormattedMessage id="ui-agreements.eresources.suppressFromDiscovery" />}
-                  onChange={e => input.onChange(e)}
-                  type="checkbox"
-                />
-              )}
-            </Field>
+              vertical
+            />
           </Col>
         </Row>
       </div>
