@@ -5,7 +5,8 @@ import compose from 'compose-function';
 
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
-import { preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
+import { Tags } from '@folio/stripes-erm-components';
+
 import View from '../components/views/AgreementLine';
 import { urls } from '../components/utilities';
 
@@ -19,7 +20,7 @@ class AgreementLineViewRoute extends React.Component {
     line: {
       type: 'okapi',
       path: 'erm/entitlements/:{lineId}',
-      shouldRefresh: preventResourceRefresh({ line: ['DELETE'] }),
+      throwErrors: false,
     },
     orderLines: {
       type: 'okapi',
@@ -33,7 +34,6 @@ class AgreementLineViewRoute extends React.Component {
       },
       fetch: props => !!props.stripes.hasInterface('order-lines', '1.0'),
       records: 'poLines',
-      shouldRefresh: preventResourceRefresh({ line: ['DELETE'] }),
       throwErrors: false,
     },
     query: {},
@@ -127,7 +127,7 @@ class AgreementLineViewRoute extends React.Component {
       items: [{ id: lineId, _delete: true }]
     })
       .then(() => {
-        history.push(`${urls.agreements()}${location.search}`);
+        history.push(`${urls.agreementView(agreementId)}${location.search}`);
         sendCallout({ message: <FormattedMessage id="ui-agreements.line.delete.callout" /> });
       })
       .catch(error => {
