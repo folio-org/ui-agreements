@@ -17,7 +17,8 @@ import { isExternal, isPackage } from '../utilities';
 
 const propTypes = {
   line: PropTypes.shape({
-    endDate: PropTypes.string,
+    activeFrom: PropTypes.string,
+    activeTo: PropTypes.string,
     id: PropTypes.string,
     note: PropTypes.string,
     owner: PropTypes.shape({
@@ -26,7 +27,6 @@ const propTypes = {
     resource: PropTypes.shape({
       _object: PropTypes.object,
     }),
-    startDate: PropTypes.string,
     suppressFromDiscovery: PropTypes.bool,
   }).isRequired,
   resource: PropTypes.object.isRequired,
@@ -49,14 +49,14 @@ const Info = ({
       <Col md={3} xs={6}>
         <KeyValue label={<FormattedMessage id="ui-agreements.eresources.activeFrom" />}>
           <div data-test-agreement-line-active-from>
-            {line.startDate ?? <NoValue />}
+            {line.activeFrom ?? <NoValue />}
           </div>
         </KeyValue>
       </Col>
       <Col md={3} xs={6}>
         <KeyValue label={<FormattedMessage id="ui-agreements.eresources.activeTo" />}>
           <div data-test-agreement-line-active-to>
-            {line.endDate ?? <NoValue />}
+            {line.activeTo ?? <NoValue />}
           </div>
         </KeyValue>
       </Col>
