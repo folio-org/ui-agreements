@@ -25,7 +25,7 @@ const formProps = {
   onSubmit: spy(),
 };
 
-describe.only('AgreementLineForm', () => {
+describe('AgreementLineForm', () => {
   const interactor = new AgreementLineFormInteractor();
   const packageCardInteractor = new PackageCardInteractor();
   const titleCardInteractor = new TitleCardInteractor();
