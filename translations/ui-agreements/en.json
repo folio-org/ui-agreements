@@ -104,6 +104,8 @@
   "agreementLines.costType": "Cost type",
   "agreementLines.count": "Count",
   "agreementLines.contentUpdated": "Content updated",
+  "agreementLines.deleteAgreementLine": "Delete agreement line",
+  "agreementLines.deleteConfirmMessage": "Agreement line for the e-resource <strong>{name}</strong> will be <strong>deleted</strong>.",
   "agreementLines.gross": "YTD Gross",
   "agreementLines.net": "YTD Net",
   "agreementLines.noLines": "Agreement has no agreement lines.",
