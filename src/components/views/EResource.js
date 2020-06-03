@@ -29,43 +29,13 @@ const propTypes = {
 };
 
 const EResource = ({
-  data: { eresource = {} },
   data = {},
+  data: { eresource },
   helperApp,
   handlers,
   isLoading
 }) => {
   const intl = useIntl();
-
-  const renderEditEresourcePaneMenu = () => {
-    return (eresource.class === resourceClasses.PCI ||
-      eresource.class === resourceClasses.TITLEINSTANCE) ?
-      (
-        <IfPermission perm="ui-agreements.resources.edit">
-          <PaneMenu>
-            {handlers.onToggleTags &&
-              <IconButton
-                ariaLabel={intl.formatMessage({ id: 'ui-agreements.agreements.showTags' })}
-                badgeCount={eresource?.tags?.length ?? 0}
-                icon="tag"
-                id="clickable-show-tags"
-                onClick={handlers.onToggleTags}
-              />
-            }
-            {eresource.class === resourceClasses.PCI &&
-            <Button
-              buttonStyle="primary"
-              id="clickable-edit-eresource"
-              marginBottom0
-              onClick={handlers.onEdit}
-            >
-              <FormattedMessage id="stripes-components.button.edit" />
-            </Button>
-        }
-          </PaneMenu>
-        </IfPermission>
-      ) : null;
-  };
 
   const paneProps = {
     defaultWidth: '55%',
@@ -77,9 +47,9 @@ const EResource = ({
 
   let EResourceViewComponent = Package;
 
-  if (data.eresource?.class === resourceClasses.TITLEINSTANCE) {
+  if (eresource.class === resourceClasses.TITLEINSTANCE) {
     EResourceViewComponent = Title;
-  } else if (data.eresource?.class === resourceClasses.PCI) {
+  } else if (eresource.class === resourceClasses.PCI) {
     EResourceViewComponent = PCI;
   }
 
@@ -87,16 +57,43 @@ const EResource = ({
     <>
       <Pane
         id="pane-view-eresource"
-        lastMenu={renderEditEresourcePaneMenu()}
+        lastMenu={
+          (eresource.class === resourceClasses.PCI || eresource.class === resourceClasses.TITLEINSTANCE) ?
+            (
+              <IfPermission perm="ui-agreements.resources.edit">
+                <PaneMenu>
+                  {handlers.onToggleTags &&
+                    <IconButton
+                      ariaLabel={intl.formatMessage({ id: 'ui-agreements.agreements.showTags' })}
+                      badgeCount={eresource?.tags?.length ?? 0}
+                      icon="tag"
+                      id="clickable-show-tags"
+                      onClick={handlers.onToggleTags}
+                    />
+                  }
+                  {eresource.class === resourceClasses.PCI &&
+                    <Button
+                      buttonStyle="primary"
+                      id="clickable-edit-eresource"
+                      marginBottom0
+                      onClick={handlers.onEdit}
+                    >
+                      <FormattedMessage id="stripes-components.button.edit" />
+                    </Button>
+                  }
+                </PaneMenu>
+              </IfPermission>
+            ) : null
+        }
         onClose={handlers.onClose}
-        paneTitle={data.eresource.name}
+        paneTitle={eresource.name}
         {...paneProps}
       >
-        <TitleManager record={data.eresource.name}>
+        <TitleManager record={eresource.name}>
           <EResourceViewComponent data={data} handlers={handlers} />
         </TitleManager>
       </Pane>
-      {helperApp(data.eresource)}
+      {helperApp(eresource)}
     </>
   );
 };
