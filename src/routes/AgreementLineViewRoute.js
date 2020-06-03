@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import compose from 'compose-function';
 
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
-import { preventResourceRefresh } from '@folio/stripes-erm-components';
+import { withTags } from '@folio/stripes/smart-components';
+import { preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
 import View from '../components/views/AgreementLine';
 import { urls } from '../components/utilities';
 
@@ -34,6 +36,7 @@ class AgreementLineViewRoute extends React.Component {
       shouldRefresh: preventResourceRefresh({ line: ['DELETE'] }),
       throwErrors: false,
     },
+    query: {},
   });
 
   static propTypes = {
@@ -53,18 +56,42 @@ class AgreementLineViewRoute extends React.Component {
       agreement: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
       }).isRequired,
+      query: PropTypes.shape({
+        update: PropTypes.func.isRequired,
+      }).isRequired,
     }).isRequired,
     resources: PropTypes.shape({
       line: PropTypes.object,
       orderLines: PropTypes.object,
+      query: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
       hasInterface: PropTypes.func.isRequired,
       hasPerm: PropTypes.func.isRequired,
     }).isRequired,
+    tagsEnabled: PropTypes.bool,
   };
 
   static contextType = CalloutContext;
+
+  getHelperApp = () => {
+    const { match, resources } = this.props;
+    const helper = resources.query.helper;
+    if (!helper) return null;
+
+    let HelperComponent = null;
+
+    if (helper === 'tags') HelperComponent = Tags;
+
+    if (!HelperComponent) return null;
+
+    return (
+      <HelperComponent
+        link={`erm/entitlements/${match.params.lineId}`}
+        onToggle={() => this.handleToggleHelper(helper)}
+      />
+    );
+  }
 
   getCompositeLine = () => {
     const { resources } = this.props;
@@ -118,6 +145,18 @@ class AgreementLineViewRoute extends React.Component {
     history.push(`${urls.agreementLineEdit(agreementId, lineId)}${location.search}`);
   }
 
+  handleToggleHelper = (helper) => {
+    const { mutator, resources } = this.props;
+    const currentHelper = resources.query.helper;
+    const nextHelper = currentHelper !== helper ? helper : null;
+
+    mutator.query.update({ helper: nextHelper });
+  }
+
+  handleToggleTags = () => {
+    this.handleToggleHelper('tags');
+  }
+
   isLoading = () => {
     const { match, resources } = this.props;
 
@@ -128,7 +167,7 @@ class AgreementLineViewRoute extends React.Component {
   }
 
   render() {
-    const { resources } = this.props;
+    const { resources, tagsEnabled } = this.props;
 
     return (
       <View
@@ -140,11 +179,16 @@ class AgreementLineViewRoute extends React.Component {
           onClose: this.handleClose,
           onDelete: this.handleDelete,
           onEdit: this.handleEdit,
+          onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
+        helperApp={this.getHelperApp()}
         isLoading={this.isLoading()}
       />
     );
   }
 }
 
-export default stripesConnect(AgreementLineViewRoute);
+export default compose(
+  stripesConnect,
+  withTags,
+)(AgreementLineViewRoute);

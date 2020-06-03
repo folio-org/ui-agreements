@@ -147,6 +147,8 @@
         "visible": true,
         "subPermissions": [
           "erm.pci.edit",
+          "erm.pti.edit",
+          "erm.titles.edit",
           "ui-agreements.resources.view"
         ]
       },
@@ -171,6 +173,7 @@
         "subPermissions": [
           "ui-agreements.agreements.view",
           "erm.agreements.edit",
+          "erm.entitlements.edit",
           "erm.files.edit",
           "tags.item.post"
         ]

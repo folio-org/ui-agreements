@@ -46,11 +46,9 @@ class EResourceLink extends React.Component {
     if (!path) return name || '-';
 
     return (
-      <div data-test-eresource-name style={{ overflowWrap: 'break-word', width: 180 }}>
-        <Link {...rest} to={`${this.getPath(eresource)}${searchString}`}>
-          {name}
-        </Link>
-      </div>
+      <Link {...rest} data-test-eresource-name to={`${this.getPath(eresource)}${searchString}`}>
+        {name}
+      </Link>
     );
   }
 }

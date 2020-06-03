@@ -113,7 +113,7 @@
   "agreementLines.removeCustomCoverage": "Remove custom coverage {index}",
   "agreementLines.removeItem": "Remove line from agreement",
   "agreementLines.removeLine": "Remove agreement line {index}",
-  "agreementLines.tax": "YTD Tax",
+  "agreementLines.suppressFromDiscovery": "Suppress from discovery",
   "agreementLines.createLine": "Create agreement line",
   "agreementLines.lineTitle": "Agreement line {number}",
   "agreementLines.hasCustomCoverage": "Has custom coverage",
