@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import {
+  Checkbox,
   Col,
   Datepicker,
   Row,
@@ -20,22 +21,22 @@ const propTypes = {
 };
 
 const validateDateOrder = (value, allValues, meta) => {
-  let startDate;
-  let endDate;
+  let activeFrom;
+  let activeTo;
 
   if (!value) return undefined;
 
-  if (meta.name === 'startDate') {
-    startDate = value;
-    endDate = allValues.endDate;
-  } else if (meta.name === 'endDate') {
-    startDate = allValues.startDate;
-    endDate = value;
+  if (meta.name === 'activeFrom') {
+    activeFrom = value;
+    activeTo = allValues.activeTo;
+  } else if (meta.name === 'activeTo') {
+    activeFrom = allValues.activeFrom;
+    activeTo = value;
   } else {
     return undefined;
   }
 
-  if (startDate && endDate && new Date(startDate) >= new Date(endDate)) {
+  if (activeFrom && activeTo && new Date(activeFrom) >= new Date(activeTo)) {
     return (
       <div data-test-error-end-date-too-early>
         <FormattedMessage id="ui-agreements.errors.endDateGreaterThanStartDate" />
@@ -52,31 +53,48 @@ const FormInfo = ({
   <>
     { isPackage(resource) ? <PackageCard pkg={resource} /> : <TitleCard title={resource} /> }
     <Row>
-      <Col md={2} xs={6}>
+      <Col md={3} xs={6}>
         <Field
           backendDateStandard="YYYY-MM-DD"
           component={Datepicker}
           id="agreement-line-active-from"
           label={<FormattedMessage id="ui-agreements.eresources.activeFrom" />}
-          name="startDate"
+          name="activeFrom"
           parse={v => v} // Lets us send an empty string instead of `undefined`
           parser={parseDateOnlyString}
           validate={validateDateOrder}
         />
       </Col>
-      <Col md={2} xs={6}>
+      <Col md={3} xs={6}>
         <Field
           backendDateStandard="YYYY-MM-DD"
           component={Datepicker}
           id="agreement-line-active-to"
           label={<FormattedMessage id="ui-agreements.eresources.activeTo" />}
-          name="endDate"
+          name="activeTo"
           parse={v => v} // Lets us send an empty string instead of `undefined`
           parser={parseDateOnlyString}
           validate={validateDateOrder}
         />
       </Col>
-      <Col md={8} xs={12}>
+      <Col md={3} xs={12}>
+        <Field
+          name="suppressFromDiscovery"
+          type="checkbox"
+        >
+          {({ input }) => (
+            <Checkbox
+              checked={input.checked}
+              id="agreement-line-suppress-from-discovery"
+              label={<FormattedMessage id="ui-agreements.agreementLines.suppressFromDiscovery" />}
+              onChange={e => input.onChange(e)}
+              type="checkbox"
+              vertical
+            />
+          )}
+        </Field>
+      </Col>
+      <Col md={3} xs={12}>
         <Field
           component={TextArea}
           id="agreement-line-note"
