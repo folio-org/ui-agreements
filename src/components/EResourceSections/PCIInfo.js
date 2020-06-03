@@ -86,9 +86,7 @@ export default class PCIInfo extends React.Component {
               {pci?.accessEnd ?? <NoValue />}
             </KeyValue>
           </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
+          <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.eresources.suppressFromDiscovery" />}>
               <div data-test-pci-suppress-from-discovery>
                 <FormattedMessage id={`ui-agreements.${pci?.suppressFromDiscovery ? 'yes' : 'no'}`} />
