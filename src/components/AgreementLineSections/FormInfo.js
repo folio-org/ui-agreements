@@ -53,7 +53,7 @@ const FormInfo = ({
   <>
     { isPackage(resource) ? <PackageCard pkg={resource} /> : <TitleCard title={resource} /> }
     <Row>
-      <Col md={2} xs={6}>
+      <Col md={3} xs={6}>
         <Field
           backendDateStandard="YYYY-MM-DD"
           component={Datepicker}
@@ -65,7 +65,7 @@ const FormInfo = ({
           validate={validateDateOrder}
         />
       </Col>
-      <Col md={2} xs={6}>
+      <Col md={3} xs={6}>
         <Field
           backendDateStandard="YYYY-MM-DD"
           component={Datepicker}
@@ -77,18 +77,7 @@ const FormInfo = ({
           validate={validateDateOrder}
         />
       </Col>
-      <Col md={8} xs={12}>
-        <Field
-          component={TextArea}
-          id="agreement-line-note"
-          label={<FormattedMessage id="ui-agreements.note" />}
-          name="note"
-          parse={v => v} // Lets us send an empty string instead of `undefined`
-        />
-      </Col>
-    </Row>
-    <Row>
-      <Col xs={12}>
+      <Col md={3} xs={12}>
         <Field
           name="suppressFromDiscovery"
           type="checkbox"
@@ -104,7 +93,15 @@ const FormInfo = ({
           )}
         </Field>
       </Col>
-
+      <Col md={3} xs={12}>
+        <Field
+          component={TextArea}
+          id="agreement-line-note"
+          label={<FormattedMessage id="ui-agreements.note" />}
+          name="note"
+          parse={v => v} // Lets us send an empty string instead of `undefined`
+        />
+      </Col>
     </Row>
   </>
 );
