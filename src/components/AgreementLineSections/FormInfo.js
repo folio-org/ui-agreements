@@ -79,20 +79,13 @@ const FormInfo = ({
       </Col>
       <Col md={3} xs={12}>
         <Field
+          component={Checkbox}
+          id="agreement-line-suppress-from-discovery"
+          label={<FormattedMessage id="ui-agreements.agreementLines.suppressFromDiscovery" />}
           name="suppressFromDiscovery"
           type="checkbox"
-        >
-          {({ input }) => (
-            <Checkbox
-              checked={input.checked}
-              id="agreement-line-suppress-from-discovery"
-              label={<FormattedMessage id="ui-agreements.agreementLines.suppressFromDiscovery" />}
-              onChange={e => input.onChange(e)}
-              type="checkbox"
-              vertical
-            />
-          )}
-        </Field>
+          vertical
+        />
       </Col>
       <Col md={3} xs={12}>
         <Field
