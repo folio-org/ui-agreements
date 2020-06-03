@@ -648,8 +648,8 @@ describe('AgreementLineForm', () => {
               }
             }}
             initialValues={{
-              startDate: '2020-05-01',
-              endDate: '2020-05-30',
+              activeFrom: '2020-05-01',
+              activeTo: '2020-05-30',
               note: 'a test note',
             }}
           />

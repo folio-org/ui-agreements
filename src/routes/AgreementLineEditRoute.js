@@ -81,7 +81,7 @@ class AgreementLineEditRoute extends React.Component {
   }
 
   getInitialValues = () => {
-    const line = this.props.resources.line?.records?.[0];
+    const line = this.props.resources.line?.records?.[0] ?? {};
 
     return {
       ...line,
