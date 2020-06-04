@@ -276,6 +276,7 @@
   "eresources.titleOnPlatformURL": "Title on platform URL",
   "eresources.titleDetails": "Title details",
   "eresources.accessTitleOnPlatform": "Access {name}",
+  "eresources.relatedTitle": "Related title \"{name}\"",
 
   "customcoverages.tooltip": "Custom Coverage",
 
@@ -301,8 +302,9 @@
 
   "finances.none": "Agreement has no order lines.",
 
+  "identifier.eissn.issn": "eISSN/ISSN",
   "identifier.doi": "DOI",
-  "identifier.issn": "eISSN/ISSN",
+  "identifier.issn": "ISSN (Print)",
   "identifier.eissn": "ISSN (Online)",
   "identifier.ezb": "EZB",
   "identifier.isbn": "ISBN",

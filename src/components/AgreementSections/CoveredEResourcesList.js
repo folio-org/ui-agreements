@@ -49,7 +49,7 @@ export default class CoveredEResourcesList extends React.Component {
 
   columnMapping = {
     name: <FormattedMessage id="ui-agreements.eresources.name" />,
-    issn: <FormattedMessage id="ui-agreements.identifier.issn" />,
+    issn: <FormattedMessage id="ui-agreements.identifier.eissn.issn" />,
     platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
     package: <FormattedMessage id="ui-agreements.eresources.package" />,
     coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,

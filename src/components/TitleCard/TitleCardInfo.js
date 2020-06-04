@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import MonographResourceInfo from './MonographResourceInfo';
 import SerialResourceInfo from './SerialResourceInfo';
 import { resourceTypes } from '../../constants';
+import RelatedTitleInfo from '../RelatedTitle/RelatedTitleInfo';
 
 const propTypes = {
   title: PropTypes.shape({
@@ -21,15 +22,29 @@ const propTypes = {
   }),
 };
 
+const renderSerial = (titleInstance) => (
+  <>
+    <SerialResourceInfo titleInstance={titleInstance} />
+    <RelatedTitleInfo relatedTitles={titleInstance.relatedTitles} />
+  </>
+);
+
+const renderMonograph = (titleInstance) => (
+  <>
+    <MonographResourceInfo titleInstance={titleInstance} />
+    <RelatedTitleInfo relatedTitles={titleInstance.relatedTitles} />
+  </>
+);
+
+
 const TitleCardInfo = ({ title }) => {
   const titleInstance = title?.pti?.titleInstance ?? title;
   const type = (titleInstance?.type?.label ?? titleInstance?.type ?? '').toLowerCase();
 
   if (type === resourceTypes.MONOGRAPH || type === resourceTypes.BOOK) {
-    return <MonographResourceInfo titleInstance={titleInstance} />;
+    return renderMonograph(titleInstance);
   }
-
-  return <SerialResourceInfo titleInstance={titleInstance} />;
+  return renderSerial(titleInstance);
 };
 
 TitleCardInfo.propTypes = propTypes;
