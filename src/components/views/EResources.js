@@ -31,6 +31,7 @@ import { getResourceIdentifier, urls } from '../utilities';
 import { resultCount } from '../../constants';
 
 import css from './Agreements.css';
+import getSiblingIdentifier from '../utilities/getSiblingIdentifier';
 
 const propTypes = {
   children: PropTypes.object,
@@ -227,7 +228,7 @@ const EResources = ({
                       type: e => <EResourceType resource={e} />,
                       isbn: e => getResourceIdentifier(e._object, 'isbn'),
                       eissn: e => getResourceIdentifier(e._object, 'eissn'),
-                      pissn: e => getResourceIdentifier(e._object, 'pissn'),
+                      pissn: e => getResourceIdentifier(e._object, 'pissn') ?? getSiblingIdentifier(e._object, 'issn'),
                     }}
                     id="list-eresources"
                     isEmptyMessage={

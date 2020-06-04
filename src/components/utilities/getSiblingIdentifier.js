@@ -1,15 +1,18 @@
 import React from 'react';
-import { get } from 'lodash';
 
 import { Layout } from '@folio/stripes/components';
 
 export default function (eresource = {}, type) {
-  const identifiers = get(eresource, 'identifiers', []);
-  const entry = identifiers.find(i => i.identifier.ns.value === type);
-  if (!entry) return null;
+  const relatedTitles = eresource?.relatedTitles || [];
+  const printSiblings = relatedTitles.find(r => r.subType.value === 'print');
+  if (!printSiblings) return null;
+  const identifiers = printSiblings.identifiers;
 
-  const value = get(entry, 'identifier.value');
+  const entry = identifiers.find(i => i.identifier.ns.value === type);
+
+  const value = entry?.identifier?.value;
   if (!value) return null;
+
 
   if (Array.isArray(value)) {
     return (
