@@ -125,7 +125,6 @@
     "agreementLines.gross": "Brut YTD",
     "agreementLines.net": "Net YTD",
     "agreementLines.noPoLines": "L'accord n'a pas de lignes",
-    "agreementLines.tax": "Taxe YTD",
     "agreementLines.addLine": "Ajouter une ligne d'accord",
     "agreementLines.lineTitle": "Ligne d'accord # {number}",
     "eresources.titles": "Titres",
@@ -441,5 +440,9 @@
     "org.olf.erm.SubscriptionAgreement.name.unique": "Ce nom existe déjà",
     "emptyAccordion.lineCoverage": "Aucune couverture pour cette ligne d'accord",
     "emptyAccordion.linePOLines": "Aucune ligne de commande pour cette ligne d'accord",
-    "line.edit": "Modifier la ligne d'accord"
+    "line.edit": "Modifier la ligne d'accord",
+    "agreementLines.suppressFromDiscovery": "Supprimer de la *recherche*",
+    "agreementLines.deleteAgreementLine": "Supprimer la ligne d'accord",
+    "agreementLines.deleteConfirmMessage": "Agreement line for the e-resource <strong>{name}</strong> will be <strong>deleted</strong>.",
+    "eresources.suppressFromDiscovery": "Supprimer de la *recherche*"
 }
