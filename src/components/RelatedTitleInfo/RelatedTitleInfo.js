@@ -44,10 +44,10 @@ const propTypes = {
 const RelatedTitleInfo = ({
   relatedTitles
 }) => (
-  relatedTitles.map((titleInstance) => (
-    <>
+  relatedTitles.map((titleInstance, i) => (
+    <div key={`related-title-${i}`} data-test-related-titles>
       <div className={css.separator} />
-      <Headline size="large" tag="h3">
+      <Headline data-test-title-instance-name size="large" tag="h3">
         <FormattedMessage id="ui-agreements.eresources.relatedTitle" values={{ name: titleInstance.name }} />
       </Headline>
       <Row>
@@ -70,7 +70,7 @@ const RelatedTitleInfo = ({
           </>
         }
       </Row>
-    </>
+    </div>
   ))
 );
 
