@@ -9,6 +9,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
+import { resourceTypes } from '../../constants';
 import EResourceIdentifier from '../EResourceIdentifier';
 import css from './RelatedTitle.css';
 
@@ -55,12 +56,19 @@ const RelatedTitleInfo = ({
             <div data-test-title-instance-sub-type>{titleInstance.subType?.label ?? <NoValue />}</div>
           </KeyValue>
         </Col>
-        <EResourceIdentifier titleInstance={titleInstance} type="ezb" />
-        <EResourceIdentifier titleInstance={titleInstance} type="zdb" />
-        <EResourceIdentifier titleInstance={titleInstance} type="eissn" />
-        <EResourceIdentifier titleInstance={titleInstance} type="issn" />
-        <EResourceIdentifier titleInstance={titleInstance} type="isbn" />
-        <EResourceIdentifier titleInstance={titleInstance} type="doi" />
+        {titleInstance.type.value === resourceTypes.MONOGRAPH || titleInstance.type.value === resourceTypes.BOOK ?
+          <>
+            <EResourceIdentifier titleInstance={titleInstance} type="isbn" />
+            <EResourceIdentifier titleInstance={titleInstance} type="doi" />
+          </>
+          :
+          <>
+            <EResourceIdentifier titleInstance={titleInstance} type="ezb" />
+            <EResourceIdentifier titleInstance={titleInstance} type="zdb" />
+            <EResourceIdentifier titleInstance={titleInstance} type="eissn" />
+            <EResourceIdentifier titleInstance={titleInstance} type="issn" />
+          </>
+        }
       </Row>
     </>
   ))
