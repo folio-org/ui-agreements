@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import MonographResourceInfo from './MonographResourceInfo';
 import SerialResourceInfo from './SerialResourceInfo';
 import { resourceTypes } from '../../constants';
-import RelatedTitleInfo from '../RelatedTitle/RelatedTitleInfo';
+import RelatedTitleInfo from '../RelatedTitleInfo';
 
 const propTypes = {
   title: PropTypes.shape({
