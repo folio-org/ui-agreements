@@ -125,7 +125,6 @@
     "agreementLines.gross": "YTD总额",
     "agreementLines.net": "YTD净值",
     "agreementLines.noPoLines": "协议无协议行。",
-    "agreementLines.tax": "YTD税费",
     "agreementLines.addLine": "添加协议行",
     "agreementLines.lineTitle": "协议行 {number}",
     "eresources.titles": "题名",
@@ -441,5 +440,9 @@
     "org.olf.erm.SubscriptionAgreement.name.unique": "This name already exists",
     "emptyAccordion.lineCoverage": "No coverage for this agreement line",
     "emptyAccordion.linePOLines": "No PO lines for this agreement line",
-    "line.edit": "Edit agreement line"
+    "line.edit": "Edit agreement line",
+    "agreementLines.suppressFromDiscovery": "Suppress from discovery",
+    "agreementLines.deleteAgreementLine": "Delete agreement line",
+    "agreementLines.deleteConfirmMessage": "Agreement line for the e-resource <strong>{name}</strong> will be <strong>deleted</strong>.",
+    "eresources.suppressFromDiscovery": "Suppress from discovery"
 }
