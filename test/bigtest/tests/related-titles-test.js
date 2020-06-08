@@ -5,7 +5,7 @@ import spies from 'chai-spies';
 import { StaticRouter as Router } from 'react-router-dom';
 import { mountWithContext } from '../helpers/mountWithContext';
 
-import RelatedTitleInfo from '../../../src/components/RelatedTitleInfo';
+import TitleCardInfo from '../../../src/components/TitleCard';
 
 import { relatedTitlesMonograph, relatedTitlesSerial } from './resources';
 import RelatedTitlesInteractor from '../interactors/related-titles';
@@ -13,19 +13,19 @@ import RelatedTitlesInteractor from '../interactors/related-titles';
 chai.use(spies);
 const { expect } = chai;
 
-describe('RelatedTitleInfo', () => {
+describe.only('RelatedTitleInfo', () => {
   const interactor = new RelatedTitlesInteractor();
 
   describe('related monograph titles', () => {
     beforeEach(async () => {
       await mountWithContext(
         <Router context={{}}>
-          <RelatedTitleInfo relatedTitles={relatedTitlesMonograph} />
+          <TitleCardInfo title={relatedTitlesMonograph} />
         </Router>
       );
     });
 
-    relatedTitlesMonograph.forEach((monographResource, i) => {
+    relatedTitlesMonograph.relatedTitles.forEach((monographResource, i) => {
       const doiValue = monographResource.identifiers.find(element => element.identifier.ns.value === 'doi')?.identifier.value;
       const isbnValue = monographResource.identifiers.find(element => element.identifier.ns.value === 'isbn')?.identifier.value;
 
@@ -55,12 +55,12 @@ describe('RelatedTitleInfo', () => {
     beforeEach(async () => {
       await mountWithContext(
         <Router context={{}}>
-          <RelatedTitleInfo relatedTitles={relatedTitlesSerial} />
+          <TitleCardInfo title={relatedTitlesSerial} />
         </Router>
       );
     });
 
-    relatedTitlesSerial.forEach((serialResource, i) => {
+    relatedTitlesSerial.relatedTitles.forEach((serialResource, i) => {
       const eissnValue = serialResource.identifiers.find(element => element.identifier.ns.value === 'eissn')?.identifier.value;
       const ezbValue = serialResource.identifiers.find(element => element.identifier.ns.value === 'ezb')?.identifier.value;
       const issnValue = serialResource.identifiers.find(element => element.identifier.ns.value === 'issn')?.identifier.value;
