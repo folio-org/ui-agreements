@@ -76,7 +76,7 @@ const Coverage = ({
                 <CustomCoverageIcon />
               </>
               :
-              <FormattedMessage id="ui-agreements.agreementLines.custom" />
+              <FormattedMessage id="ui-agreements.default" />
           ),
           endDate: c => (c.endDate ? <FormattedUTCDate value={c.endDate} /> : ''),
           startDate: c => (c.startDate ? <FormattedUTCDate value={c.startDate} /> : ''),
