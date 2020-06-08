@@ -22,29 +22,19 @@ const propTypes = {
   }),
 };
 
-const renderSerial = (titleInstance) => (
-  <>
-    <SerialResourceInfo titleInstance={titleInstance} />
-    <RelatedTitleInfo relatedTitles={titleInstance.relatedTitles || []} />
-  </>
-);
-
-const renderMonograph = (titleInstance) => (
-  <>
-    <MonographResourceInfo titleInstance={titleInstance} />
-    <RelatedTitleInfo relatedTitles={titleInstance.relatedTitles || []} />
-  </>
-);
-
-
 const TitleCardInfo = ({ title }) => {
   const titleInstance = title?.pti?.titleInstance ?? title;
   const type = (titleInstance?.type?.label ?? titleInstance?.type ?? '').toLowerCase();
-
-  if (type === resourceTypes.MONOGRAPH || type === resourceTypes.BOOK) {
-    return renderMonograph(titleInstance);
+  return (
+    <>
+      { type === resourceTypes.MONOGRAPH || type === resourceTypes.BOOK ?
+        <MonographResourceInfo titleInstance={titleInstance} />
+        :
+        <SerialResourceInfo titleInstance={titleInstance} />
   }
-  return renderSerial(titleInstance);
+      <RelatedTitleInfo relatedTitles={titleInstance.relatedTitles || []} />
+    </>
+  );
 };
 
 TitleCardInfo.propTypes = propTypes;
