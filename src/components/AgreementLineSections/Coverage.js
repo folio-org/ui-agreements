@@ -6,6 +6,7 @@ import {
   Accordion,
   Badge,
   FormattedUTCDate,
+  KeyValue,
   MultiColumnList
 } from '@folio/stripes/components';
 
@@ -39,7 +40,13 @@ const Coverage = ({
       id="agreement-line-coverage"
       label={<FormattedMessage id="ui-agreements.eresources.coverage" />}
     >
-      <Embargo embargo={resource?.embargo} />
+      { resource?.embargo ?
+        <KeyValue label={<FormattedMessage id="ui-agreements.embargo" />}>
+          <Embargo embargo={resource?.embargo} />
+        </KeyValue>
+        :
+        null
+      }
       <MultiColumnList
         columnMapping={{
           startDate: <FormattedMessage id="ui-agreements.agreements.startDate" />,
@@ -62,17 +69,14 @@ const Coverage = ({
         contentData={line.coverage}
         formatter={{
           customCoverage: () => (
-            line.customCoverage
-              ?
-              (
-                <>
-                  <FormattedMessage id="ui-agreements.agreementLines.custom" />
-                  &nbsp;
-                  <CustomCoverageIcon />
-                </>
-              )
+            line.customCoverage ?
+              <>
+                <FormattedMessage id="ui-agreements.agreementLines.custom" />
+                &nbsp;
+                <CustomCoverageIcon />
+              </>
               :
-              ''
+              <FormattedMessage id="ui-agreements.agreementLines.custom" />
           ),
           endDate: c => (c.endDate ? <FormattedUTCDate value={c.endDate} /> : ''),
           startDate: c => (c.startDate ? <FormattedUTCDate value={c.startDate} /> : ''),
