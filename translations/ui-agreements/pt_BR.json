@@ -125,7 +125,6 @@
     "agreementLines.gross": "No acumulado do ano",
     "agreementLines.net": "Acumulado do ano liquido",
     "agreementLines.noPoLines": "Contrato não tem linhas de contrato.",
-    "agreementLines.tax": "Acumulado no ano fiscal",
     "agreementLines.addLine": "Adicionar linha de contrato",
     "agreementLines.lineTitle": "Linha de contrato {number}",
     "eresources.titles": "Títulos",
@@ -441,5 +440,9 @@
     "org.olf.erm.SubscriptionAgreement.name.unique": "Este nome já existe",
     "emptyAccordion.lineCoverage": "Nenhuma cobertura para esta linha de contrato",
     "emptyAccordion.linePOLines": "Nenhuma linha de pedido para esta linha de contrato",
-    "line.edit": "Editar linha de contrato"
+    "line.edit": "Editar linha de contrato",
+    "agreementLines.suppressFromDiscovery": "Ocultar na ferramenta de descoberta",
+    "agreementLines.deleteAgreementLine": "Excluir linha de contrato",
+    "agreementLines.deleteConfirmMessage": "A linha de contrato do recurso eletrônico <strong>{name}</strong> será <strong>excluída</strong>.",
+    "eresources.suppressFromDiscovery": "Ocultar na ferramenta de descoberta"
 }

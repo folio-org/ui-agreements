@@ -125,7 +125,6 @@
     "agreementLines.gross": "الإجمالي السنوي",
     "agreementLines.net": "الصافي السنوي",
     "agreementLines.noPoLines": "لا توجد أي بنود اتفاق بالاتفاقية",
-    "agreementLines.tax": "الضريبة السنوية",
     "agreementLines.addLine": "إضافة بند اتفاقية",
     "agreementLines.lineTitle": "رقم بند الاتفاقية  {number}",
     "eresources.titles": "العناوين",
@@ -441,5 +440,9 @@
     "org.olf.erm.SubscriptionAgreement.name.unique": "هذا الاسم موجود بالفعل",
     "emptyAccordion.lineCoverage": "لا تغطية لبند الاتفاقية",
     "emptyAccordion.linePOLines": "لا توجد سطور أمر شراء لبند الاتفاقية",
-    "line.edit": "تحرير بند الاتفاقية"
+    "line.edit": "تحرير بند الاتفاقية",
+    "agreementLines.suppressFromDiscovery": "حجب عن الاكتشاف",
+    "agreementLines.deleteAgreementLine": "حذف بند الاتفاقية",
+    "agreementLines.deleteConfirmMessage": "سيتم <strong>حذف</strong> بند الاتفاقية للمورد الإلكتروني <strong>{name}</strong>",
+    "eresources.suppressFromDiscovery": "حجب عن الاكتشاف"
 }
