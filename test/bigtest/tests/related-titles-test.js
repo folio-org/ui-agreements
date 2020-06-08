@@ -13,7 +13,7 @@ import RelatedTitlesInteractor from '../interactors/related-titles';
 chai.use(spies);
 const { expect } = chai;
 
-describe.only('RelatedTitleInfo', () => {
+describe('RelatedTitleInfo', () => {
   const interactor = new RelatedTitlesInteractor();
 
   describe('related monograph titles', () => {
