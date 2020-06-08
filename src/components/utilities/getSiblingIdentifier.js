@@ -1,26 +1,17 @@
-import React from 'react';
-
-import { Layout } from '@folio/stripes/components';
-
 export default function (eresource = {}, type) {
   const relatedTitles = eresource?.relatedTitles || [];
-  const printSiblings = relatedTitles.find(r => r.subType.value === 'print');
-  if (!printSiblings) return null;
-  const identifiers = printSiblings.identifiers;
+  // find all siblings of subsType 'print'
+  const printSiblings = relatedTitles?.filter(r => r.subType.value === 'print');
 
-  const entry = identifiers.find(i => i.identifier.ns.value === type);
+  if (!printSiblings) return undefined;
 
-  const value = entry?.identifier?.value;
-  if (!value) return null;
+  let value;
 
-
-  if (Array.isArray(value)) {
-    return (
-      <Layout className="display-flex flex-direction-column">
-        {value.map((v, i) => <div key={i}>{v}</div>)}
-      </Layout>
-    );
-  }
-
+  printSiblings.forEach(printSibling => {
+    // find first identifiers value of namespace 'type'
+    if (value === undefined) {
+      value = printSibling.identifiers.find(i => i.identifier.ns.value === type)?.identifier?.value;
+    }
+  });
   return value;
 }

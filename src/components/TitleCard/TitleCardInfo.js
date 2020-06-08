@@ -25,14 +25,14 @@ const propTypes = {
 const renderSerial = (titleInstance) => (
   <>
     <SerialResourceInfo titleInstance={titleInstance} />
-    <RelatedTitleInfo relatedTitles={titleInstance.relatedTitles} />
+    <RelatedTitleInfo relatedTitles={titleInstance.relatedTitles || []} />
   </>
 );
 
 const renderMonograph = (titleInstance) => (
   <>
     <MonographResourceInfo titleInstance={titleInstance} />
-    <RelatedTitleInfo relatedTitles={titleInstance.relatedTitles} />
+    <RelatedTitleInfo relatedTitles={titleInstance.relatedTitles || []} />
   </>
 );
 
