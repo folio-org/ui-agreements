@@ -31,9 +31,9 @@ const TitleCardInfo = ({ title }) => {
         <MonographResourceInfo titleInstance={titleInstance} />
         :
         <SerialResourceInfo titleInstance={titleInstance} />
-  }
-      { titleInstance?.relatedTitles?.map((relatedTitle) => (
-        <RelatedTitleInfo relatedTitle={relatedTitle} />
+      }
+      { titleInstance?.relatedTitles?.map((relatedTitle, i) => (
+        <RelatedTitleInfo key={i} relatedTitle={relatedTitle} />
       ))
       }
     </>
