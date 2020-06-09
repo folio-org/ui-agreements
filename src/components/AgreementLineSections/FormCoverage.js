@@ -6,6 +6,7 @@ import { Accordion, Col, KeyValue, Layout, Row } from '@folio/stripes/components
 
 import { SerialCoverage } from '../Coverage';
 import CoverageFieldArray from '../CoverageFieldArray';
+import Embargo from '../Embargo';
 import { isExternal, isPackage } from '../utilities';
 
 const propTypes = {
@@ -26,6 +27,15 @@ const FormCoverage = ({
       label={<FormattedMessage id="ui-agreements.eresources.coverage" />}
     >
       <Row>
+        { resource?.embargo ?
+          <Col xs={4}>
+            <KeyValue label={<FormattedMessage id="ui-agreements.embargo" />}>
+              <Embargo embargo={resource?.embargo} />
+            </KeyValue>
+          </Col>
+          :
+          null
+        }
         <Col xs={4}>
           <KeyValue
             label={(

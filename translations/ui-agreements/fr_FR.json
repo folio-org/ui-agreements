@@ -443,6 +443,6 @@
     "line.edit": "Modifier la ligne d'accord",
     "agreementLines.suppressFromDiscovery": "Supprimer de la *recherche*",
     "agreementLines.deleteAgreementLine": "Supprimer la ligne d'accord",
-    "agreementLines.deleteConfirmMessage": "Agreement line for the e-resource <strong>{name}</strong> will be <strong>deleted</strong>.",
+    "agreementLines.deleteConfirmMessage": "La ligne d'accord pour la ressource électronique <strong> {name} </strong> sera <strong> supprimée </strong> .",
     "eresources.suppressFromDiscovery": "Supprimer de la *recherche*"
 }
