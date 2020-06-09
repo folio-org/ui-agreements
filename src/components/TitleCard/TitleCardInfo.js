@@ -32,8 +32,8 @@ const TitleCardInfo = ({ title }) => {
         :
         <SerialResourceInfo titleInstance={titleInstance} />
   }
-      { titleInstance?.relatedTitles?.map((relatedTitle, i) => (
-        <RelatedTitleInfo index={i} relatedTitle={relatedTitle} />
+      { titleInstance?.relatedTitles?.map((relatedTitle) => (
+        <RelatedTitleInfo relatedTitle={relatedTitle} />
       ))
       }
     </>

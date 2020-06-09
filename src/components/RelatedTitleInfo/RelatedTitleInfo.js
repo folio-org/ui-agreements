@@ -14,7 +14,6 @@ import EResourceIdentifier from '../EResourceIdentifier';
 import css from './RelatedTitle.css';
 
 const propTypes = {
-  index: PropTypes.number,
   relatedTitle: PropTypes.shape({
     id: PropTypes.string,
     identifiers: PropTypes.arrayOf(PropTypes.shape({
@@ -41,9 +40,9 @@ const propTypes = {
 };
 
 const RelatedTitleInfo = ({
-  relatedTitle, index
+  relatedTitle
 }) => (
-  <div key={`related-title-${index}`} data-test-related-titles>
+  <div data-test-related-titles>
     <div className={css.separator} />
     <Headline data-test-title-instance-name size="large" tag="h3">
       <FormattedMessage id="ui-agreements.eresources.relatedTitle" values={{ name: relatedTitle.name }} />
