@@ -182,7 +182,7 @@ class AgreementForm extends React.Component {
   }
 
   render() {
-    const { form, values: { id, name } } = this.props;
+    const { data, form, values: { id, name } } = this.props;
 
     const hasLoaded = form.getRegisteredFields().length > 0;
 
@@ -217,10 +217,10 @@ class AgreementForm extends React.Component {
                     <FormLines {...this.getSectionProps('formLines')} />
                     <FormLicenses {...this.getSectionProps('formLicenses')} />
                     <FormOrganizations {...this.getSectionProps('formOrganizations')} />
-                    {this.props.data.supplementaryProperties.length > 0 ?
+                    {data.supplementaryProperties?.length > 0 ?
                       <FormSupplementaryProperties {...this.getSectionProps('formSupplementaryProperties')} />
                       :
-                      undefined
+                      null
                     }
                     <FormSupplementaryDocuments {...this.getSectionProps('formSupplementaryDocs')} />
                     <FormUsageData {...this.getSectionProps('formUsageProviders')} />
