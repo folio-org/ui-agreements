@@ -10,6 +10,7 @@ export default class EResourceCount extends React.Component {
         resourceCount: PropTypes.number,
       }),
       reference_object: PropTypes.shape({
+        selectedCount: PropTypes.number,
         titleCount: PropTypes.number,
       }),
       resourceCount: PropTypes.number,
@@ -21,7 +22,13 @@ export default class EResourceCount extends React.Component {
     if (!resource) return null;
 
     if (isExternal(resource)) {
-      return resource.reference_object?.titleCount ?? 1;
+      const { reference_object: { titleCount, selectedCount } = {} } = resource;
+
+      if (titleCount >= 0) {
+        return selectedCount >= 0 ? `${selectedCount} / ${titleCount}` : titleCount;
+      }
+
+      return 1;
     }
 
     return (
