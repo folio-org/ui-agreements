@@ -640,7 +640,7 @@ describe('AgreementLineForm', () => {
                   type: 'Package',
                   provider: 'EBSCO',
                   titleCount: 1273,
-                  selectedCount: 1273,
+                  selectedCount: 1200,
                   contentType: 'E-Book',
                   providerName: 'EBSCO',
                   isSelected: true
@@ -668,7 +668,7 @@ describe('AgreementLineForm', () => {
     });
 
     it('should render correct number of items in package', () => {
-      expect(packageCardInteractor.resourceCount).to.equal('1273');
+      expect(packageCardInteractor.resourceCount).to.equal('1200 / 1273');
     });
 
     it('should render correct provider', () => {
@@ -701,6 +701,59 @@ describe('AgreementLineForm', () => {
 
     it('should not render Coverage accordion', () => {
       expect(interactor.hasCoverageAccordion).to.be.false;
+    });
+  });
+
+  describe('eHoldings Package with 0 titleCount and selectedCount', () => {
+    beforeEach(async () => {
+      await mountWithContext(
+        <Router context={{}}>
+          <AgreementLineForm
+            {...formProps}
+            data={{
+              line: {
+                id: 'f5d265ac-bc9c-4e39-a6bd-381a9c709a5b',
+                type: 'external',
+                authority: 'EKB-PACKAGE',
+                reference: '19-3629',
+                explanation: null,
+                contentUpdated: null,
+                haveAccess: true,
+                owner: {
+                  id: '9b710a4b-1f7e-4e7f-9757-17bb07f9fe91'
+                },
+                poLines: [],
+                customCoverage: false,
+                reference_object: {
+                  label: 'Book Collection Nonfiction: Elementary School Edition',
+                  type: 'Package',
+                  provider: 'EBSCO',
+                  titleCount: 0,
+                  selectedCount: 0,
+                  contentType: 'E-Book',
+                  providerName: 'EBSCO',
+                  isSelected: true
+                }
+              }
+            }}
+            initialValues={{
+              activeFrom: '2020-05-01',
+              activeTo: '2020-05-30',
+              note: 'a test note',
+            }}
+          />
+        </Router>
+      );
+
+      await interactor.whenLoaded();
+    });
+
+    it('should render form', () => {
+      expect(interactor.isAgreementLineForm).to.be.true;
+    });
+
+    it('should render correct number of items in package', () => {
+      expect(packageCardInteractor.resourceCount).to.equal('0 / 0');
     });
   });
 
