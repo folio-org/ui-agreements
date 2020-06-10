@@ -36,6 +36,7 @@ class AgreementForm extends React.Component {
     data: PropTypes.shape({
       agreementLines: PropTypes.array.isRequired,
       agreementLinesToAdd: PropTypes.array.isRequired,
+      supplementaryProperties: PropTypes.array.isRequired,
     }).isRequired,
     form: PropTypes.shape({
       change: PropTypes.func.isRequired,
@@ -181,7 +182,7 @@ class AgreementForm extends React.Component {
   }
 
   render() {
-    const { form, values: { id, name } } = this.props;
+    const { data, form, values: { id, name } } = this.props;
 
     const hasLoaded = form.getRegisteredFields().length > 0;
 
@@ -216,7 +217,11 @@ class AgreementForm extends React.Component {
                     <FormLines {...this.getSectionProps('formLines')} />
                     <FormLicenses {...this.getSectionProps('formLicenses')} />
                     <FormOrganizations {...this.getSectionProps('formOrganizations')} />
-                    <FormSupplementaryProperties {...this.getSectionProps('formSupplementaryProperties')} />
+                    {data.supplementaryProperties?.length > 0 ?
+                      <FormSupplementaryProperties {...this.getSectionProps('formSupplementaryProperties')} />
+                      :
+                      null
+                    }
                     <FormSupplementaryDocuments {...this.getSectionProps('formSupplementaryDocs')} />
                     <FormUsageData {...this.getSectionProps('formUsageProviders')} />
                     <FormRelatedAgreements {...this.getSectionProps('formRelatedAgreements')} />
