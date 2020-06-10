@@ -273,7 +273,10 @@ export default class Agreement extends React.Component {
               <Terms {...this.getSectionProps('terms')} />
               <Organizations {...this.getSectionProps('organizations')} />
               <OtherPeriods {...this.getSectionProps('otherPeriods')} />
-              <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} />
+              {this.props.data.supplementaryProperties.length > 0 ?
+                <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} /> :
+                undefined
+              }
               <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} />
               <UsageData {...this.getSectionProps('usageData')} />
               <RelatedAgreements {...this.getSectionProps('relatedAgreements')} />
