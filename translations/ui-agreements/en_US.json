@@ -258,7 +258,7 @@
     "relatedAgreements.relationship.supersedes": "Supersedes \"{agreement}\"",
     "relatedAgreements.relationship.tracks_demand-driven_acquisitions_for": "Tracks demand-driven acquisitions for \"{agreement}\"",
     "relatedAgreements.remove": "Remove related agreement {index}",
-    "identifier.issn": "eISSN/ISSN",
+    "identifier.issn": "ISSN (Print)",
     "relatedAgreements.relationshipSummary": "\"{source}\" {relationship} \"{target}\"",
     "relatedAgreements.relationshipSummaryForNewAgreement": "\"{source}\" {relationship} the agreement being created",
     "license.linkLicense": "Link license",
