@@ -64,7 +64,7 @@ describe('PackageCard', () => {
         type: 'Package',
         provider: 'EBSCO',
         titleCount: 1273,
-        selectedCount: 1274,
+        selectedCount: 1200,
         contentType: 'E-Book',
         providerName: 'EBSCO',
         isSelected: true
@@ -80,7 +80,7 @@ describe('PackageCard', () => {
     });
 
     it('should render expected count', () => {
-      expect(interactor.resourceCount).to.have.string('1274 / 1273');
+      expect(interactor.resourceCount).to.have.string('1200 / 1273');
     });
 
     it('should render expected provider', () => {
