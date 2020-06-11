@@ -17,7 +17,6 @@ const ORGS = [{
   status: 'Active',
 }];
 
-
 module.exports.test = (uiTestCtx) => {
   const orgs = ORGS;
 
