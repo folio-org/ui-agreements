@@ -38,7 +38,6 @@ export default class LicenseAmendmentList extends React.Component {
     return getConflictWarnings.amendmentWarning(amendment);
   }
 
-
   render() {
     const {
       amendments,

@@ -141,7 +141,6 @@ module.exports.test = (uiTestCtx) => {
           .catch(done);
       });
 
-
       it('should add org', done => {
         nightmare
           .click('#add-org-btn')

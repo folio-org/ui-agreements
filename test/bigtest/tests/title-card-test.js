@@ -99,7 +99,6 @@ describe('TitleCard', () => {
       expect(interactor.titleInstanceEISSN).to.have.string('1944-9585'); // handle this if you alter the doi in the pci resource
     });
 
-
     it('should render expected ISSN (Print)', () => {
       expect(interactor.titleInstancePISSN).to.have.string('1943-9585'); // handle this if you alter the doi in the pci resource
     });

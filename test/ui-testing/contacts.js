@@ -37,7 +37,6 @@ module.exports.test = (uiTestCtx) => {
         helpers.clickApp(nightmare, done, 'agreements');
       });
 
-
       it('should navigate to create agreement page', done => {
         console.log(`\tCreating ${agreementName}`);
 

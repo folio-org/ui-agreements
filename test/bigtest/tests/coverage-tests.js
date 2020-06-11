@@ -357,7 +357,6 @@ describe('Coverage tests', () => {
     });
   });
 
-
   describe('Rendering coverage component for a serial line', () => {
     beforeEach(async function () {
       await mountWithContext(
