@@ -11,7 +11,6 @@ import {
   Pane,
 } from '@folio/stripes/components';
 
-
 import stripesForm from '@folio/stripes/form';
 
 class GeneralSettingsForm extends React.Component {

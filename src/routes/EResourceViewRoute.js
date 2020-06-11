@@ -11,7 +11,6 @@ import View from '../components/views/EResource';
 import { urls } from '../components/utilities';
 import { resultCount, resourceClasses } from '../constants';
 
-
 const RECORDS_PER_REQUEST = 100;
 
 class EResourceViewRoute extends React.Component {

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Layout } from '@folio/stripes/components';
 
-
 const CustomCoverage = React.forwardRef((props, ref) => (
   <Layout
     className="flex"

@@ -333,7 +333,6 @@ module.exports.test = (uiTestCtx) => {
         });
       }
 
-
       it('should open Licenses app', done => {
         helpers.clickApp(nightmare, done, 'licenses');
       });

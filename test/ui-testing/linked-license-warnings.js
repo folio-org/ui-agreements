@@ -78,7 +78,6 @@ module.exports.test = (uiTestCtx) => {
       .catch(done);
   };
 
-
   describe('ui-agreements: linked license warnings', function test() {
     const { config, helpers } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
@@ -253,7 +252,6 @@ module.exports.test = (uiTestCtx) => {
         checkWarningColumn(nightmare, '#agreement-historical-license-0-amendments', false, done);
       });
 
-
       it('should check warnings exist for conflicting status amendments in controlling licenses, and not for non-conflicting ones', done => {
         nightmare
           .evaluate((_indices) => {
@@ -279,7 +277,6 @@ module.exports.test = (uiTestCtx) => {
           .then(done)
           .catch(done);
       });
-
 
       it('should check notes are showing up in the table', done => {
         nightmare

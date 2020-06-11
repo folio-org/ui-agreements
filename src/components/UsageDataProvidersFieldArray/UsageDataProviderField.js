@@ -96,7 +96,6 @@ export default class UsageDataProviderField extends React.Component {
     );
   }
 
-
   renderEmpty = () => (
     <div>
       <Layout className="textCentered">
