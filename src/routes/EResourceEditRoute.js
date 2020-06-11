@@ -65,10 +65,15 @@ class EResourceEditRoute extends React.Component {
 
   handleSubmit = (pci) => {
     const { history, location, mutator } = this.props;
+    const { coverage, id, suppressFromDiscovery } = pci;
 
     return mutator.pci
-      .PUT(pci)
-      .then(({ id }) => {
+      .PUT({
+        id,
+        coverage,
+        suppressFromDiscovery
+      })
+      .then(() => {
         history.push(`${urls.eresourceView(id)}${location.search}`);
       });
   }
