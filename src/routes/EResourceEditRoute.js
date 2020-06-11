@@ -73,8 +73,8 @@ class EResourceEditRoute extends React.Component {
         coverage,
         suppressFromDiscovery
       })
-      .then(({ pciId }) => {
-        history.push(`${urls.eresourceView(pciId)}${location.search}`);
+      .then(() => {
+        history.push(`${urls.eresourceView(id)}${location.search}`);
       });
   }
 
