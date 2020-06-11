@@ -2,7 +2,23 @@
 
 ##  4.0.0 IN PROGRESS
 * Added permission set and ability to delete agreements. ERM-777
+* Show/hide pick list actions based on refdata category type. ERM-735
 * Added ability to set and view agreement line notes. ERM-779
+* Display Embargo information in "E-resources in package" and "Agreement line" display. ERM-805
+* Added support for "Alternative names" for agreements. ERM-827
+* Added coverage details to "options for acquiring E-resources" view. ERM-845
+* Added ability to view and edit PCI information. ERM-847
+* Added ability to view and edit Agreement line information. ERM-870 871 844 872 885
+* Added ability to search/filter agreements based on custom properties. ERM-876
+* Added new agreement-agreement relationships. ERM-889
+* Added external links to titles on platforms. ERM-859
+* Display information from siblingInstances in the agreements resources results. ERM-774 776
+* Added Tags UI to eresources and agreement line display. ERM-919 ERM-920
+* Added ability to view/edit "Suppress from discovery" for agreement lines. ERM-923 924
+* Added ability to view/edit "Suppress from discovery" for PCIs. ERM-933
+* Display Embargo details when viewing/editing an agreement line. ERM-938 939
+* Display number of titles selected for agreement lines from eholdings. ERM-451
+* Bumped the required node version to 10.
 
 ##  3.4.1 2020-03-12
 * Set coverage columns to be fixed-width.
