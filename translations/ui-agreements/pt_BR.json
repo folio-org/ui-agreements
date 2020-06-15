@@ -258,7 +258,7 @@
     "relatedAgreements.relationship.supersedes": "Substitui \"{agreement}\"",
     "relatedAgreements.relationship.tracks_demand-driven_acquisitions_for": "Rastreia aquisições direcionadas por demanda (DDA) para \"{agreement}\"",
     "relatedAgreements.remove": "Remover contrato relacionado {index}",
-    "identifier.issn": "eISSN/ISSN",
+    "identifier.issn": "ISSN (Impresso)",
     "relatedAgreements.relationshipSummary": "\"{source}\" {relationship} \"{target}\"",
     "relatedAgreements.relationshipSummaryForNewAgreement": "\"{source}\" {relationship} o contrato que está sendo criado",
     "license.linkLicense": "Vincular licença",
@@ -444,5 +444,8 @@
     "agreementLines.suppressFromDiscovery": "Ocultar na ferramenta de descoberta",
     "agreementLines.deleteAgreementLine": "Excluir linha de contrato",
     "agreementLines.deleteConfirmMessage": "A linha de contrato do recurso eletrônico <strong>{name}</strong> será <strong>excluída</strong>.",
-    "eresources.suppressFromDiscovery": "Ocultar na ferramenta de descoberta"
+    "eresources.suppressFromDiscovery": "Ocultar na ferramenta de descoberta",
+    "default": "Padrão",
+    "eresources.relatedTitle": "Título relacionado \"{name}\"",
+    "identifier.eissn.issn": "eISSN/ISSN"
 }

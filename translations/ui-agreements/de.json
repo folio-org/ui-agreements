@@ -258,7 +258,7 @@
     "relatedAgreements.relationship.supersedes": "Supersedes \"{agreement}\"",
     "relatedAgreements.relationship.tracks_demand-driven_acquisitions_for": "Tracks demand-driven acquisitions for \"{agreement}\"",
     "relatedAgreements.remove": "Remove related agreement {index}",
-    "identifier.issn": "eISSN/ISSN",
+    "identifier.issn": "ISSN (Print)",
     "relatedAgreements.relationshipSummary": "\"{source}\" {relationship} \"{target}\"",
     "relatedAgreements.relationshipSummaryForNewAgreement": "\"{source}\" {relationship} the agreement being created",
     "license.linkLicense": "Link license",
@@ -444,5 +444,8 @@
     "agreementLines.suppressFromDiscovery": "Suppress from discovery",
     "agreementLines.deleteAgreementLine": "Delete agreement line",
     "agreementLines.deleteConfirmMessage": "Agreement line for the e-resource <strong>{name}</strong> will be <strong>deleted</strong>.",
-    "eresources.suppressFromDiscovery": "Suppress from discovery"
+    "eresources.suppressFromDiscovery": "Suppress from discovery",
+    "default": "Default",
+    "eresources.relatedTitle": "Related title \"{name}\"",
+    "identifier.eissn.issn": "eISSN/ISSN"
 }
