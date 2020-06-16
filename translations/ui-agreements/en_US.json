@@ -444,5 +444,8 @@
     "agreementLines.suppressFromDiscovery": "Suppress from discovery",
     "agreementLines.deleteAgreementLine": "Delete agreement line",
     "agreementLines.deleteConfirmMessage": "Agreement line for the e-resource <strong>{name}</strong> will be <strong>deleted</strong>.",
-    "eresources.suppressFromDiscovery": "Suppress from discovery"
+    "eresources.suppressFromDiscovery": "Suppress from discovery",
+    "default": "Default",
+    "eresources.relatedTitle": "Related title \"{name}\"",
+    "identifier.eissn.issn": "eISSN/ISSN"
 }

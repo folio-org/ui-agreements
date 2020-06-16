@@ -444,5 +444,8 @@
     "agreementLines.suppressFromDiscovery": "حجب عن الاكتشاف",
     "agreementLines.deleteAgreementLine": "حذف بند الاتفاقية",
     "agreementLines.deleteConfirmMessage": "سيتم <strong>حذف</strong> بند الاتفاقية للمورد الإلكتروني <strong>{name}</strong>",
-    "eresources.suppressFromDiscovery": "حجب عن الاكتشاف"
+    "eresources.suppressFromDiscovery": "حجب عن الاكتشاف",
+    "default": "الافتراضي",
+    "eresources.relatedTitle": "عناوين ذات صلة \"{name}\"",
+    "identifier.eissn.issn": "ردمد إلكتروني/ردمد"
 }

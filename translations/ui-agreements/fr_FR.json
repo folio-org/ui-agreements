@@ -258,7 +258,7 @@
     "relatedAgreements.relationship.supersedes": "Remplace \" {agreement} \"",
     "relatedAgreements.relationship.tracks_demand-driven_acquisitions_for": "Suit les DDA pour \" {agreement} \"",
     "relatedAgreements.remove": "Supprimer l'accord connexe {index}",
-    "identifier.issn": "eISSN / ISSN",
+    "identifier.issn": "ISSN (Papier)",
     "relatedAgreements.relationshipSummary": "\" {source} \" {relationship} \" {target} \"",
     "relatedAgreements.relationshipSummaryForNewAgreement": "\" {source} \" {relationship} l'accord en cours de création",
     "license.linkLicense": "Lier la licence",
@@ -444,5 +444,8 @@
     "agreementLines.suppressFromDiscovery": "Supprimer de la *recherche*",
     "agreementLines.deleteAgreementLine": "Supprimer la ligne d'accord",
     "agreementLines.deleteConfirmMessage": "La ligne d'accord pour la ressource électronique <strong> {name} </strong> sera <strong> supprimée </strong> .",
-    "eresources.suppressFromDiscovery": "Supprimer de la *recherche*"
+    "eresources.suppressFromDiscovery": "Supprimer de la *recherche*",
+    "default": "Par défaut",
+    "eresources.relatedTitle": "Related title \"{name}\"",
+    "identifier.eissn.issn": "eISSN / ISSN"
 }
