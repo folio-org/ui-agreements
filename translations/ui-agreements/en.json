@@ -218,6 +218,7 @@
   "eresources.edit": "Edit",
   "eresources.name": "Name",
   "eresources.type": "Type",
+  "eresources.contentType": "Package content type",
   "eresources.titles": "Titles",
   "eresources.isPackage": "Is package",
   "eresources.erInfo": "E-resource information",
@@ -279,6 +280,10 @@
   "eresources.titleDetails": "Title details",
   "eresources.accessTitleOnPlatform": "Access {name}",
   "eresources.relatedTitle": "Related title \"{name}\"",
+  "eresources.holdingStatus": "Holding status",
+  "eresources.selected": "Selected",
+  "eresources.notSelected": "Not selected",
+  "eresources.accessStatusType": "Access status type",
 
   "customcoverages.tooltip": "Custom Coverage",
 

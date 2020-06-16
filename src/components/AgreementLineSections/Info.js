@@ -11,9 +11,11 @@ import {
 } from '@folio/stripes/components';
 
 import PackageCard from '../PackageCard';
+import PackageCardExternal from '../PackageCardExternal';
 import TitleCard from '../TitleCard';
 
 import { isExternal, isPackage } from '../utilities';
+import TitleCardExternal from '../TitleCardExternal/TitleCardExternal';
 
 const propTypes = {
   line: PropTypes.shape({
@@ -80,7 +82,11 @@ const Info = ({
         <Headline size="large" tag="h3">
           <FormattedMessage id="ui-agreements.eresources.packageDetails" />
         </Headline>
-        <PackageCard pkg={resource} />
+        { isExternal(line) ?
+          <PackageCardExternal pkg={resource} />
+          :
+          <PackageCard pkg={resource} />
+        }
       </>
       :
       <>
@@ -94,15 +100,19 @@ const Info = ({
             <NoValue />
           }
         </KeyValue>
-        <TitleCard title={resource} />
-        { isExternal(line) ? null : (
-          <>
-            <Headline size="large" tag="h3">
-              <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
-            </Headline>
-            <PackageCard pkg={resource.pkg} />
-          </>
-        )}
+        { isExternal(line) ?
+          <TitleCardExternal title={resource} />
+          :
+          <TitleCard title={resource} />
+        }
+        <Headline size="large" tag="h3">
+          <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
+        </Headline>
+        { isExternal(line) ?
+          <PackageCardExternal packageData={resource.reference_object.packageData} />
+          :
+          <PackageCard pkg={resource.pkg} />
+        }
       </>
     }
   </>
