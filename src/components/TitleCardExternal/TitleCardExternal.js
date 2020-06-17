@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl';
 import {
   Card,
   Col,
-  FormattedUTCDate,
   KeyValue,
   NoValue,
   Row,
@@ -36,14 +35,14 @@ const TitleCardExternal = ({
       <Row>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.type" />}>
-            <div data-test-title--type>
+            <div data-test-title-type>
               {title?.reference_object?.type ?? <NoValue />}
             </div>
           </KeyValue>
         </Col>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.holdingStatus" />}>
-            <div data-test-holding-status>
+            <div data-test-title-holding-status>
               {title?.reference_object?.isSelected ? <FormattedMessage id="ui-agreements.eresources.selected" />
                 : <FormattedMessage id="ui-agreements.eresources.notSelected" />
     }
@@ -52,22 +51,11 @@ const TitleCardExternal = ({
         </Col>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.accessStatusType" />}>
-            <div data-test-access-status-type>
+            <div data-test-title-access-status-type>
               {title?.reference_object?.accessStatusType ?? <NoValue />}
             </div>
           </KeyValue>
         </Col>
-        { title?.dateMonographPublished ?
-          <Col xs={3}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.eresources.datePublished" />}>
-              <div data-test-vendor-name>
-                <FormattedUTCDate value={title.dateMonographPublished} />
-              </div>
-            </KeyValue>
-          </Col>
-          :
-          null
-        }
       </Row>
     </Card>
   );

@@ -316,6 +316,8 @@
   "identifier.ezb": "EZB",
   "identifier.isbn": "ISBN",
   "identifier.pissn": "ISSN (Print)",
+  "identifier.pisbn": "ISBN (Print)",
+  "identifier.eisbn": "ISBN (Online)",
   "identifier.zdb": "ZDB",
 
   "interface.name": "Interface name",

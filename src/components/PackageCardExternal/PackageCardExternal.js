@@ -10,13 +10,16 @@ import {
 } from '@folio/stripes/components';
 
 import EResourceLink from '../EResourceLink';
+import EResourceCount from '../EResourceCount';
 
 const propTypes = {
   packageData: PropTypes.shape({
     accessStatusType: PropTypes.string,
+    authority: PropTypes.string,
     contentType: PropTypes.string,
     isSelected: PropTypes.bool,
     name: PropTypes.string,
+    reference: PropTypes.string,
     providerName: PropTypes.string,
     selectedCount: PropTypes.number,
     titleCount: PropTypes.number,
@@ -39,14 +42,14 @@ const PackageCardExternal = ({
   searchString = '',
   packageData = {},
 }) => {
-  let cardHeader;
+  let eresource;
   let pkgObject;
   if (pkg.reference_object) {
+    eresource = pkg;
     pkgObject = pkg.reference_object;
-    cardHeader = <EResourceLink eresource={pkg} searchString={searchString} />;
   } else if (packageData) {
+    eresource = packageData;
     pkgObject = packageData;
-    cardHeader = packageData?.name;
   }
   return (
     <Card
@@ -54,7 +57,7 @@ const PackageCardExternal = ({
       data-test-package-card
       headerStart={(
         <strong data-test-package-link>
-          {cardHeader}
+          <EResourceLink eresource={eresource} searchString={searchString} />
         </strong>
     )}
       roundedBorder
@@ -62,12 +65,14 @@ const PackageCardExternal = ({
       <Row>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.contentType" />}>
-            {pkgObject?.contentType ?? <NoValue />}
+            <div data-test-package-content-type>
+              {pkgObject?.contentType ?? <NoValue />}
+            </div>
           </KeyValue>
         </Col>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.holdingStatus" />}>
-            <div data-test-holding-status>
+            <div data-test-package-holding-status>
               {pkgObject?.isSelected ? <FormattedMessage id="ui-agreements.eresources.selected" />
                 : <FormattedMessage id="ui-agreements.eresources.notSelected" />
     }
@@ -76,14 +81,14 @@ const PackageCardExternal = ({
         </Col>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.accessStatusType" />}>
-            <div data-test-access-status-type>
+            <div data-test-package-access-status-type>
               {pkgObject?.accessStatusType ?? <NoValue />}
             </div>
           </KeyValue>
         </Col>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.provider" />}>
-            <div data-test-vendor-name>
+            <div data-test-package-vendor-name>
               {pkgObject?.providerName ?? <NoValue />}
             </div>
           </KeyValue>
@@ -92,8 +97,8 @@ const PackageCardExternal = ({
       <Row>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.count" />}>
-            <div data-test-resource-count>
-              {pkgObject?.selectedCount ?? <NoValue />} / {pkgObject?.titleCount ?? <NoValue />}
+            <div data-test-package-resource-count>
+              <EResourceCount resource={eresource} />
             </div>
           </KeyValue>
         </Col>

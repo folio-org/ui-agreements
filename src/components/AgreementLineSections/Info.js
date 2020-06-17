@@ -15,7 +15,7 @@ import PackageCardExternal from '../PackageCardExternal';
 import TitleCard from '../TitleCard';
 
 import { isExternal, isPackage } from '../utilities';
-import TitleCardExternal from '../TitleCardExternal/TitleCardExternal';
+import TitleCardExternal from '../TitleCardExternal';
 
 const propTypes = {
   line: PropTypes.shape({

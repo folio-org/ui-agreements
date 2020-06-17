@@ -14,6 +14,8 @@ export default class EResourceCount extends React.Component {
         titleCount: PropTypes.number,
       }),
       resourceCount: PropTypes.number,
+      selectedCount: PropTypes.number,
+      titleCount: PropTypes.number,
     })
   }
 
@@ -29,6 +31,10 @@ export default class EResourceCount extends React.Component {
       }
 
       return 1;
+    }
+
+    if (resource.titleCount && resource.titleCount >= 0) {
+      return resource?.selectedCount >= 0 ? `${resource.selectedCount} / ${resource.titleCount}` : resource.titleCount;
     }
 
     return (
