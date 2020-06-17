@@ -115,6 +115,7 @@ describe('AgreementLineInfo', () => {
         });
 
         // Additionally render the parent package card
+        // resource = externalResource?.reference_object?.packageData;
         it('should render parent package card', () => {
           expect(interactor.isPkgCardPresent).to.be.true;
         });
