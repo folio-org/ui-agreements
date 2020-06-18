@@ -32,13 +32,25 @@ describe('AgreementLineInfo', () => {
         expect(interactor.parentAgreementName).to.equal(externalResource?.owner?.name);
       });
 
-      it('should render parent agreements activeFrom date', () => {
-        expect(interactor.activeFrom).to.equal(externalResource?.activeFrom);
-      });
+      if (externalResource?.activeFrom) {
+        it('should render parent agreements activeFrom date', () => {
+          expect(interactor.activeFrom).to.equal(externalResource?.activeFrom);
+        });
+      } else {
+        it('should render \'-\'', () => {
+          expect(interactor.activeFrom).to.equal('-');
+        });
+      }
 
-      it('should render parent agreements activeTo date', () => {
-        expect(interactor.activeTo).to.equal(externalResource?.activeTo);
-      });
+      if (externalResource?.activeTo) {
+        it('should render parent agreements activeTo date', () => {
+          expect(interactor.activeTo).to.equal(externalResource?.activeTo);
+        });
+      } else {
+        it('should render \'-\'', () => {
+          expect(interactor.activeFrom).to.equal('-');
+        });
+      }
 
       it('should render parent agreements suppress from discovery', () => {
         if (externalResource?.suppressFromDiscovery) {
@@ -48,9 +60,15 @@ describe('AgreementLineInfo', () => {
         }
       });
 
-      it('should render parent agreements note', () => {
-        expect(interactor.note).to.equal(externalResource?.note);
-      });
+      if (externalResource?.note) {
+        it('should render parent agreements note', () => {
+          expect(interactor.note).to.equal(externalResource?.note);
+        });
+      } else {
+        it('should render \'-\'', () => {
+          expect(interactor.activeFrom).to.equal('-');
+        });
+      }
 
       // resource = externalResource?.reference_object;
       if (externalResource?.reference_object?.type === 'Package') {
@@ -66,9 +84,15 @@ describe('AgreementLineInfo', () => {
           expect(interactor.pkgName).to.equal(externalResource?.reference_object?.label);
         });
 
-        it('should render package content type', () => {
-          expect(interactor.pkgContentType).to.equal(externalResource?.reference_object?.contentType);
-        });
+        if (externalResource?.reference_object?.contentType) {
+          it('should render package content type', () => {
+            expect(interactor.pkgContentType).to.equal(externalResource?.reference_object?.contentType);
+          });
+        } else {
+          it('should render \'-\'', () => {
+            expect(interactor.activeFrom).to.equal('-');
+          });
+        }
 
         it('should render package holdings status', () => {
           if (externalResource?.reference_object?.isSelected) {
@@ -78,13 +102,25 @@ describe('AgreementLineInfo', () => {
           }
         });
 
-        it('should render package access status type', () => {
-          expect(interactor.pkgAccessStatusType).to.equal(externalResource?.reference_object?.accessStatusType);
-        });
+        if (externalResource?.reference_object?.accessStatusType) {
+          it('should render package access status type', () => {
+            expect(interactor.pkgAccessStatusType).to.equal(externalResource?.reference_object?.accessStatusType);
+          });
+        } else {
+          it('should render \'-\'', () => {
+            expect(interactor.activeFrom).to.equal('-');
+          });
+        }
 
-        it('should render package provider', () => {
-          expect(interactor.pkgProvider).to.equal(externalResource?.reference_object?.providerName);
-        });
+        if (externalResource?.reference_object?.providerName) {
+          it('should render package provider', () => {
+            expect(interactor.pkgProvider).to.equal(externalResource?.reference_object?.providerName);
+          });
+        } else {
+          it('should render \'-\'', () => {
+            expect(interactor.activeFrom).to.equal('-');
+          });
+        }
 
         it('should render package count', () => {
           expect(interactor.pkgCount).to.have.string(externalResource?.reference_object?.selectedCount + ' / ' + externalResource?.reference_object.titleCount);
@@ -98,9 +134,15 @@ describe('AgreementLineInfo', () => {
           expect(interactor.titleName).to.equal(externalResource?.reference_object?.label);
         });
 
-        it('should render title type', () => {
-          expect(interactor.titleType).to.equal(externalResource?.reference_object?.type);
-        });
+        if (externalResource?.reference_object?.type) {
+          it('should render title type', () => {
+            expect(interactor.titleType).to.equal(externalResource?.reference_object?.type);
+          });
+        } else {
+          it('should render \'-\'', () => {
+            expect(interactor.activeFrom).to.equal('-');
+          });
+        }
 
         it('should render title holdings status', () => {
           if (externalResource?.reference_object.isSelected) {
@@ -110,9 +152,15 @@ describe('AgreementLineInfo', () => {
           }
         });
 
-        it('should render title access status type', () => {
-          expect(interactor.titleAccessStatusType).to.equal(externalResource?.reference_object?.accessStatusType);
-        });
+        if (externalResource?.reference_object?.accessStatusType) {
+          it('should render title access status type', () => {
+            expect(interactor.titleAccessStatusType).to.equal(externalResource?.reference_object?.accessStatusType);
+          });
+        } else {
+          it('should render \'-\'', () => {
+            expect(interactor.activeFrom).to.equal('-');
+          });
+        }
 
         // Additionally render the parent package card
         // resource = externalResource?.reference_object?.packageData;
@@ -124,9 +172,15 @@ describe('AgreementLineInfo', () => {
           expect(interactor.pkgName).to.equal(externalResource?.reference_object?.packageData.name);
         });
 
-        it('should render parent package content type', () => {
-          expect(interactor.pkgContentType).to.equal(externalResource?.reference_object?.packageData.contentType);
-        });
+        if (externalResource?.reference_object?.packageData.contentType) {
+          it('should render parent package content type', () => {
+            expect(interactor.pkgContentType).to.equal(externalResource?.reference_object?.packageData.contentType);
+          });
+        } else {
+          it('should render \'-\'', () => {
+            expect(interactor.activeFrom).to.equal('-');
+          });
+        }
 
         it('should render parent package holdings status', () => {
           if (externalResource?.reference_object?.packageData?.isSelected) {
@@ -136,13 +190,25 @@ describe('AgreementLineInfo', () => {
           }
         });
 
-        it('should render parent package access status type', () => {
-          expect(interactor.pkgAccessStatusType).to.equal(externalResource?.reference_object?.packageData?.accessStatusType);
-        });
+        if (externalResource?.reference_object?.packageData.accessStatusType) {
+          it('should render parent package access status type', () => {
+            expect(interactor.pkgAccessStatusType).to.equal(externalResource?.reference_object?.packageData?.accessStatusType);
+          });
+        } else {
+          it('should render \'-\'', () => {
+            expect(interactor.activeFrom).to.equal('-');
+          });
+        }
 
-        it('should render parent package provider', () => {
-          expect(interactor.pkgProvider).to.equal(externalResource?.reference_object?.packageData?.providerName);
-        });
+        if (externalResource?.reference_object?.packageData.providerName) {
+          it('should render parent package provider', () => {
+            expect(interactor.pkgProvider).to.equal(externalResource?.reference_object?.packageData?.providerName);
+          });
+        } else {
+          it('should render \'-\'', () => {
+            expect(interactor.activeFrom).to.equal('-');
+          });
+        }
 
         it('should render parent package count', () => {
           expect(interactor.pkgCount).to.have.string(externalResource?.reference_object?.packageData?.selectedCount + ' / ' + externalResource?.reference_object.packageData.titleCount);
