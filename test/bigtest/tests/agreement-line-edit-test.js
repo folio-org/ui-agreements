@@ -9,6 +9,7 @@ import AgreementLineForm from '../../../src/components/views/AgreementLineForm';
 import AgreementLineFormInteractor from '../interactors/agreement-line-form';
 import PackageCardInteractor from '../interactors/package-card';
 import TitleCardInteractor from '../interactors/title-card';
+import AgreementLineInfoInteractor from '../interactors/agreement-line-external-info';
 
 chai.use(spies);
 const { expect, spy } = chai;
@@ -29,6 +30,7 @@ describe('AgreementLineForm', () => {
   const interactor = new AgreementLineFormInteractor();
   const packageCardInteractor = new PackageCardInteractor();
   const titleCardInteractor = new TitleCardInteractor();
+  const externalInteractor = new AgreementLineInfoInteractor();
 
   describe('Internal KB Package', () => {
     beforeEach(async () => {
@@ -663,24 +665,32 @@ describe('AgreementLineForm', () => {
       expect(interactor.isAgreementLineForm).to.be.true;
     });
 
-    it('should render correct package name', () => {
-      expect(packageCardInteractor.packageName).to.equal('Book Collection Nonfiction: Elementary School Edition');
+    it('should render package card', () => {
+      expect(externalInteractor.isPkgCardPresent).to.be.true;
     });
 
-    it('should render correct number of items in package', () => {
-      expect(packageCardInteractor.resourceCount).to.equal('1200 / 1273');
+    it('should render correct package name', () => {
+      expect(externalInteractor.pkgName).to.equal('Book Collection Nonfiction: Elementary School Edition');
+    });
+
+    it('should render correct package content type', () => {
+      expect(externalInteractor.pkgContentType).to.equal('E-Book');
+    });
+
+    it('should render correct package holdings status', () => {
+      expect(externalInteractor.pkgHoldingStatus).to.equal('Selected');
+    });
+
+    it('should render correct package access status type', () => {
+      expect(externalInteractor.pkgAccessStatusType).to.equal('-');
     });
 
     it('should render correct provider', () => {
-      expect(packageCardInteractor.vendorName).to.equal('EBSCO');
+      expect(externalInteractor.pkgProvider).to.equal('EBSCO');
     });
 
-    it('should render correct source', () => {
-      expect(packageCardInteractor.packageSource).to.equal('EKB-PACKAGE');
-    });
-
-    it('should render correct reference ID', () => {
-      expect(packageCardInteractor.packageReference).to.equal('19-3629');
+    it('should render correct number of items in package', () => {
+      expect(externalInteractor.pkgCount).to.equal('1200 / 1273');
     });
 
     it('should have correct "active from" date in field', () => {
@@ -752,8 +762,12 @@ describe('AgreementLineForm', () => {
       expect(interactor.isAgreementLineForm).to.be.true;
     });
 
+    it('should render package card', () => {
+      expect(externalInteractor.isPkgCardPresent).to.be.true;
+    });
+
     it('should render correct number of items in package', () => {
-      expect(packageCardInteractor.resourceCount).to.equal('0 / 0');
+      expect(externalInteractor.pkgCount).to.equal('0 / 0');
     });
   });
 
@@ -786,6 +800,7 @@ describe('AgreementLineForm', () => {
                   summary: 'v*/i*/2012-01-01 - v*/i*/2012-12-31'
                 }],
                 reference_object: {
+                  accessStatusType: 'Draft',
                   label: 'Murder in the Title',
                   type: 'Book',
                   provider: 'EBSCO',
@@ -819,12 +834,24 @@ describe('AgreementLineForm', () => {
       expect(interactor.isAgreementLineForm).to.be.true;
     });
 
+    it('should render title card', () => {
+      expect(externalInteractor.isTitleCardPresent).to.be.true;
+    });
+
     it('should render correct title name', () => {
-      expect(titleCardInteractor.titleInstanceName).to.equal('Murder in the Title');
+      expect(externalInteractor.titleName).to.equal('Murder in the Title');
     });
 
     it('should render correct resource type', () => {
-      expect(titleCardInteractor.titleInstanceType).to.equal('Book');
+      expect(externalInteractor.titleType).to.equal('Book');
+    });
+
+    it('should render correct title holdings status', () => {
+      expect(externalInteractor.titleHoldingStatus).to.equal('Not selected');
+    });
+
+    it('should render correct title access status type', () => {
+      expect(externalInteractor.titleAccessStatusType).to.equal('Draft');
     });
 
     it('should render PO Lines accordion', () => {

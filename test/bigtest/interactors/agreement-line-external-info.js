@@ -18,6 +18,7 @@ export default @interactor class AgreementLineInfoInteractor {
   titleType = text('[data-test-title-type]');
   titleHoldingStatus = text('[data-test-title-holding-status]');
   titleAccessStatusType = text('[data-test-title-access-status-type]');
+  titleUrl = text('[data-test-agreement-line-url]');
 
   pkgName = text('[data-test-package-link]');
   pkgContentType = text('[data-test-package-content-type]')

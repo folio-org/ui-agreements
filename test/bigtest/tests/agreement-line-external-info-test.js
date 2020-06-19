@@ -27,6 +27,7 @@ describe('AgreementLineInfo', () => {
         );
       });
 
+      // PARENT AGREEMENT
       // resource = externalResource
       it('should render parent agreement name', () => {
         expect(interactor.parentAgreementName).to.equal(externalResource?.owner?.name);
@@ -70,6 +71,7 @@ describe('AgreementLineInfo', () => {
         });
       }
 
+      // PACKAGE
       // resource = externalResource?.reference_object;
       if (externalResource?.reference_object?.type === 'Package') {
         it('should not render title card', () => {
@@ -125,7 +127,18 @@ describe('AgreementLineInfo', () => {
         it('should render package count', () => {
           expect(interactor.pkgCount).to.have.string(externalResource?.reference_object?.selectedCount + ' / ' + externalResource?.reference_object.titleCount);
         });
-      } else { // TITLE
+      } else {
+        // TITLE
+        if (externalResource?.reference_object?.url) {
+          it('should render title on platform url', () => {
+            expect(interactor.titleUrl).to.equal(externalResource?.reference_object?.url);
+          });
+        } else {
+          it('should render \'-\'', () => {
+            expect(interactor.activeFrom).to.equal('-');
+          });
+        }
+
         it('should render title card', () => {
           expect(interactor.isTitleCardPresent).to.be.true;
         });

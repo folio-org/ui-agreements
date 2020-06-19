@@ -114,7 +114,8 @@ export const externalEntitlements = [
         'isSelected': true
       },
       'providerName': 'Springer Nature',
-      'isSelected': true
+      'isSelected': true,
+      'url': 'https://www.nature.com/ejcn/volumes',
     }
   }, {
     'id': '8b5c0a43-856a-4b4b-93dd-12f127c83147',
@@ -206,7 +207,8 @@ export const externalEntitlements = [
         'contentType': 'E-Book',
         'providerName': 'Askews & Holts'
       },
-      'providerName': 'Askews & Holts'
+      'providerName': 'Askews & Holts',
+      'url': 'https://www.vlebooks.com/vleweb/product/openreader?id=[[vleid]]&isbn=9781483616186&uid=none'
     }
   }];
 
