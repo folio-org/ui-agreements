@@ -118,7 +118,7 @@ const Info = ({
           <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
         </Headline>
         { isExternal(line) ?
-          <PackageCardExternal packageData={resource.reference_object.packageData} />
+          <PackageCardExternal packageData={resource.reference_object?.packageData} />
           :
           <PackageCard pkg={resource.pkg} />
         }
