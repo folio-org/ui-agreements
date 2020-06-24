@@ -386,7 +386,7 @@
     "months": "{count, number} {count, plural, one {month} other {months}}",
     "years": "{count, number} {count, plural, one {year} other {years}}",
     "embargo.start": "Последний доступный выпуск: ",
-    "embargo.end": "Последний выпуск: ",
+    "embargo.end": "Последний опубликованный выпуск: ",
     "permission.resources.edit": "Agreements: Edit e-resources",
     "embargo": "Эмбарго",
     "emptyAccordion.noAgreementsPackage": "No agreements for this package",
