@@ -447,5 +447,12 @@
     "eresources.suppressFromDiscovery": "حجب عن الاكتشاف",
     "default": "الافتراضي",
     "eresources.relatedTitle": "عناوين ذات صلة \"{name}\"",
-    "identifier.eissn.issn": "ردمد إلكتروني/ردمد"
+    "identifier.eissn.issn": "ردمد إلكتروني/ردمد",
+    "eresources.contentType": "نوع محتوى الحزمة",
+    "eresources.holdingStatus": "حالة المقتنيات",
+    "eresources.selected": "المحدد",
+    "eresources.notSelected": "غير محدد",
+    "eresources.accessStatusType": "نوع حالة الوصول",
+    "identifier.pisbn": "ردمك (مطبوع)",
+    "identifier.eisbn": "ردمك (عبر الإنترنت)"
 }
