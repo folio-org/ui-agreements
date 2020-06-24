@@ -447,5 +447,12 @@
     "eresources.suppressFromDiscovery": "在发现中隐藏",
     "default": "默认",
     "eresources.relatedTitle": "相关标题“ {name} ”",
-    "identifier.eissn.issn": "eISSN / ISSN"
+    "identifier.eissn.issn": "eISSN / ISSN",
+    "eresources.contentType": "Package content type",
+    "eresources.holdingStatus": "Holding status",
+    "eresources.selected": "Selected",
+    "eresources.notSelected": "Not selected",
+    "eresources.accessStatusType": "Access status type",
+    "identifier.pisbn": "ISBN (Print)",
+    "identifier.eisbn": "ISBN (Online)"
 }

@@ -447,5 +447,12 @@
     "eresources.suppressFromDiscovery": "Suppress from discovery",
     "default": "Default",
     "eresources.relatedTitle": "Related title \"{name}\"",
-    "identifier.eissn.issn": "eISSN/ISSN"
+    "identifier.eissn.issn": "eISSN/ISSN",
+    "eresources.contentType": "Package content type",
+    "eresources.holdingStatus": "Holding status",
+    "eresources.selected": "Selected",
+    "eresources.notSelected": "Not selected",
+    "eresources.accessStatusType": "Access status type",
+    "identifier.pisbn": "ISBN (Print)",
+    "identifier.eisbn": "ISBN (Online)"
 }
