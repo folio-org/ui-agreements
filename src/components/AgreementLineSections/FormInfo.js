@@ -12,9 +12,11 @@ import {
 } from '@folio/stripes/components';
 
 import PackageCard from '../PackageCard';
+import PackageCardExternal from '../PackageCardExternal';
 import TitleCard from '../TitleCard';
+import TitleCardExternal from '../TitleCardExternal';
 
-import { isPackage, parseDateOnlyString } from '../utilities';
+import { isExternal, isPackage, parseDateOnlyString } from '../utilities';
 
 const propTypes = {
   resource: PropTypes.object,
@@ -51,7 +53,11 @@ const FormInfo = ({
   resource,
 }) => (
   <>
-    { isPackage(resource) ? <PackageCard pkg={resource} /> : <TitleCard title={resource} /> }
+    { isExternal(resource) ?
+      isPackage(resource) ? <PackageCardExternal pkg={resource} /> : <TitleCardExternal title={resource} />
+      :
+      isPackage(resource) ? <PackageCard pkg={resource} /> : <TitleCard title={resource} />
+    }
     <Row>
       <Col md={3} xs={6}>
         <Field
