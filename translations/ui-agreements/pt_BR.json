@@ -448,11 +448,11 @@
     "default": "Padrão",
     "eresources.relatedTitle": "Título relacionado \"{name}\"",
     "identifier.eissn.issn": "eISSN/ISSN",
-    "eresources.contentType": "Package content type",
-    "eresources.holdingStatus": "Holding status",
-    "eresources.selected": "Selected",
-    "eresources.notSelected": "Not selected",
-    "eresources.accessStatusType": "Access status type",
-    "identifier.pisbn": "ISBN (Print)",
+    "eresources.contentType": "Tipo de conteúdo do pacote",
+    "eresources.holdingStatus": "Status do holding",
+    "eresources.selected": "Selecionado",
+    "eresources.notSelected": "Não selecionado",
+    "eresources.accessStatusType": "Tipo de status de acesso",
+    "identifier.pisbn": "ISBN (Impresso)",
     "identifier.eisbn": "ISBN (Online)"
 }
