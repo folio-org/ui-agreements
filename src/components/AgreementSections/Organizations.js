@@ -19,6 +19,7 @@ export default class Organizations extends React.Component {
       orgs: PropTypes.arrayOf(
         PropTypes.shape({
           interfaces: PropTypes.array.isRequired,
+          note: PropTypes.string,
           org: PropTypes.shape({
             name: PropTypes.string.isRequired,
             orgsUuid: PropTypes.string,
@@ -42,7 +43,7 @@ export default class Organizations extends React.Component {
     const { agreement: { orgs = [] } } = this.props;
 
     return orgs.map(o => {
-      const { interfaces, org, role } = o;
+      const { interfaces, note, org, role } = o;
       if (!org || !role) return null;
 
       return (
@@ -61,6 +62,7 @@ export default class Organizations extends React.Component {
             </span>
           }
           interfaces={interfaces}
+          note={note}
         />
       );
     });
