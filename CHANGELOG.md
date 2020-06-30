@@ -1,5 +1,8 @@
 # Change history for ui-agreements
 
+##  4.1.0 IN PROGRESS
+* Added ability to set and view notes on organizations. ERM-966
+
 ##  4.0.0 2020-06-11
 * Added permission set and ability to delete agreements. ERM-777
 * Show/hide pick list actions based on refdata category type. ERM-735
