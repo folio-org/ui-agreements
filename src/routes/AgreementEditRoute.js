@@ -14,6 +14,8 @@ import View from '../components/views/AgreementForm';
 import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
 
+const RECORDS_PER_REQUEST = 100;
+
 class AgreementEditRoute extends React.Component {
   static manifest = Object.freeze({
     agreement: {
@@ -30,7 +32,7 @@ class AgreementEditRoute extends React.Component {
         stats: 'true',
       },
       limitParam: 'perPage',
-      perRequest: 100,
+      perRequest: RECORDS_PER_REQUEST,
       records: 'results',
       recordsRequired: '1000',
     },
@@ -104,6 +106,7 @@ class AgreementEditRoute extends React.Component {
     users: {
       type: 'okapi',
       path: 'users',
+      perRequest: RECORDS_PER_REQUEST,
       params: (_q, _p, _r, _l, props) => {
         const query = (props?.resources?.agreement?.records?.[0]?.contacts ?? [])
           .filter(contact => contact.user)
