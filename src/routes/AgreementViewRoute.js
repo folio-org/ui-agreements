@@ -99,6 +99,7 @@ class AgreementViewRoute extends React.Component {
     users: {
       type: 'okapi',
       path: 'users',
+      perRequest: RECORDS_PER_REQUEST,
       params: (_q, _p, _r, _l, props) => {
         const query = get(props.resources, 'agreement.records[0].contacts', [])
           .filter(contact => contact.user)
