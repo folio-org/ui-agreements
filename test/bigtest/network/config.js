@@ -1,7 +1,7 @@
 // typical mirage config export
 // http://www.ember-cli-mirage.com/docs/v0.4.x/configuration/
 import { get, isEmpty } from 'lodash';
-import { faker } from '@bigtest/mirage';
+import faker from 'faker';
 import parseQueryString from './util';
 
 const getItems = (schema, request, recordName) => {

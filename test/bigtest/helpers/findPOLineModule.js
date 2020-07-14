@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react';
-import { faker } from '@bigtest/mirage';
+import faker from 'faker';
 import { Button } from '@folio/stripes/components';
 
 const { number, uuid, words } = faker.random;

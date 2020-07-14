@@ -1,5 +1,5 @@
 import { beforeEach, describe, it } from '@bigtest/mocha';
-import { faker } from '@bigtest/mirage';
+import faker from 'faker';
 
 import { expect } from 'chai';
 
