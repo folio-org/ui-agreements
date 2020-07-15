@@ -1,4 +1,5 @@
-import { Factory, faker, trait } from '@bigtest/mirage';
+import { Factory } from 'miragejs';
+import faker from 'faker';
 
 export default Factory.extend({
   id: () => faker.random.uuid(),
@@ -11,15 +12,18 @@ export default Factory.extend({
   tags: () => [],
   supplementaryDocs: () => [],
 
-  withContacts: trait({
-    afterCreate(agreement, server) {
-      const contact = server.create('contact', agreement.internalContactData);
-      agreement.update({
-        contacts: [contact]
-      });
-      agreement.save();
-    }
-  }),
+  withContacts: {
+    extension: {
+      afterCreate(agreement, server) {
+        const contact = server.create('contact', agreement.internalContactData);
+        agreement.update({
+          contacts: [contact]
+        });
+        agreement.save();
+      }
+    },
+    __isTrait__: true
+  },
 
   afterCreate(agreement, server) {
     const { items = [] } = agreement;
