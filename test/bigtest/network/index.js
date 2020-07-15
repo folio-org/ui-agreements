@@ -1,4 +1,4 @@
-import { camelize, underscore } from 'miragejs';
+import { camelize, underscore } from 'inflected';
 
 // auto-import all mirage submodules
 const req = require.context('./', true, /\.js$/);
