@@ -1,8 +1,8 @@
 # Change history for ui-agreements
 
 ##  4.1.0 IN PROGRESS
-* Refactor `miragejs` from `bigtest/mirage`.
 * Added ability to set and view notes on organizations. ERM-966
+* Refactor `miragejs` from `bigtest/mirage`.
 
 ##  4.0.0 2020-06-11
 * Added permission set and ability to delete agreements. ERM-777
