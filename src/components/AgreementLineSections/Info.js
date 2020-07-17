@@ -17,7 +17,6 @@ import TitleCardExternal from '../TitleCardExternal';
 
 import { isExternal, isPackage } from '../utilities';
 
-
 const propTypes = {
   line: PropTypes.shape({
     activeFrom: PropTypes.string,
@@ -118,9 +117,9 @@ const Info = ({
           <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
         </Headline>
         { isExternal(line) ?
-          <PackageCardExternal packageData={resource.reference_object?.packageData} />
+          <PackageCardExternal packageData={resource.reference_object?.packageData ?? {}} />
           :
-          <PackageCard pkg={resource.pkg} />
+          <PackageCard pkg={resource?.pkg ?? {}} />
         }
       </>
     }
