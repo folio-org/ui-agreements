@@ -1,4 +1,4 @@
-import { Factory } from 'miragejs';
+import { Factory, trait } from 'miragejs';
 import faker from 'faker';
 
 export default Factory.extend({
@@ -12,18 +12,15 @@ export default Factory.extend({
   tags: () => [],
   supplementaryDocs: () => [],
 
-  withContacts: {
-    extension: {
-      afterCreate(agreement, server) {
-        const contact = server.create('contact', agreement.internalContactData);
-        agreement.update({
-          contacts: [contact]
-        });
-        agreement.save();
-      }
-    },
-    __isTrait__: true
-  },
+  withContacts: trait({
+    afterCreate(agreement, server) {
+      const contact = server.create('contact', agreement.internalContactData);
+      agreement.update({
+        contacts: [contact]
+      });
+      agreement.save();
+    }
+  }),
 
   afterCreate(agreement, server) {
     const { items = [] } = agreement;

@@ -1,6 +1,7 @@
 # Change history for ui-agreements
 
 ##  4.1.0 IN PROGRESS
+* Refactor `miragejs` from `bigtest/mirage`.
 * Added ability to set and view notes on organizations. ERM-966
 
 ##  4.0.0 2020-06-11
