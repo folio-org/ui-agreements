@@ -1,8 +1,12 @@
 # Change history for ui-agreements
 
-##  4.1.0 IN PROGRESS
+##  5.0.0 IN PROGRESS
 * Added ability to set and view notes on organizations. ERM-966
+* Upgrade to Stripes 5.0
 * Refactor `miragejs` from `bigtest/mirage`.
+
+##  4.0.2 2020-07-06
+* Fixed issue with only 10 results being retrieved for internal contacts. ERM-980
 
 ##  4.0.0 2020-06-11
 * Added permission set and ability to delete agreements. ERM-777

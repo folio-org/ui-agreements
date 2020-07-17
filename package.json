@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -50,7 +50,7 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.2.0",
-    "@folio/stripes": "^4.0.0",
+    "@folio/stripes": "^5.0.0",
     "@folio/stripes-cli": "^1.8.0",
     "babel-eslint": "^9.0.0",
     "chai": "^4.2.0",
@@ -66,12 +66,13 @@
     "react-dom": "^16.6.3",
     "react-intl": "^4.5.1",
     "react-redux": "^5.1.1",
-    "react-router-dom": "^4.1.1",
+    "react-router-dom": "^5.2.0",
     "redux": "^3.7.2",
     "regenerator-runtime": "^0.13.3",
     "sinon": "^7.5.0"
   },
   "dependencies": {
+    "@folio/stripes-erm-components": "^4.0.0",
     "@folio/react-intl-safe-html": "^2.0.0",
     "@folio/stripes-erm-components": "^3.0.0",
     "@rehooks/local-storage": "^2.3.0",
@@ -88,13 +89,13 @@
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
-    "@folio/stripes": "^4.0.0",
+    "@folio/stripes": "^5.0.0",
     "moment": "^2.22.2",
     "react": "*",
     "react-dom": "*",
     "react-intl": "^4.5.1",
     "react-redux": "*",
-    "react-router-dom": "^4.1.1",
+    "react-router-dom": "^5.2.0",
     "redux": "*"
   },
   "resolutions": {

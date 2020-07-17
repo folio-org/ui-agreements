@@ -27,7 +27,7 @@ const propTypes = {
 };
 
 const PackageCard = ({
-  pkg,
+  pkg = {},
   searchString = '',
 }) => (
   <Card
