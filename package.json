@@ -47,7 +47,6 @@
   },
   "devDependencies": {
     "@bigtest/interactor": "^0.9.3",
-    "@bigtest/mirage": "^0.0.1",
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.2.0",
@@ -58,6 +57,9 @@
     "chai-spies": "^1.0.0",
     "core-js": "^3.6.1",
     "eslint": "^6.2.1",
+    "faker": "^4.1.0",
+    "inflected": "^2.0.4",
+    "miragejs": "^0.1.40",
     "mocha": "^6.2.2",
     "moment": "^2.22.2",
     "react": "^16.6.3",
@@ -72,6 +74,7 @@
   "dependencies": {
     "@folio/stripes-erm-components": "^4.0.0",
     "@folio/react-intl-safe-html": "^2.0.0",
+    "@folio/stripes-erm-components": "^3.0.0",
     "@rehooks/local-storage": "^2.3.0",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
