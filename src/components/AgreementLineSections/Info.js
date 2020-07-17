@@ -119,7 +119,7 @@ const Info = ({
         { isExternal(line) ?
           <PackageCardExternal packageData={resource.reference_object?.packageData ?? {}} />
           :
-          <PackageCard pkg={resource?.pkg ?? {}} />
+          <PackageCard pkg={resource.pkg ?? {}} />
         }
       </>
     }
