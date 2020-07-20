@@ -74,7 +74,6 @@
   "dependencies": {
     "@folio/stripes-erm-components": "^4.0.0",
     "@folio/react-intl-safe-html": "^2.0.0",
-    "@folio/stripes-erm-components": "^3.0.0",
     "@rehooks/local-storage": "^2.3.0",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
