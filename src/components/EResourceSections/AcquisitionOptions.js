@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Accordion, Badge, MultiColumnList, NoValue, Spinner } from '@folio/stripes/components';
 
+import {
+  EResourceType,
+  isPackage,
+  TitleOnPlatformLink
+} from '@folio/stripes-erm-components';
 import AddToBasketButton from '../AddToBasketButton';
 import { Coverage } from '../Coverage';
 import EResourceKB from '../EResourceKB';
-import EResourceType from '../EResourceType';
 
-import { isExternal, isPackage } from '../utilities';
-import PlatformTitleLink from '../PlatformTitleLink';
+import { isExternal } from '../utilities';
 
 class AcquisitionOptions extends React.Component {
   static propTypes = {
@@ -78,7 +81,19 @@ class AcquisitionOptions extends React.Component {
         sourceKb: option => <EResourceKB resource={option} />,
         package: option => this.renderParentPackage(option),
         coverage: option => <Coverage eResource={option} />,
-        platform: option => <PlatformTitleLink id={option.id} pti={option?._object?.pti} />,
+        platform: option => {
+          const pti = option?._object?.pti ?? {};
+          const { name, platform, url } = pti;
+
+          return (
+            <TitleOnPlatformLink
+              id={option.id}
+              name={name}
+              platform={platform?.name}
+              url={url}
+            />
+          );
+        },
         acqMethod: option => <EResourceType resource={option} />,
         add: option => {
           const optionIsPackage = isPackage(option);

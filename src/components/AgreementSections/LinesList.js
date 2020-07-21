@@ -10,12 +10,13 @@ import {
   Tooltip
 } from '@folio/stripes/components';
 
+import { EResourceType } from '@folio/stripes-erm-components';
+
 import { Coverage } from '../Coverage';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
-import EResourceType from '../EResourceType';
 import { getResourceFromEntitlement, urls } from '../utilities';
 
 export default class LinesList extends React.Component {

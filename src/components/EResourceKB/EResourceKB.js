@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
-import { isPackage } from '../utilities';
+import { isPackage } from '@folio/stripes-erm-components';
 
 export default class EResourceKB extends React.Component {
   static propTypes = {

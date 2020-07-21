@@ -4,10 +4,14 @@ import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 import { Accordion, Col, KeyValue, Layout, Row } from '@folio/stripes/components';
 
-import { SerialCoverage } from '../Coverage';
+import {
+  isPackage,
+  SerialCoverage
+} from '@folio/stripes-erm-components';
+
 import CoverageFieldArray from '../CoverageFieldArray';
 import Embargo from '../Embargo';
-import { isExternal, isPackage } from '../utilities';
+import { isExternal } from '../utilities';
 
 const propTypes = {
   line: PropTypes.object,

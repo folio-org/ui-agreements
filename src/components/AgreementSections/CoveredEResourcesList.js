@@ -19,12 +19,15 @@ import {
   Tooltip,
 } from '@folio/stripes/components';
 
-import { getResourceIdentifier } from '../utilities';
+import {
+  getResourceIdentifier,
+  TitleOnPlatformLink
+} from '@folio/stripes-erm-components';
+
 import { Coverage } from '../Coverage';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
-import PlatformTitleLink from '../PlatformTitleLink';
 
 export default class CoveredEResourcesList extends React.Component {
   static propTypes = {
@@ -74,7 +77,19 @@ export default class CoveredEResourcesList extends React.Component {
       const titleInstance = get(e._object, 'pti.titleInstance', {});
       return getResourceIdentifier(titleInstance, 'eissn') || getResourceIdentifier(titleInstance, 'pissn');
     },
-    platform: e => <PlatformTitleLink id={e.id} pti={e?._object?.pti} />,
+    platform: e => {
+      const pti = e?._object?.pti ?? {};
+      const { name, platform, url } = pti;
+
+      return (
+        <TitleOnPlatformLink
+          id={e.id}
+          name={name}
+          platform={platform?.name}
+          url={url}
+        />
+      );
+    },
     package: e => get(e._object, 'pkg.name', '-'),
     coverage:  e => <Coverage eResource={e} />,
     accessStart: e => this.renderDate(e._object?.accessStart),

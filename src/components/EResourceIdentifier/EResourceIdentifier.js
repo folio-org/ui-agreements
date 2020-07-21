@@ -6,7 +6,9 @@ import {
   KeyValue,
 } from '@folio/stripes/components';
 
-import { getResourceIdentifier } from '../utilities';
+import {
+  getResourceIdentifier,
+} from '@folio/stripes-erm-components';
 
 const EResourceIdentifier = (
   { type, titleInstance, width = 3 }

@@ -13,10 +13,10 @@ import {
   Spinner,
 } from '@folio/stripes/components';
 
+import { TitleOnPlatformLink } from '@folio/stripes-erm-components';
 import { Coverage } from '../Coverage';
 import EResourceLink from '../EResourceLink';
 import { resultCount } from '../../constants';
-import PlatformTitleLink from '../PlatformTitleLink';
 
 export default class PackageContents extends React.Component {
   static propTypes = {
@@ -42,7 +42,19 @@ export default class PackageContents extends React.Component {
 
   formatter = {
     name: pci => <EResourceLink eresource={pci.pti.titleInstance} />,
-    platform: pci => <PlatformTitleLink id={pci.id} pti={pci.pti} />,
+    platform: pci => {
+      const pti = pci.pti ?? {};
+      const { name, platform, url } = pti;
+
+      return (
+        <TitleOnPlatformLink
+          id={pci.id}
+          name={name}
+          platform={platform?.name}
+          url={url}
+        />
+      );
+    },
     coverage: pci => <Coverage pci={pci} />,
     accessStart: pci => this.renderDate(pci.accessStart),
     accessEnd: pci => this.renderDate(pci.accessEnd),
