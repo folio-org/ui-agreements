@@ -9,9 +9,9 @@ import {
   MultiColumnList,
 } from '@folio/stripes/components';
 
+import { EResourceType } from '@folio/stripes-erm-components';
 import { Coverage } from '../Coverage';
 import EResourceLink from '../EResourceLink';
-import EResourceType from '../EResourceType';
 
 class BasketList extends React.Component {
   static propTypes = {

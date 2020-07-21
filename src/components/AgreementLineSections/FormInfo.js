@@ -11,12 +11,13 @@ import {
   TextArea,
 } from '@folio/stripes/components';
 
+import { isPackage } from '@folio/stripes-erm-components';
 import PackageCard from '../PackageCard';
 import PackageCardExternal from '../PackageCardExternal';
 import TitleCard from '../TitleCard';
 import TitleCardExternal from '../TitleCardExternal';
 
-import { isExternal, isPackage, parseDateOnlyString } from '../utilities';
+import { isExternal, parseDateOnlyString } from '../utilities';
 
 const propTypes = {
   resource: PropTypes.object,

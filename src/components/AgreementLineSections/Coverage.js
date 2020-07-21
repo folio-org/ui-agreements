@@ -10,9 +10,10 @@ import {
   MultiColumnList
 } from '@folio/stripes/components';
 
+import { isPackage } from '@folio/stripes-erm-components';
+
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import Embargo from '../Embargo';
-import { isPackage } from '../utilities';
 
 const propTypes = {
   line: PropTypes.shape({

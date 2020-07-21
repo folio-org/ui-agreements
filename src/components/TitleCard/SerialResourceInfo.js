@@ -8,8 +8,8 @@ import {
   Row,
 } from '@folio/stripes/components';
 
+import { EResourceType } from '@folio/stripes-erm-components';
 import EResourceIdentifier from '../EResourceIdentifier';
-import EResourceType from '../EResourceType';
 
 const propTypes = {
   titleInstance: PropTypes.shape({

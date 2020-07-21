@@ -6,15 +6,18 @@ import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
 import { Col, Datepicker, KeyValue, Row, TextArea } from '@folio/stripes/components';
-import { EditCard } from '@folio/stripes-erm-components';
+import {
+  EditCard,
+  EResourceType,
+  isPackage,
+  SerialCoverage
+} from '@folio/stripes-erm-components';
 
 import BasketSelector from '../BasketSelector';
-import { SerialCoverage } from '../Coverage';
 import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
-import EResourceType from '../EResourceType';
-import { isExternal, isPackage, parseDateOnlyString } from '../utilities';
+import { isExternal, parseDateOnlyString } from '../utilities';
 
 import CoverageFieldArray from '../CoverageFieldArray';
 import POLinesFieldArray from '../POLinesFieldArray';
