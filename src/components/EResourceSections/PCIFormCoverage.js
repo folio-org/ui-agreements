@@ -7,7 +7,7 @@ import {
   KeyValue
 } from '@folio/stripes/components';
 import { FieldArray } from 'react-final-form-arrays';
-import Embargo from '../Embargo';
+import { Embargo } from '@folio/stripes-erm-components';
 
 import CoverageFieldArray from '../CoverageFieldArray';
 

@@ -10,7 +10,7 @@ import {
   MultiColumnList,
   NoValue,
 } from '@folio/stripes/components';
-import Embargo from '../Embargo';
+import { Embargo } from '@folio/stripes-erm-components';
 
 export default class PCICoverage extends React.Component {
   static propTypes = {
