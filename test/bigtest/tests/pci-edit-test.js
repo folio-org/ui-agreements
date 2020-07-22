@@ -16,7 +16,7 @@ const { expect, spy } = chai;
 
 const onSubmit = spy();
 
-describe.only('PCI edit form', () => {
+describe('PCI edit form', () => {
   const embargoInteractor = new EmbargoInteractor();
   const pciEditPaneInteractor = new PCIEditPaneInteractor();
 
