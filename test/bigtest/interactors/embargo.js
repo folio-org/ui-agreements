@@ -1,7 +1,7 @@
 import {
+  attribute,
   interactor,
   isPresent,
-  text,
 } from '@bigtest/interactor';
 
 @interactor class EmbargoInteractor {
@@ -11,10 +11,10 @@ import {
 
   movingWallEndExists = isPresent('[data-test-embargo-end]')
   movingWallStartExists = isPresent('[data-test-embargo-start]')
-  endLength = text('[data-test-embargo-end-length]')
-  endUnit = text('[data-test-embargo-end-unit]')
-  startLength = text('[data-test-embargo-start-length]')
-  startUnit = text('[data-test-embargo-start-unit]')
+  endLength = attribute('[data-test-embargo-end-length]', 'data-test-embargo-end-length')
+  endUnit = attribute('[data-test-embargo-end-unit]', 'data-test-embargo-end-unit')
+  startLength = attribute('[data-test-embargo-start-length]', 'data-test-embargo-start-length')
+  startUnit = attribute('[data-test-embargo-start-unit]', 'data-test-embargo-start-unit')
 }
 
 export default EmbargoInteractor;

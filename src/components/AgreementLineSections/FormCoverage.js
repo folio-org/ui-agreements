@@ -5,12 +5,12 @@ import { FieldArray } from 'react-final-form-arrays';
 import { Accordion, Col, KeyValue, Layout, Row } from '@folio/stripes/components';
 
 import {
+  Embargo,
   isPackage,
   SerialCoverage
 } from '@folio/stripes-erm-components';
 
 import CoverageFieldArray from '../CoverageFieldArray';
-import Embargo from '../Embargo';
 import { isExternal } from '../utilities';
 
 const propTypes = {

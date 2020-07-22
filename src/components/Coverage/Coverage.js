@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SerialCoverage } from '@folio/stripes-erm-components';
+import { Embargo, SerialCoverage } from '@folio/stripes-erm-components';
 import MonographCoverage from './MonographCoverage';
-import Embargo from '../Embargo';
 
 import { resourceTypes } from '../../constants';
 
