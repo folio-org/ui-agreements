@@ -220,16 +220,17 @@ describe('PCI edit form', () => {
           await pciEditPaneInteractor.coverageCards(2).fillAndBlurStartDate('02/02/2010');
           await pciEditPaneInteractor.coverageCards(2).fillAndBlurEndDate('02/02/2012');
           await pciEditPaneInteractor.clickAddButton();
+          await new Promise(resolve => { setTimeout(resolve, 500); }); // Should be removed as a part of ERM-825
           await pciEditPaneInteractor.coverageCards(3).fillAndBlurStartDate('02/02/2009');
         });
 
-        it.skip('should render overlapping dates error message', () => {
+        it('should render overlapping dates error message', () => {
           expect(pciEditPaneInteractor.coverageCards(3).isOverlappingErrorPresent).to.be.true;
         });
       });
     });
 
-    describe.skip('Adding new coverage and submitting the form', () => {
+    describe('Adding new coverage and submitting the form', () => {
       const newCoverage = {
         '_delete': false,
         'endDate': '2022-01-01',
@@ -242,6 +243,7 @@ describe('PCI edit form', () => {
 
       beforeEach(async () => {
         await pciEditPaneInteractor.clickAddButton();
+        await new Promise(resolve => { setTimeout(resolve, 500); }); // Should be removed as a part of ERM-825
         await pciEditPaneInteractor.coverageCards(2).fillStartDate('01/01/2021');
         await pciEditPaneInteractor.coverageCards(2).fillEndDate('01/01/2022');
         await pciEditPaneInteractor.coverageCards(2).fillStartVolume(newCoverage.startVolume);
