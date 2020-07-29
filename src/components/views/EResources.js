@@ -213,7 +213,7 @@ const EResources = ({
                     autosize
                     columnMapping={{
                       name: <FormattedMessage id="ui-agreements.eresources.name" />,
-                      type: <FormattedMessage id="ui-agreements.eresources.type" />,
+                      type: <FormattedMessage id="ui-agreements.eresources.publicationType" />,
                       isbn: <FormattedMessage id="ui-agreements.identifier.isbn" />,
                       eissn: <FormattedMessage id="ui-agreements.identifier.eissn" />,
                       pissn: <FormattedMessage id="ui-agreements.identifier.pissn" />,

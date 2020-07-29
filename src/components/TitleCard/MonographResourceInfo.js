@@ -22,6 +22,9 @@ const propTypes = {
     subType: PropTypes.shape({
       label: PropTypes.string,
     }),
+    publicationType: PropTypes.shape({
+      label: PropTypes.string,
+    }),
     type: PropTypes.shape({
       label: PropTypes.string,
     }),
@@ -34,8 +37,8 @@ const MonographResourceInfo = ({
   <>
     <Row>
       <Col xs={3}>
-        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.type" />}>
-          <div data-test-title-instance-type>{titleInstance.type?.label ?? <NoValue />}</div>
+        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.publicationType" />}>
+          <div data-test-title-instance-type>{titleInstance.publicationType?.label ?? <NoValue />}</div>
         </KeyValue>
       </Col>
       <Col xs={3}>

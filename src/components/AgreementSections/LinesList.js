@@ -38,7 +38,7 @@ export default class LinesList extends React.Component {
   columnMapping = {
     name: <FormattedMessage id="ui-agreements.eresources.name" />,
     provider: <FormattedMessage id="ui-agreements.eresources.provider" />,
-    type: <FormattedMessage id="ui-agreements.eresources.type" />,
+    type: <FormattedMessage id="ui-agreements.eresources.publicationType" />,
     count: <FormattedMessage id="ui-agreements.agreementLines.count" />,
     note: <FormattedMessage id="ui-agreements.note" />,
     coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,

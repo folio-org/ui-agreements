@@ -36,7 +36,7 @@ class BasketList extends React.Component {
             />
           ),
           name: <FormattedMessage id="ui-agreements.eresources.name" />,
-          type: <FormattedMessage id="ui-agreements.eresources.type" />,
+          type: <FormattedMessage id="ui-agreements.eresources.publicationType" />,
           package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
           publisher: <FormattedMessage id="ui-agreements.eresources.publisher" />,
           platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
