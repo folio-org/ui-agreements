@@ -85,7 +85,7 @@ const EResources = ({
         initialSortState={{ sort: 'name' }}
         queryGetter={queryGetter}
         querySetter={querySetter}
-        sortableColumns={['name', 'type']}
+        sortableColumns={['name', 'publicationType']}
       >
         {
           ({
@@ -213,14 +213,14 @@ const EResources = ({
                     autosize
                     columnMapping={{
                       name: <FormattedMessage id="ui-agreements.eresources.name" />,
-                      type: <FormattedMessage id="ui-agreements.eresources.publicationType" />,
+                      publicationType: <FormattedMessage id="ui-agreements.eresources.publicationType" />,
                       isbn: <FormattedMessage id="ui-agreements.identifier.isbn" />,
                       eissn: <FormattedMessage id="ui-agreements.identifier.eissn" />,
                       pissn: <FormattedMessage id="ui-agreements.identifier.pissn" />,
                     }}
                     columnWidths={{
                       name: 300,
-                      type: 100,
+                      publicationType: 100,
                       isbn: 150,
                       eissn: 150,
                       pissn: 150,
@@ -228,7 +228,7 @@ const EResources = ({
                     contentData={data.eresources}
                     formatter={{
                       name: e => e._object?.longName ?? e.name,
-                      type: e => <EResourceType resource={e} />,
+                      publicationType: e => <EResourceType resource={e} />,
                       isbn: e => getResourceIdentifier(e._object, 'isbn'),
                       eissn: e => getResourceIdentifier(e._object, 'eissn'),
                       pissn: e => getResourceIdentifier(e._object, 'pissn') ?? getSiblingIdentifier(e._object, 'issn'),
@@ -259,7 +259,7 @@ const EResources = ({
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     totalCount={count}
                     virtualize
-                    visibleColumns={['name', 'type', 'isbn', 'eissn', 'pissn']}
+                    visibleColumns={['name', 'publicationType', 'isbn', 'eissn', 'pissn']}
                   />
                 </Pane>
                 {children}
