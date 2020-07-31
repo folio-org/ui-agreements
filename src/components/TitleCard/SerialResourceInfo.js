@@ -25,8 +25,8 @@ const SerialResourceInfo = ({
   <>
     <Row>
       <Col xs={3}>
-        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.type" />}>
-          <div data-test-title-instance-type>
+        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.publicationType" />}>
+          <div data-test-title-instance-publication-type>
             <EResourceType resource={titleInstance} />
           </div>
         </KeyValue>

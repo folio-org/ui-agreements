@@ -121,10 +121,15 @@ export const serialResource = {
         }
       ],
       'name': 'Academy of Management Learning & Education',
-      'type': {
+      'publicationType': {
         'id': '2c9180b271aa43fa0171aa450a97003d',
         'value': 'journal',
         'label': 'Journal'
+      },
+      'type': {
+        'id': '2c9180b271aa43fa0171aa450a97003d',
+        'value': 'serial',
+        'label': 'Serial'
       },
       'work': {
         'id': '3160eca5-647a-435a-b2a4-f9c3a80d0cee'

@@ -71,6 +71,11 @@ const monographResource = {
       ],
       'coverage': [],
       'name': 'The Personal History of David Copperfield',
+      'publicationType': {
+        'id': '2c9180b271aa43fa0171acc669a50059',
+        'value': 'monograph',
+        'label': 'monograph'
+      },
       'type': {
         'id': '2c9180b271aa43fa0171acc669a50059',
         'value': 'monograph',

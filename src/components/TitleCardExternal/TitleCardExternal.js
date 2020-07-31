@@ -34,9 +34,9 @@ const TitleCardExternal = ({
     >
       <Row>
         <Col xs={3}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.eresources.type" />}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.eresources.publicationType" />}>
             <div data-test-title-type>
-              {title?.reference_object?.type ?? <NoValue />}
+              {title?.reference_object?.publicationType ?? <NoValue />}
             </div>
           </KeyValue>
         </Col>
