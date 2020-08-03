@@ -30,7 +30,7 @@ describe('TitleCard', () => {
     });
 
     it('should render expected title instance type', () => {
-      expect(interactor.titleInstanceType).to.equal(monographResource.pti.titleInstance.type.label);
+      expect(interactor.titleInstanceType).to.equal(monographResource.pti.titleInstance.publicationType.label);
     });
 
     it('should render expected subType', () => {
@@ -80,7 +80,7 @@ describe('TitleCard', () => {
     });
 
     it('should render expected title instance type', () => {
-      expect(interactor.titleInstanceType).to.equal(serialResource.pti.titleInstance.type.label);
+      expect(interactor.titleInstanceType).to.equal(serialResource.pti.titleInstance.publicationType.label);
     });
 
     it('should render expected subType', () => {

@@ -381,10 +381,15 @@ describe('AgreementLineForm', () => {
                           'summary': 'v21/i*/2011-01-01 - v*/i*/*'
                         }],
                         'name': 'Accounting history review',
-                        'type': {
+                        'publicationType': {
                           'id': '2c9180b2724e9dad01724e9e0b9c003f',
                           'value': 'journal',
                           'label': 'Journal'
+                        },
+                        'type': {
+                          'id': '2c9180b2724e9dad01724e9e0b9c003f',
+                          'value': 'serial',
+                          'label': 'Serial'
                         },
                         'suppressFromDiscovery': false,
                         'work': {
@@ -639,6 +644,7 @@ describe('AgreementLineForm', () => {
                 customCoverage: false,
                 reference_object: {
                   label: 'Book Collection Nonfiction: Elementary School Edition',
+                  publicationType: 'Package',
                   type: 'Package',
                   provider: 'EBSCO',
                   titleCount: 1273,
@@ -736,6 +742,7 @@ describe('AgreementLineForm', () => {
                 customCoverage: false,
                 reference_object: {
                   label: 'Book Collection Nonfiction: Elementary School Edition',
+                  pulicationType: 'Package',
                   type: 'Package',
                   provider: 'EBSCO',
                   titleCount: 0,

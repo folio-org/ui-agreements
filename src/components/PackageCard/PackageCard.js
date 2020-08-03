@@ -42,7 +42,7 @@ const PackageCard = ({
   >
     <Row>
       <Col xs={3}>
-        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.type" />}>
+        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.publicationType" />}>
           <FormattedMessage id="ui-agreements.eresources.package" />
         </KeyValue>
       </Col>

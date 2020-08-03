@@ -139,7 +139,7 @@ export default class AgreementLineField extends React.Component {
             </KeyValue>
           </Col>
           <Col md={2} xs={12}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.eresources.type" />}>
+            <KeyValue label={<FormattedMessage id="ui-agreements.eresources.publicationType" />}>
               <div data-test-ag-line-type>{this.renderLineType(resource)}</div>
             </KeyValue>
           </Col>

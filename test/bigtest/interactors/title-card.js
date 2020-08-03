@@ -7,7 +7,7 @@ export default @interactor class TitleCardInteractor {
   static defaultScope = '[data-test-title-card]';
 
   titleInstanceName = text('[data-test-title-instance-name]');
-  titleInstanceType = text('[data-test-title-instance-type]');
+  titleInstanceType = text('[data-test-title-instance-publication-type]');
   titleInstanceSubType = text('[data-test-title-instance-sub-type]');
   titleInstanceFirstAuthor = text('[data-test-title-instance-first-author]');
   titleInstanceFirstEditor = text('[data-test-title-instance-first-editor]');

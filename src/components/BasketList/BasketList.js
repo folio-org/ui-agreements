@@ -36,7 +36,7 @@ class BasketList extends React.Component {
             />
           ),
           name: <FormattedMessage id="ui-agreements.eresources.name" />,
-          type: <FormattedMessage id="ui-agreements.eresources.type" />,
+          publicationType: <FormattedMessage id="ui-agreements.eresources.publicationType" />,
           package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
           publisher: <FormattedMessage id="ui-agreements.eresources.publisher" />,
           platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
@@ -56,7 +56,7 @@ class BasketList extends React.Component {
             />
           ),
           name: resource => <EResourceLink eresource={resource} />,
-          type: resource => <EResourceType resource={resource} />,
+          publicationType: resource => <EResourceType resource={resource} />,
           package: resource => {
             const pkg = get(resource, '_object.pkg');
             if (!pkg) return '-';
@@ -88,7 +88,7 @@ class BasketList extends React.Component {
         visibleColumns={[
           'selected',
           'name',
-          'type',
+          'publicationType',
           'package',
           'platform',
           'coverage',
