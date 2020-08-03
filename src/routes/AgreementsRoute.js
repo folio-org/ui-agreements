@@ -23,7 +23,7 @@ class AgreementsRoute extends React.Component {
       perRequest: 100,
       limitParam: 'perPage',
       params: generateQueryParams({
-        searchKey: 'name,alternateNames.name',
+        searchKey: 'name,alternateNames.name,description',
         filterKeys: {
           agreementStatus: 'agreementStatus.value',
           contacts: 'contacts.user',
