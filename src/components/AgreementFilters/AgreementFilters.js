@@ -93,7 +93,6 @@ export default class AgreementFilters extends React.Component {
         onClearFilter={() => {
           this.props.filterHandlers.state({
             ...activeFilters,
-            role: [],
             orgs: [],
           });
         }}
@@ -112,14 +111,12 @@ export default class AgreementFilters extends React.Component {
 
   renderOrganizationRoleFilter = () => {
     const roles = this.props.data.orgRoleValues;
-    // TODO: TEST USING THE VALUES GENERATED IN GDSFP
     const dataOptions = roles.map(role => ({
       value: role.id,
       label: role.label,
     }));
 
     const { activeFilters } = this.props;
-    const orgFilters = activeFilters.orgs || [];
     const roleFilters = activeFilters.role || [];
 
     return (
@@ -131,12 +128,16 @@ export default class AgreementFilters extends React.Component {
         onClearFilter={() => { this.props.filterHandlers.clearGroup('role'); }}
         separator={false}
       >
-        <Selection
-          dataOptions={dataOptions}
-          disabled={orgFilters.length === 0}
-          onChange={value => this.props.filterHandlers.state({ ...activeFilters, role: [value] })}
-          value={roleFilters[0] || ''}
-        />
+        <FormattedMessage id="ui-agreements.organizations.selectRole">
+          {placeholder => (
+            <Selection
+              dataOptions={dataOptions}
+              onChange={value => this.props.filterHandlers.state({ ...activeFilters, role: [value] })}
+              placeholder={placeholder}
+              value={roleFilters[0] || ''}
+            />
+          )}
+        </FormattedMessage>
       </Accordion>
     );
   }
