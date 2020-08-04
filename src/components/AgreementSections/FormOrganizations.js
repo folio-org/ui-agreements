@@ -8,7 +8,7 @@ import { OrganizationsFieldArray } from '@folio/stripes-erm-components';
 export default class FormOrganizations extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      orgRoleValues: PropTypes.array,
+      orgRoleValues: PropTypes.arrayOf(PropTypes.object),
     }),
     id: PropTypes.string,
     onToggle: PropTypes.func,

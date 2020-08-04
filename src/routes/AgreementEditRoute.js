@@ -149,13 +149,50 @@ class AgreementEditRoute extends React.Component {
     }).isRequired,
     resources: PropTypes.shape({
       agreement: PropTypes.object,
+      agreementLines: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      agreementStatusValues: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      amendmentStatusValues: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      basket: PropTypes.arrayOf(PropTypes.object),
+      contactRoleValues: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      documentCategories: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      externalAgreementLine: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      isPerpetualValues: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      licenseLinkStatusValues: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      orderLines: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
       orgRoleValues: PropTypes.object,
       query: PropTypes.shape({
         addFromBasket: PropTypes.string,
       }),
+      reasonForClosureValues: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      renewalPriorityValues: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
       statusValues: PropTypes.object,
       supplementaryProperties: PropTypes.object,
       typeValues: PropTypes.object,
+      users: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
     }).isRequired,
     stripes: PropTypes.shape({
       hasInterface: PropTypes.func.isRequired,

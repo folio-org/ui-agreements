@@ -21,7 +21,7 @@ import { resultCount } from '../../constants';
 export default class PackageContents extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      packageContents: PropTypes.array,
+      packageContents: PropTypes.arrayOf(PropTypes.object),
       packageContentsCount: PropTypes.number,
       packageContentsFilter: PropTypes.string,
     }),

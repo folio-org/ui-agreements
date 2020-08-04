@@ -9,7 +9,7 @@ import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 export default class FormSupplementaryDocuments extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      documentCategories: PropTypes.array,
+      documentCategories: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
     handlers: PropTypes.shape({
       onDownloadFile: PropTypes.func.isRequired,

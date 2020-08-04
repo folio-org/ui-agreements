@@ -97,12 +97,12 @@ const Info = ({
           <div data-test-agreement-line-url>
             { isExternal(line) ?
           resource.reference_object?.url ?
-            <a href={resource.reference_object?.url} rel="noopener noreferrer" target="_blank">{resource.reference_object?.url}</a>
+            <a href={resource.reference_object.url} rel="noopener noreferrer" target="_blank">{resource.reference_object?.url}</a>
             :
             <NoValue />
               :
           resource.pti?.url ?
-            <a href={resource.pti?.url} rel="noopener noreferrer" target="_blank">{resource.pti?.url}</a>
+            <a href={resource.pti.url} rel="noopener noreferrer" target="_blank">{resource.pti?.url}</a>
             :
             <NoValue />
           }
