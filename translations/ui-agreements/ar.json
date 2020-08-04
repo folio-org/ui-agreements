@@ -454,5 +454,6 @@
     "eresources.notSelected": "غير محدد",
     "eresources.accessStatusType": "نوع حالة الوصول",
     "identifier.pisbn": "ردمك (مطبوع)",
-    "identifier.eisbn": "ردمك (عبر الإنترنت)"
+    "identifier.eisbn": "ردمك (عبر الإنترنت)",
+    "eresources.publicationType": "نوع المنشور"
 }
