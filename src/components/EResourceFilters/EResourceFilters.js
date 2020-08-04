@@ -6,6 +6,7 @@ import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@foli
 import { CheckboxFilter } from '@folio/stripes/smart-components';
 
 const FILTERS = [
+  'publicationType',
   'type',
 ];
 
@@ -19,11 +20,13 @@ export default class EResourceFilters extends React.Component {
   static defaultProps = {
     activeFilters: {
       class: [],
+      publicationType: [],
       type: [],
     }
   };
 
   state = {
+    publicationType: [],
     type: [],
   }
 
@@ -135,6 +138,7 @@ export default class EResourceFilters extends React.Component {
     return (
       <AccordionSet>
         {this.renderCheckboxFilter('type')}
+        {this.renderCheckboxFilter('publicationType')}
         {this.renderIsPackageFilter()}
         {this.renderRemoteKbFilter()}
       </AccordionSet>

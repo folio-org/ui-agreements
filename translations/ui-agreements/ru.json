@@ -454,5 +454,6 @@
     "eresources.notSelected": "Не выбран",
     "eresources.accessStatusType": "Тип статуса доступа",
     "identifier.pisbn": "ISBN (Печатный)",
-    "identifier.eisbn": "ISBN (Онлайн)"
+    "identifier.eisbn": "ISBN (Онлайн)",
+    "eresources.publicationType": "Publication type"
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { StripesConnectedSource } from '@folio/stripes/smart-components';
@@ -35,6 +34,12 @@ class EResourcesRoute extends React.Component {
           remoteKb: 'remoteKb.id',
         }
       }),
+    },
+    publicationTypeValues: {
+      type: 'okapi',
+      path: 'erm/refdata/TitleInstance/publicationType',
+      perRequest: 100,
+      limitParam: 'perPage',
     },
     sourceValues: {
       type: 'okapi',
@@ -123,7 +128,7 @@ class EResourcesRoute extends React.Component {
   }
 
   queryGetter = () => {
-    return get(this.props.resources, 'query', {});
+    return this.props.resources?.query ?? {};
   }
 
   render() {
@@ -138,9 +143,10 @@ class EResourcesRoute extends React.Component {
     return (
       <View
         data={{
-          eresources: get(resources, 'eresources.records', []),
-          sourceValues: get(resources, 'sourceValues.records', []),
-          typeValues: get(resources, 'typeValues.records', []),
+          eresources: resources?.eresources?.records ?? [],
+          publicationTypeValues: resources?.publicationTypeValues?.records ?? [],
+          sourceValues: resources?.sourceValues?.records ?? [],
+          typeValues: resources?.typeValues?.records ?? [],
         }}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}
