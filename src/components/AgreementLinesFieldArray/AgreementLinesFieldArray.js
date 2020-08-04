@@ -14,9 +14,9 @@ import AgreementLineField from './AgreementLineField';
 class AgreementLinesFieldArray extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      basket: PropTypes.array,
-      agreementLines: PropTypes.array,
-      orderLines: PropTypes.array,
+      basket: PropTypes.arrayOf(PropTypes.object),
+      agreementLines: PropTypes.arrayOf(PropTypes.object),
+      orderLines: PropTypes.arrayOf(PropTypes.object),
     }),
     items: PropTypes.arrayOf(PropTypes.object),
     name: PropTypes.string.isRequired,

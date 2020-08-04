@@ -14,12 +14,17 @@ import EntitlementAgreementsList from '../EntitlementsAgreementsList';
 export default class Agreements extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      entitlements: PropTypes.array,
+      entitlements: PropTypes.arrayOf(PropTypes.object),
       eresource: PropTypes.shape({
         class: PropTypes.string,
+        pti: PropTypes.shape({
+          titleInstance: PropTypes.shape({
+            name: PropTypes.string,
+          })
+        }),
         type: PropTypes.object,
       }),
-      relatedEntitlements: PropTypes.array,
+      relatedEntitlements: PropTypes.arrayOf(PropTypes.object),
     }),
     headline: PropTypes.node,
     isEmptyMessage: PropTypes.node,

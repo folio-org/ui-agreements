@@ -24,10 +24,10 @@ import AgreementPeriodsFieldArray from '../AgreementPeriodsFieldArray';
 class FormInfo extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      agreementStatusValues: PropTypes.array,
-      reasonForClosureValues: PropTypes.array,
-      renewalPriorityValues: PropTypes.array,
-      isPerpetualValues: PropTypes.array,
+      agreementStatusValues: PropTypes.arrayOf(PropTypes.object),
+      reasonForClosureValues: PropTypes.arrayOf(PropTypes.object),
+      renewalPriorityValues: PropTypes.arrayOf(PropTypes.object),
+      isPerpetualValues: PropTypes.arrayOf(PropTypes.object),
     }),
     form: PropTypes.shape({
       mutators: PropTypes.shape({

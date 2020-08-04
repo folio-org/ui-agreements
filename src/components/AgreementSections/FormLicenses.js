@@ -13,8 +13,8 @@ export default class FormLicenses extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       agreement: PropTypes.object,
-      amendmentStatusValues: PropTypes.array,
-      licenseLinkStatusValues: PropTypes.array,
+      amendmentStatusValues: PropTypes.arrayOf(PropTypes.object),
+      licenseLinkStatusValues: PropTypes.arrayOf(PropTypes.object),
     }),
     form: PropTypes.object,
     handlers: PropTypes.object,
