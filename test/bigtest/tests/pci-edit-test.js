@@ -188,7 +188,7 @@ describe('PCI edit form', () => {
       });
     });
 
-    describe('Adding new coverage', () => {
+    describe.skip('Adding new coverage', () => {
       beforeEach(async () => {
         await pciEditPaneInteractor.clickAddButton();
         await new Promise(resolve => { setTimeout(resolve, 500); }); // Should be removed as a part of ERM-825

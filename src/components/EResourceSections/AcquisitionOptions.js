@@ -17,7 +17,7 @@ import { isExternal } from '../utilities';
 class AcquisitionOptions extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      entitlementOptions: PropTypes.array,
+      entitlementOptions: PropTypes.arrayOf(PropTypes.object),
       eresource: PropTypes.shape({
         name: PropTypes.string,
       }),

@@ -16,7 +16,10 @@ import AddToBasketButton from '../AddToBasketButton';
 export default class PCIInfo extends React.Component {
   static propTypes = {
     pci: PropTypes.shape({
+      accessEnd: PropTypes.string,
+      accessStart: PropTypes.string,
       name: PropTypes.string,
+      suppressFromDiscovery: PropTypes.bool,
     }).isRequired,
   }
 

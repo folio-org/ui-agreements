@@ -22,7 +22,7 @@ class OpenBasketButton extends React.Component {
       query: PropTypes.object,
     }),
     resources: PropTypes.shape({
-      basket: PropTypes.array,
+      basket: PropTypes.arrayOf(PropTypes.object),
     }),
   }
 
