@@ -15,7 +15,7 @@ export default class Terms extends React.Component {
       })),
     }),
     data: PropTypes.shape({
-      terms: PropTypes.array,
+      terms: PropTypes.arrayOf(PropTypes.object),
     }),
     id: PropTypes.string,
     onToggle: PropTypes.func,

@@ -13,8 +13,8 @@ export default class FormLines extends React.Component {
     onToggle: PropTypes.func,
     open: PropTypes.bool,
     data: PropTypes.shape({
-      basket: PropTypes.array,
-      agreementLines: PropTypes.array,
+      basket: PropTypes.arrayOf(PropTypes.object),
+      agreementLines: PropTypes.arrayOf(PropTypes.object),
     }),
   };
 

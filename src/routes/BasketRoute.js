@@ -42,7 +42,7 @@ class BasketRoute extends React.Component {
       }).isRequired,
     }),
     resources: PropTypes.shape({
-      basket: PropTypes.array,
+      basket: PropTypes.arrayOf(PropTypes.object),
       openAgreements: PropTypes.object,
     }),
   }

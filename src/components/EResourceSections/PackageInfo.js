@@ -23,6 +23,9 @@ export default class PackageInfo extends React.Component {
         name: PropTypes.string,
         reference: PropTypes.string,
         source: PropTypes.string,
+        vendor: PropTypes.shape({
+          name: PropTypes.string,
+        })
       })
     }).isRequired,
   }
