@@ -128,7 +128,7 @@ class EResourcesRoute extends React.Component {
   }
 
   queryGetter = () => {
-    return this.props.resources?.query || {};
+    return this.props.resources?.query ?? {};
   }
 
   render() {
@@ -143,10 +143,10 @@ class EResourcesRoute extends React.Component {
     return (
       <View
         data={{
-          eresources: resources?.eresources?.records || [],
-          publicationTypeValues: resources?.publicationTypeValues?.records || [],
-          sourceValues: resources?.sourceValues?.records || [],
-          typeValues: resources?.typeValues?.records || [],
+          eresources: resources?.eresources?.records ?? [],
+          publicationTypeValues: resources?.publicationTypeValues?.records ?? [],
+          sourceValues: resources?.sourceValues?.records ?? [],
+          typeValues: resources?.typeValues?.records ?? [],
         }}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}
