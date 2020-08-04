@@ -454,5 +454,6 @@
     "eresources.notSelected": "未选",
     "eresources.accessStatusType": "访问状态类型",
     "identifier.pisbn": "ISSN（印本）",
-    "identifier.eisbn": "ISBN（在线）"
+    "identifier.eisbn": "ISBN（在线）",
+    "eresources.publicationType": "Publication type"
 }
