@@ -16,7 +16,7 @@ import CustomCoverageIcon from '../CustomCoverageIcon';
 
 const propTypes = {
   line: PropTypes.shape({
-    coverage: PropTypes.array,
+    coverage: PropTypes.arrayOf(PropTypes.object),
     customCoverage: PropTypes.bool,
     resource: PropTypes.shape({
       _object: PropTypes.shape({

@@ -28,7 +28,7 @@ class AddToBasketButton extends React.Component {
     }),
     removeButtonTooltipText: PropTypes.node,
     resources: PropTypes.shape({
-      basket: PropTypes.array,
+      basket: PropTypes.arrayOf(PropTypes.object),
     }),
   }
 
