@@ -454,5 +454,6 @@
     "eresources.notSelected": "Not selected",
     "eresources.accessStatusType": "Access status type",
     "identifier.pisbn": "ISBN (Print)",
-    "identifier.eisbn": "ISBN (Online)"
+    "identifier.eisbn": "ISBN (Online)",
+    "eresources.publicationType": "Publication type"
 }
