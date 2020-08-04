@@ -20,7 +20,7 @@ export default class Info extends React.Component {
         label: PropTypes.string,
         value: PropTypes.string,
       }),
-      alternateNames: PropTypes.array,
+      alternateNames: PropTypes.arrayOf(PropTypes.object),
       cancellationDeadline: PropTypes.string,
       currentPeriod: PropTypes.shape({
         note: PropTypes.string,

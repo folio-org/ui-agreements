@@ -12,8 +12,8 @@ export default class FormInternalContacts extends React.Component {
     onToggle: PropTypes.func,
     open: PropTypes.bool,
     data: PropTypes.shape({
-      contactRoleValues: PropTypes.array,
-      users: PropTypes.array,
+      contactRoleValues: PropTypes.arrayOf(PropTypes.object),
+      users: PropTypes.arrayOf(PropTypes.object),
     }),
   };
 

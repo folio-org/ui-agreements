@@ -26,7 +26,7 @@ import { isExternal, urls } from '../utilities';
 const propTypes = {
   data: PropTypes.shape({
     line: PropTypes.shape({
-      coverage: PropTypes.array,
+      coverage: PropTypes.arrayOf(PropTypes.object),
       customCoverage: PropTypes.bool,
       endDate: PropTypes.string,
       id: PropTypes.string,

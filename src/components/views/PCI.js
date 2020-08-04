@@ -31,7 +31,7 @@ export default class PCI extends React.Component {
           label: PropTypes.string,
         }),
       }).isRequired,
-      relatedEntitlements: PropTypes.array,
+      relatedEntitlements: PropTypes.arrayOf(PropTypes.object),
       searchString: PropTypes.string,
     }),
   }
