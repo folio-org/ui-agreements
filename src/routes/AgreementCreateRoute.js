@@ -104,9 +104,37 @@ class AgreementCreateRoute extends React.Component {
     }),
     resources: PropTypes.shape({
       agreement: PropTypes.object,
+      agreementStatusValues: PropTypes.shape({
+        records: PropTypes.array,
+      }),
+      amendmentStatusValues: PropTypes.shape({
+        records: PropTypes.array,
+      }),
+      basket: PropTypes.array,
+      contactRoleValues: PropTypes.shape({
+        records: PropTypes.array,
+      }),
+      documentCategories: PropTypes.shape({
+        records: PropTypes.array,
+      }),
+      externalAgreementLine: PropTypes.shape({
+        records: PropTypes.array,
+      }),
+      isPerpetualValues: PropTypes.shape({
+        records: PropTypes.array,
+      }),
+      licenseLinkStatusValues: PropTypes.shape({
+        records: PropTypes.array,
+      }),
       orgRoleValues: PropTypes.object,
       query: PropTypes.shape({
         addFromBasket: PropTypes.string,
+      }),
+      reasonForClosureValues: PropTypes.shape({
+        records: PropTypes.array,
+      }),
+      renewalPriorityValues: PropTypes.shape({
+        records: PropTypes.array,
       }),
       statusValues: PropTypes.object,
       supplementaryProperties: PropTypes.object,

@@ -43,6 +43,9 @@ const propTypes = {
         _object: PropTypes.object,
       }),
       startDate: PropTypes.string,
+      tags: PropTypes.shape({
+        length: PropTypes.number,
+      }),
     }).isRequired,
   }),
   handlers: PropTypes.shape({

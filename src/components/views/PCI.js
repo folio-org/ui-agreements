@@ -26,6 +26,7 @@ export default class PCI extends React.Component {
       eresource: PropTypes.shape({
         id: PropTypes.string,
         name: PropTypes.string,
+        pkg: PropTypes.object,
         status: PropTypes.shape({
           label: PropTypes.string,
         }),

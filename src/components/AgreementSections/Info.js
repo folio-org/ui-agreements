@@ -16,13 +16,23 @@ import { statuses } from '../../constants';
 export default class Info extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
+      agreementStatus: PropTypes.shape({
+        label: PropTypes.string,
+        value: PropTypes.string,
+      }),
       alternateNames: PropTypes.array,
       cancellationDeadline: PropTypes.string,
+      currentPeriod: PropTypes.shape({
+        note: PropTypes.string,
+      }),
       description: PropTypes.string,
       isPerpetual: PropTypes.shape({
         label: PropTypes.string,
       }),
       name: PropTypes.string,
+      reasonForClosure: PropTypes.shape({
+        label: PropTypes.string,
+      }),
       renewalPriority: PropTypes.shape({
         label: PropTypes.string,
       }),

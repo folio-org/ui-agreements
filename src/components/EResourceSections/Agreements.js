@@ -17,6 +17,11 @@ export default class Agreements extends React.Component {
       entitlements: PropTypes.array,
       eresource: PropTypes.shape({
         class: PropTypes.string,
+        pti: PropTypes.shape({
+          titleInstance: PropTypes.shape({
+            name: PropTypes.string,
+          })
+        }),
         type: PropTypes.object,
       }),
       relatedEntitlements: PropTypes.array,

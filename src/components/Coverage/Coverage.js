@@ -55,7 +55,14 @@ export default class Coverage extends React.Component {
                 })
               })
             })
-          })
+          }),
+          pti: PropTypes.shape({
+            titleInstance: PropTypes.shape({
+              type: PropTypes.shape({
+                value: PropTypes.string,
+              }),
+            })
+          }),
         })
       })
     }),
@@ -83,7 +90,14 @@ export default class Coverage extends React.Component {
               })
             })
           })
-        })
+        }),
+        pti: PropTypes.shape({
+          titleInstance: PropTypes.shape({
+            type: PropTypes.shape({
+              value: PropTypes.string,
+            }),
+          })
+        }),
       })
     }),
   }
