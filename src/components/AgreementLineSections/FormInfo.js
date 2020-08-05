@@ -22,6 +22,7 @@ import { isExternal, parseDateOnlyString } from '../utilities';
 
 const propTypes = {
   resource: PropTypes.object,
+  settings: PropTypes.object,
 };
 
 const validateDateOrder = (value, allValues, meta) => {
@@ -53,6 +54,7 @@ const validateDateOrder = (value, allValues, meta) => {
 
 const FormInfo = ({
   resource,
+  settings
 }) => (
   <>
     { isExternal(resource) ?
@@ -86,6 +88,7 @@ const FormInfo = ({
         />
       </Col>
       <IfSuppressFromDiscoveryEnabled
+        settings={settings}
         sfdLocation="agreementLine"
       >
         <Col md={3} xs={12}>

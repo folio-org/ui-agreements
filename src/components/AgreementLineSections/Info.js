@@ -33,11 +33,13 @@ const propTypes = {
     suppressFromDiscovery: PropTypes.bool,
   }).isRequired,
   resource: PropTypes.object.isRequired,
+  settings: PropTypes.object
 };
 
 const Info = ({
   line,
   resource,
+  settings,
 }) => (
   <>
     <Headline size="x-large" tag="h2">
@@ -64,6 +66,7 @@ const Info = ({
         </KeyValue>
       </Col>
       <IfSuppressFromDiscoveryEnabled
+        settings={settings}
         sfdLocation="agreementLine"
       >
         <Col md={3} xs={12}>

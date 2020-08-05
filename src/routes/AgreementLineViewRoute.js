@@ -36,6 +36,12 @@ class AgreementLineViewRoute extends React.Component {
       records: 'poLines',
       throwErrors: false,
     },
+    settings: {
+      type: 'okapi',
+      path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
+      records: 'configs',
+      shouldRefresh: () => false,
+    },
     query: {},
   });
 
@@ -64,6 +70,7 @@ class AgreementLineViewRoute extends React.Component {
       line: PropTypes.object,
       orderLines: PropTypes.object,
       query: PropTypes.object,
+      settings: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
       hasInterface: PropTypes.func.isRequired,
@@ -174,6 +181,7 @@ class AgreementLineViewRoute extends React.Component {
         key={resources.line?.loadedAt ?? 'loading'}
         data={{
           line: this.getCompositeLine(),
+          settings: JSON.parse(resources?.settings?.records?.[0]?.value || '{}')
         }}
         handlers={{
           onClose: this.handleClose,

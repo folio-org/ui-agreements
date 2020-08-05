@@ -47,6 +47,7 @@ const propTypes = {
         length: PropTypes.number,
       }),
     }).isRequired,
+    settings: PropTypes.object,
   }),
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
@@ -59,7 +60,7 @@ const propTypes = {
 };
 
 const AgreementLine = ({
-  data: { line },
+  data: { line, settings },
   handlers,
   helperApp,
   isLoading,
@@ -123,7 +124,7 @@ const AgreementLine = ({
         paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
         {...paneProps}
       >
-        <Info line={line} resource={resource} />
+        <Info line={line} resource={resource} settings={settings} />
         <AccordionStatus>
           <Row end="xs">
             <Col xs>

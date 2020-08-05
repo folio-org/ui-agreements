@@ -33,6 +33,12 @@ class AgreementLineEditRoute extends React.Component {
       records: 'poLines',
       throwErrors: false,
     },
+    settings: {
+      type: 'okapi',
+      path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
+      records: 'configs',
+      shouldRefresh: () => false,
+    },
   });
 
   static propTypes = {
@@ -56,6 +62,7 @@ class AgreementLineEditRoute extends React.Component {
     resources: PropTypes.shape({
       line: PropTypes.object,
       orderLines: PropTypes.object,
+      settings: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
       hasInterface: PropTypes.func.isRequired,
@@ -130,7 +137,8 @@ class AgreementLineEditRoute extends React.Component {
       <View
         key={resources.line?.loadedAt ?? 'loading'}
         data={{
-          line: this.getCompositeLine()
+          line: this.getCompositeLine(),
+          settings: JSON.parse(resources?.settings?.records?.[0]?.value || '{}')
         }}
         handlers={{
           onClose: this.handleClose,

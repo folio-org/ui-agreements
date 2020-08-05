@@ -27,6 +27,7 @@ const propTypes = {
         _object: PropTypes.object,
       }),
     }),
+    settings: PropTypes.object,
   }),
   form: PropTypes.shape({
     getRegisteredFields: PropTypes.func.isRequired,
@@ -40,7 +41,7 @@ const propTypes = {
 };
 
 const AgreementLineForm = ({
-  data: { line },
+  data: { line, settings },
   form,
   handlers,
   handleSubmit,
@@ -95,7 +96,7 @@ const AgreementLineForm = ({
             </Col>
           </Row>
           <AccordionSet>
-            <FormInfo line={line} resource={resource} />
+            <FormInfo line={line} resource={resource} settings={settings} />
             <FormPOLines line={line} resource={resource} />
             <FormCoverage line={line} resource={resource} />
           </AccordionSet>
