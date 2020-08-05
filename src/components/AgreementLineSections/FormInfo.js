@@ -16,6 +16,7 @@ import PackageCard from '../PackageCard';
 import PackageCardExternal from '../PackageCardExternal';
 import TitleCard from '../TitleCard';
 import TitleCardExternal from '../TitleCardExternal';
+import IfSuppressFromDiscoveryEnabled from '../IfSuppressFromDiscoveryEnabled';
 
 import { isExternal, parseDateOnlyString } from '../utilities';
 
@@ -84,16 +85,20 @@ const FormInfo = ({
           validate={validateDateOrder}
         />
       </Col>
-      <Col md={3} xs={12}>
-        <Field
-          component={Checkbox}
-          id="agreement-line-suppress-from-discovery"
-          label={<FormattedMessage id="ui-agreements.agreementLines.suppressFromDiscovery" />}
-          name="suppressFromDiscovery"
-          type="checkbox"
-          vertical
-        />
-      </Col>
+      <IfSuppressFromDiscoveryEnabled
+        sfdLocation="agreementLine"
+      >
+        <Col md={3} xs={12}>
+          <Field
+            component={Checkbox}
+            id="agreement-line-suppress-from-discovery"
+            label={<FormattedMessage id="ui-agreements.agreementLines.suppressFromDiscovery" />}
+            name="suppressFromDiscovery"
+            type="checkbox"
+            vertical
+          />
+        </Col>
+      </IfSuppressFromDiscoveryEnabled>
       <Col md={3} xs={12}>
         <Field
           component={TextArea}

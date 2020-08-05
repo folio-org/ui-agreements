@@ -15,6 +15,7 @@ import PackageCard from '../PackageCard';
 import PackageCardExternal from '../PackageCardExternal';
 import TitleCard from '../TitleCard';
 import TitleCardExternal from '../TitleCardExternal';
+import IfSuppressFromDiscoveryEnabled from '../IfSuppressFromDiscoveryEnabled';
 import { isExternal } from '../utilities';
 
 const propTypes = {
@@ -62,13 +63,17 @@ const Info = ({
           </div>
         </KeyValue>
       </Col>
-      <Col md={3} xs={12}>
-        <KeyValue label={<FormattedMessage id="ui-agreements.agreementLines.suppressFromDiscovery" />}>
-          <div data-test-agreement-line-suppress-from-discovery>
-            <FormattedMessage id={`ui-agreements.${line.suppressFromDiscovery ? 'yes' : 'no'}`} />
-          </div>
-        </KeyValue>
-      </Col>
+      <IfSuppressFromDiscoveryEnabled
+        sfdLocation="agreementLine"
+      >
+        <Col md={3} xs={12}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.agreementLines.suppressFromDiscovery" />}>
+            <div data-test-agreement-line-suppress-from-discovery>
+              <FormattedMessage id={`ui-agreements.${line.suppressFromDiscovery ? 'yes' : 'no'}`} />
+            </div>
+          </KeyValue>
+        </Col>
+      </IfSuppressFromDiscoveryEnabled>
       <Col md={3} xs={12}>
         <KeyValue label={<FormattedMessage id="ui-agreements.note" />}>
           <div data-test-agreement-line-note>
