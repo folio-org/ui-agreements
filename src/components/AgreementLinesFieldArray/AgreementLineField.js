@@ -169,6 +169,7 @@ export default class AgreementLineField extends React.Component {
               name={`${name}.activeFrom`}
               parse={v => v} // Lets us send an empty string instead of `undefined`
               parser={parseDateOnlyString}
+              usePortal
               validate={this.validateDateOrder}
             />
           </Col>
@@ -181,6 +182,7 @@ export default class AgreementLineField extends React.Component {
               name={`${name}.activeTo`}
               parse={v => v} // Lets us send an empty string instead of `undefined`
               parser={parseDateOnlyString}
+              usePortal
               validate={this.validateDateOrder}
             />
           </Col>

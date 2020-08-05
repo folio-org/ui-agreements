@@ -69,6 +69,7 @@ const FormInfo = ({
           name="activeFrom"
           parse={v => v} // Lets us send an empty string instead of `undefined`
           parser={parseDateOnlyString}
+          usePortal
           validate={validateDateOrder}
         />
       </Col>
@@ -81,6 +82,7 @@ const FormInfo = ({
           name="activeTo"
           parse={v => v} // Lets us send an empty string instead of `undefined`
           parser={parseDateOnlyString}
+          usePortal
           validate={validateDateOrder}
         />
       </Col>

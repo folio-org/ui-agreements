@@ -36,6 +36,7 @@ export default class PCIFormInfo extends React.Component {
               label={<FormattedMessage id="ui-agreements.eresources.accessibleFrom" />}
               name="accessStart"
               parser={parseDateOnlyString}
+              usePortal
             />
           </Col>
           <Col xs={3}>
@@ -47,6 +48,7 @@ export default class PCIFormInfo extends React.Component {
               label={<FormattedMessage id="ui-agreements.eresources.accessibleUntil" />}
               name="accessEnd"
               parser={parseDateOnlyString}
+              usePortal
             />
           </Col>
           <Col xs={3}>
