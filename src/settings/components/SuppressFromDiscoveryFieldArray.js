@@ -13,7 +13,9 @@ export default function SuppressFromDiscoveryFieldArray({ name }) {
   return (
     <>
       <Layout className="padding-bottom-gutter padding-top-gutter">
-        <FormattedMessage id="ui-agreements.settings.general.displaySuppressFromDiscovery.description" />
+        <strong>
+          <FormattedMessage id="ui-agreements.settings.general.displaySuppressFromDiscovery.description" />
+        </strong>
       </Layout>
       <Field
         component={Checkbox}
