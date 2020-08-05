@@ -22,8 +22,8 @@ class IfSuppressFromDiscoveryEnabled extends React.Component {
   };
 
   isDisplay = (specific) => {
-    const settings = JSON.parse(get(this.props.resources.settings, 'records[0].value', '{}'));
-    return settings.displaySuppressFromDiscovery[specific] || false;
+    const settings = JSON.parse(this.props.resources.settings?.records?.[0]?.value || '{}');
+    return settings.displaySuppressFromDiscovery ? settings.displaySuppressFromDiscovery[specific] : true;
   }
 
   render() {
