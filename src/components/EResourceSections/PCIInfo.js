@@ -12,6 +12,7 @@ import {
 } from '@folio/stripes/components';
 
 import AddToBasketButton from '../AddToBasketButton';
+import IfSuppressFromDiscoveryEnabled from '../IfSuppressFromDiscoveryEnabled';
 
 export default class PCIInfo extends React.Component {
   static propTypes = {
@@ -89,13 +90,17 @@ export default class PCIInfo extends React.Component {
               {pci?.accessEnd ?? <NoValue />}
             </KeyValue>
           </Col>
-          <Col xs={3}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.eresources.suppressFromDiscovery" />}>
-              <div data-test-pci-suppress-from-discovery>
-                <FormattedMessage id={`ui-agreements.${pci?.suppressFromDiscovery ? 'yes' : 'no'}`} />
-              </div>
-            </KeyValue>
-          </Col>
+          <IfSuppressFromDiscoveryEnabled
+            sfdLocation="pci"
+          >
+            <Col xs={3}>
+              <KeyValue label={<FormattedMessage id="ui-agreements.eresources.suppressFromDiscovery" />}>
+                <div data-test-pci-suppress-from-discovery>
+                  <FormattedMessage id={`ui-agreements.${pci?.suppressFromDiscovery ? 'yes' : 'no'}`} />
+                </div>
+              </KeyValue>
+            </Col>
+          </IfSuppressFromDiscoveryEnabled>
         </Row>
       </div>
     );

@@ -10,6 +10,7 @@ import {
   TextField,
 } from '@folio/stripes/components';
 import { parseDateOnlyString } from '../utilities';
+import IfSuppressFromDiscoveryEnabled from '../IfSuppressFromDiscoveryEnabled';
 
 export default class PCIFormInfo extends React.Component {
   render() {
@@ -49,16 +50,20 @@ export default class PCIFormInfo extends React.Component {
               parser={parseDateOnlyString}
             />
           </Col>
-          <Col xs={3}>
-            <Field
-              component={Checkbox}
-              id="pci-suppress-from-discovery"
-              label={<FormattedMessage id="ui-agreements.eresources.suppressFromDiscovery" />}
-              name="suppressFromDiscovery"
-              type="checkbox"
-              vertical
-            />
-          </Col>
+          <IfSuppressFromDiscoveryEnabled
+            sfdLocation="pci"
+          >
+            <Col xs={3}>
+              <Field
+                component={Checkbox}
+                id="pci-suppress-from-discovery"
+                label={<FormattedMessage id="ui-agreements.eresources.suppressFromDiscovery" />}
+                name="suppressFromDiscovery"
+                type="checkbox"
+                vertical
+              />
+            </Col>
+          </IfSuppressFromDiscoveryEnabled>
         </Row>
       </div>
     );
