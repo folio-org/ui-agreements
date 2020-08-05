@@ -1,6 +1,8 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
+import PropTypes from 'prop-types';
+
 
 import {
   Checkbox,
@@ -13,7 +15,12 @@ import { parseDateOnlyString } from '../utilities';
 import IfSuppressFromDiscoveryEnabled from '../IfSuppressFromDiscoveryEnabled';
 
 export default class PCIFormInfo extends React.Component {
+  static propTypes = {
+    settings: PropTypes.object,
+  }
+
   render() {
+    const { settings } = this.props;
     return (
       <div data-test-edit-pci-info>
         <Field
@@ -51,6 +58,7 @@ export default class PCIFormInfo extends React.Component {
             />
           </Col>
           <IfSuppressFromDiscoveryEnabled
+            settings={settings}
             sfdLocation="pci"
           >
             <Col xs={3}>

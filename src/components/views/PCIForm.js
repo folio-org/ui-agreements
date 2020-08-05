@@ -31,6 +31,7 @@ class PCIForm extends React.Component {
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
+    settings: PropTypes.object,
     submitting: PropTypes.bool,
     values: PropTypes.object,
   }
@@ -124,7 +125,7 @@ class PCIForm extends React.Component {
   }
 
   render() {
-    const { form, values: { name } } = this.props;
+    const { form, settings, values: { name } } = this.props;
 
     const hasLoaded = form.getRegisteredFields().length > 0;
 
@@ -140,7 +141,7 @@ class PCIForm extends React.Component {
         >
           <TitleManager record={name}>
             <form id="form-pci">
-              <PCIFormInfo />
+              <PCIFormInfo settings={settings} />
               <AccordionSet>
                 {hasLoaded ? <div id="form-loaded" /> : null}
                 <Row end="xs">

@@ -16,6 +16,12 @@ class EResourceEditRoute extends React.Component {
       path: 'erm/pci/:{id}',
       shouldRefresh: () => false,
     },
+    settings: {
+      type: 'okapi',
+      path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
+      records: 'configs',
+      shouldRefresh: () => false,
+    },
   });
 
   static propTypes = {
@@ -37,6 +43,7 @@ class EResourceEditRoute extends React.Component {
     }).isRequired,
     resources: PropTypes.shape({
       pci: PropTypes.object,
+      settings: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
@@ -95,6 +102,7 @@ class EResourceEditRoute extends React.Component {
         }}
         initialValues={this.getInitialValues()}
         onSubmit={this.handleSubmit}
+        settings={JSON.parse(this.props.resources.settings?.records?.[0]?.value || '{}')}
       />
     );
   }

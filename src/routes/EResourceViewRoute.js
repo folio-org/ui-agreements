@@ -61,6 +61,12 @@ class EResourceViewRoute extends React.Component {
         stats: 'true',
       },
     },
+    settings: {
+      type: 'okapi',
+      path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
+      records: 'configs',
+      shouldRefresh: () => false,
+    },
     query: {},
     entitlementsCount: { initialValue: resultCount.INITIAL_RESULT_COUNT },
     packageContentsFilter: { initialValue: 'current' },
@@ -243,6 +249,7 @@ class EResourceViewRoute extends React.Component {
           packageContentsCount: this.getPackageContentsRecordsCount(),
           relatedEntitlements: this.getRecords('relatedEntitlements'),
           searchString: this.props.location.search,
+          settings: JSON.parse(this.getRecords('settings')?.[0]?.value || '{}')
         }}
         handlers={{
           ...handlers,

@@ -22,6 +22,7 @@ export default class PCIInfo extends React.Component {
       name: PropTypes.string,
       suppressFromDiscovery: PropTypes.bool,
     }).isRequired,
+    settings: PropTypes.object
   }
 
   renderAddTitleToBasketButton = (pci) => {
@@ -51,7 +52,7 @@ export default class PCIInfo extends React.Component {
   }
 
   render() {
-    const { pci } = this.props;
+    const { pci, settings } = this.props;
     return (
       <div id="pci-info">
         <Row>
@@ -91,6 +92,7 @@ export default class PCIInfo extends React.Component {
             </KeyValue>
           </Col>
           <IfSuppressFromDiscoveryEnabled
+            settings={settings}
             sfdLocation="pci"
           >
             <Col xs={3}>

@@ -33,16 +33,17 @@ export default class PCI extends React.Component {
       }).isRequired,
       relatedEntitlements: PropTypes.arrayOf(PropTypes.object),
       searchString: PropTypes.string,
+      settings: PropTypes.object,
     }),
   }
 
   render() {
     const { data } = this.props;
-    const { eresource, searchString } = data;
+    const { eresource, searchString, settings } = data;
 
     return (
       <div id="eresource-pci">
-        <PCIInfo pci={eresource} />
+        <PCIInfo pci={eresource} settings={settings} />
         <div data-test-parent-package-details>
           <Headline margin="small" size="large" tag="h3">
             <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />

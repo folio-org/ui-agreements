@@ -1,27 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { stripesConnect } from '@folio/stripes/core';
 
 class IfSuppressFromDiscoveryEnabled extends React.Component {
-  static manifest = {
-    settings: {
-      type: 'okapi',
-      path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
-      records: 'configs',
-      shouldRefresh: () => false,
-    },
-  };
-
   static propTypes = {
     children: PropTypes.node,
-    resources: PropTypes.shape({
-      settings: PropTypes.object,
-    }),
+    settings: PropTypes.object,
     sfdLocation: PropTypes.string
   };
 
   isDisplay = (specific) => {
-    const settings = JSON.parse(this.props.resources.settings?.records?.[0]?.value || '{}');
+    const { settings = {} } = this.props;
     return settings.displaySuppressFromDiscovery ? settings.displaySuppressFromDiscovery[specific] : true;
   }
 
@@ -33,4 +21,4 @@ class IfSuppressFromDiscoveryEnabled extends React.Component {
   }
 }
 
-export default stripesConnect(IfSuppressFromDiscoveryEnabled);
+export default IfSuppressFromDiscoveryEnabled;
