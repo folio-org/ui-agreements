@@ -16,7 +16,7 @@ export default class ErmSettings extends React.Component {
       pages: [
         {
           route: 'general',
-          label: <FormattedMessage id="ui-agreements.settings.general" />,
+          label: <FormattedMessage id="ui-agreements.settings.displaySettings" />,
           perm: 'ui-agreements.generalSettings.manage',
           component: GeneralSettings,
         },
