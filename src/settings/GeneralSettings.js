@@ -19,6 +19,7 @@ class GeneralSettings extends React.Component {
 
   defaultValues = {
     hideEResourcesFunctionality: false,
+    displaySuppressFromDiscovery: { pci: true, agreementLine: true }
   }
 
   getInitialValues = (settings) => {
@@ -42,7 +43,6 @@ class GeneralSettings extends React.Component {
         getInitialValues={this.getInitialValues}
         label={<FormattedMessage id="ui-agreements.settings.general" />}
         moduleName="AGREEMENTS"
-        onBeforeSave={this.handleBeforeSave}
         stripes={this.props.stripes}
       />
     );

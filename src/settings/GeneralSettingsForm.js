@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
+import { FieldArray } from 'react-final-form-arrays';
 
 import {
   Button,
@@ -11,24 +12,24 @@ import {
   Pane,
 } from '@folio/stripes/components';
 
-import stripesForm from '@folio/stripes/form';
+import stripesFinalForm from '@folio/stripes/final-form';
+
+import { SuppressFromDiscoveryFieldArray } from './components';
 
 class GeneralSettingsForm extends React.Component {
   static propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
     label: PropTypes.string,
+    values: PropTypes.object
   };
 
-  handleSave = (data) => {
-    const { loadedConfig = {}, ...rest } = data;
-
-    this.props.onSubmit({
+  handleSave = () => {
+    const { onSubmit, values } = this.props;
+    onSubmit({
       general: JSON.stringify({
-        ...loadedConfig,
-        ...rest,
+        ...values
       })
     });
   }
@@ -42,7 +43,7 @@ class GeneralSettingsForm extends React.Component {
         disabled={(pristine || submitting)}
         id="clickable-save-agreements-general-settings"
         marginBottom0
-        type="submit"
+        onClick={this.handleSave}
       >
         <FormattedMessage id="stripes-core.button.save" />
       </Button>
@@ -51,12 +52,11 @@ class GeneralSettingsForm extends React.Component {
 
   render() {
     const {
-      handleSubmit,
       label,
     } = this.props;
 
     return (
-      <form id="agreement-general-settings-form" onSubmit={handleSubmit(this.handleSave)}>
+      <form id="agreement-general-settings-form">
         <Pane
           defaultWidth="fill"
           fluidContentWidth
@@ -82,14 +82,17 @@ class GeneralSettingsForm extends React.Component {
               listStyle="bullets"
             />
           </Layout>
+          <SuppressFromDiscoveryFieldArray name="displaySuppressFromDiscovery" />
         </Pane>
       </form>
     );
   }
 }
 
-export default stripesForm({
-  form: 'agreementGeneralSettingsForm',
+export default stripesFinalForm({
   navigationCheck: true,
   enableReinitialize: true,
+  subscription: {
+    values: true,
+  },
 })(GeneralSettingsForm);
