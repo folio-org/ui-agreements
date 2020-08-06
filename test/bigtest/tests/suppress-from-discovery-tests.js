@@ -6,20 +6,10 @@ import { Form } from 'react-final-form';
 
 import { mountWithContext } from '../helpers/mountWithContext';
 
-import IfSuppressFromDiscoveryEnabled from '../../../src/components/IfSuppressFromDiscoveryEnabled';
 import { SuppressFromDiscoveryFieldArray } from '../../../src/settings/components';
 import SuppressFromDiscoveryInteractor from '../interactors/suppress-from-discovery';
 
 const interactor = new SuppressFromDiscoveryInteractor();
-
-const settingsEmpty = {};
-const settings = {
-  displaySuppressFromDiscovery: {
-    pci: true,
-    agreementLine: false
-  }
-};
-
 let formValues = {};
 
 describe('Suppress from discovery tests', () => {
@@ -89,94 +79,6 @@ describe('Suppress from discovery tests', () => {
 
         it('pci checkbox is now true', () => {
           expect(formValues.test?.pci).to.equal(true);
-        });
-      });
-    });
-  });
-
-  describe('IfSuppressFromDiscoveryEnabled tests', () => {
-    describe('Displaying with empty/undefined settings', () => {
-      beforeEach(async function () {
-        await mountWithContext(
-          <IfSuppressFromDiscoveryEnabled
-            settings={settingsEmpty}
-            sfdLocation="agreementLine"
-          >
-            <Form
-              onSubmit={() => {}}
-              render={({ handleSubmit, values }) => {
-                formValues = values;
-                return (
-                  <form onSubmit={handleSubmit}>
-                    <SuppressFromDiscoveryFieldArray name="test" />
-                  </form>
-                );
-              }}
-              subscription={{ values: true }}
-            />
-          </IfSuppressFromDiscoveryEnabled>
-        );
-      });
-
-      it('should render the children', () => {
-        expect(interactor.isDescription).to.be.true;
-      });
-    });
-
-    describe('Displaying correctly with defined settings', () => {
-      describe('Displaying when setting is false', () => {
-        beforeEach(async function () {
-          await mountWithContext(
-            <IfSuppressFromDiscoveryEnabled
-              settings={settings}
-              sfdLocation="agreementLine"
-            >
-              <Form
-                onSubmit={() => {}}
-                render={({ handleSubmit, values }) => {
-                  formValues = values;
-                  return (
-                    <form onSubmit={handleSubmit}>
-                      <SuppressFromDiscoveryFieldArray name="test" />
-                    </form>
-                  );
-                }}
-                subscription={{ values: true }}
-              />
-            </IfSuppressFromDiscoveryEnabled>
-          );
-        });
-
-        it('should not render the children', () => {
-          expect(interactor.isDescription).to.be.false;
-        });
-      });
-
-      describe('Displaying when setting is true', () => {
-        beforeEach(async function () {
-          await mountWithContext(
-            <IfSuppressFromDiscoveryEnabled
-              settings={settings}
-              sfdLocation="pci"
-            >
-              <Form
-                onSubmit={() => {}}
-                render={({ handleSubmit, values }) => {
-                  formValues = values;
-                  return (
-                    <form onSubmit={handleSubmit}>
-                      <SuppressFromDiscoveryFieldArray name="test" />
-                    </form>
-                  );
-                }}
-                subscription={{ values: true }}
-              />
-            </IfSuppressFromDiscoveryEnabled>
-          );
-        });
-
-        it('should render the children', () => {
-          expect(interactor.isDescription).to.be.true;
         });
       });
     });

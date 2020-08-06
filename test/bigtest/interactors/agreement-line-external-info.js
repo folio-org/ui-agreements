@@ -12,6 +12,7 @@ export default @interactor class AgreementLineInfoInteractor {
   activeFrom = text('[data-test-agreement-line-active-from]');
   activeTo = text('[data-test-agreement-line-active-to]');
   suppressFromDiscovery = text('[data-test-agreement-line-suppress-from-discovery]');
+  isSuppressFromDiscoveryPresent = isPresent('[data-test-agreement-line-suppress-from-discovery]');
   note = text('[data-test-agreement-line-note]');
 
   titleName = text('[data-test-title-instance-name]');
