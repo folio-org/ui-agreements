@@ -12,15 +12,14 @@ import {
   TextField,
 } from '@folio/stripes/components';
 import { parseDateOnlyString } from '../utilities';
-import IfSuppressFromDiscoveryEnabled from '../IfSuppressFromDiscoveryEnabled';
 
 export default class PCIFormInfo extends React.Component {
   static propTypes = {
-    settings: PropTypes.object,
+    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
   }
 
   render() {
-    const { settings } = this.props;
+    const { isSuppressFromDiscoveryEnabled } = this.props;
     return (
       <div data-test-edit-pci-info>
         <Field
@@ -57,10 +56,7 @@ export default class PCIFormInfo extends React.Component {
               parser={parseDateOnlyString}
             />
           </Col>
-          <IfSuppressFromDiscoveryEnabled
-            settings={settings}
-            sfdLocation="pci"
-          >
+          { isSuppressFromDiscoveryEnabled('pci') ?
             <Col xs={3}>
               <Field
                 component={Checkbox}
@@ -70,8 +66,8 @@ export default class PCIFormInfo extends React.Component {
                 type="checkbox"
                 vertical
               />
-            </Col>
-          </IfSuppressFromDiscoveryEnabled>
+            </Col> : null
+          }
         </Row>
       </div>
     );

@@ -1,25 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { cloneDeep } from 'lodash';
+import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
 
 import View from '../components/views/PCIForm';
 import NoPermissions from '../components/NoPermissions';
-import { urls } from '../components/utilities';
+import { urls, withSuppressFromDiscovery } from '../components/utilities';
 
 class EResourceEditRoute extends React.Component {
   static manifest = Object.freeze({
     pci: {
       type: 'okapi',
       path: 'erm/pci/:{id}',
-      shouldRefresh: () => false,
-    },
-    settings: {
-      type: 'okapi',
-      path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
-      records: 'configs',
       shouldRefresh: () => false,
     },
   });
@@ -94,18 +89,22 @@ class EResourceEditRoute extends React.Component {
   render() {
     if (!this.state.hasPerms) return <NoPermissions />;
     if (this.fetchIsPending()) return <LoadingView dismissible onClose={this.handleClose} />;
+    const { isSuppressFromDiscoveryEnabled } = this.props;
 
     return (
       <View
         handlers={{
+          isSuppressFromDiscoveryEnabled,
           onClose: this.handleClose,
         }}
         initialValues={this.getInitialValues()}
         onSubmit={this.handleSubmit}
-        settings={JSON.parse(this.props.resources.settings?.records?.[0]?.value || '{}')}
       />
     );
   }
 }
 
-export default stripesConnect(EResourceEditRoute);
+export default compose(
+  stripesConnect,
+  withSuppressFromDiscovery
+)(EResourceEditRoute);

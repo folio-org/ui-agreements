@@ -8,7 +8,7 @@ import { withTags } from '@folio/stripes/smart-components';
 import { Tags } from '@folio/stripes-erm-components';
 
 import View from '../components/views/EResource';
-import { urls } from '../components/utilities';
+import { urls, withSuppressFromDiscovery } from '../components/utilities';
 import { resultCount, resourceClasses } from '../constants';
 
 const RECORDS_PER_REQUEST = 100;
@@ -61,12 +61,6 @@ class EResourceViewRoute extends React.Component {
         stats: 'true',
       },
     },
-    settings: {
-      type: 'okapi',
-      path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
-      records: 'configs',
-      shouldRefresh: () => false,
-    },
     query: {},
     entitlementsCount: { initialValue: resultCount.INITIAL_RESULT_COUNT },
     packageContentsFilter: { initialValue: 'current' },
@@ -78,6 +72,7 @@ class EResourceViewRoute extends React.Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
+    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
     }).isRequired,
@@ -233,6 +228,7 @@ class EResourceViewRoute extends React.Component {
   render() {
     const {
       handlers,
+      isSuppressFromDiscoveryEnabled,
       resources,
       tagsEnabled,
     } = this.props;
@@ -249,10 +245,10 @@ class EResourceViewRoute extends React.Component {
           packageContentsCount: this.getPackageContentsRecordsCount(),
           relatedEntitlements: this.getRecords('relatedEntitlements'),
           searchString: this.props.location.search,
-          settings: JSON.parse(this.getRecords('settings')?.[0]?.value || '{}')
         }}
         handlers={{
           ...handlers,
+          isSuppressFromDiscoveryEnabled,
           onFilterPackageContents: this.handleFilterPackageContents,
           onNeedMorePackageContents: this.handleNeedMorePackageContents,
           onClose: this.handleClose,
@@ -269,5 +265,6 @@ class EResourceViewRoute extends React.Component {
 
 export default compose(
   stripesConnect,
+  withSuppressFromDiscovery,
   withTags,
 )(EResourceViewRoute);

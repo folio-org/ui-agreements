@@ -26,12 +26,12 @@ class PCIForm extends React.Component {
       getRegisteredFields: PropTypes.func.isRequired,
     }).isRequired,
     handlers: PropTypes.PropTypes.shape({
+      isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
       onClose: PropTypes.func.isRequired,
     }),
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
-    settings: PropTypes.object,
     submitting: PropTypes.bool,
     values: PropTypes.object,
   }
@@ -125,7 +125,7 @@ class PCIForm extends React.Component {
   }
 
   render() {
-    const { form, settings, values: { name } } = this.props;
+    const { form, handlers: { isSuppressFromDiscoveryEnabled }, values: { name } } = this.props;
 
     const hasLoaded = form.getRegisteredFields().length > 0;
 
@@ -141,7 +141,7 @@ class PCIForm extends React.Component {
         >
           <TitleManager record={name}>
             <form id="form-pci">
-              <PCIFormInfo settings={settings} />
+              <PCIFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} />
               <AccordionSet>
                 {hasLoaded ? <div id="form-loaded" /> : null}
                 <Row end="xs">
