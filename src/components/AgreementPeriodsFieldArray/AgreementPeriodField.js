@@ -63,6 +63,7 @@ export default class AgreementPeriodField extends React.Component {
               name={`${name}.startDate`}
               parser={parseDateOnlyString}
               required
+              usePortal
               validate={composeValidators(
                 validators.requiredStartDate,
                 validators.dateOrder,
@@ -79,6 +80,7 @@ export default class AgreementPeriodField extends React.Component {
               name={`${name}.endDate`}
               parse={v => v} // Lets us send an empty string instead of `undefined`
               parser={parseDateOnlyString}
+              usePortal
               validate={composeValidators(
                 validators.dateOrder,
                 multipleOpenEndedPeriods,
@@ -95,6 +97,7 @@ export default class AgreementPeriodField extends React.Component {
               name={`${name}.cancellationDeadline`}
               parse={v => v} // Lets us send an empty string instead of `undefined`
               parser={parseDateOnlyString}
+              usePortal
             />
           </Col>
         </Row>

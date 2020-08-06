@@ -58,6 +58,7 @@ export default class CoverageField extends React.Component {
               name={`${name}.startDate`}
               parser={parseDateOnlyString}
               required
+              usePortal
               validate={composeValidators(
                 validators.requiredStartDate,
                 validators.dateOrder,
@@ -93,6 +94,7 @@ export default class CoverageField extends React.Component {
               name={`${name}.endDate`}
               parse={v => v} // Lets us send an empty string instead of `undefined`
               parser={parseDateOnlyString}
+              usePortal
               validate={composeValidators(
                 validators.dateOrder,
                 multipleOpenEndedCoverages,
