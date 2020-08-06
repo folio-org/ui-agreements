@@ -53,6 +53,7 @@ const validateDateOrder = (value, allValues, meta) => {
 };
 
 const FormInfo = ({
+  isSuppressFromDiscoveryEnabled,
   resource,
   settings
 }) => (
@@ -87,10 +88,7 @@ const FormInfo = ({
           validate={validateDateOrder}
         />
       </Col>
-      <IfSuppressFromDiscoveryEnabled
-        settings={settings}
-        sfdLocation="agreementLine"
-      >
+      {isSuppressFromDiscoveryEnabled('agreementLine') ?
         <Col md={3} xs={12}>
           <Field
             component={Checkbox}
@@ -100,8 +98,8 @@ const FormInfo = ({
             type="checkbox"
             vertical
           />
-        </Col>
-      </IfSuppressFromDiscoveryEnabled>
+        </Col> : null
+      }
       <Col md={3} xs={12}>
         <Field
           component={TextArea}

@@ -33,13 +33,12 @@ const propTypes = {
     suppressFromDiscovery: PropTypes.bool,
   }).isRequired,
   resource: PropTypes.object.isRequired,
-  settings: PropTypes.object
 };
 
 const Info = ({
+  isSuppressFromDiscoveryEnabled,
   line,
   resource,
-  settings,
 }) => (
   <>
     <Headline size="x-large" tag="h2">
@@ -65,18 +64,15 @@ const Info = ({
           </div>
         </KeyValue>
       </Col>
-      <IfSuppressFromDiscoveryEnabled
-        settings={settings}
-        sfdLocation="agreementLine"
-      >
+      {isSuppressFromDiscoveryEnabled('agreementLine') ?
         <Col md={3} xs={12}>
           <KeyValue label={<FormattedMessage id="ui-agreements.agreementLines.suppressFromDiscovery" />}>
             <div data-test-agreement-line-suppress-from-discovery>
               <FormattedMessage id={`ui-agreements.${line.suppressFromDiscovery ? 'yes' : 'no'}`} />
             </div>
           </KeyValue>
-        </Col>
-      </IfSuppressFromDiscoveryEnabled>
+        </Col> : null
+      }
       <Col md={3} xs={12}>
         <KeyValue label={<FormattedMessage id="ui-agreements.note" />}>
           <div data-test-agreement-line-note>

@@ -60,7 +60,7 @@ const propTypes = {
 };
 
 const AgreementLine = ({
-  data: { line, settings },
+  data: { line },
   handlers,
   helperApp,
   isLoading,
@@ -124,7 +124,7 @@ const AgreementLine = ({
         paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
         {...paneProps}
       >
-        <Info line={line} resource={resource} settings={settings} />
+        <Info isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled} line={line} resource={resource} />
         <AccordionStatus>
           <Row end="xs">
             <Col xs>

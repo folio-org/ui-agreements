@@ -41,7 +41,7 @@ const propTypes = {
 };
 
 const AgreementLineForm = ({
-  data: { line, settings },
+  data: { line },
   form,
   handlers,
   handleSubmit,
@@ -96,7 +96,7 @@ const AgreementLineForm = ({
             </Col>
           </Row>
           <AccordionSet>
-            <FormInfo line={line} resource={resource} settings={settings} />
+            <FormInfo isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled} line={line} resource={resource} />
             <FormPOLines line={line} resource={resource} />
             <FormCoverage line={line} resource={resource} />
           </AccordionSet>

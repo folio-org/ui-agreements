@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import compose from 'compose-function';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import View from '../components/views/AgreementLineForm';
-import { urls } from '../components/utilities';
+import { urls, withSuppressFromDiscovery } from '../components/utilities';
 
 class AgreementLineEditRoute extends React.Component {
   static manifest = Object.freeze({
@@ -32,12 +33,6 @@ class AgreementLineEditRoute extends React.Component {
       fetch: props => !!props.stripes.hasInterface('order-lines', '1.0'),
       records: 'poLines',
       throwErrors: false,
-    },
-    settings: {
-      type: 'okapi',
-      path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
-      records: 'configs',
-      shouldRefresh: () => false,
     },
   });
 
@@ -129,7 +124,7 @@ class AgreementLineEditRoute extends React.Component {
   }
 
   render() {
-    const { resources } = this.props;
+    const { resources, isSuppressFromDiscoveryEnabled } = this.props;
 
     if (this.isLoading()) return <LoadingView dismissible onClose={this.handleClose} />;
 
@@ -138,10 +133,10 @@ class AgreementLineEditRoute extends React.Component {
         key={resources.line?.loadedAt ?? 'loading'}
         data={{
           line: this.getCompositeLine(),
-          settings: JSON.parse(resources?.settings?.records?.[0]?.value || '{}')
         }}
         handlers={{
           onClose: this.handleClose,
+          isSuppressFromDiscoveryEnabled
         }}
         initialValues={this.getInitialValues()}
         isLoading={this.isLoading()}
@@ -151,4 +146,7 @@ class AgreementLineEditRoute extends React.Component {
   }
 }
 
-export default stripesConnect(AgreementLineEditRoute);
+export default compose(
+  withSuppressFromDiscovery,
+  stripesConnect
+)(AgreementLineEditRoute);
