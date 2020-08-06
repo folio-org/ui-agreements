@@ -455,5 +455,6 @@
     "eresources.accessStatusType": "نوع حالة الوصول",
     "identifier.pisbn": "ردمك (مطبوع)",
     "identifier.eisbn": "ردمك (عبر الإنترنت)",
-    "eresources.publicationType": "نوع المنشور"
+    "eresources.publicationType": "نوع المنشور",
+    "organizations.selectRole": "اختر دورًا"
 }
