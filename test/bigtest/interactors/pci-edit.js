@@ -60,6 +60,7 @@ export default @interactor class PCIEditPaneInteractor {
   coverageCount = count('[data-test-coverage-number]');
   clickAddButton = clickable('#edit-pci-add-coverage-button');
 
+  isSuppressFromDiscoveryCheckboxPresent = isPresent('#pci-suppress-from-discovery');
   suppressFromDiscoveryCheckboxChecked = property('#pci-suppress-from-discovery', 'checked');
   clickSuppressFromDiscoveryCheckbox = clickable('#pci-suppress-from-discovery');
 

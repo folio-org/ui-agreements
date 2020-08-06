@@ -16,6 +16,20 @@ const { expect, spy } = chai;
 
 const onSubmit = spy();
 
+const isSuppressFromDiscoveryEnabled = spy((string) => {
+  if (string === 'pci') {
+    return true;
+  }
+  return false;
+});
+
+const isSuppressFromDiscoveryEnabled2 = spy((string) => {
+  if (string === 'pci') {
+    return false;
+  }
+  return true;
+});
+
 describe('PCI edit form', () => {
   const embargoInteractor = new EmbargoInteractor();
   const pciEditPaneInteractor = new PCIEditPaneInteractor();
@@ -39,7 +53,7 @@ describe('PCI edit form', () => {
     beforeEach(async () => {
       await mountWithContext(
         <TestForm initialValues={pci} onSubmit={onSubmit}>
-          <PCIFormInfo />
+          <PCIFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} />
         </TestForm>
       );
     });
@@ -56,6 +70,10 @@ describe('PCI edit form', () => {
       expect(pciEditPaneInteractor.accessUntil).to.equal('01/01/2015');
     });
 
+    it('should have called isSuppressFromDiscoveryEnabled with string "pci"', () => {
+      expect(isSuppressFromDiscoveryEnabled).to.have.been.called.with('pci');
+    });
+
     it('renders the expected suppress from discovery status', () => {
       expect(pciEditPaneInteractor.suppressFromDiscoveryCheckboxChecked).to.equal(pci.suppressFromDiscovery);
     });
@@ -69,6 +87,24 @@ describe('PCI edit form', () => {
         ...pci,
         'suppressFromDiscovery': !pci.suppressFromDiscovery
       });
+    });
+  });
+
+  describe('PCI information (SuppressFromDisplay setting OFF)', () => {
+    beforeEach(async () => {
+      await mountWithContext(
+        <TestForm initialValues={pci} onSubmit={onSubmit}>
+          <PCIFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled2} />
+        </TestForm>
+      );
+    });
+
+    it('should have called isSuppressFromDiscoveryEnabled with string "pci"', () => {
+      expect(isSuppressFromDiscoveryEnabled).to.have.been.called.with('pci');
+    });
+
+    it('does not render the expected suppress from discovery status', () => {
+      expect(pciEditPaneInteractor.isSuppressFromDiscoveryCheckboxPresent).to.be.false;
     });
   });
 
