@@ -12,13 +12,14 @@ import {
 export default function SuppressFromDiscoveryFieldArray({ name }) {
   return (
     <>
-      <Layout className="padding-bottom-gutter padding-top-gutter">
+      <Layout className="padding-bottom-gutter padding-top-gutter" data-test-sfdfa-description>
         <strong>
           <FormattedMessage id="ui-agreements.settings.general.displaySuppressFromDiscovery.description" />
         </strong>
       </Layout>
       <Field
         component={Checkbox}
+        data-test-sfdfa-agreement-line
         id="displaySuppressFromDiscoveryAgreementLine"
         label={<FormattedMessage id="ui-agreements.settings.general.displaySuppressFromDiscoveryAgreementLine.title" />}
         name={`${name}.agreementLine`}
@@ -27,6 +28,7 @@ export default function SuppressFromDiscoveryFieldArray({ name }) {
       />
       <Field
         component={Checkbox}
+        data-test-sfdfa-pci
         id="displaySuppressFromDiscoveryPCI"
         label={<FormattedMessage id="ui-agreements.settings.general.displaySuppressFromDiscoveryPCI.title" />}
         name={`${name}.pci`}
