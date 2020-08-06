@@ -12,7 +12,6 @@ import {
 } from '@folio/stripes/components';
 
 import AddToBasketButton from '../AddToBasketButton';
-import IfSuppressFromDiscoveryEnabled from '../IfSuppressFromDiscoveryEnabled';
 
 export default class PCIInfo extends React.Component {
   static propTypes = {

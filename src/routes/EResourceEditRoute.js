@@ -23,6 +23,7 @@ class EResourceEditRoute extends React.Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
+    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
     }).isRequired,
