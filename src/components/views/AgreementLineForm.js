@@ -33,6 +33,7 @@ const propTypes = {
     getRegisteredFields: PropTypes.func.isRequired,
   }).isRequired,
   handlers: PropTypes.PropTypes.shape({
+    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
   }),
   handleSubmit: PropTypes.func.isRequired,

@@ -16,13 +16,12 @@ import PackageCard from '../PackageCard';
 import PackageCardExternal from '../PackageCardExternal';
 import TitleCard from '../TitleCard';
 import TitleCardExternal from '../TitleCardExternal';
-import IfSuppressFromDiscoveryEnabled from '../IfSuppressFromDiscoveryEnabled';
 
 import { isExternal, parseDateOnlyString } from '../utilities';
 
 const propTypes = {
+  isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
   resource: PropTypes.object,
-  settings: PropTypes.object,
 };
 
 const validateDateOrder = (value, allValues, meta) => {
@@ -54,8 +53,7 @@ const validateDateOrder = (value, allValues, meta) => {
 
 const FormInfo = ({
   isSuppressFromDiscoveryEnabled,
-  resource,
-  settings
+  resource
 }) => (
   <>
     { isExternal(resource) ?

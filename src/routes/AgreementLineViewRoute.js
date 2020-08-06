@@ -43,6 +43,7 @@ class AgreementLineViewRoute extends React.Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
+    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
     }).isRequired,
@@ -174,7 +175,6 @@ class AgreementLineViewRoute extends React.Component {
         key={resources.line?.loadedAt ?? 'loading'}
         data={{
           line: this.getCompositeLine(),
-          settings: JSON.parse(resources?.settings?.records?.[0]?.value || '{}')
         }}
         handlers={{
           isSuppressFromDiscoveryEnabled,

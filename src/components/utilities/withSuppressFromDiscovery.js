@@ -7,14 +7,15 @@ const getDisplayName = (WrappedComponent) => {
 
 export default function withSuppressFromDiscovery(WrappedComponent) {
   class WithSuppressFromDiscovery extends React.Component {
-    static manifest = Object.freeze({
-      settings: {
-        type: 'okapi',
-        path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
-        records: 'configs',
-        shouldRefresh: () => false,
-      },
-    });
+    static manifest = Object.freeze(
+      { ...WrappedComponent.manifest,
+        settings: {
+          type: 'okapi',
+          path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
+          records: 'configs',
+          shouldRefresh: () => false,
+        } }
+    );
 
     static propTypes = {
       children: PropTypes.node,

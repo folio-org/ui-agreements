@@ -15,10 +15,10 @@ import PackageCard from '../PackageCard';
 import PackageCardExternal from '../PackageCardExternal';
 import TitleCard from '../TitleCard';
 import TitleCardExternal from '../TitleCardExternal';
-import IfSuppressFromDiscoveryEnabled from '../IfSuppressFromDiscoveryEnabled';
 import { isExternal } from '../utilities';
 
 const propTypes = {
+  isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
   line: PropTypes.shape({
     activeFrom: PropTypes.string,
     activeTo: PropTypes.string,
