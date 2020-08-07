@@ -6,11 +6,10 @@ import { Form } from 'react-final-form';
 
 import { mountWithContext } from '../helpers/mountWithContext';
 
-import { SuppressFromDiscoveryFieldArray } from '../../../src/settings/components';
+import { SuppressFromDiscoveryFields } from '../../../src/settings/components';
 import SuppressFromDiscoveryInteractor from '../interactors/suppress-from-discovery';
 
 const interactor = new SuppressFromDiscoveryInteractor();
-let formValues = {};
 
 describe('Suppress from discovery tests', () => {
   describe('Rendering the "Suppress from discovery" settings component', () => {
@@ -18,15 +17,13 @@ describe('Suppress from discovery tests', () => {
       await mountWithContext(
         <Form
           onSubmit={() => {}}
-          render={({ handleSubmit, values }) => {
-            formValues = values;
+          render={({ handleSubmit }) => {
             return (
               <form onSubmit={handleSubmit}>
-                <SuppressFromDiscoveryFieldArray name="test" />
+                <SuppressFromDiscoveryFields name="test" />
               </form>
             );
           }}
-          subscription={{ values: true }}
         />
       );
     });
@@ -37,7 +34,7 @@ describe('Suppress from discovery tests', () => {
 
     describe('agreement line checkbox tests', () => {
       it('renders the agreement line checkbox', () => {
-        expect(interactor.isAgreementLine).to.be.true;
+        expect(interactor.isAgreementLineCheckboxPresent).to.be.true;
       });
 
       it('agreement line checkbox has the correct name prop', () => {
@@ -45,23 +42,23 @@ describe('Suppress from discovery tests', () => {
       });
 
       it('agreementLine checkbox is false', () => {
-        expect(formValues.test?.agreementLine).to.equal(false || undefined);
+        expect(interactor.agreementLineFieldChecked).to.equal(false);
       });
 
       describe('Clicking the agreement line checkbox', () => {
         beforeEach(async function () {
-          await interactor.checkAgreementLine();
+          await interactor.clickAgreementLine();
         });
 
-        it('agreementLine checkbox is now true', () => {
-          expect(formValues.test?.agreementLine).to.equal(true);
+        it('agreementLine checkbox is set to true', () => {
+          expect(interactor.agreementLineFieldChecked).to.equal(true);
         });
       });
     });
 
     describe('pci checkbox tests', () => {
       it('renders the pci checkbox', () => {
-        expect(interactor.isPCI).to.be.true;
+        expect(interactor.isPCICheckboxPresent).to.be.true;
       });
 
       it('pci checkbox has the correct name prop', () => {
@@ -69,16 +66,16 @@ describe('Suppress from discovery tests', () => {
       });
 
       it('pci checkbox is false', () => {
-        expect(formValues.test?.pci).to.equal(false || undefined);
+        expect(interactor.pciFieldChecked).to.equal(false);
       });
 
       describe('Clicking the pci checkbox', () => {
         beforeEach(async function () {
-          await interactor.checkPCI();
+          await interactor.clickPCI();
         });
 
-        it('pci checkbox is now true', () => {
-          expect(formValues.test?.pci).to.equal(true);
+        it('pci checkbox is set to true', () => {
+          expect(interactor.pciFieldChecked).to.equal(true);
         });
       });
     });

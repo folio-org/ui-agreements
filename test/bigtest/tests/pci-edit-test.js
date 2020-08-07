@@ -16,19 +16,9 @@ const { expect, spy } = chai;
 
 const onSubmit = spy();
 
-const isSuppressFromDiscoveryEnabled = spy((string) => {
-  if (string === 'pci') {
-    return true;
-  }
-  return false;
-});
+const isSuppressFromDiscoveryEnabled = spy(resource => resource === 'pci');
 
-const isSuppressFromDiscoveryEnabled2 = spy((string) => {
-  if (string === 'pci') {
-    return false;
-  }
-  return true;
-});
+const isSuppressFromDiscoveryEnabledFalse = spy(resource => resource !== 'pci');
 
 describe('PCI edit form', () => {
   const embargoInteractor = new EmbargoInteractor();
@@ -94,7 +84,7 @@ describe('PCI edit form', () => {
     beforeEach(async () => {
       await mountWithContext(
         <TestForm initialValues={pci} onSubmit={onSubmit}>
-          <PCIFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled2} />
+          <PCIFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabledFalse} />
         </TestForm>
       );
     });

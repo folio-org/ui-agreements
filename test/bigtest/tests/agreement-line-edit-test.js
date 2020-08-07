@@ -19,12 +19,7 @@ const formProps = {
     line: {},
   },
   handlers: {
-    isSuppressFromDiscoveryEnabled: spy((string) => {
-      if (string === 'agreementLine') {
-        return true;
-      }
-      return false;
-    }),
+    isSuppressFromDiscoveryEnabled: spy(resource => resource === 'agreementLine'),
     onClose: spy(),
   },
   initialValues: {},

@@ -9,7 +9,7 @@ import {
   Layout
 } from '@folio/stripes/components';
 
-export default function SuppressFromDiscoveryFields({ name }) {
+const SuppressFromDiscoveryFields = ({ name }) => {
   return (
     <>
       <Layout className="padding-bottom-gutter padding-top-gutter" data-test-sfdfa-description>
@@ -42,4 +42,6 @@ export default function SuppressFromDiscoveryFields({ name }) {
 SuppressFromDiscoveryFields.propTypes = {
   name: PropTypes.string
 };
+
+export default SuppressFromDiscoveryFields;
 

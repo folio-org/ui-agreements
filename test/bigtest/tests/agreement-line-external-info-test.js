@@ -16,19 +16,9 @@ const { expect, spy } = chai;
 
 describe('AgreementLineInfo', () => {
   const interactor = new AgreementLineInfoInteractor();
-  const isSuppressFromDiscoveryEnabled = spy((string) => {
-    if (string === 'agreementLine') {
-      return true;
-    }
-    return false;
-  });
+  const isSuppressFromDiscoveryEnabled = spy(resource => resource === 'agreementLine');
 
-  const isSuppressFromDiscoveryEnabled2 = spy((string) => {
-    if (string === 'agreementLine') {
-      return false;
-    }
-    return true;
-  });
+  const isSuppressFromDiscoveryEnabledFalse = spy(resource => resource !== 'agreementLine');
   externalEntitlements.forEach((externalResource, i) => {
     describe(`agreement line info of external resource of type '${externalResource?.reference_object?.type}' '${externalResource?.reference_object?.label}', index ${i}`, () => {
       beforeEach(async () => {
@@ -249,7 +239,7 @@ describe('AgreementLineInfo', () => {
       beforeEach(async () => {
         await mountWithContext(
           <Router context={{}}>
-            <Info isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled2} line={externalResource} resource={externalResource} />
+            <Info isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabledFalse} line={externalResource} resource={externalResource} />
           </Router>
         );
       });
