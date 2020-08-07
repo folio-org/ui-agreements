@@ -455,5 +455,6 @@
     "eresources.accessStatusType": "Тип статуса доступа",
     "identifier.pisbn": "ISBN (Печатный)",
     "identifier.eisbn": "ISBN (Онлайн)",
-    "eresources.publicationType": "Publication type"
+    "eresources.publicationType": "Publication type",
+    "organizations.selectRole": "Select a role"
 }

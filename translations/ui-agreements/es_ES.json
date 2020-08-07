@@ -455,5 +455,6 @@
     "eresources.accessStatusType": "Access status type",
     "identifier.pisbn": "ISBN (Print)",
     "identifier.eisbn": "ISBN (Online)",
-    "eresources.publicationType": "Publication type"
+    "eresources.publicationType": "Publication type",
+    "organizations.selectRole": "Select a role"
 }
