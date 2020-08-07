@@ -19,6 +19,7 @@ const formProps = {
     line: {},
   },
   handlers: {
+    isSuppressFromDiscoveryEnabled: spy(resource => resource === 'agreementLine'),
     onClose: spy(),
   },
   initialValues: {},

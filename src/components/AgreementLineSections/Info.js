@@ -18,6 +18,7 @@ import TitleCardExternal from '../TitleCardExternal';
 import { isExternal } from '../utilities';
 
 const propTypes = {
+  isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
   line: PropTypes.shape({
     activeFrom: PropTypes.string,
     activeTo: PropTypes.string,
@@ -35,6 +36,7 @@ const propTypes = {
 };
 
 const Info = ({
+  isSuppressFromDiscoveryEnabled,
   line,
   resource,
 }) => (
@@ -62,13 +64,15 @@ const Info = ({
           </div>
         </KeyValue>
       </Col>
-      <Col md={3} xs={12}>
-        <KeyValue label={<FormattedMessage id="ui-agreements.agreementLines.suppressFromDiscovery" />}>
-          <div data-test-agreement-line-suppress-from-discovery>
-            <FormattedMessage id={`ui-agreements.${line.suppressFromDiscovery ? 'yes' : 'no'}`} />
-          </div>
-        </KeyValue>
-      </Col>
+      {isSuppressFromDiscoveryEnabled('agreementLine') ?
+        <Col md={3} xs={12}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.agreementLines.suppressFromDiscovery" />}>
+            <div data-test-agreement-line-suppress-from-discovery>
+              <FormattedMessage id={`ui-agreements.${line.suppressFromDiscovery ? 'yes' : 'no'}`} />
+            </div>
+          </KeyValue>
+        </Col> : null
+      }
       <Col md={3} xs={12}>
         <KeyValue label={<FormattedMessage id="ui-agreements.note" />}>
           <div data-test-agreement-line-note>

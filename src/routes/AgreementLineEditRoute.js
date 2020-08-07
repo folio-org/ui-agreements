@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import compose from 'compose-function';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import View from '../components/views/AgreementLineForm';
-import { urls } from '../components/utilities';
+import { urls, withSuppressFromDiscovery } from '../components/utilities';
 
 class AgreementLineEditRoute extends React.Component {
   static manifest = Object.freeze({
@@ -39,6 +40,7 @@ class AgreementLineEditRoute extends React.Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
+    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
     }).isRequired,
@@ -56,6 +58,7 @@ class AgreementLineEditRoute extends React.Component {
     resources: PropTypes.shape({
       line: PropTypes.object,
       orderLines: PropTypes.object,
+      settings: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
       hasInterface: PropTypes.func.isRequired,
@@ -122,7 +125,7 @@ class AgreementLineEditRoute extends React.Component {
   }
 
   render() {
-    const { resources } = this.props;
+    const { resources, isSuppressFromDiscoveryEnabled } = this.props;
 
     if (this.isLoading()) return <LoadingView dismissible onClose={this.handleClose} />;
 
@@ -130,10 +133,11 @@ class AgreementLineEditRoute extends React.Component {
       <View
         key={resources.line?.loadedAt ?? 'loading'}
         data={{
-          line: this.getCompositeLine()
+          line: this.getCompositeLine(),
         }}
         handlers={{
           onClose: this.handleClose,
+          isSuppressFromDiscoveryEnabled
         }}
         initialValues={this.getInitialValues()}
         isLoading={this.isLoading()}
@@ -143,4 +147,7 @@ class AgreementLineEditRoute extends React.Component {
   }
 }
 
-export default stripesConnect(AgreementLineEditRoute);
+export default compose(
+  stripesConnect,
+  withSuppressFromDiscovery,
+)(AgreementLineEditRoute);

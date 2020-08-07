@@ -47,8 +47,10 @@ const propTypes = {
         length: PropTypes.number,
       }),
     }).isRequired,
+    settings: PropTypes.object,
   }),
   handlers: PropTypes.shape({
+    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
     onEdit: PropTypes.func.isRequired,
@@ -123,7 +125,11 @@ const AgreementLine = ({
         paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
         {...paneProps}
       >
-        <Info line={line} resource={resource} />
+        <Info
+          isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled}
+          line={line}
+          resource={resource}
+        />
         <AccordionStatus>
           <Row end="xs">
             <Col xs>
