@@ -1,3 +1,3 @@
 export { default } from './SupplementaryPropertiesConfigForm';
-export { default as SuppressFromDiscoveryFieldArray } from './SuppressFromDiscoveryFieldArray';
+export { default as SuppressFromDiscoveryFields } from './SuppressFromDiscoveryFields';
 

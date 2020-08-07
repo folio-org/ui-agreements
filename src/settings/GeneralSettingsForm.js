@@ -13,7 +13,7 @@ import {
 
 import stripesFinalForm from '@folio/stripes/final-form';
 
-import { SuppressFromDiscoveryFieldArray } from './components';
+import { SuppressFromDiscoveryFields } from './components';
 
 class GeneralSettingsForm extends React.Component {
   static propTypes = {
@@ -81,7 +81,7 @@ class GeneralSettingsForm extends React.Component {
               listStyle="bullets"
             />
           </Layout>
-          <SuppressFromDiscoveryFieldArray name="displaySuppressFromDiscovery" />
+          <SuppressFromDiscoveryFields name="displaySuppressFromDiscovery" />
         </Pane>
       </form>
     );

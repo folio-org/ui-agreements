@@ -9,7 +9,7 @@ import {
   Layout
 } from '@folio/stripes/components';
 
-export default function SuppressFromDiscoveryFieldArray({ name }) {
+export default function SuppressFromDiscoveryFields({ name }) {
   return (
     <>
       <Layout className="padding-bottom-gutter padding-top-gutter" data-test-sfdfa-description>
@@ -39,7 +39,7 @@ export default function SuppressFromDiscoveryFieldArray({ name }) {
   );
 }
 
-SuppressFromDiscoveryFieldArray.propTypes = {
+SuppressFromDiscoveryFields.propTypes = {
   name: PropTypes.string
 };
 
