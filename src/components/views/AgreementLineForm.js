@@ -97,7 +97,11 @@ const AgreementLineForm = ({
             </Col>
           </Row>
           <AccordionSet>
-            <FormInfo isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled} line={line} resource={resource} />
+            <FormInfo
+              isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled}
+              line={line}
+              resource={resource}
+            />
             <FormPOLines line={line} resource={resource} />
             <FormCoverage line={line} resource={resource} />
           </AccordionSet>

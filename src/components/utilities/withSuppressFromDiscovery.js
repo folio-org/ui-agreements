@@ -24,11 +24,10 @@ export default function withSuppressFromDiscovery(WrappedComponent) {
       })
     };
 
-
     handleSuppressFromDiscoveryEnabled = (resource) => {
       const { settings = {} } = this.props.resources;
       const parsedSettings = JSON.parse(settings?.records?.[0]?.value || '{}');
-      return parsedSettings.displaySuppressFromDiscovery ? parsedSettings.displaySuppressFromDiscovery[resource] : true;
+      return parsedSettings.displaySuppressFromDiscovery?.[resource] ?? true;
     }
 
     render() {

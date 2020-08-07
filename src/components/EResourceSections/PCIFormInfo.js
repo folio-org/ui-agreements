@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import PropTypes from 'prop-types';
 
-
 import {
   Checkbox,
   Col,

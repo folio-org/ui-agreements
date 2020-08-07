@@ -125,7 +125,11 @@ const AgreementLine = ({
         paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
         {...paneProps}
       >
-        <Info isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled} line={line} resource={resource} />
+        <Info
+          isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled}
+          line={line}
+          resource={resource}
+        />
         <AccordionStatus>
           <Row end="xs">
             <Col xs>
