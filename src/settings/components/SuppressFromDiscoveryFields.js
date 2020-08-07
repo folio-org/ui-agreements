@@ -37,7 +37,7 @@ const SuppressFromDiscoveryFields = ({ name }) => {
       />
     </>
   );
-}
+};
 
 SuppressFromDiscoveryFields.propTypes = {
   name: PropTypes.string
