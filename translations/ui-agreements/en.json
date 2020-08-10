@@ -490,7 +490,7 @@
   "settings.hideEResources.result.1": "Hide the E-resources tab in the agreements app",
   "settings.hideEResources.result.2": "Hide the basket icon in the agreements app",
   "settings.hideEResources.result.3": "Hide the \"E-resources covered by this agreement\" accordion in individual agreements",
-  "settings.general.displaySuppressFromDiscovery.description": "Display \"Suppress from discovery\" on",
+  "settings.general.displaySuppressFromDiscovery.description": "Display \"Suppress from discovery\" setting on",
   "settings.general.displaySuppressFromDiscoveryAgreementLine.title": "Agreement lines",
   "settings.general.displaySuppressFromDiscoveryPCI.title": "Package content items",
   "settings.label": "Label",
