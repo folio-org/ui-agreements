@@ -456,5 +456,9 @@
     "identifier.pisbn": "ردمك (مطبوع)",
     "identifier.eisbn": "ردمك (عبر الإنترنت)",
     "eresources.publicationType": "نوع المنشور",
-    "organizations.selectRole": "اختر دورًا"
+    "organizations.selectRole": "اختر دورًا",
+    "settings.displaySettings": "إعدادات العرض",
+    "settings.general.displaySuppressFromDiscovery.description": "عرض \"حجب من الاكتشاف\" في",
+    "settings.general.displaySuppressFromDiscoveryAgreementLine.title": "بنود الاتفاقية",
+    "settings.general.displaySuppressFromDiscoveryPCI.title": "مواد محتوى الحزمة"
 }

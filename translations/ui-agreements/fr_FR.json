@@ -456,5 +456,9 @@
     "identifier.pisbn": "ISBN (papier)",
     "identifier.eisbn": "ISBN (en ligne)",
     "eresources.publicationType": "Type de publication",
-    "organizations.selectRole": "Sélectionnez un rôle"
+    "organizations.selectRole": "Sélectionnez un rôle",
+    "settings.displaySettings": "Display settings",
+    "settings.general.displaySuppressFromDiscovery.description": "Display \"Suppress from discovery\" setting on",
+    "settings.general.displaySuppressFromDiscoveryAgreementLine.title": "Lignes d'accord",
+    "settings.general.displaySuppressFromDiscoveryPCI.title": "Package content items"
 }
