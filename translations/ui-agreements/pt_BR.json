@@ -456,5 +456,9 @@
     "identifier.pisbn": "ISBN (Impresso)",
     "identifier.eisbn": "ISBN (Online)",
     "eresources.publicationType": "Tipo de publicação",
-    "organizations.selectRole": "Selecione uma função"
+    "organizations.selectRole": "Selecione uma função",
+    "settings.displaySettings": "Configurações de exibição",
+    "settings.general.displaySuppressFromDiscovery.description": "Exibir configuração \"Suprimir da descoberta\" em",
+    "settings.general.displaySuppressFromDiscoveryAgreementLine.title": "Linhas de contrato",
+    "settings.general.displaySuppressFromDiscoveryPCI.title": "Itens de conteúdo do pacote"
 }

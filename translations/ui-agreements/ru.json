@@ -456,5 +456,9 @@
     "identifier.pisbn": "ISBN (Печатный)",
     "identifier.eisbn": "ISBN (Онлайн)",
     "eresources.publicationType": "Publication type",
-    "organizations.selectRole": "Select a role"
+    "organizations.selectRole": "Select a role",
+    "settings.displaySettings": "Display settings",
+    "settings.general.displaySuppressFromDiscovery.description": "Display \"Suppress from discovery\" setting on",
+    "settings.general.displaySuppressFromDiscoveryAgreementLine.title": "Agreement lines",
+    "settings.general.displaySuppressFromDiscoveryPCI.title": "Package content items"
 }
