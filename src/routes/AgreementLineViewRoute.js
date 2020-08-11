@@ -8,7 +8,7 @@ import { withTags } from '@folio/stripes/smart-components';
 import { Tags } from '@folio/stripes-erm-components';
 
 import View from '../components/views/AgreementLine';
-import { urls } from '../components/utilities';
+import { urls, withSuppressFromDiscovery } from '../components/utilities';
 
 class AgreementLineViewRoute extends React.Component {
   static manifest = Object.freeze({
@@ -43,6 +43,7 @@ class AgreementLineViewRoute extends React.Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
+    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
     }).isRequired,
@@ -76,7 +77,7 @@ class AgreementLineViewRoute extends React.Component {
 
   getHelperApp = () => {
     const { match, resources } = this.props;
-    const helper = resources.query.helper;
+    const helper = resources.query?.helper;
     if (!helper) return null;
 
     let HelperComponent = null;
@@ -167,7 +168,7 @@ class AgreementLineViewRoute extends React.Component {
   }
 
   render() {
-    const { resources, tagsEnabled } = this.props;
+    const { resources, tagsEnabled, isSuppressFromDiscoveryEnabled } = this.props;
 
     return (
       <View
@@ -176,6 +177,7 @@ class AgreementLineViewRoute extends React.Component {
           line: this.getCompositeLine(),
         }}
         handlers={{
+          isSuppressFromDiscoveryEnabled,
           onClose: this.handleClose,
           onDelete: this.handleDelete,
           onEdit: this.handleEdit,
@@ -190,5 +192,6 @@ class AgreementLineViewRoute extends React.Component {
 
 export default compose(
   stripesConnect,
+  withSuppressFromDiscovery,
   withTags,
 )(AgreementLineViewRoute);

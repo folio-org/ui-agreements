@@ -27,11 +27,13 @@ const propTypes = {
         _object: PropTypes.object,
       }),
     }),
+    settings: PropTypes.object,
   }),
   form: PropTypes.shape({
     getRegisteredFields: PropTypes.func.isRequired,
   }).isRequired,
   handlers: PropTypes.PropTypes.shape({
+    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
   }),
   handleSubmit: PropTypes.func.isRequired,
@@ -95,7 +97,11 @@ const AgreementLineForm = ({
             </Col>
           </Row>
           <AccordionSet>
-            <FormInfo line={line} resource={resource} />
+            <FormInfo
+              isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled}
+              line={line}
+              resource={resource}
+            />
             <FormPOLines line={line} resource={resource} />
             <FormCoverage line={line} resource={resource} />
           </AccordionSet>

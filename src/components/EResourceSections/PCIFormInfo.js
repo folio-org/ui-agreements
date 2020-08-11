@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
+import PropTypes from 'prop-types';
 
 import {
   Checkbox,
@@ -12,7 +13,12 @@ import {
 import { parseDateOnlyString } from '../utilities';
 
 export default class PCIFormInfo extends React.Component {
+  static propTypes = {
+    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
+  }
+
   render() {
+    const { isSuppressFromDiscoveryEnabled } = this.props;
     return (
       <div data-test-edit-pci-info>
         <Field
@@ -49,16 +55,18 @@ export default class PCIFormInfo extends React.Component {
               parser={parseDateOnlyString}
             />
           </Col>
-          <Col xs={3}>
-            <Field
-              component={Checkbox}
-              id="pci-suppress-from-discovery"
-              label={<FormattedMessage id="ui-agreements.eresources.suppressFromDiscovery" />}
-              name="suppressFromDiscovery"
-              type="checkbox"
-              vertical
-            />
-          </Col>
+          { isSuppressFromDiscoveryEnabled('pci') ?
+            <Col xs={3}>
+              <Field
+                component={Checkbox}
+                id="pci-suppress-from-discovery"
+                label={<FormattedMessage id="ui-agreements.eresources.suppressFromDiscovery" />}
+                name="suppressFromDiscovery"
+                type="checkbox"
+                vertical
+              />
+            </Col> : null
+          }
         </Row>
       </div>
     );
