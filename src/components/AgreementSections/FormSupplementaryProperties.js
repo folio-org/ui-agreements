@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Accordion } from '@folio/stripes/components';
+import { Accordion, Headline } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 
 import { FormCustomProperties } from '@folio/stripes-erm-components';
@@ -26,8 +26,16 @@ class FormSupplementaryProperties extends React.Component {
         <FormCustomProperties
           customProperties={supplementaryProperties}
           name="customProperties"
-          optionalSectionLabel={<FormattedMessage id="ui-agreements.supplementaryProperties.optionalProperties" />}
-          primarySectionLabel={<FormattedMessage id="ui-agreements.supplementaryProperties.primaryProperties" />}
+          optionalSectionLabel={
+            <Headline size="large" tag="h4">
+              <FormattedMessage id="ui-agreements.supplementaryProperties.optionalProperties" />
+            </Headline>
+          }
+          primarySectionLabel={
+            <Headline size="large" tag="h4">
+              <FormattedMessage id="ui-agreements.supplementaryProperties.primaryProperties" />
+            </Headline>
+          }
           translationKey="supplementaryProperty"
         />
       </Accordion>
