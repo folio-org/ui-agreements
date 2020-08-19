@@ -15,6 +15,7 @@ import AddToBasketButton from '../AddToBasketButton';
 
 export default class PCIInfo extends React.Component {
   static propTypes = {
+    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     pci: PropTypes.shape({
       accessEnd: PropTypes.string,
       accessStart: PropTypes.string,
@@ -50,7 +51,7 @@ export default class PCIInfo extends React.Component {
   }
 
   render() {
-    const { pci } = this.props;
+    const { isSuppressFromDiscoveryEnabled, pci } = this.props;
     return (
       <div id="pci-info">
         <Row>
@@ -89,13 +90,15 @@ export default class PCIInfo extends React.Component {
               {pci?.accessEnd ?? <NoValue />}
             </KeyValue>
           </Col>
-          <Col xs={3}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.eresources.suppressFromDiscovery" />}>
-              <div data-test-pci-suppress-from-discovery>
-                <FormattedMessage id={`ui-agreements.${pci?.suppressFromDiscovery ? 'yes' : 'no'}`} />
-              </div>
-            </KeyValue>
-          </Col>
+          {isSuppressFromDiscoveryEnabled('pci') ?
+            <Col xs={3}>
+              <KeyValue label={<FormattedMessage id="ui-agreements.eresources.suppressFromDiscovery" />}>
+                <div data-test-pci-suppress-from-discovery>
+                  <FormattedMessage id={`ui-agreements.${pci?.suppressFromDiscovery ? 'yes' : 'no'}`} />
+                </div>
+              </KeyValue>
+            </Col> : null
+          }
         </Row>
       </div>
     );

@@ -20,6 +20,7 @@ import TitleCardExternal from '../TitleCardExternal';
 import { isExternal, parseDateOnlyString } from '../utilities';
 
 const propTypes = {
+  isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
   resource: PropTypes.object,
 };
 
@@ -51,7 +52,8 @@ const validateDateOrder = (value, allValues, meta) => {
 };
 
 const FormInfo = ({
-  resource,
+  isSuppressFromDiscoveryEnabled,
+  resource
 }) => (
   <>
     { isExternal(resource) ?
@@ -84,16 +86,18 @@ const FormInfo = ({
           validate={validateDateOrder}
         />
       </Col>
-      <Col md={3} xs={12}>
-        <Field
-          component={Checkbox}
-          id="agreement-line-suppress-from-discovery"
-          label={<FormattedMessage id="ui-agreements.agreementLines.suppressFromDiscovery" />}
-          name="suppressFromDiscovery"
-          type="checkbox"
-          vertical
-        />
-      </Col>
+      {isSuppressFromDiscoveryEnabled('agreementLine') ?
+        <Col md={3} xs={12}>
+          <Field
+            component={Checkbox}
+            id="agreement-line-suppress-from-discovery"
+            label={<FormattedMessage id="ui-agreements.agreementLines.suppressFromDiscovery" />}
+            name="suppressFromDiscovery"
+            type="checkbox"
+            vertical
+          />
+        </Col> : null
+      }
       <Col md={3} xs={12}>
         <Field
           component={TextArea}

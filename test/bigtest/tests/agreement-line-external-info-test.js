@@ -12,17 +12,19 @@ import { externalEntitlements } from './resources';
 import AgreementLineInfoInteractor from '../interactors/agreement-line-external-info';
 
 chai.use(spies);
-const { expect } = chai;
+const { expect, spy } = chai;
 
 describe('AgreementLineInfo', () => {
   const interactor = new AgreementLineInfoInteractor();
+  const isSuppressFromDiscoveryEnabled = spy(resource => resource === 'agreementLine');
 
+  const isSuppressFromDiscoveryEnabledFalse = spy(resource => resource !== 'agreementLine');
   externalEntitlements.forEach((externalResource, i) => {
     describe(`agreement line info of external resource of type '${externalResource?.reference_object?.type}' '${externalResource?.reference_object?.label}', index ${i}`, () => {
       beforeEach(async () => {
         await mountWithContext(
           <Router context={{}}>
-            <Info line={externalResource} resource={externalResource} />
+            <Info isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} line={externalResource} resource={externalResource} />
           </Router>
         );
       });
@@ -52,6 +54,10 @@ describe('AgreementLineInfo', () => {
           expect(interactor.activeFrom).to.equal('-');
         });
       }
+
+      it('should have called isSuppressFromDiscoveryEnabled with string "agreementLine"', () => {
+        expect(isSuppressFromDiscoveryEnabled).to.have.been.called.with('agreementLine');
+      });
 
       it('should render parent agreements suppress from discovery', () => {
         if (externalResource?.suppressFromDiscovery) {
@@ -227,6 +233,24 @@ describe('AgreementLineInfo', () => {
           expect(interactor.pkgCount).to.have.string(externalResource.reference_object.packageData.selectedCount + ' / ' + externalResource.reference_object.packageData.titleCount);
         });
       }
+    });
+
+    describe(`agreement line info of external resource of type '${externalResource?.reference_object?.type}' '${externalResource?.reference_object?.label}', index ${i} (SuppressFromDisplay setting OFF)`, () => {
+      beforeEach(async () => {
+        await mountWithContext(
+          <Router context={{}}>
+            <Info isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabledFalse} line={externalResource} resource={externalResource} />
+          </Router>
+        );
+      });
+
+      it('should have called isSuppressFromDiscoveryEnabled with string "agreementLine"', () => {
+        expect(isSuppressFromDiscoveryEnabled).to.have.been.called.with('agreementLine');
+      });
+
+      it('should not render parent agreements suppress from discovery', () => {
+        expect(interactor.isSuppressFromDiscoveryPresent).to.be.false;
+      });
     });
   });
 });

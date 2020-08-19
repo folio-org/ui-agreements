@@ -33,16 +33,20 @@ export default class PCI extends React.Component {
       }).isRequired,
       relatedEntitlements: PropTypes.arrayOf(PropTypes.object),
       searchString: PropTypes.string,
+      settings: PropTypes.object,
     }),
+    handlers: PropTypes.shape({
+      isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
+    })
   }
 
   render() {
-    const { data } = this.props;
+    const { data, handlers: { isSuppressFromDiscoveryEnabled } } = this.props;
     const { eresource, searchString } = data;
 
     return (
       <div id="eresource-pci">
-        <PCIInfo pci={eresource} />
+        <PCIInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} pci={eresource} />
         <div data-test-parent-package-details>
           <Headline margin="small" size="large" tag="h3">
             <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
