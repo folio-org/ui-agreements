@@ -213,6 +213,31 @@ export default function config() {
     ];
   });
 
+  this.get('/erm/refdata/TitleInstance/publicationType', () => {
+    return [
+      {
+        'id':'2c9180b4740a3eee01740a4011e00004',
+        'value':'book',
+        'label':'Book'
+      },
+      {
+        'id':'2c9180b4740a3eee01740a4011e30005',
+        'value':'journal',
+        'label':'Journal'
+      },
+      {
+        'id':'2c9180b4740a3eee01740a4011e70006',
+        'value':'monograph',
+        'label':'Monograph'
+      },
+      {
+        'id':'2c9180b4740a3eee01740a4011ea0007',
+        'value':'serial',
+        'label':'Serial'
+      }
+    ];
+  });
+
   this.get('/erm/refdata/RemoteLicenseLink/status', () => {
     return [
       { 'id': '188389636d9ece46016d9ed017ed001b', 'value': 'controlling', 'label': 'Controlling' },
