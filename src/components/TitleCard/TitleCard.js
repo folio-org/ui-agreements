@@ -6,18 +6,26 @@ import TitleCardInfo from './TitleCardInfo';
 import EResourceLink from '../EResourceLink';
 
 const propTypes = {
+  headerEnd: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
   searchString: PropTypes.string,
   title: PropTypes.object,
 };
 
 const TitleCard = ({
+  headerEnd,
   searchString = '',
   title,
 }) => {
+  const titleObject = title._object ?? title;
+
   return (
     <Card
       cardStyle="positive"
       data-test-title-card
+      headerEnd={headerEnd}
       headerStart={(
         <strong data-test-title-instance-name>
           <EResourceLink eresource={title} searchString={searchString} />
@@ -25,7 +33,7 @@ const TitleCard = ({
       )}
       roundedBorder
     >
-      <TitleCardInfo title={title} />
+      <TitleCardInfo title={titleObject} />
     </Card>
   );
 };

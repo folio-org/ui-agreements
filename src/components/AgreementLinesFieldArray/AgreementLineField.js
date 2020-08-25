@@ -209,8 +209,12 @@ export default class AgreementLineField extends React.Component {
         autoFocus
         basket={this.props.basket}
         error={React.isValidElement(error) ? error : undefined}
+        fullWidth
+        inlineButton
+        label={<FormattedMessage id="ui-agreements.basketSelector.selectLabel" />}
         name={`${name}.basketSelector`}
         onAdd={resource => this.props.onResourceSelected(this.props.index, resource)}
+        required
       />
     );
   }

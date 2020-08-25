@@ -55,7 +55,7 @@ class POLinesFieldArray extends React.Component {
   renderPOLines() {
     const { agreementLineIndex, items, name } = this.props;
 
-    return items.map((poLine, index) => (
+    return items.length ? items.map((poLine, index) => (
       <EditCard
         key={index}
         data-test-po-line
@@ -77,7 +77,11 @@ class POLinesFieldArray extends React.Component {
           validate={requiredValidator}
         />
       </EditCard>
-    ));
+    )) : (
+      <Layout className="padding-bottom-gutter">
+        <FormattedMessage id="ui-agreements.emptyAccordion.linePOLines" />
+      </Layout>
+    );
   }
 
   render() {

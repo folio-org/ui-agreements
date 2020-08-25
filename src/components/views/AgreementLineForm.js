@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -7,6 +7,7 @@ import {
   AccordionSet,
   AccordionStatus,
   Button,
+  ButtonGroup,
   Col,
   ExpandAllButton,
   Pane,
@@ -14,14 +15,17 @@ import {
   Paneset,
   Row,
 } from '@folio/stripes/components';
+
 import { AppIcon } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
+import { FormInfo, FormPOLines, FormCoverage, FormEresource } from '../AgreementLineSections';
+import IfEResourcesEnabled from '../IfEResourcesEnabled';
 
-import { FormInfo, FormPOLines, FormCoverage } from '../AgreementLineSections';
-import { isExternal } from '../utilities';
+import { isDetached, isExternal } from '../utilities';
 
 const propTypes = {
   data: PropTypes.shape({
+    basket: PropTypes.arrayOf(PropTypes.object),
     line: PropTypes.shape({
       resource: PropTypes.shape({
         _object: PropTypes.object,
@@ -34,23 +38,54 @@ const propTypes = {
   }).isRequired,
   handlers: PropTypes.PropTypes.shape({
     isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
+    onAgreementLineSourceClick:  PropTypes.func,
     onClose: PropTypes.func.isRequired,
   }),
   handleSubmit: PropTypes.func.isRequired,
+  isEholdingsEnabled: PropTypes.bool,
+  lineId: PropTypes.string,
   pristine: PropTypes.bool,
   submitting: PropTypes.bool,
 };
 
 const AgreementLineForm = ({
-  data: { line },
+  data: { basket = [], line = {} },
   form,
   handlers,
   handleSubmit,
+  isEholdingsEnabled,
+  lineId = '',
   pristine,
   submitting,
 }) => {
   const hasLoaded = form.getRegisteredFields().length > 0;
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
+
+  const [agreementLineSource, setAgreementLineSource] = useState('basket');
+
+  const renderBasketButton = () => {
+    return (
+      <Button
+        buttonStyle={agreementLineSource === 'basket' ? 'primary' : 'default'}
+        id="clickable-nav-agreements"
+        onClick={() => { setAgreementLineSource('basket'); }}
+      >
+        <FormattedMessage id="ui-agreements.agreementLine.basket" />
+      </Button>
+    );
+  };
+
+  const renderEholdingsButton = () => {
+    return (
+      <Button
+        buttonStyle={agreementLineSource === 'eholdings' ? 'primary' : 'default'}
+        id="clickable-nav-eresources"
+        onClick={() => { setAgreementLineSource('eholdings'); }}
+      >
+        <FormattedMessage id="ui-agreements.agreementLine.eholdings" />
+      </Button>
+    );
+  };
 
   return (
     <Paneset>
@@ -87,9 +122,58 @@ const AgreementLineForm = ({
         )}
         id="pane-agreement-line-form"
         onClose={handlers.onClose}
-        paneTitle={<FormattedMessage id="ui-agreements.line.edit" />}
+        paneTitle={lineId ?
+          <FormattedMessage id="ui-agreements.line.edit" />
+          :
+          <FormattedMessage id="ui-agreements.line.new" />
+        }
       >
         {hasLoaded ? <div id="form-loaded" /> : null}
+        {/* Logic to render the button group. Set eholdings or basket as source based on eholdings permission / if eresources enabled */}
+        {
+          (!line.id || isDetached(line)) && ( // render button group on edit only for detached line type
+            isEholdingsEnabled ? (
+              <IfEResourcesEnabled>
+                {({ isEnabled }) => {
+                  if (isEnabled) {
+                    return (
+                      <ButtonGroup>
+                        {renderBasketButton()}
+                        {renderEholdingsButton()}
+                      </ButtonGroup>
+                    );
+                  } else {
+                    setAgreementLineSource('eholdings');
+                    return null;
+                  }
+                }}
+              </IfEResourcesEnabled>
+            ) : (
+              <IfEResourcesEnabled>
+                {({ isEnabled }) => {
+                  if (isEnabled) {
+                    setAgreementLineSource('basket');
+                  } else {
+                    setAgreementLineSource('');
+                  }
+
+                  return null;
+                }}
+              </IfEResourcesEnabled>
+            )
+          )
+        }
+        <FormEresource
+          agreementLineSource={agreementLineSource}
+          basket={basket}
+          line={line}
+          lineId={lineId}
+        />
+        <FormInfo
+          isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled}
+          line={line}
+          resource={resource}
+        />
         <AccordionStatus>
           <Row end="xs">
             <Col xs>
@@ -97,13 +181,17 @@ const AgreementLineForm = ({
             </Col>
           </Row>
           <AccordionSet>
-            <FormInfo
-              isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled}
+            <FormPOLines
               line={line}
               resource={resource}
             />
-            <FormPOLines line={line} resource={resource} />
-            <FormCoverage line={line} resource={resource} />
+            {
+              agreementLineSource === 'basket' &&
+              <FormCoverage
+                line={line}
+                resource={resource}
+              />
+            }
           </AccordionSet>
         </AccordionStatus>
       </Pane>
@@ -116,5 +204,8 @@ AgreementLineForm.propTypes = propTypes;
 export default stripesFinalForm({
   initialValuesEqual: (a, b) => isEqual(a, b),
   keepDirtyOnReinitialize: true,
+  subscription: {
+    values: true,
+  },
   navigationCheck: true,
 })(AgreementLineForm);

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
-import { Button } from '@folio/stripes/components';
+import { Button, Layout } from '@folio/stripes/components';
 
 import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
 import CoverageField from './CoverageField';
@@ -23,7 +23,7 @@ class CoverageFieldArray extends React.Component {
   renderCoverages = () => {
     const { deleteButtonTooltipId, headerId, items, name } = this.props;
 
-    return items.map((coverage, index) => (
+    return items.length ? items.map((coverage, index) => (
       <EditCard
         key={index}
         data-test-coverage-number={index}
@@ -37,7 +37,11 @@ class CoverageFieldArray extends React.Component {
           name={`${name}[${index}]`}
         />
       </EditCard>
-    ));
+    )) : (
+      <Layout className="padding-bottom-gutter">
+        <FormattedMessage id="ui-agreements.emptyAccordion.lineCoverage" />
+      </Layout>
+    );
   }
 
   render = () => {

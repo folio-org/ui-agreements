@@ -26,6 +26,7 @@
   "agreements.searchInputLabel": "Search Agreements",
   "eresources.searchInputLabel": "Search E-resources",
 
+  "description": "Description",
   "note": "Note",
 
   "days": "{count, number} {count, plural, one {day} other {days}}",
@@ -101,6 +102,15 @@
   "agreements.update.callout": "<strong>Agreement updated:</strong> {name}",
 
   "agreementLine": "Agreement line",
+  "agreementLine.basket": "Basket",
+  "agreementLine.eholdings": "eHoldings",
+  "agreementLine.noEresourceLinked": "No e-resource added",
+  "agreementLine.linkEresourceToStart": "Link an e-resource to get started",
+  "agreementLine.linkEresource": "Link e-resource",
+  "agreementLine.linkSelectedEresource": "Link selected e-resource",
+  "agreementLine.unlinkEresource": "Unlink e-resource",
+  "agreementLine.provideEresource": "Please provide an e-resource or description to continue",
+
   "agreementLines.addLine": "Add agreement line",
   "agreementLines.addCustomCoverage": "Add custom coverage",
   "agreementLines.costType": "Cost type",
@@ -218,7 +228,7 @@
   "eresources.edit": "Edit",
   "eresources.name": "Name",
   "eresources.type": "Type",
-  "eresources.publicationType" : "Publication type",
+  "eresources.publicationType": "Publication type",
   "eresources.contentType": "Package content type",
   "eresources.titles": "Titles",
   "eresources.isPackage": "Is package",
@@ -232,6 +242,7 @@
   "eresources.coverageDepth": "Coverage depth",
   "eresources.coverage": "Coverage",
   "eresources.defaultCoverage": "Default coverage",
+  "eresources.description": "Description",
   "eresources.activeFrom": "Active from",
   "eresources.activeTo": "Active to",
   "eresources.accessibleFrom": "Accessible from",
@@ -374,6 +385,8 @@
   "license.warn.unassignedAmendments": "This license has unassigned amendments. Please edit the agreement to rectify.",
 
   "line.edit": "Edit agreement line",
+  "line.new": "New agreement line",
+  "line.create.callout": "Agreement line created",
   "line.update.callout": "Agreement line updated",
   "line.delete.callout": "Agreement line deleted",
   "line.deleteFailed.callout": "Agreement line failed to delete: {message}",

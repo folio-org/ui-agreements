@@ -1,4 +1,5 @@
 import React from 'react';
+import { isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
@@ -19,8 +20,8 @@ const propTypes = {
 };
 
 const FormCoverage = ({
-  line,
-  resource,
+  line = {},
+  resource = {},
 }) => {
   if (isExternal(line)) return null;
   if (isPackage(resource)) return null;
@@ -40,19 +41,22 @@ const FormCoverage = ({
           :
           null
         }
-        <Col xs={4}>
-          <KeyValue
-            label={(
-              <Layout className="textCentered">
-                <FormattedMessage id="ui-agreements.eresources.defaultCoverage" />
-              </Layout>
+        {
+          !isEmpty(resource.coverage) &&
+          <Col xs={4}>
+            <KeyValue
+              label={(
+                <Layout className="textCentered">
+                  <FormattedMessage id="ui-agreements.eresources.defaultCoverage" />
+                </Layout>
             )}
-          >
-            {/* This is intentional, after talking to Gill a decision was made that behaviour
+            >
+              {/* This is intentional, after talking to Gill a decision was made that behaviour
                 of coverage in the edit screen was to remain blank for monographs. */}
-            <SerialCoverage statements={resource.coverage} />
-          </KeyValue>
-        </Col>
+              <SerialCoverage statements={resource.coverage} />
+            </KeyValue>
+          </Col>
+        }
       </Row>
       <FieldArray
         addButtonId="add-agreement-line-custom-coverage-button"

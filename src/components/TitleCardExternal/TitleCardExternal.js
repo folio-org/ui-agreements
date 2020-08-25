@@ -13,18 +13,26 @@ import {
 import EResourceLink from '../EResourceLink';
 
 const propTypes = {
+  headerEnd: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
   searchString: PropTypes.string,
   title: PropTypes.object,
 };
 
 const TitleCardExternal = ({
+  headerEnd,
   searchString = '',
   title,
 }) => {
+  const titleInfo = title?.reference_object ?? title;
+
   return (
     <Card
       cardStyle="positive"
       data-test-title-card
+      headerEnd={headerEnd}
       headerStart={(
         <strong data-test-title-instance-name>
           <EResourceLink eresource={title} searchString={searchString} />
@@ -36,14 +44,14 @@ const TitleCardExternal = ({
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.publicationType" />}>
             <div data-test-title-type>
-              {title?.reference_object?.publicationType ?? <NoValue />}
+              {titleInfo?.publicationType ?? <NoValue />}
             </div>
           </KeyValue>
         </Col>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.holdingStatus" />}>
             <div data-test-title-holding-status>
-              {title?.reference_object?.isSelected ? <FormattedMessage id="ui-agreements.eresources.selected" />
+              {titleInfo?.isSelected ? <FormattedMessage id="ui-agreements.eresources.selected" />
                 : <FormattedMessage id="ui-agreements.eresources.notSelected" />
     }
             </div>
@@ -52,7 +60,7 @@ const TitleCardExternal = ({
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.accessStatusType" />}>
             <div data-test-title-access-status-type>
-              {title?.reference_object?.accessStatusType ?? <NoValue />}
+              {titleInfo?.accessStatusType ?? <NoValue />}
             </div>
           </KeyValue>
         </Col>

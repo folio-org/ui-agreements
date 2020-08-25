@@ -13,6 +13,10 @@ import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 
 const propTypes = {
+  headerEnd: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
   packageData: PropTypes.shape({
     accessStatusType: PropTypes.string,
     authority: PropTypes.string,
@@ -38,6 +42,7 @@ const propTypes = {
 };
 
 const PackageCardExternal = ({
+  headerEnd,
   pkg = {},
   searchString = '',
   packageData = {},
@@ -49,12 +54,13 @@ const PackageCardExternal = ({
     pkgObject = pkg.reference_object;
   } else if (packageData) {
     eresource = packageData;
-    pkgObject = packageData;
+    pkgObject = packageData.reference_object ?? packageData;
   }
   return (
     <Card
       cardStyle="positive"
       data-test-package-card
+      headerEnd={headerEnd}
       headerStart={(
         <strong data-test-package-link>
           <EResourceLink eresource={eresource} searchString={searchString} />
