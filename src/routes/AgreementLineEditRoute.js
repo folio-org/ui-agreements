@@ -160,7 +160,7 @@ class AgreementLineEditRoute extends React.Component {
   }
 
   isLoading = () => {
-    return Object.values(this.props.resources).some(r => r.isPending);
+    return Object.values(this.props.resources).some(r => r.resource !== 'settings' && r.isPending);
   }
 
   render() {
@@ -178,7 +178,6 @@ class AgreementLineEditRoute extends React.Component {
         handlers={{
           isSuppressFromDiscoveryEnabled,
           onClose: this.handleClose,
-
         }}
         initialValues={this.getInitialValues()}
         isEholdingsEnabled={this.state.isEholdingsEnabled}

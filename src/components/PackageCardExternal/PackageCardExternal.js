@@ -9,6 +9,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
+import { AppIcon } from '@folio/stripes/core';
 import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 
@@ -62,10 +63,12 @@ const PackageCardExternal = ({
       data-test-package-card
       headerEnd={headerEnd}
       headerStart={(
-        <strong data-test-package-link>
-          <EResourceLink eresource={eresource} searchString={searchString} />
-        </strong>
-    )}
+        <AppIcon app="agreements" iconKey="eresource" size="small">
+          <strong data-test-package-link>
+            <EResourceLink eresource={eresource} searchString={searchString} />
+          </strong>
+        </AppIcon>
+        )}
       roundedBorder
     >
       <Row>

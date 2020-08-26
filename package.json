@@ -235,6 +235,11 @@
         "name": "closedAgreement",
         "alt": " ",
         "title": "Closed agreement"
+      },
+      {
+        "name": "eresource",
+        "alt": " ",
+        "title": "eresource"
       }
     ]
   }

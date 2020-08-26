@@ -15,11 +15,15 @@ import CoverageFieldArray from '../CoverageFieldArray';
 import { isExternal } from '../utilities';
 
 const propTypes = {
+  addButtonTooltipId: PropTypes.string,
+  disabled: PropTypes.bool,
   line: PropTypes.object,
   resource: PropTypes.object,
 };
 
 const FormCoverage = ({
+  addButtonTooltipId,
+  disabled,
   line = {},
   resource = {},
 }) => {
@@ -60,9 +64,11 @@ const FormCoverage = ({
       </Row>
       <FieldArray
         addButtonId="add-agreement-line-custom-coverage-button"
+        addButtonTooltipId={addButtonTooltipId}
         addLabelId="ui-agreements.agreementLines.addCustomCoverage"
         component={CoverageFieldArray}
         deleteButtonTooltipId="ui-agreements.agreementLines.removeCustomCoverage"
+        disabled={disabled}
         headerId="ui-agreements.agreementLines.customCoverageTitle"
         id="agreement-line-form-custom-coverages"
         name="coverage"

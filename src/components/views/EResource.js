@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Button, IconButton, LoadingPane, Pane, PaneMenu } from '@folio/stripes/components';
-import { IfPermission, TitleManager } from '@folio/stripes/core';
+import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 
 import Package from './Package';
 import Title from './Title';
@@ -59,6 +59,7 @@ const EResource = ({
   return (
     <>
       <Pane
+        appIcon={<AppIcon app="agreements" iconKey="eresource" size="small" />}
         id="pane-view-eresource"
         lastMenu={
           (eresource.class === resourceClasses.PCI || eresource.class === resourceClasses.TITLEINSTANCE) ?

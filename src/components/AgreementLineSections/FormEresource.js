@@ -13,6 +13,7 @@ import EresourceSelector from './EresourceSelector';
 const propTypes = {
   agreementLineSource: PropTypes.string,
   basket: PropTypes.arrayOf(PropTypes.object),
+  change: PropTypes.func,
   onEresourceSelected: PropTypes.func,
   line: PropTypes.shape({
     poLines: PropTypes.arrayOf(PropTypes.object)
@@ -23,6 +24,7 @@ const propTypes = {
 const FormEresource = ({
   agreementLineSource,
   basket,
+  change,
   line,
   lineId,
 }) => {
@@ -33,7 +35,10 @@ const FormEresource = ({
       <Button
         buttonStyle="default"
         marginBottom0
-        onClick={() => onChange({})}
+        onClick={() => {
+          onChange({});
+          change('coverage', []);
+        }}
       >
         <FormattedMessage id="ui-agreements.agreementLine.unlinkEresource" />
       </Button>

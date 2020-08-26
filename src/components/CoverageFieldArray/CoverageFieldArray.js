@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
-import { Button, Layout } from '@folio/stripes/components';
+import { Button, Layout, Tooltip } from '@folio/stripes/components';
 
 import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
 import CoverageField from './CoverageField';
@@ -10,8 +10,10 @@ import CoverageField from './CoverageField';
 class CoverageFieldArray extends React.Component {
   static propTypes = {
     addButtonId: PropTypes.string,
+    addButtonTooltipId: PropTypes.string,
     addLabelId: PropTypes.string,
     deleteButtonTooltipId: PropTypes.string,
+    disabled: PropTypes.bool,
     headerId: PropTypes.string,
     id: PropTypes.string,
     items: PropTypes.arrayOf(PropTypes.object),
@@ -45,15 +47,41 @@ class CoverageFieldArray extends React.Component {
   }
 
   render = () => {
-    const { addButtonId, addLabelId, id } = this.props;
+    const { addButtonId, addButtonTooltipId, addLabelId, disabled, id } = this.props;
     return (
       <div>
         <div id={id}>
           {this.renderCoverages()}
         </div>
-        <Button id={addButtonId} onClick={() => this.props.onAddField()}>
-          <FormattedMessage id={addLabelId} />
-        </Button>
+        {
+          addButtonTooltipId && disabled ? (
+            <Tooltip
+              id="add-coverage-button-tooltip"
+              placement="top-start"
+              text={<FormattedMessage id={addButtonTooltipId} />}
+            >
+              {({ ref, ariaIds }) => (
+                <div
+                  ref={ref}
+                  aria-labelledby={ariaIds.text}
+                >
+                  <Button
+                    disabled={disabled}
+                    id={addButtonId}
+                  >
+                    <FormattedMessage id={addLabelId} />
+                  </Button>
+                </div>
+              )}
+            </Tooltip>
+          ) : (
+            <Button id={addButtonId} onClick={() => this.props.onAddField()}>
+              <FormattedMessage id={addLabelId} />
+            </Button>
+          )
+        }
+
+
       </div>
     );
   }

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from '@folio/stripes/components';
 
+import { AppIcon } from '@folio/stripes/core';
 import TitleCardInfo from './TitleCardInfo';
 import EResourceLink from '../EResourceLink';
 
@@ -27,10 +28,12 @@ const TitleCard = ({
       data-test-title-card
       headerEnd={headerEnd}
       headerStart={(
-        <strong data-test-title-instance-name>
-          <EResourceLink eresource={title} searchString={searchString} />
-        </strong>
-      )}
+        <AppIcon app="agreements" iconKey="eresource" size="small">
+          <strong data-test-title-instance-name>
+            <EResourceLink eresource={title} searchString={searchString} />
+          </strong>
+        </AppIcon>
+        )}
       roundedBorder
     >
       <TitleCardInfo title={titleObject} />

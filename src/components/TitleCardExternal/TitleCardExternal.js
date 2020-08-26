@@ -10,6 +10,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
+import { AppIcon } from '@folio/stripes/core';
 import EResourceLink from '../EResourceLink';
 
 const propTypes = {
@@ -34,9 +35,11 @@ const TitleCardExternal = ({
       data-test-title-card
       headerEnd={headerEnd}
       headerStart={(
-        <strong data-test-title-instance-name>
-          <EResourceLink eresource={title} searchString={searchString} />
-        </strong>
+        <AppIcon app="agreements" iconKey="eresource" size="small">
+          <strong data-test-title-instance-name>
+            <EResourceLink eresource={title} searchString={searchString} />
+          </strong>
+        </AppIcon>
       )}
       roundedBorder
     >

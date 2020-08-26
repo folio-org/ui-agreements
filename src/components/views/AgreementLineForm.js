@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { isEqual } from 'lodash';
+import { isEmpty, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -34,6 +34,7 @@ const propTypes = {
     settings: PropTypes.object,
   }),
   form: PropTypes.shape({
+    change: PropTypes.func,
     getRegisteredFields: PropTypes.func.isRequired,
   }).isRequired,
   handlers: PropTypes.PropTypes.shape({
@@ -46,6 +47,7 @@ const propTypes = {
   lineId: PropTypes.string,
   pristine: PropTypes.bool,
   submitting: PropTypes.bool,
+  values: PropTypes.object,
 };
 
 const AgreementLineForm = ({
@@ -57,6 +59,7 @@ const AgreementLineForm = ({
   lineId = '',
   pristine,
   submitting,
+  values,
 }) => {
   const hasLoaded = form.getRegisteredFields().length > 0;
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
@@ -166,6 +169,7 @@ const AgreementLineForm = ({
         <FormEresource
           agreementLineSource={agreementLineSource}
           basket={basket}
+          change={form.change}
           line={line}
           lineId={lineId}
         />
@@ -188,6 +192,8 @@ const AgreementLineForm = ({
             {
               agreementLineSource === 'basket' &&
               <FormCoverage
+                addButtonTooltipId="ui-agreements.agreementLine.addCustomCoverageTootlip"
+                disabled={isEmpty(values.linkedResource)}
                 line={line}
                 resource={resource}
               />
