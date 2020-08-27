@@ -144,7 +144,7 @@ describe('PO Lines', () => {
                             expect(agreementView.linesSection.linesCount()).to.equal(2);
                           });
 
-                          it('should have three PO lines', () => {
+                          it.skip('should have three PO lines', () => {
                             expect(agreementView.linesSection.poLinesCount).to.equal(3);
                           });
                         });
