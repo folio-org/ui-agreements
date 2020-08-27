@@ -457,8 +457,8 @@
     "identifier.eisbn": "ISBN (en ligne)",
     "eresources.publicationType": "Type de publication",
     "organizations.selectRole": "Sélectionnez un rôle",
-    "settings.displaySettings": "Display settings",
-    "settings.general.displaySuppressFromDiscovery.description": "Display \"Suppress from discovery\" setting on",
+    "settings.displaySettings": "Paramètres d'affichage",
+    "settings.general.displaySuppressFromDiscovery.description": "Affichage du paramètre \"Supprimer de la découverte\" activé",
     "settings.general.displaySuppressFromDiscoveryAgreementLine.title": "Lignes d'accord",
     "settings.general.displaySuppressFromDiscoveryPCI.title": "Package content items"
 }
