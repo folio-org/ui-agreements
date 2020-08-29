@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import compose from 'compose-function';
+import { isEmpty } from 'lodash';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import View from '../components/views/AgreementLineForm';
@@ -101,7 +102,7 @@ class AgreementLineCreateRoute extends React.Component {
         'reference': resource.id,
         ...rest
       };
-    } else if (!resource) items = { 'type': 'detached', ...rest }; // detached
+    } else if (isEmpty(resource)) items = { 'type': 'detached', ...rest, resource: null, coverage: [] }; // detached
     else items = { resource: line.linkedResource, ...rest };
 
     const {

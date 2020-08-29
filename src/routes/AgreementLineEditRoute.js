@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import compose from 'compose-function';
-
+import { isEmpty } from 'lodash';
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
@@ -138,8 +138,8 @@ class AgreementLineEditRoute extends React.Component {
         ...rest,
         resource: null
       };
-    } else if (!linkedResource) { // On editing a detached line but not adding a resource
-      payload = { 'type': 'detached', ...rest };
+    } else if (isEmpty(linkedResource)) { // On editing a detached line but not adding a resource
+      payload = { 'type': 'detached', ...rest, resource: null };
     } else if (type === 'detached') { // on editing a detached line and adding a resource
       payload = { resource: linkedResource, ...rest, type: null };
     } else if (type === 'external') { // on editing an external line

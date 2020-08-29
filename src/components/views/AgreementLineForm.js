@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import setFieldData from 'final-form-set-field-data';
 
 import {
   AccordionSet,
@@ -70,6 +71,7 @@ const AgreementLineForm = ({
     return (
       <Button
         buttonStyle={agreementLineSource === 'basket' ? 'primary' : 'default'}
+        disabled={agreementLineSource === 'eholdings' && !isEmpty(values.linkedResource)}
         id="clickable-nav-agreements"
         onClick={() => { setAgreementLineSource('basket'); }}
       >
@@ -82,6 +84,7 @@ const AgreementLineForm = ({
     return (
       <Button
         buttonStyle={agreementLineSource === 'eholdings' ? 'primary' : 'default'}
+        disabled={agreementLineSource === 'basket' && !isEmpty(values.linkedResource)}
         id="clickable-nav-eresources"
         onClick={() => { setAgreementLineSource('eholdings'); }}
       >
@@ -170,13 +173,14 @@ const AgreementLineForm = ({
           agreementLineSource={agreementLineSource}
           basket={basket}
           change={form.change}
+          form={form}
           line={line}
           lineId={lineId}
+          setFieldData={form.mutators.setFieldData}
+          values={values}
         />
         <FormInfo
           isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled}
-          line={line}
-          resource={resource}
         />
         <AccordionStatus>
           <Row end="xs">
@@ -187,15 +191,14 @@ const AgreementLineForm = ({
           <AccordionSet>
             <FormPOLines
               line={line}
-              resource={resource}
             />
             {
               agreementLineSource === 'basket' &&
               <FormCoverage
                 addButtonTooltipId="ui-agreements.agreementLine.addCustomCoverageTootlip"
-                disabled={isEmpty(values.linkedResource)}
                 line={line}
                 resource={resource}
+                values={values}
               />
             }
           </AccordionSet>
@@ -213,5 +216,6 @@ export default stripesFinalForm({
   subscription: {
     values: true,
   },
+  mutators: { setFieldData },
   navigationCheck: true,
 })(AgreementLineForm);

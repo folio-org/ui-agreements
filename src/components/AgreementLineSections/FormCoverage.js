@@ -3,7 +3,7 @@ import { isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
-import { Accordion, Col, KeyValue, Layout, Row } from '@folio/stripes/components';
+import { Accordion, Col, KeyValue, Layout, MessageBanner, Row } from '@folio/stripes/components';
 
 import {
   Embargo,
@@ -16,14 +16,14 @@ import { isExternal } from '../utilities';
 
 const propTypes = {
   addButtonTooltipId: PropTypes.string,
-  disabled: PropTypes.bool,
+  values: PropTypes.object,
   line: PropTypes.object,
   resource: PropTypes.object,
 };
 
 const FormCoverage = ({
   addButtonTooltipId,
-  disabled,
+  values = {},
   line = {},
   resource = {},
 }) => {
@@ -35,6 +35,14 @@ const FormCoverage = ({
       id="agreement-line-form-coverage"
       label={<FormattedMessage id="ui-agreements.eresources.coverage" />}
     >
+      {
+        values.linkedResource && isEmpty(values.linkedResource) && values.coverage && !isEmpty(values.coverage) &&
+        <Layout className="padding-bottom-gutter">
+          <MessageBanner type="warning">
+            <FormattedMessage id="ui-agreements.eresources.warn.customCoverageCleared" />
+          </MessageBanner>
+        </Layout>
+      }
       <Row>
         { resource?.embargo ?
           <Col xs={4}>
@@ -68,7 +76,7 @@ const FormCoverage = ({
         addLabelId="ui-agreements.agreementLines.addCustomCoverage"
         component={CoverageFieldArray}
         deleteButtonTooltipId="ui-agreements.agreementLines.removeCustomCoverage"
-        disabled={disabled}
+        disabled={isEmpty(values.linkedResource)}
         headerId="ui-agreements.agreementLines.customCoverageTitle"
         id="agreement-line-form-custom-coverages"
         name="coverage"

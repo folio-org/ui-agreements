@@ -298,6 +298,14 @@
   "eresources.selected": "Selected",
   "eresources.notSelected": "Not selected",
   "eresources.accessStatusType": "Access status type",
+  "eresources.warn.customCoverageCleared": "All custom coverage data will be cleared. To save custom coverage data please link an e-resource",
+
+  "customCoverage.warn.startDate": "Start date will be cleared as no e-resource is linked",
+  "customCoverage.warn.endDate": "End date will be cleared as no e-resource is linked",
+  "customCoverage.warn.startVolume": "Start volume will be cleared as no e-resource is linked",
+  "customCoverage.warn.endVolume": "End volume will be cleared as no e-resource is linked",
+  "customCoverage.warn.startIssue": "Start issue will be cleared as no e-resource is linked",
+  "customCoverage.warn.endIssue": "End issue will be cleared as no e-resource is linked",
 
   "customcoverages.tooltip": "Custom Coverage",
 

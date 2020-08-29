@@ -25,8 +25,11 @@ const FormEresource = ({
   agreementLineSource,
   basket,
   change,
+  form,
   line,
   lineId,
+  setFieldData,
+  values
 }) => {
   const renderHandleUnLinkEresourceButton = (onChange) => {
     if (!isDetached(line) && lineId && !isEmpty(line)) return null;
@@ -37,12 +40,28 @@ const FormEresource = ({
         marginBottom0
         onClick={() => {
           onChange({});
-          change('coverage', []);
+          if (!isEmpty(values.coverage)) setCovergeFieldWarnings(true);
         }}
       >
         <FormattedMessage id="ui-agreements.agreementLine.unlinkEresource" />
       </Button>
     );
+  };
+
+  const setCovergeFieldWarnings = (warn) => {
+    const warnFields = ['startDate', 'startVolume', 'startIssue', 'endDate', 'endVolume', 'endIssue'];
+    values.coverage?.forEach((_, index) => {
+      if (warn) {
+        warnFields.forEach((field) => {
+          // eslint-disable-next-line
+          setFieldData(`coverage[${index}].${field}`, { warning: <FormattedMessage id={`ui-agreements.customCoverage.warn.${field}`} /> });
+        })
+      } else {
+        warnFields.forEach((field) => {
+          setFieldData(`coverage[${index}].${field}`, { warning: '' });
+        })
+      }
+    });
   };
 
   const isExternal = (resource) => {
@@ -82,7 +101,10 @@ const FormEresource = ({
               component={BasketSelector}
               error={meta.touched && meta.error}
               name={input.name}
-              onAdd={resource => input.onChange(resource)}
+              onAdd={resource => {
+                input.onChange(resource);
+                setCovergeFieldWarnings(false);
+              }}
               value={input.value}
               {...fieldProps}
             />
@@ -93,7 +115,10 @@ const FormEresource = ({
               component={EresourceSelector}
               error={meta.touched && meta.error}
               name={input.name}
-              onAdd={resource => input.onChange(resource)}
+              onAdd={resource => {
+                input.onChange(resource);
+                setCovergeFieldWarnings(false);
+              }}
               value={input.value}
             />
           );

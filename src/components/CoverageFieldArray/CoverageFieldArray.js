@@ -57,7 +57,7 @@ class CoverageFieldArray extends React.Component {
           addButtonTooltipId && disabled ? (
             <Tooltip
               id="add-coverage-button-tooltip"
-              placement="top-start"
+              placement="bottom-start"
               text={<FormattedMessage id={addButtonTooltipId} />}
             >
               {({ ref, ariaIds }) => (
