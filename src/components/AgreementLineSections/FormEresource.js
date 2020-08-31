@@ -9,6 +9,7 @@ import { isDetached } from '../utilities';
 import FormEresourceCard from './FormEresourceCard';
 import BasketSelector from '../BasketSelector';
 import EresourceSelector from './EresourceSelector';
+import { isExternal } from '../utilities';
 
 const propTypes = {
   agreementLineSource: PropTypes.string,
@@ -30,6 +31,7 @@ const FormEresource = ({
   values
 }) => {
   const renderHandleUnLinkEresourceButton = (onChange) => {
+    // dont render the button on the edit pane when the line type is non-detached and line is non-empty.
     if (!isDetached(line) && lineId && !isEmpty(line)) return null;
 
     return (
@@ -51,7 +53,6 @@ const FormEresource = ({
     values.coverage?.forEach((_, index) => {
       if (warn) {
         warnFields.forEach((field) => {
-          // eslint-disable-next-line
           setFieldData(`coverage[${index}].${field}`, { warning: <FormattedMessage id={`ui-agreements.customCoverage.warn.${field}`} /> });
         })
       } else {
@@ -62,21 +63,12 @@ const FormEresource = ({
     });
   };
 
-  const isExternal = (resource) => {
-    return resource.type === 'external';
-  };
-
+  // validation fires when there is no description and no eresource
   const required = (val, allValues) => {
     if (allValues.description?.length > 0 || (!isEmpty(val) && !isDetached(val))) {
       return undefined;
     }
     return <FormattedMessage id="ui-agreements.agreementLine.provideEresource" />;
-  };
-
-  const fieldProps = {
-    addButtonLabel: <FormattedMessage id="ui-agreements.agreementLine.linkSelectedEresource" />,
-    basket,
-    label: <FormattedMessage id="ui-agreements.eresource" />,
   };
 
   return (
@@ -91,20 +83,22 @@ const FormEresource = ({
               resource={!isDetached(line) && lineId && !isEmpty(line) ? res : input.value}
             />
           );
-        } else if (agreementLineSource === '') {
+        } else if (agreementLineSource === '') { // when neither the eholdings permission / ifEresourcesEnabled perm is on the user
           return null;
         } else if (agreementLineSource === 'basket') {
           return (
             <BasketSelector
+              addButtonLabel={<FormattedMessage id="ui-agreements.agreementLine.linkSelectedEresource" />}
+              basket={basket}
               component={BasketSelector}
               error={meta.touched && meta.error}
+              label={<FormattedMessage id="ui-agreements.eresource" />}
               name={input.name}
               onAdd={resource => {
                 input.onChange(resource);
                 setCovergeFieldWarnings(false);
               }}
               value={input.value}
-              {...fieldProps}
             />
           );
         } else {

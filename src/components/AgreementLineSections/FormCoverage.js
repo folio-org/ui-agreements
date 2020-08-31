@@ -61,10 +61,8 @@ const FormCoverage = ({
                 <Layout className="textCentered">
                   <FormattedMessage id="ui-agreements.eresources.defaultCoverage" />
                 </Layout>
-            )}
+              )}
             >
-              {/* This is intentional, after talking to Gill a decision was made that behaviour
-                of coverage in the edit screen was to remain blank for monographs. */}
               <SerialCoverage statements={resource.coverage} />
             </KeyValue>
           </Col>

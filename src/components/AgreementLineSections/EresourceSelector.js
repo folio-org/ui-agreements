@@ -46,7 +46,7 @@ const EresourceSelector = ({ error, onAdd }) => {
     return (
       <Pluggable
         dataKey="package"
-        onRecordChosen={res => onAdd(res, 'eholdings')}
+        onRecordChosen={res => onAdd(res)}
         renderCustomTrigger={props => (
           <Button
             {...buttonProps}
@@ -69,7 +69,7 @@ const EresourceSelector = ({ error, onAdd }) => {
       headerEnd={renderLinkPackageButton()}
       headerStart={(
         <AppIcon app="eholdings" size="small">
-          eHoldings
+          <FormattedMessage id="ui-agreements.agreementLine.eholdings" />
         </AppIcon>
     )}
       roundedBorder
