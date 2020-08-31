@@ -33,6 +33,7 @@ class AgreementLinesFieldArray extends React.Component {
     if (line.id) {
       const savedLine = agreementLines.find(l => l.id === line.id);
       if (savedLine) {
+        if (savedLine.type === 'detached') return savedLine;
         return isExternal(savedLine) ? savedLine : savedLine.resource;
       }
     }

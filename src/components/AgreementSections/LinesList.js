@@ -17,7 +17,7 @@ import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
-import { getResourceFromEntitlement, urls } from '../utilities';
+import { getResourceFromEntitlement, isDetached, urls } from '../utilities';
 
 export default class LinesList extends React.Component {
   static propTypes = {
@@ -36,7 +36,7 @@ export default class LinesList extends React.Component {
   }
 
   columnMapping = {
-    name: <FormattedMessage id="ui-agreements.eresources.name" />,
+    name: <FormattedMessage id="ui-agreements.eresources.nameDescription" />,
     provider: <FormattedMessage id="ui-agreements.eresources.provider" />,
     publicationType: <FormattedMessage id="ui-agreements.eresources.publicationType" />,
     count: <FormattedMessage id="ui-agreements.agreementLines.count" />,
@@ -52,6 +52,7 @@ export default class LinesList extends React.Component {
     name: line => {
       const resource = getResourceFromEntitlement(line);
       if (!resource) return line.label;
+      if (isDetached(resource)) return resource.description;
 
       return (
         <EResourceLink

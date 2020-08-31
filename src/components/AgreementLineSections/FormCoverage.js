@@ -1,8 +1,9 @@
 import React from 'react';
+import { isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
-import { Accordion, Col, KeyValue, Layout, Row } from '@folio/stripes/components';
+import { Accordion, Col, KeyValue, Layout, MessageBanner, Row } from '@folio/stripes/components';
 
 import {
   Embargo,
@@ -14,13 +15,17 @@ import CoverageFieldArray from '../CoverageFieldArray';
 import { isExternal } from '../utilities';
 
 const propTypes = {
+  addButtonTooltipId: PropTypes.string,
+  values: PropTypes.object,
   line: PropTypes.object,
   resource: PropTypes.object,
 };
 
 const FormCoverage = ({
-  line,
-  resource,
+  addButtonTooltipId,
+  values = {},
+  line = {},
+  resource = {},
 }) => {
   if (isExternal(line)) return null;
   if (isPackage(resource)) return null;
@@ -30,6 +35,14 @@ const FormCoverage = ({
       id="agreement-line-form-coverage"
       label={<FormattedMessage id="ui-agreements.eresources.coverage" />}
     >
+      {
+        values.linkedResource && isEmpty(values.linkedResource) && values.coverage && !isEmpty(values.coverage) &&
+        <Layout className="padding-bottom-gutter">
+          <MessageBanner type="warning">
+            <FormattedMessage id="ui-agreements.eresources.warn.customCoverageCleared" />
+          </MessageBanner>
+        </Layout>
+      }
       <Row>
         { resource?.embargo ?
           <Col xs={4}>
@@ -40,25 +53,28 @@ const FormCoverage = ({
           :
           null
         }
-        <Col xs={4}>
-          <KeyValue
-            label={(
-              <Layout className="textCentered">
-                <FormattedMessage id="ui-agreements.eresources.defaultCoverage" />
-              </Layout>
-            )}
-          >
-            {/* This is intentional, after talking to Gill a decision was made that behaviour
-                of coverage in the edit screen was to remain blank for monographs. */}
-            <SerialCoverage statements={resource.coverage} />
-          </KeyValue>
-        </Col>
+        {
+          !isEmpty(resource.coverage) &&
+          <Col xs={4}>
+            <KeyValue
+              label={(
+                <Layout className="textCentered">
+                  <FormattedMessage id="ui-agreements.eresources.defaultCoverage" />
+                </Layout>
+              )}
+            >
+              <SerialCoverage statements={resource.coverage} />
+            </KeyValue>
+          </Col>
+        }
       </Row>
       <FieldArray
         addButtonId="add-agreement-line-custom-coverage-button"
+        addButtonTooltipId={addButtonTooltipId}
         addLabelId="ui-agreements.agreementLines.addCustomCoverage"
         component={CoverageFieldArray}
         deleteButtonTooltipId="ui-agreements.agreementLines.removeCustomCoverage"
+        disabled={isEmpty(values.linkedResource)}
         headerId="ui-agreements.agreementLines.customCoverageTitle"
         id="agreement-line-form-custom-coverages"
         name="coverage"

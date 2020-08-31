@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import {
   Button,
   Col,
   Layout,
-  Row,
   Selection,
 } from '@folio/stripes/components';
 
@@ -19,8 +17,12 @@ export default class BasketSelector extends React.Component {
     autoFocus: PropTypes.bool,
     basket: PropTypes.arrayOf(PropTypes.object),
     error: PropTypes.node,
+    fullWidth: PropTypes.bool,
+    inlineButton: PropTypes.bool,
+    label: PropTypes.node,
     name: PropTypes.string,
     onAdd: PropTypes.func,
+    required: PropTypes.bool
   }
 
   state = {
@@ -34,9 +36,8 @@ export default class BasketSelector extends React.Component {
     this.setState({ item });
   }
 
-  render() {
-    const { addButtonLabel, basket, error, name, onAdd } = this.props;
-    const { item } = this.state;
+  renderSelector() {
+    const { basket } = this.props;
 
     const dataOptions = [
       ...basket.map(resource => ({
@@ -45,38 +46,70 @@ export default class BasketSelector extends React.Component {
         disabled: false,
       }))
     ];
+    const { error, name, required } = this.props;
+    const { item } = this.state;
 
     return (
-      <Row>
-        <Col md={8} xs={12}>
-          <Field
-            autoFocus={this.props.autoFocus}
-            component={Selection}
-            dataOptions={dataOptions}
-            error={error}
-            id={`${name}-basket-selector`}
-            label={<FormattedMessage id="ui-agreements.basketSelector.selectLabel" />}
-            name={`${name}.selection`}
-            onChange={this.handleChange}
-            required
-            validate={requiredValidator}
-            value={item.id}
-          />
-        </Col>
-        <Col md={4} xs={12}>
-          <Layout className="flex flex-align-items-center" style={{ height: '100%' }}>
-            <Button
-              buttonStyle="primary"
-              disabled={!item.id}
-              fullWidth
-              id={`${name}-basket-selector-add-button`}
-              onClick={() => { onAdd(item); }}
-            >
-              {addButtonLabel}
-            </Button>
-          </Layout>
-        </Col>
-      </Row>
+      <Field
+        autoFocus={this.props.autoFocus}
+        component={Selection}
+        dataOptions={dataOptions}
+        error={error}
+        id={`${name}-basket-selector`}
+        label={this.props.label}
+        name={`${name}.selection`}
+        onChange={this.handleChange}
+        required={required}
+        validate={required && requiredValidator}
+        value={item.id}
+      />
+    );
+  }
+
+  renderAddButton() {
+    const { addButtonLabel, name, onAdd } = this.props;
+    const { item } = this.state;
+
+    return (
+      <Button
+        buttonStyle="primary"
+        disabled={!item.id}
+        fullWidth={this.props.fullWidth}
+        id={`${name}-basket-selector-add-button`}
+        onClick={() => { onAdd(item); }}
+      >
+        {addButtonLabel}
+      </Button>
+    );
+  }
+
+  render() {
+    const { inlineButton } = this.props;
+    /* Adding this conditional logic here as we are going to make the rendering look consistent
+    eventually */
+
+    return (
+      <div>
+        {
+          inlineButton ? (
+            <>
+              <Col md={8} xs={12}>
+                {this.renderSelector()}
+              </Col>
+              <Col md={4} xs={12}>
+                <Layout className="flex flex-align-items-center" style={{ height: '100%' }}>
+                  {this.renderAddButton()}
+                </Layout>
+              </Col>
+            </>
+          ) : (
+            <>
+              {this.renderSelector()}
+              {this.renderAddButton()}
+            </>
+          )
+        }
+      </div>
     );
   }
 }

@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
-import { Col, Datepicker, KeyValue, Row, TextArea } from '@folio/stripes/components';
+import { Col, Datepicker, KeyValue, NoValue, Row, TextArea } from '@folio/stripes/components';
 import {
   EditCard,
   EResourceType,
@@ -17,7 +17,7 @@ import BasketSelector from '../BasketSelector';
 import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
-import { isExternal, parseDateOnlyString } from '../utilities';
+import { isDetached, isExternal, parseDateOnlyString } from '../utilities';
 
 import CoverageFieldArray from '../CoverageFieldArray';
 import POLinesFieldArray from '../POLinesFieldArray';
@@ -127,38 +127,52 @@ export default class AgreementLineField extends React.Component {
     );
   }
 
+  renderDescription = (resource) => (
+    <KeyValue label={<FormattedMessage id="ui-agreements.eresources.description" />}>
+      <div data-test-ag-line-description>{resource?.description ?? <NoValue />}</div>
+    </KeyValue>
+  );
+
+  renderResourceInfo = (resource) => (
+    <Row>
+      <Col md={5} xs={12}>
+        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.name" />}>
+          <div data-test-ag-line-name>{this.renderLineName(resource)}</div>
+        </KeyValue>
+      </Col>
+      <Col md={2} xs={12}>
+        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.publicationType" />}>
+          <div data-test-ag-line-type>{this.renderLineType(resource)}</div>
+        </KeyValue>
+      </Col>
+      <Col md={2} xs={12}>
+        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.titles" />}>
+          <div data-test-ag-line-titles>{this.renderLineTitles(resource)}</div>
+        </KeyValue>
+      </Col>
+      <Col md={3} xs={12}>
+        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.provider" />}>
+          <div data-test-ag-line-provider>{this.renderLineProvider(resource)}</div>
+        </KeyValue>
+      </Col>
+      <Col xs={4}>
+        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.defaultCoverage" />}>
+          <div data-test-ag-line-coverage>{this.renderCoverage(resource)}</div>
+        </KeyValue>
+      </Col>
+    </Row>
+  );
+
   renderLineResource = () => {
     const { resource = {}, index, input: { name } } = this.props;
 
     return (
       <div>
-        <Row>
-          <Col md={5} xs={12}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.eresources.name" />}>
-              <div data-test-ag-line-name>{this.renderLineName(resource)}</div>
-            </KeyValue>
-          </Col>
-          <Col md={2} xs={12}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.eresources.publicationType" />}>
-              <div data-test-ag-line-type>{this.renderLineType(resource)}</div>
-            </KeyValue>
-          </Col>
-          <Col md={2} xs={12}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.eresources.titles" />}>
-              <div data-test-ag-line-titles>{this.renderLineTitles(resource)}</div>
-            </KeyValue>
-          </Col>
-          <Col md={3} xs={12}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.eresources.provider" />}>
-              <div data-test-ag-line-provider>{this.renderLineProvider(resource)}</div>
-            </KeyValue>
-          </Col>
-          <Col xs={4}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.eresources.defaultCoverage" />}>
-              <div data-test-ag-line-coverage>{this.renderCoverage(resource)}</div>
-            </KeyValue>
-          </Col>
-        </Row>
+        {
+          isDetached(resource) ?
+            this.renderDescription(resource) :
+            this.renderResourceInfo(resource)
+        }
         <Row>
           <Col md={4} xs={12}>
             <Field
@@ -195,7 +209,7 @@ export default class AgreementLineField extends React.Component {
           parse={v => v} // Lets us send an empty string instead of `undefined`
         />
         {this.renderPOLinesFieldArray()}
-        {this.renderCustomCoverageFieldArray()}
+        {!isDetached(resource) && this.renderCustomCoverageFieldArray()}
       </div>
     );
   }
@@ -209,8 +223,12 @@ export default class AgreementLineField extends React.Component {
         autoFocus
         basket={this.props.basket}
         error={React.isValidElement(error) ? error : undefined}
+        fullWidth
+        inlineButton
+        label={<FormattedMessage id="ui-agreements.basketSelector.selectLabel" />}
         name={`${name}.basketSelector`}
         onAdd={resource => this.props.onResourceSelected(this.props.index, resource)}
+        required
       />
     );
   }

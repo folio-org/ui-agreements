@@ -2,15 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
-import { Accordion, Badge, Spinner } from '@folio/stripes/components';
+import { Button, Accordion, Badge, Spinner } from '@folio/stripes/components';
 
 import CoveredEResourcesList from './CoveredEResourcesList';
 import LinesList from './LinesList';
+import { urls } from '../utilities';
 
 export default class Lines extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
       eresources: PropTypes.arrayOf(PropTypes.object),
+      id: PropTypes.string,
       lines: PropTypes.arrayOf(PropTypes.object),
       orderLines: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
@@ -26,6 +28,14 @@ export default class Lines extends React.Component {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
+  }
+
+  renderAddAgreementLineButton = () => {
+    return (
+      <Button id="add-agreement-line-button" to={urls.agreementLineCreate(this.props.agreement.id)}>
+        <FormattedMessage id="ui-agreements.agreementLines.addLine" />
+      </Button>
+    );
   }
 
   renderBadge = () => {
@@ -48,7 +58,7 @@ export default class Lines extends React.Component {
     return (
       <Accordion
         displayWhenClosed={this.renderBadge()}
-        displayWhenOpen={this.renderBadge()}
+        displayWhenOpen={this.renderAddAgreementLineButton()}
         id={id}
         label={<FormattedMessage id="ui-agreements.agreements.agreementLines" />}
         onToggle={onToggle}

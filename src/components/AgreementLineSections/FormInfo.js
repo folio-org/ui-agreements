@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
-
+import { isEmpty } from 'lodash';
 import {
   Checkbox,
   Col,
@@ -11,17 +11,21 @@ import {
   TextArea,
 } from '@folio/stripes/components';
 
-import { isPackage } from '@folio/stripes-erm-components';
-import PackageCard from '../PackageCard';
-import PackageCardExternal from '../PackageCardExternal';
-import TitleCard from '../TitleCard';
-import TitleCardExternal from '../TitleCardExternal';
-
-import { isExternal, parseDateOnlyString } from '../utilities';
+import { isDetached, parseDateOnlyString } from '../utilities';
 
 const propTypes = {
   isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
-  resource: PropTypes.object,
+};
+
+const required = (value, allValues) => {
+  const blankString = /^\s+$/;
+  const { linkedResource } = allValues;
+  const isResourceLinked = !isEmpty(linkedResource) && !isDetached(linkedResource);
+
+  if (isResourceLinked || (value && !blankString.test(value)) || value === false || value === 0) {
+    return undefined;
+  }
+  return <FormattedMessage id="ui-agreements.agreementLine.provideEresource" />;
 };
 
 const validateDateOrder = (value, allValues, meta) => {
@@ -53,14 +57,29 @@ const validateDateOrder = (value, allValues, meta) => {
 
 const FormInfo = ({
   isSuppressFromDiscoveryEnabled,
-  resource
 }) => (
   <>
-    { isExternal(resource) ?
-      isPackage(resource) ? <PackageCardExternal pkg={resource} /> : <TitleCardExternal title={resource} />
-      :
-      isPackage(resource) ? <PackageCard pkg={resource} /> : <TitleCard title={resource} />
-    }
+    <Row>
+      <Col md={6} xs={12}>
+        <Field
+          component={TextArea}
+          id="agreement-line-description"
+          label={<FormattedMessage id="ui-agreements.eresources.description" />}
+          name="description"
+          parse={v => v} // Lets us send an empty string instead of `undefined`
+          validate={required}
+        />
+      </Col>
+      <Col md={6} xs={12}>
+        <Field
+          component={TextArea}
+          id="agreement-line-note"
+          label={<FormattedMessage id="ui-agreements.note" />}
+          name="note"
+          parse={v => v} // Lets us send an empty string instead of `undefined`
+        />
+      </Col>
+    </Row>
     <Row>
       <Col md={3} xs={6}>
         <Field
@@ -98,15 +117,6 @@ const FormInfo = ({
           />
         </Col> : null
       }
-      <Col md={3} xs={12}>
-        <Field
-          component={TextArea}
-          id="agreement-line-note"
-          label={<FormattedMessage id="ui-agreements.note" />}
-          name="note"
-          parse={v => v} // Lets us send an empty string instead of `undefined`
-        />
-      </Col>
     </Row>
   </>
 );

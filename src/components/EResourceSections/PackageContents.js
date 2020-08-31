@@ -12,6 +12,7 @@ import {
   MultiColumnList,
   Spinner,
 } from '@folio/stripes/components';
+import { AppIcon } from '@folio/stripes/core';
 
 import { TitleOnPlatformLink } from '@folio/stripes-erm-components';
 import { Coverage } from '../Coverage';
@@ -41,7 +42,18 @@ export default class PackageContents extends React.Component {
   };
 
   formatter = {
-    name: pci => <EResourceLink eresource={pci.pti.titleInstance} />,
+    name: pci => {
+      return (
+        <AppIcon
+          app="agreements"
+          iconAlignment="baseline"
+          iconKey="eresource"
+          size="small"
+        >
+          <EResourceLink eresource={pci.pti.titleInstance} />
+        </AppIcon>
+      );
+    },
     platform: pci => {
       const pti = pci.pti ?? {};
       const { name, platform, url } = pti;
