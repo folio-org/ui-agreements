@@ -26,9 +26,14 @@ class IfEResourcesEnabled extends React.Component {
   }
 
   render() {
-    if (this.isHidden()) return null;
+    const { children } = this.props;
+    const isEnabled = !this.isHidden();
 
-    return this.props.children;
+    if (typeof children === 'function') {
+      return children({ isEnabled });
+    }
+
+    return isEnabled ? children : null;
   }
 }
 

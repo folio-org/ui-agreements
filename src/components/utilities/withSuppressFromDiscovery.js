@@ -13,7 +13,6 @@ export default function withSuppressFromDiscovery(WrappedComponent) {
           type: 'okapi',
           path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
           records: 'configs',
-          shouldRefresh: () => false,
         } }
     );
 

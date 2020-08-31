@@ -13,7 +13,7 @@ const propTypes = {
 };
 
 const FormPOLines = ({
-  line: { poLines = [] },
+  line: { poLines = [] } = {},
 }) => (
   <Accordion
     id="agreement-line-form-po-lines"

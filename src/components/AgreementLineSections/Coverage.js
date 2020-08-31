@@ -35,8 +35,8 @@ const Coverage = ({
 
   return (
     <Accordion
-      displayWhenClosed={<Badge>{line.coverage?.length}</Badge>}
-      displayWhenOpen={<Badge>{line.coverage?.length}</Badge>}
+      displayWhenClosed={<Badge>{line.coverage?.length ?? 0}</Badge>}
+      displayWhenOpen={<Badge>{line.coverage?.length ?? 0}</Badge>}
       id="agreement-line-coverage"
       label={<FormattedMessage id="ui-agreements.eresources.coverage" />}
     >
