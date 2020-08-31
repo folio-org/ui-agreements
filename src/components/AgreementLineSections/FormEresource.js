@@ -24,8 +24,6 @@ const propTypes = {
 const FormEresource = ({
   agreementLineSource,
   basket,
-  change,
-  form,
   line,
   lineId,
   setFieldData,

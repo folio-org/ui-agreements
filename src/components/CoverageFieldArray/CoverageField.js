@@ -128,7 +128,7 @@ export default class CoverageField extends React.Component {
                     {...input}
                     backendDateStandard="YYYY-MM-DD"
                     error={!meta?.data?.warning && meta.touched && meta.error}
-                    id={`cc-start-date-${index}`}
+                    id={`cc-end-date-${index}`}
                     inputRef={this.inputRef}
                     label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
                     parser={parseDateOnlyString}

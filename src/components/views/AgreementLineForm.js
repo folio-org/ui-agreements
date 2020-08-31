@@ -35,12 +35,13 @@ const propTypes = {
     settings: PropTypes.object,
   }),
   form: PropTypes.shape({
-    change: PropTypes.func,
+    mutators: PropTypes.shape({
+      setFieldData: PropTypes.func,
+    }),
     getRegisteredFields: PropTypes.func.isRequired,
   }).isRequired,
   handlers: PropTypes.PropTypes.shape({
     isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
-    onAgreementLineSourceClick:  PropTypes.func,
     onClose: PropTypes.func.isRequired,
   }),
   handleSubmit: PropTypes.func.isRequired,
@@ -66,6 +67,20 @@ const AgreementLineForm = ({
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
 
   const [agreementLineSource, setAgreementLineSource] = useState('basket');
+
+  const getSectionProps = () => {
+    return {
+      addButtonTooltipId: 'ui-agreements.agreementLine.addCustomCoverageTootlip',
+      agreementLineSource,
+      basket,
+      isSuppressFromDiscoveryEnabled: handlers.isSuppressFromDiscoveryEnabled,
+      line,
+      lineId,
+      resource,
+      setFieldData: form.mutators.setFieldData,
+      values,
+    };
+  };
 
   const renderBasketButton = () => {
     return (
@@ -169,19 +184,8 @@ const AgreementLineForm = ({
             )
           )
         }
-        <FormEresource
-          agreementLineSource={agreementLineSource}
-          basket={basket}
-          change={form.change}
-          form={form}
-          line={line}
-          lineId={lineId}
-          setFieldData={form.mutators.setFieldData}
-          values={values}
-        />
-        <FormInfo
-          isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled}
-        />
+        <FormEresource {...getSectionProps()} />
+        <FormInfo {...getSectionProps()} />
         <AccordionStatus>
           <Row end="xs">
             <Col xs>
@@ -189,18 +193,8 @@ const AgreementLineForm = ({
             </Col>
           </Row>
           <AccordionSet>
-            <FormPOLines
-              line={line}
-            />
-            {
-              agreementLineSource === 'basket' &&
-              <FormCoverage
-                addButtonTooltipId="ui-agreements.agreementLine.addCustomCoverageTootlip"
-                line={line}
-                resource={resource}
-                values={values}
-              />
-            }
+            <FormPOLines {...getSectionProps()} />
+            {agreementLineSource === 'basket' && <FormCoverage {...getSectionProps()} />}
           </AccordionSet>
         </AccordionStatus>
       </Pane>
