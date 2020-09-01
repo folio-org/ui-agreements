@@ -259,10 +259,10 @@ describe('PCI edit form', () => {
     describe('Adding new coverage and submitting the form', () => {
       const newCoverage = {
         '_delete': false,
-        'endDate': '2022-01-01',
+        'endDate': '01/01/2022',
         'endIssue': '16',
         'endVolume': '225',
-        'startDate': '2021-01-01',
+        'startDate': '01/01/2021',
         'startIssue': '36',
         'startVolume': '25',
       };

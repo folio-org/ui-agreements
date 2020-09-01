@@ -183,7 +183,7 @@ const EResources = ({
                   </Pane>
                 }
                 <Pane
-                  appIcon={<AppIcon app="agreements" />}
+                  appIcon={<AppIcon app="agreements" iconKey="eresource" size="small" />}
                   defaultWidth="fill"
                   firstMenu={
                     !filterPaneIsVisible ?
@@ -227,7 +227,18 @@ const EResources = ({
                     }}
                     contentData={data.eresources}
                     formatter={{
-                      name: e => e._object?.longName ?? e.name,
+                      name: e => {
+                        return (
+                          <AppIcon
+                            app="agreements"
+                            iconAlignment="baseline"
+                            iconKey="eresource"
+                            size="small"
+                          >
+                            {e._object?.longName ?? e.name}
+                          </AppIcon>
+                        );
+                      },
                       publicationType: e => <EResourceType resource={e} />,
                       isbn: e => getResourceIdentifier(e._object, 'isbn'),
                       eissn: e => getResourceIdentifier(e._object, 'eissn'),
