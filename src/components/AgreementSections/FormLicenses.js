@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
-import { Accordion, KeyValue, TextArea } from '@folio/stripes/components';
+import { Accordion, Headline, KeyValue, TextArea } from '@folio/stripes/components';
 import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 
 import LicensesFieldArray from '../LicensesFieldArray';
@@ -36,7 +36,13 @@ export default class FormLicenses extends React.Component {
 
   renderLinkedLicenses = () => (
     <div data-test-licenses-form-all-licenses>
-      <KeyValue label={<FormattedMessage id="ui-agreements.license.allLicenses" />}>
+      <KeyValue
+        label={
+          <Headline size="large" tag="h4">
+            <FormattedMessage id="ui-agreements.license.allLicenses" />
+          </Headline>
+        }
+      >
         <FieldArray
           amendmentStatusValues={this.props.data.amendmentStatusValues}
           component={LicensesFieldArray}
@@ -50,7 +56,13 @@ export default class FormLicenses extends React.Component {
 
   renderExternalLicenses = () => (
     <div data-test-licenses-form-external-licenses>
-      <KeyValue label={<FormattedMessage id="ui-agreements.license.externalLicenses" />}>
+      <KeyValue
+        label={
+          <Headline size="large" tag="h4">
+            <FormattedMessage id="ui-agreements.license.externalLicenses" />
+          </Headline>
+        }
+      >
         <FieldArray
           addDocBtnLabel={<FormattedMessage id="ui-agreements.license.addExternalLicense" />}
           component={DocumentsFieldArray}

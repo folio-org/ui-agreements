@@ -62,7 +62,7 @@ class AmendmentsFieldArray extends React.Component {
 
     return (
       <div data-test-amendments-fa>
-        <Headline>
+        <Headline size="medium" tag="h5">
           <FormattedMessage id="ui-agreements.license.licenseAmendments" />
         </Headline>
         {items.map((item, i) => {
