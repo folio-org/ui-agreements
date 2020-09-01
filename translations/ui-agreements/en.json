@@ -121,8 +121,7 @@
   "agreementLines.deleteConfirmMessage": "Agreement line for the e-resource <strong>{name}</strong> will be <strong>deleted</strong>.",
   "agreementLines.gross": "YTD Gross",
   "agreementLines.net": "YTD Net",
-  "agreementLines.noLines": "Agreement has no agreement lines.",
-  "agreementLines.noPoLines": "Agreement has no agreement lines.",
+  "agreementLines.noLines": "No agreement lines for this agreement",
   "agreementLines.noPoLinePerm": "No permission to view PO line",
   "agreementLines.polines": "PO Line",
   "agreementLines.removeCustomCoverage": "Remove custom coverage {index}",
@@ -352,7 +351,7 @@
 
   "license.addExternalLicense": "Add external license",
   "license.addLicense": "Add license",
-  "license.agreementHasNone": "Agreement has no licenses.",
+  "license.agreementHasNone": "No licenses for this agreement",
   "license.allLicenses": "All licenses",
   "license.amendment": "Amendment",
   "license.amendmentNote": "Amendment note",
@@ -374,10 +373,8 @@
   "license.licenseIndex": "License {index}",
   "license.linkLicense": "Link license",
   "license.linkLicenseToStart": "Link a license to get started",
-  "license.noExternalLicenses": "Agreement has no external licenses.",
+  "license.noExternalLicenses": "No external licenses for this agreement",
   "license.noFindLicensePlugin": "No \"Find License\" plugin is installed.",
-  "license.noLicenseOrganizations": "Agreement has no license organizations",
-  "license.noLicenses": "Agreement has no licenses.",
   "license.noLicenseLinked": "No license linked",
   "license.removeLicense": "Remove license {index}",
   "license.removeExternalLicense": "Remove external license",
@@ -407,7 +404,7 @@
 
   "organizations.edit": "Edit organizations",
   "organizations.add": "Add organization to agreement",
-  "organizations.agreementHasNone": "Agreement has no organizations.",
+  "organizations.agreementHasNone": "No organizations for this agreement",
   "organizations.name": "Name",
   "organizations.role": "Role",
   "organizations.remove": "Remove",
@@ -445,7 +442,7 @@
 
   "relatedAgreements": "Related agreements",
   "relatedAgreements.addRelatedAgreement": "Add related agreement",
-  "relatedAgreements.agreementHasNone": "Agreement has no related agreements.",
+  "relatedAgreements.agreementHasNone": "No related agreements for this agreement",
   "relatedAgreements.linkAgreement": "Link agreement",
   "relatedAgreements.linkToStart": "Link an agreement to get started",
   "relatedAgreements.noneLinked": "No agreement linked",
@@ -483,7 +480,7 @@
 
   "usageData": "Usage data",
   "usageData.addUDP": "Add usage data provider",
-  "usageData.agreementHasNone": "Agreement has no usage data providers.",
+  "usageData.agreementHasNone": "No usage data providers for this agreement",
   "usageData.linkUDP": "Link usage data provider",
   "usageData.linkUDPToStart": "Link a usage data provider to get started",
   "usageData.note": "Note",
@@ -501,7 +498,7 @@
   "doc.removeExternalLicense": "Remove external license {index}",
   "doc.removeSupplementaryInformation": "Remove document {index}",
 
-  "supplementaryDocs.agreementHasNone": "Agreement has no supplementary documents",
+  "supplementaryDocs.agreementHasNone": "No supplementary documents for this agreement",
   "supplementaryDocs.addSupplementaryDoc": "Add supplementary document",
   "supplementaryDocuments": "Supplementary documents",
 
