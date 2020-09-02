@@ -46,7 +46,7 @@ class AgreementPeriodsFieldArray extends React.Component {
   render = () => {
     return (
       <div>
-        <Headline size="large" tag="h3">
+        <Headline margin="x-small" size="large" tag="h3">
           <FormattedMessage id="ui-agreements.agreementPeriods" />
         </Headline>
         <div id="agreement-form-periods">

@@ -38,7 +38,7 @@ export default class FormLicenses extends React.Component {
     <div data-test-licenses-form-all-licenses>
       <KeyValue
         label={
-          <Headline size="large" tag="h4">
+          <Headline margin="x-small" size="large" tag="h4">
             <FormattedMessage id="ui-agreements.license.allLicenses" />
           </Headline>
         }
@@ -58,7 +58,7 @@ export default class FormLicenses extends React.Component {
     <div data-test-licenses-form-external-licenses>
       <KeyValue
         label={
-          <Headline size="large" tag="h4">
+          <Headline margin="x-small" size="large" tag="h4">
             <FormattedMessage id="ui-agreements.license.externalLicenses" />
           </Headline>
         }
