@@ -80,7 +80,6 @@ class AgreementViewRoute extends React.Component {
             .join(' or ')
           ))
           .join(' or ');
-
         return query ? { query } : null;
       },
       fetch: props => !!props.stripes.hasInterface('order-lines', '1.0'),

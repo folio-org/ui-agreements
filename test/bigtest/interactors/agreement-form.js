@@ -14,6 +14,7 @@ import AgreementFormLinesInteractor from './agreement-form-lines';
 
 @interactor class InternalContactCardInteractor {
   userName = text('[data-test-user-name]');
+  isCardPresent = isPresent('[data-test-internal-contact]')
 }
 
 export default @interactor class AgreementFormInteractor {
