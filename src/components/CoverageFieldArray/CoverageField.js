@@ -61,10 +61,10 @@ export default class CoverageField extends React.Component {
               {({ input, meta }) => {
                 return (
                   <Datepicker
-                    {...input}
                     backendDateStandard="YYYY-MM-DD"
                     error={!meta?.data?.warning && meta.touched && meta.error}
                     id={`cc-start-date-${index}`}
+                    input={input}
                     inputRef={this.inputRef}
                     label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
                     parser={parseDateOnlyString}
@@ -129,6 +129,7 @@ export default class CoverageField extends React.Component {
                     backendDateStandard="YYYY-MM-DD"
                     error={!meta?.data?.warning && meta.touched && meta.error}
                     id={`cc-end-date-${index}`}
+                    input={input}
                     inputRef={this.inputRef}
                     label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
                     parser={parseDateOnlyString}
