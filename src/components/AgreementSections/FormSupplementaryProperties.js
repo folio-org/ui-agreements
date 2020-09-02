@@ -27,12 +27,12 @@ class FormSupplementaryProperties extends React.Component {
           customProperties={supplementaryProperties}
           name="customProperties"
           optionalSectionLabel={
-            <Headline size="large" tag="h4">
+            <Headline margin="x-small" size="large" tag="h4">
               <FormattedMessage id="ui-agreements.supplementaryProperties.optionalProperties" />
             </Headline>
           }
           primarySectionLabel={
-            <Headline size="large" tag="h4">
+            <Headline margin="x-small" size="large" tag="h4">
               <FormattedMessage id="ui-agreements.supplementaryProperties.primaryProperties" />
             </Headline>
           }
