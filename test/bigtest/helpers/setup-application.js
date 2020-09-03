@@ -2,6 +2,7 @@ import setupStripesCore from '@folio/stripes-core/test/bigtest/helpers/setup-app
 import mirageOptions from '../network';
 
 import findPOLineModule from './findPOLineModule';
+import initialState from './discovery';
 
 export default function setupApplication({
   scenarios,
@@ -18,6 +19,7 @@ export default function setupApplication({
     scenarios,
     stripesConfig: {
       hasAllPerms
-    }
+    },
+    initialState
   });
 }
