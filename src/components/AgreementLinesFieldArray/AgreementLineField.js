@@ -134,33 +134,44 @@ export default class AgreementLineField extends React.Component {
   );
 
   renderResourceInfo = (resource) => (
-    <Row>
-      <Col md={5} xs={12}>
-        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.name" />}>
-          <div data-test-ag-line-name>{this.renderLineName(resource)}</div>
-        </KeyValue>
-      </Col>
-      <Col md={2} xs={12}>
-        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.publicationType" />}>
-          <div data-test-ag-line-type>{this.renderLineType(resource)}</div>
-        </KeyValue>
-      </Col>
-      <Col md={2} xs={12}>
-        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.titles" />}>
-          <div data-test-ag-line-titles>{this.renderLineTitles(resource)}</div>
-        </KeyValue>
-      </Col>
-      <Col md={3} xs={12}>
-        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.provider" />}>
-          <div data-test-ag-line-provider>{this.renderLineProvider(resource)}</div>
-        </KeyValue>
-      </Col>
-      <Col xs={4}>
-        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.defaultCoverage" />}>
-          <div data-test-ag-line-coverage>{this.renderCoverage(resource)}</div>
-        </KeyValue>
-      </Col>
-    </Row>
+    <>
+      <Row>
+        <Col md={5} xs={12}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.eresources.name" />}>
+            <div data-test-ag-line-name>{this.renderLineName(resource)}</div>
+          </KeyValue>
+        </Col>
+        <Col md={2} xs={12}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.eresources.publicationType" />}>
+            <div data-test-ag-line-type>{this.renderLineType(resource)}</div>
+          </KeyValue>
+        </Col>
+        <Col md={2} xs={12}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.eresources.titles" />}>
+            <div data-test-ag-line-titles>{this.renderLineTitles(resource)}</div>
+          </KeyValue>
+        </Col>
+        <Col md={3} xs={12}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.eresources.provider" />}>
+            <div data-test-ag-line-provider>{this.renderLineProvider(resource)}</div>
+          </KeyValue>
+        </Col>
+      </Row>
+      {resource.description &&
+        <Row>
+          <Col xs={4}>
+            {this.renderDescription(resource)}
+          </Col>
+        </Row>
+      }
+      <Row>
+        <Col xs={4}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.eresources.defaultCoverage" />}>
+            <div data-test-ag-line-coverage>{this.renderCoverage(resource)}</div>
+          </KeyValue>
+        </Col>
+      </Row>
+    </>
   );
 
   renderLineResource = () => {

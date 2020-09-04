@@ -6,6 +6,7 @@ import { IfPermission } from '@folio/stripes/core';
 import {
   FormattedUTCDate,
   MultiColumnList,
+  NoValue,
   Spinner,
   Tooltip
 } from '@folio/stripes/components';
@@ -63,7 +64,10 @@ export default class LinesList extends React.Component {
       );
     },
     provider: line => <EResourceProvider resource={line.resource || line} />,
-    publicationType: line => <EResourceType resource={getResourceFromEntitlement(line)} />,
+    publicationType: line => {
+      const resource = getResourceFromEntitlement(line);
+      return isDetached(resource) ? <NoValue /> : <EResourceType resource={resource} />;
+    },
     activeFrom: line => <div data-test-active-from>{this.renderDate(line.startDate)}</div>,
     activeTo: line => <div data-test-active-to>{this.renderDate(line.endDate)}</div>,
     count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
