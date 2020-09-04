@@ -4,6 +4,7 @@ import compose from 'compose-function';
 import { isEmpty } from 'lodash';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { isPackage } from '@folio/stripes-erm-components';
 import View from '../components/views/AgreementLineForm';
 import { urls, withSuppressFromDiscovery } from '../components/utilities';
 
@@ -86,24 +87,35 @@ class AgreementLineCreateRoute extends React.Component {
       match: { params: { agreementId } },
     } = this.props;
 
+    const {
+      linkedResource: resource,
+      coverage,
+      ...rest
+    } = line;
+
     let items;
-    const { linkedResource: resource, ...rest } = line;
-    if (resource?.type === 'packages') {
+
+    if (resource?.type === 'packages' || resource?.type === 'resources') { // external line
       items = {
         'type': 'external',
-        'authority': 'ekb-package',
+        'authority': resource?.type === 'packages' ? 'ekb-package' : 'ekb-title',
         'reference': resource.id,
         ...rest
       };
-    } else if (resource?.type === 'resources') {
+    } else if (isEmpty(resource)) { // detached line
       items = {
-        'type': 'external',
-        'authority': 'ekb-title',
-        'reference': resource.id,
+        'type': 'detached',
+        ...rest,
+        resource: null,
+        coverage: []
+      };
+    } else { // internal line
+      items = {
+        resource,
+        coverage: isPackage(resource) ? [] : coverage, // pass empty coverage for internal package
         ...rest
       };
-    } else if (isEmpty(resource)) items = { 'type': 'detached', ...rest, resource: null, coverage: [] }; // detached
-    else items = { resource: line.linkedResource, ...rest };
+    }
 
     const {
       history,
