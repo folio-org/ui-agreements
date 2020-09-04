@@ -1,5 +1,8 @@
 # Change history for ui-agreements
 
+## 4.0.3 2020-09-04
+* Fixed issue with editing an agreement with a supplementary document and no category specified. ERM-1090
+
 ## 4.0.2 2020-07-06
 * Fixed issue with only 10 results being retrieved for internal contacts. ERM-980
 
