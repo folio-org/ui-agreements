@@ -9,7 +9,8 @@ import {
   Badge,
   Card,
   KeyValue,
-  Layout
+  Layout,
+  NoValue
 } from '@folio/stripes/components';
 import { IfPermission, AppIcon } from '@folio/stripes/core';
 
@@ -55,7 +56,7 @@ export default class UsageData extends React.Component {
           data-props-udp-note
           label={<FormattedMessage id="ui-agreements.usageData.note" />}
         >
-          {udp.usageDataProviderNote || '-'}
+          {udp.usageDataProviderNote || <NoValue />}
         </KeyValue>
       </Card>
     ))

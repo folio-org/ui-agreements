@@ -7,6 +7,7 @@ import {
   Badge,
   FormattedUTCDate,
   MultiColumnList,
+  NoValue,
 } from '@folio/stripes/components';
 
 export default class OtherPeriods extends React.Component {
@@ -35,9 +36,9 @@ export default class OtherPeriods extends React.Component {
   }
 
   formatter = {
-    startDate: p => (p.startDate ? <FormattedUTCDate value={p.startDate} /> : '-'),
-    endDate: p => (p.endDate ? <FormattedUTCDate value={p.endDate} /> : '-'),
-    cancellationDeadline: p => (p.cancellationDeadline ? <FormattedUTCDate value={p.cancellationDeadline} /> : '-'),
+    startDate: p => (p.startDate ? <FormattedUTCDate value={p.startDate} /> : <NoValue />),
+    endDate: p => (p.endDate ? <FormattedUTCDate value={p.endDate} /> : <NoValue />),
+    cancellationDeadline: p => (p.cancellationDeadline ? <FormattedUTCDate value={p.cancellationDeadline} /> : <NoValue />),
     note: p => p.note || '',
   }
 

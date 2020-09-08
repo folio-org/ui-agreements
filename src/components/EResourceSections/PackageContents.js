@@ -10,6 +10,7 @@ import {
   FormattedUTCDate,
   Layout,
   MultiColumnList,
+  NoValue,
   Spinner,
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
@@ -93,7 +94,7 @@ export default class PackageContents extends React.Component {
     );
   };
 
-  renderDate = date => (date ? <FormattedUTCDate value={date} /> : '-');
+  renderDate = date => (date ? <FormattedUTCDate value={date} /> : <NoValue />);
 
   renderBadge = () => {
     const count = this.props.data?.packageContentsCount;

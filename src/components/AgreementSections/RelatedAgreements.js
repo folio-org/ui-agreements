@@ -9,6 +9,7 @@ import {
   Badge,
   Card,
   KeyValue,
+  NoValue,
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
@@ -67,7 +68,7 @@ export default class RelatedAgreements extends React.Component {
           data-props-ra-note
           label={<FormattedMessage id="ui-agreements.note" />}
         >
-          {ra.note || '-'}
+          {ra.note || <NoValue />}
         </KeyValue>
       </Card>
     ))

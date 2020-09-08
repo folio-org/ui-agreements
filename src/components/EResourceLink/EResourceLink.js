@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
 
+import { NoValue } from '@folio/stripes/components';
 import { isExternal, urls } from '../utilities';
 
 class EResourceLink extends React.Component {
@@ -43,7 +44,7 @@ class EResourceLink extends React.Component {
 
     const name = this.getName(eresource);
     const path = this.getPath(eresource);
-    if (!path) return name || '-';
+    if (!path) return name || <NoValue />;
 
     return (
       <Link {...rest} data-test-eresource-name to={`${this.getPath(eresource)}${searchString}`}>

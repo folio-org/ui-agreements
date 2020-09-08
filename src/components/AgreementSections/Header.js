@@ -7,6 +7,7 @@ import {
   Col,
   FormattedUTCDate,
   KeyValue,
+  NoValue,
   Row,
 } from '@folio/stripes/components';
 
@@ -15,6 +16,9 @@ import css from './Header.css';
 export default class Header extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
+      agreementStatus: PropTypes.shape({
+        label: PropTypes.string,
+      }),
       endDate: PropTypes.string,
       orgs: PropTypes.arrayOf(
         PropTypes.shape({
@@ -45,21 +49,21 @@ export default class Header extends React.Component {
         <Col xs={2}>
           <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.periodStart" />}>
             <div data-test-agreement-start-date>
-              {startDate ? <FormattedUTCDate value={startDate} /> : '-'}
+              {startDate ? <FormattedUTCDate value={startDate} /> : <NoValue />}
             </div>
           </KeyValue>
         </Col>
         <Col xs={2}>
           <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.periodEnd" />}>
             <div data-test-agreement-end-date>
-              {endDate ? <FormattedUTCDate value={endDate} /> : '-'}
+              {endDate ? <FormattedUTCDate value={endDate} /> : <NoValue />}
             </div>
           </KeyValue>
         </Col>
         <Col xs={2}>
           <KeyValue label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}>
             <div data-test-agreement-status>
-              {get(agreement, 'agreementStatus.label', '-')}
+              {agreement?.agreementStatus?.label ?? <NoValue />}
             </div>
           </KeyValue>
         </Col>

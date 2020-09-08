@@ -10,6 +10,7 @@ import {
   FormattedUTCDate,
   KeyValue,
   Layout,
+  NoValue,
   Row,
   Tooltip,
 } from '@folio/stripes/components';
@@ -31,6 +32,9 @@ export default class RelatedAgreementField extends React.Component {
     }).isRequired,
     onAgreementSelected: PropTypes.func.isRequired,
     agreement: PropTypes.shape({
+      agreementStatus: PropTypes.shape({
+        label: PropTypes.string
+      }),
       endDate: PropTypes.string,
       id: PropTypes.string,
       name: PropTypes.string,
@@ -122,19 +126,19 @@ export default class RelatedAgreementField extends React.Component {
           <Col md={4} xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
-              value={agreement.startDate ? <FormattedUTCDate value={agreement.startDate} /> : '-'}
+              value={agreement.startDate ? <FormattedUTCDate value={agreement.startDate} /> : <NoValue />}
             />
           </Col>
           <Col md={4} xs={6}>
             <KeyValue
               label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
-              value={agreement.endDate ? <FormattedUTCDate value={agreement.endDate} /> : '-'}
+              value={agreement.endDate ? <FormattedUTCDate value={agreement.endDate} /> : <NoValue />}
             />
           </Col>
           <Col md={4} xs={12}>
             <KeyValue
               label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
-              value={get(agreement, 'agreementStatus.label', '-')}
+              value={agreement?.agreementStatus?.label ?? <NoValue />}
             />
           </Col>
         </Row>

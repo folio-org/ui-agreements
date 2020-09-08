@@ -14,6 +14,7 @@ import {
   Icon,
   Layout,
   MultiColumnList,
+  NoValue,
   Row,
   Spinner,
   Tooltip,
@@ -90,7 +91,7 @@ export default class CoveredEResourcesList extends React.Component {
         />
       );
     },
-    package: e => get(e._object, 'pkg.name', '-'),
+    package: e => e?._object?.pkg?.name ?? <NoValue />,
     coverage:  e => <Coverage eResource={e} />,
     accessStart: e => this.renderDate(e._object?.accessStart),
     accessEnd: e => this.renderDate(e._object?.accessEnd),

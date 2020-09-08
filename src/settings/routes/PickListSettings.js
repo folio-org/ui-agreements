@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { IntlConsumer } from '@folio/stripes/core';
+import { NoValue } from '@folio/stripes/components';
 
 export default class PickListSettings extends React.Component {
   static propTypes = {
@@ -36,7 +37,7 @@ export default class PickListSettings extends React.Component {
               desc: intl.formatMessage({ id: 'ui-agreements.settings.pickList' }),
               actions: intl.formatMessage({ id: 'ui-agreements.settings.actions' }),
             }}
-            formatter={{ numberOfObjects: (item) => { return item.values ? item.values.length : '-'; } }}
+            formatter={{ numberOfObjects: (item) => item.values?.length ?? <NoValue /> }}
             hiddenFields={['lastUpdated']}
             id="pick-lists"
             itemTemplate={{ desc: this.desc, values: [] }}

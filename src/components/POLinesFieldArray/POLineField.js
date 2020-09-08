@@ -8,6 +8,7 @@ import {
   Col,
   KeyValue,
   Layout,
+  NoValue,
   Tooltip,
   Row,
 } from '@folio/stripes/components';
@@ -110,7 +111,7 @@ export default class POLineField extends React.Component {
           <Col xs={12}>
             <KeyValue label={<FormattedMessage id="ui-agreements.poLines.title" />}>
               <div data-test-po-line-title>
-                {poLine.titleOrPackage || '-'}
+                {poLine.titleOrPackage || <NoValue />}
               </div>
             </KeyValue>
           </Col>
@@ -119,7 +120,7 @@ export default class POLineField extends React.Component {
           <Col xs={3}>
             <KeyValue label={<FormattedMessage id="ui-agreements.poLines.acqMethod" />}>
               <div data-test-po-line-acq-method>
-                {poLine.acquisitionMethod || '-'}
+                {poLine.acquisitionMethod || <NoValue />}
               </div>
             </KeyValue>
           </Col>
