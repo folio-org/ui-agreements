@@ -477,6 +477,6 @@
     "customCoverage.warn.endVolume": "End volume will be cleared as no e-resource is linked",
     "customCoverage.warn.startIssue": "Start issue will be cleared as no e-resource is linked",
     "customCoverage.warn.endIssue": "End issue will be cleared as no e-resource is linked",
-    "line.new": "New agreement line",
-    "line.create.callout": "Agreement line created"
+    "line.new": "Nouvelle ligne d'accord",
+    "line.create.callout": "Ligne d'accord créée"
 }

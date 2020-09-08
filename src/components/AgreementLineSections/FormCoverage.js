@@ -28,7 +28,7 @@ const FormCoverage = ({
   resource = {},
 }) => {
   if (isExternal(line)) return null;
-  if (isPackage(resource)) return null;
+  if (isPackage(resource) || isPackage(values?.linkedResource ?? {})) return null;
 
   return (
     <Accordion
@@ -36,7 +36,7 @@ const FormCoverage = ({
       label={<FormattedMessage id="ui-agreements.eresources.coverage" />}
     >
       {
-        values.linkedResource && isEmpty(values.linkedResource) && values.coverage && !isEmpty(values.coverage) &&
+        values.linkedResource && isEmpty(values.linkedResource) && values.coverage && !isEmpty(values.coverage) && // display warning banner
         <Layout className="padding-bottom-gutter">
           <MessageBanner type="warning">
             <FormattedMessage id="ui-agreements.eresources.warn.customCoverageCleared" />

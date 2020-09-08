@@ -65,6 +65,7 @@ const FormInfo = ({
           component={TextArea}
           id="agreement-line-description"
           label={<FormattedMessage id="ui-agreements.eresources.description" />}
+          maxLength={255}
           name="description"
           parse={v => v} // Lets us send an empty string instead of `undefined`
           validate={required}
