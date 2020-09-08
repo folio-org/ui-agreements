@@ -13,7 +13,8 @@ import {
   KeyValue,
   Row,
   Select,
-  TextArea
+  TextArea,
+  NoValue
 } from '@folio/stripes/components';
 import { LicenseEndDate, requiredValidator, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
@@ -85,7 +86,7 @@ class AmendmentsFieldArray extends React.Component {
                   <KeyValue
                     data-test-amendment-status
                     label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
-                    value={get(amendment, 'status.label', '-')}
+                    value={amendment?.status?.label ?? <NoValue />}
                   />
                 </Col>
                 <Col md={4} xs={6}>
@@ -93,7 +94,7 @@ class AmendmentsFieldArray extends React.Component {
                     data-test-amendment-start-date
                     label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
                   >
-                    {amendment.startDate ? <FormattedUTCDate value={amendment.startDate} /> : '-'}
+                    {amendment.startDate ? <FormattedUTCDate value={amendment.startDate} /> : <NoValue />}
                   </KeyValue>
                 </Col>
                 <Col md={4} xs={6}>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
 import { isPackage } from '@folio/stripes-erm-components';
+import { NoValue } from '@folio/stripes/components';
 
 export default class EResourceKB extends React.Component {
   static propTypes = {
@@ -23,12 +24,12 @@ export default class EResourceKB extends React.Component {
 
   render() {
     const { resource } = this.props;
-    if (!resource) return '-';
+    if (!resource) return <NoValue />;
 
     if (isPackage(resource)) {
-      return get(resource, '_object.remoteKb.name', '-');
+      return resource?._object?.remoteKb?.name ?? <NoValue />;
     }
 
-    return get(resource, '_object.pkg.remoteKb.name', '-');
+    return resource?._object?.pkg?.remoteKb?.name ?? <NoValue />;
   }
 }

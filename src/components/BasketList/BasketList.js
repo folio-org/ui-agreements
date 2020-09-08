@@ -7,6 +7,7 @@ import {
   Checkbox,
   IconButton,
   MultiColumnList,
+  NoValue,
 } from '@folio/stripes/components';
 
 import { EResourceType } from '@folio/stripes-erm-components';
@@ -59,14 +60,14 @@ class BasketList extends React.Component {
           publicationType: resource => <EResourceType resource={resource} />,
           package: resource => {
             const pkg = get(resource, '_object.pkg');
-            if (!pkg) return '-';
+            if (!pkg) return <NoValue />;
 
             return <EResourceLink eresource={pkg} />;
           },
           publisher: () => 'TBD',
           platform: resource => (
             get(resource, '_object.pti.platform.name') ||
-            get(resource, '_object.nominalPlatform.name') || '-'
+            get(resource, '_object.nominalPlatform.name') || <NoValue />
           ),
           // The resource below fits the same shape as the eresources in an agreement line, so we pass them in the eResource prop.
           coverage: resource => <Coverage eResource={resource} />,

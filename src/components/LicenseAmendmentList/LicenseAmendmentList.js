@@ -7,6 +7,7 @@ import {
   Icon,
   FormattedUTCDate,
   MultiColumnList,
+  NoValue,
   Tooltip
 } from '@folio/stripes/components';
 import { LicenseEndDate } from '@folio/stripes-erm-components';
@@ -88,8 +89,8 @@ export default class LicenseAmendmentList extends React.Component {
           ),
           note: a => (a.note ? a.note : ''),
           name: a => <Link to={urls.amendmentView(license.id, a.id)}>{a.name}</Link>,
-          status: a => (a.status ? a.status.label : '-'),
-          startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : '-'),
+          status: a => (a.status?.label ?? <NoValue />),
+          startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : <NoValue />),
           endDate: a => <LicenseEndDate license={a} />,
         }}
         id={id}
