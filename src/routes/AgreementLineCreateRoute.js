@@ -29,7 +29,6 @@ class AgreementLineCreateRoute extends React.Component {
     match: PropTypes.shape({
       params: PropTypes.shape({
         agreementId: PropTypes.string.isRequired,
-        lineId: PropTypes.string.isRequired,
       }).isRequired
     }).isRequired,
     mutator: PropTypes.shape({
@@ -77,9 +76,9 @@ class AgreementLineCreateRoute extends React.Component {
     const {
       history,
       location,
-      match: { params: { agreementId, lineId } },
+      match: { params: { agreementId } },
     } = this.props;
-    history.push(`${urls.agreementLineView(agreementId, lineId)}${location.search}`);
+    history.push(`${urls.agreementView(agreementId)}${location.search}`);
   }
 
   handleSubmit = (line) => {

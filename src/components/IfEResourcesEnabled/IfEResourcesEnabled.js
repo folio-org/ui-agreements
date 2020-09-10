@@ -14,7 +14,7 @@ class IfEResourcesEnabled extends React.Component {
   };
 
   static propTypes = {
-    children: PropTypes.node,
+    children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     resources: PropTypes.shape({
       settings: PropTypes.object,
     }),

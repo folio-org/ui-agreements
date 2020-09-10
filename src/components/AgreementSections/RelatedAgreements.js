@@ -18,7 +18,7 @@ import { urls } from '../utilities';
 export default class RelatedAgreements extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
-      name: PropTypes.string.isRequired,
+      name: PropTypes.string,
       relatedAgreements: PropTypes.arrayOf(
         PropTypes.shape({
           agreement: PropTypes.shape({
