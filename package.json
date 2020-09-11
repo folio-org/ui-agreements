@@ -65,9 +65,7 @@
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-intl": "^5.8.1",
-    "react-redux": "^5.1.1",
     "react-router-dom": "^5.2.0",
-    "redux": "^3.7.2",
     "regenerator-runtime": "^0.13.3",
     "sinon": "^7.5.0"
   },
@@ -84,8 +82,7 @@
     "query-string": "^6.6.0",
     "react-final-form": "^6.3.0",
     "react-final-form-arrays": "^3.1.0",
-    "react-router-prop-types": "^1.0.4",
-    "redux-form": "^7.0.3"
+    "react-router-prop-types": "^1.0.4"
   },
   "peerDependencies": {
     "@folio/stripes": "^5.0.0",
@@ -93,9 +90,7 @@
     "react": "*",
     "react-dom": "*",
     "react-intl": "^5.8.1",
-    "react-redux": "*",
-    "react-router-dom": "^5.2.0",
-    "redux": "*"
+    "react-router-dom": "^5.2.0"
   },
   "resolutions": {
     "moment": "~2.24.0"
