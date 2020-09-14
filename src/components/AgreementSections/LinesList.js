@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { orderBy } from 'lodash';
 import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
 import { IfPermission } from '@folio/stripes/core';
@@ -29,6 +30,11 @@ export default class LinesList extends React.Component {
     onViewAgreementLine: PropTypes.func.isRequired,
     onNeedMoreLines: PropTypes.func.isRequired,
   }
+
+  state = {
+    sortOrder: ['name', 'activeFrom'],
+    sortDirection: ['desc', 'asc'],
+  };
 
   columnWidths = {
     name: 250,
@@ -151,6 +157,25 @@ export default class LinesList extends React.Component {
     );
   }
 
+  onSort(e, meta) {
+    if (!this.formatter[meta.name]) return;
+
+    let {
+      sortOrder,
+      sortDirection,
+    } = this.state;
+
+    if (sortOrder[0] !== meta.name) {
+      sortOrder = [meta.name, sortOrder[0]];
+      sortDirection = ['asc', sortDirection[0]];
+    } else {
+      const direction = (sortDirection[0] === 'desc') ? 'asc' : 'desc';
+      sortDirection = [direction, sortDirection[1]];
+    }
+
+    this.setState({ sortOrder, sortDirection });
+  }
+
   render() {
     const {
       agreement: { lines, orderLines },
@@ -158,17 +183,26 @@ export default class LinesList extends React.Component {
       onNeedMoreLines,
     } = this.props;
 
+    const {
+      sortOrder,
+      sortDirection,
+    } = this.state;
+
+    const contentData = orderBy(lines,
+      [this.formatter[sortOrder[0]], this.formatter[sortOrder[1]]], sortDirection);
+
     const rowUpdater = () => orderLines.map(orderLine => orderLine.id);
 
     return (
       <MultiColumnList
         columnMapping={this.columnMapping}
         columnWidths={this.columnWidths}
-        contentData={lines}
+        contentData={contentData}
         formatter={this.formatter}
         id="agreement-lines"
         isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.agreementLines" />}
         maxHeight={400}
+        onHeaderClick={this.onSort}
         onNeedMoreData={onNeedMoreLines}
         onRowClick={(e, row) => {
           if (e.target.tagName !== 'A') {
@@ -176,6 +210,8 @@ export default class LinesList extends React.Component {
           }
         }}
         rowUpdater={rowUpdater}
+        sortDirection={`${sortDirection[0]}ending`}
+        sortOrder={sortOrder[0]}
         visibleColumns={this.visibleColumns}
       />
     );
