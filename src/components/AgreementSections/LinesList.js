@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { orderBy } from 'lodash';
 import Link from 'react-router-dom/Link';
 import { FormattedMessage } from 'react-intl';
 import { IfPermission } from '@folio/stripes/core';
@@ -32,14 +31,20 @@ export default class LinesList extends React.Component {
   }
 
   state = {
-    sortOrder: ['name', 'activeFrom'],
-    sortDirection: ['desc', 'asc'],
+    sortOrder: ['name', 'activeFrom', 'activeTo'],
+    sortDirection: ['asc', 'desc'],
   };
 
   columnWidths = {
     name: 250,
     provider: 150,
     coverage: 250,
+  }
+
+  sortMap = {
+    name: line => line.resource.name,
+    activeFrom: line => line.startDate,
+    activeTo: line => line.endDate,
   }
 
   columnMapping = {
@@ -157,8 +162,8 @@ export default class LinesList extends React.Component {
     );
   }
 
-  onSort(e, meta) {
-    if (!this.formatter[meta.name]) return;
+  onSort = (e, meta) => {
+    if (!this.sortMap[meta.name]) return;
 
     let {
       sortOrder,
@@ -188,8 +193,9 @@ export default class LinesList extends React.Component {
       sortDirection,
     } = this.state;
 
-    const contentData = orderBy(lines,
-      [this.formatter[sortOrder[0]], this.formatter[sortOrder[1]]], sortDirection);
+    // eslint-disable-next-line no-undef
+    const contentData = _.orderBy(lines,
+      [this.sortMap[sortOrder[0]], this.sortMap[sortOrder[1]], this.sortMap[sortOrder[2]]], sortDirection);
 
     const rowUpdater = () => orderLines.map(orderLine => orderLine.id);
 
