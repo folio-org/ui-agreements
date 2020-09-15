@@ -19,12 +19,12 @@ const getCorrespondingInwardValue = outwardValue => {
   return relationship ? relationship.inward.value : undefined;
 };
 
-const getCorrespondingOutwardValue = inwardValue => {
+const getCorrespondingOutwardValue = (inwardValue, relationshipTypeValues) => {
   const relationship = agreementRelationshipTypes.find(t => t.inward.value === inwardValue);
-  return relationship ? relationship.outward.value : undefined;
+  return relationship ? relationshipTypeValues.filter(rt => rt.value === relationship.outward.value)?.[0]?.id : undefined;
 };
 
-export function splitRelatedAgreements(agreement) {
+export function splitRelatedAgreements(agreement, relationshipTypeValues) {
   const {
     inwardRelationships = [],
     relatedAgreements = [],
@@ -39,9 +39,10 @@ export function splitRelatedAgreements(agreement) {
       // We need to figure out whether it was originally in `outward` or `inwardRelationships`.
       return !!(outwardRelationships.find(or => or.id === r.id));
     })
-    .map(({ agreement:a, ...rest }) => ({
+    .map(({ agreement:a, type, ...rest }) => ({
       ...rest,
       inward: a ? a.id : undefined,
+      type: relationshipTypeValues.filter(rt => rt.value === type)?.[0]?.id
     }));
 
   const inward = relatedAgreements
@@ -55,7 +56,7 @@ export function splitRelatedAgreements(agreement) {
     .map(({ agreement:a, type, ...rest }) => ({
       ...rest,
       outward: a ? a.id : undefined,
-      type: getCorrespondingOutwardValue(type),
+      type: getCorrespondingOutwardValue(type, relationshipTypeValues),
     }));
 
   if (outward) agreement.outwardRelationships = outward;
