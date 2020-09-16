@@ -35,7 +35,7 @@ const TitleCardExternal = ({
       data-test-title-card
       headerEnd={headerEnd}
       headerStart={(
-        <AppIcon app="agreements" iconKey="eresource" size="small">
+        <AppIcon app="eholdings" size="small">
           <strong data-test-title-instance-name>
             <EResourceLink eresource={title} searchString={searchString} />
           </strong>

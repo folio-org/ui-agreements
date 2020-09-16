@@ -63,7 +63,7 @@ const PackageCardExternal = ({
       data-test-package-card
       headerEnd={headerEnd}
       headerStart={(
-        <AppIcon app="agreements" iconKey="eresource" size="small">
+        <AppIcon app="eholdings" size="small">
           <strong data-test-package-link>
             <EResourceLink eresource={eresource} searchString={searchString} />
           </strong>
