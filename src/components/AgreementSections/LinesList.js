@@ -18,7 +18,7 @@ import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
-import { getResourceFromEntitlement, isDetached, urls } from '../utilities';
+import { getResourceFromEntitlement, isDetached, isExternal, urls } from '../utilities';
 
 export default class LinesList extends React.Component {
   static propTypes = {
@@ -42,7 +42,14 @@ export default class LinesList extends React.Component {
   }
 
   sortMap = {
-    name: line => line.resource.name,
+    name: line => {
+      const resource = getResourceFromEntitlement(line);
+      if (!resource) return line.label;
+      if (isDetached(resource)) return resource.description;
+      if (isExternal(resource)) return line?.reference_object?.label;
+
+      return line?.resource?.name;
+    },
     activeFrom: line => line.startDate,
     activeTo: line => line.endDate,
   }
