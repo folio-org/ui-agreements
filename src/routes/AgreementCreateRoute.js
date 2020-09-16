@@ -76,6 +76,11 @@ class AgreementCreateRoute extends React.Component {
       path: 'erm/refdata/SubscriptionAgreementOrg/role',
       shouldRefresh: () => false,
     },
+    relationshipTypeValues: {
+      type: 'okapi',
+      path: 'erm/refdata/AgreementRelationship/type',
+      shouldRefresh: () => false,
+    },
     renewalPriorityValues: {
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
@@ -146,11 +151,13 @@ class AgreementCreateRoute extends React.Component {
   }
 
   handleSubmit = (agreement) => {
-    const { history, location, mutator } = this.props;
+    const { history, location, mutator, resources } = this.props;
+    const relationshipTypeValues = resources?.relationshipTypeValues?.records ?? [];
+
     const name = agreement?.name;
     compose(
       splitRelatedAgreements,
-    )(agreement);
+    )(agreement, relationshipTypeValues);
 
     return mutator.agreements
       .POST(agreement)
