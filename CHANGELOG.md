@@ -1,5 +1,8 @@
 # Change history for ui-agreements
 
+## 4.0.4 2020-09-17
+* Fixed error on editing an inward relationship to outward, refs ERM-1118
+
 ## 4.0.3 2020-09-04
 * Fixed issue with editing an agreement with a supplementary document and no category specified. ERM-1090
 
