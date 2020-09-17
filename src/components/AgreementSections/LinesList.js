@@ -38,7 +38,7 @@ export default class LinesList extends React.Component {
   columnWidths = {
     name: 250,
     provider: 150,
-    coverage: 250,
+    coverage: { min: 250, max: 320 },
   }
 
   sortMap = {

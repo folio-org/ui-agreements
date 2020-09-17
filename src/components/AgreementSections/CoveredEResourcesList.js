@@ -66,7 +66,7 @@ export default class CoveredEResourcesList extends React.Component {
     name: 250,
     platform: 150,
     package: 150,
-    coverage: 250,
+    coverage: { min:250, max: 320 },
   }
 
   formatter = {
