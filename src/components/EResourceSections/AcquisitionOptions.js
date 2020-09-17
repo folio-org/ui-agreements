@@ -73,7 +73,7 @@ class AcquisitionOptions extends React.Component {
       columnWidths={{
         sourceKb: 90,
         package: 200,
-        coverage: 260,
+        coverage: { min: 250, max: 320 },
         acqMethod: 100
       }}
       contentData={this.props.data.entitlementOptions}

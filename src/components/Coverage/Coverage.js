@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Embargo, SerialCoverage } from '@folio/stripes-erm-components';
+import { Layout } from '@folio/stripes/components';
 import MonographCoverage from './MonographCoverage';
 
 import { resourceTypes } from '../../constants';
@@ -143,10 +144,10 @@ export default class Coverage extends React.Component {
       );
     } else {
       return (
-        <div>
+        <Layout className="full">
           <SerialCoverage statements={dataToRender?.coverage} />
           <Embargo embargo={embargo} />
-        </div>
+        </Layout>
       );
     }
   }

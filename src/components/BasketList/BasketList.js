@@ -45,6 +45,7 @@ class BasketList extends React.Component {
           remove: <FormattedMessage id="ui-agreements.remove" />,
         }}
         columnWidths={{
+          coverage: { min: 250, max: 320 },
           name: 300,
         }}
         contentData={basket}
