@@ -30,13 +30,15 @@ const FormCoverage = ({
   if (isExternal(line)) return null;
   if (isPackage(resource) || isPackage(values?.linkedResource ?? {})) return null;
 
+  const { linkedResource, coverage } = values;
+
   return (
     <Accordion
       id="agreement-line-form-coverage"
       label={<FormattedMessage id="ui-agreements.eresources.coverage" />}
     >
       {
-        values.linkedResource && isEmpty(values.linkedResource) && values.coverage && !isEmpty(values.coverage) && // display warning banner
+        linkedResource && isEmpty(linkedResource) && coverage && !isEmpty(coverage) && // display warning banner
         <Layout className="padding-bottom-gutter">
           <MessageBanner type="warning">
             <FormattedMessage id="ui-agreements.eresources.warn.customCoverageCleared" />
@@ -54,7 +56,7 @@ const FormCoverage = ({
           null
         }
         {
-          !isEmpty(resource.coverage) &&
+          (!isEmpty(resource.coverage) || !isEmpty(linkedResource?.coverage)) &&
           <Col xs={4}>
             <KeyValue
               label={(
@@ -63,7 +65,7 @@ const FormCoverage = ({
                 </Layout>
               )}
             >
-              <SerialCoverage statements={resource.coverage} />
+              <SerialCoverage statements={resource.coverage || linkedResource?.coverage} />
             </KeyValue>
           </Col>
         }
@@ -74,7 +76,7 @@ const FormCoverage = ({
         addLabelId="ui-agreements.agreementLines.addCustomCoverage"
         component={CoverageFieldArray}
         deleteButtonTooltipId="ui-agreements.agreementLines.removeCustomCoverage"
-        disabled={isEmpty(values.linkedResource)}
+        disabled={isEmpty(linkedResource)}
         headerId="ui-agreements.agreementLines.customCoverageTitle"
         id="agreement-line-form-custom-coverages"
         name="coverage"
