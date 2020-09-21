@@ -431,7 +431,7 @@
     "eresources.titleOnPlatform": "Title on platform",
     "eresources.accessTitleOnPlatform": "Access {name}",
     "relatedAgreements.relationship.has_backfile_in": "Has backfile in \"{agreement}\"",
-    "relatedAgreements.relationship.has_frontfile_in": "Has frontile in \"{agreement}\"",
+    "relatedAgreements.relationship.has_frontfile_in": "Has frontfile in \"{agreement}\"",
     "relatedAgreements.relationship.related_to": "Related to \"{agreement}\"",
     "relatedAgreements.relationship.related_to_inward": "Related to \"{agreement}\"",
     "org.olf.erm.SubscriptionAgreement.name.unique": "This name already exists",
