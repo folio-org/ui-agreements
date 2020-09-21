@@ -35,15 +35,12 @@ const FormEresource = ({
   const setCovergeFieldWarnings = (warn) => {
     const warnFields = ['startDate', 'startVolume', 'startIssue', 'endDate', 'endVolume', 'endIssue'];
     return values.coverage?.forEach((_, index) => {
-      if (warn) {
-        warnFields.forEach((field) => {
-          setFieldData(`coverage[${index}].${field}`, { warning: <FormattedMessage id={`ui-agreements.customCoverage.warn.${field}`} /> });
-        });
-      } else {
-        warnFields.forEach((field) => {
-          setFieldData(`coverage[${index}].${field}`, { warning: '' });
-        });
-      }
+      warnFields.forEach((field) => (
+        warn ?
+          setFieldData(`coverage[${index}].${field}`, { warning: <FormattedMessage id={`ui-agreements.customCoverage.warn.${field}`} /> })
+          :
+          setFieldData(`coverage[${index}].${field}`, { warning: '' })
+      ));
     });
   };
 
