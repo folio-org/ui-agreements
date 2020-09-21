@@ -46,7 +46,7 @@ export default class MonographCoverage extends React.Component {
     const edition = pci?.pti?.titleInstance?.monographEdition;
 
     if (!date && !volume && !edition) {
-      return '*';
+      return null;
     }
 
     return (
