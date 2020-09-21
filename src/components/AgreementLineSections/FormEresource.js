@@ -4,22 +4,24 @@ import { isEmpty } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Button } from '@folio/stripes/components';
 import { Field } from 'react-final-form';
-import { isDetached } from '../utilities';
+import { isDetached, isExternal } from '../utilities';
 
 import FormEresourceCard from './FormEresourceCard';
 import BasketSelector from '../BasketSelector';
 import EresourceSelector from './EresourceSelector';
-import { isExternal } from '../utilities';
+
 
 const propTypes = {
   agreementLineSource: PropTypes.string,
   basket: PropTypes.arrayOf(PropTypes.object),
-  change: PropTypes.func,
-  onEresourceSelected: PropTypes.func,
   line: PropTypes.shape({
-    poLines: PropTypes.arrayOf(PropTypes.object)
+    poLines: PropTypes.arrayOf(PropTypes.object),
   }),
   lineId: PropTypes.string,
+  setFieldData: PropTypes.func,
+  values: PropTypes.shape({
+    coverage: PropTypes.arrayOf(PropTypes.object),
+  }),
 };
 
 const FormEresource = ({
@@ -28,8 +30,23 @@ const FormEresource = ({
   line,
   lineId,
   setFieldData,
-  values
+  values,
 }) => {
+  const setCovergeFieldWarnings = (warn) => {
+    const warnFields = ['startDate', 'startVolume', 'startIssue', 'endDate', 'endVolume', 'endIssue'];
+    return values.coverage?.forEach((_, index) => {
+      if (warn) {
+        warnFields.forEach((field) => {
+          setFieldData(`coverage[${index}].${field}`, { warning: <FormattedMessage id={`ui-agreements.customCoverage.warn.${field}`} /> });
+        });
+      } else {
+        warnFields.forEach((field) => {
+          setFieldData(`coverage[${index}].${field}`, { warning: '' });
+        });
+      }
+    });
+  };
+
   const renderHandleUnLinkEresourceButton = (onChange) => {
     // dont render the button on the edit pane when the line type is non-detached and line is non-empty.
     if (!isDetached(line) && lineId && !isEmpty(line)) return null;
@@ -46,21 +63,6 @@ const FormEresource = ({
         <FormattedMessage id="ui-agreements.agreementLine.unlinkEresource" />
       </Button>
     );
-  };
-
-  const setCovergeFieldWarnings = (warn) => {
-    const warnFields = ['startDate', 'startVolume', 'startIssue', 'endDate', 'endVolume', 'endIssue'];
-    values.coverage?.forEach((_, index) => {
-      if (warn) {
-        warnFields.forEach((field) => {
-          setFieldData(`coverage[${index}].${field}`, { warning: <FormattedMessage id={`ui-agreements.customCoverage.warn.${field}`} /> });
-        })
-      } else {
-        warnFields.forEach((field) => {
-          setFieldData(`coverage[${index}].${field}`, { warning: '' });
-        })
-      }
-    });
   };
 
   // validation fires when there is no description and no eresource
