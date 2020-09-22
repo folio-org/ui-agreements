@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 
 import { isPackage } from '@folio/stripes-erm-components';
 import { NoValue } from '@folio/stripes/components';

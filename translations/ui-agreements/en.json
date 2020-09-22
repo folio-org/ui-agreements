@@ -449,7 +449,7 @@
   "relatedAgreements.noPlugin": "No \"find-agreement\" plugin is installed",
   "relatedAgreements.relatedAgreementIndex": "Related agreement {index}",
   "relatedAgreements.relationship.has_backfile_in": "Has backfile in \"{agreement}\"",
-  "relatedAgreements.relationship.has_frontfile_in": "Has frontile in \"{agreement}\"",
+  "relatedAgreements.relationship.has_frontfile_in": "Has frontfile in \"{agreement}\"",
   "relatedAgreements.relationship.has-demand-driven-acquisitions-in": "Has demand-driven acquisitions in \"{agreement}\"",
   "relatedAgreements.relationship.has-post-cancellation-access-in": "Has post-cancellation access in \"{agreement}\"",
   "relatedAgreements.relationship.is-superseded-by": "Is superseded by \"{agreement}\"",
