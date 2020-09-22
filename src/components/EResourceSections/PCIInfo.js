@@ -11,6 +11,7 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
+import { resourceClasses } from '../../constants';
 import AddToBasketButton from '../AddToBasketButton';
 
 export default class PCIInfo extends React.Component {
@@ -26,12 +27,17 @@ export default class PCIInfo extends React.Component {
 
   renderAddTitleToBasketButton = (pci) => {
     const { name: packageName } = pci;
-
+    const entitlementOption = {
+      class: resourceClasses.PCI,
+      id: pci.id,
+      name: pci.name,
+      _object: pci,
+    };
     return (
       <AddToBasketButton
         addButtonTooltipText={<FormattedMessage id="ui-agreements.eresources.addTitleButtonTooltip" values={{ packageName }} />}
         addLabel={<FormattedMessage id="ui-agreements.eresources.addTitleToBasket" />}
-        item={pci}
+        item={entitlementOption}
         removeButtonTooltipText={<FormattedMessage id="ui-agreements.eresources.removeTitleButtonTooltip" values={{ packageName }} />}
       />
     );
