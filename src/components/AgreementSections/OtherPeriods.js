@@ -24,8 +24,6 @@ export default class OtherPeriods extends React.Component {
       }),
     }).isRequired,
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
   }
 
   columnMapping = {
@@ -53,8 +51,6 @@ export default class OtherPeriods extends React.Component {
     const {
       agreement: { currentPeriod = {}, periods = [] },
       id,
-      onToggle,
-      open,
     } = this.props;
 
     const otherPeriods = periods.filter(period => period.id !== get(currentPeriod, 'id'));
@@ -65,8 +61,6 @@ export default class OtherPeriods extends React.Component {
         displayWhenOpen={<Badge>{otherPeriods.length}</Badge>}
         id={id}
         label={<FormattedMessage id="ui-agreements.agreementPeriods.otherPeriods" />}
-        onToggle={onToggle}
-        open={open}
       >
         <MultiColumnList
           columnMapping={this.columnMapping}

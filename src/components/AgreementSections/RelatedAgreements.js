@@ -36,8 +36,6 @@ export default class RelatedAgreements extends React.Component {
       ),
     }).isRequired,
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
     searchString: PropTypes.string,
   }
 
@@ -86,8 +84,6 @@ export default class RelatedAgreements extends React.Component {
     const {
       agreement: { relatedAgreements = [] },
       id,
-      onToggle,
-      open,
     } = this.props;
 
     return (
@@ -96,8 +92,6 @@ export default class RelatedAgreements extends React.Component {
         displayWhenOpen={this.renderBadge()}
         id={id}
         label={<FormattedMessage id="ui-agreements.relatedAgreements" />}
-        onToggle={onToggle}
-        open={open}
       >
         { relatedAgreements.length ? this.renderRelatedAgreements() : this.renderEmpty() }
       </Accordion>

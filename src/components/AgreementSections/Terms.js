@@ -18,8 +18,6 @@ export default class Terms extends React.Component {
       terms: PropTypes.arrayOf(PropTypes.object),
     }),
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
   }
 
   renderTermsList = (controllingLicense) => {
@@ -36,8 +34,6 @@ export default class Terms extends React.Component {
     const {
       agreement: { linkedLicenses = [] },
       id,
-      onToggle,
-      open,
     } = this.props;
 
     const controllingLicense = linkedLicenses.find(l => l.status.value === 'controlling');
@@ -46,8 +42,6 @@ export default class Terms extends React.Component {
       <Accordion
         id={id}
         label={<FormattedMessage id="ui-agreements.agreements.licenseAndBusTerms" />}
-        onToggle={onToggle}
-        open={open}
       >
         {controllingLicense ?
           this.renderTermsList(controllingLicense) :

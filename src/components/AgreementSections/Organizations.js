@@ -35,8 +35,6 @@ export default class Organizations extends React.Component {
       onFetchCredentials: PropTypes.func,
     }),
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
   };
 
   renderOrganizations = () => {
@@ -78,15 +76,13 @@ export default class Organizations extends React.Component {
   }
 
   render() {
-    const { agreement: { orgs = [] }, id, open, onToggle } = this.props;
+    const { agreement: { orgs = [] }, id } = this.props;
     return (
       <Accordion
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
         id={id}
         label={<FormattedMessage id="ui-agreements.agreements.organizations" />}
-        onToggle={onToggle}
-        open={open}
       >
         <Layout className="padding-bottom-gutter">
           {orgs.length ? this.renderOrganizations() : this.renderNoOrganizations()}

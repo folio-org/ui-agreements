@@ -16,8 +16,6 @@ export default class InternalContacts extends React.Component {
       ),
     }).isRequired,
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
   };
 
   renderBadge = () => {
@@ -39,7 +37,7 @@ export default class InternalContacts extends React.Component {
   }
 
   render() {
-    const { id, onToggle, open } = this.props;
+    const { id } = this.props;
 
     return (
       <Accordion
@@ -47,8 +45,6 @@ export default class InternalContacts extends React.Component {
         displayWhenOpen={this.renderBadge()}
         id={id}
         label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
-        onToggle={onToggle}
-        open={open}
       >
         {this.renderContacts()}
       </Accordion>

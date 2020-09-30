@@ -23,8 +23,6 @@ export default class ExternalLicenses extends React.Component {
       onDownloadFile: PropTypes.func,
     }).isRequired,
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
   };
 
   renderExternalLicense = license => (
@@ -42,7 +40,7 @@ export default class ExternalLicenses extends React.Component {
   )
 
   render() {
-    const { id, onToggle, open } = this.props;
+    const { id } = this.props;
     const externalLicenses = get(this.props, 'agreement.externalLicenseDocs', []);
 
     return (
@@ -51,8 +49,6 @@ export default class ExternalLicenses extends React.Component {
         displayWhenOpen={<Badge>{externalLicenses.length}</Badge>}
         id={id}
         label={<FormattedMessage id="ui-agreements.license.externalLicenses" />}
-        onToggle={onToggle}
-        open={open}
       >
         { externalLicenses.length ? externalLicenses.map(this.renderExternalLicense) : this.renderEmpty() }
       </Accordion>

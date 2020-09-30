@@ -20,8 +20,6 @@ export default class FutureLicenses extends React.Component {
       ),
     }).isRequired,
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
   };
 
   renderLicense = (linkedLicense, i) => {
@@ -41,7 +39,7 @@ export default class FutureLicenses extends React.Component {
   )
 
   render() {
-    const { id, onToggle, open } = this.props;
+    const { id } = this.props;
 
     const licenses = get(this.props, 'agreement.linkedLicenses', [])
       .filter(l => get(l, 'status.value') === statuses.FUTURE);
@@ -52,8 +50,6 @@ export default class FutureLicenses extends React.Component {
         displayWhenOpen={<Badge>{licenses.length}</Badge>}
         id={id}
         label={<FormattedMessage id="ui-agreements.license.futureLicenses" />}
-        onToggle={onToggle}
-        open={open}
       >
         { licenses.length ? licenses.map(this.renderLicense) : this.renderEmpty() }
       </Accordion>

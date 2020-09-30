@@ -24,8 +24,6 @@ export default class SupplementaryDocs extends React.Component {
       ),
     }),
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
   };
 
   renderDocs = (docs) => {
@@ -47,8 +45,6 @@ export default class SupplementaryDocs extends React.Component {
     const {
       agreement: { supplementaryDocs = [] },
       id,
-      onToggle,
-      open,
     } = this.props;
 
     return (
@@ -57,8 +53,6 @@ export default class SupplementaryDocs extends React.Component {
         displayWhenOpen={this.renderBadge()}
         id={id}
         label={<FormattedMessage id="ui-agreements.supplementaryDocuments" />}
-        onToggle={onToggle}
-        open={open}
       >
         {supplementaryDocs.length ?
           this.renderDocs(supplementaryDocs) :

@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import { isEmpty } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
   AccordionSet,
+  AccordionStatus,
   Button,
   Col,
   ConfirmationModal,
@@ -20,6 +21,7 @@ import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import DuplicateAgreementModal from '../DuplicateAgreementModal';
+import { statuses } from '../../constants';
 
 import {
   ControllingLicense,
@@ -64,23 +66,6 @@ export default class Agreement extends React.Component {
   state = {
     showDeleteConfirmationModal: false,
     showDuplicateAgreementModal: false,
-    sections: {
-      controllingLicense: false,
-      externalLicenses: false,
-      futureLicenses: false,
-      historicalLicenses: false,
-      internalContacts: false,
-      licenses: false,
-      lines: false,
-      notes: false,
-      organizations: false,
-      otherPeriods: false,
-      relatedAgreements: false,
-      supplementaryProperties: false,
-      supplementaryDocs: false,
-      terms: false,
-      usageData: false,
-    },
   }
 
   getSectionProps = (id) => {
@@ -93,7 +78,6 @@ export default class Agreement extends React.Component {
       id,
       handlers,
       onToggle: this.handleSectionToggle,
-      open: this.state.sections[id],
       searchString: data.searchString,
     };
   }
@@ -112,19 +96,6 @@ export default class Agreement extends React.Component {
 
   closeDuplicateAgreementModal = () => {
     this.setState({ showDuplicateAgreementModal: false });
-  }
-
-  handleSectionToggle = ({ id }) => {
-    this.setState((prevState) => ({
-      sections: {
-        ...prevState.sections,
-        [id]: !prevState.sections[id],
-      }
-    }));
-  }
-
-  handleAllSectionsToggle = (sections) => {
-    this.setState({ sections });
   }
 
   getActionMenu = ({ onToggle }) => (
@@ -183,6 +154,27 @@ export default class Agreement extends React.Component {
     </>
   )
 
+  getInitialAccordionsState = () => {
+    const { data, data: { agreement = {} } } = this.props;
+
+    return {
+      controllingLicense: !!(agreement.linkedLicenses ?? []).find(l => l?.status?.value === statuses.CONTROLLING),
+      externalLicenses: !isEmpty(agreement.externalLicenseDocs),
+      futureLicenses: !!(agreement.linkedLicenses ?? []).find(l => l?.status?.value === statuses.FUTURE),
+      historicalLicenses: !!(agreement.linkedLicenses ?? []).find(l => l?.status?.value === statuses.HISTORICAL),
+      internalContacts: !isEmpty(agreement.contacts),
+      lines: !isEmpty(agreement.lines),
+      notes: true,
+      organizations: !isEmpty(agreement.orgs),
+      otherPeriods: !isEmpty(agreement.periods),
+      relatedAgreements: !isEmpty(agreement.relatedAgreements),
+      supplementaryProperties: !isEmpty(data.supplementaryProperties),
+      supplementaryDocs: !isEmpty(data.supplementaryDocs),
+      terms: !isEmpty(data.relatedAgreements),
+      usageData: !isEmpty(agreement.usageDataProviders),
+    };
+  }
+
   renderEditAgreementPaneMenu = () => {
     const {
       data: { agreement },
@@ -197,7 +189,7 @@ export default class Agreement extends React.Component {
               {ariaLabel => (
                 <IconButton
                   ariaLabel={ariaLabel}
-                  badgeCount={get(agreement, 'tags.length', 0)}
+                  badgeCount={agreement?.tags?.length ?? 0}
                   icon="tag"
                   id="clickable-show-tags"
                   onClick={handlers.onToggleTags}
@@ -254,42 +246,40 @@ export default class Agreement extends React.Component {
           <TitleManager record={data.agreement.name}>
             <Header {...this.getSectionProps()} />
             <Info {...this.getSectionProps('info')} />
-            <AccordionSet>
+            <AccordionStatus>
               <Row end="xs">
                 <Col xs>
-                  <ExpandAllButton
-                    accordionStatus={this.state.sections}
-                    id="clickable-expand-all"
-                    onToggle={this.handleAllSectionsToggle}
-                  />
+                  <ExpandAllButton />
                 </Col>
               </Row>
-              <InternalContacts {...this.getSectionProps('internalContacts')} />
-              <Lines {...this.getSectionProps('lines')} />
-              <ControllingLicense {...this.getSectionProps('controllingLicense')} />
-              <FutureLicenses {...this.getSectionProps('futureLicenses')} />
-              <HistoricalLicenses {...this.getSectionProps('historicalLicenses')} />
-              <ExternalLicenses {...this.getSectionProps('externalLicenses')} />
-              <Terms {...this.getSectionProps('terms')} />
-              <Organizations {...this.getSectionProps('organizations')} />
-              <OtherPeriods {...this.getSectionProps('otherPeriods')} />
-              {data.supplementaryProperties?.length > 0 ?
-                <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} /> :
-                null
-              }
-              <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} />
-              <UsageData {...this.getSectionProps('usageData')} />
-              <RelatedAgreements {...this.getSectionProps('relatedAgreements')} />
-              <NotesSmartAccordion
-                {...this.getSectionProps('notes')}
-                domainName="agreements"
-                entityId={data.agreement.id}
-                entityName={data.agreement.name}
-                entityType="agreement"
-                pathToNoteCreate={urls.noteCreate()}
-                pathToNoteDetails={urls.notes()}
-              />
-            </AccordionSet>
+              <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+                <InternalContacts {...this.getSectionProps('internalContacts')} />
+                <Lines {...this.getSectionProps('lines')} />
+                <ControllingLicense {...this.getSectionProps('controllingLicense')} />
+                <FutureLicenses {...this.getSectionProps('futureLicenses')} />
+                <HistoricalLicenses {...this.getSectionProps('historicalLicenses')} />
+                <ExternalLicenses {...this.getSectionProps('externalLicenses')} />
+                <Terms {...this.getSectionProps('terms')} />
+                <Organizations {...this.getSectionProps('organizations')} />
+                <OtherPeriods {...this.getSectionProps('otherPeriods')} />
+                {data.supplementaryProperties?.length > 0 ?
+                  <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} /> :
+                  null
+                }
+                <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} />
+                <UsageData {...this.getSectionProps('usageData')} />
+                <RelatedAgreements {...this.getSectionProps('relatedAgreements')} />
+                <NotesSmartAccordion
+                  {...this.getSectionProps('notes')}
+                  domainName="agreements"
+                  entityId={data.agreement.id}
+                  entityName={data.agreement.name}
+                  entityType="agreement"
+                  pathToNoteCreate={urls.noteCreate()}
+                  pathToNoteDetails={urls.notes()}
+                />
+              </AccordionSet>
+            </AccordionStatus>
           </TitleManager>
         </Pane>
         {helperApp}
