@@ -11,17 +11,23 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
+import { AppIcon } from '@folio/stripes/core';
+
 import { EResourceType } from '@folio/stripes-erm-components';
 import { Coverage } from '../Coverage';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import { getResourceFromEntitlement, urls } from '../utilities';
+import { statuses } from '../../constants';
 
 const EntitlementAgreementsList = (
-  { headline,
+  { contentData,
+    headline,
     id,
     isEmptyMessage,
-    entitlements,
+    onSort,
+    sortDirection,
+    sortOrder,
     visibleColumns }
 ) => {
   const columnMapping = {
@@ -37,12 +43,25 @@ const EntitlementAgreementsList = (
   };
 
   const columnWidths = {
+    name: { min: 200, max: 400 },
     startDate: 120,
     endDate: 120,
   };
 
   const formatter = {
-    name: e => <div data-test-agreement-name><Link to={urls.agreementView(e?.owner?.id)}>{e?.owner.name}</Link></div>,
+    name: e => {
+      const iconKey = e?.owner.agreementStatus?.value === statuses.CLOSED ? 'closedAgreement' : 'app';
+      return (
+        <AppIcon
+          app="agreements"
+          iconAlignment="baseline"
+          iconKey={iconKey}
+          size="small"
+        >
+          <div data-test-agreement-name><Link to={urls.agreementView(e?.owner?.id)}>{e?.owner.name}</Link></div>
+        </AppIcon>
+      );
+    },
     type: e => <div data-test-agreement-status>{e?.owner?.agreementStatus?.label ?? <NoValue />}</div>,
     package: e => <div data-test-agreement-package>{e?.resource?._object?.pkg?.name ?? <NoValue />}</div>,
     startDate: e => <div data-test-agreement-start-date>{e?.owner?.startDate && <FormattedUTCDate value={e?.owner?.startDate} />}</div>,
@@ -69,11 +88,14 @@ const EntitlementAgreementsList = (
       <MultiColumnList
         columnMapping={columnMapping}
         columnWidths={columnWidths}
-        contentData={entitlements}
+        contentData={contentData}
         formatter={formatter}
         id={id}
         interactive={false}
         isEmptyMessage={isEmptyMessage}
+        onHeaderClick={onSort}
+        sortDirection={sortDirection}
+        sortOrder={sortOrder}
         visibleColumns={visibleColumns}
       />
     </div>
@@ -86,10 +108,13 @@ EntitlementAgreementsList.defaultProps = {
 };
 
 EntitlementAgreementsList.propTypes = {
-  entitlements: PropTypes.arrayOf(PropTypes.object),
+  contentData: PropTypes.arrayOf(PropTypes.object),
   headline: PropTypes.node,
   id: PropTypes.string,
   isEmptyMessage: PropTypes.node,
+  onSort: PropTypes.func,
+  sortDirection: PropTypes.string,
+  sortOrder: PropTypes.string,
   visibleColumns: PropTypes.arrayOf(PropTypes.string),
 };
 
