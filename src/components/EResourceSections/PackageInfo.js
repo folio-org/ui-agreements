@@ -63,19 +63,19 @@ export default class PackageInfo extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={4}>
+          <Col xs={3}>
             <KeyValue
               label="Provider"
               value={eresource?.vendor?.name || <NoValue />}
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={3}>
             <KeyValue
               label="Source"
               value={eresource.source || <NoValue />}
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={6}>
             <KeyValue
               label="Reference"
               value={eresource.reference || <NoValue />}
