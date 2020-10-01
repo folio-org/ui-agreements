@@ -30,8 +30,6 @@ export default class UsageData extends React.Component {
       ),
     }).isRequired,
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
   }
 
   renderUDPs = () => (
@@ -80,8 +78,6 @@ export default class UsageData extends React.Component {
     const {
       agreement: { usageDataProviders = [] },
       id,
-      onToggle,
-      open,
     } = this.props;
 
     return (
@@ -90,8 +86,6 @@ export default class UsageData extends React.Component {
         displayWhenOpen={this.renderBadge()}
         id={id}
         label={<FormattedMessage id="ui-agreements.usageData" />}
-        onToggle={onToggle}
-        open={open}
       >
         <IfPermission perm="usagedataproviders.collection.get">
           {({ hasPermission }) => (hasPermission ?

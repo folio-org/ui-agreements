@@ -22,7 +22,7 @@ export default @interactor class AgreementViewInteractor {
   headerDropdown = new HeaderDropdown('[data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
   duplicateAgreementModal = new DuplicateModalInteractor();
-  expandAll = clickable('#clickable-expand-all');
+  expandAll = clickable('[data-tast-expand-button]');
 
   linesSection = new AgreementLinesInteractor('#lines');
 

@@ -46,8 +46,6 @@ export default class ControllingLicense extends React.Component {
       ),
     }).isRequired,
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
   };
 
   renderLicense = linkedLicense => {
@@ -111,7 +109,7 @@ export default class ControllingLicense extends React.Component {
   }
 
   render() {
-    const { id, onToggle, open } = this.props;
+    const { id } = this.props;
 
     const license = get(this.props, 'agreement.linkedLicenses', [])
       .find(l => l.status.value === statuses.CONTROLLING);
@@ -122,8 +120,6 @@ export default class ControllingLicense extends React.Component {
         displayWhenOpen={<Badge>{license ? 1 : 0}</Badge>}
         id={id}
         label={<FormattedMessage id="ui-agreements.license.controllingLicense" />}
-        onToggle={onToggle}
-        open={open}
       >
         { license ?
           <div>

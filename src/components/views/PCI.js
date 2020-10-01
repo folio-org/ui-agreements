@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { isEmpty } from 'lodash';
 
 import {
   AccordionSet,
@@ -40,6 +41,15 @@ export default class PCI extends React.Component {
     })
   }
 
+  getInitialAccordionsState = () => {
+    const { data: { eresource = {}, entitlements, relatedEntitlements } } = this.props;
+
+    return {
+      'pci-coverage': !isEmpty(eresource.coverage) || !isEmpty(eresource.embargo),
+      'eresourceAgreements': !isEmpty(entitlements) || !isEmpty(relatedEntitlements),
+    };
+  }
+
   render() {
     const { data, handlers: { isSuppressFromDiscoveryEnabled } } = this.props;
     const { eresource, searchString } = data;
@@ -65,7 +75,7 @@ export default class PCI extends React.Component {
               <ExpandAllButton />
             </Col>
           </Row>
-          <AccordionSet>
+          <AccordionSet initialStatus={this.getInitialAccordionsState()}>
             <PCICoverage data={data} />
             <Agreements
               data={data}

@@ -26,8 +26,6 @@ export default class Lines extends React.Component {
       onViewAgreementLine: PropTypes.func.isRequired,
     }).isRequired,
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
   }
 
   renderAddAgreementLineButton = () => {
@@ -51,8 +49,6 @@ export default class Lines extends React.Component {
       eresourcesFilterPath,
       handlers,
       id,
-      onToggle,
-      open,
     } = this.props;
 
     return (
@@ -61,14 +57,11 @@ export default class Lines extends React.Component {
         displayWhenOpen={this.renderAddAgreementLineButton()}
         id={id}
         label={<FormattedMessage id="ui-agreements.agreements.agreementLines" />}
-        onToggle={onToggle}
-        open={open}
       >
         <LinesList
           agreement={agreement}
           onNeedMoreLines={handlers.onNeedMoreLines}
           onViewAgreementLine={handlers.onViewAgreementLine}
-          visible={open}
         />
         <CoveredEResourcesList
           agreement={agreement}
@@ -77,7 +70,6 @@ export default class Lines extends React.Component {
           onExportEResourcesAsKBART={handlers.onExportEResourcesAsKBART}
           onFilterEResources={handlers.onFilterEResources}
           onNeedMoreEResources={handlers.onNeedMoreEResources}
-          visible={open}
         />
       </Accordion>
     );

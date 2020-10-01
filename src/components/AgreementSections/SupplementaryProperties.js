@@ -9,8 +9,6 @@ export default class SupplementaryProperties extends React.Component {
     agreement: PropTypes.object,
     id: PropTypes.string,
     data: PropTypes.shape({ supplementaryProperties: PropTypes.array }),
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
   }
 
   render() {
@@ -18,16 +16,12 @@ export default class SupplementaryProperties extends React.Component {
       agreement,
       data: { supplementaryProperties },
       id,
-      onToggle,
-      open,
     } = this.props;
 
     return (
       <Accordion
         id={id}
         label={<FormattedMessage id="ui-agreements.supplementaryProperties" />}
-        onToggle={onToggle}
-        open={open}
       >
         <CustomPropertiesList
           customProperties={supplementaryProperties}

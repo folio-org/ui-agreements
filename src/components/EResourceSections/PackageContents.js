@@ -29,8 +29,6 @@ export default class PackageContents extends React.Component {
     id: PropTypes.string,
     onFilterPackageContents: PropTypes.func.isRequired,
     onNeedMorePackageContents: PropTypes.func.isRequired,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
   };
 
   state = {
@@ -165,8 +163,6 @@ export default class PackageContents extends React.Component {
     const {
       data: { packageContents, packageContentsCount },
       id,
-      onToggle,
-      open,
     } = this.props;
 
     const {
@@ -187,8 +183,6 @@ export default class PackageContents extends React.Component {
         label={
           <FormattedMessage id="ui-agreements.eresources.packageResources" />
         }
-        onToggle={onToggle}
-        open={open}
       >
         {this.renderFilterButtons()}
         {packageContents ? (
