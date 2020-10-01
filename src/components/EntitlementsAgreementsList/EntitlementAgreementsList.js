@@ -21,7 +21,7 @@ import { getResourceFromEntitlement, urls } from '../utilities';
 import { statuses } from '../../constants';
 
 const EntitlementAgreementsList = (
-  { contentData,
+  { entitlements,
     headline,
     id,
     isEmptyMessage,
@@ -88,7 +88,7 @@ const EntitlementAgreementsList = (
       <MultiColumnList
         columnMapping={columnMapping}
         columnWidths={columnWidths}
-        contentData={contentData}
+        contentData={entitlements}
         formatter={formatter}
         id={id}
         interactive={false}
@@ -108,7 +108,7 @@ EntitlementAgreementsList.defaultProps = {
 };
 
 EntitlementAgreementsList.propTypes = {
-  contentData: PropTypes.arrayOf(PropTypes.object),
+  entitlements: PropTypes.arrayOf(PropTypes.object),
   headline: PropTypes.node,
   id: PropTypes.string,
   isEmptyMessage: PropTypes.node,

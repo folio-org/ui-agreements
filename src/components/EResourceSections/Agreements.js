@@ -71,7 +71,7 @@ export default class Agreements extends React.Component {
 
     return (
       <EntitlementAgreementsList
-        contentData={contentData}
+        entitlements={contentData}
         headline={headline}
         id="pci-agreements-list"
         isEmptyMessage={isEmptyMessage}
