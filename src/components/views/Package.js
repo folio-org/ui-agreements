@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
+
 import { FormattedMessage } from 'react-intl';
 
 import {
   AccordionSet,
+  AccordionStatus,
   Col,
   ExpandAllButton,
   Row,
@@ -24,15 +27,6 @@ export default class Package extends React.Component {
     handlers: PropTypes.object,
   }
 
-  state = {
-    sections: {
-      eresourceAgreements: true,
-      info: true,
-      notes: false,
-      packageContents: true,
-    },
-  }
-
   getSectionProps = (id) => {
     const { data, handlers } = this.props;
 
@@ -41,60 +35,53 @@ export default class Package extends React.Component {
       data,
       id,
       handlers,
-      onToggle: this.handleSectionToggle,
-      open: this.state.sections[id],
     };
   }
 
-  handleAllSectionsToggle = (sections) => {
-    this.setState({ sections });
-  }
+  getInitialAccordionsState = () => {
+    const { data: { entitlements, packageContents } } = this.props;
 
-  handleSectionToggle = ({ id }) => {
-    this.setState((prevState) => ({
-      sections: {
-        ...prevState.sections,
-        [id]: !prevState.sections[id],
-      }
-    }));
+    return {
+      eresourceAgreements: !isEmpty(entitlements),
+      notes: true,
+      packageContents: !isEmpty(packageContents),
+    };
   }
 
   render() {
     const { data, handlers } = this.props;
-
+    // console.log(this.getInitialAccordionsState(), 'lavada');
     return (
       <div id="eresource-package">
         <PackageInfo {...this.getSectionProps('info')} />
-        <AccordionSet>
+        <AccordionStatus>
           <Row end="xs">
             <Col xs>
-              <ExpandAllButton
-                accordionStatus={this.state.sections}
-                id="clickable-expand-all"
-                onToggle={this.handleAllSectionsToggle}
-              />
+              <ExpandAllButton />
             </Col>
           </Row>
-          <Agreements
-            {...this.getSectionProps('eresourceAgreements')}
-            isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsPackage" />}
-            visibleColumns={['name', 'type', 'startDate', 'endDate']}
-          />
-          <PackageContents
-            {...this.getSectionProps('packageContents')}
-            onFilterPackageContents={handlers.onFilterPackageContents}
-            onNeedMorePackageContents={handlers.onNeedMorePackageContents}
-          />
-          <NotesSmartAccordion
-            {...this.getSectionProps('notes')}
-            domainName="agreements"
-            entityId={data.eresource.id}
-            entityName={data.eresource.name}
-            entityType="eresource"
-            pathToNoteCreate={urls.noteCreate()}
-            pathToNoteDetails={urls.notes()}
-          />
-        </AccordionSet>
+          <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+            <Agreements
+              {...this.getSectionProps('eresourceAgreements')}
+              isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsPackage" />}
+              visibleColumns={['name', 'type', 'startDate', 'endDate']}
+            />
+            <PackageContents
+              {...this.getSectionProps('packageContents')}
+              onFilterPackageContents={handlers.onFilterPackageContents}
+              onNeedMorePackageContents={handlers.onNeedMorePackageContents}
+            />
+            <NotesSmartAccordion
+              {...this.getSectionProps('notes')}
+              domainName="agreements"
+              entityId={data.eresource.id}
+              entityName={data.eresource.name}
+              entityType="eresource"
+              pathToNoteCreate={urls.noteCreate()}
+              pathToNoteDetails={urls.notes()}
+            />
+          </AccordionSet>
+        </AccordionStatus>
       </div>
     );
   }

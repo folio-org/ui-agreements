@@ -77,7 +77,6 @@ export default class Agreement extends React.Component {
       eresourcesFilterPath: data.eresourcesFilterPath,
       id,
       handlers,
-      onToggle: this.handleSectionToggle,
       searchString: data.searchString,
     };
   }
