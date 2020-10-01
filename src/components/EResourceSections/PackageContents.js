@@ -10,7 +10,6 @@ import {
   FormattedUTCDate,
   Layout,
   MultiColumnList,
-  NoValue,
   Spinner,
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
@@ -32,6 +31,11 @@ export default class PackageContents extends React.Component {
     onNeedMorePackageContents: PropTypes.func.isRequired,
   };
 
+  state = {
+    sortOrder: ['name', 'platform'],
+    sortDirection: ['asc', 'desc'],
+  };
+
   columnMapping = {
     name: <FormattedMessage id="ui-agreements.eresources.name" />,
     platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
@@ -39,6 +43,11 @@ export default class PackageContents extends React.Component {
     accessStart: <FormattedMessage id="ui-agreements.eresources.accessStart" />,
     accessEnd: <FormattedMessage id="ui-agreements.eresources.accessEnd" />,
   };
+
+  columnWidths = {
+    name: { min: 200, max: 400 },
+    coverage: { min: 250, max: 320 },
+  }
 
   formatter = {
     name: pci => {
@@ -71,20 +80,48 @@ export default class PackageContents extends React.Component {
     accessEnd: pci => this.renderDate(pci.accessEnd),
   };
 
+  sortMap = {
+    name: pci => pci?.pti?.titleInstance?.name,
+    platform: pci => pci.pti.name ?? {}
+  }
+
   visibleColumns = ['name', 'platform', 'coverage', 'accessStart', 'accessEnd'];
 
-  renderList = (packageContents, packageContentsCount) => {
+  onSort = (e, meta) => {
+    if (!this.sortMap[meta.name]) return;
+
+    let {
+      sortOrder,
+      sortDirection,
+    } = this.state;
+
+    if (sortOrder[0] !== meta.name) {
+      sortOrder = [meta.name, sortOrder[0]];
+      sortDirection = ['asc', sortDirection[0]];
+    } else {
+      const direction = (sortDirection[0] === 'desc') ? 'asc' : 'desc';
+      sortDirection = [direction, sortDirection[1]];
+    }
+
+    this.setState({ sortOrder, sortDirection });
+  }
+
+  renderList = (packageContents, packageContentsCount, sortDirection, sortOrder) => {
     return (
       <MultiColumnList
         columnMapping={this.columnMapping}
+        columnWidths={this.columnWidths}
         contentData={packageContents}
         formatter={this.formatter}
         id="package-contents-list"
         interactive={false}
         maxHeight={800}
+        onHeaderClick={this.onSort}
         onNeedMoreData={this.props.onNeedMorePackageContents}
         pageAmount={resultCount.RESULT_COUNT_INCREMENT}
         pagingType="click"
+        sortDirection={`${sortDirection[0]}ending`}
+        sortOrder={sortOrder[0]}
         totalCount={packageContentsCount}
         virtualize
         visibleColumns={this.visibleColumns}
@@ -92,7 +129,7 @@ export default class PackageContents extends React.Component {
     );
   };
 
-  renderDate = date => (date ? <FormattedUTCDate value={date} /> : <NoValue />);
+  renderDate = date => (date ? <FormattedUTCDate value={date} /> : null);
 
   renderBadge = () => {
     const count = this.props.data?.packageContentsCount;
@@ -128,6 +165,16 @@ export default class PackageContents extends React.Component {
       id,
     } = this.props;
 
+    const {
+      sortOrder,
+      sortDirection,
+    } = this.state;
+
+    // eslint-disable-next-line no-undef
+    const contentData = _.orderBy(packageContents,
+      [this.sortMap[sortOrder[0]], this.sortMap[sortOrder[1]]], sortDirection);
+
+
     return (
       <Accordion
         displayWhenClosed={this.renderBadge()}
@@ -139,7 +186,7 @@ export default class PackageContents extends React.Component {
       >
         {this.renderFilterButtons()}
         {packageContents ? (
-          this.renderList(packageContents, packageContentsCount)
+          this.renderList(contentData, packageContentsCount, sortDirection, sortOrder)
         ) : (
           <Spinner />
         )}
