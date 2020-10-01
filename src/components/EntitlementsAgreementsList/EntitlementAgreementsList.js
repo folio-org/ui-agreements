@@ -50,7 +50,7 @@ const EntitlementAgreementsList = (
 
   const formatter = {
     name: e => {
-      const iconKey = e?.owner.agreementStatus?.value === statuses.CLOSED ? 'closedAgreement' : 'app';
+      const iconKey = e?.owner?.agreementStatus?.value === statuses.CLOSED ? 'closedAgreement' : 'app';
       return (
         <AppIcon
           app="agreements"
@@ -58,7 +58,7 @@ const EntitlementAgreementsList = (
           iconKey={iconKey}
           size="small"
         >
-          <div data-test-agreement-name><Link to={urls.agreementView(e?.owner?.id)}>{e?.owner.name}</Link></div>
+          <div data-test-agreement-name><Link to={urls.agreementView(e?.owner?.id)}>{e?.owner?.name}</Link></div>
         </AppIcon>
       );
     },
