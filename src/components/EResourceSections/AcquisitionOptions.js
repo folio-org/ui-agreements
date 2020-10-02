@@ -26,8 +26,6 @@ class AcquisitionOptions extends React.Component {
       onEResourceClick: PropTypes.func,
     }),
     id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
   };
 
   getName = (eresource = {}) => {
@@ -136,8 +134,6 @@ class AcquisitionOptions extends React.Component {
     const {
       data: { entitlementOptions, eresource },
       id,
-      onToggle,
-      open
     } = this.props;
 
     return (
@@ -146,8 +142,6 @@ class AcquisitionOptions extends React.Component {
         displayWhenOpen={this.renderBadge()}
         id={id}
         label={<FormattedMessage id="ui-agreements.eresources.acqOptions" values={eresource} />}
-        onToggle={onToggle}
-        open={open}
       >
         {entitlementOptions ? this.renderOptions() : <Spinner />}
       </Accordion>

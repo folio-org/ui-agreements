@@ -27,21 +27,58 @@ export default class Agreements extends React.Component {
       relatedEntitlements: PropTypes.arrayOf(PropTypes.object),
     }),
     headline: PropTypes.node,
+    id: PropTypes.string,
     isEmptyMessage: PropTypes.node,
     renderRelatedEntitlements: PropTypes.bool,
     visibleColumns: PropTypes.arrayOf(PropTypes.string),
   };
 
+  state = {
+    sortOrder: ['name', 'type'],
+    sortDirection: ['asc', 'desc'],
+  };
+
+  onSort = (e, meta) => {
+    if (!this.sortMap[meta.name]) return;
+
+    let {
+      sortOrder,
+      sortDirection,
+    } = this.state;
+
+    if (sortOrder[0] !== meta.name) {
+      sortOrder = [meta.name, sortOrder[0]];
+      sortDirection = ['asc', sortDirection[0]];
+    } else {
+      const direction = (sortDirection[0] === 'desc') ? 'asc' : 'desc';
+      sortDirection = [direction, sortDirection[1]];
+    }
+
+    this.setState({ sortOrder, sortDirection });
+  }
+
   renderEntitlementAgreements = () => {
     const { entitlements = [] } = this.props.data;
     const { headline, isEmptyMessage, visibleColumns } = this.props;
 
+    const {
+      sortOrder,
+      sortDirection,
+    } = this.state;
+
+    // eslint-disable-next-line no-undef
+    const contentData = _.orderBy(entitlements,
+      [this.sortMap[sortOrder[0]], this.sortMap[sortOrder[1]]], sortDirection);
+
     return (
       <EntitlementAgreementsList
-        entitlements={entitlements}
+        entitlements={contentData}
         headline={headline}
         id="pci-agreements-list"
         isEmptyMessage={isEmptyMessage}
+        onSort={this.onSort}
+        sortDirection={`${sortDirection[0]}ending`}
+        sortOrder={sortOrder[0]}
         visibleColumns={visibleColumns}
       />
     );
@@ -73,9 +110,15 @@ export default class Agreements extends React.Component {
       <Spinner />;
   }
 
+  sortMap = {
+    name: e => e?.owner?.name,
+    type: e => e?.owner?.agreementStatus?.label,
+  };
+
   render() {
     const {
       data: { entitlements, eresource, relatedEntitlements },
+      id,
       renderRelatedEntitlements,
     } = this.props;
 
@@ -87,7 +130,7 @@ export default class Agreements extends React.Component {
       <Accordion
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
-        id="pci-agreements"
+        id={id}
         label={label}
       >
         {entitlements ? this.renderEntitlementAgreements(entitlements) : <Spinner />}

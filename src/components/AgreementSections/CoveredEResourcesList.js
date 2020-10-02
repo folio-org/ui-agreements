@@ -42,7 +42,6 @@ export default class CoveredEResourcesList extends React.Component {
     onExportEResourcesAsJSON: PropTypes.func.isRequired,
     onExportEResourcesAsKBART: PropTypes.func.isRequired,
     onNeedMoreEResources: PropTypes.func.isRequired,
-    visible: PropTypes.bool,
   };
 
   constructor(props) {
@@ -199,13 +198,12 @@ export default class CoveredEResourcesList extends React.Component {
     const {
       agreement: { eresources, eresourcesCount },
       onNeedMoreEResources,
-      visible,
     } = this.props;
     return (
       <MultiColumnList
         columnMapping={this.columnMapping}
         columnWidths={this.columnWidths}
-        contentData={visible ? eresources : []}
+        contentData={eresources}
         formatter={this.formatter}
         id="eresources-covered"
         interactive={false}
