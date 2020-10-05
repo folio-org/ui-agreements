@@ -41,7 +41,7 @@ class CoverageFieldArray extends React.Component {
       </EditCard>
     )) : (
       <Layout className="padding-bottom-gutter">
-        <FormattedMessage id="ui-agreements.emptyAccordion.lineCoverage" />
+        <FormattedMessage id="ui-agreements.emptyAccordion.lineCustomCoverage" />
       </Layout>
     );
   }
