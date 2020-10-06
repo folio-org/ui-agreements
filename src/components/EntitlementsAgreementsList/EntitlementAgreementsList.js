@@ -25,9 +25,6 @@ const EntitlementAgreementsList = (
     headline,
     id,
     isEmptyMessage,
-    onSort,
-    sortDirection,
-    sortOrder,
     visibleColumns }
 ) => {
   const columnMapping = {
@@ -36,7 +33,7 @@ const EntitlementAgreementsList = (
     package: <FormattedMessage id="ui-agreements.eresources.package" />,
     startDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodStart" />,
     endDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodEnd" />,
-    parentPackage: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
+    parentPackage: <FormattedMessage id="ui-agreements.eresource" />,
     acqMethod: <FormattedMessage id="ui-agreements.eresources.acqMethod" />,
     coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
     isCustomCoverage: ' ',
@@ -44,6 +41,8 @@ const EntitlementAgreementsList = (
 
   const columnWidths = {
     name: { min: 200, max: 400 },
+    parentPackage: { min: 200, max: 400 },
+    acqMethod: 100,
     startDate: 120,
     endDate: 120,
   };
@@ -93,9 +92,6 @@ const EntitlementAgreementsList = (
         id={id}
         interactive={false}
         isEmptyMessage={isEmptyMessage}
-        onHeaderClick={onSort}
-        sortDirection={sortDirection}
-        sortOrder={sortOrder}
         visibleColumns={visibleColumns}
       />
     </div>
@@ -112,9 +108,6 @@ EntitlementAgreementsList.propTypes = {
   headline: PropTypes.node,
   id: PropTypes.string,
   isEmptyMessage: PropTypes.node,
-  onSort: PropTypes.func,
-  sortDirection: PropTypes.string,
-  sortOrder: PropTypes.string,
   visibleColumns: PropTypes.arrayOf(PropTypes.string),
 };
 
