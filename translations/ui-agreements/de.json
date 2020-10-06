@@ -74,7 +74,7 @@
     "agreements.reviewNotes": "Decision notes",
     "agreements.agreementLines": "Vereinbarungskomponenten",
     "agreements.license": "License",
-    "agreements.licenseAndBusTerms": "License and business terms",
+    "agreements.licenseAndBusTerms": "Lizenz- und Geschäftsbedingungen",
     "agreements.organizations": "Organizations",
     "agreements.assocAgreements": "Associated agreements",
     "settings.general": "General",
@@ -142,7 +142,7 @@
     "settings.general.hideEResourcesFunctionality.description": "If you are using another app (e.g. eHoldings) as your knowledge base and wish to hide the internal agreements knowledge base, you can check this setting. Specifically, this will:",
     "agreementLines.hasCustomCoverage": "Has custom coverage",
     "eresources.provider": "Provider",
-    "agreements.showTags": "Show tags",
+    "agreements.showTags": "Tags anzeigen",
     "agreements.tags": "Tags",
     "settings.hideEResources.result.1": "Hide the E-resources tab in the agreements app",
     "settings.hideEResources.result.2": "Hide the basket icon in the agreements app",
@@ -347,7 +347,7 @@
     "emptyAccordion.futureLicenses": "No future licenses for this agreement",
     "emptyAccordion.historicalLicenses": "No historical licenses for this agreement",
     "emptyAccordion.externalLicenses": "No external licenses for this agreement",
-    "emptyAccordion.licenseAndBusinessTerms": "No license and business terms for this agreement",
+    "emptyAccordion.licenseAndBusinessTerms": "Keine Lizenz- und Geschäftsbedingungen für diese Vereinbarung",
     "emptyAccordion.organizations": "No organizations for this agreement",
     "emptyAccordion.otherPeriods": "No other periods for this agreement",
     "emptyAccordion.supplementaryProperties": "Keine ergänzenden Eigenschaften für diese Vereinbarung",
@@ -424,7 +424,7 @@
     "line.delete.callout": "Vereinbarungskomponente gelöscht",
     "line.deleteFailed.callout": "Vereinbarungskomponente konnte nicht gelöscht werden: {message}",
     "line.lineInformation": "Vereinbarungskomponente-Information",
-    "line.parentAgreement": "Parent agreement",
+    "line.parentAgreement": "Übergeordnete Vereinbarung",
     "line.lineForAgreement": "Vereinbarungskomponente aus {agreementName}",
     "line.poLines": "PO lines",
     "poLines.poLines": "PO lines",
@@ -478,5 +478,6 @@
     "customCoverage.warn.startIssue": "Angabe \"Erste Ausgabe\" wird geleert, weil keine E-Ressource verknüpft ist",
     "customCoverage.warn.endIssue": "Angabe \"Letzte Ausgabe\" wird geleert, weil keine E-Ressource verknüpft ist",
     "line.new": "Neue Vereinbarungskomponente",
-    "line.create.callout": "Vereinbarungskomponente angelegt"
+    "line.create.callout": "Vereinbarungskomponente angelegt",
+    "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line"
 }

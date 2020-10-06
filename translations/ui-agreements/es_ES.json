@@ -478,5 +478,6 @@
     "customCoverage.warn.startIssue": "Fascículo inicial se borrará ya que ningún recurso electrónico está vinculado",
     "customCoverage.warn.endIssue": "Fascículo final se borrará ya que ningún recurso electrónico está vinculado",
     "line.new": "Nueva línea de acuerdo",
-    "line.create.callout": "Línea de acuerdo creada"
+    "line.create.callout": "Línea de acuerdo creada",
+    "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line"
 }

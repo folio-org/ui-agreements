@@ -459,7 +459,7 @@
     "settings.general.displaySuppressFromDiscoveryAgreementLine.title": "Lignes d'accord",
     "settings.general.displaySuppressFromDiscoveryPCI.title": "Package content items",
     "description": "Description",
-    "agreementLine.basket": "Basket",
+    "agreementLine.basket": "Panier",
     "agreementLine.eholdings": "eHoldings",
     "agreementLine.noEresourceLinked": "No e-resource added",
     "agreementLine.linkEresourceToStart": "Link an e-resource to get started",
@@ -468,7 +468,7 @@
     "agreementLine.unlinkEresource": "Unlink e-resource",
     "agreementLine.provideEresource": "Please provide an e-resource or description to continue",
     "agreementLine.addCustomCoverageTootlip": "Custom coverage can be added when an e-resource is linked",
-    "eresources.nameDescription": "Name / Description",
+    "eresources.nameDescription": "Nom / Description",
     "eresources.description": "Description",
     "eresources.warn.customCoverageCleared": "All custom coverage data will be cleared. To save custom coverage data please link an e-resource",
     "customCoverage.warn.startDate": "Start date will be cleared as no e-resource is linked",
@@ -478,5 +478,6 @@
     "customCoverage.warn.startIssue": "Start issue will be cleared as no e-resource is linked",
     "customCoverage.warn.endIssue": "End issue will be cleared as no e-resource is linked",
     "line.new": "Nouvelle ligne d'accord",
-    "line.create.callout": "Ligne d'accord créée"
+    "line.create.callout": "Ligne d'accord créée",
+    "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line"
 }
