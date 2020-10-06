@@ -147,7 +147,7 @@ class AcquisitionOptions extends React.Component {
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderBadge()}
         id={id}
-        label={<FormattedMessage id="ui-agreements.eresources.acqOptions" values={eresource} />}
+        label={<FormattedMessage id="ui-agreements.eresources.acqOptions" />}
       >
         {entitlementOptions ? this.renderOptions() : <Spinner />}
       </Accordion>

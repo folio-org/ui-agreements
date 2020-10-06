@@ -259,7 +259,7 @@
   "eresources.packageAgreements": "Agreements for this package",
   "eresources.packageResources": "E-resources in package",
   "eresources.agreementStatus": "Agreement status",
-  "eresources.acqOptions": "Options for acquiring: {name}",
+  "eresources.acqOptions": "Options for acquiring e-resource",
   "eresources.addPackageToBasket": "Add package to basket",
   "eresources.addPackage": "Add package",
   "eresources.addPackageButtonTooltip": "Add to basket: package \"{packageName}\"",
