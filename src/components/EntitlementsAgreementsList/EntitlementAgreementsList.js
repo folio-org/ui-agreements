@@ -25,9 +25,6 @@ const EntitlementAgreementsList = (
     headline,
     id,
     isEmptyMessage,
-    onSort,
-    sortDirection,
-    sortOrder,
     visibleColumns }
 ) => {
   const columnMapping = {
@@ -93,9 +90,6 @@ const EntitlementAgreementsList = (
         id={id}
         interactive={false}
         isEmptyMessage={isEmptyMessage}
-        onHeaderClick={onSort}
-        sortDirection={sortDirection}
-        sortOrder={sortOrder}
         visibleColumns={visibleColumns}
       />
     </div>
@@ -112,9 +106,6 @@ EntitlementAgreementsList.propTypes = {
   headline: PropTypes.node,
   id: PropTypes.string,
   isEmptyMessage: PropTypes.node,
-  onSort: PropTypes.func,
-  sortDirection: PropTypes.string,
-  sortOrder: PropTypes.string,
   visibleColumns: PropTypes.arrayOf(PropTypes.string),
 };
 
