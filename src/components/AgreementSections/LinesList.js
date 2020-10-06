@@ -18,7 +18,7 @@ import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
-import { getResourceFromEntitlement, isDetached, isExternal, urls } from '../utilities';
+import { getResourceFromEntitlement, isDetached, urls } from '../utilities';
 
 export default class LinesList extends React.Component {
   static propTypes = {
@@ -30,29 +30,10 @@ export default class LinesList extends React.Component {
     onNeedMoreLines: PropTypes.func.isRequired,
   }
 
-  state = {
-    sortOrder: ['name', 'activeFrom', 'activeTo'],
-    sortDirection: ['asc', 'desc'],
-  };
-
   columnWidths = {
     name: 250,
     provider: 150,
     coverage: { min: 250, max: 320 },
-  }
-
-  sortMap = {
-    name: line => {
-      const resource = getResourceFromEntitlement(line);
-      if (!resource) return line.label;
-      if (isDetached(resource)) return resource.description;
-      // eslint-disable-next-line camelcase
-      if (isExternal(resource)) return line?.reference_object?.label;
-
-      return line?.resource?.name;
-    },
-    activeFrom: line => line.startDate,
-    activeTo: line => line.endDate,
   }
 
   columnMapping = {
@@ -170,25 +151,6 @@ export default class LinesList extends React.Component {
     );
   }
 
-  onSort = (e, meta) => {
-    if (!this.sortMap[meta.name]) return;
-
-    let {
-      sortOrder,
-      sortDirection,
-    } = this.state;
-
-    if (sortOrder[0] !== meta.name) {
-      sortOrder = [meta.name, sortOrder[0]];
-      sortDirection = ['asc', sortDirection[0]];
-    } else {
-      const direction = (sortDirection[0] === 'desc') ? 'asc' : 'desc';
-      sortDirection = [direction, sortDirection[1]];
-    }
-
-    this.setState({ sortOrder, sortDirection });
-  }
-
   render() {
     const {
       agreement: { lines, orderLines },
@@ -196,27 +158,17 @@ export default class LinesList extends React.Component {
       onNeedMoreLines,
     } = this.props;
 
-    const {
-      sortOrder,
-      sortDirection,
-    } = this.state;
-
-    // eslint-disable-next-line no-undef
-    const contentData = _.orderBy(lines,
-      [this.sortMap[sortOrder[0]], this.sortMap[sortOrder[1]], this.sortMap[sortOrder[2]]], sortDirection);
-
     const rowUpdater = () => orderLines.map(orderLine => orderLine.id);
 
     return (
       <MultiColumnList
         columnMapping={this.columnMapping}
         columnWidths={this.columnWidths}
-        contentData={contentData}
+        contentData={lines}
         formatter={this.formatter}
         id="agreement-lines"
         isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.agreementLines" />}
         maxHeight={400}
-        onHeaderClick={this.onSort}
         onNeedMoreData={onNeedMoreLines}
         onRowClick={(e, row) => {
           if (e.target.tagName !== 'A') {
@@ -224,8 +176,6 @@ export default class LinesList extends React.Component {
           }
         }}
         rowUpdater={rowUpdater}
-        sortDirection={`${sortDirection[0]}ending`}
-        sortOrder={sortOrder[0]}
         visibleColumns={this.visibleColumns}
       />
     );
