@@ -61,8 +61,8 @@ class AcquisitionOptions extends React.Component {
   renderOptions = () => (
     <MultiColumnList
       columnMapping={{
-        sourceKb: <FormattedMessage id="ui-agreements.eresources.sourceKb" />,
-        package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
+        sourceKb: <FormattedMessage id="ui-agreements.eresources.dataSource" />,
+        package: <FormattedMessage id="ui-agreements.eresources.name" />,
         coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
         platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
         acqMethod: <FormattedMessage id="ui-agreements.eresources.acqMethod" />,
@@ -71,7 +71,8 @@ class AcquisitionOptions extends React.Component {
       columnWidths={{
         sourceKb: 90,
         package: 200,
-        coverage: { min: 250, max: 320 },
+        coverage: 220,
+        platform: 200,
         acqMethod: 100
       }}
       contentData={this.props.data.entitlementOptions}
@@ -105,6 +106,10 @@ class AcquisitionOptions extends React.Component {
             <FormattedMessage id="ui-agreements.eresources.addPackageButtonTooltip" values={{ packageName }} /> :
             <FormattedMessage id="ui-agreements.eresources.addTitleButtonTooltip" values={{ packageName }} />;
 
+          const removeLabel = optionIsPackage ?
+            <FormattedMessage id="ui-agreements.eresources.removePackage" /> :
+            <FormattedMessage id="ui-agreements.eresources.removeTitle" />;
+
           const removeButtonTooltipText = optionIsPackage ?
             <FormattedMessage id="ui-agreements.eresources.removePackageButtonTooltip" values={{ packageName }} /> :
             <FormattedMessage id="ui-agreements.eresources.removeTitleButtonTooltip" values={{ packageName }} />;
@@ -121,6 +126,7 @@ class AcquisitionOptions extends React.Component {
               buttonProps={buttonProps}
               item={option}
               removeButtonTooltipText={removeButtonTooltipText}
+              removeLabel={removeLabel}
             />
           );
         },
