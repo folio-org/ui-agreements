@@ -191,7 +191,7 @@ class EResourceViewRoute extends React.Component {
     const { match, resources } = this.props;
 
     return (
-      (match.params.id !== get(resources, 'eresource.records[0].id') &&
+      (match.params.id !== resources?.eresource?.records?.[0]?.id &&
       (resources?.eresource?.isPending ?? true) ||
       (resources?.packageContents?.isPending ?? true) ||
       (resources?.entitlementOptions?.isPending ?? true);
