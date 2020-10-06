@@ -139,14 +139,14 @@ export default class Coverage extends React.Component {
       return (
         <div>
           <MonographCoverage pci={dataToRender} />
-          <Embargo embargo={dataToRender?.embargo} />
+          <Embargo alignment="centerContent" embargo={dataToRender?.embargo} />
         </div>
       );
     } else {
       return (
         <Layout className="full">
           <SerialCoverage statements={dataToRender?.coverage} />
-          <Embargo embargo={embargo} />
+          <Embargo alignment="centerContent" embargo={embargo} />
         </Layout>
       );
     }

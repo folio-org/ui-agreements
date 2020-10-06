@@ -49,7 +49,7 @@ const FormCoverage = ({
         { resource?.embargo ?
           <Col xs={4}>
             <KeyValue label={<FormattedMessage id="ui-agreements.embargo" />}>
-              <Embargo embargo={resource?.embargo} />
+              <Embargo alignment="centerContent" embargo={resource?.embargo} />
             </KeyValue>
           </Col>
           :

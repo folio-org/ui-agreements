@@ -42,7 +42,7 @@ const Coverage = ({
     >
       { resource?.embargo ?
         <KeyValue label={<FormattedMessage id="ui-agreements.embargo" />}>
-          <Embargo embargo={resource?.embargo} />
+          <Embargo alignment="centerContent" embargo={resource?.embargo} />
         </KeyValue>
         :
         null
