@@ -33,7 +33,7 @@ const EntitlementAgreementsList = (
     package: <FormattedMessage id="ui-agreements.eresources.package" />,
     startDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodStart" />,
     endDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodEnd" />,
-    parentPackage: <FormattedMessage id="ui-agreements.eresource" />,
+    eresource: <FormattedMessage id="ui-agreements.eresource" />,
     acqMethod: <FormattedMessage id="ui-agreements.eresources.acqMethod" />,
     coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
     isCustomCoverage: ' ',
@@ -41,7 +41,7 @@ const EntitlementAgreementsList = (
 
   const columnWidths = {
     name: { min: 200, max: 400 },
-    parentPackage: { min: 200, max: 400 },
+    eresource: { min: 200, max: 400 },
     acqMethod: 100,
     startDate: 120,
     endDate: 120,
@@ -65,7 +65,7 @@ const EntitlementAgreementsList = (
     package: e => <div data-test-agreement-package>{e?.resource?._object?.pkg?.name ?? <NoValue />}</div>,
     startDate: e => <div data-test-agreement-start-date>{e?.owner?.startDate && <FormattedUTCDate value={e?.owner?.startDate} />}</div>,
     endDate: e => <div data-test-agreement-start-date>{e?.owner?.endDate && <FormattedUTCDate value={e?.owner?.endDate} />}</div>,
-    parentPackage: e => <EResourceLink eresource={getResourceFromEntitlement(e)} />,
+    eresource: e => <EResourceLink eresource={getResourceFromEntitlement(e)} />,
     acqMethod: e => <EResourceType resource={e?.resource} />,
     coverage: e => <Coverage line={e} />,
     isCustomCoverage: e => e.customCoverage && <CustomCoverageIcon />,
