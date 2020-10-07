@@ -11,7 +11,7 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/views/Agreement';
 import { urls } from '../components/utilities';
-import { errorTypes } from '../constants';
+import { errorTypes, resultCount } from '../constants';
 
 import { joinRelatedAgreements } from './utilities/processRelatedAgreements';
 
@@ -47,9 +47,9 @@ class AgreementViewRoute extends React.Component {
         stats: 'true',
       },
       limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
+      perRequest: resultCount.RESULT_COUNT_INCREMENT,
       records: 'results',
-      recordsRequired: '%{agreementEresourcesCount}',
+      resultOffset: '%{resultOffset}',
       shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
     eresourcesFilterPath: { initialValue: 'current' },
@@ -123,6 +123,7 @@ class AgreementViewRoute extends React.Component {
       fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '1.0 2.0'),
     },
     interfaceRecord: {},
+    resultOffset: { initialValue: 0 },
     query: {},
   });
 
@@ -155,6 +156,9 @@ class AgreementViewRoute extends React.Component {
       interfaceRecord: PropTypes.shape({
         replace: PropTypes.func,
       }),
+      resultOffset: PropTypes.shape({
+        replace: PropTypes.func,
+      }).isRequired,
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
       }).isRequired,
@@ -397,9 +401,9 @@ class AgreementViewRoute extends React.Component {
     mutator.interfaceRecord.replace({ id });
   }
 
-  handleNeedMoreEResources = () => {
-    const { agreementEresourcesCount } = this.props.resources;
-    this.props.mutator.agreementEresourcesCount.replace(agreementEresourcesCount + RECORDS_INCREMENT);
+  handleNeedMoreEResources = (_, index) => {
+    const { mutator } = this.props;
+    mutator.resultOffset.replace(index);
   }
 
   handleToggleHelper = (helper) => {

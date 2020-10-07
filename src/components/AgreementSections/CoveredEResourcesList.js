@@ -29,6 +29,7 @@ import { Coverage } from '../Coverage';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
+import { resultCount } from '../../constants';
 
 export default class CoveredEResourcesList extends React.Component {
   static propTypes = {
@@ -209,6 +210,8 @@ export default class CoveredEResourcesList extends React.Component {
         interactive={false}
         maxHeight={800}
         onNeedMoreData={onNeedMoreEResources}
+        pageAmount={resultCount.RESULT_COUNT_INCREMENT}
+        pagingType="click"
         totalCount={eresourcesCount}
         virtualize
         visibleColumns={this.visibleColumns}
