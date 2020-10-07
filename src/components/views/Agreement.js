@@ -168,8 +168,8 @@ export default class Agreement extends React.Component {
       otherPeriods: !isEmpty(agreement.periods),
       relatedAgreements: !isEmpty(agreement.relatedAgreements),
       supplementaryProperties: !isEmpty(data.supplementaryProperties),
-      supplementaryDocs: !isEmpty(data.supplementaryDocs),
-      terms: !isEmpty(data.relatedAgreements),
+      supplementaryDocs: !isEmpty(data.agreement.supplementaryDocs),
+      terms: !isEmpty(data.agreement.linkedLicenses),
       usageData: !isEmpty(agreement.usageDataProviders),
     };
   }
