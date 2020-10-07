@@ -8,10 +8,11 @@ import {
   FormattedUTCDate,
   Headline,
   IconButton,
+  Layout,
+  MessageBanner,
   Pane,
   PaneMenu,
   Paneset,
-  Row,
   Selection,
 } from '@folio/stripes/components';
 
@@ -102,16 +103,18 @@ export default class Basket extends React.Component {
     const disabled = Object.values(this.state.selectedItems).find(v => v) === undefined; // None of the `selectedItems` value's are `true`
 
     return (
-      <Button
-        buttonStyle="primary"
-        data-test-basket-create-agreement
-        disabled={disabled}
-        onClick={() => {
-          this.props.handlers.onAddToNewAgreement(this.getSelectedItems());
-        }}
-      >
-        <FormattedMessage id="ui-agreements.basket.createAgreement" />
-      </Button>
+      <Layout className="marginTop1">
+        <Button
+          buttonStyle="primary"
+          data-test-basket-create-agreement
+          disabled={disabled}
+          onClick={() => {
+            this.props.handlers.onAddToNewAgreement(this.getSelectedItems());
+          }}
+        >
+          <FormattedMessage id="ui-agreements.basket.createAgreement" />
+        </Button>
+      </Layout>
     );
   }
 
@@ -123,19 +126,21 @@ export default class Basket extends React.Component {
 
     return (
       <div>
-        <Button
-          buttonStyle="primary"
-          data-test-basket-add-to-agreement
-          disabled={disabled}
-          onClick={() => {
-            this.props.handlers.onAddToExistingAgreement(
-              this.getSelectedItems(),
-              this.state.selectedAgreementId
-            );
-          }}
-        >
-          <FormattedMessage id="ui-agreements.basket.addToSelectedAgreement" />
-        </Button>
+        <Layout className="marginTop1">
+          <Button
+            buttonStyle="primary"
+            data-test-basket-add-to-agreement
+            disabled={disabled}
+            onClick={() => {
+              this.props.handlers.onAddToExistingAgreement(
+                this.getSelectedItems(),
+                this.state.selectedAgreementId
+              );
+            }}
+          >
+            <FormattedMessage id="ui-agreements.basket.addToSelectedAgreement" />
+          </Button>
+        </Layout>
       </div>
     );
   }
@@ -145,47 +150,43 @@ export default class Basket extends React.Component {
 
     return (
       <div>
-        <FormattedMessage id="ui-agreements.basket.addToExistingAgreement" tagName="div" />
-        <Row>
-          <Col md={8} xs={12}>
-            <FormattedMessage id="ui-agreements.basket.clickToSelectAgreement">
-              {placeholder => (
-                <Selection
-                  dataOptions={this.state.openAgreements}
-                  formatter={({ option }) => (
-                    <div
-                      data-test-agreement-id={option.id}
-                      style={{ textAlign: 'left' }}
-                    >
+        <Layout className="marginTop1">
+          <Headline margin="small" tag="h4">
+            <FormattedMessage id="ui-agreements.basket.addToExistingAgreement" tagName="div" />
+          </Headline>
+        </Layout>
+        <Col md={8} xs={12}>
+          <Selection
+            dataOptions={this.state.openAgreements}
+            formatter={({ option }) => (
+              <div
+                data-test-agreement-id={option.id}
+                style={{ textAlign: 'left' }}
+              >
                       <Headline>{option.name}&nbsp;&#40;{option.agreementStatus.label}&#41;</Headline>{/* eslint-disable-line */}
-                      <div>
+                <div>
                         <strong><FormattedMessage id="ui-agreements.agreements.startDate" />: </strong><FormattedUTCDate value={option.startDate} /> {/* eslint-disable-line */}
-                      </div>
-                    </div>
-                  )}
-                  id="select-agreement-for-basket"
-                  onChange={(selectedAgreementId) => { this.setState({ selectedAgreementId }); }}
-                  onFilter={(searchString, agreements) => {
-                    return agreements.filter(agreement => {
-                      const lowerCasedSearchString = searchString.toLowerCase();
+                </div>
+              </div>
+            )}
+            id="select-agreement-for-basket"
+            onChange={(selectedAgreementId) => { this.setState({ selectedAgreementId }); }}
+            onFilter={(searchString, agreements) => {
+              return agreements.filter(agreement => {
+                const lowerCasedSearchString = searchString.toLowerCase();
 
-                      return (
-                        agreement.name.toLowerCase().includes(lowerCasedSearchString) ||
+                return (
+                  agreement.name.toLowerCase().includes(lowerCasedSearchString) ||
                         agreement.agreementStatus.label.toLowerCase().includes(lowerCasedSearchString) ||
                         (agreement.startDate && agreement.startDate.toLowerCase().includes(lowerCasedSearchString))
-                      );
-                    });
-                  }}
-                  optionAlignment="start"
-                  placeholder={placeholder}
-                />
-              )}
-            </FormattedMessage>
-          </Col>
-          <Col md={4} xs={12}>
-            { this.renderAddToAgreementButton() }
-          </Col>
-        </Row>
+                );
+              });
+            }}
+            optionAlignment="start"
+            placeholder=" "
+          />
+        </Col>
+        { this.renderAddToAgreementButton() }
       </div>
     );
   }
@@ -202,6 +203,9 @@ export default class Basket extends React.Component {
           paneSub={<FormattedMessage id="ui-agreements.basket.recordCount" values={{ count: data.basket.length }} />}
           paneTitle={<FormattedMessage id="ui-agreements.basket.name" />}
         >
+          <MessageBanner>
+            <FormattedMessage id="ui-agreements.basket.messageBanner" />
+          </MessageBanner>
           <div id="basket-contents">
             <BasketList
               basket={data.basket}

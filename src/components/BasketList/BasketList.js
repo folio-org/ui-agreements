@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+import { get, uniqueId } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
   Checkbox,
   IconButton,
   MultiColumnList,
-  NoValue,
+  Tooltip,
 } from '@folio/stripes/components';
 
 import { EResourceType } from '@folio/stripes-erm-components';
@@ -42,11 +42,12 @@ class BasketList extends React.Component {
           publisher: <FormattedMessage id="ui-agreements.eresources.publisher" />,
           platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
           coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
-          remove: <FormattedMessage id="ui-agreements.remove" />,
+          action: <FormattedMessage id="ui-agreements.action" />,
         }}
         columnWidths={{
           coverage: { min: 250, max: 320 },
           name: 300,
+          package: { max: 400 },
         }}
         contentData={basket}
         formatter={{
@@ -61,27 +62,31 @@ class BasketList extends React.Component {
           publicationType: resource => <EResourceType resource={resource} />,
           package: resource => {
             const pkg = get(resource, '_object.pkg');
-            if (!pkg) return <NoValue />;
+            if (!pkg) return null;
 
             return <EResourceLink eresource={pkg} />;
           },
           publisher: () => 'TBD',
           platform: resource => (
             get(resource, '_object.pti.platform.name') ||
-            get(resource, '_object.nominalPlatform.name') || <NoValue />
+            get(resource, '_object.nominalPlatform.name') || null
           ),
           // The resource below fits the same shape as the eresources in an agreement line, so we pass them in the eResource prop.
           coverage: resource => <Coverage eResource={resource} />,
-          remove: resource => (
-            <FormattedMessage id="ui-agreements.basket.removeItem">
-              {ariaLabel => (
+          action: resource => (
+            <Tooltip
+              id={uniqueId('removeBasketItemBtn')}
+              text={<FormattedMessage id="ui-agreements.basket.removeFromBasket" values={{ publicationType: <EResourceType resource={resource} />, name: resource?._object?.pti?.titleInstance?.name ?? resource?.pti?.titleInstance?.name ?? resource?.name }} />}
+            >
+              {({ ariaIds, ref }) => (
                 <IconButton
-                  aria-label={ariaLabel}
+                  ref={ref}
+                  aria-labelledby={ariaIds.text}
                   icon="trash"
                   onClick={() => onRemoveItem(resource)}
                 />
               )}
-            </FormattedMessage>
+            </Tooltip>
           )
         }}
         interactive={false}
@@ -94,7 +99,7 @@ class BasketList extends React.Component {
           'package',
           'platform',
           'coverage',
-          'remove'
+          'action'
         ]}
       />
     );
