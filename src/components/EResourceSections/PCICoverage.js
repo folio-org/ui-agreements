@@ -84,7 +84,7 @@ export default class PCICoverage extends React.Component {
   renderEmbargo = (pci) => {
     return pci.embargo ? (
       <KeyValue label={<FormattedMessage id="ui-agreements.embargo" />}>
-        <Embargo embargo={pci?.embargo} />
+        <Embargo alignment="left" embargo={pci?.embargo} />
       </KeyValue>
     ) : null;
   }
