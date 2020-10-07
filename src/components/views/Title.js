@@ -77,7 +77,7 @@ export default class Title extends React.Component {
             <Agreements
               {...this.getSectionProps('eresourceAgreements')}
               isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsEresource" />}
-              visibleColumns={['name', 'type', 'startDate', 'endDate', 'parentPackage', 'acqMethod', 'coverage', 'isCustomCoverage']}
+              visibleColumns={['name', 'type', 'startDate', 'endDate', 'eresource', 'acqMethod', 'coverage', 'isCustomCoverage']}
             />
             <AcquisitionOptions {...this.getSectionProps('acquisitionOptions')} />
             <NotesSmartAccordion
