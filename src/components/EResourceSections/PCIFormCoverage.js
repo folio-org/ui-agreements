@@ -32,7 +32,7 @@ export default class PCIFormCoverage extends React.Component {
         {values?.embargo ?
           (
             <KeyValue label={<FormattedMessage id="ui-agreements.embargo" />}>
-              <Embargo embargo={values?.embargo} />
+              <Embargo alignment="left" embargo={values?.embargo} />
             </KeyValue>
           ) : null
         }
