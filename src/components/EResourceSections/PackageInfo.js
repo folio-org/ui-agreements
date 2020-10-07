@@ -57,7 +57,7 @@ export default class PackageInfo extends React.Component {
                 addLabel={<FormattedMessage id="ui-agreements.eresources.addPackageToBasket" />}
                 buttonProps={{ 'data-test-add-package-to-basket': true }}
                 item={entitlementOption}
-                removeLabel={<FormattedMessage id="ui-agreements.eresources.removePackage" />}
+                removeLabel={<FormattedMessage id="ui-agreements.eresources.removePackageFromBasket" />}
               />
             </Layout>
           </Col>
