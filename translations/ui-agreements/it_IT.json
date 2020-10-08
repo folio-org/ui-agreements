@@ -43,7 +43,7 @@
     "eresources.jusp": "JUSP",
     "eresources.erAgreements": "Contratti per questa risorsa elettronica",
     "eresources.agreementStatus": "Stato contratto",
-    "eresources.acqOptions": "Options for acquiring e-resource: {name}",
+    "eresources.acqOptions": "Options for acquiring e-resource",
     "eresources.addPackage": "Aggiungi pacchetto",
     "eresources.addTitle": "Aggiungi titolo",
     "eresources.removePackage": "Rimuovi pacchetto",
@@ -479,5 +479,7 @@
     "customCoverage.warn.endIssue": "End issue will be cleared as no e-resource is linked",
     "line.new": "New agreement line",
     "line.create.callout": "Agreement line created",
-    "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line"
+    "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line",
+    "eresources.removePackageFromBasket": "Remove package from basket",
+    "eresources.dataSource": "Data source"
 }
