@@ -479,5 +479,7 @@
     "customCoverage.warn.endIssue": "سيتم مسح العدد النهائي نظراً لعدم ربط أي مورد إلكتروني",
     "line.new": "بند اتفاقية جديد",
     "line.create.callout": "تم إنشاء بند الاتفاقية",
-    "emptyAccordion.lineCustomCoverage": "لا توجد تغطية مخصصة لبند الاتفاقية هذا"
+    "emptyAccordion.lineCustomCoverage": "لا توجد تغطية مخصصة لبند الاتفاقية هذا",
+    "eresources.removePackageFromBasket": "Remove package from basket",
+    "eresources.dataSource": "Data source"
 }
