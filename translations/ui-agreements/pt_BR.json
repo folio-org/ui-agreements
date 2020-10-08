@@ -43,7 +43,7 @@
     "eresources.jusp": "JUSP",
     "eresources.erAgreements": "Contratos para este recurso eletrônico",
     "eresources.agreementStatus": "Status do contrato",
-    "eresources.acqOptions": "Opções para a aquisição de recursos eletrônicos: {name}",
+    "eresources.acqOptions": "Opções para aquisição de recursos eletrônicos",
     "eresources.addPackage": "Adicionar pacote",
     "eresources.addTitle": "Adicionar título",
     "eresources.removePackage": "Remover pacote",
