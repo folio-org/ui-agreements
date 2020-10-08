@@ -24,6 +24,7 @@ import TitleCard from '../TitleCard';
 export default class PCI extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
+      entitlements: PropTypes.arrayOf(PropTypes.object),
       eresource: PropTypes.shape({
         id: PropTypes.string,
         name: PropTypes.string,
