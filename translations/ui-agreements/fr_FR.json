@@ -479,5 +479,7 @@
     "customCoverage.warn.endIssue": "End issue will be cleared as no e-resource is linked",
     "line.new": "Nouvelle ligne d'accord",
     "line.create.callout": "Ligne d'accord créée",
-    "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line"
+    "emptyAccordion.lineCustomCoverage": "Aucune couverture personnalisée pour cette ligne d'accord",
+    "eresources.removePackageFromBasket": "Remove package from basket",
+    "eresources.dataSource": "Data source"
 }

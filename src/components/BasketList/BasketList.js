@@ -23,6 +23,13 @@ class BasketList extends React.Component {
     selectedItems: PropTypes.object,
   }
 
+  getName = (eresource) => {
+    const pti = eresource?._object?.pti ?? eresource?.pti;
+    const name = pti?.titleInstance?.name ?? eresource.name;
+
+    return name;
+  }
+
   render() {
     const { basket, onRemoveItem, selectedItems } = this.props;
 
@@ -76,7 +83,7 @@ class BasketList extends React.Component {
           action: resource => (
             <Tooltip
               id={uniqueId('removeBasketItemBtn')}
-              text={<FormattedMessage id="ui-agreements.basket.removeFromBasket" values={{ publicationType: <EResourceType resource={resource} />, name: resource?._object?.pti?.titleInstance?.name ?? resource?.pti?.titleInstance?.name ?? resource?.name }} />}
+              text={<FormattedMessage id="ui-agreements.basket.removeFromBasket" values={{ publicationType: <EResourceType resource={resource} />, name: this.getName(resource) }} />}
             >
               {({ ariaIds, ref }) => (
                 <IconButton

@@ -479,5 +479,7 @@
     "customCoverage.warn.endIssue": "由于未链接任何电子资源，终止期将被清除",
     "line.new": "新建协议行",
     "line.create.callout": "协议行已创建",
-    "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line"
+    "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line",
+    "eresources.removePackageFromBasket": "Remove package from basket",
+    "eresources.dataSource": "Data source"
 }
