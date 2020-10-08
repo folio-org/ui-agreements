@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get, uniqueId } from 'lodash';
+import { uniqueId } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -69,15 +69,15 @@ class BasketList extends React.Component {
           name: resource => <EResourceLink eresource={resource} />,
           publicationType: resource => <EResourceType resource={resource} />,
           package: resource => {
-            const pkg = get(resource, '_object.pkg');
-            if (!pkg) return undefined;
+            const pkg = resource?._object?.pkg;
+            if (!pkg) return null;
 
             return <EResourceLink eresource={pkg} />;
           },
           publisher: () => 'TBD',
           platform: resource => (
-            get(resource, '_object.pti.platform.name') ||
-            get(resource, '_object.nominalPlatform.name') || undefined
+            resource?._object?.pti?.platform?.name ||
+            resource?._object?.nominalPlatform?.name || null
           ),
           // The resource below fits the same shape as the eresources in an agreement line, so we pass them in the eResource prop.
           coverage: resource => <Coverage eResource={resource} />,
