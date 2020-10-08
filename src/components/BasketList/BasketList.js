@@ -30,6 +30,7 @@ class BasketList extends React.Component {
     return name;
   }
 
+
   render() {
     const { basket, onRemoveItem, selectedItems } = this.props;
 
@@ -69,14 +70,14 @@ class BasketList extends React.Component {
           publicationType: resource => <EResourceType resource={resource} />,
           package: resource => {
             const pkg = get(resource, '_object.pkg');
-            if (!pkg) return null;
+            if (!pkg) return undefined;
 
             return <EResourceLink eresource={pkg} />;
           },
           publisher: () => 'TBD',
           platform: resource => (
             get(resource, '_object.pti.platform.name') ||
-            get(resource, '_object.nominalPlatform.name') || null
+            get(resource, '_object.nominalPlatform.name') || undefined
           ),
           // The resource below fits the same shape as the eresources in an agreement line, so we pass them in the eResource prop.
           coverage: resource => <Coverage eResource={resource} />,
