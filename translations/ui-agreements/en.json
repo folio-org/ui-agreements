@@ -164,7 +164,7 @@
   "basket.removeItem": "Remove item from basket",
   "basket.parentPackage": "Parent package",
   "basket.createAgreement": "Create new agreement",
-  "basket.addToExistingAgreement": "Existing agreements",
+  "basket.existingAgreements": "Existing agreements",
   "basket.addToSelectedAgreement": "Add to selected agreement",
   "basket.clickToSelectAgreement": "Click to select agreement",
   "basket.messageBanner": "Select one or more e-resources and add them to a new or existing agreement. An agreement line will be created for each e-resource that you select.",

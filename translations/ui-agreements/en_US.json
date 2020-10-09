@@ -24,7 +24,6 @@
     "basket.removeItem": "Remove item from basket",
     "basket.parentPackage": "Parent package",
     "basket.createAgreement": "Create new agreement",
-    "basket.addToExistingAgreement": "Existing agreements",
     "basket.addToSelectedAgreement": "Add to selected agreement",
     "basketSelector.selectLabel": "Select from basket",
     "eresources.name": "Name",

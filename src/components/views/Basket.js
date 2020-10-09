@@ -152,7 +152,7 @@ export default class Basket extends React.Component {
       <div>
         <Layout className="marginTop1">
           <Headline margin="small" tag="h4">
-            <FormattedMessage id="ui-agreements.basket.addToExistingAgreement" tagName="div" />
+            <FormattedMessage id="ui-agreements.basket.existingAgreements" tagName="div" />
           </Headline>
         </Layout>
         <Col md={8} xs={12}>
