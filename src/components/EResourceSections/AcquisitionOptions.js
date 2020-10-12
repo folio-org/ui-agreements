@@ -138,7 +138,7 @@ class AcquisitionOptions extends React.Component {
 
   render() {
     const {
-      data: { entitlementOptions, eresource },
+      data: { entitlementOptions },
       id,
     } = this.props;
 

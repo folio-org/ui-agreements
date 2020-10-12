@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from 'react-router-dom/Link';
+import { Link } from 'react-router-dom';
 
 import { NoValue } from '@folio/stripes/components';
 import { isExternal, urls } from '../utilities';

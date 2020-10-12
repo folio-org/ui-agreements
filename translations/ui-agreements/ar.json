@@ -46,12 +46,12 @@
     "eresources.acqOptions": "خيارات الحصول على المورد الإلكتروني: {name}",
     "eresources.addPackage": "إضافة حزمة",
     "eresources.addTitle": "أضف عنوان",
-    "eresources.removePackage": "إزالة الحزمة من السلة",
+    "eresources.removePackage": "إزالة الحزمة",
     "eresources.removeTitle": "إزالة العنوان",
     "eresources.parentPackage": "الحزمة الأصلية",
     "eresources.acqMethod": "طريقة التزويد",
     "eresources.platform": "منصة",
-    "eresources.addToBasketHeader": "سلة الموارد الإلكترونية",
+    "eresources.addToBasketHeader": "الإجراءات",
     "meta.title": "الاتفاقيات",
     "remove": "إزالة",
     "yes": "نعم",
@@ -307,7 +307,7 @@
     "doc.removeExternalLicense": "إزالة الترخيص الخارجي {index}",
     "doc.removeSupplementaryInformation": "إزالة المستند {index}",
     "eresources.addPackageButtonTooltip": "إضافة حزمة \"{packageName}\"",
-    "eresources.removePackageButtonTooltip": "إزالة الحزمة \"{packageName}\"",
+    "eresources.removePackageButtonTooltip": "إزالة من السلة: الحزمة \"{packageName}\"",
     "eresources.addTitleButtonTooltip": "إضافة عنوان إلى الحزمة \"{packageName}\"",
     "eresources.removeTitleButtonTooltip": "إزالة عنوان من الحزمة \"{packageName}\"",
     "eresources.datePublished": "تاريخ النشر",
@@ -479,5 +479,7 @@
     "customCoverage.warn.endIssue": "سيتم مسح العدد النهائي نظراً لعدم ربط أي مورد إلكتروني",
     "line.new": "بند اتفاقية جديد",
     "line.create.callout": "تم إنشاء بند الاتفاقية",
-    "emptyAccordion.lineCustomCoverage": "لا توجد تغطية مخصصة لبند الاتفاقية هذا"
+    "emptyAccordion.lineCustomCoverage": "لا توجد تغطية مخصصة لبند الاتفاقية هذا",
+    "eresources.removePackageFromBasket": "إزالة الحزمة من السلة",
+    "eresources.dataSource": "مصدر بيانات"
 }

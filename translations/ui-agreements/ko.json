@@ -479,5 +479,7 @@
     "customCoverage.warn.endIssue": "연결된 전자자원이 없으므로 최종 문제가 해결됩니다.",
     "line.new": "새로운 계약 라인",
     "line.create.callout": "계약 라인 생성",
-    "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line"
+    "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line",
+    "eresources.removePackageFromBasket": "Remove package from basket",
+    "eresources.dataSource": "Data source"
 }
