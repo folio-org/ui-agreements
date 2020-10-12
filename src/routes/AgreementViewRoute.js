@@ -282,7 +282,7 @@ class AgreementViewRoute extends React.Component {
   handleClone = (cloneableProperties) => {
     const { history, location, match, stripes: { okapi } } = this.props;
 
-    return fetch(`${okapi.url}/erm/sas/${match.params.id}/clone`, {
+    return fetch(`${okapi.url}/erm/sas/${match.params.id}/clones`, {
       method: 'POST',
       headers: {
         'X-Okapi-Tenant': okapi.tenant,
@@ -293,6 +293,8 @@ class AgreementViewRoute extends React.Component {
     }).then(response => {
       if (response.ok) {
         return response.text(); // Parse it as text
+      } else if (response.status === 422) {
+        return response.json().then(resp => { throw new Error(resp.errors[0].i18n_code); });
       } else {
         throw new Error(errorTypes.JSON_ERROR);
       }
