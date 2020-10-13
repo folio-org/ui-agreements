@@ -24,7 +24,6 @@
     "basket.removeItem": "إزالة مادة من السلة",
     "basket.parentPackage": "الحزمة الأصلية",
     "basket.createAgreement": "إنشاء اتفاقية جديدة",
-    "basket.addToExistingAgreement": "أضف إلى اتفاقية حالية",
     "basket.addToSelectedAgreement": "أضف إلى الاتفاقية المحددة",
     "basketSelector.selectLabel": "اختر من سلة",
     "eresources.name": "الاسم",
@@ -481,5 +480,9 @@
     "line.create.callout": "تم إنشاء بند الاتفاقية",
     "emptyAccordion.lineCustomCoverage": "لا توجد تغطية مخصصة لبند الاتفاقية هذا",
     "eresources.removePackageFromBasket": "إزالة الحزمة من السلة",
-    "eresources.dataSource": "مصدر بيانات"
+    "eresources.dataSource": "مصدر بيانات",
+    "action": "الإجراء",
+    "basket.existingAgreements": "الاتفاقيات الحالية",
+    "basket.messageBanner": "قم بتحديد مورد إلكتروني واحد أو أكثر وإضافته إلى اتفاقية جديدة أو حالية. سيتم إنشاء بند اتفاقية لكل مورد إلكتروني تقوم بتحديده.",
+    "basket.removeFromBasket": "إزالة { publicationType } \"{ name }\" من السلة"
 }

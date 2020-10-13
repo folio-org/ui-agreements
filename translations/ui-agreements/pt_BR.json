@@ -24,7 +24,6 @@
     "basket.removeItem": "Remover item da cesta",
     "basket.parentPackage": "Pacote principal",
     "basket.createAgreement": "Criar novo contrato",
-    "basket.addToExistingAgreement": "Adicionar ao contrato existente",
     "basket.addToSelectedAgreement": "Adicionar ao contrato selecionado",
     "basketSelector.selectLabel": "Selecione a partir de cesta",
     "eresources.name": "Nome",
@@ -481,5 +480,9 @@
     "line.create.callout": "Linha de acordo criada",
     "emptyAccordion.lineCustomCoverage": "Sem cobertura personalizada para esta linha de contrato",
     "eresources.removePackageFromBasket": "Remover pacote do cesto",
-    "eresources.dataSource": "Fonte de dados"
+    "eresources.dataSource": "Fonte de dados",
+    "action": "Ação",
+    "basket.existingAgreements": "Contratos existentes",
+    "basket.messageBanner": "Selecione um ou mais recursos eletrônicos e adicione-os a um contrato novo ou existente. Uma linha de contrato será criada para cada recurso eletrônico que você selecionar.",
+    "basket.removeFromBasket": "Remover { publicationType } \"{ name }\" do cesto"
 }

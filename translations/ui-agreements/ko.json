@@ -24,7 +24,6 @@
     "basket.removeItem": "바구니에서 항목 제거",
     "basket.parentPackage": "상위 패키지",
     "basket.createAgreement": "새 계약 만들기",
-    "basket.addToExistingAgreement": "기존 계약에 추가",
     "basket.addToSelectedAgreement": "선택한 계약에 추가",
     "basketSelector.selectLabel": "바구니에서 선택",
     "eresources.name": "이름",
@@ -481,5 +480,9 @@
     "line.create.callout": "계약 라인 생성",
     "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line",
     "eresources.removePackageFromBasket": "Remove package from basket",
-    "eresources.dataSource": "Data source"
+    "eresources.dataSource": "Data source",
+    "action": "Action",
+    "basket.existingAgreements": "Existing agreements",
+    "basket.messageBanner": "Select one or more e-resources and add them to a new or existing agreement. An agreement line will be created for each e-resource that you select.",
+    "basket.removeFromBasket": "Remove { publicationType } \"{ name }\" from basket"
 }
