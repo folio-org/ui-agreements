@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty } from 'lodash';
-
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -39,18 +37,16 @@ export default class Package extends React.Component {
   }
 
   getInitialAccordionsState = () => {
-    const { data: { entitlements, packageContents } } = this.props;
-
     return {
-      eresourceAgreements: !isEmpty(entitlements),
-      notes: true,
-      packageContents: !isEmpty(packageContents),
+      eresourceAgreements: false,
+      notes: false,
+      packageContents: false,
     };
   }
 
   render() {
     const { data, handlers } = this.props;
-    // console.log(this.getInitialAccordionsState(), 'lavada');
+
     return (
       <div id="eresource-package">
         <PackageInfo {...this.getSectionProps('info')} />
