@@ -281,7 +281,7 @@ export default class Agreement extends React.Component {
         {helperApp}
         { showDuplicateAgreementModal &&
           <DuplicateAgreementModal
-            agreementName={data.agreement.name}
+            name={data.agreement.name}
             onClone={(obj) => handlers.onClone(obj)}
             onClose={this.closeDuplicateAgreementModal}
           />
