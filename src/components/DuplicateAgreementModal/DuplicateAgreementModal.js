@@ -20,7 +20,6 @@ export default class DuplicateAgreementModal extends React.Component {
     duplicateModalMessage: 'ui-agreements.duplicateAgreementModal.duplicateMessage',
     duplicateModalError: 'ui-agreements.duplicateAgreementModal.duplicateModalError',
     invalidResponseError: 'ui-agreements.duplicateAgreementModal.invalidResponseError',
-    path: 'ui-agreements.duplicateAgreementModal',
   };
 
   render() {
