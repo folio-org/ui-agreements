@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { isEmpty } from 'lodash';
 
 import {
   AccordionSet,
@@ -39,12 +38,10 @@ export default class Title extends React.Component {
   }
 
   getInitialAccordionsState = () => {
-    const { data: { entitlements, entitlementOptions } } = this.props;
-
     return {
-      acquisitionOptions: !isEmpty(entitlementOptions),
-      eresourceAgreements: !isEmpty(entitlements),
-      notes: true,
+      acquisitionOptions: false,
+      eresourceAgreements: false,
+      notes: false,
     };
   }
 
