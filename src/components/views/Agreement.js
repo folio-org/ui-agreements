@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -154,23 +153,21 @@ export default class Agreement extends React.Component {
   )
 
   getInitialAccordionsState = () => {
-    const { data, data: { agreement = {} } } = this.props;
-
     return {
-      controllingLicense: !!(agreement.linkedLicenses ?? []).find(l => l?.status?.value === statuses.CONTROLLING),
-      externalLicenses: !isEmpty(agreement.externalLicenseDocs),
-      futureLicenses: !!(agreement.linkedLicenses ?? []).find(l => l?.status?.value === statuses.FUTURE),
-      historicalLicenses: !!(agreement.linkedLicenses ?? []).find(l => l?.status?.value === statuses.HISTORICAL),
-      internalContacts: !isEmpty(agreement.contacts),
-      lines: !isEmpty(agreement.lines),
-      notes: true,
-      organizations: !isEmpty(agreement.orgs),
-      otherPeriods: !isEmpty(agreement.periods),
-      relatedAgreements: !isEmpty(agreement.relatedAgreements),
-      supplementaryProperties: !isEmpty(data.supplementaryProperties),
-      supplementaryDocs: !isEmpty(data.agreement.supplementaryDocs),
-      terms: !isEmpty(data.agreement.linkedLicenses),
-      usageData: !isEmpty(agreement.usageDataProviders),
+      controllingLicense: false,
+      externalLicenses: false,
+      futureLicenses: false,
+      historicalLicenses: false,
+      internalContacts: false,
+      lines: false,
+      notes: false,
+      organizations: false,
+      otherPeriods: false,
+      relatedAgreements: false,
+      supplementaryProperties: false,
+      supplementaryDocs: false,
+      terms: false,
+      usageData: false,
     };
   }
 
