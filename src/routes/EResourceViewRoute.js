@@ -22,7 +22,11 @@ class EResourceViewRoute extends React.Component {
     entitlementOptions: {
       type: 'okapi',
       path: 'erm/resource/:{id}/entitlementOptions',
+      params: {
+        stats: 'true',
+      },
       perRequest: RECORDS_PER_REQUEST,
+      records: 'results',
       limitParam: 'perPage',
       throwErrors: false,
     },
