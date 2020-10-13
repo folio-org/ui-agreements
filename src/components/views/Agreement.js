@@ -20,7 +20,6 @@ import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import DuplicateAgreementModal from '../DuplicateAgreementModal';
-import { statuses } from '../../constants';
 
 import {
   ControllingLicense,
@@ -281,6 +280,7 @@ export default class Agreement extends React.Component {
         {helperApp}
         { showDuplicateAgreementModal &&
           <DuplicateAgreementModal
+            name={data.agreement.name}
             onClone={(obj) => handlers.onClone(obj)}
             onClose={this.closeDuplicateAgreementModal}
           />
