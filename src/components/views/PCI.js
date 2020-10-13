@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { isEmpty } from 'lodash';
 
 import {
   AccordionSet,
@@ -43,11 +42,9 @@ export default class PCI extends React.Component {
   }
 
   getInitialAccordionsState = () => {
-    const { data: { eresource = {}, entitlements, relatedEntitlements } } = this.props;
-
     return {
-      'pci-coverage': !isEmpty(eresource.coverage) || !isEmpty(eresource.embargo),
-      'eresourceAgreements': !isEmpty(entitlements) || !isEmpty(relatedEntitlements),
+      'pci-coverage': false,
+      'eresourceAgreements': false,
     };
   }
 
@@ -81,6 +78,7 @@ export default class PCI extends React.Component {
             <Agreements
               data={data}
               headline={eresource.name}
+              id="eresourceAgreements"
               renderRelatedEntitlements
               visibleColumns={['name', 'type', 'startDate', 'endDate']}
             />
