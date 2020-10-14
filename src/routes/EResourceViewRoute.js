@@ -219,7 +219,7 @@ class EResourceViewRoute extends React.Component {
       ?
       undefined
       :
-      get(resources, 'packageContents.records');
+      resources?.packageContents?.records;
   }
 
   getRecords = (resource) => {
