@@ -24,7 +24,6 @@
     "basket.removeItem": "Suprimir item de la cesta",
     "basket.parentPackage": "Paquete principal",
     "basket.createAgreement": "Crear nuevo acuerdo",
-    "basket.addToExistingAgreement": "Añadir a acuerdo existente",
     "basket.addToSelectedAgreement": "Añadir a acuerdo seleccionado",
     "basketSelector.selectLabel": "Seleccionar de la cesta",
     "eresources.name": "Nombre",
@@ -481,5 +480,9 @@
     "line.create.callout": "Línea de acuerdo creada",
     "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line",
     "eresources.removePackageFromBasket": "Remove package from basket",
-    "eresources.dataSource": "Data source"
+    "eresources.dataSource": "Data source",
+    "action": "Action",
+    "basket.existingAgreements": "Existing agreements",
+    "basket.messageBanner": "Select one or more e-resources and add them to a new or existing agreement. An agreement line will be created for each e-resource that you select.",
+    "basket.removeFromBasket": "Remove { publicationType } \"{ name }\" from basket"
 }

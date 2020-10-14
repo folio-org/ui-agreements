@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get, flatten, uniqBy } from 'lodash';
 import compose from 'compose-function';
+import { injectIntl } from 'react-intl';
 
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
@@ -136,6 +137,7 @@ class AgreementViewRoute extends React.Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
+    intl: PropTypes.object,
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
     }).isRequired,
@@ -279,7 +281,9 @@ class AgreementViewRoute extends React.Component {
   }
 
   handleClone = (cloneableProperties) => {
-    const { history, location, match, stripes: { okapi } } = this.props;
+    const { history, intl, location, match, resources, stripes: { okapi } } = this.props;
+
+    const name = resources?.agreement?.records?.[0].name;
 
     return fetch(`${okapi.url}/erm/sas/${match.params.id}/clone`, {
       method: 'POST',
@@ -292,6 +296,14 @@ class AgreementViewRoute extends React.Component {
     }).then(response => {
       if (response.ok) {
         return response.text(); // Parse it as text
+      } else if (response.status === 422) { // handle 422 error specifically
+        return response.json()
+          .then(({ errors }) => {
+            throw new Error(intl.formatMessage(
+              { id: `ui-agreements.duplicateAgreementModal.${errors[0].i18n_code}` }, // use the i18n_code to find the corresponding translation
+              { name },
+            ));
+          });
       } else {
         throw new Error(errorTypes.JSON_ERROR);
       }
@@ -473,6 +485,7 @@ class AgreementViewRoute extends React.Component {
 }
 
 export default compose(
+  injectIntl,
   withFileHandlers,
   stripesConnect,
   withTags,
