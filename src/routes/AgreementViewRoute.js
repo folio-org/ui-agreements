@@ -43,14 +43,19 @@ class AgreementViewRoute extends React.Component {
     agreementEresources: {
       type: 'okapi',
       path: 'erm/sas/:{id}/resources/%{eresourcesFilterPath}',
+      limitParam: 'perPage',
+      perRequest: resultCount.RESULT_COUNT_INCREMENT,
+      records: 'results',
+      resultOffset: (_q, _p, _r, _l, props) => {
+        const { match, resources } = props;
+        const resultOffset = resources?.agreementEresourcesOffset;
+        const agreementId = resources?.agreement?.records?.[0]?.id;
+        return agreementId !== match.params.id ? props.mutator.agreementEresourcesOffset.replace(0) : resultOffset;
+      },
       params: {
         sort: 'pti.titleInstance.name;asc',
         stats: 'true',
       },
-      limitParam: 'perPage',
-      perRequest: resultCount.RESULT_COUNT_INCREMENT,
-      records: 'results',
-      resultOffset: '%{resultOffset}',
       shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
     eresourcesFilterPath: { initialValue: 'current' },
@@ -113,7 +118,6 @@ class AgreementViewRoute extends React.Component {
       records: 'users',
     },
     agreementLinesCount: { initialValue: RECORDS_PER_REQUEST },
-    agreementEresourcesCount: { initialValue: RECORDS_PER_REQUEST },
     interfacesCredentials: {
       clientGeneratePk: false,
       throwErrors: false,
@@ -124,7 +128,7 @@ class AgreementViewRoute extends React.Component {
       fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '1.0 2.0'),
     },
     interfaceRecord: {},
-    resultOffset: { initialValue: 0 },
+    agreementEresourcesOffset: { initialValue: 0 },
     query: {},
   });
 
@@ -149,16 +153,13 @@ class AgreementViewRoute extends React.Component {
       agreementLinesCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
-      agreementEresourcesCount: PropTypes.shape({
-        replace: PropTypes.func.isRequired,
-      }),
       eresourcesFilterPath: PropTypes.shape({
         replace: PropTypes.func,
       }),
       interfaceRecord: PropTypes.shape({
         replace: PropTypes.func,
       }),
-      resultOffset: PropTypes.shape({
+      agreementEresourcesOffset: PropTypes.shape({
         replace: PropTypes.func,
       }).isRequired,
       query: PropTypes.shape({
@@ -170,7 +171,7 @@ class AgreementViewRoute extends React.Component {
       agreementLines: PropTypes.object,
       agreementLinesCount: PropTypes.number,
       agreementEresources: PropTypes.object,
-      agreementEresourcesCount: PropTypes.number,
+
       eresourcesFilterPath: PropTypes.string,
       interfaces: PropTypes.object,
       orderLines: PropTypes.object,
@@ -265,14 +266,12 @@ class AgreementViewRoute extends React.Component {
   getAgreementEresourcesRecords = () => {
     const { resources, match } = this.props;
     const agreementEresourcesUrl = resources?.agreementEresources?.url ?? '';
-    const isPending = resources?.agreementEresources?.isPending;
     // If a new agreement is selected or if the filter has changed return undefined
     if (agreementEresourcesUrl.indexOf(`${match.params.id}`) === -1 ||
       agreementEresourcesUrl.indexOf(`resources/${resources.eresourcesFilterPath}`) === -1) {
       return undefined;
     } else {
-      // If adding an eresource via basket return records only after the isPending state turns false
-      return isPending ? undefined : resources?.agreementEresources?.records;
+      return resources?.agreementEresources?.records;
     }
   }
 
@@ -357,6 +356,7 @@ class AgreementViewRoute extends React.Component {
   handleFilterEResources = (path) => {
     const { mutator } = this.props;
     mutator.eresourcesFilterPath.replace(path);
+    mutator.agreementEresourcesOffset.replace(0);
   }
 
   handleEdit = () => {
@@ -415,7 +415,7 @@ class AgreementViewRoute extends React.Component {
 
   handleNeedMoreEResources = (_, index) => {
     const { mutator } = this.props;
-    mutator.resultOffset.replace(index);
+    mutator.agreementEresourcesOffset.replace(index);
   }
 
   handleToggleHelper = (helper) => {
