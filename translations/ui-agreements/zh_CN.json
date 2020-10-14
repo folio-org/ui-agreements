@@ -24,7 +24,6 @@
     "basket.removeItem": "从购物篮中移除单件",
     "basket.parentPackage": "父资源包",
     "basket.createAgreement": "创建新协议",
-    "basket.addToExistingAgreement": "添加到现有协议",
     "basket.addToSelectedAgreement": "添加到选定协议",
     "basketSelector.selectLabel": "从购物篮中选择",
     "eresources.name": "名称",
@@ -481,5 +480,9 @@
     "line.create.callout": "协议行已创建",
     "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line",
     "eresources.removePackageFromBasket": "Remove package from basket",
-    "eresources.dataSource": "Data source"
+    "eresources.dataSource": "Data source",
+    "action": "Action",
+    "basket.existingAgreements": "Existing agreements",
+    "basket.messageBanner": "Select one or more e-resources and add them to a new or existing agreement. An agreement line will be created for each e-resource that you select.",
+    "basket.removeFromBasket": "Remove { publicationType } \"{ name }\" from basket"
 }

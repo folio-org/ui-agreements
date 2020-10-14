@@ -24,7 +24,6 @@
     "basket.removeItem": "从列表中移除单件",
     "basket.parentPackage": "上级包",
     "basket.createAgreement": "新增授權許可",
-    "basket.addToExistingAgreement": "添加到现有协议",
     "basket.addToSelectedAgreement": "添加到选定的协议",
     "basketSelector.selectLabel": "从列表中选择",
     "eresources.name": "名稱",
@@ -481,5 +480,9 @@
     "line.create.callout": "Agreement line created",
     "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line",
     "eresources.removePackageFromBasket": "Remove package from basket",
-    "eresources.dataSource": "Data source"
+    "eresources.dataSource": "Data source",
+    "action": "Action",
+    "basket.existingAgreements": "Existing agreements",
+    "basket.messageBanner": "Select one or more e-resources and add them to a new or existing agreement. An agreement line will be created for each e-resource that you select.",
+    "basket.removeFromBasket": "Remove { publicationType } \"{ name }\" from basket"
 }

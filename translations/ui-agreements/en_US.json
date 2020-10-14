@@ -480,5 +480,9 @@
     "line.create.callout": "Agreement line created",
     "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line",
     "eresources.removePackageFromBasket": "Remove package from basket",
-    "eresources.dataSource": "Data source"
+    "eresources.dataSource": "Data source",
+    "action": "Action",
+    "basket.existingAgreements": "Existing agreements",
+    "basket.messageBanner": "Select one or more e-resources and add them to a new or existing agreement. An agreement line will be created for each e-resource that you select.",
+    "basket.removeFromBasket": "Remove { publicationType } \"{ name }\" from basket"
 }

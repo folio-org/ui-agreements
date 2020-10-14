@@ -268,6 +268,36 @@ export default function config() {
     { 'id': '18836ea8717e097901717e1c09440029', 'value': 'consortium_negotiation_document', 'label': 'Consortium negotiation document' },
   ]));
 
+  this.get('erm/refdata/AgreementRelationship/type', () => (
+    [
+      {
+        'id':'18836ea97420fce2017421060d1a0041',
+        'value':'supersedes',
+        'label':'Supersedes'
+      },
+      {
+        'id':'18836ea97420fce2017421060d2d0042',
+        'value':'provides_post-cancellation_access_for',
+        'label':'Provides post-cancellation access for'
+      },
+      {
+        'id':'18836ea97420fce2017421060d3c0043',
+        'value':'tracks_demand-driven_acquisitions_for',
+        'label':'Tracks demand-driven acquisitions for'
+      },
+      {
+        'id':'18836ea97420fce2017421060d4b0044',
+        'value':'related_to',
+        'label':'Related to'
+      },
+      {
+        'id':'18836ea97420fce2017421060d5e0045',
+        'value':'has_backfile_in',
+        'label':'Has backfile in'
+      }
+    ]
+  ));
+
   this.get('/users', (schema) => {
     const users = schema.contacts.all().models;
 

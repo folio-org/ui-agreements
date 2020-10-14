@@ -185,6 +185,7 @@
   "duplicateAgreementModal.agreementInfo": "Agreement information",
   "duplicateAgreementModal.agreementLines": "Agreement lines",
   "duplicateAgreementModal.cloneEndpointError": "Unable to duplicate the agreement. The clone endpoint could not be accessed.",
+  "duplicateAgreementModal.org.olf.erm.SubscriptionAgreement.name.unique": "Unable to duplicate the agreement. Agreement was not saved. Name must be unique. An agreement with the name \"Copy of: {name}\" already exists.",
   "duplicateAgreementModal.duplicateAgreement": "Duplicate agreement",
   "duplicateAgreementModal.duplicateMessage": "Please select which sections of the agreement to duplicate",
   "duplicateAgreementModal.duplicateModalError": "Error: the agreement was not duplicated",

@@ -17,14 +17,13 @@
     "agreementLines.removeItem": "Remove line from agreement",
     "agreementLines.createLine": "Create agreement line",
     "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
-    "basket.name": "ERM Basket",
+    "basket.name": "ERM basket",
     "basket.close": "Close basket",
     "basket.recordCount": "Showing {count, number} {count, plural, one {record} other {records}}",
     "basket.layerLabel": "View E-resources in the ERM basket",
     "basket.removeItem": "Remove item from basket",
     "basket.parentPackage": "Parent package",
     "basket.createAgreement": "Create new agreement",
-    "basket.addToExistingAgreement": "Add to existing agreement",
     "basket.addToSelectedAgreement": "Add to selected agreement",
     "basketSelector.selectLabel": "Select from basket",
     "eresources.name": "Name",
@@ -481,5 +480,9 @@
     "line.create.callout": "Agreement line created",
     "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line",
     "eresources.removePackageFromBasket": "Remove package from basket",
-    "eresources.dataSource": "Data source"
+    "eresources.dataSource": "Data source",
+    "action": "Action",
+    "basket.existingAgreements": "Existing agreements",
+    "basket.messageBanner": "Select one or more e-resources and add them to a new or existing agreement. An agreement line will be created for each e-resource that you select.",
+    "basket.removeFromBasket": "Remove { publicationType } \"{ name }\" from basket"
 }
