@@ -21,8 +21,8 @@ import BasketList from '../BasketList';
 export default class Basket extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      basket: PropTypes.array.isRequired,
-      openAgreements: PropTypes.array.isRequired,
+      basket: PropTypes.arrayOf(PropTypes.object).isRequired,
+      openAgreements: PropTypes.arrayOf(PropTypes.object).isRequired,
     }).isRequired,
     handlers: PropTypes.shape({
       onAddToNewAgreement: PropTypes.func.isRequired,

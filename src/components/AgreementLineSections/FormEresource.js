@@ -37,7 +37,7 @@ const FormEresource = ({
     return values.coverage?.forEach((_, index) => {
       warnFields.forEach((field) => (
         warn ?
-          setFieldData(`coverage[${index}].${field}`, { warning: <FormattedMessage id={`ui-agreements.customCoverage.warn.${field}`} /> })
+          setFieldData(`coverage[${index}].${field}`, { warning: <FormattedMessage id={`ui-agreements.customCoverage.warn.${field}`} /> }) // eslint-disable-line
           :
           setFieldData(`coverage[${index}].${field}`, { warning: '' })
       ));

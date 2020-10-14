@@ -189,6 +189,9 @@ class AgreementEditRoute extends React.Component {
       reasonForClosureValues: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
+      relationshipTypeValues: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
       renewalPriorityValues: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
