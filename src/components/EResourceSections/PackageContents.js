@@ -97,7 +97,7 @@ export default class PackageContents extends React.Component {
     );
   };
 
-  renderDate = date => (date ? <FormattedUTCDate value={date} /> : null);
+  renderDate = date => (date ? <FormattedUTCDate value={date} /> : '');
 
   renderBadge = () => {
     const count = this.props.data?.packageContentsCount;
