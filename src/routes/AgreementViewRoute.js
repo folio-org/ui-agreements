@@ -42,10 +42,6 @@ class AgreementViewRoute extends React.Component {
     agreementEresources: {
       type: 'okapi',
       path: 'erm/sas/:{id}/resources/%{eresourcesFilterPath}',
-      params: {
-        sort: 'pti.titleInstance.name;asc',
-        stats: 'true',
-      },
       limitParam: 'perPage',
       perRequest: resultCount.RESULT_COUNT_INCREMENT,
       records: 'results',
@@ -53,7 +49,11 @@ class AgreementViewRoute extends React.Component {
         const { match, resources } = props;
         const resultOffset = resources?.agreementEresourcesOffset;
         const agreementId = resources?.agreement?.records?.[0]?.id;
-        return agreementId !== match.params.id ? 0 : resultOffset;
+        return agreementId !== match.params.id ? props.mutator.agreementEresourcesOffset.replace(0) : resultOffset;
+      },
+      params: {
+        sort: 'pti.titleInstance.name;asc',
+        stats: 'true',
       },
       shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
@@ -117,7 +117,6 @@ class AgreementViewRoute extends React.Component {
       records: 'users',
     },
     agreementLinesCount: { initialValue: RECORDS_PER_REQUEST },
-    agreementEresourcesCount: { initialValue: RECORDS_PER_REQUEST },
     interfacesCredentials: {
       clientGeneratePk: false,
       throwErrors: false,
@@ -152,9 +151,6 @@ class AgreementViewRoute extends React.Component {
       agreementLinesCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
-      agreementEresourcesCount: PropTypes.shape({
-        replace: PropTypes.func.isRequired,
-      }),
       eresourcesFilterPath: PropTypes.shape({
         replace: PropTypes.func,
       }),
@@ -173,7 +169,7 @@ class AgreementViewRoute extends React.Component {
       agreementLines: PropTypes.object,
       agreementLinesCount: PropTypes.number,
       agreementEresources: PropTypes.object,
-      agreementEresourcesCount: PropTypes.number,
+
       eresourcesFilterPath: PropTypes.string,
       interfaces: PropTypes.object,
       orderLines: PropTypes.object,
