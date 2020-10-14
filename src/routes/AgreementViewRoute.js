@@ -49,7 +49,12 @@ class AgreementViewRoute extends React.Component {
       limitParam: 'perPage',
       perRequest: resultCount.RESULT_COUNT_INCREMENT,
       records: 'results',
-      resultOffset: '%{resultOffset}',
+      resultOffset: (_q, _p, _r, _l, props) => {
+        const { match, resources } = props;
+        const resultOffset = resources?.agreementEresourcesOffset;
+        const agreementId = resources?.agreement?.records?.[0]?.id;
+        return agreementId !== match.params.id ? 0 : resultOffset;
+      },
       shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
     eresourcesFilterPath: { initialValue: 'current' },
@@ -123,7 +128,7 @@ class AgreementViewRoute extends React.Component {
       fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '1.0 2.0'),
     },
     interfaceRecord: {},
-    resultOffset: { initialValue: 0 },
+    agreementEresourcesOffset: { initialValue: 0 },
     query: {},
   });
 
@@ -156,7 +161,7 @@ class AgreementViewRoute extends React.Component {
       interfaceRecord: PropTypes.shape({
         replace: PropTypes.func,
       }),
-      resultOffset: PropTypes.shape({
+      agreementEresourcesOffset: PropTypes.shape({
         replace: PropTypes.func,
       }).isRequired,
       query: PropTypes.shape({
@@ -345,6 +350,7 @@ class AgreementViewRoute extends React.Component {
   handleFilterEResources = (path) => {
     const { mutator } = this.props;
     mutator.eresourcesFilterPath.replace(path);
+    mutator.agreementEresourcesOffset.replace(0);
   }
 
   handleEdit = () => {
@@ -403,7 +409,7 @@ class AgreementViewRoute extends React.Component {
 
   handleNeedMoreEResources = (_, index) => {
     const { mutator } = this.props;
-    mutator.resultOffset.replace(index);
+    mutator.agreementEresourcesOffset.replace(index);
   }
 
   handleToggleHelper = (helper) => {
