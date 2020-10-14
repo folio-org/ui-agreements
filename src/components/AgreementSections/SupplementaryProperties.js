@@ -8,7 +8,7 @@ export default class SupplementaryProperties extends React.Component {
   static propTypes = {
     agreement: PropTypes.object,
     id: PropTypes.string,
-    data: PropTypes.shape({ supplementaryProperties: PropTypes.array }),
+    data: PropTypes.shape({ supplementaryProperties: PropTypes.arrayOf(PropTypes.object) }),
   }
 
   render() {

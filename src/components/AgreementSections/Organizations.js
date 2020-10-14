@@ -18,7 +18,7 @@ export default class Organizations extends React.Component {
     agreement: PropTypes.shape({
       orgs: PropTypes.arrayOf(
         PropTypes.shape({
-          interfaces: PropTypes.array.isRequired,
+          interfaces: PropTypes.arrayOf(PropTypes.object),
           note: PropTypes.string,
           org: PropTypes.shape({
             name: PropTypes.string.isRequired,

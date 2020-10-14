@@ -15,7 +15,7 @@ const propTypes = {
     eresource: PropTypes.shape({
       class: PropTypes.string,
       name: PropTypes.string,
-      tags: PropTypes.array,
+      tags: PropTypes.arrayOf(PropTypes.string),
       type: PropTypes.object,
     }),
   }),
