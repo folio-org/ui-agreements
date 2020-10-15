@@ -107,6 +107,9 @@ class EResourceViewRoute extends React.Component {
     resources: PropTypes.shape({
       entitlementsCount: PropTypes.number,
       eresource: PropTypes.object,
+      packageContents: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
       packageContentsFilter: PropTypes.string,
       packageContentsCount: PropTypes.number,
       query: PropTypes.object,

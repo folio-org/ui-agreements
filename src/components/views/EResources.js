@@ -39,7 +39,7 @@ import css from './Agreements.css';
 const propTypes = {
   children: PropTypes.object,
   data: PropTypes.shape({
-    eresources: PropTypes.array.isRequired,
+    eresources: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
   onNeedMoreData: PropTypes.func.isRequired,
   queryGetter: PropTypes.func.isRequired,

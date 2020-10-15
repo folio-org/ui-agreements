@@ -34,9 +34,9 @@ import {
 class AgreementForm extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      agreementLines: PropTypes.array.isRequired,
-      agreementLinesToAdd: PropTypes.array.isRequired,
-      supplementaryProperties: PropTypes.array.isRequired,
+      agreementLines: PropTypes.arrayOf(PropTypes.object).isRequired,
+      agreementLinesToAdd: PropTypes.arrayOf(PropTypes.object).isRequired,
+      supplementaryProperties: PropTypes.arrayOf(PropTypes.object).isRequired,
     }).isRequired,
     form: PropTypes.shape({
       change: PropTypes.func.isRequired,
