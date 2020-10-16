@@ -484,5 +484,6 @@
     "action": "Action",
     "basket.existingAgreements": "Accords existants",
     "basket.messageBanner": "Select one or more e-resources and add them to a new or existing agreement. An agreement line will be created for each e-resource that you select.",
-    "basket.removeFromBasket": "Retirer { publicationType } \" { name } \" du panier"
+    "basket.removeFromBasket": "Retirer { publicationType } \" { name } \" du panier",
+    "duplicateAgreementModal.org.olf.erm.SubscriptionAgreement.name.unique": "Unable to duplicate the agreement. Agreement was not saved. Name must be unique. An agreement with the name \"Copy of: {name}\" already exists."
 }
