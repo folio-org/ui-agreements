@@ -484,5 +484,6 @@
     "action": "الإجراء",
     "basket.existingAgreements": "الاتفاقيات الحالية",
     "basket.messageBanner": "قم بتحديد مورد إلكتروني واحد أو أكثر وإضافته إلى اتفاقية جديدة أو حالية. سيتم إنشاء بند اتفاقية لكل مورد إلكتروني تقوم بتحديده.",
-    "basket.removeFromBasket": "إزالة { publicationType } \"{ name }\" من السلة"
+    "basket.removeFromBasket": "إزالة { publicationType } \"{ name }\" من السلة",
+    "duplicateAgreementModal.org.olf.erm.SubscriptionAgreement.name.unique": "غير قادر على تكرار الاتفاقية. لم يتم حفظ الاتفاقية. يجب أن يكون الاسم فريدًا. توجد بالفعل اتفاقية بالاسم \"نسخة من: {name} \"."
 }
