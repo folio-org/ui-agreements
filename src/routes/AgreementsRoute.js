@@ -174,6 +174,7 @@ class AgreementsRoute extends React.Component {
           supplementaryProperties: resources?.supplementaryProperties?.records ?? [],
           tagsValues: get(resources, 'tagsValues.records', []),
         }}
+        history={this.props.history}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}
         querySetter={this.querySetter}

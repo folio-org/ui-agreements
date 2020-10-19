@@ -6,7 +6,9 @@ import {
   AccordionSet,
   Button,
   Col,
+  expandAllFunction,
   ExpandAllButton,
+  HasCommand,
   IconButton,
   Pane,
   PaneFooter,
@@ -71,6 +73,31 @@ class PCIForm extends React.Component {
     this.setState({ sections });
   }
 
+  toggleAllSections = (expand) => {
+    this.setState((curState) => {
+      const newSections = expandAllFunction(curState.sections, expand);
+
+      return {
+        sections: newSections
+      };
+    });
+  }
+
+  expandAllSections = (e) => {
+    e.preventDefault();
+    this.toggleAllSections(true);
+  }
+
+  collapseAllSections = (e) => {
+    e.preventDefault();
+    this.toggleAllSections(false);
+  }
+
+  handleSaveKeyCommand = (e) => {
+    e.preventDefault();
+    this.props.handleSubmit();
+  }
+
   renderPaneFooter() {
     const {
       handlers,
@@ -124,42 +151,63 @@ class PCIForm extends React.Component {
     );
   }
 
+  shortcuts = [
+    {
+      name: 'save',
+      handler: this.handleSaveKeyCommand,
+    },
+    {
+      name: 'expandAllSections',
+      handler: this.expandAllSections,
+    },
+    {
+      name: 'collapseAllSections',
+      handler: this.collapseAllSections
+    }
+  ];
+
   render() {
     const { form, handlers: { isSuppressFromDiscoveryEnabled }, values: { name } } = this.props;
 
     const hasLoaded = form.getRegisteredFields().length > 0;
 
     return (
-      <Paneset>
-        <Pane
-          centerContent
-          defaultWidth="100%"
-          firstMenu={this.renderFirstMenu()}
-          footer={this.renderPaneFooter()}
-          id="pane-pci-form"
-          paneTitle={<FormattedMessage id="ui-agreements.pci.editPci" values={{ name }} />}
-        >
-          <TitleManager record={name}>
-            <form id="form-pci">
-              <PCIFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} />
-              <AccordionSet>
-                {hasLoaded ? <div id="form-loaded" /> : null}
-                <Row end="xs">
-                  <Col xs>
-                    <ExpandAllButton
-                      accordionStatus={this.state.sections}
-                      id="clickable-expand-all"
-                      onToggle={this.handleAllSectionsToggle}
-                    />
-                  </Col>
-                </Row>
-                <div className={css.separator} />
-                <PCIFormCoverage {...this.getSectionProps('pciFormCoverage')} />
-              </AccordionSet>
-            </form>
-          </TitleManager>
-        </Pane>
-      </Paneset>
+      <HasCommand
+        commands={this.shortcuts}
+        isWithinScope
+        scope={document.body}
+      >
+        <Paneset>
+          <Pane
+            centerContent
+            defaultWidth="100%"
+            firstMenu={this.renderFirstMenu()}
+            footer={this.renderPaneFooter()}
+            id="pane-pci-form"
+            paneTitle={<FormattedMessage id="ui-agreements.pci.editPci" values={{ name }} />}
+          >
+            <TitleManager record={name}>
+              <form id="form-pci">
+                <PCIFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} />
+                <AccordionSet>
+                  {hasLoaded ? <div id="form-loaded" /> : null}
+                  <Row end="xs">
+                    <Col xs>
+                      <ExpandAllButton
+                        accordionStatus={this.state.sections}
+                        id="clickable-expand-all"
+                        onToggle={this.handleAllSectionsToggle}
+                      />
+                    </Col>
+                  </Row>
+                  <div className={css.separator} />
+                  <PCIFormCoverage {...this.getSectionProps('pciFormCoverage')} />
+                </AccordionSet>
+              </form>
+            </TitleManager>
+          </Pane>
+        </Paneset>
+      </HasCommand>
     );
   }
 }

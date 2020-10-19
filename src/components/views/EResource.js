@@ -2,7 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { Button, IconButton, LoadingPane, Pane, PaneMenu } from '@folio/stripes/components';
+import {
+  Button,
+  IconButton,
+  LoadingPane,
+  Pane,
+  PaneMenu,
+} from '@folio/stripes/components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 
 import Package from './Package';
@@ -26,7 +32,9 @@ const propTypes = {
     onToggleTags: PropTypes.func.isRequired
   }).isRequired,
   helperApp: PropTypes.func,
+  history: PropTypes.object,
   isLoading: PropTypes.bool,
+  match: PropTypes.object,
 };
 
 const EResource = ({
@@ -34,7 +42,9 @@ const EResource = ({
   data: { eresource },
   helperApp,
   handlers,
-  isLoading
+  history,
+  isLoading,
+  match,
 }) => {
   const intl = useIntl();
 
@@ -92,7 +102,7 @@ const EResource = ({
         {...paneProps}
       >
         <TitleManager record={eresource.name}>
-          <EResourceViewComponent data={data} handlers={handlers} />
+          <EResourceViewComponent data={data} handlers={handlers} history={history} match={match} />
         </TitleManager>
       </Pane>
       {helperApp(eresource)}
