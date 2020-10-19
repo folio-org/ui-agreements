@@ -1,9 +1,22 @@
 # Change history for ui-agreements
 
-##  5.0.0 IN PROGRESS
+##  5.0.0 2020-10-15
+* Enhance eHoldings display in Agreement Line view. ERM-948
 * Added ability to set and view notes on organizations. ERM-966
-* Upgrade to Stripes 5.0
+* Retrieve upto 100 results from users endpoint. ERM-980
+* Upgrade to Stripes v5.0.
 * Refactor `miragejs` from `bigtest/mirage`.
+* Added support for the new publication type property. ERM-943
+* Added support for searching by publication type property. ERM-944
+* Separate organization and role filter. ERM-1043
+* Added option to not display "Suppress from discovery" checkbox. ERM-1004
+* Added new workflow for adding agreement lines to agreements. ERM-1000
+* Improvements to agreement edit pane and added empty accordion messages. ERM-862
+* Fixed coverage date format on submit. ERM-1091, ERM-1092
+* Added Description to Agreement Line display in Edit Agreement view. ERM-1099
+* Display eholdings icon on external resource cards. ERM-1106
+* Retrieve upto 100 entitlement options. ERM-1158
+* Added load more functionality to covered eresources MCL. ERM-1128
 
 ##  4.0.2 2020-07-06
 * Fixed issue with only 10 results being retrieved for internal contacts. ERM-980

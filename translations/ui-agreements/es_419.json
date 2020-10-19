@@ -478,11 +478,12 @@
     "customCoverage.warn.endIssue": "Fascículo final se borrará ya que ningún recurso electrónico está vinculado",
     "line.new": "Nueva línea de acuerdo",
     "line.create.callout": "Línea de acuerdo creada",
-    "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line",
-    "eresources.removePackageFromBasket": "Remove package from basket",
-    "eresources.dataSource": "Data source",
-    "action": "Action",
-    "basket.existingAgreements": "Existing agreements",
-    "basket.messageBanner": "Select one or more e-resources and add them to a new or existing agreement. An agreement line will be created for each e-resource that you select.",
-    "basket.removeFromBasket": "Remove { publicationType } \"{ name }\" from basket"
+    "emptyAccordion.lineCustomCoverage": "No hay cobertura personalizada para esta línea de acuerdo",
+    "eresources.removePackageFromBasket": "Retirar el paquete de la cesta",
+    "eresources.dataSource": "Fuente de datos",
+    "action": "Acción",
+    "basket.existingAgreements": "Acuerdos existentes",
+    "basket.messageBanner": "Seleccione uno o más recursos electrónicos y agréguelos a un acuerdo nuevo o existente. Se creará una línea de acuerdo para cada recurso electrónico que seleccione.",
+    "basket.removeFromBasket": "Eliminar { publicationType } \"{ nombre }\" de la cesta",
+    "duplicateAgreementModal.org.olf.erm.SubscriptionAgreement.name.unique": "No se puede duplicar el acuerdo. No se guardó el acuerdo. El nombre debe ser único. Ya existe un acuerdo con el nombre \"Copia de: {name} \"."
 }
