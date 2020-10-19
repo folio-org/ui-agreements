@@ -447,6 +447,8 @@ class AgreementViewRoute extends React.Component {
   render() {
     const {
       handlers,
+      history,
+      match,
       resources,
       tagsEnabled,
     } = this.props;
@@ -478,7 +480,9 @@ class AgreementViewRoute extends React.Component {
           onViewAgreementLine: this.handleViewAgreementLine,
         }}
         helperApp={this.getHelperApp()}
+        history={history}
         isLoading={this.isLoading()}
+        match={match}
       />
     );
   }

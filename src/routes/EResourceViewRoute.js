@@ -236,6 +236,8 @@ class EResourceViewRoute extends React.Component {
   render() {
     const {
       handlers,
+      history,
+      match,
       isSuppressFromDiscoveryEnabled,
       resources,
       tagsEnabled,
@@ -265,7 +267,9 @@ class EResourceViewRoute extends React.Component {
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
         helperApp={(eresource) => this.getHelperApp(eresource)}
+        history={history}
         isLoading={this.isLoading()}
+        match={match}
       />
     );
   }

@@ -9,6 +9,7 @@ import {
   Col,
   ConfirmationModal,
   ExpandAllButton,
+  HasCommand,
   Icon,
   IconButton,
   LoadingPane,
@@ -57,14 +58,18 @@ const propTypes = {
     onToggleTags: PropTypes.func,
   }).isRequired,
   helperApp: PropTypes.node,
+  history: PropTypes.object,
   isLoading: PropTypes.bool,
+  match: PropTypes.object,
 };
 
 const AgreementLine = ({
   data: { line },
   handlers,
   helperApp,
+  history,
   isLoading,
+  match: { params },
 }) => {
   const paneProps = {
     defaultWidth: '55%',
@@ -81,36 +86,59 @@ const AgreementLine = ({
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
   const resourceName = resource.pti?.titleInstance.name ?? resource.reference_object?.label ?? '';
 
+  const goToEdit = () => {
+    history.push(`/erm/agreements/${params.agreementId}/line/${params.lineId}/edit`);
+  };
+
+  const shortcuts = [
+    {
+      name: 'edit',
+      handler: goToEdit,
+    },
+    {
+      name: 'expandAllSections',
+      // handler: this.expandAllSections,
+    },
+    {
+      name: 'collapseAllSections',
+      // handler: this.collapseAllSections
+    }
+  ];
   return (
-    <>
-      <Pane
-        actionMenu={() => (
-          <IfPermission perm="ui-agreements.agreements.edit">
-            <Button
-              buttonStyle="dropdownItem"
-              id="clickable-dropdown-edit-agreement-line"
-              onClick={handlers.onEdit}
-            >
-              <Icon icon="edit">
-                <FormattedMessage id="ui-agreements.agreements.edit" />
-              </Icon>
-            </Button>
-            <Button
-              buttonStyle="dropdownItem"
-              id="clickable-dropdown-delete-agreement-line"
-              onClick={() => setShowDeleteConfirmationModal(true)}
-            >
-              <Icon icon="trash">
-                <FormattedMessage id="ui-agreements.delete" />
-              </Icon>
-            </Button>
-          </IfPermission>
-        )}
-        appIcon={<AppIcon app="agreements" />}
-        lastMenu={
-          <IfPermission perm="ui-agreements.agreements.edit">
-            <PaneMenu>
-              {handlers.onToggleTags &&
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope
+      scope={document.body}
+    >
+      <>
+        <Pane
+          actionMenu={() => (
+            <IfPermission perm="ui-agreements.agreements.edit">
+              <Button
+                buttonStyle="dropdownItem"
+                id="clickable-dropdown-edit-agreement-line"
+                onClick={handlers.onEdit}
+              >
+                <Icon icon="edit">
+                  <FormattedMessage id="ui-agreements.agreements.edit" />
+                </Icon>
+              </Button>
+              <Button
+                buttonStyle="dropdownItem"
+                id="clickable-dropdown-delete-agreement-line"
+                onClick={() => setShowDeleteConfirmationModal(true)}
+              >
+                <Icon icon="trash">
+                  <FormattedMessage id="ui-agreements.delete" />
+                </Icon>
+              </Button>
+            </IfPermission>
+          )}
+          appIcon={<AppIcon app="agreements" />}
+          lastMenu={
+            <IfPermission perm="ui-agreements.agreements.edit">
+              <PaneMenu>
+                {handlers.onToggleTags &&
                 <IconButton
                   ariaLabel={intl.formatMessage({ id: 'ui-agreements.agreements.showTags' })}
                   badgeCount={line?.tags?.length ?? 0}
@@ -119,58 +147,59 @@ const AgreementLine = ({
                   onClick={handlers.onToggleTags}
                 />
               }
-            </PaneMenu>
-          </IfPermission>
+              </PaneMenu>
+            </IfPermission>
         }
-        paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
-        {...paneProps}
-      >
-        <Info
-          isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled}
-          line={line}
-          resource={resource}
+          paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
+          {...paneProps}
+        >
+          <Info
+            isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled}
+            line={line}
+            resource={resource}
+          />
+          <AccordionStatus>
+            <Row end="xs">
+              <Col xs>
+                <ExpandAllButton id="clickable-expand-all" />
+              </Col>
+            </Row>
+            <AccordionSet>
+              <POLines line={line} resource={resource} />
+              <Coverage line={line} resource={resource} />
+              <FormattedMessage id="ui-agreements.line.lineForAgreement" values={{ agreementName: line.owner?.name }}>
+                {title => (
+                  <NotesSmartAccordion
+                    domainName="agreements"
+                    entityId={line.id ?? '-'}
+                    entityName={title ?? '-'}
+                    entityType="agreementLine"
+                    id="agreement-line-notes"
+                    pathToNoteCreate={urls.noteCreate()}
+                    pathToNoteDetails={urls.notes()}
+                  />
+                )}
+              </FormattedMessage>
+            </AccordionSet>
+          </AccordionStatus>
+        </Pane>
+        {helperApp}
+        <ConfirmationModal
+          buttonStyle="danger"
+          confirmLabel={<FormattedMessage id="ui-agreements.delete" />}
+          data-test-delete-confirmation-modal
+          heading={<FormattedMessage id="ui-agreements.agreementLines.deleteAgreementLine" />}
+          id="delete-agreement-line-confirmation"
+          message={<SafeHTMLMessage id="ui-agreements.agreementLines.deleteConfirmMessage" values={{ name: resourceName }} />}
+          onCancel={() => setShowDeleteConfirmationModal(false)}
+          onConfirm={() => {
+            handlers.onDelete();
+            setShowDeleteConfirmationModal(false);
+          }}
+          open={showDeleteConfirmationModal}
         />
-        <AccordionStatus>
-          <Row end="xs">
-            <Col xs>
-              <ExpandAllButton id="clickable-expand-all" />
-            </Col>
-          </Row>
-          <AccordionSet>
-            <POLines line={line} resource={resource} />
-            <Coverage line={line} resource={resource} />
-            <FormattedMessage id="ui-agreements.line.lineForAgreement" values={{ agreementName: line.owner?.name }}>
-              {title => (
-                <NotesSmartAccordion
-                  domainName="agreements"
-                  entityId={line.id ?? '-'}
-                  entityName={title ?? '-'}
-                  entityType="agreementLine"
-                  id="agreement-line-notes"
-                  pathToNoteCreate={urls.noteCreate()}
-                  pathToNoteDetails={urls.notes()}
-                />
-              )}
-            </FormattedMessage>
-          </AccordionSet>
-        </AccordionStatus>
-      </Pane>
-      {helperApp}
-      <ConfirmationModal
-        buttonStyle="danger"
-        confirmLabel={<FormattedMessage id="ui-agreements.delete" />}
-        data-test-delete-confirmation-modal
-        heading={<FormattedMessage id="ui-agreements.agreementLines.deleteAgreementLine" />}
-        id="delete-agreement-line-confirmation"
-        message={<SafeHTMLMessage id="ui-agreements.agreementLines.deleteConfirmMessage" values={{ name: resourceName }} />}
-        onCancel={() => setShowDeleteConfirmationModal(false)}
-        onConfirm={() => {
-          handlers.onDelete();
-          setShowDeleteConfirmationModal(false);
-        }}
-        open={showDeleteConfirmationModal}
-      />
-    </>
+      </>
+    </HasCommand>
   );
 };
 

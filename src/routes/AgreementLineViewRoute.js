@@ -168,7 +168,7 @@ class AgreementLineViewRoute extends React.Component {
   }
 
   render() {
-    const { resources, tagsEnabled, isSuppressFromDiscoveryEnabled } = this.props;
+    const { history, match, resources, tagsEnabled, isSuppressFromDiscoveryEnabled } = this.props;
 
     return (
       <View
@@ -184,7 +184,9 @@ class AgreementLineViewRoute extends React.Component {
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
         helperApp={this.getHelperApp()}
+        history={history}
         isLoading={this.isLoading()}
+        match={match}
       />
     );
   }

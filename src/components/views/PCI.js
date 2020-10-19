@@ -7,6 +7,7 @@ import {
   AccordionStatus,
   Col,
   ExpandAllButton,
+  HasCommand,
   Headline,
   Row,
 } from '@folio/stripes/components';
@@ -38,7 +39,9 @@ export default class PCI extends React.Component {
     }),
     handlers: PropTypes.shape({
       isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
-    })
+    }),
+    history: PropTypes.object,
+    match: PropTypes.object,
   }
 
   getInitialAccordionsState = () => {
@@ -48,43 +51,70 @@ export default class PCI extends React.Component {
     };
   }
 
+  goToEdit = () => {
+    const { history, match: { params } } = this.props;
+    history.push(`/erm/eresources/${params.id}/edit`);
+  };
+
   render() {
     const { data, handlers: { isSuppressFromDiscoveryEnabled } } = this.props;
     const { eresource, searchString } = data;
 
+    const checkScope = () => true;
+    const shortcuts = [
+      {
+        name: 'edit',
+        handler: this.goToEdit,
+      },
+      {
+        name: 'expandAllSections',
+        handler: this.expandAllSections,
+      },
+      {
+        name: 'collapseAllSections',
+        handler: this.collapseAllSections
+      }
+    ];
+
     return (
-      <div id="eresource-pci">
-        <PCIInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} pci={eresource} />
-        <div data-test-parent-package-details>
-          <Headline margin="small" size="large" tag="h3">
-            <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
-          </Headline>
-          <PackageCard pkg={eresource?.pkg ?? {}} searchString={searchString} />
+      <HasCommand
+        commands={shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
+      >
+        <div id="eresource-pci">
+          <PCIInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} pci={eresource} />
+          <div data-test-parent-package-details>
+            <Headline margin="small" size="large" tag="h3">
+              <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
+            </Headline>
+            <PackageCard pkg={eresource?.pkg ?? {}} searchString={searchString} />
+          </div>
+          <div id="title-info">
+            <Headline margin="small" size="large" tag="h3">
+              <FormattedMessage id="ui-agreements.eresources.titleDetails" />
+            </Headline>
+            <TitleCard searchString={searchString} title={data.eresource} />
+          </div>
+          <AccordionStatus>
+            <Row end="xs">
+              <Col xs>
+                <ExpandAllButton />
+              </Col>
+            </Row>
+            <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+              <PCICoverage data={data} />
+              <Agreements
+                data={data}
+                headline={eresource.name}
+                id="eresourceAgreements"
+                renderRelatedEntitlements
+                visibleColumns={['name', 'type', 'startDate', 'endDate']}
+              />
+            </AccordionSet>
+          </AccordionStatus>
         </div>
-        <div id="title-info">
-          <Headline margin="small" size="large" tag="h3">
-            <FormattedMessage id="ui-agreements.eresources.titleDetails" />
-          </Headline>
-          <TitleCard searchString={searchString} title={data.eresource} />
-        </div>
-        <AccordionStatus>
-          <Row end="xs">
-            <Col xs>
-              <ExpandAllButton />
-            </Col>
-          </Row>
-          <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-            <PCICoverage data={data} />
-            <Agreements
-              data={data}
-              headline={eresource.name}
-              id="eresourceAgreements"
-              renderRelatedEntitlements
-              visibleColumns={['name', 'type', 'startDate', 'endDate']}
-            />
-          </AccordionSet>
-        </AccordionStatus>
-      </div>
+      </HasCommand>
     );
   }
 }

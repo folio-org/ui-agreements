@@ -11,6 +11,7 @@ import {
   ButtonGroup,
   Col,
   ExpandAllButton,
+  HasCommand,
   Pane,
   PaneFooter,
   Paneset,
@@ -47,6 +48,7 @@ const propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   isEholdingsEnabled: PropTypes.bool,
   lineId: PropTypes.string,
+  onSubmit: PropTypes.func,
   pristine: PropTypes.bool,
   submitting: PropTypes.bool,
   values: PropTypes.object,
@@ -108,50 +110,75 @@ const AgreementLineForm = ({
     );
   };
 
+  const handleSaveKeyCommand = (e) => {
+    e.preventDefault();
+    handleSubmit();
+  };
+
+  const shortcuts = [
+    {
+      name: 'save',
+      handler: handleSaveKeyCommand,
+    },
+    {
+      name: 'expandAllSections',
+      // handler: expandAllSections,
+    },
+    {
+      name: 'collapseAllSections',
+      // handler: collapseAllSections
+    }
+  ];
+
   return (
-    <Paneset>
-      <Pane
-        appIcon={<AppIcon app="agreements" />}
-        centerContent
-        defaultWidth="100%"
-        dismissible
-        footer={(
-          <PaneFooter
-            renderEnd={(
-              <Button
-                buttonStyle="primary mega"
-                disabled={pristine || submitting}
-                id="clickable-update-agreement-line"
-                marginBottom0
-                onClick={handleSubmit}
-                type="submit"
-              >
-                <FormattedMessage id="stripes-components.saveAndClose" />
-              </Button>
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope
+      scope={document.body}
+    >
+      <Paneset>
+        <Pane
+          appIcon={<AppIcon app="agreements" />}
+          centerContent
+          defaultWidth="100%"
+          dismissible
+          footer={(
+            <PaneFooter
+              renderEnd={(
+                <Button
+                  buttonStyle="primary mega"
+                  disabled={pristine || submitting}
+                  id="clickable-update-agreement-line"
+                  marginBottom0
+                  onClick={handleSubmit}
+                  type="submit"
+                >
+                  <FormattedMessage id="stripes-components.saveAndClose" />
+                </Button>
             )}
-            renderStart={(
-              <Button
-                buttonStyle="default mega"
-                id="clickable-cancel"
-                marginBottom0
-                onClick={handlers.onClose}
-              >
-                <FormattedMessage id="stripes-components.cancel" />
-              </Button>
+              renderStart={(
+                <Button
+                  buttonStyle="default mega"
+                  id="clickable-cancel"
+                  marginBottom0
+                  onClick={handlers.onClose}
+                >
+                  <FormattedMessage id="stripes-components.cancel" />
+                </Button>
             )}
-          />
+            />
         )}
-        id="pane-agreement-line-form"
-        onClose={handlers.onClose}
-        paneTitle={lineId ?
-          <FormattedMessage id="ui-agreements.line.edit" />
-          :
-          <FormattedMessage id="ui-agreements.line.new" />
+          id="pane-agreement-line-form"
+          onClose={handlers.onClose}
+          paneTitle={lineId ?
+            <FormattedMessage id="ui-agreements.line.edit" />
+            :
+            <FormattedMessage id="ui-agreements.line.new" />
         }
-      >
-        {hasLoaded ? <div id="form-loaded" /> : null}
-        {/* Logic to render the button group. Set eholdings or basket as source based on eholdings permission / if eresources enabled */}
-        {
+        >
+          {hasLoaded ? <div id="form-loaded" /> : null}
+          {/* Logic to render the button group. Set eholdings or basket as source based on eholdings permission / if eresources enabled */}
+          {
           (!line.id || isDetached(line)) && ( // render button group on edit only for detached line type
             isEholdingsEnabled ? (
               <IfEResourcesEnabled>
@@ -184,21 +211,22 @@ const AgreementLineForm = ({
             )
           )
         }
-        <FormEresource {...getSectionProps()} />
-        <FormInfo {...getSectionProps()} />
-        <AccordionStatus>
-          <Row end="xs">
-            <Col xs>
-              <ExpandAllButton id="clickable-expand-all" />
-            </Col>
-          </Row>
-          <AccordionSet>
-            <FormPOLines {...getSectionProps()} />
-            {agreementLineSource === 'basket' && <FormCoverage {...getSectionProps()} />}
-          </AccordionSet>
-        </AccordionStatus>
-      </Pane>
-    </Paneset>
+          <FormEresource {...getSectionProps()} />
+          <FormInfo {...getSectionProps()} />
+          <AccordionStatus>
+            <Row end="xs">
+              <Col xs>
+                <ExpandAllButton id="clickable-expand-all" />
+              </Col>
+            </Row>
+            <AccordionSet>
+              <FormPOLines {...getSectionProps()} />
+              {agreementLineSource === 'basket' && <FormCoverage {...getSectionProps()} />}
+            </AccordionSet>
+          </AccordionStatus>
+        </Pane>
+      </Paneset>
+    </HasCommand>
   );
 };
 
