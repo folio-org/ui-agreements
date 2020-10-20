@@ -26,6 +26,8 @@ const urls = {
   noteEdit: id => `/erm/notes/${id}/edit`,
   noteCreate: () => '/erm/notes/create',
 
+  platforms: () => '/erm/platforms',
+
   orgView: id => `/organizations/view/${id}`,
 
   poLineView: id => `/orders/lines/view/${id}`,

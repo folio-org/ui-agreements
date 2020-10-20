@@ -4,16 +4,17 @@ import { FormattedMessage } from 'react-intl';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
 import {
-  MultiColumnList,
-  SearchField,
-  Pane,
-  Icon,
   Button,
   ButtonGroup,
+  FormattedUTCDate,
+  Icon,
+  MultiColumnList,
+  Pane,
   PaneMenu,
+  SearchField,
 } from '@folio/stripes/components';
 
-import { AppIcon } from '@folio/stripes/core';
+import { AppIcon, IfPermission } from '@folio/stripes/core';
 
 import {
   CollapseFilterPaneButton,
@@ -23,45 +24,35 @@ import {
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
 
-import {
-  getResourceIdentifier,
-  getSiblingIdentifier,
-  EResourceType
-} from '@folio/stripes-erm-components';
-import EResourceFilters from '../EResourceFilters';
+import { statuses } from '../../constants';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
-
 import { urls } from '../utilities';
-import { resultCount } from '../../constants';
-
 import css from './Agreements.css';
 
 const propTypes = {
   children: PropTypes.object,
   data: PropTypes.shape({
-    eresources: PropTypes.arrayOf(PropTypes.object).isRequired,
+    platforms: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
   onNeedMoreData: PropTypes.func.isRequired,
   queryGetter: PropTypes.func.isRequired,
   querySetter: PropTypes.func.isRequired,
   searchString: PropTypes.string,
-  selectedRecordId: PropTypes.string,
   source: PropTypes.shape({
     loaded: PropTypes.func,
     totalCount: PropTypes.func,
   }),
 };
 
-const filterPaneVisibilityKey = '@folio/agreements/eresourcesFilterPaneVisibility';
+const filterPaneVisibilityKey = '@folio/platforms/platformsFilterPaneVisibility';
 
-const EResources = ({
+const Platforms = ({
   children,
   data = {},
   onNeedMoreData,
   queryGetter,
   querySetter,
-  searchString,
-  selectedRecordId,
+  searchString = '',
   source,
 }) => {
   const count = source?.totalCount() ?? 0;
@@ -71,6 +62,7 @@ const EResources = ({
   const searchField = useRef(null);
 
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
+
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
@@ -78,14 +70,13 @@ const EResources = ({
   };
 
   return (
-    <div data-test-eresources>
+    <div data-test-platforms>
       <SearchAndSortQuery
-        initialFilterState={{}}
         initialSearchState={{ query: '' }}
         initialSortState={{ sort: 'name' }}
         queryGetter={queryGetter}
         querySetter={querySetter}
-        sortableColumns={['name', 'publicationType']}
+        syncToLocationSearch
       >
         {
           ({
@@ -103,11 +94,14 @@ const EResources = ({
             const filterCount = activeFilters.string ? activeFilters.string.split(',').length : 0;
 
             return (
-              <PersistedPaneset appId="@folio/agreements" id="eresources-paneset">
+              <PersistedPaneset
+                appId="@folio/platforms"
+                id="platforms-paneset"
+              >
                 {filterPaneIsVisible &&
                   <Pane
                     defaultWidth="20%"
-                    id="pane-eresources-search"
+                    id="pane-platform-search"
                     lastMenu={
                       <PaneMenu>
                         <CollapseFilterPaneButton onClick={toggleFilterPane} />
@@ -125,14 +119,14 @@ const EResources = ({
                             <FormattedMessage id="ui-agreements.agreements" />
                           </Button>
                           <Button
-                            buttonStyle="primary"
                             id="clickable-nav-eresources"
+                            to={urls.eresources()}
                           >
                             <FormattedMessage id="ui-agreements.eresources" />
                           </Button>
                           <Button
+                            buttonStyle="primary"
                             id="clickable-nav-platforms"
-                            to={urls.platforms()}
                           >
                             <FormattedMessage id="ui-agreements.platforms" />
                           </Button>
@@ -146,8 +140,8 @@ const EResources = ({
                               aria-label={ariaLabel}
                               autoFocus
                               className={css.searchField}
-                              data-test-eresource-search-input
-                              id="input-eresource-search"
+                              data-test-platform-search-input
+                              id="input-platform-search"
                               inputRef={searchField}
                               marginBottom0
                               name="query"
@@ -161,7 +155,7 @@ const EResources = ({
                           buttonStyle="primary"
                           disabled={!searchValue.query || searchValue.query === ''}
                           fullWidth
-                          id="clickable-search-eresources"
+                          id="clickable-search-platforms"
                           marginBottom0
                           type="submit"
                         >
@@ -180,16 +174,11 @@ const EResources = ({
                           </Icon>
                         </Button>
                       </div>
-                      <EResourceFilters
-                        activeFilters={activeFilters.state}
-                        data={data}
-                        filterHandlers={getFilterHandlers()}
-                      />
                     </form>
                   </Pane>
                 }
                 <Pane
-                  appIcon={<AppIcon app="agreements" iconKey="eresource" size="small" />}
+                  appIcon={<AppIcon app="agreements" iconKey="platform" />}
                   defaultWidth="fill"
                   firstMenu={
                     !filterPaneIsVisible ?
@@ -204,7 +193,7 @@ const EResources = ({
                       :
                       null
                   }
-                  id="pane-eresources-list"
+                  id="pane-platform-list"
                   noOverflow
                   padContent={false}
                   paneSub={
@@ -213,47 +202,35 @@ const EResources = ({
                       :
                       <FormattedMessage id="stripes-smart-components.searchCriteria" />
                   }
-                  paneTitle={<FormattedMessage id="ui-agreements.eresources" />}
+                  paneTitle={<FormattedMessage id="ui-agreements.platforms" />}
                 >
                   <MultiColumnList
                     autosize
                     columnMapping={{
-                      name: <FormattedMessage id="ui-agreements.eresources.name" />,
-                      publicationType: <FormattedMessage id="ui-agreements.eresources.publicationType" />,
-                      isbn: <FormattedMessage id="ui-agreements.identifier.isbn" />,
-                      eissn: <FormattedMessage id="ui-agreements.identifier.eissn" />,
-                      pissn: <FormattedMessage id="ui-agreements.identifier.pissn" />,
+                      name: <FormattedMessage id="ui-agreements.agreements.name" />,
                     }}
-                    columnWidths={{
-                      name: 300,
-                      publicationType: 100,
-                      isbn: 150,
-                      eissn: 150,
-                      pissn: 150,
-                    }}
-                    contentData={data.eresources}
+                    contentData={data.agreements}
                     formatter={{
-                      name: e => {
+                      name: a => {
                         return (
                           <AppIcon
                             app="agreements"
                             iconAlignment="baseline"
-                            iconKey="eresource"
+                            iconKey="platform"
                             size="small"
                           >
-                            {e._object?.longName ?? e.name}
+                            <div style={{ overflowWrap: 'break-word', width: 460 }}>
+                              {a.name}
+                            </div>
                           </AppIcon>
                         );
                       },
-                      publicationType: e => <EResourceType resource={e} />,
-                      isbn: e => getResourceIdentifier(e._object, 'isbn'),
-                      eissn: e => getResourceIdentifier(e._object, 'eissn'),
-                      pissn: e => getResourceIdentifier(e._object, 'pissn') ?? getSiblingIdentifier(e._object, 'issn'),
                     }}
-                    id="list-eresources"
+                    hasMargin
+                    id="list-platforms"
                     isEmptyMessage={
                       source ? (
-                        <div data-test-eresources-no-results-message>
+                        <div data-test-platforms-no-results-message>
                           <SearchAndSortNoResultsMessage
                             filterPaneIsVisible
                             searchTerm={query.query ?? ''}
@@ -263,20 +240,19 @@ const EResources = ({
                         </div>
                       ) : '...'
                     }
-                    isSelected={({ item }) => item.id === selectedRecordId}
                     onHeaderClick={onSort}
                     onNeedMoreData={onNeedMoreData}
-                    pageAmount={resultCount.RESULT_COUNT_INCREMENT}
-                    pagingType="click"
                     rowProps={{
-                      labelStrings: ({ rowData }) => [rowData.name],
-                      to: id => `${urls.eresourceView(id)}${searchString}`,
+                      to: id => `${urls.agreementView(id)}${searchString}`,
+                      labelStrings: ({ rowData }) => ([rowData.name, rowData.agreementStatus?.label]),
                     }}
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     totalCount={count}
                     virtualize
-                    visibleColumns={['name', 'publicationType', 'isbn', 'eissn', 'pissn']}
+                    visibleColumns={[
+                      'name',
+                    ]}
                   />
                 </Pane>
                 {children}
@@ -289,5 +265,6 @@ const EResources = ({
   );
 };
 
-EResources.propTypes = propTypes;
-export default EResources;
+Platforms.propTypes = propTypes;
+
+export default Platforms;

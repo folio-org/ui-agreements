@@ -235,6 +235,11 @@
         "name": "eresource",
         "alt": " ",
         "title": "eresource"
+      },
+      {
+        "name": "platform",
+        "alt": " ",
+        "title": "platform"
       }
     ]
   }
