@@ -27,6 +27,7 @@ const urls = {
   noteCreate: () => '/erm/notes/create',
 
   platforms: () => '/erm/platforms',
+  platformView: id => `/erm/platforms/${id}`,
 
   orgView: id => `/organizations/view/${id}`,
 

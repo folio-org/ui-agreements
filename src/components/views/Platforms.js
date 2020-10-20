@@ -243,7 +243,7 @@ const Platforms = ({
                     onHeaderClick={onSort}
                     onNeedMoreData={onNeedMoreData}
                     rowProps={{
-                      to: id => `${urls.agreementView(id)}${searchString}`,
+                      to: id => `${urls.platformView(id)}${searchString}`,
                       labelStrings: ({ rowData }) => ([rowData.name, rowData.agreementStatus?.label]),
                     }}
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}

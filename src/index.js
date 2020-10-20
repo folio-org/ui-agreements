@@ -26,7 +26,7 @@ const NoteEditRoute = lazy(() => import('./routes/NoteEditRoute'));
 const NoteViewRoute = lazy(() => import('./routes/NoteViewRoute'));
 
 const PlatformsRoute = lazy(() => import('./routes/PlatformsRoute'));
-
+const PlatformViewRoute = lazy(() => import('./routes/PlatformViewRoute'));
 
 const IfEResourcesEnabled = lazy(() => import('./components/IfEResourcesEnabled'));
 const OpenBasketButton = lazy(() => import('./components/OpenBasketButton'));
@@ -83,7 +83,9 @@ class App extends React.Component {
               <Route component={NoteEditRoute} path={`${path}/notes/:id/edit`} />
               <Route component={NoteViewRoute} path={`${path}/notes/:id`} />
 
-              <Route component={PlatformsRoute} path={`${path}/platforms/:id?`} />
+              <Route component={PlatformsRoute} path={`${path}/platforms/:id?`}>
+                <Route component={PlatformViewRoute} path={`${path}/platforms/:id`} />
+              </Route>
 
               <Route component={BasketRoute} path={`${path}/basket`} />
             </Switch>
