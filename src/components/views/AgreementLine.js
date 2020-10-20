@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -78,6 +78,8 @@ const AgreementLine = ({
     onClose: handlers.onClose,
   };
 
+  const accordionStatusRef = useRef();
+
   const intl = useIntl();
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
 
@@ -85,6 +87,20 @@ const AgreementLine = ({
 
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
   const resourceName = resource.pti?.titleInstance.name ?? resource.reference_object?.label ?? '';
+
+  const expandAllSections = (e) => {
+    e.preventDefault();
+    const { state, setStatus } = accordionStatusRef.current;
+    // eslint-disable-next-line no-undef
+    setStatus(() => _.mapValues(state, () => true));
+  };
+
+  const collapseAllSections = (e) => {
+    e.preventDefault();
+    const { state, setStatus } = accordionStatusRef.current;
+    // eslint-disable-next-line no-undef
+    setStatus(() => _.mapValues(state, () => false));
+  };
 
   const goToEdit = () => {
     history.push(`/erm/agreements/${params.agreementId}/line/${params.lineId}/edit`);
@@ -97,11 +113,11 @@ const AgreementLine = ({
     },
     {
       name: 'expandAllSections',
-      // handler: this.expandAllSections,
+      handler: expandAllSections,
     },
     {
       name: 'collapseAllSections',
-      // handler: this.collapseAllSections
+      handler: collapseAllSections
     }
   ];
   return (
@@ -158,7 +174,7 @@ const AgreementLine = ({
             line={line}
             resource={resource}
           />
-          <AccordionStatus>
+          <AccordionStatus ref={accordionStatusRef}>
             <Row end="xs">
               <Col xs>
                 <ExpandAllButton id="clickable-expand-all" />

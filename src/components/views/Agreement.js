@@ -8,7 +8,6 @@ import {
   Button,
   Col,
   ConfirmationModal,
-  expandAllFunction,
   ExpandAllButton,
   HasCommand,
   Icon,
@@ -64,6 +63,12 @@ export default class Agreement extends React.Component {
     isLoading: PropTypes.bool.isRequired,
     match: PropTypes.object,
   }
+
+  constructor(props) {
+    super(props);
+    this.accordionStatusRef = React.createRef();
+  }
+
 
   state = {
     showDeleteConfirmationModal: false,
@@ -214,23 +219,18 @@ export default class Agreement extends React.Component {
     );
   }
 
-  toggleAllSections = (expand) => {
-    this.setState((curState) => {
-      const newSections = expandAllFunction(curState.sections, expand);
-      return {
-        sections: newSections
-      };
-    });
-  }
-
   expandAllSections = (e) => {
     e.preventDefault();
-    this.toggleAllSections(true);
+    const { state, setStatus } = this.accordionStatusRef.current;
+    // eslint-disable-next-line no-undef
+    setStatus(() => _.mapValues(state, () => true));
   }
 
   collapseAllSections = (e) => {
     e.preventDefault();
-    this.toggleAllSections(false);
+    const { state, setStatus } = this.accordionStatusRef.current;
+    // eslint-disable-next-line no-undef
+    setStatus(() => _.mapValues(state, () => false));
   }
 
   goToEdit = () => {
@@ -290,7 +290,7 @@ export default class Agreement extends React.Component {
             <TitleManager record={data.agreement.name}>
               <Header {...this.getSectionProps()} />
               <Info {...this.getSectionProps('info')} />
-              <AccordionStatus>
+              <AccordionStatus ref={this.accordionStatusRef}>
                 <Row end="xs">
                   <Col xs>
                     <ExpandAllButton />
