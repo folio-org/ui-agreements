@@ -28,6 +28,7 @@ const urls = {
 
   platforms: () => '/erm/platforms',
   platformView: id => `/erm/platforms/${id}`,
+  platformEdit: id => `/erm/platforms/${id}/edit`,
 
   orgView: id => `/organizations/view/${id}`,
 

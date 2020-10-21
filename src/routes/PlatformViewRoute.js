@@ -87,7 +87,7 @@ class PlatformViewRoute extends React.Component {
 
   handleEdit = () => {
     const { history, location, match } = this.props;
-    history.push(`${urls.eresourceEdit(match.params.id)}${location.search}`);
+    history.push(`${urls.platformEdit(match.params.id)}${location.search}`);
   }
 
   handleEResourceClick = (id) => {
