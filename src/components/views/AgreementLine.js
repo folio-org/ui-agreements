@@ -120,6 +120,7 @@ const AgreementLine = ({
       handler: collapseAllSections
     }
   ];
+
   return (
     <HasCommand
       commands={shortcuts}

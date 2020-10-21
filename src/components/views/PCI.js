@@ -44,11 +44,30 @@ export default class PCI extends React.Component {
     match: PropTypes.object,
   }
 
+  constructor(props) {
+    super(props);
+    this.accordionStatusRef = React.createRef();
+  }
+
   getInitialAccordionsState = () => {
     return {
       'pci-coverage': false,
       'eresourceAgreements': false,
     };
+  }
+
+  expandAllSections = (e) => {
+    e.preventDefault();
+    const { state, setStatus } = this.accordionStatusRef.current;
+    // eslint-disable-next-line no-undef
+    setStatus(() => _.mapValues(state, () => true));
+  }
+
+  collapseAllSections = (e) => {
+    e.preventDefault();
+    const { state, setStatus } = this.accordionStatusRef.current;
+    // eslint-disable-next-line no-undef
+    setStatus(() => _.mapValues(state, () => false));
   }
 
   goToEdit = () => {
@@ -60,7 +79,6 @@ export default class PCI extends React.Component {
     const { data, handlers: { isSuppressFromDiscoveryEnabled } } = this.props;
     const { eresource, searchString } = data;
 
-    const checkScope = () => true;
     const shortcuts = [
       {
         name: 'edit',
@@ -79,7 +97,7 @@ export default class PCI extends React.Component {
     return (
       <HasCommand
         commands={shortcuts}
-        isWithinScope={checkScope}
+        isWithinScope
         scope={document.body}
       >
         <div id="eresource-pci">
@@ -96,7 +114,7 @@ export default class PCI extends React.Component {
             </Headline>
             <TitleCard searchString={searchString} title={data.eresource} />
           </div>
-          <AccordionStatus>
+          <AccordionStatus ref={this.accordionStatusRef}>
             <Row end="xs">
               <Col xs>
                 <ExpandAllButton />

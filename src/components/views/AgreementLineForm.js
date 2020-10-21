@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -70,6 +70,8 @@ const AgreementLineForm = ({
 
   const [agreementLineSource, setAgreementLineSource] = useState('basket');
 
+  const accordionStatusRef = useRef();
+
   const getSectionProps = () => {
     return {
       addButtonTooltipId: 'ui-agreements.agreementLine.addCustomCoverageTootlip',
@@ -115,6 +117,20 @@ const AgreementLineForm = ({
     handleSubmit();
   };
 
+  const expandAllSections = (e) => {
+    e.preventDefault();
+    const { state, setStatus } = accordionStatusRef.current;
+    // eslint-disable-next-line no-undef
+    setStatus(() => _.mapValues(state, () => true));
+  };
+
+  const collapseAllSections = (e) => {
+    e.preventDefault();
+    const { state, setStatus } = accordionStatusRef.current;
+    // eslint-disable-next-line no-undef
+    setStatus(() => _.mapValues(state, () => false));
+  };
+
   const shortcuts = [
     {
       name: 'save',
@@ -122,11 +138,11 @@ const AgreementLineForm = ({
     },
     {
       name: 'expandAllSections',
-      // handler: expandAllSections,
+      handler: expandAllSections,
     },
     {
       name: 'collapseAllSections',
-      // handler: collapseAllSections
+      handler: collapseAllSections
     }
   ];
 
@@ -213,7 +229,7 @@ const AgreementLineForm = ({
         }
           <FormEresource {...getSectionProps()} />
           <FormInfo {...getSectionProps()} />
-          <AccordionStatus>
+          <AccordionStatus ref={accordionStatusRef}>
             <Row end="xs">
               <Col xs>
                 <ExpandAllButton id="clickable-expand-all" />
