@@ -51,6 +51,8 @@ const propTypes = {
     settings: PropTypes.object,
   }),
   handlers: PropTypes.shape({
+    collapseAllSections: PropTypes.func.isRequired,
+    expandAllSections: PropTypes.func.isRequired,
     isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
@@ -58,18 +60,14 @@ const propTypes = {
     onToggleTags: PropTypes.func,
   }).isRequired,
   helperApp: PropTypes.node,
-  history: PropTypes.object,
   isLoading: PropTypes.bool,
-  match: PropTypes.object,
 };
 
 const AgreementLine = ({
   data: { line },
   handlers,
   helperApp,
-  history,
   isLoading,
-  match: { params },
 }) => {
   const paneProps = {
     defaultWidth: '55%',
@@ -88,36 +86,18 @@ const AgreementLine = ({
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
   const resourceName = resource.pti?.titleInstance.name ?? resource.reference_object?.label ?? '';
 
-  const expandAllSections = (e) => {
-    e.preventDefault();
-    const { state, setStatus } = accordionStatusRef.current;
-    // eslint-disable-next-line no-undef
-    setStatus(() => _.mapValues(state, () => true));
-  };
-
-  const collapseAllSections = (e) => {
-    e.preventDefault();
-    const { state, setStatus } = accordionStatusRef.current;
-    // eslint-disable-next-line no-undef
-    setStatus(() => _.mapValues(state, () => false));
-  };
-
-  const goToEdit = () => {
-    history.push(`/erm/agreements/${params.agreementId}/line/${params.lineId}/edit`);
-  };
-
   const shortcuts = [
     {
       name: 'edit',
-      handler: goToEdit,
+      handler: handlers.onEdit,
     },
     {
       name: 'expandAllSections',
-      handler: expandAllSections,
+      handler: (e) => handlers.expandAllSections(e, accordionStatusRef),
     },
     {
       name: 'collapseAllSections',
-      handler: collapseAllSections
+      handler: (e) => handlers.collapseAllSections(e, accordionStatusRef)
     }
   ];
 

@@ -46,6 +46,8 @@ class AgreementForm extends React.Component {
       getState: PropTypes.func.isRequired,
     }).isRequired,
     handlers: PropTypes.PropTypes.shape({
+      collapseAllSections: PropTypes.func.isRequired,
+      expandAllSections: PropTypes.func.isRequired,
       onBasketLinesAdded: PropTypes.func.isRequired,
       onClose: PropTypes.func.isRequired,
     }),

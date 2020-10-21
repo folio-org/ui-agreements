@@ -7,6 +7,8 @@ import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
 import { Tags } from '@folio/stripes-erm-components';
 
+import withAccordionHandlers from './components/withAccordionHandlers';
+
 import View from '../components/views/AgreementLine';
 import { urls, withSuppressFromDiscovery } from '../components/utilities';
 
@@ -40,6 +42,7 @@ class AgreementLineViewRoute extends React.Component {
   });
 
   static propTypes = {
+    handlers: PropTypes.object,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -168,7 +171,7 @@ class AgreementLineViewRoute extends React.Component {
   }
 
   render() {
-    const { history, match, resources, tagsEnabled, isSuppressFromDiscoveryEnabled } = this.props;
+    const { resources, tagsEnabled, isSuppressFromDiscoveryEnabled } = this.props;
 
     return (
       <View
@@ -177,6 +180,7 @@ class AgreementLineViewRoute extends React.Component {
           line: this.getCompositeLine(),
         }}
         handlers={{
+          ...this.props.handlers,
           isSuppressFromDiscoveryEnabled,
           onClose: this.handleClose,
           onDelete: this.handleDelete,
@@ -184,15 +188,14 @@ class AgreementLineViewRoute extends React.Component {
           onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
         helperApp={this.getHelperApp()}
-        history={history}
         isLoading={this.isLoading()}
-        match={match}
       />
     );
   }
 }
 
 export default compose(
+  withAccordionHandlers,
   stripesConnect,
   withSuppressFromDiscovery,
   withTags,

@@ -9,6 +9,7 @@ import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
 import { withAsyncValidation } from '@folio/stripes-erm-components';
 import withFileHandlers from './components/withFileHandlers';
+import withAccordionHandlers from './components/withAccordionHandlers';
 import { joinRelatedAgreements, splitRelatedAgreements } from './utilities/processRelatedAgreements';
 import View from '../components/views/AgreementForm';
 import NoPermissions from '../components/NoPermissions';
@@ -210,7 +211,7 @@ class AgreementEditRoute extends React.Component {
   };
 
   static defaultProps = {
-    handlers: {},
+    handlers: { },
   }
 
   static contextType = CalloutContext;
@@ -428,6 +429,7 @@ class AgreementEditRoute extends React.Component {
 
 export default compose(
   withFileHandlers,
+  withAccordionHandlers,
   withAsyncValidation,
   stripesConnect
 )(AgreementEditRoute);

@@ -51,6 +51,8 @@ export default class Agreement extends React.Component {
       supplementaryProperties: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
     handlers: PropTypes.shape({
+      collapseAllSections: PropTypes.func.isRequired,
+      expandAllSections: PropTypes.func.isRequired,
       onClone: PropTypes.func.isRequired,
       onClose: PropTypes.func.isRequired,
       onDelete: PropTypes.func.isRequired,
@@ -59,16 +61,13 @@ export default class Agreement extends React.Component {
       onToggleTags: PropTypes.func,
     }).isRequired,
     helperApp: PropTypes.node,
-    history: PropTypes.object,
     isLoading: PropTypes.bool.isRequired,
-    match: PropTypes.object,
   }
 
   constructor(props) {
     super(props);
     this.accordionStatusRef = React.createRef();
   }
-
 
   state = {
     showDeleteConfirmationModal: false,
@@ -219,26 +218,6 @@ export default class Agreement extends React.Component {
     );
   }
 
-  expandAllSections = (e) => {
-    e.preventDefault();
-    const { state, setStatus } = this.accordionStatusRef.current;
-    // eslint-disable-next-line no-undef
-    setStatus(() => _.mapValues(state, () => true));
-  }
-
-  collapseAllSections = (e) => {
-    e.preventDefault();
-    const { state, setStatus } = this.accordionStatusRef.current;
-    // eslint-disable-next-line no-undef
-    setStatus(() => _.mapValues(state, () => false));
-  }
-
-  goToEdit = () => {
-    const { history, match: { params } } = this.props;
-    history.push(`/erm/agreements/${params.id}/edit`);
-  };
-
-
   render() {
     const {
       data,
@@ -261,15 +240,15 @@ export default class Agreement extends React.Component {
     const shortcuts = [
       {
         name: 'edit',
-        handler: this.goToEdit,
+        handler: this.props.handlers.onEdit,
       },
       {
         name: 'expandAllSections',
-        handler: this.expandAllSections,
+        handler: (e) => this.props.handlers.expandAllSections(e, this.accordionStatusRef),
       },
       {
         name: 'collapseAllSections',
-        handler: this.collapseAllSections
+        handler: (e) => this.props.handlers.collapseAllSections(e, this.accordionStatusRef)
       }
     ];
 

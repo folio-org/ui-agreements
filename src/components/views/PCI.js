@@ -38,10 +38,11 @@ export default class PCI extends React.Component {
       settings: PropTypes.object,
     }),
     handlers: PropTypes.shape({
+      collapseAllSections: PropTypes.func.isRequired,
+      expandAllSections: PropTypes.func.isRequired,
       isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
+      onEdit: PropTypes.func.isRequired,
     }),
-    history: PropTypes.object,
-    match: PropTypes.object,
   }
 
   constructor(props) {
@@ -56,41 +57,22 @@ export default class PCI extends React.Component {
     };
   }
 
-  expandAllSections = (e) => {
-    e.preventDefault();
-    const { state, setStatus } = this.accordionStatusRef.current;
-    // eslint-disable-next-line no-undef
-    setStatus(() => _.mapValues(state, () => true));
-  }
-
-  collapseAllSections = (e) => {
-    e.preventDefault();
-    const { state, setStatus } = this.accordionStatusRef.current;
-    // eslint-disable-next-line no-undef
-    setStatus(() => _.mapValues(state, () => false));
-  }
-
-  goToEdit = () => {
-    const { history, match: { params } } = this.props;
-    history.push(`/erm/eresources/${params.id}/edit`);
-  };
-
   render() {
-    const { data, handlers: { isSuppressFromDiscoveryEnabled } } = this.props;
+    const { data, handlers: { collapseAllSections, expandAllSections, isSuppressFromDiscoveryEnabled, onEdit } } = this.props;
     const { eresource, searchString } = data;
 
     const shortcuts = [
       {
         name: 'edit',
-        handler: this.goToEdit,
+        handler: onEdit,
       },
       {
         name: 'expandAllSections',
-        handler: this.expandAllSections,
+        handler: (e) => expandAllSections(e, this.accordionStatusRef),
       },
       {
         name: 'collapseAllSections',
-        handler: this.collapseAllSections
+        handler: (e) => collapseAllSections(e, this.accordionStatusRef)
       }
     ];
 

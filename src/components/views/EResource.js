@@ -42,9 +42,7 @@ const EResource = ({
   data: { eresource },
   helperApp,
   handlers,
-  history,
   isLoading,
-  match,
 }) => {
   const intl = useIntl();
 
@@ -102,7 +100,7 @@ const EResource = ({
         {...paneProps}
       >
         <TitleManager record={eresource.name}>
-          <EResourceViewComponent data={data} handlers={handlers} history={history} match={match} />
+          <EResourceViewComponent data={data} handlers={handlers} />
         </TitleManager>
       </Pane>
       {helperApp(eresource)}

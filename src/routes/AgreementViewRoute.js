@@ -10,6 +10,7 @@ import { preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from './components/withFileHandlers';
+import withAccordionHandlers from './components/withAccordionHandlers';
 import View from '../components/views/Agreement';
 import { urls } from '../components/utilities';
 import { errorTypes, resultCount } from '../constants';
@@ -191,7 +192,7 @@ class AgreementViewRoute extends React.Component {
   };
 
   static defaultProps = {
-    handlers: {},
+    handlers: { },
   }
 
   static contextType = CalloutContext;
@@ -447,8 +448,6 @@ class AgreementViewRoute extends React.Component {
   render() {
     const {
       handlers,
-      history,
-      match,
       resources,
       tagsEnabled,
     } = this.props;
@@ -480,9 +479,7 @@ class AgreementViewRoute extends React.Component {
           onViewAgreementLine: this.handleViewAgreementLine,
         }}
         helperApp={this.getHelperApp()}
-        history={history}
         isLoading={this.isLoading()}
-        match={match}
       />
     );
   }
@@ -491,6 +488,7 @@ class AgreementViewRoute extends React.Component {
 export default compose(
   injectIntl,
   withFileHandlers,
+  withAccordionHandlers,
   stripesConnect,
   withTags,
 )(AgreementViewRoute);

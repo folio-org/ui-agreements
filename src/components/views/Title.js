@@ -32,20 +32,6 @@ export default class Title extends React.Component {
     this.accordionStatusRef = React.createRef();
   }
 
-  expandAllSections = (e) => {
-    e.preventDefault();
-    const { state, setStatus } = this.accordionStatusRef.current;
-    // eslint-disable-next-line no-undef
-    setStatus(() => _.mapValues(state, () => true));
-  }
-
-  collapseAllSections = (e) => {
-    e.preventDefault();
-    const { state, setStatus } = this.accordionStatusRef.current;
-    // eslint-disable-next-line no-undef
-    setStatus(() => _.mapValues(state, () => false));
-  }
-
   getSectionProps = (id) => {
     const { data, handlers } = this.props;
 
@@ -79,16 +65,16 @@ export default class Title extends React.Component {
   );
 
   render() {
-    const { data } = this.props;
+    const { data, handlers } = this.props;
 
     const shortcuts = [
       {
         name: 'expandAllSections',
-        handler: this.expandAllSections,
+        handler: (e) => handlers.expandAllSections(e, this.accordionStatusRef),
       },
       {
         name: 'collapseAllSections',
-        handler: this.collapseAllSections
+        handler: (e) => handlers.collapseAllSections(e, this.accordionStatusRef)
       }
     ];
 

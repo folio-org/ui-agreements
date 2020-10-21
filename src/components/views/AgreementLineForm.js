@@ -42,6 +42,8 @@ const propTypes = {
     getRegisteredFields: PropTypes.func.isRequired,
   }).isRequired,
   handlers: PropTypes.PropTypes.shape({
+    collapseAllSections: PropTypes.func.isRequired,
+    expandAllSections: PropTypes.func.isRequired,
     isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
   }),
@@ -117,20 +119,6 @@ const AgreementLineForm = ({
     handleSubmit();
   };
 
-  const expandAllSections = (e) => {
-    e.preventDefault();
-    const { state, setStatus } = accordionStatusRef.current;
-    // eslint-disable-next-line no-undef
-    setStatus(() => _.mapValues(state, () => true));
-  };
-
-  const collapseAllSections = (e) => {
-    e.preventDefault();
-    const { state, setStatus } = accordionStatusRef.current;
-    // eslint-disable-next-line no-undef
-    setStatus(() => _.mapValues(state, () => false));
-  };
-
   const shortcuts = [
     {
       name: 'save',
@@ -138,11 +126,11 @@ const AgreementLineForm = ({
     },
     {
       name: 'expandAllSections',
-      handler: expandAllSections,
+      handler: (e) => handlers.expandAllSections(e, accordionStatusRef),
     },
     {
       name: 'collapseAllSections',
-      handler: collapseAllSections
+      handler: (e) => handlers.collapseAllSections(e, accordionStatusRef)
     }
   ];
 
