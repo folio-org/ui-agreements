@@ -4,9 +4,9 @@ import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import {
   AccordionSet,
+  AccordionStatus,
   Button,
   Col,
-  expandAllFunction,
   ExpandAllButton,
   HasCommand,
   IconButton,
@@ -28,6 +28,8 @@ class PCIForm extends React.Component {
       getRegisteredFields: PropTypes.func.isRequired,
     }).isRequired,
     handlers: PropTypes.PropTypes.shape({
+      collapseAllSections: PropTypes.func.isRequired,
+      expandAllSections: PropTypes.func.isRequired,
       isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
       onClose: PropTypes.func.isRequired,
     }),
@@ -42,10 +44,15 @@ class PCIForm extends React.Component {
     initialValues: {},
   }
 
-  state = {
-    sections: {
+  constructor(props) {
+    super(props);
+    this.accordionStatusRef = React.createRef();
+  }
+
+  getInitialAccordionsState = () => {
+    return {
       pciFormCoverage: true,
-    }
+    };
   }
 
   getSectionProps(id) {
@@ -54,48 +61,22 @@ class PCIForm extends React.Component {
     return {
       form,
       id,
-      onToggle: this.handleSectionToggle,
-      open: this.state.sections[id],
       values,
     };
   }
 
-  handleSectionToggle = ({ id }) => {
-    this.setState((prevState) => ({
-      sections: {
-        ...prevState.sections,
-        [id]: !prevState.sections[id],
-      }
-    }));
-  }
-
-  handleAllSectionsToggle = (sections) => {
-    this.setState({ sections });
-  }
-
-  toggleAllSections = (expand) => {
-    this.setState((curState) => {
-      const newSections = expandAllFunction(curState.sections, expand);
-
-      return {
-        sections: newSections
-      };
-    });
-  }
-
-  expandAllSections = (e) => {
-    e.preventDefault();
-    this.toggleAllSections(true);
-  }
-
-  collapseAllSections = (e) => {
-    e.preventDefault();
-    this.toggleAllSections(false);
-  }
-
   handleSaveKeyCommand = (e) => {
+    const {
+      handleSubmit,
+      pristine,
+      submitting,
+    } = this.props;
+
     e.preventDefault();
-    this.props.handleSubmit();
+
+    if (!pristine && !submitting) {
+      handleSubmit();
+    }
   }
 
   renderPaneFooter() {
@@ -158,11 +139,11 @@ class PCIForm extends React.Component {
     },
     {
       name: 'expandAllSections',
-      handler: this.expandAllSections,
+      handler: (e) => this.props.handlers.expandAllSections(e, this.accordionStatusRef),
     },
     {
       name: 'collapseAllSections',
-      handler: this.collapseAllSections
+      handler: (e) => this.props.handlers.collapseAllSections(e, this.accordionStatusRef),
     }
   ];
 
@@ -189,20 +170,18 @@ class PCIForm extends React.Component {
             <TitleManager record={name}>
               <form id="form-pci">
                 <PCIFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} />
-                <AccordionSet>
+                <AccordionStatus ref={this.accordionStatusRef}>
                   {hasLoaded ? <div id="form-loaded" /> : null}
                   <Row end="xs">
                     <Col xs>
-                      <ExpandAllButton
-                        accordionStatus={this.state.sections}
-                        id="clickable-expand-all"
-                        onToggle={this.handleAllSectionsToggle}
-                      />
+                      <ExpandAllButton />
                     </Col>
                   </Row>
-                  <div className={css.separator} />
-                  <PCIFormCoverage {...this.getSectionProps('pciFormCoverage')} />
-                </AccordionSet>
+                  <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+                    <div className={css.separator} />
+                    <PCIFormCoverage {...this.getSectionProps('pciFormCoverage')} />
+                  </AccordionSet>
+                </AccordionStatus>
               </form>
             </TitleManager>
           </Pane>
