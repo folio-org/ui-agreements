@@ -116,11 +116,11 @@ const AgreementLineForm = ({
 
   const handleSaveKeyCommand = (e) => {
     e.preventDefault();
-    console.log('pristine: ' + pristine + ' submitting: ' + submitting);
-    // handleSubmit();
-    if (!pristine && !submitting) {
+    handleSubmit();
+    // Bug in HasCommand makes the following not working
+    /* if (!pristine && !submitting) {
       handleSubmit();
-    }
+    } */
   };
 
   const shortcuts = [
