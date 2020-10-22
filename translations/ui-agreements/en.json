@@ -40,6 +40,8 @@
   "permission.agreements.view": "Agreements: Search & view agreements",
   "permission.agreements.edit": "Agreements: Edit agreements",
   "permission.agreements.delete": "Agreements: Delete agreements",
+  "permission.platforms.view": "Agreements: Search & view platforms",
+  "permission.platforms.edit": "Agreements: Edit platforms",
   "permission.generalSettings.manage": "Settings (Agreements): Can view and edit general settings",
   "permission.picklists.manage": "Settings (Agreements): Manage pick lists and values",
   "permission.supplementaryProperties.manage": "Settings (Agreements): Manage agreement supplementary properties",

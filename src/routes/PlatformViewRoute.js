@@ -13,9 +13,9 @@ const RECORDS_PER_REQUEST = 100;
 
 class PlatformViewRoute extends React.Component {
   static manifest = Object.freeze({
-    agreement: {
+    platform: {
       type: 'okapi',
-      path: 'erm/sas/:{id}',
+      path: 'erm/platforms/:{id}',
     },
     query: {},
   });
@@ -97,8 +97,8 @@ class PlatformViewRoute extends React.Component {
   isLoading = () => {
     const { match, resources } = this.props;
     return (
-      match.params.id !== get(resources, 'agreement.records[0].id') &&
-      get(resources, 'agreement.isPending', true)
+      match.params.id !== get(resources, 'platform.records[0].id') &&
+      get(resources, 'platform.isPending', true)
     );
   }
 
@@ -118,16 +118,13 @@ class PlatformViewRoute extends React.Component {
       tagsEnabled,
     } = this.props;
 
-    const agreement = get(resources, 'agreement.records[0]', {
-      contacts: [],
-      orgs: [],
-    });
+    const platform = get(resources, 'platform.records[0]');
 
     return (
       <View
         key={get(resources, 'eresource.loadedAt', 'loading')}
         data={{
-          agreement
+          platform
         }}
         handlers={{
           ...handlers,

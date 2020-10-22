@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -136,6 +136,24 @@
           "erm.titles.view",
           "erm.resources.view",
           "erm.pci.view"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.platforms.view",
+        "displayName": "Platforms: Search & view platforms",
+        "visible": true,
+        "subPermissions": [
+          "module.agreements.enabled",
+          "erm.platforms.view"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.platforms.edit",
+        "displayName": "Platforms: Edit platforms",
+        "visible": true,
+        "subPermissions": [
+          "erm.platforms.edit",
+          "ui-agreements.platforms.view"
         ]
       },
       {

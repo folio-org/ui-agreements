@@ -209,7 +209,7 @@ const Platforms = ({
                     columnMapping={{
                       name: <FormattedMessage id="ui-agreements.agreements.name" />,
                     }}
-                    contentData={data.agreements}
+                    contentData={data.platforms}
                     formatter={{
                       name: a => {
                         return (

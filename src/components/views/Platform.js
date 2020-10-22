@@ -15,7 +15,7 @@ import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 export default class Platform extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      agreement: PropTypes.object.isRequired,
+      platform: PropTypes.object.isRequired,
       eresourcesFilterPath: PropTypes.string,
       searchString: PropTypes.string,
       supplementaryProperties: PropTypes.arrayOf(PropTypes.object),
@@ -150,10 +150,10 @@ export default class Platform extends React.Component {
           actionMenu={this.getActionMenu}
           appIcon={<AppIcon app="agreements" iconKey="platform" />}
           lastMenu={this.renderEditAgreementPaneMenu()}
-          paneTitle={data.agreement.name}
+          paneTitle={data?.platform?.name}
           {...paneProps}
         >
-          <TitleManager record={data.agreement.name} />
+          <TitleManager record={data?.platform?.name} />
         </Pane>
       </>
     );

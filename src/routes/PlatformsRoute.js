@@ -15,9 +15,9 @@ const RESULT_COUNT_INCREMENT = 100;
 
 class PlatformsRoute extends React.Component {
   static manifest = Object.freeze({
-    agreements: {
+    platforms: {
       type: 'okapi',
-      path: 'erm/sas',
+      path: 'erm/platforms',
       records: 'results',
       recordsRequired: '%{resultCount}',
       perRequest: 100,
@@ -115,7 +115,7 @@ class PlatformsRoute extends React.Component {
     return (
       <View
         data={{
-          agreements: get(resources, 'agreements.records', []),
+          platforms: get(resources, 'platforms.records', []),
         }}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}
