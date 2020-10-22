@@ -36,6 +36,19 @@ export default class LinesList extends React.Component {
     coverage: { min: 250, max: 320 },
   }
 
+  sortMap = {
+    name: line => {
+      const resource = getResourceFromEntitlement(line);
+      if (!resource) return line.label;
+      if (isDetached(resource)) return resource.description;
+      if (isExternal(resource)) return line?.reference_object?.label;
+
+      return line?.resource?.name;
+    },
+    activeFrom: line => line.startDate,
+    activeTo: line => line.endDate,
+  }
+
   columnMapping = {
     name: <FormattedMessage id="ui-agreements.eresources.nameDescription" />,
     provider: <FormattedMessage id="ui-agreements.eresources.provider" />,
