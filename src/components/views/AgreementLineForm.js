@@ -116,7 +116,11 @@ const AgreementLineForm = ({
 
   const handleSaveKeyCommand = (e) => {
     e.preventDefault();
-    handleSubmit();
+    console.log('pristine: ' + pristine + ' submitting: ' + submitting);
+    // handleSubmit();
+    if (!pristine && !submitting) {
+      handleSubmit();
+    }
   };
 
   const shortcuts = [

@@ -32,9 +32,7 @@ const propTypes = {
     onToggleTags: PropTypes.func.isRequired
   }).isRequired,
   helperApp: PropTypes.func,
-  history: PropTypes.object,
   isLoading: PropTypes.bool,
-  match: PropTypes.object,
 };
 
 const EResource = ({
