@@ -5,9 +5,8 @@ import compose from 'compose-function';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
-import { Tags } from '@folio/stripes-erm-components';
+import { checkScope, collapseAllSections, expandAllSections, Tags } from '@folio/stripes-erm-components';
 
-import withAccordionHandlers from './components/withAccordionHandlers';
 import View from '../components/views/EResource';
 import { urls, withSuppressFromDiscovery } from '../components/utilities';
 import { resultCount, resourceClasses } from '../constants';
@@ -257,6 +256,9 @@ class EResourceViewRoute extends React.Component {
         }}
         handlers={{
           ...handlers,
+          checkScope,
+          collapseAllSections,
+          expandAllSections,
           isSuppressFromDiscoveryEnabled,
           onFilterPackageContents: this.handleFilterPackageContents,
           onNeedMorePackageContents: this.handleNeedMorePackageContents,
@@ -273,7 +275,6 @@ class EResourceViewRoute extends React.Component {
 }
 
 export default compose(
-  withAccordionHandlers,
   stripesConnect,
   withSuppressFromDiscovery,
   withTags,

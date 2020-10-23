@@ -42,6 +42,7 @@ const propTypes = {
     getRegisteredFields: PropTypes.func.isRequired,
   }).isRequired,
   handlers: PropTypes.PropTypes.shape({
+    checkScope: PropTypes.func.isRequired,
     collapseAllSections: PropTypes.func.isRequired,
     expandAllSections: PropTypes.func.isRequired,
     isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
@@ -141,7 +142,7 @@ const AgreementLineForm = ({
   return (
     <HasCommand
       commands={shortcuts}
-      isWithinScope
+      isWithinScope={handlers.checkScope}
       scope={document.body}
     >
       <Paneset>

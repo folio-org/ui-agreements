@@ -51,6 +51,7 @@ export default class Agreement extends React.Component {
       supplementaryProperties: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
     handlers: PropTypes.shape({
+      checkScope: PropTypes.func.isRequired,
       collapseAllSections: PropTypes.func.isRequired,
       expandAllSections: PropTypes.func.isRequired,
       onClone: PropTypes.func.isRequired,
@@ -240,22 +241,22 @@ export default class Agreement extends React.Component {
     const shortcuts = [
       {
         name: 'edit',
-        handler: this.props.handlers.onEdit,
+        handler: handlers.onEdit,
       },
       {
         name: 'expandAllSections',
-        handler: (e) => this.props.handlers.expandAllSections(e, this.accordionStatusRef),
+        handler: (e) => handlers.expandAllSections(e, this.accordionStatusRef),
       },
       {
         name: 'collapseAllSections',
-        handler: (e) => this.props.handlers.collapseAllSections(e, this.accordionStatusRef)
+        handler: (e) => handlers.collapseAllSections(e, this.accordionStatusRef)
       }
     ];
 
     return (
       <HasCommand
         commands={shortcuts}
-        isWithinScope
+        isWithinScope={handlers.checkScope}
         scope={document.body}
       >
         <>

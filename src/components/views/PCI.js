@@ -38,6 +38,7 @@ export default class PCI extends React.Component {
       settings: PropTypes.object,
     }),
     handlers: PropTypes.shape({
+      checkScope: PropTypes.func.isRequired,
       collapseAllSections: PropTypes.func.isRequired,
       expandAllSections: PropTypes.func.isRequired,
       isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
@@ -58,7 +59,7 @@ export default class PCI extends React.Component {
   }
 
   render() {
-    const { data, handlers: { collapseAllSections, expandAllSections, isSuppressFromDiscoveryEnabled, onEdit } } = this.props;
+    const { data, handlers: { checkScope, collapseAllSections, expandAllSections, isSuppressFromDiscoveryEnabled, onEdit } } = this.props;
     const { eresource, searchString } = data;
 
     const shortcuts = [
@@ -79,7 +80,7 @@ export default class PCI extends React.Component {
     return (
       <HasCommand
         commands={shortcuts}
-        isWithinScope
+        isWithinScope={checkScope}
         scope={document.body}
       >
         <div id="eresource-pci">

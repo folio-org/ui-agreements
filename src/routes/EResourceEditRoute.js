@@ -6,7 +6,7 @@ import compose from 'compose-function';
 import { stripesConnect } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
 
-import withAccordionHandlers from './components/withAccordionHandlers';
+import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 import View from '../components/views/PCIForm';
 import NoPermissions from '../components/NoPermissions';
 import { urls, withSuppressFromDiscovery } from '../components/utilities';
@@ -98,6 +98,9 @@ class EResourceEditRoute extends React.Component {
       <View
         handlers={{
           ...this.props.handlers,
+          checkScope,
+          collapseAllSections,
+          expandAllSections,
           isSuppressFromDiscoveryEnabled,
           onClose: this.handleClose,
         }}
@@ -109,7 +112,6 @@ class EResourceEditRoute extends React.Component {
 }
 
 export default compose(
-  withAccordionHandlers,
   stripesConnect,
   withSuppressFromDiscovery
 )(EResourceEditRoute);

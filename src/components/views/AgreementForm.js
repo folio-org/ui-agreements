@@ -46,6 +46,7 @@ class AgreementForm extends React.Component {
       getState: PropTypes.func.isRequired,
     }).isRequired,
     handlers: PropTypes.PropTypes.shape({
+      checkScope: PropTypes.func.isRequired,
       collapseAllSections: PropTypes.func.isRequired,
       expandAllSections: PropTypes.func.isRequired,
       onBasketLinesAdded: PropTypes.func.isRequired,
@@ -215,7 +216,7 @@ class AgreementForm extends React.Component {
     return (
       <HasCommand
         commands={this.shortcuts}
-        isWithinScope
+        isWithinScope={this.props.handlers.checkScope}
         scope={document.body}
       >
         <Paneset>

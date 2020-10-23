@@ -28,6 +28,7 @@ class PCIForm extends React.Component {
       getRegisteredFields: PropTypes.func.isRequired,
     }).isRequired,
     handlers: PropTypes.PropTypes.shape({
+      checkScope: PropTypes.func.isRequired,
       collapseAllSections: PropTypes.func.isRequired,
       expandAllSections: PropTypes.func.isRequired,
       isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
@@ -148,14 +149,14 @@ class PCIForm extends React.Component {
   ];
 
   render() {
-    const { form, handlers: { isSuppressFromDiscoveryEnabled }, values: { name } } = this.props;
+    const { form, handlers: { checkScope, isSuppressFromDiscoveryEnabled }, values: { name } } = this.props;
 
     const hasLoaded = form.getRegisteredFields().length > 0;
 
     return (
       <HasCommand
         commands={this.shortcuts}
-        isWithinScope
+        isWithinScope={checkScope}
         scope={document.body}
       >
         <Paneset>

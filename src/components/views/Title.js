@@ -81,7 +81,7 @@ export default class Title extends React.Component {
     return (
       <HasCommand
         commands={shortcuts}
-        isWithinScope
+        isWithinScope={handlers.checkScope}
         scope={document.body}
       >
         <div id="eresource-title">

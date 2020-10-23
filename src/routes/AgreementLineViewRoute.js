@@ -5,9 +5,7 @@ import compose from 'compose-function';
 
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
-import { Tags } from '@folio/stripes-erm-components';
-
-import withAccordionHandlers from './components/withAccordionHandlers';
+import { checkScope, collapseAllSections, expandAllSections, Tags } from '@folio/stripes-erm-components';
 
 import View from '../components/views/AgreementLine';
 import { urls, withSuppressFromDiscovery } from '../components/utilities';
@@ -181,6 +179,9 @@ class AgreementLineViewRoute extends React.Component {
         }}
         handlers={{
           ...this.props.handlers,
+          checkScope,
+          collapseAllSections,
+          expandAllSections,
           isSuppressFromDiscoveryEnabled,
           onClose: this.handleClose,
           onDelete: this.handleDelete,
@@ -195,7 +196,6 @@ class AgreementLineViewRoute extends React.Component {
 }
 
 export default compose(
-  withAccordionHandlers,
   stripesConnect,
   withSuppressFromDiscovery,
   withTags,

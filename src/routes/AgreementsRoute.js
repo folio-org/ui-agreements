@@ -4,7 +4,7 @@ import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { StripesConnectedSource } from '@folio/stripes/smart-components';
-import { generateQueryParams, preventResourceRefresh } from '@folio/stripes-erm-components';
+import { checkScope, generateQueryParams, preventResourceRefresh } from '@folio/stripes-erm-components';
 
 import View from '../components/views/Agreements';
 import NoPermissions from '../components/NoPermissions';
@@ -174,6 +174,7 @@ class AgreementsRoute extends React.Component {
           supplementaryProperties: resources?.supplementaryProperties?.records ?? [],
           tagsValues: get(resources, 'tagsValues.records', []),
         }}
+        handlers={{ checkScope }}
         history={this.props.history}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}

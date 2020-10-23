@@ -51,6 +51,7 @@ const propTypes = {
     settings: PropTypes.object,
   }),
   handlers: PropTypes.shape({
+    checkScope: PropTypes.func.isRequired,
     collapseAllSections: PropTypes.func.isRequired,
     expandAllSections: PropTypes.func.isRequired,
     isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
@@ -104,7 +105,7 @@ const AgreementLine = ({
   return (
     <HasCommand
       commands={shortcuts}
-      isWithinScope
+      isWithinScope={handlers.checkScope}
       scope={document.body}
     >
       <>

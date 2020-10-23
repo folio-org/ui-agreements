@@ -4,7 +4,7 @@ import { Switch } from 'react-router-dom';
 import { Route } from '@folio/stripes/core';
 import { CommandList, HasCommand, Layout } from '@folio/stripes/components';
 
-import keyboardCommands from '@folio/stripes-erm-components';
+import { keyboardCommands } from '@folio/stripes-erm-components';
 import css from './index.css';
 
 const AgreementsRoute = lazy(() => import('./routes/AgreementsRoute'));
@@ -41,9 +41,9 @@ class App extends React.Component {
   }
 
   searchInput = () => {
-    return this.props.location.pathname.search('agreements') > 0 ?
+    return this.props.location.pathname.search('/erm/agreements') === 0 ?
       'input-agreement-search' :
-      this.props.location.pathname.search('eresources') > 0 ?
+      this.props.location.pathname.search('/erm/eresources') === 0 ?
         'input-eresource-search' :
         undefined;
   }

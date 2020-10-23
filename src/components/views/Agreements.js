@@ -42,6 +42,7 @@ const propTypes = {
     supplementaryProperties: PropTypes.arrayOf(PropTypes.object).isRequired,
     tagsValues: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
+  handlers: PropTypes.object,
   history: PropTypes.object,
   onNeedMoreData: PropTypes.func.isRequired,
   queryGetter: PropTypes.func.isRequired,
@@ -58,6 +59,7 @@ const filterPaneVisibilityKey = '@folio/agreements/agreementsFilterPaneVisibilit
 const Agreements = ({
   children,
   data = {},
+  handlers,
   history,
   onNeedMoreData,
   queryGetter,
@@ -91,7 +93,11 @@ const Agreements = ({
   ];
 
   return (
-    <HasCommand commands={shortcuts}>
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={handlers.checkScope}
+      scope={document.body}
+    >
       <div data-test-agreements>
         <SearchAndSortQuery
           initialFilterState={{
