@@ -4,8 +4,8 @@ import { Switch } from 'react-router-dom';
 import { Route } from '@folio/stripes/core';
 import { CommandList, HasCommand, Layout } from '@folio/stripes/components';
 
+import keyboardCommands from '@folio/stripes-erm-components';
 import css from './index.css';
-import commands from './keyboardCommands';
 
 const AgreementsRoute = lazy(() => import('./routes/AgreementsRoute'));
 const AgreementCreateRoute = lazy(() => import('./routes/AgreementCreateRoute'));
@@ -84,7 +84,7 @@ class App extends React.Component {
     }
 
     return (
-      <CommandList commands={commands}>
+      <CommandList commands={keyboardCommands}>
         <HasCommand
           commands={this.shortcuts}
           isWithinScope={this.checkScope}

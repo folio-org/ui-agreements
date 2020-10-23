@@ -6,11 +6,11 @@ import { injectIntl } from 'react-intl';
 
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
-import { preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
+import { collapseAllSections, expandAllSections, preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from './components/withFileHandlers';
-import withAccordionHandlers from './components/withAccordionHandlers';
+// import withAccordionHandlers from './components/withAccordionHandlers';
 import View from '../components/views/Agreement';
 import { urls } from '../components/utilities';
 import { errorTypes, resultCount } from '../constants';
@@ -464,6 +464,8 @@ class AgreementViewRoute extends React.Component {
         }}
         handlers={{
           ...handlers,
+          collapseAllSections,
+          expandAllSections,
           onClone: this.handleClone,
           onClose: this.handleClose,
           onDelete: this.handleDelete,
@@ -488,7 +490,6 @@ class AgreementViewRoute extends React.Component {
 export default compose(
   injectIntl,
   withFileHandlers,
-  withAccordionHandlers,
   stripesConnect,
   withTags,
 )(AgreementViewRoute);
