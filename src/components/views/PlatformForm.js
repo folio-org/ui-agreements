@@ -2,19 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import { Field } from 'react-final-form';
+
 import {
   AccordionSet,
   Button,
   Col,
   ExpandAllButton,
   IconButton,
+  KeyValue,
   Pane,
   PaneFooter,
   PaneMenu,
   Paneset,
   Row,
+  TextField
 } from '@folio/stripes/components';
-import { TitleManager } from '@folio/stripes/core';
+import { AppIcon, TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
 import css from './PCIForm.css';
 
@@ -131,6 +135,7 @@ class PlatformForm extends React.Component {
     return (
       <Paneset>
         <Pane
+          appIcon={<AppIcon app="agreements" iconKey="platform" />}
           centerContent
           defaultWidth="100%"
           firstMenu={this.renderFirstMenu()}
@@ -139,9 +144,26 @@ class PlatformForm extends React.Component {
           paneTitle={<FormattedMessage id="ui-agreements.pci.editPci" values={{ name }} />}
         >
           <TitleManager record={name}>
-            <form id="form-pci">
-              jaffa
-              <div className={css.separator} />
+            <form id="form-platform">
+              <Row>
+                <Col xs={3}>
+                  <KeyValue label={<FormattedMessage id="ui-agreements.platform.name" />}>
+                    <div data-test-platform-name>
+                      {name}
+                    </div>
+                  </KeyValue>
+                </Col>
+                <Col xs={3}>
+                  <Field
+                    autoFocus
+                    component={TextField}
+                    id="edit-local-platform-code"
+                    label={<FormattedMessage id="ui-agreements.platform.localPlatformCode" />}
+                    maxLength={255}
+                    name="localCode"
+                  />
+                </Col>
+              </Row>
             </form>
           </TitleManager>
         </Pane>

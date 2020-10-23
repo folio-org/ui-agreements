@@ -4,11 +4,17 @@ import { FormattedMessage } from 'react-intl';
 
 import {
   Button,
+  Col,
+  Headline,
   Icon,
   IconButton,
+  KeyValue,
+  List,
   LoadingPane,
+  NoValue,
   Pane,
   PaneMenu,
+  Row
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 
@@ -25,112 +31,31 @@ export default class Platform extends React.Component {
       onClose: PropTypes.func.isRequired,
       onDelete: PropTypes.func.isRequired,
       onEdit: PropTypes.func,
-      onExportAgreement: PropTypes.func,
       onToggleTags: PropTypes.func,
     }).isRequired,
     helperApp: PropTypes.node,
     isLoading: PropTypes.bool.isRequired,
   }
 
-  getActionMenu = ({ onToggle }) => (
+  getActionMenu = () => (
     <>
-      <IfPermission perm="ui-agreements.agreements.edit">
+      <IfPermission perm="ui-agreements.platforms.edit">
         <Button
           buttonStyle="dropdownItem"
-          id="clickable-dropdown-edit-agreement"
+          id="clickable-dropdown-edit-platform"
           onClick={this.props.handlers.onEdit}
         >
           <Icon icon="edit">
-            <FormattedMessage id="ui-agreements.agreements.edit" />
-          </Icon>
-        </Button>
-        <Button
-          buttonStyle="dropdownItem"
-          id="clickable-dropdown-duplicate-agreement"
-          onClick={() => {
-            this.openDuplicateAgreementModal();
-            onToggle();
-          }}
-        >
-          <Icon icon="duplicate">
-            <FormattedMessage id="ui-agreements.agreements.duplicate" />
-          </Icon>
-        </Button>
-      </IfPermission>
-      <IfPermission perm="ui-agreements.agreements.view">
-        <Button
-          buttonStyle="dropdownItem"
-          id="clickable-dropdown-export-agreement"
-          onClick={() => {
-            this.props.handlers.onExportAgreement();
-            onToggle();
-          }}
-        >
-          <Icon icon="download">
-            <FormattedMessage id="ui-agreements.agreements.export" />
-          </Icon>
-        </Button>
-      </IfPermission>
-      <IfPermission perm="ui-agreements.agreements.delete">
-        <Button
-          buttonStyle="dropdownItem"
-          id="clickable-dropdown-delete-agreement"
-          onClick={() => {
-            this.openDeleteConfirmationModal();
-            onToggle();
-          }}
-        >
-          <Icon icon="trash">
-            <FormattedMessage id="ui-agreements.delete" />
+            <FormattedMessage id="ui-agreements.platform.edit" />
           </Icon>
         </Button>
       </IfPermission>
     </>
   )
 
-  renderEditAgreementPaneMenu = () => {
-    const {
-      data: { agreement },
-      handlers,
-    } = this.props;
-
-    return (
-      <IfPermission perm="ui-agreements.agreements.edit">
-        <PaneMenu>
-          {handlers.onToggleTags &&
-            <FormattedMessage id="ui-agreements.agreements.showTags">
-              {ariaLabel => (
-                <IconButton
-                  ariaLabel={ariaLabel}
-                  badgeCount={agreement?.tags?.length ?? 0}
-                  icon="tag"
-                  id="clickable-show-tags"
-                  onClick={handlers.onToggleTags}
-                />
-              )}
-            </FormattedMessage>
-          }
-          <FormattedMessage id="ui-agreements.agreements.editAgreement">
-            {ariaLabel => (
-              <Button
-                aria-label={ariaLabel}
-                buttonStyle="primary"
-                id="clickable-edit-agreement"
-                marginBottom0
-                onClick={handlers.onEdit}
-              >
-                <FormattedMessage id="stripes-components.button.edit" />
-              </Button>
-            )}
-          </FormattedMessage>
-        </PaneMenu>
-      </IfPermission>
-    );
-  }
-
   render() {
     const {
-      data,
+      data: { platform },
       isLoading,
       handlers,
     } = this.props;
@@ -138,7 +63,7 @@ export default class Platform extends React.Component {
     const paneProps = {
       defaultWidth: '55%',
       dismissible: true,
-      id: 'pane-view-agreement',
+      id: 'pane-view-platform',
       onClose: handlers.onClose,
     };
 
@@ -149,11 +74,43 @@ export default class Platform extends React.Component {
         <Pane
           actionMenu={this.getActionMenu}
           appIcon={<AppIcon app="agreements" iconKey="platform" />}
-          lastMenu={this.renderEditAgreementPaneMenu()}
-          paneTitle={data?.platform?.name}
+          paneTitle={platform?.name}
           {...paneProps}
         >
-          <TitleManager record={data?.platform?.name} />
+          <TitleManager record={platform?.name}>
+            <Row>
+              <Col xs={12}>
+                <div data-test-agreement-name>
+                  <Headline
+                    size="xx-large"
+                    tag="h2"
+                  >
+                    {platform?.name}
+                  </Headline>
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={3}>
+                <KeyValue label={<FormattedMessage id="ui-agreements.platform.localPlatformCode" />}>
+                  <div data-test-local-platform-code>
+                    {platform?.localCode ?? <NoValue />}
+                  </div>
+                </KeyValue>
+              </Col>
+              <Col xs={3}>
+                <KeyValue label={<FormattedMessage id="ui-agreements.platform.locators" />}>
+                  <div data-test-platform-locators>
+                    {platform?.locators?.length ?
+                      platform?.locators.map(locator => <div>{locator?.domainName}</div>)
+                      :
+                      <NoValue />
+                    }
+                  </div>
+                </KeyValue>
+              </Col>
+            </Row>
+          </TitleManager>
         </Pane>
       </>
     );

@@ -433,6 +433,11 @@
   "pci.coverage.endVolume": "End volume",
   "pci.coverage.endIssue": "End issue",
 
+  "platform.edit": "Edit",
+  "platform.localPlatformCode": "Local platform code",
+  "platform.locators": "Locators",
+  "platform.name": "Name",
+
   "poLines.acqMethod": "Acquisition method",
   "poLines.addPOLine": "Add PO line",
   "polines.lineHasNone": "Agreement line has no PO lines",

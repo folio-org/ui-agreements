@@ -12,9 +12,9 @@ import { urls, withSuppressFromDiscovery } from '../components/utilities';
 
 class PlatformEditRoute extends React.Component {
   static manifest = Object.freeze({
-    agreement: {
+    platform: {
       type: 'okapi',
-      path: 'erm/sas/:{id}',
+      path: 'erm/platforms/:{id}',
       shouldRefresh: () => false,
     },
   });
@@ -56,8 +56,8 @@ class PlatformEditRoute extends React.Component {
 
   getInitialValues = () => {
     const { resources } = this.props;
-    const pci = resources?.pci?.records?.[0] ?? {};
-    const initialValues = cloneDeep(pci);
+    const platform = resources?.platform?.records?.[0] ?? {};
+    const initialValues = cloneDeep(platform);
     return initialValues;
   }
 

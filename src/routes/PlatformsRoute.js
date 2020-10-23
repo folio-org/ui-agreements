@@ -59,12 +59,12 @@ class PlatformsRoute extends React.Component {
     this.searchField = React.createRef();
 
     this.state = {
-      hasPerms: props.stripes.hasPerm('ui-agreements.agreements.view'),
+      hasPerms: props.stripes.hasPerm('ui-agreements.platforms.view'),
     };
   }
 
   componentDidMount() {
-    this.source = new StripesConnectedSource(this.props, this.logger, 'agreements');
+    this.source = new StripesConnectedSource(this.props, this.logger, 'platforms');
 
     if (this.searchField.current) {
       this.searchField.current.focus();
@@ -75,18 +75,18 @@ class PlatformsRoute extends React.Component {
     const newCount = this.source.totalCount();
     const newRecords = this.source.records();
 
-    // if (newCount === 1) {
-    //   const { history, location } = this.props;
+    if (newCount === 1) {
+      const { history, location } = this.props;
 
-    //   const prevSource = new StripesConnectedSource(prevProps, this.logger, 'agreements');
-    //   const oldCount = prevSource.totalCount();
-    //   const oldRecords = prevSource.records();
+      const prevSource = new StripesConnectedSource(prevProps, this.logger, 'platforms');
+      const oldCount = prevSource.totalCount();
+      const oldRecords = prevSource.records();
 
-    //   if (oldCount !== 1 || (oldCount === 1 && oldRecords[0].id !== newRecords[0].id)) {
-    //     const record = newRecords[0];
-    //     history.push(`${urls.agreementView(record.id)}${location.search}`);
-    //   }
-    // }
+      if (oldCount !== 1 || (oldCount === 1 && oldRecords[0].id !== newRecords[0].id)) {
+        const record = newRecords[0];
+        history.push(`${urls.platformView(record.id)}${location.search}`);
+      }
+    }
   }
 
   handleNeedMoreData = () => {
@@ -107,7 +107,7 @@ class PlatformsRoute extends React.Component {
     const { children, location, resources } = this.props;
 
     if (this.source) {
-      this.source.update(this.props, 'agreements');
+      this.source.update(this.props, 'platforms');
     }
 
     if (!this.state.hasPerms) return <NoPermissions />;
