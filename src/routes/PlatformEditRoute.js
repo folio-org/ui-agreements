@@ -63,21 +63,17 @@ class PlatformEditRoute extends React.Component {
 
   handleClose = () => {
     const { location, match } = this.props;
-    this.props.history.push(`${urls.eresourceView(match.params.id)}${location.search}`);
+    this.props.history.push(`${urls.platformView(match.params.id)}${location.search}`);
   }
 
-  handleSubmit = (pci) => {
+  handleSubmit = (platform) => {
+    console.log(platform, 'platform');
     const { history, location, mutator } = this.props;
-    const { coverage, id, suppressFromDiscovery } = pci;
 
-    return mutator.pci
-      .PUT({
-        id,
-        coverage,
-        suppressFromDiscovery
-      })
-      .then(() => {
-        history.push(`${urls.eresourceView(id)}${location.search}`);
+    return mutator.platform
+      .PUT(platform)
+      .then(({ id }) => {
+        history.push(`${urls.platformView(id)}${location.search}`);
       });
   }
 

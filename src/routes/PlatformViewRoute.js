@@ -82,7 +82,7 @@ class PlatformViewRoute extends React.Component {
   }
 
   handleClose = () => {
-    this.props.history.push(`${urls.eresources()}${this.props.location.search}`);
+    this.props.history.push(`${urls.platforms()}${this.props.location.search}`);
   }
 
   handleEdit = () => {
