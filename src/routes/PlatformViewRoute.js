@@ -29,7 +29,7 @@ class PlatformViewRoute extends React.Component {
       }).isRequired
     }).isRequired,
     resources: PropTypes.shape({
-      platform: this.propTypes.object,
+      platform: PropTypes.object,
     }).isRequired,
   };
 
