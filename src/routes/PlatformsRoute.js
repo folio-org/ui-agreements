@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { StripesConnectedSource } from '@folio/stripes/smart-components';
@@ -100,7 +99,7 @@ class PlatformsRoute extends React.Component {
   }
 
   queryGetter = () => {
-    return get(this.props.resources, 'query', {});
+    return this.props.resources?.query ?? {};
   }
 
   render() {
@@ -115,7 +114,7 @@ class PlatformsRoute extends React.Component {
     return (
       <View
         data={{
-          platforms: get(resources, 'platforms.records', []),
+          platforms: resources?.platforms?.records ?? [],
         }}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}

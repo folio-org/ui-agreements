@@ -8,7 +8,7 @@ import { LoadingView } from '@folio/stripes/components';
 
 import View from '../components/views/PlatformForm';
 import NoPermissions from '../components/NoPermissions';
-import { urls, withSuppressFromDiscovery } from '../components/utilities';
+import { urls } from '../components/utilities';
 
 class PlatformEditRoute extends React.Component {
   static manifest = Object.freeze({
@@ -23,7 +23,6 @@ class PlatformEditRoute extends React.Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
-    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
     }).isRequired,
@@ -33,13 +32,12 @@ class PlatformEditRoute extends React.Component {
       }).isRequired,
     }).isRequired,
     mutator: PropTypes.shape({
-      pci: PropTypes.shape({
+      platform: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
       }),
     }).isRequired,
     resources: PropTypes.shape({
-      pci: PropTypes.object,
-      settings: PropTypes.object,
+      platform: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
@@ -67,7 +65,6 @@ class PlatformEditRoute extends React.Component {
   }
 
   handleSubmit = (platform) => {
-    console.log(platform, 'platform');
     const { history, location, mutator } = this.props;
 
     return mutator.platform
@@ -86,12 +83,10 @@ class PlatformEditRoute extends React.Component {
   render() {
     if (!this.state.hasPerms) return <NoPermissions />;
     if (this.fetchIsPending()) return <LoadingView dismissible onClose={this.handleClose} />;
-    const { isSuppressFromDiscoveryEnabled } = this.props;
 
     return (
       <View
         handlers={{
-          isSuppressFromDiscoveryEnabled,
           onClose: this.handleClose,
         }}
         initialValues={this.getInitialValues()}
@@ -103,5 +98,4 @@ class PlatformEditRoute extends React.Component {
 
 export default compose(
   stripesConnect,
-  withSuppressFromDiscovery
 )(PlatformEditRoute);

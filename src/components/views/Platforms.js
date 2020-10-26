@@ -6,7 +6,6 @@ import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 import {
   Button,
   ButtonGroup,
-  FormattedUTCDate,
   Icon,
   MultiColumnList,
   Pane,
@@ -14,7 +13,7 @@ import {
   SearchField,
 } from '@folio/stripes/components';
 
-import { AppIcon, IfPermission } from '@folio/stripes/core';
+import { AppIcon } from '@folio/stripes/core';
 
 import {
   CollapseFilterPaneButton,
@@ -24,7 +23,6 @@ import {
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
 
-import { statuses } from '../../constants';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
 import { urls } from '../utilities';
 import css from './Agreements.css';
@@ -84,7 +82,6 @@ const Platforms = ({
             getSearchHandlers,
             onSubmitSearch,
             onSort,
-            getFilterHandlers,
             activeFilters,
             filterChanged,
             searchChanged,

@@ -232,6 +232,9 @@
   "pci.removeCoverage": "Remove coverage",
   "pci.coverageTitle": "Coverage { number }",
 
+  "platform.closeEdit": "Close edit platform",
+  "platform.editPlatform": "Edit {name}",
+
   "eresources.count": "Count",
   "eresources.edit": "Edit",
   "eresources.name": "Name",

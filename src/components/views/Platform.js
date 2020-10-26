@@ -7,13 +7,10 @@ import {
   Col,
   Headline,
   Icon,
-  IconButton,
   KeyValue,
-  List,
   LoadingPane,
   NoValue,
   Pane,
-  PaneMenu,
   Row
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
@@ -22,18 +19,12 @@ export default class Platform extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       platform: PropTypes.object.isRequired,
-      eresourcesFilterPath: PropTypes.string,
       searchString: PropTypes.string,
-      supplementaryProperties: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
     handlers: PropTypes.shape({
-      onClone: PropTypes.func.isRequired,
       onClose: PropTypes.func.isRequired,
-      onDelete: PropTypes.func.isRequired,
       onEdit: PropTypes.func,
-      onToggleTags: PropTypes.func,
     }).isRequired,
-    helperApp: PropTypes.node,
     isLoading: PropTypes.bool.isRequired,
   }
 
@@ -80,7 +71,7 @@ export default class Platform extends React.Component {
           <TitleManager record={platform?.name}>
             <Row>
               <Col xs={12}>
-                <div data-test-agreement-name>
+                <div data-test-platform-name>
                   <Headline
                     size="xx-large"
                     tag="h2"
