@@ -1,5 +1,8 @@
 # Change history for ui-agreements
 
+##  5.1.0 IN PROGRESS
+* Added optionalOkapiInterfaces to package.json. ERM-940
+
 ##  5.0.0 2020-10-15
 * Enhance eHoldings display in Agreement Line view. ERM-948
 * Added ability to set and view notes on organizations. ERM-966
