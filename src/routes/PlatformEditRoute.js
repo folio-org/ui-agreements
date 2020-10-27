@@ -76,7 +76,7 @@ class PlatformEditRoute extends React.Component {
 
   fetchIsPending = () => {
     return Object.values(this.props.resources)
-      .filter(r => r && r.resource !== 'pci')
+      .filter(r => r && r.resource !== 'platform')
       .some(r => r.isPending);
   }
 
