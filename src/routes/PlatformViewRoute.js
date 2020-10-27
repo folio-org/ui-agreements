@@ -78,7 +78,6 @@ class PlatformViewRoute extends React.Component {
         handlers={{
           onClose: this.handleClose,
           onEdit: this.handleEdit,
-          onEResourceClick: this.handleEResourceClick,
         }}
         isLoading={this.isLoading()}
       />
