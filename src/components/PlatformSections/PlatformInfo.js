@@ -10,7 +10,7 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
-export default class PCIInfo extends React.Component {
+export default class PlatformInfo extends React.Component {
   static propTypes = {
     platform: PropTypes.shape({
       localCode: PropTypes.string,
