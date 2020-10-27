@@ -10,52 +10,51 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
-export default class PlatformInfo extends React.Component {
-  static propTypes = {
-    platform: PropTypes.shape({
-      localCode: PropTypes.string,
-      locators: PropTypes.arrayOf(PropTypes.object),
-      name: PropTypes.string
-    }).isRequired,
-  }
-
-  render() {
-    const { platform } = this.props;
-    return (
-      <div id="platform-info">
-        <Row>
-          <Col xs={12}>
-            <div data-test-platform-name>
-              <Headline
-                size="xx-large"
-                tag="h2"
-              >
-                {platform?.name}
-              </Headline>
+const PlatformInfo = ({ platform }) => {
+  return (
+    <div id="platform-info">
+      <Row>
+        <Col xs={12}>
+          <div data-test-platform-name>
+            <Headline
+              size="xx-large"
+              tag="h2"
+            >
+              {platform?.name}
+            </Headline>
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={3}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.platform.localPlatformCode" />}>
+            <div data-test-local-platform-code>
+              {platform?.localCode ?? <NoValue />}
             </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={3}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.platform.localPlatformCode" />}>
-              <div data-test-local-platform-code>
-                {platform?.localCode ?? <NoValue />}
-              </div>
-            </KeyValue>
-          </Col>
-          <Col xs={3}>
-            <KeyValue label={<FormattedMessage id="ui-agreements.platform.locators" />}>
-              <div data-test-platform-locators>
-                {platform?.locators?.length ?
-                  platform?.locators.map(locator => <div>{locator?.domainName}</div>)
-                  :
-                  <NoValue />
+          </KeyValue>
+        </Col>
+        <Col xs={3}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.platform.locators" />}>
+            <div data-test-platform-locators>
+              {platform?.locators?.length ?
+                platform?.locators.map(locator => <div>{locator?.domainName}</div>)
+                :
+                <NoValue />
                     }
-              </div>
-            </KeyValue>
-          </Col>
-        </Row>
-      </div>
-    );
-  }
-}
+            </div>
+          </KeyValue>
+        </Col>
+      </Row>
+    </div>
+  );
+};
+
+PlatformInfo.propTypes = {
+  platform: PropTypes.shape({
+    localCode: PropTypes.string,
+    locators: PropTypes.arrayOf(PropTypes.object),
+    name: PropTypes.string
+  }).isRequired,
+};
+
+export default PlatformInfo;
