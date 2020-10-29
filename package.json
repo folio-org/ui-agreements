@@ -141,6 +141,24 @@
         ]
       },
       {
+        "permissionName": "ui-agreements.platforms.view",
+        "displayName": "Platforms: Search & view platforms",
+        "visible": true,
+        "subPermissions": [
+          "module.agreements.enabled",
+          "erm.platforms.view"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.platforms.edit",
+        "displayName": "Platforms: Edit platforms",
+        "visible": true,
+        "subPermissions": [
+          "erm.platforms.edit",
+          "ui-agreements.platforms.view"
+        ]
+      },
+      {
         "permissionName": "ui-agreements.resources.edit",
         "displayName": "Agreements: Edit e-resources",
         "visible": true,
@@ -237,6 +255,11 @@
         "name": "eresource",
         "alt": " ",
         "title": "eresource"
+      },
+      {
+        "name": "platform",
+        "alt": " ",
+        "title": "platform"
       }
     ]
   }

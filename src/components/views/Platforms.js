@@ -6,8 +6,6 @@ import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 import {
   Button,
   ButtonGroup,
-  FormattedUTCDate,
-  HasCommand,
   Icon,
   MultiColumnList,
   Pane,
@@ -15,7 +13,7 @@ import {
   SearchField,
 } from '@folio/stripes/components';
 
-import { AppIcon, IfPermission } from '@folio/stripes/core';
+import { AppIcon } from '@folio/stripes/core';
 
 import {
   CollapseFilterPaneButton,
@@ -25,8 +23,6 @@ import {
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
 
-import { statuses } from '../../constants';
-import AgreementFilters from '../AgreementFilters';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
 import { urls } from '../utilities';
 import css from './Agreements.css';
@@ -34,16 +30,8 @@ import css from './Agreements.css';
 const propTypes = {
   children: PropTypes.object,
   data: PropTypes.shape({
-    agreements: PropTypes.arrayOf(PropTypes.object).isRequired,
-    agreementStatusValues: PropTypes.arrayOf(PropTypes.object).isRequired,
-    isPerpetualValues: PropTypes.arrayOf(PropTypes.object).isRequired,
-    orgRoleValues: PropTypes.arrayOf(PropTypes.object).isRequired,
-    renewalPriorityValues: PropTypes.arrayOf(PropTypes.object).isRequired,
-    supplementaryProperties: PropTypes.arrayOf(PropTypes.object).isRequired,
-    tagsValues: PropTypes.arrayOf(PropTypes.object).isRequired,
+    platforms: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
-  handlers: PropTypes.object,
-  history: PropTypes.object,
   onNeedMoreData: PropTypes.func.isRequired,
   queryGetter: PropTypes.func.isRequired,
   querySetter: PropTypes.func.isRequired,
@@ -54,13 +42,11 @@ const propTypes = {
   }),
 };
 
-const filterPaneVisibilityKey = '@folio/agreements/agreementsFilterPaneVisibility';
+const filterPaneVisibilityKey = '@folio/platforms/platformsFilterPaneVisibility';
 
-const Agreements = ({
+const Platforms = ({
   children,
   data = {},
-  handlers,
-  history,
   onNeedMoreData,
   queryGetter,
   querySetter,
@@ -81,41 +67,21 @@ const Agreements = ({
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
   };
 
-  const goToNew = () => {
-    history.push('/erm/agreements/create');
-  };
-
-  const shortcuts = [
-    {
-      name: 'new',
-      handler: goToNew,
-    },
-  ];
-
   return (
-    <HasCommand
-      commands={shortcuts}
-      isWithinScope={handlers.checkScope}
-      scope={document.body}
-    >
-      <div data-test-agreements>
-        <SearchAndSortQuery
-          initialFilterState={{
-            agreementStatus: ['active', 'draft', 'in_negotiation', 'requested']
-          }}
-          initialSearchState={{ query: '' }}
-          initialSortState={{ sort: 'name' }}
-          queryGetter={queryGetter}
-          querySetter={querySetter}
-          syncToLocationSearch
-        >
-          {
+    <div data-test-platforms>
+      <SearchAndSortQuery
+        initialSearchState={{ query: '' }}
+        initialSortState={{ sort: 'name' }}
+        queryGetter={queryGetter}
+        querySetter={querySetter}
+        syncToLocationSearch
+      >
+        {
           ({
             searchValue,
             getSearchHandlers,
             onSubmitSearch,
             onSort,
-            getFilterHandlers,
             activeFilters,
             filterChanged,
             searchChanged,
@@ -126,13 +92,13 @@ const Agreements = ({
 
             return (
               <PersistedPaneset
-                appId="@folio/agreements"
-                id="agreements-paneset"
+                appId="@folio/platforms"
+                id="platforms-paneset"
               >
                 {filterPaneIsVisible &&
                   <Pane
                     defaultWidth="20%"
-                    id="pane-agreement-search"
+                    id="pane-platform-search"
                     lastMenu={
                       <PaneMenu>
                         <CollapseFilterPaneButton onClick={toggleFilterPane} />
@@ -144,8 +110,8 @@ const Agreements = ({
                       <IfEResourcesEnabled>
                         <ButtonGroup fullWidth>
                           <Button
-                            buttonStyle="primary"
                             id="clickable-nav-agreements"
+                            to={urls.agreements()}
                           >
                             <FormattedMessage id="ui-agreements.agreements" />
                           </Button>
@@ -156,8 +122,8 @@ const Agreements = ({
                             <FormattedMessage id="ui-agreements.eresources" />
                           </Button>
                           <Button
+                            buttonStyle="primary"
                             id="clickable-nav-platforms"
-                            to={urls.platforms()}
                           >
                             <FormattedMessage id="ui-agreements.platforms" />
                           </Button>
@@ -171,8 +137,8 @@ const Agreements = ({
                               aria-label={ariaLabel}
                               autoFocus
                               className={css.searchField}
-                              data-test-agreement-search-input
-                              id="input-agreement-search"
+                              data-test-platform-search-input
+                              id="input-platform-search"
                               inputRef={searchField}
                               marginBottom0
                               name="query"
@@ -186,7 +152,7 @@ const Agreements = ({
                           buttonStyle="primary"
                           disabled={!searchValue.query || searchValue.query === ''}
                           fullWidth
-                          id="clickable-search-agreements"
+                          id="clickable-search-platforms"
                           marginBottom0
                           type="submit"
                         >
@@ -205,16 +171,11 @@ const Agreements = ({
                           </Icon>
                         </Button>
                       </div>
-                      <AgreementFilters
-                        activeFilters={activeFilters.state}
-                        data={data}
-                        filterHandlers={getFilterHandlers()}
-                      />
                     </form>
                   </Pane>
                 }
                 <Pane
-                  appIcon={<AppIcon app="agreements" />}
+                  appIcon={<AppIcon app="agreements" iconKey="platform" />}
                   defaultWidth="fill"
                   firstMenu={
                     !filterPaneIsVisible ?
@@ -229,26 +190,7 @@ const Agreements = ({
                       :
                       null
                   }
-                  id="pane-agreement-list"
-                  lastMenu={(
-                    <IfPermission perm="ui-agreements.agreements.edit">
-                      <PaneMenu>
-                        <FormattedMessage id="ui-agreements.agreements.createAgreement">
-                          {ariaLabel => (
-                            <Button
-                              aria-label={ariaLabel}
-                              buttonStyle="primary"
-                              id="clickable-new-agreement"
-                              marginBottom0
-                              to={`${urls.agreementCreate()}${searchString}`}
-                            >
-                              <FormattedMessage id="stripes-smart-components.new" />
-                            </Button>
-                          )}
-                        </FormattedMessage>
-                      </PaneMenu>
-                    </IfPermission>
-                  )}
+                  id="pane-platform-list"
                   noOverflow
                   padContent={false}
                   paneSub={
@@ -257,33 +199,21 @@ const Agreements = ({
                       :
                       <FormattedMessage id="stripes-smart-components.searchCriteria" />
                   }
-                  paneTitle={<FormattedMessage id="ui-agreements.agreements" />}
+                  paneTitle={<FormattedMessage id="ui-agreements.platforms" />}
                 >
                   <MultiColumnList
                     autosize
                     columnMapping={{
                       name: <FormattedMessage id="ui-agreements.agreements.name" />,
-                      agreementStatus: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
-                      startDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodStart" />,
-                      endDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodEnd" />,
-                      cancellationDeadline: <FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />,
                     }}
-                    columnWidths={{
-                      name: 500,
-                      agreementStatus: 150,
-                      startDate: 120,
-                      endDate: 120,
-                      cancellationDeadline: 120,
-                    }}
-                    contentData={data.agreements}
+                    contentData={data.platforms}
                     formatter={{
                       name: a => {
-                        const iconKey = a?.agreementStatus?.value === statuses.CLOSED ? 'closedAgreement' : 'app';
                         return (
                           <AppIcon
                             app="agreements"
                             iconAlignment="baseline"
-                            iconKey={iconKey}
+                            iconKey="platform"
                             size="small"
                           >
                             <div style={{ overflowWrap: 'break-word', width: 460 }}>
@@ -292,16 +222,12 @@ const Agreements = ({
                           </AppIcon>
                         );
                       },
-                      agreementStatus: a => a?.agreementStatus?.label,
-                      startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : ''),
-                      endDate: a => (a.endDate ? <FormattedUTCDate value={a.endDate} /> : ''),
-                      cancellationDeadline: a => (a.cancellationDeadline ? <FormattedUTCDate value={a.cancellationDeadline} /> : ''),
                     }}
                     hasMargin
-                    id="list-agreements"
+                    id="list-platforms"
                     isEmptyMessage={
                       source ? (
-                        <div data-test-agreements-no-results-message>
+                        <div data-test-platforms-no-results-message>
                           <SearchAndSortNoResultsMessage
                             filterPaneIsVisible
                             searchTerm={query.query ?? ''}
@@ -311,11 +237,10 @@ const Agreements = ({
                         </div>
                       ) : '...'
                     }
-                    nonInteractiveHeaders={['startDate', 'endDate', 'cancellationDeadline']}
                     onHeaderClick={onSort}
                     onNeedMoreData={onNeedMoreData}
                     rowProps={{
-                      to: id => `${urls.agreementView(id)}${searchString}`,
+                      to: id => `${urls.platformView(id)}${searchString}`,
                       labelStrings: ({ rowData }) => ([rowData.name, rowData.agreementStatus?.label]),
                     }}
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
@@ -324,10 +249,6 @@ const Agreements = ({
                     virtualize
                     visibleColumns={[
                       'name',
-                      'agreementStatus',
-                      'startDate',
-                      'endDate',
-                      'cancellationDeadline'
                     ]}
                   />
                 </Pane>
@@ -336,12 +257,11 @@ const Agreements = ({
             );
           }
         }
-        </SearchAndSortQuery>
-      </div>
-    </HasCommand>
+      </SearchAndSortQuery>
+    </div>
   );
 };
 
-Agreements.propTypes = propTypes;
+Platforms.propTypes = propTypes;
 
-export default Agreements;
+export default Platforms;

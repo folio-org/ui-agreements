@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { get, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import setFieldData from 'final-form-set-field-data';
+import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 
 import {
   AccordionSet,
@@ -46,9 +47,6 @@ class AgreementForm extends React.Component {
       getState: PropTypes.func.isRequired,
     }).isRequired,
     handlers: PropTypes.PropTypes.shape({
-      checkScope: PropTypes.func.isRequired,
-      collapseAllSections: PropTypes.func.isRequired,
-      expandAllSections: PropTypes.func.isRequired,
       onBasketLinesAdded: PropTypes.func.isRequired,
       onClose: PropTypes.func.isRequired,
     }),
@@ -200,11 +198,11 @@ class AgreementForm extends React.Component {
     },
     {
       name: 'expandAllSections',
-      handler: (e) => this.props.handlers.expandAllSections(e, this.accordionStatusRef),
+      handler: (e) => expandAllSections(e, this.accordionStatusRef),
     },
     {
       name: 'collapseAllSections',
-      handler: (e) => this.props.handlers.collapseAllSections(e, this.accordionStatusRef),
+      handler: (e) => collapseAllSections(e, this.accordionStatusRef),
     }
   ];
 
@@ -216,7 +214,7 @@ class AgreementForm extends React.Component {
     return (
       <HasCommand
         commands={this.shortcuts}
-        isWithinScope={this.props.handlers.checkScope}
+        isWithinScope={checkScope}
         scope={document.body}
       >
         <Paneset>

@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import setFieldData from 'final-form-set-field-data';
+import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 
 import {
   AccordionSet,
@@ -42,9 +43,6 @@ const propTypes = {
     getRegisteredFields: PropTypes.func.isRequired,
   }).isRequired,
   handlers: PropTypes.PropTypes.shape({
-    checkScope: PropTypes.func.isRequired,
-    collapseAllSections: PropTypes.func.isRequired,
-    expandAllSections: PropTypes.func.isRequired,
     isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
   }),
@@ -56,6 +54,7 @@ const propTypes = {
   submitting: PropTypes.bool,
   values: PropTypes.object,
 };
+
 
 const AgreementLineForm = ({
   data: { basket = [], line = {} },
@@ -74,6 +73,33 @@ const AgreementLineForm = ({
   const [agreementLineSource, setAgreementLineSource] = useState('basket');
 
   const accordionStatusRef = useRef();
+  const isFormSubmittableRef = useRef(false);
+
+  useEffect(() => {
+    isFormSubmittableRef.current = !pristine && !submitting;
+  }, [pristine, submitting]);
+
+  const handleSaveKeyCommand = (e) => {
+    e.preventDefault();
+    if (isFormSubmittableRef.current) {
+      handleSubmit();
+    }
+  };
+
+  const shortcuts = [
+    {
+      name: 'save',
+      handler: handleSaveKeyCommand
+    },
+    {
+      name: 'expandAllSections',
+      handler: (e) => expandAllSections(e, accordionStatusRef),
+    },
+    {
+      name: 'collapseAllSections',
+      handler: (e) => collapseAllSections(e, accordionStatusRef)
+    }
+  ];
 
   const getSectionProps = () => {
     return {
@@ -115,34 +141,10 @@ const AgreementLineForm = ({
     );
   };
 
-  const handleSaveKeyCommand = (e) => {
-    e.preventDefault();
-    handleSubmit();
-    // Bug in HasCommand makes the following not working
-    /* if (!pristine && !submitting) {
-      handleSubmit();
-    } */
-  };
-
-  const shortcuts = [
-    {
-      name: 'save',
-      handler: handleSaveKeyCommand,
-    },
-    {
-      name: 'expandAllSections',
-      handler: (e) => handlers.expandAllSections(e, accordionStatusRef),
-    },
-    {
-      name: 'collapseAllSections',
-      handler: (e) => handlers.collapseAllSections(e, accordionStatusRef)
-    }
-  ];
-
   return (
     <HasCommand
       commands={shortcuts}
-      isWithinScope={handlers.checkScope}
+      isWithinScope={checkScope}
       scope={document.body}
     >
       <Paneset>

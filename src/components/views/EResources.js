@@ -130,6 +130,12 @@ const EResources = ({
                           >
                             <FormattedMessage id="ui-agreements.eresources" />
                           </Button>
+                          <Button
+                            id="clickable-nav-platforms"
+                            to={urls.platforms()}
+                          >
+                            <FormattedMessage id="ui-agreements.platforms" />
+                          </Button>
                         </ButtonGroup>
                       </IfEResourcesEnabled>
                       {/* TODO: Use forthcoming <SearchGroup> or similar component */}

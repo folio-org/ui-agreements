@@ -20,6 +20,7 @@ import {
 import { AppIcon, IfPermission } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 
 import { Info, POLines, Coverage } from '../AgreementLineSections';
 import { isExternal, urls } from '../utilities';
@@ -51,9 +52,6 @@ const propTypes = {
     settings: PropTypes.object,
   }),
   handlers: PropTypes.shape({
-    checkScope: PropTypes.func.isRequired,
-    collapseAllSections: PropTypes.func.isRequired,
-    expandAllSections: PropTypes.func.isRequired,
     isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
@@ -94,18 +92,18 @@ const AgreementLine = ({
     },
     {
       name: 'expandAllSections',
-      handler: (e) => handlers.expandAllSections(e, accordionStatusRef),
+      handler: (e) => expandAllSections(e, accordionStatusRef),
     },
     {
       name: 'collapseAllSections',
-      handler: (e) => handlers.collapseAllSections(e, accordionStatusRef)
+      handler: (e) => collapseAllSections(e, accordionStatusRef)
     }
   ];
 
   return (
     <HasCommand
       commands={shortcuts}
-      isWithinScope={handlers.checkScope}
+      isWithinScope={checkScope}
       scope={document.body}
     >
       <>

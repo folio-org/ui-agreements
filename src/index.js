@@ -26,6 +26,10 @@ const NoteCreateRoute = lazy(() => import('./routes/NoteCreateRoute'));
 const NoteEditRoute = lazy(() => import('./routes/NoteEditRoute'));
 const NoteViewRoute = lazy(() => import('./routes/NoteViewRoute'));
 
+const PlatformsRoute = lazy(() => import('./routes/PlatformsRoute'));
+const PlatformViewRoute = lazy(() => import('./routes/PlatformViewRoute'));
+const PlatformEditRoute = lazy(() => import('./routes/PlatformEditRoute'));
+
 const IfEResourcesEnabled = lazy(() => import('./components/IfEResourcesEnabled'));
 const OpenBasketButton = lazy(() => import('./components/OpenBasketButton'));
 
@@ -69,9 +73,6 @@ class App extends React.Component {
     return document.body.contains(document.activeElement);
   }
 
-  shortcutScope = document.body;
-
-
   render() {
     const { actAs, match: { path } } = this.props;
 
@@ -88,7 +89,7 @@ class App extends React.Component {
         <HasCommand
           commands={this.shortcuts}
           isWithinScope={this.checkScope}
-          scope={this.shortcutScope}
+          scope={document.body}
         >
           <div className={css.container}>
             <Suspense fallback={null}>
@@ -120,6 +121,11 @@ class App extends React.Component {
                   <Route component={NoteCreateRoute} path={`${path}/notes/create`} />
                   <Route component={NoteEditRoute} path={`${path}/notes/:id/edit`} />
                   <Route component={NoteViewRoute} path={`${path}/notes/:id`} />
+
+                  <Route component={PlatformEditRoute} path={`${path}/platforms/:id/edit`} />
+                  <Route component={PlatformsRoute} path={`${path}/platforms/:id?`}>
+                    <Route component={PlatformViewRoute} path={`${path}/platforms/:id`} />
+                  </Route>
 
                   <Route component={BasketRoute} path={`${path}/basket`} />
                 </Switch>

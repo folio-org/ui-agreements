@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 
 import {
   AccordionSet,
@@ -65,23 +66,23 @@ export default class Title extends React.Component {
   );
 
   render() {
-    const { data, handlers } = this.props;
+    const { data } = this.props;
 
     const shortcuts = [
       {
         name: 'expandAllSections',
-        handler: (e) => handlers.expandAllSections(e, this.accordionStatusRef),
+        handler: (e) => expandAllSections(e, this.accordionStatusRef),
       },
       {
         name: 'collapseAllSections',
-        handler: (e) => handlers.collapseAllSections(e, this.accordionStatusRef)
+        handler: (e) => collapseAllSections(e, this.accordionStatusRef)
       }
     ];
 
     return (
       <HasCommand
         commands={shortcuts}
-        isWithinScope={handlers.checkScope}
+        isWithinScope={checkScope}
         scope={document.body}
       >
         <div id="eresource-title">

@@ -20,6 +20,7 @@ import {
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 import DuplicateAgreementModal from '../DuplicateAgreementModal';
 
 import {
@@ -51,9 +52,6 @@ export default class Agreement extends React.Component {
       supplementaryProperties: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
     handlers: PropTypes.shape({
-      checkScope: PropTypes.func.isRequired,
-      collapseAllSections: PropTypes.func.isRequired,
-      expandAllSections: PropTypes.func.isRequired,
       onClone: PropTypes.func.isRequired,
       onClose: PropTypes.func.isRequired,
       onDelete: PropTypes.func.isRequired,
@@ -245,18 +243,18 @@ export default class Agreement extends React.Component {
       },
       {
         name: 'expandAllSections',
-        handler: (e) => handlers.expandAllSections(e, this.accordionStatusRef),
+        handler: (e) => expandAllSections(e, this.accordionStatusRef),
       },
       {
         name: 'collapseAllSections',
-        handler: (e) => handlers.collapseAllSections(e, this.accordionStatusRef)
+        handler: (e) => collapseAllSections(e, this.accordionStatusRef)
       }
     ];
 
     return (
       <HasCommand
         commands={shortcuts}
-        isWithinScope={handlers.checkScope}
+        isWithinScope={checkScope}
         scope={document.body}
       >
         <>

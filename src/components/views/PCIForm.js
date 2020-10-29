@@ -18,6 +18,7 @@ import {
 } from '@folio/stripes/components';
 import { TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
+import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 import css from './PCIForm.css';
 
 import { PCIFormCoverage, PCIFormInfo } from '../EResourceSections';
@@ -28,9 +29,6 @@ class PCIForm extends React.Component {
       getRegisteredFields: PropTypes.func.isRequired,
     }).isRequired,
     handlers: PropTypes.PropTypes.shape({
-      checkScope: PropTypes.func.isRequired,
-      collapseAllSections: PropTypes.func.isRequired,
-      expandAllSections: PropTypes.func.isRequired,
       isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
       onClose: PropTypes.func.isRequired,
     }),
@@ -140,16 +138,16 @@ class PCIForm extends React.Component {
     },
     {
       name: 'expandAllSections',
-      handler: (e) => this.props.handlers.expandAllSections(e, this.accordionStatusRef),
+      handler: (e) => expandAllSections(e, this.accordionStatusRef),
     },
     {
       name: 'collapseAllSections',
-      handler: (e) => this.props.handlers.collapseAllSections(e, this.accordionStatusRef),
+      handler: (e) => collapseAllSections(e, this.accordionStatusRef),
     }
   ];
 
   render() {
-    const { form, handlers: { checkScope, isSuppressFromDiscoveryEnabled }, values: { name } } = this.props;
+    const { form, handlers: { isSuppressFromDiscoveryEnabled }, values: { name } } = this.props;
 
     const hasLoaded = form.getRegisteredFields().length > 0;
 
