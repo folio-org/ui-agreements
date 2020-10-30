@@ -326,7 +326,7 @@
     "supplementaryProperties.optionalProperties": "خصائص اختيارية",
     "supplementaryProperties.primaryProperties": "خصائص رئيسية",
     "section.supplementaryProperties": "خصائص تكميلية",
-    "supplementaryDocs.agreementHasNone": "لا توجد أي وثائق تكميلية للاتفاقية",
+    "supplementaryDocs.agreementHasNone": "لا توجد مستندات تكميلية لهذه الاتفاقية",
     "supplementaryDocs.addSupplementaryDoc": "إضافة وثيقة تكميلية",
     "supplementaryDocuments": "وثائق تكميلية",
     "settings.supplementaryProperties": "خصائص تكميلية",
@@ -485,5 +485,14 @@
     "basket.existingAgreements": "الاتفاقيات الحالية",
     "basket.messageBanner": "قم بتحديد مورد إلكتروني واحد أو أكثر وإضافته إلى اتفاقية جديدة أو حالية. سيتم إنشاء بند اتفاقية لكل مورد إلكتروني تقوم بتحديده.",
     "basket.removeFromBasket": "إزالة { publicationType } \"{ name }\" من السلة",
-    "duplicateAgreementModal.org.olf.erm.SubscriptionAgreement.name.unique": "غير قادر على تكرار الاتفاقية. لم يتم حفظ الاتفاقية. يجب أن يكون الاسم فريدًا. توجد بالفعل اتفاقية بالاسم \"نسخة من: {name} \"."
+    "duplicateAgreementModal.org.olf.erm.SubscriptionAgreement.name.unique": "غير قادر على تكرار الاتفاقية. لم يتم حفظ الاتفاقية. يجب أن يكون الاسم فريدًا. توجد بالفعل اتفاقية بالاسم \"نسخة من: {name} \".",
+    "platforms": "المنصات",
+    "permission.platforms.view": "الإتفاقيات: ابحث واعرض المنصات",
+    "permission.platforms.edit": "الإتفاقيات: حرّر المنصات",
+    "platform.closeEdit": "إغلاق وتحرير المنصة",
+    "platform.editPlatform": "تحرير {name}",
+    "platform.edit": "تحرير",
+    "platform.localPlatformCode": "كود المنصة المحلي",
+    "platform.locators": "محددات الموقع",
+    "platform.name": "الاسم"
 }
