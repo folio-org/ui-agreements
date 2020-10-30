@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import { get, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import setFieldData from 'final-form-set-field-data';
+import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 
 import {
   AccordionSet,
+  AccordionStatus,
   Button,
   Col,
   ExpandAllButton,
+  HasCommand,
   IconButton,
   Pane,
   PaneFooter,
@@ -61,18 +64,13 @@ class AgreementForm extends React.Component {
     initialValues: {},
   }
 
+  constructor(props) {
+    super(props);
+    this.accordionStatusRef = React.createRef();
+  }
+
   state = {
     addedLinesToAdd: false, // eslint-disable-line react/no-unused-state
-    sections: {
-      formInternalContacts: true,
-      formLines: true,
-      formLicenses: true,
-      formOrganizations: true,
-      formSupplementaryProperties: true,
-      formSupplementaryDocs: true,
-      formUsageProviders: true,
-      formRelatedAgreements: true,
-    }
   }
 
   // The `agreementLinesToAdd` must be added here rather than in the parent route
@@ -99,6 +97,19 @@ class AgreementForm extends React.Component {
     return null;
   }
 
+  getInitialAccordionsState = () => {
+    return {
+      formInternalContacts: true,
+      formLines: true,
+      formLicenses: true,
+      formOrganizations: true,
+      formSupplementaryProperties: true,
+      formSupplementaryDocs: true,
+      formUsageProviders: true,
+      formRelatedAgreements: true,
+    };
+  }
+
   getSectionProps(id) {
     const { data, form, handlers, initialValues, values = {} } = this.props;
 
@@ -108,23 +119,22 @@ class AgreementForm extends React.Component {
       handlers,
       id,
       initialValues,
-      onToggle: this.handleSectionToggle,
-      open: this.state.sections[id],
       values,
     };
   }
 
-  handleSectionToggle = ({ id }) => {
-    this.setState((prevState) => ({
-      sections: {
-        ...prevState.sections,
-        [id]: !prevState.sections[id],
-      }
-    }));
-  }
+  handleSaveKeyCommand = (e) => {
+    const {
+      handleSubmit,
+      pristine,
+      submitting,
+    } = this.props;
 
-  handleAllSectionsToggle = (sections) => {
-    this.setState({ sections });
+    e.preventDefault();
+
+    if (!pristine && !submitting) {
+      handleSubmit();
+    }
   }
 
   renderPaneFooter() {
@@ -181,57 +191,76 @@ class AgreementForm extends React.Component {
     );
   }
 
+  shortcuts = [
+    {
+      name: 'save',
+      handler: this.handleSaveKeyCommand,
+    },
+    {
+      name: 'expandAllSections',
+      handler: (e) => expandAllSections(e, this.accordionStatusRef),
+    },
+    {
+      name: 'collapseAllSections',
+      handler: (e) => collapseAllSections(e, this.accordionStatusRef),
+    }
+  ];
+
   render() {
     const { data, form, values: { id, name } } = this.props;
 
     const hasLoaded = form.getRegisteredFields().length > 0;
 
     return (
-      <Paneset>
-        <FormattedMessage id="ui-agreements.create">
-          {create => (
-            <Pane
-              appIcon={<AppIcon app="agreements" />}
-              centerContent
-              defaultWidth="100%"
-              firstMenu={this.renderFirstMenu()}
-              footer={this.renderPaneFooter()}
-              id="pane-agreement-form"
-              paneTitle={id ? name : <FormattedMessage id="ui-agreements.agreements.createAgreement" />}
-            >
-              <TitleManager record={id ? name : create}>
-                <form id="form-agreement">
-                  <AccordionSet>
-                    {hasLoaded ? <div id="form-loaded" /> : null}
-                    <Row end="xs">
-                      <Col xs>
-                        <ExpandAllButton
-                          accordionStatus={this.state.sections}
-                          id="clickable-expand-all"
-                          onToggle={this.handleAllSectionsToggle}
-                        />
-                      </Col>
-                    </Row>
-                    <FormInfo {...this.getSectionProps('formInfo')} />
-                    <FormInternalContacts {...this.getSectionProps('formInternalContacts')} />
-                    <FormLines {...this.getSectionProps('formLines')} />
-                    <FormLicenses {...this.getSectionProps('formLicenses')} />
-                    <FormOrganizations {...this.getSectionProps('formOrganizations')} />
-                    {data.supplementaryProperties?.length > 0 ?
-                      <FormSupplementaryProperties {...this.getSectionProps('formSupplementaryProperties')} />
-                      :
-                      null
+      <HasCommand
+        commands={this.shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
+      >
+        <Paneset>
+          <FormattedMessage id="ui-agreements.create">
+            {create => (
+              <Pane
+                appIcon={<AppIcon app="agreements" />}
+                centerContent
+                defaultWidth="100%"
+                firstMenu={this.renderFirstMenu()}
+                footer={this.renderPaneFooter()}
+                id="pane-agreement-form"
+                paneTitle={id ? name : <FormattedMessage id="ui-agreements.agreements.createAgreement" />}
+              >
+                <TitleManager record={id ? name : create}>
+                  <form id="form-agreement">
+                    <AccordionStatus ref={this.accordionStatusRef}>
+                      {hasLoaded ? <div id="form-loaded" /> : null}
+                      <Row end="xs">
+                        <Col xs>
+                          <ExpandAllButton />
+                        </Col>
+                      </Row>
+                      <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+                        <FormInfo {...this.getSectionProps('formInfo')} />
+                        <FormInternalContacts {...this.getSectionProps('formInternalContacts')} />
+                        <FormLines {...this.getSectionProps('formLines')} />
+                        <FormLicenses {...this.getSectionProps('formLicenses')} />
+                        <FormOrganizations {...this.getSectionProps('formOrganizations')} />
+                        {data.supplementaryProperties?.length > 0 ?
+                          <FormSupplementaryProperties {...this.getSectionProps('formSupplementaryProperties')} />
+                          :
+                          null
                     }
-                    <FormSupplementaryDocuments {...this.getSectionProps('formSupplementaryDocs')} />
-                    <FormUsageData {...this.getSectionProps('formUsageProviders')} />
-                    <FormRelatedAgreements {...this.getSectionProps('formRelatedAgreements')} />
-                  </AccordionSet>
-                </form>
-              </TitleManager>
-            </Pane>
-          )}
-        </FormattedMessage>
-      </Paneset>
+                        <FormSupplementaryDocuments {...this.getSectionProps('formSupplementaryDocs')} />
+                        <FormUsageData {...this.getSectionProps('formUsageProviders')} />
+                        <FormRelatedAgreements {...this.getSectionProps('formRelatedAgreements')} />
+                      </AccordionSet>
+                    </AccordionStatus>
+                  </form>
+                </TitleManager>
+              </Pane>
+            )}
+          </FormattedMessage>
+        </Paneset>
+      </HasCommand>
     );
   }
 }

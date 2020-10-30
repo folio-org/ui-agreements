@@ -5,7 +5,7 @@ import compose from 'compose-function';
 
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
-import { Tags } from '@folio/stripes-erm-components';
+import { checkScope, collapseAllSections, expandAllSections, Tags } from '@folio/stripes-erm-components';
 
 import View from '../components/views/AgreementLine';
 import { urls, withSuppressFromDiscovery } from '../components/utilities';
@@ -40,6 +40,7 @@ class AgreementLineViewRoute extends React.Component {
   });
 
   static propTypes = {
+    handlers: PropTypes.object,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -177,6 +178,10 @@ class AgreementLineViewRoute extends React.Component {
           line: this.getCompositeLine(),
         }}
         handlers={{
+          ...this.props.handlers,
+          checkScope,
+          collapseAllSections,
+          expandAllSections,
           isSuppressFromDiscoveryEnabled,
           onClose: this.handleClose,
           onDelete: this.handleDelete,

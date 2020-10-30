@@ -6,6 +6,7 @@ import compose from 'compose-function';
 import { stripesConnect } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
 
+import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 import View from '../components/views/PCIForm';
 import NoPermissions from '../components/NoPermissions';
 import { urls, withSuppressFromDiscovery } from '../components/utilities';
@@ -20,6 +21,7 @@ class EResourceEditRoute extends React.Component {
   });
 
   static propTypes = {
+    handlers: PropTypes.object,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -95,6 +97,10 @@ class EResourceEditRoute extends React.Component {
     return (
       <View
         handlers={{
+          ...this.props.handlers,
+          checkScope,
+          collapseAllSections,
+          expandAllSections,
           isSuppressFromDiscoveryEnabled,
           onClose: this.handleClose,
         }}

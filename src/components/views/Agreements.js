@@ -7,6 +7,7 @@ import {
   Button,
   ButtonGroup,
   FormattedUTCDate,
+  HasCommand,
   Icon,
   MultiColumnList,
   Pane,
@@ -41,6 +42,8 @@ const propTypes = {
     supplementaryProperties: PropTypes.arrayOf(PropTypes.object).isRequired,
     tagsValues: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
+  handlers: PropTypes.object,
+  history: PropTypes.object,
   onNeedMoreData: PropTypes.func.isRequired,
   queryGetter: PropTypes.func.isRequired,
   querySetter: PropTypes.func.isRequired,
@@ -56,6 +59,8 @@ const filterPaneVisibilityKey = '@folio/agreements/agreementsFilterPaneVisibilit
 const Agreements = ({
   children,
   data = {},
+  handlers,
+  history,
   onNeedMoreData,
   queryGetter,
   querySetter,
@@ -76,19 +81,35 @@ const Agreements = ({
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
   };
 
+  const goToNew = () => {
+    history.push('/erm/agreements/create');
+  };
+
+  const shortcuts = [
+    {
+      name: 'new',
+      handler: goToNew,
+    },
+  ];
+
   return (
-    <div data-test-agreements>
-      <SearchAndSortQuery
-        initialFilterState={{
-          agreementStatus: ['active', 'draft', 'in_negotiation', 'requested']
-        }}
-        initialSearchState={{ query: '' }}
-        initialSortState={{ sort: 'name' }}
-        queryGetter={queryGetter}
-        querySetter={querySetter}
-        syncToLocationSearch
-      >
-        {
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={handlers.checkScope}
+      scope={document.body}
+    >
+      <div data-test-agreements>
+        <SearchAndSortQuery
+          initialFilterState={{
+            agreementStatus: ['active', 'draft', 'in_negotiation', 'requested']
+          }}
+          initialSearchState={{ query: '' }}
+          initialSortState={{ sort: 'name' }}
+          queryGetter={queryGetter}
+          querySetter={querySetter}
+          syncToLocationSearch
+        >
+          {
           ({
             searchValue,
             getSearchHandlers,
@@ -315,8 +336,9 @@ const Agreements = ({
             );
           }
         }
-      </SearchAndSortQuery>
-    </div>
+        </SearchAndSortQuery>
+      </div>
+    </HasCommand>
   );
 };
 

@@ -4,9 +4,11 @@ import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import {
   AccordionSet,
+  AccordionStatus,
   Button,
   Col,
   ExpandAllButton,
+  HasCommand,
   IconButton,
   Pane,
   PaneFooter,
@@ -16,6 +18,7 @@ import {
 } from '@folio/stripes/components';
 import { TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
+import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 import css from './PCIForm.css';
 
 import { PCIFormCoverage, PCIFormInfo } from '../EResourceSections';
@@ -40,10 +43,15 @@ class PCIForm extends React.Component {
     initialValues: {},
   }
 
-  state = {
-    sections: {
+  constructor(props) {
+    super(props);
+    this.accordionStatusRef = React.createRef();
+  }
+
+  getInitialAccordionsState = () => {
+    return {
       pciFormCoverage: true,
-    }
+    };
   }
 
   getSectionProps(id) {
@@ -52,23 +60,22 @@ class PCIForm extends React.Component {
     return {
       form,
       id,
-      onToggle: this.handleSectionToggle,
-      open: this.state.sections[id],
       values,
     };
   }
 
-  handleSectionToggle = ({ id }) => {
-    this.setState((prevState) => ({
-      sections: {
-        ...prevState.sections,
-        [id]: !prevState.sections[id],
-      }
-    }));
-  }
+  handleSaveKeyCommand = (e) => {
+    const {
+      handleSubmit,
+      pristine,
+      submitting,
+    } = this.props;
 
-  handleAllSectionsToggle = (sections) => {
-    this.setState({ sections });
+    e.preventDefault();
+
+    if (!pristine && !submitting) {
+      handleSubmit();
+    }
   }
 
   renderPaneFooter() {
@@ -124,42 +131,61 @@ class PCIForm extends React.Component {
     );
   }
 
+  shortcuts = [
+    {
+      name: 'save',
+      handler: this.handleSaveKeyCommand,
+    },
+    {
+      name: 'expandAllSections',
+      handler: (e) => expandAllSections(e, this.accordionStatusRef),
+    },
+    {
+      name: 'collapseAllSections',
+      handler: (e) => collapseAllSections(e, this.accordionStatusRef),
+    }
+  ];
+
   render() {
     const { form, handlers: { isSuppressFromDiscoveryEnabled }, values: { name } } = this.props;
 
     const hasLoaded = form.getRegisteredFields().length > 0;
 
     return (
-      <Paneset>
-        <Pane
-          centerContent
-          defaultWidth="100%"
-          firstMenu={this.renderFirstMenu()}
-          footer={this.renderPaneFooter()}
-          id="pane-pci-form"
-          paneTitle={<FormattedMessage id="ui-agreements.pci.editPci" values={{ name }} />}
-        >
-          <TitleManager record={name}>
-            <form id="form-pci">
-              <PCIFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} />
-              <AccordionSet>
-                {hasLoaded ? <div id="form-loaded" /> : null}
-                <Row end="xs">
-                  <Col xs>
-                    <ExpandAllButton
-                      accordionStatus={this.state.sections}
-                      id="clickable-expand-all"
-                      onToggle={this.handleAllSectionsToggle}
-                    />
-                  </Col>
-                </Row>
-                <div className={css.separator} />
-                <PCIFormCoverage {...this.getSectionProps('pciFormCoverage')} />
-              </AccordionSet>
-            </form>
-          </TitleManager>
-        </Pane>
-      </Paneset>
+      <HasCommand
+        commands={this.shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
+      >
+        <Paneset>
+          <Pane
+            centerContent
+            defaultWidth="100%"
+            firstMenu={this.renderFirstMenu()}
+            footer={this.renderPaneFooter()}
+            id="pane-pci-form"
+            paneTitle={<FormattedMessage id="ui-agreements.pci.editPci" values={{ name }} />}
+          >
+            <TitleManager record={name}>
+              <form id="form-pci">
+                <PCIFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} />
+                <AccordionStatus ref={this.accordionStatusRef}>
+                  {hasLoaded ? <div id="form-loaded" /> : null}
+                  <Row end="xs">
+                    <Col xs>
+                      <ExpandAllButton />
+                    </Col>
+                  </Row>
+                  <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+                    <div className={css.separator} />
+                    <PCIFormCoverage {...this.getSectionProps('pciFormCoverage')} />
+                  </AccordionSet>
+                </AccordionStatus>
+              </form>
+            </TitleManager>
+          </Pane>
+        </Paneset>
+      </HasCommand>
     );
   }
 }
