@@ -20,7 +20,7 @@ export default function withFileHandlers(WrappedComponent) {
     };
 
     static defaultProps = {
-      handlers: {},
+      handlers: { },
     }
 
     handleUploadFile = (file) => {

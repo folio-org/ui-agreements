@@ -4,7 +4,7 @@ import compose from 'compose-function';
 import { isEmpty } from 'lodash';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { isPackage } from '@folio/stripes-erm-components';
+import { checkScope, collapseAllSections, expandAllSections, isPackage } from '@folio/stripes-erm-components';
 import View from '../components/views/AgreementLineForm';
 import { urls, withSuppressFromDiscovery } from '../components/utilities';
 
@@ -19,6 +19,7 @@ class AgreementLineCreateRoute extends React.Component {
   });
 
   static propTypes = {
+    handlers: PropTypes.object,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
@@ -139,6 +140,10 @@ class AgreementLineCreateRoute extends React.Component {
           basket: (resources?.basket ?? []),
         }}
         handlers={{
+          ...this.props.handlers,
+          checkScope,
+          collapseAllSections,
+          expandAllSections,
           isSuppressFromDiscoveryEnabled,
           onClose: this.handleClose,
         }}

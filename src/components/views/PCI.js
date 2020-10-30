@@ -7,6 +7,7 @@ import {
   AccordionStatus,
   Col,
   ExpandAllButton,
+  HasCommand,
   Headline,
   Row,
 } from '@folio/stripes/components';
@@ -37,8 +38,17 @@ export default class PCI extends React.Component {
       settings: PropTypes.object,
     }),
     handlers: PropTypes.shape({
+      checkScope: PropTypes.func.isRequired,
+      collapseAllSections: PropTypes.func.isRequired,
+      expandAllSections: PropTypes.func.isRequired,
       isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
-    })
+      onEdit: PropTypes.func.isRequired,
+    }),
+  }
+
+  constructor(props) {
+    super(props);
+    this.accordionStatusRef = React.createRef();
   }
 
   getInitialAccordionsState = () => {
@@ -49,42 +59,63 @@ export default class PCI extends React.Component {
   }
 
   render() {
-    const { data, handlers: { isSuppressFromDiscoveryEnabled } } = this.props;
+    const { data, handlers: { checkScope, collapseAllSections, expandAllSections, isSuppressFromDiscoveryEnabled, onEdit } } = this.props;
     const { eresource, searchString } = data;
 
+    const shortcuts = [
+      {
+        name: 'edit',
+        handler: onEdit,
+      },
+      {
+        name: 'expandAllSections',
+        handler: (e) => expandAllSections(e, this.accordionStatusRef),
+      },
+      {
+        name: 'collapseAllSections',
+        handler: (e) => collapseAllSections(e, this.accordionStatusRef)
+      }
+    ];
+
     return (
-      <div id="eresource-pci">
-        <PCIInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} pci={eresource} />
-        <div data-test-parent-package-details>
-          <Headline margin="small" size="large" tag="h3">
-            <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
-          </Headline>
-          <PackageCard pkg={eresource?.pkg ?? {}} searchString={searchString} />
+      <HasCommand
+        commands={shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
+      >
+        <div id="eresource-pci">
+          <PCIInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} pci={eresource} />
+          <div data-test-parent-package-details>
+            <Headline margin="small" size="large" tag="h3">
+              <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
+            </Headline>
+            <PackageCard pkg={eresource?.pkg ?? {}} searchString={searchString} />
+          </div>
+          <div id="title-info">
+            <Headline margin="small" size="large" tag="h3">
+              <FormattedMessage id="ui-agreements.eresources.titleDetails" />
+            </Headline>
+            <TitleCard searchString={searchString} title={data.eresource} />
+          </div>
+          <AccordionStatus ref={this.accordionStatusRef}>
+            <Row end="xs">
+              <Col xs>
+                <ExpandAllButton />
+              </Col>
+            </Row>
+            <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+              <PCICoverage data={data} />
+              <Agreements
+                data={data}
+                headline={eresource.name}
+                id="eresourceAgreements"
+                renderRelatedEntitlements
+                visibleColumns={['name', 'type', 'startDate', 'endDate']}
+              />
+            </AccordionSet>
+          </AccordionStatus>
         </div>
-        <div id="title-info">
-          <Headline margin="small" size="large" tag="h3">
-            <FormattedMessage id="ui-agreements.eresources.titleDetails" />
-          </Headline>
-          <TitleCard searchString={searchString} title={data.eresource} />
-        </div>
-        <AccordionStatus>
-          <Row end="xs">
-            <Col xs>
-              <ExpandAllButton />
-            </Col>
-          </Row>
-          <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-            <PCICoverage data={data} />
-            <Agreements
-              data={data}
-              headline={eresource.name}
-              id="eresourceAgreements"
-              renderRelatedEntitlements
-              visibleColumns={['name', 'type', 'startDate', 'endDate']}
-            />
-          </AccordionSet>
-        </AccordionStatus>
-      </div>
+      </HasCommand>
     );
   }
 }

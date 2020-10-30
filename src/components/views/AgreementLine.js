@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -9,6 +9,7 @@ import {
   Col,
   ConfirmationModal,
   ExpandAllButton,
+  HasCommand,
   Icon,
   IconButton,
   LoadingPane,
@@ -19,6 +20,7 @@ import {
 import { AppIcon, IfPermission } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 
 import { Info, POLines, Coverage } from '../AgreementLineSections';
 import { isExternal, urls } from '../utilities';
@@ -73,6 +75,8 @@ const AgreementLine = ({
     onClose: handlers.onClose,
   };
 
+  const accordionStatusRef = useRef();
+
   const intl = useIntl();
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
 
@@ -81,36 +85,56 @@ const AgreementLine = ({
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
   const resourceName = resource.pti?.titleInstance.name ?? resource.reference_object?.label ?? '';
 
+  const shortcuts = [
+    {
+      name: 'edit',
+      handler: handlers.onEdit,
+    },
+    {
+      name: 'expandAllSections',
+      handler: (e) => expandAllSections(e, accordionStatusRef),
+    },
+    {
+      name: 'collapseAllSections',
+      handler: (e) => collapseAllSections(e, accordionStatusRef)
+    }
+  ];
+
   return (
-    <>
-      <Pane
-        actionMenu={() => (
-          <IfPermission perm="ui-agreements.agreements.edit">
-            <Button
-              buttonStyle="dropdownItem"
-              id="clickable-dropdown-edit-agreement-line"
-              onClick={handlers.onEdit}
-            >
-              <Icon icon="edit">
-                <FormattedMessage id="ui-agreements.agreements.edit" />
-              </Icon>
-            </Button>
-            <Button
-              buttonStyle="dropdownItem"
-              id="clickable-dropdown-delete-agreement-line"
-              onClick={() => setShowDeleteConfirmationModal(true)}
-            >
-              <Icon icon="trash">
-                <FormattedMessage id="ui-agreements.delete" />
-              </Icon>
-            </Button>
-          </IfPermission>
-        )}
-        appIcon={<AppIcon app="agreements" />}
-        lastMenu={
-          <IfPermission perm="ui-agreements.agreements.edit">
-            <PaneMenu>
-              {handlers.onToggleTags &&
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
+    >
+      <>
+        <Pane
+          actionMenu={() => (
+            <IfPermission perm="ui-agreements.agreements.edit">
+              <Button
+                buttonStyle="dropdownItem"
+                id="clickable-dropdown-edit-agreement-line"
+                onClick={handlers.onEdit}
+              >
+                <Icon icon="edit">
+                  <FormattedMessage id="ui-agreements.agreements.edit" />
+                </Icon>
+              </Button>
+              <Button
+                buttonStyle="dropdownItem"
+                id="clickable-dropdown-delete-agreement-line"
+                onClick={() => setShowDeleteConfirmationModal(true)}
+              >
+                <Icon icon="trash">
+                  <FormattedMessage id="ui-agreements.delete" />
+                </Icon>
+              </Button>
+            </IfPermission>
+          )}
+          appIcon={<AppIcon app="agreements" />}
+          lastMenu={
+            <IfPermission perm="ui-agreements.agreements.edit">
+              <PaneMenu>
+                {handlers.onToggleTags &&
                 <IconButton
                   ariaLabel={intl.formatMessage({ id: 'ui-agreements.agreements.showTags' })}
                   badgeCount={line?.tags?.length ?? 0}
@@ -119,58 +143,59 @@ const AgreementLine = ({
                   onClick={handlers.onToggleTags}
                 />
               }
-            </PaneMenu>
-          </IfPermission>
+              </PaneMenu>
+            </IfPermission>
         }
-        paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
-        {...paneProps}
-      >
-        <Info
-          isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled}
-          line={line}
-          resource={resource}
+          paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
+          {...paneProps}
+        >
+          <Info
+            isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled}
+            line={line}
+            resource={resource}
+          />
+          <AccordionStatus ref={accordionStatusRef}>
+            <Row end="xs">
+              <Col xs>
+                <ExpandAllButton id="clickable-expand-all" />
+              </Col>
+            </Row>
+            <AccordionSet>
+              <POLines line={line} resource={resource} />
+              <Coverage line={line} resource={resource} />
+              <FormattedMessage id="ui-agreements.line.lineForAgreement" values={{ agreementName: line.owner?.name }}>
+                {title => (
+                  <NotesSmartAccordion
+                    domainName="agreements"
+                    entityId={line.id ?? '-'}
+                    entityName={title ?? '-'}
+                    entityType="agreementLine"
+                    id="agreement-line-notes"
+                    pathToNoteCreate={urls.noteCreate()}
+                    pathToNoteDetails={urls.notes()}
+                  />
+                )}
+              </FormattedMessage>
+            </AccordionSet>
+          </AccordionStatus>
+        </Pane>
+        {helperApp}
+        <ConfirmationModal
+          buttonStyle="danger"
+          confirmLabel={<FormattedMessage id="ui-agreements.delete" />}
+          data-test-delete-confirmation-modal
+          heading={<FormattedMessage id="ui-agreements.agreementLines.deleteAgreementLine" />}
+          id="delete-agreement-line-confirmation"
+          message={<SafeHTMLMessage id="ui-agreements.agreementLines.deleteConfirmMessage" values={{ name: resourceName }} />}
+          onCancel={() => setShowDeleteConfirmationModal(false)}
+          onConfirm={() => {
+            handlers.onDelete();
+            setShowDeleteConfirmationModal(false);
+          }}
+          open={showDeleteConfirmationModal}
         />
-        <AccordionStatus>
-          <Row end="xs">
-            <Col xs>
-              <ExpandAllButton id="clickable-expand-all" />
-            </Col>
-          </Row>
-          <AccordionSet>
-            <POLines line={line} resource={resource} />
-            <Coverage line={line} resource={resource} />
-            <FormattedMessage id="ui-agreements.line.lineForAgreement" values={{ agreementName: line.owner?.name }}>
-              {title => (
-                <NotesSmartAccordion
-                  domainName="agreements"
-                  entityId={line.id ?? '-'}
-                  entityName={title ?? '-'}
-                  entityType="agreementLine"
-                  id="agreement-line-notes"
-                  pathToNoteCreate={urls.noteCreate()}
-                  pathToNoteDetails={urls.notes()}
-                />
-              )}
-            </FormattedMessage>
-          </AccordionSet>
-        </AccordionStatus>
-      </Pane>
-      {helperApp}
-      <ConfirmationModal
-        buttonStyle="danger"
-        confirmLabel={<FormattedMessage id="ui-agreements.delete" />}
-        data-test-delete-confirmation-modal
-        heading={<FormattedMessage id="ui-agreements.agreementLines.deleteAgreementLine" />}
-        id="delete-agreement-line-confirmation"
-        message={<SafeHTMLMessage id="ui-agreements.agreementLines.deleteConfirmMessage" values={{ name: resourceName }} />}
-        onCancel={() => setShowDeleteConfirmationModal(false)}
-        onConfirm={() => {
-          handlers.onDelete();
-          setShowDeleteConfirmationModal(false);
-        }}
-        open={showDeleteConfirmationModal}
-      />
-    </>
+      </>
+    </HasCommand>
   );
 };
 

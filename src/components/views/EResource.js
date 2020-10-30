@@ -2,7 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { Button, IconButton, LoadingPane, Pane, PaneMenu } from '@folio/stripes/components';
+import {
+  Button,
+  IconButton,
+  LoadingPane,
+  Pane,
+  PaneMenu,
+} from '@folio/stripes/components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 
 import Package from './Package';
@@ -34,7 +40,7 @@ const EResource = ({
   data: { eresource },
   helperApp,
   handlers,
-  isLoading
+  isLoading,
 }) => {
   const intl = useIntl();
 

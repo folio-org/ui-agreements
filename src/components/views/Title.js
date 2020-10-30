@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 
 import {
   AccordionSet,
   AccordionStatus,
   Col,
   ExpandAllButton,
+  HasCommand,
   Headline,
   Row,
 } from '@folio/stripes/components';
@@ -24,6 +26,11 @@ export default class Title extends React.Component {
   static propTypes = {
     data: PropTypes.object,
     handlers: PropTypes.object,
+  }
+
+  constructor(props) {
+    super(props);
+    this.accordionStatusRef = React.createRef();
   }
 
   getSectionProps = (id) => {
@@ -61,35 +68,52 @@ export default class Title extends React.Component {
   render() {
     const { data } = this.props;
 
-    return (
-      <div id="eresource-title">
-        {this.renderTitleInfo(data.eresource)}
-        <AccordionStatus>
-          <Row end="xs">
-            <Col xs>
-              <ExpandAllButton />
-            </Col>
-          </Row>
-          <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-            <Agreements
-              {...this.getSectionProps('eresourceAgreements')}
-              isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsEresource" />}
-              visibleColumns={['name', 'type', 'startDate', 'endDate', 'eresource', 'acqMethod', 'coverage', 'isCustomCoverage']}
-            />
-            <AcquisitionOptions {...this.getSectionProps('acquisitionOptions')} />
-            <NotesSmartAccordion
-              {...this.getSectionProps('notes')}
-              domainName="agreements"
-              entityId={data.eresource.id}
-              entityName={data.eresource.name}
-              entityType="eresource"
-              pathToNoteCreate={urls.noteCreate()}
-              pathToNoteDetails={urls.notes()}
-            />
-          </AccordionSet>
-        </AccordionStatus>
+    const shortcuts = [
+      {
+        name: 'expandAllSections',
+        handler: (e) => expandAllSections(e, this.accordionStatusRef),
+      },
+      {
+        name: 'collapseAllSections',
+        handler: (e) => collapseAllSections(e, this.accordionStatusRef)
+      }
+    ];
 
-      </div>
+    return (
+      <HasCommand
+        commands={shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
+      >
+        <div id="eresource-title">
+          {this.renderTitleInfo(data.eresource)}
+          <AccordionStatus ref={this.accordionStatusRef}>
+            <Row end="xs">
+              <Col xs>
+                <ExpandAllButton />
+              </Col>
+            </Row>
+            <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+              <Agreements
+                {...this.getSectionProps('eresourceAgreements')}
+                isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsEresource" />}
+                visibleColumns={['name', 'type', 'startDate', 'endDate', 'eresource', 'acqMethod', 'coverage', 'isCustomCoverage']}
+              />
+              <AcquisitionOptions {...this.getSectionProps('acquisitionOptions')} />
+              <NotesSmartAccordion
+                {...this.getSectionProps('notes')}
+                domainName="agreements"
+                entityId={data.eresource.id}
+                entityName={data.eresource.name}
+                entityType="eresource"
+                pathToNoteCreate={urls.noteCreate()}
+                pathToNoteDetails={urls.notes()}
+              />
+            </AccordionSet>
+          </AccordionStatus>
+
+        </div>
+      </HasCommand>
     );
   }
 }

@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { checkScope } from '@folio/stripes-erm-components';
 
 import {
   Button,
+  HasCommand,
   Icon,
   LoadingPane,
   Pane,
@@ -25,33 +27,46 @@ const Platform = ({
 
   if (isLoading) return <LoadingPane data-loading {...paneProps} />;
 
+  const shortcuts = [
+    {
+      name: 'edit',
+      handler: handlers.onEdit,
+    },
+  ];
+
   return (
-    <>
-      <Pane
-        actionMenu={() => (
-          <>
-            <IfPermission perm="ui-agreements.platforms.edit">
-              <Button
-                buttonStyle="dropdownItem"
-                id="clickable-dropdown-edit-platform"
-                onClick={handlers.onEdit}
-              >
-                <Icon icon="edit">
-                  <FormattedMessage id="ui-agreements.platform.edit" />
-                </Icon>
-              </Button>
-            </IfPermission>
-          </>
-        )}
-        appIcon={<AppIcon app="agreements" iconKey="platform" />}
-        paneTitle={platform?.name}
-        {...paneProps}
-      >
-        <TitleManager record={platform?.name}>
-          <PlatformInfo platform={platform} />
-        </TitleManager>
-      </Pane>
-    </>
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
+    >
+      <>
+        <Pane
+          actionMenu={() => (
+            <>
+              <IfPermission perm="ui-agreements.platforms.edit">
+                <Button
+                  buttonStyle="dropdownItem"
+                  id="clickable-dropdown-edit-platform"
+                  onClick={handlers.onEdit}
+                >
+                  <Icon icon="edit">
+                    <FormattedMessage id="ui-agreements.platform.edit" />
+                  </Icon>
+                </Button>
+              </IfPermission>
+            </>
+          )}
+          appIcon={<AppIcon app="agreements" iconKey="platform" />}
+          paneTitle={platform?.name}
+          {...paneProps}
+        >
+          <TitleManager record={platform?.name}>
+            <PlatformInfo platform={platform} />
+          </TitleManager>
+        </Pane>
+      </>
+    </HasCommand>
   );
 };
 

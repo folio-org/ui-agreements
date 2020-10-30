@@ -9,6 +9,7 @@ import {
   Col,
   ConfirmationModal,
   ExpandAllButton,
+  HasCommand,
   Icon,
   IconButton,
   LoadingPane,
@@ -19,6 +20,7 @@ import {
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 import DuplicateAgreementModal from '../DuplicateAgreementModal';
 
 import {
@@ -59,6 +61,11 @@ export default class Agreement extends React.Component {
     }).isRequired,
     helperApp: PropTypes.node,
     isLoading: PropTypes.bool.isRequired,
+  }
+
+  constructor(props) {
+    super(props);
+    this.accordionStatusRef = React.createRef();
   }
 
   state = {
@@ -215,7 +222,7 @@ export default class Agreement extends React.Component {
       data,
       isLoading,
       handlers,
-      helperApp
+      helperApp,
     } = this.props;
 
     const { showDeleteConfirmationModal, showDuplicateAgreementModal } = this.state;
@@ -229,78 +236,98 @@ export default class Agreement extends React.Component {
 
     if (isLoading) return <LoadingPane data-loading {...paneProps} />;
 
+    const shortcuts = [
+      {
+        name: 'edit',
+        handler: handlers.onEdit,
+      },
+      {
+        name: 'expandAllSections',
+        handler: (e) => expandAllSections(e, this.accordionStatusRef),
+      },
+      {
+        name: 'collapseAllSections',
+        handler: (e) => collapseAllSections(e, this.accordionStatusRef)
+      }
+    ];
+
     return (
-      <>
-        <Pane
-          actionMenu={this.getActionMenu}
-          appIcon={<AppIcon app="agreements" />}
-          lastMenu={this.renderEditAgreementPaneMenu()}
-          paneTitle={data.agreement.name}
-          {...paneProps}
-        >
-          <TitleManager record={data.agreement.name}>
-            <Header {...this.getSectionProps()} />
-            <Info {...this.getSectionProps('info')} />
-            <AccordionStatus>
-              <Row end="xs">
-                <Col xs>
-                  <ExpandAllButton />
-                </Col>
-              </Row>
-              <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-                <InternalContacts {...this.getSectionProps('internalContacts')} />
-                <Lines {...this.getSectionProps('lines')} />
-                <ControllingLicense {...this.getSectionProps('controllingLicense')} />
-                <FutureLicenses {...this.getSectionProps('futureLicenses')} />
-                <HistoricalLicenses {...this.getSectionProps('historicalLicenses')} />
-                <ExternalLicenses {...this.getSectionProps('externalLicenses')} />
-                <Terms {...this.getSectionProps('terms')} />
-                <Organizations {...this.getSectionProps('organizations')} />
-                <OtherPeriods {...this.getSectionProps('otherPeriods')} />
-                {data.supplementaryProperties?.length > 0 ?
-                  <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} /> :
-                  null
+      <HasCommand
+        commands={shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
+      >
+        <>
+          <Pane
+            actionMenu={this.getActionMenu}
+            appIcon={<AppIcon app="agreements" />}
+            lastMenu={this.renderEditAgreementPaneMenu()}
+            paneTitle={data.agreement.name}
+            {...paneProps}
+          >
+            <TitleManager record={data.agreement.name}>
+              <Header {...this.getSectionProps()} />
+              <Info {...this.getSectionProps('info')} />
+              <AccordionStatus ref={this.accordionStatusRef}>
+                <Row end="xs">
+                  <Col xs>
+                    <ExpandAllButton />
+                  </Col>
+                </Row>
+                <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+                  <InternalContacts {...this.getSectionProps('internalContacts')} />
+                  <Lines {...this.getSectionProps('lines')} />
+                  <ControllingLicense {...this.getSectionProps('controllingLicense')} />
+                  <FutureLicenses {...this.getSectionProps('futureLicenses')} />
+                  <HistoricalLicenses {...this.getSectionProps('historicalLicenses')} />
+                  <ExternalLicenses {...this.getSectionProps('externalLicenses')} />
+                  <Terms {...this.getSectionProps('terms')} />
+                  <Organizations {...this.getSectionProps('organizations')} />
+                  <OtherPeriods {...this.getSectionProps('otherPeriods')} />
+                  {data.supplementaryProperties?.length > 0 ?
+                    <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} /> :
+                    null
                 }
-                <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} />
-                <UsageData {...this.getSectionProps('usageData')} />
-                <RelatedAgreements {...this.getSectionProps('relatedAgreements')} />
-                <NotesSmartAccordion
-                  {...this.getSectionProps('notes')}
-                  domainName="agreements"
-                  entityId={data.agreement.id}
-                  entityName={data.agreement.name}
-                  entityType="agreement"
-                  pathToNoteCreate={urls.noteCreate()}
-                  pathToNoteDetails={urls.notes()}
-                />
-              </AccordionSet>
-            </AccordionStatus>
-          </TitleManager>
-        </Pane>
-        {helperApp}
-        { showDuplicateAgreementModal &&
+                  <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} />
+                  <UsageData {...this.getSectionProps('usageData')} />
+                  <RelatedAgreements {...this.getSectionProps('relatedAgreements')} />
+                  <NotesSmartAccordion
+                    {...this.getSectionProps('notes')}
+                    domainName="agreements"
+                    entityId={data.agreement.id}
+                    entityName={data.agreement.name}
+                    entityType="agreement"
+                    pathToNoteCreate={urls.noteCreate()}
+                    pathToNoteDetails={urls.notes()}
+                  />
+                </AccordionSet>
+              </AccordionStatus>
+            </TitleManager>
+          </Pane>
+          {helperApp}
+          { showDuplicateAgreementModal &&
           <DuplicateAgreementModal
             name={data.agreement.name}
             onClone={(obj) => handlers.onClone(obj)}
             onClose={this.closeDuplicateAgreementModal}
           />
         }
-        <ConfirmationModal
-          buttonStyle="danger"
-          confirmLabel={<FormattedMessage id="ui-agreements.delete" />}
-          data-test-delete-confirmation-modal
-          heading={<FormattedMessage id="ui-agreements.agreements.deleteAgreement" />}
-          id="delete-agreement-confirmation"
-          message={<SafeHTMLMessage id="ui-agreements.agreements.deleteConfirmMessage" values={{ name: data.agreement?.name }} />}
-          onCancel={this.closeDeleteConfirmationModal}
-          onConfirm={() => {
-            handlers.onDelete();
-            this.closeDeleteConfirmationModal();
-          }}
-          open={showDeleteConfirmationModal}
-        />
-      </>
-
+          <ConfirmationModal
+            buttonStyle="danger"
+            confirmLabel={<FormattedMessage id="ui-agreements.delete" />}
+            data-test-delete-confirmation-modal
+            heading={<FormattedMessage id="ui-agreements.agreements.deleteAgreement" />}
+            id="delete-agreement-confirmation"
+            message={<SafeHTMLMessage id="ui-agreements.agreements.deleteConfirmMessage" values={{ name: data.agreement?.name }} />}
+            onCancel={this.closeDeleteConfirmationModal}
+            onConfirm={() => {
+              handlers.onDelete();
+              this.closeDeleteConfirmationModal();
+            }}
+            open={showDeleteConfirmationModal}
+          />
+        </>
+      </HasCommand>
     );
   }
 }
