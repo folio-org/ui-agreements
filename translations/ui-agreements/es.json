@@ -485,5 +485,14 @@
     "basket.existingAgreements": "Acuerdos existentes",
     "basket.messageBanner": "Seleccione uno o más recursos electrónicos y agréguelos a un acuerdo nuevo o existente. Se creará una línea de acuerdo para cada recurso electrónico que seleccione.",
     "basket.removeFromBasket": "Eliminar { publicationType } \"{ nombre }\" de la cesta",
-    "duplicateAgreementModal.org.olf.erm.SubscriptionAgreement.name.unique": "No se puede duplicar el acuerdo. No se guardó el acuerdo. El nombre debe ser único. Ya existe un acuerdo con el nombre \"Copia de: {name} \"."
+    "duplicateAgreementModal.org.olf.erm.SubscriptionAgreement.name.unique": "No se puede duplicar el acuerdo. No se guardó el acuerdo. El nombre debe ser único. Ya existe un acuerdo con el nombre \"Copia de: {name} \".",
+    "platforms": "Platforms",
+    "permission.platforms.view": "Agreements: Search & view platforms",
+    "permission.platforms.edit": "Agreements: Edit platforms",
+    "platform.closeEdit": "Close edit platform",
+    "platform.editPlatform": "Edit {name}",
+    "platform.edit": "Edit",
+    "platform.localPlatformCode": "Local platform code",
+    "platform.locators": "Locators",
+    "platform.name": "Name"
 }

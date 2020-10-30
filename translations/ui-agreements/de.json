@@ -485,5 +485,14 @@
     "basket.existingAgreements": "Existing agreements",
     "basket.messageBanner": "Wählen Sie eine oder mehrere E-Ressourcen aus und fügen Sie sie einer neuen oder einer vorhandenen Vereinbarung hinzu. Für jede ausgewählte E-Ressource wird eine Vereinbarungskomponente erstellt.",
     "basket.removeFromBasket": "{ publicationType } \"{ name }\" aus der Merkliste entfernen",
-    "duplicateAgreementModal.org.olf.erm.SubscriptionAgreement.name.unique": "Die Vereinbarung kann nicht dupliziert werden. Es wurde keine neue Vereinbarung gespeichert. Der Name muss eindeutig sein. Eine Vereinbarung mit dem Namen \"Kopie von: {name} \" existiert bereits."
+    "duplicateAgreementModal.org.olf.erm.SubscriptionAgreement.name.unique": "Die Vereinbarung kann nicht dupliziert werden. Es wurde keine neue Vereinbarung gespeichert. Der Name muss eindeutig sein. Eine Vereinbarung mit dem Namen \"Kopie von: {name} \" existiert bereits.",
+    "platforms": "Platforms",
+    "permission.platforms.view": "Agreements: Search & view platforms",
+    "permission.platforms.edit": "Agreements: Edit platforms",
+    "platform.closeEdit": "Close edit platform",
+    "platform.editPlatform": "Edit {name}",
+    "platform.edit": "Edit",
+    "platform.localPlatformCode": "Local platform code",
+    "platform.locators": "Locators",
+    "platform.name": "Name"
 }
