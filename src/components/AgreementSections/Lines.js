@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
+import { IfPermission } from '@folio/stripes/core';
 import { Button, Accordion, Badge, Spinner } from '@folio/stripes/components';
 
 import CoveredEResourcesList from './CoveredEResourcesList';
@@ -30,9 +31,11 @@ export default class Lines extends React.Component {
 
   renderAddAgreementLineButton = () => {
     return (
-      <Button id="add-agreement-line-button" to={urls.agreementLineCreate(this.props.agreement.id)}>
-        <FormattedMessage id="ui-agreements.agreementLines.addLine" />
-      </Button>
+      <IfPermission perm="ui-agreements.agreements.edit">
+        <Button id="add-agreement-line-button" to={urls.agreementLineCreate(this.props.agreement.id)}>
+          <FormattedMessage id="ui-agreements.agreementLines.addLine" />
+        </Button>
+      </IfPermission>
     );
   }
 
