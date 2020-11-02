@@ -101,7 +101,7 @@
     "settings.orgRoles.orgRole": "Organization role",
     "settings.orgRoles.role": "Role",
     "agreements.financesAgreementLines": "Finanzas - líneas de acuerdo",
-    "agreements.editFinancesAgreementLines": "Edit agreement lines",
+    "agreements.editFinancesAgreementLines": "Editar líneas de acuerdo",
     "agreements.licenseInfo": "License information",
     "license.externalLicenses": "Licencias externas",
     "license.generalNotes": "General notes about the agreement's license",
@@ -169,7 +169,7 @@
     "agreements.selectIsPerpetual": "Select agreement perpetuity",
     "agreements.closeEdit": "Close edit agreement",
     "eresources.packageResources": "E-resources in package",
-    "finances.none": "Agreement has no order lines.",
+    "finances.none": "El acuerdo NO tiene líneas de pedido.",
     "organizations.addOrganizationToAgreement": "Añadir organización",
     "eresource": "E-resource",
     "eresourcePluralizable": "{count} {count, plural, one {e-resource} other {e-resources}}",
@@ -493,6 +493,6 @@
     "platform.editPlatform": "Edit {name}",
     "platform.edit": "Edit",
     "platform.localPlatformCode": "Local platform code",
-    "platform.locators": "Locators",
-    "platform.name": "Name"
+    "platform.locators": "Localizadores",
+    "platform.name": "Nombre"
 }
