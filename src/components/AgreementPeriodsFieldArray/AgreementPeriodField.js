@@ -12,7 +12,7 @@ import {
 } from '@folio/stripes/components';
 
 import { composeValidators } from '@folio/stripes-erm-components';
-import { parseDateOnlyString, validators } from '../utilities';
+import { validators } from '../utilities';
 
 const multipleOpenEndedPeriods = (...rest) => (
   validators.multipleOpenEnded(...rest, 'ui-agreements.errors.multipleOpenEndedPeriods')
@@ -61,8 +61,8 @@ export default class AgreementPeriodField extends React.Component {
               inputRef={this.inputRef}
               label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
               name={`${name}.startDate`}
-              parser={parseDateOnlyString}
               required
+              timeZone="UTC"
               usePortal
               validate={composeValidators(
                 validators.requiredStartDate,
@@ -79,7 +79,7 @@ export default class AgreementPeriodField extends React.Component {
               label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
               name={`${name}.endDate`}
               parse={v => v} // Lets us send an empty string instead of `undefined`
-              parser={parseDateOnlyString}
+              timeZone="UTC"
               usePortal
               validate={composeValidators(
                 validators.dateOrder,
@@ -96,7 +96,7 @@ export default class AgreementPeriodField extends React.Component {
               label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}
               name={`${name}.cancellationDeadline`}
               parse={v => v} // Lets us send an empty string instead of `undefined`
-              parser={parseDateOnlyString}
+              timeZone="UTC"
               usePortal
             />
           </Col>
