@@ -10,7 +10,6 @@ import {
   Row,
   TextField,
 } from '@folio/stripes/components';
-import { parseDateOnlyString } from '../utilities';
 
 export default class PCIFormInfo extends React.Component {
   static propTypes = {
@@ -41,7 +40,7 @@ export default class PCIFormInfo extends React.Component {
               id="pci-access-from"
               label={<FormattedMessage id="ui-agreements.eresources.accessibleFrom" />}
               name="accessStart"
-              parser={parseDateOnlyString}
+              timeZone="UTC"
             />
           </Col>
           <Col xs={3}>
@@ -52,7 +51,7 @@ export default class PCIFormInfo extends React.Component {
               id="pci-access-end"
               label={<FormattedMessage id="ui-agreements.eresources.accessibleUntil" />}
               name="accessEnd"
-              parser={parseDateOnlyString}
+              timeZone="UTC"
             />
           </Col>
           { isSuppressFromDiscoveryEnabled('pci') ?
