@@ -11,7 +11,7 @@ import {
   TextArea,
 } from '@folio/stripes/components';
 
-import { isDetached, parseDateOnlyString } from '../utilities';
+import { isDetached } from '../utilities';
 
 const propTypes = {
   isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
@@ -90,7 +90,7 @@ const FormInfo = ({
           label={<FormattedMessage id="ui-agreements.eresources.activeFrom" />}
           name="activeFrom"
           parse={v => v} // Lets us send an empty string instead of `undefined`
-          parser={parseDateOnlyString}
+          timeZone="UTC"
           validate={validateDateOrder}
         />
       </Col>
@@ -102,7 +102,7 @@ const FormInfo = ({
           label={<FormattedMessage id="ui-agreements.eresources.activeTo" />}
           name="activeTo"
           parse={v => v} // Lets us send an empty string instead of `undefined`
-          parser={parseDateOnlyString}
+          timeZone="UTC"
           validate={validateDateOrder}
         />
       </Col>

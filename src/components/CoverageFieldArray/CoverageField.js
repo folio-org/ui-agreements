@@ -12,7 +12,7 @@ import {
 } from '@folio/stripes/components';
 
 import { composeValidators } from '@folio/stripes-erm-components';
-import { parseDateOnlyString, validators } from '../utilities';
+import { validators } from '../utilities';
 
 const multipleOpenEndedCoverages = (...rest) => (
   validators.multipleOpenEnded(...rest, 'ui-agreements.errors.multipleOpenEndedCoverages')
@@ -67,8 +67,8 @@ export default class CoverageField extends React.Component {
                     input={input}
                     inputRef={this.inputRef}
                     label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
-                    parser={parseDateOnlyString}
                     required
+                    timeZone="UTC"
                     usePortal
                     warning={meta.touched && input.value && meta?.data?.warning}
                   />
@@ -132,7 +132,7 @@ export default class CoverageField extends React.Component {
                     input={input}
                     inputRef={this.inputRef}
                     label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
-                    parser={parseDateOnlyString}
+                    timeZone="UTC"
                     usePortal
                     warning={meta.touched && input.value && meta?.data?.warning}
                   />
