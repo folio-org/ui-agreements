@@ -493,6 +493,6 @@
     "platform.editPlatform": "Edit {name}",
     "platform.edit": "Edit",
     "platform.localPlatformCode": "Local platform code",
-    "platform.locators": "Locators",
-    "platform.name": "Name"
+    "platform.locators": "Localizadores",
+    "platform.name": "Nombre"
 }
