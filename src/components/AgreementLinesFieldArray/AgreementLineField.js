@@ -17,7 +17,7 @@ import BasketSelector from '../BasketSelector';
 import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
 import EResourceProvider from '../EResourceProvider';
-import { isDetached, isExternal, parseDateOnlyString } from '../utilities';
+import { isDetached, isExternal } from '../utilities';
 
 import CoverageFieldArray from '../CoverageFieldArray';
 import POLinesFieldArray from '../POLinesFieldArray';
@@ -199,7 +199,7 @@ export default class AgreementLineField extends React.Component {
               label={<FormattedMessage id="ui-agreements.eresources.activeFrom" />}
               name={`${name}.activeFrom`}
               parse={v => v} // Lets us send an empty string instead of `undefined`
-              parser={parseDateOnlyString}
+              timeZone="UTC"
               usePortal
               validate={this.validateDateOrder}
             />
@@ -212,7 +212,7 @@ export default class AgreementLineField extends React.Component {
               label={<FormattedMessage id="ui-agreements.eresources.activeTo" />}
               name={`${name}.activeTo`}
               parse={v => v} // Lets us send an empty string instead of `undefined`
-              parser={parseDateOnlyString}
+              timeZone="UTC"
               usePortal
               validate={this.validateDateOrder}
             />
