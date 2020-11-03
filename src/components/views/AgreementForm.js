@@ -16,7 +16,7 @@ import {
   Paneset,
   Row,
 } from '@folio/stripes/components';
-import { AppIcon, TitleManager } from '@folio/stripes/core';
+import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
 
 import {
@@ -213,7 +213,12 @@ class AgreementForm extends React.Component {
                       </Col>
                     </Row>
                     <FormInfo {...this.getSectionProps('formInfo')} />
-                    <FormInternalContacts {...this.getSectionProps('formInternalContacts')} />
+                    <IfPermission perm="users.collection.get">
+                      {({ hasPermission }) => (hasPermission ?
+                        <FormInternalContacts {...this.getSectionProps('formInternalContacts')} />
+                        :
+                        null)}
+                    </IfPermission>
                     <FormLines {...this.getSectionProps('formLines')} />
                     <FormLicenses {...this.getSectionProps('formLicenses')} />
                     <FormOrganizations {...this.getSectionProps('formOrganizations')} />

@@ -121,6 +121,7 @@ class AgreementEditRoute extends React.Component {
         return query ? { query } : null;
       },
       fetch: props => !!props.stripes.hasInterface('users', '15.0'),
+      permissionsRequired: 'users.collection.get',
       records: 'users',
     },
     basket: { initialValue: [] },
