@@ -23,91 +23,91 @@ class AgreementEditRoute extends React.Component {
       path: 'erm/sas/:{id}',
       shouldRefresh: () => false,
     },
-    // agreementLines: {
-    //   type: 'okapi',
-    //   path: 'erm/entitlements',
-    //   params: {
-    //     filters: 'owner=:{id}',
-    //     sort: 'resource.name',
-    //     stats: 'true',
-    //   },
-    //   limitParam: 'perPage',
-    //   perRequest: RECORDS_PER_REQUEST,
-    //   records: 'results',
-    //   recordsRequired: '1000',
-    // },
-    // agreementStatusValues: {
-    //   type: 'okapi',
-    //   path: 'erm/refdata/SubscriptionAgreement/agreementStatus',
-    //   shouldRefresh: () => false,
-    // },
-    // reasonForClosureValues: {
-    //   type: 'okapi',
-    //   path: 'erm/refdata/SubscriptionAgreement/reasonForClosure',
-    //   shouldRefresh: () => false,
-    // },
-    // amendmentStatusValues: {
-    //   type: 'okapi',
-    //   path: 'erm/refdata/LicenseAmendmentStatus/status',
-    //   shouldRefresh: () => false,
-    // },
-    // contactRoleValues: {
-    //   type: 'okapi',
-    //   path: 'erm/refdata/InternalContact/role',
-    //   shouldRefresh: () => false,
-    // },
-    // documentCategories: {
-    //   type: 'okapi',
-    //   path: 'erm/refdata/DocumentAttachment/atType',
-    //   shouldRefresh: () => false,
-    // },
-    // isPerpetualValues: {
-    //   type: 'okapi',
-    //   path: 'erm/refdata/SubscriptionAgreement/isPerpetual',
-    //   shouldRefresh: () => false,
-    // },
-    // licenseLinkStatusValues: {
-    //   type: 'okapi',
-    //   path: 'erm/refdata/RemoteLicenseLink/status',
-    //   shouldRefresh: () => false,
-    // },
-    // orderLines: {
-    //   type: 'okapi',
-    //   path: 'orders/order-lines',
-    //   params: (_q, _p, _r, _l, props) => {
-    //     const query = (props?.resources?.agreementLines?.records ?? [])
-    //       .filter(line => line.poLines && line.poLines.length)
-    //       .map(line => (line.poLines
-    //         .map(poLine => `id==${poLine.poLineId}`)
-    //         .join(' or ')
-    //       ))
-    //       .join(' or ');
+    agreementLines: {
+      type: 'okapi',
+      path: 'erm/entitlements',
+      params: {
+        filters: 'owner=:{id}',
+        sort: 'resource.name',
+        stats: 'true',
+      },
+      limitParam: 'perPage',
+      perRequest: RECORDS_PER_REQUEST,
+      records: 'results',
+      recordsRequired: '1000',
+    },
+    agreementStatusValues: {
+      type: 'okapi',
+      path: 'erm/refdata/SubscriptionAgreement/agreementStatus',
+      shouldRefresh: () => false,
+    },
+    reasonForClosureValues: {
+      type: 'okapi',
+      path: 'erm/refdata/SubscriptionAgreement/reasonForClosure',
+      shouldRefresh: () => false,
+    },
+    amendmentStatusValues: {
+      type: 'okapi',
+      path: 'erm/refdata/LicenseAmendmentStatus/status',
+      shouldRefresh: () => false,
+    },
+    contactRoleValues: {
+      type: 'okapi',
+      path: 'erm/refdata/InternalContact/role',
+      shouldRefresh: () => false,
+    },
+    documentCategories: {
+      type: 'okapi',
+      path: 'erm/refdata/DocumentAttachment/atType',
+      shouldRefresh: () => false,
+    },
+    isPerpetualValues: {
+      type: 'okapi',
+      path: 'erm/refdata/SubscriptionAgreement/isPerpetual',
+      shouldRefresh: () => false,
+    },
+    licenseLinkStatusValues: {
+      type: 'okapi',
+      path: 'erm/refdata/RemoteLicenseLink/status',
+      shouldRefresh: () => false,
+    },
+    orderLines: {
+      type: 'okapi',
+      path: 'orders/order-lines',
+      params: (_q, _p, _r, _l, props) => {
+        const query = (props?.resources?.agreementLines?.records ?? [])
+          .filter(line => line.poLines && line.poLines.length)
+          .map(line => (line.poLines
+            .map(poLine => `id==${poLine.poLineId}`)
+            .join(' or ')
+          ))
+          .join(' or ');
 
-    //     return query ? { query } : null;
-    //   },
-    //   fetch: props => !!props.stripes.hasInterface('order-lines', '1.0'),
-    //   records: 'poLines',
-    // },
-    // orgRoleValues: {
-    //   type: 'okapi',
-    //   path: 'erm/refdata/SubscriptionAgreementOrg/role',
-    //   shouldRefresh: () => false,
-    // },
-    // renewalPriorityValues: {
-    //   type: 'okapi',
-    //   path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
-    //   shouldRefresh: () => false,
-    // },
-    // relationshipTypeValues: {
-    //   type: 'okapi',
-    //   path: 'erm/refdata/AgreementRelationship/type',
-    //   shouldRefresh: () => false,
-    // },
-    // supplementaryProperties: {
-    //   type: 'okapi',
-    //   path: 'erm/custprops',
-    //   shouldRefresh: () => false,
-    // },
+        return query ? { query } : null;
+      },
+      fetch: props => !!props.stripes.hasInterface('order-lines', '1.0'),
+      records: 'poLines',
+    },
+    orgRoleValues: {
+      type: 'okapi',
+      path: 'erm/refdata/SubscriptionAgreementOrg/role',
+      shouldRefresh: () => false,
+    },
+    renewalPriorityValues: {
+      type: 'okapi',
+      path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
+      shouldRefresh: () => false,
+    },
+    relationshipTypeValues: {
+      type: 'okapi',
+      path: 'erm/refdata/AgreementRelationship/type',
+      shouldRefresh: () => false,
+    },
+    supplementaryProperties: {
+      type: 'okapi',
+      path: 'erm/custprops',
+      shouldRefresh: () => false,
+    },
     users: {
       type: 'okapi',
       path: 'users',
@@ -121,6 +121,7 @@ class AgreementEditRoute extends React.Component {
         return query ? { query } : null;
       },
       fetch: props => !!props.stripes.hasInterface('users', '15.0'),
+      permissionsRequired: 'users.collection.get',
       records: 'users',
     },
     basket: { initialValue: [] },

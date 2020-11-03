@@ -4,6 +4,7 @@ import { get, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import setFieldData from 'final-form-set-field-data';
 import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
+import { IfPermission } from '@folio/stripes/core';
 
 import {
   AccordionSet,
@@ -240,7 +241,12 @@ class AgreementForm extends React.Component {
                       </Row>
                       <AccordionSet initialStatus={this.getInitialAccordionsState()}>
                         <FormInfo {...this.getSectionProps('formInfo')} />
-                        <FormInternalContacts {...this.getSectionProps('formInternalContacts')} />
+                        <IfPermission perm="users.collection.get">
+                          {({ hasPermission }) => (hasPermission ?
+                            <FormInternalContacts {...this.getSectionProps('formInternalContacts')} />
+                            :
+                            null)}
+                        </IfPermission>
                         <FormLines {...this.getSectionProps('formLines')} />
                         <FormLicenses {...this.getSectionProps('formLicenses')} />
                         <FormOrganizations {...this.getSectionProps('formOrganizations')} />
