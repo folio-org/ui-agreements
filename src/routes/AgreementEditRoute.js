@@ -15,7 +15,6 @@ import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
 
 const RECORDS_PER_REQUEST = 100;
-const RECORDS_PER_PAGE = '100';
 
 class AgreementEditRoute extends React.Component {
   static manifest = Object.freeze({
@@ -45,9 +44,8 @@ class AgreementEditRoute extends React.Component {
     reasonForClosureValues: {
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreement/reasonForClosure',
-      params: {
-        perPage: RECORDS_PER_PAGE,
-      },
+      limitParam: 'perPage',
+      perRequest: RECORDS_PER_REQUEST,
       shouldRefresh: () => false,
     },
     amendmentStatusValues: {
@@ -58,17 +56,15 @@ class AgreementEditRoute extends React.Component {
     contactRoleValues: {
       type: 'okapi',
       path: 'erm/refdata/InternalContact/role',
-      params: {
-        perPage: RECORDS_PER_PAGE,
-      },
+      limitParam: 'perPage',
+      perRequest: RECORDS_PER_REQUEST,
       shouldRefresh: () => false,
     },
     documentCategories: {
       type: 'okapi',
       path: 'erm/refdata/DocumentAttachment/atType',
-      params: {
-        perPage: RECORDS_PER_PAGE,
-      },
+      limitParam: 'perPage',
+      perRequest: RECORDS_PER_REQUEST,
       shouldRefresh: () => false,
     },
     isPerpetualValues: {
@@ -106,9 +102,8 @@ class AgreementEditRoute extends React.Component {
     renewalPriorityValues: {
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
-      params: {
-        perPage: RECORDS_PER_PAGE,
-      },
+      limitParam: 'perPage',
+      perRequest: RECORDS_PER_REQUEST,
       shouldRefresh: () => false,
     },
     relationshipTypeValues: {

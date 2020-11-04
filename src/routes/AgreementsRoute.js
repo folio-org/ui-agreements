@@ -12,7 +12,7 @@ import { urls } from '../components/utilities';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
-const RECORDS_PER_PAGE = '100';
+const RECORDS_PER_REQUEST = 100;
 
 class AgreementsRoute extends React.Component {
   static manifest = Object.freeze({
@@ -46,9 +46,7 @@ class AgreementsRoute extends React.Component {
       limitParam: 'perPage',
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
-      params: {
-        perPage: RECORDS_PER_PAGE,
-      },
+      perRequest: RECORDS_PER_REQUEST,
       shouldRefresh: () => false,
     },
     isPerpetualValues: {
@@ -59,9 +57,8 @@ class AgreementsRoute extends React.Component {
     contactRoleValues: {
       type: 'okapi',
       path: 'erm/refdata/InternalContact/role',
-      params: {
-        perPage: RECORDS_PER_PAGE,
-      },
+      limitParam: 'perPage',
+      perRequest: RECORDS_PER_REQUEST,
       shouldRefresh: () => false,
     },
     orgRoleValues: {
