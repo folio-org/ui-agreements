@@ -4,7 +4,7 @@ import { get, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import setFieldData from 'final-form-set-field-data';
 import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
-import { IfPermission } from '@folio/stripes/core';
+import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 
 import {
   AccordionSet,
@@ -20,7 +20,7 @@ import {
   Paneset,
   Row,
 } from '@folio/stripes/components';
-import { AppIcon, TitleManager } from '@folio/stripes/core';
+
 import stripesFinalForm from '@folio/stripes/final-form';
 
 import {
