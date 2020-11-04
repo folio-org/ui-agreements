@@ -15,7 +15,7 @@ import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
 
 const RECORDS_PER_REQUEST = 100;
-const RECORDS_PER_PAGE = 100;
+const RECORDS_PER_PAGE = '100';
 
 class AgreementEditRoute extends React.Component {
   static manifest = Object.freeze({

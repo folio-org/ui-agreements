@@ -13,7 +13,7 @@ import View from '../components/views/AgreementForm';
 import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
 
-const RECORDS_PER_PAGE = 100;
+const RECORDS_PER_PAGE = '100';
 
 class AgreementCreateRoute extends React.Component {
   static manifest = Object.freeze({

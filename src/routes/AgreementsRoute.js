@@ -12,7 +12,7 @@ import { urls } from '../components/utilities';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
-const RECORDS_PER_PAGE = 100;
+const RECORDS_PER_PAGE = '100';
 
 class AgreementsRoute extends React.Component {
   static manifest = Object.freeze({
