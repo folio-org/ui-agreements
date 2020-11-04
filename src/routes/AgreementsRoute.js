@@ -42,8 +42,12 @@ class AgreementsRoute extends React.Component {
       shouldRefresh: () => false,
     },
     renewalPriorityValues: {
+      limitParam: 'perPage',
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
+      params: {
+        perPage: '100',
+      },
       shouldRefresh: () => false,
     },
     isPerpetualValues: {
@@ -54,6 +58,9 @@ class AgreementsRoute extends React.Component {
     contactRoleValues: {
       type: 'okapi',
       path: 'erm/refdata/InternalContact/role',
+      params: {
+        perPage: '100',
+      },
       shouldRefresh: () => false,
     },
     orgRoleValues: {

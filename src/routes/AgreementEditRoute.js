@@ -44,6 +44,9 @@ class AgreementEditRoute extends React.Component {
     reasonForClosureValues: {
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreement/reasonForClosure',
+      params: {
+        perPage: '100',
+      },
       shouldRefresh: () => false,
     },
     amendmentStatusValues: {
@@ -54,11 +57,17 @@ class AgreementEditRoute extends React.Component {
     contactRoleValues: {
       type: 'okapi',
       path: 'erm/refdata/InternalContact/role',
+      params: {
+        perPage: '100',
+      },
       shouldRefresh: () => false,
     },
     documentCategories: {
       type: 'okapi',
       path: 'erm/refdata/DocumentAttachment/atType',
+      params: {
+        perPage: '100',
+      },
       shouldRefresh: () => false,
     },
     isPerpetualValues: {
@@ -96,6 +105,9 @@ class AgreementEditRoute extends React.Component {
     renewalPriorityValues: {
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
+      params: {
+        perPage: '100',
+      },
       shouldRefresh: () => false,
     },
     relationshipTypeValues: {
