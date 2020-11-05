@@ -486,13 +486,13 @@
     "basket.messageBanner": "하나 이상의 전자 자원을 선택하고 신규 또는 기존 계약에 추가합니다. 선택한 각 e전자자원에 대해 계약 라인이 생성됩니다.",
     "basket.removeFromBasket": "바구니에서 {간행물유형} \"{이름}\" 제거",
     "duplicateAgreementModal.org.olf.erm.SubscriptionAgreement.name.unique": "계약을 복제할 수 없습니다. 계약이 저장되지 않았습니다. 이름은 고유해야합니다. 이름이 \"사본 : {name} \"인 계약이 이미 존재합니다.",
-    "platforms": "Platforms",
-    "permission.platforms.view": "Agreements: Search & view platforms",
-    "permission.platforms.edit": "Agreements: Edit platforms",
-    "platform.closeEdit": "Close edit platform",
-    "platform.editPlatform": "Edit {name}",
-    "platform.edit": "Edit",
-    "platform.localPlatformCode": "Local platform code",
-    "platform.locators": "Locators",
-    "platform.name": "Name"
+    "platforms": "플랫폼",
+    "permission.platforms.view": "계약(Agreements): 플랫폼 검색 및 보기",
+    "permission.platforms.edit": "계약(Agreements): 플랫폼 편집",
+    "platform.closeEdit": "편집 플랫폼 닫기",
+    "platform.editPlatform": "{이름} 편집",
+    "platform.edit": "편집",
+    "platform.localPlatformCode": "로컬 플랫폼 코드",
+    "platform.locators": "로케이터",
+    "platform.name": "이름"
 }
