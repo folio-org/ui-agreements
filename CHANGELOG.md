@@ -3,6 +3,12 @@
 ##  5.1.0 IN PROGRESS
 * Added optionalOkapiInterfaces to package.json. ERM-940
 
+##  5.0.1 2020-11-05
+* Added permission check when displaying the add agreement line button. ERM-1197
+* Fixes bug where incorrect Dates are saved when tenant timezone is ahead of UTC. ERM-1202
+* Added permission check to fetch associated internal contacts data on editing an agreement. ERM-1200
+* Bumped the limit to fetch 100 results for user definable pick lists. ERM-1192
+
 ##  5.0.0 2020-10-15
 * Enhance eHoldings display in Agreement Line view. ERM-948
 * Added ability to set and view notes on organizations. ERM-966
