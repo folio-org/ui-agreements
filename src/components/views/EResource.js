@@ -79,7 +79,7 @@ const EResource = ({
                       onClick={handlers.onToggleTags}
                     />
                   }
-                  {eresource.class === resourceClasses.PCI &&
+                  {/* {eresource.class === resourceClasses.PCI && */}
                     <Button
                       buttonStyle="primary"
                       id="clickable-edit-eresource"
@@ -88,7 +88,7 @@ const EResource = ({
                     >
                       <FormattedMessage id="stripes-components.button.edit" />
                     </Button>
-                  }
+                  {/* } */}
                 </PaneMenu>
               </IfPermission>
             ) : null
