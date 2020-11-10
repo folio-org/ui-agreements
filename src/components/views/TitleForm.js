@@ -16,9 +16,10 @@ import {
 } from '@folio/stripes/components';
 import { TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
-import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
+import { checkScope } from '@folio/stripes-erm-components';
 
 import TitleCardInfo from '../TitleCard/TitleCardInfo';
+import css from '../styles.css';
 
 class TitleForm extends React.Component {
   static propTypes = {
@@ -128,20 +129,10 @@ class TitleForm extends React.Component {
       name: 'save',
       handler: this.handleSaveKeyCommand,
     },
-    {
-      name: 'expandAllSections',
-      handler: (e) => expandAllSections(e, this.accordionStatusRef),
-    },
-    {
-      name: 'collapseAllSections',
-      handler: (e) => collapseAllSections(e, this.accordionStatusRef),
-    }
   ];
 
   render() {
-    const { form, handlers: { isSuppressFromDiscoveryEnabled }, values: { name } } = this.props;
-
-    const hasLoaded = form.getRegisteredFields().length > 0;
+    const { handlers: { isSuppressFromDiscoveryEnabled }, values: { name } } = this.props;
 
     return (
       <HasCommand
@@ -156,22 +147,23 @@ class TitleForm extends React.Component {
             firstMenu={this.renderFirstMenu()}
             footer={this.renderPaneFooter()}
             id="pane-title-form"
-            paneTitle={<FormattedMessage id="ui-agreements.title.Title" values={{ name }} />}
+            paneTitle={<FormattedMessage id="ui-agreements.editResource" values={{ name }} />}
           >
             <TitleManager record={name}>
               <form id="form-title">
                 <TitleCardInfo {...this.getSectionProps('info')} title={this.props.eresource} />
-              { isSuppressFromDiscoveryEnabled('title') ?
-              <Col xs={3}>
-                <Field
-                  component={Checkbox}
-                  id="pci-suppress-from-discovery"
-                  label={<FormattedMessage id="ui-agreements.eresources.suppressFromDiscovery" />}
-                  name="suppressFromDiscovery"
-                  type="checkbox"
-                  vertical
-                />
-              </Col> : null
+                <div className={css.separator} />
+                { isSuppressFromDiscoveryEnabled('title') ?
+                  <Col xs={3}>
+                    <Field
+                      component={Checkbox}
+                      id="pci-suppress-from-discovery"
+                      label={<FormattedMessage id="ui-agreements.eresources.suppressFromDiscovery" />}
+                      name="suppressFromDiscovery"
+                      type="checkbox"
+                      vertical
+                    />
+                  </Col> : null
             }
               </form>
             </TitleManager>

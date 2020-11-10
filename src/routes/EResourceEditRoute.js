@@ -123,10 +123,9 @@ class EResourceEditRoute extends React.Component {
     if (this.fetchIsPending()) return <LoadingView dismissible onClose={this.handleClose} />;
     const { isSuppressFromDiscoveryEnabled } = this.props;
     const eresource = this.props.resources?.resource?.records[0];
-    const eresourceClass = eresource?.class
+    const eresourceClass = eresource?.class;
 
     const EResourceViewComponent = eresourceClass === resourceClasses.TITLEINSTANCE ? TitleForm : PCIForm;
-    console.log(eresourceClass);
 
     return (
       <EResourceViewComponent

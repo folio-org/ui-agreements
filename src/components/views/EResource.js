@@ -26,6 +26,7 @@ const propTypes = {
     }),
   }),
   handlers: PropTypes.shape({
+    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     onEdit: PropTypes.func.isRequired,
     onNeedMorePackageContents: PropTypes.func.isRequired,
@@ -79,7 +80,7 @@ const EResource = ({
                       onClick={handlers.onToggleTags}
                     />
                   }
-                  {/* {eresource.class === resourceClasses.PCI && */}
+                  { (eresource.class === resourceClasses.PCI || (eresource.class === resourceClasses.TITLEINSTANCE && handlers.isSuppressFromDiscoveryEnabled('title'))) &&
                     <Button
                       buttonStyle="primary"
                       id="clickable-edit-eresource"
@@ -88,7 +89,7 @@ const EResource = ({
                     >
                       <FormattedMessage id="stripes-components.button.edit" />
                     </Button>
-                  {/* } */}
+                }
                 </PaneMenu>
               </IfPermission>
             ) : null
