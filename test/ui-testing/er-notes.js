@@ -1,4 +1,4 @@
-/* global describe, it, before, after, Nightmare */
+/* global before, after, Nightmare */
 
 module.exports.test = (uiTestCtx, { eresource }) => {
   const testNote = `note${Math.floor(Math.random() * 100000)}`;

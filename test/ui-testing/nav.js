@@ -1,4 +1,4 @@
-/* global describe, it, before, after, Nightmare */
+/* global before, after, Nightmare */
 
 module.exports.test = (uiTestCtx) => {
   describe('ui-agreements: tab navigation', function test() {

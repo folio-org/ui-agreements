@@ -1,5 +1,5 @@
 // Utilities for tests in this repo.
-/* global describe, it, before, after, Nightmare */ // eslint-disable-line
+/* global before, after, Nightmare */ // eslint-disable-line
 
 module.exports.formattedDate = function formattedDate(datestring) {
   const date = new Date(datestring);
