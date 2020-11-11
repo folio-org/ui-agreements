@@ -53,6 +53,7 @@
     "@folio/eslint-config-stripes": "^5.2.0",
     "@folio/stripes": "^5.0.0",
     "@folio/stripes-cli": "^1.8.0",
+    "@testing-library/react": "^11.1.2",
     "babel-eslint": "^9.0.0",
     "chai": "^4.2.0",
     "chai-spies": "^1.0.0",

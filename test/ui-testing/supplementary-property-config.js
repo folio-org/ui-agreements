@@ -1,4 +1,4 @@
-/* global describe, it, before, after, Nightmare */
+/* global before, after, Nightmare */
 
 const randomNumber = Math.round(Math.random() * 1000);
 const BASE_SUPPLEMENTARY_PROPERTY = {

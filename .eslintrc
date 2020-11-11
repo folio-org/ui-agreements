@@ -2,10 +2,17 @@
   "parser": "babel-eslint",
   "extends": "@folio/eslint-config-stripes",
   "rules": {
-    "react/jsx-sort-props": "error"
+    "react/jsx-sort-props": "error",
+    "testing-library/await-async-query": "error",
+    "testing-library/no-await-sync-query": "error",
+    "testing-library/no-debug": "warn",
+    "jest-dom/prefer-checked": "error",
+    "jest-dom/prefer-enabled-disabled": "error",
+    "jest-dom/prefer-required": "error",
+    "jest-dom/prefer-to-have-attribute": "error"
   },
   "env": {
-    "jest/globals": true
+    "jest": true
   },
-  "plugins": ["babel", "jest"]
+  "plugins": ["testing-library", "jest-dom"]
 }
