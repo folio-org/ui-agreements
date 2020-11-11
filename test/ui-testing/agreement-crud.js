@@ -1,4 +1,4 @@
-/* global describe, it, before, after, Nightmare */
+/* global before, after, Nightmare */
 const Utils = require('./utils');
 
 const generateAgreementValues = () => {

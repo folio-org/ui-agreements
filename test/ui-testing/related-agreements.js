@@ -1,4 +1,4 @@
-/* global describe, it, before, after, Nightmare */
+/* global before, after, Nightmare */
 const AgreementCRUD = require('./agreement-crud');
 
 // Ideally, we'd import these from constants/agreementRelationshipTypes.js but the mismatch

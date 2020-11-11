@@ -1,4 +1,4 @@
-/* global describe, it, before, after, Nightmare */
+/* global before, after, Nightmare */
 
 const AgreementCRUD = require('./agreement-crud');
 const Basket = require('./basket');
