@@ -157,7 +157,7 @@ class TitleForm extends React.Component {
                   <Col xs={3}>
                     <Field
                       component={Checkbox}
-                      id="pci-suppress-from-discovery"
+                      id="title-suppress-from-discovery"
                       label={<FormattedMessage id="ui-agreements.eresources.suppressFromDiscovery" />}
                       name="suppressFromDiscovery"
                       type="checkbox"

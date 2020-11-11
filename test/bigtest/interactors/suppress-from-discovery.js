@@ -16,4 +16,10 @@ export default @interactor class SuppressFromDiscoveryInteractor {
   clickPCI = clickable('[data-test-sfdfa-pci]');
   pciFieldName = property('[data-test-sfdfa-pci]', 'name')
   pciFieldChecked = property('[data-test-sfdfa-pci]', 'checked')
+
+  isTitleInstanceCheckboxPresent = isPresent('[data-test-sfdfa-title]');
+  clickTitleInstance = clickable('[data-test-sfdfa-title]');
+  titleInstanceFieldName = property('[data-test-sfdfa-title]', 'name')
+  titleInstanceFieldChecked = property('[data-test-sfdfa-title]', 'checked')
+
 }
