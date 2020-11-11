@@ -3,5 +3,9 @@
   "extends": "@folio/eslint-config-stripes",
   "rules": {
     "react/jsx-sort-props": "error"
-  }
+  },
+  "env": {
+    "jest/globals": true
+  },
+  "plugins": ["babel", "jest"]
 }
