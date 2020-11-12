@@ -48,7 +48,7 @@ class PlatformEditRoute extends React.Component {
     super(props);
 
     this.state = {
-      hasPerms: props.stripes.hasPerm('ui-agreements.resources.edit'),
+      hasPerms: props.stripes.hasPerm('ui-agreements.platforms.edit'),
     };
   }
 
