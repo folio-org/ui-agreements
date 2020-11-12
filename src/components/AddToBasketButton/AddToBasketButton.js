@@ -99,7 +99,8 @@ class AddToBasketButton extends React.Component {
       'data-test-coverage-details': coverage,
       'data-test-entitlement-option-id': item.id,
       disabled,
-      'onClick': itemExistsInBasket ? this.removeFromBasket : this.addToBasket
+      'onClick': itemExistsInBasket ? this.removeFromBasket : this.addToBasket,
+      'data-testid': 'addtobasketbutton'
     };
 
     const button = addButtonTooltipText ?
