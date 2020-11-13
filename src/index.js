@@ -38,18 +38,26 @@ const Settings = lazy(() => import('./settings'));
 class App extends React.Component {
   static propTypes = {
     history: PropTypes.object,
-    location: PropTypes.object,
+    location: PropTypes.shape({
+      pathname: PropTypes.string
+    }),
     match: PropTypes.object.isRequired,
     actAs: PropTypes.string.isRequired,
     stripes: PropTypes.object.isRequired,
   }
 
   searchInput = () => {
-    return this.props.location.pathname.search('/erm/agreements') === 0 ?
-      'input-agreement-search' :
-      this.props.location.pathname.search('/erm/eresources') === 0 ?
-        'input-eresource-search' :
-        undefined;
+    const { pathname } = this.props.location;
+
+    if (pathname.search('/erm/agreements') === 0) {
+      return 'input-agreement-search';
+    } else if (pathname.search('/erm/eresources') === 0) {
+      return 'input-eresource-search';
+    } else if (pathname.search('/erm/platforms') === 0) {
+      return 'input-platform-search';
+    } else {
+      return undefined;
+    }
   }
 
   focusSearchField = () => {
