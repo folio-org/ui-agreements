@@ -60,6 +60,7 @@ export default class Lines extends React.Component {
         displayWhenOpen={this.renderAddAgreementLineButton()}
         id={id}
         label={<FormattedMessage id="ui-agreements.agreements.agreementLines" />}
+        open
       >
         <LinesList
           agreement={agreement}

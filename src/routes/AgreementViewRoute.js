@@ -236,9 +236,9 @@ class AgreementViewRoute extends React.Component {
     return {
       ...agreement,
       contacts,
+      lines: this.getLinesRecords(),
       eresources: this.getAgreementEresourcesRecords(),
       eresourcesCount: get(resources, 'agreementEresources.other.totalRecords'),
-      lines: get(resources, 'agreementLines.records'),
       orderLines: get(resources, 'orderLines.records'),
       orgs,
     };
@@ -266,12 +266,23 @@ class AgreementViewRoute extends React.Component {
   getAgreementEresourcesRecords = () => {
     const { resources, match } = this.props;
     const agreementEresourcesUrl = resources?.agreementEresources?.url ?? '';
-    // If a new agreement is selected or if the filter has changed return undefined
+    // If a new agreement is selected or if the filter has changed return undefined until the new set of records is fetched
     if (agreementEresourcesUrl.indexOf(`${match.params.id}`) === -1 ||
       agreementEresourcesUrl.indexOf(`resources/${resources.eresourcesFilterPath}`) === -1) {
       return undefined;
     } else {
       return resources?.agreementEresources?.records;
+    }
+  }
+
+  getLinesRecords = () => {
+    const { resources, match } = this.props;
+    const agreementLinesUrl = resources?.agreementLines?.url ?? '';
+    // If a new agreement is selected return undefined until the new set of records is fetched
+    if (agreementLinesUrl.indexOf(`${match.params.id}`) === -1) {
+      return undefined;
+    } else {
+      return resources?.agreementLines?.records;
     }
   }
 
