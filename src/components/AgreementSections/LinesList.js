@@ -159,8 +159,7 @@ export default class LinesList extends React.Component {
     } = this.props;
 
     const rowUpdater = () => orderLines.map(orderLine => orderLine.id);
-
-    return (
+    return lines ? (
       <MultiColumnList
         columnMapping={this.columnMapping}
         columnWidths={this.columnWidths}
@@ -178,6 +177,6 @@ export default class LinesList extends React.Component {
         rowUpdater={rowUpdater}
         visibleColumns={this.visibleColumns}
       />
-    );
+    ) : <Spinner />;
   }
 }
