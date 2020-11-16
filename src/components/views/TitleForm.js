@@ -2,11 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'react-final-form';
 import {
   Button,
-  Checkbox,
-  Col,
   HasCommand,
   IconButton,
   Pane,
@@ -19,6 +16,8 @@ import stripesFinalForm from '@folio/stripes/final-form';
 import { checkScope } from '@folio/stripes-erm-components';
 
 import TitleCardInfo from '../TitleCard/TitleCardInfo';
+import TitleFormInfo from './TitleFormInfo';
+
 import css from '../styles.css';
 
 class TitleForm extends React.Component {
@@ -153,18 +152,7 @@ class TitleForm extends React.Component {
               <form id="form-title">
                 <TitleCardInfo {...this.getSectionProps('info')} title={this.props.eresource} />
                 <div className={css.separator} />
-                { isSuppressFromDiscoveryEnabled('title') ?
-                  <Col xs={3}>
-                    <Field
-                      component={Checkbox}
-                      id="title-suppress-from-discovery"
-                      label={<FormattedMessage id="ui-agreements.eresources.suppressFromDiscovery" />}
-                      name="suppressFromDiscovery"
-                      type="checkbox"
-                      vertical
-                    />
-                  </Col> : null
-            }
+                <TitleFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} name={name} />
               </form>
             </TitleManager>
           </Pane>

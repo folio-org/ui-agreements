@@ -21,5 +21,4 @@ export default @interactor class SuppressFromDiscoveryInteractor {
   clickTitleInstance = clickable('[data-test-sfdfa-title]');
   titleInstanceFieldName = property('[data-test-sfdfa-title]', 'name')
   titleInstanceFieldChecked = property('[data-test-sfdfa-title]', 'checked')
-
 }

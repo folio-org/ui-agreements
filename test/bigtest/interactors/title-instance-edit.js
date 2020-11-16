@@ -6,7 +6,6 @@ import {
 } from '@bigtest/interactor';
 
 export default @interactor class TitleInstanceEditPaneInteractor {
-
   isTitleForm = isPresent('#pane-title-form');
   isSuppressFromDiscoveryCheckboxPresent = isPresent('#title-suppress-from-discovery');
   suppressFromDiscoveryCheckboxChecked = property('#title-suppress-from-discovery', 'checked');
