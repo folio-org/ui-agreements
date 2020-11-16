@@ -80,16 +80,14 @@ const EResource = ({
                       onClick={handlers.onToggleTags}
                     />
                   }
-                  { (eresource.class === resourceClasses.PCI || (eresource.class === resourceClasses.TITLEINSTANCE && handlers.isSuppressFromDiscoveryEnabled('title'))) &&
-                    <Button
-                      buttonStyle="primary"
-                      id="clickable-edit-eresource"
-                      marginBottom0
-                      onClick={handlers.onEdit}
-                    >
-                      <FormattedMessage id="stripes-components.button.edit" />
-                    </Button>
-                }
+                  <Button
+                    buttonStyle="primary"
+                    id="clickable-edit-eresource"
+                    marginBottom0
+                    onClick={handlers.onEdit}
+                  >
+                    <FormattedMessage id="stripes-components.button.edit" />
+                  </Button>
                 </PaneMenu>
               </IfPermission>
             ) : null

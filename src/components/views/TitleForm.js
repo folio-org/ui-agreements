@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import { checkScope } from '@folio/stripes-erm-components';
+
 import {
   Button,
   HasCommand,
@@ -11,156 +13,136 @@ import {
   PaneMenu,
   Paneset,
 } from '@folio/stripes/components';
-import { TitleManager } from '@folio/stripes/core';
-import stripesFinalForm from '@folio/stripes/final-form';
-import { checkScope } from '@folio/stripes-erm-components';
 
+import { AppIcon, TitleManager } from '@folio/stripes/core';
+import stripesFinalForm from '@folio/stripes/final-form';
 import TitleCardInfo from '../TitleCard/TitleCardInfo';
 import TitleFormInfo from './TitleFormInfo';
 
 import css from '../styles.css';
 
-class TitleForm extends React.Component {
-  static propTypes = {
-    eresource: PropTypes.object,
-    form: PropTypes.shape({
-      getRegisteredFields: PropTypes.func.isRequired,
-    }).isRequired,
-    handlers: PropTypes.PropTypes.shape({
-      isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
-      onClose: PropTypes.func.isRequired,
-    }),
-    initialValues: PropTypes.object,
-    handleSubmit: PropTypes.func.isRequired,
-    pristine: PropTypes.bool,
-    submitting: PropTypes.bool,
-    values: PropTypes.object,
-  }
 
-  static defaultProps = {
-    initialValues: {},
-  }
+const TitleForm = ({
+  eresource,
+  form,
+  handlers,
+  handleSubmit,
+  pristine,
+  submitting,
+  values,
+}) => {
+  const isFormSubmittableRef = useRef(false);
 
-  constructor(props) {
-    super(props);
-    this.accordionStatusRef = React.createRef();
-  }
+  useEffect(() => {
+    isFormSubmittableRef.current = !pristine && !submitting;
+  }, [pristine, submitting]);
 
-  getSectionProps(id) {
-    const { form, values = {} } = this.props;
-
-    return {
-      form,
-      id,
-      values,
-    };
-  }
-
-  handleSaveKeyCommand = (e) => {
-    const {
-      handleSubmit,
-      pristine,
-      submitting,
-    } = this.props;
-
+  const handleSaveKeyCommand = (e) => {
     e.preventDefault();
-
-    if (!pristine && !submitting) {
+    if (isFormSubmittableRef.current) {
       handleSubmit();
     }
-  }
+  };
 
-  renderPaneFooter() {
-    const {
-      handlers,
-      handleSubmit,
-      pristine,
-      submitting,
-    } = this.props;
+  const getSectionProps = () => {
+    return {
+      form,
+      isSuppressFromDiscoveryEnabled: handlers.isSuppressFromDiscoveryEnabled,
+      name: values.name,
+      title: eresource,
+      values,
+    };
+  };
 
-    return (
-      <PaneFooter
-        renderEnd={(
-          <Button
-            buttonStyle="primary mega"
-            disabled={pristine || submitting}
-            id="clickable-update-title"
-            marginBottom0
-            onClick={handleSubmit}
-            type="submit"
-          >
-            <FormattedMessage id="stripes-components.saveAndClose" />
-          </Button>
-        )}
-        renderStart={(
-          <Button
-            buttonStyle="default mega"
-            id="clickable-cancel"
-            marginBottom0
-            onClick={handlers.onClose}
-          >
-            <FormattedMessage id="stripes-components.cancel" />
-          </Button>
-        )}
-      />
-    );
-  }
-
-  renderFirstMenu() {
-    return (
-      <PaneMenu>
-        <FormattedMessage id="ui-agreements.title.closeEdit">
-          {ariaLabel => (
-            <IconButton
-              aria-label={ariaLabel}
-              icon="times"
-              id="close-title-form-button"
-              onClick={this.props.handlers.onClose}
-            />
-          )}
-        </FormattedMessage>
-      </PaneMenu>
-    );
-  }
-
-  shortcuts = [
+  const shortcuts = [
     {
       name: 'save',
-      handler: this.handleSaveKeyCommand,
+      handler: handleSaveKeyCommand
     },
   ];
 
-  render() {
-    const { handlers: { isSuppressFromDiscoveryEnabled }, values: { name } } = this.props;
+  return (
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
+    >
+      <Paneset>
+        <Pane
+          appIcon={<AppIcon app="agreements" iconKey="eresource" />}
+          centerContent
+          defaultWidth="100%"
+          firstMenu={
+            <PaneMenu>
+              <FormattedMessage id="ui-agreements.title.closeEdit">
+                {ariaLabel => (
+                  <IconButton
+                    aria-label={ariaLabel}
+                    icon="times"
+                    id="close-title-form-button"
+                    onClick={handlers.onClose}
+                  />
+                )}
+              </FormattedMessage>
+            </PaneMenu>
+        }
+          footer={
+            <PaneFooter
+              renderEnd={(
+                <Button
+                  buttonStyle="primary mega"
+                  disabled={pristine || submitting}
+                  id="clickable-update-title"
+                  marginBottom0
+                  onClick={handleSubmit}
+                  type="submit"
+                >
+                  <FormattedMessage id="stripes-components.saveAndClose" />
+                </Button>
+        )}
+              renderStart={(
+                <Button
+                  buttonStyle="default mega"
+                  id="clickable-cancel"
+                  marginBottom0
+                  onClick={handlers.onClose}
+                >
+                  <FormattedMessage id="stripes-components.cancel" />
+                </Button>
+        )}
+            />
+        }
+          id="pane-title-form"
+          paneTitle={<FormattedMessage id="ui-agreements.editResource" values={{ name: values.name }} />}
+        >
+          <TitleManager record={values.name}>
+            <form id="form-title">
+              <TitleCardInfo {...getSectionProps()} />
+              <div className={css.separator} />
+              <TitleFormInfo {...getSectionProps()} />
+            </form>
+          </TitleManager>
+        </Pane>
+      </Paneset>
+    </HasCommand>
+  );
+};
 
-    return (
-      <HasCommand
-        commands={this.shortcuts}
-        isWithinScope={checkScope}
-        scope={document.body}
-      >
-        <Paneset>
-          <Pane
-            centerContent
-            defaultWidth="100%"
-            firstMenu={this.renderFirstMenu()}
-            footer={this.renderPaneFooter()}
-            id="pane-title-form"
-            paneTitle={<FormattedMessage id="ui-agreements.editResource" values={{ name }} />}
-          >
-            <TitleManager record={name}>
-              <form id="form-title">
-                <TitleCardInfo {...this.getSectionProps('info')} title={this.props.eresource} />
-                <div className={css.separator} />
-                <TitleFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} name={name} />
-              </form>
-            </TitleManager>
-          </Pane>
-        </Paneset>
-      </HasCommand>
-    );
-  }
-}
+TitleForm.propTypes = {
+  eresource: PropTypes.object,
+  form: PropTypes.shape({
+    getRegisteredFields: PropTypes.func.isRequired,
+  }).isRequired,
+  handlers: PropTypes.PropTypes.shape({
+    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
+  }),
+  initialValues: PropTypes.object,
+  handleSubmit: PropTypes.func.isRequired,
+  pristine: PropTypes.bool,
+  submitting: PropTypes.bool,
+  values: PropTypes.object,
+};
 
 export default stripesFinalForm({
   initialValuesEqual: (a, b) => isEqual(a, b),
