@@ -26,7 +26,6 @@ const propTypes = {
     }),
   }),
   handlers: PropTypes.shape({
-    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     onEdit: PropTypes.func.isRequired,
     onNeedMorePackageContents: PropTypes.func.isRequired,

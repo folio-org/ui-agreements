@@ -21,7 +21,6 @@ import TitleFormInfo from './TitleFormInfo';
 
 import css from '../styles.css';
 
-
 const TitleForm = ({
   eresource,
   form,
@@ -129,9 +128,7 @@ const TitleForm = ({
 
 TitleForm.propTypes = {
   eresource: PropTypes.object,
-  form: PropTypes.shape({
-    getRegisteredFields: PropTypes.func.isRequired,
-  }).isRequired,
+  form: PropTypes.object.isRequired,
   handlers: PropTypes.PropTypes.shape({
     isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
