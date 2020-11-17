@@ -19,7 +19,7 @@ class GeneralSettings extends React.Component {
 
   defaultValues = {
     hideEResourcesFunctionality: false,
-    displaySuppressFromDiscovery: { pci: true, agreementLine: true }
+    displaySuppressFromDiscovery: { pci: true, agreementLine: true, title: true }
   }
 
   getInitialValues = (settings) => {

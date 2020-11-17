@@ -6,3 +6,4 @@ export { default as externalEntitlements } from './externalEntitlements';
 export { default as platform } from './platform';
 export { default as relatedTitlesMonograph } from './relatedTitlesMonograph';
 export { default as relatedTitlesSerial } from './relatedTitlesSerial';
+export { default as titleInstance } from './titleInstance';

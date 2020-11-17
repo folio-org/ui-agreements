@@ -164,7 +164,7 @@ class PCIForm extends React.Component {
             firstMenu={this.renderFirstMenu()}
             footer={this.renderPaneFooter()}
             id="pane-pci-form"
-            paneTitle={<FormattedMessage id="ui-agreements.pci.editPci" values={{ name }} />}
+            paneTitle={<FormattedMessage id="ui-agreements.editResource" values={{ name }} />}
           >
             <TitleManager record={name}>
               <form id="form-pci">

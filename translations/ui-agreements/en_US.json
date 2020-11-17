@@ -390,7 +390,6 @@
     "emptyAccordion.pciCoverage": "No coverage for this title",
     "emptyAccordion.noAgreementsOtherPackages": "No agreements on other platform-package combinations",
     "pci.addCoverage": "Add coverage",
-    "pci.editPci": "Edit {name}",
     "pci.edit": "Edit pci",
     "pci.closeEdit": "Close edit pci",
     "pci.removeCoverage": "Remove coverage",

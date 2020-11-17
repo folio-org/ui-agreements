@@ -35,6 +35,15 @@ const SuppressFromDiscoveryFields = ({ name }) => {
         normalize={v => !!v}
         type="checkbox"
       />
+      <Field
+        component={Checkbox}
+        data-test-sfdfa-title
+        id="displaySuppressFromDiscoveryTitle"
+        label={<FormattedMessage id="ui-agreements.settings.general.displaySuppressFromDiscoveryTitle.title" />}
+        name={`${name}.title`}
+        normalize={v => !!v}
+        type="checkbox"
+      />
     </>
   );
 };

@@ -28,6 +28,7 @@ const PlatformFormInfo = ({ name }) => (
           label={<FormattedMessage id="ui-agreements.platform.localPlatformCode" />}
           maxLength={255}
           name="localCode"
+          parse={v => v}
         />
       </Col>
     </Row>
