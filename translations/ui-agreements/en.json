@@ -531,6 +531,7 @@
   "settings.general.displaySuppressFromDiscovery.description": "Display \"Suppress from discovery\" setting on",
   "settings.general.displaySuppressFromDiscoveryAgreementLine.title": "Agreement lines",
   "settings.general.displaySuppressFromDiscoveryPCI.title": "Package content items",
+  "settings.general.mclPagination.description": "MCL Pagination",
   "settings.label": "Label",
   "settings.orgRoles": "Organization roles",
   "settings.orgRoles.orgRole": "Organization role",

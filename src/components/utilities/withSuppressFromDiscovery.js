@@ -25,7 +25,13 @@ export default function withSuppressFromDiscovery(WrappedComponent) {
 
     handleSuppressFromDiscoveryEnabled = (resource) => {
       const { settings = {} } = this.props.resources;
+      console.log('settings');
+      console.log(settings);
       const parsedSettings = JSON.parse(settings?.records?.[0]?.value || '{}');
+      console.log('parsed settings:');
+      console.log(parsedSettings);
+      // console.log('parsed settings of "' + resource + '": ' + parsedSettings.displaySuppressFromDiscovery?.[resource]);
+      // console.log('getDisplayName: ' + WrappedComponent.name); // WrappedComponent.name
       return parsedSettings.displaySuppressFromDiscovery?.[resource] ?? true;
     }
 

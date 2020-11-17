@@ -13,7 +13,7 @@ import {
 
 import stripesFinalForm from '@folio/stripes/final-form';
 
-import { SuppressFromDiscoveryFields } from './components';
+import { MCLPagination, SuppressFromDiscoveryFields } from './components';
 
 class GeneralSettingsForm extends React.Component {
   static propTypes = {
@@ -52,6 +52,7 @@ class GeneralSettingsForm extends React.Component {
   render() {
     const {
       label,
+      values: { mclPagination },
     } = this.props;
 
     return (
@@ -81,6 +82,7 @@ class GeneralSettingsForm extends React.Component {
               listStyle="bullets"
             />
           </Layout>
+          <MCLPagination dataOptions={mclPagination} name="mclPagination" />
           <SuppressFromDiscoveryFields name="displaySuppressFromDiscovery" />
         </Pane>
       </form>
