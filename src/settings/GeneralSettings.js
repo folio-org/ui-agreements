@@ -21,8 +21,8 @@ class GeneralSettings extends React.Component {
   }
 
   defaultValues = {
+    displaySuppressFromDiscovery: { pci: true, agreementLine: true, title: true },
     hideEResourcesFunctionality: false,
-    displaySuppressFromDiscovery: { pci: true, agreementLine: true },
     /*  mclPagination: {
       acquisitionOptions: {
         name: 'acquisitionOptions',
