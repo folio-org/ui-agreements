@@ -390,7 +390,6 @@
     "emptyAccordion.pciCoverage": "이 타이틀에 대한 커버리지가 없습니다.",
     "emptyAccordion.noAgreementsOtherPackages": "다른 플랫폼-패키지 조합에 대한 계약 없음",
     "pci.addCoverage": "커버리지 추가",
-    "pci.editPci": "{이름} 편집",
     "pci.edit": "PCI 수정",
     "pci.closeEdit": "PCI 편집 닫기",
     "pci.removeCoverage": "커버리지 제거",
@@ -494,5 +493,7 @@
     "platform.edit": "편집",
     "platform.localPlatformCode": "로컬 플랫폼 코드",
     "platform.locators": "로케이터",
-    "platform.name": "이름"
+    "platform.name": "이름",
+    "editResource": "Edit {name}",
+    "settings.general.displaySuppressFromDiscoveryTitle.title": "Title instances"
 }

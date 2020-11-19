@@ -390,7 +390,6 @@
     "emptyAccordion.pciCoverage": "Keine Abdeckung für diesen Titel",
     "emptyAccordion.noAgreementsOtherPackages": "No agreements on other platform-package combinations",
     "pci.addCoverage": "Abdeckung hinzufügen",
-    "pci.editPci": "{name} bearbeiten",
     "pci.edit": "Edit pci",
     "pci.closeEdit": "Bearbeitungsbereich für pci schließen",
     "pci.removeCoverage": "Abdeckung entfernen",
@@ -494,5 +493,7 @@
     "platform.edit": "Edit",
     "platform.localPlatformCode": "Local platform code",
     "platform.locators": "Locators",
-    "platform.name": "Name"
+    "platform.name": "Name",
+    "editResource": "Edit {name}",
+    "settings.general.displaySuppressFromDiscoveryTitle.title": "Title instances"
 }

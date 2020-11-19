@@ -493,5 +493,7 @@
     "platform.edit": "Edit",
     "platform.localPlatformCode": "Local platform code",
     "platform.locators": "Locators",
-    "platform.name": "Name"
+    "platform.name": "Name",
+    "editResource": "Edit {name}",
+    "settings.general.displaySuppressFromDiscoveryTitle.title": "Title instances"
 }

@@ -390,7 +390,6 @@
     "emptyAccordion.pciCoverage": "此标题没有收录范围",
     "emptyAccordion.noAgreementsOtherPackages": "没有关于其他平台资源包组合的协议",
     "pci.addCoverage": "添加收录范围",
-    "pci.editPci": "编辑： {name}",
     "pci.edit": "编辑pci",
     "pci.closeEdit": "关闭编辑pci",
     "pci.removeCoverage": "移除收录范围",
@@ -494,5 +493,7 @@
     "platform.edit": "编辑",
     "platform.localPlatformCode": "本地平台代码",
     "platform.locators": "定位器",
-    "platform.name": "名称"
+    "platform.name": "名称",
+    "editResource": "Edit {name}",
+    "settings.general.displaySuppressFromDiscoveryTitle.title": "Title instances"
 }

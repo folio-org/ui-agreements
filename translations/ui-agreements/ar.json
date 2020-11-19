@@ -390,7 +390,6 @@
     "emptyAccordion.pciCoverage": "لا توجد تغطية لهذا العنوان",
     "emptyAccordion.noAgreementsOtherPackages": "لا توجد اتفاقيات حول تركيبات حزمة-منصة أخرى",
     "pci.addCoverage": "إضافة تغطية",
-    "pci.editPci": "تحرير {name}",
     "pci.edit": "تحرير pci",
     "pci.closeEdit": "إغلاق تحرير pci",
     "pci.removeCoverage": "إزالة التغطية",
@@ -494,5 +493,7 @@
     "platform.edit": "تحرير",
     "platform.localPlatformCode": "كود المنصة المحلي",
     "platform.locators": "محددات الموقع",
-    "platform.name": "الاسم"
+    "platform.name": "الاسم",
+    "editResource": "تحرير {name}",
+    "settings.general.displaySuppressFromDiscoveryTitle.title": "أوعية العنوان"
 }

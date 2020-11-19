@@ -390,7 +390,6 @@
     "emptyAccordion.pciCoverage": "No coverage for this title",
     "emptyAccordion.noAgreementsOtherPackages": "No agreements on other platform-package combinations",
     "pci.addCoverage": "Add coverage",
-    "pci.editPci": "Edit {name}",
     "pci.edit": "Edit pci",
     "pci.closeEdit": "Close edit pci",
     "pci.removeCoverage": "Remove coverage",
@@ -494,5 +493,7 @@
     "platform.edit": "Edit",
     "platform.localPlatformCode": "Local platform code",
     "platform.locators": "Localizadores",
-    "platform.name": "Nombre"
+    "platform.name": "Nombre",
+    "editResource": "Edit {name}",
+    "settings.general.displaySuppressFromDiscoveryTitle.title": "Title instances"
 }
