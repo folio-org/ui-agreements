@@ -10,44 +10,29 @@ import {
   Col,
   ExpandAllButton,
   HasCommand,
+  Headline,
   Icon,
+  KeyValue,
   LoadingPane,
+  NoValue,
   Row,
   Pane,
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
-import { PlatformInfo, PlatformUrlCustomization } from '../PlatformSections';
+import { IfPermission, TitleManager } from '@folio/stripes/core';
 
-const Platform = ({
-  data: { platform, stringTemplates },
+const UrlCustomiser = ({
+  data: { urlCustomisation },
   isLoading,
   handlers
 }) => {
   const paneProps = {
     defaultWidth: '55%',
     dismissible: true,
-    id: 'pane-view-platform',
+    id: 'pane-view-urlcustomiser',
     onClose: handlers.onClose,
   };
 
-  const accordionStatusRef = useRef(null);
-
   if (isLoading) return <LoadingPane data-loading {...paneProps} />;
-
-  const getSectionProps = (id) => {
-    return {
-      id,
-      platform,
-      handlers,
-      stringTemplates
-    };
-  };
-
-  const getInitialAccordionsState = () => {
-    return {
-      platformUrlCustomization: false,
-    };
-  };
 
   const shortcuts = [
     {
@@ -76,25 +61,39 @@ const Platform = ({
                     <FormattedMessage id="ui-agreements.platform.edit" />
                   </Icon>
                 </Button>
+                <Button
+                  buttonStyle="dropdownItem"
+                  id="clickable-dropdown-edit-platform"
+                  onClick={handlers.onDelete}
+                >
+                  <Icon icon="delete">
+                    <FormattedMessage id="ui-agreements.platform.delete" />
+                  </Icon>
+                </Button>
               </IfPermission>
             </>
           )}
-          appIcon={<AppIcon app="agreements" iconKey="platform" />}
-          paneTitle={platform?.name}
+          paneTitle={urlCustomisation?.name}
           {...paneProps}
         >
-          <TitleManager record={platform?.name}>
-            <PlatformInfo {...getSectionProps('platformInfo')} />
-            <AccordionStatus ref={accordionStatusRef}>
-              <Row end="xs">
-                <Col xs>
-                  <ExpandAllButton />
-                </Col>
-              </Row>
-              <AccordionSet initialStatus={getInitialAccordionsState()}>
-                <PlatformUrlCustomization {...getSectionProps('platformUrlCustomization')} />
-              </AccordionSet>
-            </AccordionStatus>
+          <TitleManager record={urlCustomisation?.name}>
+            <Row>
+              <Col xs={12}>
+                <div data-test-platform-name>
+                  <Headline
+                    size="xx-large"
+                    tag="h2"
+                  >
+                    {urlCustomisation?.name}
+                  </Headline>
+                </div>
+              </Col>
+            </Row>
+            <KeyValue label={<FormattedMessage id="ui-agreements.platform.urlCustomization.customizationCode" />}>
+              <div data-test-url-customization-code>
+                {urlCustomisation?.rule ?? <NoValue />}
+              </div>
+            </KeyValue>
           </TitleManager>
         </Pane>
       </>
@@ -102,7 +101,7 @@ const Platform = ({
   );
 };
 
-Platform.propTypes = {
+UrlCustomiser.propTypes = {
   data: PropTypes.shape({
     platform: PropTypes.object.isRequired,
     stringTemplates: PropTypes.arrayOf(PropTypes.object),
@@ -115,4 +114,4 @@ Platform.propTypes = {
   isLoading: PropTypes.bool.isRequired,
 };
 
-export default Platform;
+export default UrlCustomiser;

@@ -14,6 +14,12 @@ class PlatformViewRoute extends React.Component {
       type: 'okapi',
       path: 'erm/platforms/:{id}',
     },
+    stringTemplates: {
+      type: 'okapi',
+      path: 'erm/sts/template/:{id}',
+      clientGeneratePk: false,
+      throwErrors: false
+    },
   });
 
   static propTypes = {
@@ -30,6 +36,7 @@ class PlatformViewRoute extends React.Component {
     }).isRequired,
     resources: PropTypes.shape({
       platform: PropTypes.object,
+      stringTemplates: PropTypes.arrayOf(PropTypes.object)
     }).isRequired,
   };
 
@@ -44,6 +51,11 @@ class PlatformViewRoute extends React.Component {
 
   handleEResourceClick = (id) => {
     this.props.history.push(`${urls.eresourceView(id)}${this.props.location.search}`);
+  }
+
+  handleViewUrlCustomizer = (templateId) => {
+    const { history, location, match } = this.props;
+    history.push(`${urls.urlCustomiserView(match.params.id, templateId)}${location.search}`);
   }
 
   isLoading = () => {
@@ -67,17 +79,17 @@ class PlatformViewRoute extends React.Component {
       resources,
     } = this.props;
 
-    const platform = resources?.platform?.records?.[0] ?? {};
-
     return (
       <View
         key={get(resources, 'eresource.loadedAt', 'loading')}
         data={{
-          platform
+          platform: resources?.platform?.records?.[0] ?? {},
+          stringTemplates: resources?.stringTemplates?.records[0] ?? []
         }}
         handlers={{
           onClose: this.handleClose,
           onEdit: this.handleEdit,
+          onViewUrlCustomiser: this.handleViewUrlCustomizer
         }}
         isLoading={this.isLoading()}
       />

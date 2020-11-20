@@ -34,7 +34,11 @@ const urls = {
 
   poLineView: id => `/orders/lines/view/${id}`,
 
-  udpView: id => `/eusage/view/${id}`
+  udpView: id => `/eusage/view/${id}`,
+
+  urlCustomiserView: (platformId, templateId) => `/erm/platforms/${platformId}/urlcustomiser/${templateId}`,
+  urlCustomizerCreate: (platformId) => `/erm/platforms/${platformId}/urlcustomizer/create`
+
 };
 
 export default urls;

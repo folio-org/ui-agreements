@@ -246,7 +246,7 @@ export default class CoveredEResourcesList extends React.Component {
                   <Icon
                     ref={ref}
                     aria-labelledby={ariaIds.text}
-                    icon="exclamation-circle"
+                    icon="info"
                     tabIndex="0"
                   />
                 )}

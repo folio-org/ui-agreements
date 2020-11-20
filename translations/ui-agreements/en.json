@@ -234,6 +234,10 @@
 
   "platform.closeEdit": "Close edit platform",
   "platform.editPlatform": "Edit {name}",
+  "platform.addUrlCustomization": "Add URL Customization",
+  "platform.urlCustomization": "URL Customization",
+  "platform.urlCustomization.name": "Name",
+  "platform.urlCustomization.customizationCode":"Customization code",
 
   "eresources.count": "Count",
   "eresources.edit": "Edit",
