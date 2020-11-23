@@ -30,8 +30,9 @@ const PlatformsRoute = lazy(() => import('./routes/PlatformsRoute'));
 const PlatformViewRoute = lazy(() => import('./routes/PlatformViewRoute'));
 const PlatformEditRoute = lazy(() => import('./routes/PlatformEditRoute'));
 
-const UrlCustomiserViewRoute = lazy(() => import('./routes/UrlCustomiserViewRoute'));
-const UrlCustomiserCreateRoute = lazy(() => import('./routes/UrlCustomiserCreateRoute'));
+const UrlCustomizerEditRoute = lazy(() => import('./routes/UrlCustomizerEditRoute'));
+const UrlCustomizerViewRoute = lazy(() => import('./routes/UrlCustomizerViewRoute'));
+const UrlCustomizerCreateRoute = lazy(() => import('./routes/UrlCustomizerCreateRoute'));
 
 const IfEResourcesEnabled = lazy(() => import('./components/IfEResourcesEnabled'));
 const OpenBasketButton = lazy(() => import('./components/OpenBasketButton'));
@@ -134,10 +135,11 @@ class App extends React.Component {
                   <Route component={NoteViewRoute} path={`${path}/notes/:id`} />
 
                   <Route component={PlatformEditRoute} path={`${path}/platforms/:id/edit`} />
-                  <Route component={UrlCustomiserCreateRoute} path={`${path}/platforms/:platformId/urlcustomizer/create`} />
+                  <Route component={UrlCustomizerCreateRoute} path={`${path}/platforms/:platformId/urlcustomizer/create`} />
+                  <Route component={UrlCustomizerEditRoute} path={`${path}/platforms/:platformId/urlcustomizer/:templateId/edit`} />
                   <Route component={PlatformsRoute} path={`${path}/platforms/:id?`}>
                     <Switch>
-                      <Route component={UrlCustomiserViewRoute} path={`${path}/platforms/:platformId/urlcustomiser/:templateId`} />
+                      <Route component={UrlCustomizerViewRoute} path={`${path}/platforms/:platformId/urlcustomiser/:templateId`} />
                       <Route component={PlatformViewRoute} path={`${path}/platforms/:id`} />
                     </Switch>
                   </Route>

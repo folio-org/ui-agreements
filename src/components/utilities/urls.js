@@ -36,8 +36,9 @@ const urls = {
 
   udpView: id => `/eusage/view/${id}`,
 
-  urlCustomiserView: (platformId, templateId) => `/erm/platforms/${platformId}/urlcustomiser/${templateId}`,
-  urlCustomizerCreate: (platformId) => `/erm/platforms/${platformId}/urlcustomizer/create`
+  urlCustomizerView: (platformId, templateId) => `/erm/platforms/${platformId}/urlcustomiser/${templateId}`,
+  urlCustomizerCreate: (platformId) => `/erm/platforms/${platformId}/urlcustomizer/create`,
+  urlCustomizerEdit: (platformId, templateId) => `/erm/platforms/${platformId}/urlcustomizer/${templateId}/edit`
 
 };
 

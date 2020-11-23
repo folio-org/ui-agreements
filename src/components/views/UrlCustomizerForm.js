@@ -163,7 +163,7 @@ class UrlCustomizerForm extends React.Component {
                 firstMenu={this.renderFirstMenu()}
                 footer={this.renderPaneFooter()}
                 id="pane-url-customizer-form"
-                paneTitle={id ? name : <FormattedMessage id="ui-agreements.agreements.newUrlCustomization" />}
+                paneTitle={id ? name : <FormattedMessage id="ui-agreements.platform.newUrlCustomization" />}
               >
                 <TitleManager record={id ? name : create}>
                   <form id="form-url-customization">
@@ -172,8 +172,8 @@ class UrlCustomizerForm extends React.Component {
                       <Field
                         component={TextField}
                         data-test-proxy-server-setting-name-edit
-                        label={<FormattedMessage id="ui-local-kb-admin.settings.externalDataSources.name" />}
-                        name={`${name}.name`}
+                        label={<FormattedMessage id="ui-agreements.platform.urlCustomization.name" />}
+                        name="name"
                         required
                         validate={composeValidators(
                           requiredValidator,
@@ -187,26 +187,26 @@ class UrlCustomizerForm extends React.Component {
                         fullWidth
                         label={
                           <>
-                            <FormattedMessage id="ui-local-kb-admin.settings.proxyServerSettings.urlCustomizationCode" />
+                            <FormattedMessage id="ui-agreements.platform.urlCustomization.customizationCode" />
                             <InfoPopover
                               allowAnchorClick
                               buttonHref="https://wiki.folio.org/display/FOLIOtips/Proxy+server+configuration+and+URL+customizations"
-                              buttonLabel={<FormattedMessage id="ui-local-kb-admin.settings.urlCustomizationCode.learnMore" />}
-                              content={<FormattedMessage id="ui-local-kb-admin.settings.proxyServerSettings.urlCustomizationCode.info" />}
+                              buttonLabel={<FormattedMessage id="ui-agreements.platform.urlCustomizationCode.learnMore" />}
+                              content={<FormattedMessage id="ui-agreements.platform.urlCustomizationCode.info" />}
                               contentClass={css.infoPopoverContent}
                               hideOnButtonClick
                             />
                           </>
           }
-                        name={`${name}.rule`}
+                        name="rule"
                         required
                         validate={requiredValidator}
                       />
                     </Row>
                     <Row>
                       <Layout className="display-flex flex-direction-column padding-bottom-gutter">
-                        <FormattedMessage id="ui-local-kb-admin.settings.proxyServerSettings.urlCustomizationCode.variables" tagName="div" />
-                        <FormattedMessage id="ui-local-kb-admin.settings.proxyServerSettings.urlCustomizationCode.handleBarHelpers" tagName="div" />
+                        <FormattedMessage id="ui-agreements.platform.urlCustomizationCode.variables" tagName="div" />
+                        <FormattedMessage id="ui-agreements.platform.urlCustomizationCode.handleBarHelpers" tagName="div" />
                       </Layout>
                     </Row>
                   </form>

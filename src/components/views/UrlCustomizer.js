@@ -20,8 +20,8 @@ import {
 } from '@folio/stripes/components';
 import { IfPermission, TitleManager } from '@folio/stripes/core';
 
-const UrlCustomiser = ({
-  data: { urlCustomisation },
+const UrlCustomizer = ({
+  data: { urlCustomization },
   isLoading,
   handlers
 }) => {
@@ -58,7 +58,7 @@ const UrlCustomiser = ({
                   onClick={handlers.onEdit}
                 >
                   <Icon icon="edit">
-                    <FormattedMessage id="ui-agreements.platform.edit" />
+                    <FormattedMessage id="ui-agreements.platform.urlCustomizer.edit" />
                   </Icon>
                 </Button>
                 <Button
@@ -66,17 +66,17 @@ const UrlCustomiser = ({
                   id="clickable-dropdown-edit-platform"
                   onClick={handlers.onDelete}
                 >
-                  <Icon icon="delete">
-                    <FormattedMessage id="ui-agreements.platform.delete" />
+                  <Icon icon="trash">
+                    <FormattedMessage id="ui-agreements.platform.urlCustomizer.delete" />
                   </Icon>
                 </Button>
               </IfPermission>
             </>
           )}
-          paneTitle={urlCustomisation?.name}
+          paneTitle={urlCustomization?.name}
           {...paneProps}
         >
-          <TitleManager record={urlCustomisation?.name}>
+          <TitleManager record={urlCustomization?.name}>
             <Row>
               <Col xs={12}>
                 <div data-test-platform-name>
@@ -84,14 +84,14 @@ const UrlCustomiser = ({
                     size="xx-large"
                     tag="h2"
                   >
-                    {urlCustomisation?.name}
+                    {urlCustomization?.name}
                   </Headline>
                 </div>
               </Col>
             </Row>
             <KeyValue label={<FormattedMessage id="ui-agreements.platform.urlCustomization.customizationCode" />}>
               <div data-test-url-customization-code>
-                {urlCustomisation?.rule ?? <NoValue />}
+                {urlCustomization?.rule ?? <NoValue />}
               </div>
             </KeyValue>
           </TitleManager>
@@ -101,7 +101,7 @@ const UrlCustomiser = ({
   );
 };
 
-UrlCustomiser.propTypes = {
+UrlCustomizer.propTypes = {
   data: PropTypes.shape({
     platform: PropTypes.object.isRequired,
     stringTemplates: PropTypes.arrayOf(PropTypes.object),
@@ -114,4 +114,4 @@ UrlCustomiser.propTypes = {
   isLoading: PropTypes.bool.isRequired,
 };
 
-export default UrlCustomiser;
+export default UrlCustomizer;

@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty } from 'lodash';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { checkScope, collapseAllSections, expandAllSections, isPackage } from '@folio/stripes-erm-components';
+import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 import View from '../components/views/UrlCustomizerForm';
 import { urls } from '../components/utilities';
 
@@ -48,89 +47,33 @@ class UrlCustomizerCreateRoute extends React.Component {
 
   static contextType = CalloutContext;
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isEholdingsEnabled: props.stripes.hasPerm('module.eholdings.enabled'),
-    };
-  }
-
-  getCompositeLine = () => {
-    const { resources } = this.props;
-    const line = resources.line?.records?.[0] ?? {};
-    const orderLines = resources.orderLines?.records || [];
-
-    const poLines = (line.poLines || [])
-      .map(linePOL => orderLines.find(orderLine => orderLine.id === linePOL.poLineId))
-      .filter(poLine => poLine);
-
-    return {
-      ...line,
-      poLines,
-    };
-  }
-
   handleClose = () => {
     const {
       history,
       location,
-      match: { params: { agreementId } },
+      match: { params: { platformId } },
     } = this.props;
-    history.push(`${urls.agreementView(agreementId)}${location.search}`);
+    history.push(`${urls.platformView(platformId)}${location.search}`);
   }
 
-  handleSubmit = (line) => {
-    const {
-      match: { params: { agreementId } },
-    } = this.props;
-
-    const {
-      linkedResource: resource,
-      coverage,
-      ...rest
-    } = line;
-
-    let items;
-
-    if (resource?.type === 'packages' || resource?.type === 'resources') { // external line
-      items = {
-        'type': 'external',
-        'authority': resource?.type === 'packages' ? 'ekb-package' : 'ekb-title',
-        'reference': resource.id,
-        ...rest
-      };
-    } else if (isEmpty(resource)) { // detached line
-      items = {
-        'type': 'detached',
-        ...rest,
-        resource: null,
-        coverage: []
-      };
-    } else { // internal line
-      items = {
-        resource,
-        coverage: isPackage(resource) ? [] : coverage, // pass empty coverage for internal package
-        ...rest
-      };
-    }
-
+  handleSubmit = (urlCustomization) => {
     const {
       history,
-      location,
+      match: { params: { platformId } },
       mutator,
+      location
     } = this.props;
 
-    return mutator.entitlements
-      .POST({ ...items, 'owner': agreementId })
+    return mutator.stringTemplate
+      .POST({ ...urlCustomization, 'idScopes': [platformId], 'context': 'urlCustomiser' })
       .then(({ id }) => {
         this.context.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.line.create.callout" /> });
-        history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
+        history.push(`${urls.urlCustomizerView(platformId, id)}${location.search}`);
       });
   }
 
   render() {
-    const { resources, isSuppressFromDiscoveryEnabled } = this.props;
+    const { isSuppressFromDiscoveryEnabled } = this.props;
 
     return (
       <View

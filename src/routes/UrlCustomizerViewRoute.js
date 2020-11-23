@@ -4,17 +4,17 @@ import { FormattedMessage } from 'react-intl';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { checkScope, collapseAllSections, expandAllSections, preventResourceRefresh } from '@folio/stripes-erm-components';
 
-import View from '../components/views/UrlCustomiser';
+import View from '../components/views/UrlCustomizer';
 import { urls } from '../components/utilities';
 
-class UrlCustomiserViewRoute extends React.Component {
+class UrlCustomizerViewRoute extends React.Component {
   static manifest = Object.freeze({
-    urlCustomisation: {
+    urlCustomization: {
       type: 'okapi',
       path: 'erm/sts/:{templateId}',
       clientGeneratePk: false,
       throwErrors: false,
-      shouldRefresh: preventResourceRefresh({ 'urlCustomisation': ['DELETE'] }),
+      shouldRefresh: preventResourceRefresh({ 'urlCustomization': ['DELETE'] }),
     },
   });
 
@@ -69,7 +69,7 @@ class UrlCustomiserViewRoute extends React.Component {
     } = this.props;
     const { sendCallout } = this.context;
 
-    mutator.urlCustomisation.DELETE(template)
+    mutator.urlCustomization.DELETE(template)
       .then(() => {
         history.push(`${urls.platforms()}${location.search}`);
         sendCallout({ message: <FormattedMessage id="ui-agreements.line.delete.callout" /> });
@@ -83,10 +83,10 @@ class UrlCustomiserViewRoute extends React.Component {
     const {
       history,
       location,
-      match: { params: { agreementId, lineId } },
+      match: { params: { platformId, templateId } },
     } = this.props;
 
-    history.push(`${urls.agreementLineEdit(agreementId, lineId)}${location.search}`);
+    history.push(`${urls.urlCustomizerEdit(platformId, templateId)}${location.search}`);
   }
 
   isLoading = () => {
@@ -100,14 +100,12 @@ class UrlCustomiserViewRoute extends React.Component {
 
   render() {
     const { resources, tagsEnabled, isSuppressFromDiscoveryEnabled, match } = this.props;
-    const urlCustomisationRecord = (resources?.urlCustomisation?.records?.[0] ?? {});
+    const urlCustomizationRecord = (resources?.urlCustomization?.records?.[0] ?? {});
 
-    console.log(urlCustomisationRecord, 'urlCustomisationRecord');
-    // return null;
     return (
       <View
         data={{
-          urlCustomisation: urlCustomisationRecord,
+          urlCustomization: urlCustomizationRecord,
         }}
         handlers={{
           ...this.props.handlers,
@@ -126,4 +124,4 @@ class UrlCustomiserViewRoute extends React.Component {
   }
 }
 
-export default stripesConnect(UrlCustomiserViewRoute);
+export default stripesConnect(UrlCustomizerViewRoute);

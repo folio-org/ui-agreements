@@ -55,7 +55,7 @@ class PlatformViewRoute extends React.Component {
 
   handleViewUrlCustomizer = (templateId) => {
     const { history, location, match } = this.props;
-    history.push(`${urls.urlCustomiserView(match.params.id, templateId)}${location.search}`);
+    history.push(`${urls.urlCustomizerView(match.params.id, templateId)}${location.search}`);
   }
 
   isLoading = () => {
