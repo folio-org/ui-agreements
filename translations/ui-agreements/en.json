@@ -226,11 +226,11 @@
   "emptyAccordion.noAgreementsOtherPackages": "No agreements on other platform-package combinations",
 
   "pci.addCoverage": "Add coverage",
-  "pci.editPci": "Edit {name}",
   "pci.edit": "Edit pci",
   "pci.closeEdit": "Close edit pci",
   "pci.removeCoverage": "Remove coverage",
   "pci.coverageTitle": "Coverage { number }",
+  "editResource": "Edit {name}",
 
   "platform.closeEdit": "Close edit platform",
   "platform.editPlatform": "Edit {name}",
@@ -564,6 +564,7 @@
   "settings.general.displaySuppressFromDiscovery.description": "Display \"Suppress from discovery\" setting on",
   "settings.general.displaySuppressFromDiscoveryAgreementLine.title": "Agreement lines",
   "settings.general.displaySuppressFromDiscoveryPCI.title": "Package content items",
+  "settings.general.displaySuppressFromDiscoveryTitle.title": "Title instances",
   "settings.label": "Label",
   "settings.orgRoles": "Organization roles",
   "settings.orgRoles.orgRole": "Organization role",

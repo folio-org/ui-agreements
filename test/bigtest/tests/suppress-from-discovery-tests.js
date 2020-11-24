@@ -79,5 +79,29 @@ describe('Suppress from discovery tests', () => {
         });
       });
     });
+
+    describe('title instance checkbox tests', () => {
+      it('renders the title instance checkbox', () => {
+        expect(interactor.isTitleInstanceCheckboxPresent).to.be.true;
+      });
+
+      it('title instance checkbox has the correct name prop', () => {
+        expect(interactor.titleInstanceFieldName).to.equal('test.title');
+      });
+
+      it('title instance checkbox is false', () => {
+        expect(interactor.titleInstanceFieldChecked).to.equal(false);
+      });
+
+      describe('Clicking the title instance checkbox', () => {
+        beforeEach(async function () {
+          await interactor.clickTitleInstance();
+        });
+
+        it('title instance checkbox is set to true', () => {
+          expect(interactor.titleInstanceFieldChecked).to.equal(true);
+        });
+      });
+    });
   });
 });

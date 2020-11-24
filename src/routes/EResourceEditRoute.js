@@ -7,16 +7,28 @@ import { stripesConnect } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
 
 import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
-import View from '../components/views/PCIForm';
+import PCIForm from '../components/views/PCIForm';
+import TitleForm from '../components/views/TitleForm';
 import NoPermissions from '../components/NoPermissions';
 import { urls, withSuppressFromDiscovery } from '../components/utilities';
+import { resourceClasses } from '../constants';
 
 class EResourceEditRoute extends React.Component {
   static manifest = Object.freeze({
+    eresource: {
+      type: 'okapi',
+      path: 'erm/resource/:{id}',
+      shouldRefresh: () => false,
+    },
     pci: {
       type: 'okapi',
       path: 'erm/pci/:{id}',
-      shouldRefresh: () => false,
+      fetch: false
+    },
+    title: {
+      type: 'okapi',
+      path: 'erm/titles/:{id}',
+      fetch: false
     },
   });
 
@@ -38,9 +50,12 @@ class EResourceEditRoute extends React.Component {
       pci: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
       }),
+      title: PropTypes.shape({
+        PUT: PropTypes.func.isRequired,
+      }),
     }).isRequired,
     resources: PropTypes.shape({
-      pci: PropTypes.object,
+      eresource: PropTypes.object,
       settings: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
@@ -58,8 +73,8 @@ class EResourceEditRoute extends React.Component {
 
   getInitialValues = () => {
     const { resources } = this.props;
-    const pci = resources?.pci?.records?.[0] ?? {};
-    const initialValues = cloneDeep(pci);
+    const eresource = resources?.eresource?.records?.[0] ?? {};
+    const initialValues = cloneDeep(eresource);
     return initialValues;
   }
 
@@ -68,24 +83,36 @@ class EResourceEditRoute extends React.Component {
     this.props.history.push(`${urls.eresourceView(match.params.id)}${location.search}`);
   }
 
-  handleSubmit = (pci) => {
+  handleSubmit = (eresource) => {
     const { history, location, mutator } = this.props;
-    const { coverage, id, suppressFromDiscovery } = pci;
+    const { coverage, id, suppressFromDiscovery } = eresource;
+    const eresourceClass = eresource?.class;
 
-    return mutator.pci
-      .PUT({
-        id,
-        coverage,
-        suppressFromDiscovery
-      })
-      .then(() => {
-        history.push(`${urls.eresourceView(id)}${location.search}`);
-      });
+    if (eresourceClass === resourceClasses.TITLEINSTANCE) {
+      return mutator.title
+        .PUT({
+          id,
+          suppressFromDiscovery
+        })
+        .then(() => {
+          history.push(`${urls.eresourceView(id)}${location.search}`);
+        });
+    } else {
+      return mutator.pci
+        .PUT({
+          id,
+          coverage,
+          suppressFromDiscovery
+        })
+        .then(() => {
+          history.push(`${urls.eresourceView(id)}${location.search}`);
+        });
+    }
   }
 
   fetchIsPending = () => {
     return Object.values(this.props.resources)
-      .filter(r => r && r.resource !== 'pci')
+      .filter(r => r && r.eresource !== 'pci')
       .some(r => r.isPending);
   }
 
@@ -93,9 +120,14 @@ class EResourceEditRoute extends React.Component {
     if (!this.state.hasPerms) return <NoPermissions />;
     if (this.fetchIsPending()) return <LoadingView dismissible onClose={this.handleClose} />;
     const { isSuppressFromDiscoveryEnabled } = this.props;
+    const eresource = this.props.resources?.eresource?.records[0];
+    const eresourceClass = eresource?.class;
+
+    const EResourceViewComponent = eresourceClass === resourceClasses.TITLEINSTANCE ? TitleForm : PCIForm;
 
     return (
-      <View
+      <EResourceViewComponent
+        eresource={eresource}
         handlers={{
           ...this.props.handlers,
           checkScope,

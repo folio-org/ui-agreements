@@ -11,7 +11,7 @@ import {
 
 import { resourceTypes } from '../../constants';
 import EResourceIdentifier from '../EResourceIdentifier';
-import css from './RelatedTitle.css';
+import css from '../styles.css';
 
 const propTypes = {
   relatedTitle: PropTypes.shape({

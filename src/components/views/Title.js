@@ -66,9 +66,13 @@ export default class Title extends React.Component {
   );
 
   render() {
-    const { data } = this.props;
+    const { data, handlers } = this.props;
 
     const shortcuts = [
+      {
+        name: 'edit',
+        handler: handlers.onEdit,
+      },
       {
         name: 'expandAllSections',
         handler: (e) => expandAllSections(e, this.accordionStatusRef),
