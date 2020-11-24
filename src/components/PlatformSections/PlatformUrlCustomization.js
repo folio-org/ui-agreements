@@ -6,18 +6,18 @@ import {
   Accordion,
   Badge,
   Button,
-  Col,
-  Headline,
-  KeyValue,
-  Row,
-  NoValue,
   Spinner,
   Tooltip,
   MultiColumnList
 } from '@folio/stripes/components';
 import { urls } from '../utilities';
 
-const PlatformUrlCustomization = ({ platform, stringTemplates = [], id, handlers: { onViewUrlCustomiser } }) => {
+const PlatformUrlCustomization = ({
+  platform: { id: platformId },
+  stringTemplates = [],
+  id,
+  handlers: { onViewUrlCustomiser }
+}) => {
   const urlCustomiserStringTemplates = stringTemplates?.urlCustomisers ?? [];
 
   const renderAddUrlCustomizationButton = () => {
@@ -46,7 +46,7 @@ const PlatformUrlCustomization = ({ platform, stringTemplates = [], id, handlers
         ) : (
           <Button
             id="add-url-customization-button"
-            to={urls.urlCustomizerCreate(platform.id)}
+            to={urls.urlCustomizerCreate(platformId)}
           >
             <FormattedMessage id="ui-agreements.platform.addUrlCustomization" />
           </Button>
@@ -106,11 +106,14 @@ const PlatformUrlCustomization = ({ platform, stringTemplates = [], id, handlers
 };
 
 PlatformUrlCustomization.propTypes = {
+  handlers: PropTypes.shape({
+    onViewUrlCustomiser: PropTypes.func
+  }),
+  id: PropTypes.string,
   platform: PropTypes.shape({
-    localCode: PropTypes.string,
-    locators: PropTypes.arrayOf(PropTypes.object),
-    name: PropTypes.string
-  }).isRequired,
+    id: PropTypes.string,
+  }),
+  stringTemplates: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default PlatformUrlCustomization;

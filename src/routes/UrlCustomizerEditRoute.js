@@ -28,16 +28,18 @@ class UrlCustomizerEditRoute extends React.Component {
     }).isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
-        id: PropTypes.string.isRequired,
+        platformId: PropTypes.string,
+        templateId: PropTypes.string,
       }).isRequired,
     }).isRequired,
     mutator: PropTypes.shape({
-      platform: PropTypes.shape({
+      urlCustomization: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
       }),
     }).isRequired,
     resources: PropTypes.shape({
       platform: PropTypes.object,
+      urlCustomization: PropTypes.object
     }).isRequired,
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,

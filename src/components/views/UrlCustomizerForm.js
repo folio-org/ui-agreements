@@ -1,19 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get, isEqual } from 'lodash';
+import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import setFieldData from 'final-form-set-field-data';
 import { checkScope, collapseAllSections, expandAllSections, composeValidators, requiredValidator } from '@folio/stripes-erm-components';
-import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
+import { TitleManager } from '@folio/stripes/core';
 import { Field } from 'react-final-form';
 
 
 import {
-  AccordionSet,
-  AccordionStatus,
   Button,
-  Col,
-  ExpandAllButton,
   HasCommand,
   IconButton,
   InfoPopover,
@@ -46,18 +42,10 @@ class UrlCustomizerForm extends React.Component {
       onBasketLinesAdded: PropTypes.func.isRequired,
       onClose: PropTypes.func.isRequired,
     }),
-    initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
-    isLoading: PropTypes.bool,
-    onSubmit: PropTypes.func.isRequired,
-    invalid: PropTypes.bool,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
     values: PropTypes.object,
-  }
-
-  static defaultProps = {
-    initialValues: {},
   }
 
   handleSaveKeyCommand = (e) => {
@@ -144,7 +132,7 @@ class UrlCustomizerForm extends React.Component {
   ];
 
   render() {
-    const { data, form, values: { id, name } } = this.props;
+    const { form, values: { id, name } } = this.props;
 
     const hasLoaded = form.getRegisteredFields().length > 0;
 

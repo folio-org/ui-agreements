@@ -42,9 +42,15 @@ class PlatformViewRoute extends React.Component {
         id: PropTypes.string.isRequired,
       }).isRequired
     }).isRequired,
+    mutator: PropTypes.shape({
+      proxyServers: PropTypes.shape({
+        PUT: PropTypes.func.isRequired
+      })
+    }),
     resources: PropTypes.shape({
       platform: PropTypes.object,
-      stringTemplates: PropTypes.arrayOf(PropTypes.object)
+      proxyServers: PropTypes.arrayOf(PropTypes.object),
+      stringTemplates: PropTypes.object
     }).isRequired,
   };
 

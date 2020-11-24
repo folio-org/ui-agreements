@@ -1,21 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { IfPermission } from '@folio/stripes/core';
 import {
   Accordion,
   Button,
-  Col,
-  Headline,
-  KeyValue,
-  Row,
-  NoValue,
   Tooltip,
   MultiColumnList
 } from '@folio/stripes/components';
-import { urls } from '../utilities';
 
-const PlatformProxySettings = ({ platform, proxyServers = [], id, handlers: { onViewUrlCustomiser, onClickProxyServerAction } }) => {
+const PlatformProxySettings = ({
+  platform: { id: platformId, name: platformName },
+  proxyServers = [],
+  id,
+  handlers: { onClickProxyServerAction }
+}) => {
   const columnMapping = {
     name: <FormattedMessage id="ui-agreements.platform.platformProxySettings.name" />,
     status: <FormattedMessage id="ui-agreements.platform.platformProxySettings.status" />,
@@ -29,19 +27,22 @@ const PlatformProxySettings = ({ platform, proxyServers = [], id, handlers: { on
 
   const formatter = {
     name: ({ name }) => name,
-    status: ({ idScopes }) => (idScopes.includes(platform.id) ?
-      <FormattedMessage id="ui-agreements.platform.platformProxySettings.notUsed" /> :
-      <FormattedMessage id="ui-agreements.platform.platformProxySettings.used" />),
+    status: (proxyServerSetting) => {
+      const { idScopes } = proxyServerSetting;
+      return (idScopes.includes(platformId) ?
+        <FormattedMessage id="ui-agreements.platform.platformProxySettings.notUsed" /> :
+        <FormattedMessage id="ui-agreements.platform.platformProxySettings.used" />);
+    },
     actions: (proxyServerSetting) => {
       const { name, idScopes } = proxyServerSetting;
-      const hasPlatformId = idScopes.includes(platform.id);
+      const hasPlatformId = idScopes.includes(platformId);
       return (
         <Tooltip
           id="proxy-server-action-button-tooltip"
           placement="top"
           text={hasPlatformId ?
-            <FormattedMessage id="ui-agreements.platform.platformProxySettings.useProxyTooltip" values={{ proxyName : name, platformName: platform.name }} /> :
-            <FormattedMessage id="ui-agreements.platform.platformProxySettings.doNotUseProxyTooltip" values={{ proxyName : name, platformName: platform.name }} />
+            <FormattedMessage id="ui-agreements.platform.platformProxySettings.useProxyTooltip" values={{ proxyName : name, platformName }} /> :
+            <FormattedMessage id="ui-agreements.platform.platformProxySettings.doNotUseProxyTooltip" values={{ proxyName : name, platformName }} />
           }
         >
           {({ ref, ariaIds }) => (
@@ -52,7 +53,7 @@ const PlatformProxySettings = ({ platform, proxyServers = [], id, handlers: { on
               <Button
                 buttonStyle={hasPlatformId ? 'primary' : 'default'}
                 marginBottom0
-                onClick={() => onClickProxyServerAction(proxyServerSetting, platform.id, hasPlatformId)}
+                onClick={() => onClickProxyServerAction(proxyServerSetting, platformId, hasPlatformId)}
               >
                 {(hasPlatformId ?
                   <FormattedMessage id="ui-agreements.platform.platformProxySettings.useThisProxy" /> :
@@ -92,11 +93,17 @@ const PlatformProxySettings = ({ platform, proxyServers = [], id, handlers: { on
 };
 
 PlatformProxySettings.propTypes = {
+  id: PropTypes.string,
+  handlers: PropTypes.shape({
+    onClickProxyServerAction: PropTypes.func,
+  }),
   platform: PropTypes.shape({
-    localCode: PropTypes.string,
-    locators: PropTypes.arrayOf(PropTypes.object),
+    id: PropTypes.string,
     name: PropTypes.string
   }).isRequired,
+  proxyServers: PropTypes.arrayOf(PropTypes.shape({
+    idScopes: PropTypes.arrayOf(PropTypes.string)
+  }))
 };
 
 export default PlatformProxySettings;

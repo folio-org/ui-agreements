@@ -33,15 +33,15 @@ const FormEresource = ({
   values,
 }) => {
   const setCovergeFieldWarnings = (warn) => {
-    // const warnFields = ['startDate', 'startVolume', 'startIssue', 'endDate', 'endVolume', 'endIssue'];
-    // return values.coverage?.forEach((_, index) => {
-    //   warnFields.forEach((field) => (
-    //     warn ?
-    //       setFieldData(`coverage[${index}].${field}`, { warning: <FormattedMessage id={`ui-agreements.customCoverage.warn.${field}`} /> })
-    //       :
-    //       setFieldData(`coverage[${index}].${field}`, { warning: '' })
-    //   ));
-    // });
+    const warnFields = ['startDate', 'startVolume', 'startIssue', 'endDate', 'endVolume', 'endIssue'];
+    return values.coverage?.forEach((_, index) => {
+      warnFields.forEach((field) => (
+        warn ?
+          setFieldData(`coverage[${index}].${field}`, { warning: <FormattedMessage id={`ui-agreements.customCoverage.warn.${field}`} /> })
+          :
+          setFieldData(`coverage[${index}].${field}`, { warning: '' })
+      ));
+    });
   };
 
   const renderHandleUnLinkEresourceButton = (onChange) => {

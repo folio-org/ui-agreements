@@ -27,10 +27,11 @@ class UrlCustomizerCreateRoute extends React.Component {
     match: PropTypes.shape({
       params: PropTypes.shape({
         agreementId: PropTypes.string.isRequired,
+        platformId: PropTypes.string.isRequired,
       }).isRequired
     }).isRequired,
     mutator: PropTypes.shape({
-      entitlements: PropTypes.shape({
+      stringTemplate: PropTypes.shape({
         POST: PropTypes.func.isRequired,
       }),
     }),

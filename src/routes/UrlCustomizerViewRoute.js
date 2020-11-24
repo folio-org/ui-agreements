@@ -23,7 +23,6 @@ class UrlCustomizerViewRoute extends React.Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
-    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
     }).isRequired,
@@ -34,23 +33,17 @@ class UrlCustomizerViewRoute extends React.Component {
       }).isRequired
     }).isRequired,
     mutator: PropTypes.shape({
-      agreement: PropTypes.shape({
-        PUT: PropTypes.func.isRequired,
-      }).isRequired,
-      query: PropTypes.shape({
-        update: PropTypes.func.isRequired,
+      urlCustomization: PropTypes.shape({
+        DELETE: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
     resources: PropTypes.shape({
-      line: PropTypes.object,
-      orderLines: PropTypes.object,
-      query: PropTypes.object,
+      urlCustomization: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
       hasInterface: PropTypes.func.isRequired,
       hasPerm: PropTypes.func.isRequired,
     }).isRequired,
-    tagsEnabled: PropTypes.bool,
   };
 
   static contextType = CalloutContext;
@@ -64,7 +57,7 @@ class UrlCustomizerViewRoute extends React.Component {
     const {
       history,
       location,
-      match: { params: { platformId, templateId } },
+      match: { params: { templateId } },
       mutator,
     } = this.props;
     const { sendCallout } = this.context;
@@ -90,16 +83,16 @@ class UrlCustomizerViewRoute extends React.Component {
   }
 
   isLoading = () => {
-    const { match, resources } = this.props;
+    const { match, resources: { urlCustomization = {} } } = this.props;
 
     return (
-      match.params.lineId !== resources.line?.records?.[0]?.id &&
-      (resources?.line?.isPending ?? true)
+      match.params.templateId !== urlCustomization?.records?.[0]?.id &&
+      (urlCustomization?.isPending ?? true)
     );
   }
 
   render() {
-    const { resources, tagsEnabled, isSuppressFromDiscoveryEnabled, match } = this.props;
+    const { resources } = this.props;
     const urlCustomizationRecord = (resources?.urlCustomization?.records?.[0] ?? {});
 
     return (
@@ -112,11 +105,9 @@ class UrlCustomizerViewRoute extends React.Component {
           checkScope,
           collapseAllSections,
           expandAllSections,
-          isSuppressFromDiscoveryEnabled,
           onClose: this.handleClose,
           onDelete: this.handleDelete,
           onEdit: this.handleEdit,
-          onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
         isLoading={this.isLoading()}
       />

@@ -108,7 +108,8 @@ const Platform = ({
 Platform.propTypes = {
   data: PropTypes.shape({
     platform: PropTypes.object.isRequired,
-    stringTemplates: PropTypes.arrayOf(PropTypes.object),
+    proxyServers: PropTypes.arrayOf(PropTypes.object),
+    stringTemplates: PropTypes.object,
     searchString: PropTypes.string,
   }).isRequired,
   handlers: PropTypes.shape({

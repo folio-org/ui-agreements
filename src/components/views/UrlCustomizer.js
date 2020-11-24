@@ -4,12 +4,9 @@ import { FormattedMessage } from 'react-intl';
 import { checkScope } from '@folio/stripes-erm-components';
 
 import {
-  AccordionSet,
-  AccordionStatus,
   Button,
   Col,
   ConfirmationModal,
-  ExpandAllButton,
   HasCommand,
   Headline,
   Icon,
@@ -130,10 +127,14 @@ UrlCustomizer.propTypes = {
   data: PropTypes.shape({
     platform: PropTypes.object.isRequired,
     stringTemplates: PropTypes.arrayOf(PropTypes.object),
-    searchString: PropTypes.string,
+    urlCustomization: PropTypes.shape({
+      name: PropTypes.string,
+      rule: PropTypes.string
+    })
   }).isRequired,
   handlers: PropTypes.shape({
-    onClose: PropTypes.func.isRequired,
+    onClose: PropTypes.func,
+    onDelete: PropTypes.func,
     onEdit: PropTypes.func,
   }).isRequired,
   isLoading: PropTypes.bool.isRequired,
