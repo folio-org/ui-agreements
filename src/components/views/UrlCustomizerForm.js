@@ -28,18 +28,10 @@ import css from './UrlCustomizerForm.css';
 
 class UrlCustomizerForm extends React.Component {
   static propTypes = {
-    data: PropTypes.shape({
-      agreementLines: PropTypes.arrayOf(PropTypes.object).isRequired,
-      agreementLinesToAdd: PropTypes.arrayOf(PropTypes.object).isRequired,
-      supplementaryProperties: PropTypes.arrayOf(PropTypes.object).isRequired,
-    }).isRequired,
     form: PropTypes.shape({
-      change: PropTypes.func.isRequired,
       getRegisteredFields: PropTypes.func.isRequired,
-      getState: PropTypes.func.isRequired,
     }).isRequired,
     handlers: PropTypes.PropTypes.shape({
-      onBasketLinesAdded: PropTypes.func.isRequired,
       onClose: PropTypes.func.isRequired,
     }),
     handleSubmit: PropTypes.func.isRequired,

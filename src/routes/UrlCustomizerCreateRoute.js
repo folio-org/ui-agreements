@@ -34,15 +34,6 @@ class UrlCustomizerCreateRoute extends React.Component {
         POST: PropTypes.func.isRequired,
       }),
     }),
-    resources: PropTypes.shape({
-      basket: PropTypes.arrayOf(PropTypes.object),
-      line: PropTypes.object,
-      orderLines: PropTypes.object,
-    }).isRequired,
-    stripes: PropTypes.shape({
-      hasInterface: PropTypes.func.isRequired,
-      hasPerm: PropTypes.func.isRequired,
-    }).isRequired,
   };
 
   static contextType = CalloutContext;
@@ -67,7 +58,7 @@ class UrlCustomizerCreateRoute extends React.Component {
     return mutator.stringTemplate
       .POST({ ...urlCustomization, 'idScopes': [platformId], 'context': 'urlCustomiser' })
       .then(({ id }) => {
-        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.line.create.callout" /> });
+        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.platform.urlCustomization.create.callout" /> });
         history.push(`${urls.urlCustomizerView(platformId, id)}${location.search}`);
       });
   }
