@@ -60,7 +60,7 @@ class UrlCustomizerViewRoute extends React.Component {
     history.push(`${urls.platformView(match.params.platformId)}${location.search}`);
   }
 
-  handleDelete = (template) => {
+  handleDelete = () => {
     const {
       history,
       location,
@@ -69,13 +69,13 @@ class UrlCustomizerViewRoute extends React.Component {
     } = this.props;
     const { sendCallout } = this.context;
 
-    mutator.urlCustomization.DELETE(template)
+    mutator.urlCustomization.DELETE(templateId)
       .then(() => {
         history.push(`${urls.platforms()}${location.search}`);
-        sendCallout({ message: <FormattedMessage id="ui-agreements.line.delete.callout" /> });
+        sendCallout({ message: <FormattedMessage id="ui-agreements.platform.urlCustomization.delete.callout" /> });
       })
       .catch(error => {
-        sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.line.deleteFailed.callout" values={{ message: error.message }} /> });
+        sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.platform.urlCustomization..deleteFailed.callout" values={{ message: error.message }} /> });
       });
   }
 

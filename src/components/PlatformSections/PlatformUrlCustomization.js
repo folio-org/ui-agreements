@@ -4,12 +4,15 @@ import { FormattedMessage } from 'react-intl';
 import { IfPermission } from '@folio/stripes/core';
 import {
   Accordion,
+  Badge,
   Button,
   Col,
   Headline,
   KeyValue,
   Row,
   NoValue,
+  Spinner,
+  Tooltip,
   MultiColumnList
 } from '@folio/stripes/components';
 import { urls } from '../utilities';
@@ -20,13 +23,35 @@ const PlatformUrlCustomization = ({ platform, stringTemplates = [], id, handlers
   const renderAddUrlCustomizationButton = () => {
     return (
       <IfPermission perm="ui-agreements.platforms.edit">
-        <Button
-          disabled={urlCustomiserStringTemplates?.length > 0}
-          id="add-url-customization-button"
-          to={urls.urlCustomizerCreate(platform.id)}
-        >
-          <FormattedMessage id="ui-agreements.platform.addUrlCustomization" />
-        </Button>
+        {urlCustomiserStringTemplates?.length > 0 ? (
+          <Tooltip
+            id="add-url-customization-button-tooltip"
+            placement="top"
+            text={<FormattedMessage id="ui-agreements.platform.addUrlCustomization.maxNumber" />}
+          >
+            {({ ref, ariaIds }) => (
+              <div
+                ref={ref}
+                aria-labelledby={ariaIds.text}
+              >
+                <Button
+                  disabled
+                  id="add-url-customization-button"
+                >
+                  <FormattedMessage id="ui-agreements.platform.addUrlCustomization" />
+                </Button>
+              </div>
+            )}
+          </Tooltip>
+        ) : (
+          <Button
+            id="add-url-customization-button"
+            to={urls.urlCustomizerCreate(platform.id)}
+          >
+            <FormattedMessage id="ui-agreements.platform.addUrlCustomization" />
+          </Button>
+        )
+        }
       </IfPermission>
     );
   };
@@ -50,11 +75,17 @@ const PlatformUrlCustomization = ({ platform, stringTemplates = [], id, handlers
     'customizationCode'
   ];
 
+  const renderBadge = () => {
+    const count = urlCustomiserStringTemplates?.length ?? 0;
+    return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
+  };
+
   return (
     <Accordion
+      displayWhenClosed={renderBadge()}
       displayWhenOpen={renderAddUrlCustomizationButton()}
       id={id}
-      label={<FormattedMessage id="ui-agreements.platform.urlCustomization" />}
+      label={<FormattedMessage id="ui-agreements.platform.urlCustomizationSettings" />}
     >
       <MultiColumnList
         columnMapping={columnMapping}

@@ -60,8 +60,8 @@ class UrlCustomizerEditRoute extends React.Component {
   }
 
   handleClose = () => {
-    const { location, match } = this.props;
-    this.props.history.push(`${urls.platformView(match.params.id)}${location.search}`);
+    const { location, match, history } = this.props;
+    history.push(`${urls.urlCustomizerView(match.params.platformId, match.params.templateId)}${location.search}`);
   }
 
   handleSubmit = (urlCustomization) => {

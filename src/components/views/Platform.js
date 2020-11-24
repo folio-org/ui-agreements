@@ -16,10 +16,10 @@ import {
   Pane,
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
-import { PlatformInfo, PlatformUrlCustomization } from '../PlatformSections';
+import { PlatformInfo, PlatformUrlCustomization, PlatformProxySettings } from '../PlatformSections';
 
 const Platform = ({
-  data: { platform, stringTemplates },
+  data: { platform, stringTemplates, proxyServers },
   isLoading,
   handlers
 }) => {
@@ -39,13 +39,15 @@ const Platform = ({
       id,
       platform,
       handlers,
-      stringTemplates
+      stringTemplates,
+      proxyServers
     };
   };
 
   const getInitialAccordionsState = () => {
     return {
       platformUrlCustomization: false,
+      platformProxySettings: false
     };
   };
 
@@ -93,6 +95,7 @@ const Platform = ({
               </Row>
               <AccordionSet initialStatus={getInitialAccordionsState()}>
                 <PlatformUrlCustomization {...getSectionProps('platformUrlCustomization')} />
+                <PlatformProxySettings {...getSectionProps('platformProxySettings')} />
               </AccordionSet>
             </AccordionStatus>
           </TitleManager>

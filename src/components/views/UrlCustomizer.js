@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { checkScope } from '@folio/stripes-erm-components';
@@ -8,6 +8,7 @@ import {
   AccordionStatus,
   Button,
   Col,
+  ConfirmationModal,
   ExpandAllButton,
   HasCommand,
   Headline,
@@ -19,6 +20,7 @@ import {
   Pane,
 } from '@folio/stripes/components';
 import { IfPermission, TitleManager } from '@folio/stripes/core';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 const UrlCustomizer = ({
   data: { urlCustomization },
@@ -32,7 +34,13 @@ const UrlCustomizer = ({
     onClose: handlers.onClose,
   };
 
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
+
   if (isLoading) return <LoadingPane data-loading {...paneProps} />;
+
+  const openDeleteConfirmationModal = () => setShowDeleteConfirmationModal(true);
+
+  const closeDeleteConfirmationModal = () => setShowDeleteConfirmationModal(false);
 
   const shortcuts = [
     {
@@ -49,12 +57,12 @@ const UrlCustomizer = ({
     >
       <>
         <Pane
-          actionMenu={() => (
+          actionMenu={({ onToggle }) => (
             <>
               <IfPermission perm="ui-agreements.platforms.edit">
                 <Button
                   buttonStyle="dropdownItem"
-                  id="clickable-dropdown-edit-platform"
+                  id="clickable-dropdown-edit-url-customizer"
                   onClick={handlers.onEdit}
                 >
                   <Icon icon="edit">
@@ -63,8 +71,11 @@ const UrlCustomizer = ({
                 </Button>
                 <Button
                   buttonStyle="dropdownItem"
-                  id="clickable-dropdown-edit-platform"
-                  onClick={handlers.onDelete}
+                  id="clickable-dropdown-delete-url-customizer"
+                  onClick={() => {
+                    openDeleteConfirmationModal();
+                    onToggle();
+                  }}
                 >
                   <Icon icon="trash">
                     <FormattedMessage id="ui-agreements.platform.urlCustomizer.delete" />
@@ -73,7 +84,7 @@ const UrlCustomizer = ({
               </IfPermission>
             </>
           )}
-          paneTitle={urlCustomization?.name}
+          paneTitle={<FormattedMessage id="ui-agreements.platform.urlCustomizer.paneTitle" values={{ name: urlCustomization?.name }} />}
           {...paneProps}
         >
           <TitleManager record={urlCustomization?.name}>
@@ -84,7 +95,7 @@ const UrlCustomizer = ({
                     size="xx-large"
                     tag="h2"
                   >
-                    {urlCustomization?.name}
+                    <FormattedMessage id="ui-agreements.platform.urlCustomizer.paneTitle" values={{ name: urlCustomization?.name }} />
                   </Headline>
                 </div>
               </Col>
@@ -96,6 +107,20 @@ const UrlCustomizer = ({
             </KeyValue>
           </TitleManager>
         </Pane>
+        <ConfirmationModal
+          buttonStyle="danger"
+          confirmLabel={<FormattedMessage id="ui-agreements.delete" />}
+          data-test-delete-confirmation-modal
+          heading={<FormattedMessage id="ui-agreements.platform.urlCustomization.delete" />}
+          id="delete-agreement-confirmation"
+          message={<SafeHTMLMessage id="ui-agreements.platform.urlCustomization.deleteConfirmMessage" values={{ name: urlCustomization?.name }} />}
+          onCancel={closeDeleteConfirmationModal}
+          onConfirm={() => {
+            handlers.onDelete();
+            closeDeleteConfirmationModal();
+          }}
+          open={showDeleteConfirmationModal}
+        />
       </>
     </HasCommand>
   );

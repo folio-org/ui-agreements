@@ -20,6 +20,14 @@ class PlatformViewRoute extends React.Component {
       clientGeneratePk: false,
       throwErrors: false
     },
+    proxyServers: {
+      type: 'okapi',
+      path: 'erm/sts',
+      params: {
+        filters: 'context.value=urlproxier',
+      },
+      throwErrors: false
+    },
   });
 
   static propTypes = {
@@ -58,6 +66,24 @@ class PlatformViewRoute extends React.Component {
     history.push(`${urls.urlCustomizerView(match.params.id, templateId)}${location.search}`);
   }
 
+  handleClickProxyServerAction = (proxyServer, platformId, hasPlatformId) => {
+    const mutator = this.props.mutator.proxyServers;
+    const { idScopes = [] } = proxyServer;
+
+    const idScopeValues = hasPlatformId ?
+      idScopes.filter(id => id !== platformId)
+      :
+      [...idScopes, platformId];
+
+    const proxyServerPayload = {
+      ...proxyServer,
+      ...{ idScopes: idScopeValues },
+      'context': 'urlProxier'
+    };
+
+    return mutator.PUT(proxyServerPayload);
+  }
+
   isLoading = () => {
     const { match, resources } = this.props;
     return (
@@ -84,12 +110,14 @@ class PlatformViewRoute extends React.Component {
         key={get(resources, 'eresource.loadedAt', 'loading')}
         data={{
           platform: resources?.platform?.records?.[0] ?? {},
-          stringTemplates: resources?.stringTemplates?.records[0] ?? []
+          stringTemplates: resources?.stringTemplates?.records[0] ?? [],
+          proxyServers: resources?.proxyServers?.records ?? [],
         }}
         handlers={{
           onClose: this.handleClose,
           onEdit: this.handleEdit,
-          onViewUrlCustomiser: this.handleViewUrlCustomizer
+          onViewUrlCustomiser: this.handleViewUrlCustomizer,
+          onClickProxyServerAction: this.handleClickProxyServerAction
         }}
         isLoading={this.isLoading()}
       />
