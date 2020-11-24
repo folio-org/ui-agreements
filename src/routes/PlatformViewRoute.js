@@ -14,6 +14,20 @@ class PlatformViewRoute extends React.Component {
       type: 'okapi',
       path: 'erm/platforms/:{id}',
     },
+    stringTemplates: {
+      type: 'okapi',
+      path: 'erm/sts/template/:{id}',
+      clientGeneratePk: false,
+      throwErrors: false
+    },
+    proxyServers: {
+      type: 'okapi',
+      path: 'erm/sts',
+      params: {
+        filters: 'context.value=urlproxier',
+      },
+      throwErrors: false
+    },
   });
 
   static propTypes = {
@@ -28,8 +42,15 @@ class PlatformViewRoute extends React.Component {
         id: PropTypes.string.isRequired,
       }).isRequired
     }).isRequired,
+    mutator: PropTypes.shape({
+      proxyServers: PropTypes.shape({
+        PUT: PropTypes.func.isRequired
+      })
+    }),
     resources: PropTypes.shape({
       platform: PropTypes.object,
+      proxyServers: PropTypes.arrayOf(PropTypes.object),
+      stringTemplates: PropTypes.object
     }).isRequired,
   };
 
@@ -44,6 +65,29 @@ class PlatformViewRoute extends React.Component {
 
   handleEResourceClick = (id) => {
     this.props.history.push(`${urls.eresourceView(id)}${this.props.location.search}`);
+  }
+
+  handleViewUrlCustomizer = (templateId) => {
+    const { history, location, match } = this.props;
+    history.push(`${urls.urlCustomizerView(match.params.id, templateId)}${location.search}`);
+  }
+
+  handleClickProxyServerAction = (proxyServer, platformId, hasPlatformId) => {
+    const mutator = this.props.mutator.proxyServers;
+    const { idScopes = [] } = proxyServer;
+
+    const idScopeValues = hasPlatformId ?
+      idScopes.filter(id => id !== platformId)
+      :
+      [...idScopes, platformId];
+
+    const proxyServerPayload = {
+      ...proxyServer,
+      ...{ idScopes: idScopeValues },
+      'context': 'urlProxier'
+    };
+
+    return mutator.PUT(proxyServerPayload);
   }
 
   isLoading = () => {
@@ -67,17 +111,19 @@ class PlatformViewRoute extends React.Component {
       resources,
     } = this.props;
 
-    const platform = resources?.platform?.records?.[0] ?? {};
-
     return (
       <View
         key={get(resources, 'eresource.loadedAt', 'loading')}
         data={{
-          platform
+          platform: resources?.platform?.records?.[0] ?? {},
+          stringTemplates: resources?.stringTemplates?.records[0] ?? [],
+          proxyServers: resources?.proxyServers?.records ?? [],
         }}
         handlers={{
           onClose: this.handleClose,
           onEdit: this.handleEdit,
+          onViewUrlCustomizer: this.handleViewUrlCustomizer,
+          onClickProxyServerAction: this.handleClickProxyServerAction
         }}
         isLoading={this.isLoading()}
       />

@@ -1,20 +1,25 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { checkScope } from '@folio/stripes-erm-components';
 
 import {
+  AccordionSet,
+  AccordionStatus,
   Button,
+  Col,
+  ExpandAllButton,
   HasCommand,
   Icon,
   LoadingPane,
+  Row,
   Pane,
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
-import { PlatformInfo } from '../PlatformSections';
+import { PlatformInfo, PlatformUrlCustomization, PlatformProxySettings } from '../PlatformSections';
 
 const Platform = ({
-  data: { platform },
+  data: { platform, stringTemplates, proxyServers },
   isLoading,
   handlers
 }) => {
@@ -25,7 +30,26 @@ const Platform = ({
     onClose: handlers.onClose,
   };
 
+  const accordionStatusRef = useRef(null);
+
   if (isLoading) return <LoadingPane data-loading {...paneProps} />;
+
+  const getSectionProps = (id) => {
+    return {
+      id,
+      platform,
+      handlers,
+      stringTemplates,
+      proxyServers
+    };
+  };
+
+  const getInitialAccordionsState = () => {
+    return {
+      platformUrlCustomization: false,
+      platformProxySettings: false
+    };
+  };
 
   const shortcuts = [
     {
@@ -62,7 +86,18 @@ const Platform = ({
           {...paneProps}
         >
           <TitleManager record={platform?.name}>
-            <PlatformInfo platform={platform} />
+            <PlatformInfo {...getSectionProps('platformInfo')} />
+            <AccordionStatus ref={accordionStatusRef}>
+              <Row end="xs">
+                <Col xs>
+                  <ExpandAllButton />
+                </Col>
+              </Row>
+              <AccordionSet initialStatus={getInitialAccordionsState()}>
+                <PlatformUrlCustomization {...getSectionProps('platformUrlCustomization')} />
+                <PlatformProxySettings {...getSectionProps('platformProxySettings')} />
+              </AccordionSet>
+            </AccordionStatus>
           </TitleManager>
         </Pane>
       </>
@@ -73,6 +108,8 @@ const Platform = ({
 Platform.propTypes = {
   data: PropTypes.shape({
     platform: PropTypes.object.isRequired,
+    proxyServers: PropTypes.arrayOf(PropTypes.object),
+    stringTemplates: PropTypes.object,
     searchString: PropTypes.string,
   }).isRequired,
   handlers: PropTypes.shape({
