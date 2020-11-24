@@ -264,6 +264,7 @@
   "platform.urlCustomizer.paneTitle": "{name} URL customization",
   "platform.urlCustomization.delete": "Delete URL customization",
   "platform.urlCustomization.deleteConfirmMessage": "URL customization <strong>{name}</strong> will be <strong>deleted</strong>.",
+  "platform.urlCustomizer.closeEdit": "Close edit URL customization",
 
   "eresources.count": "Count",
   "eresources.edit": "Edit",

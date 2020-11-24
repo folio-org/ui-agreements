@@ -122,7 +122,7 @@ class PlatformViewRoute extends React.Component {
         handlers={{
           onClose: this.handleClose,
           onEdit: this.handleEdit,
-          onViewUrlCustomiser: this.handleViewUrlCustomizer,
+          onViewUrlCustomizer: this.handleViewUrlCustomizer,
           onClickProxyServerAction: this.handleClickProxyServerAction
         }}
         isLoading={this.isLoading()}

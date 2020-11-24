@@ -139,7 +139,7 @@ class App extends React.Component {
                   <Route component={UrlCustomizerEditRoute} path={`${path}/platforms/:platformId/urlcustomizer/:templateId/edit`} />
                   <Route component={PlatformsRoute} path={`${path}/platforms/:id?`}>
                     <Switch>
-                      <Route component={UrlCustomizerViewRoute} path={`${path}/platforms/:platformId/urlcustomiser/:templateId`} />
+                      <Route component={UrlCustomizerViewRoute} path={`${path}/platforms/:platformId/urlcustomizer/:templateId`} />
                       <Route component={PlatformViewRoute} path={`${path}/platforms/:id`} />
                     </Switch>
                   </Route>

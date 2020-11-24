@@ -102,7 +102,7 @@ class UrlCustomizerForm extends React.Component {
   renderFirstMenu() {
     return (
       <PaneMenu>
-        <FormattedMessage id="ui-agreements.urlCustomiser.closeEdit">
+        <FormattedMessage id="ui-agreements.platform.urlCustomizer.closeEdit">
           {ariaLabel => (
             <IconButton
               aria-label={ariaLabel}

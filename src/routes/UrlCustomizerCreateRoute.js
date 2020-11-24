@@ -20,7 +20,6 @@ class UrlCustomizerCreateRoute extends React.Component {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
-    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
     }).isRequired,
@@ -74,8 +73,6 @@ class UrlCustomizerCreateRoute extends React.Component {
   }
 
   render() {
-    const { isSuppressFromDiscoveryEnabled } = this.props;
-
     return (
       <View
         handlers={{
@@ -83,7 +80,6 @@ class UrlCustomizerCreateRoute extends React.Component {
           checkScope,
           collapseAllSections,
           expandAllSections,
-          isSuppressFromDiscoveryEnabled,
           onClose: this.handleClose,
         }}
         onSubmit={this.handleSubmit}

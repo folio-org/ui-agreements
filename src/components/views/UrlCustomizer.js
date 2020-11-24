@@ -27,7 +27,7 @@ const UrlCustomizer = ({
   const paneProps = {
     defaultWidth: '55%',
     dismissible: true,
-    id: 'pane-view-urlcustomiser',
+    id: 'pane-view-urlcustomizer',
     onClose: handlers.onClose,
   };
 

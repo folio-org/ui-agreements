@@ -16,14 +16,14 @@ const PlatformUrlCustomization = ({
   platform: { id: platformId },
   stringTemplates = [],
   id,
-  handlers: { onViewUrlCustomiser }
+  handlers: { onViewUrlCustomizer }
 }) => {
-  const urlCustomiserStringTemplates = stringTemplates?.urlCustomisers ?? [];
+  const urlCustomizerStringTemplates = stringTemplates?.urlCustomisers ?? [];
 
   const renderAddUrlCustomizationButton = () => {
     return (
       <IfPermission perm="ui-agreements.platforms.edit">
-        {urlCustomiserStringTemplates?.length > 0 ? (
+        {urlCustomizerStringTemplates?.length > 0 ? (
           <Tooltip
             id="add-url-customization-button-tooltip"
             placement="top"
@@ -76,7 +76,7 @@ const PlatformUrlCustomization = ({
   ];
 
   const renderBadge = () => {
-    const count = urlCustomiserStringTemplates?.length ?? 0;
+    const count = urlCustomizerStringTemplates?.length ?? 0;
     return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
   };
 
@@ -90,13 +90,13 @@ const PlatformUrlCustomization = ({
       <MultiColumnList
         columnMapping={columnMapping}
         columnWidths={columnWidths}
-        contentData={urlCustomiserStringTemplates}
+        contentData={urlCustomizerStringTemplates}
         formatter={formatter}
         id="url-customization"
         isEmptyMessage={<FormattedMessage id="ui-agreements.platform.noUrlCustomization" />}
         onRowClick={(e, row) => {
           if (e.target.tagName !== 'A') {
-            onViewUrlCustomiser(row.id);
+            onViewUrlCustomizer(row.id);
           }
         }}
         visibleColumns={visibleColumns}
@@ -107,7 +107,7 @@ const PlatformUrlCustomization = ({
 
 PlatformUrlCustomization.propTypes = {
   handlers: PropTypes.shape({
-    onViewUrlCustomiser: PropTypes.func
+    onViewUrlCustomizer: PropTypes.func
   }),
   id: PropTypes.string,
   platform: PropTypes.shape({
