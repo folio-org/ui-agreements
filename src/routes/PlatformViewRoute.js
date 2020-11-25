@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
-import compose from 'compose-function';
+import { get, isEmpty } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
@@ -77,13 +76,13 @@ class PlatformViewRoute extends React.Component {
     const { idScopes = [] } = proxyServer;
 
     const idScopeValues = hasPlatformId ?
-      idScopes.filter(id => id !== platformId)
+      idScopes.filter(id => id !== '' && id !== platformId) // empy string condition needs to be taken off once the bug in webtoolkit is fixed
       :
-      [...idScopes, platformId];
+      [...idScopes.filter(id => id !== ''), platformId]; // empy string condition needs to be taken off once the bug in webtoolkit is fixed
 
     const proxyServerPayload = {
       ...proxyServer,
-      ...{ idScopes: idScopeValues },
+      ...{ idScopes: isEmpty(idScopeValues) ? [''] : idScopeValues }, // empy string condition needs to be taken off once the bug in webtoolkit is fixed
       'context': 'urlProxier'
     };
 
@@ -113,7 +112,6 @@ class PlatformViewRoute extends React.Component {
 
     return (
       <View
-        key={get(resources, 'eresource.loadedAt', 'loading')}
         data={{
           platform: resources?.platform?.records?.[0] ?? {},
           stringTemplates: resources?.stringTemplates?.records[0] ?? [],
@@ -131,6 +129,4 @@ class PlatformViewRoute extends React.Component {
   }
 }
 
-export default compose(
-  stripesConnect,
-)(PlatformViewRoute);
+export default stripesConnect(PlatformViewRoute);
