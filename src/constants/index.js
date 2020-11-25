@@ -8,3 +8,4 @@ export { default as agreementRelationshipTypes } from './agreementRelationshipTy
 export { default as resourceClasses } from './resourceClasses';
 export { default as resourceTypes } from './resourceTypes';
 export { default as validationEndPoint } from './validationEndPoint';
+export { default as defaultSettingsValues } from './defaultSettingsValues';

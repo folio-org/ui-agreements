@@ -13,20 +13,30 @@ import {
 
 import stripesFinalForm from '@folio/stripes/final-form';
 
-import { MCLPagination, SuppressFromDiscoveryFields } from './components';
+import { MCLPaginationFields, SuppressFromDiscoveryFields } from './components';
 
 class GeneralSettingsForm extends React.Component {
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
     label: PropTypes.string,
     values: PropTypes.object
   };
 
-  handleSave = () => {
+  /* handleSave = () => {
     const { onSubmit, values } = this.props;
     onSubmit({
+      general: JSON.stringify({
+        ...values
+      })
+    });
+  } */
+
+  handleSave = (e) => {
+    const { values, handleSubmit } = this.props;
+    e.preventDefault();
+    handleSubmit({
       general: JSON.stringify({
         ...values
       })
@@ -52,7 +62,6 @@ class GeneralSettingsForm extends React.Component {
   render() {
     const {
       label,
-      values: { mclPagination },
     } = this.props;
 
     return (
@@ -82,7 +91,7 @@ class GeneralSettingsForm extends React.Component {
               listStyle="bullets"
             />
           </Layout>
-          <MCLPagination dataOptions={mclPagination} name="mclPagination" />
+          <MCLPaginationFields initialLoad={this.props.values.initialLoad} pageSize={this.props.values.pageSize} />
           <SuppressFromDiscoveryFields name="displaySuppressFromDiscovery" />
         </Pane>
       </form>
