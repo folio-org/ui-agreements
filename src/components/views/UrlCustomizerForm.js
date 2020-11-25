@@ -186,7 +186,7 @@ class UrlCustomizerForm extends React.Component {
                     <Row>
                       <Layout className="display-flex flex-direction-column padding-bottom-gutter">
                         <FormattedMessage id="ui-agreements.platform.urlCustomizationCode.variables" tagName="div" />
-                        <FormattedMessage id="ui-agreements.platform.urlCustomizationCode.handleBarHelpers" tagName="div" />
+                        <FormattedMessage id="ui-agreements.platform.urlCustomizationCode.helpers" tagName="div" />
                       </Layout>
                     </Row>
                   </form>
