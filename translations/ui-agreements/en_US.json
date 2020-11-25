@@ -507,7 +507,7 @@
     "platform.urlCustomizationCode.learnMore": "Learn more",
     "platform.addUrlCustomization.maxNumber": "Maximum number of URL customizations is 1",
     "platform.urlCustomizationCode.info": "The template that will be used to generate a proxied URL.",
-    "platform.urlCustomizationCode.variables": "Variables: inputUrl, platformLocalCode",
+    "platform.urlCustomizationCode.variables": "Variables: inputUrl, platformCode",
     "platform.urlCustomizationCode.handleBarHelpers": "Handlebar helpers: replace, encodeUrl, removeProtocol",
     "platform.noUrlCustomization": "No URL customization for this platform",
     "platform.urlCustomization.delete.callout": "URL customization deleted",
