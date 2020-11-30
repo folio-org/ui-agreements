@@ -1,20 +1,6 @@
-const DEFAULT = 10;
-
 const defaultSettingsValues = {
-  initialLoad: {
-    agreementLines: DEFAULT,
-    coveredEresources: DEFAULT,
-    acquisitionOptions: DEFAULT,
-    packageContents: DEFAULT,
-    entitlementAgreements: DEFAULT,
-  },
-  pageSize: {
-    agreementLines: DEFAULT,
-    coveredEresources: DEFAULT,
-    acquisitionOptions: DEFAULT,
-    packageContents: DEFAULT,
-    entitlementAgreements: DEFAULT,
-  },
+  INITIAL_LOAD: 10,
+  PAGE_SIZE: 10,
 };
 
 export default defaultSettingsValues;

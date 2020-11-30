@@ -11,13 +11,15 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/views/Agreement';
-import { urls } from '../components/utilities';
-import { errorTypes, resultCount } from '../constants';
+import { urls, getMCLSettingsValues } from '../components/utilities';
+import { defaultSettingsValues, errorTypes, resultCount } from '../constants';
 
 import { joinRelatedAgreements } from './utilities/processRelatedAgreements';
 
 const RECORDS_PER_REQUEST = 100;
 const RECORDS_INCREMENT = 1000;
+const INITIAL_LOAD = defaultSettingsValues.INITIAL_LOAD;
+const PAGE_SIZE = defaultSettingsValues.PAGE_SIZE;
 
 class AgreementViewRoute extends React.Component {
   static manifest = Object.freeze({
@@ -35,7 +37,11 @@ class AgreementViewRoute extends React.Component {
         stats: 'true',
       },
       limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
+      // perRequest: RECORDS_PER_REQUEST,
+      perRequest: (_q, _p, _r, _l, props) => {
+        const { pageSize } = props;
+        return pageSize('agreementLines') ?? PAGE_SIZE;
+      },
       records: 'results',
       recordsRequired: '%{agreementLinesCount}',
       shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
@@ -141,6 +147,7 @@ class AgreementViewRoute extends React.Component {
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
     }).isRequired,
+    initialLoad: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: PropTypes.string.isRequired,
@@ -166,6 +173,7 @@ class AgreementViewRoute extends React.Component {
         update: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
+    pageSize: PropTypes.func.isRequired,
     resources: PropTypes.shape({
       agreement: PropTypes.object,
       agreementLines: PropTypes.object,
@@ -458,6 +466,8 @@ class AgreementViewRoute extends React.Component {
   render() {
     const {
       handlers,
+      initialLoad,
+      pageSize,
       resources,
       tagsEnabled,
     } = this.props;
@@ -477,6 +487,8 @@ class AgreementViewRoute extends React.Component {
           checkScope,
           collapseAllSections,
           expandAllSections,
+          initialLoad,
+          pageSize,
           onClone: this.handleClone,
           onClose: this.handleClose,
           onDelete: this.handleDelete,
@@ -502,5 +514,6 @@ export default compose(
   injectIntl,
   withFileHandlers,
   stripesConnect,
+  getMCLSettingsValues,
   withTags,
 )(AgreementViewRoute);

@@ -1,7 +1,8 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { Field } from 'react-final-form';
+// import { Field } from 'react-final-form';
+import { Field } from 'react-final-form-html5-validation';
 
 import {
   Col,
@@ -10,15 +11,16 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-const lists = ['acquisitionOptions', 'agreementLines', 'coveredEresources', 'entitlementAgreements', 'packageContents'];
+const lists = ['agreementLines', 'coveredEresources', 'acquisitionOptions', 'packageContents', 'entitlementAgreements'];
 
 const inRange = (x, min, max) => {
-  return ((x - min) * (x - max) <= 0) && Number.isInteger(x);
+  return ((x - min) * (x - max) <= 0);
 };
 
 const validate = (fieldValue, min, max) => {
-  return (fieldValue && !inRange(fieldValue, min, max)) ?
-    <FormattedMessage id="stripes-erm-components.errors.customPropertyValueNotInRange" values={{ min, max }} /> : undefined;
+  // parseInt(fieldValue, 10)
+  return (!inRange(fieldValue, min, max)) ?
+    <FormattedMessage id="ui-agreements.settings.error.valueNotInRange" values={{ min, max }} /> : undefined;
 };
 
 const MCLPaginationFields = () => {
@@ -30,32 +32,34 @@ const MCLPaginationFields = () => {
         </Layout>
         <Layout className="padding-bottom-gutter">
           <Row>
-            <Col md={4} xs={12}> MCL </Col>
-            <Col md={4} xs={12}> Initial load </Col>
-            <Col md={4} xs={12}> Page size </Col>
+            <Col xs={6}> <FormattedMessage id="ui-agreements.settings.mcl" /> </Col>
+            <Col xs={3}> <FormattedMessage id="ui-agreements.settings.mcl.initialLoad" /> </Col>
+            <Col xs={3}> <FormattedMessage id="ui-agreements.settings.mcl.pageSize" /> </Col>
           </Row>
         </Layout>
       </strong>
       { lists.map((mcl, index) => (
         <Row key={`row-${index}`}>
-          <Col md={4} xs={12}>
-            {mcl}
+          <Col xs={6}>
+            <FormattedMessage id={`ui-agreements.settings.mcl.${mcl}`} />
           </Col>
-          <Col md={4} xs={12}>
+          <Col xs={3}>
             <Field
               component={TextField}
               id={`initialLoad-${mcl}`}
               name={`initialLoad.${mcl}`}
-              normalize={v => !!v}
+              parse={v => parseInt(v, 10)}
+              type="number"
               validate={v => validate(v, 0, 100)}
             />
           </Col>
-          <Col md={4} xs={12}>
+          <Col xs={3}>
             <Field
               component={TextField}
               id={`pageSize-${mcl}`}
               name={`pageSize.${mcl}`}
-              normalize={v => !!v}
+              parse={v => parseInt(v, 10)}
+              type="number"
               validate={v => validate(v, 1, 100)}
             />
           </Col>

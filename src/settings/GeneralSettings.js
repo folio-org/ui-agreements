@@ -21,20 +21,24 @@ class GeneralSettings extends React.Component {
   defaultValues = {
     displaySuppressFromDiscovery: { pci: true, agreementLine: true, title: true },
     hideEResourcesFunctionality: false,
-    /* initialLoadValues: {
-      agreementLines: INITIAL_LOAD_DEFAULT,
-      coveredEresources: INITIAL_LOAD_DEFAULT,
-      acquisitionOptions: INITIAL_LOAD_DEFAULT,
-      packageContents: INITIAL_LOAD_DEFAULT,
-      entitlementAgreements: INITIAL_LOAD_DEFAULT
+    initialLoad: {
+      agreementLines: defaultSettingsValues.INITIAL_LOAD,
+      coveredEresources: defaultSettingsValues.INITIAL_LOAD,
+      acquisitionOptions: defaultSettingsValues.INITIAL_LOAD,
+      packageContents: defaultSettingsValues.INITIAL_LOAD,
+      entitlementAgreements: defaultSettingsValues.INITIAL_LOAD
     },
-    pageSizeValues: {
-      agreementLines: PAGE_SIZE_DEFAULT,
-      coveredEresources: PAGE_SIZE_DEFAULT,
-      acquisitionOptions: PAGE_SIZE_DEFAULT,
-      packageContents: PAGE_SIZE_DEFAULT,
-      entitlementAgreements: PAGE_SIZE_DEFAULT
-    }, */
+    pageSize: {
+      agreementLines: defaultSettingsValues.PAGE_SIZE,
+      coveredEresources: defaultSettingsValues.PAGE_SIZE,
+      acquisitionOptions: defaultSettingsValues.PAGE_SIZE,
+      packageContents: defaultSettingsValues.PAGE_SIZE,
+      entitlementAgreements: defaultSettingsValues.PAGE_SIZE
+    },
+  }
+
+  beforeSave(data) {
+    return JSON.stringify(data);
   }
 
   getInitialValues = (settings) => {
@@ -50,7 +54,6 @@ class GeneralSettings extends React.Component {
   }
 
   render() {
-    console.log(defaultSettingsValues);
     return (
       <this.connectedConfigManager
         configFormComponent={GeneralSettingsForm}
@@ -58,6 +61,7 @@ class GeneralSettings extends React.Component {
         getInitialValues={this.getInitialValues}
         label={<FormattedMessage id="ui-agreements.settings.displaySettings" />}
         moduleName="AGREEMENTS"
+        onBeforeSave={this.beforeSave}
         stripes={this.props.stripes}
       />
     );
