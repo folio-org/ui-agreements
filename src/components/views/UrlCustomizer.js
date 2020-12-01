@@ -16,13 +16,14 @@ import {
   Row,
   Pane,
 } from '@folio/stripes/components';
-import { IfPermission, TitleManager } from '@folio/stripes/core';
+import { TitleManager, withStripes } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 const UrlCustomizer = ({
   data: { urlCustomization },
   isLoading,
-  handlers
+  handlers,
+  stripes: { hasPerm }
 }) => {
   const paneProps = {
     defaultWidth: '55%',
@@ -54,9 +55,11 @@ const UrlCustomizer = ({
     >
       <>
         <Pane
-          actionMenu={({ onToggle }) => (
-            <>
-              <IfPermission perm="ui-agreements.platforms.edit">
+          actionMenu={({ onToggle }) => {
+            const buttons = [];
+
+            if (hasPerm('ui-agreements.platforms.edit')) {
+              buttons.push(
                 <Button
                   buttonStyle="dropdownItem"
                   id="clickable-dropdown-edit-url-customizer"
@@ -66,6 +69,8 @@ const UrlCustomizer = ({
                     <FormattedMessage id="ui-agreements.platform.urlCustomizer.edit" />
                   </Icon>
                 </Button>
+              );
+              buttons.push(
                 <Button
                   buttonStyle="dropdownItem"
                   id="clickable-dropdown-delete-url-customizer"
@@ -78,9 +83,12 @@ const UrlCustomizer = ({
                     <FormattedMessage id="ui-agreements.platform.urlCustomizer.delete" />
                   </Icon>
                 </Button>
-              </IfPermission>
-            </>
-          )}
+              );
+            }
+
+            return buttons.length ? buttons : null;
+          }
+          }
           paneTitle={<FormattedMessage id="ui-agreements.platform.urlCustomizer.paneTitle" values={{ name: urlCustomization?.name }} />}
           {...paneProps}
         >
@@ -138,6 +146,9 @@ UrlCustomizer.propTypes = {
     onEdit: PropTypes.func,
   }).isRequired,
   isLoading: PropTypes.bool.isRequired,
+  stripes: PropTypes.shape({
+    hasPerm: PropTypes.func
+  })
 };
 
-export default UrlCustomizer;
+export default withStripes(UrlCustomizer);

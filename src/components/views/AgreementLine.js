@@ -17,7 +17,7 @@ import {
   PaneMenu,
   Row,
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission } from '@folio/stripes/core';
+import { AppIcon, IfPermission, withStripes } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
@@ -60,6 +60,9 @@ const propTypes = {
   }).isRequired,
   helperApp: PropTypes.node,
   isLoading: PropTypes.bool,
+  stripes: PropTypes.shape({
+    hasPerm: PropTypes.func
+  })
 };
 
 const AgreementLine = ({
@@ -67,6 +70,7 @@ const AgreementLine = ({
   handlers,
   helperApp,
   isLoading,
+  stripes: { hasPerm }
 }) => {
   const paneProps = {
     defaultWidth: '55%',
@@ -108,8 +112,8 @@ const AgreementLine = ({
     >
       <>
         <Pane
-          actionMenu={() => (
-            <IfPermission perm="ui-agreements.agreements.edit">
+          actionMenu={() => (hasPerm('ui-agreements.agreements.edit') ? (
+            <>
               <Button
                 buttonStyle="dropdownItem"
                 id="clickable-dropdown-edit-agreement-line"
@@ -128,8 +132,8 @@ const AgreementLine = ({
                   <FormattedMessage id="ui-agreements.delete" />
                 </Icon>
               </Button>
-            </IfPermission>
-          )}
+            </>
+          ) : null)}
           appIcon={<AppIcon app="agreements" />}
           lastMenu={
             <IfPermission perm="ui-agreements.agreements.edit">
@@ -200,4 +204,4 @@ const AgreementLine = ({
 };
 
 AgreementLine.propTypes = propTypes;
-export default AgreementLine;
+export default withStripes(AgreementLine);
