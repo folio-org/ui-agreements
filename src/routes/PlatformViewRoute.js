@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
-import compose from 'compose-function';
+import { get, isEmpty } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
@@ -13,6 +12,20 @@ class PlatformViewRoute extends React.Component {
     platform: {
       type: 'okapi',
       path: 'erm/platforms/:{id}',
+    },
+    stringTemplates: {
+      type: 'okapi',
+      path: 'erm/sts/template/:{id}',
+      clientGeneratePk: false,
+      throwErrors: false
+    },
+    proxyServers: {
+      type: 'okapi',
+      path: 'erm/sts',
+      params: {
+        filters: 'context.value=urlproxier',
+      },
+      throwErrors: false
     },
   });
 
@@ -28,8 +41,15 @@ class PlatformViewRoute extends React.Component {
         id: PropTypes.string.isRequired,
       }).isRequired
     }).isRequired,
+    mutator: PropTypes.shape({
+      proxyServers: PropTypes.shape({
+        PUT: PropTypes.func.isRequired
+      })
+    }),
     resources: PropTypes.shape({
       platform: PropTypes.object,
+      proxyServers: PropTypes.arrayOf(PropTypes.object),
+      stringTemplates: PropTypes.object
     }).isRequired,
   };
 
@@ -44,6 +64,29 @@ class PlatformViewRoute extends React.Component {
 
   handleEResourceClick = (id) => {
     this.props.history.push(`${urls.eresourceView(id)}${this.props.location.search}`);
+  }
+
+  handleViewUrlCustomizer = (templateId) => {
+    const { history, location, match } = this.props;
+    history.push(`${urls.urlCustomizerView(match.params.id, templateId)}${location.search}`);
+  }
+
+  handleClickProxyServerAction = (proxyServer, platformId, hasPlatformId) => {
+    const mutator = this.props.mutator.proxyServers;
+    const { idScopes = [] } = proxyServer;
+
+    const idScopeValues = hasPlatformId ?
+      idScopes.filter(id => id !== '' && id !== platformId) // empy string condition needs to be taken off once the bug in webtoolkit is fixed
+      :
+      [...idScopes.filter(id => id !== ''), platformId]; // empy string condition needs to be taken off once the bug in webtoolkit is fixed
+
+    const proxyServerPayload = {
+      ...proxyServer,
+      ...{ idScopes: isEmpty(idScopeValues) ? [''] : idScopeValues }, // empy string condition needs to be taken off once the bug in webtoolkit is fixed
+      'context': 'urlProxier'
+    };
+
+    return mutator.PUT(proxyServerPayload);
   }
 
   isLoading = () => {
@@ -67,17 +110,18 @@ class PlatformViewRoute extends React.Component {
       resources,
     } = this.props;
 
-    const platform = resources?.platform?.records?.[0] ?? {};
-
     return (
       <View
-        key={get(resources, 'eresource.loadedAt', 'loading')}
         data={{
-          platform
+          platform: resources?.platform?.records?.[0] ?? {},
+          stringTemplates: resources?.stringTemplates?.records[0] ?? [],
+          proxyServers: resources?.proxyServers?.records ?? [],
         }}
         handlers={{
           onClose: this.handleClose,
           onEdit: this.handleEdit,
+          onViewUrlCustomizer: this.handleViewUrlCustomizer,
+          onClickProxyServerAction: this.handleClickProxyServerAction
         }}
         isLoading={this.isLoading()}
       />
@@ -85,6 +129,4 @@ class PlatformViewRoute extends React.Component {
   }
 }
 
-export default compose(
-  stripesConnect,
-)(PlatformViewRoute);
+export default stripesConnect(PlatformViewRoute);
