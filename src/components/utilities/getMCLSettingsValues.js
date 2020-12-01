@@ -23,24 +23,18 @@ export default function getMCLSettingsValues(WrappedComponent) {
       })
     };
 
-    handleInitialLoad = (resource) => {
+    handleMCLSettings = (name) => {
       const { settings = {} } = this.props.resources;
       const parsedSettings = JSON.parse(settings?.records?.[0]?.value || '{}');
-      return parsedSettings.initialLoad?.[resource];
-    }
-
-    handlePageSize = (resource) => {
-      const { settings = {} } = this.props.resources;
-      const parsedSettings = JSON.parse(settings?.records?.[0]?.value || '{}');
-      return parsedSettings.pageSize?.[resource];
+      return parsedSettings?.[name];
     }
 
     render() {
       return (
         <WrappedComponent
           {...this.props}
-          initialLoad={this.handleInitialLoad}
-          pageSize={this.handlePageSize}
+          initialLoad={this.handleMCLSettings('initialLoad')}
+          pageSize={this.handleMCLSettings('pageSize')}
         />
       );
     }

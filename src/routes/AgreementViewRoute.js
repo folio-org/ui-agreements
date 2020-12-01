@@ -17,7 +17,7 @@ import { defaultSettingsValues, errorTypes, resultCount } from '../constants';
 import { joinRelatedAgreements } from './utilities/processRelatedAgreements';
 
 const RECORDS_PER_REQUEST = 100;
-const RECORDS_INCREMENT = 1000;
+// const RECORDS_INCREMENT = 1000;
 const INITIAL_LOAD = defaultSettingsValues.INITIAL_LOAD;
 const PAGE_SIZE = defaultSettingsValues.PAGE_SIZE;
 
@@ -37,11 +37,7 @@ class AgreementViewRoute extends React.Component {
         stats: 'true',
       },
       limitParam: 'perPage',
-      // perRequest: RECORDS_PER_REQUEST,
-      perRequest: (_q, _p, _r, _l, props) => {
-        const { pageSize } = props;
-        return pageSize('agreementLines') ?? PAGE_SIZE;
-      },
+      perRequest: INITIAL_LOAD,
       records: 'results',
       recordsRequired: '%{agreementLinesCount}',
       shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
@@ -424,6 +420,7 @@ class AgreementViewRoute extends React.Component {
 
   handleNeedMoreLines = () => {
     const { agreementLinesCount } = this.props.resources;
+    const RECORDS_INCREMENT = this.props.pageSize?.agreementLines ?? PAGE_SIZE;
     this.props.mutator.agreementLinesCount.replace(agreementLinesCount + RECORDS_INCREMENT);
   }
 
