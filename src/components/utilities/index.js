@@ -8,4 +8,5 @@ export { default as withSuppressFromDiscovery } from './withSuppressFromDiscover
 export { default as urls } from './urls';
 export { default as validators } from './validators';
 export { default as getMCLSettingsValues } from './getMCLSettingsValues';
+export { default as parseMclSettings } from './parseMclSettings';
 

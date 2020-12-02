@@ -11,15 +11,12 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/views/Agreement';
-import { urls, getMCLSettingsValues } from '../components/utilities';
-import { defaultSettingsValues, errorTypes, resultCount } from '../constants';
+import { parseMclSettings, urls } from '../components/utilities';
+import { errorTypes, resultCount } from '../constants';
 
 import { joinRelatedAgreements } from './utilities/processRelatedAgreements';
 
 const RECORDS_PER_REQUEST = 100;
-// const RECORDS_INCREMENT = 1000;
-const INITIAL_LOAD = defaultSettingsValues.INITIAL_LOAD;
-const PAGE_SIZE = defaultSettingsValues.PAGE_SIZE;
 
 class AgreementViewRoute extends React.Component {
   static manifest = Object.freeze({
@@ -31,13 +28,15 @@ class AgreementViewRoute extends React.Component {
     agreementLines: {
       type: 'okapi',
       path: 'erm/entitlements',
-      params: {
-        filters: 'owner=:{id}',
-        sort: 'resource.name',
-        stats: 'true',
+      params: (_q, p, _r, _l, props) => {
+        const agreementLinesInitialLoad = parseMclSettings(props.resources.settings, 'initialLoad', 'agreementLines');
+        return ({
+          filters: `owner=${p.id}`,
+          sort: 'resource.name',
+          stats: 'true',
+          perPage: agreementLinesInitialLoad
+        });
       },
-      limitParam: 'perPage',
-      perRequest: INITIAL_LOAD,
       records: 'results',
       recordsRequired: '%{agreementLinesCount}',
       shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
@@ -45,8 +44,8 @@ class AgreementViewRoute extends React.Component {
     agreementEresources: {
       type: 'okapi',
       path: 'erm/sas/:{id}/resources/%{eresourcesFilterPath}',
-      limitParam: 'perPage',
-      perRequest: resultCount.RESULT_COUNT_INCREMENT,
+      // limitParam: 'perPage',
+      // perRequest: resultCount.RESULT_COUNT_INCREMENT,
       records: 'results',
       resultOffset: (_q, _p, _r, _l, props) => {
         const { match, resources } = props;
@@ -54,9 +53,13 @@ class AgreementViewRoute extends React.Component {
         const agreementId = resources?.agreement?.records?.[0]?.id;
         return agreementId !== match.params.id ? props.mutator.agreementEresourcesOffset.replace(0) : resultOffset;
       },
-      params: {
-        sort: 'pti.titleInstance.name;asc',
-        stats: 'true',
+      params: (_q, p, _r, _l, props) => {
+        const coveredEresourcesInitialLoad = parseMclSettings(props.resources.settings, 'initialLoad', 'coveredEresources');
+        return ({
+          sort: 'pti.titleInstance.name;asc',
+          stats: 'true',
+          perPage: coveredEresourcesInitialLoad
+        });
       },
       shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
@@ -93,6 +96,11 @@ class AgreementViewRoute extends React.Component {
       fetch: props => !!props.stripes.hasInterface('order-lines', '1.0'),
       records: 'poLines',
       throwErrors: false,
+    },
+    settings: {
+      type: 'okapi',
+      path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
+      records: 'configs',
     },
     supplementaryProperties: {
       type: 'okapi',
@@ -143,7 +151,6 @@ class AgreementViewRoute extends React.Component {
     location: PropTypes.shape({
       search: PropTypes.string.isRequired,
     }).isRequired,
-    initialLoad: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
         id: PropTypes.string.isRequired,
@@ -169,17 +176,16 @@ class AgreementViewRoute extends React.Component {
         update: PropTypes.func.isRequired,
       }).isRequired,
     }).isRequired,
-    pageSize: PropTypes.func.isRequired,
     resources: PropTypes.shape({
       agreement: PropTypes.object,
       agreementLines: PropTypes.object,
       agreementLinesCount: PropTypes.number,
       agreementEresources: PropTypes.object,
-
       eresourcesFilterPath: PropTypes.string,
       interfaces: PropTypes.object,
       orderLines: PropTypes.object,
       query: PropTypes.object,
+      settings: PropTypes.object,
       users: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
@@ -419,9 +425,9 @@ class AgreementViewRoute extends React.Component {
   }
 
   handleNeedMoreLines = () => {
-    const { agreementLinesCount } = this.props.resources;
-    const RECORDS_INCREMENT = this.props.pageSize?.agreementLines ?? PAGE_SIZE;
-    this.props.mutator.agreementLinesCount.replace(agreementLinesCount + RECORDS_INCREMENT);
+    const { agreementLinesCount, settings } = this.props.resources;
+    const agreementLinesPageSize = parseMclSettings(settings, 'pageSize', 'agreementLines');
+    this.props.mutator.agreementLinesCount.replace(agreementLinesCount + agreementLinesPageSize);
   }
 
   handleFetchCredentials = (id) => {
@@ -463,8 +469,6 @@ class AgreementViewRoute extends React.Component {
   render() {
     const {
       handlers,
-      initialLoad,
-      pageSize,
       resources,
       tagsEnabled,
     } = this.props;
@@ -484,8 +488,6 @@ class AgreementViewRoute extends React.Component {
           checkScope,
           collapseAllSections,
           expandAllSections,
-          initialLoad,
-          pageSize,
           onClone: this.handleClone,
           onClose: this.handleClose,
           onDelete: this.handleDelete,
@@ -511,6 +513,5 @@ export default compose(
   injectIntl,
   withFileHandlers,
   stripesConnect,
-  getMCLSettingsValues,
   withTags,
 )(AgreementViewRoute);

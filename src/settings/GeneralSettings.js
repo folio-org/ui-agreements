@@ -22,18 +22,18 @@ class GeneralSettings extends React.Component {
     displaySuppressFromDiscovery: { pci: true, agreementLine: true, title: true },
     hideEResourcesFunctionality: false,
     initialLoad: {
-      agreementLines: defaultSettingsValues.INITIAL_LOAD,
-      coveredEresources: defaultSettingsValues.INITIAL_LOAD,
-      acquisitionOptions: defaultSettingsValues.INITIAL_LOAD,
-      packageContents: defaultSettingsValues.INITIAL_LOAD,
-      entitlementAgreements: defaultSettingsValues.INITIAL_LOAD
+      agreementLines: defaultSettingsValues.initialLoad,
+      coveredEresources: defaultSettingsValues.initialLoad,
+      acquisitionOptions: defaultSettingsValues.initialLoad,
+      packageContents: defaultSettingsValues.initialLoad,
+      entitlementAgreements: defaultSettingsValues.initialLoad
     },
     pageSize: {
-      agreementLines: defaultSettingsValues.PAGE_SIZE,
-      coveredEresources: defaultSettingsValues.PAGE_SIZE,
-      acquisitionOptions: defaultSettingsValues.PAGE_SIZE,
-      packageContents: defaultSettingsValues.PAGE_SIZE,
-      entitlementAgreements: defaultSettingsValues.PAGE_SIZE
+      agreementLines: defaultSettingsValues.pageSize,
+      coveredEresources: defaultSettingsValues.pageSize,
+      acquisitionOptions: defaultSettingsValues.pageSize,
+      packageContents: defaultSettingsValues.pageSize,
+      entitlementAgreements: defaultSettingsValues.pageSize
     },
   }
 
