@@ -21,20 +21,8 @@ class GeneralSettings extends React.Component {
   defaultValues = {
     displaySuppressFromDiscovery: { pci: true, agreementLine: true, title: true },
     hideEResourcesFunctionality: false,
-    initialLoad: {
-      agreementLines: defaultSettingsValues.initialLoad,
-      coveredEresources: defaultSettingsValues.initialLoad,
-      acquisitionOptions: defaultSettingsValues.initialLoad,
-      packageContents: defaultSettingsValues.initialLoad,
-      entitlementAgreements: defaultSettingsValues.initialLoad
-    },
-    pageSize: {
-      agreementLines: defaultSettingsValues.pageSize,
-      coveredEresources: defaultSettingsValues.pageSize,
-      acquisitionOptions: defaultSettingsValues.pageSize,
-      packageContents: defaultSettingsValues.pageSize,
-      entitlementAgreements: defaultSettingsValues.pageSize
-    },
+    initialLoad: defaultSettingsValues.initialLoad,
+    pageSize: defaultSettingsValues.pageSize,
   }
 
   beforeSave(data) {

@@ -1,7 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-// import { Field } from 'react-final-form';
 import { Field } from 'react-final-form-html5-validation';
 
 import {
@@ -18,7 +17,6 @@ const inRange = (x, min, max) => {
 };
 
 const validate = (fieldValue, min, max) => {
-  // parseInt(fieldValue, 10)
   return (!inRange(fieldValue, min, max)) ?
     <FormattedMessage id="ui-agreements.settings.error.valueNotInRange" values={{ min, max }} /> : undefined;
 };
