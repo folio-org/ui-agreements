@@ -8,7 +8,7 @@ import { withTags } from '@folio/stripes/smart-components';
 import { checkScope, collapseAllSections, expandAllSections, Tags } from '@folio/stripes-erm-components';
 
 import View from '../components/views/EResource';
-import { urls, withSuppressFromDiscovery } from '../components/utilities';
+import { parseMclSettings, urls, withSuppressFromDiscovery } from '../components/utilities';
 import { resultCount, resourceClasses } from '../constants';
 
 const RECORDS_PER_REQUEST = 100;
@@ -22,24 +22,35 @@ class EResourceViewRoute extends React.Component {
     entitlementOptions: {
       type: 'okapi',
       path: 'erm/resource/:{id}/entitlementOptions',
-      params: {
-        stats: 'true',
+      params: (_q, _p, _r, _l, props) => {
+        const entitlementOptionsInitialLoad = parseMclSettings(props.resources.settings, 'initialLoad', 'entitlementOptions');
+        return ({
+          stats: 'true',
+          perPage: entitlementOptionsInitialLoad
+        });
       },
-      perRequest: RECORDS_PER_REQUEST,
+      // perRequest: RECORDS_PER_REQUEST,
       records: 'results',
-      limitParam: 'perPage',
+      // limitParam: 'perPage',
       throwErrors: false,
     },
     entitlements: {
       type: 'okapi',
       path: 'erm/resource/:{id}/entitlements',
       records: 'results',
-      perRequest: RECORDS_PER_REQUEST,
+      // perRequest: RECORDS_PER_REQUEST,
       recordsRequired: '%{entitlementsCount}',
-      limitParam: 'perPage',
-      params: {
-        stats: 'true',
+      // limitParam: 'perPage',
+      params: (_q, _p, _r, _l, props) => {
+        const entitlementsInitialLoad = parseMclSettings(props.resources.settings, 'initialLoad', 'entitlements');
+        return ({
+          stats: 'true',
+          perPage: entitlementsInitialLoad
+        });
       },
+      /* params: {
+        stats: 'true',
+      }, */
     },
     relatedEntitlements: {
       type: 'okapi',
@@ -49,23 +60,37 @@ class EResourceViewRoute extends React.Component {
       limitParam: 'perPage',
       throwErrors: false,
     },
+    settings: {
+      type: 'okapi',
+      path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
+      records: 'configs',
+    },
     packageContents: {
       type: 'okapi',
       path: 'erm/packages/:{id}/content/%{packageContentsFilter}',
       records: 'results',
-      limitParam: 'perPage',
-      perRequest: resultCount.RESULT_COUNT_INCREMENT,
+      /* limitParam: 'perPage',
+      perRequest: resultCount.RESULT_COUNT_INCREMENT, */
       resultOffset: (_q, _p, _r, _l, props) => {
         const { match, resources } = props;
         const resultOffset = get(resources, 'packageContentsOffset');
         const eresourceId = get(resources, 'eresource.records[0].id');
         return eresourceId !== match.params.id ? 0 : resultOffset;
       },
-      params: {
+      params: (_q, p, _r, _l, props) => {
+        const packageContentsInitialLoad = parseMclSettings(props.resources.settings, 'initialLoad', 'packageContents');
+        return ({
+          filters: `pkg.id==${p.id}`,
+          sort: 'pti.titleInstance.name;asc',
+          stats: 'true',
+          perPage: packageContentsInitialLoad
+        });
+      },
+      /* params: {
         filters: 'pkg.id==:{id}',
         sort: 'pti.titleInstance.name;asc',
         stats: 'true',
-      },
+      }, */
     },
     query: {},
     entitlementsCount: { initialValue: resultCount.INITIAL_RESULT_COUNT },

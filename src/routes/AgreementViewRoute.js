@@ -54,11 +54,11 @@ class AgreementViewRoute extends React.Component {
         return agreementId !== match.params.id ? props.mutator.agreementEresourcesOffset.replace(0) : resultOffset;
       },
       params: (_q, p, _r, _l, props) => {
-        const coveredEresourcesInitialLoad = parseMclSettings(props.resources.settings, 'initialLoad', 'coveredEresources');
+        const agreementEresourcesInitialLoad = parseMclSettings(props.resources.settings, 'initialLoad', 'agreementEresources');
         return ({
           sort: 'pti.titleInstance.name;asc',
           stats: 'true',
-          perPage: coveredEresourcesInitialLoad
+          perPage: agreementEresourcesInitialLoad
         });
       },
       shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),

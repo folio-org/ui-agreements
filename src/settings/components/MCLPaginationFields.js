@@ -10,7 +10,7 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-const lists = ['agreementLines', 'coveredEresources', 'acquisitionOptions', 'packageContents', 'entitlementAgreements'];
+const lists = ['agreementLines', 'agreementEresources', 'entitlementOptions', 'packageContents', 'entitlements'];
 
 const inRange = (x, min, max) => {
   return ((x - min) * (x - max) <= 0);
