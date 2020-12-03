@@ -69,33 +69,32 @@ class EResourceViewRoute extends React.Component {
       type: 'okapi',
       path: 'erm/packages/:{id}/content/%{packageContentsFilter}',
       records: 'results',
-      /* limitParam: 'perPage',
-      perRequest: resultCount.RESULT_COUNT_INCREMENT, */
+      limitParam: 'perPage',
       resultOffset: (_q, _p, _r, _l, props) => {
         const { match, resources } = props;
-        const resultOffset = get(resources, 'packageContentsOffset');
+        const resultOffset = get(resources, 'packageContentsConfig.packageContentsOffset');
         const eresourceId = get(resources, 'eresource.records[0].id');
+        // console.log(resultOffset, eresourceId !== match.params.id, 'resultoffset');
         return eresourceId !== match.params.id ? 0 : resultOffset;
       },
       params: (_q, p, _r, _l, props) => {
-        const packageContentsInitialLoad = parseMclSettings(props.resources.settings, 'initialLoad', 'packageContents');
         return ({
           filters: `pkg.id==${p.id}`,
           sort: 'pti.titleInstance.name;asc',
           stats: 'true',
-          perPage: packageContentsInitialLoad
+          perPage: props.resources.packageContentsConfig.packageContentsPageSize,
         });
       },
-      /* params: {
-        filters: 'pkg.id==:{id}',
-        sort: 'pti.titleInstance.name;asc',
-        stats: 'true',
-      }, */
     },
     query: {},
     entitlementsCount: { initialValue: resultCount.INITIAL_RESULT_COUNT },
     packageContentsFilter: { initialValue: 'current' },
-    packageContentsOffset: { initialValue: 0 },
+    packageContentsConfig: {
+      initialValue: {
+        packageContentsOffset:  0,
+        packageContentsPageSize: 1, // parseMclSettings(props.resources.settings, 'initialLoad', 'packageContents')
+      }
+    }
   });
 
   static propTypes = {
@@ -119,10 +118,10 @@ class EResourceViewRoute extends React.Component {
       packageContentsCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
-      packageContentsFilter: PropTypes.shape({
+      packageContentsConfig: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
-      packageContentsOffset: PropTypes.shape({
+      packageContentsFilter: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
       query: PropTypes.shape({
@@ -138,6 +137,7 @@ class EResourceViewRoute extends React.Component {
       packageContentsFilter: PropTypes.string,
       packageContentsCount: PropTypes.number,
       query: PropTypes.object,
+      settings: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
@@ -201,12 +201,12 @@ class EResourceViewRoute extends React.Component {
   handleFilterPackageContents = (path) => {
     const { mutator } = this.props;
     mutator.packageContentsFilter.replace(path);
-    mutator.packageContentsOffset.replace(0);
+    mutator.packageContentsConfig.replace({ packageContentsOffset: 0 });
   }
 
   handleNeedMorePackageContents = (_askAmount, index) => {
     const { mutator } = this.props;
-    mutator.packageContentsOffset.replace(index);
+    mutator.packageContentsConfig.replace({ packageContentsOffset: index, packageContentsPageSize: 2 }); // parseMclSettings(props.resources.settings, 'pageSize', 'packageContents')
   }
 
   handleToggleHelper = (helper) => {
