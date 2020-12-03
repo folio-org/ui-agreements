@@ -17,7 +17,7 @@ import {
   PaneMenu,
   Row,
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
+import { AppIcon, IfPermission, TitleManager, withStripes } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
@@ -43,7 +43,7 @@ import {
 
 import { urls } from '../utilities';
 
-export default class Agreement extends React.Component {
+class Agreement extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       agreement: PropTypes.object.isRequired,
@@ -61,6 +61,9 @@ export default class Agreement extends React.Component {
     }).isRequired,
     helperApp: PropTypes.node,
     isLoading: PropTypes.bool.isRequired,
+    stripes: PropTypes.shape({
+      hasPerm: PropTypes.func
+    })
   }
 
   constructor(props) {
@@ -102,9 +105,12 @@ export default class Agreement extends React.Component {
     this.setState({ showDuplicateAgreementModal: false });
   }
 
-  getActionMenu = ({ onToggle }) => (
-    <>
-      <IfPermission perm="ui-agreements.agreements.edit">
+  getActionMenu = ({ onToggle }) => {
+    const { stripes } = this.props;
+    const buttons = [];
+
+    if (stripes.hasPerm('ui-agreements.agreements.edit')) {
+      buttons.push(
         <Button
           buttonStyle="dropdownItem"
           id="clickable-dropdown-edit-agreement"
@@ -114,6 +120,8 @@ export default class Agreement extends React.Component {
             <FormattedMessage id="ui-agreements.agreements.edit" />
           </Icon>
         </Button>
+      );
+      buttons.push(
         <Button
           buttonStyle="dropdownItem"
           id="clickable-dropdown-duplicate-agreement"
@@ -126,8 +134,11 @@ export default class Agreement extends React.Component {
             <FormattedMessage id="ui-agreements.agreements.duplicate" />
           </Icon>
         </Button>
-      </IfPermission>
-      <IfPermission perm="ui-agreements.agreements.view">
+      );
+    }
+
+    if (stripes.hasPerm('ui-agreements.agreements.view')) {
+      buttons.push(
         <Button
           buttonStyle="dropdownItem"
           id="clickable-dropdown-export-agreement"
@@ -140,8 +151,11 @@ export default class Agreement extends React.Component {
             <FormattedMessage id="ui-agreements.agreements.export" />
           </Icon>
         </Button>
-      </IfPermission>
-      <IfPermission perm="ui-agreements.agreements.delete">
+      );
+    }
+
+    if (stripes.hasPerm('ui-agreements.agreements.delete')) {
+      buttons.push(
         <Button
           buttonStyle="dropdownItem"
           id="clickable-dropdown-delete-agreement"
@@ -154,9 +168,11 @@ export default class Agreement extends React.Component {
             <FormattedMessage id="ui-agreements.delete" />
           </Icon>
         </Button>
-      </IfPermission>
-    </>
-  )
+      );
+    }
+
+    return buttons.length ? buttons : null;
+  };
 
   getInitialAccordionsState = () => {
     return {
@@ -331,3 +347,5 @@ export default class Agreement extends React.Component {
     );
   }
 }
+
+export default withStripes(Agreement);

@@ -15,13 +15,14 @@ import {
   Row,
   Pane,
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
+import { AppIcon, TitleManager, withStripes } from '@folio/stripes/core';
 import { PlatformInfo, PlatformUrlCustomization, PlatformProxySettings } from '../PlatformSections';
 
 const Platform = ({
   data: { platform, stringTemplates, proxyServers },
   isLoading,
-  handlers
+  handlers,
+  stripes: { hasPerm }
 }) => {
   const paneProps = {
     defaultWidth: '55%',
@@ -67,8 +68,9 @@ const Platform = ({
       <>
         <Pane
           actionMenu={() => (
-            <>
-              <IfPermission perm="ui-agreements.platforms.edit">
+            hasPerm('ui-agreements.platforms.edit') ?
+              (
+
                 <Button
                   buttonStyle="dropdownItem"
                   id="clickable-dropdown-edit-platform"
@@ -78,8 +80,7 @@ const Platform = ({
                     <FormattedMessage id="ui-agreements.platform.edit" />
                   </Icon>
                 </Button>
-              </IfPermission>
-            </>
+              ) : null
           )}
           appIcon={<AppIcon app="agreements" iconKey="platform" />}
           paneTitle={platform?.name}
@@ -117,6 +118,9 @@ Platform.propTypes = {
     onEdit: PropTypes.func,
   }).isRequired,
   isLoading: PropTypes.bool.isRequired,
+  stripes: PropTypes.shape({
+    hasPerm: PropTypes.func
+  })
 };
 
-export default Platform;
+export default withStripes(Platform);
