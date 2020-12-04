@@ -15,15 +15,16 @@ import {
   Row,
   Pane,
 } from '@folio/stripes/components';
-import { AppIcon, TitleManager, withStripes } from '@folio/stripes/core';
+import { AppIcon, TitleManager, useStripes } from '@folio/stripes/core';
 import { PlatformInfo, PlatformUrlCustomization, PlatformProxySettings } from '../PlatformSections';
 
 const Platform = ({
   data: { platform, stringTemplates, proxyServers },
   isLoading,
   handlers,
-  stripes: { hasPerm }
 }) => {
+  const stripes = useStripes();
+
   const paneProps = {
     defaultWidth: '55%',
     dismissible: true,
@@ -68,7 +69,7 @@ const Platform = ({
       <>
         <Pane
           actionMenu={() => (
-            hasPerm('ui-agreements.platforms.edit') ?
+            stripes.hasPerm('ui-agreements.platforms.edit') ?
               (
 
                 <Button
@@ -118,9 +119,6 @@ Platform.propTypes = {
     onEdit: PropTypes.func,
   }).isRequired,
   isLoading: PropTypes.bool.isRequired,
-  stripes: PropTypes.shape({
-    hasPerm: PropTypes.func
-  })
 };
 
-export default withStripes(Platform);
+export default Platform;
