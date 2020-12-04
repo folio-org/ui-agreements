@@ -73,15 +73,15 @@ const AgreementLineForm = ({
   const [agreementLineSource, setAgreementLineSource] = useState('basket');
 
   const accordionStatusRef = useRef();
-  const isFormSubmittableRef = useRef(false);
+  // const isFormSubmittableRef = useRef(false);
 
-  useEffect(() => {
-    isFormSubmittableRef.current = !pristine && !submitting;
-  }, [pristine, submitting]);
+  // useEffect(() => {
+  //   isFormSubmittableRef.current = !pristine && !submitting;
+  // }, [pristine, submitting]);
 
   const handleSaveKeyCommand = (e) => {
     e.preventDefault();
-    if (isFormSubmittableRef.current) {
+    if (!pristine && !submitting) {
       handleSubmit();
     }
   };
