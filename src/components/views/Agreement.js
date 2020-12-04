@@ -264,6 +264,13 @@ class Agreement extends React.Component {
       {
         name: 'collapseAllSections',
         handler: (e) => collapseAllSections(e, this.accordionStatusRef)
+      },
+      {
+        name: 'duplicateRecord',
+        handler: (e) => {
+          this.openDuplicateAgreementModal();
+          onToggle();
+        }
       }
     ];
 
