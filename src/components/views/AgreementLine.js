@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { useStripes, AppIcon, IfPermission } from '@folio/stripes/core';
 
 import {
   AccordionSet,
@@ -17,7 +18,7 @@ import {
   PaneMenu,
   Row,
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission, withStripes } from '@folio/stripes/core';
+
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
@@ -70,8 +71,9 @@ const AgreementLine = ({
   handlers,
   helperApp,
   isLoading,
-  stripes: { hasPerm }
 }) => {
+  const stripes = useStripes();
+
   const paneProps = {
     defaultWidth: '55%',
     dismissible: true,
@@ -112,7 +114,7 @@ const AgreementLine = ({
     >
       <>
         <Pane
-          actionMenu={() => (hasPerm('ui-agreements.agreements.edit') ? (
+          actionMenu={() => (stripes.hasPerm('ui-agreements.agreements.edit') ? (
             <>
               <Button
                 buttonStyle="dropdownItem"
@@ -204,4 +206,4 @@ const AgreementLine = ({
 };
 
 AgreementLine.propTypes = propTypes;
-export default withStripes(AgreementLine);
+export default AgreementLine;
