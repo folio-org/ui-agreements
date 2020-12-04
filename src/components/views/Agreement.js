@@ -269,7 +269,6 @@ class Agreement extends React.Component {
         name: 'duplicateRecord',
         handler: (e) => {
           this.openDuplicateAgreementModal();
-          onToggle();
         }
       }
     ];
