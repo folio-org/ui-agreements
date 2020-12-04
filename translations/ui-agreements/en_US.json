@@ -315,7 +315,7 @@
     "eresources.firstAuthor": "First author",
     "eresources.firstEditor": "First editor",
     "coverage.editionShort": "Ed:",
-    "agreements.currentPeriodNote": "Agreement period note",
+    "agreements.currentPeriodNote": "Current period note",
     "supplementaryProperties": "Supplementary properties",
     "supplementaryProperties.count": "{count, number} saved {count, plural, one {supplementary property} other {supplementary properties}}",
     "supplementaryProperties.callout.delete.error": "There was an error deleting the supplementary property. {error}",
