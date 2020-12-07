@@ -36,7 +36,14 @@ class AgreementViewRoute extends React.Component {
         stats: 'true',
       },
       records: 'results',
-      resultOffset: '%{agreementLinesConfig.agreementLinesOffset}',
+      // resultOffset: '%{agreementLinesConfig.agreementLinesOffset}',
+      resultOffset: (_q, _p, _r, _l, props) => {
+        const { match, resources } = props;
+        const resultOffset = resources?.agreementLinesConfig?.agreementLinesOffset;
+        const agreementId = resources?.agreement?.records?.[0]?.id;
+        console.log(resultOffset, agreementId !== match.params.id, 'resultoffset');
+        return agreementId !== match.params.id ? 0 : resultOffset;
+      },
       shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
     agreementEresources: {
@@ -121,7 +128,7 @@ class AgreementViewRoute extends React.Component {
       permissionsRequired: 'users.collection.get',
       records: 'users',
     },
-    agreementLinesCount: { initialValue: RECORDS_PER_REQUEST },
+    // agreementLinesCount: { initialValue: RECORDS_PER_REQUEST },
     interfacesCredentials: {
       clientGeneratePk: false,
       throwErrors: false,
@@ -163,9 +170,9 @@ class AgreementViewRoute extends React.Component {
       agreement: PropTypes.shape({
         DELETE: PropTypes.func.isRequired,
       }),
-      agreementLinesCount: PropTypes.shape({
+      /* agreementLinesCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
-      }),
+      }), */
       eresourcesFilterPath: PropTypes.shape({
         replace: PropTypes.func,
       }),
@@ -185,7 +192,7 @@ class AgreementViewRoute extends React.Component {
     resources: PropTypes.shape({
       agreement: PropTypes.object,
       agreementLines: PropTypes.object,
-      agreementLinesCount: PropTypes.number,
+      // agreementLinesCount: PropTypes.number,
       agreementEresources: PropTypes.object,
       eresourcesFilterPath: PropTypes.string,
       interfaces: PropTypes.object,

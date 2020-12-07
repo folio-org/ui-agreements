@@ -91,7 +91,7 @@ export default class PackageContents extends React.Component {
         pageAmount={resultCount.RESULT_COUNT_INCREMENT}
         pagingType="click"
         totalCount={packageContentsCount}
-        virtualize
+        // virtualize
         visibleColumns={this.visibleColumns}
       />
     );

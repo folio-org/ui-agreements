@@ -213,7 +213,7 @@ export default class CoveredEResourcesList extends React.Component {
         pageAmount={resultCount.RESULT_COUNT_INCREMENT}
         pagingType="click"
         totalCount={eresourcesCount}
-        virtualize
+        // virtualize
         visibleColumns={this.visibleColumns}
       />
     );
