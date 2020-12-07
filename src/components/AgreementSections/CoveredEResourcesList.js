@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
+
 import {
   Button,
   ButtonGroup,
@@ -27,9 +29,9 @@ import {
 
 import { Coverage } from '../Coverage';
 import CustomCoverageIcon from '../CustomCoverageIcon';
-import EResourceLink from '../EResourceLink';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
 import { resultCount } from '../../constants';
+import { urls } from '../utilities';
 
 export default class CoveredEResourcesList extends React.Component {
   static propTypes = {
@@ -71,8 +73,8 @@ export default class CoveredEResourcesList extends React.Component {
 
   formatter = {
     name: e => {
-      const titleInstance = get(e._object, 'pti.titleInstance', {});
-      return <EResourceLink eresource={titleInstance} />;
+      const titleInstanceName = e?._object?.pti?.titleInstance?.name;
+      return <Link to={urls.eresourceView(e.id)}>{titleInstanceName}</Link>;
     },
     issn: e => {
       const titleInstance = get(e._object, 'pti.titleInstance', {});
