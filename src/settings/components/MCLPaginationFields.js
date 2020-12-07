@@ -31,7 +31,7 @@ const MCLPaginationFields = () => {
         <Layout className="padding-bottom-gutter">
           <Row>
             <Col xs={6}> <FormattedMessage id="ui-agreements.settings.mcl" /> </Col>
-            <Col xs={3}> <FormattedMessage id="ui-agreements.settings.mcl.initialLoad" /> </Col>
+            {/* <Col xs={3}> <FormattedMessage id="ui-agreements.settings.mcl.initialLoad" /> </Col> */}
             <Col xs={3}> <FormattedMessage id="ui-agreements.settings.mcl.pageSize" /> </Col>
           </Row>
         </Layout>
@@ -41,7 +41,7 @@ const MCLPaginationFields = () => {
           <Col xs={6}>
             <FormattedMessage id={`ui-agreements.settings.mcl.${mcl}`} />
           </Col>
-          <Col xs={3}>
+          {/* <Col xs={3}>
             <Field
               component={TextField}
               id={`initialLoad-${mcl}`}
@@ -50,7 +50,7 @@ const MCLPaginationFields = () => {
               type="number"
               validate={v => validate(v, 0, 100)}
             />
-          </Col>
+          </Col> */}
           <Col xs={3}>
             <Field
               component={TextField}

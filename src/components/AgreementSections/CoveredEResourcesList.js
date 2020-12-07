@@ -208,7 +208,7 @@ export default class CoveredEResourcesList extends React.Component {
         formatter={this.formatter}
         id="eresources-covered"
         interactive={false}
-        maxHeight={800}
+        // maxHeight={800} // <- this makes a scroll bar, not needed with "load more" button
         onNeedMoreData={onNeedMoreEResources}
         pageAmount={resultCount.RESULT_COUNT_INCREMENT}
         pagingType="click"

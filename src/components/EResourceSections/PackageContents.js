@@ -86,7 +86,7 @@ export default class PackageContents extends React.Component {
         formatter={this.formatter}
         id="package-contents-list"
         interactive={false}
-        maxHeight={800}
+        // maxHeight={800} // <- this makes a scroll bar, not needed with "load more" button
         onNeedMoreData={this.props.onNeedMorePackageContents}
         pageAmount={resultCount.RESULT_COUNT_INCREMENT}
         pagingType="click"

@@ -22,35 +22,25 @@ class EResourceViewRoute extends React.Component {
     entitlementOptions: {
       type: 'okapi',
       path: 'erm/resource/:{id}/entitlementOptions',
-      params: (_q, _p, _r, _l, props) => {
-        const entitlementOptionsInitialLoad = parseMclSettings(props.resources.settings, 'initialLoad', 'entitlementOptions');
-        return ({
-          stats: 'true',
-          perPage: entitlementOptionsInitialLoad
-        });
+      params: {
+        stats: 'true',
       },
-      // perRequest: RECORDS_PER_REQUEST,
+      perRequest: (_q, _p, _r, _l, props) => parseMclSettings(props.resources.settings, 'pageSize', 'entitlementOptions'),
       records: 'results',
-      // limitParam: 'perPage',
+      limitParam: 'perPage',
       throwErrors: false,
+      resultOffset: '%{entitlementOptionsConfig.entitlementOptionsOffset}',
     },
     entitlements: {
       type: 'okapi',
       path: 'erm/resource/:{id}/entitlements',
       records: 'results',
-      // perRequest: RECORDS_PER_REQUEST,
-      recordsRequired: '%{entitlementsCount}',
-      // limitParam: 'perPage',
-      params: (_q, _p, _r, _l, props) => {
-        const entitlementsInitialLoad = parseMclSettings(props.resources.settings, 'initialLoad', 'entitlements');
-        return ({
-          stats: 'true',
-          perPage: entitlementsInitialLoad
-        });
-      },
-      /* params: {
+      perRequest: (_q, _p, _r, _l, props) => parseMclSettings(props.resources.settings, 'pageSize', 'entitlements'),
+      limitParam: 'perPage',
+      params: {
         stats: 'true',
-      }, */
+      },
+      resultOffset: '%{entitlementsConfig.entitlementsOffset}',
     },
     relatedEntitlements: {
       type: 'okapi',
@@ -70,29 +60,38 @@ class EResourceViewRoute extends React.Component {
       path: 'erm/packages/:{id}/content/%{packageContentsFilter}',
       records: 'results',
       limitParam: 'perPage',
+      perRequest: (_q, _p, _r, _l, props) => parseMclSettings(props.resources.settings, 'pageSize', 'packageContents'),
       resultOffset: (_q, _p, _r, _l, props) => {
         const { match, resources } = props;
         const resultOffset = get(resources, 'packageContentsConfig.packageContentsOffset');
         const eresourceId = get(resources, 'eresource.records[0].id');
-        // console.log(resultOffset, eresourceId !== match.params.id, 'resultoffset');
         return eresourceId !== match.params.id ? 0 : resultOffset;
       },
-      params: (_q, p, _r, _l, props) => {
-        return ({
-          filters: `pkg.id==${p.id}`,
-          sort: 'pti.titleInstance.name;asc',
-          stats: 'true',
-          perPage: props.resources.packageContentsConfig.packageContentsPageSize,
-        });
+      params: {
+        filters: 'pkg.id==:{id}',
+        sort: 'pti.titleInstance.name;asc',
+        stats: 'true',
       },
     },
     query: {},
+    entitlementsConfig: {
+      initialValue: {
+        entitlementsOffset:  0,
+        // entitlementsPageSize: parseMclSettings(props.resources.settings, 'initialLoad', 'entitlements')
+      }
+    },
     entitlementsCount: { initialValue: resultCount.INITIAL_RESULT_COUNT },
+    entitlementOptionsConfig: {
+      initialValue: {
+        entitlementOptionsOffset:  0,
+        // entitlementOptionsPageSize: parseMclSettings(props.resources.settings, 'initialLoad', 'entitlementOptions')
+      }
+    },
     packageContentsFilter: { initialValue: 'current' },
     packageContentsConfig: {
       initialValue: {
         packageContentsOffset:  0,
-        packageContentsPageSize: 1, // parseMclSettings(props.resources.settings, 'initialLoad', 'packageContents')
+        // packageContentsPageSize: parseMclSettings(props.resources.settings, 'initialLoad', 'packageContents')
       }
     }
   });
@@ -113,6 +112,12 @@ class EResourceViewRoute extends React.Component {
     }).isRequired,
     mutator: PropTypes.shape({
       entitlementsCount: PropTypes.shape({
+        replace: PropTypes.func.isRequired,
+      }),
+      entitlementsConfig: PropTypes.shape({
+        replace: PropTypes.func.isRequired,
+      }),
+      entitlementOptionsConfig: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
       packageContentsCount: PropTypes.shape({
@@ -204,9 +209,19 @@ class EResourceViewRoute extends React.Component {
     mutator.packageContentsConfig.replace({ packageContentsOffset: 0 });
   }
 
+  handleNeedMoreEntitlements = (_askAmount, index) => {
+    const { mutator } = this.props;
+    mutator.entitlementsConfig.replace({ entitlementsOffset: index });
+  }
+
+  handleNeedMoreEntitlementOptions = (_askAmount, index) => {
+    const { mutator } = this.props;
+    mutator.entitlementOptionsConfig.replace({ entitlementOptionsOffset: index });
+  }
+
   handleNeedMorePackageContents = (_askAmount, index) => {
     const { mutator } = this.props;
-    mutator.packageContentsConfig.replace({ packageContentsOffset: index, packageContentsPageSize: 2 }); // parseMclSettings(props.resources.settings, 'pageSize', 'packageContents')
+    mutator.packageContentsConfig.replace({ packageContentsOffset: index });
   }
 
   handleToggleHelper = (helper) => {
@@ -272,7 +287,9 @@ class EResourceViewRoute extends React.Component {
         data={{
           eresource: resources?.eresource?.records?.[0] ?? {},
           entitlementOptions: this.getRecords('entitlementOptions'),
+          entitlementOptionsCount: resources?.entitlementOptions?.other?.totalRecords ?? 0,
           entitlements: this.getRecords('entitlements'),
+          entitlementsCount: resources?.entitlements?.other?.totalRecords ?? 0,
           packageContentsFilter: this.props.resources.packageContentsFilter,
           packageContents: this.getPackageContentsRecords(),
           packageContentsCount: this.getPackageContentsRecordsCount(),
@@ -286,6 +303,8 @@ class EResourceViewRoute extends React.Component {
           expandAllSections,
           isSuppressFromDiscoveryEnabled,
           onFilterPackageContents: this.handleFilterPackageContents,
+          onNeedMoreEntitlements: this.handleNeedMoreEntitlements,
+          onNeedMoreEntitlementOptions: this.handleNeedMoreEntitlementOptions,
           onNeedMorePackageContents: this.handleNeedMorePackageContents,
           onClose: this.handleClose,
           onEdit: this.handleEdit,

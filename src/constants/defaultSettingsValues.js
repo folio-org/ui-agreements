@@ -1,5 +1,5 @@
 const DEFAULT_INITIAL_LOAD = 10;
-const DEFAULT_PAGE_SIZE = 10;
+const DEFAULT_PAGE_SIZE = 1;
 const defaultSettingsValues = {
   initialLoad: {
     agreementLines: DEFAULT_INITIAL_LOAD,

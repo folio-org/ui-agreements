@@ -25,6 +25,8 @@ const EntitlementAgreementsList = (
     headline,
     id,
     isEmptyMessage,
+    onNeedMoreData,
+    totalCount,
     visibleColumns }
 ) => {
   const columnMapping = {
@@ -92,6 +94,9 @@ const EntitlementAgreementsList = (
         id={id}
         interactive={false}
         isEmptyMessage={isEmptyMessage}
+        onNeedMoreData={onNeedMoreData}
+        pagingType="click"
+        totalCount={totalCount}
         visibleColumns={visibleColumns}
       />
     </div>
@@ -108,6 +113,8 @@ EntitlementAgreementsList.propTypes = {
   headline: PropTypes.node,
   id: PropTypes.string,
   isEmptyMessage: PropTypes.node,
+  onNeedMoreData: PropTypes.func,
+  totalCount: PropTypes.number,
   visibleColumns: PropTypes.arrayOf(PropTypes.string),
 };
 

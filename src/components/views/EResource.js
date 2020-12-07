@@ -28,6 +28,7 @@ const propTypes = {
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
     onEdit: PropTypes.func.isRequired,
+    onNeedMoreEntitlementOptions: PropTypes.func.isRequired,
     onNeedMorePackageContents: PropTypes.func.isRequired,
     onToggleTags: PropTypes.func.isRequired
   }).isRequired,
