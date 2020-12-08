@@ -87,21 +87,18 @@ class EResourceViewRoute extends React.Component {
     entitlementsConfig: {
       initialValue: {
         entitlementsOffset:  0,
-        // entitlementsPageSize: parseMclSettings(props.resources.settings, 'initialLoad', 'entitlements')
       }
     },
     entitlementsCount: { initialValue: resultCount.INITIAL_RESULT_COUNT },
     entitlementOptionsConfig: {
       initialValue: {
         entitlementOptionsOffset:  0,
-        // entitlementOptionsPageSize: parseMclSettings(props.resources.settings, 'initialLoad', 'entitlementOptions')
       }
     },
     packageContentsFilter: { initialValue: 'current' },
     packageContentsConfig: {
       initialValue: {
         packageContentsOffset:  0,
-        // packageContentsPageSize: parseMclSettings(props.resources.settings, 'initialLoad', 'packageContents')
       }
     }
   });
@@ -164,13 +161,19 @@ class EResourceViewRoute extends React.Component {
     handlers: { },
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { mutator, resources } = this.props;
     const totalEntitlements = get(resources, 'entitlements.other.totalRecords', RECORDS_PER_REQUEST);
     const { entitlementsCount } = resources;
 
     if (totalEntitlements > entitlementsCount) {
       mutator.entitlementsCount.replace(totalEntitlements);
+    }
+
+    if (prevProps?.resources?.eresource?.records?.[0]?.id !== this.props?.resources?.eresource?.records?.[0]?.id) {
+      mutator.entitlementsConfig.replace({ entitlementsOffset: 0 });
+      mutator.entitlementOptionsConfig.replace({ entitlementOptionsOffset: 0 });
+      mutator.packageContentsConfig.replace({ packageContentsOffset: 0 });
     }
   }
 

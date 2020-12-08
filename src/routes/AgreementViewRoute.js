@@ -40,7 +40,6 @@ class AgreementViewRoute extends React.Component {
         const { match, resources } = props;
         const resultOffset = resources?.agreementLinesConfig?.agreementLinesOffset;
         const agreementId = resources?.agreement?.records?.[0]?.id;
-        console.log(resultOffset, agreementId !== match.params.id, 'resultoffset');
         return agreementId !== match.params.id ? 0 : resultOffset;
       },
       shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
@@ -212,6 +211,14 @@ class AgreementViewRoute extends React.Component {
   }
 
   static contextType = CalloutContext;
+
+  componentDidUpdate(prevProps) {
+    const { mutator } = this.props;
+    if (prevProps?.resources?.agreement?.records?.[0]?.id !== this.props?.resources?.agreement?.records?.[0]?.id) {
+      mutator.agreementEresourcesConfig.replace({ agreementEresourcesOffset: 0 });
+      mutator.agreementLinesConfig.replace({ agreementLinesOffset: 0 });
+    }
+  }
 
   downloadBlob = (name) => (
     blob => {

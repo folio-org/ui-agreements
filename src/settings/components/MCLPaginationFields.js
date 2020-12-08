@@ -30,27 +30,16 @@ const MCLPaginationFields = () => {
         </Layout>
         <Layout className="padding-bottom-gutter">
           <Row>
-            <Col xs={6}> <FormattedMessage id="ui-agreements.settings.mcl" /> </Col>
-            {/* <Col xs={3}> <FormattedMessage id="ui-agreements.settings.mcl.initialLoad" /> </Col> */}
+            <Col xs={9}> <FormattedMessage id="ui-agreements.settings.mcl" /> </Col>
             <Col xs={3}> <FormattedMessage id="ui-agreements.settings.mcl.pageSize" /> </Col>
           </Row>
         </Layout>
       </strong>
       { lists.map((mcl, index) => (
         <Row key={`row-${index}`}>
-          <Col xs={6}>
+          <Col xs={9}>
             <FormattedMessage id={`ui-agreements.settings.mcl.${mcl}`} />
           </Col>
-          {/* <Col xs={3}>
-            <Field
-              component={TextField}
-              id={`initialLoad-${mcl}`}
-              name={`initialLoad.${mcl}`}
-              parse={v => parseInt(v, 10)}
-              type="number"
-              validate={v => validate(v, 0, 100)}
-            />
-          </Col> */}
           <Col xs={3}>
             <Field
               component={TextField}
