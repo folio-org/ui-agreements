@@ -168,7 +168,6 @@ export default class LinesList extends React.Component {
         formatter={this.formatter}
         id="agreement-lines"
         isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.agreementLines" />}
-        // maxHeight={400} // <- this makes a scroll bar, not needed with "load more" button
         onNeedMoreData={onNeedMoreLines}
         onRowClick={(e, row) => {
           if (e.target.tagName !== 'A') {

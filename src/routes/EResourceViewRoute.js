@@ -29,7 +29,12 @@ class EResourceViewRoute extends React.Component {
       records: 'results',
       limitParam: 'perPage',
       throwErrors: false,
-      resultOffset: '%{entitlementOptionsConfig.entitlementOptionsOffset}',
+      resultOffset: (_q, _p, _r, _l, props) => {
+        const { match, resources } = props;
+        const resultOffset = get(resources, 'entitlementOptionsConfig.entitlementOptionsOffset');
+        const eresourceId = get(resources, 'eresource.records[0].id');
+        return eresourceId !== match.params.id ? 0 : resultOffset;
+      },
     },
     entitlements: {
       type: 'okapi',
@@ -40,7 +45,12 @@ class EResourceViewRoute extends React.Component {
       params: {
         stats: 'true',
       },
-      resultOffset: '%{entitlementsConfig.entitlementsOffset}',
+      resultOffset: (_q, _p, _r, _l, props) => {
+        const { match, resources } = props;
+        const resultOffset = get(resources, 'entitlementsConfig.entitlementsOffset');
+        const eresourceId = get(resources, 'eresource.records[0].id');
+        return eresourceId !== match.params.id ? 0 : resultOffset;
+      },
     },
     relatedEntitlements: {
       type: 'okapi',
