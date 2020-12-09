@@ -21,7 +21,7 @@ const poLine = {
 const poLineWithInstanceId = {...poLine}
 poLineWithInstanceId.instanceId = "abcde"
 
-describe.only('POLineCard', () => {
+describe('POLineCard', () => {
   const interactor = new POLineCardInteractor();
 
   describe('when rendered with limited data', () => {
