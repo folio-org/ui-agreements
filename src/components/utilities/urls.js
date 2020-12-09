@@ -34,6 +34,8 @@ const urls = {
 
   poLineView: id => `/orders/lines/view/${id}`,
 
+  viewInInventory: id => `/inventory/view/${id}`,
+
   udpView: id => `/eusage/view/${id}`,
 
   urlCustomizerView: (platformId, templateId) => `/erm/platforms/${platformId}/urlcustomizer/${templateId}`,
