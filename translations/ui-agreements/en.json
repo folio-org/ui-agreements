@@ -490,6 +490,7 @@
   "poLines.replacePOLineSpecific": "Replace PO line {POLineTitle}",
   "poLines.title": "Title in PO line",
   "poLines.unlinkPOLine": "Unlink PO line",
+  "poLines.viewInInventory": "View in inventory",
 
   "relatedAgreements": "Related agreements",
   "relatedAgreements.addRelatedAgreement": "Add related agreement",
