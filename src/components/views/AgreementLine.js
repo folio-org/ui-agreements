@@ -61,9 +61,6 @@ const propTypes = {
   }).isRequired,
   helperApp: PropTypes.node,
   isLoading: PropTypes.bool,
-  stripes: PropTypes.shape({
-    hasPerm: PropTypes.func
-  })
 };
 
 const AgreementLine = ({
