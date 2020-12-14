@@ -131,7 +131,7 @@ const Agreements = ({
               >
                 {filterPaneIsVisible &&
                   <Pane
-                    defaultWidth="20%"
+                    defaultWidth="25%"
                     id="pane-agreement-search"
                     lastMenu={
                       <PaneMenu>

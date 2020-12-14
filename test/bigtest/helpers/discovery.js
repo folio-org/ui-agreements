@@ -238,7 +238,7 @@ const initialState = {
       'identifier-types':'1.2',
       'contributor-types':'2.0',
       'contributor-name-types':'1.2',
-      'instance-bulk':'0.1',
+      'inventory-record-bulk':'1.0',
       'instance-formats':'2.0',
       'instance-types':'2.0',
       'nature-of-content-terms':'1.0',
