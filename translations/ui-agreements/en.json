@@ -246,7 +246,7 @@
   "platform.addUrlCustomization.maxNumber": "Maximum number of URL customizations is 1",
   "platform.urlCustomizationCode.info": "The template that will be used to generate a proxied URL.",
   "platform.urlCustomizationCode.variables": "Variables: inputUrl, platformLocalCode",
-  "platform.urlCustomizationCode.helpers": "Helpers: encodeUrl, insertAfter, insertAfterAll, insertBefore, insertBeforeAll, encodeUrl, removeProtocol, replace",
+  "platform.urlCustomizationCode.helpers": "Helpers: insertAfter, insertAfterAll, insertBefore, insertBeforeAll, urlEncode, removeProtocol, replace",
   "platform.noUrlCustomization": "No URL customization for this platform",
   "platform.urlCustomization.delete.callout": "URL customization deleted",
   "platform.urlCustomization.deleteFailed.callout": "URL customization failed to delete: {message}",
@@ -490,6 +490,7 @@
   "poLines.replacePOLineSpecific": "Replace PO line {POLineTitle}",
   "poLines.title": "Title in PO line",
   "poLines.unlinkPOLine": "Unlink PO line",
+  "poLines.viewInInventory": "View in inventory",
 
   "relatedAgreements": "Related agreements",
   "relatedAgreements.addRelatedAgreement": "Add related agreement",

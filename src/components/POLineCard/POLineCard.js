@@ -62,6 +62,16 @@ const POLineCard = ({
               {poLine.titleOrPackage ?? <NoValue />}
             </div>
           </KeyValue>
+          {poLine?.instanceId &&
+            <AppIcon app="inventory" iconKey="instance" size="small">
+              <Link
+                to={urls.viewInstance(poLine.instanceId)}
+                data-test-po-line-view-in-inventory
+              >
+                <FormattedMessage id="ui-agreements.poLines.viewInInventory" />
+              </Link>
+            </AppIcon>
+          }
         </Col>
       </Row>
     </div>
