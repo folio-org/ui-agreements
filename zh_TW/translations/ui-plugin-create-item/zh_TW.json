@@ -1,0 +1,6 @@
+{
+    "error.noHolding": "该实例无选定馆藏地的馆藏",
+    "error.onSave": "無法新增單件",
+    "meta.title": "创建单件（插件）",
+    "success.onSave": "The Item has been successfully saved"
+}

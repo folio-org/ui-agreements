@@ -1,0 +1,21 @@
+{
+    "errors.issuersMustBeUnique": "توجد منصة بجهة الإصدار هذه بالفعل. يجب أن تكون جهات الإصدار فريدة.",
+    "meta.title": "أداة LTI للمقررات",
+    "platform": "منصة LTI",
+    "platform.clientId": "معرف العميل",
+    "platform.clientId.description": "بعد تسجيل أداة LTI 1.3 بمنصة/نظام إداة مكتبات (مثال: من داخل Sakai)، تقوم المنصة عادةً بتوليد معرف عميل للأداة. قم بإدخاله هنا. إذا كان نظام إدارة المكتبات الخاص بك يتيح لك تهيئة معرف العميل، قم بإدخال نفس القيمة هنا التي قمت بإدخالها هناك.",
+    "platform.cssUrl": "CSS URL",
+    "platform.cssUrl.description": "تقوم الأداة بتقديم محتوياتها في iframe، بحيث يتم تجاهل النمط الأصلي. لتنميط مخرجات الأداة، قم بإدخال عنوان URL لملف CSS هنا وسيقوم iframe بجلبه وتطبيقه في <link>.",
+    "platform.issuer": "جهة الإصدار",
+    "platform.jwksUrl": "JWKS URL",
+    "platform.jwksUrl.description": "تأكد من أن عنوان URL هذا متاح للجمهور. ما لم يتم تهيئتها بشكل صحيح، تقوم بعض أنظمة إدارة المكتبات بتوفير عنوان URL لا يراعي أشياء مثل البروكسي العكسي.",
+    "platform.noReservesMessage": "رسالة \"لا توجد حجوزات\"",
+    "platform.noReservesMessage.description": "عندما لا يحتوي المقرر على حجوزات حالية، سيتم عرض هذه الرسالة",
+    "platform.oidcAuthUrl": "عنوان URL لاستيثاق OIDC",
+    "platform.oidcAuthUrl.description": "تأكد من أن عنوان URL هذا متاح للجمهور. ما لم يتم تهيئتها بشكل صحيح، تقوم بعض أنظمة إدارة المكتبات بتوفير عنوان URL لا يراعي أشياء مثل البروكسي العكسي.",
+    "platform.searchUrl": "عنوان URL للبحث العام",
+    "platform.searchUrl.description": "<div>سيتم استخدام عنوان URL للبحث العام إنشاء روابط في حالة عدم تعريف وصول إلكتروني للمادة المحجوزة. يمكن إدخال بعض المتغيرات إلى عنوان الURL، مثل: https://find.mylibrary.edu?query=[BARCODE]. المتغيرات المدعومة هي:</div><ul><li>[BARCODE] - باركود المادة</li><li> [INSTANCE_HRID] - رقم التعريف القابل للقراءة بشرياً للوعاء</li></ul>",
+    "platforms": "منصات LTI",
+    "settings.edit": "الإعدادات (أداة LTI للمقررات): حرّر الإعدادات",
+    "settings.view": "الإعدادات (أداة LTI للمقررات): اعرض الإعدادات"
+}

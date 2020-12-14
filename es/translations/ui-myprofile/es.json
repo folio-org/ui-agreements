@@ -1,0 +1,19 @@
+{
+    "meta.title": "My profile",
+    "permission.settings.change-password": "Configuración (Mi perfil): puede cambiar su contraseña local",
+    "permission.settings.enabled": "Ajustes (Mi perfil): presentar la lista de páginas de ajustes",
+    "settings.changePassword.confirmPassword": "Confirm FOLIO password",
+    "settings.changePassword.confirmPasswordMatchError": "New and confirm password does not match. Retype your password.",
+    "settings.changePassword.currentPassword": "Current FOLIO password",
+    "settings.changePassword.enterValue": "Please enter a value.",
+    "settings.changePassword.hidePassword": "Hide password",
+    "settings.changePassword.label": "Change password",
+    "settings.changePassword.lastTenPasswords": "Previously used password. Please enter a new password.",
+    "settings.changePassword.newPassword": "New FOLIO password",
+    "settings.changePassword.save": "Save",
+    "settings.changePassword.showPassword": "Show password",
+    "settings.changePassword.successfullyChanged": "The <strong>FOLIO password</strong> has been successfully <strong>changed</strong> for <strong>{lastName}</strong>, <strong>{firstName}</strong>",
+    "settings.changePassword.wrongPassword": "Incorrect password. Retype your password.",
+    "settings.index.paneTitle": "My profile",
+    "userDropdown.changePassword.caption": "Change Password"
+}

@@ -1,0 +1,19 @@
+{
+    "meta.title": "Mein Profil",
+    "permission.settings.change-password": "Einstellungen (Mein Profil): Kann Ihr lokales Passwort ändern",
+    "permission.settings.enabled": "Einstellungen (Mein Profil): Liste der Einstellungsseiten anzeigen",
+    "settings.changePassword.confirmPassword": "FOLIO-Passwort bestätigen",
+    "settings.changePassword.confirmPasswordMatchError": "Neues Passwort und Bestätigungspasswort stimmen nicht überein. Passwort erneut eingeben.",
+    "settings.changePassword.currentPassword": "Aktuelles FOLIO-Passwort",
+    "settings.changePassword.enterValue": "Bitte geben Sie einen Wert ein.",
+    "settings.changePassword.hidePassword": "Passwort ausblenden",
+    "settings.changePassword.label": "Passwort ändern",
+    "settings.changePassword.lastTenPasswords": "Zuvor verwendetes Passwort: Neues Passwort eingeben.",
+    "settings.changePassword.newPassword": "Neues FOLIO-Passwort",
+    "settings.changePassword.save": "Speichern",
+    "settings.changePassword.showPassword": "Passwort anzeigen",
+    "settings.changePassword.successfullyChanged": "<strong>FOLIO-Passwort</strong> wurde erfolgreich <strong>geändert</strong> für <strong>{lastName}</strong>, <strong>{firstName}</strong>",
+    "settings.changePassword.wrongPassword": "Falsches Passwort. Passwort erneut eingeben.",
+    "settings.index.paneTitle": "Mein Profil",
+    "userDropdown.changePassword.caption": "Passwort ändern"
+}

@@ -1,0 +1,18 @@
+{
+    "active": "Активный",
+    "contact.email": "Электронная почта",
+    "inactive": "Inactive",
+    "information.barcode": "Штрихкод",
+    "information.name": "Name",
+    "information.patronGroup": "Группа читателей",
+    "information.username": "Имя пользователя",
+    "meta.title": "User-finder (plugin)",
+    "modal.close": "Close",
+    "modal.label": "Выберите пользователя",
+    "modal.save": "Сохранить",
+    "modal.total": "Total selected: {count}",
+    "noResults": "Выберите фильтр или введите поисковый запрос, чтобы показать результаты.",
+    "searchButton.title": "Find User",
+    "searchFieldLabel": "Поиск",
+    "status": "Статус"
+}

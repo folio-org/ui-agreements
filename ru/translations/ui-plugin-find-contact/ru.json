@@ -1,0 +1,14 @@
+{
+    "button.addContact": "Добавить контакт",
+    "button.cancel": "Отмена",
+    "button.save": "Сохранить",
+    "contact.categories": "Категория",
+    "contact.name": "Имя",
+    "contact.status": "Статус",
+    "contact.status.active": "Активный",
+    "contact.status.inactive": "Недействующий",
+    "meta.pluginTitle": "Контакты",
+    "meta.title": "Add (assign) 'contact person' to organization (plugin)",
+    "modal.title": "Add contacts",
+    "totalSelected": "Total selected: {count}"
+}

@@ -1,0 +1,14 @@
+{
+    "button.addContact": "Add contact",
+    "button.cancel": "Cancel",
+    "button.save": "Save",
+    "contact.categories": "Category",
+    "contact.name": "Name",
+    "contact.status": "Status",
+    "contact.status.active": "Active",
+    "contact.status.inactive": "Inactive",
+    "meta.pluginTitle": "Contacts",
+    "meta.title": "Add (assign) 'contact person' to organization (plugin)",
+    "modal.title": "Add contacts",
+    "totalSelected": "Total selected: {count}"
+}

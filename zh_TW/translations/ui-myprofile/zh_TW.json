@@ -1,0 +1,19 @@
+{
+    "meta.title": "我的個人資料",
+    "permission.settings.change-password": "Settings (My profile): Can change your local password",
+    "permission.settings.enabled": "Settings (My profile): display list of settings pages",
+    "settings.changePassword.confirmPassword": "確認 FOLIO 密碼",
+    "settings.changePassword.confirmPasswordMatchError": "新密碼與確認密碼不一致，請重新輸入密碼。",
+    "settings.changePassword.currentPassword": "目前 FOLIO 密碼",
+    "settings.changePassword.enterValue": "请输入一个值。",
+    "settings.changePassword.hidePassword": "隐藏密码",
+    "settings.changePassword.label": "更改密碼",
+    "settings.changePassword.lastTenPasswords": "以前用过的密码。请输入新密码。",
+    "settings.changePassword.newPassword": "新的 FOLIO 密碼",
+    "settings.changePassword.save": "儲存",
+    "settings.changePassword.showPassword": "顯示密碼",
+    "settings.changePassword.successfullyChanged": "<strong> FOLIO密码</strong>已成功<strong>改变</strong>为<strong> {lastName} </strong> ， <strong> {firstName} </strong>",
+    "settings.changePassword.wrongPassword": "密碼不對，請重新輸入密碼。",
+    "settings.index.paneTitle": "我的個人資料",
+    "userDropdown.changePassword.caption": "更改密碼"
+}

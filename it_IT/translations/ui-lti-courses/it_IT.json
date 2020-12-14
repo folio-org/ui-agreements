@@ -1,0 +1,21 @@
+{
+    "errors.issuersMustBeUnique": "A platform with this issuer already exists. Issuers must be unique.",
+    "meta.title": "Courses LTI Tool",
+    "platform": "LTI Platform",
+    "platform.clientId": "Client ID",
+    "platform.clientId.description": "After you register an LTI 1.3 Tool with a Platform/LMS (eg, from within Sakai), the Platform usually generates a Client ID for the Tool. Insert that here. If your LMS allows you to configure the Client ID, enter the same value here that you enter there.",
+    "platform.cssUrl": "CSS URL",
+    "platform.cssUrl.description": "The tool renders its contents in an iframe, so parent styling is ignored. To style the tool's output, enter the URL of a CSS file here and the iframe will fetch and apply it in a <link>.",
+    "platform.issuer": "Issuer",
+    "platform.jwksUrl": "JWKS URL",
+    "platform.jwksUrl.description": "Ensure that this URL is publicly accessible. Unless they are properly configured, some LMSs provide a URL that doesn't account for things like reverse proxies.",
+    "platform.noReservesMessage": "\"No reserves\" message",
+    "platform.noReservesMessage.description": "When a course has no current reserves, this message will be displayed.",
+    "platform.oidcAuthUrl": "OIDC authentication URL",
+    "platform.oidcAuthUrl.description": "Ensure that this URL is publicly accessible. Unless they are properly configured, some LMSs provide a URL that doesn't account for things like reverse proxies.",
+    "platform.searchUrl": "Public search URL",
+    "platform.searchUrl.description": "<div> L'URL di ricerca pubblico verrà utilizzato per creare collegamenti quando non è definito alcun accesso elettronico per l'elemento riservato. Alcune variabili possono essere inserite nell'URL, ad esempio, https://find.mylibrary.edu?query=[BARCODE]. Le variabili supportate sono: </div> <ul> <li> [BARCODE] - Il barcode dell'item </li> <li> [INSTANCE_HRID] - L'HRID dell'istanza </li> </ul>",
+    "platforms": "LTI Platforms",
+    "settings.edit": "Settings (Courses LTI Tool): Edit settings",
+    "settings.view": "Settings (Courses LTI Tool): View settings"
+}

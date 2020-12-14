@@ -1,0 +1,17 @@
+{
+    "meta.title": "附註",
+    "permission.item.assign-unassign": "Notes: Can assign and unassign a note",
+    "permission.item.create": "Notes: Can create a note",
+    "permission.item.delete": "Notes: Can delete a note",
+    "permission.item.edit": "Notes: Can edit a note",
+    "permission.item.view": "Notes: Can view a note",
+    "permission.module.notes.enabled": "UI: ui-notes module is enabled",
+    "permission.notes.enabled": "Settings (notes): display list of settings pages",
+    "settings.duplicated": "{field}重复",
+    "settings.general": "一般",
+    "settings.index.paneTitle": "附註",
+    "settings.maxAmout": "允许的附注类型最大为{amount} 。",
+    "settings.notes": "附注",
+    "settings.noteType": "附註類型",
+    "settings.noteTypes": "附註類型"
+}

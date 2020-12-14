@@ -1,0 +1,19 @@
+{
+    "assigned": "معيّن",
+    "button.close": "إغلاق",
+    "button.save": "حفظ",
+    "filterValue.no": "لا",
+    "filterValue.undetermined": "غير محدد",
+    "filterValue.yes": "نعم",
+    "freeContent": "محتوى مجاني",
+    "isEmptyMessage": "لم يتم العثور على نتائج. يرجى التحقق من المنقحات.",
+    "label": "الاسم",
+    "mdSource": "مصدر الميتاداتا",
+    "meta.title": "plugin-find-finc-metadata-collection",
+    "modal.label": "اختر مجموعة الميتاداتا",
+    "modal.paneTitle": "مجموعات الميتاداتا",
+    "modal.totalSelected": "إجمالي المحدد: {count}",
+    "permitted": "الاستخدام المسموح",
+    "searchButton.title": "ابحث عن مجموعة الميتاداتا",
+    "selected": "المحدد"
+}

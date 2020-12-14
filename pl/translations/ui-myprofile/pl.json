@@ -1,0 +1,19 @@
+{
+    "meta.title": "Mój profil",
+    "permission.settings.change-password": "Ustawienia (Mój profil): Może zmienić twoje lokalne hasło",
+    "permission.settings.enabled": "Ustawienia (Mój profil): wyświetl listę stron ustawień",
+    "settings.changePassword.confirmPassword": "Potwierdź hasło FOLIO",
+    "settings.changePassword.confirmPasswordMatchError": "Nowe i potwierdzone hasło nie się zgodne. Wpisz ponownie swoje hasło.",
+    "settings.changePassword.currentPassword": "Aktualne hasło FOLIO",
+    "settings.changePassword.enterValue": "Proszę wprowadzić wartość.",
+    "settings.changePassword.hidePassword": "Ukryj hasło",
+    "settings.changePassword.label": "Zmień hasło",
+    "settings.changePassword.lastTenPasswords": "Poprzednio używane hasło. Wprowadź nowe hasło.",
+    "settings.changePassword.newPassword": "Nowe hasło FOLIO",
+    "settings.changePassword.save": "Zapisz",
+    "settings.changePassword.showPassword": "Pokaż hasło",
+    "settings.changePassword.successfullyChanged": "<strong> Hasło FOLIO </strong> zostało pomyślnie <strong> zmienione </strong> dla <strong> {lastName} </strong> , <strong> {firstName} </strong>",
+    "settings.changePassword.wrongPassword": "Nieprawidłowe hasło. Wpisz ponownie hasło.",
+    "settings.index.paneTitle": "Mój profil",
+    "userDropdown.changePassword.caption": "Zmień hasło"
+}

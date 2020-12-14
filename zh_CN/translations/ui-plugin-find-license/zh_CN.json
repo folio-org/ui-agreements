@@ -1,0 +1,14 @@
+{
+    "licenses": "许可证",
+    "meta.title": "许可证查找器插件",
+    "permission.search": "查找许可证插件：搜索许可证",
+    "prop.endDate": "结束日期",
+    "prop.name": "名称",
+    "prop.organization": "组织",
+    "prop.organizationRole": "组织角色",
+    "prop.startDate": "开始日期",
+    "prop.status": "状态",
+    "prop.type": "类型",
+    "searchInputLabel": "搜索许可证",
+    "selectLicense": "选择许可证"
+}

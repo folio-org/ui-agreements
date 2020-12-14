@@ -1,0 +1,19 @@
+{
+    "meta.title": "マイプロフィール",
+    "permission.settings.change-password": "Settings (My profile): Can change your local password",
+    "permission.settings.enabled": "Settings (My profile): display list of settings pages",
+    "settings.changePassword.confirmPassword": "FOLIOパスワードを確認",
+    "settings.changePassword.confirmPasswordMatchError": "新規パスワードと確認パスワードが一致しません。パスワードを再入力してください。",
+    "settings.changePassword.currentPassword": "現在のFOLIOパスワード",
+    "settings.changePassword.enterValue": "値を入力してください。",
+    "settings.changePassword.hidePassword": "パスワードを隠す",
+    "settings.changePassword.label": "パスワードを変更する",
+    "settings.changePassword.lastTenPasswords": "以前に使用したパスワードです。新しいパスワードを入力してください。",
+    "settings.changePassword.newPassword": "新しいFOLIOパスワード",
+    "settings.changePassword.save": "保存",
+    "settings.changePassword.showPassword": "パスワードを表示",
+    "settings.changePassword.successfullyChanged": "<strong> {lastName} </strong>   <strong> {firstName} </strong> の<strong> FOLIOパスワード</strong>が正常に<strong>変更</strong>されまました",
+    "settings.changePassword.wrongPassword": "パスワードが正しくありません。パスワードを再入力してください。",
+    "settings.index.paneTitle": "マイプロフィール",
+    "userDropdown.changePassword.caption": "パスワードを変更する"
+}

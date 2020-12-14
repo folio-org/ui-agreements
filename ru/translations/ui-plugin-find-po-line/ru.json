@@ -1,0 +1,8 @@
+{
+    "addPOLine": "Add order lines",
+    "meta.title": "Order lines",
+    "modal.footer.close": "Закрыть",
+    "modal.footer.save": "Сохранить",
+    "modal.footer.totalSelected": "Total selected: {count}",
+    "modal.title": "Выберите строки заказа"
+}

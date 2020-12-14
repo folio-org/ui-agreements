@@ -1,0 +1,18 @@
+{
+    "active": "Active",
+    "contact.email": "Email",
+    "inactive": "Inactive",
+    "information.barcode": "Barcode",
+    "information.name": "Name",
+    "information.patronGroup": "Patron group",
+    "information.username": "Username",
+    "meta.title": "User-finder (plugin)",
+    "modal.close": "Close",
+    "modal.label": "Select User",
+    "modal.save": "Save",
+    "modal.total": "Total selected: {count}",
+    "noResults": "Choose a filter or enter a search query to show results.",
+    "searchButton.title": "Find User",
+    "searchFieldLabel": "Search",
+    "status": "Status"
+}

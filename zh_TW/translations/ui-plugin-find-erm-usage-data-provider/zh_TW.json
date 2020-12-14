@@ -1,0 +1,12 @@
+{
+    "information.aggregator": "Aggregator",
+    "information.aggregators": "Aggregators",
+    "information.harvestingStatus": "Harvesting status",
+    "information.harvestVia": "Harvest via",
+    "information.latestStatistics": "Latest statistics",
+    "information.providerName": "Provider name",
+    "meta.title": "使用数据提供者寻找器（插件）",
+    "modal.label": "选择使用数据提供者",
+    "searchButton.title": "查找使用数据提供者",
+    "udp.searchInputLabel": "Search usage data providers"
+}

@@ -1,0 +1,14 @@
+{
+    "licenses": "Licencias",
+    "meta.title": "Plugin del Buscador de Licencias",
+    "permission.search": "Encuentra el plugin de la licencia: Buscar licencias",
+    "prop.endDate": "Fecha fin",
+    "prop.name": "Nombre",
+    "prop.organization": "Organización",
+    "prop.organizationRole": "Rol de la organización",
+    "prop.startDate": "Fecha inicio",
+    "prop.status": "Estado",
+    "prop.type": "Tipo",
+    "searchInputLabel": "Buscar licencias",
+    "selectLicense": "Select license"
+}

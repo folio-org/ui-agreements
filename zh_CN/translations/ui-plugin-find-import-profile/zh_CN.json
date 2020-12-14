@@ -1,0 +1,20 @@
+{
+    "addProfile": "添加{profileType}",
+    "confirmationModal.heading": "重新链接{profileType} ？",
+    "confirmationModal.label": "重新链接",
+    "confirmationModal.multiple.body": "这些{profileType}的一个或多个已经链接到其他{linkedProfileType} 。是否要从以前的{linkedProfileType}取消链接并重新链接到此<b> {currentProfileName} </b> {linkedProfileType} ？",
+    "confirmationModal.note": "<b>注意</b>该{profileType}不会重新链接，除非保存{parentType}",
+    "confirmationModal.single.body": "本{profileType}已链接到<b> “ {linkedProfileName} ” </b> {linkedProfileType} 。是否要取消与先前{linkedProfileType}的链接并重新链接到此<b> “ {currentProfileName} ” </b> {linkedProfileType}",
+    "entities.actionProfiles": "操作配置文件",
+    "entities.jobProfiles": "任务配置文件",
+    "entities.mappingProfiles": "字段映射配置文件",
+    "entities.matchProfiles": "匹配配置文件",
+    "meta.pluginTitle": "测试查找配置文件插件",
+    "meta.title": "{profileType}",
+    "modal.footer.close": "关闭",
+    "modal.footer.save": "保存",
+    "modal.footer.totalSelected": "已选总数： {count}",
+    "modal.title": "选择{profileType}",
+    "pluggable.caption": "选取配置文件",
+    "pluggable.errors.plugin.disabled": "无可用插件！"
+}

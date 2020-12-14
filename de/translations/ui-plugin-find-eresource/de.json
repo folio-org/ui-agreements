@@ -1,0 +1,18 @@
+{
+    "eresources": "E-Ressourcen",
+    "meta.title": "E-Ressource Finder Plugin",
+    "no": "Nein",
+    "package": "Paket",
+    "permission.search": "E-Ressourcen Plugin finden: E-Ressourcen suchen",
+    "prop.eissn": "ISSN (Online)",
+    "prop.isbn": "ISBN",
+    "prop.isPackage": "Ist Paket",
+    "prop.name": "Name",
+    "prop.pissn": "ISSN (Druckausgabe)",
+    "prop.sourceKb": "Externe Datenquelle",
+    "prop.type": "Typ",
+    "searchInputLabel": "E-Ressourcen suchen",
+    "selectEresource": "E-Ressourcen auswählen",
+    "title": "Titel",
+    "yes": "Ja"
+}

@@ -1,0 +1,12 @@
+{
+    "meta.title": "Tags",
+    "permission.all": "Tags: Alle Berechtigungen",
+    "permission.create": "Tags: Tags erstellen",
+    "permission.delete": "Tags: Tags löschen",
+    "permission.edit": "Tags: Tags bearbeiten",
+    "permission.view": "Tags in Datensätzen: nur anzeigen",
+    "settings.enableTags": "Tags aktivieren",
+    "settings.general.label": "Allgemein",
+    "settings.index.paneTitle": "Tags",
+    "settings.tags.label": "Tags"
+}

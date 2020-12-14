@@ -1,0 +1,17 @@
+{
+    "agreements": "Contratti",
+    "meta.title": "Plugin ricerca accordi ERM",
+    "permission.search": "Find Agreement Plugin: Search agreements",
+    "prop.agreementStatus": "Stato",
+    "prop.cancellationDeadline": "Termine di cancellazione",
+    "prop.isPerpetual": "Acquisto perpetuo",
+    "prop.name": "Nome",
+    "prop.organizations": "Organizzazioni",
+    "prop.orgRole": "Ruolo organizzativo",
+    "prop.periodEnd": "Periodo di fine",
+    "prop.periodStart": "Periodo di inizio",
+    "prop.renewalPriority": "Priorità del rinnovo",
+    "prop.tags": "Tag",
+    "searchInputLabel": "Cerca contratti",
+    "selectAgreement": "Seleziona contratto"
+}

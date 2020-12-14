@@ -1,0 +1,23 @@
+{
+    "addToken": "إضافة رمز",
+    "close": "إغلاق",
+    "preview": "معاينة",
+    "print": "طباعة",
+    "toolbar.align.center": "الوسط",
+    "toolbar.align.justify": "ضبط",
+    "toolbar.align.noAlign": "بدون محاذاة",
+    "toolbar.align.right": "اليمين",
+    "toolbar.indent.decrease": "تقليل المسافة البادئة",
+    "toolbar.indent.increase": "زيادة المسافة البادئة",
+    "toolbar.link": "رابط",
+    "toolbar.list.bullet": "قائمة منقوطة",
+    "toolbar.list.ordered": "قائمة مرتبة",
+    "toolbar.size": "الحجم",
+    "toolbar.size.huge": "ضخم",
+    "toolbar.size.large": "كبير",
+    "toolbar.size.normal": "عادي",
+    "toolbar.size.small": "صغير",
+    "toolbar.text.bold": "عريض",
+    "toolbar.text.italic": "مائل",
+    "toolbar.text.underline": "تسطير"
+}

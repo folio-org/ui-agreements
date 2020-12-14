@@ -1,0 +1,18 @@
+{
+    "active": "激活",
+    "contact.email": "电子邮件",
+    "inactive": "未激活",
+    "information.barcode": "条码",
+    "information.name": "名称",
+    "information.patronGroup": "读者组",
+    "information.username": "用户名",
+    "meta.title": "用户查找器（插件）",
+    "modal.close": "关闭",
+    "modal.label": "选择用户",
+    "modal.save": "保存",
+    "modal.total": "已选总数： {count}",
+    "noResults": "选择筛选条件或输入搜索查询以显示结果。",
+    "searchButton.title": "查找用户",
+    "searchFieldLabel": "搜索",
+    "status": "状态"
+}

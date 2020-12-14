@@ -1,0 +1,6 @@
+{
+    "error.noHolding": "Aucune conservation pour l'emplacement sélectionné n'est disponible pour l'instance",
+    "error.onSave": "L'élément ne peut pas être créé",
+    "meta.title": "Créer un élément (plugin)",
+    "success.onSave": "L'élément a été enregistré avec succès"
+}

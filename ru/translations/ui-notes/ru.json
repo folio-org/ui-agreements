@@ -1,0 +1,17 @@
+{
+    "meta.title": "Notes",
+    "permission.item.assign-unassign": "Примечания: можно разместить заметку и отменить размещение заметки",
+    "permission.item.create": "Примечания: можно создать заметку",
+    "permission.item.delete": "Примечания: можно удалить заметку",
+    "permission.item.edit": "Примечания: можно редактировать примечание",
+    "permission.item.view": "Примечания: можно просмотреть заметку",
+    "permission.module.notes.enabled": "Интерфейс пользователя: модуль ui-notes включён",
+    "permission.notes.enabled": "Настройки (заметки): отображение списка страниц с настройками",
+    "settings.duplicated": "{field} duplicated",
+    "settings.general": "Общие",
+    "settings.index.paneTitle": "Notes",
+    "settings.maxAmout": "Maximum # of note types allowed is {amount}.",
+    "settings.notes": "Notes",
+    "settings.noteType": "Note type",
+    "settings.noteTypes": "Note types"
+}

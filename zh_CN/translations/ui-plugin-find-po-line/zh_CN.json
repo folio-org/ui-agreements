@@ -1,0 +1,8 @@
+{
+    "addPOLine": "添加订单行",
+    "meta.title": "订单行",
+    "modal.footer.close": "关闭",
+    "modal.footer.save": "保存",
+    "modal.footer.totalSelected": "已选总数： {count}",
+    "modal.title": "选择订单行"
+}

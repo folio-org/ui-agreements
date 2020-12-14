@@ -1,0 +1,14 @@
+{
+    "licenses": "라이선스",
+    "meta.title": "라이선스 찾기 플러그인",
+    "permission.search": "라이선스 플러그인 찾기 : 라이선스 검색",
+    "prop.endDate": "종료일",
+    "prop.name": "이름",
+    "prop.organization": "공급사",
+    "prop.organizationRole": "공급사 역할",
+    "prop.startDate": "시작일",
+    "prop.status": "상태",
+    "prop.type": "유형",
+    "searchInputLabel": "라이선스 검색",
+    "selectLicense": "라이선스 선택"
+}

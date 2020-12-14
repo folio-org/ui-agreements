@@ -1,0 +1,8 @@
+{
+    "addPOLine": "Ajouter des lignes de commande",
+    "meta.title": "Lignes de commande",
+    "modal.footer.close": "Fermer",
+    "modal.footer.save": "Sauvegarder",
+    "modal.footer.totalSelected": "Total sélectionné: {count}",
+    "modal.title": "Sélectionner les lignes de commande"
+}

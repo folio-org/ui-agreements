@@ -1,0 +1,8 @@
+{
+    "addPOLine": "Add order lines",
+    "meta.title": "Líneas de pedido",
+    "modal.footer.close": "Close",
+    "modal.footer.save": "Save",
+    "modal.footer.totalSelected": "Total selected: {count}",
+    "modal.title": "Select order lines"
+}

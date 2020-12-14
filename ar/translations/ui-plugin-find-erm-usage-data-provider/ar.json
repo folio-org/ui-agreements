@@ -1,0 +1,12 @@
+{
+    "information.aggregator": "المجمّع",
+    "information.aggregators": "المجمعين",
+    "information.harvestingStatus": "حالة الحصاد",
+    "information.harvestVia": "الحصاد عن طريق",
+    "information.latestStatistics": "أحدث الإحصائيات",
+    "information.providerName": "اسم مقدم الخدمة",
+    "meta.title": "باحث مزود بيانات الاستخدام (برنامج مساعد)",
+    "modal.label": "حدد مزود بيانات الاستخدام",
+    "searchButton.title": "ابحث عن مزود بيانات الاستخدام",
+    "udp.searchInputLabel": "بحث مزودي بيانات الاستخدام"
+}

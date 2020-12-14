@@ -1,0 +1,17 @@
+{
+    "meta.title": "Notes",
+    "permission.item.assign-unassign": "Notes: Can assign and unassign a note",
+    "permission.item.create": "Notes: Can create a note",
+    "permission.item.delete": "Notes: Can delete a note",
+    "permission.item.edit": "Notes: Can edit a note",
+    "permission.item.view": "Notes: Can view a note",
+    "permission.module.notes.enabled": "UI: ui-notes module is enabled",
+    "permission.notes.enabled": "Settings (notes): display list of settings pages",
+    "settings.duplicated": "{field} dupliziert",
+    "settings.general": "General",
+    "settings.index.paneTitle": "Notes",
+    "settings.maxAmout": "Maximum # of note types allowed is {amount}.",
+    "settings.notes": "Notes",
+    "settings.noteType": "Note type",
+    "settings.noteTypes": "Anmerkungstyp"
+}

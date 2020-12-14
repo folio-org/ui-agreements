@@ -1,0 +1,20 @@
+{
+    "addProfile": "Ajouter {profileType}",
+    "confirmationModal.heading": "Relier {profileType} ?",
+    "confirmationModal.label": "Relier",
+    "confirmationModal.multiple.body": "Un ou plusieurs de ces {profileType} sont déjà liés à d'autres {linkedProfileType} . Souhaitez-vous le(s) dissocier des {linkedProfileType} précédents et les relier à ce <b> {currentProfileName} </b> {linkedProfileType} ?",
+    "confirmationModal.note": "<b> REMARQUE </b> les {profileType} ne seront pas réassociés tant que vous n'aurez pas enregistré le {parentType} .",
+    "confirmationModal.single.body": "Ce {profileType} est déjà lié à <b> \" {linkedProfileName} \" </b> {linkedProfileType} . Voulez-vous vous dissocier de l'ancien {linkedProfileType} et le reconnecter à ce <b> \" {currentProfileName} \" </b> {linkedProfileType}",
+    "entities.actionProfiles": "Profils d'action",
+    "entities.jobProfiles": "Profils de tâche",
+    "entities.mappingProfiles": "Field Mapping Profiles",
+    "entities.matchProfiles": "Match Profiles",
+    "meta.pluginTitle": "Test Find Profile Plugin",
+    "meta.title": "{profileType}",
+    "modal.footer.close": "Fermer",
+    "modal.footer.save": "Sauvegarder",
+    "modal.footer.totalSelected": "Total sélectionné: {count}",
+    "modal.title": "Sélectionnez {profileType}",
+    "pluggable.caption": "Choisir un profil",
+    "pluggable.errors.plugin.disabled": "Aucun plugin disponible!"
+}

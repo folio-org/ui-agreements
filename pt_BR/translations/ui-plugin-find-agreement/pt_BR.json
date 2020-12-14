@@ -1,0 +1,17 @@
+{
+    "agreements": "Contratos",
+    "meta.title": "Plugin localizador de contratos",
+    "permission.search": "Plugin de pesquisar contratos: Pesquisar contratos",
+    "prop.agreementStatus": "Status",
+    "prop.cancellationDeadline": "Prazo de cancelamento",
+    "prop.isPerpetual": "É perpétuo",
+    "prop.name": "Nome",
+    "prop.organizations": "Organizações",
+    "prop.orgRole": "Função da organização",
+    "prop.periodEnd": "Fim do período",
+    "prop.periodStart": "Início do período",
+    "prop.renewalPriority": "Prioridade de renovação",
+    "prop.tags": "Tags",
+    "searchInputLabel": "Pesquisar contratos",
+    "selectAgreement": "Selecione o contrato"
+}

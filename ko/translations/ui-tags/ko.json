@@ -1,0 +1,12 @@
+{
+    "meta.title": "태그",
+    "permission.all": "태그 : 모든 권한",
+    "permission.create": "태그 : 태그 만들기",
+    "permission.delete": "태그 : 태그 삭제",
+    "permission.edit": "태그 : 태그 편집",
+    "permission.view": "레코드의 태그 :보기 전용",
+    "settings.enableTags": "태그 활성화",
+    "settings.general.label": "일반",
+    "settings.index.paneTitle": "태그",
+    "settings.tags.label": "태그"
+}

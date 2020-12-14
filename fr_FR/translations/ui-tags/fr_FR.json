@@ -1,0 +1,12 @@
+{
+    "meta.title": "Mots-clés",
+    "permission.all": "Tags: toutes les autorisations",
+    "permission.create": "Tags: créer des tags",
+    "permission.delete": "Tags: supprimer les tags",
+    "permission.edit": "Tags: Modifier les tags",
+    "permission.view": "Tags sur les enregistrements: Afficher uniquement",
+    "settings.enableTags": "Activer les mots-clés",
+    "settings.general.label": "Général",
+    "settings.index.paneTitle": "Mots-clés",
+    "settings.tags.label": "Mots-clés"
+}

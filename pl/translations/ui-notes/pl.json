@@ -1,0 +1,17 @@
+{
+    "meta.title": "Uwagi",
+    "permission.item.assign-unassign": "Notes: Can assign and unassign a note",
+    "permission.item.create": "Notes: Can create a note",
+    "permission.item.delete": "Notes: Can delete a note",
+    "permission.item.edit": "Notes: Can edit a note",
+    "permission.item.view": "Notes: Can view a note",
+    "permission.module.notes.enabled": "UI: ui-notes module is enabled",
+    "permission.notes.enabled": "Settings (notes): display list of settings pages",
+    "settings.duplicated": "{field} duplicated",
+    "settings.general": "Ogólne",
+    "settings.index.paneTitle": "Uwagi",
+    "settings.maxAmout": "Maximum # of note types allowed is {amount}.",
+    "settings.notes": "Uwagi",
+    "settings.noteType": "Typ uwagi",
+    "settings.noteTypes": "Typy uwag"
+}

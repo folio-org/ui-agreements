@@ -1,0 +1,18 @@
+{
+    "active": "نشط",
+    "contact.email": "البريد الإلكتروني",
+    "inactive": "غير نشط",
+    "information.barcode": "الباركود",
+    "information.name": "الاسم",
+    "information.patronGroup": "مجموعة المستفيدين",
+    "information.username": "اسم المستخدم",
+    "meta.title": "باحث المستخدم (برنامج مساعد)",
+    "modal.close": "إغلاق",
+    "modal.label": "قم بتحديد مستخدم",
+    "modal.save": "حفظ",
+    "modal.total": "إجمالي المحدد: {count}",
+    "noResults": "قم باختيار منقح أو إدخال استعلام بحث لعرض النتائج",
+    "searchButton.title": "البحث عن مستخدم",
+    "searchFieldLabel": "بحث",
+    "status": "الحالة"
+}

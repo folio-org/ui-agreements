@@ -1,0 +1,19 @@
+{
+    "meta.title": "Мой профиль",
+    "permission.settings.change-password": "Settings (My profile): Can change your local password",
+    "permission.settings.enabled": "Settings (My profile): display list of settings pages",
+    "settings.changePassword.confirmPassword": "Подтвердите пароль FOLIO",
+    "settings.changePassword.confirmPasswordMatchError": "Новый и подтвержденный пароли не совпадают. Введите пароль снова.",
+    "settings.changePassword.currentPassword": "Текущий пароль FOLIO",
+    "settings.changePassword.enterValue": "Пожалуйста, введите значение.",
+    "settings.changePassword.hidePassword": "Скрыть пароль",
+    "settings.changePassword.label": "Изменить пароль",
+    "settings.changePassword.lastTenPasswords": "Ранее использованный пароль. Пожалуйста, введите новый пароль.",
+    "settings.changePassword.newPassword": "Новый пароль FOLIO",
+    "settings.changePassword.save": "Сохранить",
+    "settings.changePassword.showPassword": "Показать пароль",
+    "settings.changePassword.successfullyChanged": "<strong>Пароль FOLIO</strong> был успешно <strong>изменен</strong> на <strong>{lastName}</strong>, <strong>{firstName}</strong>",
+    "settings.changePassword.wrongPassword": "Неверный пароль. Введите пароль снова.",
+    "settings.index.paneTitle": "Мой профиль",
+    "userDropdown.changePassword.caption": "Изменить пароль"
+}

@@ -1,0 +1,17 @@
+{
+    "meta.title": "Commentaires",
+    "permission.item.assign-unassign": "Notes: peut affecter et annuler l'attribution d'une note",
+    "permission.item.create": "Notes: peut créer une note",
+    "permission.item.delete": "Notes: peut supprimer une note",
+    "permission.item.edit": "Notes: peut modifier une note",
+    "permission.item.view": "Notes: peut afficher une note",
+    "permission.module.notes.enabled": "UI: ui-notes module is enabled",
+    "permission.notes.enabled": "Settings (notes): display list of settings pages",
+    "settings.duplicated": "{field} dupliqué",
+    "settings.general": "Général",
+    "settings.index.paneTitle": "Commentaires",
+    "settings.maxAmout": "Le nombre maximal de types de notes autorisés est de {amount} .",
+    "settings.notes": "Commentaires",
+    "settings.noteType": "Type de commentaire",
+    "settings.noteTypes": "Types de commentaire"
+}

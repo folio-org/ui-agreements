@@ -1,0 +1,20 @@
+{
+    "addProfile": "{profileType} 추가",
+    "confirmationModal.heading": "{profileType} 다시 연결하시겠습니까?",
+    "confirmationModal.label": "다시 연결",
+    "confirmationModal.multiple.body": "이 {profileType} 중 하나 이상이 이미 다른 {linkedProfileType} 에 연결되어 있습니다. 이전 {linkedProfileType} 에서 연결을 해제하고 이 <b> {currentProfileName} </b> {linkedProfileType} 을 다시 연결하시겠습니까?",
+    "confirmationModal.note": "<b> 참고 </b> {parentType} 를) 저장할 때까지 {profileType} 은 다시 연결되지 않습니다.",
+    "confirmationModal.single.body": "이 {profileType} 은 이미 <b> \" {linkedProfileName} \" </b> {linkedProfileType} 에 연결되어 있습니다. 이전 {linkedProfileType} 에서 연결을 해제하고 이 <b> {currentProfileName} </b> {linkedProfileType} 에 다시 연결 하시겠습니까?",
+    "entities.actionProfiles": "작업 프로파일",
+    "entities.jobProfiles": "작업 프로파일",
+    "entities.mappingProfiles": "필드 매핑 프로파일",
+    "entities.matchProfiles": "매치 프로파일",
+    "meta.pluginTitle": "프로파일 찾기 플러그인 테스트",
+    "meta.title": "{profileType}",
+    "modal.footer.close": "닫기",
+    "modal.footer.save": "저장",
+    "modal.footer.totalSelected": "선택한 총: {수}",
+    "modal.title": "{profileType} 선택",
+    "pluggable.caption": "프로파일 선택",
+    "pluggable.errors.plugin.disabled": "사용 가능한 플러그인이 없습니다!"
+}

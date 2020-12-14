@@ -1,0 +1,12 @@
+{
+    "information.aggregator": "アグリゲーター",
+    "information.aggregators": "アグリゲーター",
+    "information.harvestingStatus": "ハーベスト状況",
+    "information.harvestVia": "ハーベストの経由",
+    "information.latestStatistics": "最新の統計",
+    "information.providerName": "Provider name",
+    "meta.title": "利用統計データプロバイダーファインダー（プラグイン）",
+    "modal.label": "Select esage data provider",
+    "searchButton.title": "Find usage data provider",
+    "udp.searchInputLabel": "Search usage data providers"
+}

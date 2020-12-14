@@ -1,0 +1,18 @@
+{
+    "eresources": "电子资源",
+    "meta.title": "电子资源查找器插件",
+    "no": "否",
+    "package": "资源包",
+    "permission.search": "查找电子资源插件：搜索电子资源",
+    "prop.eissn": "ISSN（在线）",
+    "prop.isbn": "ISBN",
+    "prop.isPackage": "是资源包",
+    "prop.name": "名称",
+    "prop.pissn": "ISSN（印本）",
+    "prop.sourceKb": "外部数据源",
+    "prop.type": "类型",
+    "searchInputLabel": "搜索电子资源",
+    "selectEresource": "选择电子资源",
+    "title": "题名",
+    "yes": "是"
+}

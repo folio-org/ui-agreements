@@ -1,0 +1,7 @@
+{
+    "meta.title": "Instance-finder (plugin)",
+    "modal.title": "Выберите экземпляр",
+    "noSourceYet": "Источника пока нет",
+    "resultsHeader": "Результаты поиска",
+    "totalSelected": "Всего выбрано: {count}"
+}

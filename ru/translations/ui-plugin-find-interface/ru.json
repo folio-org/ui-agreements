@@ -1,0 +1,16 @@
+{
+    "button.addInterface": "Добавить интерфейс",
+    "interface.name": "Name",
+    "interface.notes": "Notes",
+    "interface.type": "Тип",
+    "interface.type.admin": "Администратор",
+    "interface.type.endUser": "Конечный пользователь",
+    "interface.type.invoices": "Invoices",
+    "interface.type.orders": "Orders",
+    "interface.type.other": "Other",
+    "interface.type.reports": "Reports",
+    "interface.url": "URL",
+    "meta.title": "Interfaces",
+    "modal.title": "Add interfaces",
+    "modal.totalSelected": "Total selected: {count}"
+}

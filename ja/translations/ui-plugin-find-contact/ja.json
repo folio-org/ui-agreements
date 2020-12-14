@@ -1,0 +1,14 @@
+{
+    "button.addContact": "連絡先を追加",
+    "button.cancel": "キャンセル",
+    "button.save": "保存",
+    "contact.categories": "カテゴリー",
+    "contact.name": "名称",
+    "contact.status": "ステータス",
+    "contact.status.active": "有効",
+    "contact.status.inactive": "無効",
+    "meta.pluginTitle": "Contacts",
+    "meta.title": "組織に 「連絡担当者」を追加 (割り当て) (プラグイン)",
+    "modal.title": "連絡先を追加",
+    "totalSelected": "Total selected: {count}"
+}

@@ -1,0 +1,23 @@
+{
+    "addToken": "Добавить токен",
+    "close": "Закрыть",
+    "preview": "Предварительный просмотр",
+    "print": "Печать",
+    "toolbar.align.center": "по центру",
+    "toolbar.align.justify": "по ширине",
+    "toolbar.align.noAlign": "нет выравнивания",
+    "toolbar.align.right": "вправо",
+    "toolbar.indent.decrease": "уменьшить отступ",
+    "toolbar.indent.increase": "увеличить отступ",
+    "toolbar.link": "ссылка",
+    "toolbar.list.bullet": "ненумерованный список",
+    "toolbar.list.ordered": "нумерованный список",
+    "toolbar.size": "size",
+    "toolbar.size.huge": "огромный",
+    "toolbar.size.large": "большой",
+    "toolbar.size.normal": "нормальный",
+    "toolbar.size.small": "маленький",
+    "toolbar.text.bold": "жирный",
+    "toolbar.text.italic": "курсив",
+    "toolbar.text.underline": "подчеркивание"
+}

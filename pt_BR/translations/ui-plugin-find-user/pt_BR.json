@@ -1,0 +1,18 @@
+{
+    "active": "Ativo",
+    "contact.email": "E-mail",
+    "inactive": "Inativo",
+    "information.barcode": "Código de barras",
+    "information.name": "Nome",
+    "information.patronGroup": "Grupo de usuários",
+    "information.username": "Nome de usuário",
+    "meta.title": "Localizador de usuários (plugin)",
+    "modal.close": "Fechar",
+    "modal.label": "Selecione o usuário",
+    "modal.save": "Salvar",
+    "modal.total": "Total selecionado: {count}",
+    "noResults": "Escolha um filtro ou insira uma consulta de pesquisa para mostrar os resultados.",
+    "searchButton.title": "Encontrar usuário",
+    "searchFieldLabel": "Pesquisa",
+    "status": "Status"
+}

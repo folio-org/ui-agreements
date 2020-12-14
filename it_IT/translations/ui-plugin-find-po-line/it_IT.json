@@ -1,0 +1,8 @@
+{
+    "addPOLine": "Aggiungi righe ordine",
+    "meta.title": "Righe d'ordine",
+    "modal.footer.close": "Chiudi",
+    "modal.footer.save": "Salva",
+    "modal.footer.totalSelected": "Totale selezionato: {count}",
+    "modal.title": "Seleziona righe ordine"
+}

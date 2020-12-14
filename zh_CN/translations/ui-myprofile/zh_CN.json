@@ -1,0 +1,19 @@
+{
+    "meta.title": "我的个人资料",
+    "permission.settings.change-password": "设置（我的个人资料）：可以更改您的本地密码",
+    "permission.settings.enabled": "设置（我的个人资料）：显示设置页面列表",
+    "settings.changePassword.confirmPassword": "确认FOLIO密码",
+    "settings.changePassword.confirmPasswordMatchError": "新密码和确认密码不匹配。重新输入您的密码。",
+    "settings.changePassword.currentPassword": "当前FOLIO密码",
+    "settings.changePassword.enterValue": "请输入一个值。",
+    "settings.changePassword.hidePassword": "隐藏密码",
+    "settings.changePassword.label": "更改密码",
+    "settings.changePassword.lastTenPasswords": "以前用过的密码。请输入新密码。",
+    "settings.changePassword.newPassword": "新的FOLIO密码",
+    "settings.changePassword.save": "保存",
+    "settings.changePassword.showPassword": "显示密码",
+    "settings.changePassword.successfullyChanged": "<strong> FOLIO密码</strong>已成功<strong>改变</strong>为<strong> {lastName} </strong> ， <strong> {firstName} </strong>",
+    "settings.changePassword.wrongPassword": "密码错误，请重新输入。",
+    "settings.index.paneTitle": "我的个人资料",
+    "userDropdown.changePassword.caption": "更改密码"
+}

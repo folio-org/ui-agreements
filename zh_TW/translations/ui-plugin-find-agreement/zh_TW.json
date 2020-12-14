@@ -1,0 +1,17 @@
+{
+    "agreements": "授權許可",
+    "meta.title": "ERM协议查找器（插件）",
+    "permission.search": "Find Agreement Plugin: Search agreements",
+    "prop.agreementStatus": "狀態",
+    "prop.cancellationDeadline": "取消截止日期",
+    "prop.isPerpetual": "買斷的",
+    "prop.name": "名稱",
+    "prop.organizations": "組織機構",
+    "prop.orgRole": "組織機構角色",
+    "prop.periodEnd": "Period end",
+    "prop.periodStart": "Period start",
+    "prop.renewalPriority": "續訂優先順序",
+    "prop.tags": "標籤",
+    "searchInputLabel": "查詢授權許可",
+    "selectAgreement": "选择协议"
+}

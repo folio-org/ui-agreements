@@ -1,0 +1,14 @@
+{
+    "licenses": "Licenças",
+    "meta.title": "Plugin localizador de licença",
+    "permission.search": "Plugin de pesquisar licenças: Pesquisar licenças",
+    "prop.endDate": "Data final",
+    "prop.name": "Nome",
+    "prop.organization": "Organização",
+    "prop.organizationRole": "Função da organização",
+    "prop.startDate": "Data de início",
+    "prop.status": "Status",
+    "prop.type": "Tipo",
+    "searchInputLabel": "Pesquisar licenças",
+    "selectLicense": "Selecione a licença"
+}

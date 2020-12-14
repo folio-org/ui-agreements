@@ -1,0 +1,16 @@
+{
+    "button.addInterface": "添加界面",
+    "interface.name": "名称",
+    "interface.notes": "附注",
+    "interface.type": "类型",
+    "interface.type.admin": "管理",
+    "interface.type.endUser": "最终用户",
+    "interface.type.invoices": "发票",
+    "interface.type.orders": "订单",
+    "interface.type.other": "其他",
+    "interface.type.reports": "报告",
+    "interface.url": "URL",
+    "meta.title": "界面",
+    "modal.title": "添加界面",
+    "modal.totalSelected": "已选总数： {count}"
+}

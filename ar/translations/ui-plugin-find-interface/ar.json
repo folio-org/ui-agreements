@@ -1,0 +1,16 @@
+{
+    "button.addInterface": "إضافة واجهة",
+    "interface.name": "الاسم",
+    "interface.notes": "ملاحظات",
+    "interface.type": "النوع",
+    "interface.type.admin": "المشرف",
+    "interface.type.endUser": "المستخدم النهائي",
+    "interface.type.invoices": "الفواتير",
+    "interface.type.orders": "طلبيات",
+    "interface.type.other": "أخرى",
+    "interface.type.reports": "التقارير",
+    "interface.url": "عنوان URL",
+    "meta.title": "واجهات",
+    "modal.title": "إضافة واجهات",
+    "modal.totalSelected": "إجمالي المحدد: {count}"
+}

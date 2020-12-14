@@ -1,0 +1,8 @@
+{
+    "accessDenied.close": "關閉",
+    "accessDenied.message": "您必須選擇工作區才能訪問<strong>{displayName}</strong> App。請在<strong>使用者</strong> App 中為為您的使用者帳號新增一個或多個工作區。如果您無法新增，請與管理員聯繫。",
+    "accessDenied.title": "存取被拒絕",
+    "meta.title": "工作區",
+    "selectServicePoint": "選擇工作區",
+    "userDropdown.switchServicePoint": "切換工作區"
+}

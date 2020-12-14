@@ -1,0 +1,21 @@
+{
+    "errors.issuersMustBeUnique": "具有该发行者的平台已经存在。发行者必须是唯一的。",
+    "meta.title": "课程LTI工具",
+    "platform": "LTI平台",
+    "platform.clientId": "客户ID",
+    "platform.clientId.description": "在向平台/ LMS注册LTI 1.3工具之后（例如，从Sakai内部），平台通常会为该工具生成一个客户端ID。在这里插入。如果LMS允许配置客户端ID，请在此处输入相同的值。",
+    "platform.cssUrl": "CSS URL",
+    "platform.cssUrl.description": "本工具将其内容呈现在iframe中，因此可以忽略父样式。要设置工具输出的样式，请在此处输入CSS文件的URL，然后iframe将获取该文件并将其应用于<link> 。",
+    "platform.issuer": "发行者",
+    "platform.jwksUrl": "JWKS URL",
+    "platform.jwksUrl.description": "确保此URL可公共访问。除非正确配置，否则某些LMS所提供的URL不会考虑反向代理之类的问题。",
+    "platform.noReservesMessage": "“无教参”消息",
+    "platform.noReservesMessage.description": "当课程没有当前教参时，将显示此消息。",
+    "platform.oidcAuthUrl": "OIDC认证URL",
+    "platform.oidcAuthUrl.description": "确保此URL可公共访问。除非正确配置，否则某些LMS所提供的URL不会考虑反向代理之类的问题。",
+    "platform.searchUrl": "公共搜索URL",
+    "platform.searchUrl.description": "<div>如果未为教参单件定义电子访问，则将使用公共搜索URL创建链接。可以将一些变量插入URL，例如https://find.mylibrary.edu?query=[BARCODE]。支持的变量为： </div> <ul> <li> [BARCODE]-单件的条码</li> <li> [INSTANCE_HRID]-实例的HRID </li> </ul>",
+    "platforms": "LTI平台",
+    "settings.edit": "设置（课程LTI工具）：编辑设置",
+    "settings.view": "设置（课程LTI工具）：查看设置"
+}

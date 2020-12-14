@@ -1,0 +1,18 @@
+{
+    "active": "활성",
+    "contact.email": "이메일",
+    "inactive": "비활성",
+    "information.barcode": "바코드",
+    "information.name": "이름",
+    "information.patronGroup": "사용자 그룹",
+    "information.username": "사용자",
+    "meta.title": "사용자 찾기 (플러그인)",
+    "modal.close": "닫기",
+    "modal.label": "사용자 선택",
+    "modal.save": "저장",
+    "modal.total": "선택한 총: {수}",
+    "noResults": "결과를 보기 위해서 필터를 선택하거나 검색 쿼리를 입력하세요",
+    "searchButton.title": "사용자 찾기",
+    "searchFieldLabel": "검색",
+    "status": "상태"
+}

@@ -1,0 +1,19 @@
+{
+    "assigned": "已分配",
+    "button.close": "关闭",
+    "button.save": "保存",
+    "filterValue.no": "否",
+    "filterValue.undetermined": "待定",
+    "filterValue.yes": "是",
+    "freeContent": "免费内容",
+    "isEmptyMessage": "未找到结果。请检查筛选条件。",
+    "label": "名称",
+    "mdSource": "元数据来源",
+    "meta.title": "插件查找finc元数据集合",
+    "modal.label": "选择元数据集合",
+    "modal.paneTitle": "元数据集合",
+    "modal.totalSelected": "已选总数： {count}",
+    "permitted": "允许使用",
+    "searchButton.title": "查找元数据集合",
+    "selected": "已选"
+}

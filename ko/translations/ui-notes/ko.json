@@ -1,0 +1,17 @@
+{
+    "meta.title": "노트",
+    "permission.item.assign-unassign": "메모 : 메모를 할당 및 할당 해제할 수 있습니다.",
+    "permission.item.create": "메모 : 메모를 만들 수 있습니다.",
+    "permission.item.delete": "메모 : 메모를 삭제할 수 있습니다.",
+    "permission.item.edit": "메모 : 메모를 편집할 수 있습니다.",
+    "permission.item.view": "메모 : 메모를 볼 수 있습니다.",
+    "permission.module.notes.enabled": "UI : ui-notes 모듈이 활성화되었습니다.",
+    "permission.notes.enabled": "설정 (참고) : 설정 페이지 목록 표시",
+    "settings.duplicated": "{field} 복제 됨",
+    "settings.general": "일반",
+    "settings.index.paneTitle": "노트",
+    "settings.maxAmout": "허용되는 최대 메모 유형 수는 {amount} 입니다.",
+    "settings.notes": "노트",
+    "settings.noteType": "노트 유형",
+    "settings.noteTypes": "노트 유형"
+}

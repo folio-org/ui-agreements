@@ -1,0 +1,8 @@
+{
+    "accessDenied.close": "Bezár",
+    "accessDenied.message": "Válasszon egy szolgáltatási pontot <strong>{displayName}</strong> a belépéshez! Kérem, adjon egy vagy több szolgáltatási pontot felhasználói rekodjához a <strong>Felhasználók</strong> alkalmazásban! Ha nem tud szolgáltatási pontot adni felhasználói rekodjához, szóljon egy adminisztrátornak.",
+    "accessDenied.title": "Hozzáférés megtagadva",
+    "meta.title": "Szolgáltatási pontok",
+    "selectServicePoint": "Szolgáltatási pont kiválasztása",
+    "userDropdown.switchServicePoint": "Szolgáltatási pont váltása"
+}

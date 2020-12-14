@@ -1,0 +1,19 @@
+{
+    "meta.title": "Profilom",
+    "permission.settings.change-password": "Settings (My profile): Can change your local password",
+    "permission.settings.enabled": "Settings (My profile): display list of settings pages",
+    "settings.changePassword.confirmPassword": "FOLIO jelszó megerősítése",
+    "settings.changePassword.confirmPasswordMatchError": "Az új és a megerősíttett jelszó nem egyezik meg. Írja be újra a jelszavát.",
+    "settings.changePassword.currentPassword": "Jelenlegi FOLIO jelszó",
+    "settings.changePassword.enterValue": "Adjon meg egy értéket.",
+    "settings.changePassword.hidePassword": "Jelszó elrejtése",
+    "settings.changePassword.label": "Jelszó módosítása",
+    "settings.changePassword.lastTenPasswords": "Korábban használt jelszó. Adjon meg új jelszót.",
+    "settings.changePassword.newPassword": "Új FOLIO jelszó",
+    "settings.changePassword.save": "Mentés",
+    "settings.changePassword.showPassword": "Jelszó megjelenítése",
+    "settings.changePassword.successfullyChanged": "A <strong>FOLIO jelszó</strong> sikeresen <strong>módosítva</strong> a <strong>{lastName}</strong>, <strong>{firstName}</strong>",
+    "settings.changePassword.wrongPassword": "Hibás jelszó. Írja be újra a jelszavát!",
+    "settings.index.paneTitle": "Profilom",
+    "userDropdown.changePassword.caption": "Jelszó módosítása"
+}

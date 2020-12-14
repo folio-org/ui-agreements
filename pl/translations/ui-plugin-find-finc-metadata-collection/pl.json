@@ -1,0 +1,19 @@
+{
+    "assigned": "Przypisane",
+    "button.close": "Close",
+    "button.save": "Save",
+    "filterValue.no": "No",
+    "filterValue.undetermined": "Undetermined",
+    "filterValue.yes": "Yes",
+    "freeContent": "Free content",
+    "isEmptyMessage": "No results found. Please check your filters.",
+    "label": "Name",
+    "mdSource": "Metadata source",
+    "meta.title": "plugin-find-finc-metadata-collection",
+    "modal.label": "Select metadata collection",
+    "modal.paneTitle": "Metadata collections",
+    "modal.totalSelected": "Total selected: {count}",
+    "permitted": "Usage permitted",
+    "searchButton.title": "Find metadata collection",
+    "selected": "Selected"
+}

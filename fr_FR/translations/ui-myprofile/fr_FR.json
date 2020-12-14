@@ -1,0 +1,19 @@
+{
+    "meta.title": "Mon profil",
+    "permission.settings.change-password": "Settings (My profile): Can change your local password",
+    "permission.settings.enabled": "Settings (My profile): display list of settings pages",
+    "settings.changePassword.confirmPassword": "Confirmer le mot de passe FOLIO",
+    "settings.changePassword.confirmPasswordMatchError": "La confirmation et le mot de passe ne correspondent pas. Ressaisir votre mot de passe.",
+    "settings.changePassword.currentPassword": "Mot de passe FOLIO actuel",
+    "settings.changePassword.enterValue": "Merci de saisir une valeur",
+    "settings.changePassword.hidePassword": "Masquer le mot de passe",
+    "settings.changePassword.label": "Changer le mot de passe",
+    "settings.changePassword.lastTenPasswords": "Mot de passe précédemment utilisé. Merci de saisir un nouveau mot de passe.",
+    "settings.changePassword.newPassword": "Nouveau mot de passe FOLIO",
+    "settings.changePassword.save": "Sauvegarder",
+    "settings.changePassword.showPassword": "Afficher le mot de passe",
+    "settings.changePassword.successfullyChanged": "Le <strong> mot de passe FOLIO </strong> a été <strong> changé </strong> avec succès pour <strong> {lastName} </strong> , <strong> {firstName} </strong>",
+    "settings.changePassword.wrongPassword": "Mot de passe incorrect. Retaper votre mot de passe.",
+    "settings.index.paneTitle": "Mon profil",
+    "userDropdown.changePassword.caption": "Changer le mot de passe"
+}

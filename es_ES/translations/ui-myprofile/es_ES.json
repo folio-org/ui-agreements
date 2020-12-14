@@ -1,0 +1,19 @@
+{
+    "meta.title": "My profile",
+    "permission.settings.change-password": "Configuración (Mi perfil): puede cambiar su contraseña local",
+    "permission.settings.enabled": "Ajustes (Mi perfil): presentar la lista de páginas de ajustes",
+    "settings.changePassword.confirmPassword": "Confirmar contraseña FOLIO",
+    "settings.changePassword.confirmPasswordMatchError": "Las contraseñas no coinciden. Vuelva a introducir la contraseña.",
+    "settings.changePassword.currentPassword": "Contraseña FOLIO actual",
+    "settings.changePassword.enterValue": "Por favor, introduzca un valor.",
+    "settings.changePassword.hidePassword": "Ocultar contraseña",
+    "settings.changePassword.label": "Cambiar contraseña",
+    "settings.changePassword.lastTenPasswords": "Contraseña introducida anteriormente. Por favor, introduzca otra contraseña.",
+    "settings.changePassword.newPassword": "Nueva contraseña FOLIO",
+    "settings.changePassword.save": "Guardar",
+    "settings.changePassword.showPassword": "Mostrar contraseña",
+    "settings.changePassword.successfullyChanged": "La <strong>contraseña FOLIO</strong>ha sido<strong>modificada</strong> para <strong>{lastName}</strong>, <strong>{firstName}</strong>",
+    "settings.changePassword.wrongPassword": "Contraseña incorrecta. Vuelva a introducir la contraseña.",
+    "settings.index.paneTitle": "My profile",
+    "userDropdown.changePassword.caption": "Modificar contraseña"
+}

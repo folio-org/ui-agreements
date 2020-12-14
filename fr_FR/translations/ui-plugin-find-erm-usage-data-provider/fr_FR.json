@@ -1,0 +1,12 @@
+{
+    "information.aggregator": "Agrégateur",
+    "information.aggregators": "Agrégateurs",
+    "information.harvestingStatus": "Statut du moissonnage",
+    "information.harvestVia": "Moissonnage via",
+    "information.latestStatistics": "Dernières statistiques",
+    "information.providerName": "Nom du fournisseur",
+    "meta.title": "Usage-data-provider-finder (plugin)",
+    "modal.label": "Sélectionner le fournisseur de données d'utilisation",
+    "searchButton.title": "Trouver un fournisseur de données d'utilisation",
+    "udp.searchInputLabel": "Search usage data providers"
+}

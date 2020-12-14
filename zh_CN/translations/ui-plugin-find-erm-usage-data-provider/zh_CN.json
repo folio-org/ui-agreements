@@ -1,0 +1,12 @@
+{
+    "information.aggregator": "聚合器",
+    "information.aggregators": "聚合器",
+    "information.harvestingStatus": "收割状态",
+    "information.harvestVia": "通过收割",
+    "information.latestStatistics": "最新统计",
+    "information.providerName": "提供者名称",
+    "meta.title": "使用数据提供者寻找器（插件）",
+    "modal.label": "选择使用数据提供者",
+    "searchButton.title": "查找使用数据提供者",
+    "udp.searchInputLabel": "搜索使用数据提供者"
+}

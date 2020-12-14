@@ -1,0 +1,18 @@
+{
+    "active": "Aktiv",
+    "contact.email": "E-Mail",
+    "inactive": "Inaktiv",
+    "information.barcode": "Barcode",
+    "information.name": "Name",
+    "information.patronGroup": "Personengruppe",
+    "information.username": "Systemkennung",
+    "meta.title": "Personen-Finder (Plugin)",
+    "modal.close": "Schließen",
+    "modal.label": "Person auswählen",
+    "modal.save": "Speichern",
+    "modal.total": "Insgesamt ausgewählt: {count}",
+    "noResults": "Filter auswählen oder Suchanfrage eingeben, um Ergebnisse anzuzeigen.",
+    "searchButton.title": "Person finden",
+    "searchFieldLabel": "Suche",
+    "status": "Status"
+}

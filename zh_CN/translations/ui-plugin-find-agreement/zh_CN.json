@@ -1,0 +1,17 @@
+{
+    "agreements": "协议",
+    "meta.title": "协议查找器插件",
+    "permission.search": "查找协议插件：搜索协议",
+    "prop.agreementStatus": "状态",
+    "prop.cancellationDeadline": "取消截止日期",
+    "prop.isPerpetual": "永久的",
+    "prop.name": "名称",
+    "prop.organizations": "组织",
+    "prop.orgRole": "组织角色",
+    "prop.periodEnd": "期限结束",
+    "prop.periodStart": "期限开始",
+    "prop.renewalPriority": "续订优先权",
+    "prop.tags": "标签",
+    "searchInputLabel": "搜索协议",
+    "selectAgreement": "选择协议"
+}

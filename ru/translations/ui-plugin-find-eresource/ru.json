@@ -1,0 +1,18 @@
+{
+    "eresources": "Электронные ресурсы",
+    "meta.title": "Плагин поиска электронных ресурсов",
+    "no": "Нет",
+    "package": "Пакет",
+    "permission.search": "Найти плагин электронных ресурсов: Поиск электронных ресурсов",
+    "prop.eissn": "ISSN (онлайн)",
+    "prop.isbn": "ISBN",
+    "prop.isPackage": "Является пакетом",
+    "prop.name": "Название",
+    "prop.pissn": "ISSN (печатный)",
+    "prop.sourceKb": "Внешний источник данных",
+    "prop.type": "Тип",
+    "searchInputLabel": "Поиск электронных ресурсов",
+    "selectEresource": "Выбрать электронный ресурс",
+    "title": "Заголовок",
+    "yes": "Да"
+}

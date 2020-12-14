@@ -1,0 +1,20 @@
+{
+    "addProfile": "Add {profileType}",
+    "confirmationModal.heading": "Relink {profileType}?",
+    "confirmationModal.label": "Relink",
+    "confirmationModal.multiple.body": "One or more of these {profileType}s is already linked to other {linkedProfileType}(s). Do you want to unlink from the previous {linkedProfileType}(s) and relink to this <b>{currentProfileName}</b> {linkedProfileType}?",
+    "confirmationModal.note": "<b>NOTE</b> that the {profileType}(s) will not be relinked until you save the {parentType}.",
+    "confirmationModal.single.body": "This {profileType} is already linked to <b>\"{linkedProfileName}\"</b> {linkedProfileType}. Do you want to unlink from the previous {linkedProfileType} and relink to this <b>{currentProfileName}</b> {linkedProfileType}?",
+    "entities.actionProfiles": "Action Profiles",
+    "entities.jobProfiles": "Профили заданий",
+    "entities.mappingProfiles": "Field Mapping Profiles",
+    "entities.matchProfiles": "Match Profiles",
+    "meta.pluginTitle": "Test Find Profile Plugin",
+    "meta.title": "{profileType}",
+    "modal.footer.close": "Закрыть",
+    "modal.footer.save": "Сохранить",
+    "modal.footer.totalSelected": "Total selected: {count}",
+    "modal.title": "Выберите {profileType}",
+    "pluggable.caption": "Pick Profile",
+    "pluggable.errors.plugin.disabled": "No plugin available!"
+}

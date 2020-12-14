@@ -1,0 +1,8 @@
+{
+    "accessDenied.close": "Schließen",
+    "accessDenied.message": "Eine Servicestelle muss ausgewählt werden, um auf die App <strong>{displayName}</strong> zuzugreifen. Bitte eine oder mehrere Servicestellen zu Ihrem Benutzerdatensatz in der <strong>Nutzer</strong> App hinzufügen oder den Administrator kontaktieren, um Servicestellen hinzufügen zu lassen.",
+    "accessDenied.title": "Zugriff verweigert",
+    "meta.title": "Servicestelle",
+    "selectServicePoint": "Servicestelle auswählen",
+    "userDropdown.switchServicePoint": "Servicestelle wechseln"
+}

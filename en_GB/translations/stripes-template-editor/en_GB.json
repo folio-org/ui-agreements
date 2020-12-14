@@ -1,0 +1,23 @@
+{
+    "addToken": "Add token",
+    "close": "Close",
+    "preview": "Preview",
+    "print": "Print",
+    "toolbar.align.center": "center",
+    "toolbar.align.justify": "justify",
+    "toolbar.align.noAlign": "no align",
+    "toolbar.align.right": "right",
+    "toolbar.indent.decrease": "decrease indent",
+    "toolbar.indent.increase": "increase indent",
+    "toolbar.link": "link",
+    "toolbar.list.bullet": "bullet list",
+    "toolbar.list.ordered": "ordered list",
+    "toolbar.size": "size",
+    "toolbar.size.huge": "huge",
+    "toolbar.size.large": "large",
+    "toolbar.size.normal": "normal",
+    "toolbar.size.small": "small",
+    "toolbar.text.bold": "bold",
+    "toolbar.text.italic": "italic",
+    "toolbar.text.underline": "underline"
+}

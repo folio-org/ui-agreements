@@ -1,0 +1,12 @@
+{
+    "meta.title": "Etiquetas",
+    "permission.all": "Tags: All permissions",
+    "permission.create": "Tags: Create tags",
+    "permission.delete": "Tags: Delete tags",
+    "permission.edit": "Tags: Edit tags",
+    "permission.view": "Tags on records: View only",
+    "settings.enableTags": "Permitir etiquetas",
+    "settings.general.label": "General",
+    "settings.index.paneTitle": "Etiquetas",
+    "settings.tags.label": "Etiquetas"
+}

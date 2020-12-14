@@ -1,0 +1,17 @@
+{
+    "meta.title": "ملاحظات",
+    "permission.item.assign-unassign": "ملاحظات: إمكانية تعيين وإلغاء تعيين ملاحظة",
+    "permission.item.create": "ملاحظات: إمكانية إنشاء ملاحظة",
+    "permission.item.delete": "ملاحظات: إمكانية حذف ملاحظة",
+    "permission.item.edit": "ملاحظات: إمكانية تحرير ملاحظة",
+    "permission.item.view": "ملاحظات: إمكانية عرض ملاحظة",
+    "permission.module.notes.enabled": "واجهة المستخدم: تم تفعيل وحدة ملاحظات-واجهة المستخدم",
+    "permission.notes.enabled": "الإعدادات (ملاحظات): اعرض قائمة بصفحات الإعدادات",
+    "settings.duplicated": "{field} مكرر",
+    "settings.general": "عام",
+    "settings.index.paneTitle": "ملاحظات",
+    "settings.maxAmout": "الحد الأقصى لعدد أنواع الملاحظات المسموح بها هو {amount} .",
+    "settings.notes": "ملاحظات",
+    "settings.noteType": "نوع الملاحظة",
+    "settings.noteTypes": "أنواع الملاحظات"
+}

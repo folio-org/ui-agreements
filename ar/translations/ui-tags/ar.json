@@ -1,0 +1,12 @@
+{
+    "meta.title": "الوسوم",
+    "permission.all": "الوسوم: كل الصلاحيات",
+    "permission.create": "الوسوم: أنشئ وسوم",
+    "permission.delete": "الوسوم: احذف الوسوم",
+    "permission.edit": "الوسوم: حرّر الوسوم",
+    "permission.view": "وسوم على التسجيلات: اعرض فقط",
+    "settings.enableTags": "تفعيل الوسوم",
+    "settings.general.label": "عام",
+    "settings.index.paneTitle": "الوسوم",
+    "settings.tags.label": "الوسوم"
+}

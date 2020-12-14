@@ -1,0 +1,17 @@
+{
+    "meta.title": "附注",
+    "permission.item.assign-unassign": "附注：可以分配和取消分配附注",
+    "permission.item.create": "附注：可以创建附注",
+    "permission.item.delete": "附注：可以删除附注",
+    "permission.item.edit": "附注：可以编辑附注",
+    "permission.item.view": "附注：可以查看附注",
+    "permission.module.notes.enabled": "UI：启用了ui-附注模块",
+    "permission.notes.enabled": "设置（附注）：设置页面显示清单",
+    "settings.duplicated": "{field}重复",
+    "settings.general": "通用",
+    "settings.index.paneTitle": "附注",
+    "settings.maxAmout": "允许的附注类型最大为{amount} 。",
+    "settings.notes": "附注",
+    "settings.noteType": "附注类型",
+    "settings.noteTypes": "附注类型"
+}

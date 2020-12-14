@@ -1,0 +1,7 @@
+{
+    "meta.title": "Instance-finder (plugin)",
+    "modal.title": "Seleziona istanza",
+    "noSourceYet": "Ancora nessuna fonte",
+    "resultsHeader": "Risultati ricerca",
+    "totalSelected": "Totale selezionato: {count}"
+}

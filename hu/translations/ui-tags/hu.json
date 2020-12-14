@@ -1,0 +1,12 @@
+{
+    "meta.title": "Címkék",
+    "permission.all": "Tags: All permissions",
+    "permission.create": "Tags: Create tags",
+    "permission.delete": "Tags: Delete tags",
+    "permission.edit": "Tags: Edit tags",
+    "permission.view": "Tags on records: View only",
+    "settings.enableTags": "Címkék engedélyezése",
+    "settings.general.label": "Általános",
+    "settings.index.paneTitle": "Címkék",
+    "settings.tags.label": "Címkék"
+}

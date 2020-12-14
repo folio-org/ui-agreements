@@ -1,0 +1,16 @@
+{
+    "button.addInterface": "인터페이스 추가",
+    "interface.name": "이름",
+    "interface.notes": "노트",
+    "interface.type": "유형",
+    "interface.type.admin": "관리자",
+    "interface.type.endUser": "이용자",
+    "interface.type.invoices": "인보이스",
+    "interface.type.orders": "주문",
+    "interface.type.other": "기타",
+    "interface.type.reports": "보고서",
+    "interface.url": "URL",
+    "meta.title": "인터페이스",
+    "modal.title": "인터페이스 추가",
+    "modal.totalSelected": "선택한 총: {수}"
+}

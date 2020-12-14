@@ -1,0 +1,18 @@
+{
+    "active": "啟用",
+    "contact.email": "電子郵件",
+    "inactive": "未啟用",
+    "information.barcode": "條碼",
+    "information.name": "名稱",
+    "information.patronGroup": "讀者群組",
+    "information.username": "使用者名稱",
+    "meta.title": "用户查找器（插件）",
+    "modal.close": "關閉",
+    "modal.label": "選擇使用者",
+    "modal.save": "儲存",
+    "modal.total": "已選總數：{count}",
+    "noResults": "點一個篩選項目或是輸入關鍵字以顯示結果。",
+    "searchButton.title": "查詢使用者",
+    "searchFieldLabel": "查詢",
+    "status": "狀態"
+}

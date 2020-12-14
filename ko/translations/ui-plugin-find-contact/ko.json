@@ -1,0 +1,14 @@
+{
+    "button.addContact": "담당자 추가",
+    "button.cancel": "취소",
+    "button.save": "저장",
+    "contact.categories": "카테고리",
+    "contact.name": "이름",
+    "contact.status": "상태",
+    "contact.status.active": "활성",
+    "contact.status.inactive": "비활성",
+    "meta.pluginTitle": "담당자",
+    "meta.title": "공급사 (플러그인)에 '담당자' 추가 (할당)",
+    "modal.title": "담당자 추가",
+    "totalSelected": "선택한 총계 : {count}"
+}

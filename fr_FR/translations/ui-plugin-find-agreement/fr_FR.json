@@ -1,0 +1,17 @@
+{
+    "agreements": "Accords",
+    "meta.title": "Recherche d'accords ERM (plugin)",
+    "permission.search": "Find Agreement Plugin: Search agreements",
+    "prop.agreementStatus": "Statut",
+    "prop.cancellationDeadline": "Date limite d'annulation",
+    "prop.isPerpetual": "Perpétuel ? (O/N)",
+    "prop.name": "Nom",
+    "prop.organizations": "Organisations",
+    "prop.orgRole": "Rôle de l'organisation",
+    "prop.periodEnd": "Fin de période",
+    "prop.periodStart": "Début de période",
+    "prop.renewalPriority": "Priorité de renouvellement",
+    "prop.tags": "Mots-clés",
+    "searchInputLabel": "Rechercher parmi les accords",
+    "selectAgreement": "Sélectionner un accord"
+}

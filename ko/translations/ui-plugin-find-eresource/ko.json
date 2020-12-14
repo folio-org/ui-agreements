@@ -1,0 +1,18 @@
+{
+    "eresources": "전자자원",
+    "meta.title": "전자자원 찾기 플러그인",
+    "no": "아니요",
+    "package": "패키지",
+    "permission.search": "전자자원 플러그인 찾기 : 전자자원 검색",
+    "prop.eissn": "ISSN (온라인)",
+    "prop.isbn": "ISBN",
+    "prop.isPackage": "패키지입니다",
+    "prop.name": "이름",
+    "prop.pissn": "ISSN (인쇄)",
+    "prop.sourceKb": "외부 데이터 소스",
+    "prop.type": "유형",
+    "searchInputLabel": "전자자원 검색",
+    "selectEresource": "전자자원 선택",
+    "title": "타이틀",
+    "yes": "예"
+}

@@ -1,0 +1,19 @@
+{
+    "meta.title": "ملفي الشخصي",
+    "permission.settings.change-password": "الإعدادات (بروفايلي): إمكانية تغيير كلمة مرورك المحلية",
+    "permission.settings.enabled": "الإعدادات (بروفايلي): اعرض قائمة بصفحات الإعدادات",
+    "settings.changePassword.confirmPassword": "تأكيد كلمة مرور فوليو",
+    "settings.changePassword.confirmPasswordMatchError": "كلمة المرور الجديدة وتأكيدها غير متطابقين. أعد كتابة كلمة المرور الخاصة بك.",
+    "settings.changePassword.currentPassword": "كلمة مرور فوليو الحالية",
+    "settings.changePassword.enterValue": "يرجى إدخال قيمة.",
+    "settings.changePassword.hidePassword": "إخفاء كلمة المرور",
+    "settings.changePassword.label": "تغيير كلمة المرور",
+    "settings.changePassword.lastTenPasswords": "سبق استخدام كلمة المرور هذه. الرجاء إدخال كلمة مرور جديدة.",
+    "settings.changePassword.newPassword": "كلمة مرور فوليو الجديدة",
+    "settings.changePassword.save": "حفظ",
+    "settings.changePassword.showPassword": "إظهار كلمة المرور",
+    "settings.changePassword.successfullyChanged": "تم تغيير <strong> كلمة مرور فوليو </strong> بنجاح <strong> </strong>  لـ <strong> {lastName} </strong> و <strong> {firstName} </strong>",
+    "settings.changePassword.wrongPassword": "كلمة المرور غير صحيحة. أعد كتابة كلمة المرور الخاصة بك.",
+    "settings.index.paneTitle": "ملفي الشخصي",
+    "userDropdown.changePassword.caption": "تغيير كلمة المرور"
+}

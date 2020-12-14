@@ -1,0 +1,14 @@
+{
+    "button.addContact": "添加联系人",
+    "button.cancel": "取消",
+    "button.save": "儲存",
+    "contact.categories": "类别",
+    "contact.name": "名稱",
+    "contact.status": "狀態",
+    "contact.status.active": "啟用",
+    "contact.status.inactive": "未啟用",
+    "meta.pluginTitle": "联系人",
+    "meta.title": "向组织添加（分配）“联系人”（插件）",
+    "modal.title": "添加联系人",
+    "totalSelected": "已選總數：{count}"
+}

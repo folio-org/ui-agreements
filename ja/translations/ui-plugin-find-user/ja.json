@@ -1,0 +1,18 @@
+{
+    "active": "有効",
+    "contact.email": "Eメール",
+    "inactive": "無効",
+    "information.barcode": "バーコード",
+    "information.name": "名称",
+    "information.patronGroup": "利用者グループ",
+    "information.username": "ユーザー名",
+    "meta.title": "ユーザーファインダー（プラグイン）",
+    "modal.close": "閉じる",
+    "modal.label": "ユーザーを選択",
+    "modal.save": "保存",
+    "modal.total": "選択済合計： {count}",
+    "noResults": "フィルターを選択するか、検索クエリを入力して結果を表示します。",
+    "searchButton.title": "Find User",
+    "searchFieldLabel": "検索",
+    "status": "ステータス"
+}

@@ -1,0 +1,16 @@
+{
+    "button.addInterface": "インターフェースを追加",
+    "interface.name": "名称",
+    "interface.notes": "ノート",
+    "interface.type": "種類",
+    "interface.type.admin": "Admin",
+    "interface.type.endUser": "End user",
+    "interface.type.invoices": "Invoices",
+    "interface.type.orders": "発注",
+    "interface.type.other": "その他",
+    "interface.type.reports": "Reports",
+    "interface.url": "URL",
+    "meta.title": "インターフェース",
+    "modal.title": "Add interfaces",
+    "modal.totalSelected": "選択済合計： {count}"
+}

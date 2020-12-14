@@ -1,0 +1,12 @@
+{
+    "meta.title": "标签",
+    "permission.all": "标签：所有权限",
+    "permission.create": "标签：创建标签",
+    "permission.delete": "标签：删除标签",
+    "permission.edit": "标签：编辑标签",
+    "permission.view": "记录标签：仅查看",
+    "settings.enableTags": "启用标签",
+    "settings.general.label": "通用",
+    "settings.index.paneTitle": "标签",
+    "settings.tags.label": "标签"
+}

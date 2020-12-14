@@ -1,0 +1,6 @@
+{
+    "error.noHolding": "No holding for selected location is available for the instance",
+    "error.onSave": "アイテムを作成できません",
+    "meta.title": "アイテムを作成（プラグイン）",
+    "success.onSave": "The Item has been successfully saved"
+}

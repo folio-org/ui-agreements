@@ -1,0 +1,14 @@
+{
+    "licenses": "授權憑證",
+    "meta.title": "许可证查找器插件",
+    "permission.search": "Find License Plugin: Search licenses",
+    "prop.endDate": "结束日期",
+    "prop.name": "名稱",
+    "prop.organization": "組織機構",
+    "prop.organizationRole": "組織機構角色",
+    "prop.startDate": "開始日期",
+    "prop.status": "狀態",
+    "prop.type": "類型",
+    "searchInputLabel": "查詢授權憑證",
+    "selectLicense": "選擇授權憑證"
+}

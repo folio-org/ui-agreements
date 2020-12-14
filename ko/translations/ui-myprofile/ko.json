@@ -1,0 +1,19 @@
+{
+    "meta.title": "내 프로파일",
+    "permission.settings.change-password": "Settings (My profile): Can change your local password",
+    "permission.settings.enabled": "Settings (My profile): display list of settings pages",
+    "settings.changePassword.confirmPassword": "FOLIO 비밀번호 확인",
+    "settings.changePassword.confirmPasswordMatchError": "신규 및 확인 비밀번호가 일치하지 않습니다. 비밀번호를 다시 입력하십시오.",
+    "settings.changePassword.currentPassword": "현재 FOLIO 비밀번호",
+    "settings.changePassword.enterValue": "값을 입력하세요.",
+    "settings.changePassword.hidePassword": "비밀번호 숨기기",
+    "settings.changePassword.label": "비밀번호 변경",
+    "settings.changePassword.lastTenPasswords": "이전에 사용한 비밀번호입니다. 새 비밀번호를 입력하세요.",
+    "settings.changePassword.newPassword": "새로운 FOLIO 비밀번호",
+    "settings.changePassword.save": "저장",
+    "settings.changePassword.showPassword": "비밀번호 표시",
+    "settings.changePassword.successfullyChanged": "<strong> FOLIO 암호 </strong> 성공적으로되었습니다 <strong> 변경 </strong> 위한 <strong> {lastName} </strong> , <strong> {firstName} </strong>",
+    "settings.changePassword.wrongPassword": "잘못된 비밀번호. 비밀번호를 다시 입력하십시오.",
+    "settings.index.paneTitle": "내 프로파일",
+    "userDropdown.changePassword.caption": "비밀번호 변경"
+}

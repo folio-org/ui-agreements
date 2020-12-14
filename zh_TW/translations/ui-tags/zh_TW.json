@@ -1,0 +1,12 @@
+{
+    "meta.title": "標籤",
+    "permission.all": "Tags: All permissions",
+    "permission.create": "Tags: Create tags",
+    "permission.delete": "Tags: Delete tags",
+    "permission.edit": "Tags: Edit tags",
+    "permission.view": "Tags on records: View only",
+    "settings.enableTags": "啟用標籤",
+    "settings.general.label": "一般",
+    "settings.index.paneTitle": "標籤",
+    "settings.tags.label": "標籤"
+}

@@ -1,0 +1,14 @@
+{
+    "licenses": "Lizenzverträge",
+    "meta.title": "Plugin Lizenzverträge suchen",
+    "permission.search": "Plugin: Lizenzverträge suchen",
+    "prop.endDate": "Enddatum",
+    "prop.name": "Name",
+    "prop.organization": "Organisation",
+    "prop.organizationRole": "Rolle der Organisation",
+    "prop.startDate": "Startdatum",
+    "prop.status": "Status",
+    "prop.type": "Typ",
+    "searchInputLabel": "Lizenzverträge suchen",
+    "selectLicense": "Lizenzverträge auswählen"
+}

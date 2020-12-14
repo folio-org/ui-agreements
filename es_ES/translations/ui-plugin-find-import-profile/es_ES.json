@@ -1,0 +1,20 @@
+{
+    "addProfile": "Añadir {profileType}",
+    "confirmationModal.heading": "Volver a vincular {profileType} ?",
+    "confirmationModal.label": "Volver a vincular",
+    "confirmationModal.multiple.body": "One or more of these {profileType}s is already linked to other {linkedProfileType}(s). Do you want to unlink from the previous {linkedProfileType}(s) and relink to this <b>{currentProfileName}</b> {linkedProfileType}?",
+    "confirmationModal.note": "<b> NOTA </b> que {profileType} no se volverá a vincular hasta que guarde {parentType}",
+    "confirmationModal.single.body": "Este {profileType} ya está vinculado a <b> \" {linkedProfileName} \" </b> {linkedProfileType} . ¿Desea desvincularse del {linkedProfileType} y volver a vincular a este <b> \" {currentProfileName} \" </b> {linkedProfileType}",
+    "entities.actionProfiles": "Perfiles de acción",
+    "entities.jobProfiles": "Perfiles de procesos",
+    "entities.mappingProfiles": "Perfiles de mapeo de campo",
+    "entities.matchProfiles": "Perfiles de coincidencia",
+    "meta.pluginTitle": "Probar el plugin de perfil de búsqueda",
+    "meta.title": "{profileType}",
+    "modal.footer.close": "Cerrar",
+    "modal.footer.save": "Guardar",
+    "modal.footer.totalSelected": "Total seleccionado: {count}",
+    "modal.title": "Seleccione {profileType}",
+    "pluggable.caption": "Seleccionar perfil",
+    "pluggable.errors.plugin.disabled": "No hay plugin disponible!"
+}

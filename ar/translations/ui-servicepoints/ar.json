@@ -1,0 +1,8 @@
+{
+    "accessDenied.close": "إغلاق",
+    "accessDenied.message": "يجب تحديد نقطة خدمة للوصول إلى التطبيق <strong> {displayName} </strong> . يرجى إضافة نقطة خدمة واحدة أو أكثر لتسجيلة المستخدم الخاصة بك في تطبيق <strong> المستخدمين </strong> . اتصل بأحد المشرفين إذا لم تكن قادراً على إضافة نقاط الخدمة إلى تسجيلتك.",
+    "accessDenied.title": "تم رفض الوصول",
+    "meta.title": "نقاط الخدمة",
+    "selectServicePoint": "حدد نقطة خدمة",
+    "userDropdown.switchServicePoint": "تبديل نقطة الخدمة"
+}

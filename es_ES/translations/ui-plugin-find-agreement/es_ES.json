@@ -1,0 +1,17 @@
+{
+    "agreements": "Agreements",
+    "meta.title": "Agreement Finder Plugin",
+    "permission.search": "Find Agreement Plugin: Search agreements",
+    "prop.agreementStatus": "Estado del acuerdo",
+    "prop.cancellationDeadline": "Cancellation deadline",
+    "prop.isPerpetual": "Is perpetual",
+    "prop.name": "Name",
+    "prop.organizations": "Organizations",
+    "prop.orgRole": "Rol",
+    "prop.periodEnd": "Fin del período",
+    "prop.periodStart": "Inicio del período",
+    "prop.renewalPriority": "Renewal priority",
+    "prop.tags": "Tags",
+    "searchInputLabel": "Buscar acuerdos",
+    "selectAgreement": "Select agreement"
+}

@@ -1,0 +1,17 @@
+{
+    "agreements": "اتفاقيات",
+    "meta.title": "برنامج باحث الاتفاقية المساعد",
+    "permission.search": "برنامج باحث الإتفاقية المساعد: ابحث الإتفاقيات",
+    "prop.agreementStatus": "الحالة",
+    "prop.cancellationDeadline": "الموعد النهائي للإلغاء",
+    "prop.isPerpetual": "دائم",
+    "prop.name": "الاسم",
+    "prop.organizations": "المؤسسات",
+    "prop.orgRole": "دور المؤسسة",
+    "prop.periodEnd": "انتهاء الفترة",
+    "prop.periodStart": "بدء الفترة",
+    "prop.renewalPriority": "أولوية التجديد",
+    "prop.tags": "الوسوم",
+    "searchInputLabel": "بحث الاتفاقيات",
+    "selectAgreement": "اختر اتفاقية"
+}

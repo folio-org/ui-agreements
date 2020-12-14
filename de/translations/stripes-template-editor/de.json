@@ -1,0 +1,23 @@
+{
+    "addToken": "Token hinzufügen",
+    "close": "Schließen",
+    "preview": "Vorschau",
+    "print": "Drucken",
+    "toolbar.align.center": "Zentrieren",
+    "toolbar.align.justify": "Ausrichten",
+    "toolbar.align.noAlign": "keine Ausrichtung",
+    "toolbar.align.right": "rechtsbündig",
+    "toolbar.indent.decrease": "Einzug verringern",
+    "toolbar.indent.increase": "Einzug vergrößern",
+    "toolbar.link": "Verknüpfung",
+    "toolbar.list.bullet": "Aufzählung",
+    "toolbar.list.ordered": "geordnete Liste",
+    "toolbar.size": "Größe",
+    "toolbar.size.huge": "riesig",
+    "toolbar.size.large": "groß",
+    "toolbar.size.normal": "normal",
+    "toolbar.size.small": "klein",
+    "toolbar.text.bold": "fett",
+    "toolbar.text.italic": "kursiv",
+    "toolbar.text.underline": "unterstreichen"
+}

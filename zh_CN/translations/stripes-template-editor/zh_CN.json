@@ -1,0 +1,23 @@
+{
+    "addToken": "添加令牌",
+    "close": "关闭",
+    "preview": "预览",
+    "print": "打印",
+    "toolbar.align.center": "居中",
+    "toolbar.align.justify": "证明",
+    "toolbar.align.noAlign": "没有对齐",
+    "toolbar.align.right": "靠右",
+    "toolbar.indent.decrease": "减少缩进",
+    "toolbar.indent.increase": "增加缩进",
+    "toolbar.link": "链接",
+    "toolbar.list.bullet": "项目符号清单",
+    "toolbar.list.ordered": "有序清单",
+    "toolbar.size": "大小",
+    "toolbar.size.huge": "巨大",
+    "toolbar.size.large": "大",
+    "toolbar.size.normal": "正常",
+    "toolbar.size.small": "小",
+    "toolbar.text.bold": "加粗",
+    "toolbar.text.italic": "斜体",
+    "toolbar.text.underline": "下划线"
+}

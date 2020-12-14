@@ -1,0 +1,17 @@
+{
+    "meta.title": "Note",
+    "permission.item.assign-unassign": "Notes: Can assign and unassign a note",
+    "permission.item.create": "Notes: Can create a note",
+    "permission.item.delete": "Note: può eliminare una nota",
+    "permission.item.edit": "Note: può modificare una nota",
+    "permission.item.view": "Note: può visualizzare una nota",
+    "permission.module.notes.enabled": "UI: ui-notes module is enabled",
+    "permission.notes.enabled": "Settings (notes): display list of settings pages",
+    "settings.duplicated": "{field} duplicato",
+    "settings.general": "Generale",
+    "settings.index.paneTitle": "Note",
+    "settings.maxAmout": "Il numero massimo di tipi di nota consentiti è {amount} .",
+    "settings.notes": "Note",
+    "settings.noteType": "Tipologia nota",
+    "settings.noteTypes": "Tipologie nota"
+}

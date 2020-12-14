@@ -1,0 +1,12 @@
+{
+    "information.aggregator": "Aggregator",
+    "information.aggregators": "Aggregatori",
+    "information.harvestingStatus": "Harvesting status",
+    "information.harvestVia": "Harvest via",
+    "information.latestStatistics": "Latest statistics",
+    "information.providerName": "Nome del fornitore",
+    "meta.title": "Usage-data-provider-finder (plugin)",
+    "modal.label": "Seleziona un fornitore di statistiche d'uso",
+    "searchButton.title": "Trova fornitore di statistiche d'uso",
+    "udp.searchInputLabel": "Cerca fornitori di statistiche d'uso"
+}

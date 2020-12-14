@@ -1,0 +1,14 @@
+{
+    "licenses": "ライセンス",
+    "meta.title": "ライセンスファインダープラグイン",
+    "permission.search": "ライセンスプラグインの検索：ライセンスの検索",
+    "prop.endDate": "終了日",
+    "prop.name": "名称",
+    "prop.organization": "組織",
+    "prop.organizationRole": "組織の役割",
+    "prop.startDate": "開始日",
+    "prop.status": "ステータス",
+    "prop.type": "種類",
+    "searchInputLabel": "ライセンスを検索",
+    "selectLicense": "ライセンスを選択"
+}

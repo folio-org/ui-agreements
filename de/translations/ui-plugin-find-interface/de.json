@@ -1,0 +1,16 @@
+{
+    "button.addInterface": "Interface hinzufügen",
+    "interface.name": "Name",
+    "interface.notes": "Notizen",
+    "interface.type": "Typ",
+    "interface.type.admin": "Admin",
+    "interface.type.endUser": "End user",
+    "interface.type.invoices": "Rechnungen",
+    "interface.type.orders": "Bestellungen",
+    "interface.type.other": "Andere",
+    "interface.type.reports": "Berichte",
+    "interface.url": "URL",
+    "meta.title": "Interfaces",
+    "modal.title": "Interfaces hinzufügen",
+    "modal.totalSelected": "Insgesamt ausgewählt: {count}"
+}

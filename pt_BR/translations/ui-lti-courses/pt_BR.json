@@ -1,0 +1,21 @@
+{
+    "errors.issuersMustBeUnique": "Já existe uma plataforma com este emissor. Os emissores devem ser únicos.",
+    "meta.title": "Ferramenta dos cursos LTI",
+    "platform": "Plataforma LTI",
+    "platform.clientId": "ID do cliente",
+    "platform.clientId.description": "Depois de registrar uma Ferramenta LTI 1.3 com uma Plataforma / LMS (por exemplo, de dentro do Sakai), a Plataforma geralmente gera um ID de Cliente para a Ferramenta. Insira isso aqui. Se o seu LMS permitir que você configure o ID do cliente, digite o mesmo valor aqui que você digita lá.",
+    "platform.cssUrl": "URL do CSS",
+    "platform.cssUrl.description": "A ferramenta renderiza seu conteúdo em um iframe, portanto, o estilo pai é ignorado. Para estilizar a saída da ferramenta, digite a URL de um arquivo CSS aqui e o iframe será buscado e aplicado em um <link> .",
+    "platform.issuer": "Emissor",
+    "platform.jwksUrl": "URL do JWKS",
+    "platform.jwksUrl.description": "Verifique se este URL está acessível ao público. A menos que estejam configurados corretamente, alguns LMSs fornecem um URL que não é responsável por questões como proxies reversos.",
+    "platform.noReservesMessage": "Mensagem \"Sem reservas\"",
+    "platform.noReservesMessage.description": "Quando um curso não tem reservas atuais, esta mensagem será exibida.",
+    "platform.oidcAuthUrl": "URL de autenticação do OIDC",
+    "platform.oidcAuthUrl.description": "Verifique se este URL está acessível ao público. A menos que estejam configurados corretamente, alguns AVAs fornecem um URL que não é responsável por questões como proxies reversos.",
+    "platform.searchUrl": "URL de pesquisa pública",
+    "platform.searchUrl.description": "<div>A URL de pesquisa pública será usado para criar links quando nenhum acesso eletrônico estiver definido para o item reservado. Algumas variáveis podem ser inseridas na URL, por exemplo, https://find.mylibrary.edu?query=[BARCODE]. As variáveis suportadas são:</div> <ul><li>[BARCODE] - O código de barras do item</li> <li>[INSTANCE_HRID] - O HRID da instância</li></ul>",
+    "platforms": "Plataformas LTI",
+    "settings.edit": "Configurações (Ferramenta de cursos LTI): Editar configurações",
+    "settings.view": "Configurações (Ferramenta de cursos LTI): Exibir configurações"
+}

@@ -1,0 +1,19 @@
+{
+    "assigned": "할당 됨",
+    "button.close": "닫기",
+    "button.save": "저장",
+    "filterValue.no": "No",
+    "filterValue.undetermined": "Undetermined",
+    "filterValue.yes": "Yes",
+    "freeContent": "무료 콘텐츠",
+    "isEmptyMessage": "No results found. Please check your filters.",
+    "label": "이름",
+    "mdSource": "메타데이터 소스",
+    "meta.title": "메타데이터 컬렉션 찾기 플러그인 ",
+    "modal.label": "메타데이터 컬렉션 선택",
+    "modal.paneTitle": "Metadata collections",
+    "modal.totalSelected": "선택한 총: {수}",
+    "permitted": "통계 허용",
+    "searchButton.title": "메타데이터 컬렉션 찾기",
+    "selected": "선택된"
+}

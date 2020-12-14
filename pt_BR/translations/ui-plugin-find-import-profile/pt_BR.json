@@ -1,0 +1,20 @@
+{
+    "addProfile": "Adicione {profileType}",
+    "confirmationModal.heading": "Vincular novamente o {profileType}?",
+    "confirmationModal.label": "Revinculação",
+    "confirmationModal.multiple.body": "Um ou mais desses {profileType} já estão vinculados a outros {linkedProfileType}. Deseja desvincular os {linkedProfileType} anteriores e vincular a este <b>{currentProfileName}</b> {linkedProfileType}?",
+    "confirmationModal.note": "<b>NOTA</b> que o {profileType} não será vinculado novamente até que você salve o {parentType}.",
+    "confirmationModal.single.body": "Este {profileType} já está vinculado a <b>\"{linkedProfileName}\"</b> {linkedProfileType}. Deseja desvincular do {linkedProfileType} anterior e vincular a este <b>{currentProfileName}</b> {linkedProfileType}?",
+    "entities.actionProfiles": "Perfis de ação",
+    "entities.jobProfiles": "Perfis de jobs",
+    "entities.mappingProfiles": "Perfis de mapeamento de campo",
+    "entities.matchProfiles": "Perfis de correspondência",
+    "meta.pluginTitle": "Testar plugin de encontrar perfil",
+    "meta.title": "{profileType}",
+    "modal.footer.close": "Fechar",
+    "modal.footer.save": "Salvar",
+    "modal.footer.totalSelected": "Total selecionado: {count}",
+    "modal.title": "Selecione {profileType}",
+    "pluggable.caption": "Escolha o perfil",
+    "pluggable.errors.plugin.disabled": "Nenhum plugin disponível!"
+}

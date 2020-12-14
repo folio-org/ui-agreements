@@ -1,0 +1,17 @@
+{
+    "agreements": "契約",
+    "meta.title": "契約ファインダープラグイン",
+    "permission.search": "Find Agreement Plugin: Search agreements",
+    "prop.agreementStatus": "ステータス",
+    "prop.cancellationDeadline": "キャンセル期限",
+    "prop.isPerpetual": "永続",
+    "prop.name": "名称",
+    "prop.organizations": "組織",
+    "prop.orgRole": "組織の役割",
+    "prop.periodEnd": "期間終了",
+    "prop.periodStart": "期間開始",
+    "prop.renewalPriority": "更新の優先度",
+    "prop.tags": "タグ",
+    "searchInputLabel": "契約を検索",
+    "selectAgreement": "契約を選択"
+}

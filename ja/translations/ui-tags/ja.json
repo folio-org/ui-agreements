@@ -1,0 +1,12 @@
+{
+    "meta.title": "タグ",
+    "permission.all": "タグ：すべての権限",
+    "permission.create": "Tags: Create tags",
+    "permission.delete": "Tags: Delete tags",
+    "permission.edit": "Tags: Edit tags",
+    "permission.view": "Tags on records: View only",
+    "settings.enableTags": "タグを有効にする",
+    "settings.general.label": "一般",
+    "settings.index.paneTitle": "タグ",
+    "settings.tags.label": "タグ"
+}

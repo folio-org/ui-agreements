@@ -1,0 +1,23 @@
+{
+    "addToken": "Ajouter un jeton",
+    "close": "Fermer",
+    "preview": "Aperçu",
+    "print": "Imprimer",
+    "toolbar.align.center": "centrer",
+    "toolbar.align.justify": "Justifier",
+    "toolbar.align.noAlign": "pas d'alignement",
+    "toolbar.align.right": "droite",
+    "toolbar.indent.decrease": "Diminuer le retrait",
+    "toolbar.indent.increase": "augmenter le retrait",
+    "toolbar.link": "Lien",
+    "toolbar.list.bullet": "liste à puces",
+    "toolbar.list.ordered": "liste ordonnée",
+    "toolbar.size": "Taille",
+    "toolbar.size.huge": "Très grand",
+    "toolbar.size.large": "grand",
+    "toolbar.size.normal": "Normal",
+    "toolbar.size.small": "petit",
+    "toolbar.text.bold": "Gras",
+    "toolbar.text.italic": "italique",
+    "toolbar.text.underline": "souligner"
+}

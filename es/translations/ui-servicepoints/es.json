@@ -1,0 +1,8 @@
+{
+    "accessDenied.close": "Close",
+    "accessDenied.message": "Debes seleccionar un punto de servicio para acceder a la aplicación <strong> {displayName} </strong> . Agregue uno o más puntos de servicio a su registro de usuario en la aplicación <strong> Usuarios </strong> . Comuníquese con un administrador si no tiene la capacidad de agregar puntos de servicio a su registro.",
+    "accessDenied.title": "Access Denied",
+    "meta.title": "Service points",
+    "selectServicePoint": "Select service point",
+    "userDropdown.switchServicePoint": "Switch service point"
+}

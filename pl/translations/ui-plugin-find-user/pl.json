@@ -1,0 +1,18 @@
+{
+    "active": "Aktywny",
+    "contact.email": "E-mail",
+    "inactive": "Nieaktywny",
+    "information.barcode": "Kod kreskowy",
+    "information.name": "Nazwa",
+    "information.patronGroup": "Grupa czytelników",
+    "information.username": "Nazwa Użytkownika",
+    "meta.title": "User-finder (wtyczka)",
+    "modal.close": "Zamknij",
+    "modal.label": "Wybierz użytkownika",
+    "modal.save": "Zapisz",
+    "modal.total": "Wybrano łącznie: {count}",
+    "noResults": "Wybierz filtr lub wprowadź zapytanie wyszukiwania, aby wyświetlić wyniki.",
+    "searchButton.title": "Znajdź użytkownika",
+    "searchFieldLabel": "Szukaj",
+    "status": "Status"
+}

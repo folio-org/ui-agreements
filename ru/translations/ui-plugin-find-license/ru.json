@@ -1,0 +1,14 @@
+{
+    "licenses": "Лицензии",
+    "meta.title": "License Finder Plugin",
+    "permission.search": "Find License Plugin: Search licenses",
+    "prop.endDate": "End date",
+    "prop.name": "Name",
+    "prop.organization": "Организация",
+    "prop.organizationRole": "Organization role",
+    "prop.startDate": "Дата начала",
+    "prop.status": "Статус",
+    "prop.type": "Тип",
+    "searchInputLabel": "Поиск лицензий",
+    "selectLicense": "Выберите лицензию"
+}

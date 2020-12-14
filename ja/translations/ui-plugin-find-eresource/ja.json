@@ -1,0 +1,18 @@
+{
+    "eresources": "E-resources",
+    "meta.title": "E-resource Finder Plugin",
+    "no": "No",
+    "package": "Package",
+    "permission.search": "Find E-resource Plugin: Search e-resources",
+    "prop.eissn": "ISSN（オンライン）",
+    "prop.isbn": "ISBN",
+    "prop.isPackage": "Is package",
+    "prop.name": "Name",
+    "prop.pissn": "ISSN (Print)",
+    "prop.sourceKb": "External data source",
+    "prop.type": "Type",
+    "searchInputLabel": "Search e-resources",
+    "selectEresource": "Select e-resource",
+    "title": "タイトル",
+    "yes": "Yes"
+}

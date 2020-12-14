@@ -1,0 +1,12 @@
+{
+    "information.aggregator": "제공사(Aggregator)",
+    "information.aggregators": "제공사(Aggregators)",
+    "information.harvestingStatus": "수집 상태",
+    "information.harvestVia": "수집",
+    "information.latestStatistics": "최신 통계",
+    "information.providerName": "제공사 이름",
+    "meta.title": "이용통계 데이터 제공사 찾기 (플러그인)",
+    "modal.label": "이용통계 데이터 제공사 선택",
+    "searchButton.title": "이용통계 데이터 제공사 찾기",
+    "udp.searchInputLabel": "이용통계 데이터 제공사 검색"
+}

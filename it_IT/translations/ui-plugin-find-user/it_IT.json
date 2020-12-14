@@ -1,0 +1,18 @@
+{
+    "active": "Attivo",
+    "contact.email": "Email",
+    "inactive": "Inattivo",
+    "information.barcode": "Barcode",
+    "information.name": "Nome",
+    "information.patronGroup": "Categoria utente",
+    "information.username": "Nome utente",
+    "meta.title": "Plugin ricerca utenti",
+    "modal.close": "Chiudi",
+    "modal.label": "Seleziona utente",
+    "modal.save": "Salva",
+    "modal.total": "Totale selezionato: {count}",
+    "noResults": "Scegli un filtro o inserisci i termini per visualizzare i risultati.",
+    "searchButton.title": "Trova utente",
+    "searchFieldLabel": "Cerca",
+    "status": "Stato"
+}

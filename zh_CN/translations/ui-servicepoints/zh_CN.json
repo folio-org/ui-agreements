@@ -1,0 +1,8 @@
+{
+    "accessDenied.close": "关闭",
+    "accessDenied.message": "您必须选择服务点才能访问<strong>{displayName}</strong>应用。请在<strong>用户</strong>应用中为为您的用户添加一个或多个服务点。如果您无法添加，请与管理员联系。",
+    "accessDenied.title": "拒绝访问",
+    "meta.title": "服务点",
+    "selectServicePoint": "选择服务点",
+    "userDropdown.switchServicePoint": "切换服务点"
+}

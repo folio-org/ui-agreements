@@ -1,0 +1,8 @@
+{
+    "accessDenied.close": "Fermer",
+    "accessDenied.message": "You must select a service point to access the <strong>{displayName}</strong> app. Please add one or more service points to your user record in the <strong>Users</strong> app. Contact an administrator if you do not have the ability to add service points to your record.",
+    "accessDenied.title": "Accès refusé",
+    "meta.title": "Points/lieux de service",
+    "selectServicePoint": "Sélectionnez un point/lieu de service",
+    "userDropdown.switchServicePoint": "Changer de point/lieu de service"
+}

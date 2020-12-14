@@ -1,0 +1,8 @@
+{
+    "addPOLine": "Add order lines",
+    "meta.title": "オーダーライン",
+    "modal.footer.close": "閉じる",
+    "modal.footer.save": "Save",
+    "modal.footer.totalSelected": "選択済合計： {count}",
+    "modal.title": "Select order lines"
+}

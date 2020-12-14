@@ -1,0 +1,20 @@
+{
+    "addProfile": "Aggiungi {profileType}",
+    "confirmationModal.heading": "Ricollega {profileType} ?",
+    "confirmationModal.label": "Relink",
+    "confirmationModal.multiple.body": "One or more of these {profileType}s is already linked to other {linkedProfileType}(s). Do you want to unlink from the previous {linkedProfileType}(s) and relink to this <b>{currentProfileName}</b> {linkedProfileType}?",
+    "confirmationModal.note": "<b>NOTA</b> che il {profileType} non verrà ricollegato finché non si salva il {parentType}.",
+    "confirmationModal.single.body": "This {profileType} is already linked to <b>\"{linkedProfileName}\"</b> {linkedProfileType}. Do you want to unlink from the previous {linkedProfileType} and relink to this <b>{currentProfileName}</b> {linkedProfileType}?",
+    "entities.actionProfiles": "Profili di azione",
+    "entities.jobProfiles": "Profili di procedura",
+    "entities.mappingProfiles": "Field Mapping Profiles",
+    "entities.matchProfiles": "Profili di corrispondenza",
+    "meta.pluginTitle": "Test Find Profile Plugin",
+    "meta.title": "{profileType}",
+    "modal.footer.close": "Chiudi",
+    "modal.footer.save": "Salva",
+    "modal.footer.totalSelected": "Totale selezionato: {count}",
+    "modal.title": "Seleziona {profileType}",
+    "pluggable.caption": "Scegli profilo",
+    "pluggable.errors.plugin.disabled": "Nessun plugin disponibile!"
+}

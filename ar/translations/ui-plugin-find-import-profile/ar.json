@@ -1,0 +1,20 @@
+{
+    "addProfile": "إضافة {profileType}",
+    "confirmationModal.heading": "إعادة ربط {profileType}؟",
+    "confirmationModal.label": "إعادة ربط",
+    "confirmationModal.multiple.body": "تم ربط أحد هذه {profileType} أو أكثر إلى {linkedProfileType} أخرى. هل تريد إلغاء ربطها من {linkedProfileType} السابقة وإعادة ربطها إلى هذه <b>{currentProfileName}</b> {linkedProfileType}؟",
+    "confirmationModal.note": "<b>لاحظ</b> أنه لن تتم إعادة ربط وضع الإجراء{profileType} حتى تقوم بحفظ {parentType}.",
+    "confirmationModal.single.body": "تم ربط  {profileType}  بالفعل إلى <b>\"{linkedProfileName}\"</b> {linkedProfileType}. هل تريد إلغاء الربط من {linkedProfileType} السابق وإعادة الربط إلى هذا<b>\"{currentProfileName}\" </b>{linkedProfileType}؟",
+    "entities.actionProfiles": "أوضاع الإجراءات",
+    "entities.jobProfiles": "أوضاع الوظائف",
+    "entities.mappingProfiles": "أوضاع تخطيط الحقل",
+    "entities.matchProfiles": "أوضاع المطابقة",
+    "meta.pluginTitle": "اختبار برنامج باحث الوضع المساعد",
+    "meta.title": "{profileType}",
+    "modal.footer.close": "إغلاق",
+    "modal.footer.save": "حفظ",
+    "modal.footer.totalSelected": "إجمالي المحدد: {count}",
+    "modal.title": "اختر {profileType}",
+    "pluggable.caption": "اختر وضع",
+    "pluggable.errors.plugin.disabled": "لا توجد برامج مساعدة!"
+}

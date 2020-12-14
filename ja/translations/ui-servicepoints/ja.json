@@ -1,0 +1,8 @@
+{
+    "accessDenied.close": "閉じる",
+    "accessDenied.message": "<strong> {displayName} </strong>アプリにアクセスするには、サービスポイントを選択する必要があります。 <strong>ユーザー</strong>アプリのユーザーレコードに1つ以上のサービスポイントを追加してください。レコードにサービスポイントを追加する権限がない場合は、管理者に連絡してください。",
+    "accessDenied.title": "アクセスが拒否されました",
+    "meta.title": "サービスポイント",
+    "selectServicePoint": "サービスポイントを選択",
+    "userDropdown.switchServicePoint": "サービスポイントの切り替え"
+}
