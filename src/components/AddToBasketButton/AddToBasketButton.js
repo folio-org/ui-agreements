@@ -42,11 +42,11 @@ class AddToBasketButton extends React.Component {
 
   state = {
     itemExistsInBasket: false,
-    basketSize: undefined, // eslint-disable-line react/no-unused-state
+    basketSize: 0, // eslint-disable-line react/no-unused-state
   }
 
   static getDerivedStateFromProps(props, state) {
-    const basket = props.resources.basket || [];
+    const basket = props.resources.basket;
     if (basket.length !== state.basketSize) {
       const item = basket.find(i => i.id === props.item.id);
       return {
@@ -64,7 +64,6 @@ class AddToBasketButton extends React.Component {
 
     const basket = [...resources.basket];
     basket.push(item);
-
     mutator.basket.replace(basket);
   }
 
@@ -72,7 +71,7 @@ class AddToBasketButton extends React.Component {
     e.stopPropagation();
     const { item, mutator, resources } = this.props;
 
-    const basket = resources.basket || [];
+    const basket = resources.basket;
     const updatedBasket = basket.filter(i => i.id !== item.id);
 
     mutator.basket.replace(updatedBasket);
