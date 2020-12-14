@@ -18,8 +18,8 @@ const poLine = {
   titleOrPackage: 'How to write tests',
 };
 
-const poLineWithInstanceId = {...poLine}
-poLineWithInstanceId.instanceId = "abcde"
+const poLineWithInstanceId = { ...poLine };
+poLineWithInstanceId.instanceId = 'abcde';
 
 describe('POLineCard', () => {
   const interactor = new POLineCardInteractor();

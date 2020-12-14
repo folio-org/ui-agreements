@@ -20,6 +20,7 @@ const propTypes = {
   poLine: PropTypes.shape({
     acquisitionMethod: PropTypes.string,
     id: PropTypes.string,
+    instanceId: PropTypes.any.string,
     poLineNumber: PropTypes.string,
     titleOrPackage: PropTypes.string,
   }).isRequired,
@@ -65,8 +66,8 @@ const POLineCard = ({
           {poLine?.instanceId &&
             <AppIcon app="inventory" iconKey="instance" size="small">
               <Link
-                to={urls.viewInstance(poLine.instanceId)}
                 data-test-po-line-view-in-inventory
+                to={urls.viewInstance(poLine.instanceId)}
               >
                 <FormattedMessage id="ui-agreements.poLines.viewInInventory" />
               </Link>
