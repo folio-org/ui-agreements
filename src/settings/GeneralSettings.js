@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { stripesConnect, withStripes } from '@folio/stripes/core';
 import { ConfigManager } from '@folio/stripes/smart-components';
 
-import { defaultSettingsValues } from '../constants';
+import { defaultMclPageSize } from '../constants';
 import GeneralSettingsForm from './GeneralSettingsForm';
 
 class GeneralSettings extends React.Component {
@@ -21,7 +21,7 @@ class GeneralSettings extends React.Component {
   defaultValues = {
     displaySuppressFromDiscovery: { pci: true, agreementLine: true, title: true },
     hideEResourcesFunctionality: false,
-    pageSize: defaultSettingsValues.pageSize,
+    pageSize: defaultMclPageSize.pageSize,
   }
 
   beforeSave(data) {

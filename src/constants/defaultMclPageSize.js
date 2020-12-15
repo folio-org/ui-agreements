@@ -1,5 +1,5 @@
 const DEFAULT_PAGE_SIZE = 10;
-const defaultSettingsValues = {
+const defaultMclPageSize = {
   pageSize: {
     agreementLines: DEFAULT_PAGE_SIZE,
     agreementEresources: DEFAULT_PAGE_SIZE,
@@ -9,4 +9,4 @@ const defaultSettingsValues = {
   },
 };
 
-export default defaultSettingsValues;
+export default defaultMclPageSize;

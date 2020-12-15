@@ -11,7 +11,7 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/views/Agreement';
-import { parseMclSettings, urls } from '../components/utilities';
+import { parseMclPageSize, urls } from '../components/utilities';
 import { errorTypes } from '../constants';
 
 import { joinRelatedAgreements } from './utilities/processRelatedAgreements';
@@ -29,7 +29,7 @@ class AgreementViewRoute extends React.Component {
       type: 'okapi',
       path: 'erm/entitlements',
       limitParam: 'perPage',
-      perRequest: (_q, _p, _r, _l, props) => parseMclSettings(props.resources.settings, 'pageSize', 'agreementLines'),
+      perRequest: (_q, _p, _r, _l, props) => parseMclPageSize(props.resources.settings, 'agreementLines'),
       params: {
         filters: 'owner=:{id}',
         sort: 'resource.name',
@@ -48,7 +48,7 @@ class AgreementViewRoute extends React.Component {
       type: 'okapi',
       path: 'erm/sas/:{id}/resources/%{eresourcesFilterPath}',
       limitParam: 'perPage',
-      perRequest: (_q, _p, _r, _l, props) => parseMclSettings(props.resources.settings, 'pageSize', 'agreementEresources'),
+      perRequest: (_q, _p, _r, _l, props) => parseMclPageSize(props.resources.settings, 'agreementEresources'),
       records: 'results',
       resultOffset: (_q, _p, _r, _l, props) => {
         const { match, resources } = props;

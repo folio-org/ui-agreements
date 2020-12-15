@@ -7,5 +7,5 @@ export { default as isExternal } from './isExternal';
 export { default as withSuppressFromDiscovery } from './withSuppressFromDiscovery';
 export { default as urls } from './urls';
 export { default as validators } from './validators';
-export { default as parseMclSettings } from './parseMclSettings';
+export { default as parseMclPageSize } from './parseMclPageSize';
 

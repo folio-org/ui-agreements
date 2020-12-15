@@ -8,7 +8,7 @@ import { withTags } from '@folio/stripes/smart-components';
 import { checkScope, collapseAllSections, expandAllSections, Tags } from '@folio/stripes-erm-components';
 
 import View from '../components/views/EResource';
-import { parseMclSettings, urls, withSuppressFromDiscovery } from '../components/utilities';
+import { parseMclPageSize, urls, withSuppressFromDiscovery } from '../components/utilities';
 import { resultCount, resourceClasses } from '../constants';
 
 const RECORDS_PER_REQUEST = 100;
@@ -25,7 +25,7 @@ class EResourceViewRoute extends React.Component {
       params: {
         stats: 'true',
       },
-      perRequest: (_q, _p, _r, _l, props) => parseMclSettings(props.resources.settings, 'pageSize', 'entitlementOptions'),
+      perRequest: (_q, _p, _r, _l, props) => parseMclPageSize(props.resources.settings, 'entitlementOptions'),
       records: 'results',
       limitParam: 'perPage',
       throwErrors: false,
@@ -40,7 +40,7 @@ class EResourceViewRoute extends React.Component {
       type: 'okapi',
       path: 'erm/resource/:{id}/entitlements',
       records: 'results',
-      perRequest: (_q, _p, _r, _l, props) => parseMclSettings(props.resources.settings, 'pageSize', 'entitlements'),
+      perRequest: (_q, _p, _r, _l, props) => parseMclPageSize(props.resources.settings, 'entitlements'),
       limitParam: 'perPage',
       params: {
         stats: 'true',
@@ -70,7 +70,7 @@ class EResourceViewRoute extends React.Component {
       path: 'erm/packages/:{id}/content/%{packageContentsFilter}',
       records: 'results',
       limitParam: 'perPage',
-      perRequest: (_q, _p, _r, _l, props) => parseMclSettings(props.resources.settings, 'pageSize', 'packageContents'),
+      perRequest: (_q, _p, _r, _l, props) => parseMclPageSize(props.resources.settings, 'packageContents'),
       resultOffset: (_q, _p, _r, _l, props) => {
         const { match, resources } = props;
         const resultOffset = get(resources, 'packageContentsConfig.packageContentsOffset');
