@@ -24,17 +24,15 @@ const validate = (fieldValue, min, max) => {
 const MCLPaginationFields = () => {
   return (
     <>
-      <strong>
-        <Layout className="padding-bottom-gutter padding-top-gutter" data-test-mcl-description>
-          <FormattedMessage id="ui-agreements.settings.mcl.pagination.description" />
-        </Layout>
-        <Layout className="padding-bottom-gutter">
-          <Row>
-            <Col xs={8}> <FormattedMessage id="ui-agreements.settings.mcl" /> </Col>
-            <Col xs={4}> <FormattedMessage id="ui-agreements.settings.mcl.pageSize" /> </Col>
-          </Row>
-        </Layout>
-      </strong>
+      <Layout className="padding-bottom-gutter padding-top-gutter" data-test-mcl-description>
+        <FormattedMessage id="ui-agreements.settings.mcl.pagination.description" />
+      </Layout>
+      <Layout className="padding-bottom-gutter">
+        <Row>
+          <Col xs={8}> <FormattedMessage id="ui-agreements.settings.mcl" /> </Col>
+          <Col xs={4}> <FormattedMessage id="ui-agreements.settings.mcl.pageSize" /> </Col>
+        </Row>
+      </Layout>
       { mclList.map((mcl, index) => (
         <Row key={`row-${index}`}>
           <Col xs={8}>
