@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { Field } from 'react-final-form-html5-validation';
+import { Field } from 'react-final-form';
 
 import {
   Col,
@@ -10,7 +10,7 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-const lists = ['agreementLines', 'agreementEresources', 'entitlementOptions', 'packageContents', 'entitlements'];
+const mclList = ['agreementLines', 'agreementEresources', 'entitlementOptions', 'packageContents', 'entitlements'];
 
 const inRange = (x, min, max) => {
   return ((x - min) * (x - max) <= 0);
@@ -35,7 +35,7 @@ const MCLPaginationFields = () => {
           </Row>
         </Layout>
       </strong>
-      { lists.map((mcl, index) => (
+      { mclList.map((mcl, index) => (
         <Row key={`row-${index}`}>
           <Col xs={8}>
             <FormattedMessage id={`ui-agreements.settings.mcl.${mcl}`} />

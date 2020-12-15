@@ -47,7 +47,7 @@ export default class Agreements extends React.Component {
         headline={headline}
         id="pci-agreements-list"
         isEmptyMessage={isEmptyMessage}
-        onNeedMoreData={onNeedMoreEntitlements}
+        onNeedMoreEntitlements={onNeedMoreEntitlements}
         totalCount={entitlementsCount}
         visibleColumns={visibleColumns}
       />

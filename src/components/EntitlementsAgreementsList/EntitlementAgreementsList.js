@@ -25,7 +25,7 @@ const EntitlementAgreementsList = (
     headline,
     id,
     isEmptyMessage,
-    onNeedMoreData,
+    onNeedMoreEntitlements,
     totalCount,
     visibleColumns }
 ) => {
@@ -94,7 +94,7 @@ const EntitlementAgreementsList = (
         id={id}
         interactive={false}
         isEmptyMessage={isEmptyMessage}
-        onNeedMoreData={onNeedMoreData}
+        onNeedMoreData={onNeedMoreEntitlements}
         pagingType="click"
         totalCount={totalCount}
         visibleColumns={visibleColumns}
@@ -113,7 +113,7 @@ EntitlementAgreementsList.propTypes = {
   headline: PropTypes.node,
   id: PropTypes.string,
   isEmptyMessage: PropTypes.node,
-  onNeedMoreData: PropTypes.func,
+  onNeedMoreEntitlements: PropTypes.func,
   totalCount: PropTypes.number,
   visibleColumns: PropTypes.arrayOf(PropTypes.string),
 };

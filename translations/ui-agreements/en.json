@@ -568,7 +568,6 @@
   "settings.general.displaySuppressFromDiscoveryTitle.title": "Title instances",
   "settings.mcl.pagination.description": "MCL Pagination",
   "settings.mcl": "MCL",
-  "settings.mcl.initialLoad": "Initial load",
   "settings.mcl.pageSize": "Page size",
   "settings.mcl.entitlementOptions": "E-resource view pane > Options for acquiring e-resource",
   "settings.mcl.agreementLines": "Agreement view pane > Agreement lines",

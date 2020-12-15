@@ -21,7 +21,6 @@ class GeneralSettings extends React.Component {
   defaultValues = {
     displaySuppressFromDiscovery: { pci: true, agreementLine: true, title: true },
     hideEResourcesFunctionality: false,
-    initialLoad: defaultSettingsValues.initialLoad,
     pageSize: defaultSettingsValues.pageSize,
   }
 
