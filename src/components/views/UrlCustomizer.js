@@ -16,15 +16,16 @@ import {
   Row,
   Pane,
 } from '@folio/stripes/components';
-import { TitleManager, withStripes } from '@folio/stripes/core';
+import { TitleManager, useStripes } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 const UrlCustomizer = ({
   data: { urlCustomization },
   isLoading,
   handlers,
-  stripes: { hasPerm }
 }) => {
+  const stripes = useStripes();
+
   const paneProps = {
     defaultWidth: '55%',
     dismissible: true,
@@ -58,7 +59,7 @@ const UrlCustomizer = ({
           actionMenu={({ onToggle }) => {
             const buttons = [];
 
-            if (hasPerm('ui-agreements.platforms.edit')) {
+            if (stripes.hasPerm('ui-agreements.platforms.edit')) {
               buttons.push(
                 <Button
                   buttonStyle="dropdownItem"
@@ -146,9 +147,6 @@ UrlCustomizer.propTypes = {
     onEdit: PropTypes.func,
   }).isRequired,
   isLoading: PropTypes.bool.isRequired,
-  stripes: PropTypes.shape({
-    hasPerm: PropTypes.func
-  })
 };
 
-export default withStripes(UrlCustomizer);
+export default UrlCustomizer;
