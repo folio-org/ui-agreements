@@ -70,7 +70,7 @@ class EResourceViewRoute extends React.Component {
       path: 'erm/packages/:{id}/content/%{packageContentsFilter}',
       records: 'results',
       limitParam: 'perPage',
-      perRequest: (_q, _p, _r, _l, props) => parseMclPageSize(props.resources.settings, 'packageContents'),
+      perRequest: (_q, _p, _r, _l, props) => parseMclPageSize(props.resources?.settings, 'packageContents'),
       resultOffset: (_q, _p, _r, _l, props) => {
         const { match, resources } = props;
         const resultOffset = get(resources, 'packageContentsOffset');
