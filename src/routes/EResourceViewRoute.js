@@ -31,7 +31,7 @@ class EResourceViewRoute extends React.Component {
       throwErrors: false,
       resultOffset: (_q, _p, _r, _l, props) => {
         const { match, resources } = props;
-        const resultOffset = get(resources, 'entitlementOptionsConfig.entitlementOptionsOffset');
+        const resultOffset = get(resources, 'entitlementOptionsOffset');
         const eresourceId = get(resources, 'eresource.records[0].id');
         return eresourceId !== match.params.id ? 0 : resultOffset;
       },
@@ -47,7 +47,7 @@ class EResourceViewRoute extends React.Component {
       },
       resultOffset: (_q, _p, _r, _l, props) => {
         const { match, resources } = props;
-        const resultOffset = get(resources, 'entitlementsConfig.entitlementsOffset');
+        const resultOffset = get(resources, 'entitlementsOffset');
         const eresourceId = get(resources, 'eresource.records[0].id');
         return eresourceId !== match.params.id ? 0 : resultOffset;
       },
@@ -73,7 +73,7 @@ class EResourceViewRoute extends React.Component {
       perRequest: (_q, _p, _r, _l, props) => parseMclPageSize(props.resources.settings, 'packageContents'),
       resultOffset: (_q, _p, _r, _l, props) => {
         const { match, resources } = props;
-        const resultOffset = get(resources, 'packageContentsConfig.packageContentsOffset');
+        const resultOffset = get(resources, 'packageContentsOffset');
         const eresourceId = get(resources, 'eresource.records[0].id');
         return eresourceId !== match.params.id ? 0 : resultOffset;
       },
@@ -84,23 +84,11 @@ class EResourceViewRoute extends React.Component {
       },
     },
     query: {},
-    entitlementsConfig: {
-      initialValue: {
-        entitlementsOffset:  0,
-      }
-    },
+    entitlementsOffset: { initialValue: 0 },
     entitlementsCount: { initialValue: resultCount.INITIAL_RESULT_COUNT },
-    entitlementOptionsConfig: {
-      initialValue: {
-        entitlementOptionsOffset:  0,
-      }
-    },
+    entitlementOptionsOffset: { initialValue: 0 },
     packageContentsFilter: { initialValue: 'current' },
-    packageContentsConfig: {
-      initialValue: {
-        packageContentsOffset:  0,
-      }
-    }
+    packageContentsOffset: { initialValue: 0 },
   });
 
   static propTypes = {
@@ -121,16 +109,16 @@ class EResourceViewRoute extends React.Component {
       entitlementsCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
-      entitlementsConfig: PropTypes.shape({
+      entitlementsOffset: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
-      entitlementOptionsConfig: PropTypes.shape({
+      entitlementOptionsOffset: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
       packageContentsCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
-      packageContentsConfig: PropTypes.shape({
+      packageContentsOffset: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
       packageContentsFilter: PropTypes.shape({
@@ -171,9 +159,9 @@ class EResourceViewRoute extends React.Component {
     }
 
     if (prevProps?.resources?.eresource?.records?.[0]?.id !== this.props?.resources?.eresource?.records?.[0]?.id) {
-      mutator.entitlementsConfig.replace({ entitlementsOffset: 0 });
-      mutator.entitlementOptionsConfig.replace({ entitlementOptionsOffset: 0 });
-      mutator.packageContentsConfig.replace({ packageContentsOffset: 0 });
+      mutator.entitlementsOffset.replace(0);
+      mutator.entitlementOptionsOffset.replace(0);
+      mutator.packageContentsOffset.replace(0);
     }
   }
 
@@ -219,22 +207,22 @@ class EResourceViewRoute extends React.Component {
   handleFilterPackageContents = (path) => {
     const { mutator } = this.props;
     mutator.packageContentsFilter.replace(path);
-    mutator.packageContentsConfig.replace({ packageContentsOffset: 0 });
+    mutator.packageContentsOffset.replace(0);
   }
 
   handleNeedMoreEntitlements = (_askAmount, index) => {
     const { mutator } = this.props;
-    mutator.entitlementsConfig.replace({ entitlementsOffset: index });
+    mutator.entitlementsOffset.replace(index);
   }
 
   handleNeedMoreEntitlementOptions = (_askAmount, index) => {
     const { mutator } = this.props;
-    mutator.entitlementOptionsConfig.replace({ entitlementOptionsOffset: index });
+    mutator.entitlementOptionsOffset.replace(index);
   }
 
   handleNeedMorePackageContents = (_askAmount, index) => {
     const { mutator } = this.props;
-    mutator.packageContentsConfig.replace({ packageContentsOffset: index });
+    mutator.packageContentsOffset.replace(index);
   }
 
   handleToggleHelper = (helper) => {

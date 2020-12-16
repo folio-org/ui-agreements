@@ -38,7 +38,7 @@ class AgreementViewRoute extends React.Component {
       records: 'results',
       resultOffset: (_q, _p, _r, _l, props) => {
         const { match, resources } = props;
-        const resultOffset = resources?.agreementLinesConfig?.agreementLinesOffset;
+        const resultOffset = resources?.agreementLinesOffset;
         const agreementId = resources?.agreement?.records?.[0]?.id;
         return agreementId !== match.params.id ? 0 : resultOffset;
       },
@@ -52,7 +52,7 @@ class AgreementViewRoute extends React.Component {
       records: 'results',
       resultOffset: (_q, _p, _r, _l, props) => {
         const { match, resources } = props;
-        const resultOffset = resources?.agreementEresourcesConfig?.agreementEresourcesOffset;
+        const resultOffset = resources?.agreementEresourcesOffset;
         const agreementId = resources?.agreement?.records?.[0]?.id;
         return agreementId !== match.params.id ? 0 : resultOffset;
       },
@@ -136,16 +136,8 @@ class AgreementViewRoute extends React.Component {
       fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '1.0 2.0'),
     },
     interfaceRecord: {},
-    agreementEresourcesConfig: {
-      initialValue: {
-        agreementEresourcesOffset:  0,
-      }
-    },
-    agreementLinesConfig: {
-      initialValue: {
-        agreementLinesOffset:  0,
-      }
-    },
+    agreementEresourcesOffset: { initialValue: 0 },
+    agreementLinesOffset: { initialValue: 0 },
     query: {},
   });
 
@@ -173,10 +165,10 @@ class AgreementViewRoute extends React.Component {
       interfaceRecord: PropTypes.shape({
         replace: PropTypes.func,
       }),
-      agreementEresourcesConfig: PropTypes.shape({
+      agreementEresourcesOffset: PropTypes.shape({
         replace: PropTypes.func,
       }).isRequired,
-      agreementLinesConfig: PropTypes.shape({
+      agreementLinesOffset: PropTypes.shape({
         replace: PropTypes.func,
       }).isRequired,
       query: PropTypes.shape({
@@ -215,8 +207,8 @@ class AgreementViewRoute extends React.Component {
   componentDidUpdate(prevProps) {
     const { mutator } = this.props;
     if (prevProps?.resources?.agreement?.records?.[0]?.id !== this.props?.resources?.agreement?.records?.[0]?.id) {
-      mutator.agreementEresourcesConfig.replace({ agreementEresourcesOffset: 0 });
-      mutator.agreementLinesConfig.replace({ agreementLinesOffset: 0 });
+      mutator.agreementEresourcesOffset.replace(0);
+      mutator.agreementLinesOffset.replace(0);
     }
   }
 
@@ -392,7 +384,7 @@ class AgreementViewRoute extends React.Component {
   handleFilterEResources = (path) => {
     const { mutator } = this.props;
     mutator.eresourcesFilterPath.replace(path);
-    mutator.agreementEresourcesConfig.replace({ agreementEresourcesOffset: 0 });
+    mutator.agreementEresourcesOffset.replace(0);
   }
 
   handleEdit = () => {
@@ -446,12 +438,12 @@ class AgreementViewRoute extends React.Component {
 
   handleNeedMoreLines = (_askAmount, index) => {
     const { mutator } = this.props;
-    mutator.agreementLinesConfig.replace({ agreementLinesOffset: index });
+    mutator.agreementLinesOffset.replace(index);
   }
 
   handleNeedMoreEResources = (_askAmount, index) => {
     const { mutator } = this.props;
-    mutator.agreementEresourcesConfig.replace({ agreementEresourcesOffset: index });
+    mutator.agreementEresourcesOffset.replace(index);
   }
 
   handleToggleHelper = (helper) => {
