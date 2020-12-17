@@ -461,7 +461,6 @@ test('renders add To Basket button', () => {
       />
     </MemoryRouter>
   );
-  screen.debug();
 
   expect(getByRole('grid')).toBeInTheDocument();
 });
