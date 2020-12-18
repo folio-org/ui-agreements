@@ -478,6 +478,7 @@
     "line.new": "New agreement line",
     "line.create.callout": "Agreement line created",
     "emptyAccordion.lineCustomCoverage": "No custom coverage for this agreement line",
+    "emptyAccordion.lineCoverageEresource": "No coverage for this e-resource",
     "eresources.removePackageFromBasket": "Remove package from basket",
     "eresources.dataSource": "Data source",
     "action": "Action",
