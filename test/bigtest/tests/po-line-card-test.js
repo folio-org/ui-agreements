@@ -18,6 +18,9 @@ const poLine = {
   titleOrPackage: 'How to write tests',
 };
 
+const poLineWithInstanceId = { ...poLine };
+poLineWithInstanceId.instanceId = 'abcde';
+
 describe('POLineCard', () => {
   const interactor = new POLineCardInteractor();
 
@@ -35,7 +38,7 @@ describe('POLineCard', () => {
     });
   });
 
-  describe('when rendered with full data', () => {
+  describe('when rendered with full data but no instanceId', () => {
     beforeEach(async () => {
       await mountWithContext(
         <Router context={{}}>
@@ -54,6 +57,24 @@ describe('POLineCard', () => {
 
     it('should render acquisition method', () => {
       expect(interactor.acqMethod).to.equal(poLine.acquisitionMethod);
+    });
+
+    it('should not render inventory link', () => {
+      expect(interactor.inventoryLinkIsPresent).to.be.false;
+    });
+  });
+
+  describe('when rendered with full data and instanceId', () => {
+    beforeEach(async () => {
+      await mountWithContext(
+        <Router context={{}}>
+          <POLineCard poLine={poLineWithInstanceId} />
+        </Router>
+      );
+    });
+
+    it('should render inventory link', () => {
+      expect(interactor.inventoryLinkIsPresent).to.be.true;
     });
   });
 

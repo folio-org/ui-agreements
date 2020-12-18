@@ -2,6 +2,7 @@
 
 ##  5.1.0 IN PROGRESS
 * Added optionalOkapiInterfaces to package.json. ERM-940
+* Rename instance-bulk to inventory-record-bulk. UIIN-1368
 
 ##  5.0.1 2020-11-05
 * Added permission check when displaying the add agreement line button. ERM-1197
