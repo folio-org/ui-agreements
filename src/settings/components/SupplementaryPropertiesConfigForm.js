@@ -59,6 +59,7 @@ class SupplementaryPropertiesConfigForm extends React.Component {
           .json()
           .then(error => {
             const pattern = new RegExp(
+              //'ConstraintViolationException',
               'violates foreign key constraint.*is still referenced from table',
               's'
             );
