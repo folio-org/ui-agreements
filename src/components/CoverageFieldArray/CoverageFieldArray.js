@@ -20,15 +20,15 @@ class CoverageFieldArray extends React.Component {
     name: PropTypes.string.isRequired,
     onAddField: PropTypes.func.isRequired,
     onDeleteField: PropTypes.func.isRequired,
-    isEmptyCoverageMessage: PropTypes.string,
+    isEmptyCoverageId: PropTypes.string,
   }
 
   static defaultProps = {
-    isEmptyCoverageMessage: 'ui-agreements.emptyAccordion.lineCustomCoverage',
+    isEmptyCoverageId: 'ui-agreements.emptyAccordion.lineCustomCoverage',
   }
 
   renderCoverages = () => {
-    const { deleteButtonTooltipId, headerId, items, name, isEmptyCoverageMessage } = this.props;
+    const { deleteButtonTooltipId, headerId, items, name, isEmptyCoverageId } = this.props;
 
     return items.length ? items.map((coverage, index) => (
       <EditCard
@@ -46,7 +46,7 @@ class CoverageFieldArray extends React.Component {
       </EditCard>
     )) : (
       <Layout className="padding-bottom-gutter">
-        <FormattedMessage id={isEmptyCoverageMessage} />
+        <FormattedMessage id={isEmptyCoverageId} />
       </Layout>
     );
   }
