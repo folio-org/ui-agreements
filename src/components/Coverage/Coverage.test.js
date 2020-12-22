@@ -1,7 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
+import userEvent from '@testing-library/user-event';
+import Coverage from './Coverage';
 
 const serialResource = {
   'id':'b0e57a22-85e1-46cc-bec6-002275f03431',
