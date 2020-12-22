@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { MemoryRouter } from 'react-router-dom';
 import BasketList from './BasketList';
@@ -458,6 +458,23 @@ test('renders add To Basket button', () => {
         onToggleAll={onToggleAll}
         onToggleItem={onToggleItem}
         selectedItems={{}}
+      />
+    </MemoryRouter>
+  );
+  // screen.debug();
+
+  expect(getByRole('grid')).toBeInTheDocument();
+});
+
+test('renders add To Basket button', () => {
+  const { getByRole } = render(
+    <MemoryRouter>
+      <BasketList
+        basket={basket}
+        onRemoveItem={onRemoveItem}
+        onToggleAll={onToggleAll}
+        onToggleItem={onToggleItem}
+        selectedItems={selectedItems}
       />
     </MemoryRouter>
   );
