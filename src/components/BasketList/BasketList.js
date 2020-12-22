@@ -30,7 +30,6 @@ class BasketList extends React.Component {
     return name;
   }
 
-
   render() {
     const { basket, onRemoveItem, selectedItems } = this.props;
 
