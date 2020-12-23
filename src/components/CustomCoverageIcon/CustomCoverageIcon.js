@@ -6,6 +6,7 @@ const CustomCoverage = React.forwardRef((props, ref) => (
   <Layout
     className="flex"
     data-test-custom-coverage
+    data-testid="customCoverageIcon"
   >
     <span ref={ref} aria-labelledby={props['aria-labelledby']} tabIndex="-1">
       <svg focusable="false" height="16" viewBox="0 0 4.23 4.23" width="16" xmlns="http://www.w3.org/2000/svg">
