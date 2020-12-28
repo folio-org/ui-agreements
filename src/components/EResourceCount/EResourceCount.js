@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 
 import { isExternal } from '../utilities';
 
@@ -21,7 +22,7 @@ export default class EResourceCount extends React.Component {
 
   render() {
     const { resource } = this.props;
-    if (!resource) return null;
+    if (isEmpty(resource)) return null;
 
     if (isExternal(resource)) {
       const { reference_object: { titleCount, selectedCount } = {} } = resource;
