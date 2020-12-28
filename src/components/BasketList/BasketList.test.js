@@ -449,35 +449,37 @@ const selectedItems = {
   'beadf493-5674-4736-bd70-42679c017286': true
 };
 
-test('renders add To Basket button', () => {
-  const { getByRole } = render(
-    <MemoryRouter>
-      <BasketList
-        basket={basket}
-        onRemoveItem={onRemoveItem}
-        onToggleAll={onToggleAll}
-        onToggleItem={onToggleItem}
-        selectedItems={{}}
-      />
-    </MemoryRouter>
-  );
-  // screen.debug();
+describe('BasketList', () => {
+  test('renders add To Basket button', () => {
+    const { getByRole } = render(
+      <MemoryRouter>
+        <BasketList
+          basket={basket}
+          onRemoveItem={onRemoveItem}
+          onToggleAll={onToggleAll}
+          onToggleItem={onToggleItem}
+          selectedItems={{}}
+        />
+      </MemoryRouter>
+    );
+    // screen.debug();
 
-  expect(getByRole('grid')).toBeInTheDocument();
-});
+    expect(getByRole('grid')).toBeInTheDocument();
+  });
 
-test('renders add To Basket button', () => {
-  const { getByRole } = render(
-    <MemoryRouter>
-      <BasketList
-        basket={basket}
-        onRemoveItem={onRemoveItem}
-        onToggleAll={onToggleAll}
-        onToggleItem={onToggleItem}
-        selectedItems={selectedItems}
-      />
-    </MemoryRouter>
-  );
+  test('renders add To Basket button', () => {
+    const { getByRole } = render(
+      <MemoryRouter>
+        <BasketList
+          basket={basket}
+          onRemoveItem={onRemoveItem}
+          onToggleAll={onToggleAll}
+          onToggleItem={onToggleItem}
+          selectedItems={selectedItems}
+        />
+      </MemoryRouter>
+    );
 
-  expect(getByRole('grid')).toBeInTheDocument();
+    expect(getByRole('grid')).toBeInTheDocument();
+  });
 });

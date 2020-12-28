@@ -205,55 +205,54 @@ const ExternalPackageResource = {
   ]
 };
 
-test('AgreementLine resource renders expected eresource count', () => {
-  const { getByText } = render(
-    <EResourceCount
-      resource={AgreementLineResource}
-    />
-  );
+describe('EResourceCount', () => {
+  test('AgreementLine resource renders expected eresource count', () => {
+    const { getByText } = render(
+      <EResourceCount
+        resource={AgreementLineResource}
+      />
+    );
 
-  expect(getByText(AgreementLineResource._object.resourceCount));
+    expect(getByText(AgreementLineResource._object.resourceCount));
+  });
+
+  test('Package resource renders expected eresource count', () => {
+    const { getByText } = render(
+      <EResourceCount
+        resource={PackageResource}
+      />
+    );
+
+    expect(getByText(PackageResource.resourceCount));
+  });
+
+  test('External package resource renders expected eresource count', () => {
+    const { getByText } = render(
+      <EResourceCount
+        resource={ExternalPackageResource}
+      />
+    );
+
+    expect(getByText('1 / 1'));
+  });
+
+  test('eHoldings package resource renders expected eresource count', () => {
+    const { getByText } = render(
+      <EResourceCount
+        resource={eHoldingsPackageResource}
+      />
+    );
+
+    expect(getByText('1902193 / 1902197'));
+  });
+
+  test('empty resource should render null', () => {
+    const { container } = render(
+      <EResourceCount
+        resource={{}}
+      />
+    );
+
+    expect(container.firstChild).toBeNull();
+  });
 });
-
-test('Package resource renders expected eresource count', () => {
-  const { getByText } = render(
-    <EResourceCount
-      resource={PackageResource}
-    />
-  );
-
-  expect(getByText(PackageResource.resourceCount));
-});
-
-test('External package resource renders expected eresource count', () => {
-  const { getByText } = render(
-    <EResourceCount
-      resource={ExternalPackageResource}
-    />
-  );
-
-  expect(getByText('1 / 1'));
-});
-
-test('eHoldings package resource renders expected eresource count', () => {
-  const { getByText } = render(
-    <EResourceCount
-      resource={eHoldingsPackageResource}
-    />
-  );
-
-  expect(getByText('1902193 / 1902197'));
-});
-
-test('empty resource should render null', () => {
-  const { container } = render(
-    <EResourceCount
-      resource={{}}
-    />
-  );
-
-  expect(container.firstChild).toBeNull();
-});
-
-
-
