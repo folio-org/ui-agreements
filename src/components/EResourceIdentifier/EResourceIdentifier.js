@@ -22,7 +22,7 @@ const EResourceIdentifier = (
       <KeyValue
         label={<FormattedMessage id={`ui-agreements.identifier.${type}`} />}
       >
-        <div {...{ [`data-test-${type}`]: true }}>{identifier}</div>
+        <div {...{ [`data-test-${type}`]: true }} data-testid="eresourceIdentifier">{identifier}</div>
       </KeyValue>
     </Col>
   );

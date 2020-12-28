@@ -227,32 +227,33 @@ const basketSelectorProps = {
   'onAdd':onAdd,
   'required':true
 };
+describe('BasketSelector', () => {
+  test('renders add To Basket button', () => {
+    const { getByLabelText } = render(
+      <TestForm onSubmit={onSubmit}>
+        <BasketSelector
+          {...basketSelectorProps}
+        />
+      </TestForm>
 
-test('renders add To Basket button', () => {
-  const { getByLabelText } = render(
-    <TestForm onSubmit={onSubmit}>
-      <BasketSelector
-        {...basketSelectorProps}
-      />
-    </TestForm>
+    );
 
-  );
+    expect(getByLabelText(/basketSelector/i)).toBeInTheDocument();
+  });
 
-  expect(getByLabelText(/basketSelector/i)).toBeInTheDocument();
-});
+  test('renders add To Basket button', () => {
+    const { getByText } = render(
+      <TestForm onSubmit={onSubmit}>
+        <BasketSelector
+          {...basketSelectorProps}
+        />
+      </TestForm>
 
-test('renders add To Basket button', () => {
-  const { getByText } = render(
-    <TestForm onSubmit={onSubmit}>
-      <BasketSelector
-        {...basketSelectorProps}
-      />
-    </TestForm>
+    );
 
-  );
-
-  userEvent.click(getByText(/industrial upgrading/i));
-  userEvent.click(getByText(/Finance:Nationallizenz/i));
-  userEvent.click(getByText('add button'));
-  expect(onAdd.mock.calls.length).toBe(1);
+    userEvent.click(getByText(/industrial upgrading/i));
+    userEvent.click(getByText(/Finance:Nationallizenz/i));
+    userEvent.click(getByText('add button'));
+    expect(onAdd.mock.calls.length).toBe(1);
+  });
 });

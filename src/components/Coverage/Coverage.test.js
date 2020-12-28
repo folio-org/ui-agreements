@@ -375,53 +375,55 @@ const monographResource = {
   'lastSeenTimestamp': 1587741616444
 };
 
-test('renders expected serial coverage when passed as a pci', () => {
-  const { getByTestId } = render(
-    <Coverage
-      pci={serialResource}
-    />
+describe('Coverage', () => {
+  test('renders expected serial coverage when passed as a pci', () => {
+    const { getByTestId } = render(
+      <Coverage
+        pci={serialResource}
+      />
 
-  );
+    );
 
-  expect(getByTestId('serialCoverage')).toBeInTheDocument();
-});
+    expect(getByTestId('serialCoverage')).toBeInTheDocument();
+  });
 
-test('renders expected monograph coverage when passed as a pci', () => {
-  const { getByTestId } = render(
-    <Coverage
-      pci={monographResource}
-    />
+  test('renders expected monograph coverage when passed as a pci', () => {
+    const { getByTestId } = render(
+      <Coverage
+        pci={monographResource}
+      />
 
-  );
+    );
 
-  expect(getByTestId('monographCoverage')).toBeInTheDocument();
-});
+    expect(getByTestId('monographCoverage')).toBeInTheDocument();
+  });
 
-test('renders expected serial coverage when passed as a line', () => {
-  const line = monographResource;
-  const { getByTestId } = render(
-    <Coverage
-      line={line}
-    />
+  test('renders expected serial coverage when passed as a line', () => {
+    const line = monographResource;
+    const { getByTestId } = render(
+      <Coverage
+        line={line}
+      />
 
-  );
+    );
 
-  expect(getByTestId('serialCoverage')).toBeInTheDocument();
-});
+    expect(getByTestId('serialCoverage')).toBeInTheDocument();
+  });
 
-test('renders expected monograph coverage when passed as a line', () => {
-  const monographLine = {
-    resource: {
-      _object: monographResource,
-    },
-  };
+  test('renders expected monograph coverage when passed as a line', () => {
+    const monographLine = {
+      resource: {
+        _object: monographResource,
+      },
+    };
 
-  const { getByTestId } = render(
-    <Coverage
-      line={monographLine}
-    />
+    const { getByTestId } = render(
+      <Coverage
+        line={monographLine}
+      />
 
-  );
+    );
 
-  expect(getByTestId('monographCoverage')).toBeInTheDocument();
+    expect(getByTestId('monographCoverage')).toBeInTheDocument();
+  });
 });

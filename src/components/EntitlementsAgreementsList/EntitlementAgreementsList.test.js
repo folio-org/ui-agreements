@@ -395,34 +395,35 @@ const entitlements = [
   }
 ];
 
-test('renders expected agreements list', () => {
-  const { getByRole } = render(
-    <MemoryRouter>
-      <EntitlementAgreementsList
-        entitlements={entitlements}
-        headline={<div>EntitlementAgreementsList</div>}
-        id="pci-agreements-list"
-        visibleColumns={['name', 'type', 'package', 'startDate', 'eresource', 'coverage', 'isCustomCoverage', 'acqMethod', 'endDate']}
-      />
-    </MemoryRouter>
-  );
+describe('EntitlementAgreementsList', () => {
+  test('renders expected agreements list', () => {
+    const { getByRole } = render(
+      <MemoryRouter>
+        <EntitlementAgreementsList
+          entitlements={entitlements}
+          headline={<div>EntitlementAgreementsList</div>}
+          id="pci-agreements-list"
+          visibleColumns={['name', 'type', 'package', 'startDate', 'eresource', 'coverage', 'isCustomCoverage', 'acqMethod', 'endDate']}
+        />
+      </MemoryRouter>
+    );
 
-  expect(getByRole('grid')).toBeInTheDocument();
+    expect(getByRole('grid')).toBeInTheDocument();
+  });
+
+  test('renders expected agreements list without headline', () => {
+    const { getByRole } = render(
+      <MemoryRouter>
+        <EntitlementAgreementsList
+          entitlements={entitlements}
+          id="pci-agreements-list"
+          visibleColumns={['name', 'type', 'package', 'startDate', 'eresource', 'coverage', 'isCustomCoverage', 'acqMethod', 'endDate']}
+        />
+      </MemoryRouter>
+    );
+
+    expect(getByRole('grid')).toBeInTheDocument();
+  });
 });
-
-test('renders expected agreements list without headline', () => {
-  const { getByRole } = render(
-    <MemoryRouter>
-      <EntitlementAgreementsList
-        entitlements={entitlements}
-        id="pci-agreements-list"
-        visibleColumns={['name', 'type', 'package', 'startDate', 'eresource', 'coverage', 'isCustomCoverage', 'acqMethod', 'endDate']}
-      />
-    </MemoryRouter>
-  );
-
-  expect(getByRole('grid')).toBeInTheDocument();
-});
-
 
 
