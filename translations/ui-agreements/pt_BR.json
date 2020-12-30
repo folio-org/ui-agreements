@@ -530,5 +530,10 @@
     "platform.urlCustomization.update.callout": "Customização da URL atualizada",
     "platform.urlCustomizationCode.helpers": "Auxiliares: insertAfter, insertAfterAll, insertBefore, insertBeforeAll, urlEncode, removeProtocol, replace",
     "poLines.viewInInventory": "Ver no acervo",
-    "emptyAccordion.lineCoverageEresource": "Sem cobertura para este recurso eletrônico"
+    "emptyAccordion.lineCoverageEresource": "Sem cobertura para este recurso eletrônico",
+    "basket.addToExistingAgreement": "",
+    "license.noLicenseOrganizations": "",
+    "agreementLines.noPoLines": "",
+    "license.noLicenses": "",
+    "pci.editPci": ""
 }
