@@ -530,10 +530,5 @@
     "platform.urlCustomization.update.callout": "تم تحديث تخصيص URL",
     "platform.urlCustomizationCode.helpers": "أدوات المساعدة: encodeUrl, insertAfter, insertAfterAll, insertBefore, insertBeforeAll, encodeUrl, removeProtocol, replace",
     "poLines.viewInInventory": "عرض في المخزون",
-    "emptyAccordion.lineCoverageEresource": "لا توجد تغطية لهذا المورد الإلكتروني",
-    "basket.addToExistingAgreement": "",
-    "license.noLicenseOrganizations": "",
-    "agreementLines.noPoLines": "",
-    "license.noLicenses": "",
-    "pci.editPci": ""
+    "emptyAccordion.lineCoverageEresource": "لا توجد تغطية لهذا المورد الإلكتروني"
 }

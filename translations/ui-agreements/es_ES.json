@@ -530,10 +530,5 @@
     "platform.urlCustomization.update.callout": "URL customization updated",
     "platform.urlCustomizationCode.helpers": "Helpers: insertAfter, insertAfterAll, insertBefore, insertBeforeAll, urlEncode, removeProtocol, replace",
     "poLines.viewInInventory": "View in inventory",
-    "emptyAccordion.lineCoverageEresource": "No coverage for this e-resource",
-    "basket.addToExistingAgreement": "Añadir a acuerdo existente",
-    "license.noLicenseOrganizations": "El acuerdo no tiene organizaciones de licencias",
-    "agreementLines.noPoLines": "El acuerdo no tiene lineas de acuerdo.",
-    "license.noLicenses": "El acuerdo no tiene licencias.",
-    "pci.editPci": "Edit {name}"
+    "emptyAccordion.lineCoverageEresource": "No coverage for this e-resource"
 }
