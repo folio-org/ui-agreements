@@ -530,10 +530,5 @@
     "platform.urlCustomization.update.callout": "URL自定义已更新",
     "platform.urlCustomizationCode.helpers": "助手：insertAfter，insertAfterAll，insertBefore，insertBeforeAll，urlEncode，removeProtocol，replace",
     "poLines.viewInInventory": "在典藏中查看",
-    "emptyAccordion.lineCoverageEresource": "此电子资源无收录范围",
-    "basket.addToExistingAgreement": "",
-    "license.noLicenseOrganizations": "",
-    "agreementLines.noPoLines": "",
-    "license.noLicenses": "",
-    "pci.editPci": ""
+    "emptyAccordion.lineCoverageEresource": "此电子资源无收录范围"
 }

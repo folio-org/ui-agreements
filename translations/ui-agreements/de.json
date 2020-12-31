@@ -530,10 +530,5 @@
     "platform.urlCustomization.update.callout": "URL-Anpassung aktualisiert",
     "platform.urlCustomizationCode.helpers": "Hilfsfunktionen: insertAfter, insertAfterAll, insertBefore, insertBeforeAll, urlEncode, removeProtocol, replace",
     "poLines.viewInInventory": "View in inventory",
-    "emptyAccordion.lineCoverageEresource": "No coverage for this e-resource",
-    "basket.addToExistingAgreement": "",
-    "license.noLicenseOrganizations": "",
-    "agreementLines.noPoLines": "",
-    "license.noLicenses": "",
-    "pci.editPci": ""
+    "emptyAccordion.lineCoverageEresource": "No coverage for this e-resource"
 }
