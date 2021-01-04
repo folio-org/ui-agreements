@@ -210,12 +210,10 @@ export default class CoveredEResourcesList extends React.Component {
         formatter={this.formatter}
         id="eresources-covered"
         interactive={false}
-        maxHeight={800}
         onNeedMoreData={onNeedMoreEResources}
         pageAmount={resultCount.RESULT_COUNT_INCREMENT}
         pagingType="click"
         totalCount={eresourcesCount}
-        virtualize
         visibleColumns={this.visibleColumns}
       />
     );

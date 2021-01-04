@@ -13,25 +13,15 @@ import {
 
 import stripesFinalForm from '@folio/stripes/final-form';
 
-import { SuppressFromDiscoveryFields } from './components';
+import { MCLPaginationFields, SuppressFromDiscoveryFields } from './components';
 
 class GeneralSettingsForm extends React.Component {
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
     label: PropTypes.string,
-    values: PropTypes.object
   };
-
-  handleSave = () => {
-    const { onSubmit, values } = this.props;
-    onSubmit({
-      general: JSON.stringify({
-        ...values
-      })
-    });
-  }
 
   getLastMenu = () => {
     const { pristine, submitting } = this.props;
@@ -42,7 +32,7 @@ class GeneralSettingsForm extends React.Component {
         disabled={(pristine || submitting)}
         id="clickable-save-agreements-general-settings"
         marginBottom0
-        onClick={this.handleSave}
+        type="submit"
       >
         <FormattedMessage id="stripes-core.button.save" />
       </Button>
@@ -51,11 +41,12 @@ class GeneralSettingsForm extends React.Component {
 
   render() {
     const {
+      handleSubmit,
       label,
     } = this.props;
 
     return (
-      <form id="agreement-general-settings-form">
+      <form id="agreement-general-settings-form" onSubmit={handleSubmit}>
         <Pane
           defaultWidth="fill"
           fluidContentWidth
@@ -81,6 +72,7 @@ class GeneralSettingsForm extends React.Component {
               listStyle="bullets"
             />
           </Layout>
+          <MCLPaginationFields />
           <SuppressFromDiscoveryFields name="displaySuppressFromDiscovery" />
         </Pane>
       </form>

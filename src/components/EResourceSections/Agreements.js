@@ -15,6 +15,7 @@ export default class Agreements extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       entitlements: PropTypes.arrayOf(PropTypes.object),
+      entitlementsCount: PropTypes.number,
       eresource: PropTypes.shape({
         class: PropTypes.string,
         pti: PropTypes.shape({
@@ -26,6 +27,9 @@ export default class Agreements extends React.Component {
       }),
       relatedEntitlements: PropTypes.arrayOf(PropTypes.object),
     }),
+    handlers: PropTypes.shape({
+      onNeedMoreEntitlements: PropTypes.func,
+    }),
     headline: PropTypes.node,
     id: PropTypes.string,
     isEmptyMessage: PropTypes.node,
@@ -34,8 +38,8 @@ export default class Agreements extends React.Component {
   };
 
   renderEntitlementAgreements = () => {
-    const { entitlements = [] } = this.props.data;
-    const { headline, isEmptyMessage, visibleColumns } = this.props;
+    const { entitlements = [], entitlementsCount } = this.props.data;
+    const { handlers: { onNeedMoreEntitlements }, headline, isEmptyMessage, visibleColumns } = this.props;
 
     return (
       <EntitlementAgreementsList
@@ -43,6 +47,8 @@ export default class Agreements extends React.Component {
         headline={headline}
         id="pci-agreements-list"
         isEmptyMessage={isEmptyMessage}
+        onNeedMoreEntitlements={onNeedMoreEntitlements}
+        totalCount={entitlementsCount}
         visibleColumns={visibleColumns}
       />
     );
@@ -66,10 +72,10 @@ export default class Agreements extends React.Component {
   }
 
   renderBadge = () => {
-    const { entitlements, relatedEntitlements } = this.props.data;
+    const { entitlements, entitlementsCount, relatedEntitlements } = this.props.data;
 
     return (entitlements && relatedEntitlements) ?
-      <Badge>{entitlements?.length + relatedEntitlements?.length}</Badge>
+      <Badge>{entitlementsCount + relatedEntitlements?.length}</Badge>
       :
       <Spinner />;
   }

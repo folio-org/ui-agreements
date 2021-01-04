@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { stripesConnect, withStripes } from '@folio/stripes/core';
 import { ConfigManager } from '@folio/stripes/smart-components';
 
+import { defaultMclPageSize } from '../constants';
 import GeneralSettingsForm from './GeneralSettingsForm';
 
 class GeneralSettings extends React.Component {
@@ -18,8 +19,13 @@ class GeneralSettings extends React.Component {
   }
 
   defaultValues = {
+    displaySuppressFromDiscovery: { pci: true, agreementLine: true, title: true },
     hideEResourcesFunctionality: false,
-    displaySuppressFromDiscovery: { pci: true, agreementLine: true, title: true }
+    pageSize: defaultMclPageSize.pageSize,
+  }
+
+  beforeSave(data) {
+    return JSON.stringify(data);
   }
 
   getInitialValues = (settings) => {
@@ -28,7 +34,6 @@ class GeneralSettings extends React.Component {
       const value = settings.length === 0 ? '' : settings[0].value;
       loadedValues = JSON.parse(value);
     } catch (e) {} // eslint-disable-line no-empty
-
     return {
       ...this.defaultValues,
       ...loadedValues,
@@ -41,8 +46,9 @@ class GeneralSettings extends React.Component {
         configFormComponent={GeneralSettingsForm}
         configName="general"
         getInitialValues={this.getInitialValues}
-        label={<FormattedMessage id="ui-agreements.settings.general" />}
+        label={<FormattedMessage id="ui-agreements.settings.displaySettings" />}
         moduleName="AGREEMENTS"
+        onBeforeSave={this.beforeSave}
         stripes={this.props.stripes}
       />
     );

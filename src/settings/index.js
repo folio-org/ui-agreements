@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
 
 import GeneralSettings from './GeneralSettings';
+
 import {
   SupplementaryPropertiesConfigRoute,
   PickListSettings,
@@ -25,7 +26,7 @@ export default class ErmSettings extends React.Component {
           label: <FormattedMessage id="ui-agreements.settings.supplementaryProperties" />,
           perm: 'ui-agreements.supplementaryProperties.manage',
           route: 'supplementaryProperties',
-        }
+        },
       ]
     },
     {

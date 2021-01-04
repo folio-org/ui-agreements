@@ -11,13 +11,12 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/views/Agreement';
-import { urls } from '../components/utilities';
-import { errorTypes, resultCount } from '../constants';
+import { parseMclPageSize, urls } from '../components/utilities';
+import { errorTypes } from '../constants';
 
 import { joinRelatedAgreements } from './utilities/processRelatedAgreements';
 
 const RECORDS_PER_REQUEST = 100;
-const RECORDS_INCREMENT = 1000;
 
 class AgreementViewRoute extends React.Component {
   static manifest = Object.freeze({
@@ -29,28 +28,33 @@ class AgreementViewRoute extends React.Component {
     agreementLines: {
       type: 'okapi',
       path: 'erm/entitlements',
+      limitParam: 'perPage',
+      perRequest: (_q, _p, _r, _l, props) => parseMclPageSize(props.resources?.settings, 'agreementLines'),
       params: {
         filters: 'owner=:{id}',
         sort: 'resource.name',
         stats: 'true',
       },
-      limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
       records: 'results',
-      recordsRequired: '%{agreementLinesCount}',
+      resultOffset: (_q, _p, _r, _l, props) => {
+        const { match, resources } = props;
+        const resultOffset = resources?.agreementLinesOffset;
+        const agreementId = resources?.agreement?.records?.[0]?.id;
+        return agreementId !== match.params.id ? 0 : resultOffset;
+      },
       shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
     agreementEresources: {
       type: 'okapi',
       path: 'erm/sas/:{id}/resources/%{eresourcesFilterPath}',
       limitParam: 'perPage',
-      perRequest: resultCount.RESULT_COUNT_INCREMENT,
+      perRequest: (_q, _p, _r, _l, props) => parseMclPageSize(props.resources?.settings, 'agreementEresources'),
       records: 'results',
       resultOffset: (_q, _p, _r, _l, props) => {
         const { match, resources } = props;
         const resultOffset = resources?.agreementEresourcesOffset;
         const agreementId = resources?.agreement?.records?.[0]?.id;
-        return agreementId !== match.params.id ? props.mutator.agreementEresourcesOffset.replace(0) : resultOffset;
+        return agreementId !== match.params.id ? 0 : resultOffset;
       },
       params: {
         sort: 'pti.titleInstance.name;asc',
@@ -92,6 +96,11 @@ class AgreementViewRoute extends React.Component {
       records: 'poLines',
       throwErrors: false,
     },
+    settings: {
+      type: 'okapi',
+      path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
+      records: 'configs',
+    },
     supplementaryProperties: {
       type: 'okapi',
       path: 'erm/custprops',
@@ -117,7 +126,6 @@ class AgreementViewRoute extends React.Component {
       permissionsRequired: 'users.collection.get',
       records: 'users',
     },
-    agreementLinesCount: { initialValue: RECORDS_PER_REQUEST },
     interfacesCredentials: {
       clientGeneratePk: false,
       throwErrors: false,
@@ -129,6 +137,7 @@ class AgreementViewRoute extends React.Component {
     },
     interfaceRecord: {},
     agreementEresourcesOffset: { initialValue: 0 },
+    agreementLinesOffset: { initialValue: 0 },
     query: {},
   });
 
@@ -150,9 +159,6 @@ class AgreementViewRoute extends React.Component {
       agreement: PropTypes.shape({
         DELETE: PropTypes.func.isRequired,
       }),
-      agreementLinesCount: PropTypes.shape({
-        replace: PropTypes.func.isRequired,
-      }),
       eresourcesFilterPath: PropTypes.shape({
         replace: PropTypes.func,
       }),
@@ -162,6 +168,9 @@ class AgreementViewRoute extends React.Component {
       agreementEresourcesOffset: PropTypes.shape({
         replace: PropTypes.func,
       }).isRequired,
+      agreementLinesOffset: PropTypes.shape({
+        replace: PropTypes.func,
+      }).isRequired,
       query: PropTypes.shape({
         update: PropTypes.func.isRequired,
       }).isRequired,
@@ -169,13 +178,12 @@ class AgreementViewRoute extends React.Component {
     resources: PropTypes.shape({
       agreement: PropTypes.object,
       agreementLines: PropTypes.object,
-      agreementLinesCount: PropTypes.number,
       agreementEresources: PropTypes.object,
-
       eresourcesFilterPath: PropTypes.string,
       interfaces: PropTypes.object,
       orderLines: PropTypes.object,
       query: PropTypes.object,
+      settings: PropTypes.object,
       users: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
@@ -195,6 +203,14 @@ class AgreementViewRoute extends React.Component {
   }
 
   static contextType = CalloutContext;
+
+  componentDidUpdate(prevProps) {
+    const { mutator } = this.props;
+    if (prevProps?.resources?.agreement?.records?.[0]?.id !== this.props?.resources?.agreement?.records?.[0]?.id) {
+      mutator.agreementEresourcesOffset.replace(0);
+      mutator.agreementLinesOffset.replace(0);
+    }
+  }
 
   downloadBlob = (name) => (
     blob => {
@@ -237,6 +253,7 @@ class AgreementViewRoute extends React.Component {
       ...agreement,
       contacts,
       lines: this.getLinesRecords(),
+      agreementLinesCount: get(resources, 'agreementLines.other.totalRecords') ?? 0,
       eresources: this.getAgreementEresourcesRecords(),
       eresourcesCount: get(resources, 'agreementEresources.other.totalRecords'),
       orderLines: get(resources, 'orderLines.records'),
@@ -414,17 +431,17 @@ class AgreementViewRoute extends React.Component {
       .then(this.downloadBlob(name));
   }
 
-  handleNeedMoreLines = () => {
-    const { agreementLinesCount } = this.props.resources;
-    this.props.mutator.agreementLinesCount.replace(agreementLinesCount + RECORDS_INCREMENT);
-  }
-
   handleFetchCredentials = (id) => {
     const { mutator } = this.props;
     mutator.interfaceRecord.replace({ id });
   }
 
-  handleNeedMoreEResources = (_, index) => {
+  handleNeedMoreLines = (_askAmount, index) => {
+    const { mutator } = this.props;
+    mutator.agreementLinesOffset.replace(index);
+  }
+
+  handleNeedMoreEResources = (_askAmount, index) => {
     const { mutator } = this.props;
     mutator.agreementEresourcesOffset.replace(index);
   }
