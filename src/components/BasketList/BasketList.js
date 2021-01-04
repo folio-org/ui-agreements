@@ -30,7 +30,6 @@ class BasketList extends React.Component {
     return name;
   }
 
-
   render() {
     const { basket, onRemoveItem, selectedItems } = this.props;
 
@@ -47,7 +46,6 @@ class BasketList extends React.Component {
           name: <FormattedMessage id="ui-agreements.eresources.name" />,
           publicationType: <FormattedMessage id="ui-agreements.eresources.publicationType" />,
           package: <FormattedMessage id="ui-agreements.eresources.parentPackage" />,
-          publisher: <FormattedMessage id="ui-agreements.eresources.publisher" />,
           platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
           coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
           action: <FormattedMessage id="ui-agreements.action" />,
@@ -74,7 +72,6 @@ class BasketList extends React.Component {
 
             return <EResourceLink eresource={pkg} />;
           },
-          publisher: () => 'TBD',
           platform: resource => (
             resource?._object?.pti?.platform?.name ||
             resource?._object?.nominalPlatform?.name || null

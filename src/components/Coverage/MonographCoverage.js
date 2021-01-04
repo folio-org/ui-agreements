@@ -76,7 +76,7 @@ export default class MonographCoverage extends React.Component {
     if (!pci) return null;
 
     return (
-      <Layout className="full" data-test-monograph-coverage={titleName}>
+      <Layout className="full" data-test-monograph-coverage={titleName} data-testid="monographCoverage">
         {this.renderCoverage(pci)}
       </Layout>
     );
