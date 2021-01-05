@@ -4,12 +4,14 @@ import { FormattedMessage } from 'react-intl';
 import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 
 import {
+  Accordion,
   AccordionSet,
   AccordionStatus,
   Col,
   ExpandAllButton,
   HasCommand,
   Headline,
+  KeyValue,
   Row,
 } from '@folio/stripes/components';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
@@ -49,6 +51,7 @@ export default class Title extends React.Component {
       acquisitionOptions: false,
       eresourceAgreements: false,
       notes: false,
+      discoverySettings: false
     };
   }
 
@@ -113,6 +116,17 @@ export default class Title extends React.Component {
                 pathToNoteCreate={urls.noteCreate()}
                 pathToNoteDetails={urls.notes()}
               />
+              {
+                handlers.isSuppressFromDiscoveryEnabled('title') &&
+                <Accordion
+                  id="discoverySettings"
+                  label={<FormattedMessage id="ui-agreements.eresources.discoverySettings" />}
+                >
+                  <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitle" values={{ breakingLine: <br /> }} />}>
+                    <FormattedMessage id={`ui-agreements.${data?.eresource?.suppressFromDiscovery ? 'yes' : 'no'}`} />
+                  </KeyValue>
+                </Accordion>
+              }
             </AccordionSet>
           </AccordionStatus>
 
