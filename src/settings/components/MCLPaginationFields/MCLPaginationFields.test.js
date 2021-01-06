@@ -31,7 +31,7 @@ describe('MCLPaginationFields', () => {
     );
 
     mclList.forEach((mcl) => {
-      userEvent.type(getByTestId(mcl), 15);
+      userEvent.type(getByTestId(mcl), '15');
       expect(getByTestId(mcl)).toHaveValue(15);
     });
   });

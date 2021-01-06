@@ -34,8 +34,8 @@ const MCLPaginationFields = () => {
         </Row>
       </Layout>
       { mclList.map((mcl, index) => (
-        <div data-test-mcl-page-size-fields>
-          <Row key={`row-${index}`}>
+         <div key={`row-${index}`} data-test-mcl-page-size-fields>
+          <Row>
             <Col
               id={`pageSize-${mcl}`}
               xs={8}
@@ -48,7 +48,6 @@ const MCLPaginationFields = () => {
                 component={TextField}
                 data-testid={mcl}
                 id={`pageSize-${mcl}`}
-                key={index}
                 name={`pageSize.${mcl}`}
                 parse={v => parseInt(v, 10)}
                 type="number"
