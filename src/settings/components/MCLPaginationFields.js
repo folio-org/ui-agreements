@@ -5,6 +5,7 @@ import { Field } from 'react-final-form';
 
 import {
   Col,
+  Label,
   Layout,
   Row,
   TextField,
@@ -36,11 +37,15 @@ const MCLPaginationFields = () => {
       { mclList.map((mcl, index) => (
         <div data-test-mcl-page-size-fields>
           <Row key={`row-${index}`}>
-            <Col xs={8}>
+            <Col
+              id={`pageSize-${mcl}`}
+              xs={8}
+            >
               <FormattedMessage id={`ui-agreements.settings.mcl.${mcl}`} />
             </Col>
             <Col xs={4}>
               <Field
+                ariaLabelledBy={`pageSize-${mcl}`}
                 component={TextField}
                 data-test-mcl-page-size
                 id={`pageSize-${mcl}`}
