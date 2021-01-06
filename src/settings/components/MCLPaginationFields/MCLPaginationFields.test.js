@@ -6,21 +6,35 @@ import userEvent from '@testing-library/user-event';
 import MCLPaginationFields from './MCLPaginationFields';
 
 const onSubmit = jest.fn();
-// const mclList = ['agreementLines', 'agreementEresources', 'entitlementOptions', 'packageContents', 'entitlements'];
-const mclLabels = ['Agreement lines', ' E-resources covered by this agreement', 'Options for acquiring e-resource', 'E-resources in package', 'Agreements for this e-resource'];
-
+const mclList = ['agreementLines', 'agreementEresources', 'entitlementOptions', 'packageContents', 'entitlements'];
 
 describe('MCLPaginationFields', () => {
   test('renders mcl labels', () => {
-    const { getByLabelText } = render(
+    const { getByTestId } = render(
       <TestForm onSubmit={onSubmit}>
         <MCLPaginationFields />
       </TestForm>
 
     );
-    // expect(getByLabelText(/agreement lines/i).toBeInTheDocument());
-    mclLabels.forEach((label) => {
-      expect(getByLabelText(new RegExp(label, 'i')).toBeInTheDocument());
+
+    mclList.forEach((mcl) => {
+      expect(getByTestId(mcl)).toBeInTheDocument();
     });
   });
+
+  test('type value and render', () => {
+    const { getByTestId } = render(
+      <TestForm onSubmit={onSubmit}>
+        <MCLPaginationFields />
+      </TestForm>
+
+    );
+
+    mclList.forEach((mcl) => {
+      userEvent.type(getByTestId(mcl), 15);
+      expect(getByTestId(mcl)).toHaveValue(15);
+    });
+  });
+
+
 });

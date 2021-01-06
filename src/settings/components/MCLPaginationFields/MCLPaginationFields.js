@@ -46,8 +46,9 @@ const MCLPaginationFields = () => {
               <Field
                 ariaLabelledBy={`pageSize-${mcl}`}
                 component={TextField}
-                data-test-mcl-page-size
+                data-testid={mcl}
                 id={`pageSize-${mcl}`}
+                key={index}
                 name={`pageSize.${mcl}`}
                 parse={v => parseInt(v, 10)}
                 type="number"
