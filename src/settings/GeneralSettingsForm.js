@@ -13,7 +13,8 @@ import {
 
 import stripesFinalForm from '@folio/stripes/final-form';
 
-import { MCLPaginationFields, SuppressFromDiscoveryFields } from './components';
+import MCLPaginationFields from './components/MCLPaginationFields';
+import SuppressFromDiscoveryFields from './components/SuppressFromDiscoveryFields';
 
 class GeneralSettingsForm extends React.Component {
   static propTypes = {

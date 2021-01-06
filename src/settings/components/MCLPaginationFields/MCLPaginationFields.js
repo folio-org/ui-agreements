@@ -5,7 +5,6 @@ import { Field } from 'react-final-form';
 
 import {
   Col,
-  Label,
   Layout,
   Row,
   TextField,
