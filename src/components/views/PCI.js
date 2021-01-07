@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
-  Accordion,
   AccordionSet,
   AccordionStatus,
   Col,
   ExpandAllButton,
   HasCommand,
   Headline,
-  KeyValue,
   Row,
 } from '@folio/stripes/components';
 
@@ -58,7 +56,6 @@ export default class PCI extends React.Component {
     return {
       'pci-coverage': false,
       'eresourceAgreements': false,
-      'discoverySettings': false
     };
   }
 
@@ -88,7 +85,7 @@ export default class PCI extends React.Component {
         scope={document.body}
       >
         <div id="eresource-pci">
-          <PCIInfo pci={eresource} />
+          <PCIInfo isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled} pci={eresource} />
           <div data-test-parent-package-details>
             <Headline margin="small" size="large" tag="h3">
               <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
@@ -117,33 +114,6 @@ export default class PCI extends React.Component {
                 renderRelatedEntitlements
                 visibleColumns={['name', 'type', 'startDate', 'endDate']}
               />
-              {(handlers.isSuppressFromDiscoveryEnabled('pci') || handlers.isSuppressFromDiscoveryEnabled('title')) &&
-                <Accordion
-                  id="discoverySettings"
-                  label={<FormattedMessage id="ui-agreements.eresources.discoverySettings" />}
-                >
-                  <Row>
-                    {handlers.isSuppressFromDiscoveryEnabled('pci') &&
-                      <Col xs={3}>
-                        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitleInPackage" values={{ breakingLine: <br /> }} />}>
-                          <div>
-                            <FormattedMessage id={`ui-agreements.${eresource?.suppressFromDiscovery ? 'yes' : 'no'}`} />
-                          </div>
-                        </KeyValue>
-                      </Col>
-                    }
-                    {handlers.isSuppressFromDiscoveryEnabled('title') &&
-                      <Col xs={3}>
-                        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitle" values={{ breakingLine: <br /> }} />}>
-                          <div>
-                            <FormattedMessage id={`ui-agreements.${eresource?.pti?.titleInstance?.suppressFromDiscovery ? 'yes' : 'no'}`} />
-                          </div>
-                        </KeyValue>
-                      </Col>
-                    }
-                  </Row>
-                </Accordion>
-              }
             </AccordionSet>
           </AccordionStatus>
         </div>

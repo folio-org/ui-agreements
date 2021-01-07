@@ -4,7 +4,6 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useStripes, AppIcon, IfPermission } from '@folio/stripes/core';
 
 import {
-  Accordion,
   AccordionSet,
   AccordionStatus,
   Button,
@@ -14,7 +13,6 @@ import {
   HasCommand,
   Icon,
   IconButton,
-  KeyValue,
   LoadingPane,
   Pane,
   PaneMenu,
@@ -181,42 +179,6 @@ const AgreementLine = ({
                   />
                 )}
               </FormattedMessage>
-              {(handlers.isSuppressFromDiscoveryEnabled('pci') || handlers.isSuppressFromDiscoveryEnabled('title') || handlers.isSuppressFromDiscoveryEnabled('agreementLine')) &&
-                <Accordion
-                  id="discoverySettings"
-                  label={<FormattedMessage id="ui-agreements.eresources.discoverySettings" />}
-                >
-                  <Row>
-                    {handlers.isSuppressFromDiscoveryEnabled('agreementLine') &&
-                      <Col xs={3}>
-                        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryAgreementLine" values={{ breakingLine: <br /> }} />}>
-                          <div>
-                            <FormattedMessage id={`ui-agreements.${line?.suppressFromDiscovery ? 'yes' : 'no'}`} />
-                          </div>
-                        </KeyValue>
-                      </Col>
-                    }
-                    {handlers.isSuppressFromDiscoveryEnabled('pci') &&
-                      <Col xs={3}>
-                        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitleInPackage" values={{ breakingLine: <br /> }} />}>
-                          <div>
-                            <FormattedMessage id={`ui-agreements.${line?.resource?.suppressFromDiscovery ? 'yes' : 'no'}`} />
-                          </div>
-                        </KeyValue>
-                      </Col>
-                    }
-                    {handlers.isSuppressFromDiscoveryEnabled('title') &&
-                      <Col xs={3}>
-                        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitle" values={{ breakingLine: <br /> }} />}>
-                          <div>
-                            <FormattedMessage id={`ui-agreements.${line?.resource?._object?.pti?.titleInstance?.suppressFromDiscovery ? 'yes' : 'no'}`} />
-                          </div>
-                        </KeyValue>
-                      </Col>
-                    }
-                  </Row>
-                </Accordion>
-              }
             </AccordionSet>
           </AccordionStatus>
         </Pane>
