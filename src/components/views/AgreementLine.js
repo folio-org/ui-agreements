@@ -89,16 +89,6 @@ const AgreementLine = ({
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
   const resourceName = resource.pti?.titleInstance.name ?? resource.reference_object?.label ?? '';
 
-  console.log(resource, 'na madda');
-  const getSectionProps = (id) => {
-    return {
-      id,
-      handlers,
-      line,
-      resource
-    };
-  };
-
   const shortcuts = [
     {
       name: 'edit',
