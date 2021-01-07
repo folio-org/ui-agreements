@@ -34,7 +34,7 @@ const MCLPaginationFields = () => {
         </Row>
       </Layout>
       { mclList.map((mcl, index) => (
-         <div key={`row-${index}`} data-test-mcl-page-size-fields>
+        <div key={`row-${index}`} data-test-mcl-page-size-fields>
           <Row>
             <Col
               id={`pageSize-${mcl}`}
