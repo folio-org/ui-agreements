@@ -4,17 +4,16 @@ import { FormattedMessage } from 'react-intl';
 import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 
 import {
-  Accordion,
   AccordionSet,
   AccordionStatus,
   Col,
   ExpandAllButton,
   HasCommand,
   Headline,
-  KeyValue,
   Row,
 } from '@folio/stripes/components';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
+import DiscoverySettings from '../DiscoverySettings';
 
 import {
   AcquisitionOptions,
@@ -118,14 +117,11 @@ export default class Title extends React.Component {
               />
               {
                 handlers.isSuppressFromDiscoveryEnabled('title') &&
-                <Accordion
+                <DiscoverySettings
+                  handlers={handlers}
                   id="discoverySettings"
-                  label={<FormattedMessage id="ui-agreements.eresources.discoverySettings" />}
-                >
-                  <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitle" values={{ breakingLine: <br /> }} />}>
-                    <FormattedMessage id={`ui-agreements.${data?.eresource?.suppressFromDiscovery ? 'yes' : 'no'}`} />
-                  </KeyValue>
-                </Accordion>
+                  title={data}
+                />
               }
             </AccordionSet>
           </AccordionStatus>

@@ -4,7 +4,6 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useStripes, AppIcon, IfPermission } from '@folio/stripes/core';
 
 import {
-  Accordion,
   AccordionSet,
   AccordionStatus,
   Button,
@@ -14,7 +13,6 @@ import {
   HasCommand,
   Icon,
   IconButton,
-  KeyValue,
   LoadingPane,
   Pane,
   PaneMenu,
@@ -27,6 +25,7 @@ import { checkScope, collapseAllSections, expandAllSections } from '@folio/strip
 
 import { Info, POLines, Coverage } from '../AgreementLineSections';
 import { isExternal, urls } from '../utilities';
+import DiscoverySettings from '../DiscoverySettings';
 
 const propTypes = {
   data: PropTypes.shape({
@@ -89,6 +88,16 @@ const AgreementLine = ({
 
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
   const resourceName = resource.pti?.titleInstance.name ?? resource.reference_object?.label ?? '';
+
+  console.log(resource, 'na madda');
+  const getSectionProps = (id) => {
+    return {
+      id,
+      handlers,
+      line,
+      resource
+    };
+  };
 
   const shortcuts = [
     {
@@ -181,41 +190,15 @@ const AgreementLine = ({
                   />
                 )}
               </FormattedMessage>
-              {(handlers.isSuppressFromDiscoveryEnabled('pci') || handlers.isSuppressFromDiscoveryEnabled('title') || handlers.isSuppressFromDiscoveryEnabled('agreementLine')) &&
-                <Accordion
+              {
+                (handlers.isSuppressFromDiscoveryEnabled('pci') ||
+                handlers.isSuppressFromDiscoveryEnabled('title') ||
+                handlers.isSuppressFromDiscoveryEnabled('agreementLine'))
+                && <DiscoverySettings
+                  handlers={handlers}
                   id="discoverySettings"
-                  label={<FormattedMessage id="ui-agreements.eresources.discoverySettings" />}
-                >
-                  <Row>
-                    {handlers.isSuppressFromDiscoveryEnabled('agreementLine') &&
-                      <Col xs={3}>
-                        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryAgreementLine" values={{ breakingLine: <br /> }} />}>
-                          <div>
-                            <FormattedMessage id={`ui-agreements.${line?.suppressFromDiscovery ? 'yes' : 'no'}`} />
-                          </div>
-                        </KeyValue>
-                      </Col>
-                    }
-                    {handlers.isSuppressFromDiscoveryEnabled('pci') &&
-                      <Col xs={3}>
-                        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitleInPackage" values={{ breakingLine: <br /> }} />}>
-                          <div>
-                            <FormattedMessage id={`ui-agreements.${line?.resource?.suppressFromDiscovery ? 'yes' : 'no'}`} />
-                          </div>
-                        </KeyValue>
-                      </Col>
-                    }
-                    {handlers.isSuppressFromDiscoveryEnabled('title') &&
-                      <Col xs={3}>
-                        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitle" values={{ breakingLine: <br /> }} />}>
-                          <div>
-                            <FormattedMessage id={`ui-agreements.${line?.resource?._object?.pti?.titleInstance?.suppressFromDiscovery ? 'yes' : 'no'}`} />
-                          </div>
-                        </KeyValue>
-                      </Col>
-                    }
-                  </Row>
-                </Accordion>
+                  line={line}
+                />
               }
             </AccordionSet>
           </AccordionStatus>
