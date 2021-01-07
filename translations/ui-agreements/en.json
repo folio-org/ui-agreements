@@ -241,7 +241,7 @@
   "platform.urlCustomization": "URL Customization",
   "platform.urlCustomizationSettings": "Platform URL customization settings",
   "platform.urlCustomization.name": "Name",
-  "platform.urlCustomization.customizationCode":"Customization code",
+  "platform.urlCustomization.customizationCode": "Customization code",
   "platform.newUrlCustomization": "New URL customization",
   "platform.urlCustomizationCode.learnMore": "Learn more",
   "platform.addUrlCustomization.maxNumber": "Maximum number of URL customizations is 1",

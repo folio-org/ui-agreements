@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import '@folio/stripes-erm-components/test/jest/__mock__';
+import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import EResourceLink from './EResourceLink';
 
 const externalTitle = {
@@ -229,12 +230,16 @@ describe('EResourceLink', () => {
   });
 
   test('renders no value for an empty resource', () => {
-    const { getByText } = render(
+    const { getByText } = renderWithIntl(
       <MemoryRouter>
         <EResourceLink
           eresource={{}}
-        />
-      </MemoryRouter>
+        />,
+      </MemoryRouter>,
+      [{
+        prefix: 'stripes-components',
+        translations: { 'noValue.noValueSet': 'No value set' },
+      }]
     );
 
     expect(getByText('-')).toBeInTheDocument();

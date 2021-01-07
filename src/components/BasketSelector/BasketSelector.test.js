@@ -1,9 +1,10 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
+import { TestForm, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import userEvent from '@testing-library/user-event';
 import BasketSelector from './BasketSelector';
+
+import translationsProperties from '../../../test/helpers';
 
 const onAdd = jest.fn();
 const onSubmit = jest.fn();
@@ -229,12 +230,12 @@ const basketSelectorProps = {
 };
 describe('BasketSelector', () => {
   test('renders add To Basket button', () => {
-    const { getByLabelText } = render(
+    const { getByLabelText } = renderWithIntl(
       <TestForm onSubmit={onSubmit}>
         <BasketSelector
           {...basketSelectorProps}
         />
-      </TestForm>
+      </TestForm>, translationsProperties
 
     );
 
@@ -242,12 +243,12 @@ describe('BasketSelector', () => {
   });
 
   test('renders add To Basket button', () => {
-    const { getByText } = render(
+    const { getByText } = renderWithIntl(
       <TestForm onSubmit={onSubmit}>
         <BasketSelector
           {...basketSelectorProps}
         />
-      </TestForm>
+      </TestForm>, translationsProperties
 
     );
 

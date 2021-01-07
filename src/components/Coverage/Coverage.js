@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Embargo, SerialCoverage } from '@folio/stripes-erm-components';
 import { Layout } from '@folio/stripes/components';
-import MonographCoverage from './MonographCoverage';
+import MonographCoverage from '../MonographCoverage';
 
 import { resourceTypes } from '../../constants';
 

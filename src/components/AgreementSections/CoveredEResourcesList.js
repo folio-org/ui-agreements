@@ -27,7 +27,7 @@ import {
   TitleOnPlatformLink
 } from '@folio/stripes-erm-components';
 
-import { Coverage } from '../Coverage';
+import Coverage from '../Coverage';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
 import { resultCount } from '../../constants';
