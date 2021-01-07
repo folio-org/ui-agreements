@@ -4,9 +4,7 @@ import { TestForm, renderWithIntl } from '@folio/stripes-erm-components/test/jes
 import userEvent from '@testing-library/user-event';
 import BasketSelector from './BasketSelector';
 
-import {
-  translationsProperties,
-} from '../../../test/helpers';
+import translationsProperties from '../../../test/helpers';
 
 const onAdd = jest.fn();
 const onSubmit = jest.fn();
@@ -230,7 +228,7 @@ const basketSelectorProps = {
   'onAdd':onAdd,
   'required':true
 };
-describe.only('BasketSelector', () => {
+describe('BasketSelector', () => {
   test('renders add To Basket button', () => {
     const { getByLabelText } = renderWithIntl(
       <TestForm onSubmit={onSubmit}>
