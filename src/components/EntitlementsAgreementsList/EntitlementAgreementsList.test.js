@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import '@folio/stripes-erm-components/test/jest/__mock__';
+import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import EntitlementAgreementsList from './EntitlementAgreementsList';
 
 const entitlements = [
@@ -397,7 +398,7 @@ const entitlements = [
 
 describe('EntitlementAgreementsList', () => {
   test('renders expected agreements list', () => {
-    const { getByRole } = render(
+    const { getByRole } = renderWithIntl(
       <MemoryRouter>
         <EntitlementAgreementsList
           entitlements={entitlements}
@@ -412,7 +413,7 @@ describe('EntitlementAgreementsList', () => {
   });
 
   test('renders expected agreements list without headline', () => {
-    const { getByRole } = render(
+    const { getByRole } = renderWithIntl(
       <MemoryRouter>
         <EntitlementAgreementsList
           entitlements={entitlements}

@@ -2,7 +2,9 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { MemoryRouter } from 'react-router-dom';
+import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import BasketList from './BasketList';
+
 
 const onRemoveItem = jest.fn();
 const onToggleAll = jest.fn();
@@ -451,7 +453,7 @@ const selectedItems = {
 
 describe('BasketList', () => {
   test('renders add To Basket button', () => {
-    const { getByRole } = render(
+    const { getByRole } = renderWithIntl(
       <MemoryRouter>
         <BasketList
           basket={basket}
@@ -462,13 +464,12 @@ describe('BasketList', () => {
         />
       </MemoryRouter>
     );
-    // screen.debug();
 
     expect(getByRole('grid')).toBeInTheDocument();
   });
 
   test('renders add To Basket button', () => {
-    const { getByRole } = render(
+    const { getByRole } = renderWithIntl(
       <MemoryRouter>
         <BasketList
           basket={basket}

@@ -15,7 +15,7 @@ import {
 import { AppIcon } from '@folio/stripes/core';
 
 import { TitleOnPlatformLink } from '@folio/stripes-erm-components';
-import { Coverage } from '../Coverage';
+import Coverage from '../Coverage';
 import EResourceLink from '../EResourceLink';
 import { resultCount } from '../../constants';
 
