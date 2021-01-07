@@ -125,7 +125,6 @@ export default class Title extends React.Component {
               }
             </AccordionSet>
           </AccordionStatus>
-
         </div>
       </HasCommand>
     );
