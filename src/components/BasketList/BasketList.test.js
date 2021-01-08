@@ -4,7 +4,6 @@ import { MemoryRouter } from 'react-router-dom';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import BasketList from './BasketList';
 
-
 const onRemoveItem = jest.fn();
 const onToggleAll = jest.fn();
 const onToggleItem = jest.fn();

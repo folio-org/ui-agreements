@@ -25,7 +25,7 @@ const DiscoverySettings = ({
       {agLineSuppressFromDiscoveryEnabled &&
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryAgreementLine" values={{ breakingLine: <br /> }} />}>
-            <div>
+            <div data-testId="suppressFromDiscoveryAgreementLine">
               <FormattedMessage id={`ui-agreements.${line?.suppressFromDiscovery ? 'yes' : 'no'}`} />
             </div>
           </KeyValue>
@@ -34,7 +34,7 @@ const DiscoverySettings = ({
       {pciSuppressFromDiscoveryEnabled &&
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitleInPackage" values={{ breakingLine: <br /> }} />}>
-            <div>
+            <div data-testId="suppressFromDiscoveryTitleInPackage">
               <FormattedMessage id={`ui-agreements.${line?.resource?.suppressFromDiscovery ? 'yes' : 'no'}`} />
             </div>
           </KeyValue>
@@ -43,7 +43,7 @@ const DiscoverySettings = ({
       {titleSuppressFromDiscoveryEnabled &&
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitle" values={{ breakingLine: <br /> }} />}>
-            <div>
+            <div data-testId="suppressFromDiscoveryTitle">
               <FormattedMessage id={`ui-agreements.${line?.resource?._object?.pti?.titleInstance?.suppressFromDiscovery ? 'yes' : 'no'}`} />
             </div>
           </KeyValue>
@@ -57,7 +57,7 @@ const DiscoverySettings = ({
       {pciSuppressFromDiscoveryEnabled &&
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitleInPackage" values={{ breakingLine: <br /> }} />}>
-            <div>
+            <div data-testId="suppressFromDiscoveryTitleInPackage">
               <FormattedMessage id={`ui-agreements.${pci?.suppressFromDiscovery ? 'yes' : 'no'}`} />
             </div>
           </KeyValue>
@@ -66,7 +66,7 @@ const DiscoverySettings = ({
       {titleSuppressFromDiscoveryEnabled &&
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitle" values={{ breakingLine: <br /> }} />}>
-            <div>
+            <div data-testId="suppressFromDiscoveryTitle">
               <FormattedMessage id={`ui-agreements.${pci?.pti?.titleInstance?.suppressFromDiscovery ? 'yes' : 'no'}`} />
             </div>
           </KeyValue>
@@ -76,7 +76,7 @@ const DiscoverySettings = ({
   );
 
   const renderTitleDiscoverySettings = () => (
-    <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitle" values={{ breakingLine: <br /> }} />}>
+    <KeyValue data-testId="suppressFromDiscoveryTitle" label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitle" values={{ breakingLine: <br /> }} />}>
       <FormattedMessage id={`ui-agreements.${title?.eresource?.suppressFromDiscovery ? 'yes' : 'no'}`} />
     </KeyValue>
   );
@@ -90,19 +90,19 @@ const DiscoverySettings = ({
     renderDiscoverySettings = renderTitleDiscoverySettings;
   }
 
-  return (
+  return renderDiscoverySettings ? (
     <Accordion
       id={id}
       label={<FormattedMessage id="ui-agreements.eresources.discoverySettings" />}
     >
-      {renderDiscoverySettings?.() ?? null}
+      {renderDiscoverySettings()}
     </Accordion>
-  );
+  ) : null;
 };
 
 DiscoverySettings.propTypes = {
   handlers: PropTypes.shape({
-    isSuppressFromDiscoveryEnabled: PropTypes.func
+    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired
   }),
   id: PropTypes.string,
   line: PropTypes.object,
