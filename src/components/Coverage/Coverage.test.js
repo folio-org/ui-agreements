@@ -1,6 +1,6 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
+import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import Coverage from './Coverage';
 
 const serialResource = {
@@ -377,7 +377,7 @@ const monographResource = {
 
 describe('Coverage', () => {
   test('renders expected serial coverage when passed as a pci', () => {
-    const { getByTestId } = render(
+    const { getByTestId } = renderWithIntl(
       <Coverage
         pci={serialResource}
       />
@@ -388,7 +388,7 @@ describe('Coverage', () => {
   });
 
   test('renders expected monograph coverage when passed as a pci', () => {
-    const { getByTestId } = render(
+    const { getByTestId } = renderWithIntl(
       <Coverage
         pci={monographResource}
       />
@@ -400,7 +400,7 @@ describe('Coverage', () => {
 
   test('renders expected serial coverage when passed as a line', () => {
     const line = monographResource;
-    const { getByTestId } = render(
+    const { getByTestId } = renderWithIntl(
       <Coverage
         line={line}
       />
@@ -410,14 +410,14 @@ describe('Coverage', () => {
     expect(getByTestId('serialCoverage')).toBeInTheDocument();
   });
 
-  test('renders expected monograph coverage when passed as a line', () => {
+  test('renders expected monograph coverage when passed as a line with an _object', () => {
     const monographLine = {
       resource: {
         _object: monographResource,
       },
     };
 
-    const { getByTestId } = render(
+    const { getByTestId } = renderWithIntl(
       <Coverage
         line={monographLine}
       />

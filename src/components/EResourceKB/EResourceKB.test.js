@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
+import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import EResourceKB from './EResourceKB';
 
 const PackageResource = {
@@ -242,10 +243,14 @@ describe('EResourceKB', () => {
   });
 
   test('renders no value for an empty resource', () => {
-    const { getByText } = render(
+    const { getByText } = renderWithIntl(
       <EResourceKB
         resource={{}}
-      />
+      />,
+      [{
+        prefix: 'stripes-components',
+        translations: { 'noValue.noValueSet': 'No value set' },
+      }]
     );
 
     expect(getByText('-')).toBeInTheDocument();

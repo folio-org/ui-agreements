@@ -11,7 +11,7 @@ import {
 } from '@folio/stripes/components';
 
 import { EResourceType } from '@folio/stripes-erm-components';
-import { Coverage } from '../Coverage';
+import Coverage from '../Coverage';
 import EResourceLink from '../EResourceLink';
 
 class BasketList extends React.Component {

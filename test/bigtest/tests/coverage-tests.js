@@ -4,7 +4,7 @@ import { expect } from 'chai';
 
 import { mountWithContext } from '../helpers/mountWithContext';
 
-import { Coverage } from '../../../src/components/Coverage';
+import Coverage from '../../../src/components/Coverage';
 import MonographCoverageInteractor from '../interactors/monograph-coverage';
 import SerialCoverageInteractor from '../interactors/serial-coverage';
 import EmbargoInteractor from '../interactors/embargo';

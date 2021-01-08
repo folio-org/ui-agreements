@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { render } from '@testing-library/react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
+import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import EResourceIdentifier from './EResourceIdentifier';
 
 const titleInstanceWithIdentifier = {
@@ -99,7 +99,7 @@ const titleInstanceWithoutIdentifier = {
 
 describe('EResourceIdentifier', () => {
   test('renders expected identifier for Title with identifier', () => {
-    const { getByTestId } = render(
+    const { getByTestId } = renderWithIntl(
       <EResourceIdentifier
         titleInstance={titleInstanceWithIdentifier}
         type="isbn"
@@ -110,7 +110,7 @@ describe('EResourceIdentifier', () => {
   });
 
   test('renders null for Title with no identifier ', () => {
-    const { container } = render(
+    const { container } = renderWithIntl(
       <EResourceIdentifier
         titleInstance={titleInstanceWithoutIdentifier}
         type="isbn"

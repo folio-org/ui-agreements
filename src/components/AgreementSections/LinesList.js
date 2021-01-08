@@ -13,7 +13,7 @@ import {
 
 import { EResourceType } from '@folio/stripes-erm-components';
 
-import { Coverage } from '../Coverage';
+import Coverage from '../Coverage';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import EResourceCount from '../EResourceCount';
