@@ -236,7 +236,6 @@ describe('BasketSelector', () => {
           {...basketSelectorProps}
         />
       </TestForm>, translationsProperties
-
     );
 
     expect(getByLabelText(/basketSelector/i)).toBeInTheDocument();

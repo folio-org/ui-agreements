@@ -25,6 +25,7 @@ import { checkScope, collapseAllSections, expandAllSections } from '@folio/strip
 
 import { Info, POLines, Coverage } from '../AgreementLineSections';
 import { isExternal, urls } from '../utilities';
+import DiscoverySettings from '../DiscoverySettings';
 
 const propTypes = {
   data: PropTypes.shape({
@@ -179,6 +180,16 @@ const AgreementLine = ({
                   />
                 )}
               </FormattedMessage>
+              {
+                (handlers.isSuppressFromDiscoveryEnabled('pci') ||
+                handlers.isSuppressFromDiscoveryEnabled('title') ||
+                handlers.isSuppressFromDiscoveryEnabled('agreementLine'))
+                && <DiscoverySettings
+                  handlers={handlers}
+                  id="discoverySettings"
+                  line={line}
+                />
+              }
             </AccordionSet>
           </AccordionStatus>
         </Pane>
