@@ -9,7 +9,7 @@ const onSubmit = jest.fn();
 const mclList = ['agreementLines', 'agreementEresources', 'entitlementOptions', 'packageContents', 'entitlements'];
 
 describe('MCLPaginationFields', () => {
-  test('renders mcl labels', () => {
+  test('renders mcl fields', () => {
     const { getByTestId } = render(
       <TestForm onSubmit={onSubmit}>
         <MCLPaginationFields />

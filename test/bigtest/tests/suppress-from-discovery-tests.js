@@ -6,7 +6,7 @@ import { Form } from 'react-final-form';
 
 import { mountWithContext } from '../helpers/mountWithContext';
 
-import SuppressFromDiscoveryFields from '../../../src/settings/components/SuppressFromDiscoveryFields';
+import { SuppressFromDiscoveryFields } from '../../../src/settings/components';
 import SuppressFromDiscoveryInteractor from '../interactors/suppress-from-discovery';
 
 const interactor = new SuppressFromDiscoveryInteractor();
