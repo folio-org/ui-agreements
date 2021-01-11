@@ -14,7 +14,7 @@ import {
 import { AppIcon } from '@folio/stripes/core';
 
 import { EResourceType } from '@folio/stripes-erm-components';
-import { Coverage } from '../Coverage';
+import Coverage from '../Coverage';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import { getResourceFromEntitlement, urls } from '../utilities';
@@ -25,6 +25,8 @@ const EntitlementAgreementsList = (
     headline,
     id,
     isEmptyMessage,
+    onNeedMoreEntitlements,
+    totalCount,
     visibleColumns }
 ) => {
   const columnMapping = {
@@ -92,6 +94,9 @@ const EntitlementAgreementsList = (
         id={id}
         interactive={false}
         isEmptyMessage={isEmptyMessage}
+        onNeedMoreData={onNeedMoreEntitlements}
+        pagingType="click"
+        totalCount={totalCount}
         visibleColumns={visibleColumns}
       />
     </div>
@@ -108,6 +113,8 @@ EntitlementAgreementsList.propTypes = {
   headline: PropTypes.node,
   id: PropTypes.string,
   isEmptyMessage: PropTypes.node,
+  onNeedMoreEntitlements: PropTypes.func,
+  totalCount: PropTypes.number,
   visibleColumns: PropTypes.arrayOf(PropTypes.string),
 };
 

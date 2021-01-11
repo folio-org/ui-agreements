@@ -15,7 +15,7 @@ import {
 import { AppIcon } from '@folio/stripes/core';
 
 import { TitleOnPlatformLink } from '@folio/stripes-erm-components';
-import { Coverage } from '../Coverage';
+import Coverage from '../Coverage';
 import EResourceLink from '../EResourceLink';
 import { resultCount } from '../../constants';
 
@@ -86,12 +86,10 @@ export default class PackageContents extends React.Component {
         formatter={this.formatter}
         id="package-contents-list"
         interactive={false}
-        maxHeight={800}
         onNeedMoreData={this.props.onNeedMorePackageContents}
         pageAmount={resultCount.RESULT_COUNT_INCREMENT}
         pagingType="click"
         totalCount={packageContentsCount}
-        virtualize
         visibleColumns={this.visibleColumns}
       />
     );

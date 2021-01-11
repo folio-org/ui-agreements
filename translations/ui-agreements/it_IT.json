@@ -507,8 +507,7 @@
     "platform.urlCustomizationCode.learnMore": "Learn more",
     "platform.addUrlCustomization.maxNumber": "Maximum number of URL customizations is 1",
     "platform.urlCustomizationCode.info": "The template that will be used to generate a proxied URL.",
-    "platform.urlCustomizationCode.variables": "Variables: inputUrl, platformCode",
-    "platform.urlCustomizationCode.handleBarHelpers": "Handlebar helpers: replace, encodeUrl, removeProtocol",
+    "platform.urlCustomizationCode.variables": "Variables: inputUrl, platformLocalCode",
     "platform.noUrlCustomization": "No URL customization for this platform",
     "platform.urlCustomization.delete.callout": "URL customization deleted",
     "platform.urlCustomization.deleteFailed.callout": "URL customization failed to delete: {message}",
@@ -528,5 +527,17 @@
     "platform.urlCustomization.deleteConfirmMessage": "URL customization <strong>{name}</strong> will be <strong>deleted</strong>.",
     "platform.urlCustomizer.closeEdit": "Close edit URL customization",
     "platform.urlCustomization.create.callout": "URL customization created",
-    "platform.urlCustomization.update.callout": "URL customization updated"
+    "platform.urlCustomization.update.callout": "URL customization updated",
+    "platform.urlCustomizationCode.helpers": "Helpers: insertAfter, insertAfterAll, insertBefore, insertBeforeAll, urlEncode, removeProtocol, replace",
+    "poLines.viewInInventory": "View in inventory",
+    "emptyAccordion.lineCoverageEresource": "No coverage for this e-resource",
+    "settings.mcl.pagination.description": "<strong>MCL Pagination</strong>",
+    "settings.mcl": "<strong>MCL</strong>",
+    "settings.mcl.pageSize": "<strong>Page size</strong>",
+    "settings.mcl.entitlementOptions": "E-resource view pane > Options for acquiring e-resource",
+    "settings.mcl.agreementLines": "Agreement view pane > Agreement lines",
+    "settings.mcl.agreementEresources": "Agreement view pane > E-resources covered by this agreement",
+    "settings.mcl.entitlements": "E-resource view pane > Agreements for this e-resource",
+    "settings.mcl.packageContents": "Package view pane > E-resources in package",
+    "settings.error.valueNotInRange": "Please enter a whole number in the range {min} to {max} to continue"
 }

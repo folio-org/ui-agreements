@@ -53,45 +53,47 @@ const AddToBasketButtonPropsWithItem = {
   'resources': { basket: [item] },
 };
 
-test('renders add To Basket button', () => {
-  const { getByTestId } = render(
-    <AddToBasketButton
-      {...AddToBasketButtonProps}
-    />
-  );
-  expect(getByTestId('addtobasketbutton')).toBeInTheDocument();
-});
+describe('AddToBasketButton', () => {
+  test('renders add To Basket button', () => {
+    const { getByTestId } = render(
+      <AddToBasketButton
+        {...AddToBasketButtonProps}
+      />
+    );
+    expect(getByTestId('addtobasketbutton')).toBeInTheDocument();
+  });
 
-test('renders remove button label', () => {
-  const { getByText } = render(
-    <AddToBasketButton
-      {...AddToBasketButtonPropsWithItem}
-    />
-  );
-  expect(getByText('Remove button'));
-});
+  test('renders remove button label', () => {
+    const { getByText } = render(
+      <AddToBasketButton
+        {...AddToBasketButtonPropsWithItem}
+      />
+    );
+    expect(getByText('Remove button'));
+  });
 
 
-test('clicking the add button invokes the callback with expected value', () => {
-  const { getByTestId } = render(
-    <AddToBasketButton
-      {...AddToBasketButtonProps}
-    />
-  );
+  test('clicking the add button invokes the callback with expected value', () => {
+    const { getByTestId } = render(
+      <AddToBasketButton
+        {...AddToBasketButtonProps}
+      />
+    );
 
-  userEvent.click(getByTestId('addtobasketbutton'));
-  expect(handleReplace.mock.calls.length).toBe(1);
-  handleReplace.mockClear();
-});
+    userEvent.click(getByTestId('addtobasketbutton'));
+    expect(handleReplace.mock.calls.length).toBe(1);
+    handleReplace.mockClear();
+  });
 
-test('clicking the remove button invokes the callback with expected value', () => {
-  const { getByTestId } = render(
-    <AddToBasketButton
-      {...AddToBasketButtonPropsWithItem}
-    />
-  );
+  test('clicking the remove button invokes the callback with expected value', () => {
+    const { getByTestId } = render(
+      <AddToBasketButton
+        {...AddToBasketButtonPropsWithItem}
+      />
+    );
 
-  userEvent.click(getByTestId('addtobasketbutton'));
-  expect(handleReplace.mock.calls.length).toBe(1);
-  handleReplace.mockClear();
+    userEvent.click(getByTestId('addtobasketbutton'));
+    expect(handleReplace.mock.calls.length).toBe(1);
+    handleReplace.mockClear();
+  });
 });

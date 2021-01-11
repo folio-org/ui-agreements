@@ -13,6 +13,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
+import DiscoverySettings from '../DiscoverySettings';
 
 import {
   AcquisitionOptions,
@@ -49,6 +50,7 @@ export default class Title extends React.Component {
       acquisitionOptions: false,
       eresourceAgreements: false,
       notes: false,
+      discoverySettings: false
     };
   }
 
@@ -113,9 +115,16 @@ export default class Title extends React.Component {
                 pathToNoteCreate={urls.noteCreate()}
                 pathToNoteDetails={urls.notes()}
               />
+              {
+                handlers.isSuppressFromDiscoveryEnabled('title') &&
+                <DiscoverySettings
+                  handlers={handlers}
+                  id="discoverySettings"
+                  title={data}
+                />
+              }
             </AccordionSet>
           </AccordionStatus>
-
         </div>
       </HasCommand>
     );

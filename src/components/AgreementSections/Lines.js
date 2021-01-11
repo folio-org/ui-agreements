@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { get } from 'lodash';
 import { IfPermission } from '@folio/stripes/core';
 import { Button, Accordion, Badge, Spinner } from '@folio/stripes/components';
 
@@ -12,6 +11,7 @@ import { urls } from '../utilities';
 export default class Lines extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
+      agreementLinesCount: PropTypes.number,
       eresources: PropTypes.arrayOf(PropTypes.object),
       id: PropTypes.string,
       lines: PropTypes.arrayOf(PropTypes.object),
@@ -40,10 +40,8 @@ export default class Lines extends React.Component {
   }
 
   renderBadge = () => {
-    const count = get(this.props, 'agreement.lines.length');
-    if (count === undefined) return <Spinner />;
-
-    return <Badge data-test-agreement-lines-count={count}>{count}</Badge>;
+    const count = this.props.agreement?.agreementLinesCount;
+    return count !== undefined ? <Badge data-test-agreement-lines-count={count}>{count}</Badge> : <Spinner />;
   }
 
   render() {

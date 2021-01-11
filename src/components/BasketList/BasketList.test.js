@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { MemoryRouter } from 'react-router-dom';
+import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import BasketList from './BasketList';
 
 const onRemoveItem = jest.fn();
@@ -449,18 +449,36 @@ const selectedItems = {
   'beadf493-5674-4736-bd70-42679c017286': true
 };
 
-test('renders add To Basket button', () => {
-  const { getByRole } = render(
-    <MemoryRouter>
-      <BasketList
-        basket={basket}
-        onRemoveItem={onRemoveItem}
-        onToggleAll={onToggleAll}
-        onToggleItem={onToggleItem}
-        selectedItems={{}}
-      />
-    </MemoryRouter>
-  );
+describe('BasketList', () => {
+  test('renders add To Basket button', () => {
+    const { getByRole } = renderWithIntl(
+      <MemoryRouter>
+        <BasketList
+          basket={basket}
+          onRemoveItem={onRemoveItem}
+          onToggleAll={onToggleAll}
+          onToggleItem={onToggleItem}
+          selectedItems={{}}
+        />
+      </MemoryRouter>
+    );
 
-  expect(getByRole('grid')).toBeInTheDocument();
+    expect(getByRole('grid')).toBeInTheDocument();
+  });
+
+  test('renders add To Basket button', () => {
+    const { getByRole } = renderWithIntl(
+      <MemoryRouter>
+        <BasketList
+          basket={basket}
+          onRemoveItem={onRemoveItem}
+          onToggleAll={onToggleAll}
+          onToggleItem={onToggleItem}
+          selectedItems={selectedItems}
+        />
+      </MemoryRouter>
+    );
+
+    expect(getByRole('grid')).toBeInTheDocument();
+  });
 });

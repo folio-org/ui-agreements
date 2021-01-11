@@ -13,7 +13,9 @@ import { pci as eresource, entitlements, relatedEntitlements } from './resources
 import PCIAgreementsInteractor from '../interactors/pci-agreements';
 
 chai.use(spies);
-const { expect } = chai;
+const { expect, spy } = chai;
+
+const handleNeedMoreEntitlements = spy();
 
 describe('PCI agreements information', () => {
   const data = { eresource, entitlements, relatedEntitlements };
@@ -26,6 +28,9 @@ describe('PCI agreements information', () => {
         <Router context={{}}>
           <Agreements
             data={data}
+            handlers={{
+              onNeedMoreEntitlements: handleNeedMoreEntitlements
+            }}
             headline={data.eresource.name}
             visibleColumns={['name', 'type', 'startDate', 'endDate']}
           />

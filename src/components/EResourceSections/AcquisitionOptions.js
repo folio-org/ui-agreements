@@ -9,7 +9,7 @@ import {
   TitleOnPlatformLink
 } from '@folio/stripes-erm-components';
 import AddToBasketButton from '../AddToBasketButton';
-import { Coverage } from '../Coverage';
+import Coverage from '../Coverage';
 import EResourceKB from '../EResourceKB';
 
 import { isExternal } from '../utilities';
@@ -18,12 +18,14 @@ class AcquisitionOptions extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       entitlementOptions: PropTypes.arrayOf(PropTypes.object),
+      entitlementOptionsCount: PropTypes.number,
       eresource: PropTypes.shape({
         name: PropTypes.string,
       }),
     }),
     handlers: PropTypes.shape({
       onEResourceClick: PropTypes.func,
+      onNeedMoreEntitlementOptions: PropTypes.func,
     }),
     id: PropTypes.string,
   };
@@ -44,7 +46,7 @@ class AcquisitionOptions extends React.Component {
   }
 
   renderBadge = () => {
-    const count = this.props?.data?.entitlementOptions?.length;
+    const count = this.props?.data?.entitlementOptionsCount;
     return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
   }
 
@@ -131,7 +133,10 @@ class AcquisitionOptions extends React.Component {
           );
         },
       }}
+      onNeedMoreData={this.props.handlers.onNeedMoreEntitlementOptions}
       onRowClick={this.onRowClick}
+      pagingType="click"
+      totalCount={this.props.data.entitlementOptionsCount}
       visibleColumns={['sourceKb', 'package', 'coverage', 'platform', 'acqMethod', 'add']}
     />
   )

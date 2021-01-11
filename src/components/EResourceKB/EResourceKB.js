@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { isEmpty } from 'lodash';
 import { isPackage } from '@folio/stripes-erm-components';
 import { NoValue } from '@folio/stripes/components';
 
@@ -23,7 +23,7 @@ export default class EResourceKB extends React.Component {
 
   render() {
     const { resource } = this.props;
-    if (!resource) return <NoValue />;
+    if (isEmpty(resource)) return <NoValue />;
 
     if (isPackage(resource)) {
       return resource?._object?.remoteKb?.name ?? <NoValue />;

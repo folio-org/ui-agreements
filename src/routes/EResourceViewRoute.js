@@ -8,7 +8,7 @@ import { withTags } from '@folio/stripes/smart-components';
 import { checkScope, collapseAllSections, expandAllSections, Tags } from '@folio/stripes-erm-components';
 
 import View from '../components/views/EResource';
-import { urls, withSuppressFromDiscovery } from '../components/utilities';
+import { parseMclPageSize, urls, withSuppressFromDiscovery } from '../components/utilities';
 import { resultCount, resourceClasses } from '../constants';
 
 const RECORDS_PER_REQUEST = 100;
@@ -25,20 +25,31 @@ class EResourceViewRoute extends React.Component {
       params: {
         stats: 'true',
       },
-      perRequest: RECORDS_PER_REQUEST,
+      perRequest: (_q, _p, _r, _l, props) => parseMclPageSize(props.resources.settings, 'entitlementOptions'),
       records: 'results',
       limitParam: 'perPage',
       throwErrors: false,
+      resultOffset: (_q, _p, _r, _l, props) => {
+        const { match, resources } = props;
+        const resultOffset = get(resources, 'entitlementOptionsOffset');
+        const eresourceId = get(resources, 'eresource.records[0].id');
+        return eresourceId !== match.params.id ? 0 : resultOffset;
+      },
     },
     entitlements: {
       type: 'okapi',
       path: 'erm/resource/:{id}/entitlements',
       records: 'results',
-      perRequest: RECORDS_PER_REQUEST,
-      recordsRequired: '%{entitlementsCount}',
+      perRequest: (_q, _p, _r, _l, props) => parseMclPageSize(props.resources.settings, 'entitlements'),
       limitParam: 'perPage',
       params: {
         stats: 'true',
+      },
+      resultOffset: (_q, _p, _r, _l, props) => {
+        const { match, resources } = props;
+        const resultOffset = get(resources, 'entitlementsOffset');
+        const eresourceId = get(resources, 'eresource.records[0].id');
+        return eresourceId !== match.params.id ? 0 : resultOffset;
       },
     },
     relatedEntitlements: {
@@ -49,12 +60,17 @@ class EResourceViewRoute extends React.Component {
       limitParam: 'perPage',
       throwErrors: false,
     },
+    settings: {
+      type: 'okapi',
+      path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
+      records: 'configs',
+    },
     packageContents: {
       type: 'okapi',
       path: 'erm/packages/:{id}/content/%{packageContentsFilter}',
       records: 'results',
       limitParam: 'perPage',
-      perRequest: resultCount.RESULT_COUNT_INCREMENT,
+      perRequest: (_q, _p, _r, _l, props) => parseMclPageSize(props.resources?.settings, 'packageContents'),
       resultOffset: (_q, _p, _r, _l, props) => {
         const { match, resources } = props;
         const resultOffset = get(resources, 'packageContentsOffset');
@@ -68,7 +84,9 @@ class EResourceViewRoute extends React.Component {
       },
     },
     query: {},
+    entitlementsOffset: { initialValue: 0 },
     entitlementsCount: { initialValue: resultCount.INITIAL_RESULT_COUNT },
+    entitlementOptionsOffset: { initialValue: 0 },
     packageContentsFilter: { initialValue: 'current' },
     packageContentsOffset: { initialValue: 0 },
   });
@@ -91,13 +109,19 @@ class EResourceViewRoute extends React.Component {
       entitlementsCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
+      entitlementsOffset: PropTypes.shape({
+        replace: PropTypes.func.isRequired,
+      }),
+      entitlementOptionsOffset: PropTypes.shape({
+        replace: PropTypes.func.isRequired,
+      }),
       packageContentsCount: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
-      packageContentsFilter: PropTypes.shape({
+      packageContentsOffset: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
-      packageContentsOffset: PropTypes.shape({
+      packageContentsFilter: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
       query: PropTypes.shape({
@@ -113,6 +137,7 @@ class EResourceViewRoute extends React.Component {
       packageContentsFilter: PropTypes.string,
       packageContentsCount: PropTypes.number,
       query: PropTypes.object,
+      settings: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
@@ -124,13 +149,19 @@ class EResourceViewRoute extends React.Component {
     handlers: { },
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { mutator, resources } = this.props;
     const totalEntitlements = get(resources, 'entitlements.other.totalRecords', RECORDS_PER_REQUEST);
     const { entitlementsCount } = resources;
 
     if (totalEntitlements > entitlementsCount) {
       mutator.entitlementsCount.replace(totalEntitlements);
+    }
+
+    if (prevProps?.resources?.eresource?.records?.[0]?.id !== this.props?.resources?.eresource?.records?.[0]?.id) {
+      mutator.entitlementsOffset.replace(0);
+      mutator.entitlementOptionsOffset.replace(0);
+      mutator.packageContentsOffset.replace(0);
     }
   }
 
@@ -177,6 +208,16 @@ class EResourceViewRoute extends React.Component {
     const { mutator } = this.props;
     mutator.packageContentsFilter.replace(path);
     mutator.packageContentsOffset.replace(0);
+  }
+
+  handleNeedMoreEntitlements = (_askAmount, index) => {
+    const { mutator } = this.props;
+    mutator.entitlementsOffset.replace(index);
+  }
+
+  handleNeedMoreEntitlementOptions = (_askAmount, index) => {
+    const { mutator } = this.props;
+    mutator.entitlementOptionsOffset.replace(index);
   }
 
   handleNeedMorePackageContents = (_askAmount, index) => {
@@ -247,7 +288,9 @@ class EResourceViewRoute extends React.Component {
         data={{
           eresource: resources?.eresource?.records?.[0] ?? {},
           entitlementOptions: this.getRecords('entitlementOptions'),
+          entitlementOptionsCount: resources?.entitlementOptions?.other?.totalRecords ?? 0,
           entitlements: this.getRecords('entitlements'),
+          entitlementsCount: resources?.entitlements?.other?.totalRecords ?? 0,
           packageContentsFilter: this.props.resources.packageContentsFilter,
           packageContents: this.getPackageContentsRecords(),
           packageContentsCount: this.getPackageContentsRecordsCount(),
@@ -261,6 +304,8 @@ class EResourceViewRoute extends React.Component {
           expandAllSections,
           isSuppressFromDiscoveryEnabled,
           onFilterPackageContents: this.handleFilterPackageContents,
+          onNeedMoreEntitlements: this.handleNeedMoreEntitlements,
+          onNeedMoreEntitlementOptions: this.handleNeedMoreEntitlementOptions,
           onNeedMorePackageContents: this.handleNeedMorePackageContents,
           onClose: this.handleClose,
           onEdit: this.handleEdit,

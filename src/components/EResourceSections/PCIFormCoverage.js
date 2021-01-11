@@ -43,6 +43,7 @@ export default class PCIFormCoverage extends React.Component {
           deleteButtonTooltipId="ui-agreements.pci.removeCoverage"
           headerId="ui-agreements.pci.coverageTitle"
           id="pci-form-coverages"
+          isEmptyCoverageId="ui-agreements.emptyAccordion.lineCoverageEresource"
           name="coverage"
         />
       </Accordion>

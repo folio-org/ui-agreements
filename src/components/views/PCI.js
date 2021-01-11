@@ -11,6 +11,7 @@ import {
   Headline,
   Row,
 } from '@folio/stripes/components';
+import DiscoverySettings from '../DiscoverySettings';
 
 import {
   Agreements,
@@ -43,6 +44,7 @@ export default class PCI extends React.Component {
       expandAllSections: PropTypes.func.isRequired,
       isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
       onEdit: PropTypes.func.isRequired,
+      onNeedMoreEntitlements: PropTypes.func.isRequired,
     }),
   }
 
@@ -55,36 +57,37 @@ export default class PCI extends React.Component {
     return {
       'pci-coverage': false,
       'eresourceAgreements': false,
+      'discoverySettings': false
     };
   }
 
   render() {
-    const { data, handlers: { checkScope, collapseAllSections, expandAllSections, isSuppressFromDiscoveryEnabled, onEdit } } = this.props;
+    const { data, handlers } = this.props;
     const { eresource, searchString } = data;
 
     const shortcuts = [
       {
         name: 'edit',
-        handler: onEdit,
+        handler: handlers.onEdit,
       },
       {
         name: 'expandAllSections',
-        handler: (e) => expandAllSections(e, this.accordionStatusRef),
+        handler: (e) => handlers.expandAllSections(e, this.accordionStatusRef),
       },
       {
         name: 'collapseAllSections',
-        handler: (e) => collapseAllSections(e, this.accordionStatusRef)
+        handler: (e) => handlers.collapseAllSections(e, this.accordionStatusRef)
       }
     ];
 
     return (
       <HasCommand
         commands={shortcuts}
-        isWithinScope={checkScope}
+        isWithinScope={handlers.checkScope}
         scope={document.body}
       >
         <div id="eresource-pci">
-          <PCIInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} pci={eresource} />
+          <PCIInfo pci={eresource} />
           <div data-test-parent-package-details>
             <Headline margin="small" size="large" tag="h3">
               <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
@@ -107,11 +110,17 @@ export default class PCI extends React.Component {
               <PCICoverage data={data} />
               <Agreements
                 data={data}
+                handlers={handlers}
                 headline={eresource.name}
                 id="eresourceAgreements"
                 renderRelatedEntitlements
                 visibleColumns={['name', 'type', 'startDate', 'endDate']}
               />
+              {
+                (handlers.isSuppressFromDiscoveryEnabled('pci') ||
+                handlers.isSuppressFromDiscoveryEnabled('title'))
+                && <DiscoverySettings handlers={handlers} id="discoverySettings" pci={eresource} />
+              }
             </AccordionSet>
           </AccordionStatus>
         </div>
