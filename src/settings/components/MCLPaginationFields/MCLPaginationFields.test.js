@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
+import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import userEvent from '@testing-library/user-event';
 import MCLPaginationFields from './MCLPaginationFields';
 
@@ -10,7 +10,7 @@ const mclList = ['agreementLines', 'agreementEresources', 'entitlementOptions', 
 
 describe('MCLPaginationFields', () => {
   test('renders mcl fields', () => {
-    const { getByTestId } = render(
+    const { getByTestId } = renderWithIntl(
       <TestForm onSubmit={onSubmit}>
         <MCLPaginationFields />
       </TestForm>
@@ -23,7 +23,7 @@ describe('MCLPaginationFields', () => {
   });
 
   test('type value and render', () => {
-    const { getByTestId } = render(
+    const { getByTestId } = renderWithIntl(
       <TestForm onSubmit={onSubmit}>
         <MCLPaginationFields />
       </TestForm>
