@@ -11,6 +11,7 @@ import {
   Headline,
   Row,
 } from '@folio/stripes/components';
+import DiscoverySettings from '../DiscoverySettings';
 
 import {
   Agreements,
@@ -56,6 +57,7 @@ export default class PCI extends React.Component {
     return {
       'pci-coverage': false,
       'eresourceAgreements': false,
+      'discoverySettings': false
     };
   }
 
@@ -85,7 +87,7 @@ export default class PCI extends React.Component {
         scope={document.body}
       >
         <div id="eresource-pci">
-          <PCIInfo isSuppressFromDiscoveryEnabled={handlers.isSuppressFromDiscoveryEnabled} pci={eresource} />
+          <PCIInfo pci={eresource} />
           <div data-test-parent-package-details>
             <Headline margin="small" size="large" tag="h3">
               <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
@@ -114,6 +116,11 @@ export default class PCI extends React.Component {
                 renderRelatedEntitlements
                 visibleColumns={['name', 'type', 'startDate', 'endDate']}
               />
+              {
+                (handlers.isSuppressFromDiscoveryEnabled('pci') ||
+                handlers.isSuppressFromDiscoveryEnabled('title'))
+                && <DiscoverySettings handlers={handlers} id="discoverySettings" pci={eresource} />
+              }
             </AccordionSet>
           </AccordionStatus>
         </div>
