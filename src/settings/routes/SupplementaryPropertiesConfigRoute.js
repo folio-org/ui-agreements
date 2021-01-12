@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
-import SupplementaryPropertiesConfigForm from '../components';
+import { SupplementaryPropertiesConfigForm } from '../components';
 
 class SupplementaryPropertiesConfigRoute extends React.Component {
   static manifest = Object.freeze({
