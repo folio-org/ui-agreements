@@ -23,7 +23,9 @@ export default class MonographCoverage extends React.Component {
     return (
       <>
         <FormattedMessage id="ui-agreements.coverage.editionShort" />
-        {edition}
+        <div data-testid="editionDisplay">
+          {edition}
+        </div>
       </>
     );
   }
@@ -34,7 +36,9 @@ export default class MonographCoverage extends React.Component {
     return (
       <>
         <FormattedMessage id="ui-agreements.coverage.volumeShort" />
-        {volume}
+        <div data-testid="volumeDisplay">
+          {volume}
+        </div>
       </>
     );
   }
@@ -54,7 +58,7 @@ export default class MonographCoverage extends React.Component {
         className="full"
         data-test-start
       >
-        <div data-test-date={date}>
+        <div data-test-date={date} data-testid="dateDisplay">
           { date }
         </div>
         <div
