@@ -145,7 +145,7 @@ const monographResource = {
 const monographResourceNoEdition = cloneDeep(monographResource);
 monographResourceNoEdition.pti.titleInstance.monographEdition = null;
 
-const monographResourceNoVolume = cloneDeep(monographResource)
+const monographResourceNoVolume = cloneDeep(monographResource);
 monographResourceNoVolume.pti.titleInstance.monographVolume = null;
 
 describe('MonographCoverage', () => {
@@ -159,11 +159,11 @@ describe('MonographCoverage', () => {
     // renders monograph coverage element
     expect(getByTestId('monographCoverage')).toBeInTheDocument();
     // renders correct date
-    expect(getByTestId('dateDisplay')).toHaveTextContent("1850");
+    expect(getByTestId('dateDisplay')).toHaveTextContent('1850');
     // renders correct edition
-    expect(getByTestId('editionDisplay')).toHaveTextContent("1st");
+    expect(getByTestId('editionDisplay')).toHaveTextContent('1st');
     // renders correct volume
-    expect(getByTestId('volumeDisplay')).toHaveTextContent("1");
+    expect(getByTestId('volumeDisplay')).toHaveTextContent('1');
   });
 
   test('renders expected monograph coverage when passed without an edition', () => {
