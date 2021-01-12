@@ -540,8 +540,8 @@
     "settings.mcl.entitlements": "Painel de recursos eletrônicos > Acordos para este recurso eletrônico",
     "settings.mcl.packageContents": "Painel de visualização do pacote > Recursos eletrônicos no pacote",
     "settings.error.valueNotInRange": "Insira um número inteiro no intervalo de {min} a {max} para continuar",
-    "eresources.discoverySettings": "Discovery settings",
-    "eresources.discoverySettings.suppressFromDiscoveryAgreementLine": "Suppress from discovery {breakingLine} (Agreement line)",
-    "eresources.discoverySettings.suppressFromDiscoveryTitle": "Suppress from discovery {breakingLine} (Title)",
-    "eresources.discoverySettings.suppressFromDiscoveryTitleInPackage": "Suppress from discovery {breakingLine} (Title in package)"
+    "eresources.discoverySettings": "Configurações de Descoberta",
+    "eresources.discoverySettings.suppressFromDiscoveryAgreementLine": "Suprimir da Descoberta {breakingLine} (Linha de acordo)",
+    "eresources.discoverySettings.suppressFromDiscoveryTitle": "Suprimir da Descoberta {breakingLine} (título)",
+    "eresources.discoverySettings.suppressFromDiscoveryTitleInPackage": "Suprimir da Descoberta {breakingLine} (título no pacote)"
 }
