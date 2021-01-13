@@ -46,7 +46,7 @@ export default class CoverageField extends React.Component {
     const { index, input: { name } } = this.props;
 
     return (
-      <div data-test-coverage-field>
+      <div data-testid="coverageField">
         <Row>
           <Col md={2} xs={4}>
             <Field
