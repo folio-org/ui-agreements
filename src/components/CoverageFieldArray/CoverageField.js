@@ -46,7 +46,7 @@ export default class CoverageField extends React.Component {
     const { index, input: { name } } = this.props;
 
     return (
-      <div 
+      <div
         data-test-coverage-field
         data-testid="coverageField"
       >
@@ -73,7 +73,7 @@ export default class CoverageField extends React.Component {
                     required
                     timeZone="UTC"
                     usePortal
-                    warning={meta.touched ? input.value && meta?.data?.warning : undefined}
+                    warning={meta.touched && input.value ? meta?.data?.warning : undefined}
                   />
                 );
               }}
@@ -91,7 +91,7 @@ export default class CoverageField extends React.Component {
                     error={!meta?.data?.warning ? meta.touched && meta.error : undefined}
                     id={`cc-start-volume-${index}`}
                     label={<FormattedMessage id="ui-agreements.agreementLines.customCoverage.startVolume" />}
-                    warning={meta.touched ? input.value && meta?.data?.warning : undefined}
+                    warning={meta.touched && input.value ? meta?.data?.warning : undefined}
                   />
                 );
               }}
@@ -109,7 +109,7 @@ export default class CoverageField extends React.Component {
                     error={!meta?.data?.warning ? meta.touched && meta.error : undefined}
                     id={`cc-start-issue-${index}`}
                     label={<FormattedMessage id="ui-agreements.agreementLines.customCoverage.startIssue" />}
-                    warning={meta.touched ? input.value && meta?.data?.warning : undefined}
+                    warning={meta.touched && input.value ? meta?.data?.warning : undefined}
                   />
                 );
               }}
@@ -137,7 +137,7 @@ export default class CoverageField extends React.Component {
                     label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
                     timeZone="UTC"
                     usePortal
-                    warning={meta.touched ? input.value && meta?.data?.warning : undefined}
+                    warning={meta.touched && input.value ? meta?.data?.warning : undefined}
                   />
                 );
               }}
@@ -155,7 +155,7 @@ export default class CoverageField extends React.Component {
                     error={!meta?.data?.warning ? meta.touched && meta.error : undefined}
                     id={`cc-end-volume-${index}`}
                     label={<FormattedMessage id="ui-agreements.agreementLines.customCoverage.endVolume" />}
-                    warning={meta.touched ? input.value && meta?.data?.warning : undefined}
+                    warning={meta.touched && input.value ? meta?.data?.warning : undefined}
                   />
                 );
               }}
@@ -173,7 +173,7 @@ export default class CoverageField extends React.Component {
                     error={!meta?.data?.warning ? meta.touched && meta.error : undefined}
                     id={`cc-end-issue-${index}`}
                     label={<FormattedMessage id="ui-agreements.agreementLines.customCoverage.endIssue" />}
-                    warning={meta.touched ? input.value && meta?.data?.warning : undefined}
+                    warning={meta.touched && input.value ? meta?.data?.warning : undefined}
                   />
                 );
               }}
