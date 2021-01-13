@@ -42,7 +42,7 @@ class SupplementaryPropertiesConfigForm extends React.Component {
     return this.callout.sendCallout({
       type: 'error',
       message: (
-        <SafeHTMLMessage id="ui-agreements.supplementaryProperties.callout.delete.supplementaryPropertyInUse" values={{supplementaryPropertyName}}/>
+        <SafeHTMLMessage id="ui-agreements.supplementaryProperties.callout.delete.supplementaryPropertyInUse" values={{ supplementaryPropertyName }} />
       ),
       timeout: 0,
     });
