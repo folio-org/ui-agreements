@@ -34,15 +34,19 @@ const MCLPaginationFields = () => {
         </Row>
       </Layout>
       { mclList.map((mcl, index) => (
-        <div data-test-mcl-page-size-fields>
-          <Row key={`row-${index}`}>
-            <Col xs={8}>
+        <div key={index}>
+          <Row>
+            <Col
+              id={`pageSize-${mcl}`}
+              xs={8}
+            >
               <FormattedMessage id={`ui-agreements.settings.mcl.${mcl}`} />
             </Col>
             <Col xs={4}>
               <Field
+                ariaLabelledBy={`pageSize-${mcl}`}
                 component={TextField}
-                data-test-mcl-page-size
+                data-testid={mcl}
                 id={`pageSize-${mcl}`}
                 name={`pageSize.${mcl}`}
                 parse={v => parseInt(v, 10)}

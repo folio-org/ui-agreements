@@ -539,5 +539,9 @@
     "settings.mcl.agreementEresources": "Agreement view pane > E-resources covered by this agreement",
     "settings.mcl.entitlements": "E-resource view pane > Agreements for this e-resource",
     "settings.mcl.packageContents": "Package view pane > E-resources in package",
-    "settings.error.valueNotInRange": "Please enter a whole number in the range {min} to {max} to continue"
+    "settings.error.valueNotInRange": "Please enter a whole number in the range {min} to {max} to continue",
+    "eresources.discoverySettings": "Discovery settings",
+    "eresources.discoverySettings.suppressFromDiscoveryAgreementLine": "Suppress from discovery {breakingLine} (Agreement line)",
+    "eresources.discoverySettings.suppressFromDiscoveryTitle": "Suppress from discovery {breakingLine} (Title)",
+    "eresources.discoverySettings.suppressFromDiscoveryTitleInPackage": "Suppress from discovery {breakingLine} (Title in package)"
 }

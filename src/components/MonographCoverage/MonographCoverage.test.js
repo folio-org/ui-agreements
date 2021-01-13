@@ -1,4 +1,5 @@
 import React from 'react';
+import { cloneDeep } from 'lodash';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import MonographCoverage from './MonographCoverage';
@@ -141,15 +142,55 @@ const monographResource = {
   'lastSeenTimestamp': 1587741616444
 };
 
+const monographResourceNoEdition = cloneDeep(monographResource);
+monographResourceNoEdition.pti.titleInstance.monographEdition = null;
+
+const monographResourceNoVolume = cloneDeep(monographResource);
+monographResourceNoVolume.pti.titleInstance.monographVolume = null;
+
 describe('MonographCoverage', () => {
   test('renders expected monograph coverage when passed as a pci', () => {
     const { getByTestId } = renderWithIntl(
       <MonographCoverage
         pci={monographResource}
       />
-
     );
 
+    // renders monograph coverage element
     expect(getByTestId('monographCoverage')).toBeInTheDocument();
+    // renders correct date
+    expect(getByTestId('dateDisplay')).toHaveTextContent('1850');
+    // renders correct edition
+    expect(getByTestId('editionDisplay')).toHaveTextContent('1st');
+    // renders correct volume
+    expect(getByTestId('volumeDisplay')).toHaveTextContent('1');
+  });
+
+  test('renders expected monograph coverage when passed without an edition', () => {
+    const { queryByTestId } = renderWithIntl(
+      <MonographCoverage
+        pci={monographResourceNoEdition}
+      />
+    );
+    // does not render edition
+    expect(queryByTestId('editionDisplay')).not.toBeInTheDocument();
+  });
+
+  test('renders expected monograph coverage when passed without a volume', () => {
+    const { queryByTestId } = renderWithIntl(
+      <MonographCoverage
+        pci={monographResourceNoVolume}
+      />
+    );
+    // does not render volume
+    expect(queryByTestId('volumeDisplay')).not.toBeInTheDocument();
+  });
+
+  test('renders expected monograph coverage when passed without a pci', () => {
+    const { queryByTestId } = renderWithIntl(
+      <MonographCoverage />
+    );
+    // does not render monograph coverage element
+    expect(queryByTestId('monographCoverage')).not.toBeInTheDocument();
   });
 });
