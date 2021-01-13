@@ -53,5 +53,39 @@ describe('CoverageField', () => {
      * getAllByText returns an array, so just check it has any values in it.
      */
     await waitFor(() => expect(getAllByText('ui-agreements.errors.endDateGreaterThanStartDate')?.[0]).toBeInTheDocument());
-  })
+  });
+
+  test('expected values are submitted', () => {
+    const { getByRole, getByTestId } = renderWithIntl(
+      <TestForm onSubmit={onSubmit}>
+        <CoverageField
+          index={0}
+          input={{
+            name: "coverageTest"
+          }}
+        />
+      </TestForm>
+    );
+    userEvent.type(getByRole('textbox', {name: "ui-agreements.agreements.startDate"}), '10/10/1996');
+    userEvent.type(getByRole('textbox', {name: "ui-agreements.agreements.endDate"}), '02/06/1999');
+    userEvent.type(getByRole('textbox', {name: "ui-agreements.agreementLines.customCoverage.startVolume"}), '1');
+    userEvent.type(getByRole('textbox', {name: "ui-agreements.agreementLines.customCoverage.endVolume"}), '5');
+    userEvent.type(getByRole('textbox', {name: "ui-agreements.agreementLines.customCoverage.startIssue"}), '3rd');
+    userEvent.type(getByRole('textbox', {name: "ui-agreements.agreementLines.customCoverage.endIssue"}), '9th');
+    
+    userEvent.click(getByTestId('submit'));
+    expect(onSubmit.mock.calls.length).toBe(1);
+    const submittedValues = onSubmit.mock.calls[0][0]
+    const expectedPayload = {
+      coverageTest: {
+        startDate: '1996-10-10',
+        endDate: '1999-02-06',
+        startVolume: '1',
+        endVolume: '5',
+        startIssue: '3rd',
+        endIssue: '9th'
+      }
+    }
+    expect(submittedValues).toEqual(expectedPayload);
+  });
 });
