@@ -5,6 +5,7 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import CoverageField from './CoverageField';
 
+import translationsProperties from '../../../test/helpers';
 
 const onSubmit = jest.fn();
 
@@ -18,16 +19,16 @@ describe('CoverageField', () => {
             name: 'coverageTest'
           }}
         />
-      </TestForm>
+      </TestForm>, translationsProperties
     );
 
     expect(getByTestId('coverageField')).toBeInTheDocument();
-    expect(getByRole('textbox', { name: 'ui-agreements.agreements.startDate' })).toBeInTheDocument();
-    expect(getByRole('textbox', { name: 'ui-agreements.agreementLines.customCoverage.startVolume' })).toBeInTheDocument();
-    expect(getByRole('textbox', { name: 'ui-agreements.agreementLines.customCoverage.startIssue' })).toBeInTheDocument();
-    expect(getByRole('textbox', { name: 'ui-agreements.agreements.endDate' })).toBeInTheDocument();
-    expect(getByRole('textbox', { name: 'ui-agreements.agreementLines.customCoverage.endVolume' })).toBeInTheDocument();
-    expect(getByRole('textbox', { name: 'ui-agreements.agreementLines.customCoverage.endIssue' })).toBeInTheDocument();
+    expect(getByRole('textbox', { name: /start date/i })).toBeInTheDocument();
+    expect(getByRole('textbox', { name: /start volume/i })).toBeInTheDocument();
+    expect(getByRole('textbox', { name: /start issue/i })).toBeInTheDocument();
+    expect(getByRole('textbox', { name: /end date/i })).toBeInTheDocument();
+    expect(getByRole('textbox', { name: /end volume/i })).toBeInTheDocument();
+    expect(getByRole('textbox', { name: /end issue/i })).toBeInTheDocument();
   });
 
   // Test start date/end date validation.
@@ -41,10 +42,10 @@ describe('CoverageField', () => {
             name: 'coverageTest'
           }}
         />
-      </TestForm>
+      </TestForm>, translationsProperties
     );
-    userEvent.type(getByRole('textbox', { name: 'ui-agreements.agreements.startDate' }), '01/01/2021');
-    userEvent.type(getByRole('textbox', { name: 'ui-agreements.agreements.endDate' }), '01/01/2002');
+    userEvent.type(getByRole('textbox', { name: /start date/i }), '01/01/2021');
+    userEvent.type(getByRole('textbox', { name: /end date/i }), '01/01/2002');
 
     /*
      * This actually works with getByText, because currently the validation only
@@ -52,7 +53,7 @@ describe('CoverageField', () => {
      * This behaviour should not be relied upon though, since the validation is set up on two fields.
      * getAllByText returns an array, so just check it has any values in it.
      */
-    await waitFor(() => expect(getAllByText('ui-agreements.errors.endDateGreaterThanStartDate')?.[0]).toBeInTheDocument());
+    await waitFor(() => expect(getAllByText(/End date must be after the start date./i)?.[0]).toBeInTheDocument());
   });
 
   test('expected values are submitted', () => {
@@ -64,14 +65,14 @@ describe('CoverageField', () => {
             name: 'coverageTest'
           }}
         />
-      </TestForm>
+      </TestForm>, translationsProperties
     );
-    userEvent.type(getByRole('textbox', { name: 'ui-agreements.agreements.startDate' }), '10/10/1996');
-    userEvent.type(getByRole('textbox', { name: 'ui-agreements.agreements.endDate' }), '02/06/1999');
-    userEvent.type(getByRole('textbox', { name: 'ui-agreements.agreementLines.customCoverage.startVolume' }), '1');
-    userEvent.type(getByRole('textbox', { name: 'ui-agreements.agreementLines.customCoverage.endVolume' }), '5');
-    userEvent.type(getByRole('textbox', { name: 'ui-agreements.agreementLines.customCoverage.startIssue' }), '3rd');
-    userEvent.type(getByRole('textbox', { name: 'ui-agreements.agreementLines.customCoverage.endIssue' }), '9th');
+    userEvent.type(getByRole('textbox', { name: /start date/i }), '10/10/1996');
+    userEvent.type(getByRole('textbox', { name: /end date/i }), '02/06/1999');
+    userEvent.type(getByRole('textbox', { name: /start volume/i }), '1');
+    userEvent.type(getByRole('textbox', { name: /end volume/i }), '5');
+    userEvent.type(getByRole('textbox', { name: /start issue/i }), '3rd');
+    userEvent.type(getByRole('textbox', { name: /end issue/i }), '9th');
 
     userEvent.click(getByTestId('submit'));
     expect(onSubmit.mock.calls.length).toBe(1);

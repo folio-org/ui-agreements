@@ -46,7 +46,10 @@ export default class CoverageField extends React.Component {
     const { index, input: { name } } = this.props;
 
     return (
-      <div data-testid="coverageField">
+      <div 
+        data-test-coverage-field
+        data-testid="coverageField"
+      >
         <Row>
           <Col md={2} xs={4}>
             <Field
@@ -62,7 +65,7 @@ export default class CoverageField extends React.Component {
                 return (
                   <Datepicker
                     backendDateStandard="YYYY-MM-DD"
-                    error={!meta?.data?.warning && meta.touched && meta.error}
+                    error={!meta?.data?.warning ? meta.touched && meta.error : undefined}
                     id={`cc-start-date-${index}`}
                     input={input}
                     inputRef={this.inputRef}
@@ -70,7 +73,7 @@ export default class CoverageField extends React.Component {
                     required
                     timeZone="UTC"
                     usePortal
-                    warning={meta.touched && input.value && meta?.data?.warning}
+                    warning={meta.touched ? input.value && meta?.data?.warning : undefined}
                   />
                 );
               }}
@@ -85,10 +88,10 @@ export default class CoverageField extends React.Component {
                 return (
                   <TextField
                     {...input}
-                    error={!meta?.data?.warning && meta.touched && meta.error}
+                    error={!meta?.data?.warning ? meta.touched && meta.error : undefined}
                     id={`cc-start-volume-${index}`}
                     label={<FormattedMessage id="ui-agreements.agreementLines.customCoverage.startVolume" />}
-                    warning={meta.touched && input.value && meta?.data?.warning}
+                    warning={meta.touched ? input.value && meta?.data?.warning : undefined}
                   />
                 );
               }}
@@ -103,10 +106,10 @@ export default class CoverageField extends React.Component {
                 return (
                   <TextField
                     {...input}
-                    error={!meta?.data?.warning && meta.touched && meta.error}
+                    error={!meta?.data?.warning ? meta.touched && meta.error : undefined}
                     id={`cc-start-issue-${index}`}
                     label={<FormattedMessage id="ui-agreements.agreementLines.customCoverage.startIssue" />}
-                    warning={meta.touched && input.value && meta?.data?.warning}
+                    warning={meta.touched ? input.value && meta?.data?.warning : undefined}
                   />
                 );
               }}
@@ -127,14 +130,14 @@ export default class CoverageField extends React.Component {
                   <Datepicker
                     {...input}
                     backendDateStandard="YYYY-MM-DD"
-                    error={!meta?.data?.warning && meta.touched && meta.error}
+                    error={!meta?.data?.warning ? meta.touched && meta.error : undefined}
                     id={`cc-end-date-${index}`}
                     input={input}
                     inputRef={this.inputRef}
                     label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
                     timeZone="UTC"
                     usePortal
-                    warning={meta.touched && input.value && meta?.data?.warning}
+                    warning={meta.touched ? input.value && meta?.data?.warning : undefined}
                   />
                 );
               }}
@@ -149,10 +152,10 @@ export default class CoverageField extends React.Component {
                 return (
                   <TextField
                     {...input}
-                    error={!meta?.data?.warning && meta.touched && meta.error}
+                    error={!meta?.data?.warning ? meta.touched && meta.error : undefined}
                     id={`cc-end-volume-${index}`}
                     label={<FormattedMessage id="ui-agreements.agreementLines.customCoverage.endVolume" />}
-                    warning={meta.touched && input.value && meta?.data?.warning}
+                    warning={meta.touched ? input.value && meta?.data?.warning : undefined}
                   />
                 );
               }}
@@ -167,10 +170,10 @@ export default class CoverageField extends React.Component {
                 return (
                   <TextField
                     {...input}
-                    error={!meta?.data?.warning && meta.touched && meta.error}
+                    error={!meta?.data?.warning ? meta.touched && meta.error : undefined}
                     id={`cc-end-issue-${index}`}
                     label={<FormattedMessage id="ui-agreements.agreementLines.customCoverage.endIssue" />}
-                    warning={meta.touched && input.value && meta?.data?.warning}
+                    warning={meta.touched ? input.value && meta?.data?.warning : undefined}
                   />
                 );
               }}
