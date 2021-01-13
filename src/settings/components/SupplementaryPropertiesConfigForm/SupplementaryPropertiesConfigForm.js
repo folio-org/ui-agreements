@@ -38,11 +38,11 @@ class SupplementaryPropertiesConfigForm extends React.Component {
     });
   };
 
-  sendCalloutInUse = customPropertyName => {
+  sendCalloutInUse = supplementaryPropertyName => {
     return this.callout.sendCallout({
       type: 'error',
       message: (
-        <SafeHTMLMessage id="ui-agreements.supplementaryProperties.callout.delete.supplementaryPropertyInUse" values={{customPropertyName}}/>
+        <SafeHTMLMessage id="ui-agreements.supplementaryProperties.callout.delete.supplementaryPropertyInUse" values={{supplementaryPropertyName}}/>
       ),
       timeout: 0,
     });
@@ -60,7 +60,6 @@ class SupplementaryPropertiesConfigForm extends React.Component {
           .then(error => {
             const pattern = new RegExp(
               'ConstraintViolationException',
-              // 'violates foreign key constraint.*is still referenced from table',
               's'
             );
             if (pattern.test(error.message)) {
