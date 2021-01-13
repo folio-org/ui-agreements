@@ -34,7 +34,7 @@ describe('CoverageField', () => {
   // Test start date/end date validation.
   // Overlapping and multiple open ended coverage validation to be covered in CoverageFieldArrayTest
   test('date validation fires for invalid end date', async () => {
-    const { getAllByText, getByRole, queryAllByText } = renderWithIntl(
+    const { getAllByText, getByRole, queryByText } = renderWithIntl(
       <TestForm onSubmit={onSubmit}>
         <CoverageField
           index={0}
@@ -54,9 +54,11 @@ describe('CoverageField', () => {
      * getAllByText returns an array, so just check it has any values in it.
      */
     await waitFor(() => expect(getAllByText(/End date must be after the start date./i)?.[0]).toBeInTheDocument());
-    // amend end date
+    // amend end date (Have to clear it first)
+    // TODO use interactors when they become available, for fillAndBlur
+    userEvent.clear(getByRole('textbox', { name: /end date/i }));
     userEvent.type(getByRole('textbox', { name: /end date/i }), '01/01/2022');
-    await waitFor(() => expect(queryAllByText(/End date must be after the start date./i)?.[0]).not.toBeInTheDocument());
+    await waitFor(() => expect(queryByText(/End date must be after the start date./i)).not.toBeInTheDocument());
   });
 
   test('expected values are submitted', () => {
