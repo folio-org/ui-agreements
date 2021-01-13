@@ -1,5 +1,4 @@
 import React from 'react';
-import { cloneDeep } from 'lodash';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import MonographCoverage from './MonographCoverage';
