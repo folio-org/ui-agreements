@@ -10,7 +10,7 @@ import translationsProperties from '../../../test/helpers';
 const onSubmit = jest.fn();
 
 describe('CoverageField', () => {
-  test('renders correct fields', () => {
+  test('renders expected fields', () => {
     const { getByTestId, getByRole } = renderWithIntl(
       <TestForm onSubmit={onSubmit}>
         <CoverageField
