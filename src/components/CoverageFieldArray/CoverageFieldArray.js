@@ -56,9 +56,9 @@ class CoverageFieldArray extends React.Component {
     const { addButtonId, addButtonTooltipId, addLabelId, disabled, id } = this.props;
     return (
       <div>
-        <div 
-          id={id}
+        <div
           data-testid="coverageFieldArray"
+          id={id}
         >
           {this.renderCoverages()}
         </div>
