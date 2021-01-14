@@ -181,6 +181,82 @@ describe('CoverageFieldArray', () => {
     userEvent.clear(within(getByTestId('coverageFieldArray[1]')).getByRole('textbox', { name: /end date/i }));
     await waitFor(() => expect(queryAllByText(/Cannot have multiple open-ended coverage statements./i)[0]).toBeInTheDocument());
     userEvent.type(within(getByTestId('coverageFieldArray[0]')).getByRole('textbox', { name: /end date/i }), '01/26/2021');
-    await waitFor(() => expect(queryByText(/Cannot have multiple open-ended coverage statements./i)[0]).not.toBeInTheDocument());
+    await waitFor(() => expect(queryByText(/Cannot have multiple open-ended coverage statements./i)).not.toBeInTheDocument());
+  });
+
+  test('overlapping coverages warning works as expected', async () => {
+    const { getByTestId, queryByText, queryAllByText } = renderWithIntl(
+      <TestForm
+        onSubmit={onSubmit}
+        initialValues={{coverageFieldArrayTest:doubleCoverage}}
+      >
+         <FieldArray
+          addButtonId="addButtonId"
+          addButtonTooltipId="ui-agreements.agreementLine.addCustomCoverageTootlip"
+          addLabelId="ui-agreements.agreementLines.addCustomCoverage"
+          component={CoverageFieldArray}
+          deleteButtonTooltipId="ui-agreements.agreementLines.removeCustomCoverage"
+          headerId="ui-agreements.agreementLines.customCoverageTitle"
+          id="custom-coverage-test"
+          name="coverageFieldArrayTest"
+        />
+      </TestForm>, translationsProperties
+    );
+    
+    userEvent.clear(within(getByTestId('coverageFieldArray[1]')).getByRole('textbox', { name: /end date/i }));
+    // TODO This one currently only fires in the UI if you click away
+    userEvent.click(within(getByTestId('coverageFieldArray[1]')).getByRole('textbox', { name: /start date/i }));
+    
+    await waitFor(() => expect(queryAllByText(/The following coverages have overlapping dates:/i)[0]).toBeInTheDocument());
+    userEvent.type(within(getByTestId('coverageFieldArray[1]')).getByRole('textbox', { name: /end date/i }), '05/10/2007');
+    await waitFor(() => expect(queryByText(/The following coverages have overlapping dates:/i)).not.toBeInTheDocument());
+  });
+
+
+  test('expected values are submitted', () => {
+    const { getByTestId } = renderWithIntl(
+      <TestForm
+        onSubmit={onSubmit}
+        initialValues={{coverageFieldArrayTest:doubleCoverage}}
+      >
+         <FieldArray
+          addButtonId="addButtonId"
+          addButtonTooltipId="ui-agreements.agreementLine.addCustomCoverageTootlip"
+          addLabelId="ui-agreements.agreementLines.addCustomCoverage"
+          component={CoverageFieldArray}
+          deleteButtonTooltipId="ui-agreements.agreementLines.removeCustomCoverage"
+          headerId="ui-agreements.agreementLines.customCoverageTitle"
+          id="custom-coverage-test"
+          name="coverageFieldArrayTest"
+        />
+      </TestForm>, translationsProperties
+    );
+    
+    userEvent.click(getByTestId('submit'));
+    expect(onSubmit.mock.calls.length).toBe(1);
+    const submittedValues = onSubmit.mock.calls[0][0];
+    const expectedPayload = {
+      coverageFieldArrayTest: [
+        {
+          _delete: false,
+          endDate: "2021-01-26",
+          endIssue: "7",
+          endVolume: "15",
+          startDate:"2021-01-20",
+          startIssue: "1",
+          startVolume: "12"
+        },
+        {
+          _delete: false,
+          endDate: "2007-10-05",
+          endIssue: "3",
+          endVolume: "6",
+          startDate:"2001-12-06",
+          startIssue: "2",
+          startVolume: "4"
+        }
+      ]
+    };
+    expect(submittedValues).toEqual(expectedPayload);
   });
 });
