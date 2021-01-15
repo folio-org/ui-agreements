@@ -1,4 +1,4 @@
-@import "@folio/stripes-components/lib/variables.css";
+@import '@folio/stripes-components/lib/variables.css';
 
 .agreementHeader {
   position: sticky;
@@ -7,9 +7,9 @@
   border-bottom: 1px solid var(--color-border);
 
   /* AccordionHeaders and other elements that use a
-     `interactionStyles` class have a z-index of 1 which
+     `interactionStyles` class have a z-index of 2 which
      would render them above this floaty. */
-  z-index: 2;
+  z-index: 3;
 
   /* As content scrolls behind this div and then /above/ it, it
      will be visible due to the padding in ContentPane.
