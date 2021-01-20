@@ -25,7 +25,7 @@ const DiscoverySettings = ({
       {agLineSuppressFromDiscoveryEnabled &&
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryAgreementLine" values={{ breakingLine: <br /> }} />}>
-            <div data-testId="suppressFromDiscoveryAgreementLine">
+            <div data-testid="suppressFromDiscoveryAgreementLine">
               <FormattedMessage id={`ui-agreements.${line?.suppressFromDiscovery ? 'yes' : 'no'}`} />
             </div>
           </KeyValue>
@@ -34,7 +34,7 @@ const DiscoverySettings = ({
       {pciSuppressFromDiscoveryEnabled &&
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitleInPackage" values={{ breakingLine: <br /> }} />}>
-            <div data-testId="suppressFromDiscoveryTitleInPackage">
+            <div data-testid="suppressFromDiscoveryTitleInPackage">
               <FormattedMessage id={`ui-agreements.${line?.resource?.suppressFromDiscovery ? 'yes' : 'no'}`} />
             </div>
           </KeyValue>
@@ -43,7 +43,7 @@ const DiscoverySettings = ({
       {titleSuppressFromDiscoveryEnabled &&
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitle" values={{ breakingLine: <br /> }} />}>
-            <div data-testId="suppressFromDiscoveryTitle">
+            <div data-testid="suppressFromDiscoveryTitle">
               <FormattedMessage id={`ui-agreements.${line?.resource?._object?.pti?.titleInstance?.suppressFromDiscovery ? 'yes' : 'no'}`} />
             </div>
           </KeyValue>
@@ -57,7 +57,7 @@ const DiscoverySettings = ({
       {pciSuppressFromDiscoveryEnabled &&
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitleInPackage" values={{ breakingLine: <br /> }} />}>
-            <div data-testId="suppressFromDiscoveryTitleInPackage">
+            <div data-testid="suppressFromDiscoveryTitleInPackage">
               <FormattedMessage id={`ui-agreements.${pci?.suppressFromDiscovery ? 'yes' : 'no'}`} />
             </div>
           </KeyValue>
@@ -66,7 +66,7 @@ const DiscoverySettings = ({
       {titleSuppressFromDiscoveryEnabled &&
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitle" values={{ breakingLine: <br /> }} />}>
-            <div data-testId="suppressFromDiscoveryTitle">
+            <div data-testid="suppressFromDiscoveryTitle">
               <FormattedMessage id={`ui-agreements.${pci?.pti?.titleInstance?.suppressFromDiscovery ? 'yes' : 'no'}`} />
             </div>
           </KeyValue>
@@ -76,7 +76,7 @@ const DiscoverySettings = ({
   );
 
   const renderTitleDiscoverySettings = () => (
-    <KeyValue data-testId="suppressFromDiscoveryTitle" label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitle" values={{ breakingLine: <br /> }} />}>
+    <KeyValue data-testid="suppressFromDiscoveryTitle" label={<FormattedMessage id="ui-agreements.eresources.discoverySettings.suppressFromDiscoveryTitle" values={{ breakingLine: <br /> }} />}>
       <FormattedMessage id={`ui-agreements.${title?.eresource?.suppressFromDiscovery ? 'yes' : 'no'}`} />
     </KeyValue>
   );
