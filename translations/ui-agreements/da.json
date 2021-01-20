@@ -322,7 +322,7 @@
     "supplementaryProperties.callout.delete.success": "Supplementary property successfully deleted.",
     "supplementaryProperties.callout.save.error": "There was an error saving the supplementary property. {error}",
     "supplementaryProperties.callout.save.success": "Supplementary property successfully saved.",
-    "supplementaryProperties.callout.delete.supplementaryPropertyInUse": "<strong>Supplementary property</strong> was not deleted because it is in use on one or more agreements.",
+    "supplementaryProperties.callout.delete.supplementaryPropertyInUse": "<strong>Error:</strong> Supplementary property <strong>{supplementaryPropertyName}</strong> was not deleted because it is in use on one or more agreements.",
     "supplementaryProperties.optionalProperties": "Optional properties",
     "supplementaryProperties.primaryProperties": "Primary properties",
     "section.supplementaryProperties": "Supplementary properties",
