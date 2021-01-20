@@ -250,7 +250,7 @@
     "relatedAgreements.relationship.has-demand-driven-acquisitions-in": "Hat Demand-Driven Acquisition in \"{agreement}\"",
     "relatedAgreements.relationship.has-post-cancellation-access-in": "Hat Post-Cancellation Access in \"{agreement}\"",
     "relatedAgreements.relationship.is-superseded-by": "Wird ersetzt von \"{agreement}\"",
-    "relatedAgreements.relationship.provides_post-cancellation_access_for": "Biete Post-Cancellation Access für \"{agreement}\"",
+    "relatedAgreements.relationship.provides_post-cancellation_access_for": "Bietet Post-Cancellation Access für \"{agreement}\"",
     "relatedAgreements.relationship.supersedes": "Ersetzt \"{agreement}\"",
     "relatedAgreements.relationship.tracks_demand-driven_acquisitions_for": "Zeichnet Demand-Driven Acquisition für \"{agreement}\" auf",
     "relatedAgreements.remove": "Zugehörige Vereinbarung {index} entfernen",
