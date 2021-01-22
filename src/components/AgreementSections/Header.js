@@ -47,14 +47,14 @@ export default class Header extends React.Component {
     return (
       <Row className={css.agreementHeader}>
         <Col xs={3}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.periodStart" />}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.agreements.startDate" />}>
             <div data-test-agreement-start-date>
               {startDate ? <FormattedUTCDate value={startDate} /> : <NoValue />}
             </div>
           </KeyValue>
         </Col>
         <Col xs={3}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.periodEnd" />}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.endDate" />}>
             <div data-test-agreement-end-date>
               {endDate ? <FormattedUTCDate value={endDate} /> : <NoValue />}
             </div>
