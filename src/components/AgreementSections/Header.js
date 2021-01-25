@@ -54,7 +54,7 @@ export default class Header extends React.Component {
           </KeyValue>
         </Col>
         <Col xs={3}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.endDate" />}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.agreements.endDate" />}>
             <div data-test-agreement-end-date>
               {endDate ? <FormattedUTCDate value={endDate} /> : <NoValue />}
             </div>
