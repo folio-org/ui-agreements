@@ -264,8 +264,8 @@ const Agreements = ({
                     columnMapping={{
                       name: <FormattedMessage id="ui-agreements.agreements.name" />,
                       agreementStatus: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
-                      startDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodStart" />,
-                      endDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodEnd" />,
+                      startDate: <FormattedMessage id="ui-agreements.agreements.startDate" />,
+                      endDate: <FormattedMessage id="ui-agreements.agreements.endDate" />,
                       cancellationDeadline: <FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />,
                     }}
                     columnWidths={{
