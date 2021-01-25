@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { IfPermission } from '@folio/stripes/core';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { CustomPropertyFilters, InternalContactSelection, OrganizationSelection } from '@folio/stripes-erm-components';
+import { CustomPropertyFilters, DateFilter, InternalContactSelection, OrganizationSelection } from '@folio/stripes-erm-components';
 
 const FILTERS = [
   'agreementStatus',
@@ -14,7 +14,7 @@ const FILTERS = [
   'tags'
 ];
 
-export default class AgreementFilters extends React.Component {
+class AgreementFilters extends React.Component {
   static propTypes = {
     activeFilters: PropTypes.object,
     data: PropTypes.object.isRequired,
@@ -235,12 +235,32 @@ export default class AgreementFilters extends React.Component {
     />;
   }
 
+  renderStartDateFilter = () => {
+    return <DateFilter
+      activeFilters={this.props.activeFilters}
+      filterHandlers={this.props.filterHandlers}
+      name="startDate"
+    />;
+  }
+
+  renderEndDateFilter = () => {
+    return <DateFilter
+      activeFilters={this.props.activeFilters}
+      allowNull
+      filterHandlers={this.props.filterHandlers}
+      name="endDate"
+      resourceName={this.props.intl.formatMessage({id: 'ui-agreements.agreements.lowerCase'})}
+    />;
+  }
+
   render() {
     return (
       <AccordionSet>
         {this.renderCheckboxFilter('agreementStatus')}
         {this.renderCheckboxFilter('renewalPriority', { closedByDefault: true })}
         {this.renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
+        {this.renderStartDateFilter()}
+        {this.renderEndDateFilter()}
         {this.renderOrganizationFilter()}
         {this.renderOrganizationRoleFilter()}
         {this.renderInternalContactFilter()}
@@ -251,3 +271,5 @@ export default class AgreementFilters extends React.Component {
     );
   }
 }
+
+export default injectIntl(AgreementFilters);

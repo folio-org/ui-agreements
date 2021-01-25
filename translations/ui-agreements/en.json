@@ -12,6 +12,7 @@
   "dashboard": "Dashboard",
   "delete": "Delete",
   "agreements": "Agreements",
+  "agreements.lowerCase": "agreements",
   "eresources": "E-resources",
   "platforms": "Platforms",
   "status": "Status",
