@@ -19,6 +19,9 @@ class AgreementFilters extends React.Component {
     activeFilters: PropTypes.object,
     data: PropTypes.object.isRequired,
     filterHandlers: PropTypes.object,
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func.isRequired
+    }),
   };
 
   static defaultProps = {
@@ -249,7 +252,7 @@ class AgreementFilters extends React.Component {
       allowNull
       filterHandlers={this.props.filterHandlers}
       name="endDate"
-      resourceName={this.props.intl.formatMessage({id: 'ui-agreements.agreements.lowerCase'})}
+      resourceName={this.props.intl.formatMessage({ id: 'ui-agreements.agreements.lowerCase' })}
     />;
   }
 
