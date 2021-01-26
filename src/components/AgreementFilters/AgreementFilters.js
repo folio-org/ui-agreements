@@ -242,6 +242,7 @@ class AgreementFilters extends React.Component {
     return <DateFilter
       activeFilters={this.props.activeFilters}
       filterHandlers={this.props.filterHandlers}
+      hideNoDateSetCheckbox
       name="startDate"
     />;
   }
@@ -252,7 +253,6 @@ class AgreementFilters extends React.Component {
       filterHandlers={this.props.filterHandlers}
       name="endDate"
       resourceName={this.props.intl.formatMessage({ id: 'ui-agreements.agreements.lowerCase' })}
-      showNoDateCheckbox
     />;
   }
 
