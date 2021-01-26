@@ -8,8 +8,8 @@ import {
   Spinner
 } from '@folio/stripes/components';
 
-import { resourceClasses } from '../../constants';
-import EntitlementAgreementsList from '../EntitlementsAgreementsList';
+import { resourceClasses } from '../../../constants';
+import EntitlementAgreementsList from '../../EntitlementsAgreementsList';
 
 export default class Agreements extends React.Component {
   static propTypes = {
