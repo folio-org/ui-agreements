@@ -1,8 +1,7 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { MultiColumnList, MultiColumnListCell } from '@folio/stripes-testing';
+import { Accordion, MultiColumnList, MultiColumnListCell } from '@folio/stripes-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import AcquisitionOptions from './AcquisitionOptions';
@@ -311,7 +310,11 @@ describe('AcquisitionOptions', () => {
     );
   });
 
-  test('renders MCL', async () => {
+  test('renders an Accordion', async () => {
+    await Accordion('Options for acquiring e-resource').exists();
+  });
+
+  test('renders the MCL', async () => {
     await MultiColumnList('acqOptions-mcl').exists();
   });
 
