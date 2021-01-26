@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { IfPermission } from '@folio/stripes/core';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
 import { CustomPropertyFilters, DateFilter, InternalContactSelection, OrganizationSelection } from '@folio/stripes-erm-components';
+
+const propTypes = {
+  activeFilters: PropTypes.object,
+  data: PropTypes.object.isRequired,
+  filterHandlers: PropTypes.object,
+};
 
 const FILTERS = [
   'agreementStatus',
@@ -14,48 +20,33 @@ const FILTERS = [
   'tags'
 ];
 
-class AgreementFilters extends React.Component {
-  static propTypes = {
-    activeFilters: PropTypes.object,
-    data: PropTypes.object.isRequired,
-    filterHandlers: PropTypes.object,
-    intl: PropTypes.shape({
-      formatMessage: PropTypes.func.isRequired
-    }),
-  };
-
-  static defaultProps = {
-    activeFilters: {}
-  };
-
-  state = {
+export default function AgreementFilters({ activeFilters, data, filterHandlers }) {
+  const intl = useIntl();
+  const [filterState, setFilterState] = useState({
     agreementStatus: [],
     renewalPriority: [],
     isPerpetual: [],
-    tags: [],
-  }
+    tags: []
+  });
 
-  static getDerivedStateFromProps(props, state) {
+  useEffect(() => {
     const newState = {};
-
     FILTERS.forEach(filter => {
-      const values = props.data[`${filter}Values`];
-      if (values.length !== state[filter].length) {
+      const values = data[`${filter}Values`];
+      if (values.length !== filterState[filter]?.length) {
         newState[filter] = values;
       }
     });
 
-    if ((props.data?.tagsValues?.length ?? 0) !== state.tags.length) {
-      newState.tags = props.data.tagsValues.map(({ label }) => ({ value: label, label }));
+    if ((data?.tagsValues?.length ?? 0) !== filterState.tags?.length) {
+      newState.tags = data.tagsValues.map(({ label }) => ({ value: label, label }));
     }
+    if (Object.keys(newState).length) {
+      setFilterState(newState);
+    }
+  }, [data, filterState]);
 
-    if (Object.keys(newState).length) return newState;
-
-    return null;
-  }
-
-  renderCheckboxFilter = (name, props) => {
-    const { activeFilters } = this.props;
+  const renderCheckboxFilter = (name, prps) => {
     const groupFilters = activeFilters[name] || [];
 
     return (
@@ -64,15 +55,15 @@ class AgreementFilters extends React.Component {
         header={FilterAccordionHeader}
         id={`filter-accordion-${name}`}
         label={<FormattedMessage id={`ui-agreements.agreements.${name}`} />}
-        onClearFilter={() => { this.props.filterHandlers.clearGroup(name); }}
+        onClearFilter={() => { filterHandlers.clearGroup(name); }}
         separator={false}
-        {...props}
+        {...prps}
       >
         <CheckboxFilter
-          dataOptions={this.state[name]}
+          dataOptions={filterState[name] || []}
           name={name}
           onChange={(group) => {
-            this.props.filterHandlers.state({
+            filterHandlers.state({
               ...activeFilters,
               [group.name]: group.values
             });
@@ -81,10 +72,9 @@ class AgreementFilters extends React.Component {
         />
       </Accordion>
     );
-  }
+  };
 
-  renderOrganizationFilter = () => {
-    const { activeFilters } = this.props;
+  const renderOrganizationFilter = () => {
     const orgFilters = activeFilters.orgs || [];
 
     return (
@@ -94,7 +84,7 @@ class AgreementFilters extends React.Component {
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-agreements.agreements.organizations" />}
         onClearFilter={() => {
-          this.props.filterHandlers.state({
+          filterHandlers.state({
             ...activeFilters,
             orgs: [],
           });
@@ -104,22 +94,21 @@ class AgreementFilters extends React.Component {
         <OrganizationSelection
           input={{
             name: 'agreement-orgs-filter',
-            onChange: value => this.props.filterHandlers.state({ ...activeFilters, orgs: [value] }),
+            onChange: value => filterHandlers.state({ ...activeFilters, orgs: [value] }),
             value: orgFilters[0] || '',
           }}
         />
       </Accordion>
     );
-  }
+  };
 
-  renderOrganizationRoleFilter = () => {
-    const roles = this.props.data.orgRoleValues;
+  const renderOrganizationRoleFilter = () => {
+    const roles = data.orgRoleValues;
     const dataOptions = roles.map(role => ({
       value: role.id,
       label: role.label,
     }));
 
-    const { activeFilters } = this.props;
     const roleFilters = activeFilters.role || [];
 
     return (
@@ -128,14 +117,14 @@ class AgreementFilters extends React.Component {
         displayClearButton={roleFilters.length > 0}
         header={FilterAccordionHeader}
         label={<FormattedMessage id="ui-agreements.settings.orgRoles.orgRole" />}
-        onClearFilter={() => { this.props.filterHandlers.clearGroup('role'); }}
+        onClearFilter={() => { filterHandlers.clearGroup('role'); }}
         separator={false}
       >
         <FormattedMessage id="ui-agreements.organizations.selectRole">
           {placeholder => (
             <Selection
               dataOptions={dataOptions}
-              onChange={value => this.props.filterHandlers.state({ ...activeFilters, role: [value] })}
+              onChange={value => filterHandlers.state({ ...activeFilters, role: [value] })}
               placeholder={placeholder}
               value={roleFilters[0] || ''}
             />
@@ -143,10 +132,9 @@ class AgreementFilters extends React.Component {
         </FormattedMessage>
       </Accordion>
     );
-  }
+  };
 
-  renderInternalContactFilter = () => {
-    const { activeFilters } = this.props;
+  const renderInternalContactFilter = () => {
     const contactFilters = activeFilters.contacts || [];
 
     return (
@@ -157,14 +145,14 @@ class AgreementFilters extends React.Component {
           header={FilterAccordionHeader}
           id="internal-contacts-filter"
           label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
-          onClearFilter={() => this.props.filterHandlers.clearGroup('contacts')}
+          onClearFilter={() => filterHandlers.clearGroup('contacts')}
           separator={false}
         >
           <InternalContactSelection
             id="agreement-internal-contacts-filter"
             input={{
               name: 'agreement-contacts-filter',
-              onChange: value => this.props.filterHandlers.state({ ...activeFilters, contacts: [value] }),
+              onChange: value => filterHandlers.state({ ...activeFilters, contacts: [value] }),
               value: contactFilters[0] || '',
             }}
             path="erm/contacts"
@@ -172,16 +160,15 @@ class AgreementFilters extends React.Component {
         </Accordion>
       </IfPermission>
     );
-  }
+  };
 
-  renderInternalContactRoleFilter = () => {
-    const contactRoles = this.props.data.contactRoleValues;
+  const renderInternalContactRoleFilter = () => {
+    const contactRoles = data.contactRoleValues;
     const dataOptions = contactRoles.map(contactRole => ({
       value: contactRole.id,
       label: contactRole.label,
     }));
 
-    const { activeFilters } = this.props;
     const contactRoleFilters = activeFilters.contactRole || [];
 
     return (
@@ -191,21 +178,20 @@ class AgreementFilters extends React.Component {
         header={FilterAccordionHeader}
         id="internal-contacts-role-filter"
         label={<FormattedMessage id="ui-agreements.agreements.internalContactsRole" />}
-        onClearFilter={() => { this.props.filterHandlers.clearGroup('contactRole'); }}
+        onClearFilter={() => { filterHandlers.clearGroup('contactRole'); }}
         separator={false}
       >
         <Selection
           dataOptions={dataOptions}
           id="agreement-internal-contacts-role-filter"
-          onChange={value => this.props.filterHandlers.state({ ...activeFilters, contactRole: [value] })}
+          onChange={value => filterHandlers.state({ ...activeFilters, contactRole: [value] })}
           value={contactRoleFilters[0] || ''}
         />
       </Accordion>
     );
-  }
+  };
 
-  renderTagsFilter = () => {
-    const { activeFilters } = this.props;
+  const renderTagsFilter = () => {
     const tagFilters = activeFilters.tags || [];
 
     return (
@@ -215,64 +201,65 @@ class AgreementFilters extends React.Component {
         header={FilterAccordionHeader}
         id="clickable-tags-filter"
         label={<FormattedMessage id="ui-agreements.agreements.tags" />}
-        onClearFilter={() => { this.props.filterHandlers.clearGroup('tags'); }}
+        onClearFilter={() => { filterHandlers.clearGroup('tags'); }}
         separator={false}
       >
         <MultiSelectionFilter
-          dataOptions={this.state.tags}
+          dataOptions={filterState.tags || []}
           id="tags-filter"
           name="tags"
-          onChange={e => this.props.filterHandlers.state({ ...activeFilters, tags: e.values })}
+          onChange={e => filterHandlers.state({ ...activeFilters, tags: e.values })}
           selectedValues={tagFilters}
         />
       </Accordion>
     );
-  }
+  };
 
-  renderCustomPropertyFilters = () => {
+  const renderCustomPropertyFilters = () => {
     return <CustomPropertyFilters
-      activeFilters={this.props.activeFilters}
-      customProperties={this.props.data.supplementaryProperties}
+      activeFilters={activeFilters}
+      customProperties={data.supplementaryProperties}
       custPropName="supplementaryProperty"
-      filterHandlers={this.props.filterHandlers}
+      filterHandlers={filterHandlers}
     />;
-  }
+  };
 
-  renderStartDateFilter = () => {
+  const renderStartDateFilter = () => {
     return <DateFilter
-      activeFilters={this.props.activeFilters}
-      filterHandlers={this.props.filterHandlers}
+      activeFilters={activeFilters}
+      filterHandlers={filterHandlers}
       hideNoDateSetCheckbox
       name="startDate"
     />;
-  }
+  };
 
-  renderEndDateFilter = () => {
+  const renderEndDateFilter = () => {
     return <DateFilter
-      activeFilters={this.props.activeFilters}
-      filterHandlers={this.props.filterHandlers}
+      activeFilters={activeFilters}
+      filterHandlers={filterHandlers}
       name="endDate"
-      resourceName={this.props.intl.formatMessage({ id: 'ui-agreements.agreements.lowerCase' })}
+      resourceName={intl.formatMessage({ id: 'ui-agreements.agreements.lowerCase' })}
     />;
-  }
+  };
 
-  render() {
-    return (
-      <AccordionSet>
-        {this.renderCheckboxFilter('agreementStatus')}
-        {this.renderCheckboxFilter('renewalPriority', { closedByDefault: true })}
-        {this.renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
-        {this.renderStartDateFilter()}
-        {this.renderEndDateFilter()}
-        {this.renderOrganizationFilter()}
-        {this.renderOrganizationRoleFilter()}
-        {this.renderInternalContactFilter()}
-        {this.renderInternalContactRoleFilter()}
-        {this.renderTagsFilter()}
-        {this.renderCustomPropertyFilters()}
-      </AccordionSet>
-    );
-  }
+  return (
+    <AccordionSet>
+      {renderCheckboxFilter('agreementStatus')}
+      {renderCheckboxFilter('renewalPriority', { closedByDefault: true })}
+      {renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
+      {renderStartDateFilter()}
+      {renderEndDateFilter()}
+      {renderOrganizationFilter()}
+      {renderOrganizationRoleFilter()}
+      {renderInternalContactFilter()}
+      {renderInternalContactRoleFilter()}
+      {renderTagsFilter()}
+      {renderCustomPropertyFilters()}
+    </AccordionSet>
+  );
 }
 
-export default injectIntl(AgreementFilters);
+AgreementFilters.propTypes = propTypes;
+AgreementFilters.defaultProps = {
+  activeFilters: {}
+};
