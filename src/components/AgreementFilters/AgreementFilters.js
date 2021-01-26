@@ -249,10 +249,10 @@ class AgreementFilters extends React.Component {
   renderEndDateFilter = () => {
     return <DateFilter
       activeFilters={this.props.activeFilters}
-      allowNull
       filterHandlers={this.props.filterHandlers}
       name="endDate"
       resourceName={this.props.intl.formatMessage({ id: 'ui-agreements.agreements.lowerCase' })}
+      showNoDateCheckbox
     />;
   }
 
