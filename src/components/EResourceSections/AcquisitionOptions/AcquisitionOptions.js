@@ -8,11 +8,11 @@ import {
   isPackage,
   TitleOnPlatformLink
 } from '@folio/stripes-erm-components';
-import AddToBasketButton from '../AddToBasketButton';
-import Coverage from '../Coverage';
-import EResourceKB from '../EResourceKB';
+import AddToBasketButton from '../../AddToBasketButton';
+import Coverage from '../../Coverage';
+import EResourceKB from '../../EResourceKB';
 
-import { isExternal } from '../utilities';
+import { isExternal } from '../../utilities';
 
 class AcquisitionOptions extends React.Component {
   static propTypes = {
@@ -133,6 +133,7 @@ class AcquisitionOptions extends React.Component {
           );
         },
       }}
+      id={`${this.props.id}-mcl`}
       onNeedMoreData={this.props.handlers.onNeedMoreEntitlementOptions}
       onRowClick={this.onRowClick}
       pagingType="click"
