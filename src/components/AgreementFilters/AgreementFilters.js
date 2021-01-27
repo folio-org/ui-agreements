@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -22,27 +22,37 @@ const FILTERS = [
 
 export default function AgreementFilters({ activeFilters, data, filterHandlers }) {
   const intl = useIntl();
-  const [filterState, setFilterState] = useState({
-    agreementStatus: [],
-    renewalPriority: [],
-    isPerpetual: [],
-    tags: []
-  });
+
+  const [filterState, changeFilter] = useReducer(
+    (state, filterProps) => {
+      return (
+        {...state, [filterProps.filter]: filterProps.values}
+      );
+    },
+    {
+      agreementStatus: [],
+      renewalPriority: [],
+      isPerpetual: [],
+      tags: []
+    }
+  )
 
   useEffect(() => {
-    const newState = {};
     FILTERS.forEach(filter => {
       const values = data[`${filter}Values`];
       if (values.length !== filterState[filter]?.length) {
-        newState[filter] = values;
+        changeFilter({
+          filter: filter,
+          values: values
+        });
       }
     });
 
     if ((data?.tagsValues?.length ?? 0) !== filterState.tags?.length) {
-      newState.tags = data.tagsValues.map(({ label }) => ({ value: label, label }));
-    }
-    if (Object.keys(newState).length) {
-      setFilterState(newState);
+      changeFilter({
+        filter: 'tags',
+        values: data.tagsValues.map(({ label }) => ({ value: label, label }))
+      });
     }
   }, [data, filterState]);
 
