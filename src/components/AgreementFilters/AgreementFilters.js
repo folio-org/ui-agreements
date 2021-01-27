@@ -26,7 +26,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
   const [filterState, changeFilter] = useReducer(
     (state, filterProps) => {
       return (
-        {...state, [filterProps.filter]: filterProps.values}
+        { ...state, [filterProps.filter]: filterProps.values }
       );
     },
     {
@@ -35,15 +35,15 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       isPerpetual: [],
       tags: []
     }
-  )
+  );
 
   useEffect(() => {
     FILTERS.forEach(filter => {
       const values = data[`${filter}Values`];
       if (values.length !== filterState[filter]?.length) {
         changeFilter({
-          filter: filter,
-          values: values
+          filter,
+          values
         });
       }
     });
