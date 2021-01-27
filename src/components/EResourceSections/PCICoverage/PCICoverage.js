@@ -16,9 +16,7 @@ export default class PCICoverage extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       eresource: PropTypes.shape({
-        coverage: PropTypes.shape({
-          length: PropTypes.number,
-        }),
+        coverage: PropTypes.arrayOf(PropTypes.object),
         embargo: PropTypes.shape({
           movingWallStart: PropTypes.shape({
             length: PropTypes.number,
