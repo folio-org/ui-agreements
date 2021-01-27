@@ -213,7 +213,7 @@ describe('PCI Coverage', () => {
 
   test('renders the embargo', async () => {
     const { getByTestId } = renderComponent;
-    expect(getByTestId('embargo').toBeInTheDocument());
+    expect(getByTestId('embargo')).toBeInTheDocument();
   });
 });
 
