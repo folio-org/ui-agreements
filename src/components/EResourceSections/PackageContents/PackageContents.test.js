@@ -3,7 +3,6 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { Accordion, Button, MultiColumnList, MultiColumnListCell } from '@folio/stripes-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { screen } from '@testing-library/react';
 import translationsProperties from '../../../../test/helpers';
 import PackageContents from './PackageContents';
 
@@ -356,7 +355,6 @@ describe('PackageContents', () => {
   });
 
   test('renders the E-resources in package Accordion', async () => {
-    screen.debug();
     await Accordion('E-resources in package').exists();
   });
 
