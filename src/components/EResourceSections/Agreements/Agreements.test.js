@@ -6,10 +6,7 @@ import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import Agreements from './Agreements';
 
-// jest.mock('../../AddToBasketButton', () => () => <div>AddToBasketButton</div>);
-
 const onNeedMoreEntitlements = jest.fn();
-// const onEResourceClick = jest.fn();
 
 const AgreementsProps = {
   data: {
