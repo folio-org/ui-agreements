@@ -40,13 +40,12 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
     });
 
     if ((data?.tagsValues?.length ?? 0) !== filterState.tags?.length) {
-      newState.tags = data.tagsValues.map(({ label }) => ({ value: label, label }))
+      newState.tags = data.tagsValues.map(({ label }) => ({ value: label, label }));
     }
 
     if (Object.keys(newState).length) {
-      setFilterState(prevState => ({...prevState, ...newState}))
+      setFilterState(prevState => ({ ...prevState, ...newState }));
     }
-
   }, [data, filterState]);
 
   const renderCheckboxFilter = (name, prps) => {
