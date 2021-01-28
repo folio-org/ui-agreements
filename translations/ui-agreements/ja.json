@@ -422,7 +422,7 @@
     "line.delete.callout": "契約項目が削除されました",
     "line.deleteFailed.callout": "契約項目の削除に失敗しました： {message}",
     "line.lineInformation": "契約項目情報",
-    "line.parentAgreement": "Parent agreement",
+    "line.parentAgreement": "親契約",
     "line.lineForAgreement": "{agreementName}の契約項目",
     "line.poLines": "PO lines",
     "poLines.poLines": "PO lines",
