@@ -240,7 +240,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       activeFilters={activeFilters}
       filterHandlers={filterHandlers}
       name="endDate"
-      resourceName={intl.formatMessage({ id: 'ui-agreements.agreements.lowerCase' })}
+      resourceName={intl.formatMessage({ id: 'ui-agreements.agreements' }).toLowerCase()}
     />;
   };
 
