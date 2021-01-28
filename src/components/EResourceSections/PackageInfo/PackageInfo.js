@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-
 import {
   Col,
   Headline,
@@ -11,9 +10,9 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
-import { resourceClasses } from '../../constants';
+import { resourceClasses } from '../../../constants';
 
-import AddToBasketButton from '../AddToBasketButton';
+import AddToBasketButton from '../../AddToBasketButton';
 
 export default class PackageInfo extends React.Component {
   static propTypes = {
