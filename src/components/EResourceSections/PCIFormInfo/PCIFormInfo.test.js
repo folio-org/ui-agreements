@@ -3,9 +3,8 @@ import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { Checkbox, TextField } from '@folio/stripes-testing';
-import { screen } from '@testing-library/react';
 import translationsProperties from '../../../../test/helpers';
-import PCIFormInfo from '../PCIFormInfo';
+import PCIFormInfo from './PCIFormInfo';
 
 const onSubmit = jest.fn();
 const isSuppressFromDiscoveryEnabled = jest.fn(_pci => true);
@@ -254,7 +253,6 @@ describe('PCIFormInfo', () => {
   ));
 
   test('renders the Name TextField', async () => {
-    screen.debug();
     await TextField({ id: 'edit-pci-name' }).exists();
   });
 
