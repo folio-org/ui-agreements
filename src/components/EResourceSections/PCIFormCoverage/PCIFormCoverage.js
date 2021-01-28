@@ -9,7 +9,7 @@ import {
 import { FieldArray } from 'react-final-form-arrays';
 import { Embargo } from '@folio/stripes-erm-components';
 
-import CoverageFieldArray from '../CoverageFieldArray';
+import CoverageFieldArray from '../../CoverageFieldArray';
 
 export default class PCIFormCoverage extends React.Component {
   static propTypes = {
