@@ -176,7 +176,6 @@ describe('PCI Coverage', () => {
       </MemoryRouter>,
       translationsProperties
     );
-    return renderComponent;
   });
 
   test('renders an Accordion', async () => {
