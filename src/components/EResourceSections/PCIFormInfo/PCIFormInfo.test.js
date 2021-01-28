@@ -243,6 +243,7 @@ const initialValues = {
   'class':'org.olf.kb.PackageContentItem'
 };
 
+
 describe('PCIFormInfo', () => {
   beforeEach(() => renderWithIntl(
     <TestForm initialValues={initialValues} onSubmit={onSubmit}>
@@ -252,7 +253,7 @@ describe('PCIFormInfo', () => {
   ));
 
   test('renders the Name TextField', async () => {
-    await TextField('Name', { disabled: true }).exists();
+    await TextField({ id: 'edit-pci-name' }).exists();
   });
 
   test('renders expected value in the Name TextField', async () => {
