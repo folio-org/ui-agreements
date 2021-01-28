@@ -21,10 +21,13 @@ export default class PCIFormInfo extends React.Component {
     return (
       <div data-test-edit-pci-info>
         <Field
+          autoFocus
           component={TextField}
+          data-test-pci-name
           disabled
           id="edit-pci-name"
           label={<FormattedMessage id="ui-agreements.eresources.name" />}
+          maxLength={255}
           name="name"
           required
         />
