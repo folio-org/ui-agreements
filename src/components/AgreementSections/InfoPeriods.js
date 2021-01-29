@@ -37,8 +37,8 @@ export default function InfoPeriods({ periods }) {
         setSelectedPeriod('previous');
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // eslint-disable-previous-line react-hooks/exhaustive-deps
   // As above, this dependency omission is by design, to enforce useEffect to only run once
 
 
