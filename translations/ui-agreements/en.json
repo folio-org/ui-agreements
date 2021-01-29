@@ -146,6 +146,10 @@
 
   "alternativeNames": "Alternative names",
 
+  "agreementPeriods.period": "Period",
+  "agreementPeriods.current": "Current",
+  "agreementPeriods.next": "Next",
+  "agreementPeriods.previous": "Previous",
   "agreementPeriods": "Agreement periods",
   "agreementPeriods.addPeriod": "Add agreement period",
   "agreementPeriods.removePeriod": "Remove agreement period {periodNum}",
