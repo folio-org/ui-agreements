@@ -9,27 +9,27 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
-export default function AllPeriods ({ agreement: { periods = [] }, id }) {
+export default function AllPeriods({ agreement: { periods = [] }, id }) {
   const columnMapping = {
     startDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodStart" />,
     endDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodEnd" />,
     cancellationDeadline: <FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />,
     note: <FormattedMessage id="ui-agreements.agreementPeriods.periodNote" />,
-  }
+  };
 
   const formatter = {
     startDate: p => (p.startDate ? <FormattedUTCDate value={p.startDate} /> : <NoValue />),
     endDate: p => (p.endDate ? <FormattedUTCDate value={p.endDate} /> : <NoValue />),
     cancellationDeadline: p => (p.cancellationDeadline ? <FormattedUTCDate value={p.cancellationDeadline} /> : <NoValue />),
     note: p => p.note || '',
-  }
+  };
 
   const visibleColumns = [
     'startDate',
     'endDate',
     'cancellationDeadline',
     'note',
-  ]
+  ];
 
   if (periods.length > 1) {
     return (
@@ -49,7 +49,7 @@ export default function AllPeriods ({ agreement: { periods = [] }, id }) {
         />
       </Accordion>
     );
-  } 
+  }
   return null;
 }
 
@@ -66,4 +66,4 @@ AllPeriods.propTypes = {
     }),
   }).isRequired,
   id: PropTypes.string,
-}
+};
