@@ -24,6 +24,7 @@ import { checkScope, collapseAllSections, expandAllSections } from '@folio/strip
 import DuplicateAgreementModal from '../DuplicateAgreementModal';
 
 import {
+  AllPeriods,
   ControllingLicense,
   ExternalLicenses,
   FutureLicenses,
@@ -33,7 +34,6 @@ import {
   InternalContacts,
   Lines,
   Organizations,
-  OtherPeriods,
   RelatedAgreements,
   SupplementaryDocs,
   SupplementaryProperties,
@@ -176,6 +176,7 @@ class Agreement extends React.Component {
 
   getInitialAccordionsState = () => {
     return {
+      allPeriods: false,
       controllingLicense: false,
       externalLicenses: false,
       futureLicenses: false,
@@ -184,7 +185,6 @@ class Agreement extends React.Component {
       lines: false,
       notes: false,
       organizations: false,
-      otherPeriods: false,
       relatedAgreements: false,
       supplementaryProperties: false,
       supplementaryDocs: false,
@@ -297,6 +297,7 @@ class Agreement extends React.Component {
                   </Col>
                 </Row>
                 <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+                  <AllPeriods {...this.getSectionProps('allPeriods')} />
                   <InternalContacts {...this.getSectionProps('internalContacts')} />
                   <Lines {...this.getSectionProps('lines')} />
                   <ControllingLicense {...this.getSectionProps('controllingLicense')} />
@@ -305,7 +306,6 @@ class Agreement extends React.Component {
                   <ExternalLicenses {...this.getSectionProps('externalLicenses')} />
                   <Terms {...this.getSectionProps('terms')} />
                   <Organizations {...this.getSectionProps('organizations')} />
-                  <OtherPeriods {...this.getSectionProps('otherPeriods')} />
                   {data.supplementaryProperties?.length > 0 ?
                     <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} /> :
                     null

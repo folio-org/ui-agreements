@@ -150,7 +150,7 @@
   "agreementPeriods.addPeriod": "Add agreement period",
   "agreementPeriods.removePeriod": "Remove agreement period {periodNum}",
 
-  "agreementPeriods.otherPeriods": "Other periods",
+  "agreementPeriods.allPeriods": "All periods",
   "agreementPeriods.periodEnd": "Period end",
   "agreementPeriods.periodNote": "Period note",
   "agreementPeriods.periodStart": "Period start",
@@ -218,7 +218,6 @@
   "emptyAccordion.noAgreementsPackage": "No agreements for this package",
   "emptyAccordion.noAgreementsEresource": "No agreements for this e-resource",
   "emptyAccordion.organizations": "No organizations for this agreement",
-  "emptyAccordion.otherPeriods": "No other periods for this agreement",
   "emptyAccordion.supplementaryProperties": "No supplementary properties for this agreement",
   "emptyAccordion.supplementaryDocuments": "No supplementary documents for this agreement",
   "emptyAccordion.usageData": "No usage data for this agreement",
