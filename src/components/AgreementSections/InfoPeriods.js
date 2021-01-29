@@ -41,9 +41,7 @@ export default function InfoPeriods({ periods }) {
   }, []);
   // As above, this dependency omission is by design, to enforce useEffect to only run once
 
-
   const displayPeriod = displayPeriodOptions[`${selectedPeriod}Period`];
-
 
   const PeriodButton = (periodStatus) => {
     return (
