@@ -11,8 +11,8 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
-import { resourceClasses } from '../../constants';
-import AddToBasketButton from '../AddToBasketButton';
+import { resourceClasses } from '../../../constants';
+import AddToBasketButton from '../../AddToBasketButton';
 
 export default class PCIInfo extends React.Component {
   static propTypes = {
