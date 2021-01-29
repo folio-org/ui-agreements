@@ -13,9 +13,8 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-export default function InfoPeriods ({ periods }) {
-
-  /* 
+export default function InfoPeriods({ periods }) {
+  /*
    * This could be handled by callback, but since we need to know for display whether next/prev/current exist
    * it seems more prudent to just fetch all three at once and then do our logic at this stage
    */
@@ -23,24 +22,27 @@ export default function InfoPeriods ({ periods }) {
     currentPeriod: periods?.find(p => p.periodStatus === 'current'),
     nextPeriod: periods?.find(p => p.periodStatus === 'next'),
     previousPeriod: periods?.find(p => p.periodStatus === 'previous')
-  }
+  };
 
-  /* 
+  /*
    * Set up which period is currently selected. Heirachy is Current > Next > Previous
    * The empty array as a second argument to useEffect should mean this code only runs once to prevent infinite loops
    */
-  const [selectedPeriod, setSelectedPeriod] = useState('current')
+  const [selectedPeriod, setSelectedPeriod] = useState('current');
   useEffect(() => {
     if (displayPeriodOptions.currentPeriod === undefined) {
       if (displayPeriodOptions.nextPeriod !== undefined) {
-        setSelectedPeriod('next')
+        setSelectedPeriod('next');
       } else {
-        setSelectedPeriod('previous')
+        setSelectedPeriod('previous');
       }
     }
-  },[])
+  }, []);
+  // eslint-disable-previous-line react-hooks/exhaustive-deps
+  // As above, this dependency omission is by design, to enforce useEffect to only run once
 
-  const displayPeriod = displayPeriodOptions[`${selectedPeriod}Period`]
+
+  const displayPeriod = displayPeriodOptions[`${selectedPeriod}Period`];
 
 
   const PeriodButton = (periodStatus) => {
@@ -48,13 +50,12 @@ export default function InfoPeriods ({ periods }) {
       <Button
         buttonStyle={selectedPeriod === periodStatus ? 'primary' : 'default'}
         disabled={displayPeriodOptions[`${periodStatus}Period`] === undefined}
-        marginBottom0
         onClick={() => setSelectedPeriod(periodStatus)}
       >
         <FormattedMessage id={`ui-agreements.agreementPeriods.${periodStatus}`} />
       </Button>
     );
-  }
+  };
 
   return (
     <>
@@ -85,21 +86,21 @@ export default function InfoPeriods ({ periods }) {
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.periodStart" />}>
             <div data-test-period-info-start-date>
-              {<FormattedUTCDate value={displayPeriod?.startDate} /> ?? <NoValue />}
+              {displayPeriod?.startDate ? <FormattedUTCDate value={displayPeriod?.startDate} /> : <NoValue />}
             </div>
           </KeyValue>
         </Col>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.agreementPeriods.periodEnd" />}>
             <div data-test-period-info-end-date>
-              {<FormattedUTCDate value={displayPeriod?.endDate} /> ?? <NoValue />}
+              {displayPeriod?.endDate ? <FormattedUTCDate value={displayPeriod?.endDate} /> : <NoValue />}
             </div>
           </KeyValue>
         </Col>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}>
             <div data-test-period-info-cancellation-deadline>
-              {<FormattedUTCDate value={displayPeriod?.cancellationDeadline} /> ?? <NoValue />}
+              {displayPeriod?.cancellationDeadline ? <FormattedUTCDate value={displayPeriod?.cancellationDeadline} /> : <NoValue />}
             </div>
           </KeyValue>
         </Col>
@@ -117,7 +118,7 @@ export default function InfoPeriods ({ periods }) {
   );
 }
 
-InfoPeriods.propTypes = { 
+InfoPeriods.propTypes = {
   periods: PropTypes.arrayOf(PropTypes.shape({
     cancellationDeadline: PropTypes.string,
     endDate: PropTypes.string,

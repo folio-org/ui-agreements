@@ -13,7 +13,7 @@ import {
 import { statuses } from '../../constants';
 import InfoPeriods from './InfoPeriods';
 
-export default function Info ({ agreement }) {
+export default function Info({ agreement }) {
   return (
     <div data-test-agreement-info>
       <Row>
@@ -69,12 +69,12 @@ export default function Info ({ agreement }) {
           visibleColumns={['name']}
         />
       }
-      <InfoPeriods periods={agreement.periods}/>
+      <InfoPeriods periods={agreement.periods} />
     </div>
   );
 }
 
-Info.propTypes = { 
+Info.propTypes = {
   agreement: PropTypes.shape({
     agreementStatus: PropTypes.shape({
       label: PropTypes.string,
