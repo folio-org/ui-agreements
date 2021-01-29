@@ -99,7 +99,7 @@ export default function InfoPeriods ({ periods }) {
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}>
             <div data-test-period-info-cancellation-deadline>
-              {displayPeriod?.cancellationDeadline ?? <NoValue />}
+              {<FormattedUTCDate value={displayPeriod?.cancellationDeadline} /> ?? <NoValue />}
             </div>
           </KeyValue>
         </Col>
