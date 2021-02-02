@@ -15,10 +15,13 @@ import {
   PaneMenu,
   Paneset,
   Row,
+  checkScope,
+  collapseAllSections,
+  expandAllSections
 } from '@folio/stripes/components';
 import { TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
-import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
+import { handleSaveKeyCommand } from '@folio/stripes-erm-components';
 import css from './PCIForm.css';
 
 import { PCIFormCoverage, PCIFormInfo } from '../EResourceSections';
@@ -62,20 +65,6 @@ class PCIForm extends React.Component {
       id,
       values,
     };
-  }
-
-  handleSaveKeyCommand = (e) => {
-    const {
-      handleSubmit,
-      pristine,
-      submitting,
-    } = this.props;
-
-    e.preventDefault();
-
-    if (!pristine && !submitting) {
-      handleSubmit();
-    }
   }
 
   renderPaneFooter() {
@@ -134,7 +123,7 @@ class PCIForm extends React.Component {
   shortcuts = [
     {
       name: 'save',
-      handler: this.handleSaveKeyCommand,
+      handler: (e) => handleSaveKeyCommand(e, this.props),
     },
     {
       name: 'expandAllSections',

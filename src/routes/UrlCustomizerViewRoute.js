@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
-import { checkScope, collapseAllSections, expandAllSections, preventResourceRefresh } from '@folio/stripes-erm-components';
+import { preventResourceRefresh } from '@folio/stripes-erm-components';
 
 import View from '../components/views/UrlCustomizer';
 import { urls } from '../components/utilities';
@@ -102,9 +102,6 @@ class UrlCustomizerViewRoute extends React.Component {
         }}
         handlers={{
           ...this.props.handlers,
-          checkScope,
-          collapseAllSections,
-          expandAllSections,
           onClose: this.handleClose,
           onDelete: this.handleDelete,
           onEdit: this.handleEdit,

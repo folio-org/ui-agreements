@@ -7,7 +7,7 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
-import { checkScope, collapseAllSections, expandAllSections, withAsyncValidation } from '@folio/stripes-erm-components';
+import { withAsyncValidation } from '@folio/stripes-erm-components';
 import withFileHandlers from './components/withFileHandlers';
 import { joinRelatedAgreements, splitRelatedAgreements } from './utilities/processRelatedAgreements';
 import View from '../components/views/AgreementForm';
@@ -423,9 +423,6 @@ class AgreementEditRoute extends React.Component {
         }}
         handlers={{
           ...handlers,
-          checkScope,
-          collapseAllSections,
-          expandAllSections,
           onBasketLinesAdded: this.handleBasketLinesAdded,
           onAsyncValidate: this.props.checkAsyncValidation,
           onClose: this.handleClose,

@@ -13,6 +13,7 @@ import {
   Pane,
   PaneMenu,
   SearchField,
+  checkScope
 } from '@folio/stripes/components';
 
 import { AppIcon, IfPermission } from '@folio/stripes/core';
@@ -42,7 +43,6 @@ const propTypes = {
     supplementaryProperties: PropTypes.arrayOf(PropTypes.object).isRequired,
     tagsValues: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
-  handlers: PropTypes.object,
   history: PropTypes.object,
   onNeedMoreData: PropTypes.func.isRequired,
   queryGetter: PropTypes.func.isRequired,
@@ -59,7 +59,6 @@ const filterPaneVisibilityKey = '@folio/agreements/agreementsFilterPaneVisibilit
 const Agreements = ({
   children,
   data = {},
-  handlers,
   history,
   onNeedMoreData,
   queryGetter,
@@ -95,7 +94,7 @@ const Agreements = ({
   return (
     <HasCommand
       commands={shortcuts}
-      isWithinScope={handlers.checkScope}
+      isWithinScope={checkScope}
       scope={document.body}
     >
       <div data-test-agreements>

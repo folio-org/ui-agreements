@@ -5,7 +5,6 @@ import { isEmpty } from 'lodash';
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 import View from '../components/views/AgreementLineForm';
 import { urls, withSuppressFromDiscovery } from '../components/utilities';
 
@@ -179,9 +178,6 @@ class AgreementLineEditRoute extends React.Component {
         }}
         handlers={{
           ...this.props.handlers,
-          checkScope,
-          collapseAllSections,
-          expandAllSections,
           isSuppressFromDiscoveryEnabled,
           onClose: this.handleClose,
         }}

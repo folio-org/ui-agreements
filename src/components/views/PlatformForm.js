@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { checkScope } from '@folio/stripes-erm-components';
+import { handleSaveKeyCommand } from '@folio/stripes-erm-components';
 
 import {
   Button,
@@ -12,6 +12,7 @@ import {
   PaneFooter,
   PaneMenu,
   Paneset,
+  checkScope
 } from '@folio/stripes/components';
 
 import { AppIcon, TitleManager } from '@folio/stripes/core';
@@ -25,23 +26,10 @@ const PlatformForm = ({
   submitting,
   values: { name }
 }) => {
-  const isFormSubmittableRef = useRef(false);
-
-  useEffect(() => {
-    isFormSubmittableRef.current = !pristine && !submitting;
-  }, [pristine, submitting]);
-
-  const handleSaveKeyCommand = (e) => {
-    e.preventDefault();
-    if (isFormSubmittableRef.current) {
-      handleSubmit();
-    }
-  };
-
   const shortcuts = [
     {
       name: 'save',
-      handler: handleSaveKeyCommand
+      handler: (e) => handleSaveKeyCommand(e, { handleSubmit, pristine, submitting }),
     },
   ];
 

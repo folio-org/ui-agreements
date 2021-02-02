@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { get, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import setFieldData from 'final-form-set-field-data';
-import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
+import { handleSaveKeyCommand } from '@folio/stripes-erm-components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 
 import {
@@ -19,6 +19,9 @@ import {
   PaneMenu,
   Paneset,
   Row,
+  checkScope,
+  collapseAllSections,
+  expandAllSections
 } from '@folio/stripes/components';
 
 import stripesFinalForm from '@folio/stripes/final-form';
@@ -124,20 +127,6 @@ class AgreementForm extends React.Component {
     };
   }
 
-  handleSaveKeyCommand = (e) => {
-    const {
-      handleSubmit,
-      pristine,
-      submitting,
-    } = this.props;
-
-    e.preventDefault();
-
-    if (!pristine && !submitting) {
-      handleSubmit();
-    }
-  }
-
   renderPaneFooter() {
     const {
       handlers,
@@ -195,7 +184,7 @@ class AgreementForm extends React.Component {
   shortcuts = [
     {
       name: 'save',
-      handler: this.handleSaveKeyCommand,
+      handler: (e) => handleSaveKeyCommand(e, this.props),
     },
     {
       name: 'expandAllSections',

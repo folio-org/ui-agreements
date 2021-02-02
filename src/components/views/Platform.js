@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { checkScope } from '@folio/stripes-erm-components';
 
 import {
   AccordionSet,
@@ -14,6 +13,7 @@ import {
   LoadingPane,
   Row,
   Pane,
+  checkScope
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager, useStripes } from '@folio/stripes/core';
 import { PlatformInfo, PlatformUrlCustomization, PlatformProxySettings } from '../PlatformSections';

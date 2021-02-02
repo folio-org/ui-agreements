@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import setFieldData from 'final-form-set-field-data';
-import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
+import { handleSaveKeyCommand } from '@folio/stripes-erm-components';
 
 import {
   AccordionSet,
@@ -17,6 +17,9 @@ import {
   PaneFooter,
   Paneset,
   Row,
+  checkScope,
+  collapseAllSections,
+  expandAllSections
 } from '@folio/stripes/components';
 
 import { AppIcon } from '@folio/stripes/core';
@@ -73,23 +76,11 @@ const AgreementLineForm = ({
   const [agreementLineSource, setAgreementLineSource] = useState('basket');
 
   const accordionStatusRef = useRef();
-  const isFormSubmittableRef = useRef(false);
-
-  useEffect(() => {
-    isFormSubmittableRef.current = !pristine && !submitting;
-  }, [pristine, submitting]);
-
-  const handleSaveKeyCommand = (e) => {
-    e.preventDefault();
-    if (isFormSubmittableRef.current) {
-      handleSubmit();
-    }
-  };
 
   const shortcuts = [
     {
       name: 'save',
-      handler: handleSaveKeyCommand
+      handler: (e) => handleSaveKeyCommand(e, { handleSubmit, pristine, submitting }),
     },
     {
       name: 'expandAllSections',

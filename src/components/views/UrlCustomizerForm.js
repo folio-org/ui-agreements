@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import setFieldData from 'final-form-set-field-data';
-import { checkScope, collapseAllSections, expandAllSections, composeValidators, requiredValidator } from '@folio/stripes-erm-components';
+import { composeValidators, handleSaveKeyCommand, requiredValidator } from '@folio/stripes-erm-components';
 import { TitleManager } from '@folio/stripes/core';
 import { Field } from 'react-final-form';
 
@@ -20,7 +20,10 @@ import {
   Paneset,
   Row,
   TextArea,
-  TextField
+  TextField,
+  checkScope,
+  collapseAllSections,
+  expandAllSections
 } from '@folio/stripes/components';
 
 import stripesFinalForm from '@folio/stripes/final-form';
@@ -38,20 +41,6 @@ class UrlCustomizerForm extends React.Component {
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
     values: PropTypes.object,
-  }
-
-  handleSaveKeyCommand = (e) => {
-    const {
-      handleSubmit,
-      pristine,
-      submitting,
-    } = this.props;
-
-    e.preventDefault();
-
-    if (!pristine && !submitting) {
-      handleSubmit();
-    }
   }
 
   renderPaneFooter() {
@@ -111,7 +100,7 @@ class UrlCustomizerForm extends React.Component {
   shortcuts = [
     {
       name: 'save',
-      handler: this.handleSaveKeyCommand,
+      handler: (e) => handleSaveKeyCommand(e, this.props),
     },
     {
       name: 'expandAllSections',
