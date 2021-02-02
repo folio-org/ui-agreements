@@ -19,9 +19,9 @@ const InfoPeriods = ({ periods }) => {
    * it seems more prudent to just fetch all three at once and then do our logic at this stage
    */
   const displayPeriodOptions = {
-    currentPeriod: periods?.find(p => p.periodStatus === 'current'),
-    nextPeriod: periods?.find(p => p.periodStatus === 'next'),
-    previousPeriod: periods?.find(p => p.periodStatus === 'previous')
+    currentPeriod: periods?.find(p => p.periodStatus === 'current') || {},
+    nextPeriod: periods?.find(p => p.periodStatus === 'next') || {},
+    previousPeriod: periods?.find(p => p.periodStatus === 'previous') || {}
   };
 
   /*
@@ -32,8 +32,8 @@ const InfoPeriods = ({ periods }) => {
    */
   const [selectedPeriod, setSelectedPeriod] = useState('current');
   useEffect(() => {
-    if (displayPeriodOptions.currentPeriod === undefined) {
-      if (displayPeriodOptions.nextPeriod !== undefined) {
+    if (Object.keys(displayPeriodOptions.currentPeriod).length === 0) {
+      if (Object.keys(displayPeriodOptions.nextPeriod).length) {
         setSelectedPeriod('next');
       } else {
         setSelectedPeriod('previous');
@@ -49,7 +49,7 @@ const InfoPeriods = ({ periods }) => {
     return (
       <Button
         buttonStyle={selectedPeriod === periodStatus ? 'primary' : 'default'}
-        disabled={displayPeriodOptions[`${periodStatus}Period`] === undefined}
+        disabled={Object.keys(displayPeriodOptions[`${periodStatus}Period`]).length === 0}
         onClick={() => setSelectedPeriod(periodStatus)}
       >
         <FormattedMessage id={`ui-agreements.agreementPeriods.${periodStatus}`} />
