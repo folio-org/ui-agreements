@@ -9,7 +9,7 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
-export default function AllPeriods({ agreement: { periods = [] }, id }) {
+const AllPeriods = ({ agreement: { periods = [] }, id }) => {
   const columnMapping = {
     startDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodStart" />,
     endDate: <FormattedMessage id="ui-agreements.agreementPeriods.periodEnd" />,
@@ -31,27 +31,29 @@ export default function AllPeriods({ agreement: { periods = [] }, id }) {
     'note',
   ];
 
-  if (periods.length > 1) {
+  
     return (
-      <Accordion
-        displayWhenClosed={<Badge>{periods.length}</Badge>}
-        displayWhenOpen={<Badge>{periods.length}</Badge>}
-        id={id}
-        label={<FormattedMessage id="ui-agreements.agreementPeriods.allPeriods" />}
-      >
-        <MultiColumnList
-          columnMapping={columnMapping}
-          contentData={periods}
-          formatter={formatter}
-          id="agreement-periods-list"
-          interactive={false}
-          visibleColumns={visibleColumns}
-        />
-      </Accordion>
-    );
-  }
-  return null;
+      (periods.length > 1) ?
+        <Accordion
+          displayWhenClosed={<Badge>{periods.length}</Badge>}
+          displayWhenOpen={<Badge>{periods.length}</Badge>}
+          id={id}
+          label={<FormattedMessage id="ui-agreements.agreementPeriods.allPeriods" />}
+        >
+          <MultiColumnList
+            columnMapping={columnMapping}
+            contentData={periods}
+            formatter={formatter}
+            id="agreement-periods-list"
+            interactive={false}
+            visibleColumns={visibleColumns}
+          />
+        </Accordion> :
+        null
+  );
 }
+
+export default AllPeriods;
 
 AllPeriods.propTypes = {
   agreement: PropTypes.shape({

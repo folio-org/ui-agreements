@@ -13,7 +13,7 @@ import {
 import { statuses } from '../../constants';
 import InfoPeriods from './InfoPeriods';
 
-export default function Info({ agreement }) {
+const Info = ({ agreement }) => {
   return (
     <div data-test-agreement-info>
       <Row>
@@ -62,7 +62,7 @@ export default function Info({ agreement }) {
           </KeyValue>
         </Col>
       </Row>
-      {agreement?.alternateNames?.length !== 0 &&
+      {agreement?.alternateNames?.length &&
         <MultiColumnList
           columnMapping={{ name: <FormattedMessage id="ui-agreements.alternativeNames" /> }}
           contentData={agreement.alternateNames}
@@ -73,6 +73,8 @@ export default function Info({ agreement }) {
     </div>
   );
 }
+
+export default Info;
 
 Info.propTypes = {
   agreement: PropTypes.shape({

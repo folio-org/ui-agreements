@@ -13,7 +13,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-export default function InfoPeriods({ periods }) {
+const InfoPeriods = ({ periods }) => {
   /*
    * This could be handled by callback, but since we need to know for display whether next/prev/current exist
    * it seems more prudent to just fetch all three at once and then do our logic at this stage
@@ -26,7 +26,9 @@ export default function InfoPeriods({ periods }) {
 
   /*
    * Set up which period is currently selected. Heirachy is Current > Next > Previous
-   * The empty array as a second argument to useEffect should mean this code only runs once to prevent infinite loops
+   * The empty array as a second argument to useEffect should mean this code only runs once per component lifecycle
+   * to prevent infinite loops.
+   * This is equivalent to the old "componentDidMount"
    */
   const [selectedPeriod, setSelectedPeriod] = useState('current');
   useEffect(() => {
@@ -115,6 +117,8 @@ export default function InfoPeriods({ periods }) {
     </>
   );
 }
+
+export default InfoPeriods;
 
 InfoPeriods.propTypes = {
   periods: PropTypes.arrayOf(PropTypes.shape({
