@@ -19,7 +19,7 @@ const onlyPastPeriods = [
     startDate: '2001-12-06',
     cancellationDeadline: '2003-01-16',
     note: 'Past period note 2',
-    periodStatus: "previous"
+    periodStatus: 'previous'
   }
 ];
 
@@ -29,7 +29,7 @@ const onlyFuturePeriods = [
     startDate: '2050-01-01',
     cancellationDeadline: '2050-11-30',
     note: 'Future period note 1',
-    periodStatus: "next"
+    periodStatus: 'next'
   },
   {
     endDate: '2060-01-01',
@@ -38,7 +38,7 @@ const onlyFuturePeriods = [
     note: 'Future period note 2',
     periodStatus: null
   }
-]
+];
 
 const onlyCurrentPeriod = [
   {
@@ -46,7 +46,7 @@ const onlyCurrentPeriod = [
     startDate: '2008-01-01',
     cancellationDeadline: '2047/11/30',
     note: 'Current period note',
-    periodStatus: "current"
+    periodStatus: 'current'
   }
 ];
 
@@ -63,14 +63,14 @@ const noCurrentPeriod = [
     startDate: '2001-12-06',
     cancellationDeadline: '2003-01-16',
     note: 'Past period note 2',
-    periodStatus: "previous"
+    periodStatus: 'previous'
   },
   {
     endDate: '2051-01-01',
     startDate: '2050-01-01',
     cancellationDeadline: '2050-11-30',
     note: 'Future period note 1',
-    periodStatus: "next"
+    periodStatus: 'next'
   },
   {
     endDate: '2060-01-01',
@@ -94,21 +94,21 @@ const allPeriods = [
     startDate: '2001-12-06',
     cancellationDeadline: '2003-01-16',
     note: 'Past period note 2',
-    periodStatus: "previous"
+    periodStatus: 'previous'
   },
   {
     endDate: '2049-01-01',
     startDate: '2008-01-01',
     cancellationDeadline: '2047/11/30',
     note: 'Current period note',
-    periodStatus: "current"
+    periodStatus: 'current'
   },
   {
     endDate: '2051-01-01',
     startDate: '2050-01-01',
     cancellationDeadline: '2050-11-30',
     note: 'Future period note 1',
-    periodStatus: "next"
+    periodStatus: 'next'
   },
   {
     endDate: '2060-01-01',
@@ -137,7 +137,7 @@ const prevPeriodTests = () => describe('previous period renders as expected', ()
   test('displays correct period note information', async () => {
     await KeyValue('Period note').has({ value: 'Past period note 2' });
   });
-})
+});
 
 const currentPeriodTests = () => describe('current period renders as expected', () => {
   test('displays correct period start information', async () => {
@@ -155,7 +155,7 @@ const currentPeriodTests = () => describe('current period renders as expected', 
   test('displays correct period note information', async () => {
     await KeyValue('Period note').has({ value: 'Current period note' });
   });
-})
+});
 
 const nextPeriodTests = () => describe('next period renders as expected', () => {
   test('displays correct period start information', async () => {
@@ -173,17 +173,19 @@ const nextPeriodTests = () => describe('next period renders as expected', () => 
   test('displays correct period note information', async () => {
     await KeyValue('Period note').has({ value: 'Future period note 1' });
   });
-})
+});
 
 const checkButtonDisabled = (buttonLabel, shouldBeDisabled) => {
   test(`${buttonLabel} button is ${shouldBeDisabled ? '' : 'not '}disabled`, async () => {
     const { getByRole } = renderComponent;
-    const re = new RegExp(buttonLabel, "i")
-    shouldBeDisabled ? 
-    expect(getByRole('button', {name: re})).toBeDisabled() :
-    expect(getByRole('button', {name: re})).not.toBeDisabled()
+    const re = new RegExp(buttonLabel, 'i');
+    if (shouldBeDisabled) {
+      expect(getByRole('button', { name: re })).toBeDisabled();
+    } else {
+      expect(getByRole('button', { name: re })).not.toBeDisabled();
+    }
   });
-}
+};
 
 describe('InfoPeriods', () => {
   describe('agreement with only past periods', () => {
@@ -201,7 +203,7 @@ describe('InfoPeriods', () => {
     test('renders a previous button', async () => {
       await Button('Previous').exists();
     });
-    
+
     test('renders a current button', async () => {
       await Button('Current').exists();
     });
@@ -210,11 +212,11 @@ describe('InfoPeriods', () => {
       await Button('Next').exists();
     });
 
-    checkButtonDisabled("previous", false)
-    checkButtonDisabled("current", true)
-    checkButtonDisabled("next", true)
+    checkButtonDisabled('previous', false);
+    checkButtonDisabled('current', true);
+    checkButtonDisabled('next', true);
 
-    prevPeriodTests()
+    prevPeriodTests();
   });
 
   describe('agreement with only future periods', () => {
@@ -241,11 +243,11 @@ describe('InfoPeriods', () => {
       await Button('Next').exists();
     });
 
-    checkButtonDisabled("previous", true)
-    checkButtonDisabled("current", true)
-    checkButtonDisabled("next", false)
+    checkButtonDisabled('previous', true);
+    checkButtonDisabled('current', true);
+    checkButtonDisabled('next', false);
 
-    nextPeriodTests()
+    nextPeriodTests();
   });
 
   describe('agreement with only current period', () => {
@@ -274,11 +276,11 @@ describe('InfoPeriods', () => {
       await Button('Next').exists();
     });
 
-    checkButtonDisabled("previous", true)
-    checkButtonDisabled("current", false)
-    checkButtonDisabled("next", true)
+    checkButtonDisabled('previous', true);
+    checkButtonDisabled('current', false);
+    checkButtonDisabled('next', true);
 
-    currentPeriodTests()
+    currentPeriodTests();
   });
 
   describe('agreement with no current period', () => {
@@ -304,17 +306,17 @@ describe('InfoPeriods', () => {
       await Button('Next').exists();
     });
 
-    checkButtonDisabled("previous", false)
-    checkButtonDisabled("current", true)
-    checkButtonDisabled("next", false)
+    checkButtonDisabled('previous', false);
+    checkButtonDisabled('current', true);
+    checkButtonDisabled('next', false);
 
     // Should display next by default
-    nextPeriodTests()
+    nextPeriodTests();
 
     describe('clicking on previous period tab', () => {
       beforeEach(async () => { await Button('Previous').click(); });
       // Should now pass previous period tests
-      prevPeriodTests()
+      prevPeriodTests();
     });
   });
 
@@ -342,23 +344,23 @@ describe('InfoPeriods', () => {
       await Button('Next').exists();
     });
 
-    checkButtonDisabled("previous", false)
-    checkButtonDisabled("current", false)
-    checkButtonDisabled("next", false)
+    checkButtonDisabled('previous', false);
+    checkButtonDisabled('current', false);
+    checkButtonDisabled('next', false);
 
     // Should display current by default
-    currentPeriodTests()
+    currentPeriodTests();
 
     describe('clicking on previous period tab', () => {
       beforeEach(async () => { await Button('Previous').click(); });
       // Should now pass previous period tests
-      prevPeriodTests()
+      prevPeriodTests();
     });
 
     describe('clicking on next period tab', () => {
       beforeEach(async () => { await Button('Next').click(); });
       // Should now pass previous period tests
-      nextPeriodTests()
+      nextPeriodTests();
     });
   });
 });
