@@ -18,11 +18,11 @@ const InfoPeriods = ({ periods }) => {
    * This could be handled by callback, but since we need to know for display whether next/prev/current exist
    * it seems more prudent to just fetch all three at once and then do our logic at this stage
    */
-  const displayPeriodOptions = {
-    currentPeriod: periods?.find(p => p.periodStatus === 'current') || {},
-    nextPeriod: periods?.find(p => p.periodStatus === 'next') || {},
-    previousPeriod: periods?.find(p => p.periodStatus === 'previous') || {}
-  };
+
+  const displayPeriodOptions = periods?.reduce((map, period) => {
+    if (period.periodStatus) map[period.periodStatus] = period;
+    return map;
+  }, {}) || {};
 
   /*
    * Set up which period is currently selected. Heirachy is Current > Next > Previous
@@ -31,9 +31,10 @@ const InfoPeriods = ({ periods }) => {
    * This is equivalent to the old "componentDidMount"
    */
   const [selectedPeriod, setSelectedPeriod] = useState('current');
+
   useEffect(() => {
-    if (Object.keys(displayPeriodOptions.currentPeriod).length === 0) {
-      if (Object.keys(displayPeriodOptions.nextPeriod).length) {
+    if (!displayPeriodOptions.current) {
+      if (displayPeriodOptions.next) {
         setSelectedPeriod('next');
       } else {
         setSelectedPeriod('previous');
@@ -43,13 +44,13 @@ const InfoPeriods = ({ periods }) => {
   }, []);
   // As above, this dependency omission is by design, to enforce useEffect to only run once
 
-  const displayPeriod = displayPeriodOptions[`${selectedPeriod}Period`];
+  const displayPeriod = displayPeriodOptions[selectedPeriod];
 
   const PeriodButton = (periodStatus) => {
     return (
       <Button
         buttonStyle={selectedPeriod === periodStatus ? 'primary' : 'default'}
-        disabled={Object.keys(displayPeriodOptions[`${periodStatus}Period`]).length === 0}
+        disabled={!displayPeriodOptions[periodStatus]}
         onClick={() => setSelectedPeriod(periodStatus)}
       >
         <FormattedMessage id={`ui-agreements.agreementPeriods.${periodStatus}`} />
