@@ -62,7 +62,7 @@ const Info = ({ agreement }) => {
           </KeyValue>
         </Col>
       </Row>
-      {agreement?.alternateNames?.length &&
+      {agreement?.alternateNames?.length !== 0 &&
         <MultiColumnList
           columnMapping={{ name: <FormattedMessage id="ui-agreements.alternativeNames" /> }}
           contentData={agreement.alternateNames}
