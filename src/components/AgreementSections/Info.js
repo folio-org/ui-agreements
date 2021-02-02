@@ -72,7 +72,7 @@ const Info = ({ agreement }) => {
       <InfoPeriods periods={agreement.periods} />
     </div>
   );
-}
+};
 
 export default Info;
 

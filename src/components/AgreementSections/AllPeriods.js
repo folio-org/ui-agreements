@@ -31,27 +31,27 @@ const AllPeriods = ({ agreement: { periods = [] }, id }) => {
     'note',
   ];
 
-  
-    return (
-      (periods.length > 1) ?
-        <Accordion
-          displayWhenClosed={<Badge>{periods.length}</Badge>}
-          displayWhenOpen={<Badge>{periods.length}</Badge>}
-          id={id}
-          label={<FormattedMessage id="ui-agreements.agreementPeriods.allPeriods" />}
-        >
-          <MultiColumnList
-            columnMapping={columnMapping}
-            contentData={periods}
-            formatter={formatter}
-            id="agreement-periods-list"
-            interactive={false}
-            visibleColumns={visibleColumns}
-          />
-        </Accordion> :
-        null
+
+  return (
+    (periods.length > 1) ?
+      <Accordion
+        displayWhenClosed={<Badge>{periods.length}</Badge>}
+        displayWhenOpen={<Badge>{periods.length}</Badge>}
+        id={id}
+        label={<FormattedMessage id="ui-agreements.agreementPeriods.allPeriods" />}
+      >
+        <MultiColumnList
+          columnMapping={columnMapping}
+          contentData={periods}
+          formatter={formatter}
+          id="agreement-periods-list"
+          interactive={false}
+          visibleColumns={visibleColumns}
+        />
+      </Accordion> :
+      null
   );
-}
+};
 
 export default AllPeriods;
 

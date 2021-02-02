@@ -116,7 +116,7 @@ const InfoPeriods = ({ periods }) => {
       </Row>
     </>
   );
-}
+};
 
 export default InfoPeriods;
 
