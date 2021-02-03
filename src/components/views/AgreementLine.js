@@ -17,11 +17,13 @@ import {
   Pane,
   PaneMenu,
   Row,
+  checkScope,
+  collapseAllSections,
+  expandAllSections
 } from '@folio/stripes/components';
 
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 
 import { Info, POLines, Coverage } from '../AgreementLineSections';
 import { isExternal, urls } from '../utilities';
