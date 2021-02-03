@@ -13,7 +13,9 @@ import {
   LoadingPane,
   Row,
   Pane,
-  checkScope
+  checkScope,
+  collapseAllSections,
+  expandAllSections
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager, useStripes } from '@folio/stripes/core';
 import { PlatformInfo, PlatformUrlCustomization, PlatformProxySettings } from '../PlatformSections';
@@ -57,6 +59,14 @@ const Platform = ({
     {
       name: 'edit',
       handler: handlers.onEdit,
+    },
+    {
+      name: 'expandAllSections',
+      handler: (e) => expandAllSections(e, accordionStatusRef),
+    },
+    {
+      name: 'collapseAllSections',
+      handler: (e) => collapseAllSections(e, accordionStatusRef)
     },
   ];
 
