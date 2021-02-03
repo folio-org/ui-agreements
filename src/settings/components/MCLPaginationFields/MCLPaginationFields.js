@@ -25,11 +25,11 @@ const MCLPaginationFields = () => {
   return (
     <>
       <Layout className="padding-bottom-gutter padding-top-gutter" data-test-mcl-description>
-        <FormattedMessage id="ui-agreements.settings.mcl.pagination.description" />
+        <FormattedMessage id="ui-agreements.settings.tabularList.pagination" />
       </Layout>
       <Layout className="padding-bottom-gutter">
         <Row>
-          <Col xs={8}> <FormattedMessage id="ui-agreements.settings.mcl" /> </Col>
+          <Col xs={8}> <FormattedMessage id="ui-agreements.settings.tabularList" /> </Col>
           <Col xs={4}> <FormattedMessage id="ui-agreements.settings.mcl.pageSize" /> </Col>
         </Row>
       </Layout>
