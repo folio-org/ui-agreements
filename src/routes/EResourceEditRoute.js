@@ -6,7 +6,6 @@ import compose from 'compose-function';
 import { stripesConnect } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
 
-import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 import PCIForm from '../components/views/PCIForm';
 import TitleForm from '../components/views/TitleForm';
 import NoPermissions from '../components/NoPermissions';
@@ -130,9 +129,6 @@ class EResourceEditRoute extends React.Component {
         eresource={eresource}
         handlers={{
           ...this.props.handlers,
-          checkScope,
-          collapseAllSections,
-          expandAllSections,
           isSuppressFromDiscoveryEnabled,
           onClose: this.handleClose,
         }}
