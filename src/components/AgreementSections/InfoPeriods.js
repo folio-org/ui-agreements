@@ -31,7 +31,7 @@ const InfoPeriods = ({ periods = [] }) => {
    * This is equivalent to the old "componentDidMount"
    */
 
-   // TODO This isn't an ideal solution, see https://issues.folio.org/browse/ERM-1548 
+  // TODO This isn't an ideal solution, see https://issues.folio.org/browse/ERM-1548
   // for tech debt JIRA to come back and fix when we have time/experience
   const [selectedPeriod, setSelectedPeriod] = useState('current');
   const { current, next } = displayPeriodOptions;
