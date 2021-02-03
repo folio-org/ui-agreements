@@ -13,16 +13,16 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-const InfoPeriods = ({ periods }) => {
+const InfoPeriods = ({ periods = [] }) => {
   /*
    * This could be handled by callback, but since we need to know for display whether next/prev/current exist
    * it seems more prudent to just fetch all three at once and then do our logic at this stage
    */
 
-  const displayPeriodOptions = periods?.reduce((map, period) => {
+  const displayPeriodOptions = periods.reduce((map, period) => {
     if (period.periodStatus) map[period.periodStatus] = period;
     return map;
-  }, {}) || {};
+  }, {});
 
   /*
    * Set up which period is currently selected. Heirachy is Current > Next > Previous
@@ -34,11 +34,9 @@ const InfoPeriods = ({ periods }) => {
 
   useEffect(() => {
     if (!displayPeriodOptions.current) {
-      if (displayPeriodOptions.next) {
-        setSelectedPeriod('next');
-      } else {
-        setSelectedPeriod('previous');
-      }
+      setSelectedPeriod(() => {
+        return displayPeriodOptions.next ? 'next' : 'previous';
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
