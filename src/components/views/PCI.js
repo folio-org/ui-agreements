@@ -10,6 +10,9 @@ import {
   HasCommand,
   Headline,
   Row,
+  checkScope,
+  collapseAllSections,
+  expandAllSections
 } from '@folio/stripes/components';
 import DiscoverySettings from '../DiscoverySettings';
 
@@ -39,9 +42,6 @@ export default class PCI extends React.Component {
       settings: PropTypes.object,
     }),
     handlers: PropTypes.shape({
-      checkScope: PropTypes.func.isRequired,
-      collapseAllSections: PropTypes.func.isRequired,
-      expandAllSections: PropTypes.func.isRequired,
       isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
       onEdit: PropTypes.func.isRequired,
       onNeedMoreEntitlements: PropTypes.func.isRequired,
@@ -72,18 +72,18 @@ export default class PCI extends React.Component {
       },
       {
         name: 'expandAllSections',
-        handler: (e) => handlers.expandAllSections(e, this.accordionStatusRef),
+        handler: (e) => expandAllSections(e, this.accordionStatusRef),
       },
       {
         name: 'collapseAllSections',
-        handler: (e) => handlers.collapseAllSections(e, this.accordionStatusRef)
+        handler: (e) => collapseAllSections(e, this.accordionStatusRef)
       }
     ];
 
     return (
       <HasCommand
         commands={shortcuts}
-        isWithinScope={handlers.checkScope}
+        isWithinScope={checkScope}
         scope={document.body}
       >
         <div id="eresource-pci">

@@ -1,6 +1,6 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
+import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import NoPermissions from './NoPermissions';
 import translationsProperties from '../../../test/helpers';
 
