@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { checkScope } from '@folio/stripes-erm-components';
 
 import {
   Button,
@@ -15,6 +14,7 @@ import {
   NoValue,
   Row,
   Pane,
+  checkScope
 } from '@folio/stripes/components';
 import { TitleManager, useStripes } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
