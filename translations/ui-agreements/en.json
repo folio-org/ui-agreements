@@ -572,7 +572,7 @@
   "settings.general.displaySuppressFromDiscovery.titlesInPackages": "Titles in packages",
   "settings.general.displaySuppressFromDiscovery.titles": "Titles",
   "settings.tabularList.pagination": "<strong>Tabular list pagination</strong>",
-  "settings.tabularList": "<strong>Tabular list </strong>",
+  "settings.tabularList": "<strong>Tabular list</strong>",
   "settings.mcl.pageSize": "<strong>Page size</strong>",
   "settings.mcl.entitlementOptions": "E-resource view pane > Options for acquiring e-resource",
   "settings.mcl.agreementLines": "Agreement view pane > Agreement lines",
