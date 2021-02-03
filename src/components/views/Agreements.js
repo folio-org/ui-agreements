@@ -81,7 +81,7 @@ const Agreements = ({
   };
 
   const goToNew = () => {
-    history.push('/erm/agreements/create');
+    history.push(`${urls.agreementCreate()}${searchString}`);
   };
 
   const shortcuts = [
