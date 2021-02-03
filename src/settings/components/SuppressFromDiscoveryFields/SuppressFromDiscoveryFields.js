@@ -30,7 +30,7 @@ const SuppressFromDiscoveryFields = ({ name }) => {
         component={Checkbox}
         data-test-sfdfa-pci
         id="displaySuppressFromDiscoveryPCI"
-        label={<FormattedMessage id="ui-agreements.settings.general.displaySuppressFromDiscoveryPCI.title" />}
+        label={<FormattedMessage id="ui-agreements.settings.general.displaySuppressFromDiscovery.titlesInPackages" />}
         name={`${name}.pci`}
         normalize={v => !!v}
         type="checkbox"
@@ -39,7 +39,7 @@ const SuppressFromDiscoveryFields = ({ name }) => {
         component={Checkbox}
         data-test-sfdfa-title
         id="displaySuppressFromDiscoveryTitle"
-        label={<FormattedMessage id="ui-agreements.settings.general.displaySuppressFromDiscoveryTitle.title" />}
+        label={<FormattedMessage id="ui-agreements.settings.general.displaySuppressFromDiscovery.titles" />}
         name={`${name}.title`}
         normalize={v => !!v}
         type="checkbox"
