@@ -31,15 +31,17 @@ const InfoPeriods = ({ periods = [] }) => {
    * This is equivalent to the old "componentDidMount"
    */
   const [selectedPeriod, setSelectedPeriod] = useState('current');
+  const { current, next } = displayPeriodOptions;
+  const isCurrent = !!current;
+  const isNext = !!next;
 
   useEffect(() => {
-    if (!displayPeriodOptions.current) {
+    if (!isCurrent) {
       setSelectedPeriod(() => {
-        return displayPeriodOptions.next ? 'next' : 'previous';
+        return isNext ? 'next' : 'previous';
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isCurrent, isNext]);
   // As above, this dependency omission is by design, to enforce useEffect to only run once
 
   const displayPeriod = displayPeriodOptions[selectedPeriod];
