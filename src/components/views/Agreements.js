@@ -98,7 +98,7 @@ const Agreements = ({
       isWithinScope={handlers.checkScope}
       scope={document.body}
     >
-      <div data-test-agreements>
+      <div data-test-agreements data-testid="agreements">
         <SearchAndSortQuery
           initialFilterState={{
             agreementStatus: ['active', 'draft', 'in_negotiation', 'requested']
