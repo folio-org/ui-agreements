@@ -6,9 +6,9 @@ import { stripesConnect } from '@folio/stripes/core';
 import { StripesConnectedSource } from '@folio/stripes/smart-components';
 import { generateQueryParams, preventResourceRefresh } from '@folio/stripes-erm-components';
 
-import View from '../components/views/Agreements';
-import NoPermissions from '../components/NoPermissions';
-import { urls } from '../components/utilities';
+import View from '../../components/views/Agreements';
+import NoPermissions from '../../components/NoPermissions';
+import { urls } from '../../components/utilities';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
@@ -111,8 +111,6 @@ class AgreementsRoute extends React.Component {
     super(props);
 
     this.logger = props.stripes.logger;
-    this.searchField = React.createRef();
-
     this.state = {
       hasPerms: props.stripes.hasPerm('ui-agreements.agreements.view'),
     };
@@ -120,10 +118,6 @@ class AgreementsRoute extends React.Component {
 
   componentDidMount() {
     this.source = new StripesConnectedSource(this.props, this.logger, 'agreements');
-
-    if (this.searchField.current) {
-      this.searchField.current.focus();
-    }
   }
 
   componentDidUpdate(prevProps) {

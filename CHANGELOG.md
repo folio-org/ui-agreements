@@ -5,6 +5,8 @@
 * Rename instance-bulk to inventory-record-bulk. UIIN-1368
 * Upgrade to Stripes 6.0
 * Refactored AgreementFilters to functional component, added date filter. ERM-1532
+* Changed Other Periods accordion to All Periods ERM-1531
+* Tweaked display to highlight current/next/previous period ERM-1534
 * Modify keyboard shortcuts, use handlers from stripes-components, stripes-erm-components
 ##  5.0.1 2020-11-05
 * Added permission check when displaying the add agreement line button. ERM-1197
