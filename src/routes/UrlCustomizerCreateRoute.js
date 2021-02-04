@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { checkScope, collapseAllSections, expandAllSections } from '@folio/stripes-erm-components';
 import View from '../components/views/UrlCustomizerForm';
 import { urls } from '../components/utilities';
 
@@ -68,9 +67,6 @@ class UrlCustomizerCreateRoute extends React.Component {
       <View
         handlers={{
           ...this.props.handlers,
-          checkScope,
-          collapseAllSections,
-          expandAllSections,
           onClose: this.handleClose,
         }}
         onSubmit={this.handleSubmit}

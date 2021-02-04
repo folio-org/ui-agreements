@@ -4,7 +4,7 @@ import compose from 'compose-function';
 import { isEmpty } from 'lodash';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { checkScope, collapseAllSections, expandAllSections, isPackage } from '@folio/stripes-erm-components';
+import { isPackage } from '@folio/stripes-erm-components';
 import View from '../components/views/AgreementLineForm';
 import { urls, withSuppressFromDiscovery } from '../components/utilities';
 
@@ -141,9 +141,6 @@ class AgreementLineCreateRoute extends React.Component {
         }}
         handlers={{
           ...this.props.handlers,
-          checkScope,
-          collapseAllSections,
-          expandAllSections,
           isSuppressFromDiscoveryEnabled,
           onClose: this.handleClose,
         }}
