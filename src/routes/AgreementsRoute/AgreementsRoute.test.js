@@ -196,7 +196,7 @@ const routeProps = {
   resources: { agreements }
 };
 
-describe.only('AgreementsRoute', () => {
+describe('AgreementsRoute', () => {
   describe('rendering the route with permissions', () => {
     let renderComponent;
     beforeEach(() => {
