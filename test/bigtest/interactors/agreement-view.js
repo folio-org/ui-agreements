@@ -6,6 +6,7 @@ import {
 
 import DuplicateModalInteractor from '@folio/stripes-erm-components/lib/DuplicateModal/tests/interactor';
 import AgreementLinesInteractor from './agreement-lines';
+
 @interactor class HeaderDropdownMenu {
   isDuplicateButtonPresent = isPresent('#clickable-dropdown-duplicate-agreement')
   clickDuplicate = clickable('#clickable-dropdown-duplicate-agreement');
