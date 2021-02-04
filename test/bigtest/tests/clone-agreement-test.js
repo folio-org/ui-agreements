@@ -45,11 +45,12 @@ describe('Clone Agreement test', () => {
     beforeEach(async function () {
       await this.visit(`erm/agreements/${agreement.id}`);
       await agreementView.whenLoaded();
+      await agreementView.whenActionsDropDownButtonLoaded();
     });
 
     describe('select only the agreementInfo checkbox to duplicate', () => {
       beforeEach(async function () {
-        await agreementView.headerDropdown.click();
+        await agreementView.clickActionsDropdownButton();
         await agreementView.headerDropdownMenu.clickDuplicate();
         await agreementView.duplicateAgreementModal.checkBoxList(1).click();
         await agreementView.duplicateAgreementModal.clickSaveAndClose();
@@ -67,7 +68,7 @@ describe('Clone Agreement test', () => {
 
     describe('select all properties to duplicate', () => {
       beforeEach(async function () {
-        await agreementView.headerDropdown.click();
+        await agreementView.clickActionsDropdownButton();
         await agreementView.headerDropdownMenu.clickDuplicate();
         await agreementView.duplicateAgreementModal.checkBoxList(0).click();
         await agreementView.duplicateAgreementModal.clickSaveAndClose();
