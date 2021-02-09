@@ -44,6 +44,7 @@ import {
 } from '../AgreementSections';
 
 import { urls } from '../utilities';
+import { statuses } from '../../constants';
 
 class Agreement extends React.Component {
   static propTypes = {
@@ -252,6 +253,11 @@ class Agreement extends React.Component {
       onClose: handlers.onClose,
     };
 
+    const licenses = data.agreement?.linkedLicenses || [];
+    const controllingLicenses = licenses.find(l => l.status.value === statuses.CONTROLLING);
+    const futureLicenses = licenses.find(l => l.status.value === statuses.FUTURE);
+    const historicalLicenses = licenses.find(l => l.status.value === statuses.HISTORICAL);
+
     if (isLoading) return <LoadingPane data-loading {...paneProps} />;
 
     const shortcuts = [
@@ -300,21 +306,46 @@ class Agreement extends React.Component {
                 </Row>
                 <AccordionSet initialStatus={this.getInitialAccordionsState()}>
                   <AllPeriods {...this.getSectionProps('allPeriods')} />
-                  <InternalContacts {...this.getSectionProps('internalContacts')} />
+                  { data.agreement?.contacts?.length ?
+                    <InternalContacts {...this.getSectionProps('internalContacts')} />
+                    :
+                    null }
                   <Lines {...this.getSectionProps('lines')} />
-                  <ControllingLicense {...this.getSectionProps('controllingLicense')} />
-                  <FutureLicenses {...this.getSectionProps('futureLicenses')} />
-                  <HistoricalLicenses {...this.getSectionProps('historicalLicenses')} />
-                  <ExternalLicenses {...this.getSectionProps('externalLicenses')} />
+                  { controllingLicenses?.length ?
+                    <ControllingLicense {...this.getSectionProps('controllingLicense')} />
+                    :
+                    null }
+                  { futureLicenses?.length ?
+                    <FutureLicenses {...this.getSectionProps('futureLicenses')} />
+                    :
+                    null }
+                  { historicalLicenses?.length ?
+                    <HistoricalLicenses {...this.getSectionProps('historicalLicenses')} />
+                    :
+                    null }
+                  { data.agreement?.externalLicenseDocs?.length ?
+                    <ExternalLicenses {...this.getSectionProps('externalLicenses')} />
+                    :
+                    null }
                   <Terms {...this.getSectionProps('terms')} />
-                  <Organizations {...this.getSectionProps('organizations')} />
-                  {data.supplementaryProperties?.length > 0 ?
+                  { data.agreement?.orgs?.length ?
+                    <Organizations {...this.getSectionProps('organizations')} />
+                    :
+                    null }
+                  { data.supplementaryProperties?.length > 0 ?
                     <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} /> :
-                    null
-                }
-                  <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} />
-                  <UsageData {...this.getSectionProps('usageData')} />
-                  <RelatedAgreements {...this.getSectionProps('relatedAgreements')} />
+                    null }
+                  { data.agreement?.supplementaryDocs?.length ?
+                    <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} />
+                    :
+                    null }
+                  { data.agreement?.usageDataProviders?.length ?
+                    <UsageData {...this.getSectionProps('usageData')} />
+                    :
+                    null }
+                  { data.agreement?.relatedAgreements?.length ?
+                    <RelatedAgreements {...this.getSectionProps('relatedAgreements')} />
+                    : null }
                   <NotesSmartAccordion
                     {...this.getSectionProps('notes')}
                     domainName="agreements"
