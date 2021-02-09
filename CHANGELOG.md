@@ -8,7 +8,6 @@
 * Changed Other Periods accordion to All Periods ERM-1531
 * Tweaked display to highlight current/next/previous period ERM-1534
 * Modify keyboard shortcuts, use handlers from stripes-components, stripes-erm-components
-* Support order-lines 2.0 interface. ERM-1549
 ##  5.0.1 2020-11-05
 * Added permission check when displaying the add agreement line button. ERM-1197
 * Fixes bug where incorrect Dates are saved when tenant timezone is ahead of UTC. ERM-1202
