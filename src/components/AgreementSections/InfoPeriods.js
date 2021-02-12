@@ -26,13 +26,11 @@ const InfoPeriods = ({ periods = [] }) => {
 
   /*
    * Set up which period is currently selected. Heirachy is Current > Next > Previous
-   * The empty array as a second argument to useEffect should mean this code only runs once per component lifecycle
+   * This code only runs once per component lifecycle
    * to prevent infinite loops.
    * This is equivalent to the old "componentDidMount"
    */
 
-  // TODO This isn't an ideal solution, see https://issues.folio.org/browse/ERM-1548
-  // for tech debt JIRA to come back and fix when we have time/experience
   const [selectedPeriod, setSelectedPeriod] = useState('current');
   const { current, next } = displayPeriodOptions;
   const isCurrent = !!current;
@@ -45,7 +43,6 @@ const InfoPeriods = ({ periods = [] }) => {
       });
     }
   }, [isCurrent, isNext]);
-  // As above, this dependency omission is by design, to enforce useEffect to only run once
 
   const displayPeriod = displayPeriodOptions[selectedPeriod];
 
