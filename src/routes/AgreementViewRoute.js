@@ -10,7 +10,7 @@ import { preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from './components/withFileHandlers';
-import View from '../components/views/Agreement';
+import { Agreement as View } from '../components/views';
 import { parseMclPageSize, urls } from '../components/utilities';
 import { errorTypes } from '../constants';
 

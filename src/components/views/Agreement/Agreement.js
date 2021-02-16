@@ -23,7 +23,7 @@ import {
 import { AppIcon, IfPermission, TitleManager, withStripes } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import DuplicateAgreementModal from '../DuplicateAgreementModal';
+import DuplicateAgreementModal from '../../DuplicateAgreementModal';
 
 import {
   AllPeriods,
@@ -41,10 +41,10 @@ import {
   SupplementaryProperties,
   Terms,
   UsageData,
-} from '../AgreementSections';
+} from '../../AgreementSections';
 
-import { urls } from '../utilities';
-import { statuses } from '../../constants';
+import { urls } from '../../utilities';
+import { statuses } from '../../../constants';
 
 class Agreement extends React.Component {
   static propTypes = {
@@ -254,9 +254,9 @@ class Agreement extends React.Component {
     };
 
     const licenses = data.agreement?.linkedLicenses || [];
-    const controllingLicenses = licenses.find(l => l.status.value === statuses.CONTROLLING);
-    const futureLicenses = licenses.find(l => l.status.value === statuses.FUTURE);
-    const historicalLicenses = licenses.find(l => l.status.value === statuses.HISTORICAL);
+    const controllingLicenses = licenses.filter(l => l.status.value === statuses.CONTROLLING);
+    const futureLicenses = licenses.filter(l => l.status.value === statuses.FUTURE);
+    const historicalLicenses = licenses.filter(l => l.status.value === statuses.HISTORICAL);
 
     if (isLoading) return <LoadingPane data-loading {...paneProps} />;
 
