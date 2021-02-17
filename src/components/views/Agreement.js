@@ -23,7 +23,7 @@ import {
 import { AppIcon, IfPermission, TitleManager, withStripes } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import DuplicateAgreementModal from '../../DuplicateAgreementModal';
+import DuplicateAgreementModal from '../DuplicateAgreementModal';
 
 import {
   AllPeriods,
@@ -41,10 +41,10 @@ import {
   SupplementaryProperties,
   Terms,
   UsageData,
-} from '../../AgreementSections';
+} from '../AgreementSections';
 
-import { urls } from '../../utilities';
-import { statuses } from '../../../constants';
+import { urls } from '../utilities';
+import { statuses } from '../../constants';
 
 class Agreement extends React.Component {
   static propTypes = {
