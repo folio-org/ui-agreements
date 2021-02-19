@@ -544,7 +544,7 @@
     "agreementPeriods.previous": "Previous",
     "agreementPeriods.allPeriods": "All periods",
     "settings.general.displaySuppressFromDiscovery.titlesInPackages": "Titles in packages",
-    "settings.general.displaySuppressFromDiscovery.titles": "Titles",
+    "settings.general.displaySuppressFromDiscovery.titles": "Tytuły",
     "settings.tabularList.pagination": "<strong>Tabular list pagination</strong>",
     "settings.tabularList": "<strong>Tabular list</strong>"
 }
