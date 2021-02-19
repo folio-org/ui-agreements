@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
-import { CheckboxFilter } from '@folio/stripes/smart-components';
+import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
 
 const FILTERS = [
   'publicationType',
   'type',
+  // 'tags',
 ];
 
 export default class EResourceFilters extends React.Component {
@@ -22,12 +23,14 @@ export default class EResourceFilters extends React.Component {
       class: [],
       publicationType: [],
       type: [],
+      // tags: [],
     }
   };
 
   state = {
     publicationType: [],
     type: [],
+    // tags: [],
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -79,6 +82,7 @@ export default class EResourceFilters extends React.Component {
   renderCheckboxFilter = (name, props) => {
     const { activeFilters } = this.props;
     const groupFilters = activeFilters[name] || [];
+    console.log("DEBUG groupFilters %o", groupFilters)
 
     return (
       <Accordion
@@ -134,6 +138,46 @@ export default class EResourceFilters extends React.Component {
     );
   }
 
+  renderTagsFilter = () => {
+    // if ((data?.tagsValues?.length ?? 0) !== filterState.tags?.length) {
+    // }
+    const tagsValues = this.props.data.tagsValues;
+    //   newState.tags = data.tagsValues.map(({ label }) => ({ value: label, label }));
+    console.log("DEBUG tagsValues %o", tagsValues)
+    // const dataOptions = tagsValues.map(tags => ({
+    //   label: tags.label,
+    //   value: tags.id,
+    // }));
+    const dataOptions = tagsValues.map(({ label }) => ({ value: label, label }))
+    console.log("DEBUG dataOptions %o", dataOptions)
+    const { activeFilters } = this.props;
+    const tagFilters = activeFilters.tags || [];
+    console.log("DEBUG activeFilters %o", activeFilters)
+    console.log("DEBUG tagFilters %o", tagFilters)
+
+    return (
+      <Accordion
+        closedByDefault
+        displayClearButton={tagFilters.length > 0}
+        header={FilterAccordionHeader}
+        id="clickable-tags-filter"
+        label={<FormattedMessage id="ui-agreements.agreements.tags" />}
+        onClearFilter={() => { this.props.filterHandlers.clearGroup('tags'); }}
+        // onClearFilter={() => { filterHandlers.clearGroup('tags'); }}
+        separator={false}
+      >
+        <MultiSelectionFilter
+          dataOptions={dataOptions}
+          id="tags-filter"
+          name="tags"
+          onChange={e => this.props.filterHandlers.state({ ...activeFilters, [e.name]: e.values })} //[group.name]: group.values
+          // onChange={value => this.props.filterHandlers.state({ ...activeFilters, tags: [value] })}
+          selectedValues={tagFilters}
+        />
+      </Accordion>
+    );
+  }
+
   render() {
     return (
       <AccordionSet>
@@ -141,6 +185,7 @@ export default class EResourceFilters extends React.Component {
         {this.renderCheckboxFilter('publicationType')}
         {this.renderIsPackageFilter()}
         {this.renderRemoteKbFilter()}
+        {this.renderTagsFilter()}
       </AccordionSet>
     );
   }

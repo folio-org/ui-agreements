@@ -9,6 +9,7 @@ import View from '../components/views/EResources';
 import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
 import { resultCount } from '../constants';
+import {get} from "lodash";
 
 const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT;
 
@@ -32,6 +33,7 @@ class EResourcesRoute extends React.Component {
         }],
         filterKeys: {
           remoteKb: 'remoteKb.id',
+          tags: 'tags.value',
         }
       }),
     },
@@ -51,6 +53,15 @@ class EResourcesRoute extends React.Component {
       path: 'erm/refdata/TitleInstance/type',
       perRequest: 100,
       limitParam: 'perPage',
+    },
+    tagsValues: {
+      type: 'okapi',
+      path: 'tags',
+      params: {
+        limit: '1000',
+        query: 'cql.allRecords=1 sortby label',
+      },
+      records: 'tags',
     },
     query: { initialValue: {} },
     resultOffset: { initialValue: 0 },
@@ -147,6 +158,7 @@ class EResourcesRoute extends React.Component {
           publicationTypeValues: resources?.publicationTypeValues?.records ?? [],
           sourceValues: resources?.sourceValues?.records ?? [],
           typeValues: resources?.typeValues?.records ?? [],
+          tagsValues: resources?.tagsValues?.records ?? [],
         }}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}
