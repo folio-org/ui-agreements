@@ -135,8 +135,7 @@ export default class EResourceFilters extends React.Component {
   }
 
   renderTagsFilter = () => {
-    // const tagsValues = this.props.data.tagsValues;
-    const dataOptions = this.props.data.tagsValues.map(({ label }) => ({ value: label, label }))
+    const dataOptions = this.props.data.tagsValues.map(({ label }) => ({ value: label, label }));
     const { activeFilters } = this.props;
     const tagFilters = activeFilters.tags || [];
 
@@ -145,7 +144,7 @@ export default class EResourceFilters extends React.Component {
         closedByDefault
         displayClearButton={tagFilters.length > 0}
         header={FilterAccordionHeader}
-        id="clickable-tags-filter"
+        id="filter-accordion-tags"
         label={<FormattedMessage id="ui-agreements.agreements.tags" />}
         onClearFilter={() => { this.props.filterHandlers.clearGroup('tags'); }}
         separator={false}
@@ -154,7 +153,7 @@ export default class EResourceFilters extends React.Component {
           dataOptions={dataOptions}
           id="tags-filter"
           name="tags"
-          onChange={e => this.props.filterHandlers.state({ ...activeFilters, [e.name]: e.values })}
+          onChange={e => this.props.filterHandlers.state({ ...activeFilters, tags: e.values })}
           selectedValues={tagFilters}
         />
       </Accordion>
