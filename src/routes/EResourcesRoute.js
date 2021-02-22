@@ -9,7 +9,6 @@ import View from '../components/views/EResources';
 import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
 import { resultCount } from '../constants';
-import {get} from "lodash";
 
 const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT;
 
