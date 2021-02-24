@@ -66,6 +66,7 @@ class AgreementViewRoute extends React.Component {
     interfaces: {
       type: 'okapi',
       path: 'organizations-storage/interfaces',
+      perRequest: RECORDS_PER_REQUEST,
       params: (_q, _p, _r, _l, props) => {
         const orgs = get(props.resources, 'agreement.records[0].orgs', []);
         const interfaces = flatten(orgs.map(o => get(o, 'org.orgsUuid_object.interfaces', [])));
