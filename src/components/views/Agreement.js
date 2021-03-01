@@ -327,7 +327,11 @@ class Agreement extends React.Component {
                     <ExternalLicenses {...this.getSectionProps('externalLicenses')} />
                     :
                     null }
-                  <Terms {...this.getSectionProps('terms')} />
+                  { controllingLicenses?.length ?
+                    <Terms {...this.getSectionProps('terms')} />
+                    :
+                    null }
+
                   { data.agreement?.orgs?.length ?
                     <Organizations {...this.getSectionProps('organizations')} />
                     :
