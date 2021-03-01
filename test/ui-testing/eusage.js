@@ -97,8 +97,8 @@ module.exports.test = (uiTestCtx) => {
 
       it('should edit agreement', done => {
         nightmare
-          .wait('#clickable-edit-agreement')
-          .click('#clickable-edit-agreement')
+          .wait('#clickable-edit-agreement') // edit button removed, ERM-693
+          .click('#clickable-edit-agreement') // edit button removed, ERM-693
           .wait('#clickable-expand-all')
           .click('#clickable-expand-all')
           .then(done)
@@ -124,8 +124,8 @@ module.exports.test = (uiTestCtx) => {
 
       it('should edit agreement', done => {
         nightmare
-          .wait('#clickable-edit-agreement')
-          .click('#clickable-edit-agreement')
+          .wait('#clickable-edit-agreement') // edit button removed, ERM-693
+          .click('#clickable-edit-agreement') // edit button removed, ERM-693
           .wait('#clickable-expand-all')
           .click('#clickable-expand-all')
           .then(done)

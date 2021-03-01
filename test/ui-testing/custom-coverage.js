@@ -154,8 +154,8 @@ module.exports.test = (uiTestCtx) => {
         });
 
         nightmare
-          .wait('#clickable-edit-agreement')
-          .click('#clickable-edit-agreement')
+          .wait('#clickable-edit-agreement') // edit button removed, ERM-693
+          .click('#clickable-edit-agreement') // edit button removed, ERM-693
           .wait('[data-test-edit-agreement-info]')
           .waitUntilNetworkIdle(2000)
           .then(done)
@@ -213,8 +213,8 @@ module.exports.test = (uiTestCtx) => {
 
       it('should edit agreement', done => {
         nightmare
-          .wait('#clickable-edit-agreement')
-          .click('#clickable-edit-agreement')
+          .wait('#clickable-edit-agreement') // edit button removed, ERM-693
+          .click('#clickable-edit-agreement') // edit button removed, ERM-693
           .wait('[data-test-ag-line-number]')
           .waitUntilNetworkIdle(2000)
           .then(done)

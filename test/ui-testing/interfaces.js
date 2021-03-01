@@ -244,8 +244,8 @@ module.exports.test = (uiTestCtx) => {
 
       it('should navigate to Edit Agreement page', done => {
         nightmare
-          .wait('#clickable-edit-agreement')
-          .click('#clickable-edit-agreement')
+          .wait('#clickable-edit-agreement') // edit button removed, ERM-693
+          .click('#clickable-edit-agreement') // edit button removed, ERM-693
           .waitUntilNetworkIdle(2000)
           .then(done)
           .catch(done);

@@ -169,8 +169,8 @@ module.exports.test = (uiTestCtx) => {
 
       it(`should edit agreement to: ${values.name}${values.editedName}`, done => {
         nightmare
-          .wait('#clickable-edit-agreement')
-          .click('#clickable-edit-agreement')
+          .wait('#clickable-edit-agreement') // edit button removed, ERM-693
+          .click('#clickable-edit-agreement') // edit button removed, ERM-693
           .wait('#form-loaded')
 
           .insert('#edit-agreement-name', values.editedName)

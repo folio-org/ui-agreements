@@ -41,7 +41,7 @@ module.exports.test = (uiTestCtx) => {
 
       it('should link a PO line', done => {
         nightmare
-          .click('#clickable-edit-agreement')
+          .click('#clickable-edit-agreement') // edit button removed, ERM-693
           .waitUntilNetworkIdle(2000)
           .wait('#agreement-form-lines [data-test-ag-line-number="0"] #add-poline-btn-0')
           .click('#agreement-form-lines [data-test-ag-line-number="0"] #add-poline-btn-0')
