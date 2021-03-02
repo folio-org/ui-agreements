@@ -218,19 +218,6 @@ class Agreement extends React.Component {
               )}
             </FormattedMessage>
           }
-          <FormattedMessage id="ui-agreements.agreements.editAgreement">
-            {ariaLabel => (
-              <Button
-                aria-label={ariaLabel}
-                buttonStyle="primary"
-                id="clickable-edit-agreement"
-                marginBottom0
-                onClick={handlers.onEdit}
-              >
-                <FormattedMessage id="stripes-components.button.edit" />
-              </Button>
-            )}
-          </FormattedMessage>
         </PaneMenu>
       </IfPermission>
     );

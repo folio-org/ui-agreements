@@ -251,8 +251,8 @@ module.exports.test = (uiTestCtx) => {
 
         it('should edit agreement and should reject activeTo <= activeFrom', done => {
           nightmare
-            .wait('#clickable-edit-agreement')
-            .click('#clickable-edit-agreement')
+            .wait('#clickable-edit-agreement') // edit button removed, ERM-693
+            .click('#clickable-edit-agreement') // edit button removed, ERM-693
             .waitUntilNetworkIdle(2000)
             .insert('#edit-agreement-name', 'Invalid Date')
             .click('#datepicker-clear-button-agreement-line-0-active-from')
@@ -276,8 +276,8 @@ module.exports.test = (uiTestCtx) => {
 
         it('should edit agreement', done => {
           nightmare
-            .wait('#clickable-edit-agreement')
-            .click('#clickable-edit-agreement')
+            .wait('#clickable-edit-agreement') // edit button removed, ERM-693
+            .click('#clickable-edit-agreement') // edit button removed, ERM-693
             .then(done)
             .catch(done);
         });
