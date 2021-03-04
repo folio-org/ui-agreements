@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
@@ -19,8 +19,8 @@ const FILTERS = [
 ];
 
 export default function EResourceFilters({ activeFilters, data, filterHandlers }) {
-  const intl = useIntl();
-  console.log("activeFilters: %o", activeFilters);
+  // const intl = useIntl();
+  console.log('activeFilters: %o', activeFilters);
 
   const [filterState, setFilterState] = useState({
     publicationType: [],
@@ -49,7 +49,7 @@ export default function EResourceFilters({ activeFilters, data, filterHandlers }
 
   const renderIsPackageFilter = () => {
     const groupFilters = activeFilters.class || [];
-    console.log("groupFilters: %o", groupFilters)
+    console.log('groupFilters: %o', groupFilters);
 
     return (
       <Accordion
@@ -80,7 +80,7 @@ export default function EResourceFilters({ activeFilters, data, filterHandlers }
 
   const renderCheckboxFilter = (name, prps) => {
     const groupFilters = activeFilters[name] || [];
-    console.log("groupFilters in renderCheckboxFilter: %o", groupFilters)
+    console.log('groupFilters in renderCheckboxFilter: %o', groupFilters);
 
     return (
       <Accordion
