@@ -127,8 +127,8 @@ module.exports.test = (uiTestCtx,
 
       it('should open edit agreement', done => {
         nightmare
-          .wait('#clickable-edit-agreement')
-          .click('#clickable-edit-agreement')
+          .wait('#clickable-edit-agreement') // edit button removed, ERM-693
+          .click('#clickable-edit-agreement') // edit button removed, ERM-693
           .wait('[data-test-edit-agreement-info]')
           .waitUntilNetworkIdle(2000)
           .then(done)

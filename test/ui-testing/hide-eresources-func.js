@@ -73,8 +73,8 @@ module.exports.test = (uiTestCtx) => {
 
       it('should confirm ability to add agreement lines', done => {
         nightmare
-          .wait('#clickable-edit-agreement')
-          .click('#clickable-edit-agreement')
+          .wait('#clickable-edit-agreement') // edit button removed, ERM-693
+          .click('#clickable-edit-agreement') // edit button removed, ERM-693
           .wait('#add-agreement-line-button')
           .then(done)
           .catch(done);

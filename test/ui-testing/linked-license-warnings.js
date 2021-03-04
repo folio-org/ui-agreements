@@ -159,8 +159,8 @@ module.exports.test = (uiTestCtx) => {
 
       it('should open edit agreement page and open licenses accordion', done => {
         nightmare
-          .wait('#clickable-edit-agreement')
-          .click('#clickable-edit-agreement')
+          .wait('#clickable-edit-agreement') // edit button removed, ERM-693
+          .click('#clickable-edit-agreement') // edit button removed, ERM-693
           .wait('#formLicenses')
           .then(done)
           .catch(done);
