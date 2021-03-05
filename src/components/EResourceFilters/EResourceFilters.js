@@ -19,9 +19,6 @@ const FILTERS = [
 ];
 
 export default function EResourceFilters({ activeFilters, data, filterHandlers }) {
-  // const intl = useIntl();
-  console.log('activeFilters: %o', activeFilters);
-
   const [filterState, setFilterState] = useState({
     publicationType: [],
     type: [],
@@ -49,7 +46,6 @@ export default function EResourceFilters({ activeFilters, data, filterHandlers }
 
   const renderIsPackageFilter = () => {
     const groupFilters = activeFilters.class || [];
-    console.log('groupFilters: %o', groupFilters);
 
     return (
       <Accordion
@@ -80,7 +76,6 @@ export default function EResourceFilters({ activeFilters, data, filterHandlers }
 
   const renderCheckboxFilter = (name, prps) => {
     const groupFilters = activeFilters[name] || [];
-    console.log('groupFilters in renderCheckboxFilter: %o', groupFilters);
 
     return (
       <Accordion

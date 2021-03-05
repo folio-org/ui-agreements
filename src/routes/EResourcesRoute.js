@@ -33,6 +33,8 @@ class EResourcesRoute extends React.Component {
         filterKeys: {
           remoteKb: 'remoteKb.id',
           tags: 'tags.value',
+          publicationType: 'publicationType.value',
+          type: 'type.value'
         }
       }),
     },
