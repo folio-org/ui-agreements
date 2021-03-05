@@ -21,7 +21,11 @@ export default function EResourceFilters({ activeFilters, data, filterHandlers }
   const [filterState, setFilterState] = useState({
     publicationType: [],
     type: [],
-    tags: []
+    tags: [],
+    isPackage: [
+      { value: 'package', label: <FormattedMessage id="ui-agreements.yes" /> },
+      { value: 'nopackage', label: <FormattedMessage id="ui-agreements.no" /> },
+    ]
   });
 
   useEffect(() => {
@@ -43,19 +47,7 @@ export default function EResourceFilters({ activeFilters, data, filterHandlers }
   }, [data, filterState]);
 
   const renderCheckboxFilter = (name, prps) => {
-    function getdataOptions () {
-      if (name === 'isPackage') {
-        return( [
-                  { value: 'package', label: <FormattedMessage id="ui-agreements.yes" /> },
-                  { value: 'nopackage', label: <FormattedMessage id="ui-agreements.no" /> },
-                ] )
-      }
-      else {
-        return (filterState[name] || [])
-      }
-    }
-
-    const fieldName = (name === 'isPackage') ? 'class' : name
+    const fieldName = (name === 'isPackage') ? 'class' : name;
     const groupFilters = activeFilters[fieldName] || [];
 
     return (
@@ -69,7 +61,7 @@ export default function EResourceFilters({ activeFilters, data, filterHandlers }
         {...prps}
       >
         <CheckboxFilter
-          dataOptions={getdataOptions()}
+          dataOptions={filterState[name] || []}
           name={fieldName}
           onChange={(group) => {
             filterHandlers.state({
