@@ -42,38 +42,21 @@ export default function EResourceFilters({ activeFilters, data, filterHandlers }
     }
   }, [data, filterState]);
 
-  const renderIsPackageFilter = () => {
-    const groupFilters = activeFilters.class || [];
-
-    return (
-      <Accordion
-        displayClearButton={groupFilters.length > 0}
-        header={FilterAccordionHeader}
-        id="filter-accordion-is-package"
-        label={<FormattedMessage id="ui-agreements.eresources.isPackage" />}
-        onClearFilter={() => { filterHandlers.clearGroup('class'); }}
-        separator={false}
-      >
-        <CheckboxFilter
-          dataOptions={[
-            { value: 'package', label: <FormattedMessage id="ui-agreements.yes" /> },
-            { value: 'nopackage', label: <FormattedMessage id="ui-agreements.no" /> },
-          ]}
-          name="class"
-          onChange={group => {
-            filterHandlers.state({
-              ...activeFilters,
-              [group.name]: group.values
-            });
-          }}
-          selectedValues={groupFilters}
-        />
-      </Accordion>
-    );
-  };
-
   const renderCheckboxFilter = (name, prps) => {
-    const groupFilters = activeFilters[name] || [];
+    function getdataOptions () {
+      if (name === 'isPackage') {
+        return( [
+                  { value: 'package', label: <FormattedMessage id="ui-agreements.yes" /> },
+                  { value: 'nopackage', label: <FormattedMessage id="ui-agreements.no" /> },
+                ] )
+      }
+      else {
+        return (filterState[name] || [])
+      }
+    }
+
+    const fieldName = (name === 'isPackage') ? 'class' : name
+    const groupFilters = activeFilters[fieldName] || [];
 
     return (
       <Accordion
@@ -81,13 +64,13 @@ export default function EResourceFilters({ activeFilters, data, filterHandlers }
         header={FilterAccordionHeader}
         id={`filter-accordion-${name}`}
         label={<FormattedMessage id={`ui-agreements.eresources.${name}`} />}
-        onClearFilter={() => { filterHandlers.clearGroup(name); }}
+        onClearFilter={() => { filterHandlers.clearGroup(fieldName); }}
         separator={false}
         {...prps}
       >
         <CheckboxFilter
-          dataOptions={filterState[name] || []}
-          name={name}
+          dataOptions={getdataOptions()}
+          name={fieldName}
           onChange={(group) => {
             filterHandlers.state({
               ...activeFilters,
@@ -156,7 +139,7 @@ export default function EResourceFilters({ activeFilters, data, filterHandlers }
     <AccordionSet>
       {renderCheckboxFilter('type')}
       {renderCheckboxFilter('publicationType')}
-      {renderIsPackageFilter()}
+      {renderCheckboxFilter('isPackage')}
       {renderRemoteKbFilter()}
       {renderTagsFilter()}
     </AccordionSet>
