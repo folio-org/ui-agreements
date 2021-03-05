@@ -14,7 +14,6 @@ const propTypes = {
 const FILTERS = [
   'publicationType',
   'type',
-  'source',
   'tags'
 ];
 
@@ -22,7 +21,6 @@ export default function EResourceFilters({ activeFilters, data, filterHandlers }
   const [filterState, setFilterState] = useState({
     publicationType: [],
     type: [],
-    class: [],
     tags: []
   });
 
