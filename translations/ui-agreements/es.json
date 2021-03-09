@@ -138,7 +138,7 @@
     "identifier.pissn": "ISSN (Impreso)",
     "identifier.zdb": "ZDB",
     "settings.general.hideEResourcesFunctionality.title": "Ocultar la base de conocimientos de los acuerdos internos",
-    "settings.general.hideEResourcesFunctionality.description": "Si está utilizando otra aplicación (por ejemplo, eHoldings) como su base de conocimientos y desea ocultar la base de conocimientos de acuerdos internos, puede verificar esta configuración. Específicamente, esto va a:",
+    "settings.general.hideEResourcesFunctionality.description": "Si está utilizando otra aplicación (por ejemplo, eRecursos) como su base de conocimientos y desea ocultar la base de conocimientos de acuerdos internos, puede verificar esta configuración. Específicamente, esto va a:",
     "agreementLines.hasCustomCoverage": "Tiene cobertura personalizada",
     "eresources.provider": "Proveedor",
     "agreements.showTags": "Mostrar etiquetas",
