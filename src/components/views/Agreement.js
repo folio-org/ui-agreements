@@ -293,18 +293,18 @@ class Agreement extends React.Component {
                 </Row>
                 <AccordionSet initialStatus={this.getInitialAccordionsState()}>
                   <AllPeriods {...this.getSectionProps('allPeriods')} />
-                  { data.agreement?.contacts?.length && <InternalContacts {...this.getSectionProps('internalContacts')} /> }
+                  { data.agreement?.contacts?.length > 0 && <InternalContacts {...this.getSectionProps('internalContacts')} /> }
                   <Lines {...this.getSectionProps('lines')} />
-                  { controllingLicenses?.length && <ControllingLicense {...this.getSectionProps('controllingLicense')} /> }
-                  { futureLicenses?.length && <FutureLicenses {...this.getSectionProps('futureLicenses')} /> }
-                  { historicalLicenses?.length && <HistoricalLicenses {...this.getSectionProps('historicalLicenses')} /> }
-                  { data.agreement?.externalLicenseDocs?.length && <ExternalLicenses {...this.getSectionProps('externalLicenses')} /> }
-                  { controllingLicenses?.length && <Terms {...this.getSectionProps('terms')} /> }
-                  { data.agreement?.orgs?.length && <Organizations {...this.getSectionProps('organizations')} /> }
+                  { controllingLicenses?.length > 0 && <ControllingLicense {...this.getSectionProps('controllingLicense')} /> }
+                  { futureLicenses?.length > 0 && <FutureLicenses {...this.getSectionProps('futureLicenses')} /> }
+                  { historicalLicenses?.length > 0 && <HistoricalLicenses {...this.getSectionProps('historicalLicenses')} /> }
+                  { data.agreement?.externalLicenseDocs?.length > 0 && <ExternalLicenses {...this.getSectionProps('externalLicenses')} /> }
+                  { controllingLicenses?.length > 0 && <Terms {...this.getSectionProps('terms')} /> }
+                  { data.agreement?.orgs?.length > 0 && <Organizations {...this.getSectionProps('organizations')} /> }
                   { data.supplementaryProperties?.length > 0 && <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} /> }
-                  { data.agreement?.supplementaryDocs?.length && <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} /> }
-                  { data.agreement?.usageDataProviders?.length && <UsageData {...this.getSectionProps('usageData')} /> }
-                  { data.agreement?.relatedAgreements?.length && <RelatedAgreements {...this.getSectionProps('relatedAgreements')} /> }
+                  { data.agreement?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} /> }
+                  { data.agreement?.usageDataProviders?.length > 0 && <UsageData {...this.getSectionProps('usageData')} /> }
+                  { data.agreement?.relatedAgreements?.length > 0 && <RelatedAgreements {...this.getSectionProps('relatedAgreements')} /> }
                   <NotesSmartAccordion
                     {...this.getSectionProps('notes')}
                     domainName="agreements"
