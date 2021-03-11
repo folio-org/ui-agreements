@@ -32,6 +32,9 @@ class EResourcesRoute extends React.Component {
         }],
         filterKeys: {
           remoteKb: 'remoteKb.id',
+          tags: 'tags.value',
+          publicationType: 'publicationType.value',
+          type: 'type.value'
         }
       }),
     },
@@ -51,6 +54,15 @@ class EResourcesRoute extends React.Component {
       path: 'erm/refdata/TitleInstance/type',
       perRequest: 100,
       limitParam: 'perPage',
+    },
+    tagsValues: {
+      type: 'okapi',
+      path: 'tags',
+      params: {
+        limit: '1000',
+        query: 'cql.allRecords=1 sortby label',
+      },
+      records: 'tags',
     },
     query: { initialValue: {} },
     resultOffset: { initialValue: 0 },
@@ -147,6 +159,7 @@ class EResourcesRoute extends React.Component {
           publicationTypeValues: resources?.publicationTypeValues?.records ?? [],
           sourceValues: resources?.sourceValues?.records ?? [],
           typeValues: resources?.typeValues?.records ?? [],
+          tagsValues: resources?.tagsValues?.records ?? [],
         }}
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}
