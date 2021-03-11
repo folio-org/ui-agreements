@@ -293,50 +293,18 @@ class Agreement extends React.Component {
                 </Row>
                 <AccordionSet initialStatus={this.getInitialAccordionsState()}>
                   <AllPeriods {...this.getSectionProps('allPeriods')} />
-                  { data.agreement?.contacts?.length ?
-                    <InternalContacts {...this.getSectionProps('internalContacts')} />
-                    :
-                    null }
+                  { data.agreement?.contacts?.length && <InternalContacts {...this.getSectionProps('internalContacts')} /> }
                   <Lines {...this.getSectionProps('lines')} />
-                  { controllingLicenses?.length ?
-                    <ControllingLicense {...this.getSectionProps('controllingLicense')} />
-                    :
-                    null }
-                  { futureLicenses?.length ?
-                    <FutureLicenses {...this.getSectionProps('futureLicenses')} />
-                    :
-                    null }
-                  { historicalLicenses?.length ?
-                    <HistoricalLicenses {...this.getSectionProps('historicalLicenses')} />
-                    :
-                    null }
-                  { data.agreement?.externalLicenseDocs?.length ?
-                    <ExternalLicenses {...this.getSectionProps('externalLicenses')} />
-                    :
-                    null }
-                  { controllingLicenses?.length ?
-                    <Terms {...this.getSectionProps('terms')} />
-                    :
-                    null }
-
-                  { data.agreement?.orgs?.length ?
-                    <Organizations {...this.getSectionProps('organizations')} />
-                    :
-                    null }
-                  { data.supplementaryProperties?.length > 0 ?
-                    <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} /> :
-                    null }
-                  { data.agreement?.supplementaryDocs?.length ?
-                    <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} />
-                    :
-                    null }
-                  { data.agreement?.usageDataProviders?.length ?
-                    <UsageData {...this.getSectionProps('usageData')} />
-                    :
-                    null }
-                  { data.agreement?.relatedAgreements?.length ?
-                    <RelatedAgreements {...this.getSectionProps('relatedAgreements')} />
-                    : null }
+                  { controllingLicenses?.length && <ControllingLicense {...this.getSectionProps('controllingLicense')} /> }
+                  { futureLicenses?.length && <FutureLicenses {...this.getSectionProps('futureLicenses')} /> }
+                  { historicalLicenses?.length && <HistoricalLicenses {...this.getSectionProps('historicalLicenses')} /> }
+                  { data.agreement?.externalLicenseDocs?.length && <ExternalLicenses {...this.getSectionProps('externalLicenses')} /> }
+                  { controllingLicenses?.length && <Terms {...this.getSectionProps('terms')} /> }
+                  { data.agreement?.orgs?.length && <Organizations {...this.getSectionProps('organizations')} /> }
+                  { data.supplementaryProperties?.length > 0 && <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} /> }
+                  { data.agreement?.supplementaryDocs?.length && <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} /> }
+                  { data.agreement?.usageDataProviders?.length && <UsageData {...this.getSectionProps('usageData')} /> }
+                  { data.agreement?.relatedAgreements?.length && <RelatedAgreements {...this.getSectionProps('relatedAgreements')} /> }
                   <NotesSmartAccordion
                     {...this.getSectionProps('notes')}
                     domainName="agreements"
