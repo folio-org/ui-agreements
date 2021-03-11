@@ -223,6 +223,10 @@ class Agreement extends React.Component {
     );
   }
 
+  renderIfNotEmpty = (array, func) => {
+    return array?.length ? func : null;
+  }
+
   render() {
     const {
       data,
@@ -293,50 +297,18 @@ class Agreement extends React.Component {
                 </Row>
                 <AccordionSet initialStatus={this.getInitialAccordionsState()}>
                   <AllPeriods {...this.getSectionProps('allPeriods')} />
-                  { data.agreement?.contacts?.length ?
-                    <InternalContacts {...this.getSectionProps('internalContacts')} />
-                    :
-                    null }
+                  {this.renderIfNotEmpty(data.agreement?.contacts, <InternalContacts {...this.getSectionProps('internalContacts')} />)}
                   <Lines {...this.getSectionProps('lines')} />
-                  { controllingLicenses?.length ?
-                    <ControllingLicense {...this.getSectionProps('controllingLicense')} />
-                    :
-                    null }
-                  { futureLicenses?.length ?
-                    <FutureLicenses {...this.getSectionProps('futureLicenses')} />
-                    :
-                    null }
-                  { historicalLicenses?.length ?
-                    <HistoricalLicenses {...this.getSectionProps('historicalLicenses')} />
-                    :
-                    null }
-                  { data.agreement?.externalLicenseDocs?.length ?
-                    <ExternalLicenses {...this.getSectionProps('externalLicenses')} />
-                    :
-                    null }
-                  { controllingLicenses?.length ?
-                    <Terms {...this.getSectionProps('terms')} />
-                    :
-                    null }
-
-                  { data.agreement?.orgs?.length ?
-                    <Organizations {...this.getSectionProps('organizations')} />
-                    :
-                    null }
-                  { data.supplementaryProperties?.length > 0 ?
-                    <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} /> :
-                    null }
-                  { data.agreement?.supplementaryDocs?.length ?
-                    <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} />
-                    :
-                    null }
-                  { data.agreement?.usageDataProviders?.length ?
-                    <UsageData {...this.getSectionProps('usageData')} />
-                    :
-                    null }
-                  { data.agreement?.relatedAgreements?.length ?
-                    <RelatedAgreements {...this.getSectionProps('relatedAgreements')} />
-                    : null }
+                  {this.renderIfNotEmpty(controllingLicenses, <ControllingLicense {...this.getSectionProps('controllingLicense')} />)}
+                  {this.renderIfNotEmpty(futureLicenses, <FutureLicenses {...this.getSectionProps('futureLicenses')} />)}
+                  {this.renderIfNotEmpty(historicalLicenses, <HistoricalLicenses {...this.getSectionProps('historicalLicenses')} />)}
+                  {this.renderIfNotEmpty(data.agreement?.externalLicenseDocs, <ExternalLicenses {...this.getSectionProps('externalLicenses')} />)}
+                  {this.renderIfNotEmpty(controllingLicenses, <Terms {...this.getSectionProps('terms')} />)}
+                  {this.renderIfNotEmpty(data.agreement?.orgs, <Organizations {...this.getSectionProps('organizations')} />)}
+                  {this.renderIfNotEmpty(data.supplementaryProperties, <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} />)}
+                  {this.renderIfNotEmpty(data.agreement?.supplementaryDocs, <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} />)}
+                  {this.renderIfNotEmpty(data.agreement?.usageDataProviders, <UsageData {...this.getSectionProps('usageData')} />)}
+                  {this.renderIfNotEmpty(data.agreement?.relatedAgreements, <RelatedAgreements {...this.getSectionProps('relatedAgreements')} />)}
                   <NotesSmartAccordion
                     {...this.getSectionProps('notes')}
                     domainName="agreements"
