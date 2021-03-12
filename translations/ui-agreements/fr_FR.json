@@ -455,7 +455,7 @@
     "settings.general.displaySuppressFromDiscoveryAgreementLine.title": "Lignes d'accord",
     "description": "Description",
     "agreementLine.basket": "Panier",
-    "agreementLine.eholdings": "eHoldings",
+    "agreementLine.eholdings": "Ressources électroniques",
     "agreementLine.noEresourceLinked": "No e-resource added",
     "agreementLine.linkEresourceToStart": "Link an e-resource to get started",
     "agreementLine.linkEresource": "Link e-resource",
@@ -543,8 +543,8 @@
     "agreementPeriods.next": "Next",
     "agreementPeriods.previous": "Previous",
     "agreementPeriods.allPeriods": "All periods",
-    "settings.general.displaySuppressFromDiscovery.titlesInPackages": "Titles in packages",
-    "settings.general.displaySuppressFromDiscovery.titles": "Titles",
+    "settings.general.displaySuppressFromDiscovery.titlesInPackages": "Titres en bouquets",
+    "settings.general.displaySuppressFromDiscovery.titles": "Titres",
     "settings.tabularList.pagination": "<strong>Tabular list pagination</strong>",
     "settings.tabularList": "<strong>Tabular list</strong>"
 }
