@@ -164,7 +164,7 @@
       },
       {
         "permissionName": "ui-agreements.platforms.view",
-        "displayName": "Platforms: Search & view platforms",
+        "displayName": "Agreements: Search & view platforms",
         "visible": true,
         "subPermissions": [
           "module.agreements.enabled",
@@ -173,7 +173,7 @@
       },
       {
         "permissionName": "ui-agreements.platforms.edit",
-        "displayName": "Platforms: Edit platforms",
+        "displayName": "Agreements: Edit platforms",
         "visible": true,
         "subPermissions": [
           "erm.platforms.edit",
