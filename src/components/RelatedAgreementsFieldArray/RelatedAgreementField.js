@@ -47,7 +47,6 @@ export default function RelatedAgreementField({
   onAgreementSelected,
   agreement,
 }) {
-
   let triggerButton = useRef(null);
 
   useEffect(() => {
