@@ -32,7 +32,7 @@ class AgreementLineViewRoute extends React.Component {
 
         return query ? { query } : null;
       },
-      fetch: props => !!props.stripes.hasInterface('order-lines', '1.0'),
+      fetch: props => (!!props.stripes.hasInterface('order-lines', '1.0 2.0')),
       records: 'poLines',
       throwErrors: false,
     },
