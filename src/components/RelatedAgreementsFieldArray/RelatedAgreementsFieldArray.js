@@ -96,6 +96,7 @@ class RelatedAgreementsFieldArray extends React.Component {
           name={`${this.props.name}[${index}].agreement`}
           onAgreementSelected={selectedAgreement => this.handleAgreementSelected(index, selectedAgreement)}
           parentAgreementId={this.props.currentAgreementId}
+          parentAgreementName={this.props.currentAgreementName}
           validate={composeValidators(
             requiredValidator,
             this.validateSelfLinking,

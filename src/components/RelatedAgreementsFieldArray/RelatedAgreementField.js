@@ -42,6 +42,7 @@ const propTypes = {
   }).isRequired,
   onAgreementSelected: PropTypes.func.isRequired,
   parentAgreementId: PropTypes.string,
+  parentAgreementName: PropTypes.string,
 };
 export default function RelatedAgreementField({
   agreement,
@@ -50,6 +51,7 @@ export default function RelatedAgreementField({
   meta,
   onAgreementSelected,
   parentAgreementId,
+  parentAgreementName,
 }) {
   let triggerButton = useRef(null);
 
@@ -165,16 +167,19 @@ export default function RelatedAgreementField({
             <FormattedMessage id="ui-agreements.relatedAgreements.noneLinked" />
           </strong>
         </Layout>
-        { agreementRemoved &&
-        <MessageBanner
-          dismissable
-          type="error"
-        >
-          <FormattedMessage id="ui-agreements.relatedAgreements.linkToParentError" values={{ agreement: agreement.name }} />
-        </MessageBanner> }
         <Layout className="textCentered">
           <FormattedMessage id="ui-agreements.relatedAgreements.linkToStart" />
         </Layout>
+        { agreementRemoved &&
+        <Layout className="padding-top-gutter">
+          <MessageBanner
+            dismissable
+            onExited={() => setAgreementRemoved(false)}
+            type="error"
+          >
+            <FormattedMessage id="ui-agreements.relatedAgreements.linkToParentError" values={{ agreement: parentAgreementName }} />
+          </MessageBanner>
+        </Layout> }
       </div>
     );
   };
