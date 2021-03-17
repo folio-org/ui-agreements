@@ -1,5 +1,6 @@
-import React, { useEffect, useForm, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useForm } from 'react-final-form';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -9,6 +10,7 @@ import {
   FormattedUTCDate,
   KeyValue,
   Layout,
+  MessageBanner,
   NoValue,
   Row,
   Tooltip,
@@ -19,16 +21,6 @@ import { urls } from '../utilities';
 import css from '../styles.css';
 
 const propTypes = {
-  id: PropTypes.string,
-  input: PropTypes.shape({
-    name: PropTypes.string,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  }).isRequired,
-  meta: PropTypes.shape({
-    error: PropTypes.node,
-    touched: PropTypes.bool,
-  }).isRequired,
-  onAgreementSelected: PropTypes.func.isRequired,
   agreement: PropTypes.shape({
     agreementStatus: PropTypes.shape({
       label: PropTypes.string
@@ -39,21 +31,44 @@ const propTypes = {
     label: PropTypes.string,
     startDate: PropTypes.string,
   }),
+  id: PropTypes.string,
+  input: PropTypes.shape({
+    name: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  }).isRequired,
+  meta: PropTypes.shape({
+    error: PropTypes.node,
+    touched: PropTypes.bool,
+  }).isRequired,
+  onAgreementSelected: PropTypes.func.isRequired,
+  parentAgreementId: PropTypes.string,
 };
 export default function RelatedAgreementField({
+  agreement,
   id,
   input,
   meta,
   onAgreementSelected,
-  agreement,
+  parentAgreementId,
 }) {
   let triggerButton = useRef(null);
+
+  const { change } = useForm();
+
+  const [agreementRemoved, setAgreementRemoved] = useState(false);
 
   useEffect(() => {
     if (!input.value.id && triggerButton.current) {
       triggerButton.current.focus();
     }
   });
+
+  useEffect(() => {
+    if (parentAgreementId === input.value?.id) {
+      change(input.name, undefined);
+      setAgreementRemoved(true);
+    }
+  }, [change, input, parentAgreementId]);
 
   const renderLinkAgreementButton = value => {
     const name = input.name;
@@ -150,6 +165,13 @@ export default function RelatedAgreementField({
             <FormattedMessage id="ui-agreements.relatedAgreements.noneLinked" />
           </strong>
         </Layout>
+        { agreementRemoved &&
+        <MessageBanner
+          dismissable
+          type="error"
+        >
+          <FormattedMessage id="ui-agreements.relatedAgreements.linkToParentError" values={{ agreement: agreement.name }} />
+        </MessageBanner> }
         <Layout className="textCentered">
           <FormattedMessage id="ui-agreements.relatedAgreements.linkToStart" />
         </Layout>
@@ -164,6 +186,8 @@ export default function RelatedAgreementField({
       </strong>
     </Layout>
   );
+
+  console.log('agreementRemoved: ', agreementRemoved);
 
   return (
     <Card
