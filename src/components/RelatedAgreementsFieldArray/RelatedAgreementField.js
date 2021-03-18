@@ -127,6 +127,9 @@ export default function RelatedAgreementField({
   };
 
   const renderAgreement = () => {
+    if (parentAgreementId !== input.value?.id) {
+      setAgreementRemoved(false);
+    }
     return (
       <div>
         <Link
