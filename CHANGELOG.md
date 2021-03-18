@@ -1,5 +1,7 @@
 # Change history for ui-agreements
 
+## 6.1.0 In progress
+
 ##  6.0.0 2021-03-18
 * Purchase Order Line details not retrieved from /orders/order-lines for Entitlement. ERM-1606
 * Update displayName for ui-agreements.platforms.X permissions. ERM-1592
