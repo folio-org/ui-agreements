@@ -153,6 +153,7 @@
       {
         "permissionName": "ui-agreements.resources.view",
         "displayName": "Agreements: Search & view e-resources",
+        "description": "A user with this permission can search and view e-resources (packages and titles in those packages) in the internal KB. This includes the permission to see and access the Agreement app in the Folio interface",
         "visible": true,
         "subPermissions": [
           "module.agreements.enabled",
@@ -165,6 +166,7 @@
       {
         "permissionName": "ui-agreements.platforms.view",
         "displayName": "Agreements: Search & view platforms",
+        "description": "A user with this permission can search and view platforms in the internal KB. This includes the permission to see and access the Agreement app in the Folio interface",
         "visible": true,
         "subPermissions": [
           "module.agreements.enabled",
@@ -174,6 +176,7 @@
       {
         "permissionName": "ui-agreements.platforms.edit",
         "displayName": "Agreements: Edit platforms",
+        "description": "Grants all permissions included in 'Platforms: Search & view platforms' plus the ability to edit platform properties",
         "visible": true,
         "subPermissions": [
           "erm.platforms.edit",
@@ -183,6 +186,7 @@
       {
         "permissionName": "ui-agreements.resources.edit",
         "displayName": "Agreements: Edit e-resources",
+        "description": "Grants all permissions included in 'Agreements: Search & view e-resources' plus the ability to edit the e-resources",
         "visible": true,
         "subPermissions": [
           "erm.pci.edit",
@@ -194,6 +198,7 @@
       {
         "permissionName": "ui-agreements.agreements.view",
         "displayName": "Agreements: Search & view agreements",
+        "description": "A user with this permission can search and view existing agreements. This includes the permission to see and access the Agreement app in the Folio interface",
         "visible": true,
         "subPermissions": [
           "module.agreements.enabled",
@@ -208,6 +213,7 @@
       {
         "permissionName": "ui-agreements.agreements.edit",
         "displayName": "Agreements: Edit agreements",
+        "description": "Grants all permissions included in 'Agreements: Search & view agreements' plus the ability to edit agreements, including the ability to add and edit agreement lines, documents and view, add and edit tags on an agreement",
         "visible": true,
         "subPermissions": [
           "ui-agreements.agreements.view",
@@ -220,6 +226,7 @@
       {
         "permissionName": "ui-agreements.agreements.delete",
         "displayName": "Agreements: Delete agreements",
+        "description": "Grants all permissions included in 'Agreements: Search & view agreements' plus the ability to delete agreements. This does not include the ability to edit agreements, only to delete them",
         "visible": true,
         "subPermissions": [
           "ui-agreements.agreements.view",
@@ -238,6 +245,7 @@
       {
         "permissionName": "ui-agreements.generalSettings.manage",
         "displayName": "Settings (Agreements): Can view and edit general settings",
+        "description": "Grants permission to view and edit the general Agreements settings",
         "visible": true,
         "subPermissions": [
           "settings.agreements.enabled"
@@ -246,6 +254,7 @@
       {
         "permissionName": "ui-agreements.picklists.manage",
         "displayName": "Settings (Agreements): Manage pick lists and values",
+        "description": "Grants all permissions included in 'Settings (Agreements): Can view and edit general settings' plus the ability to manage pick lists and pick list values",
         "visible": true,
         "subPermissions": [
           "settings.agreements.enabled",
@@ -255,6 +264,7 @@
       {
         "permissionName": "ui-agreements.supplementaryProperties.manage",
         "displayName": "Settings (Agreements): Manage agreement supplementary properties",
+        "description": "Grants all permissions included in 'Settings (Agreements): Can view and edit general settings' plus the ability to manage the available supplementary properties",
         "visible": true,
         "subPermissions": [
           "settings.agreements.enabled",
