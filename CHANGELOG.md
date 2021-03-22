@@ -1,16 +1,82 @@
 # Change history for ui-agreements
 
-##  6.0.0 IN PROGRESS
-* Added optionalOkapiInterfaces to package.json. ERM-940
-* Rename instance-bulk to inventory-record-bulk. UIIN-1368
-* Upgrade to Stripes 6.0
+## 6.1.0 In progress
+
+##  6.0.0 2021-03-18
+* Purchase Order Line details not retrieved from /orders/order-lines for Entitlement. ERM-1606
+* Update displayName for ui-agreements.platforms.X permissions. ERM-1592
+* License and business terms accordion should only display when there is a Controlling license. ERM-1578
+* When displaying Interfaces for organisations in an Agreement full details are only retrieved for 10. ERM-1559
+* Update stripes-cli to v2. ERM-1550
+* Support order-lines 2.0 interface. ERM-1549
+* Add tag search to eresources search and sort. ERM-1544
+* Added conditional rendering of accordions in Agreement view. ERM-1537
+* Tweaked display to highlight current/next/previous period ERM-1534
+* Agreement start and end dates should be the earliest period start and latest period end date respectively ERM-1533
 * Refactored AgreementFilters to functional component, added date filter. ERM-1532
 * Changed Other Periods accordion to All Periods ERM-1531
-* Tweaked display to highlight current/next/previous period ERM-1534
-* Modify keyboard shortcuts, use handlers from stripes-components, stripes-erm-components
-* Support order-lines 2.0 interface. ERM-1549
-* Added conditional rendering of accordions in Agreement view. ERM-1537
+* Update on screen text on Agreements settings page ERM-1527
+* Actions on the Agreement pane cause the fixed panel to become transparent ERM-1464
+* New shortcut key | Duplicate a record. ERM-1458
+* Error on viewing a URL Customiser. ERM-1456
+* Add Discovery Settings accordion for "Suppress from discovery" information to Title Instance, PCI and Agreement Line display. ERM-1250
+* Incorrect message on PCI screen. ERM-1236
+* Add POL/Inventory Instance details to Agreement Line display. ERM-1228
+* Platform: Action button should not show if user would see no options in Action dropdown. ERM-1225
+* Removing content of "Local platform code" and saving should result in empty platform code. ERM-1224
+* Agreement lines from previous agreement show when switching to view another agreement. ERM-1223
+* Agreements > Platforms: "search" keyboard shortcut does not work. ERM-1219
+* Incorrect error message is displayed when the user deletes a supplementary property which is in use on an agreement. ERM-1218
+* Setup RTL test infrastructure. ERM-1216
+* Dropdowns do not display values when editing Agreements. ERM-1206
+* Agreement lines do not display correctly in Agreement edit view. ERM-1205
+* Add UI settings to control the number of items displayed in Agreements MCLs. ERM-1190
+* Add FOLIO keyboard shortcuts to Agreements-Platforms. ERM-1186 
+* Add "Edit" screen for title instance resources. ERM-1184
+* Support user access to platform records. ERM-1156
+* Add FOLIO keyboard shortcuts to Agreements. ERM-1151
+* E-resources covered by this agreement: Link to PCI instead of TI. ERM-1148
+* Apply a four column layout to the Agreement preview pane. ERM-1137
+* Support for e-resource proxies and url customisers ERM-1102
+  * UI for managing proxy server configurations. ERM-1109
+  * UIs for managing proxy url and customiser url configurations from the Platform context. ERM-1194
+* Added optionalOkapiInterfaces to package.json. ERM-940
 * Removed edit button in agreements detail view. ERM-693
+* UI tests replacement with RTL/Jest FAT-81
+  * AgreementsRoute ERM-1473
+  * MCLPaginationFields ERM-1460
+  * NoPermissions ERM-1281
+  * IfEResourcesEnabled ERM-1277
+  * FolioLink ERM-1276
+  * EntitlementsAgreementsList ERM-1275
+  * EResourceSections ERM-1274
+    * PackageInfo.js ERM-1395
+    * PackageContents.js ERM-1394
+    * PCIInfo.js ERM-1393
+    * PCIFormInfo.js ERM-1392
+    * PCIFormCoverage.js ERM-1391
+    * PCICoverage.js ERM-1390
+    * Agreements.js ERM-1389
+    * AcquisitionOptions.js ERM-1388
+  * EResourceProvider ERM-1273
+  * EResourceLink ERM-1272
+  * EResourceKB ERM-1271
+  * EResourceIdentifier ERM-1270
+  * EResourceCount ERM-1268
+  * DuplicateAgreementModal ERM-1267
+  * CustomCoverageIcon ERM-1266
+  * CoverageFieldArray ERM-1265
+  * Coverage ERM-1264
+    * CoverageFieldArray.js ERM-1387
+    * CoverageField.js ERM-1386
+    * MonographCoverage.js ERM-1385
+    * Coverage.js ERM-1384
+  * BasketSelector ERM-1263
+  * BasketList ERM-1262
+  * AddToBasketButton ERM-1256
+* Upgrade to Stripes 6.0
+* Modify keyboard shortcuts, use handlers from stripes-components, stripes-erm-components
+* Rename instance-bulk to inventory-record-bulk. UIIN-1368
 ##  5.0.1 2020-11-05
 * Added permission check when displaying the add agreement line button. ERM-1197
 * Fixes bug where incorrect Dates are saved when tenant timezone is ahead of UTC. ERM-1202
