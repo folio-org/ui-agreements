@@ -53,11 +53,11 @@ export default function RelatedAgreementField({
   parentAgreementId,
   parentAgreementName,
 }) {
+  const [selfLinked, setSelfLinked] = useState(false);
+
   let triggerButton = useRef(null);
 
   const { change } = useForm();
-
-  const [agreementRemoved, setAgreementRemoved] = useState(false);
 
   useEffect(() => {
     if (!input.value.id && triggerButton.current) {
@@ -66,15 +66,16 @@ export default function RelatedAgreementField({
   });
 
   useEffect(() => {
-    if (parentAgreementId === input.value?.id) {
+    if (parentAgreementId === input.value?.id && !selfLinked) {
       change(input.name, undefined);
-      setAgreementRemoved(true);
+      setSelfLinked(true);
+    } else if (input.value && parentAgreementId !== input.value?.id && selfLinked) {
+      setSelfLinked(false);
     }
-  }, [change, input, parentAgreementId]);
+  }, [change, input, parentAgreementId, selfLinked, setSelfLinked]);
 
   const renderLinkAgreementButton = value => {
     const name = input.name;
-
     return (
       <Pluggable
         dataKey={id}
@@ -127,9 +128,6 @@ export default function RelatedAgreementField({
   };
 
   const renderAgreement = () => {
-    if (parentAgreementId !== input.value?.id) {
-      setAgreementRemoved(false);
-    }
     return (
       <div>
         <Link
@@ -173,11 +171,11 @@ export default function RelatedAgreementField({
         <Layout className="textCentered">
           <FormattedMessage id="ui-agreements.relatedAgreements.linkToStart" />
         </Layout>
-        { agreementRemoved &&
+        { selfLinked &&
         <Layout className="padding-top-gutter">
           <MessageBanner
             dismissable
-            onExited={() => setAgreementRemoved(false)}
+            onExited={() => setSelfLinked(false)}
             type="error"
           >
             <FormattedMessage id="ui-agreements.relatedAgreements.linkToParentError" values={{ agreement: parentAgreementName }} />
@@ -194,8 +192,6 @@ export default function RelatedAgreementField({
       </strong>
     </Layout>
   );
-
-  console.log('agreementRemoved: ', agreementRemoved);
 
   return (
     <Card
