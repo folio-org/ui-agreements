@@ -6,7 +6,6 @@ import { NoteEditPage } from '@folio/stripes/smart-components';
 
 import {
   formatNoteReferrerEntityData,
-  urls,
 } from '../components/utilities';
 
 import {
@@ -25,24 +24,19 @@ export default class NoteEditRoute extends Component {
     }).isRequired,
   };
 
-  goToNoteView = () => {
-    const { history, location, match } = this.props;
-
-    history.replace({
-      pathname: urls.noteView(match.params.id),
-      state: location.state,
-    });
-  }
-
   render() {
-    const { location, match } = this.props;
+    const {
+      location,
+      match,
+      history,
+    } = this.props;
 
     return (
       <NoteEditPage
         domain="agreements"
         entityTypePluralizedTranslationKeys={entityTypePluralizedTranslationKeys}
         entityTypeTranslationKeys={entityTypeTranslationKeys}
-        navigateBack={this.goToNoteView}
+        navigateBack={history.goBack}
         noteId={match.params.id}
         paneHeaderAppIcon="agreement"
         referredEntityData={formatNoteReferrerEntityData(location.state)}

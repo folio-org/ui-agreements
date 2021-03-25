@@ -1,6 +1,7 @@
 # Change history for ui-agreements
 
 ## 6.1.0 In progress
+* Fix Note Edit Page - doesn't return to record page after click on 'Save&Close'. UIU-2087
 
 ##  6.0.0 2021-03-18
 * Purchase Order Line details not retrieved from /orders/order-lines for Entitlement. ERM-1606
