@@ -545,6 +545,6 @@
     "agreementPeriods.allPeriods": "Todos os períodos",
     "settings.general.displaySuppressFromDiscovery.titlesInPackages": "Títulos nos pacotes",
     "settings.general.displaySuppressFromDiscovery.titles": "Títulos",
-    "settings.tabularList.pagination": "<strong>Tabular list pagination</strong>",
-    "settings.tabularList": "<strong>Tabular list</strong>"
+    "settings.tabularList.pagination": "<strong>Paginação de lista tabular</strong>",
+    "settings.tabularList": "<strong>Lista tabular</strong>"
 }
