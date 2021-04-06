@@ -130,7 +130,7 @@
     "agreementLines.customCoverageTitle": "Cobertura personalizada # {number}",
     "errors.endDateGreaterThanStartDate": "La fecha de finalización debe ser posterior a la fecha de inicio.",
     "errors.multipleOpenEndedCoverages": "No se pueden tener múltiples declaraciones de cobertura abiertas.",
-    "errors.overlappingCoverage": "Las siguientes coberturas tienen fechas superpuestas: {coverages}",
+    "errors.overlappingCoverage": "Las siguientes coberturas tienen fechas superpuestas: {fields}",
     "identifier.doi": "DOI",
     "identifier.eissn": "ISSN (en línea)",
     "identifier.ezb": "EZB",

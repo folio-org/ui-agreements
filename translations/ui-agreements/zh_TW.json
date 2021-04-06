@@ -130,7 +130,7 @@
     "agreementLines.customCoverageTitle": "自定收錄範圍 {number}",
     "errors.endDateGreaterThanStartDate": "結束日期 必須在 開始日期 之後。",
     "errors.multipleOpenEndedCoverages": "不能有多个开放式收录范围说明。",
-    "errors.overlappingCoverage": "以下數錄範圍的日期重叠： {coverages}",
+    "errors.overlappingCoverage": "以下數錄範圍的日期重叠： {fields}",
     "identifier.doi": "DOI",
     "identifier.eissn": "國際標準期刊號（電子期刊）",
     "identifier.ezb": "EZB",
