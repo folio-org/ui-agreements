@@ -148,12 +148,14 @@ const Agreements = ({
                           >
                             <FormattedMessage id="ui-agreements.agreements" />
                           </Button>
-                          <Button
-                            id="clickable-nav-eresources"
-                            to={urls.eresources()}
-                          >
-                            <FormattedMessage id="ui-agreements.eresources" />
-                          </Button>
+                          <IfPermission perm="ui-agreements.resources.view">
+                            <Button
+                              id="clickable-nav-eresources"
+                              to={urls.eresources()}
+                            >
+                              <FormattedMessage id="ui-agreements.eresources" />
+                            </Button>
+                          </IfPermission>
                           <Button
                             id="clickable-nav-platforms"
                             to={urls.platforms()}
