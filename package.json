@@ -160,7 +160,8 @@
           "erm.packages.view",
           "erm.titles.view",
           "erm.resources.view",
-          "erm.pci.view"
+          "erm.pci.view",
+          "ui-agreements.agreements.view"
         ]
       },
       {
@@ -170,7 +171,8 @@
         "visible": true,
         "subPermissions": [
           "module.agreements.enabled",
-          "erm.platforms.view"
+          "erm.platforms.view",
+          "ui-agreements.resources.view"
         ]
       },
       {
