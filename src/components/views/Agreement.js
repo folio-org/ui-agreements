@@ -20,7 +20,7 @@ import {
   collapseAllSections,
   expandAllSections
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission, TitleManager, withStripes } from '@folio/stripes/core';
+import { AppIcon, IfPermission, TitleManager, withStripes, Pluggable } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import DuplicateAgreementModal from '../DuplicateAgreementModal';
@@ -305,6 +305,7 @@ class Agreement extends React.Component {
                   { data.agreement?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} /> }
                   { data.agreement?.usageDataProviders?.length > 0 && <UsageData {...this.getSectionProps('usageData')} /> }
                   { data.agreement?.relatedAgreements?.length > 0 && <RelatedAgreements {...this.getSectionProps('relatedAgreements')} /> }
+                  <Pluggable type="eusage-reports" id="eusage-reports" />
                   <NotesSmartAccordion
                     {...this.getSectionProps('notes')}
                     domainName="agreements"
