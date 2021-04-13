@@ -44,7 +44,7 @@ const propTypes = {
   parentAgreementId: PropTypes.string,
   parentAgreementName: PropTypes.string,
 };
-export default function RelatedAgreementField({
+const RelatedAgreementField = ({
   agreement,
   id,
   input,
@@ -52,27 +52,27 @@ export default function RelatedAgreementField({
   onAgreementSelected,
   parentAgreementId,
   parentAgreementName,
-}) {
-  const [selfLinked, setSelfLinked] = useState(false);
+}) => {
+  const [selfLinkedWarning, setSelfLinkedWarning] = useState(false);
 
   let triggerButton = useRef(null);
 
   const { change } = useForm();
 
   useEffect(() => {
-    if (!input.value.id && triggerButton.current) {
+    if (!input.value?.id && triggerButton.current) {
       triggerButton.current.focus();
     }
-  });
+  }, [input, triggerButton]);
 
   useEffect(() => {
-    if (parentAgreementId === input.value?.id && !selfLinked) {
+    if (parentAgreementId === input.value?.id && !selfLinkedWarning) {
       change(input.name, undefined);
-      setSelfLinked(true);
-    } else if (input.value && parentAgreementId !== input.value?.id && selfLinked) {
-      setSelfLinked(false);
+      setSelfLinkedWarning(true);
+    } else if (input.value && parentAgreementId !== input.value?.id && selfLinkedWarning) {
+      setSelfLinkedWarning(false);
     }
-  }, [change, input, parentAgreementId, selfLinked, setSelfLinked]);
+  }, [change, input, parentAgreementId, selfLinkedWarning, setSelfLinkedWarning]);
 
   const renderLinkAgreementButton = value => {
     const name = input.name;
@@ -83,7 +83,7 @@ export default function RelatedAgreementField({
         renderTrigger={(pluggableRenderProps) => {
           triggerButton = pluggableRenderProps.buttonRef;
 
-          const agreementName = agreement.name;
+          const agreementName = agreement?.name;
           const buttonProps = {
             'aria-haspopup': 'true',
             'buttonRef': triggerButton,
@@ -127,63 +127,59 @@ export default function RelatedAgreementField({
     );
   };
 
-  const renderAgreement = () => {
-    return (
-      <div>
-        <Link
-          data-test-agreement-card-name
-          to={urls.agreementView(agreement.id)}
-        >
-          {agreement.name}
-        </Link>
-        <Row>
-          <Col md={4} xs={6}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
-              value={agreement.startDate ? <FormattedUTCDate value={agreement.startDate} /> : <NoValue />}
-            />
-          </Col>
-          <Col md={4} xs={6}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
-              value={agreement.endDate ? <FormattedUTCDate value={agreement.endDate} /> : <NoValue />}
-            />
-          </Col>
-          <Col md={4} xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
-              value={agreement?.agreementStatus?.label ?? <NoValue />}
-            />
-          </Col>
-        </Row>
-      </div>
-    );
-  };
+  const renderAgreement = () => (
+    <div>
+      <Link
+        data-test-agreement-card-name
+        to={urls.agreementView(agreement.id)}
+      >
+        {agreement.name}
+      </Link>
+      <Row>
+        <Col md={4} xs={6}>
+          <KeyValue
+            label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
+            value={agreement.startDate ? <FormattedUTCDate value={agreement.startDate} /> : <NoValue />}
+          />
+        </Col>
+        <Col md={4} xs={6}>
+          <KeyValue
+            label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
+            value={agreement.endDate ? <FormattedUTCDate value={agreement.endDate} /> : <NoValue />}
+          />
+        </Col>
+        <Col md={4} xs={12}>
+          <KeyValue
+            label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
+            value={agreement?.agreementStatus?.label ?? <NoValue />}
+          />
+        </Col>
+      </Row>
+    </div>
+  );
 
-  const renderEmpty = () => {
-    return (
-      <div>
-        <Layout className="textCentered">
-          <strong>
-            <FormattedMessage id="ui-agreements.relatedAgreements.noneLinked" />
-          </strong>
-        </Layout>
-        <Layout className="textCentered">
-          <FormattedMessage id="ui-agreements.relatedAgreements.linkToStart" />
-        </Layout>
-        { selfLinked &&
+  const renderEmpty = () => (
+    <div>
+      <Layout className="textCentered">
+        <strong>
+          <FormattedMessage id="ui-agreements.relatedAgreements.noneLinked" />
+        </strong>
+      </Layout>
+      <Layout className="textCentered">
+        <FormattedMessage id="ui-agreements.relatedAgreements.linkToStart" />
+      </Layout>
+      { selfLinkedWarning &&
         <Layout className="padding-top-gutter">
           <MessageBanner
             dismissable
-            onExited={() => setSelfLinked(false)}
+            onExited={() => setSelfLinkedWarning(false)}
             type="error"
           >
             <FormattedMessage id="ui-agreements.relatedAgreements.linkToParentError" values={{ agreement: parentAgreementName }} />
           </MessageBanner>
         </Layout> }
-      </div>
-    );
-  };
+    </div>
+  );
 
   const renderError = () => (
     <Layout className={`textCentered ${css.error}`}>
@@ -211,10 +207,11 @@ export default function RelatedAgreementField({
       {meta.touched && meta.error ? renderError() : null}
     </Card>
   );
-}
+};
 
 RelatedAgreementField.propTypes = propTypes;
 RelatedAgreementField.defaultProps = {
   agreement: {},
 };
+export default RelatedAgreementField;
 
