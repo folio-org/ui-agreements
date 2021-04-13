@@ -69,63 +69,61 @@ const RelatedAgreementField = ({
     if (parentAgreementId === input.value?.id && !selfLinkedWarning) {
       change(input.name, undefined);
       setSelfLinkedWarning(true);
-    } else if (input.value && parentAgreementId !== input.value?.id && selfLinkedWarning) {
+    }
+    if (input.value && parentAgreementId !== input.value?.id && selfLinkedWarning) {
       setSelfLinkedWarning(false);
     }
   }, [change, input, parentAgreementId, selfLinkedWarning, setSelfLinkedWarning]);
 
-  const renderLinkAgreementButton = value => {
-    const name = input.name;
-    return (
-      <Pluggable
-        dataKey={id}
-        onAgreementSelected={onAgreementSelected}
-        renderTrigger={(pluggableRenderProps) => {
-          triggerButton = pluggableRenderProps.buttonRef;
+  const renderLinkAgreementButton = value => (
+    <Pluggable
+      dataKey={id}
+      onAgreementSelected={onAgreementSelected}
+      renderTrigger={(pluggableRenderProps) => {
+        triggerButton = pluggableRenderProps.buttonRef;
 
-          const agreementName = agreement?.name;
-          const buttonProps = {
-            'aria-haspopup': 'true',
-            'buttonRef': triggerButton,
-            'buttonStyle': value ? 'default' : 'primary',
-            'id': `${id}-find-agreement-btn`,
-            'marginBottom0': true,
-            'name': name,
-            'onClick': pluggableRenderProps.onClick
-          };
+        const agreementName = agreement?.name;
+        const buttonProps = {
+          'aria-haspopup': 'true',
+          'buttonRef': triggerButton,
+          'buttonStyle': value ? 'default' : 'primary',
+          'id': `${id}-find-agreement-btn`,
+          'marginBottom0': true,
+          'name': input.name,
+          'onClick': pluggableRenderProps.onClick
+        };
 
-          if (value) {
-            return (
-              <Tooltip
-                id={`${id}-license-button-tooltip`}
-                text={<FormattedMessage id="ui-agreements.relatedAgreements.replaceAgreementSpecific" values={{ agreementName }} />}
-                triggerRef={triggerButton}
-              >
-                {({ ariaIds }) => (
-                  <Button
-                    aria-labelledby={ariaIds.text}
-                    {...buttonProps}
-                  >
-                    <FormattedMessage id="ui-agreements.relatedAgreements.replaceAgreement" />
-                  </Button>
-                )}
-              </Tooltip>
-            );
-          }
+        if (value) {
           return (
-            <Button
-              {...buttonProps}
+            <Tooltip
+              id={`${id}-license-button-tooltip`}
+              text={<FormattedMessage id="ui-agreements.relatedAgreements.replaceAgreementSpecific" values={{ agreementName }} />}
+              triggerRef={triggerButton}
             >
-              <FormattedMessage id="ui-agreements.relatedAgreements.linkAgreement" />
-            </Button>
+              {({ ariaIds }) => (
+                <Button
+                  aria-labelledby={ariaIds.text}
+                  {...buttonProps}
+                >
+                  <FormattedMessage id="ui-agreements.relatedAgreements.replaceAgreement" />
+                </Button>
+              )}
+            </Tooltip>
           );
-        }}
-        type="find-agreement"
-      >
-        <FormattedMessage id="ui-agreements.relatedAgreements.noPlugin" />
-      </Pluggable>
-    );
-  };
+        }
+        return (
+          <Button
+            {...buttonProps}
+          >
+            <FormattedMessage id="ui-agreements.relatedAgreements.linkAgreement" />
+          </Button>
+        );
+      }}
+      type="find-agreement"
+    >
+      <FormattedMessage id="ui-agreements.relatedAgreements.noPlugin" />
+    </Pluggable>
+  );
 
   const renderAgreement = () => (
     <div>
