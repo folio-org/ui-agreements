@@ -504,6 +504,7 @@
   "relatedAgreements.addRelatedAgreement": "Add related agreement",
   "relatedAgreements.agreementHasNone": "No related agreements for this agreement",
   "relatedAgreements.linkAgreement": "Link agreement",
+  "relatedAgreements.linkToParentError": "<strong>Error:</strong> Agreement \"{agreement}\" was not linked because an agreement cannot be linked to itself.",
   "relatedAgreements.linkToStart": "Link an agreement to get started",
   "relatedAgreements.noneLinked": "No agreement linked",
   "relatedAgreements.noPlugin": "No \"find-agreement\" plugin is installed",
