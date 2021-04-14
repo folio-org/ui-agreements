@@ -305,7 +305,7 @@ class Agreement extends React.Component {
                   { data.agreement?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} /> }
                   { data.agreement?.usageDataProviders?.length > 0 && <UsageData {...this.getSectionProps('usageData')} /> }
                   { data.agreement?.relatedAgreements?.length > 0 && <RelatedAgreements {...this.getSectionProps('relatedAgreements')} /> }
-                  <Pluggable id="eusage-reports" type="eusage-reports" />
+                  <Pluggable type="ui-agreements-extension" />
                   <NotesSmartAccordion
                     {...this.getSectionProps('notes')}
                     domainName="agreements"
