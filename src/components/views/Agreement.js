@@ -203,7 +203,7 @@ class Agreement extends React.Component {
     } = this.props;
 
     return (
-      <IfPermission perm="ui-agreements.agreements.edit">
+      <IfPermission perm="ui-agreements.agreements.view">
         <PaneMenu>
           {handlers.onToggleTags &&
             <FormattedMessage id="ui-agreements.agreements.showTags">
