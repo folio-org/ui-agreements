@@ -153,24 +153,26 @@
       {
         "permissionName": "ui-agreements.resources.view",
         "displayName": "Agreements: Search & view e-resources",
-        "description": "A user with this permission can search and view e-resources (packages and titles in those packages) in the internal KB. This includes the permission to see and access the Agreement app in the Folio interface",
+        "description": "Grants all permissions included in 'Agreements: Search & view agreements' plus the ability to search and view e-resources (packages and titles in those packages) in the internal KB.",
         "visible": true,
         "subPermissions": [
           "module.agreements.enabled",
           "erm.packages.view",
           "erm.titles.view",
           "erm.resources.view",
-          "erm.pci.view"
+          "erm.pci.view",
+          "ui-agreements.agreements.view"
         ]
       },
       {
         "permissionName": "ui-agreements.platforms.view",
         "displayName": "Agreements: Search & view platforms",
-        "description": "A user with this permission can search and view platforms in the internal KB. This includes the permission to see and access the Agreement app in the Folio interface",
+        "description": "Grants all permissions included in 'Agreements: Search & view e-resources' plus the ability to search and view platforms in the internal KB",
         "visible": true,
         "subPermissions": [
           "module.agreements.enabled",
-          "erm.platforms.view"
+          "erm.platforms.view",
+          "ui-agreements.resources.view"
         ]
       },
       {
