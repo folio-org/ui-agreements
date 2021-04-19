@@ -200,27 +200,25 @@ class Agreement extends React.Component {
     const {
       data: { agreement },
       handlers,
+      stripes
     } = this.props;
-
-    return (
-      <IfPermission perm="ui-agreements.agreements.view">
-        <PaneMenu>
-          {handlers.onToggleTags &&
-            <FormattedMessage id="ui-agreements.agreements.showTags">
-              {ariaLabel => (
-                <IconButton
-                  ariaLabel={ariaLabel}
-                  badgeCount={agreement?.tags?.length ?? 0}
-                  icon="tag"
-                  id="clickable-show-tags"
-                  onClick={handlers.onToggleTags}
-                />
-              )}
-            </FormattedMessage>
-          }
-        </PaneMenu>
-      </IfPermission>
-    );
+    return stripes.hasPerm('ui-agreements.agreements.edit') ? (
+      <PaneMenu>
+        {handlers.onToggleTags &&
+        <FormattedMessage id="ui-agreements.agreements.showTags">
+          {ariaLabel => (
+            <IconButton
+              ariaLabel={ariaLabel}
+              badgeCount={agreement?.tags?.length ?? 0}
+              icon="tag"
+              id="clickable-show-tags"
+              onClick={handlers.onToggleTags}
+            />
+          )}
+        </FormattedMessage>
+        }
+      </PaneMenu>
+    ): null;
   }
 
   render() {
