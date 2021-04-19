@@ -11,6 +11,7 @@ import {
 } from '@folio/stripes/components';
 
 import css from './index.css';
+import setUpRegistry from './setUpRegistry';
 
 const AgreementsRoute = lazy(() => import('./routes/AgreementsRoute'));
 const AgreementCreateRoute = lazy(() => import('./routes/AgreementCreateRoute'));
@@ -43,6 +44,9 @@ const IfEResourcesEnabled = lazy(() => import('./components/IfEResourcesEnabled'
 const OpenBasketButton = lazy(() => import('./components/OpenBasketButton'));
 
 const Settings = lazy(() => import('./settings'));
+
+// DO THIS BEFORE APP
+setUpRegistry();
 
 class App extends React.Component {
   static propTypes = {
