@@ -21,7 +21,7 @@ import { urls } from './components/utilities';
 
 // This must return a function to render a link button
 
-const AgreementLookupComponent = ({id, input: { name, value }, onResourceSelected, resource }) => {
+const AgreementLookupComponent = ({ disabled, id, input: { name, value }, onResourceSelected, resource }) => {
   let triggerButton = useRef(null);
 
   const renderAgreementLinkButton = (v) => (
@@ -36,6 +36,7 @@ const AgreementLookupComponent = ({id, input: { name, value }, onResourceSelecte
           'aria-haspopup': 'true',
           'buttonRef': triggerButton,
           'buttonStyle': v ? 'default' : 'primary',
+          'disabled': disabled,
           'id': `${id}-find-agreement-btn`,
           'marginBottom0': true,
           'name': name,
