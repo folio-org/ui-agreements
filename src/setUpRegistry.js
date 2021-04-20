@@ -1,16 +1,13 @@
-import React, { useRef } from 'react';
-import { FormattedMessage } from 'react-intl';
+import React from 'react';
 
 import Registry from '@folio/plugin-resource-registry';
 
 import {
-  Button,
   FormattedUTCDate,
   NoValue,
-  Tooltip
 } from '@folio/stripes/components';
 
-import { Pluggable } from '@folio/stripes/core';
+import RegistryLookup from './RegistryLookup';
 
 const setUpRegistry = () => {
   const registry = Registry;
@@ -27,57 +24,7 @@ const setUpRegistry = () => {
   });
 
   // Lookup plugin
-
-  const createLookupButton = ({ id, input: { name }, onLicenseSelected }) => {
-    return (value) => (
-      <Pluggable
-        dataKey={id}
-        onLicenseSelected={onLicenseSelected}
-        renderTrigger={(props) => {
-          this.triggerButton = props.buttonRef;
-
-          const buttonProps = {
-            'buttonStyle': value ? 'default' : 'primary',
-            'buttonRef': this.triggerButton,
-            'id': `${id}-find-license-btn`,
-            'marginBottom0': true,
-            'name': name,
-            'onClick': props.onClick
-          };
-
-          if (value) {
-            return (
-              <Tooltip
-                id={`${this.props.id}-license-button-tooltip`}
-                text={<FormattedMessage id="ui-agreements.license.replaceLicenseSpecific" values={{ licenseName: get(this.props.license, 'name') }} />}
-                triggerRef={this.triggerButton}
-              >
-                {({ ariaIds }) => (
-                  <Button
-                    aria-labelledby={ariaIds.text}
-                    {...buttonProps}
-                  >
-                    <FormattedMessage id="ui-agreements.license.replaceLicense" />
-                  </Button>
-                )}
-              </Tooltip>
-            );
-          }
-
-          return (
-            <Button
-              {...buttonProps}
-            >
-              <FormattedMessage id="ui-agreements.license.linkLicense" />
-            </Button>
-          );
-        }}
-        type="find-license"
-      >
-        <FormattedMessage id="ui-agreements.license.noFindLicensePlugin" />
-      </Pluggable>
-    );
-  };
+  agreementReg.addLookupComponent(RegistryLookup);
 
   // AgreementLine Resource
   const aglReg = registry.registerResource('agreementLine');
