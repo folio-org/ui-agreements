@@ -42,7 +42,7 @@
     "eresources.jusp": "JUSP",
     "eresources.erAgreements": "이 전자자원에 대한 계약",
     "eresources.agreementStatus": "계약 상태",
-    "eresources.acqOptions": "전자자원 수서 옵션 : {name}",
+    "eresources.acqOptions": "Options for acquiring e-resource",
     "eresources.addPackage": "패키지 추가",
     "eresources.addTitle": "타이틀 추가",
     "eresources.removePackage": "바구니에서 패키지 제거",
