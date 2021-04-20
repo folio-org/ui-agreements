@@ -20,7 +20,7 @@ import {
   collapseAllSections,
   expandAllSections
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission, TitleManager, withStripes } from '@folio/stripes/core';
+import { AppIcon, TitleManager, withStripes } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import DuplicateAgreementModal from '../DuplicateAgreementModal';
@@ -115,9 +115,9 @@ class Agreement extends React.Component {
     if (stripes.hasPerm('ui-agreements.agreements.edit')) {
       buttons.push(
         <Button
+          key="clickable-dropdown-edit-agreement"
           buttonStyle="dropdownItem"
           id="clickable-dropdown-edit-agreement"
-          key="clickable-dropdown-edit-agreement"
           onClick={this.props.handlers.onEdit}
         >
           <Icon icon="edit">
@@ -127,9 +127,9 @@ class Agreement extends React.Component {
       );
       buttons.push(
         <Button
+          key="clickable-dropdown-duplicate-agreement"
           buttonStyle="dropdownItem"
           id="clickable-dropdown-duplicate-agreement"
-          key="clickable-dropdown-duplicate-agreement"
           onClick={() => {
             this.openDuplicateAgreementModal();
             onToggle();
@@ -145,9 +145,9 @@ class Agreement extends React.Component {
     if (stripes.hasPerm('ui-agreements.agreements.view')) {
       buttons.push(
         <Button
+          key="clickable-dropdown-export-agreement"
           buttonStyle="dropdownItem"
           id="clickable-dropdown-export-agreement"
-          key="clickable-dropdown-export-agreement"
           onClick={() => {
             this.props.handlers.onExportAgreement();
             onToggle();
@@ -163,9 +163,9 @@ class Agreement extends React.Component {
     if (stripes.hasPerm('ui-agreements.agreements.delete')) {
       buttons.push(
         <Button
+          key="clickable-dropdown-delete-agreement"
           buttonStyle="dropdownItem"
           id="clickable-dropdown-delete-agreement"
-          key="clickable-dropdown-delete-agreement"
           onClick={() => {
             this.openDeleteConfirmationModal();
             onToggle();
@@ -222,7 +222,7 @@ class Agreement extends React.Component {
         </FormattedMessage>
         }
       </PaneMenu>
-    ): null;
+    ) : null;
   }
 
   render() {
