@@ -42,7 +42,7 @@
     "eresources.jusp": "JUSP (Portal de estadísticas de uso de revistas)",
     "eresources.erAgreements": "Acuerdos para este recursos electrónico",
     "eresources.agreementStatus": "Estado del acuerdo",
-    "eresources.acqOptions": "Opciones para adquirir el recursos electrónico: {name}",
+    "eresources.acqOptions": "Opciones para adquirir recursos electrónicos",
     "eresources.addPackage": "Añadir paquete",
     "eresources.addTitle": "Añadir título",
     "eresources.removePackage": "Quitar el paquete de la cesta",
