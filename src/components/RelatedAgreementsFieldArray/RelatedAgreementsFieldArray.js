@@ -6,7 +6,6 @@ import { Field } from 'react-final-form';
 import { Button, Layout, MessageBanner, Select, TextArea } from '@folio/stripes/components';
 import {
   EditCard,
-  composeValidators,
   requiredValidator,
   withKiwtFieldArray
 } from '@folio/stripes-erm-components';
@@ -43,14 +42,6 @@ class RelatedAgreementsFieldArray extends React.Component {
   handleAgreementSelected = (index, agreement) => {
     this.props.onUpdateField(index, { agreement });
   }
-
-  validateSelfLinking = (value) => {
-    if (value && value.id === this.props.currentAgreementId) {
-      return <FormattedMessage id="ui-agreements.errors.cannotLinkAgreementToItself" />;
-    }
-
-    return undefined;
-  };
 
   renderEmpty = () => (
     <Layout className="padding-bottom-gutter" data-test-ra-empty-message>
@@ -95,10 +86,9 @@ class RelatedAgreementsFieldArray extends React.Component {
           index={index}
           name={`${this.props.name}[${index}].agreement`}
           onAgreementSelected={selectedAgreement => this.handleAgreementSelected(index, selectedAgreement)}
-          validate={composeValidators(
-            requiredValidator,
-            this.validateSelfLinking,
-          )}
+          parentAgreementId={this.props.currentAgreementId}
+          parentAgreementName={this.props.currentAgreementName}
+          validate={requiredValidator}
         />
         <Field
           component={Select}
