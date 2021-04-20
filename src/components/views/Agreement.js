@@ -117,6 +117,7 @@ class Agreement extends React.Component {
         <Button
           buttonStyle="dropdownItem"
           id="clickable-dropdown-edit-agreement"
+          key="clickable-dropdown-edit-agreement"
           onClick={this.props.handlers.onEdit}
         >
           <Icon icon="edit">
@@ -128,6 +129,7 @@ class Agreement extends React.Component {
         <Button
           buttonStyle="dropdownItem"
           id="clickable-dropdown-duplicate-agreement"
+          key="clickable-dropdown-duplicate-agreement"
           onClick={() => {
             this.openDuplicateAgreementModal();
             onToggle();
@@ -145,6 +147,7 @@ class Agreement extends React.Component {
         <Button
           buttonStyle="dropdownItem"
           id="clickable-dropdown-export-agreement"
+          key="clickable-dropdown-export-agreement"
           onClick={() => {
             this.props.handlers.onExportAgreement();
             onToggle();
@@ -162,6 +165,7 @@ class Agreement extends React.Component {
         <Button
           buttonStyle="dropdownItem"
           id="clickable-dropdown-delete-agreement"
+          key="clickable-dropdown-delete-agreement"
           onClick={() => {
             this.openDeleteConfirmationModal();
             onToggle();
