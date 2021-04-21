@@ -1,5 +1,12 @@
 # Change history for ui-agreements
 
+## 6.0.1 2021-04-21
+* Permissions for view agreements, resources, platforms should be linked. ERM-1621
+* Actions menu doesn't display for Agreements even when there are valid actions for the user. ERM-1619
+* Add descriptions to visible permission set in ui-agreements. ERM-1593
+* "Platforms" button should only display in search and filter pane to users with "ui-agreements.platforms.view" permission. ERM-1215
+* "E-resources" button should only display in search and filter pane to users with "ui-agreements.resources.view" permission. ERM-1214
+
 ##  6.0.0 2021-03-18
 * Purchase Order Line details not retrieved from /orders/order-lines for Entitlement. ERM-1606
 * Update displayName for ui-agreements.platforms.X permissions. ERM-1592
