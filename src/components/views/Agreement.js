@@ -20,7 +20,7 @@ import {
   collapseAllSections,
   expandAllSections
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission, TitleManager, withStripes, Pluggable } from '@folio/stripes/core';
+import { AppIcon, TitleManager, withStripes, Pluggable } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import DuplicateAgreementModal from '../DuplicateAgreementModal';
@@ -115,6 +115,7 @@ class Agreement extends React.Component {
     if (stripes.hasPerm('ui-agreements.agreements.edit')) {
       buttons.push(
         <Button
+          key="clickable-dropdown-edit-agreement"
           buttonStyle="dropdownItem"
           id="clickable-dropdown-edit-agreement"
           onClick={this.props.handlers.onEdit}
@@ -126,6 +127,7 @@ class Agreement extends React.Component {
       );
       buttons.push(
         <Button
+          key="clickable-dropdown-duplicate-agreement"
           buttonStyle="dropdownItem"
           id="clickable-dropdown-duplicate-agreement"
           onClick={() => {
@@ -143,6 +145,7 @@ class Agreement extends React.Component {
     if (stripes.hasPerm('ui-agreements.agreements.view')) {
       buttons.push(
         <Button
+          key="clickable-dropdown-export-agreement"
           buttonStyle="dropdownItem"
           id="clickable-dropdown-export-agreement"
           onClick={() => {
@@ -160,6 +163,7 @@ class Agreement extends React.Component {
     if (stripes.hasPerm('ui-agreements.agreements.delete')) {
       buttons.push(
         <Button
+          key="clickable-dropdown-delete-agreement"
           buttonStyle="dropdownItem"
           id="clickable-dropdown-delete-agreement"
           onClick={() => {
@@ -200,27 +204,25 @@ class Agreement extends React.Component {
     const {
       data: { agreement },
       handlers,
+      stripes
     } = this.props;
-
-    return (
-      <IfPermission perm="ui-agreements.agreements.edit">
-        <PaneMenu>
-          {handlers.onToggleTags &&
-            <FormattedMessage id="ui-agreements.agreements.showTags">
-              {ariaLabel => (
-                <IconButton
-                  ariaLabel={ariaLabel}
-                  badgeCount={agreement?.tags?.length ?? 0}
-                  icon="tag"
-                  id="clickable-show-tags"
-                  onClick={handlers.onToggleTags}
-                />
-              )}
-            </FormattedMessage>
-          }
-        </PaneMenu>
-      </IfPermission>
-    );
+    return stripes.hasPerm('ui-agreements.agreements.edit') ? (
+      <PaneMenu>
+        {handlers.onToggleTags &&
+        <FormattedMessage id="ui-agreements.agreements.showTags">
+          {ariaLabel => (
+            <IconButton
+              ariaLabel={ariaLabel}
+              badgeCount={agreement?.tags?.length ?? 0}
+              icon="tag"
+              id="clickable-show-tags"
+              onClick={handlers.onToggleTags}
+            />
+          )}
+        </FormattedMessage>
+        }
+      </PaneMenu>
+    ) : null;
   }
 
   render() {
