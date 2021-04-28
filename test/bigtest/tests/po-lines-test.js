@@ -17,7 +17,7 @@ const eresourcesToCreate = [
   { name: 'Package of Bananas', class: 'org.olf.kb.Pkg' }
 ];
 
-describe('PO Lines', () => {
+describe.skip('PO Lines', () => {
   setupApplication();
   const basketInteractor = new BasketInteractor();
   const agreementForm = new AgreementFormInteractor();
