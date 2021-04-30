@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Registry from '@folio/plugin-resource-registry';
-
 import {
   FormattedUTCDate,
   NoValue,
@@ -9,8 +7,7 @@ import {
 
 import RegistryLookup from './RegistryLookup';
 
-const setUpRegistry = () => {
-  const registry = Registry;
+const setUpRegistry = (registry) => {
   // Agreement Resource
   const agreementReg = registry.registerResource('agreement');
   agreementReg.addViewAll('/erm/agreements');

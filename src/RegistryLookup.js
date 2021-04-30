@@ -1,4 +1,6 @@
 import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
+
 import { FormattedMessage } from 'react-intl';
 
 import { Link } from 'react-router-dom';
@@ -20,6 +22,17 @@ import { AppIcon, Pluggable } from '@folio/stripes/core';
 import { urls } from './components/utilities';
 
 // This must return a function to render a link button
+
+const propTypes = {
+  disabled: PropTypes.bool,
+  id: PropTypes.string,
+  input: PropTypes.shape({
+    name: PropTypes.string,
+    value: PropTypes.string
+  }),
+  onResourceSelected: PropTypes.func,
+  resource: PropTypes.object
+};
 
 const AgreementLookupComponent = ({ disabled, id, input: { name, value }, onResourceSelected, resource }) => {
   let triggerButton = useRef(null);
@@ -137,5 +150,7 @@ const AgreementLookupComponent = ({ disabled, id, input: { name, value }, onReso
     </Card>
   );
 };
+
+AgreementLookupComponent.propTypes = propTypes;
 
 export default AgreementLookupComponent;

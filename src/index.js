@@ -45,10 +45,17 @@ const OpenBasketButton = lazy(() => import('./components/OpenBasketButton'));
 
 const Settings = lazy(() => import('./settings'));
 
-// DO THIS BEFORE APP
-setUpRegistry();
-
 class App extends React.Component {
+  static eventHandler(event, _s, data) {
+    if (event === 'ui-dashboard-registry-load') {
+      // Data should contain Registry singleton:
+      setUpRegistry(data);
+      return null;
+    }
+
+    return null;
+  }
+
   static propTypes = {
     history: PropTypes.object,
     location: PropTypes.shape({
