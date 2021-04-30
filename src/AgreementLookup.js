@@ -34,7 +34,7 @@ const propTypes = {
   resource: PropTypes.object
 };
 
-const AgreementLookupComponent = ({ disabled, id, input: { name, value }, onResourceSelected, resource }) => {
+const AgreementLookup = ({ disabled, id, input: { name, value }, onResourceSelected, resource }) => {
   let triggerButton = useRef(null);
 
   const renderAgreementLinkButton = (v) => (
@@ -151,6 +151,6 @@ const AgreementLookupComponent = ({ disabled, id, input: { name, value }, onReso
   );
 };
 
-AgreementLookupComponent.propTypes = propTypes;
+AgreementLookup.propTypes = propTypes;
 
-export default AgreementLookupComponent;
+export default AgreementLookup;

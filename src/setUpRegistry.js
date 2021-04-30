@@ -5,7 +5,7 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
-import RegistryLookup from './RegistryLookup';
+import AgreementLookup from './AgreementLookup';
 
 const setUpRegistry = (registry) => {
   // Agreement Resource
@@ -21,7 +21,7 @@ const setUpRegistry = (registry) => {
   });
 
   // Lookup plugin
-  agreementReg.addLookupComponent(RegistryLookup);
+  agreementReg.addLookupComponent(AgreementLookup);
 
   // AgreementLine Resource
   const aglReg = registry.registerResource('agreementLine');
