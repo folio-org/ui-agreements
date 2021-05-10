@@ -314,7 +314,6 @@ const Agreements = ({
                         </div>
                       ) : '...'
                     }
-                    nonInteractiveHeaders={['startDate', 'endDate', 'cancellationDeadline']}
                     onHeaderClick={onSort}
                     onNeedMoreData={onNeedMoreData}
                     rowProps={{
