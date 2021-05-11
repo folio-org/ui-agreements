@@ -50,7 +50,6 @@ class App extends React.Component {
     if (event === 'ui-dashboard-registry-load') {
       // Data should contain Registry singleton:
       setUpRegistry(data);
-      return null;
     }
 
     return null;
