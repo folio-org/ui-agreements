@@ -3,7 +3,7 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { Accordion, MultiColumnList, MultiColumnListCell } from '@folio/stripes-testing';
 import { MemoryRouter } from 'react-router-dom';
-import translationsProperties from '../../../test/helpers';
+import translationsProperties from '../../../../test/helpers';
 import AllPeriods from './AllPeriods';
 
 const agreementWith1Period = {
