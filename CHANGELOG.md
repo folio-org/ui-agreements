@@ -1,8 +1,8 @@
 # Change history for ui-agreements
 
 ## 6.1.0 In progress
+* Enable sorting by start/end/cancellation dates in agreements. ERM-1610
 * Locked rehooks/local-storage version to 2.4.0
-
 ##  6.0.0 2021-03-18
 * Purchase Order Line details not retrieved from /orders/order-lines for Entitlement. ERM-1606
 * Update displayName for ui-agreements.platforms.X permissions. ERM-1592
@@ -32,7 +32,7 @@
 * Dropdowns do not display values when editing Agreements. ERM-1206
 * Agreement lines do not display correctly in Agreement edit view. ERM-1205
 * Add UI settings to control the number of items displayed in Agreements MCLs. ERM-1190
-* Add FOLIO keyboard shortcuts to Agreements-Platforms. ERM-1186 
+* Add FOLIO keyboard shortcuts to Agreements-Platforms. ERM-1186
 * Add "Edit" screen for title instance resources. ERM-1184
 * Support user access to platform records. ERM-1156
 * Add FOLIO keyboard shortcuts to Agreements. ERM-1151
