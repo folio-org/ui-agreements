@@ -115,7 +115,6 @@
   },
   "resolutions": {
     "moment": "~2.24.0",
-    "@babel/parser": "7.7.5",
     "@rehooks/local-storage": "2.4.0"
   },
   "stripes": {
