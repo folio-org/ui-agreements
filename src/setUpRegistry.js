@@ -5,6 +5,9 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
+
+import { InternalContactsArrayDisplay } from './components/registryRenderFunctions'
+
 import AgreementLookup from './AgreementLookup';
 
 const setUpRegistry = (registry) => {
@@ -18,6 +21,10 @@ const setUpRegistry = (registry) => {
     const date = record.periods.find(p => p.periodStatus === 'current')?.startDate;
     return date ? <FormattedUTCDate value={date} /> :
     <NoValue />;
+  });
+
+  agreementReg.setRenderFunction('internalContacts', record => {
+    return <InternalContactsArrayDisplay contacts={record.contacts}/>;
   });
 
   // Lookup plugin
