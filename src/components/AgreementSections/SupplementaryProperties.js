@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { CustomPropertiesList } from '@folio/stripes-erm-components';
-import { Accordion, Badge } from '@folio/stripes/components';
+import { Accordion, Badge, Spinner } from '@folio/stripes/components';
 
 export default class SupplementaryProperties extends React.Component {
   static propTypes = {
@@ -14,9 +14,16 @@ export default class SupplementaryProperties extends React.Component {
   renderBadge = () => {
     console.log("supplementaryProperties %o", this.props.data.supplementaryProperties)
     console.log("agreement %o", this.props.agreement.customProperties)
-    const count = 5;
-    console.log("count %o", count)
-    return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
+    // const count = this.props.agreement?.customProperties?.size;
+    if (this.props.agreement.customProperties !== undefined) {
+      const count = Object.keys(this.props.agreement.customProperties).length;
+      console.log("count %o", count)
+      return <Badge>{count}</Badge>;
+    }
+    else {
+      return <Spinner />;
+    }
+    // return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
   }
 
   render() {
