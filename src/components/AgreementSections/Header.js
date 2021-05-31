@@ -34,10 +34,10 @@ export default class Header extends React.Component {
     }).isRequired,
   };
 
-  renderVendor = () => {
+  renderPrimaryOrg = () => {
     const { agreement: { orgs = [] } } = this.props;
-    const vendor = orgs.find(o => get(o, 'role.value') === 'vendor');
-    return get(vendor, 'org.name', <FormattedMessage id="ui-agreements.notSet" />);
+    const primaryOrg = orgs.find(o => o.primaryOrg === true);
+    return primaryOrg?.org?.name || <FormattedMessage id="ui-agreements.notSet" />;
   }
 
   render() {
@@ -68,9 +68,9 @@ export default class Header extends React.Component {
           </KeyValue>
         </Col>
         <Col xs={3}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.agreements.vendor" />}>
-            <div data-test-agreement-vendor-name>
-              {this.renderVendor()}
+          <KeyValue label={<FormattedMessage id="ui-agreements.organizations.primary" />}>
+            <div data-test-agreement-primaryOrg-name>
+              {this.renderPrimaryOrg()}
             </div>
           </KeyValue>
         </Col>
