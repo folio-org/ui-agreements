@@ -68,7 +68,7 @@ export default class Header extends React.Component {
         </Col>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.organizations.primary" />}>
-            <div data-test-agreement-primaryOrg-name>
+            <div data-test-agreement-primary-org-name>
               {this.renderPrimaryOrg()}
             </div>
           </KeyValue>
