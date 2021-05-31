@@ -59,7 +59,6 @@ export default class Organizations extends React.Component {
                 <Link to={urls.orgView(org.orgsUuid)}>
                   <strong>{org.name}</strong>
                 </Link>
-                {/* {` · ${role.label}`} */}
                 { primaryOrg ? ' . ' : null }
                 { primaryOrg ? <FormattedMessage id="ui-agreements.organizations.primary" /> : null }
               </AppIcon>
