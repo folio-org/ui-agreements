@@ -1,5 +1,5 @@
 import React from 'react';
-import { InternalContactsArrayDisplay } from './components/registryRenderFunctions'
+import { InternalContactsArrayDisplay } from '@folio/stripes-erm-components';
 import AgreementLookup from './AgreementLookup';
 
 const setUpRegistry = (registry) => {

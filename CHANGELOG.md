@@ -1,6 +1,7 @@
 # Change history for ui-agreements
 
 ## 6.1.0 In progress
+* Set up ui-agreements Registry entry. ERM-1682
 * Locked rehooks/local-storage version to 2.4.0
 
 ##  6.0.0 2021-03-18
