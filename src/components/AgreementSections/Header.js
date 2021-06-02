@@ -24,9 +24,7 @@ export default class Header extends React.Component {
           org: PropTypes.shape({
             name: PropTypes.string,
           }),
-          role: PropTypes.shape({
-            value: PropTypes.string,
-          }),
+          roles: PropTypes.arrayOf(PropTypes.object),
         }),
       ),
       startDate: PropTypes.string,
