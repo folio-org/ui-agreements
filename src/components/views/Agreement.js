@@ -201,8 +201,8 @@ class Agreement extends React.Component {
   }
 
   showTermsAccordion = () => {
-    const {data} = this.props;
-    const primaryprops = data.supplementaryProperties?.filter(p => p.primary===true).length;
+    const { data } = this.props;
+    const primaryprops = data.supplementaryProperties?.filter(p => p.primary === true).length;
     let custprops = false;
     if (data.agreement?.customProperties !== undefined) {
       custprops = Object.keys(data.agreement?.customProperties).length;
