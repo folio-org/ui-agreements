@@ -12,12 +12,11 @@ export default class SupplementaryProperties extends React.Component {
   }
 
   renderBadge = () => {
-    const {agreement: { customProperties }} = this.props;
+    const { agreement: { customProperties } } = this.props;
     if (customProperties !== undefined) {
       const count = Object.keys(customProperties).length;
       return <Badge>{count}</Badge>;
-    }
-    else {
+    } else {
       return <Spinner />;
     }
   }
