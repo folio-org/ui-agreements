@@ -129,7 +129,17 @@ class EResourceViewRoute extends React.Component {
       }).isRequired,
     }).isRequired,
     resources: PropTypes.shape({
+      entitlements: PropTypes.shape({
+        other: PropTypes.shape({
+          totalRecords: PropTypes.number
+        })
+      }),
       entitlementsCount: PropTypes.number,
+      entitlementOptions: PropTypes.shape({
+        other: PropTypes.shape({
+          totalRecords: PropTypes.number
+        })
+      }),
       eresource: PropTypes.object,
       packageContents: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
