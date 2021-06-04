@@ -120,8 +120,10 @@
   "stripes": {
     "actsAs": [
       "app",
+      "handler",
       "settings"
     ],
+    "handlerName": "eventHandler",
     "displayName": "ui-agreements.meta.title",
     "route": "/erm",
     "home": "/erm/agreements",
