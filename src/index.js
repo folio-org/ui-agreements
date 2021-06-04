@@ -11,6 +11,7 @@ import {
 } from '@folio/stripes/components';
 
 import css from './index.css';
+import setUpRegistry from './setUpRegistry';
 
 const AgreementsRoute = lazy(() => import('./routes/AgreementsRoute'));
 const AgreementCreateRoute = lazy(() => import('./routes/AgreementCreateRoute'));
@@ -45,6 +46,15 @@ const OpenBasketButton = lazy(() => import('./components/OpenBasketButton'));
 const Settings = lazy(() => import('./settings'));
 
 class App extends React.Component {
+  static eventHandler(event, _s, data) {
+    if (event === 'ui-dashboard-registry-load') {
+      // Data should contain Registry singleton:
+      setUpRegistry(data);
+    }
+
+    return null;
+  }
+
   static propTypes = {
     history: PropTypes.object,
     location: PropTypes.shape({
