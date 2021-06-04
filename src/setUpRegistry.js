@@ -9,7 +9,7 @@ const setUpRegistry = (registry) => {
   agreementReg.addViewTemplate(agreement => `/erm/agreements/${agreement.id}`);
 
   agreementReg.setRenderFunction('internalContacts', record => {
-    return <InternalContactsArrayDisplay contacts={record.contacts}/>;
+    return <InternalContactsArrayDisplay contacts={record.contacts} />;
   });
 
   // Lookup plugin
