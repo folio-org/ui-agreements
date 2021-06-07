@@ -253,7 +253,7 @@
     "relatedAgreements.relationship.provides_post-cancellation_access_for": "「 {agreement} 」にキャンセル後のアクセスを提供します",
     "relatedAgreements.relationship.supersedes": "「 {agreement} 」を置き換えます",
     "relatedAgreements.relationship.tracks_demand-driven_acquisitions_for": "「 {agreement} 」の需要駆動型購入（DDA）を追跡します",
-    "relatedAgreements.remove": "関連する契約を削除",
+    "relatedAgreements.remove": "Remove related agreement {index}",
     "identifier.issn": "eISSN/ISSN",
     "relatedAgreements.relationshipSummary": "\" {source} \" {relationship} \" {target} \"",
     "relatedAgreements.relationshipSummaryForNewAgreement": "\"{source}\" {relationship} the agreement being created",
