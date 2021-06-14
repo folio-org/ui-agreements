@@ -92,7 +92,7 @@
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^2.0.0",
-    "@folio/stripes-erm-components": "^5.0.0",
+    "@folio/stripes-erm-components": "^5.1.0",
     "@rehooks/local-storage": "2.4.0",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
@@ -120,8 +120,10 @@
   "stripes": {
     "actsAs": [
       "app",
+      "handler",
       "settings"
     ],
+    "handlerName": "eventHandler",
     "displayName": "ui-agreements.meta.title",
     "route": "/erm",
     "home": "/erm/agreements",
