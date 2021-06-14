@@ -200,10 +200,10 @@ class Agreement extends React.Component {
     };
   }
 
-  showTermsAccordion = () => {
+  showSupplementaryPropertiesAccordion = () => {
     const { data } = this.props;
     const primaryprops = data.supplementaryProperties?.filter(p => p.primary === true).length;
-    let custprops = false;
+    let custprops = 0;
     if (data.agreement?.customProperties !== undefined) {
       custprops = Object.keys(data.agreement?.customProperties).length;
     }
@@ -313,7 +313,7 @@ class Agreement extends React.Component {
                   { data.agreement?.externalLicenseDocs?.length > 0 && <ExternalLicenses {...this.getSectionProps('externalLicenses')} /> }
                   { controllingLicenses?.length > 0 && <Terms {...this.getSectionProps('terms')} /> }
                   { data.agreement?.orgs?.length > 0 && <Organizations {...this.getSectionProps('organizations')} /> }
-                  { this.showTermsAccordion() && <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} /> }
+                  { this.showSupplementaryPropertiesAccordion() && <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} /> }
                   { data.agreement?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} /> }
                   { data.agreement?.usageDataProviders?.length > 0 && <UsageData {...this.getSectionProps('usageData')} /> }
                   { data.agreement?.relatedAgreements?.length > 0 && <RelatedAgreements {...this.getSectionProps('relatedAgreements')} /> }
