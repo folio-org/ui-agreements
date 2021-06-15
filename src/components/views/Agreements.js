@@ -68,7 +68,29 @@ const Agreements = ({
 }) => {
   const count = source?.totalCount() ?? 0;
   const query = queryGetter() ?? {};
-  const sortOrder = query.sort ?? '';
+
+  const [sortOrder, setSortOrder] = useState(['name', 'agreementStatus', 'startDate', 'endDate', 'cancellationDeadline']);
+  const [sortDirection, setSortDirection] = useState(['asc', 'desc']);
+
+  const sortMap = {
+    name:  a => a?.name,
+    agreementStatus: a => a?.agreementStatus?.label,
+    startDate: a => a?.startDate,
+    endDate: a => a?.endDate,
+    cancellationDeadline: a => a?.cancellationDeadline,
+  };
+
+  const onSort = (e, meta) => {
+    if (!sortMap[meta.name]) return;
+
+    if (sortOrder[0] !== meta.name) {
+      setSortOrder([meta.name, sortOrder[0]]);
+      setSortDirection(['asc', sortDirection[0]]);
+    } else {
+      const direction = (sortDirection[0] === 'desc') ? 'asc' : 'desc';
+      setSortDirection([direction, sortDirection[1]]);
+    }
+  };
 
   const searchField = useRef(null);
 
@@ -113,7 +135,7 @@ const Agreements = ({
             searchValue,
             getSearchHandlers,
             onSubmitSearch,
-            onSort,
+            // onSort,
             getFilterHandlers,
             activeFilters,
             filterChanged,
@@ -122,6 +144,10 @@ const Agreements = ({
           }) => {
             const disableReset = () => (!filterChanged && !searchChanged);
             const filterCount = activeFilters.string ? activeFilters.string.split(',').length : 0;
+
+            // eslint-disable-next-line no-undef
+            const contentData = _.orderBy(data.agreements,
+              [sortMap[sortOrder[0]], sortMap[sortOrder[1]]], sortDirection);
 
             return (
               <PersistedPaneset
@@ -278,7 +304,7 @@ const Agreements = ({
                       endDate: 120,
                       cancellationDeadline: 120,
                     }}
-                    contentData={data.agreements}
+                    contentData={contentData}
                     formatter={{
                       name: a => {
                         const iconKey = a?.agreementStatus?.value === statuses.CLOSED ? 'closedAgreement' : 'app';
@@ -320,8 +346,8 @@ const Agreements = ({
                       to: id => `${urls.agreementView(id)}${searchString}`,
                       labelStrings: ({ rowData }) => ([rowData.name, rowData.agreementStatus?.label]),
                     }}
-                    sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
-                    sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
+                    sortDirection={sortDirection}
+                    sortOrder={sortOrder}
                     totalCount={count}
                     virtualize
                     visibleColumns={[
