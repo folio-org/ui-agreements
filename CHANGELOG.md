@@ -1,5 +1,7 @@
 # Change history for ui-agreements
 
+## 6.2.0 (In Progress)
+
 ## 6.1.0 2021-06-16
 * ERM-1725 Update version of interfaces due to supporting MARC Authority records
 * ERM-1682 Set up ui-agreements Registry entry.
