@@ -35,6 +35,9 @@ class AgreementsRoute extends React.Component {
           role: 'orgs.role',
           tags: 'tags.value',
         },
+        sortKeys: {
+          agreementStatus: 'agreementStatus.label',
+        },
       }),
     },
     agreementStatusValues: {
