@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "6.1.0",
+  "version": "6.2.0",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -56,9 +56,9 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.2.0",
-    "@folio/stripes": "^6.1.0",
+    "@folio/stripes": "^6.2.0",
     "@folio/stripes-testing": "^3.0.0",
-    "@folio/stripes-cli": "^2.0.0",
+    "@folio/stripes-cli": "^2.3.0",
     "@testing-library/dom": "^7.26.6",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.2",
@@ -106,7 +106,7 @@
     "react-router-prop-types": "^1.0.4"
   },
   "peerDependencies": {
-    "@folio/stripes": "^6.1.0",
+    "@folio/stripes": "^6.2.0",
     "moment": "^2.22.2",
     "react": "*",
     "react-dom": "*",
