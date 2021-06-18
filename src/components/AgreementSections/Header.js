@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -25,19 +24,17 @@ export default class Header extends React.Component {
           org: PropTypes.shape({
             name: PropTypes.string,
           }),
-          role: PropTypes.shape({
-            value: PropTypes.string,
-          }),
+          roles: PropTypes.arrayOf(PropTypes.object),
         }),
       ),
       startDate: PropTypes.string,
     }).isRequired,
   };
 
-  renderVendor = () => {
+  renderPrimaryOrg = () => {
     const { agreement: { orgs = [] } } = this.props;
-    const vendor = orgs.find(o => get(o, 'role.value') === 'vendor');
-    return get(vendor, 'org.name', <FormattedMessage id="ui-agreements.notSet" />);
+    const primaryOrg = orgs.find(o => o.primaryOrg === true);
+    return primaryOrg?.org?.name || <FormattedMessage id="ui-agreements.notSet" />;
   }
 
   render() {
@@ -68,9 +65,9 @@ export default class Header extends React.Component {
           </KeyValue>
         </Col>
         <Col xs={3}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.agreements.vendor" />}>
-            <div data-test-agreement-vendor-name>
-              {this.renderVendor()}
+          <KeyValue label={<FormattedMessage id="ui-agreements.organizations.primary" />}>
+            <div data-test-agreement-primary-org-name>
+              {this.renderPrimaryOrg()}
             </div>
           </KeyValue>
         </Col>
