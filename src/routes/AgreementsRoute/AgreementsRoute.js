@@ -32,7 +32,7 @@ class AgreementsRoute extends React.Component {
           isPerpetual: 'isPerpetual.value',
           orgs: 'orgs.org',
           renewalPriority: 'renewalPriority.value',
-          role: 'orgs.role',
+          role: 'orgs.roles.role',
           tags: 'tags.value',
         },
         sortKeys: {

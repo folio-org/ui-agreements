@@ -317,7 +317,7 @@
     "coverage.editionShort": "版本：",
     "agreements.currentPeriodNote": "当前周期附注",
     "supplementaryProperties": "补充属性",
-    "supplementaryProperties.count": "{count, number}已保存{count, number} {count, plural, one {补充属性} other {补充属性}}",
+    "supplementaryProperties.count": "{count, number}已保存{count, plural, one {补充属性} other {补充属性}}",
     "supplementaryProperties.callout.delete.error": "删除补充属性时出错。 {error}",
     "supplementaryProperties.callout.delete.success": "补充属性已成功删除。",
     "supplementaryProperties.callout.save.error": "保存补充属性时出错。 {error}",

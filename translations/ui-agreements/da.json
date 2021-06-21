@@ -127,7 +127,7 @@
     "eresources.titles": "Titles",
     "agreements.showInvoicesLink": "Show invoices",
     "agreementLines.addCustomCoverage": "Add custom coverage",
-    "agreementLines.customCoverageTitle": "Brugerdefineret dækning {nummer}",
+    "agreementLines.customCoverageTitle": "Brugerdefineret dækning {number}",
     "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
     "errors.multipleOpenEndedCoverages": "Cannot have multiple open-ended coverage statements.",
     "errors.overlappingCoverage": "The following coverages have overlapping dates: {fields}",
