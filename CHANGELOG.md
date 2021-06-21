@@ -1,6 +1,8 @@
 # Change history for ui-agreements
 
-## 6.2.0 (In Progress)
+## 7.0.0 (In Progress)
+* Included interface dependency for erm 5.0
+* Included interface dependency for licenses 4.0
 
 ## 6.1.0 2021-06-16
 * ERM-1725 Update version of interfaces due to supporting MARC Authority records
