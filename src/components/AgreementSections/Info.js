@@ -62,7 +62,7 @@ const Info = ({ agreement }) => {
           </KeyValue>
         </Col>
       </Row>
-      {agreement?.licenseNote ?
+      {agreement?.licenseNote &&
         <Row>
           <Col xs={12}>
             <KeyValue label={<FormattedMessage id="ui-agreements.license.generalNotes" />}>
@@ -72,8 +72,6 @@ const Info = ({ agreement }) => {
             </KeyValue>
           </Col>
         </Row>
-      :
-      null
       }
       {agreement?.alternateNames?.length !== 0 &&
         <MultiColumnList
