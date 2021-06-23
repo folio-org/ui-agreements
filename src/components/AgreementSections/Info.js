@@ -62,6 +62,17 @@ const Info = ({ agreement }) => {
           </KeyValue>
         </Col>
       </Row>
+      {agreement?.licenseNote &&
+        <Row>
+          <Col xs={12}>
+            <KeyValue label={<FormattedMessage id="ui-agreements.license.generalNotes" />}>
+              <div data-test-agreement-license-note style={{ whiteSpace: 'pre-wrap' }}>
+                {agreement.licenseNote}
+              </div>
+            </KeyValue>
+          </Col>
+        </Row>
+      }
       {agreement?.alternateNames?.length !== 0 &&
         <MultiColumnList
           columnMapping={{ name: <FormattedMessage id="ui-agreements.alternativeNames" /> }}
@@ -91,6 +102,7 @@ Info.propTypes = {
     isPerpetual: PropTypes.shape({
       label: PropTypes.string,
     }),
+    licenseNote: PropTypes.string,
     name: PropTypes.string,
     reasonForClosure: PropTypes.shape({
       label: PropTypes.string,
