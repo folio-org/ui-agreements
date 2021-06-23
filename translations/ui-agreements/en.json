@@ -19,6 +19,8 @@
 
   "default": "Default",
 
+  "appMenu.keyboardShortcuts": "Keyboard shortcuts",
+
   "agreement": "Agreement",
   "agreementPluralizable": "{count} {count, plural, one {agreement} other {agreements}}",
   "agreementLinePluralizable": "{count} {count, plural, one {agreement line} other {agreement lines}}",
