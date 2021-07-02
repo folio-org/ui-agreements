@@ -226,7 +226,7 @@
     "agreementPeriods.periodStart": "Beginn des Zeitraums",
     "agreementPeriods.periodTitle": "Vereinbarungszeitraum {number}",
     "errors.multipleOpenEndedPeriods": "Es darf nicht mehrere unbeendete Vereinbarungszeiträume geben.",
-    "errors.overlappingPeriod": "Die folgenden Zeiträume haben sich überschneidende Zeitangaben: {Felder}",
+    "errors.overlappingPeriod": "Die folgenden Zeiträume haben sich überschneidende Zeitangaben: {fields}",
     "agreements.reasonForClosure": "Grund für die Schließung",
     "warn.clearReasonForClosure": "Dieser Grund wird geleert, weil Status nicht geschlossen ist",
     "content.all": "Alle",

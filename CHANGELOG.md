@@ -1,8 +1,24 @@
 # Change history for ui-agreements
 
-## 6.1.0 In progress
-* Set up ui-agreements Registry entry. ERM-1682
-* Locked rehooks/local-storage version to 2.4.0
+## 7.0.0 (In Progress)
+* Included interface dependency for erm 5.0
+* Included interface dependency for licenses 4.0
+
+## 6.1.0 2021-06-16
+* ERM-1725 Update version of interfaces due to supporting MARC Authority records
+* ERM-1682 Set up ui-agreements Registry entry.
+* ERM-1640 Locked rehooks/local-storage version to 2.4.0
+* ERM-1621 Permissions for view agreements, resources, platforms should be linked
+* ERM-1619 Actions menu doesn't display for Agreements even when there are valid actions for the user
+* ERM-1610 Implement sort by start/end/cancellation dates in Agreements search and sort MCL
+* ERM-1609 Hide supplementary properties accordion if zero populated terms and no primary terms
+* ERM-1607 Add count of populated custom properties in accordion header
+* ERM-1593 Add descriptions to visible permission set in ui-agreements
+* ERM-1547 Related agreements: Improve error management when the user attempts to link an agreement to itself
+* ERM-1215 "Platforms" button should only display in search and filter pane to users with "ui-agreements.platforms.view" permission
+* ERM-1214 "E-resources" button should only display in search and filter pane to users with "ui-agreements.resources.view" permission
+* Add a surface for Stripes handler modules to present extensions
+* Babel Parser dependency fixes
 
 ##  6.0.0 2021-03-18
 * Purchase Order Line details not retrieved from /orders/order-lines for Entitlement. ERM-1606
