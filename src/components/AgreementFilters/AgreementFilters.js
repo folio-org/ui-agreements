@@ -127,7 +127,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
             <Selection
               dataOptions={dataOptions}
               onChange={value => filterHandlers.state({ ...activeFilters, role: [value] })}
-              placeholder={placeholder}
+              placeholder={typeof placeholder === 'string' ? placeholder : placeholder[0]}
               value={roleFilters[0] || ''}
             />
           )}
