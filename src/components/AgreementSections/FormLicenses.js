@@ -5,11 +5,12 @@ import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
 import { Accordion, Headline, KeyValue, TextArea } from '@folio/stripes/components';
+import { withStripes } from '@folio/stripes/core';
 import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 
 import LicensesFieldArray from '../LicensesFieldArray';
 
-export default class FormLicenses extends React.Component {
+class FormLicenses extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       agreement: PropTypes.object,
@@ -21,6 +22,7 @@ export default class FormLicenses extends React.Component {
     id: PropTypes.string,
     onToggle: PropTypes.func,
     open: PropTypes.bool,
+    stripes: PropTypes.object
   };
 
   renderNote = () => (
@@ -54,27 +56,31 @@ export default class FormLicenses extends React.Component {
     </div>
   )
 
-  renderExternalLicenses = () => (
-    <div data-test-licenses-form-external-licenses>
-      <KeyValue
-        label={
-          <Headline margin="x-small" size="large" tag="h4">
-            <FormattedMessage id="ui-agreements.license.externalLicenses" />
-          </Headline>
-        }
-      >
-        <FieldArray
-          addDocBtnLabel={<FormattedMessage id="ui-agreements.license.addExternalLicense" />}
-          component={DocumentsFieldArray}
-          deleteBtnTooltipMsgId="ui-agreements.doc.removeExternalLicense"
-          isEmptyMessage={<FormattedMessage id="ui-agreements.license.noExternalLicenses" />}
-          name="externalLicenseDocs"
-          onDownloadFile={this.props.handlers.onDownloadFile}
-          onUploadFile={this.props.handlers.onUploadFile}
-        />
-      </KeyValue>
-    </div>
-  )
+  renderExternalLicenses = () => {
+    const { stripes } = this.props;
+    return (
+      <div data-test-licenses-form-external-licenses>
+        <KeyValue
+          label={
+            <Headline margin="x-small" size="large" tag="h4">
+              <FormattedMessage id="ui-agreements.license.externalLicenses" />
+            </Headline>
+          }
+        >
+          <FieldArray
+            addDocBtnLabel={<FormattedMessage id="ui-agreements.license.addExternalLicense" />}
+            component={DocumentsFieldArray}
+            deleteBtnTooltipMsgId="ui-agreements.doc.removeExternalLicense"
+            hasDownloadPerm={stripes.hasPerm('ui-agreements.agreements.file.download')}
+            isEmptyMessage={<FormattedMessage id="ui-agreements.license.noExternalLicenses" />}
+            name="externalLicenseDocs"
+            onDownloadFile={this.props.handlers.onDownloadFile}
+            onUploadFile={this.props.handlers.onUploadFile}
+          />
+        </KeyValue>
+      </div>
+    );
+  }
 
   render() {
     const {
@@ -97,3 +103,5 @@ export default class FormLicenses extends React.Component {
     );
   }
 }
+
+export default withStripes(FormLicenses);

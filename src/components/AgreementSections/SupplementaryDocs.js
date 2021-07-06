@@ -5,8 +5,9 @@ import { FormattedMessage } from 'react-intl';
 
 import { Accordion, Badge } from '@folio/stripes/components';
 import { DocumentCard } from '@folio/stripes-erm-components';
+import { withStripes } from '@folio/stripes/core';
 
-export default class SupplementaryDocs extends React.Component {
+class SupplementaryDocs extends React.Component {
   static propTypes = {
     handlers: PropTypes.shape({
       onDownloadFile: PropTypes.func,
@@ -24,12 +25,15 @@ export default class SupplementaryDocs extends React.Component {
       ),
     }),
     id: PropTypes.string,
+    stripes: PropTypes.object
   };
 
   renderDocs = (docs) => {
+    const { stripes } = this.props;
     return docs.map(doc => (
       <DocumentCard
         key={doc.id}
+        hasDownloadPerm={stripes.hasPerm('ui-agreements.agreements.file.download')}
         onDownloadFile={this.props.handlers.onDownloadFile}
         {...doc}
       />
@@ -62,3 +66,5 @@ export default class SupplementaryDocs extends React.Component {
     );
   }
 }
+
+export default withStripes(SupplementaryDocs);

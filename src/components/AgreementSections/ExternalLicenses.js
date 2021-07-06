@@ -4,8 +4,9 @@ import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Accordion, Badge, Layout } from '@folio/stripes/components';
 import { DocumentCard } from '@folio/stripes-erm-components';
+import { withStripes } from '@folio/stripes/core';
 
-export default class ExternalLicenses extends React.Component {
+class ExternalLicenses extends React.Component {
   static propTypes = {
     agreement: PropTypes.shape({
       externalLicenseDocs: PropTypes.arrayOf(
@@ -23,15 +24,20 @@ export default class ExternalLicenses extends React.Component {
       onDownloadFile: PropTypes.func,
     }).isRequired,
     id: PropTypes.string,
+    stripes: PropTypes.object
   };
 
-  renderExternalLicense = license => (
-    <DocumentCard
-      key={license.id}
-      onDownloadFile={this.props.handlers.onDownloadFile}
-      {...license}
-    />
-  )
+  renderExternalLicense = license => {
+    const { stripes } = this.props;
+    return (
+      <DocumentCard
+        key={license.id}
+        hasDownloadPerm={stripes.hasPerm('ui-agreements.agreements.file.download')}
+        onDownloadFile={this.props.handlers.onDownloadFile}
+        {...license}
+      />
+    );
+  }
 
   renderEmpty = () => (
     <Layout className="padding-bottom-gutter">
@@ -55,3 +61,5 @@ export default class ExternalLicenses extends React.Component {
     );
   }
 }
+
+export default withStripes(ExternalLicenses);

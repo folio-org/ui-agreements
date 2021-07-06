@@ -215,6 +215,15 @@
         ]
       },
       {
+        "permissionName": "ui-agreements.agreements.file.download",
+        "displayName": "Agreements: File download",
+        "description": "A user with this permission is able to download and view the content of Agreement document files",
+        "visible": true,
+        "subPermissions": [
+          "erm.files.item.download"
+        ]
+      },
+      {
         "permissionName": "ui-agreements.agreements.edit",
         "displayName": "Agreements: Edit agreements",
         "description": "Grants all permissions included in 'Agreements: Search & view agreements' plus the ability to edit agreements, including the ability to add and edit agreement lines, documents and view, add and edit tags on an agreement",
