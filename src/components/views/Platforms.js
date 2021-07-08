@@ -23,6 +23,8 @@ import {
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
 
+import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
+
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
 import { urls } from '../utilities';
 import css from './Agreements.css';
@@ -62,6 +64,8 @@ const Platforms = ({
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
 
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
+  const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
+
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
@@ -106,7 +110,7 @@ const Platforms = ({
                     }
                     paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                   >
-                    <form onSubmit={onSubmitSearch}>
+                    <form onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}>
                       <IfEResourcesEnabled>
                         <ButtonGroup fullWidth>
                           <Button
@@ -200,6 +204,7 @@ const Platforms = ({
                       <FormattedMessage id="stripes-smart-components.searchCriteria" />
                   }
                   paneTitle={<FormattedMessage id="ui-agreements.platforms" />}
+                  paneTitleRef={resultsPaneTitleRef}
                 >
                   <MultiColumnList
                     autosize
