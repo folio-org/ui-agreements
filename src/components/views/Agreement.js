@@ -317,7 +317,7 @@ class Agreement extends React.Component {
                   { data.agreement?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} /> }
                   { data.agreement?.usageDataProviders?.length > 0 && <UsageData {...this.getSectionProps('usageData')} /> }
                   { data.agreement?.relatedAgreements?.length > 0 && <RelatedAgreements {...this.getSectionProps('relatedAgreements')} /> }
-                  <HandlerManager event="ui-agreements-extension" stripes={this.props.stripes} data={{ data }} />
+                  <HandlerManager data={{ data }} event="ui-agreements-extension" stripes={this.props.stripes} />
                   <NotesSmartAccordion
                     {...this.getSectionProps('notes')}
                     domainName="agreements"
