@@ -24,10 +24,14 @@ export default class Organizations extends React.Component {
             name: PropTypes.string.isRequired,
             orgsUuid: PropTypes.string,
           }).isRequired,
-          role: PropTypes.shape({
-            label: PropTypes.string.isRequired,
-            value: PropTypes.string.isRequired,
-          }).isRequired,
+          roles: PropTypes.arrayOf(
+            PropTypes.shape({
+              role: PropTypes.shape({
+                label: PropTypes.string.isRequired,
+                value: PropTypes.string.isRequired,
+              }).isRequired,
+            })
+          ),
         }),
       ),
     }).isRequired,
@@ -41,12 +45,12 @@ export default class Organizations extends React.Component {
     const { agreement: { orgs = [] } } = this.props;
 
     return orgs.map(o => {
-      const { interfaces, note, org, role } = o;
-      if (!org || !role) return null;
+      const { interfaces, note, org, primaryOrg, roles } = o;
+      if (!org || !roles.length) return null;
 
       return (
         <ViewOrganizationCard
-          key={`${org.orgsUuid}-${role.value}`}
+          key={`${org.orgsUuid}`}
           data-test-organizations-org
           fetchCredentials={this.props.handlers.onFetchCredentials}
           headerStart={
@@ -55,12 +59,14 @@ export default class Organizations extends React.Component {
                 <Link to={urls.orgView(org.orgsUuid)}>
                   <strong>{org.name}</strong>
                 </Link>
-                {` · ${role.label}`}
+                { primaryOrg ? ' . ' : null }
+                { primaryOrg ? <FormattedMessage id="ui-agreements.organizations.primary" /> : null }
               </AppIcon>
             </span>
           }
           interfaces={interfaces}
           note={note}
+          roles={roles}
         />
       );
     });

@@ -19,6 +19,8 @@
 
   "default": "Default",
 
+  "appMenu.keyboardShortcuts": "Keyboard shortcuts",
+
   "agreement": "Agreement",
   "agreementPluralizable": "{count} {count, plural, one {agreement} other {agreements}}",
   "agreementLinePluralizable": "{count} {count, plural, one {agreement line} other {agreement lines}}",
@@ -467,6 +469,7 @@
   "organizations.typeToSearch": "Begin typing to search for an organization",
   "organizations.addOrganizationToAgreement": "Add organization",
   "organizations.selectRole": "Select a role",
+  "organizations.primary": "Primary organization",
 
   "org.olf.erm.SubscriptionAgreement.name.unique": "This name already exists",
 

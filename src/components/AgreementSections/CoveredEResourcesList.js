@@ -22,6 +22,9 @@ import {
   Tooltip,
 } from '@folio/stripes/components';
 
+
+import { AppIcon } from '@folio/stripes/core';
+
 import {
   getResourceIdentifier,
   TitleOnPlatformLink
@@ -74,7 +77,16 @@ export default class CoveredEResourcesList extends React.Component {
   formatter = {
     name: e => {
       const titleInstanceName = e?._object?.pti?.titleInstance?.name;
-      return <Link to={urls.eresourceView(e.id)}>{titleInstanceName}</Link>;
+      return (
+        <AppIcon
+          app="agreements"
+          iconAlignment="baseline"
+          iconKey="eresource"
+          size="small"
+        >
+          <Link to={urls.eresourceView(e.id)}>{titleInstanceName}</Link>
+        </AppIcon>
+      );
     },
     issn: e => {
       const titleInstance = get(e._object, 'pti.titleInstance', {});

@@ -200,6 +200,16 @@ class Agreement extends React.Component {
     };
   }
 
+  showSupplementaryPropertiesAccordion = () => {
+    const { data } = this.props;
+    const primaryprops = data.supplementaryProperties?.filter(p => p.primary === true).length;
+    let custprops = 0;
+    if (data.agreement?.customProperties !== undefined) {
+      custprops = Object.keys(data.agreement?.customProperties).length;
+    }
+    return !!(primaryprops || custprops);
+  }
+
   renderEditAgreementPaneMenu = () => {
     const {
       data: { agreement },
@@ -212,7 +222,7 @@ class Agreement extends React.Component {
         <FormattedMessage id="ui-agreements.agreements.showTags">
           {ariaLabel => (
             <IconButton
-              ariaLabel={ariaLabel}
+              ariaLabel={typeof ariaLabel === 'string' ? ariaLabel : ariaLabel[0]}
               badgeCount={agreement?.tags?.length ?? 0}
               icon="tag"
               id="clickable-show-tags"
@@ -303,11 +313,11 @@ class Agreement extends React.Component {
                   { data.agreement?.externalLicenseDocs?.length > 0 && <ExternalLicenses {...this.getSectionProps('externalLicenses')} /> }
                   { controllingLicenses?.length > 0 && <Terms {...this.getSectionProps('terms')} /> }
                   { data.agreement?.orgs?.length > 0 && <Organizations {...this.getSectionProps('organizations')} /> }
-                  { data.supplementaryProperties?.length > 0 && <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} /> }
+                  { this.showSupplementaryPropertiesAccordion() && <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} /> }
                   { data.agreement?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} /> }
                   { data.agreement?.usageDataProviders?.length > 0 && <UsageData {...this.getSectionProps('usageData')} /> }
                   { data.agreement?.relatedAgreements?.length > 0 && <RelatedAgreements {...this.getSectionProps('relatedAgreements')} /> }
-                  <HandlerManager event="ui-agreements-extension" stripes={this.props.stripes} />
+                  <HandlerManager data={{ data }} event="ui-agreements-extension" stripes={this.props.stripes} />
                   <NotesSmartAccordion
                     {...this.getSectionProps('notes')}
                     domainName="agreements"

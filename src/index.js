@@ -1,16 +1,22 @@
 import React, { lazy, Suspense } from 'react';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Switch } from 'react-router-dom';
-import { Route } from '@folio/stripes/core';
+import { AppContextMenu, Route } from '@folio/stripes/core';
 import {
   CommandList,
   HasCommand,
+  KeyboardShortcutsModal,
   Layout,
+  NavList,
+  NavListItem,
+  NavListSection,
   checkScope,
   defaultKeyboardShortcuts,
 } from '@folio/stripes/components';
 
 import css from './index.css';
+import setUpRegistry from './setUpRegistry';
 
 const AgreementsRoute = lazy(() => import('./routes/AgreementsRoute'));
 const AgreementCreateRoute = lazy(() => import('./routes/AgreementCreateRoute'));
@@ -45,6 +51,15 @@ const OpenBasketButton = lazy(() => import('./components/OpenBasketButton'));
 const Settings = lazy(() => import('./settings'));
 
 class App extends React.Component {
+  static eventHandler(event, _s, data) {
+    if (event === 'ui-dashboard-registry-load') {
+      // Data should contain Registry singleton:
+      setUpRegistry(data);
+    }
+
+    return null;
+  }
+
   static propTypes = {
     history: PropTypes.object,
     location: PropTypes.shape({
@@ -53,6 +68,19 @@ class App extends React.Component {
     match: PropTypes.object.isRequired,
     actAs: PropTypes.string.isRequired,
     stripes: PropTypes.object.isRequired,
+  }
+
+  state = {
+    showKeyboardShortcutsModal: false,
+  };
+
+  changeKeyboardShortcutsModal = (modalState) => {
+    this.setState({ showKeyboardShortcutsModal: modalState });
+  };
+
+  shortcutModalToggle(handleToggle) {
+    handleToggle();
+    this.changeKeyboardShortcutsModal(true);
   }
 
   searchInput = () => {
@@ -84,6 +112,10 @@ class App extends React.Component {
       name: 'search',
       handler: this.focusSearchField
     },
+    {
+      name: 'openShortcutModal',
+      handler: this.changeKeyboardShortcutsModal
+    },
   ];
 
   render() {
@@ -98,60 +130,83 @@ class App extends React.Component {
     }
 
     return (
-      <CommandList commands={defaultKeyboardShortcuts}>
-        <HasCommand
-          commands={this.shortcuts}
-          isWithinScope={checkScope}
-          scope={document.body}
-        >
-          <div className={css.container}>
-            <Suspense fallback={null}>
-              <IfEResourcesEnabled>
-                <Layout className={`${css.header} display-flex justify-end full padding-top-gutter padding-start-gutter padding-end-gutter`}>
-                  <OpenBasketButton />
-                </Layout>
-              </IfEResourcesEnabled>
-              <div className={css.body}>
-                <Switch>
-                  <Route component={AgreementCreateRoute} path={`${path}/agreements/create`} />
-                  <Route component={AgreementEditRoute} path={`${path}/agreements/:id/edit`} />
-                  <Route component={AgreementLineCreateRoute} path={`${path}/agreements/:agreementId/line/create`} />
-                  <Route component={AgreementLineEditRoute} path={`${path}/agreements/:agreementId/line/:lineId/edit`} />
-                  <Route component={AgreementsRoute} path={`${path}/agreements/:id?`}>
-                    <Switch>
-                      <Route component={AgreementLineViewRoute} path={`${path}/agreements/:agreementId/line/:lineId`} />
-                      <Route component={AgreementViewRoute} path={`${path}/agreements/:id`} />
-                    </Switch>
-                  </Route>
+      <>
+        <CommandList commands={defaultKeyboardShortcuts}>
+          <HasCommand
+            commands={this.shortcuts}
+            isWithinScope={checkScope}
+            scope={document.body}
+          >
+            <AppContextMenu>
+              {(handleToggle) => (
+                <NavList>
+                  <NavListSection>
+                    <NavListItem
+                      id="keyboard-shortcuts-item"
+                      onClick={() => { this.shortcutModalToggle(handleToggle); }}
+                    >
+                      <FormattedMessage id="ui-agreements.appMenu.keyboardShortcuts" />
+                    </NavListItem>
+                  </NavListSection>
+                </NavList>
+              )}
+            </AppContextMenu>
+            <div className={css.container}>
+              <Suspense fallback={null}>
+                <IfEResourcesEnabled>
+                  <Layout className={`${css.header} display-flex justify-end full padding-top-gutter padding-start-gutter padding-end-gutter`}>
+                    <OpenBasketButton />
+                  </Layout>
+                </IfEResourcesEnabled>
+                <div className={css.body}>
+                  <Switch>
+                    <Route component={AgreementCreateRoute} path={`${path}/agreements/create`} />
+                    <Route component={AgreementEditRoute} path={`${path}/agreements/:id/edit`} />
+                    <Route component={AgreementLineCreateRoute} path={`${path}/agreements/:agreementId/line/create`} />
+                    <Route component={AgreementLineEditRoute} path={`${path}/agreements/:agreementId/line/:lineId/edit`} />
+                    <Route component={AgreementsRoute} path={`${path}/agreements/:id?`}>
+                      <Switch>
+                        <Route component={AgreementLineViewRoute} path={`${path}/agreements/:agreementId/line/:lineId`} />
+                        <Route component={AgreementViewRoute} path={`${path}/agreements/:id`} />
+                      </Switch>
+                    </Route>
 
-                  <Route component={EResourceEditRoute} path={`${path}/eresources/:id/edit`} />
-                  <Route component={EResourcesRoute} path={`${path}/eresources/:id?`}>
-                    <Suspense fallback={null}>
-                      <Route component={EResourceViewRoute} path={`${path}/eresources/:id`} />
-                    </Suspense>
-                  </Route>
+                    <Route component={EResourceEditRoute} path={`${path}/eresources/:id/edit`} />
+                    <Route component={EResourcesRoute} path={`${path}/eresources/:id?`}>
+                      <Suspense fallback={null}>
+                        <Route component={EResourceViewRoute} path={`${path}/eresources/:id`} />
+                      </Suspense>
+                    </Route>
 
-                  <Route component={NoteCreateRoute} path={`${path}/notes/create`} />
-                  <Route component={NoteEditRoute} path={`${path}/notes/:id/edit`} />
-                  <Route component={NoteViewRoute} path={`${path}/notes/:id`} />
+                    <Route component={NoteCreateRoute} path={`${path}/notes/create`} />
+                    <Route component={NoteEditRoute} path={`${path}/notes/:id/edit`} />
+                    <Route component={NoteViewRoute} path={`${path}/notes/:id`} />
 
-                  <Route component={PlatformEditRoute} path={`${path}/platforms/:id/edit`} />
-                  <Route component={UrlCustomizerCreateRoute} path={`${path}/platforms/:platformId/urlcustomizer/create`} />
-                  <Route component={UrlCustomizerEditRoute} path={`${path}/platforms/:platformId/urlcustomizer/:templateId/edit`} />
-                  <Route component={PlatformsRoute} path={`${path}/platforms/:id?`}>
-                    <Switch>
-                      <Route component={UrlCustomizerViewRoute} path={`${path}/platforms/:platformId/urlcustomizer/:templateId`} />
-                      <Route component={PlatformViewRoute} path={`${path}/platforms/:id`} />
-                    </Switch>
-                  </Route>
+                    <Route component={PlatformEditRoute} path={`${path}/platforms/:id/edit`} />
+                    <Route component={UrlCustomizerCreateRoute} path={`${path}/platforms/:platformId/urlcustomizer/create`} />
+                    <Route component={UrlCustomizerEditRoute} path={`${path}/platforms/:platformId/urlcustomizer/:templateId/edit`} />
+                    <Route component={PlatformsRoute} path={`${path}/platforms/:id?`}>
+                      <Switch>
+                        <Route component={UrlCustomizerViewRoute} path={`${path}/platforms/:platformId/urlcustomizer/:templateId`} />
+                        <Route component={PlatformViewRoute} path={`${path}/platforms/:id`} />
+                      </Switch>
+                    </Route>
 
-                  <Route component={BasketRoute} path={`${path}/basket`} />
-                </Switch>
-              </div>
-            </Suspense>
-          </div>
-        </HasCommand>
-      </CommandList>
+                    <Route component={BasketRoute} path={`${path}/basket`} />
+                  </Switch>
+                </div>
+              </Suspense>
+            </div>
+          </HasCommand>
+        </CommandList>
+        { this.state.showKeyboardShortcutsModal && (
+        <KeyboardShortcutsModal
+          allCommands={defaultKeyboardShortcuts}
+          onClose={() => { this.changeKeyboardShortcutsModal(false); }}
+          open
+        />
+      )}
+      </>
     );
   }
 }
