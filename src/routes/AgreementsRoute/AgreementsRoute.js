@@ -122,7 +122,9 @@ class AgreementsRoute extends React.Component {
 
   componentDidMount() {
     this.source = new StripesConnectedSource(this.props, this.logger, 'agreements');
-    this.searchField.current.focus();
+    if (this.searchField.current) {
+      this.searchField.current.focus();
+    }
   }
 
   componentDidUpdate(prevProps) {
