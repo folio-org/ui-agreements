@@ -42,8 +42,7 @@ FormSupplementaryDocuments.propTypes = {
   }),
   id: PropTypes.string,
   onToggle: PropTypes.func,
-  open: PropTypes.bool,
-  stripes: PropTypes.object
+  open: PropTypes.bool
 };
 
 export default FormSupplementaryDocuments;

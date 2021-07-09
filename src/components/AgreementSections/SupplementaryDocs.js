@@ -60,8 +60,7 @@ SupplementaryDocs.propTypes = {
       }),
     ),
   }),
-  id: PropTypes.string,
-  stripes: PropTypes.object
+  id: PropTypes.string
 };
 
 export default SupplementaryDocs;
