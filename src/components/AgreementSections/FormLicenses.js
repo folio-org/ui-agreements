@@ -5,27 +5,22 @@ import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
 import { Accordion, Headline, KeyValue, TextArea } from '@folio/stripes/components';
-import { withStripes } from '@folio/stripes/core';
+import { useStripes } from '@folio/stripes/core';
 import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 
 import LicensesFieldArray from '../LicensesFieldArray';
 
-class FormLicenses extends React.Component {
-  static propTypes = {
-    data: PropTypes.shape({
-      agreement: PropTypes.object,
-      amendmentStatusValues: PropTypes.arrayOf(PropTypes.object),
-      licenseLinkStatusValues: PropTypes.arrayOf(PropTypes.object),
-    }),
-    form: PropTypes.object,
-    handlers: PropTypes.object,
-    id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
-    stripes: PropTypes.object
-  };
+const FormLicenses = ({
+  data,
+  form,
+  handlers,
+  id,
+  onToggle,
+  open,
+}) => {
+  const stripes = useStripes();
 
-  renderNote = () => (
+  const renderNote = () => (
     <Field
       component={TextArea}
       id="edit-agreement-licenseNote"
@@ -34,9 +29,9 @@ class FormLicenses extends React.Component {
       name="licenseNote"
       parse={v => v} // Lets us send an empty string instead of `undefined`
     />
-  )
+  );
 
-  renderLinkedLicenses = () => (
+  const renderLinkedLicenses = () => (
     <div data-test-licenses-form-all-licenses>
       <KeyValue
         label={
@@ -46,18 +41,17 @@ class FormLicenses extends React.Component {
         }
       >
         <FieldArray
-          amendmentStatusValues={this.props.data.amendmentStatusValues}
+          amendmentStatusValues={data.amendmentStatusValues}
           component={LicensesFieldArray}
-          form={this.props.form}
-          licenseStatusValues={this.props.data.licenseLinkStatusValues}
+          form={form}
+          licenseStatusValues={data.licenseLinkStatusValues}
           name="linkedLicenses"
         />
       </KeyValue>
     </div>
-  )
+  );
 
-  renderExternalLicenses = () => {
-    const { stripes } = this.props;
+  const renderExternalLicenses = () => {
     return (
       <div data-test-licenses-form-external-licenses>
         <KeyValue
@@ -74,34 +68,39 @@ class FormLicenses extends React.Component {
             hasDownloadPerm={stripes.hasPerm('ui-agreements.agreements.file.download')}
             isEmptyMessage={<FormattedMessage id="ui-agreements.license.noExternalLicenses" />}
             name="externalLicenseDocs"
-            onDownloadFile={this.props.handlers.onDownloadFile}
-            onUploadFile={this.props.handlers.onUploadFile}
+            onDownloadFile={handlers.onDownloadFile}
+            onUploadFile={handlers.onUploadFile}
           />
         </KeyValue>
       </div>
     );
-  }
+  };
 
-  render() {
-    const {
-      id,
-      onToggle,
-      open,
-    } = this.props;
+  return (
+    <Accordion
+      id={id}
+      label={<FormattedMessage id="ui-agreements.agreements.licenseInfo" />}
+      onToggle={onToggle}
+      open={open}
+    >
+      {renderNote()}
+      {renderLinkedLicenses()}
+      {renderExternalLicenses()}
+    </Accordion>
+  );
+};
 
-    return (
-      <Accordion
-        id={id}
-        label={<FormattedMessage id="ui-agreements.agreements.licenseInfo" />}
-        onToggle={onToggle}
-        open={open}
-      >
-        {this.renderNote()}
-        {this.renderLinkedLicenses()}
-        {this.renderExternalLicenses()}
-      </Accordion>
-    );
-  }
-}
+FormLicenses.propTypes = {
+  data: PropTypes.shape({
+    agreement: PropTypes.object,
+    amendmentStatusValues: PropTypes.arrayOf(PropTypes.object),
+    licenseLinkStatusValues: PropTypes.arrayOf(PropTypes.object),
+  }),
+  form: PropTypes.object,
+  handlers: PropTypes.object,
+  id: PropTypes.string,
+  onToggle: PropTypes.func,
+  open: PropTypes.bool,
+};
 
-export default withStripes(FormLicenses);
+export default FormLicenses;
