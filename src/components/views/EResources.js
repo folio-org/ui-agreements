@@ -26,7 +26,8 @@ import {
 import {
   getResourceIdentifier,
   getSiblingIdentifier,
-  EResourceType
+  EResourceType,
+  useHandleSubmitSearch
 } from '@folio/stripes-erm-components';
 import EResourceFilters from '../EResourceFilters';
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
@@ -72,6 +73,8 @@ const EResources = ({
 
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
+  const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
+
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
@@ -115,7 +118,7 @@ const EResources = ({
                     }
                     paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                   >
-                    <form onSubmit={onSubmitSearch}>
+                    <form onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}>
                       <IfEResourcesEnabled>
                         <ButtonGroup fullWidth>
                           <Button
@@ -216,6 +219,7 @@ const EResources = ({
                       <FormattedMessage id="stripes-smart-components.searchCriteria" />
                   }
                   paneTitle={<FormattedMessage id="ui-agreements.eresources" />}
+                  paneTitleRef={resultsPaneTitleRef}
                 >
                   <MultiColumnList
                     autosize

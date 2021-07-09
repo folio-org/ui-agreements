@@ -117,10 +117,14 @@ class AgreementsRoute extends React.Component {
     this.state = {
       hasPerms: props.stripes.hasPerm('ui-agreements.agreements.view'),
     };
+    this.searchField = React.createRef();
   }
 
   componentDidMount() {
     this.source = new StripesConnectedSource(this.props, this.logger, 'agreements');
+    if (this.searchField.current) {
+      this.searchField.current.focus();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -180,6 +184,7 @@ class AgreementsRoute extends React.Component {
         onNeedMoreData={this.handleNeedMoreData}
         queryGetter={this.queryGetter}
         querySetter={this.querySetter}
+        searchField={this.searchField}
         searchString={location.search}
         source={this.source}
       >
