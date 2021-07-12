@@ -5,25 +5,22 @@ import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
 import { Accordion, Headline, KeyValue, TextArea } from '@folio/stripes/components';
+import { useStripes } from '@folio/stripes/core';
 import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 
 import LicensesFieldArray from '../LicensesFieldArray';
 
-export default class FormLicenses extends React.Component {
-  static propTypes = {
-    data: PropTypes.shape({
-      agreement: PropTypes.object,
-      amendmentStatusValues: PropTypes.arrayOf(PropTypes.object),
-      licenseLinkStatusValues: PropTypes.arrayOf(PropTypes.object),
-    }),
-    form: PropTypes.object,
-    handlers: PropTypes.object,
-    id: PropTypes.string,
-    onToggle: PropTypes.func,
-    open: PropTypes.bool,
-  };
+const FormLicenses = ({
+  data,
+  form,
+  handlers,
+  id,
+  onToggle,
+  open,
+}) => {
+  const stripes = useStripes();
 
-  renderNote = () => (
+  const renderNote = () => (
     <Field
       component={TextArea}
       id="edit-agreement-licenseNote"
@@ -32,9 +29,9 @@ export default class FormLicenses extends React.Component {
       name="licenseNote"
       parse={v => v} // Lets us send an empty string instead of `undefined`
     />
-  )
+  );
 
-  renderLinkedLicenses = () => (
+  const renderLinkedLicenses = () => (
     <div data-test-licenses-form-all-licenses>
       <KeyValue
         label={
@@ -44,56 +41,66 @@ export default class FormLicenses extends React.Component {
         }
       >
         <FieldArray
-          amendmentStatusValues={this.props.data.amendmentStatusValues}
+          amendmentStatusValues={data.amendmentStatusValues}
           component={LicensesFieldArray}
-          form={this.props.form}
-          licenseStatusValues={this.props.data.licenseLinkStatusValues}
+          form={form}
+          licenseStatusValues={data.licenseLinkStatusValues}
           name="linkedLicenses"
         />
       </KeyValue>
     </div>
-  )
+  );
 
-  renderExternalLicenses = () => (
-    <div data-test-licenses-form-external-licenses>
-      <KeyValue
-        label={
-          <Headline margin="x-small" size="large" tag="h4">
-            <FormattedMessage id="ui-agreements.license.externalLicenses" />
-          </Headline>
-        }
-      >
-        <FieldArray
-          addDocBtnLabel={<FormattedMessage id="ui-agreements.license.addExternalLicense" />}
-          component={DocumentsFieldArray}
-          deleteBtnTooltipMsgId="ui-agreements.doc.removeExternalLicense"
-          isEmptyMessage={<FormattedMessage id="ui-agreements.license.noExternalLicenses" />}
-          name="externalLicenseDocs"
-          onDownloadFile={this.props.handlers.onDownloadFile}
-          onUploadFile={this.props.handlers.onUploadFile}
-        />
-      </KeyValue>
-    </div>
-  )
-
-  render() {
-    const {
-      id,
-      onToggle,
-      open,
-    } = this.props;
-
+  const renderExternalLicenses = () => {
     return (
-      <Accordion
-        id={id}
-        label={<FormattedMessage id="ui-agreements.agreements.licenseInfo" />}
-        onToggle={onToggle}
-        open={open}
-      >
-        {this.renderNote()}
-        {this.renderLinkedLicenses()}
-        {this.renderExternalLicenses()}
-      </Accordion>
+      <div data-test-licenses-form-external-licenses>
+        <KeyValue
+          label={
+            <Headline margin="x-small" size="large" tag="h4">
+              <FormattedMessage id="ui-agreements.license.externalLicenses" />
+            </Headline>
+          }
+        >
+          <FieldArray
+            addDocBtnLabel={<FormattedMessage id="ui-agreements.license.addExternalLicense" />}
+            component={DocumentsFieldArray}
+            deleteBtnTooltipMsgId="ui-agreements.doc.removeExternalLicense"
+            hasDownloadPerm={stripes.hasPerm('ui-agreements.agreements.file.download')}
+            isEmptyMessage={<FormattedMessage id="ui-agreements.license.noExternalLicenses" />}
+            name="externalLicenseDocs"
+            onDownloadFile={handlers.onDownloadFile}
+            onUploadFile={handlers.onUploadFile}
+          />
+        </KeyValue>
+      </div>
     );
-  }
-}
+  };
+
+  return (
+    <Accordion
+      id={id}
+      label={<FormattedMessage id="ui-agreements.agreements.licenseInfo" />}
+      onToggle={onToggle}
+      open={open}
+    >
+      {renderNote()}
+      {renderLinkedLicenses()}
+      {renderExternalLicenses()}
+    </Accordion>
+  );
+};
+
+FormLicenses.propTypes = {
+  data: PropTypes.shape({
+    agreement: PropTypes.object,
+    amendmentStatusValues: PropTypes.arrayOf(PropTypes.object),
+    licenseLinkStatusValues: PropTypes.arrayOf(PropTypes.object),
+  }),
+  form: PropTypes.object,
+  handlers: PropTypes.object,
+  id: PropTypes.string,
+  onToggle: PropTypes.func,
+  open: PropTypes.bool,
+};
+
+export default FormLicenses;
