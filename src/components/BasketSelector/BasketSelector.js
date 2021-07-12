@@ -29,8 +29,7 @@ export default class BasketSelector extends React.Component {
   }
 
   state = {
-    // item: { id: '' },
-    item: {},
+    item: { id: '' },
   }
 
   handleChange = id => {

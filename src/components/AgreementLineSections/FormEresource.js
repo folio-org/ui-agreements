@@ -64,6 +64,7 @@ const FormEresource = ({
 
   // validation fires when there is no description and no eresource
   const required = (val, allValues) => {
+    console.log(val, 'val');
     if (allValues.description?.length > 0 || (!isEmpty(val) && !isDetached(val))) {
       return undefined;
     }
@@ -91,16 +92,13 @@ const FormEresource = ({
               addButtonLabel={<FormattedMessage id="ui-agreements.agreementLine.linkSelectedEresource" />}
               basket={basket}
               component={BasketSelector}
-              error={meta.touched && meta.error}
+              error={(meta.touched && meta.error) || meta.data.error}
               label={<FormattedMessage id="ui-agreements.eresource" />}
               name={input.name}
-              /* onAdd={resource => {
-                input.onChange(resource);
-                setCovergeFieldWarnings(false);
-              }} */
               onAdd={resource => {
                 if (isEmpty(resource)) {
                   setFieldData('linkedResource', { error: 'customError' });
+                  input.onChange(resource);
                   return;
                 }
                 input.onChange(resource);
