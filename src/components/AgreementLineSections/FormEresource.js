@@ -64,19 +64,17 @@ const FormEresource = ({
 
   // validation fires when there is no description and no eresource
   const required = (val, allValues) => {
-    console.log(val, 'val');
     if (allValues.description?.length > 0 || (!isEmpty(val) && !isDetached(val))) {
       return undefined;
     }
-    // return <FormattedMessage id="ui-agreements.agreementLine.provideEresource" />;
-    return 'validation message from FormEresource';
+    return <FormattedMessage id="ui-agreements.agreementLine.provideEresource" />;
   };
 
   return (
     <Field name="linkedResource" validate={required}>
       {({ input, meta }) => {
         const res = isExternal(input.value) ? input.value : (input.value.resource?._object ?? {});
-        if (!isEmpty(input.value) && !isDetached(input.value)) {
+        if (!isEmpty(input.value) && !isDetached(input.value) && !isEmpty(input.value?.id)) {
           return (
             <FormEresourceCard
               component={FormEresourceCard}
@@ -96,9 +94,9 @@ const FormEresource = ({
               label={<FormattedMessage id="ui-agreements.eresource" />}
               name={input.name}
               onAdd={resource => {
-                if (isEmpty(resource)) {
-                  setFieldData('linkedResource', { error: 'customError' });
-                  input.onChange(resource);
+                if (isEmpty(resource.id)) {
+                  setFieldData('linkedResource', { error: <FormattedMessage id="ui-agreements.basketSelector.selectResourceMessage" /> });
+                  input.onChange();
                   return;
                 }
                 input.onChange(resource);
