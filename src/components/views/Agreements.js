@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
@@ -13,7 +13,8 @@ import {
   Pane,
   PaneMenu,
   SearchField,
-  checkScope
+  checkScope,
+
 } from '@folio/stripes/components';
 
 import { AppIcon, IfPermission } from '@folio/stripes/core';
@@ -25,6 +26,7 @@ import {
   SearchAndSortNoResultsMessage,
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
+import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
 import { statuses } from '../../constants';
 import AgreementFilters from '../AgreementFilters';
@@ -47,10 +49,12 @@ const propTypes = {
   onNeedMoreData: PropTypes.func.isRequired,
   queryGetter: PropTypes.func.isRequired,
   querySetter: PropTypes.func.isRequired,
+  searchField: PropTypes.object,
   searchString: PropTypes.string,
   source: PropTypes.shape({
     loaded: PropTypes.func,
     totalCount: PropTypes.func,
+    pending: PropTypes.func
   }),
 };
 
@@ -61,6 +65,7 @@ const Agreements = ({
   data = {},
   history,
   onNeedMoreData,
+  searchField,
   queryGetter,
   querySetter,
   searchString = '',
@@ -70,11 +75,10 @@ const Agreements = ({
   const query = queryGetter() ?? {};
   const sortOrder = query.sort ?? '';
 
-  const searchField = useRef(null);
-
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
-
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
+  const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
+
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
@@ -139,7 +143,7 @@ const Agreements = ({
                     }
                     paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                   >
-                    <form onSubmit={onSubmitSearch}>
+                    <form onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}>
                       <IfEResourcesEnabled>
                         <ButtonGroup fullWidth>
                           <Button
@@ -172,7 +176,6 @@ const Agreements = ({
                           {ariaLabel => (
                             <SearchField
                               aria-label={ariaLabel}
-                              autoFocus
                               className={css.searchField}
                               data-test-agreement-search-input
                               id="input-agreement-search"
@@ -261,6 +264,7 @@ const Agreements = ({
                       <FormattedMessage id="stripes-smart-components.searchCriteria" />
                   }
                   paneTitle={<FormattedMessage id="ui-agreements.agreements" />}
+                  paneTitleRef={resultsPaneTitleRef}
                 >
                   <MultiColumnList
                     autosize

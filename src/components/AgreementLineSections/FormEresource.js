@@ -67,7 +67,8 @@ const FormEresource = ({
     if (allValues.description?.length > 0 || (!isEmpty(val) && !isDetached(val))) {
       return undefined;
     }
-    return <FormattedMessage id="ui-agreements.agreementLine.provideEresource" />;
+    // return <FormattedMessage id="ui-agreements.agreementLine.provideEresource" />;
+    return 'validation message from FormEresource';
   };
 
   return (
@@ -93,7 +94,15 @@ const FormEresource = ({
               error={meta.touched && meta.error}
               label={<FormattedMessage id="ui-agreements.eresource" />}
               name={input.name}
+              /* onAdd={resource => {
+                input.onChange(resource);
+                setCovergeFieldWarnings(false);
+              }} */
               onAdd={resource => {
+                if (isEmpty(resource)) {
+                  setFieldData('linkedResource', { error: 'customError' });
+                  return;
+                }
                 input.onChange(resource);
                 setCovergeFieldWarnings(false);
               }}
