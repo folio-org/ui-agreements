@@ -64,7 +64,7 @@ const FormEresource = ({
 
   // validation fires when there is no description and no eresource
   const required = (val, allValues) => {
-    if (allValues.description?.length > 0 || (!isEmpty(val) && !isDetached(val))) {
+    if (allValues.description?.length > 0 || (!isEmpty(val) && !isDetached(val) && !isEmpty(val?.id))) {
       return undefined;
     }
     return <FormattedMessage id="ui-agreements.agreementLine.provideEresource" />;
@@ -96,7 +96,7 @@ const FormEresource = ({
               onAdd={resource => {
                 if (!resource.id) {
                   setFieldData('linkedResource', { error: <FormattedMessage id="ui-agreements.basketSelector.selectResourceMessage" /> });
-                  input.onChange(resource);
+                  input.onChange();
                   return;
                 }
                 input.onChange(resource);
