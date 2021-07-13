@@ -48,7 +48,7 @@ import UrlCustomizerCreateRoute from './routes/UrlCustomizerCreateRoute';
 import IfEResourcesEnabled from './components/IfEResourcesEnabled';
 import OpenBasketButton from './components/OpenBasketButton';
 
-import Settings from './Settings';
+import Settings from './settings';
 
 class App extends React.Component {
   static eventHandler(event, _s, data) {
