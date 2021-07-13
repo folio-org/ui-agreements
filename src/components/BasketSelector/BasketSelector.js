@@ -114,7 +114,6 @@ export default class BasketSelector extends React.Component {
     return (
       <Button
         buttonStyle="primary"
-        // disabled={!item.id}
         fullWidth={this.props.fullWidth}
         id={`${name}-basket-selector-add-button`}
         onClick={() => { onAdd(item); }}

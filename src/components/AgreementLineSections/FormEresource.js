@@ -94,9 +94,9 @@ const FormEresource = ({
               label={<FormattedMessage id="ui-agreements.eresource" />}
               name={input.name}
               onAdd={resource => {
-                if (isEmpty(resource.id)) {
+                if (!resource.id) {
                   setFieldData('linkedResource', { error: <FormattedMessage id="ui-agreements.basketSelector.selectResourceMessage" /> });
-                  input.onChange();
+                  input.onChange(resource);
                   return;
                 }
                 input.onChange(resource);
