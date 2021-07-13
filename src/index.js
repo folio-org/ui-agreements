@@ -122,7 +122,7 @@ class App extends React.Component {
     const { actAs, match: { path } } = this.props;
 
     if (actAs === 'settings') {
-      return <Settings {...this.props} />
+      return <Settings {...this.props} />;
     }
 
     return (
@@ -148,46 +148,46 @@ class App extends React.Component {
               )}
             </AppContextMenu>
             <div className={css.container}>
-                <IfEResourcesEnabled>
-                  <Layout className={`${css.header} display-flex justify-end full padding-top-gutter padding-start-gutter padding-end-gutter`}>
-                    <OpenBasketButton />
-                  </Layout>
-                </IfEResourcesEnabled>
-                <div className={css.body}>
-                  <Switch>
-                    <Route component={AgreementCreateRoute} path={`${path}/agreements/create`} />
-                    <Route component={AgreementEditRoute} path={`${path}/agreements/:id/edit`} />
-                    <Route component={AgreementLineCreateRoute} path={`${path}/agreements/:agreementId/line/create`} />
-                    <Route component={AgreementLineEditRoute} path={`${path}/agreements/:agreementId/line/:lineId/edit`} />
-                    <Route component={AgreementsRoute} path={`${path}/agreements/:id?`}>
-                      <Switch>
-                        <Route component={AgreementLineViewRoute} path={`${path}/agreements/:agreementId/line/:lineId`} />
-                        <Route component={AgreementViewRoute} path={`${path}/agreements/:id`} />
-                      </Switch>
-                    </Route>
+              <IfEResourcesEnabled>
+                <Layout className={`${css.header} display-flex justify-end full padding-top-gutter padding-start-gutter padding-end-gutter`}>
+                  <OpenBasketButton />
+                </Layout>
+              </IfEResourcesEnabled>
+              <div className={css.body}>
+                <Switch>
+                  <Route component={AgreementCreateRoute} path={`${path}/agreements/create`} />
+                  <Route component={AgreementEditRoute} path={`${path}/agreements/:id/edit`} />
+                  <Route component={AgreementLineCreateRoute} path={`${path}/agreements/:agreementId/line/create`} />
+                  <Route component={AgreementLineEditRoute} path={`${path}/agreements/:agreementId/line/:lineId/edit`} />
+                  <Route component={AgreementsRoute} path={`${path}/agreements/:id?`}>
+                    <Switch>
+                      <Route component={AgreementLineViewRoute} path={`${path}/agreements/:agreementId/line/:lineId`} />
+                      <Route component={AgreementViewRoute} path={`${path}/agreements/:id`} />
+                    </Switch>
+                  </Route>
 
-                    <Route component={EResourceEditRoute} path={`${path}/eresources/:id/edit`} />
-                    <Route component={EResourcesRoute} path={`${path}/eresources/:id?`}>
-                        <Route component={EResourceViewRoute} path={`${path}/eresources/:id`} />
-                    </Route>
+                  <Route component={EResourceEditRoute} path={`${path}/eresources/:id/edit`} />
+                  <Route component={EResourcesRoute} path={`${path}/eresources/:id?`}>
+                    <Route component={EResourceViewRoute} path={`${path}/eresources/:id`} />
+                  </Route>
 
-                    <Route component={NoteCreateRoute} path={`${path}/notes/create`} />
-                    <Route component={NoteEditRoute} path={`${path}/notes/:id/edit`} />
-                    <Route component={NoteViewRoute} path={`${path}/notes/:id`} />
+                  <Route component={NoteCreateRoute} path={`${path}/notes/create`} />
+                  <Route component={NoteEditRoute} path={`${path}/notes/:id/edit`} />
+                  <Route component={NoteViewRoute} path={`${path}/notes/:id`} />
 
-                    <Route component={PlatformEditRoute} path={`${path}/platforms/:id/edit`} />
-                    <Route component={UrlCustomizerCreateRoute} path={`${path}/platforms/:platformId/urlcustomizer/create`} />
-                    <Route component={UrlCustomizerEditRoute} path={`${path}/platforms/:platformId/urlcustomizer/:templateId/edit`} />
-                    <Route component={PlatformsRoute} path={`${path}/platforms/:id?`}>
-                      <Switch>
-                        <Route component={UrlCustomizerViewRoute} path={`${path}/platforms/:platformId/urlcustomizer/:templateId`} />
-                        <Route component={PlatformViewRoute} path={`${path}/platforms/:id`} />
-                      </Switch>
-                    </Route>
+                  <Route component={PlatformEditRoute} path={`${path}/platforms/:id/edit`} />
+                  <Route component={UrlCustomizerCreateRoute} path={`${path}/platforms/:platformId/urlcustomizer/create`} />
+                  <Route component={UrlCustomizerEditRoute} path={`${path}/platforms/:platformId/urlcustomizer/:templateId/edit`} />
+                  <Route component={PlatformsRoute} path={`${path}/platforms/:id?`}>
+                    <Switch>
+                      <Route component={UrlCustomizerViewRoute} path={`${path}/platforms/:platformId/urlcustomizer/:templateId`} />
+                      <Route component={PlatformViewRoute} path={`${path}/platforms/:id`} />
+                    </Switch>
+                  </Route>
 
-                    <Route component={BasketRoute} path={`${path}/basket`} />
-                  </Switch>
-                </div>
+                  <Route component={BasketRoute} path={`${path}/basket`} />
+                </Switch>
+              </div>
             </div>
           </HasCommand>
         </CommandList>
