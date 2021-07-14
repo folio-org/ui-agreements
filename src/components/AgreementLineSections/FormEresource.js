@@ -53,7 +53,7 @@ const FormEresource = ({
         buttonStyle="default"
         marginBottom0
         onClick={() => {
-          onChange({});
+          onChange('');
           if (!isEmpty(values.coverage)) setCovergeFieldWarnings(true);
         }}
       >
@@ -64,7 +64,7 @@ const FormEresource = ({
 
   // validation fires when there is no description and no eresource
   const required = (val, allValues) => {
-    if (allValues.description?.length > 0 || (!isEmpty(val) && !isDetached(val))) {
+    if (allValues.description?.length > 0 || (!isEmpty(val) && !isDetached(val) && !isEmpty(val?.id))) {
       return undefined;
     }
     return <FormattedMessage id="ui-agreements.agreementLine.provideEresource" />;
@@ -74,7 +74,7 @@ const FormEresource = ({
     <Field name="linkedResource" validate={required}>
       {({ input, meta }) => {
         const res = isExternal(input.value) ? input.value : (input.value.resource?._object ?? {});
-        if (!isEmpty(input.value) && !isDetached(input.value)) {
+        if (!isEmpty(input.value) && !isDetached(input.value) && !isEmpty(input.value?.id)) {
           return (
             <FormEresourceCard
               component={FormEresourceCard}
@@ -94,10 +94,16 @@ const FormEresource = ({
               label={<FormattedMessage id="ui-agreements.eresource" />}
               name={input.name}
               onAdd={resource => {
+                if (!resource.id) {
+                  setFieldData('linkedResource', { warning: <FormattedMessage id="ui-agreements.basketSelector.selectResourceMessage" /> });
+                  input.onChange('');
+                  return;
+                }
                 input.onChange(resource);
+                setFieldData('linkedResource', { warning: '' });
                 setCovergeFieldWarnings(false);
               }}
-              value={input.value}
+              warning={meta.data.warning}
             />
           );
         } else {

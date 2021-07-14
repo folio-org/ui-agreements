@@ -181,6 +181,10 @@
 
   "basketSelector.selectLabel": "Select from basket",
   "basketSelector.selectPlaceholder": "Select e-resource or package",
+  "basketSelector.infoPopover": "A set of e-resources which are currently in the basket",
+  "basketSelector.emptyMessage": "No items in e-resource basket",
+  "basketSelector.linkSelectedEresource.tooltip": "An e-resource can be linked when it is has been added to the basket",
+  "basketSelector.selectResourceMessage": "Please select an e-resource to continue",
 
   "content.all": "All",
   "content.current": "Current",
