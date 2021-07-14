@@ -25,7 +25,8 @@ export default class BasketSelector extends React.Component {
     label: PropTypes.node,
     name: PropTypes.string,
     onAdd: PropTypes.func,
-    required: PropTypes.bool
+    required: PropTypes.bool,
+    warning: PropTypes.node
   }
 
   state = {
@@ -49,7 +50,7 @@ export default class BasketSelector extends React.Component {
         disabled: false,
       }))
     ];
-    const { error, name, required } = this.props;
+    const { error, name, required, warning } = this.props;
     const { item } = this.state;
 
     return (
@@ -77,6 +78,7 @@ export default class BasketSelector extends React.Component {
         required={required}
         validate={required && requiredValidator}
         value={item.id}
+        warning={warning}
       />
     );
   }

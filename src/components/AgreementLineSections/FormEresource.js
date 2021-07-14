@@ -63,12 +63,11 @@ const FormEresource = ({
   };
 
   // validation fires when there is no description and no eresource
-  const required = (val, allValues, meta) => {
-    if (!allValues.description?.length > 0 && meta.data.showBasketError) return <FormattedMessage id="ui-agreements.basketSelector.selectResourceMessage" />;
+  const required = (val, allValues) => {
     if (allValues.description?.length > 0 || (!isEmpty(val) && !isDetached(val) && !isEmpty(val?.id))) {
       return undefined;
     }
-    return meta.touched && <FormattedMessage id="ui-agreements.agreementLine.provideEresource" />;
+    return <FormattedMessage id="ui-agreements.agreementLine.provideEresource" />;
   };
 
   return (
@@ -91,19 +90,20 @@ const FormEresource = ({
               addButtonLabel={<FormattedMessage id="ui-agreements.agreementLine.linkSelectedEresource" />}
               basket={basket}
               component={BasketSelector}
-              error={meta.error}
+              error={meta.touched && meta.error}
               label={<FormattedMessage id="ui-agreements.eresource" />}
               name={input.name}
               onAdd={resource => {
                 if (!resource.id) {
-                  setFieldData('linkedResource', { 'showBasketError': true });
+                  setFieldData('linkedResource', { warning: <FormattedMessage id="ui-agreements.basketSelector.selectResourceMessage" /> });
                   input.onChange('');
                   return;
                 }
                 input.onChange(resource);
-                setFieldData('linkedResource', { 'showBasketError': false });
+                setFieldData('linkedResource', { warning: '' });
                 setCovergeFieldWarnings(false);
               }}
+              warning={meta.data.warning}
             />
           );
         } else {
