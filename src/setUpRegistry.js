@@ -1,23 +1,23 @@
-import React from 'react';
 import { InternalContactsArrayDisplay } from '@folio/stripes-erm-components';
 import AgreementLookup from './AgreementLookup';
 
 const setUpRegistry = (registry) => {
   // Agreement Resource
   const agreementReg = registry.registerResource('agreement');
-  agreementReg.addViewAll('/erm/agreements');
-  agreementReg.addViewTemplate(agreement => `/erm/agreements/${agreement.id}`);
+
+  agreementReg.setViewResources('/erm/agreements');
+  agreementReg.setViewResource(agreement => `/erm/agreements/${agreement.id}`);
 
   agreementReg.setRenderFunction('internalContacts', record => {
     return <InternalContactsArrayDisplay contacts={record.contacts} />;
   });
 
   // Lookup plugin
-  agreementReg.addLookupComponent(AgreementLookup);
+  agreementReg.setLookupComponent(AgreementLookup);
 
   // AgreementLine Resource
   const aglReg = registry.registerResource('agreementLine');
-  aglReg.addViewTemplate(al => `/erm/agreements/${al.owner?.id}/line/${al.id}`);
+  aglReg.setViewResource(al => `/erm/agreements/${al.owner?.id}/line/${al.id}`);
 };
 
 export default setUpRegistry;
