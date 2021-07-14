@@ -53,7 +53,7 @@ const FormEresource = ({
         buttonStyle="default"
         marginBottom0
         onClick={() => {
-          onChange({});
+          onChange('');
           if (!isEmpty(values.coverage)) setCovergeFieldWarnings(true);
         }}
       >
@@ -63,11 +63,12 @@ const FormEresource = ({
   };
 
   // validation fires when there is no description and no eresource
-  const required = (val, allValues) => {
+  const required = (val, allValues, meta) => {
+    if (!allValues.description?.length > 0 && meta.data.showBasketError) return <FormattedMessage id="ui-agreements.basketSelector.selectResourceMessage" />;
     if (allValues.description?.length > 0 || (!isEmpty(val) && !isDetached(val) && !isEmpty(val?.id))) {
       return undefined;
     }
-    return <FormattedMessage id="ui-agreements.agreementLine.provideEresource" />;
+    return meta.touched && <FormattedMessage id="ui-agreements.agreementLine.provideEresource" />;
   };
 
   return (
@@ -90,19 +91,19 @@ const FormEresource = ({
               addButtonLabel={<FormattedMessage id="ui-agreements.agreementLine.linkSelectedEresource" />}
               basket={basket}
               component={BasketSelector}
-              error={(meta.touched && meta.error) || meta.data.error}
+              error={meta.error}
               label={<FormattedMessage id="ui-agreements.eresource" />}
               name={input.name}
               onAdd={resource => {
                 if (!resource.id) {
-                  setFieldData('linkedResource', { error: <FormattedMessage id="ui-agreements.basketSelector.selectResourceMessage" /> });
-                  input.onChange({});
+                  setFieldData('linkedResource', { 'showBasketError': true });
+                  input.onChange('');
                   return;
                 }
                 input.onChange(resource);
+                setFieldData('linkedResource', { 'showBasketError': false });
                 setCovergeFieldWarnings(false);
               }}
-              value={input.value}
             />
           );
         } else {
