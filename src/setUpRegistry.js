@@ -13,7 +13,7 @@ const setUpRegistry = (registry) => {
   });
 
   // Lookup plugin
-  agreementReg.addLookupComponent(AgreementLookup);
+  agreementReg.setLookupComponent(AgreementLookup);
 
   // AgreementLine Resource
   const aglReg = registry.registerResource('agreementLine');
