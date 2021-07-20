@@ -6,6 +6,7 @@ import {
   Col,
   Headline,
   KeyValue,
+  MetaSection,
   NoValue,
   Row,
 } from '@folio/stripes/components';
@@ -22,8 +23,10 @@ const propTypes = {
   line: PropTypes.shape({
     activeFrom: PropTypes.string,
     activeTo: PropTypes.string,
+    dateCreated: PropTypes.string,
     description: PropTypes.string,
     id: PropTypes.string,
+    lastUpdated: PropTypes.string,
     note: PropTypes.string,
     owner: PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -45,6 +48,13 @@ const Info = ({
     <Headline size="x-large" tag="h2">
       <FormattedMessage id="ui-agreements.line.lineInformation" />
     </Headline>
+    <MetaSection
+      contentId="agreementLineInfoRecordMetaContent"
+      createdDate={line.dateCreated}
+      hideSource
+      id="agreementLineInfoRecordMeta"
+      lastUpdatedDate={line.lastUpdated}
+    />
     <KeyValue label={<FormattedMessage id="ui-agreements.line.parentAgreement" />}>
       <div data-test-agreement-line-agreement>
         {line.owner?.name ?? <NoValue />}
