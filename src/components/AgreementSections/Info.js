@@ -5,6 +5,7 @@ import {
   Col,
   Headline,
   KeyValue,
+  MetaSection,
   MultiColumnList,
   NoValue,
   Row,
@@ -28,6 +29,13 @@ const Info = ({ agreement }) => {
           </div>
         </Col>
       </Row>
+      <MetaSection
+        contentId="agreementInfoRecordMetaContent"
+        createdDate={agreement.dateCreated}
+        hideSource
+        id="agreementInfoRecordMeta"
+        lastUpdatedDate={agreement.lastUpdated}
+      />
       <Row>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.agreements.isPerpetual" />}>
@@ -98,10 +106,12 @@ Info.propTypes = {
     currentPeriod: PropTypes.shape({
       note: PropTypes.string,
     }),
+    dateCreated: PropTypes.string,
     description: PropTypes.string,
     isPerpetual: PropTypes.shape({
       label: PropTypes.string,
     }),
+    lastUpdated: PropTypes.string,
     licenseNote: PropTypes.string,
     name: PropTypes.string,
     reasonForClosure: PropTypes.shape({
