@@ -237,7 +237,7 @@ const agreement = {
    ]
 };
 
-describe.only('Header', () => {
+describe('Header', () => {
    beforeEach(() => {
       renderWithIntl(
         <Header
