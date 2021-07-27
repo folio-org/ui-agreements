@@ -63,6 +63,7 @@ const RelatedTitleInfo = ({
           <EResourceIdentifier titleInstance={relatedTitle} type="ezb" />
           <EResourceIdentifier titleInstance={relatedTitle} type="zdb" />
           <EResourceIdentifier titleInstance={relatedTitle} type="eissn" />
+          <EResourceIdentifier titleInstance={relatedTitle} type="pissn" />
           <EResourceIdentifier titleInstance={relatedTitle} type="issn" />
         </>
         }
