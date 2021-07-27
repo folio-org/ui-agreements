@@ -4,9 +4,9 @@ import { FormattedMessage } from 'react-intl';
 import { IfPermission } from '@folio/stripes/core';
 import { Button, Accordion, Badge, Spinner } from '@folio/stripes/components';
 
-import CoveredEResourcesList from './CoveredEResourcesList';
-import LinesList from './LinesList';
-import { urls } from '../utilities';
+import CoveredEResourcesList from '../CoveredEResourcesList';
+import LinesList from '../LinesList';
+import { urls } from '../../utilities';
 
 export default class Lines extends React.Component {
   static propTypes = {

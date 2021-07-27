@@ -107,6 +107,7 @@ describe('Package Content Filters', () => {
             describe('clicking the lines accordion', () => {
               beforeEach(async function () {
                 await agreementView.expandAll();
+                await agreementView.linesSection.whenLoaded();
               });
 
               it('should render the expected current eresource', () => {
