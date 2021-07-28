@@ -253,7 +253,7 @@ const EResources = ({
                       },
                       publicationType: e => <EResourceType resource={e} />,
                       isbn: e => getResourceIdentifier(e._object, 'isbn'),
-                      eissn: e => getResourceIdentifier(e._object, 'eissn'),
+                      eissn: e => getResourceIdentifier(e._object, 'eissn') ?? getResourceIdentifier(e._object, 'issn'),
                       pissn: e => getResourceIdentifier(e._object, 'pissn') ?? getSiblingIdentifier(e._object, 'issn'),
                     }}
                     id="list-eresources"
