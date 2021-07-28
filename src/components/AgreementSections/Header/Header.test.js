@@ -243,8 +243,8 @@ describe('Header', () => {
         <Header
           agreement={agreement}
         />,
-        translationsProperties
-       );
+         translationsProperties
+      );
    });
 
    test('renders the expected start date', async () => {

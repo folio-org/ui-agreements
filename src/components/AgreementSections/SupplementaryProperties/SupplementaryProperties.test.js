@@ -1,8 +1,7 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { screen } from '@testing-library/react';
-import { Accordion, MultiColumnList, MultiColumnListCell } from '@folio/stripes-testing';
+import { Accordion } from '@folio/stripes-testing';
 import SupplementaryProperties from './SupplementaryProperties';
 import translationsProperties from '../../../../test/helpers';
 
