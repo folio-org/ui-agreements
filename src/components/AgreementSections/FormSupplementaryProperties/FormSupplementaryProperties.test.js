@@ -5,7 +5,7 @@ import { Accordion } from '@folio/stripes-testing';
 import FormSupplementaryProperties from './FormSupplementaryProperties';
 import translationsProperties from '../../../../test/helpers';
 
-/* We mock the FormCustomProperties component here and test if that component renders as expecteda part of this test.
+/* We mock the FormCustomProperties component here and test if that component renders as expected as a part of this test.
 We neednt test out the  FormCustomProperties functionality in theses tests because we shouldnt be concerned with the
 underlying implementation of the child component */
 
