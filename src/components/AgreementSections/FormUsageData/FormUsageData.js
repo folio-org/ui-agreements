@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 import { Accordion } from '@folio/stripes/components';
 
-import UsageDataProvidersFieldArray from '../UsageDataProvidersFieldArray';
+import UsageDataProvidersFieldArray from '../../UsageDataProvidersFieldArray';
 
 export default class FormUsageData extends React.Component {
   static propTypes = {
