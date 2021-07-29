@@ -156,6 +156,7 @@ describe('Pick list', () => {
         const internalRefData = refDataCategories.find(category => !category.internal);
         beforeEach(async function () {
           await interactor.pickListDropdown.selectOption(internalRefData.desc);
+          await new Promise(resolve => { setTimeout(resolve, 500); });
         });
 
         describe('Clicking new button', () => {

@@ -42,6 +42,7 @@ const SerialResourceInfo = ({
       <EResourceIdentifier titleInstance={titleInstance} type="zdb" />
       <EResourceIdentifier titleInstance={titleInstance} type="eissn" />
       <EResourceIdentifier titleInstance={titleInstance} type="pissn" />
+      <EResourceIdentifier titleInstance={titleInstance} type="issn" />
     </Row>
   </>
 );
