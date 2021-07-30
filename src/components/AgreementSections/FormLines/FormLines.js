@@ -5,7 +5,7 @@ import { FieldArray } from 'react-final-form-arrays';
 
 import { Accordion } from '@folio/stripes/components';
 
-import AgreementLinesFieldArray from '../AgreementLinesFieldArray';
+import AgreementLinesFieldArray from '../../AgreementLinesFieldArray';
 
 export default class FormLines extends React.Component {
   static propTypes = {

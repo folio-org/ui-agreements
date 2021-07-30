@@ -10,7 +10,7 @@ We neednt test out the  FormCustomProperties functionality in theses tests becau
 underlying implementation of the child component */
 
 jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-components'),
+  ...jest.requireActual('@folio/stripes-erm-components'),
   FormCustomProperties: () => <div>FormCustomProperties</div>,
 }));
 
@@ -43,22 +43,20 @@ const data = {
 
 describe('FormSupplementaryProperties', () => {
   let renderComponent;
-  describe('with no initial values', () => {
-    beforeEach(() => {
-      renderComponent = renderWithIntl(
-        <TestForm onSubmit={onSubmit}>
-          <FormSupplementaryProperties data={data} />
-        </TestForm>, translationsProperties
-      );
-    });
+  beforeEach(() => {
+    renderComponent = renderWithIntl(
+      <TestForm onSubmit={onSubmit}>
+        <FormSupplementaryProperties data={data} />
+      </TestForm>, translationsProperties
+    );
+  });
 
-    test('renders the Supplementary properties accordion', async () => {
-      await Accordion('Supplementary properties').exists();
-    });
+  test('renders the Supplementary properties accordion', async () => {
+    await Accordion('Supplementary properties').exists();
+  });
 
-    test('renders the FormCustomProperties component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('FormCustomProperties')).toBeInTheDocument();
-    });
+  test('renders the FormCustomProperties component', () => {
+    const { getByText } = renderComponent;
+    expect(getByText('FormCustomProperties')).toBeInTheDocument();
   });
 });
