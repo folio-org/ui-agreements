@@ -48,9 +48,10 @@ export default class RelatedAgreements extends React.Component {
         headerStart={(
           <AppIcon app="agreements" size="small">
             <Link
+              data-test-agreement-link
               to={`${urls.agreementView(ra.agreement.id)}${this.props.searchString}`}
             >
-              <strong data-testid="relatedAgreementName">{ra.agreement.name}</strong>
+              <strong>{ra.agreement.name}</strong>
             </Link>
           </AppIcon>
         )}
