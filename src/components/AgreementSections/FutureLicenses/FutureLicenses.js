@@ -4,8 +4,8 @@ import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Accordion, Badge, Layout } from '@folio/stripes/components';
 
-import LinkedLicenseCard from '../LinkedLicenseCard';
-import { statuses } from '../../constants';
+import LinkedLicenseCard from '../../LinkedLicenseCard';
+import { statuses } from '../../../constants';
 
 export default class FutureLicenses extends React.Component {
   static propTypes = {
@@ -51,7 +51,7 @@ export default class FutureLicenses extends React.Component {
         id={id}
         label={<FormattedMessage id="ui-agreements.license.futureLicenses" />}
       >
-        { licenses.length ? licenses.map(this.renderLicense) : this.renderEmpty() }
+        {licenses.length ? licenses.map(this.renderLicense) : this.renderEmpty()}
       </Accordion>
     );
   }
