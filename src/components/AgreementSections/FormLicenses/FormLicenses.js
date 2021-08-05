@@ -8,7 +8,7 @@ import { Accordion, Headline, KeyValue, TextArea } from '@folio/stripes/componen
 import { useStripes } from '@folio/stripes/core';
 import { DocumentsFieldArray } from '@folio/stripes-erm-components';
 
-import LicensesFieldArray from '../LicensesFieldArray';
+import LicensesFieldArray from '../../LicensesFieldArray';
 
 const FormLicenses = ({
   data,
