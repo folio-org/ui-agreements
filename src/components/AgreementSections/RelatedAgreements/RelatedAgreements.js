@@ -13,7 +13,7 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
-import { urls } from '../utilities';
+import { urls } from '../../utilities';
 
 export default class RelatedAgreements extends React.Component {
   static propTypes = {
@@ -44,6 +44,7 @@ export default class RelatedAgreements extends React.Component {
       <Card
         key={index}
         cardStyle="positive"
+        data-testid="relatedAgreements"
         headerStart={(
           <AppIcon app="agreements" size="small">
             <Link
@@ -93,7 +94,7 @@ export default class RelatedAgreements extends React.Component {
         id={id}
         label={<FormattedMessage id="ui-agreements.relatedAgreements" />}
       >
-        { relatedAgreements.length ? this.renderRelatedAgreements() : this.renderEmpty() }
+        {relatedAgreements.length ? this.renderRelatedAgreements() : this.renderEmpty()}
       </Accordion>
     );
   }
