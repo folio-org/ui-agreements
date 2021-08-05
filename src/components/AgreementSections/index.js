@@ -14,7 +14,7 @@ export { default as FutureLicenses } from './FutureLicenses';
 export { default as Header } from './Header';
 export { default as HistoricalLicenses } from './HistoricalLicenses';
 export { default as Info } from './Info';
-export { default as InfoPeriods } from './InfoPeriods';
+export { default as InfoPeriods } from './InfoPeriods/InfoPeriods';
 export { default as InternalContacts } from './InternalContacts';
 export { default as Lines } from './Lines';
 export { default as Organizations } from './Organizations';

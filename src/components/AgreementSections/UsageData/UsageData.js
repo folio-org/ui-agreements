@@ -14,7 +14,7 @@ import {
 } from '@folio/stripes/components';
 import { IfPermission, AppIcon } from '@folio/stripes/core';
 
-import { urls } from '../utilities';
+import { urls } from '../../utilities';
 
 export default class UsageData extends React.Component {
   static propTypes = {
@@ -37,8 +37,9 @@ export default class UsageData extends React.Component {
       <Card
         key={index}
         cardStyle="positive"
+        data-testid="usageData"
         headerStart={(
-          <AppIcon app="erm-usage" size="small">
+          <AppIcon a pp="erm-usage" size="small">
             <Link
               data-test-udp-link
               to={urls.udpView(udp.remoteId)}

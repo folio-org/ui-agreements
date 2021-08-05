@@ -11,8 +11,8 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { statuses } from '../../constants';
-import InfoPeriods from './InfoPeriods';
+import { statuses } from '../../../constants';
+import InfoPeriods from '../InfoPeriods';
 
 const Info = ({ agreement }) => {
   return (
@@ -85,6 +85,7 @@ const Info = ({ agreement }) => {
         <MultiColumnList
           columnMapping={{ name: <FormattedMessage id="ui-agreements.alternativeNames" /> }}
           contentData={agreement.alternateNames}
+          id="alternate-names-list"
           visibleColumns={['name']}
         />
       }
