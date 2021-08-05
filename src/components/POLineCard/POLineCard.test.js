@@ -76,9 +76,9 @@ describe('POLineCard', () => {
           <POLineCard id={poLine.id} poLine={{}} />
         </Router>
       );
-  });
+    });
     test('should render', async () => {
-    expect(data.poLine.id).toEqual(poLine.id);
+      expect(data.poLine.id).toEqual(poLine.id);
     });
   });
 
@@ -90,29 +90,29 @@ describe('POLineCard', () => {
         </Router>
       );
     });
-        test('should render the title', () => {
-          expect(data.poLine.titleOrPackage).toEqual(poLine.titleOrPackage);
-        });
-      });
-
-        test('should render acquisition method', () => {
-          expect(data.poLine.acquisitionMethod).toEqual(poLine.acquisitionMethod);
-        });
-
-        test('should render PO Line number', () => {
-          expect(data.poLine.poLineNumber).toContain(poLine.poLineNumber);
-        });
-      });
-
-    describe('rendering with instance Id', () => {
-      beforeEach(() => {
-        renderWithIntl(
-          <Router context={{}}>
-            <POLineCard poLine={poLineWithInstanceId} />
-          </Router>
-        );
+    test('should render the title', () => {
+      expect(data.poLine.titleOrPackage).toEqual(poLine.titleOrPackage);
     });
-    test('should render inventory link', () => {
-      expect(poLineWithInstanceId).toBeTruthy();
-    });
+  });
+
+  test('should render acquisition method', () => {
+    expect(data.poLine.acquisitionMethod).toEqual(poLine.acquisitionMethod);
+  });
+
+  test('should render PO Line number', () => {
+    expect(data.poLine.poLineNumber).toContain(poLine.poLineNumber);
+  });
+});
+
+describe('rendering with instance Id', () => {
+  beforeEach(() => {
+    renderWithIntl(
+      <Router context={{}}>
+        <POLineCard poLine={poLineWithInstanceId} />
+      </Router>
+    );
+  });
+  test('should render inventory link', () => {
+    expect(poLineWithInstanceId).toBeTruthy();
+  });
 });
