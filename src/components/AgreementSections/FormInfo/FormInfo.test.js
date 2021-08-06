@@ -1,15 +1,10 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { TestForm, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { Accordion } from '@folio/stripes-testing';
 import userEvent from '@testing-library/user-event';
 import FormInfo from './FormInfo';
 import translationsProperties from '../../../../test/helpers';
 import { data, form, handlers, initialValues, values } from './testResources';
-
-/* We mock the AgreementLinesFieldArray component here and test if that component renders as expected as a part of this test.
-We neednt test out the  FormLines functionality in theses tests because we shouldnt be concerned with the
-underlying implementation of the child component */
 
 jest.mock('../../AgreementPeriodsFieldArray', () => () => <div>AgreementPeriodsFieldArray</div>);
 
