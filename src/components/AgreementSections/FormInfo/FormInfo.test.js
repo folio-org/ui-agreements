@@ -122,7 +122,7 @@ describe('FormInfo', () => {
       expect(getByText('AgreementPeriodsFieldArray')).toBeInTheDocument();
     });
 
-    test('typing in the name field should fire the onAsynValidate callback', () => {
+    test('typing in the name field should fire the onAsyncValidate callback', () => {
       const { getByRole } = renderComponent;
       userEvent.type(getByRole('textbox', { name: 'Name' }), 'a');
       expect(handlers.onAsyncValidate).toHaveBeenCalled();
