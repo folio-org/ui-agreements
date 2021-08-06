@@ -17,9 +17,9 @@ import {
   composeValidators,
   requiredValidator,
 } from '@folio/stripes-erm-components';
-import { validationEndPoint, statuses } from '../../constants';
+import { validationEndPoint, statuses } from '../../../constants';
 
-import AgreementPeriodsFieldArray from '../AgreementPeriodsFieldArray';
+import AgreementPeriodsFieldArray from '../../AgreementPeriodsFieldArray';
 
 class FormInfo extends React.Component {
   static propTypes = {
