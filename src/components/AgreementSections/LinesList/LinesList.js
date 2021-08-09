@@ -13,12 +13,12 @@ import {
 
 import { EResourceType } from '@folio/stripes-erm-components';
 
-import Coverage from '../Coverage';
-import CustomCoverageIcon from '../CustomCoverageIcon';
-import EResourceLink from '../EResourceLink';
-import EResourceCount from '../EResourceCount';
-import EResourceProvider from '../EResourceProvider';
-import { getResourceFromEntitlement, isDetached, urls } from '../utilities';
+import Coverage from '../../Coverage';
+import CustomCoverageIcon from '../../CustomCoverageIcon';
+import EResourceLink from '../../EResourceLink';
+import EResourceCount from '../../EResourceCount';
+import EResourceProvider from '../../EResourceProvider';
+import { getResourceFromEntitlement, isDetached, urls } from '../../utilities';
 
 export default class LinesList extends React.Component {
   static propTypes = {
