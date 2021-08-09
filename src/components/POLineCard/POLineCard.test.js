@@ -1,118 +1,164 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { StaticRouter as Router } from 'react-router-dom';
+import { KeyValue } from '@folio/stripes-testing';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import translationsProperties from '../../../test/helpers';
 import POLineCard from './POLineCard';
 
-
-const poLine = {
-  'acquisitionMethod': 'Purchase',
-  'id': '556abc25-ebbf-3fb2-b478-1bfaff0af4dc',
-  'poLineNumber': '81-1',
-  'titleOrPackage': 'ABA Journal',
-};
-
-const poLineWithInstanceId = { ...poLine };
-poLineWithInstanceId.instanceId = 'abc';
-
 const data = {
-  'headerEnd': '<WithStripes(Pluggable) />',
-  'id': 'edit-poline-0-0',
-  'poLine': {
-    'id': '556abc25-ebbf-3fb2-b478-1bfaff0af4dc',
+    'id': 'baec48dd-1594-2712-be8f-de336bc83fcc',
     'edition': 'First edition',
     'checkinItems': false,
-    'agreementId': '09c6ed1b-3984-4d9a-8f9b-e1200b68b61c',
+    'agreementId': '800b2f19-7134-4408-8145-3b04697b7de7',
     'acquisitionMethod': 'Purchase',
     'alerts': '[]',
     'cancellationRestriction': false,
     'cancellationRestrictionNote': '',
-    'claims': '[{…}]',
+    'claims': [
+      {
+        'claimed': true,
+        'grace': 0
+      }
+    ],
     'collection': false,
     'contributors': '[]',
-    'cost': '{additionalCost: 0, currency: "USD", discount: 0, d…}',
+    'cost': {
+      'listUnitPrice': 500,
+      'listUnitPriceElectronic': 0,
+      'currency': 'USD',
+      'additionalCost': 0,
+      'discount': 20,
+      'discountType': 'amount',
+      'quantityPhysical': 6,
+      'quantityElectronic': 1,
+      'poLineEstimatedPrice': 2980
+    },
     'description': '',
-    'details': '{productIds: Array(1), receivingNote: "", subscript…}',
+    'details': {
+      'receivingNote': '',
+      'productIds': [
+        '{productId: "0552142352", productIdType: "8261054f-…}',
+        '{productId: "9780552142352", productIdType: "826105…}'
+      ],
+      'subscriptionFrom': '2018-07-20T00:00:00.000+00:00',
+      'subscriptionInterval': 1095,
+      'subscriptionTo': '2021-07-19T00:00:00.000+00:00'
+    },
     'donor': '',
-    'fundDistribution': '[{…}]',
-    'isPackage': false,
-    'locations': '[{…}]',
-    'orderFormat': 'Other',
+    'eresource': {
+      'activated': false,
+      'activationDue': 1,
+      'createInventory': 'Instance, Holding',
+      'trial': true,
+      'expectedActivation': '2019-07-20T00:00:00.000+00:00',
+      'userLimit': 0,
+      'accessProvider': '14fb6608-cdf1-11e8-a8d5-f2801f1b9fd1',
+      'materialType': 'a7eb0130-7287-4485-b32c-b4b5814da0fa'
+    },
+    'fundDistribution': [
+      {
+        'code': 'USHIST',
+        'encumbrance': 'e1a607b4-2ed3-4bd9-9c1e-3726737d5425',
+        'fundId': '65032151-39a5-4cef-8810-5350eb316300',
+        'distributionType': 'percentage',
+        'value': 50
+      },
+      {
+        'code': 'EUROHIST',
+        'encumbrance': '6268d1e5-00c4-4ba7-86ff-c3eeb44886ea',
+        'fundId': 'e9285a1c-1dfc-4380-868c-e74073003f43',
+        'distributionType': 'percentage',
+        'value': 50
+      }
+    ],
+    'isPackage': true,
+    'locations': [
+      {
+        'locationId': 'f34d27c6-a8eb-461b-acd6-5dea81771e70',
+        'quantity': 2,
+        'quantityElectronic': 1,
+        'quantityPhysical': 1
+      },
+      {
+        'locationId': 'fcd64ce1-6995-48f0-840e-89ffa2288371',
+        'quantity': 1,
+        'quantityElectronic': 0,
+        'quantityPhysical': 1
+      },
+      {
+        'locationId': 'b241764c-1466-4e1d-a028-1a3684a5da87',
+        'quantity': 4,
+        'quantityElectronic': 0,
+        'quantityPhysical': 4
+      }
+    ],
+    'orderFormat': 'P/E Mix',
     'paymentStatus': 'Pending',
-    'physical': '{materialSupplier: "e0fb5df2-cdf1-11e8-a8d5-f2801f1…}',
+    'physical': {
+      'createInventory': 'Instance, Holding, Item',
+      'materialType': '5ee11d91-f7e8-481d-b079-65d708582ccc',
+      'materialSupplier': '70fb4e66-cdf1-11e8-a8d5-f2801f1b9fd1',
+      'receiptDue': '2018-08-19T00:00:00.000+00:00',
+      'volumes': [
+        'vol. 1'
+      ]
+    },
     'poLineDescription': '',
-    'poLineNumber': '81-1',
-    'publicationDate': '1915',
-    'publisher': 'American Bar Association',
-    'purchaseOrderId': 'c27e60f9-6361-44c1-976e-0c4821a33a7d',
+    'poLineNumber': '52590-1',
+    'purchaseOrderId': '0610be6d-0ddd-494b-b867-19f63d8b5d6d',
     'receiptStatus': 'Pending',
     'reportingCodes': '[]',
     'requester': '',
     'rush': false,
-    'selector': '',
+    'selector': 'sgw',
     'source': 'User',
-    'tags': '{tagList: Array(1)}',
-    'titleOrPackage': 'ABA Journal',
-    'vendorDetail': '{instructions: "", noteFromVendor: "", referenceNum…}',
-    'metadata': '{createdDate: "2021-08-04T01:50:10.921+00:00", upda…}',
-  },
-  'children': null,
+    'tags': {
+      'tagList': [
+        'membership'
+      ]
+    },
+    'titleOrPackage': 'Interesting Times',
+    'vendorDetail': {
+      'instructions': '',
+      'noteFromVendor': '',
+      'vendorAccount': '',
+      'referenceNumbers': []
+    },
+    'metadata': {
+      'createdDate': '2021-08-06T01:49:47.296+00:00',
+      'updatedDate': '2021-08-06T01:49:47.296+00:00'
+    },
 };
 
+let renderComponent;
 describe('POLineCard', () => {
-  test('renders po line component', () => {
-    const { getByTestId } = renderWithIntl(
-      <Router>
-        <POLineCard {...data} />
-      </Router>
-    );
-    expect(getByTestId('polineCard')).toBeInTheDocument();
-  });
-
-  describe('rendered with no data', () => {
-    beforeEach(() => {
-      renderWithIntl(
-        <Router context={{}}>
-          <POLineCard id={poLine.id} poLine={{}} />
-        </Router>
-      );
-    });
-    test('should render', async () => {
-      expect(data.poLine.id).toEqual(poLine.id);
-    });
-  });
-
-  describe('rendering with full data but without instanceId', () => {
-    beforeEach(() => {
-      renderWithIntl(
-        <Router context={{}}>
-          <POLineCard poLine={poLine} />
-        </Router>
-      );
-    });
-    test('should render the title', () => {
-      expect(data.poLine.titleOrPackage).toEqual(poLine.titleOrPackage);
-    });
-  });
-
-  test('should render acquisition method', () => {
-    expect(data.poLine.acquisitionMethod).toEqual(poLine.acquisitionMethod);
-  });
-
-  test('should render PO Line number', () => {
-    expect(data.poLine.poLineNumber).toContain(poLine.poLineNumber);
-  });
-});
-
-describe('rendering with instance Id', () => {
   beforeEach(() => {
-    renderWithIntl(
-      <Router context={{}}>
-        <POLineCard poLine={poLineWithInstanceId} />
-      </Router>
+    renderComponent = renderWithIntl(
+      <Router>
+        <POLineCard
+          id="polines"
+          poLine={data}
+        />
+      </Router>,
+      translationsProperties
     );
   });
-  test('should render inventory link', () => {
-    expect(poLineWithInstanceId).toBeTruthy();
+ test('renders POLineCard component', () => {
+   const { getByTestId } = renderComponent;
+   expect(getByTestId('polines')).toBeInTheDocument();
+  });
+
+  test('renders a link with the poLineNumber', () => {
+    const { getByRole } = renderComponent;
+    expect(getByRole('link', { poLineNumber: '52590-1' })).toBeInTheDocument();
+  });
+
+  test('renders the expected acquisitionMethod value', async () => {
+    await KeyValue('Acquisition method').has({ value: 'Purchase' });
+  });
+
+  test('renders title in poline', async () => {
+    await KeyValue('Title in PO line').has({ value: 'Interesting Times' });
   });
 });
