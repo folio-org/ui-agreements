@@ -1,9 +1,8 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { Button, Dropdown, MultiColumnList, MultiColumnListCell } from '@folio/stripes-testing';
+import { Button, Dropdown, MultiColumnList } from '@folio/stripes-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { screen } from '@testing-library/react';
 import translationsProperties from '../../../../test/helpers';
 import CoveredEResourcesList from './CoveredEResourcesList';
 import agreement from './testResources';
@@ -69,42 +68,5 @@ describe('CoveredEResourcesList', () => {
   test('renders expected columns', async () => {
     await MultiColumnList({ columns: ['Name', 'eISSN/ISSN', 'Platform', 'Package', 'Coverage', ' ', 'Access start', 'Access end'] }).exists();
   });
-
-  // test('renders expected row count', async () => {
-  //   await MultiColumnList({ rowCount: agreement.agreementLinesCount }).exists();
-  // });
-
-  // test('renders expected agreement line name in each row', async () => {
-  //   Promise.all([
-  //     await MultiColumnListCell({ row: 0, columnIndex: 0 }).has({ content: 'ACS in Focus Test' }),
-  //     await MultiColumnListCell({ row: 1, columnIndex: 0 }).has({ content: 'American Society of Civil Engineers : Journals' })
-  //   ]);
-  // });
-
-  // test('renders expected Provider in each row', async () => {
-  //   Promise.all([
-  //     await MultiColumnListCell({ row: 0, columnIndex: 1 }).has({ content: 'American Chemical Society' }),
-  //     await MultiColumnListCell({ row: 1, columnIndex: 1 }).has({ content: 'American Society of Civil Engineers' })
-  //   ]);
-  // });
-
-  // test('renders expected Publication type date in each row', async () => {
-  //   Promise.all([
-  //     await MultiColumnListCell({ row: 0, columnIndex: 2 }).has({ content: 'Package' }),
-  //     await MultiColumnListCell({ row: 1, columnIndex: 2 }).has({ content: 'Package' })
-  //   ]);
-  // });
-
-  // describe('Clicking the first row', () => {
-  //   beforeEach(async () => {
-  //     /* clicking the second column here instead of the first one because the first cell has a
-  //      link and we prevent the onRowClick to be called when we click a link within a cell */
-  //     await MultiColumnList('agreement-lines').click({ row: 0, columnIndex: 1 });
-  //   });
-
-  //   test('should call the onViewAgreementLine callback', () => {
-  //     expect(onViewAgreementLine).toHaveBeenCalled();
-  //   });
-  // });
 });
 
