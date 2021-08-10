@@ -22,6 +22,7 @@ import {
   Tooltip,
 } from '@folio/stripes/components';
 
+
 import { AppIcon } from '@folio/stripes/core';
 
 import {
@@ -29,11 +30,11 @@ import {
   TitleOnPlatformLink
 } from '@folio/stripes-erm-components';
 
-import Coverage from '../../Coverage';
-import CustomCoverageIcon from '../../CustomCoverageIcon';
-import IfEResourcesEnabled from '../../IfEResourcesEnabled';
-import { resultCount } from '../../../constants';
-import { urls } from '../../utilities';
+import Coverage from '../Coverage';
+import CustomCoverageIcon from '../CustomCoverageIcon';
+import IfEResourcesEnabled from '../IfEResourcesEnabled';
+import { resultCount } from '../../constants';
+import { urls } from '../utilities';
 
 export default class CoveredEResourcesList extends React.Component {
   static propTypes = {
@@ -70,7 +71,7 @@ export default class CoveredEResourcesList extends React.Component {
     name: 250,
     platform: 150,
     package: 150,
-    coverage: { min: 250, max: 320 },
+    coverage: { min:250, max: 320 },
   }
 
   formatter = {
@@ -105,7 +106,7 @@ export default class CoveredEResourcesList extends React.Component {
       );
     },
     package: e => e?._object?.pkg?.name ?? <NoValue />,
-    coverage: e => <Coverage eResource={e} />,
+    coverage:  e => <Coverage eResource={e} />,
     accessStart: e => this.renderDate(e._object?.accessStart),
     accessEnd: e => this.renderDate(e._object?.accessEnd),
     isCustomCoverage: line => {
