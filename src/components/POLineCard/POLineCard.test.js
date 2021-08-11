@@ -134,6 +134,7 @@ describe('POLineCard', () => {
   test('renders title in poline', async () => {
     await KeyValue('Title in PO line').has({ value: 'ABA Journal' });
   });
+
   test('renders a link with instanceId', () => {
     const { getByRole } = renderComponent;
     expect(getByRole('link', { name: 'View in inventory' })).toBeInTheDocument();
