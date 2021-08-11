@@ -7,128 +7,101 @@ import translationsProperties from '../../../test/helpers';
 import POLineCard from './POLineCard';
 
 const data = {
-    'id': 'baec48dd-1594-2712-be8f-de336bc83fcc',
+    'id': 'e96f0dbc-48f9-4e49-a394-35187507c25b',
     'edition': 'First edition',
     'checkinItems': false,
-    'agreementId': '800b2f19-7134-4408-8145-3b04697b7de7',
+    'agreementId': '09c6ed1b-3984-4d9a-8f9b-e1200b68b61c',
     'acquisitionMethod': 'Purchase',
-    'alerts': '[]',
+    'alerts': [],
     'cancellationRestriction': false,
     'cancellationRestrictionNote': '',
     'claims': [
       {
-        'claimed': true,
+        'claimed': false,
         'grace': 0
       }
     ],
     'collection': false,
-    'contributors': '[]',
+    'contributors': [],
     'cost': {
-      'listUnitPrice': 500,
+      'listUnitPrice': 0,
       'listUnitPriceElectronic': 0,
       'currency': 'USD',
       'additionalCost': 0,
-      'discount': 20,
-      'discountType': 'amount',
-      'quantityPhysical': 6,
-      'quantityElectronic': 1,
-      'poLineEstimatedPrice': 2980
+      'discount': 0,
+      'discountType': 'percentage',
+      'quantityPhysical': 2,
+      'quantityElectronic': 0,
+      'poLineEstimatedPrice': 0
     },
     'description': '',
     'details': {
       'receivingNote': '',
       'productIds': [
-        '{productId: "0552142352", productIdType: "8261054f-…}',
-        '{productId: "9780552142352", productIdType: "826105…}'
+        {
+          'productId': '0747-0088',
+          'productIdType': '913300b2-03ed-469a-8179-c1092c991227'
+        }
       ],
-      'subscriptionFrom': '2018-07-20T00:00:00.000+00:00',
-      'subscriptionInterval': 1095,
-      'subscriptionTo': '2021-07-19T00:00:00.000+00:00'
+      'subscriptionInterval': 0
     },
     'donor': '',
-    'eresource': {
-      'activated': false,
-      'activationDue': 1,
-      'createInventory': 'Instance, Holding',
-      'trial': true,
-      'expectedActivation': '2019-07-20T00:00:00.000+00:00',
-      'userLimit': 0,
-      'accessProvider': '14fb6608-cdf1-11e8-a8d5-f2801f1b9fd1',
-      'materialType': 'a7eb0130-7287-4485-b32c-b4b5814da0fa'
-    },
     'fundDistribution': [
       {
-        'code': 'USHIST',
-        'encumbrance': 'e1a607b4-2ed3-4bd9-9c1e-3726737d5425',
-        'fundId': '65032151-39a5-4cef-8810-5350eb316300',
+        'code': 'UNIV-SUBN',
+        'encumbrance': 'c2e528bf-ea58-4e3e-9e9e-54e642b183fa',
+        'fundId': '4428a37c-8bae-4f0d-865d-970d83d5ad55',
         'distributionType': 'percentage',
-        'value': 50
-      },
-      {
-        'code': 'EUROHIST',
-        'encumbrance': '6268d1e5-00c4-4ba7-86ff-c3eeb44886ea',
-        'fundId': 'e9285a1c-1dfc-4380-868c-e74073003f43',
-        'distributionType': 'percentage',
-        'value': 50
+        'value': 100
       }
     ],
-    'isPackage': true,
+    'instanceId': '69640328-788e-43fc-9c3c-af39e243f3b7',
+    'isPackage': false,
     'locations': [
       {
-        'locationId': 'f34d27c6-a8eb-461b-acd6-5dea81771e70',
+        'holdingId': '5cfffb70-ef44-487f-a26d-c10b2339b595',
         'quantity': 2,
-        'quantityElectronic': 1,
-        'quantityPhysical': 1
-      },
-      {
-        'locationId': 'fcd64ce1-6995-48f0-840e-89ffa2288371',
-        'quantity': 1,
         'quantityElectronic': 0,
-        'quantityPhysical': 1
-      },
-      {
-        'locationId': 'b241764c-1466-4e1d-a028-1a3684a5da87',
-        'quantity': 4,
-        'quantityElectronic': 0,
-        'quantityPhysical': 4
+        'quantityPhysical': 2
       }
     ],
-    'orderFormat': 'P/E Mix',
-    'paymentStatus': 'Pending',
+    'orderFormat': 'Other',
+    'paymentStatus': 'Ongoing',
     'physical': {
       'createInventory': 'Instance, Holding, Item',
-      'materialType': '5ee11d91-f7e8-481d-b079-65d708582ccc',
-      'materialSupplier': '70fb4e66-cdf1-11e8-a8d5-f2801f1b9fd1',
-      'receiptDue': '2018-08-19T00:00:00.000+00:00',
+      'materialType': 'dd0bf600-dbd9-44ab-9ff2-e2a61a6539f1',
+      'materialSupplier': 'e0fb5df2-cdf1-11e8-a8d5-f2801f1b9fd1',
       'volumes': [
         'vol. 1'
       ]
     },
     'poLineDescription': '',
-    'poLineNumber': '52590-1',
-    'purchaseOrderId': '0610be6d-0ddd-494b-b867-19f63d8b5d6d',
-    'receiptStatus': 'Pending',
-    'reportingCodes': '[]',
+    'poLineNumber': '10011-1',
+    'publicationDate': '1915',
+    'publisher': 'American Bar Association',
+    'purchaseOrderId': '733867b9-40fb-4df4-bc82-ccb98c2d5846',
+    'receiptStatus': 'Ongoing',
+    'reportingCodes': [],
     'requester': '',
     'rush': false,
-    'selector': 'sgw',
+    'selector': '',
     'source': 'User',
     'tags': {
-      'tagList': [
-        'membership'
-      ]
+      'tagList': '["catalogingrecords"]'
     },
-    'titleOrPackage': 'Interesting Times',
+    'titleOrPackage': 'ABA Journal',
     'vendorDetail': {
       'instructions': '',
       'noteFromVendor': '',
       'vendorAccount': '',
-      'referenceNumbers': []
+      'referenceNumbers': '[]'
     },
     'metadata': {
-      'createdDate': '2021-08-06T01:49:47.296+00:00',
-      'updatedDate': '2021-08-06T01:49:47.296+00:00'
-    },
+      'createdDate': '2021-08-10T11:50:02.904+00:00',
+      'createdByUserId': 'f082d1d0-8ded-5e98-a340-e2fe9acb1bad',
+      'updatedDate': '2021-08-10T11:50:45.628+00:00',
+      'updatedByUserId': 'f082d1d0-8ded-5e98-a340-e2fe9acb1bad'
+    }
 };
 
 let renderComponent;
@@ -151,7 +124,7 @@ describe('POLineCard', () => {
 
   test('renders a link with the poLineNumber', () => {
     const { getByRole } = renderComponent;
-    expect(getByRole('link', { poLineNumber: '52590-1' })).toBeInTheDocument();
+    expect(getByRole('link', { name: 'PO line: 10011-1' })).toBeInTheDocument();
   });
 
   test('renders the expected acquisitionMethod value', async () => {
@@ -159,6 +132,10 @@ describe('POLineCard', () => {
   });
 
   test('renders title in poline', async () => {
-    await KeyValue('Title in PO line').has({ value: 'Interesting Times' });
+    await KeyValue('Title in PO line').has({ value: 'ABA Journal' });
+  });
+  test('renders a link with instanceId', () => {
+    const { getByRole } = renderComponent;
+    expect(getByRole('link', { name: 'View in inventory' })).toBeInTheDocument();
   });
 });
