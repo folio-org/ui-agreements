@@ -35,6 +35,7 @@ const POLineCard = ({
   <Card
     cardStyle="positive"
     data-test-po-line-card
+    data-testid="polines"
     headerEnd={headerEnd}
     headerStart={(
       <Link to={urls.poLineView(poLine.id)}>
