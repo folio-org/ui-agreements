@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 import { Accordion } from '@folio/stripes/components';
 
-import RelatedAgreementsFieldArray from '../RelatedAgreementsFieldArray';
+import RelatedAgreementsFieldArray from '../../RelatedAgreementsFieldArray';
 
 export default class FormRelatedAgreements extends React.Component {
   static propTypes = {

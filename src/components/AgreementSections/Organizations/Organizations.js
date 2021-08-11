@@ -11,7 +11,7 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
-import { urls } from '../utilities';
+import { urls } from '../../utilities';
 
 export default class Organizations extends React.Component {
   static propTypes = {
@@ -59,8 +59,8 @@ export default class Organizations extends React.Component {
                 <Link to={urls.orgView(org.orgsUuid)}>
                   <strong>{org.name}</strong>
                 </Link>
-                { primaryOrg ? ' . ' : null }
-                { primaryOrg ? <FormattedMessage id="ui-agreements.organizations.primary" /> : null }
+                {primaryOrg ? ' . ' : null}
+                {primaryOrg ? <FormattedMessage id="ui-agreements.organizations.primary" /> : null}
               </AppIcon>
             </span>
           }

@@ -14,9 +14,9 @@ import {
 import { AppIcon } from '@folio/stripes/core';
 import { LicenseCard } from '@folio/stripes-erm-components';
 
-import LicenseAmendmentList from '../LicenseAmendmentList';
-import { getLicenseAmendments, urls } from '../utilities';
-import { statuses } from '../../constants';
+import LicenseAmendmentList from '../../LicenseAmendmentList';
+import { getLicenseAmendments, urls } from '../../utilities';
+import { statuses } from '../../../constants';
 
 export default class ControllingLicense extends React.Component {
   static propTypes = {
@@ -55,6 +55,7 @@ export default class ControllingLicense extends React.Component {
     return (
       <Card
         cardStyle="positive"
+        data-testid="controllingLicense"
         headerStart={(
           <AppIcon app="licenses" size="small">
             <Link to={urls.licenseView(licenseRecord.id)}>
@@ -65,7 +66,7 @@ export default class ControllingLicense extends React.Component {
         id="agreement-controlling-license"
         roundedBorder
       >
-        { unsetAmendments.length ?
+        {unsetAmendments.length ?
           <MessageBanner type="warning">
             <FormattedMessage id="ui-agreements.license.warn.unassignedAmendments" />
           </MessageBanner>
@@ -75,13 +76,13 @@ export default class ControllingLicense extends React.Component {
           license={licenseRecord}
           renderName={false}
         />
-        { linkedLicense.note &&
+        {linkedLicense.note &&
           <KeyValue label={<FormattedMessage id="ui-agreements.license.prop.note" />}>
             {linkedLicense.note}
           </KeyValue>
         }
         {this.renderAmendments(linkedLicense, statuses.CURRENT)}
-        { unsetAmendments.length ?
+        {unsetAmendments.length ?
           this.renderAmendments(linkedLicense, statuses.UNSET)
           : null
         }
@@ -121,7 +122,7 @@ export default class ControllingLicense extends React.Component {
         id={id}
         label={<FormattedMessage id="ui-agreements.license.controllingLicense" />}
       >
-        { license ?
+        {license ?
           <div>
             {this.renderLicense(license)}
             {this.renderAmendments(license, statuses.FUTURE)}
