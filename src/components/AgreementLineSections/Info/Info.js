@@ -12,11 +12,11 @@ import {
 } from '@folio/stripes/components';
 
 import { isPackage } from '@folio/stripes-erm-components';
-import PackageCard from '../PackageCard';
-import PackageCardExternal from '../PackageCardExternal';
-import TitleCard from '../TitleCard';
-import TitleCardExternal from '../TitleCardExternal';
-import { isDetached, isExternal } from '../utilities';
+import PackageCard from '../../PackageCard';
+import PackageCardExternal from '../../PackageCardExternal';
+import TitleCard from '../../TitleCard';
+import TitleCardExternal from '../../TitleCardExternal';
+import { isDetached, isExternal } from '../../utilities';
 
 const propTypes = {
   isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
@@ -45,6 +45,7 @@ const Info = ({
   resource,
 }) => (
   <>
+    <div data-testid="lineInfo" />
     <Headline size="x-large" tag="h2">
       <FormattedMessage id="ui-agreements.line.lineInformation" />
     </Headline>
