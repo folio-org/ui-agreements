@@ -1,246 +1,99 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { StaticRouter as Router } from 'react-router-dom';
 import { KeyValue } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import Info from './Info';
 
-const isSuppressFromDiscoveryEnabled = { 'isSuppressFromDiscoveryEnabled': 'ƒ () {}' };
+jest.mock('../../PackageCard', () => () => <div>PackageCard</div>);
+jest.mock('../../PackageCardExternal', () => () => <div>PackageCardExternal</div>);
+jest.mock('../../TitleCard', () => () => <div>TitleCard</div>);
+jest.mock('../../TitleCardExternal', () => () => <div>TitleCardExternal</div>);
+
     const line = {
-          'id': '5a1bb143-5d3b-4668-ae43-bcb564c0fe8a',
-          'type': 'external',
-          'description': 'Description for agreement line section.',
-          'authority': 'EKB-PACKAGE',
-          'reference': '72-6052',
-          'explanation': null,
-          'startDate': '2021-08-04',
-          'endDate': '2021-08-30',
-          'activeFrom': '2021-08-04',
-          'activeTo': '2021-08-30',
-          'contentUpdated': null,
-          'haveAccess': true,
-          'suppressFromDiscovery': true,
-          'note': 'Note for agreement line section.',
-          'tags': '[]',
-          'owner': {
-            'id': '146e869e-540c-4dd2-96a0-0069a3e5a520',
-            'cancellationDeadline': '2021-08-28',
-            'dateCreated': '2021-08-19T12:18:26Z',
-            'isPerpetual': {
-              'id': '2c91809c7b5c1612017b5c1d3305002f',
-              'value': 'yes',
-              'label': 'Yes'
-            },
-            'name': 'MR Test Form Info',
-            'orgs': [],
-            'licenseNote': 'general note test',
-            'externalLicenseDocs': [],
-            'outwardRelationships': [],
-            'customProperties': {},
-            'contacts': [
-              {
-                'id': '64d4eb51-9a45-43f8-b1d3-0080885302f9',
-                'owner': {
-                  'id': '146e869e-540c-4dd2-96a0-0069a3e5a520'
-                },
-                'role': {
-                  'id': '2c91809c7b5c1612017b5c1d32fb002c',
-                  'value': 'erm_librarian',
-                  'label': 'ERM librarian'
-                },
-                'user': '75bc3af6-39a9-5312-b9f3-8ed1043efe3a'
-              }
-            ],
-            'tags': [],
-            'lastUpdated': '2021-08-19T12:18:26Z',
-            'inwardRelationships': [],
-            'renewalPriority': {
-              'id': '2c91809c7b5c1612017b5c1d33220036',
-              'value': 'definitely_renew',
-              'label': 'Definitely renew'
-            },
-            'endDate': '2021-08-31',
-            'startDate': '2021-08-01',
-            'linkedLicenses': [],
-            'docs': [],
-            'periods': [
-              {
-                'id': '2df9d356-02f6-43e2-a680-6d2cfc9cc2c4',
-                'startDate': '2021-08-01',
-                'cancellationDeadline': '2021-08-28',
-                'owner': {
-                  'id': '146e869e-540c-4dd2-96a0-0069a3e5a520'
-                },
-                'note': 'This is note test.',
-                'endDate': '2021-08-31',
-                'periodStatus': 'current'
-              }
-            ],
-            'usageDataProviders': [],
-            'agreementStatus': {
-              'id': '2c91809c7b5c1612017b5c1d335e003f',
-              'value': 'active',
-              'label': 'Active'
-            },
-            'supplementaryDocs': [],
-            'description': 'This is description',
-            'items': [
-              '{id: "5a1bb143-5d3b-4668-ae43-bcb564c0fe8a"}'
-            ],
-            'alternateNames': [
-              {
-                'id': '1f616afb-5b52-40ec-8887-cb45e03742c1',
-                'owner': {
-                  'id': '146e869e-540c-4dd2-96a0-0069a3e5a520'
-                },
-                'name': 'Form Info'
-              }
-            ]
+        'id': '4ecd2dfb-40da-49bf-84ce-afe3b2d7df5d',
+        'type': 'external',
+        'description': 'This is description.',
+        'authority': 'EKB-PACKAGE',
+        'reference': '122380-2556389',
+        'explanation': null,
+        'startDate': '2021-08-04',
+        'endDate': '2021-08-28',
+        'activeFrom': '2021-08-04',
+        'activeTo': '2021-08-28',
+        'contentUpdated': null,
+        'haveAccess': true,
+        'suppressFromDiscovery': true,
+        'note': 'This is note.',
+        'tags': '[]',
+        'owner': {
+          'id': 'b1631c53-c383-4e71-b5bd-50e23ee96b8e',
+          'cancellationDeadline': '2021-08-09',
+          'dateCreated': '2021-08-20T09:08:41Z',
+          'isPerpetual': {
+            'id': '2c91809c7b613a80017b614140780018',
+            'value': 'yes',
+            'label': 'Yes'
           },
-          'customCoverage': false,
-          'reference_object': {
-            'label': 'Early American Imprints, Series I: Evans Supplement, 1652-1800',
-            'type': 'Package',
-            'provider': 'NewsBank',
-            'titleCount': 1,
-            'selectedCount': 1,
-            'contentType': 'Abstract and Index',
-            'providerName': 'NewsBank',
-            'isSelected': true
+          'name': 'MR test Info',
+          'orgs': [],
+          'licenseNote': "note about agreement's license",
+          'externalLicenseDocs': [],
+          'outwardRelationships': [],
+          'customProperties': {},
+          'contacts': [
+            '{id: "1f05a876-96d0-488e-93d1-f27a1ec7171e", owner:…}'
+          ],
+          'tags': [],
+          'lastUpdated': '2021-08-20T09:08:41Z',
+          'inwardRelationships': [],
+          'renewalPriority': {
+            'id': '2c91809c7b613a80017b61414094001f',
+            'value': 'definitely_renew',
+            'label': 'Definitely renew'
           },
-          'poLines': '[]'
-        };
-        const resource = {
-          'id': '5a1bb143-5d3b-4668-ae43-bcb564c0fe8a',
-          'type': 'external',
-          'description': 'Description for agreement line section.',
-          'authority': 'EKB-PACKAGE',
-          'reference': '72-6052',
-          'explanation': null,
-          'startDate': '2021-08-04',
-          'endDate': '2021-08-30',
-          'activeFrom': '2021-08-04',
-          'activeTo': '2021-08-30',
-          'contentUpdated': null,
-          'haveAccess': true,
-          'suppressFromDiscovery': true,
-          'note': 'Note for agreement line section.',
-          'tags': '[]',
-          'owner': {
-            'id': '146e869e-540c-4dd2-96a0-0069a3e5a520',
-            'cancellationDeadline': '2021-08-28',
-            'dateCreated': '2021-08-19T12:18:26Z',
-            'isPerpetual': {
-              'id': '2c91809c7b5c1612017b5c1d3305002f',
-              'value': 'yes',
-              'label': 'Yes'
-            },
-            'name': 'MR Test Form Info',
-            'orgs': [],
-            'licenseNote': 'general note test',
-            'externalLicenseDocs': [],
-            'outwardRelationships': [],
-            'customProperties': {},
-            'contacts': [
-              {
-                'id': '64d4eb51-9a45-43f8-b1d3-0080885302f9',
-                'owner': {
-                  'id': '146e869e-540c-4dd2-96a0-0069a3e5a520'
-                },
-                'role': {
-                  'id': '2c91809c7b5c1612017b5c1d32fb002c',
-                  'value': 'erm_librarian',
-                  'label': 'ERM librarian'
-                },
-                'user': '75bc3af6-39a9-5312-b9f3-8ed1043efe3a'
-              }
-            ],
-            'tags': [],
-            'lastUpdated': '2021-08-19T12:18:26Z',
-            'inwardRelationships': [],
-            'renewalPriority': {
-              'id': '2c91809c7b5c1612017b5c1d33220036',
-              'value': 'definitely_renew',
-              'label': 'Definitely renew'
-            },
-            'endDate': '2021-08-31',
-            'startDate': '2021-08-01',
-            'linkedLicenses': [],
-            'docs': [],
-            'periods': [
-              {
-                'id': '2df9d356-02f6-43e2-a680-6d2cfc9cc2c4',
-                'startDate': '2021-08-01',
-                'cancellationDeadline': '2021-08-28',
-                'owner': {
-                  'id': '146e869e-540c-4dd2-96a0-0069a3e5a520'
-                },
-                'note': 'This is note test.',
-                'endDate': '2021-08-31',
-                'periodStatus': 'current'
-              }
-            ],
-            'usageDataProviders': [],
-            'agreementStatus': {
-              'id': '2c91809c7b5c1612017b5c1d335e003f',
-              'value': 'active',
-              'label': 'Active'
-            },
-            'supplementaryDocs': [],
-            'description': 'This is description',
-            'items': [
-              {
-                'id': '5a1bb143-5d3b-4668-ae43-bcb564c0fe8a'
-              }
-            ],
-            'alternateNames': [
-              {
-                'id': '1f616afb-5b52-40ec-8887-cb45e03742c1',
-                'owner': {
-                  'id': '146e869e-540c-4dd2-96a0-0069a3e5a520'
-                },
-                'name': 'Form Info'
-              }
-            ]
+          'endDate': '2021-08-26',
+          'startDate': '2021-08-06',
+          'linkedLicenses': [],
+          'docs': [],
+          'periods': [
+            '{cancellationDeadline: "2021-08-09", endDate: "2021…}'
+          ],
+          'usageDataProviders': [],
+          'agreementStatus': {
+            'id': '2c91809c7b613a80017b614140d20028',
+            'value': 'active',
+            'label': 'Active'
           },
-          'customCoverage': false,
-          'reference_object': {
-            'label': 'Early American Imprints, Series I: Evans Supplement, 1652-1800',
-            'type': 'Package',
-            'provider': 'NewsBank',
-            'titleCount': 1,
-            'selectedCount': 1,
-            'contentType': 'Abstract and Index',
-            'providerName': 'NewsBank',
-            'isSelected': true
-          },
-          'poLines': '[]'
+          'supplementaryDocs': [],
+          'items': [
+            '{id: "4ecd2dfb-40da-49bf-84ce-afe3b2d7df5d"}'
+          ],
+          'alternateNames': []
+        },
+        'customCoverage': false,
+        'reference_object': '{contentType: "E-Journal", label: "i-Scholar", prov…}',
+        'poLines': '[]'
       };
 
       let renderComponent;
-
       describe('Info', () => {
         beforeEach(() => {
           renderComponent = renderWithIntl(
-            <Router>
-              <Info
-                id="lineInfo"
-                isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
-                line={line}
-                resource={resource}
-              />
-            </Router>,
+            <Info
+              id="lineInfo"
+              line={line}
+            />,
             translationsProperties
           );
         });
-        test('displays agreement line name', async () => {
-          const { getByTestId } = renderComponent;
-          expect(getByTestId(isSuppressFromDiscoveryEnabled)).toBeInTheDocument();
-        });
+        test('renders Info component', async () => {
+            const { getByTestId } = renderComponent;
+            expect(getByTestId('lineInfo')).toBeInTheDocument();
+          });
 
         test('displays parent agreements name', async () => {
-          await KeyValue('Parent agreement').has({ value: 'MR Test Form Info' });
+          await KeyValue('Parent agreement').has({ value: 'MR test Info' });
         });
 
           test('displays parent agreement activeFrom date', async () => {
@@ -248,7 +101,7 @@ const isSuppressFromDiscoveryEnabled = { 'isSuppressFromDiscoveryEnabled': 'ƒ (
           });
 
           test('displays parent agreement activeTo date', async () => {
-            await KeyValue('Active to').has({ value: '2021-08-30' });
+            await KeyValue('Active to').has({ value: '2021-08-28' });
           });
 
           test('displays parent agreement suppressFromDiscovery', async () => {
@@ -256,10 +109,29 @@ const isSuppressFromDiscoveryEnabled = { 'isSuppressFromDiscoveryEnabled': 'ƒ (
           });
 
           test('dispalys parent agreement note', async () => {
-            await KeyValue('Note').has({ value: 'Note for agreement line section.' });
+            await KeyValue('Note').has({ value: 'This is note.' });
           });
 
           test('dispalys parent agreement description', async () => {
-            await KeyValue('Description').has({ value: 'Description for agreement line section.' });
+            await KeyValue('Description').has({ value: 'This is description.' });
+          });
+          test('renders the TitleCardExternal components', () => {
+            const { getByText } = renderComponent;
+            expect(getByText('TitleCardExternal')).toBeInTheDocument();
+          });
+
+          test('renders the PackageCard components', () => {
+            const { getByText } = renderComponent;
+            expect(getByText('PackageCard')).toBeInTheDocument();
+          });
+
+          test('renders the PackageCardExternal components', () => {
+            const { getByText } = renderComponent;
+            expect(getByText('PackageCardExternal')).toBeInTheDocument();
+          });
+
+          test('renders the TitleCard components', () => {
+            const { getByText } = renderComponent;
+            expect(getByText('TitleCard')).toBeInTheDocument();
           });
     });

@@ -45,64 +45,64 @@ const Info = ({
   resource,
 }) => (
   <>
-    <div data-testid="lineInfo" />
-    <Headline size="x-large" tag="h2">
-      <FormattedMessage id="ui-agreements.line.lineInformation" />
-    </Headline>
-    <MetaSection
-      contentId="agreementLineInfoRecordMetaContent"
-      createdDate={line.dateCreated}
-      hideSource
-      id="agreementLineInfoRecordMeta"
-      lastUpdatedDate={line.lastUpdated}
-    />
-    <KeyValue label={<FormattedMessage id="ui-agreements.line.parentAgreement" />}>
-      <div data-test-agreement-line-agreement>
-        {line.owner?.name ?? <NoValue />}
-      </div>
-    </KeyValue>
-    <Row>
-      <Col md={3} xs={6}>
-        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.activeFrom" />}>
-          <div data-test-agreement-line-active-from>
-            {line.activeFrom ?? <NoValue />}
-          </div>
-        </KeyValue>
-      </Col>
-      <Col md={3} xs={6}>
-        <KeyValue label={<FormattedMessage id="ui-agreements.eresources.activeTo" />}>
-          <div data-test-agreement-line-active-to>
-            {line.activeTo ?? <NoValue />}
-          </div>
-        </KeyValue>
-      </Col>
-      {isSuppressFromDiscoveryEnabled('agreementLine') ?
-        <Col md={3} xs={12}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.agreementLines.suppressFromDiscovery" />}>
-            <div data-test-agreement-line-suppress-from-discovery>
-              <FormattedMessage id={`ui-agreements.${line.suppressFromDiscovery ? 'yes' : 'no'}`} />
+    <div data-testid="lineInfo">
+      <Headline size="x-large" tag="h2">
+        <FormattedMessage id="ui-agreements.line.lineInformation" />
+      </Headline>
+      <MetaSection
+        contentId="agreementLineInfoRecordMetaContent"
+        createdDate={line.dateCreated}
+        hideSource
+        id="agreementLineInfoRecordMeta"
+        lastUpdatedDate={line.lastUpdated}
+      />
+      <KeyValue label={<FormattedMessage id="ui-agreements.line.parentAgreement" />}>
+        <div data-test-agreement-line-agreement>
+          {line.owner?.name ?? <NoValue />}
+        </div>
+      </KeyValue>
+      <Row>
+        <Col md={3} xs={6}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.eresources.activeFrom" />}>
+            <div data-test-agreement-line-active-from>
+              {line.activeFrom ?? <NoValue />}
             </div>
           </KeyValue>
-        </Col> : null
+        </Col>
+        <Col md={3} xs={6}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.eresources.activeTo" />}>
+            <div data-test-agreement-line-active-to>
+              {line.activeTo ?? <NoValue />}
+            </div>
+          </KeyValue>
+        </Col>
+        {isSuppressFromDiscoveryEnabled('agreementLine') ?
+          <Col md={3} xs={12}>
+            <KeyValue label={<FormattedMessage id="ui-agreements.agreementLines.suppressFromDiscovery" />}>
+              <div data-test-agreement-line-suppress-from-discovery>
+                <FormattedMessage id={`ui-agreements.${line.suppressFromDiscovery ? 'yes' : 'no'}`} />
+              </div>
+            </KeyValue>
+          </Col> : null
       }
-      <Col md={3} xs={12}>
-        <KeyValue label={<FormattedMessage id="ui-agreements.note" />}>
-          <div data-test-agreement-line-note>
-            {line.note ?? <NoValue />}
-          </div>
-        </KeyValue>
-      </Col>
-    </Row>
-    <Row>
-      <Col md={3} xs={12}>
-        <KeyValue label={<FormattedMessage id="ui-agreements.description" />}>
-          <div data-test-agreement-line-description>
-            {line.description ?? <NoValue />}
-          </div>
-        </KeyValue>
-      </Col>
-    </Row>
-    { !isDetached(line) ?
+        <Col md={3} xs={12}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.note" />}>
+            <div data-test-agreement-line-note>
+              {line.note ?? <NoValue />}
+            </div>
+          </KeyValue>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={3} xs={12}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.description" />}>
+            <div data-test-agreement-line-description>
+              {line.description ?? <NoValue />}
+            </div>
+          </KeyValue>
+        </Col>
+      </Row>
+      { !isDetached(line) ?
       isPackage(resource) ?
         <>
           <Headline size="large" tag="h3">
@@ -149,6 +149,7 @@ const Info = ({
         }
         </> : null
     }
+    </div>
   </>
 );
 
