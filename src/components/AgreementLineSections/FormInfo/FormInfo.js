@@ -11,7 +11,7 @@ import {
   TextArea,
 } from '@folio/stripes/components';
 
-import { isDetached } from '../utilities';
+import { isDetached } from '../../utilities';
 
 const propTypes = {
   isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
@@ -63,6 +63,7 @@ const FormInfo = ({
       <Col md={6} xs={12}>
         <Field
           component={TextArea}
+          data-testid="line-description"
           id="agreement-line-description"
           label={<FormattedMessage id="ui-agreements.eresources.description" />}
           maxLength={255}
