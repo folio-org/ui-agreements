@@ -9,9 +9,15 @@ jest.mock('../../PackageCard', () => () => <div>PackageCard</div>);
 jest.mock('../../PackageCardExternal', () => () => <div>PackageCardExternal</div>);
 jest.mock('../../TitleCard', () => () => <div>TitleCard</div>);
 jest.mock('../../TitleCardExternal', () => () => <div>TitleCardExternal</div>);
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  isPackage: () => <div>isPackage</div>,
+}));
+
+const isSuppressFromDiscoveryEnabled = jest.fn().mockImplementation(resource => resource);
 
 const line = {
-    'id': '4ecd2dfb-40da-49bf-84ce-afe3b2d7df5d',
+    'id': '0bc141e5-9cb8-432f-bd61-69069ada4f03',
     'type': 'external',
     'description': 'This is description.',
     'authority': 'EKB-PACKAGE',
@@ -27,54 +33,124 @@ const line = {
     'note': 'This is note.',
     'tags': '[]',
     'owner': {
-        'id': 'b1631c53-c383-4e71-b5bd-50e23ee96b8e',
-        'cancellationDeadline': '2021-08-09',
-        'dateCreated': '2021-08-20T09:08:41Z',
-        'isPerpetual': {
-        'id': '2c91809c7b613a80017b614140780018',
+      'id': '59cf8946-1496-4434-8c9c-4dbe218ad83c',
+      'dateCreated': '2021-08-23T08:13:21Z',
+      'isPerpetual': {
+        'id': '2c91809c7b70aeb1017b70b5e700001d',
         'value': 'yes',
         'label': 'Yes'
-        },
-        'name': 'MR test Info',
-        'orgs': [],
-        'licenseNote': "note about agreement's license",
-        'externalLicenseDocs': [],
-        'outwardRelationships': [],
-        'customProperties': {},
-        'contacts': [
-        '{id: "1f05a876-96d0-488e-93d1-f27a1ec7171e", owner:…}'
-        ],
-        'tags': [],
-        'lastUpdated': '2021-08-20T09:08:41Z',
-        'inwardRelationships': [],
-        'renewalPriority': {
-        'id': '2c91809c7b613a80017b61414094001f',
+      },
+      'name': 'MR test Info',
+      'orgs': [],
+      'externalLicenseDocs': [],
+      'outwardRelationships': [],
+      'customProperties': {},
+      'contacts': [],
+      'tags': [],
+      'lastUpdated': '2021-08-23T08:13:21Z',
+      'inwardRelationships': [],
+      'renewalPriority': {
+        'id': '2c91809c7b70aeb1017b70b5e71d0024',
         'value': 'definitely_renew',
         'label': 'Definitely renew'
-        },
-        'endDate': '2021-08-26',
-        'startDate': '2021-08-06',
-        'linkedLicenses': [],
-        'docs': [],
-        'periods': [
-        '{cancellationDeadline: "2021-08-09", endDate: "2021…}'
-        ],
-        'usageDataProviders': [],
-        'agreementStatus': {
-        'id': '2c91809c7b613a80017b614140d20028',
+      },
+      'endDate': '2021-08-28',
+      'startDate': '2021-08-04',
+      'linkedLicenses': [],
+      'docs': [],
+      'periods': [
+        '{endDate: "2021-08-28", id: "6b1b4903-3f14-4f51-add…}'
+      ],
+      'usageDataProviders': [],
+      'agreementStatus': {
+        'id': '2c91809c7b70aeb1017b70b5e767002d',
         'value': 'active',
         'label': 'Active'
-        },
-        'supplementaryDocs': [],
-        'items': [
-        '{id: "4ecd2dfb-40da-49bf-84ce-afe3b2d7df5d"}'
-        ],
-        'alternateNames': []
+      },
+      'supplementaryDocs': [],
+      'description': 'This is description.',
+      'cancellationDeadline': null,
+      'items': [
+        '{id: "0bc141e5-9cb8-432f-bd61-69069ada4f03"}'
+      ],
+      'alternateNames': []
+    },
+    'customCoverage': false,
+    'reference_object': {
+      'label': 'i-Scholar',
+      'type': 'Package',
+      'provider': 'Informatics Publishing Limited',
+      'titleCount': 1028,
+      'selectedCount': 0,
+      'contentType': 'E-Journal',
+      'providerName': 'Informatics Publishing Limited'
+    },
+    'poLines': '[]'
+  };
+
+ const resource = {
+    'id': '0bc141e5-9cb8-432f-bd61-69069ada4f03',
+    'type': 'external',
+    'description': 'This is description.',
+    'authority': 'EKB-PACKAGE',
+    'reference': '122380-2556389',
+    'explanation': null,
+    'startDate': '2021-08-04',
+    'endDate': '2021-08-28',
+    'activeFrom': '2021-08-04',
+    'activeTo': '2021-08-28',
+    'contentUpdated': null,
+    'haveAccess': true,
+    'suppressFromDiscovery': true,
+    'note': 'This is note.',
+    'tags': '[]',
+    'owner': {
+      'id': '59cf8946-1496-4434-8c9c-4dbe218ad83c',
+      'dateCreated': '2021-08-23T08:13:21Z',
+      'isPerpetual': {
+        'id': '2c91809c7b70aeb1017b70b5e700001d',
+        'value': 'yes',
+        'label': 'Yes'
+      },
+      'name': 'Mr test Info',
+      'orgs': [],
+      'externalLicenseDocs': [],
+      'outwardRelationships': [],
+      'customProperties': {},
+      'contacts': [],
+      'tags': [],
+      'lastUpdated': '2021-08-23T08:13:21Z',
+      'inwardRelationships': [],
+      'renewalPriority': {
+        'id': '2c91809c7b70aeb1017b70b5e71d0024',
+        'value': 'definitely_renew',
+        'label': 'Definitely renew'
+      },
+      'endDate': '2021-08-28',
+      'startDate': '2021-08-04',
+      'linkedLicenses': [],
+      'docs': [],
+      'periods': [
+        '{endDate: "2021-08-28", id: "6b1b4903-3f14-4f51-add…}'
+      ],
+      'usageDataProviders': [],
+      'agreementStatus': {
+        'id': '2c91809c7b70aeb1017b70b5e767002d',
+        'value': 'active',
+        'label': 'Active'
+      },
+      'supplementaryDocs': [],
+      'description': 'This is description.',
+      'cancellationDeadline': null,
+      'items': [
+        '{id: "0bc141e5-9cb8-432f-bd61-69069ada4f03"}'
+      ],
+      'alternateNames': []
     },
     'customCoverage': false,
     'reference_object': '{contentType: "E-Journal", label: "i-Scholar", prov…}',
     'poLines': '[]'
-    };
+};
 
     let renderComponent;
     describe('Info', () => {
@@ -82,7 +158,9 @@ const line = {
         renderComponent = renderWithIntl(
           <Info
             id="lineInfo"
+            isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
             line={line}
+            resource={resource}
           />,
         translationsProperties
         );
@@ -98,42 +176,42 @@ const line = {
     });
 
     test('displays parent agreement activeFrom date', async () => {
-    await KeyValue('Active from').has({ value: '2021-08-04' });
+      await KeyValue('Active from').has({ value: '2021-08-04' });
     });
 
     test('displays parent agreement activeTo date', async () => {
-    await KeyValue('Active to').has({ value: '2021-08-28' });
+      await KeyValue('Active to').has({ value: '2021-08-28' });
     });
 
     test('displays parent agreement suppressFromDiscovery', async () => {
-    await KeyValue('Suppress from discovery').has({ value: true });
+      await KeyValue('Suppress from discovery').has({ value: 'Yes' });
     });
 
     test('dispalys parent agreement note', async () => {
-    await KeyValue('Note').has({ value: 'This is note.' });
+      await KeyValue('Note').has({ value: 'This is note.' });
     });
 
     test('dispalys parent agreement description', async () => {
-    await KeyValue('Description').has({ value: 'This is description.' });
+      await KeyValue('Description').has({ value: 'This is description.' });
     });
 
     test('renders the TitleCardExternal components', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('TitleCardExternal')).toBeInTheDocument();
+      const { getByText } = renderComponent;
+      expect(getByText('TitleCardExternal')).toBeInTheDocument();
     });
 
     test('renders the PackageCard components', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('PackageCard')).toBeInTheDocument();
+      const { getByText } = renderComponent;
+      expect(getByText('PackageCard')).toBeInTheDocument();
     });
 
     test('renders the PackageCardExternal components', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('PackageCardExternal')).toBeInTheDocument();
+      const { getByText } = renderComponent;
+      expect(getByText('PackageCardExternal')).toBeInTheDocument();
     });
 
     test('renders the TitleCard components', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('TitleCard')).toBeInTheDocument();
+      const { getByText } = renderComponent;
+      expect(getByText('TitleCard')).toBeInTheDocument();
     });
 });
