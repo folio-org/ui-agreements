@@ -19,7 +19,8 @@
     "test-all": "yarn run test-bigtest-once; yarn run test-int",
     "test-bigtest-once": "stripes test karma --karma.singleRun",
     "test-erm": "yarn run test-int; yarn run test-licenses-int",
-    "lint": "eslint src test"
+    "lint": "eslint src test",
+    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-agreements ./translations/ui-agreements/compiled"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.1",
@@ -31,8 +32,9 @@
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.2.0",
     "@folio/stripes": "^6.2.0",
-    "@folio/stripes-testing": "^3.0.0",
     "@folio/stripes-cli": "^2.3.0",
+    "@folio/stripes-testing": "^3.0.0",
+    "@formatjs/cli": "^4.2.31",
     "@testing-library/dom": "^7.26.6",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.2",
