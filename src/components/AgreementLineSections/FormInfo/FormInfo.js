@@ -75,6 +75,7 @@ const FormInfo = ({
       <Col md={6} xs={12}>
         <Field
           component={TextArea}
+          data-testid="line-note"
           id="agreement-line-note"
           label={<FormattedMessage id="ui-agreements.note" />}
           name="note"

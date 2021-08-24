@@ -4,30 +4,14 @@ import { TestForm, renderWithIntl } from '@folio/stripes-erm-components/test/jes
 import { Datepicker, Checkbox } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import FormInfo from './FormInfo';
+import { data, handlers, initialValues, values } from './testResources';
 
 const onSubmit = jest.fn();
 const isSuppressFromDiscoveryEnabled = jest.fn(_info => true);
 
-const data = {
-  'addButtonTooltipId': 'ui-agreements.agreementLine.addCustomCoverageTootlip',
-  'agreementLineSource': 'basket',
-  'basket': [],
-  'isSuppressFromDiscoveryEnabled': 'ƒ () {}',
-  'line': {},
-  'lineId': '',
-  'resource': {},
-  'setFieldData': 'ƒ () {}',
-  'values': {
-    'description': 'This is description.',
-    'note': 'This is note.',
-    'activeFrom': '2021-08-04',
-    'activeTo': '2021-08-28',
-    'suppressFromDiscovery': true
-  }
-};
-
   let renderComponent;
   describe('FormInfo', () => {
+    describe('with no initial values', () => {
       beforeEach(() => {
         renderComponent = renderWithIntl(
           <TestForm data={data} onSubmit={onSubmit}>
@@ -63,20 +47,61 @@ const data = {
         expect(getByRole('checkbox', { name: 'Suppress from discovery' }));
       });
 
-      test('renders Active from Datepicker', async () => {
+      test('renders Active from Datepicker by id', async () => {
         await Datepicker({ id: 'agreement-line-active-from' }).exists();
       });
 
-      test('renders Active to Datepicker', async () => {
+      test('renders Active to Datepicker by id', async () => {
         await Datepicker({ id: 'agreement-line-active-to' }).exists();
       });
 
-      test('renders Suppress from discovery Checkbox', async () => {
+      test('renders Suppress from discovery Checkbox by id', async () => {
         await Checkbox({ id: 'agreement-line-suppress-from-discovery' }).exists();
       });
 
-      test('renders the  Description field by id', () => {
+      test('renders the Description field by id', () => {
         const { getByTestId } = renderComponent;
         expect(getByTestId('line-description')).toBeInTheDocument();
       });
+
+      test('renders the Description field by id', () => {
+        const { getByTestId } = renderComponent;
+        expect(getByTestId('line-note')).toBeInTheDocument();
+      });
     });
+
+    describe('with initial values', () => {
+      beforeEach(() => {
+        renderWithIntl(
+          <TestForm initialValues={initialValues} onSubmit={onSubmit}>
+            <FormInfo data={data} handlers={handlers} isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} values={values} />
+          </TestForm>, translationsProperties
+        );
+      });
+
+      test('renders the expected value in the Description field', () => {
+        const { getByRole } = renderComponent;
+        expect(getByRole('textbox', { name: 'Description' })).toHaveDisplayValue('This is description');
+      });
+
+      test('renders the expected value in the Note field', () => {
+        const { getByRole } = renderComponent;
+        expect(getByRole('textbox', { name: 'Note' })).toHaveDisplayValue('This is note.');
+      });
+
+      test('renders the expected value in the Active from field', () => {
+        const { getByRole } = renderComponent;
+        expect(getByRole('textbox', { name: 'Active from' })).toHaveDisplayValue('08/04/2021');
+      });
+
+      test('renders the expected value in the Active to field', () => {
+        const { getByRole } = renderComponent;
+        expect(getByRole('textbox', { name: 'Active to' })).toHaveDisplayValue('08/28/2021');
+      });
+
+      test('renders the expected value in the Suppress from discovery field', () => {
+        const { getByRole } = renderComponent;
+        expect(getByRole('checkbox', { name: 'Suppress from discovery' })).toBeTruthy();
+      });
+    });
+  });
