@@ -160,7 +160,7 @@
     "agreements": "계약",
     "eresources": "전자자원",
     "agreement": "계약",
-    "agreementPluralizable": "{카운트} {카운트, 복수, 하나의 {계약} 다른 {계약}}",
+    "agreementPluralizable": "{count} {count, plural, one {계약} other {계약}}",
     "agreements.searchInputLabel": "계약 검색",
     "eresources.searchInputLabel": "전자자원 검색",
     "agreements.vendor": "공급업체",
