@@ -58,16 +58,6 @@ const isSuppressFromDiscoveryEnabled = jest.fn(_info => true);
       test('renders Suppress from discovery Checkbox by id', async () => {
         await Checkbox({ id: 'agreement-line-suppress-from-discovery' }).exists();
       });
-
-      test('renders the Description field by id', () => {
-        const { getByTestId } = renderComponent;
-        expect(getByTestId('line-description')).toBeInTheDocument();
-      });
-
-      test('renders the Description field by id', () => {
-        const { getByTestId } = renderComponent;
-        expect(getByTestId('line-note')).toBeInTheDocument();
-      });
     });
 
     describe('with initial values', () => {
