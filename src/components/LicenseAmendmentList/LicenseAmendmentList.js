@@ -91,7 +91,7 @@ export default class LicenseAmendmentList extends React.Component {
           name: a => <Link to={urls.amendmentView(license.id, a.id)}>{a.name}</Link>,
           status: a => (a.status?.label ?? <NoValue />),
           startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : <NoValue />),
-          endDate: a => <LicenseEndDate license={a} />,
+          endDate: a => <LicenseEndDate license={a} renderNullIfEmpty />,
         }}
         id={id}
         interactive={false}
