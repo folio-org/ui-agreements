@@ -32,30 +32,15 @@ const isSuppressFromDiscoveryEnabled = jest.fn(_info => true);
         expect(getByRole('textbox', { name: 'Note' }));
       });
 
-      test('renders Active from field', () => {
-        const { getByRole } = renderComponent;
-        expect(getByRole('textbox', { name: 'Active from' }));
-      });
-
-      test('renders Active to field', () => {
-        const { getByRole } = renderComponent;
-        expect(getByRole('textbox', { name: 'Active to' }));
-      });
-
-      test('renders Suppress from discovery field', () => {
-        const { getByRole } = renderComponent;
-        expect(getByRole('checkbox', { name: 'Suppress from discovery' }));
-      });
-
-      test('renders Active from Datepicker by id', async () => {
+      test('renders Active from Datepicker', async () => {
         await Datepicker({ id: 'agreement-line-active-from' }).exists();
       });
 
-      test('renders Active to Datepicker by id', async () => {
+      test('renders Active to Datepicker', async () => {
         await Datepicker({ id: 'agreement-line-active-to' }).exists();
       });
 
-      test('renders Suppress from discovery Checkbox by id', async () => {
+      test('renders Suppress from discovery Checkbox', async () => {
         await Checkbox({ id: 'agreement-line-suppress-from-discovery' }).exists();
       });
     });
