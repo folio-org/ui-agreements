@@ -1,18 +1,12 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { MemoryRouter } from 'react-router-dom';
 import { KeyValue } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import Info from './Info';
 
-jest.mock('../../PackageCard', () => () => <div>PackageCard</div>);
 jest.mock('../../PackageCardExternal', () => () => <div>PackageCardExternal</div>);
-jest.mock('../../TitleCard', () => () => <div>TitleCard</div>);
-jest.mock('../../TitleCardExternal', () => () => <div>TitleCardExternal</div>);
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  isPackage: () => <div>isPackage</div>,
-}));
 
 const isSuppressFromDiscoveryEnabled = jest.fn().mockImplementation(resource => resource);
 
@@ -156,12 +150,13 @@ const line = {
     describe('Info', () => {
     beforeEach(() => {
         renderComponent = renderWithIntl(
-          <Info
-            id="lineInfo"
-            isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
-            line={line}
-            resource={resource}
-          />,
+          <MemoryRouter>
+            <Info
+              isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
+              line={line}
+              resource={resource}
+            />
+          </MemoryRouter>,
         translationsProperties
         );
     });
@@ -195,23 +190,8 @@ const line = {
       await KeyValue('Description').has({ value: 'This is description.' });
     });
 
-    test('renders the TitleCardExternal components', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('TitleCardExternal')).toBeInTheDocument();
-    });
-
-    test('renders the PackageCard components', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('PackageCard')).toBeInTheDocument();
-    });
-
-    test('renders the PackageCardExternal components', () => {
+    test('renders the PackageCardExternal component', () => {
       const { getByText } = renderComponent;
       expect(getByText('PackageCardExternal')).toBeInTheDocument();
-    });
-
-    test('renders the TitleCard components', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('TitleCard')).toBeInTheDocument();
     });
 });
