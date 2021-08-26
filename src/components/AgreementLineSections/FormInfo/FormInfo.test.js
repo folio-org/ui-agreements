@@ -90,8 +90,7 @@ const isSuppressFromDiscoveryEnabled = jest.fn(_info => true);
       });
 
       test('renders the expected value in the Suppress from discovery field', () => {
-        const { getByRole } = renderComponent;
-        expect(getByRole('checkbox', { name: 'Suppress from discovery' })).toBeTruthy();
-      });
+        expect(('checkbox', { name: 'Suppress from discovery' })).toBeTruthy();
+     });
     });
   });
