@@ -317,7 +317,7 @@
     "coverage.editionShort": "Udg.",
     "agreements.currentPeriodNote": "Current period note",
     "supplementaryProperties": "Supplementary properties",
-    "supplementaryProperties.count": "{count, number} gemt {count, plural, one {supplementary property} andre  {supplementary properties}}",
+    "supplementaryProperties.count": "{count, number} gemt {count, plural, one { supplementary property } other { supplementary properties}}",
     "supplementaryProperties.callout.delete.error": "There was an error deleting the supplementary property. {error}",
     "supplementaryProperties.callout.delete.success": "Supplementary property successfully deleted.",
     "supplementaryProperties.callout.save.error": "Der opstod en fejl i forbindelse med at det supplerende dataelement blev gemt. {error}",
