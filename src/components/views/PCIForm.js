@@ -107,7 +107,7 @@ class PCIForm extends React.Component {
     return (
       <PaneMenu>
         <FormattedMessage id="ui-agreements.pci.closeEdit">
-          {ariaLabel => (
+          {([ariaLabel]) => (
             <IconButton
               aria-label={ariaLabel}
               icon="times"
