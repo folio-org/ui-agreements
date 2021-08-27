@@ -12,7 +12,7 @@ import {
 
 import { Embargo, isPackage } from '@folio/stripes-erm-components';
 
-import CustomCoverageIcon from '../CustomCoverageIcon';
+import CustomCoverageIcon from '../../CustomCoverageIcon';
 
 const propTypes = {
   line: PropTypes.shape({
