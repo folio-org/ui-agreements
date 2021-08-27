@@ -4,11 +4,11 @@ import { isEmpty } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Button } from '@folio/stripes/components';
 import { Field } from 'react-final-form';
-import { isDetached, isExternal } from '../utilities';
+import { isDetached, isExternal } from '../../utilities';
 
-import FormEresourceCard from './FormEresourceCard';
-import BasketSelector from '../BasketSelector';
-import EresourceSelector from './EresourceSelector';
+import FormEresourceCard from '../FormEresourceCard';
+import BasketSelector from '../../BasketSelector';
+import EresourceSelector from '../EresourceSelector';
 
 
 const propTypes = {
