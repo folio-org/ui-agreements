@@ -2,63 +2,51 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { TestForm, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { MemoryRouter } from 'react-router-dom';
 import FormEresourceCard from './FormEresourceCard';
 import translationsProperties from '../../../../test/helpers';
-import { dataTypePackage, resource, line, handlers, initialValues } from './testResources';
 
-jest.mock('../../TitleCardExternal', () => () => <div>TitleCardExternal</div>);
-jest.mock('../../PackageCard', () => () => <div>PackageCard</div>);
-
+jest.mock('../../PackageCardExternal', () => () => <div>PackageCardExternal</div>);
 const onSubmit = jest.fn();
+
+const data = {
+  'component': 'ƒ FormEresourceCard() {}',
+  'headerEnd': '<ForwardRef />',
+};
+  const resource = {
+    'contentType': 'Aggregated Full Text',
+    'customCoverage': {
+      'beginCoverage': '',
+      'endCoverage': ''
+    },
+    'isCustom': false,
+    'isSelected': true,
+    'name': 'i-law.com',
+    'packageId': 3581,
+    'packageType': 'Variable',
+    'providerId': 936,
+    'providerName': 'Informa Law & Finance',
+    'selectedCount': 181,
+    'titleCount': 181,
+    'visibilityData': {
+      'isHidden': false,
+      'reason': ''
+    },
+    'id': '936-3581',
+    'type': 'packages'
+  };
+
 let renderComponent;
 describe('FormEresourceCard', () => {
-  describe('with no initial values', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
-        <MemoryRouter>
-          <TestForm onSubmit={onSubmit}>
-            <FormEresourceCard handlers={handlers} line={line} resource={resource} />
-          </TestForm>
-        </MemoryRouter>, translationsProperties
+        <TestForm onSubmit={onSubmit}>
+          <FormEresourceCard data={data} resource={resource} />
+        </TestForm>, translationsProperties
       );
     });
 
-    test('renders the TitleCardExternal', () => {
+    test('renders the PackageCardExternal', () => {
       const { getByText } = renderComponent;
-      expect(getByText('TitleCardExternal')).toBeInTheDocument();
+      expect(getByText('PackageCardExternal')).toBeInTheDocument();
     });
-  });
-
-  describe('with initial values', () => {
-    beforeEach(() => {
-      renderWithIntl(
-        <MemoryRouter>
-          <TestForm initialValues={initialValues} onSubmit={onSubmit}>
-            <FormEresourceCard handlers={handlers} line={line} resource={resource} />
-          </TestForm>
-        </MemoryRouter>, translationsProperties
-      );
-    });
-    test('renders the TitleCardExternal', () => {
-        const { getByText } = renderComponent;
-        expect(getByText('TitleCardExternal')).toBeInTheDocument();
-      });
-  });
-
-  describe('with type package', () => {
-    beforeEach(() => {
-      renderWithIntl(
-        <MemoryRouter>
-          <TestForm onSubmit={onSubmit}>
-            <FormEresourceCard dataTypePackage={dataTypePackage} />
-          </TestForm>
-        </MemoryRouter>, translationsProperties
-      );
-    });
-    test('renders the PackageCard', () => {
-        const { getByText } = renderComponent;
-        expect(getByText('PackageCard')).toBeInTheDocument();
-      });
-  });
 });

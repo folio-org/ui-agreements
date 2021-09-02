@@ -14,7 +14,11 @@ const propTypes = {
 };
 
 const isExternal = (resource) => {
-  return resource.type === 'external' || resource.type === 'packages' || resource.type === 'resources';
+  return (
+    resource.type === 'external' ||
+    resource.type === 'packages' ||
+    resource.type === 'resources'
+  );
 };
 
 const isPackage = (resource) => {
