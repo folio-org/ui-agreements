@@ -11,6 +11,18 @@ import translationsProperties from '../../../../test/helpers';
 jest.mock('../../POLinesFieldArray', () => () => <div>POLinesFieldArray</div>);
 const onSubmit = jest.fn();
 
+const formPolines = {
+  'addButtonTooltipId': 'ui-agreements.agreementLine.addCustomCoverageTootlip',
+  'agreementLineSource': 'basket',
+  'basket': [],
+  'isSuppressFromDiscoveryEnabled': 'ƒ () {}',
+  'line': {},
+  'lineId': '',
+  'resource': {},
+  'setFieldData': 'ƒ () {}',
+  'values': {}
+};
+
 const data = {
   'basket': '[]',
   'isEholdingsEnabled': true,
@@ -190,6 +202,28 @@ const initialValues = {
   }
 };
 
+describe('renders FormPOLines', () => {
+  describe('with no initialValues', () => {
+    let renderComponent;
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <TestForm onSubmit={onSubmit}>
+          <FormPOLines formPolines={formPolines} />
+        </TestForm>,
+        translationsProperties
+      );
+    });
+
+    test('renders the PO lines accordion', async () => {
+      await Accordion('PO lines').exists();
+    });
+
+    test('renders the POLinesFieldArray component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('POLinesFieldArray')).toBeInTheDocument();
+    });
+  });
+
   describe('with initialValues', () => {
     let renderComponent;
     beforeEach(() => {
@@ -210,3 +244,4 @@ const initialValues = {
       expect(getByText('POLinesFieldArray')).toBeInTheDocument();
     });
   });
+});
