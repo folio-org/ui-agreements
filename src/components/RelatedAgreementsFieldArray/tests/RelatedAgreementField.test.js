@@ -41,9 +41,8 @@ describe('RelatedAgreementField', () => {
       translationsProperties
     );
 
-    it('renders expected app icon and default message', () => {
+    it('renders the default message', () => {
       const { getByText } = renderComponent;
-      expect(getByText('Agreement')).toBeInTheDocument();
       expect(getByText('Link an agreement to get started')).toBeInTheDocument();
     });
   });
