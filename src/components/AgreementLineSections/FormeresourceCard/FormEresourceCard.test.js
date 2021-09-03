@@ -12,28 +12,29 @@ const data = {
   'component': 'ƒ FormEresourceCard() {}',
   'headerEnd': '<ForwardRef />',
 };
-  const resource = {
-    'contentType': 'Aggregated Full Text',
-    'customCoverage': {
-      'beginCoverage': '',
-      'endCoverage': ''
-    },
-    'isCustom': false,
-    'isSelected': true,
-    'name': 'i-law.com',
-    'packageId': 3581,
-    'packageType': 'Variable',
-    'providerId': 936,
-    'providerName': 'Informa Law & Finance',
-    'selectedCount': 181,
-    'titleCount': 181,
-    'visibilityData': {
-      'isHidden': false,
-      'reason': ''
-    },
-    'id': '936-3581',
-    'type': 'packages'
-  };
+
+const resource = {
+  'contentType': 'Aggregated Full Text',
+  'customCoverage': {
+    'beginCoverage': '',
+    'endCoverage': ''
+  },
+  'isCustom': false,
+  'isSelected': true,
+  'name': 'i-law.com',
+  'packageId': 3581,
+  'packageType': 'Variable',
+  'providerId': 936,
+  'providerName': 'Informa Law & Finance',
+  'selectedCount': 181,
+  'titleCount': 181,
+  'visibilityData': {
+    'isHidden': false,
+    'reason': ''
+  },
+  'id': '936-3581',
+  'type': 'packages'
+};
 
 let renderComponent;
 describe('FormEresourceCard', () => {
