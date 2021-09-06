@@ -6,18 +6,12 @@ import {
 } from '@folio/stripes-erm-components/test/jest/helpers';
 import { Button } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
-import { data, values, line, handlers, initialValues } from './testResources';
+import { data, values, line, resource, handlers, initialValues } from './testResources';
 import FormEresource from './FormEresource';
 
+jest.mock('../EresourceSelector', () => () => <div>EresourceSelector</div>);
+jest.mock('../FormEresourceCard', () => () => <div>FormEresourceCard</div>);
 const onSubmit = jest.fn();
-const isSuppressFromDiscoveryEnabled = jest.fn((_info) => true);
-
-jest.mock('@folio/stripes-erm-components', () => ({
-    ...jest.requireActual('@folio/stripes-erm-components'),
-    FormEresourceCard: () => <div>FormEresourceCard</div>,
-  }));
-
-
 
 describe('FormEresource', () => {
   let renderComponent;
@@ -27,7 +21,8 @@ describe('FormEresource', () => {
         <TestForm onSubmit={onSubmit}>
           <FormEresource
             data={data}
-            isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
+            line={line}
+            resource={resource}
             values={values}
           />
         </TestForm>,
@@ -35,32 +30,31 @@ describe('FormEresource', () => {
       );
     });
     test('renders link e-resource button', () => {
-    const { getByRole } = renderComponent;
-    expect(getByRole('button', { name: 'Submit' })).toBeInTheDocument();
+      const { getByRole } = renderComponent;
+      expect(getByRole('button', { name: 'Submit' })).toBeInTheDocument();
     });
 
     test('renders the Submit button', async () => {
       await Button('Submit').exists();
     });
-});
+    test('renders the EresourceSelector component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('EresourceSelector')).toBeInTheDocument();
+    });
+  });
 
-describe('with initialValues', () => {
+  describe('with initialValues', () => {
     beforeEach(() => {
-        renderComponent = renderWithIntl(
-          <TestForm initialValues={initialValues} onSubmit={onSubmit}>
-            <FormEresource
-              data={data}
-              handlers={handlers}
-              isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
-              line={line}
-            />
-          </TestForm>,
+      renderComponent = renderWithIntl(
+        <TestForm initialValues={initialValues} onSubmit={onSubmit}>
+          <FormEresource data={data} handlers={handlers} line={line} />
+        </TestForm>,
         translationsProperties
-        );
-        test('renders the FormEresourceCard component', () => {
-            const { getByText } = renderComponent;
-            expect(getByText('FormEresourceCard'));
-          });
+      );
+      test('renders the FormEresourceCard component', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('FormEresourceCard')).toBeInTheDocument();
+      });
     });
   });
 });
