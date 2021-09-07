@@ -13,54 +13,53 @@ jest.mock('@folio/stripes-erm-components', () => ({
 jest.mock('../../CoverageFieldArray', () => () => <div>CoverageFieldArray</div>);
 
 const onSubmit = jest.fn();
-
-  describe('FormCoverage', () => {
-    let renderComponent;
-    describe('with no initialValues', () => {
-      beforeEach(() => {
-        renderComponent = renderWithIntl(
-          <TestForm onSubmit={onSubmit}>
-            <FormCoverage
-              data={data}
-              line={line}
-              resource={resource}
-              values={values}
-            />
-          </TestForm>,
-          translationsProperties
-        );
-      });
-      test('renders the Coverage accordion', async () => {
-        await Accordion('Coverage').exists();
-      });
-      test('renders the expected  value', async () => {
-        await KeyValue('Default coverage').exists();
-      });
-      test('renders the SerialCoverage component', () => {
-        const { getByText } = renderComponent;
-        expect(getByText('SerialCoverage')).toBeInTheDocument();
-      });
+describe('FormCoverage', () => {
+  let renderComponent;
+  describe('with no initialValues', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <TestForm onSubmit={onSubmit}>
+          <FormCoverage
+            data={data}
+            line={line}
+            resource={resource}
+            values={values}
+          />
+        </TestForm>,
+        translationsProperties
+      );
     });
-
-    describe('with initialValues', () => {
-      beforeEach(() => {
-        renderComponent = renderWithIntl(
-          <TestForm initialValues={initialValues} onSubmit={onSubmit}>
-            <FormCoverage
-              data={initialValuesData}
-              handlers={handlers}
-              resource={resource}
-            />
-          </TestForm>,
-          translationsProperties
-        );
-      });
-      test('renders the Coverage accordion', async () => {
-        await Accordion('Coverage').exists();
-      });
-      test('renders the CoverageFieldArray component', () => {
-        const { getByText } = renderComponent;
-        expect(getByText('CoverageFieldArray')).toBeInTheDocument();
-      });
+    test('renders the Coverage accordion', async () => {
+      await Accordion('Coverage').exists();
+    });
+    test('renders the expected  value', async () => {
+      await KeyValue('Default coverage').exists();
+    });
+    test('renders the SerialCoverage component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('SerialCoverage')).toBeInTheDocument();
     });
   });
+
+  describe('with initialValues', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <TestForm initialValues={initialValues} onSubmit={onSubmit}>
+          <FormCoverage
+            data={initialValuesData}
+            handlers={handlers}
+            resource={resource}
+          />
+        </TestForm>,
+        translationsProperties
+      );
+    });
+    test('renders the Coverage accordion', async () => {
+      await Accordion('Coverage').exists();
+    });
+    test('renders the CoverageFieldArray component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('CoverageFieldArray')).toBeInTheDocument();
+    });
+  });
+});
