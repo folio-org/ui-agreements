@@ -6,11 +6,12 @@ import {
 } from '@folio/stripes-erm-components/test/jest/helpers';
 import { Button } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
-import { data, values, line, resource, handlers, initialValues } from './testResources';
+import { values, line, handlers, initialValues, eholdingData } from './testResources';
 import FormEresource from './FormEresource';
 
 jest.mock('../EresourceSelector', () => () => <div>EresourceSelector</div>);
 jest.mock('../FormEresourceCard', () => () => <div>FormEresourceCard</div>);
+
 const onSubmit = jest.fn();
 
 describe('FormEresource', () => {
@@ -20,9 +21,7 @@ describe('FormEresource', () => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
           <FormEresource
-            data={data}
             line={line}
-            resource={resource}
             values={values}
           />
         </TestForm>,
@@ -47,13 +46,28 @@ describe('FormEresource', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm initialValues={initialValues} onSubmit={onSubmit}>
-          <FormEresource data={data} handlers={handlers} line={line} />
+          <FormEresource handlers={handlers} line={line} values={values} />
         </TestForm>,
         translationsProperties
       );
       test('renders the FormEresourceCard component', () => {
         const { getByText } = renderComponent;
         expect(getByText('FormEresourceCard')).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('with agreementLine type eholdings', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <TestForm onSubmit={onSubmit}>
+          <FormEresource data={eholdingData} />
+        </TestForm>,
+        translationsProperties
+      );
+      test('renders the EresourceSelector component', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('EresourceSelector')).toBeInTheDocument();
       });
     });
   });
