@@ -61,7 +61,7 @@ const TitleForm = ({
           firstMenu={
             <PaneMenu>
               <FormattedMessage id="ui-agreements.title.closeEdit">
-                {ariaLabel => (
+                {([ariaLabel]) => (
                   <IconButton
                     aria-label={ariaLabel}
                     icon="times"
@@ -71,7 +71,7 @@ const TitleForm = ({
                 )}
               </FormattedMessage>
             </PaneMenu>
-        }
+          }
           footer={
             <PaneFooter
               renderEnd={(
@@ -85,7 +85,7 @@ const TitleForm = ({
                 >
                   <FormattedMessage id="stripes-components.saveAndClose" />
                 </Button>
-        )}
+              )}
               renderStart={(
                 <Button
                   buttonStyle="default mega"
@@ -95,9 +95,9 @@ const TitleForm = ({
                 >
                   <FormattedMessage id="stripes-components.cancel" />
                 </Button>
-        )}
+              )}
             />
-        }
+          }
           id="pane-title-form"
           paneTitle={<FormattedMessage id="ui-agreements.editResource" values={{ name: values.name }} />}
         >

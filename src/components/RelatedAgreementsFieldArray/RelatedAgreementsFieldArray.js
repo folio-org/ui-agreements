@@ -70,6 +70,7 @@ class RelatedAgreementsFieldArray extends React.Component {
     return items.map((relatedAgreement, index) => (
       <EditCard
         key={index}
+        data-testid={`relatedAgreementsFieldArray[${index}]`}
         deleteBtnProps={{
           'id': `ra-delete-${index}`,
           'data-test-delete-field-button': true
@@ -100,7 +101,7 @@ class RelatedAgreementsFieldArray extends React.Component {
           required
           validate={requiredValidator}
         />
-        { this.renderRelationshipSummary(relatedAgreement) }
+        {this.renderRelationshipSummary(relatedAgreement)}
         <Field
           component={TextArea}
           id={`ra-note-${index}`}
