@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-
 import { Accordion, Badge } from '@folio/stripes/components';
-
-import POLineCard from '../POLineCard';
+import POLineCard from '../../POLineCard';
 
 const propTypes = {
   line: PropTypes.shape({
@@ -29,6 +27,7 @@ const POLines = ({
       poLines.map(poLine => (
         <POLineCard
           key={poLine.id}
+          data-testid="polines"
           id={`ag-line-pol-card-${poLine.id}`}
           poLine={poLine}
         />
