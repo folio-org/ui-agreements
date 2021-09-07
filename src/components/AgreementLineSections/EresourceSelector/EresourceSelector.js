@@ -44,22 +44,24 @@ const EresourceSelector = ({ error, onAdd }) => {
 
   const renderLinkPackageButton = () => {
     return (
-      <Pluggable
-        dataKey="package"
-        onRecordChosen={res => onAdd(res)}
-        renderCustomTrigger={props => (
-          <Button
-            {...buttonProps}
-            {...props}
-            data-test-custom-trigger
-          >
-            <FormattedMessage id="ui-agreements.agreementLine.linkEresource" />
-          </Button>
+      <div data-testid="eresourceselector">
+        <Pluggable
+          dataKey="package"
+          onRecordChosen={res => onAdd(res)}
+          renderCustomTrigger={props => (
+            <Button
+              {...buttonProps}
+              {...props}
+              data-test-custom-trigger
+            >
+              <FormattedMessage id="ui-agreements.agreementLine.linkEresource" />
+            </Button>
         )}
-        type="find-package-title"
-      >
-        <FormattedMessage id="ui-erm-comparisons.newComparison.noPackagePlugin" />
-      </Pluggable>
+          type="find-package-title"
+        >
+          <FormattedMessage id="ui-erm-comparisons.newComparison.noPackagePlugin" />
+        </Pluggable>
+      </div>
     );
   };
 
