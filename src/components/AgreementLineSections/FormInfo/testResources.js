@@ -66,7 +66,7 @@ const data = {
     'contentUpdated': null,
     'haveAccess': true
     }
-  };
+};
 
 const handlers = {
   isSuppressFromDiscoveryEnabled: () => {},
@@ -133,15 +133,12 @@ const initialValues = {
   'haveAccess': true
 };
 
-const values = { 'isEholdingsEnabled': true,
+const values = {
+  'isEholdingsEnabled': true,
   'isLoading': false,
   'lineId': '045e0540-48b3-461c-9e5a-06513ef40587',
-  'onSubmit': 'ƒ () {}' };
-
-export {
-    data,
-    handlers,
-    initialValues,
-    values
+  'onSubmit': () => {}
 };
+
+export { data, handlers, initialValues, values };
 
