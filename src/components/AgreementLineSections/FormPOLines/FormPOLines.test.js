@@ -11,25 +11,24 @@ import translationsProperties from '../../../../test/helpers';
 jest.mock('../../POLinesFieldArray', () => () => <div>POLinesFieldArray</div>);
 const onSubmit = jest.fn();
 
-const formPolines = {
+const data = {
   'addButtonTooltipId': 'ui-agreements.agreementLine.addCustomCoverageTootlip',
   'agreementLineSource': 'basket',
   'basket': [],
-  'isSuppressFromDiscoveryEnabled': 'ƒ () {}',
+  'isSuppressFromDiscoveryEnabled': () => {},
   'line': {},
   'lineId': '',
   'resource': {},
-  'setFieldData': 'ƒ () {}',
-  'values': {}
+  'setFieldData': () => {},
+  'values': {
+    'poLines': [
+      {
+        '_delete': false,
+        'poLineId': '647c1dca-b9bf-47af-8456-bfb6dfef9eee'
+      }
+    ]
+  }
 };
-
-const data = {
-  'basket': '[]',
-  'isEholdingsEnabled': true,
-  'isLoading': false,
-  'lineId': 'b725a59d-a156-45c1-8a90-f507322ad58b',
-  'onSubmit': 'ƒ () {}'
-  };
 
 const initialValues = {
   'id': 'b725a59d-a156-45c1-8a90-f507322ad58b',
@@ -208,7 +207,7 @@ describe('renders FormPOLines', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
-          <FormPOLines formPolines={formPolines} />
+          <FormPOLines data={data} />
         </TestForm>,
         translationsProperties
       );
@@ -229,7 +228,7 @@ describe('renders FormPOLines', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm initialValues={initialValues} onSubmit={onSubmit}>
-          <FormPOLines data={data} />
+          <FormPOLines />
         </TestForm>,
         translationsProperties
       );
