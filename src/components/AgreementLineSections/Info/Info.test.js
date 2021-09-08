@@ -63,7 +63,13 @@ describe('Info', () => {
       const { getByText } = renderComponent;
       expect(getByText('PackageCardExternal')).toBeInTheDocument();
     });
+
+    test('renders the TitleCardExternal component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('TitleCardExternal')).toBeInTheDocument();
+    });
   });
+
   describe('Info with type packages', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
@@ -106,13 +112,16 @@ describe('Info', () => {
     test('dispalys agreement line description', async () => {
       await KeyValue('Description').has({ value: 'This is agreement line description' });
     });
+
     test('dispalys agreement line title on platfrom URL', async () => {
       await KeyValue('Title on platform URL').has({ value: 'https://doi.org/10.4337/9781845425678' });
     });
+
     test('renders the PackageCard component', () => {
       const { getByText } = renderComponent;
       expect(getByText('PackageCard')).toBeInTheDocument();
     });
+
     test('renders the TitleCard component', () => {
       const { getByText } = renderComponent;
       expect(getByText('TitleCard')).toBeInTheDocument();
