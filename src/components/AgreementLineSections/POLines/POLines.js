@@ -27,7 +27,6 @@ const POLines = ({
       poLines.map(poLine => (
         <POLineCard
           key={poLine.id}
-          data-testid="polines"
           id={`ag-line-pol-card-${poLine.id}`}
           poLine={poLine}
         />
