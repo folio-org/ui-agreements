@@ -25,6 +25,7 @@ export default class PackageContents extends React.Component {
       packageContents: PropTypes.arrayOf(PropTypes.object),
       packageContentsCount: PropTypes.number,
       packageContentsFilter: PropTypes.string,
+      searchString: PropTypes.string
     }),
     id: PropTypes.string,
     onFilterPackageContents: PropTypes.func.isRequired,
@@ -53,7 +54,7 @@ export default class PackageContents extends React.Component {
           iconKey="eresource"
           size="small"
         >
-          <EResourceLink eresource={pci.pti.titleInstance} />
+          <EResourceLink eresource={pci.pti.titleInstance} searchString={this.props.data?.searchString} />
         </AppIcon>
       );
     },
