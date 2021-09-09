@@ -2,7 +2,7 @@ import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { Accordion } from '@folio/stripes-testing';
-import { line, resource } from './testResources';
+import line from './testResources';
 import translationsProperties from '../../../../test/helpers';
 import POLines from './POLines';
 
@@ -12,7 +12,7 @@ describe('POLines', () => {
   let renderComponent;
   beforeEach(() => {
     renderComponent = renderWithIntl(
-      <POLines line={line} resource={resource} />,
+      <POLines line={line} />,
       translationsProperties
     );
   });
