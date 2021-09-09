@@ -1,7 +1,6 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { MemoryRouter } from 'react-router-dom';
 import { KeyValue } from '@folio/stripes-testing';
 import { externalLine, externalResource, packageLine, packageResource } from './testReasource';
 import translationsProperties from '../../../../test/helpers';
@@ -19,13 +18,12 @@ describe('Info', () => {
   describe('Info with external type', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
-        <MemoryRouter>
-          <Info
-            isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
-            line={externalLine}
-            resource={externalResource}
-          />
-        </MemoryRouter>,
+
+        <Info
+          isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
+          line={externalLine}
+          resource={externalResource}
+        />,
         translationsProperties
       );
     });
@@ -73,13 +71,11 @@ describe('Info', () => {
   describe('Info with type packages', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
-        <MemoryRouter>
-          <Info
-            isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
-            line={packageLine}
-            resource={packageResource}
-          />
-        </MemoryRouter>,
+        <Info
+          isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
+          line={packageLine}
+          resource={packageResource}
+        />,
         translationsProperties
       );
     });
