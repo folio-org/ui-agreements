@@ -1,137 +1,213 @@
 const externalLine = {
-    'id': '0bc141e5-9cb8-432f-bd61-69069ada4f03',
-    'type': 'external',
-    'description': 'This is description.',
-    'authority': 'EKB-PACKAGE',
-    'reference': '122380-2556389',
-    'explanation': null,
-    'startDate': '2021-08-04',
-    'endDate': '2021-08-28',
-    'activeFrom': '2021-08-04',
-    'activeTo': '2021-08-28',
-    'contentUpdated': null,
-    'haveAccess': true,
-    'suppressFromDiscovery': true,
-    'note': 'This is note.',
-    'tags': '[]',
-    'owner': {
-      'id': '59cf8946-1496-4434-8c9c-4dbe218ad83c',
-      'dateCreated': '2021-08-23T08:13:21Z',
-      'isPerpetual': {
-        'id': '2c91809c7b70aeb1017b70b5e700001d',
-        'value': 'yes',
-        'label': 'Yes'
-      },
-      'name': 'MR test Info',
-      'orgs': [],
-      'externalLicenseDocs': [],
-      'outwardRelationships': [],
-      'customProperties': {},
-      'contacts': [],
-      'tags': [],
-      'lastUpdated': '2021-08-23T08:13:21Z',
-      'inwardRelationships': [],
-      'renewalPriority': {
-        'id': '2c91809c7b70aeb1017b70b5e71d0024',
-        'value': 'definitely_renew',
-        'label': 'Definitely renew'
-      },
-      'endDate': '2021-08-28',
-      'startDate': '2021-08-04',
-      'linkedLicenses': [],
-      'docs': [],
-      'periods': [
-        '{endDate: "2021-08-28", id: "6b1b4903-3f14-4f51-add…}'
-      ],
-      'usageDataProviders': [],
-      'agreementStatus': {
-        'id': '2c91809c7b70aeb1017b70b5e767002d',
-        'value': 'active',
-        'label': 'Active'
-      },
-      'supplementaryDocs': [],
-      'description': 'This is description.',
-      'cancellationDeadline': null,
-      'items': [
-        '{id: "0bc141e5-9cb8-432f-bd61-69069ada4f03"}'
-      ],
-      'alternateNames': []
+  'id': '1c247260-bd39-4a5a-887f-25c40cfc53d2',
+  'type': 'external',
+  'description': 'This is description.',
+  'authority': 'EKB-TITLE',
+  'reference': '32498-16793-12384379',
+  'explanation': null,
+  'startDate': '2021-08-04',
+  'endDate': '2021-09-30',
+  'activeFrom': '2021-08-04',
+  'activeTo': '2021-08-28',
+  'contentUpdated': null,
+  'haveAccess': true,
+  'suppressFromDiscovery': true,
+  'note': 'This is note.',
+  'tags': '[]',
+  'owner': {
+    'id': '733186f6-4c7d-4b32-a982-86ed03f0d6ea',
+    'cancellationDeadline': '2021-09-26',
+    'dateCreated': '2021-09-09T08:17:55Z',
+    'isPerpetual': {
+      'id': '2c91809c7bc8e064017bc8e81518000a',
+      'value': 'yes',
+      'label': 'Yes'
     },
-    'customCoverage': false,
-    'reference_object': {
-      'label': 'i-Scholar',
-      'type': 'Package',
-      'provider': 'Informatics Publishing Limited',
-      'titleCount': 1028,
+    'name': 'MR test Info',
+    'orgs': [],
+    'externalLicenseDocs': [],
+    'outwardRelationships': [],
+    'customProperties': {},
+    'contacts': [],
+    'tags': [],
+    'lastUpdated': '2021-09-09T11:56:05Z',
+    'inwardRelationships': [],
+    'renewalPriority': {
+      'id': '2c91809c7bc8e064017bc8e815420011',
+      'value': 'definitely_renew',
+      'label': 'Definitely renew'
+    },
+    'endDate': '2021-09-30',
+    'startDate': '2021-09-01',
+    'linkedLicenses': [],
+    'docs': [],
+    'periods': [{
+      'id': '428fda12-c517-425b-828e-fd3b15bbaf35',
+      'startDate': '2021-09-01',
+      'cancellationDeadline': '2021-09-26',
+      'owner': {
+        'id': '733186f6-4c7d-4b32-a982-86ed03f0d6ea'
+      },
+      'note': 'period note',
+      'endDate': '2021-09-30',
+      'periodStatus': 'current'
+    }],
+    'usageDataProviders': [],
+    'agreementStatus': {
+      'id': '2c91809c7bc8e064017bc8e81591001a',
+      'value': 'active',
+      'label': 'Active'
+    },
+    'supplementaryDocs': [],
+    'description': 'This is description.',
+    'items': [{
+        'id': 'a4255fc3-986e-47a3-94cb-6bd30b828d1d'
+      },
+      {
+        'id': '1c247260-bd39-4a5a-887f-25c40cfc53d2'
+      }
+    ],
+    'alternateNames': []
+  },
+  'customCoverage': false,
+  'coverage': [{
+    'startDate': '2015-01-01',
+    'endDate': '2015-12-31',
+    'summary': 'v*/i*/2015-01-01 - v*/i*/2015-12-31'
+  }],
+  'reference_object': {
+    'label': '„Swoja i obca”',
+    'type': 'Book',
+    'provider': 'Wydawnictwo Naukowe PWN',
+    'publicationType': 'Book',
+    'url': 'https://libra.ibuk.pl/book/166729',
+    'identifiers': [{
+      'identifier': {
+        'value': '978-83-7996-171-9',
+        'ns': '{value: "pisbn"}'
+      }
+    }],
+    'authors': [
+      'Agata Paliwoda'
+    ],
+    'packageData': {
+      'authority': 'EKB-PACKAGE',
+      'reference': '32498-16793',
+      'name': 'IBUK Libra',
+      'titleCount': 39204,
       'selectedCount': 0,
-      'contentType': 'E-Journal',
-      'providerName': 'Informatics Publishing Limited'
+      'contentType': 'Aggregated Full Text',
+      'providerName': 'Wydawnictwo Naukowe PWN'
     },
-    'poLines': '[]'
-  };
+    'providerName': 'Wydawnictwo Naukowe PWN'
+  },
+  'poLines': '[]'
+};
 
- const externalResource = {
-    'id': '0bc141e5-9cb8-432f-bd61-69069ada4f03',
-    'type': 'external',
-    'description': 'This is description.',
-    'authority': 'EKB-PACKAGE',
-    'reference': '122380-2556389',
-    'explanation': null,
-    'startDate': '2021-08-04',
-    'endDate': '2021-08-28',
-    'activeFrom': '2021-08-04',
-    'activeTo': '2021-08-28',
-    'contentUpdated': null,
-    'haveAccess': true,
-    'suppressFromDiscovery': true,
-    'note': 'This is note.',
-    'tags': '[]',
-    'owner': {
-      'id': '59cf8946-1496-4434-8c9c-4dbe218ad83c',
-      'dateCreated': '2021-08-23T08:13:21Z',
-      'isPerpetual': {
-        'id': '2c91809c7b70aeb1017b70b5e700001d',
-        'value': 'yes',
-        'label': 'Yes'
-      },
-      'name': 'Mr test Info',
-      'orgs': [],
-      'externalLicenseDocs': [],
-      'outwardRelationships': [],
-      'customProperties': {},
-      'contacts': [],
-      'tags': [],
-      'lastUpdated': '2021-08-23T08:13:21Z',
-      'inwardRelationships': [],
-      'renewalPriority': {
-        'id': '2c91809c7b70aeb1017b70b5e71d0024',
-        'value': 'definitely_renew',
-        'label': 'Definitely renew'
-      },
-      'endDate': '2021-08-28',
-      'startDate': '2021-08-04',
-      'linkedLicenses': [],
-      'docs': [],
-      'periods': [
-        '{endDate: "2021-08-28", id: "6b1b4903-3f14-4f51-add…}'
-      ],
-      'usageDataProviders': [],
-      'agreementStatus': {
-        'id': '2c91809c7b70aeb1017b70b5e767002d',
-        'value': 'active',
-        'label': 'Active'
-      },
-      'supplementaryDocs': [],
-      'description': 'This is description.',
-      'cancellationDeadline': null,
-      'items': [
-        '{id: "0bc141e5-9cb8-432f-bd61-69069ada4f03"}'
-      ],
-      'alternateNames': []
+const externalResource = {
+  'id': '1c247260-bd39-4a5a-887f-25c40cfc53d2',
+  'type': 'external',
+  'description': 'This is description.',
+  'authority': 'EKB-TITLE',
+  'reference': '32498-16793-12384379',
+  'explanation': null,
+  'startDate': '2021-09-01',
+  'endDate': '2021-09-30',
+  'activeFrom': '2021-09-01',
+  'activeTo': '2021-09-30',
+  'contentUpdated': null,
+  'haveAccess': true,
+  'suppressFromDiscovery': true,
+  'note': 'this is note',
+  'tags': '[]',
+  'owner': {
+    'id': '733186f6-4c7d-4b32-a982-86ed03f0d6ea',
+    'cancellationDeadline': '2021-09-26',
+    'dateCreated': '2021-09-09T08:17:55Z',
+    'isPerpetual': {
+      'id': '2c91809c7bc8e064017bc8e81518000a',
+      'value': 'yes',
+      'label': 'Yes'
     },
-    'customCoverage': false,
-    'reference_object': '{contentType: "E-Journal", label: "i-Scholar", prov…}',
-    'poLines': '[]'
+    'name': 'MR agr test',
+    'orgs': [],
+    'externalLicenseDocs': [],
+    'outwardRelationships': [],
+    'customProperties': {},
+    'contacts': [],
+    'tags': [],
+    'lastUpdated': '2021-09-09T11:56:05Z',
+    'inwardRelationships': [],
+    'renewalPriority': {
+      'id': '2c91809c7bc8e064017bc8e815420011',
+      'value': 'definitely_renew',
+      'label': 'Definitely renew'
+    },
+    'endDate': '2021-09-30',
+    'startDate': '2021-09-01',
+    'linkedLicenses': [],
+    'docs': [],
+    'periods': [{
+      'id': '428fda12-c517-425b-828e-fd3b15bbaf35',
+      'startDate': '2021-09-01',
+      'cancellationDeadline': '2021-09-26',
+      'owner': {
+        'id': '733186f6-4c7d-4b32-a982-86ed03f0d6ea'
+      },
+      'note': 'period note',
+      'endDate': '2021-09-30',
+      'periodStatus': 'current'
+    }],
+    'usageDataProviders': [],
+    'agreementStatus': {
+      'id': '2c91809c7bc8e064017bc8e81591001a',
+      'value': 'active',
+      'label': 'Active'
+    },
+    'supplementaryDocs': [],
+    'description': 'This is description',
+    'items': [{
+        'id': 'a4255fc3-986e-47a3-94cb-6bd30b828d1d'
+      },
+      {
+        'id': '1c247260-bd39-4a5a-887f-25c40cfc53d2'
+      }
+    ],
+    'alternateNames': []
+  },
+  'customCoverage': false,
+  'coverage': [{
+    'startDate': '2015-01-01',
+    'endDate': '2015-12-31',
+    'summary': 'v*/i*/2015-01-01 - v*/i*/2015-12-31'
+  }],
+  'reference_object': {
+    'label': '„Swoja i obca”',
+    'type': 'Book',
+    'provider': 'Wydawnictwo Naukowe PWN',
+    'publicationType': 'Book',
+    'url': 'https://libra.ibuk.pl/book/166729',
+    'identifiers': [{
+      'identifier': {
+        'value': '978-83-7996-171-9',
+        'ns': '{value: "pisbn"}'
+      }
+    }],
+    'authors': [
+      'Agata Paliwoda'
+    ],
+    'packageData': {
+      'authority': 'EKB-PACKAGE',
+      'reference': '32498-16793',
+      'name': 'IBUK Libra',
+      'titleCount': 39204,
+      'selectedCount': 0,
+      'contentType': 'Aggregated Full Text',
+      'providerName': 'Wydawnictwo Naukowe PWN'
+    },
+    'providerName': 'Wydawnictwo Naukowe PWN'
+  },
+  'poLines': '[]'
 };
 
 const packageLine = {
@@ -167,19 +243,17 @@ const packageLine = {
     'startDate': '2021-09-01',
     'linkedLicenses': [],
     'docs': [],
-    'periods': [
-      {
-        'id': 'c5f87743-a2e4-4328-a5a3-111c7fa0163a',
-        'startDate': '2021-09-01',
-        'cancellationDeadline': '2021-09-28',
-        'owner': {
-          'id': 'f78b6bf6-04f0-4e5b-8452-28712853ad33'
-        },
-        'note': 'period note',
-        'endDate': '2021-09-30',
-        'periodStatus': 'current'
-      }
-    ],
+    'periods': [{
+      'id': 'c5f87743-a2e4-4328-a5a3-111c7fa0163a',
+      'startDate': '2021-09-01',
+      'cancellationDeadline': '2021-09-28',
+      'owner': {
+        'id': 'f78b6bf6-04f0-4e5b-8452-28712853ad33'
+      },
+      'note': 'period note',
+      'endDate': '2021-09-30',
+      'periodStatus': 'current'
+    }],
     'usageDataProviders': [],
     'agreementStatus': {
       'id': '2c91809c7bb8c6f3017bb8cdd9610022',
@@ -188,8 +262,7 @@ const packageLine = {
     },
     'supplementaryDocs': [],
     'description': 'this is description',
-    'items': [
-      {
+    'items': [{
         'id': 'c995ebbe-67a7-41ca-bae7-eefe66ce615a'
       },
       {
@@ -223,23 +296,19 @@ const packageLine = {
           'dateCreated': '2021-09-06T01:57:52Z',
           'lastUpdated': '2021-09-06T01:57:52Z',
           'name': 'Elgaronline',
-          'locators': [
-            {
-              'id': '25532243-da35-4f76-941c-ddeb03394338',
-              'domainName': 'www.elgaronline.com'
-            }
-          ]
+          'locators': [{
+            'id': '25532243-da35-4f76-941c-ddeb03394338',
+            'domainName': 'www.elgaronline.com'
+          }]
         },
-        'templatedUrls': [
-          {
-            'id': '5b5b3349-9aa9-4fd8-94f1-016c748f6db0',
-            'url': 'https://doi.org/10.4337/9781845425678',
-            'name': 'defaultUrl',
-            'resource': {
-              'id': 'b353eb8f-89e3-4de6-b099-ecfee80be537'
-            }
+        'templatedUrls': [{
+          'id': '5b5b3349-9aa9-4fd8-94f1-016c748f6db0',
+          'url': 'https://doi.org/10.4337/9781845425678',
+          'name': 'defaultUrl',
+          'resource': {
+            'id': 'b353eb8f-89e3-4de6-b099-ecfee80be537'
           }
-        ],
+        }],
         'coverage': [],
         'titleInstance': {
           'id': '08eee460-758b-4339-960f-f16c4b8fe446',
@@ -256,24 +325,22 @@ const packageLine = {
             'value': 'book',
             'label': 'Book'
           },
-          'identifiers': [
-            {
-              'title': {
-                'id': '08eee460-758b-4339-960f-f16c4b8fe446'
-              },
-              'status': {
-                'id': '2c91809c7bb8c6f3017bb8cde2a90045',
-                'value': 'approved',
-                'label': 'approved'
-              },
-              'identifier': {
-                'value': '9781845425678',
-                'ns': {
-                  'value': 'isbn'
-                }
+          'identifiers': [{
+            'title': {
+              'id': '08eee460-758b-4339-960f-f16c4b8fe446'
+            },
+            'status': {
+              'id': '2c91809c7bb8c6f3017bb8cde2a90045',
+              'value': 'approved',
+              'label': 'approved'
+            },
+            'identifier': {
+              'value': '9781845425678',
+              'ns': {
+                'value': 'isbn'
               }
             }
-          ],
+          }],
           'coverage': '[]',
           'name': "\"Institutions, industrial upgrading, and economic performance in Japan: the 'flying-geese' paradigm of catch-up growth\"",
           'type': {
@@ -370,23 +437,19 @@ const packageResource = {
       'dateCreated': '2021-09-06T01:57:52Z',
       'lastUpdated': '2021-09-06T01:57:52Z',
       'name': 'Elgaronline',
-      'locators': [
-        {
-          'id': '25532243-da35-4f76-941c-ddeb03394338',
-          'domainName': 'www.elgaronline.com'
-        }
-      ]
+      'locators': [{
+        'id': '25532243-da35-4f76-941c-ddeb03394338',
+        'domainName': 'www.elgaronline.com'
+      }]
     },
-    'templatedUrls': [
-      {
-        'id': '5b5b3349-9aa9-4fd8-94f1-016c748f6db0',
-        'url': 'https://doi.org/10.4337/9781845425678',
-        'name': 'defaultUrl',
-        'resource': {
-          'id': 'b353eb8f-89e3-4de6-b099-ecfee80be537'
-        }
+    'templatedUrls': [{
+      'id': '5b5b3349-9aa9-4fd8-94f1-016c748f6db0',
+      'url': 'https://doi.org/10.4337/9781845425678',
+      'name': 'defaultUrl',
+      'resource': {
+        'id': 'b353eb8f-89e3-4de6-b099-ecfee80be537'
       }
-    ],
+    }],
     'coverage': [],
     'titleInstance': {
       'id': '08eee460-758b-4339-960f-f16c4b8fe446',
@@ -403,24 +466,22 @@ const packageResource = {
         'value': 'book',
         'label': 'Book'
       },
-      'identifiers': [
-        {
-          'title': {
-            'id': '08eee460-758b-4339-960f-f16c4b8fe446'
-          },
-          'status': {
-            'id': '2c91809c7bb8c6f3017bb8cde2a90045',
-            'value': 'approved',
-            'label': 'approved'
-          },
-          'identifier': {
-            'value': '9781845425678',
-            'ns': {
-              'value': 'isbn'
-            }
+      'identifiers': [{
+        'title': {
+          'id': '08eee460-758b-4339-960f-f16c4b8fe446'
+        },
+        'status': {
+          'id': '2c91809c7bb8c6f3017bb8cde2a90045',
+          'value': 'approved',
+          'label': 'approved'
+        },
+        'identifier': {
+          'value': '9781845425678',
+          'ns': {
+            'value': 'isbn'
           }
         }
-      ],
+      }],
       'coverage': '[]',
       'name': "\"Institutions, industrial upgrading, and economic performance in Japan: the 'flying-geese' paradigm of catch-up growth\"",
       'type': {
@@ -486,4 +547,9 @@ const packageResource = {
   'class': 'org.olf.kb.PackageContentItem'
 };
 
-export { externalLine, externalResource, packageLine, packageResource };
+export {
+  externalLine,
+  externalResource,
+  packageLine,
+  packageResource
+};

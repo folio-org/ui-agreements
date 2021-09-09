@@ -18,7 +18,6 @@ describe('Info', () => {
   describe('Info with external type', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
-
         <Info
           isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
           line={externalLine}
@@ -57,6 +56,9 @@ describe('Info', () => {
       await KeyValue('Description').has({ value: 'This is description.' });
     });
 
+    test('dispalys agreement line title on platfrom URL', async () => {
+      await KeyValue('Title on platform URL').has({ value: 'https://libra.ibuk.pl/book/166729' });
+    });
     test('renders the PackageCardExternal component', () => {
       const { getByText } = renderComponent;
       expect(getByText('PackageCardExternal')).toBeInTheDocument();
@@ -113,14 +115,14 @@ describe('Info', () => {
       await KeyValue('Title on platform URL').has({ value: 'https://doi.org/10.4337/9781845425678' });
     });
 
-    test('renders the PackageCard component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('PackageCard')).toBeInTheDocument();
-    });
-
     test('renders the TitleCard component', () => {
       const { getByText } = renderComponent;
       expect(getByText('TitleCard')).toBeInTheDocument();
+    });
+
+    test('renders the PackageCard component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('PackageCard')).toBeInTheDocument();
     });
   });
 });
