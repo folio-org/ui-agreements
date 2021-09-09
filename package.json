@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "7.0.0",
+  "version": "8.0.0",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -31,9 +31,9 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.2.0",
-    "@folio/stripes": "^6.2.0",
+    "@folio/stripes": "^7.0.0",
+    "@folio/stripes-testing": "^4.0.0",
     "@folio/stripes-cli": "^2.3.0",
-    "@folio/stripes-testing": "^3.0.0",
     "@formatjs/cli": "^4.2.31",
     "@testing-library/dom": "^7.26.6",
     "@testing-library/jest-dom": "^5.11.5",
@@ -59,8 +59,8 @@
     "miragejs": "^0.1.40",
     "mocha": "^6.2.2",
     "moment": "^2.22.2",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-intl": "^5.8.1",
     "react-router-dom": "^5.2.0",
     "regenerator-runtime": "^0.13.3",
@@ -68,7 +68,7 @@
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^2.0.0",
-    "@folio/stripes-erm-components": "^5.1.0",
+    "@folio/stripes-erm-components": "^6.0.0",
     "@rehooks/local-storage": "2.4.0",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
@@ -82,7 +82,7 @@
     "react-router-prop-types": "^1.0.4"
   },
   "peerDependencies": {
-    "@folio/stripes": "^6.2.0",
+    "@folio/stripes": "^7.0.0",
     "moment": "^2.22.2",
     "react": "*",
     "react-dom": "*",
