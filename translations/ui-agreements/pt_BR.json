@@ -214,7 +214,7 @@
     "license.warn.amendmentStatus": "Status conflitantes: o status da alteração é \"{status}\" enquanto \"Status (este contrato)\" é \"Atual\".",
     "customcoverages.tooltip": "Cobertura personalizada",
     "eresources.activeFrom": "Ativo a partir de",
-    "eresources.activeTo": "Ativo para",
+    "eresources.activeTo": "Ativo até",
     "eresources.packageAgreements": "Contratos para este pacote",
     "eresources.addPackageToBasket": "Adicionar pacote ao cesto",
     "note": "Nota",
