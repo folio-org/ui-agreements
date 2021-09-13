@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 import { Accordion } from '@folio/stripes/components';
 
-import POLinesFieldArray from '../POLinesFieldArray';
+import POLinesFieldArray from '../../POLinesFieldArray';
 
 const propTypes = {
   line: PropTypes.shape({
