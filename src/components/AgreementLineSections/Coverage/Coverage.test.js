@@ -6,9 +6,6 @@ import { line, resource, defaultLine, defaultResource } from './testResources';
 import translationsProperties from '../../../../test/helpers';
 import Coverage from './Coverage';
 
-jest.mock('../../CustomCoverageIcon', () => () => <div>CustomCoverageIcon</div>);
-let renderComponent;
-
 describe('Coverage', () => {
     describe('renders with coverage type custom ', () => {
       beforeEach(() => {
@@ -21,15 +18,14 @@ describe('Coverage', () => {
       test('renders Coverage Accordion', async () => {
         await Accordion('Coverage').exists();
       });
+
+      test('renders Coverage Accordion', async () => {
+        await KeyValue('Embargo').exists();
+      });
+
       test('renders the expected embargo value', async () => {
         await KeyValue('Embargo').has({ value: 'Moving wall end: 4 years' });
       });
-
-      test('renders the CustomCoverageIcon component', () => {
-        const { getByText } = renderComponent;
-        expect(getByText('CustomCoverageIcon')).toBeInTheDocument();
-      });
-
 
       test('renders expected column count', async () => {
         await MultiColumnList({ columnCount: 7 }).exists();
