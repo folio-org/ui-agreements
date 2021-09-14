@@ -19,7 +19,7 @@ describe('Coverage', () => {
         await Accordion('Coverage').exists();
       });
 
-      test('renders Coverage Accordion', async () => {
+      test('renders Embargo Accordion', async () => {
         await KeyValue('Embargo').exists();
       });
 
