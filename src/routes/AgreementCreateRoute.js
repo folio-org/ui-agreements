@@ -12,8 +12,9 @@ import { splitRelatedAgreements } from './utilities/processRelatedAgreements';
 import View from '../components/views/AgreementForm';
 import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
+import { resultCount } from '../constants';
 
-const RECORDS_PER_REQUEST = 100;
+const { RECORDS_PER_REQUEST_MEDIUM } = resultCount;
 
 class AgreementCreateRoute extends React.Component {
   static manifest = Object.freeze({
@@ -37,7 +38,7 @@ class AgreementCreateRoute extends React.Component {
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreement/reasonForClosure',
       limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
+      perRequest: RECORDS_PER_REQUEST_MEDIUM,
       shouldRefresh: () => false,
     },
     amendmentStatusValues: {
@@ -49,14 +50,14 @@ class AgreementCreateRoute extends React.Component {
       type: 'okapi',
       path: 'erm/refdata/InternalContact/role',
       limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
+      perRequest: RECORDS_PER_REQUEST_MEDIUM,
       shouldRefresh: () => false,
     },
     documentCategories: {
       type: 'okapi',
       path: 'erm/refdata/DocumentAttachment/atType',
       limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
+      perRequest: RECORDS_PER_REQUEST_MEDIUM,
       shouldRefresh: () => false,
     },
     externalAgreementLine: {
@@ -93,7 +94,7 @@ class AgreementCreateRoute extends React.Component {
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
       limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
+      perRequest: RECORDS_PER_REQUEST_MEDIUM,
       shouldRefresh: () => false,
     },
     basket: { initialValue: [] },
@@ -165,7 +166,7 @@ class AgreementCreateRoute extends React.Component {
   };
 
   static defaultProps = {
-    handlers: { },
+    handlers: {},
   }
 
   static contextType = CalloutContext;
