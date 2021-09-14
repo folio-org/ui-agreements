@@ -546,5 +546,13 @@
     "settings.general.displaySuppressFromDiscovery.titlesInPackages": "Títulos nos pacotes",
     "settings.general.displaySuppressFromDiscovery.titles": "Títulos",
     "settings.tabularList.pagination": "<strong>Paginação de lista tabular</strong>",
-    "settings.tabularList": "<strong>Lista tabular</strong>"
+    "settings.tabularList": "<strong>Lista tabular</strong>",
+    "appMenu.keyboardShortcuts": "Atalhos do teclado",
+    "basketSelector.infoPopover": "Um conjunto de recursos eletrônicos que estão atualmente na cesta",
+    "basketSelector.emptyMessage": "Nenhum item na cesta de recursos eletrônicos",
+    "basketSelector.linkSelectedEresource.tooltip": "Um recurso eletrônico pode ser vinculado quando é adicionado à cesta",
+    "basketSelector.selectResourceMessage": "Por favor, selecione um recurso eletrônico para continuar",
+    "title.closeEdit": "Fechar edição do título",
+    "organizations.primary": "Organização primária",
+    "relatedAgreements.linkToParentError": "<strong> Erro: </strong> contrato \" {agreement} \" não foi vinculado porque um contrato não pode ser vinculado a si mesmo."
 }
