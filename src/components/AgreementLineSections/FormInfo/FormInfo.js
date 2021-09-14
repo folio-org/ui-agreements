@@ -11,7 +11,7 @@ import {
   TextArea,
 } from '@folio/stripes/components';
 
-import { isDetached } from '../utilities';
+import { isDetached } from '../../utilities';
 
 const propTypes = {
   isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
