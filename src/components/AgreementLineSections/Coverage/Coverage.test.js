@@ -1,10 +1,13 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { Accordion, MultiColumnList, MultiColumnListCell } from '@folio/stripes-testing';
+import { Accordion, MultiColumnList, MultiColumnListCell, KeyValue } from '@folio/stripes-testing';
 import { line, resource, defaultLine, defaultResource } from './testResources';
 import translationsProperties from '../../../../test/helpers';
 import Coverage from './Coverage';
+
+jest.mock('../../CustomCoverageIcon', () => () => <div>CustomCoverageIcon</div>);
+let renderComponent;
 
 describe('Coverage', () => {
     describe('renders with coverage type custom ', () => {
@@ -18,6 +21,15 @@ describe('Coverage', () => {
       test('renders Coverage Accordion', async () => {
         await Accordion('Coverage').exists();
       });
+      test('renders the expected embargo value', async () => {
+        await KeyValue('Embargo').has({ value: 'Moving wall end: 4 years' });
+      });
+
+      test('renders the CustomCoverageIcon component', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('CustomCoverageIcon')).toBeInTheDocument();
+      });
+
 
       test('renders expected column count', async () => {
         await MultiColumnList({ columnCount: 7 }).exists();
@@ -81,8 +93,8 @@ describe('Coverage', () => {
 
       test('renders expected coverage type in the row ', async () => {
         Promise.all([
-          await MultiColumnListCell({ row: 0, columnIndex: 6 }).has({ content: 'Custom ' }),
-          await MultiColumnListCell({ row: 1, columnIndex: 6 }).has({ content: 'Custom ' })
+          await MultiColumnListCell({ row: 0, columnIndex: 6 }).has({ content: 'Custom CustomCoverageIcon' }),
+          await MultiColumnListCell({ row: 1, columnIndex: 6 }).has({ content: 'Custom CustomCoverageIcon' })
         ]);
       });
     });
