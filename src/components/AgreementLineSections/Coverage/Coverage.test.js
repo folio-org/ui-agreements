@@ -55,14 +55,14 @@ describe('Coverage', () => {
       test('renders expected coverage start volume in the row', async () => {
         Promise.all([
           await MultiColumnListCell({ row: 0, columnIndex: 1 }).has({ content: '1' }),
-          await MultiColumnListCell({ row: 1, columnIndex: 1 }).has({ content: '1' })
+          await MultiColumnListCell({ row: 1, columnIndex: 1 }).has({ content: '6' })
         ]);
       });
 
       test('renders expected coverage start issue in the row', async () => {
         Promise.all([
           await MultiColumnListCell({ row: 0, columnIndex: 2 }).has({ content: '1' }),
-          await MultiColumnListCell({ row: 1, columnIndex: 2 }).has({ content: '1' })
+          await MultiColumnListCell({ row: 1, columnIndex: 2 }).has({ content: 'Jan' })
         ]);
       });
 
@@ -76,14 +76,14 @@ describe('Coverage', () => {
       test('renders expected coverage end volume in the row', async () => {
         Promise.all([
           await MultiColumnListCell({ row: 0, columnIndex: 4 }).has({ content: '8' }),
-          await MultiColumnListCell({ row: 1, columnIndex: 4 }).has({ content: '8' })
+          await MultiColumnListCell({ row: 1, columnIndex: 4 }).has({ content: '1' })
         ]);
       });
 
       test('renders expected coverage end issue in the row', async () => {
         Promise.all([
           await MultiColumnListCell({ row: 0, columnIndex: 5 }).has({ content: '12' }),
-          await MultiColumnListCell({ row: 1, columnIndex: 5 }).has({ content: '12' })
+          await MultiColumnListCell({ row: 1, columnIndex: 5 }).has({ content: '20' })
         ]);
       });
 
