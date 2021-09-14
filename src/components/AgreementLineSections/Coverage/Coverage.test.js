@@ -6,7 +6,6 @@ import { line, resource, defaultLine, defaultResource } from './testResources';
 import translationsProperties from '../../../../test/helpers';
 import Coverage from './Coverage';
 
-
 describe('Coverage', () => {
     describe('renders with coverage type custom ', () => {
       beforeEach(() => {
@@ -82,8 +81,8 @@ describe('Coverage', () => {
 
       test('renders expected coverage type in the row ', async () => {
         Promise.all([
-          await MultiColumnListCell({ row: 0, columnIndex: 6 }).has({ content: 'Custom CustomCoverageIcon' }),
-          await MultiColumnListCell({ row: 1, columnIndex: 6 }).has({ content: 'Custom CustomCoverageIcon' })
+          await MultiColumnListCell({ row: 0, columnIndex: 6 }).has({ content: 'Custom ' }),
+          await MultiColumnListCell({ row: 1, columnIndex: 6 }).has({ content: 'Custom ' })
         ]);
       });
     });
