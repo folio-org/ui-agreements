@@ -15,6 +15,7 @@ import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
 
 const RECORDS_PER_REQUEST = 100;
+const PO_LINES_PER_REQUEST = 1000;
 
 class AgreementEditRoute extends React.Component {
   static manifest = Object.freeze({
@@ -79,6 +80,7 @@ class AgreementEditRoute extends React.Component {
     },
     orderLines: {
       type: 'okapi',
+      perRequest: PO_LINES_PER_REQUEST,
       path: 'orders/order-lines',
       params: (_q, _p, _r, _l, props) => {
         const query = (props?.resources?.agreementLines?.records ?? [])

@@ -17,6 +17,7 @@ import { errorTypes } from '../constants';
 import { joinRelatedAgreements } from './utilities/processRelatedAgreements';
 
 const RECORDS_PER_REQUEST = 100;
+const PO_LINES_PER_REQUEST = 1000;
 
 class AgreementViewRoute extends React.Component {
   static manifest = Object.freeze({
@@ -82,6 +83,7 @@ class AgreementViewRoute extends React.Component {
     },
     orderLines: {
       type: 'okapi',
+      perRequest: PO_LINES_PER_REQUEST,
       path: 'orders/order-lines',
       params: (_q, _p, _r, _l, props) => {
         const query = get(props.resources, 'agreementLines.records', [])

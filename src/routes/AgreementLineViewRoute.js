@@ -10,6 +10,8 @@ import { Tags } from '@folio/stripes-erm-components';
 import View from '../components/views/AgreementLine';
 import { urls, withSuppressFromDiscovery } from '../components/utilities';
 
+const PO_LINES_PER_REQUEST = 1000;
+
 class AgreementLineViewRoute extends React.Component {
   static manifest = Object.freeze({
     agreement: {
@@ -24,6 +26,7 @@ class AgreementLineViewRoute extends React.Component {
     },
     orderLines: {
       type: 'okapi',
+      perRequest: PO_LINES_PER_REQUEST,
       path: 'orders/order-lines',
       params: (_q, _p, _r, _l, props) => {
         const query = (props.resources.line?.records?.[0]?.poLines ?? [])

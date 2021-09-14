@@ -8,6 +8,7 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import View from '../components/views/AgreementLineForm';
 import { urls, withSuppressFromDiscovery } from '../components/utilities';
 
+const PO_LINES_PER_REQUEST = 1000;
 class AgreementLineEditRoute extends React.Component {
   static manifest = Object.freeze({
     entitlements: {
@@ -21,6 +22,7 @@ class AgreementLineEditRoute extends React.Component {
     },
     orderLines: {
       type: 'okapi',
+      perRequest: PO_LINES_PER_REQUEST,
       path: 'orders/order-lines',
       params: (_q, _p, _r, _l, props) => {
         const query = (props.resources.line?.records?.[0]?.poLines ?? [])
