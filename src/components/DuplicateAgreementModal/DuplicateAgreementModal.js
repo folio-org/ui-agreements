@@ -10,7 +10,7 @@ export default class DuplicateAgreementModal extends React.Component {
     { key: 'linkedLicenses', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.linkedLicenses" /> },
     { key: 'externalLicenses', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.externalLicenses" /> },
     { key: 'organizations', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.organizations" /> },
-    { key: 'supplementaryDocuments', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.supplementaryDocuments" /> },
+    { key: 'supplementaryDocs', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.supplementaryDocuments" /> },
     { key: 'supplementaryProperties', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.supplementaryProperties" /> },
     { key: 'usageData', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.usageData" /> },
   ];
