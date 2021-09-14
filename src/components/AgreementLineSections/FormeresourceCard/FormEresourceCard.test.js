@@ -35,7 +35,7 @@ describe('FormEresourceCard', () => {
     });
   });
 
-  describe('renders  with internal title', () => {
+  describe('renders with internal title', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
