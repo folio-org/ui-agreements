@@ -5,8 +5,8 @@ import { Button } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import {
   eholdingsData,
-  basketData,
   basketSelectordata,
+  formEresourceCardDate,
   handlers,
   initialValues
 } from './testResources';
@@ -56,20 +56,35 @@ describe('FormEresource', () => {
     });
   });
 
+  describe('renders agreementLineSource type basket', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <TestForm onSubmit={onSubmit}>
+          <FormEresource basket={basketSelectordata.basket} line={basketSelectordata.line} resource={basketSelectordata.resource} values={basketSelectordata.values} />
+        </TestForm>,
+        translationsProperties
+      );
 
-  // describe('renders agreementLineSource with empty basket', () => {
-  //   beforeEach(() => {
-  //     renderComponent = renderWithIntl(
-  //       <TestForm onSubmit={onSubmit}>
-  //         <FormEresource basket={basketSelectordata.basket} line={basketSelectordata.line} resource={basketData.resource} values={basketSelectordata.values} />
-  //       </TestForm>,
-  //       translationsProperties
-  //     );
+      test('renders the BasketSelector component', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('BasketSelector')).toBeInTheDocument();
+      });
+    });
+  });
 
-  //     test('renders the BasketSelector component', () => {
-  //       const { getByText } = renderComponent;
-  //       expect(getByText('BasketSelector')).toBeInTheDocument();
-  //     });
-  //   });
-  // });
+  describe('renders agreementLineSource  ', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <TestForm onSubmit={onSubmit}>
+          <FormEresource basket={formEresourceCardDate.basket} line={formEresourceCardDate.line} resource={formEresourceCardDate.resource} values={formEresourceCardDate.values} />
+        </TestForm>,
+        translationsProperties
+      );
+
+      test('renders the FormEresourceCard component', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('FormEresourceCard')).toBeInTheDocument();
+      });
+    });
+  });
 });
