@@ -546,5 +546,13 @@
     "settings.general.displaySuppressFromDiscovery.titlesInPackages": "패키지의 제목",
     "settings.general.displaySuppressFromDiscovery.titles": "타이틀",
     "settings.tabularList.pagination": "<strong>탭 목록 페이지</strong>",
-    "settings.tabularList": "<strong>Tabular 목록</strong>"
+    "settings.tabularList": "<strong>Tabular 목록</strong>",
+    "appMenu.keyboardShortcuts": "Keyboard shortcuts",
+    "basketSelector.infoPopover": "A set of e-resources which are currently in the basket",
+    "basketSelector.emptyMessage": "No items in e-resource basket",
+    "basketSelector.linkSelectedEresource.tooltip": "An e-resource can be linked when it is has been added to the basket",
+    "basketSelector.selectResourceMessage": "Please select an e-resource to continue",
+    "title.closeEdit": "Close edit title",
+    "organizations.primary": "Primary organization",
+    "relatedAgreements.linkToParentError": "<strong>Error:</strong> Agreement \"{agreement}\" was not linked because an agreement cannot be linked to itself."
 }

@@ -13,9 +13,9 @@ import { joinRelatedAgreements, splitRelatedAgreements } from './utilities/proce
 import View from '../components/views/AgreementForm';
 import NoPermissions from '../components/NoPermissions';
 import { urls } from '../components/utilities';
+import { resultCount } from '../constants';
 
-const RECORDS_PER_REQUEST = 100;
-
+const { RECORDS_PER_REQUEST_MEDIUM, RECORDS_PER_REQUEST_LARGE } = resultCount;
 class AgreementEditRoute extends React.Component {
   static manifest = Object.freeze({
     agreement: {
@@ -32,7 +32,7 @@ class AgreementEditRoute extends React.Component {
         stats: 'true',
       },
       limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
+      perRequest: RECORDS_PER_REQUEST_MEDIUM,
       records: 'results',
       recordsRequired: '1000',
     },
@@ -45,7 +45,7 @@ class AgreementEditRoute extends React.Component {
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreement/reasonForClosure',
       limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
+      perRequest: RECORDS_PER_REQUEST_MEDIUM,
       shouldRefresh: () => false,
     },
     amendmentStatusValues: {
@@ -57,14 +57,14 @@ class AgreementEditRoute extends React.Component {
       type: 'okapi',
       path: 'erm/refdata/InternalContact/role',
       limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
+      perRequest: RECORDS_PER_REQUEST_MEDIUM,
       shouldRefresh: () => false,
     },
     documentCategories: {
       type: 'okapi',
       path: 'erm/refdata/DocumentAttachment/atType',
       limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
+      perRequest: RECORDS_PER_REQUEST_MEDIUM,
       shouldRefresh: () => false,
     },
     isPerpetualValues: {
@@ -79,6 +79,7 @@ class AgreementEditRoute extends React.Component {
     },
     orderLines: {
       type: 'okapi',
+      perRequest: RECORDS_PER_REQUEST_LARGE,
       path: 'orders/order-lines',
       params: (_q, _p, _r, _l, props) => {
         const query = (props?.resources?.agreementLines?.records ?? [])
@@ -103,7 +104,7 @@ class AgreementEditRoute extends React.Component {
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
       limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
+      perRequest: RECORDS_PER_REQUEST_MEDIUM,
       shouldRefresh: () => false,
     },
     relationshipTypeValues: {
@@ -119,7 +120,7 @@ class AgreementEditRoute extends React.Component {
     users: {
       type: 'okapi',
       path: 'users',
-      perRequest: RECORDS_PER_REQUEST,
+      perRequest: RECORDS_PER_REQUEST_MEDIUM,
       params: (_q, _p, _r, _l, props) => {
         const query = (props?.resources?.agreement?.records?.[0]?.contacts ?? [])
           .filter(contact => contact.user)
@@ -219,7 +220,7 @@ class AgreementEditRoute extends React.Component {
   };
 
   static defaultProps = {
-    handlers: { },
+    handlers: {},
   }
 
   static contextType = CalloutContext;
