@@ -104,380 +104,443 @@ const initialValues = {
 };
 
 const line = {
-  'id': 'dae4130d-a3d8-4cd8-b693-2b68513a1b07',
-  'dateCreated': '2021-09-14T09:34:34Z',
-  'activeTo': '2021-09-30',
-  'tags': '[]',
-  'lastUpdated': '2021-09-14T10:10:48Z',
-  'owner': '{agreementStatus: {…}, alternateNames: Array(0), ca…}',
-  'resource': {
-    'id': '91a6914c-e1ee-4772-9be9-f084e61b5dd6',
-    'class': 'org.olf.kb.PackageContentItem',
-    'name': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
-    'suppressFromDiscovery': false,
-    'tags': [],
-    'coverage': [{
-      'id': '20889d12-e769-4aae-ab22-b2ab648c1953',
-      'startDate': '1977-01-01',
-      'startVolume': '1',
-      'startIssue': '1',
-      'summary': 'v1/i1/1977-01-01 - v*/i*/*'
-    }],
-    'customCoverage': false,
-    '_object': {
-      'id': '91a6914c-e1ee-4772-9be9-f084e61b5dd6',
-      'dateCreated': '2021-09-14T02:19:04Z',
-      'tags': '[]',
-      'lastUpdated': '2021-09-14T02:19:04Z',
-      'coverage': [{
-        'id': '20889d12-e769-4aae-ab22-b2ab648c1953',
-        'startDate': '1977-01-01',
-        'startVolume': '1',
-        'startIssue': '1',
-        'summary': 'v1/i1/1977-01-01 - v*/i*/*'
-      }],
-      'pti': '{class: "org.olf.kb.PlatformTitleInstance", coverag…}',
-      'pkg': '{class: "org.olf.kb.Pkg", dateCreated: "2021-09-14T…}',
-      'embargo': {
-        'movingWallEnd': {
-          'length': 4,
-          'unit': 'years'
-        }
-      },
-      'addedTimestamp': 1631585932795,
-      'name': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
-      'lastSeenTimestamp': 1631585932795,
-      'suppressFromDiscovery': false,
-      'longName': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
-      'class': 'org.olf.kb.PackageContentItem'
-    }
-  },
-  'activeFrom': '2021-09-01',
-  'poLines': '[]',
-  'suppressFromDiscovery': true,
-  'note': 'This is note',
-  'description': 'This is description',
-  'coverage': [{
-      'id': 'aed3502a-f150-4be1-91d9-6f1b6777893d',
-      'startDate': '2021-09-01',
-      'endDate': '2021-09-30',
-      'startVolume': '1',
-      'startIssue': '1',
-      'endVolume': '8',
-      'endIssue': '12',
-      'summary': 'v1/i1/2021-09-01 - v8/i12/2021-09-30'
-    },
-    {
-      'id': '6a9621c7-b190-402a-bb1a-5586ac623b6a',
-      'startDate': '2021-10-01',
-      'endDate': '2021-10-30',
-      'startVolume': '1',
-      'startIssue': '1',
-      'endVolume': '8',
-      'endIssue': '12',
-      'summary': 'v1/i1/2021-10-01 - v8/i12/2021-10-30'
-    }
-  ],
-  'customCoverage': true,
-  'explanation': 'Agreement includes this item from a package specifically',
-  'startDate': '2021-09-01',
-  'endDate': '2021-09-30',
-  'contentUpdated': null,
-  'haveAccess': true
-};
-
-const resource = {
-  'id': '91a6914c-e1ee-4772-9be9-f084e61b5dd6',
-  'dateCreated': '2021-09-14T02:19:04Z',
-  'tags': '[]',
-  'lastUpdated': '2021-09-14T02:19:04Z',
-  'coverage': '[{…}]',
-  'pti': '{class: "org.olf.kb.PlatformTitleInstance", coverag…}',
-  'pkg': '{class: "org.olf.kb.Pkg", dateCreated: "2021-09-14T…}',
-  'embargo': '{movingWallEnd: {…}}',
-  'addedTimestamp': 1631585932795,
-  'name': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
-  'lastSeenTimestamp': 1631585932795,
-  'suppressFromDiscovery': false,
-  'longName': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
-  'class': 'org.olf.kb.PackageContentItem'
-};
-
-const values = {
-  'id': 'dae4130d-a3d8-4cd8-b693-2b68513a1b07',
-  'dateCreated': '2021-09-14T09:34:34Z',
-  'activeTo': '2021-09-30',
-  'tags': '[]',
-  'lastUpdated': '2021-09-14T10:10:48Z',
-  'owner': {
-    'id': '94ce396f-85d6-4dfe-a8fe-31ce00187ef8',
-    'cancellationDeadline': '2021-09-28',
-    'dateCreated': '2021-09-14T08:20:41Z',
-    'isPerpetual': {
-      'id': '2c91809c7be1f9ac017be20137390001',
-      'value': 'yes',
-      'label': 'Yes'
-    },
-    'name': 'MR agr test',
-    'orgs': [],
-    'externalLicenseDocs': [],
-    'outwardRelationships': [],
-    'customProperties': {},
-    'contacts': [],
-    'tags': [],
-    'lastUpdated': '2021-09-14T10:10:48Z',
-    'inwardRelationships': [],
-    'renewalPriority': {
-      'id': '2c91809c7be1f9ac017be201375f0008',
-      'value': 'definitely_renew',
-      'label': 'Definitely renew'
-    },
-    'endDate': '2021-09-30',
-    'startDate': '2021-09-01',
-    'linkedLicenses': [],
-    'docs': [],
-    'periods': [{
-      'id': '7b9a3ebe-99f4-470a-90c5-27d1a65b5cfc',
-      'startDate': '2021-09-01',
-      'cancellationDeadline': '2021-09-28',
-      'owner': {
-        'id': '94ce396f-85d6-4dfe-a8fe-31ce00187ef8'
-      },
-      'note': 'This is period',
-      'endDate': '2021-09-30',
-      'periodStatus': 'current'
-    }],
-    'usageDataProviders': [],
-    'agreementStatus': {
-      'id': '2c91809c7be1f9ac017be20137af0011',
-      'value': 'active',
-      'label': 'Active'
-    },
-    'supplementaryDocs': [],
-    'description': 'This is description',
-    'items': [{
-        'id': 'dae4130d-a3d8-4cd8-b693-2b68513a1b07'
-      },
-      {
-        'id': '64900261-e3cc-47cd-92ed-cad638df21f0'
-      },
-      {
-        'id': 'f5ea0b6e-5747-4246-8147-d07df37e060a'
-      },
-      {
-        'id': '2288c972-c8b6-4c74-9c42-061af61e36d1'
-      },
-      {
-        'id': 'a1276839-3759-47a4-928f-b413309efddb'
-      },
-      {
-        'id': '02acd18d-94d1-490a-b27e-e43ff81aee79'
-      }
-    ],
-    'alternateNames': []
-  },
-  'resource': '{_object: {…}, class: "org.olf.kb.PackageContentIte…}',
-  'activeFrom': '2021-09-01',
-  'poLines': '[]',
-  'suppressFromDiscovery': true,
-  'note': 'This is note',
-  'description': 'This is description',
-  'coverage': [{
-      'id': 'aed3502a-f150-4be1-91d9-6f1b6777893d',
-      'startDate': '2021-09-01',
-      'endDate': '2021-09-30',
-      'startVolume': '1',
-      'startIssue': '1',
-      'endVolume': '8',
-      'endIssue': '12',
-      'summary': 'v1/i1/2021-09-01 - v8/i12/2021-09-30'
-    },
-    {
-      'id': '6a9621c7-b190-402a-bb1a-5586ac623b6a',
-      'startDate': '2021-10-01',
-      'endDate': '2021-10-30',
-      'startVolume': '1',
-      'startIssue': '1',
-      'endVolume': '8',
-      'endIssue': '12',
-      'summary': 'v1/i1/2021-10-01 - v8/i12/2021-10-30'
-    }
-  ],
-  'customCoverage': true,
-  'explanation': 'Agreement includes this item from a package specifically',
-  'startDate': '2021-09-01',
-  'endDate': '2021-09-30',
-  'contentUpdated': null,
-  'haveAccess': true,
-  'linkedResource': {
-    'id': 'dae4130d-a3d8-4cd8-b693-2b68513a1b07',
-    'dateCreated': '2021-09-14T09:34:34Z',
-    'activeTo': '2021-09-30',
-    'tags': [],
-    'lastUpdated': '2021-09-14T10:10:48Z',
+    'id': '3ab8c347-4f98-4a70-8bce-63bee849444d',
+    'dateCreated': '2021-09-15T08:31:25Z',
+    'tags': '[]',
+    'lastUpdated': '2021-09-15T08:31:25Z',
     'owner': {
-      'id': '94ce396f-85d6-4dfe-a8fe-31ce00187ef8',
+      'id': '4c4e0cbc-2301-4ef8-b170-d38255351e39',
       'cancellationDeadline': '2021-09-28',
-      'dateCreated': '2021-09-14T08:20:41Z',
+      'dateCreated': '2021-09-15T08:28:39Z',
       'isPerpetual': {
-        'id': '2c91809c7be1f9ac017be20137390001',
+        'id': '2c91809c7be72150017be7293b05002f',
         'value': 'yes',
         'label': 'Yes'
       },
       'name': 'MR agr test',
-      'orgs': '[]',
-      'externalLicenseDocs': '[]',
-      'outwardRelationships': '[]',
-      'customProperties': '{}',
-      'contacts': '[]',
-      'tags': '[]',
-      'lastUpdated': '2021-09-14T10:10:48Z',
-      'inwardRelationships': '[]',
+      'orgs': [],
+      'externalLicenseDocs': [],
+      'outwardRelationships': [],
+      'customProperties': {},
+      'contacts': [],
+      'tags': [],
+      'lastUpdated': '2021-09-15T08:31:25Z',
+      'inwardRelationships': [],
       'renewalPriority': {
-        'id': '2c91809c7be1f9ac017be201375f0008',
+        'id': '2c91809c7be72150017be7293b240036',
         'value': 'definitely_renew',
         'label': 'Definitely renew'
       },
       'endDate': '2021-09-30',
       'startDate': '2021-09-01',
-      'linkedLicenses': '[]',
-      'docs': '[]',
-      'periods': [{
-        'id': '7b9a3ebe-99f4-470a-90c5-27d1a65b5cfc',
-        'startDate': '2021-09-01',
-        'cancellationDeadline': '2021-09-28',
-        'owner': '{id: "94ce396f-85d6-4dfe-a8fe-31ce00187ef8"}',
-        'note': 'This is period',
-        'endDate': '2021-09-30',
-        'periodStatus': 'current'
-      }],
-      'usageDataProviders': '[]',
-      'agreementStatus': '{id: "2c91809c7be1f9ac017be20137af0011", label: "Ac…}',
-      'supplementaryDocs': '[]',
-      'description': 'This is description',
-      'items': [{
-          'id': 'dae4130d-a3d8-4cd8-b693-2b68513a1b07'
-        },
+      'linkedLicenses': [],
+      'docs': [],
+      'periods': [
         {
-          'id': '64900261-e3cc-47cd-92ed-cad638df21f0'
-        },
-        {
-          'id': 'f5ea0b6e-5747-4246-8147-d07df37e060a'
-        },
-        {
-          'id': '2288c972-c8b6-4c74-9c42-061af61e36d1'
-        },
-        {
-          'id': 'a1276839-3759-47a4-928f-b413309efddb'
-        },
-        {
-          'id': '02acd18d-94d1-490a-b27e-e43ff81aee79'
+          'id': 'c38afb53-b81d-4050-83c1-27eed42560e0',
+          'startDate': '2021-09-01',
+          'cancellationDeadline': '2021-09-28',
+          'owner': {
+            'id': '4c4e0cbc-2301-4ef8-b170-d38255351e39'
+          },
+          'note': 'This is period note',
+          'endDate': '2021-09-30',
+          'periodStatus': 'current'
         }
       ],
-      'alternateNames': '[]'
+      'usageDataProviders': [],
+      'agreementStatus': {
+        'id': '2c91809c7be72150017be7293b6a003f',
+        'value': 'active',
+        'label': 'Active'
+      },
+      'supplementaryDocs': [],
+      'description': 'This is description',
+      'items': [
+        '{id: "3ab8c347-4f98-4a70-8bce-63bee849444d"}'
+      ],
+      'alternateNames': []
     },
     'resource': {
-      'id': '91a6914c-e1ee-4772-9be9-f084e61b5dd6',
+      'id': '2a99a24e-53db-4328-a819-8de6415dafe6',
       'class': 'org.olf.kb.PackageContentItem',
       'name': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
       'suppressFromDiscovery': false,
-      'tags': '[]',
-      'coverage': [{
-        'id': '20889d12-e769-4aae-ab22-b2ab648c1953',
-        'startDate': '1977-01-01',
-        'startVolume': '1',
-        'startIssue': '1',
-        'summary': 'v1/i1/1977-01-01 - v*/i*/*'
-      }],
+      'tags': [],
+      'coverage': [
+        '{id: "89f732df-e082-447b-ab3d-e7927df5de42", startD…}'
+      ],
       'customCoverage': false,
       '_object': {
-        'id': '91a6914c-e1ee-4772-9be9-f084e61b5dd6',
-        'dateCreated': '2021-09-14T02:19:04Z',
-        'tags': [],
-        'lastUpdated': '2021-09-14T02:19:04Z',
-        'coverage': [{
-          'id': '20889d12-e769-4aae-ab22-b2ab648c1953',
-          'startDate': '1977-01-01',
-          'startVolume': '1',
-          'startIssue': '1',
-          'summary': 'v1/i1/1977-01-01 - v*/i*/*'
-        }],
-        'pti': {
-          'id': '3e937f1c-74f2-4075-9df2-87759e2e9df8',
-          'dateCreated': '2021-09-14T02:19:04Z',
-          'tags': '[]',
-          'lastUpdated': '2021-09-14T02:19:04Z',
-          'platform': '{dateCreated: "2021-09-14T02:13:46Z", id: "60dc9d1b…}',
-          'templatedUrls': '[{…}]',
-          'coverage': '[{…}]',
-          'titleInstance': '{class: "org.olf.kb.TitleInstance", coverage: Array…}',
-          'name': "'19th century music' on Platform 'JSTOR'",
-          'suppressFromDiscovery': false,
-          'class': 'org.olf.kb.PlatformTitleInstance',
-          'longName': "'19th century music' on Platform 'JSTOR'"
-        },
-        'pkg': {
-          'id': 'cfedf08c-dca7-4ba3-a388-9fa97b62a859',
-          'dateCreated': '2021-09-14T02:18:52Z',
-          'lastUpdated': '2021-09-14T02:18:52Z',
-          'vendor': '{id: "67f5c3fe-77c3-4453-b91d-a670add8aeba", name: …}',
-          'source': 'GOKb',
-          'remoteKb': '{activationEnabled: false, active: true, cursor: "2…}',
-          'name': 'JSTOR : Arts & Sciences III Collection : NK',
-          'suppressFromDiscovery': false,
-          'reference': 'JSTOR_:_Arts_&_Sciences_III_Collection_:_NK',
-          'resourceCount': 228,
-          'class': 'org.olf.kb.Pkg'
-        },
+        'id': '2a99a24e-53db-4328-a819-8de6415dafe6',
+        'dateCreated': '2021-09-15T02:23:20Z',
+        'tags': '[]',
+        'lastUpdated': '2021-09-15T02:23:20Z',
+        'coverage': [
+          {
+            'id': '89f732df-e082-447b-ab3d-e7927df5de42',
+            'startDate': '1977-01-01',
+            'startVolume': '1',
+            'startIssue': '1',
+            'summary': 'v1/i1/1977-01-01 - v*/i*/*'
+          }
+        ],
+        'pti': '{class: "org.olf.kb.PlatformTitleInstance", coverag…}',
+        'pkg': '{class: "org.olf.kb.Pkg", dateCreated: "2021-09-15T…}',
         'embargo': {
           'movingWallEnd': {
             'length': 4,
             'unit': 'years'
           }
         },
-        'addedTimestamp': 1631585932795,
+        'addedTimestamp': 1631672587073,
         'name': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
-        'lastSeenTimestamp': 1631585932795,
+        'lastSeenTimestamp': 1631672587073,
         'suppressFromDiscovery': false,
         'longName': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
         'class': 'org.olf.kb.PackageContentItem'
       }
     },
-    'activeFrom': '2021-09-01',
-    'poLines': [],
-    'suppressFromDiscovery': true,
-    'note': 'This is note',
-    'description': 'This is description',
-    'coverage': [{
-        'id': 'aed3502a-f150-4be1-91d9-6f1b6777893d',
-        'startDate': '2021-09-01',
-        'endDate': '2021-09-30',
-        'startVolume': '1',
-        'startIssue': '1',
-        'endVolume': '8',
-        'endIssue': '12',
-        'summary': 'v1/i1/2021-09-01 - v8/i12/2021-09-30'
-      },
+    'poLines': '[]',
+    'suppressFromDiscovery': false,
+    'coverage': [
       {
-        'id': '6a9621c7-b190-402a-bb1a-5586ac623b6a',
-        'startDate': '2021-10-01',
-        'endDate': '2021-10-30',
+        'id': '89f732df-e082-447b-ab3d-e7927df5de42',
+        'startDate': '1977-01-01',
         'startVolume': '1',
         'startIssue': '1',
-        'endVolume': '8',
-        'endIssue': '12',
-        'summary': 'v1/i1/2021-10-01 - v8/i12/2021-10-30'
+        'summary': 'v1/i1/1977-01-01 - v*/i*/*'
       }
     ],
-    'customCoverage': true,
+    'customCoverage': false,
     'explanation': 'Agreement includes this item from a package specifically',
-    'startDate': '2021-09-01',
-    'endDate': '2021-09-30',
+    'startDate': null,
+    'endDate': null,
+    'activeFrom': null,
+    'activeTo': null,
     'contentUpdated': null,
     'haveAccess': true
-  }
-};
+  };
 
+  const resource = {
+    'id': '2a99a24e-53db-4328-a819-8de6415dafe6',
+    'dateCreated': '2021-09-15T02:23:20Z',
+    'tags': '[]',
+    'lastUpdated': '2021-09-15T02:23:20Z',
+    'coverage': [
+      {
+        'id': '89f732df-e082-447b-ab3d-e7927df5de42',
+        'startDate': '1977-01-01',
+        'startVolume': '1',
+        'startIssue': '1',
+        'summary': 'v1/i1/1977-01-01 - v*/i*/*'
+      }
+    ],
+    'pti': '{class: "org.olf.kb.PlatformTitleInstance", coverag…}',
+    'pkg': '{class: "org.olf.kb.Pkg", dateCreated: "2021-09-15T…}',
+    'embargo': {
+      'movingWallEnd': {
+        'length': 4,
+        'unit': 'years'
+      }
+    },
+    'addedTimestamp': 1631672587073,
+    'name': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
+    'lastSeenTimestamp': 1631672587073,
+    'suppressFromDiscovery': false,
+    'longName': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
+    'class': 'org.olf.kb.PackageContentItem'
+  };
+
+  const values = {
+    'id': '3ab8c347-4f98-4a70-8bce-63bee849444d',
+    'dateCreated': '2021-09-15T08:31:25Z',
+    'tags': '[]',
+    'lastUpdated': '2021-09-15T08:31:25Z',
+    'owner': {
+      'id': '4c4e0cbc-2301-4ef8-b170-d38255351e39',
+      'cancellationDeadline': '2021-09-28',
+      'dateCreated': '2021-09-15T08:28:39Z',
+      'isPerpetual': {
+        'id': '2c91809c7be72150017be7293b05002f',
+        'value': 'yes',
+        'label': 'Yes'
+      },
+      'name': 'MR agr test',
+      'orgs': [],
+      'externalLicenseDocs': [],
+      'outwardRelationships': [],
+      'customProperties': {},
+      'contacts': [],
+      'tags': [],
+      'lastUpdated': '2021-09-15T08:31:25Z',
+      'inwardRelationships': [],
+      'renewalPriority': {
+        'id': '2c91809c7be72150017be7293b240036',
+        'value': 'definitely_renew',
+        'label': 'Definitely renew'
+      },
+      'endDate': '2021-09-30',
+      'startDate': '2021-09-01',
+      'linkedLicenses': [],
+      'docs': [],
+      'periods': [
+        {
+          'id': 'c38afb53-b81d-4050-83c1-27eed42560e0',
+          'startDate': '2021-09-01',
+          'cancellationDeadline': '2021-09-28',
+          'owner': {
+            'id': '4c4e0cbc-2301-4ef8-b170-d38255351e39'
+          },
+          'note': 'This is period note',
+          'endDate': '2021-09-30',
+          'periodStatus': 'current'
+        }
+      ],
+      'usageDataProviders': [],
+      'agreementStatus': {
+        'id': '2c91809c7be72150017be7293b6a003f',
+        'value': 'active',
+        'label': 'Active'
+      },
+      'supplementaryDocs': [],
+      'description': 'This is description',
+      'items': [
+        {
+          'id': '3ab8c347-4f98-4a70-8bce-63bee849444d'
+        }
+      ],
+      'alternateNames': []
+    },
+    'resource': {
+      'id': '2a99a24e-53db-4328-a819-8de6415dafe6',
+      'class': 'org.olf.kb.PackageContentItem',
+      'name': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
+      'suppressFromDiscovery': false,
+      'tags': [],
+      'coverage': [
+        {
+          'id': '89f732df-e082-447b-ab3d-e7927df5de42',
+          'startDate': '1977-01-01',
+          'startVolume': '1',
+          'startIssue': '1',
+          'summary': 'v1/i1/1977-01-01 - v*/i*/*'
+        }
+      ],
+      'customCoverage': false,
+      '_object': {
+        'id': '2a99a24e-53db-4328-a819-8de6415dafe6',
+        'dateCreated': '2021-09-15T02:23:20Z',
+        'tags': '[]',
+        'lastUpdated': '2021-09-15T02:23:20Z',
+        'coverage': [
+          {
+            'id': '89f732df-e082-447b-ab3d-e7927df5de42',
+            'startDate': '1977-01-01',
+            'startVolume': '1',
+            'startIssue': '1',
+            'summary': 'v1/i1/1977-01-01 - v*/i*/*'
+          }
+        ],
+        'pti': '{class: "org.olf.kb.PlatformTitleInstance", coverag…}',
+        'pkg': '{class: "org.olf.kb.Pkg", dateCreated: "2021-09-15T…}',
+        'embargo': {
+          'movingWallEnd': {
+            'length': 4,
+            'unit': 'years'
+          }
+        },
+        'addedTimestamp': 1631672587073,
+        'name': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
+        'lastSeenTimestamp': 1631672587073,
+        'suppressFromDiscovery': false,
+        'longName': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
+        'class': 'org.olf.kb.PackageContentItem'
+      }
+    },
+    'poLines': '[]',
+    'suppressFromDiscovery': false,
+    'coverage': [
+      {
+        '_delete': false,
+        'startDate': '2021-09-01',
+        'startVolume': '1',
+        'startIssue': '1',
+        'endDate': '2021-09-30',
+        'endVolume': '8',
+        'endIssue': '12'
+      },
+      {
+        '_delete': false,
+        'startDate': '2021-10-01',
+        'endDate': '2021-10-30',
+        'startVolume': '6',
+        'startIssue': 'Nov',
+        'endVolume': '2',
+        'endIssue': '14'
+      }
+    ],
+    'customCoverage': false,
+    'explanation': 'Agreement includes this item from a package specifically',
+    'startDate': null,
+    'endDate': null,
+    'activeFrom': null,
+    'activeTo': null,
+    'contentUpdated': null,
+    'haveAccess': true,
+    'linkedResource': {
+      'id': '3ab8c347-4f98-4a70-8bce-63bee849444d',
+      'dateCreated': '2021-09-15T08:31:25Z',
+      'tags': [],
+      'lastUpdated': '2021-09-15T08:31:25Z',
+      'owner': {
+        'id': '4c4e0cbc-2301-4ef8-b170-d38255351e39',
+        'cancellationDeadline': '2021-09-28',
+        'dateCreated': '2021-09-15T08:28:39Z',
+        'isPerpetual': {
+          'id': '2c91809c7be72150017be7293b05002f',
+          'value': 'yes',
+          'label': 'Yes'
+        },
+        'name': 'MR agr test',
+        'orgs': '[]',
+        'externalLicenseDocs': '[]',
+        'outwardRelationships': '[]',
+        'customProperties': '{}',
+        'contacts': '[]',
+        'tags': '[]',
+        'lastUpdated': '2021-09-15T08:31:25Z',
+        'inwardRelationships': '[]',
+        'renewalPriority': {
+          'id': '2c91809c7be72150017be7293b240036',
+          'value': 'definitely_renew',
+          'label': 'Definitely renew'
+        },
+        'endDate': '2021-09-30',
+        'startDate': '2021-09-01',
+        'linkedLicenses': '[]',
+        'docs': '[]',
+        'periods': [
+          {
+            'id': 'c38afb53-b81d-4050-83c1-27eed42560e0',
+            'startDate': '2021-09-01',
+            'cancellationDeadline': '2021-09-28',
+            'owner': {
+              'id': '4c4e0cbc-2301-4ef8-b170-d38255351e39'
+            },
+            'note': 'This is period note',
+            'endDate': '2021-09-30',
+            'periodStatus': 'current'
+          }
+        ],
+        'usageDataProviders': '[]',
+        'agreementStatus': {
+          'id': '2c91809c7be72150017be7293b6a003f',
+          'value': 'active',
+          'label': 'Active'
+        },
+        'supplementaryDocs': '[]',
+        'description': 'This is description',
+        'items': [
+          {
+            'id': '3ab8c347-4f98-4a70-8bce-63bee849444d'
+          }
+        ],
+        'alternateNames': '[]'
+      },
+      'resource': {
+        'id': '2a99a24e-53db-4328-a819-8de6415dafe6',
+        'class': 'org.olf.kb.PackageContentItem',
+        'name': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
+        'suppressFromDiscovery': false,
+        'tags': '[]',
+        'coverage': [
+          {
+            'id': '89f732df-e082-447b-ab3d-e7927df5de42',
+            'startDate': '1977-01-01',
+            'startVolume': '1',
+            'startIssue': '1',
+            'summary': 'v1/i1/1977-01-01 - v*/i*/*'
+          }
+        ],
+        'customCoverage': false,
+        '_object': {
+          'id': '2a99a24e-53db-4328-a819-8de6415dafe6',
+          'dateCreated': '2021-09-15T02:23:20Z',
+          'tags': [],
+          'lastUpdated': '2021-09-15T02:23:20Z',
+          'coverage': [
+            {
+              'id': '89f732df-e082-447b-ab3d-e7927df5de42',
+              'startDate': '1977-01-01',
+              'startVolume': '1',
+              'startIssue': '1',
+              'summary': 'v1/i1/1977-01-01 - v*/i*/*'
+            }
+          ],
+          'pti': {
+            'id': '46fc69f0-967f-4faa-b7df-26728f76c4de',
+            'dateCreated': '2021-09-15T02:23:20Z',
+            'tags': '[]',
+            'lastUpdated': '2021-09-15T02:23:20Z',
+            'platform': '{dateCreated: "2021-09-15T02:17:34Z", id: "c9fe54a7…}',
+            'templatedUrls': '[{…}]',
+            'coverage': '[{…}]',
+            'titleInstance': '{class: "org.olf.kb.TitleInstance", coverage: Array…}',
+            'url': 'http://www.jstor.org/action/showPublication?journalCode=19thcenturymusic',
+            'name': "'19th century music' on Platform 'JSTOR'",
+            'suppressFromDiscovery': false,
+            'class': 'org.olf.kb.PlatformTitleInstance',
+            'longName': "'19th century music' on Platform 'JSTOR'"
+          },
+          'pkg': {
+            'id': 'cd109ac7-3f74-4915-9c92-2ee2ca470a82',
+            'dateCreated': '2021-09-15T02:23:07Z',
+            'lastUpdated': '2021-09-15T02:23:07Z',
+            'vendor': '{id: "23029216-cd83-4a69-98e4-02610b8e3c6d", name: …}',
+            'source': 'GOKb',
+            'remoteKb': '{activationEnabled: false, active: true, cursor: "2…}',
+            'name': 'JSTOR : Arts & Sciences III Collection : NK',
+            'suppressFromDiscovery': false,
+            'reference': 'JSTOR_:_Arts_&_Sciences_III_Collection_:_NK',
+            'resourceCount': 228,
+            'class': 'org.olf.kb.Pkg'
+          },
+          'embargo': {
+            'movingWallEnd': {
+              'length': 4,
+              'unit': 'years'
+            }
+          },
+          'addedTimestamp': 1631672587073,
+          'name': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
+          'lastSeenTimestamp': 1631672587073,
+          'suppressFromDiscovery': false,
+          'longName': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
+          'class': 'org.olf.kb.PackageContentItem'
+        }
+      },
+      'poLines': [],
+      'suppressFromDiscovery': false,
+      'coverage': [
+        {
+          'id': '89f732df-e082-447b-ab3d-e7927df5de42',
+          'startDate': '1977-01-01',
+          'startVolume': '1',
+          'startIssue': '1',
+          'summary': 'v1/i1/1977-01-01 - v*/i*/*'
+        }
+      ],
+      'customCoverage': false,
+      'explanation': 'Agreement includes this item from a package specifically',
+      'startDate': null,
+      'endDate': null,
+      'activeFrom': null,
+      'activeTo': null,
+      'contentUpdated': null,
+      'haveAccess': true
+    }
+  };
 
 export {
   line,

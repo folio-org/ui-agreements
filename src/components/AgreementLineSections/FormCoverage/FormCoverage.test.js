@@ -34,8 +34,8 @@ describe('FormCoverage', () => {
       await Accordion('Coverage').exists();
     });
 
-    test('renders the expected value', async () => {
-      await KeyValue('Default coverage').exists();
+    test('renders the expected Default coverage value', async () => {
+      await KeyValue('Default coverage').has({ value: 'SerialCoverage' });
     });
 
     test('renders the SerialCoverage component', () => {
@@ -43,8 +43,8 @@ describe('FormCoverage', () => {
       expect(getByText('SerialCoverage')).toBeInTheDocument();
     });
 
-    test('renders embargo', async () => {
-      await KeyValue('Embargo').exists();
+    test('renders the expected embargo value', async () => {
+      await KeyValue('Embargo').has({ value: 'Moving wall end: 4 years' });
     });
   });
 
