@@ -204,14 +204,6 @@ describe('InfoPeriods', () => {
       await Button('Previous').exists();
     });
 
-    test('renders a current button', async () => {
-      await Button('Current').exists();
-    });
-
-    test('renders a next button', async () => {
-      await Button('Next').exists();
-    });
-
     checkButtonDisabled('previous', false);
     checkButtonDisabled('current', true);
     checkButtonDisabled('next', true);
@@ -229,14 +221,6 @@ describe('InfoPeriods', () => {
         </MemoryRouter>,
         translationsProperties
       );
-    });
-
-    test('renders a previous button', async () => {
-      await Button('Previous').exists();
-    });
-
-    test('renders a current button', async () => {
-      await Button('Current').exists();
     });
 
     test('renders a next button', async () => {
@@ -262,18 +246,8 @@ describe('InfoPeriods', () => {
       );
     });
 
-    test('renders a previous button', async () => {
-      await Button('Previous').exists();
-    });
-
-
     test('renders a current button', async () => {
       await Button('Current').exists();
-    });
-
-
-    test('renders a next button', async () => {
-      await Button('Next').exists();
     });
 
     checkButtonDisabled('previous', true);
@@ -299,9 +273,6 @@ describe('InfoPeriods', () => {
       await Button('Previous').exists();
     });
 
-    test('renders a current button', async () => {
-      await Button('Current').exists();
-    });
     test('renders a next button', async () => {
       await Button('Next').exists();
     });
