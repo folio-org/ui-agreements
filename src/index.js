@@ -52,7 +52,7 @@ import Settings from './settings';
 
 class App extends React.Component {
   static eventHandler(event, _s, data) {
-    if (event === 'ui-handler-stripes-registry-load') {
+    if (event === 'LOAD_STRIPES_REGISTRY') {
       // Data should contain Registry singleton:
       setUpRegistry(data);
     }
