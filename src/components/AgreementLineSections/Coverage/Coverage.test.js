@@ -19,10 +19,6 @@ describe('Coverage', () => {
         await Accordion('Coverage').exists();
       });
 
-      test('renders Embargo keyValue', async () => {
-        await KeyValue('Embargo').exists();
-      });
-
       test('renders the expected embargo value', async () => {
         await KeyValue('Embargo').has({ value: 'Moving wall end: 4 years' });
       });
