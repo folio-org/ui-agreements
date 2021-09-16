@@ -5,7 +5,7 @@ import { MultiColumnList, MultiColumnListCell } from '@folio/stripes-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../test/helpers';
 import LicenseAmendmentList from './LicenseAmendmentList';
-import { currentAmendments, futureAmendments, historicalAmendments } from './testLists';
+import { currentAmendments, futureAmendments, historicalAmendments } from './testResources';
 
 describe('LicenseAmendmentList', () => {
     describe('List of current amendments', () => {
