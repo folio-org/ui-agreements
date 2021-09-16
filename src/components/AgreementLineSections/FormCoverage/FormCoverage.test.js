@@ -54,6 +54,8 @@ describe('FormCoverage', () => {
         <TestForm initialValues={initialValues} onSubmit={onSubmit}>
           <FormCoverage
             handlers={handlers}
+            resource={resource}
+            values={values}
           />
         </TestForm>,
         translationsProperties
@@ -64,9 +66,19 @@ describe('FormCoverage', () => {
       await Accordion('Coverage').exists();
     });
 
+    test('renders the SerialCoverage component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('SerialCoverage')).toBeInTheDocument();
+    });
+
     test('renders the CoverageFieldArray component', () => {
       const { getByText } = renderComponent;
       expect(getByText('CoverageFieldArray')).toBeInTheDocument();
+    });
+
+    test('renders the Embargo component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('Embargo')).toBeInTheDocument();
     });
   });
 });
