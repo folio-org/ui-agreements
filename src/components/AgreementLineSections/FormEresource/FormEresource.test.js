@@ -3,18 +3,12 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { Button } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
-import {
-  eholdingsData,
-  basketSelectordata,
-  formEresourceCardDate,
-  handlers,
-  initialValues
-} from './testResources';
+import { data, handlers, initialValues, eholdingData, basketSelectorData } from './testResources';
 import FormEresource from './FormEresource';
 
 jest.mock('../EresourceSelector', () => () => <div>EresourceSelector</div>);
 jest.mock('../FormEresourceCard', () => () => <div>FormEresourceCard</div>);
-jest.mock('../BasketSelector', () => () => <div>BasketSelector</div>);
+jest.mock('../../BasketSelector', () => () => <div>BasketSelector</div>);
 
 const onSubmit = jest.fn();
 
@@ -28,18 +22,23 @@ describe('FormEresource', () => {
         </TestForm>,
         translationsProperties
       );
+    });
 
-      test('renders the submit button', async () => {
-        await Button('Submit').exists();
-      });
+    test('renders the submit button', async () => {
+      await Button('Submit').exists();
+    });
+
+    test('renders the EresourceSelector component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('EresourceSelector')).toBeInTheDocument();
     });
   });
 
-  describe('renders agreementLineSource type eholdings', () => {
+  describe('renders agreementLineSource type basket', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
-          <FormEresource basket={eholdingsData.basket} line={eholdingsData.line} resourec={eholdingsData.resource} values={eholdingsData.values} />
+          <FormEresource line={data.line} values={data.values} />
         </TestForm>,
         translationsProperties
       );
@@ -56,11 +55,11 @@ describe('FormEresource', () => {
     });
   });
 
-  describe('renders agreementLineSource type basket', () => {
+  describe('renders agreementLineSource type basket for basket selector component', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
-          <FormEresource basket={basketSelectordata.basket} line={basketSelectordata.line} resource={basketSelectordata.resource} values={basketSelectordata.values} />
+          <FormEresource line={basketSelectorData.line} values={basketSelectorData.values} />
         </TestForm>,
         translationsProperties
       );
@@ -72,11 +71,11 @@ describe('FormEresource', () => {
     });
   });
 
-  describe('renders agreementLineSource  ', () => {
+  describe('renders agreementLineSource type eholdings', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
-          <FormEresource basket={formEresourceCardDate.basket} line={formEresourceCardDate.line} resource={formEresourceCardDate.resource} values={formEresourceCardDate.values} />
+          <FormEresource line={eholdingData.line} values={eholdingData.values} />
         </TestForm>,
         translationsProperties
       );
