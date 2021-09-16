@@ -9,10 +9,14 @@ import { generateQueryParams, preventResourceRefresh } from '@folio/stripes-erm-
 import View from '../../components/views/Agreements';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
+import { resultCount } from '../../constants';
 
-const INITIAL_RESULT_COUNT = 100;
-const RESULT_COUNT_INCREMENT = 100;
-const RECORDS_PER_REQUEST = 100;
+const {
+  INITIAL_RESULT_COUNT,
+  RESULT_COUNT_INCREMENT,
+  RECORDS_PER_REQUEST_MEDIUM
+} = resultCount;
+
 
 class AgreementsRoute extends React.Component {
   static manifest = Object.freeze({
@@ -49,7 +53,7 @@ class AgreementsRoute extends React.Component {
       limitParam: 'perPage',
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
-      perRequest: RECORDS_PER_REQUEST,
+      perRequest: RECORDS_PER_REQUEST_MEDIUM,
       shouldRefresh: () => false,
     },
     isPerpetualValues: {
@@ -61,7 +65,7 @@ class AgreementsRoute extends React.Component {
       type: 'okapi',
       path: 'erm/refdata/InternalContact/role',
       limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST,
+      perRequest: RECORDS_PER_REQUEST_MEDIUM,
       shouldRefresh: () => false,
     },
     orgRoleValues: {

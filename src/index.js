@@ -52,7 +52,7 @@ import Settings from './settings';
 
 class App extends React.Component {
   static eventHandler(event, _s, data) {
-    if (event === 'ui-stripes-registry-load') {
+    if (event === 'LOAD_STRIPES_REGISTRY') {
       // Data should contain Registry singleton:
       setUpRegistry(data);
     }
@@ -191,13 +191,13 @@ class App extends React.Component {
             </div>
           </HasCommand>
         </CommandList>
-        { this.state.showKeyboardShortcutsModal && (
-        <KeyboardShortcutsModal
-          allCommands={defaultKeyboardShortcuts}
-          onClose={() => { this.changeKeyboardShortcutsModal(false); }}
-          open
-        />
-      )}
+        {this.state.showKeyboardShortcutsModal && (
+          <KeyboardShortcutsModal
+            allCommands={defaultKeyboardShortcuts}
+            onClose={() => { this.changeKeyboardShortcutsModal(false); }}
+            open
+          />
+        )}
       </>
     );
   }

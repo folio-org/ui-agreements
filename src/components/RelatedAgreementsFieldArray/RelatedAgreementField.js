@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-final-form';
 import { Link } from 'react-router-dom';
@@ -16,6 +16,7 @@ import {
   Tooltip,
 } from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
+import useLinkedWarning from './useLinkedWarning';
 
 import { urls } from '../utilities';
 import css from '../styles.css';
@@ -53,28 +54,12 @@ const RelatedAgreementField = ({
   parentAgreementId,
   parentAgreementName,
 }) => {
-  const [selfLinkedWarning, setSelfLinkedWarning] = useState(false);
-
+  const { change } = useForm();
   let triggerButton = useRef(null);
 
-  const { change } = useForm();
+  const { selfLinkedWarning, setSelfLinkedWarning } = useLinkedWarning(change, input, parentAgreementId, triggerButton);
 
-  useEffect(() => {
-    if (!input.value?.id && triggerButton.current) {
-      triggerButton.current.focus();
-    }
-  }, [input, triggerButton]);
-
-  useEffect(() => {
-    if (parentAgreementId === input.value?.id && !selfLinkedWarning) {
-      change(input.name, undefined);
-      setSelfLinkedWarning(true);
-    }
-    if (input.value && parentAgreementId !== input.value?.id && selfLinkedWarning) {
-      setSelfLinkedWarning(false);
-    }
-  }, [change, input, parentAgreementId, selfLinkedWarning, setSelfLinkedWarning]);
-
+  /* istanbul ignore next */
   const renderLinkAgreementButton = value => (
     <Pluggable
       dataKey={id}
@@ -166,7 +151,7 @@ const RelatedAgreementField = ({
       <Layout className="textCentered">
         <FormattedMessage id="ui-agreements.relatedAgreements.linkToStart" />
       </Layout>
-      { selfLinkedWarning &&
+      {selfLinkedWarning &&
         <Layout className="padding-top-gutter">
           <MessageBanner
             dismissable
@@ -175,7 +160,7 @@ const RelatedAgreementField = ({
           >
             <FormattedMessage id="ui-agreements.relatedAgreements.linkToParentError" values={{ agreement: parentAgreementName }} />
           </MessageBanner>
-        </Layout> }
+        </Layout>}
     </div>
   );
 
@@ -197,7 +182,7 @@ const RelatedAgreementField = ({
             <FormattedMessage id="ui-agreements.agreement" />
           </strong>
         </AppIcon>
-        )}
+      )}
       id={id}
       roundedBorder
     >

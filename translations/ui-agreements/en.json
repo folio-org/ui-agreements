@@ -16,27 +16,20 @@
   "platforms": "Platforms",
   "status": "Status",
   "action": "Action",
-
   "default": "Default",
-
   "appMenu.keyboardShortcuts": "Keyboard shortcuts",
-
   "agreement": "Agreement",
   "agreementPluralizable": "{count} {count, plural, one {agreement} other {agreements}}",
   "agreementLinePluralizable": "{count} {count, plural, one {agreement line} other {agreement lines}}",
   "eresource": "E-resource",
   "eresourcePluralizable": "{count} {count, plural, one {e-resource} other {e-resources}}",
-
   "agreements.searchInputLabel": "Search Agreements",
   "eresources.searchInputLabel": "Search E-resources",
-
   "description": "Description",
   "note": "Note",
-
   "days": "{count, number} {count, plural, one {day} other {days}}",
   "months": "{count, number} {count, plural, one {month} other {months}}",
   "years": "{count, number} {count, plural, one {year} other {years}}",
-
   "permission.resources.view": "Agreements: Search & view e-resources",
   "permission.resources.edit": "Agreements: Edit e-resources",
   "permission.agreements.view": "Agreements: Search & view agreements",
@@ -47,7 +40,6 @@
   "permission.generalSettings.manage": "Settings (Agreements): Can view and edit general settings",
   "permission.picklists.manage": "Settings (Agreements): Manage pick lists and values",
   "permission.supplementaryProperties.manage": "Settings (Agreements): Manage agreement supplementary properties",
-
   "agreements.deletedAgreement": "<strong>Agreement deleted:</strong> {name}",
   "agreements.deleteAgreement": "Delete agreement",
   "agreements.deleteConfirmMessage": "Agreement <strong>{name}</strong> will be <strong>deleted</strong>.",
@@ -103,10 +95,8 @@
   "agreements.closeEdit": "Close edit agreement",
   "agreements.createAgreement": "New agreement",
   "agreements.editAgreement": "Edit agreement",
-
   "agreements.create.callout": "<strong>Agreement created:</strong> {name}",
   "agreements.update.callout": "<strong>Agreement updated:</strong> {name}",
-
   "agreementLine": "Agreement line",
   "agreementLine.basket": "Basket",
   "agreementLine.eholdings": "eHoldings",
@@ -117,7 +107,6 @@
   "agreementLine.unlinkEresource": "Unlink e-resource",
   "agreementLine.provideEresource": "Please provide an e-resource or description to continue",
   "agreementLine.addCustomCoverageTootlip": "Custom coverage can be added when an e-resource is linked",
-
   "agreementLines.addLine": "Add agreement line",
   "agreementLines.addCustomCoverage": "Add custom coverage",
   "agreementLines.costType": "Cost type",
@@ -139,15 +128,12 @@
   "agreementLines.hasCustomCoverage": "Has custom coverage",
   "agreementLines.customCoverageTitle": "Custom coverage {number}",
   "agreementLines.custom": "Custom",
-
   "agreementLines.customCoverage.startIssue": "Start issue",
   "agreementLines.customCoverage.endIssue": "End issue",
   "agreementLines.customCoverage.startVolume": "Start volume",
   "agreementLines.customCoverage.endVolume": "End volume",
   "agreementLines.customCoverage.coverageType": "Coverage type",
-
   "alternativeNames": "Alternative names",
-
   "agreementPeriods.period": "Period",
   "agreementPeriods.current": "Current",
   "agreementPeriods.next": "Next",
@@ -155,17 +141,13 @@
   "agreementPeriods": "Agreement periods",
   "agreementPeriods.addPeriod": "Add agreement period",
   "agreementPeriods.removePeriod": "Remove agreement period {periodNum}",
-
   "agreementPeriods.allPeriods": "All periods",
   "agreementPeriods.periodEnd": "Period end",
   "agreementPeriods.periodNote": "Period note",
   "agreementPeriods.periodStart": "Period start",
   "agreementPeriods.periodTitle": "Agreement period {number}",
-
   "warn.clearReasonForClosure": "This reason will be cleared as status is not closed",
-
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
-
   "basket.name": "ERM basket",
   "basket.close": "Close basket",
   "basket.recordCount": "Showing {count, number} {count, plural, one {record} other {records}}",
@@ -178,23 +160,19 @@
   "basket.clickToSelectAgreement": "Click to select agreement",
   "basket.messageBanner": "Select one or more e-resources and add them to a new or existing agreement. An agreement line will be created for each e-resource that you select.",
   "basket.removeFromBasket": "Remove { publicationType } \"{ name }\" from basket",
-
   "basketSelector.selectLabel": "Select from basket",
   "basketSelector.selectPlaceholder": "Select e-resource or package",
   "basketSelector.infoPopover": "A set of e-resources which are currently in the basket",
   "basketSelector.emptyMessage": "No items in e-resource basket",
   "basketSelector.linkSelectedEresource.tooltip": "An e-resource can be linked when it is has been added to the basket",
   "basketSelector.selectResourceMessage": "Please select an e-resource to continue",
-
   "content.all": "All",
   "content.current": "Current",
   "content.dropped": "Dropped",
   "content.future": "Future",
-
   "coverage.volumeShort": "Vol:",
   "coverage.issueShort": "Iss:",
   "coverage.editionShort": "Ed:",
-
   "duplicateAgreementModal.agreementInfo": "Agreement information",
   "duplicateAgreementModal.agreementLines": "Agreement lines",
   "duplicateAgreementModal.cloneEndpointError": "Unable to duplicate the agreement. The clone endpoint could not be accessed.",
@@ -207,13 +185,12 @@
   "duplicateAgreementModal.invalidResponseError": "Unable to duplicate the agreement. The response received from the server was invalid.",
   "duplicateAgreementModal.linkedLicenses": "Linked licenses",
   "duplicateAgreementModal.organizations": "Organizations",
-  "duplicateAgreementModal.supplementaryInformation": "Supplementary information",
+  "duplicateAgreementModal.supplementaryDocuments": "Supplementary documents",
+  "duplicateAgreementModal.supplementaryProperties": "Supplementary properties",
   "duplicateAgreementModal.usageData": "Usage data",
-
   "embargo": "Embargo",
   "embargo.start": "Moving wall start: ",
   "embargo.end": "Moving wall end: ",
-
   "emptyAccordion.internalContacts": "No internal contacts for this agreement",
   "emptyAccordion.agreementLines": "No agreement lines for this agreement",
   "emptyAccordion.controllingLicense": "No controlling license for this agreement",
@@ -234,14 +211,13 @@
   "emptyAccordion.relatedAgreements": "No related agreements for this agreement",
   "emptyAccordion.pciCoverage": "No coverage for this title",
   "emptyAccordion.noAgreementsOtherPackages": "No agreements on other platform-package combinations",
-
   "pci.addCoverage": "Add coverage",
   "pci.edit": "Edit pci",
   "pci.closeEdit": "Close edit pci",
   "pci.removeCoverage": "Remove coverage",
   "pci.coverageTitle": "Coverage { number }",
   "editResource": "Edit {name}",
-
+  "title.closeEdit": "Close edit title",
   "platform.closeEdit": "Close edit platform",
   "platform.editPlatform": "Edit {name}",
   "platform.addUrlCustomization": "Add URL Customization",
@@ -277,7 +253,6 @@
   "platform.urlCustomizer.closeEdit": "Close edit URL customization",
   "platform.urlCustomization.create.callout": "URL customization created",
   "platform.urlCustomization.update.callout": "URL customization updated",
-
   "eresources.count": "Count",
   "eresources.edit": "Edit",
   "eresources.name": "Name",
@@ -354,16 +329,13 @@
   "eresources.notSelected": "Not selected",
   "eresources.accessStatusType": "Access status type",
   "eresources.warn.customCoverageCleared": "All custom coverage data will be cleared. To save custom coverage data please link an e-resource",
-
   "customCoverage.warn.startDate": "Start date will be cleared as no e-resource is linked",
   "customCoverage.warn.endDate": "End date will be cleared as no e-resource is linked",
   "customCoverage.warn.startVolume": "Start volume will be cleared as no e-resource is linked",
   "customCoverage.warn.endVolume": "End volume will be cleared as no e-resource is linked",
   "customCoverage.warn.startIssue": "Start issue will be cleared as no e-resource is linked",
   "customCoverage.warn.endIssue": "End issue will be cleared as no e-resource is linked",
-
   "customcoverages.tooltip": "Custom Coverage",
-
   "eresourcesCovered.exportAs": "Export as...",
   "eresourcesCovered.exportAsJSON": "Export as JSON",
   "eresourcesCovered.exportAsKBART": "Export as KBART",
@@ -375,7 +347,6 @@
   "eresources.discoverySettings.suppressFromDiscoveryAgreementLine": "Suppress from discovery {breakingLine} (Agreement line)",
   "eresources.discoverySettings.suppressFromDiscoveryTitle": "Suppress from discovery {breakingLine} (Title)",
   "eresources.discoverySettings.suppressFromDiscoveryTitleInPackage": "Suppress from discovery {breakingLine} (Title in package)",
-
   "errors.endDateGreaterThanStartDate": "End date must be after the start date.",
   "errors.multipleOpenEndedCoverages": "Cannot have multiple open-ended coverage statements.",
   "errors.multipleOpenEndedPeriods": "Cannot have multiple open-ended agreement periods.",
@@ -387,9 +358,7 @@
   "errors.noDeleteHasLicenses": "<strong>Agreement was not deleted</strong> because it has one or more licenses attached.",
   "errors.noDeleteHasRelatedAgreements": "<strong>Agreement was not deleted</strong> because it has one or more related agreements.",
   "errors.noDeleteAgreementBackendError": "<strong>Agreement was not deleted:</strong> {message}",
-
   "finances.none": "Agreement has no order lines.",
-
   "identifier.eissn.issn": "eISSN/ISSN",
   "identifier.doi": "DOI",
   "identifier.issn": "ISSN",
@@ -400,7 +369,6 @@
   "identifier.pisbn": "ISBN (Print)",
   "identifier.eisbn": "ISBN (Online)",
   "identifier.zdb": "ZDB",
-
   "interface.name": "Interface name",
   "interface.username": "Username",
   "interface.password": "Password",
@@ -408,7 +376,6 @@
   "interface.type": "Interface type",
   "interface.notes": "Notes",
   "interface.notFound": "No interfaces found",
-
   "license.addExternalLicense": "Add external license",
   "license.addLicense": "Add license",
   "license.agreementHasNone": "No licenses for this agreement",
@@ -450,7 +417,6 @@
   "license.warn.amendmentPast": "Amendment has ended while \"Status (this agreement)\" is \"Current.\"",
   "license.warn.amendmentStatus": "Conflicting statuses: Amendment status is \"{status}\" while \"Status (this agreement)\" is \"Current.\"",
   "license.warn.unassignedAmendments": "This license has unassigned amendments. Please edit the agreement to rectify.",
-
   "line.edit": "Edit agreement line",
   "line.new": "New agreement line",
   "line.create.callout": "Agreement line created",
@@ -461,7 +427,6 @@
   "line.parentAgreement": "Parent agreement",
   "line.lineForAgreement": "Agreement line in {agreementName}",
   "line.poLines": "PO lines",
-
   "organizations.edit": "Edit organizations",
   "organizations.add": "Add organization to agreement",
   "organizations.agreementHasNone": "No organizations for this agreement",
@@ -474,21 +439,17 @@
   "organizations.addOrganizationToAgreement": "Add organization",
   "organizations.selectRole": "Select a role",
   "organizations.primary": "Primary organization",
-
   "org.olf.erm.SubscriptionAgreement.name.unique": "This name already exists",
-
   "pci.coverage.startDate": "Start date",
   "pci.coverage.startVolume": "Start volume",
   "pci.coverage.startIssue": "Start issue",
   "pci.coverage.endDate": "End date",
   "pci.coverage.endVolume": "End volume",
   "pci.coverage.endIssue": "End issue",
-
   "platform.edit": "Edit",
   "platform.localPlatformCode": "Local platform code",
   "platform.locators": "Locators",
   "platform.name": "Name",
-
   "poLines.acqMethod": "Acquisition method",
   "poLines.addPOLine": "Add PO line",
   "polines.lineHasNone": "Agreement line has no PO lines",
@@ -506,7 +467,6 @@
   "poLines.title": "Title in PO line",
   "poLines.unlinkPOLine": "Unlink PO line",
   "poLines.viewInInventory": "View in inventory",
-
   "relatedAgreements": "Related agreements",
   "relatedAgreements.addRelatedAgreement": "Add related agreement",
   "relatedAgreements.agreementHasNone": "No related agreements for this agreement",
@@ -533,9 +493,7 @@
   "relatedAgreements.remove": "Remove related agreement {index}",
   "relatedAgreements.replaceAgreement": "Replace agreement",
   "relatedAgreements.replaceAgreementSpecific": "Replace agreement {agreementName}",
-
   "section.supplementaryProperties": "Supplementary properties",
-
   "supplementaryProperties": "Supplementary properties",
   "supplementaryProperties.count": "{count, number} saved {count, plural, one {supplementary property} other {supplementary properties}}",
   "supplementaryProperties.callout.delete.error": "There was an error deleting the supplementary property. {error}",
@@ -545,7 +503,6 @@
   "supplementaryProperties.callout.delete.supplementaryPropertyInUse": "<strong>Error:</strong> Supplementary property <strong>{supplementaryPropertyName}</strong> was not deleted because it is in use on one or more agreements.",
   "supplementaryProperties.optionalProperties": "Optional properties",
   "supplementaryProperties.primaryProperties": "Primary properties",
-
   "usageData": "Usage data",
   "usageData.addUDP": "Add usage data provider",
   "usageData.agreementHasNone": "No usage data providers for this agreement",
@@ -560,16 +517,12 @@
   "usageData.replaceUDPSpecific": "Replace usage data provider {UDPName}",
   "usageData.usageDataProvider": "Usage data provider",
   "usageData.usageDataProviderIndex": "Usage data provider {index}",
-
   "viewUDP.name": "Name",
-
   "doc.removeExternalLicense": "Remove external license {index}",
   "doc.removeSupplementaryInformation": "Remove document {index}",
-
   "supplementaryDocs.agreementHasNone": "No supplementary documents for this agreement",
   "supplementaryDocs.addSupplementaryDoc": "Add supplementary document",
   "supplementaryDocuments": "Supplementary documents",
-
   "settings.actions": "Actions",
   "settings.general": "General",
   "settings.displaySettings": "Display settings",

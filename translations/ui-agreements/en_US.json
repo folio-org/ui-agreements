@@ -254,7 +254,7 @@
     "relatedAgreements.relationship.supersedes": "Supersedes \"{agreement}\"",
     "relatedAgreements.relationship.tracks_demand-driven_acquisitions_for": "Tracks demand-driven acquisitions for \"{agreement}\"",
     "relatedAgreements.remove": "Remove related agreement {index}",
-    "identifier.issn": "ISSN (Print)",
+    "identifier.issn": "ISSN",
     "relatedAgreements.relationshipSummary": "\"{source}\" {relationship} \"{target}\"",
     "relatedAgreements.relationshipSummaryForNewAgreement": "\"{source}\" {relationship} the agreement being created",
     "license.linkLicense": "Link license",
@@ -285,7 +285,6 @@
     "duplicateAgreementModal.linkedLicenses": "Linked licenses",
     "duplicateAgreementModal.externalLicenses": "External licenses",
     "duplicateAgreementModal.organizations": "Organizations",
-    "duplicateAgreementModal.supplementaryInformation": "Supplementary information",
     "duplicateAgreementModal.usageData": "Usage data",
     "close": "Close",
     "agreements.export": "Export",
@@ -546,5 +545,13 @@
     "settings.general.displaySuppressFromDiscovery.titlesInPackages": "Titles in packages",
     "settings.general.displaySuppressFromDiscovery.titles": "Titles",
     "settings.tabularList.pagination": "<strong>Tabular list pagination</strong>",
-    "settings.tabularList": "<strong>Tabular list</strong>"
+    "settings.tabularList": "<strong>Tabular list</strong>",
+    "appMenu.keyboardShortcuts": "Keyboard shortcuts",
+    "basketSelector.infoPopover": "A set of e-resources which are currently in the basket",
+    "basketSelector.emptyMessage": "No items in e-resource basket",
+    "basketSelector.linkSelectedEresource.tooltip": "An e-resource can be linked when it is has been added to the basket",
+    "basketSelector.selectResourceMessage": "Please select an e-resource to continue",
+    "title.closeEdit": "Close edit title",
+    "organizations.primary": "Primary organization",
+    "relatedAgreements.linkToParentError": "<strong>Error:</strong> Agreement \"{agreement}\" was not linked because an agreement cannot be linked to itself."
 }
