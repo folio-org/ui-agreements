@@ -6,11 +6,12 @@ export default class DuplicateAgreementModal extends React.Component {
   cloneableProperties = [
     { key: 'agreementInfo', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.agreementInfo" /> },
     { key: 'internalContacts', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.internalContacts" /> },
-    { key: 'agreementLines', value : <FormattedMessage id="ui-agreements.duplicateAgreementModal.agreementLines" /> },
+    { key: 'agreementLines', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.agreementLines" /> },
     { key: 'linkedLicenses', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.linkedLicenses" /> },
     { key: 'externalLicenses', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.externalLicenses" /> },
     { key: 'organizations', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.organizations" /> },
-    { key: 'supplementaryInformation', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.supplementaryInformation" /> },
+    { key: 'supplementaryDocs', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.supplementaryDocuments" /> },
+    { key: 'supplementaryProperties', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.supplementaryProperties" /> },
     { key: 'usageData', value: <FormattedMessage id="ui-agreements.duplicateAgreementModal.usageData" /> },
   ];
 

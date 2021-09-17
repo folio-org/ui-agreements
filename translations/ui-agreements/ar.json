@@ -254,7 +254,7 @@
     "relatedAgreements.relationship.supersedes": "يحل محل \"{agreement}\"",
     "relatedAgreements.relationship.tracks_demand-driven_acquisitions_for": "يتتبع التزويد عند الطلب لـ \"{agreement}\"",
     "relatedAgreements.remove": "إزالة الاتفاقية ذات الصلة {index}",
-    "identifier.issn": "ردمد (طباعة)",
+    "identifier.issn": "ردمد",
     "relatedAgreements.relationshipSummary": "\"{source}\" {relationship} \"{target}\"",
     "relatedAgreements.relationshipSummaryForNewAgreement": "\"{source}\" {relationship} الاتفاقية التي يجري إنشاؤها",
     "license.linkLicense": "ربط الرخصة",
@@ -548,11 +548,11 @@
     "settings.tabularList.pagination": "<strong>ترقيم صفحات قائمة مجدولة</strong>",
     "settings.tabularList": "<strong>قائمة مجدولة</strong>",
     "appMenu.keyboardShortcuts": "اختصارات لوحة المفاتيح",
-    "basketSelector.infoPopover": "A set of e-resources which are currently in the basket",
-    "basketSelector.emptyMessage": "No items in e-resource basket",
-    "basketSelector.linkSelectedEresource.tooltip": "An e-resource can be linked when it is has been added to the basket",
+    "basketSelector.infoPopover": "مجموعة من الموارد الإلكترونية الموجودة حالياً في السلة",
+    "basketSelector.emptyMessage": "لا توجد مواد في سلة الموارد الإلكترونية",
+    "basketSelector.linkSelectedEresource.tooltip": "يمكن ربط المورد الإلكتروني عندما تتم إضافته إلى السلة",
     "basketSelector.selectResourceMessage": "يرجى تحديد مورد إلكتروني للمتابعة",
     "title.closeEdit": "إغلاق تحرير العنوان",
     "organizations.primary": "المؤسسة الأساسية",
-    "relatedAgreements.linkToParentError": "<strong>Error:</strong> Agreement \"{agreement}\" was not linked because an agreement cannot be linked to itself."
+    "relatedAgreements.linkToParentError": "<strong>خطأ:</strong> لم يتم ربط الاتفاقية \"{agreement}\" لأنه لا يمكن ربط اتفاقية بنفسها."
 }

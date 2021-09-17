@@ -12,8 +12,6 @@ import {
 
 import { Embargo, isPackage } from '@folio/stripes-erm-components';
 
-import CustomCoverageIcon from '../CustomCoverageIcon';
-
 const propTypes = {
   line: PropTypes.shape({
     coverage: PropTypes.arrayOf(PropTypes.object),
@@ -72,8 +70,6 @@ const Coverage = ({
             line.customCoverage ?
               <>
                 <FormattedMessage id="ui-agreements.agreementLines.custom" />
-                &nbsp;
-                <CustomCoverageIcon />
               </>
               :
               <FormattedMessage id="ui-agreements.default" />

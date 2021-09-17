@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PackageCard from '../PackageCard';
-import PackageCardExternal from '../PackageCardExternal';
-import TitleCard from '../TitleCard';
-import TitleCardExternal from '../TitleCardExternal';
+import PackageCard from '../../PackageCard';
+import PackageCardExternal from '../../PackageCardExternal';
+import TitleCard from '../../TitleCard';
+import TitleCardExternal from '../../TitleCardExternal';
 
 const propTypes = {
   headerEnd: PropTypes.oneOfType([
@@ -14,7 +14,11 @@ const propTypes = {
 };
 
 const isExternal = (resource) => {
-  return resource.type === 'external' || resource.type === 'packages' || resource.type === 'resources';
+  return (
+    resource.type === 'external' ||
+    resource.type === 'packages' ||
+    resource.type === 'resources'
+  );
 };
 
 const isPackage = (resource) => {
