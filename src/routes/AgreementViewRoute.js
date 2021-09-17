@@ -12,11 +12,11 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import withFileHandlers from './components/withFileHandlers';
 import View from '../components/views/Agreement';
 import { parseMclPageSize, urls } from '../components/utilities';
-import { errorTypes } from '../constants';
+import { errorTypes, resultCount } from '../constants';
 
 import { joinRelatedAgreements } from './utilities/processRelatedAgreements';
 
-const RECORDS_PER_REQUEST = 100;
+const { RECORDS_PER_REQUEST_MEDIUM, RECORDS_PER_REQUEST_LARGE } = resultCount;
 
 class AgreementViewRoute extends React.Component {
   static manifest = Object.freeze({
@@ -66,7 +66,7 @@ class AgreementViewRoute extends React.Component {
     interfaces: {
       type: 'okapi',
       path: 'organizations-storage/interfaces',
-      perRequest: RECORDS_PER_REQUEST,
+      perRequest: RECORDS_PER_REQUEST_MEDIUM,
       params: (_q, _p, _r, _l, props) => {
         const orgs = get(props.resources, 'agreement.records[0].orgs', []);
         const interfaces = flatten(orgs.map(o => get(o, 'org.orgsUuid_object.interfaces', [])));
@@ -82,6 +82,7 @@ class AgreementViewRoute extends React.Component {
     },
     orderLines: {
       type: 'okapi',
+      perRequest: RECORDS_PER_REQUEST_LARGE,
       path: 'orders/order-lines',
       params: (_q, _p, _r, _l, props) => {
         const query = get(props.resources, 'agreementLines.records', [])
@@ -114,7 +115,7 @@ class AgreementViewRoute extends React.Component {
     users: {
       type: 'okapi',
       path: 'users',
-      perRequest: RECORDS_PER_REQUEST,
+      perRequest: RECORDS_PER_REQUEST_MEDIUM,
       params: (_q, _p, _r, _l, props) => {
         const query = get(props.resources, 'agreement.records[0].contacts', [])
           .filter(contact => contact.user)
@@ -200,7 +201,7 @@ class AgreementViewRoute extends React.Component {
   };
 
   static defaultProps = {
-    handlers: { },
+    handlers: {},
   }
 
   static contextType = CalloutContext;
@@ -375,7 +376,7 @@ class AgreementViewRoute extends React.Component {
     mutator.agreement.DELETE(agreement)
       .then(() => {
         history.push(`${urls.agreements()}${location.search}`);
-        sendCallout({ message: <SafeHTMLMessage id="ui-agreements.agreements.deletedAgreement" values={{ name : agreement.name }} /> });
+        sendCallout({ message: <SafeHTMLMessage id="ui-agreements.agreements.deletedAgreement" values={{ name: agreement.name }} /> });
       })
       .catch(error => {
         sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteAgreementBackendError" values={{ message: error.message }} /> });

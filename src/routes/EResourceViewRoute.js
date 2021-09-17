@@ -11,7 +11,7 @@ import View from '../components/views/EResource';
 import { parseMclPageSize, urls, withSuppressFromDiscovery } from '../components/utilities';
 import { resultCount, resourceClasses } from '../constants';
 
-const RECORDS_PER_REQUEST = 100;
+const { INITIAL_RESULT_COUNT, RECORDS_PER_REQUEST_MEDIUM } = resultCount;
 
 class EResourceViewRoute extends React.Component {
   static manifest = Object.freeze({
@@ -55,7 +55,7 @@ class EResourceViewRoute extends React.Component {
     relatedEntitlements: {
       type: 'okapi',
       path: 'erm/resource/:{id}/entitlements/related',
-      perRequest: RECORDS_PER_REQUEST,
+      perRequest: RECORDS_PER_REQUEST_MEDIUM,
       recordsRequired: '%{entitlementsCount}',
       limitParam: 'perPage',
       throwErrors: false,
@@ -85,7 +85,7 @@ class EResourceViewRoute extends React.Component {
     },
     query: {},
     entitlementsOffset: { initialValue: 0 },
-    entitlementsCount: { initialValue: resultCount.INITIAL_RESULT_COUNT },
+    entitlementsCount: { initialValue: INITIAL_RESULT_COUNT },
     entitlementOptionsOffset: { initialValue: 0 },
     packageContentsFilter: { initialValue: 'current' },
     packageContentsOffset: { initialValue: 0 },
@@ -156,12 +156,12 @@ class EResourceViewRoute extends React.Component {
   };
 
   static defaultProps = {
-    handlers: { },
+    handlers: {},
   }
 
   componentDidUpdate(prevProps) {
     const { mutator, resources } = this.props;
-    const totalEntitlements = get(resources, 'entitlements.other.totalRecords', RECORDS_PER_REQUEST);
+    const totalEntitlements = get(resources, 'entitlements.other.totalRecords', RECORDS_PER_REQUEST_MEDIUM);
     const { entitlementsCount } = resources;
 
     if (totalEntitlements > entitlementsCount) {

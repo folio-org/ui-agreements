@@ -254,7 +254,7 @@
     "relatedAgreements.relationship.supersedes": "يحل محل \"{agreement}\"",
     "relatedAgreements.relationship.tracks_demand-driven_acquisitions_for": "يتتبع التزويد عند الطلب لـ \"{agreement}\"",
     "relatedAgreements.remove": "إزالة الاتفاقية ذات الصلة {index}",
-    "identifier.issn": "ردمد (طباعة)",
+    "identifier.issn": "ردمد",
     "relatedAgreements.relationshipSummary": "\"{source}\" {relationship} \"{target}\"",
     "relatedAgreements.relationshipSummaryForNewAgreement": "\"{source}\" {relationship} الاتفاقية التي يجري إنشاؤها",
     "license.linkLicense": "ربط الرخصة",
@@ -546,5 +546,13 @@
     "settings.general.displaySuppressFromDiscovery.titlesInPackages": "العناوين الموجودة في الحزم",
     "settings.general.displaySuppressFromDiscovery.titles": "العناوين",
     "settings.tabularList.pagination": "<strong>ترقيم صفحات قائمة مجدولة</strong>",
-    "settings.tabularList": "<strong>قائمة مجدولة</strong>"
+    "settings.tabularList": "<strong>قائمة مجدولة</strong>",
+    "appMenu.keyboardShortcuts": "اختصارات لوحة المفاتيح",
+    "basketSelector.infoPopover": "مجموعة من الموارد الإلكترونية الموجودة حالياً في السلة",
+    "basketSelector.emptyMessage": "لا توجد مواد في سلة الموارد الإلكترونية",
+    "basketSelector.linkSelectedEresource.tooltip": "يمكن ربط المورد الإلكتروني عندما تتم إضافته إلى السلة",
+    "basketSelector.selectResourceMessage": "يرجى تحديد مورد إلكتروني للمتابعة",
+    "title.closeEdit": "إغلاق تحرير العنوان",
+    "organizations.primary": "المؤسسة الأساسية",
+    "relatedAgreements.linkToParentError": "<strong>خطأ:</strong> لم يتم ربط الاتفاقية \"{agreement}\" لأنه لا يمكن ربط اتفاقية بنفسها."
 }
