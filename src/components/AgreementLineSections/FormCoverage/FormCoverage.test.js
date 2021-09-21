@@ -3,7 +3,7 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 import { TestForm, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { Accordion, KeyValue } from '@folio/stripes-testing';
 import FormCoverage from './FormCoverage';
-import { line, values, resource, handlers, initialValues, emptyCoverage, basketData } from './testResources';
+import { line, values, resource, handlers, initialValues, basketData } from './testResources';
 import translationsProperties from '../../../../test/helpers';
 
 jest.mock('../../CoverageFieldArray', () => () => <div>CoverageFieldArray</div>);

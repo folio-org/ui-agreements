@@ -602,6 +602,5 @@ export {
   resource,
   handlers,
   initialValues,
-  emptyCoverage,
   basketData
 };
