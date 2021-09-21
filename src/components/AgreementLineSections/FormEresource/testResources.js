@@ -64,7 +64,6 @@ const initialValues = {
   'haveAccess': true
 };
 
-
 const handlers = {
   isSuppressFromDiscoveryEnabled: () => {},
   onClose: () => {},
@@ -510,7 +509,67 @@ const data = {
     }
   }
 };
+
 const eholdingData = {
+  'addButtonTooltipId': 'ui-agreements.agreementLine.addCustomCoverageTootlip',
+  'agreementLineSource': 'eholdings',
+  'basket': [],
+  'isSuppressFromDiscoveryEnabled': () => {},
+  'line': {},
+  'lineId': '',
+  'resource': {},
+  'setFieldData': 'ƒ () {}',
+  'values': {
+    'linkedResource': {
+      'isTitleCustom': false,
+      'publisherName': 'NLA Access Media Limited',
+      'titleId': 28722958,
+      'contributors': [],
+      'identifiers': [],
+      'name': 'I',
+      'publicationType': 'Journal',
+      'subjects': [
+        '{subject: "Newspapers", type: "Library of Congress"}',
+        '{subject: "Newspapers", type: "Medical"}',
+        '{subject: "News", type: "TLI"}',
+        '{subject: "General Works", type: "Library of Congre…}',
+        '{subject: "Communications and Journalism", type: "M…}'
+      ],
+      'customEmbargoPeriod': {
+        'embargoValue': 0
+      },
+      'isPackageCustom': false,
+      'isSelected': true,
+      'titleHasSelectedResources': true,
+      'isTokenNeeded': false,
+      'locationId': 45031770,
+      'managedEmbargoPeriod': {
+        'embargoValue': 0
+      },
+      'packageId': '18-4111',
+      'packageName': 'Gale In Context: Global Issues',
+      'url': 'https://link.gale.com/apps/pub/91S5/GIC?u=[[galesiteid]]',
+      'providerId': 18,
+      'providerName': 'Gale | Cengage',
+      'visibilityData': {
+        'isHidden': false,
+        'reason': ''
+      },
+      'managedCoverages': [
+        '{beginCoverage: "2021-04-05", endCoverage: "9999-12…}'
+      ],
+      'customCoverages': [],
+      'proxy': {
+        'id': 'ezproxy',
+        'inherited': true
+      },
+      'id': '18-4111-28722958',
+      'type': 'resources'
+    }
+  }
+};
+
+const data2 = {
   'addButtonTooltipId': 'ui-agreements.agreementLine.addCustomCoverageTootlip',
   'agreementLineSource': 'eholdings',
   'basket': [
@@ -564,63 +623,10 @@ const eholdingData = {
   }
 };
 
-const basketSelectorData = {
-  'addButtonTooltipId': 'ui-agreements.agreementLine.addCustomCoverageTootlip',
-  'agreementLineSource': 'eholdings',
-  'basket': [
-    '{_object: {…}, class: "org.olf.kb.Pkg", customCover…}',
-    '{_object: {…}, class: "org.olf.kb.PackageContentIte…}'
-  ],
-  'isSuppressFromDiscoveryEnabled': () => {},
-  'line': {
-    'id': 'd1618087-e7c6-462b-84a8-c0d6479f6110',
-    'dateCreated': '2021-09-16T09:35:31Z',
-    'activeTo': '2021-09-30',
-    'tags': '[]',
-    'lastUpdated': '2021-09-16T09:35:31Z',
-    'owner': '{agreementStatus: {…}, alternateNames: Array(0), ca…}',
-    'activeFrom': '2021-09-01',
-    'poLines': '[{…}]',
-    'type': 'detached',
-    'suppressFromDiscovery': false,
-    'note': 'This is note',
-    'description': 'This is description',
-    'customCoverage': false,
-    'explanation': null,
-    'startDate': '2021-09-01',
-    'endDate': '2021-09-30',
-    'contentUpdated': null,
-    'haveAccess': true
-  },
-  'lineId': 'd1618087-e7c6-462b-84a8-c0d6479f6110',
-  'resource': {},
-  'setFieldData': () => {},
-  'values': {
-    'id': 'd1618087-e7c6-462b-84a8-c0d6479f6110',
-    'dateCreated': '2021-09-16T09:35:31Z',
-    'activeTo': '2021-09-30',
-    'tags': '[]',
-    'lastUpdated': '2021-09-16T09:35:31Z',
-    'owner': '{agreementStatus: {…}, alternateNames: Array(0), ca…}',
-    'activeFrom': '2021-09-01',
-    'poLines': '[{…}]',
-    'type': 'detached',
-    'suppressFromDiscovery': false,
-    'note': 'This is note',
-    'description': 'This is description',
-    'customCoverage': false,
-    'explanation': null,
-    'startDate': '2021-09-01',
-    'endDate': '2021-09-30',
-    'contentUpdated': null,
-    'haveAccess': true
-  }
-};
-
 export {
   data,
   handlers,
   initialValues,
   eholdingData,
-  basketSelectorData
+  data2
 };
