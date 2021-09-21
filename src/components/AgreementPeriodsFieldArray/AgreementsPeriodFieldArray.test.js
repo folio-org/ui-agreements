@@ -143,7 +143,7 @@ describe('AgreementPeriodsFieldArray', () => {
     await waitFor(() => expect(queryAllByText(/The following periods have overlapping dates:/i)[0]).toBeInTheDocument());
     await waitFor(() => expect(queryAllByText(/The following periods have overlapping dates:/i)[1]).toBeInTheDocument());
     userEvent.type(within(getByTestId('agreementPeriodsFieldArray[0]')).getByRole('textbox', { name: /end date/i }), '01/25/2022');
-    await waitFor(() => expect(queryByText(/The following coverages have overlapping dates:/i)).not.toBeInTheDocument());
+    await waitFor(() => expect(queryByText(/The following periods have overlapping dates:/i)).not.toBeInTheDocument());
   });
 
   test('expected values are submitted', () => {
