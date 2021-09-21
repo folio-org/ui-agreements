@@ -35,7 +35,7 @@ describe('LinkedLicenseCard', () => {
 
        test('renders a link with the license name', () => {
         const { getByRole } = renderComponent;
-        expect(getByRole('link', { name: futureLicense.remoteId_object.name })).toBeInTheDocument();
+        expect(getByRole('link', { name: 'Future license' })).toBeInTheDocument();
       });
 
       test('renders the LicenseCard', () => {
@@ -43,18 +43,14 @@ describe('LinkedLicenseCard', () => {
         expect(getByText('LicenseCard')).toBeInTheDocument();
       });
 
-      if (futureLicense.note) {
-        test('renders the expected note value', async () => {
-          await KeyValue('Note').has({ value: futureLicense.note });
-        });
-      }
+      test('renders the expected note value', async () => {
+         await KeyValue('Note').has({ value: 'Future license note' });
+      });
 
-      if (futureLicense.remoteId_object.amendments.length) {
-        test('renders the LicenseAmendmentList', () => {
-          const { getByText } = renderComponent;
-          expect(getByText('LicenseAmendmentList')).toBeInTheDocument();
-        });
-      }
+      test('renders the LicenseAmendmentList', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('LicenseAmendmentList')).toBeInTheDocument();
+      });
     });
 
     describe('Historical license card', () => {
@@ -77,7 +73,7 @@ describe('LinkedLicenseCard', () => {
 
          test('renders a link with the license name', () => {
           const { getByRole } = renderComponent;
-          expect(getByRole('link', { name: historicalLicense.remoteId_object.name })).toBeInTheDocument();
+          expect(getByRole('link', { name: 'Historical license' })).toBeInTheDocument();
         });
 
         test('renders the LicenseCard', () => {
@@ -85,17 +81,13 @@ describe('LinkedLicenseCard', () => {
           expect(getByText('LicenseCard')).toBeInTheDocument();
         });
 
-        if (historicalLicense.note) {
-          test('renders the expected note value', async () => {
-            await KeyValue('Note').has({ value: historicalLicense.note });
-          });
-        }
+        test('renders the expected note value', async () => {
+          await KeyValue('Note').has({ value: 'Historical license note' });
+        });
 
-        if (historicalLicense.remoteId_object.amendments.length) {
-          test('renders the LicenseAmendmentList', () => {
-            const { getByText } = renderComponent;
-            expect(getByText('LicenseAmendmentList')).toBeInTheDocument();
-          });
-        }
+        test('renders the LicenseAmendmentList', () => {
+           const { getByText } = renderComponent;
+           expect(getByText('LicenseAmendmentList')).toBeInTheDocument();
+        });
     });
 });
