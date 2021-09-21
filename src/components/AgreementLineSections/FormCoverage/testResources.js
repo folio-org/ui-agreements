@@ -515,10 +515,93 @@ const values = {
   }
 };
 
+const basketData = {
+  'addButtonTooltipId': 'ui-agreements.agreementLine.addCustomCoverageTootlip',
+  'agreementLineSource': 'basket',
+  'basket': [
+    '{_object: {…}, class: "org.olf.kb.Pkg", id: "8b2666…}'
+  ],
+  'isSuppressFromDiscoveryEnabled': () => {},
+  'line': {
+    'id': '61bb6bb8-32ed-4e7c-a6cc-32b89b8ead13',
+    'type': 'external',
+    'description': 'This is description',
+    'authority': 'EKB-PACKAGE',
+    'reference': '350-1207861',
+    'explanation': null,
+    'startDate': '2021-09-04',
+    'endDate': '2021-09-24',
+    'activeFrom': '2021-09-04',
+    'activeTo': '2021-09-24',
+    'contentUpdated': null,
+    'haveAccess': true,
+    'suppressFromDiscovery': true,
+    'note': 'This is note',
+    'tags': '[]',
+    'owner': '{agreementStatus: {…}, alternateNames: Array(0), ca…}',
+    'customCoverage': true,
+    'coverage': [{
+      'startDate': '2020-09-01',
+      'endDate': '2020-10-21',
+      'summary': 'v*/i*/2020-09-01 - v*/i*/2020-10-21'
+    }],
+    'reference_object': '{contentType: "Online Reference", isSelected: true,…}',
+    'poLines': '[]'
+  },
+  'lineId': '61bb6bb8-32ed-4e7c-a6cc-32b89b8ead13',
+  'resource': {
+    'id': '61bb6bb8-32ed-4e7c-a6cc-32b89b8ead13',
+    'type': 'external',
+    'description': 'This is description',
+    'authority': 'EKB-PACKAGE',
+    'reference': '350-1207861',
+    'explanation': null,
+    'startDate': '2021-09-04',
+    'endDate': '2021-09-24',
+    'activeFrom': '2021-09-04',
+    'activeTo': '2021-09-24',
+    'contentUpdated': null,
+    'haveAccess': true,
+    'suppressFromDiscovery': true,
+    'note': 'This is note',
+    'tags': '[]',
+    'owner': '{agreementStatus: {…}, alternateNames: Array(0), ca…}',
+    'customCoverage': true,
+    'coverage': '[{…}]',
+    'reference_object': '{contentType: "Online Reference", isSelected: true,…}',
+    'poLines': '[]'
+  },
+  'setFieldData': () => {},
+  'values': {
+    'id': '61bb6bb8-32ed-4e7c-a6cc-32b89b8ead13',
+    'type': 'external',
+    'description': 'This is description',
+    'authority': 'EKB-PACKAGE',
+    'reference': '350-1207861',
+    'explanation': null,
+    'startDate': '2021-09-04',
+    'endDate': '2021-09-24',
+    'activeFrom': '2021-09-04',
+    'activeTo': '2021-09-24',
+    'contentUpdated': null,
+    'haveAccess': true,
+    'suppressFromDiscovery': true,
+    'note': 'This is note',
+    'tags': '[]',
+    'owner': '{agreementStatus: {…}, alternateNames: Array(0), ca…}',
+    'customCoverage': true,
+    'coverage': '[{…}]',
+    'reference_object': '{contentType: "Online Reference", isSelected: true,…}',
+    'linkedResource': '{activeFrom: "2021-09-04", activeTo: "2021-09-24", …}'
+  }
+};
+
 export {
   line,
   values,
   resource,
   handlers,
-  initialValues
+  initialValues,
+  emptyCoverage,
+  basketData
 };

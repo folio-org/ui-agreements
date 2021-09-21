@@ -3,7 +3,7 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 import { TestForm, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { Accordion, KeyValue } from '@folio/stripes-testing';
 import FormCoverage from './FormCoverage';
-import { line, values, resource, handlers, initialValues } from './testResources';
+import { line, values, resource, handlers, initialValues, emptyCoverage, basketData } from './testResources';
 import translationsProperties from '../../../../test/helpers';
 
 jest.mock('../../CoverageFieldArray', () => () => <div>CoverageFieldArray</div>);
@@ -79,6 +79,48 @@ describe('FormCoverage', () => {
     test('renders the Embargo component', () => {
       const { getByText } = renderComponent;
       expect(getByText('Embargo')).toBeInTheDocument();
+    });
+  });
+
+  describe('with no coverage', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <TestForm onSubmit={onSubmit}>
+          <FormCoverage
+            line={{}}
+            resource={{}}
+            values={{}}
+          />
+        </TestForm>,
+        translationsProperties
+      );
+    });
+
+    test('renders the Coverage accordion', async () => {
+      await Accordion('Coverage').exists();
+    });
+
+    test('renders the CoverageFieldArray component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('CoverageFieldArray')).toBeInTheDocument();
+    });
+  });
+
+  describe('with no coverage', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <TestForm onSubmit={onSubmit}>
+          <FormCoverage
+            line={basketData.line}
+            resource={basketData.resource}
+            values={basketData.values}
+          />
+        </TestForm>,
+        translationsProperties
+      );
+    });
+    test('does not render coverage Accordion', async () => {
+      await Accordion('Coverage').absent();
     });
   });
 });
