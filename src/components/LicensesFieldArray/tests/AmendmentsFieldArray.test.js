@@ -6,7 +6,6 @@ import { FieldArray } from 'react-final-form-arrays';
 import { MemoryRouter } from 'react-router-dom';
 import AmendmentsFieldArray from '../AmendmentsFieldArray';
 import { KeyValue, Select, TextArea } from '@folio/stripes-testing';
-//import * as utilities from '../../utilities';
 
 import translationsProperties from '../../../../test/helpers';
 
