@@ -122,5 +122,10 @@ describe('FormCoverage', () => {
     test('does not render coverage Accordion', async () => {
       await Accordion('Coverage').absent();
     });
+
+    test('renders null', () => {
+      const { queryByText } = renderComponent;
+      expect(queryByText('FormCoverage')).toBeNull();
+    });
   });
 });

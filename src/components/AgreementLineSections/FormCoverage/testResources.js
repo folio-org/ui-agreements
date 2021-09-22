@@ -1,6 +1,6 @@
 const handlers = {
-  'isSuppressFromDiscoveryEnabled': 'ƒ () {}',
-  'onClose': 'ƒ () {}'
+  'isSuppressFromDiscoveryEnabled': () => {},
+  'onClose': () => {}
 };
 
 const initialValues = {
