@@ -161,7 +161,7 @@ const data = {
           translationsProperties
         );
 
-        expect(getByTestId('AgreementLineField')).toBeInTheDocument();
+        expect(getByTestId('agreementLineField')).toBeInTheDocument();
         expect(getByRole('textbox', { name: /active from/i })).toBeInTheDocument();
         expect(getByRole('textbox', { name: /active to/i })).toBeInTheDocument();
         expect(getByRole('textbox', { name: /note/i })).toBeInTheDocument();
