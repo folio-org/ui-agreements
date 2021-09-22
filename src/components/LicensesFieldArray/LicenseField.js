@@ -33,12 +33,14 @@ export default class LicenseField extends React.Component {
     license: {},
   }
 
+  /* istanbul ignore next */
   componentDidMount() {
     if (!this.props.input.value && get(this.triggerButton, 'current')) {
       this.triggerButton.current.focus();
     }
   }
 
+  /* istanbul ignore next */
   renderLinkLicenseButton = (value) => {
     const { id, input: { name }, onLicenseSelected } = this.props;
     return (
