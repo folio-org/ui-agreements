@@ -1,11 +1,10 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { FieldArray } from 'react-final-form-arrays';
 import { MemoryRouter } from 'react-router-dom';
+import { KeyValue, Select } from '@folio/stripes-testing';
 import AmendmentsFieldArray from '../AmendmentsFieldArray';
-import { KeyValue, Select, TextArea } from '@folio/stripes-testing';
 
 import translationsProperties from '../../../../test/helpers';
 
@@ -15,7 +14,7 @@ const form = {
   mutators: {
     setFieldData: jest.fn()
   }
-}
+};
 
 jest.mock('@folio/stripes-erm-components', () => ({
   ...jest.requireActual('@folio/stripes-erm-components'),
@@ -36,19 +35,19 @@ const amendments = [
 
 const amendmentStatusValues = [
   {
-    "id": "2c91809c7c060664017c060e35a20035",
-    "value": "current",
-    "label": "Current"
+    'id': '2c91809c7c060664017c060e35a20035',
+    'value': 'current',
+    'label': 'Current'
   },
   {
-    "id": "2c91809c7c060664017c060e35a70036",
-    "value": "future",
-    "label": "Future"
+    'id': '2c91809c7c060664017c060e35a70036',
+    'value': 'future',
+    'label': 'Future'
   },
   {
-    "id": "2c91809c7c060664017c060e35ac0037",
-    "value": "historical",
-    "label": "Historical"
+    'id': '2c91809c7c060664017c060e35ac0037',
+    'value': 'historical',
+    'label': 'Historical'
   }
 ];
 
@@ -135,95 +134,96 @@ const license = {
 
 const amendmentWithFutureStatus = [
   {
-    "id": "a4080fe1-bdc7-4729-93d1-24175cdb8f6a",
-    "owner": {
-      "id": "2c91809c7c060664017c09dc83ec0048"
+    'id': 'a4080fe1-bdc7-4729-93d1-24175cdb8f6a',
+    'owner': {
+      'id': '2c91809c7c060664017c09dc83ec0048'
     },
-    "status": "future",
-    "amendmentId": "d9f4ec22-68fa-46e2-ad8b-39c236df7853",
-    "note": "test amendment note"
+    'status': 'future',
+    'amendmentId': 'd9f4ec22-68fa-46e2-ad8b-39c236df7853',
+    'note': 'test amendment note'
   }
-]
+];
+
 
 const licenseWithRejectedStatus = {
-  "id": "ffbf6e5d-29a2-4e32-9771-c3a2eca4a213",
-  "endDateSemantics": {
-    "id": "2c91809d7c0606cd017c060e4c3d0003",
-    "value": "implicit",
-    "label": "Implicit",
-    "owner": {
-      "id": "2c91809d7c0606cd017c060e4bec0000",
-      "desc": "License.EndDateSemantics",
-      "internal": true
+  'id': 'ffbf6e5d-29a2-4e32-9771-c3a2eca4a213',
+  'endDateSemantics': {
+    'id': '2c91809d7c0606cd017c060e4c3d0003',
+    'value': 'implicit',
+    'label': 'Implicit',
+    'owner': {
+      'id': '2c91809d7c0606cd017c060e4bec0000',
+      'desc': 'License.EndDateSemantics',
+      'internal': true
     }
   },
-  "dateCreated": "2021-09-21T19:36:43Z",
-  "customProperties": {},
-  "contacts": [],
-  "tags": [],
-  "lastUpdated": "2021-09-22T00:19:10Z",
-  "docs": [],
-  "name": "am license 1",
-  "status": {
-    "id": "2c91809d7c0606cd017c060e4c5d0008",
-    "value": "rejected",
-    "label": "Rejected",
-    "owner": {
-      "id": "2c91809d7c0606cd017c060e4c430004",
-      "desc": "License.Status",
-      "internal": true
+  'dateCreated': '2021-09-21T19:36:43Z',
+  'customProperties': {},
+  'contacts': [],
+  'tags': [],
+  'lastUpdated': '2021-09-22T00:19:10Z',
+  'docs': [],
+  'name': 'am license 1',
+  'status': {
+    'id': '2c91809d7c0606cd017c060e4c5d0008',
+    'value': 'rejected',
+    'label': 'Rejected',
+    'owner': {
+      'id': '2c91809d7c0606cd017c060e4c430004',
+      'desc': 'License.Status',
+      'internal': true
     }
   },
-  "supplementaryDocs": [],
-  "openEnded": false,
-  "amendments": [
+  'supplementaryDocs': [],
+  'openEnded': false,
+  'amendments': [
     {
-      "id": "d9f4ec22-68fa-46e2-ad8b-39c236df7853",
-      "endDateSemantics": {
-        "id": "2c91809d7c0606cd017c060e4c2d0001",
-        "value": "explicit",
-        "label": "Explicit",
-        "owner": {
-          "id": "2c91809d7c0606cd017c060e4bec0000",
-          "desc": "License.EndDateSemantics",
-          "internal": true
+      'id': 'd9f4ec22-68fa-46e2-ad8b-39c236df7853',
+      'endDateSemantics': {
+        'id': '2c91809d7c0606cd017c060e4c2d0001',
+        'value': 'explicit',
+        'label': 'Explicit',
+        'owner': {
+          'id': '2c91809d7c0606cd017c060e4bec0000',
+          'desc': 'License.EndDateSemantics',
+          'internal': true
         }
       },
-      "dateCreated": "2021-09-21T21:01:21Z",
-      "customProperties": {},
-      "contacts": [],
-      "tags": [],
-      "lastUpdated": "2021-09-22T00:19:10Z",
-      "docs": [],
-      "name": "am amendment 1",
-      "status": {
-        "id": "2c91809d7c0606cd017c060e4c640009",
-        "value": "expired",
-        "label": "Expired",
-        "owner": {
-          "id": "2c91809d7c0606cd017c060e4c430004",
-          "desc": "License.Status",
-          "internal": true
+      'dateCreated': '2021-09-21T21:01:21Z',
+      'customProperties': {},
+      'contacts': [],
+      'tags': [],
+      'lastUpdated': '2021-09-22T00:19:10Z',
+      'docs': [],
+      'name': 'am amendment 1',
+      'status': {
+        'id': '2c91809d7c0606cd017c060e4c640009',
+        'value': 'expired',
+        'label': 'Expired',
+        'owner': {
+          'id': '2c91809d7c0606cd017c060e4c430004',
+          'desc': 'License.Status',
+          'internal': true
         }
       },
-      "supplementaryDocs": [],
-      "startDate": "2021-09-23",
-      "endDate": "2021-09-29",
-      "openEnded": false
+      'supplementaryDocs': [],
+      'startDate': '2021-09-23',
+      'endDate': '2021-09-29',
+      'openEnded': false
     }
   ],
-  "orgs": [],
-  "type": {
-    "id": "2c91809d7c0606cd017c060e4c8c0011",
-    "value": "local",
-    "label": "Local",
-    "owner": {
-      "id": "2c91809d7c0606cd017c060e4c8a0010",
-      "desc": "License.Type",
-      "internal": false
+  'orgs': [],
+  'type': {
+    'id': '2c91809d7c0606cd017c060e4c8c0011',
+    'value': 'local',
+    'label': 'Local',
+    'owner': {
+      'id': '2c91809d7c0606cd017c060e4c8a0010',
+      'desc': 'License.Type',
+      'internal': false
     }
   },
-  "alternateNames": []
+  'alternateNames': []
 };
 
 describe('AmendmentsFieldArray', () => {
@@ -237,8 +237,8 @@ describe('AmendmentsFieldArray', () => {
         >
           <FieldArray
             component={AmendmentsFieldArray}
-            name="amendments"
             form={form}
+            name="amendments"
           />
         </TestForm>, translationsProperties
       );
@@ -261,8 +261,8 @@ describe('AmendmentsFieldArray', () => {
           >
             <FieldArray
               amendmentStatusValues={amendmentStatusValues}
-              form={form}
               component={AmendmentsFieldArray}
+              form={form}
               license={license}
               name="amendments"
             />
@@ -287,7 +287,7 @@ describe('AmendmentsFieldArray', () => {
     describe('select a status of current', () => {
       beforeEach(async () => {
         await Select().choose('Current');
-      })
+      });
 
       it('renders expected status of current', async () => {
         await Select().has({ value: 'current' });
@@ -307,8 +307,8 @@ describe('AmendmentsFieldArray', () => {
           >
             <FieldArray
               amendmentStatusValues={amendmentStatusValues}
-              form={form}
               component={AmendmentsFieldArray}
+              form={form}
               license={licenseWithRejectedStatus}
               name="amendments"
             />
@@ -321,7 +321,7 @@ describe('AmendmentsFieldArray', () => {
     describe('selecting a status of current', () => {
       beforeEach(async () => {
         await Select().choose('Current');
-      })
+      });
 
       it('renders a conflict warning message', () => {
         const { getByText } = renderComponent;
