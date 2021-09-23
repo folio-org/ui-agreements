@@ -3,6 +3,7 @@ import { waitFor } from '@testing-library/react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { Field } from 'react-final-form';
+import { KeyValue } from '@folio/stripes-testing';
 import userEvent from '@testing-library/user-event';
 import AgreementLineField from './AgreementLineField';
 import translationsProperties from '../../../test/helpers';
@@ -17,115 +18,869 @@ jest.mock('../POLinesFieldArray', () => () => <div>POLinesFieldArray</div>);
 const onSubmit = jest.fn();
 
 const data = {
-    'input': {
-      'name': 'items[0]',
-      'value': {
-        'id': '3f5d18c0-f299-4afe-b26c-8254ac279f18',
-        'activeFrom': '2021-09-02',
-        'activeTo': '2021-09-30',
-        'note': 'note'
-      },
-      'onBlur': () => {},
-      'onChange': () => {},
-      'onFocus': () => {},
-    },
-    'meta': {
-      'active': false,
-      'data': '{}',
-      'dirty': false,
-      'dirtySinceLastSubmit': false,
-      'initial': {
-        'id': '3f5d18c0-f299-4afe-b26c-8254ac279f18',
-        'activeFrom': '2021-09-02',
-        'activeTo': '2021-09-30',
-        'note': 'note'
-      },
-      'invalid': false,
-      'modified': false,
-      'modifiedSinceLastSubmit': false,
-      'pristine': true,
-      'submitFailed': false,
-      'submitSucceeded': false,
-      'submitting': false,
-      'touched': false,
-      'valid': true,
-      'validating': false,
-      'visited': false
-    },
-    'basket': [],
-    'index': 0,
-    'onDelete': () => {},
-    'onResourceSelected': () => {},
-    'poLines': [],
-    'resource': {
-      'id': '3f5d18c0-f299-4afe-b26c-8254ac279f18',
-      'type': 'external',
-      'description': 'description',
-      'authority': 'EKB-PACKAGE',
-      'reference': '287-1647',
-      'explanation': null,
-      'startDate': '2021-09-02',
-      'endDate': '2021-09-30',
+  'input': {
+    'name': 'items[4]',
+    'value': {
+      'id': '67bb4fb0-1498-43e0-aafd-1a8f8aff6995',
+      'coverage': [
+        {
+          'id': '19374063-ec48-462a-bdc2-567733462660',
+          'startDate': '2021-09-04',
+          'endDate': '2021-09-30',
+          'startVolume': '5',
+          'startIssue': '11',
+          'endVolume': '20',
+          'endIssue': '26',
+          'summary': 'v5/i11/2021-09-04 - v20/i26/2021-09-30'
+        }
+      ],
+      'poLines': [
+        {
+          'id': 'f05ba56a-79e5-4b73-884a-95259e35aca6',
+          'poLineId': '556abc25-ebbf-3fb2-b478-1bfaff0af4dc',
+          'owner': {
+            'id': '67bb4fb0-1498-43e0-aafd-1a8f8aff6995'
+          }
+        }
+      ],
       'activeFrom': '2021-09-02',
-      'activeTo': '2021-09-30',
-      'contentUpdated': null,
-      'haveAccess': true,
-      'suppressFromDiscovery': true,
-      'note': 'note',
-      'tags': '[]',
-      'owner': {
-        'id': '15e449d1-7cdb-4577-8919-34d77711f41f',
-        'cancellationDeadline': '2021-09-26',
-        'isPerpetual': {
-          'id': '2c91809c7c0b2cce017c0b34d0440008',
-          'value': 'yes',
-          'label': 'Yes'
-        },
-        'name': 'MR agr test',
-        'orgs': [],
-        'externalLicenseDocs': [],
-        'outwardRelationships': [],
-        'customProperties': {},
-        'contacts': [],
-        'tags': [],
-        'inwardRelationships': [],
-        'renewalPriority': {
-          'id': '2c91809c7c0b2cce017c0b34d0720010',
-          'value': 'for_review',
-          'label': 'For review'
-        },
-        'endDate': '2021-09-30',
-        'startDate': '2021-09-01',
-        'linkedLicenses': [],
-        'docs': [],
-        'periods': [
-          '{cancellationDeadline: "2021-09-26", endDate: "2021…}'
-        ],
-        'usageDataProviders': [],
-        'agreementStatus': {
-          'id': '2c91809c7c0b2cce017c0b34d0cb0018',
-          'value': 'active',
-          'label': 'Active'
-        },
-        'supplementaryDocs': [],
-        'description': 'Agreement line description',
-        'items': [
-          '{id: "3f5d18c0-f299-4afe-b26c-8254ac279f18"}'
-        ],
-        'alternateNames': []
-      },
+      'activeTo': '2021-09-28',
+      'note': 'Agreement line note'
+    },
+    'onBlur': 'ƒ () {}',
+    'onChange': 'ƒ () {}',
+    'onFocus': 'ƒ () {}'
+  },
+  'meta': {
+    'active': false,
+    'data': '{}',
+    'dirty': false,
+    'dirtySinceLastSubmit': false,
+    'initial': {
+      'id': '67bb4fb0-1498-43e0-aafd-1a8f8aff6995',
+      'coverage': [
+        {
+          'id': '19374063-ec48-462a-bdc2-567733462660',
+          'startDate': '2021-09-04',
+          'endDate': '2021-09-30',
+          'startVolume': '5',
+          'startIssue': '11',
+          'endVolume': '20',
+          'endIssue': '26',
+          'summary': 'v5/i11/2021-09-04 - v20/i26/2021-09-30'
+        }
+      ],
+      'poLines': [
+        {
+          'id': 'f05ba56a-79e5-4b73-884a-95259e35aca6',
+          'poLineId': '556abc25-ebbf-3fb2-b478-1bfaff0af4dc',
+          'owner': {
+            'id': '67bb4fb0-1498-43e0-aafd-1a8f8aff6995'
+          }
+        }
+      ],
+      'activeFrom': '2021-09-02',
+      'activeTo': '2021-09-28',
+      'note': 'Agreement line note'
+    },
+    'invalid': false,
+    'modified': false,
+    'modifiedSinceLastSubmit': false,
+    'pristine': true,
+    'submitFailed': false,
+    'submitSucceeded': false,
+    'submitting': false,
+    'touched': false,
+    'valid': true,
+    'validating': false,
+    'visited': false
+  },
+  'basket': [
+    {
+      'id': 'fa1b8a63-4673-4d0c-809d-1a65e66bdc10',
+      'class': 'org.olf.kb.Pkg',
+      'name': 'JSTOR : Arts & Sciences V Collection : NK',
+      'suppressFromDiscovery': false,
+      'tags': [],
       'customCoverage': false,
-      'reference_object': {
-        'label': 'I-Revues',
-        'type': 'Package',
-        'provider': 'Institut National de l’Information Scientifique et Technique : INIST-CNRS',
-        'titleCount': 52,
-        'selectedCount': 0,
-        'contentType': 'Aggregated Full Text',
-        'providerName': 'Institut National de l’Information Scientifique et Technique : INIST-CNRS'
+      '_object': {
+        'id': 'fa1b8a63-4673-4d0c-809d-1a65e66bdc10',
+        'dateCreated': '2021-09-23T02:17:25Z',
+        'tags': '[]',
+        'lastUpdated': '2021-09-23T02:17:25Z',
+        'vendor': {
+          'id': '8b282cda-3776-4325-9c92-792d6e9c1ca2',
+          'name': 'JSTOR',
+          'orgsUuid_object': {
+            'error': 400,
+            'message': 'Bad Request'
+          }
+        },
+        'coverage': '[]',
+        'source': 'GOKb',
+        'remoteKb': {
+          'id': 'cf82d40d-54ee-4050-8532-5bc29dfad4f0',
+          'cursor': '2021-09-14T08:21:37Z',
+          'active': true,
+          'trustedSourceTI': false,
+          'activationEnabled': false,
+          'readonly': false,
+          'syncStatus': 'idle',
+          'lastCheck': 1632383230252,
+          'name': 'GOKb_TEST',
+          'type': 'org.olf.kb.adapters.GOKbOAIAdapter',
+          'fullPrefix': 'gokb',
+          'uri': 'https://gokbt.gbv.de/gokb/oai/index',
+          'supportsHarvesting': true,
+          'rectype': 1
+        },
+        'name': 'JSTOR : Arts & Sciences V Collection : NK',
+        'suppressFromDiscovery': false,
+        'reference': 'JSTOR_:_Arts_&_Sciences_V_Collection_:_NK',
+        'resourceCount': 211,
+        'class': 'org.olf.kb.Pkg'
+      },
+      'rowIndex': 1
+    },
+    {
+      'id': '5f3bb0a8-1921-4088-ba17-efcb8c1d25e1',
+      'class': 'org.olf.kb.PackageContentItem',
+      'name': "'14th century English mystics newsletter' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences V Collection : NK",
+      'suppressFromDiscovery': false,
+      'tags': [],
+      'coverage': [
+        {
+          'id': '9a8f6ee0-9dc2-420e-a429-4667bac05f94',
+          'startDate': '1974-01-01',
+          'endDate': '1983-12-31',
+          'startVolume': '1',
+          'startIssue': '1',
+          'endVolume': '9',
+          'endIssue': '4',
+          'summary': 'v1/i1/1974-01-01 - v9/i4/1983-12-31'
+        }
+      ],
+      'customCoverage': false,
+      '_object': {
+        'id': '5f3bb0a8-1921-4088-ba17-efcb8c1d25e1',
+        'dateCreated': '2021-09-23T02:18:01Z',
+        'tags': '[]',
+        'lastUpdated': '2021-09-23T02:18:01Z',
+        'coverage': [
+          {
+            'id': '9a8f6ee0-9dc2-420e-a429-4667bac05f94',
+            'startDate': '1974-01-01',
+            'endDate': '1983-12-31',
+            'startVolume': '1',
+            'startIssue': '1',
+            'endVolume': '9',
+            'endIssue': '4',
+            'summary': 'v1/i1/1974-01-01 - v9/i4/1983-12-31'
+          }
+        ],
+        'pti': {
+          'id': 'ed0678f1-edba-44ab-a13a-25cf2c9598bc',
+          'dateCreated': '2021-09-23T02:18:01Z',
+          'tags': [],
+          'lastUpdated': '2021-09-23T02:18:01Z',
+          'platform': {
+            'id': 'cd7c0e30-9201-4a8b-955f-509d62adc4f0',
+            'dateCreated': '2021-09-23T02:17:25Z',
+            'lastUpdated': '2021-09-23T02:17:25Z',
+            'name': 'JSTOR',
+            'locators': [
+              {
+                'id': 'f17b8eac-49d7-4e5e-a87b-62e339ce424a',
+                'domainName': 'www.jstor.org'
+              }
+            ]
+          },
+          'templatedUrls': [
+            {
+              'id': '183064c2-9475-4d04-b025-b33b25fe2769',
+              'url': 'http://www.jstor.org/action/showPublication?journalCode=14centengmystnew',
+              'name': 'defaultUrl',
+              'resource': {
+                'id': 'ed0678f1-edba-44ab-a13a-25cf2c9598bc'
+              }
+            }
+          ],
+          'coverage': [
+            {
+              'id': 'a97cf744-41f3-4799-a5f8-88454cddaaf8',
+              'startDate': '1974-01-01',
+              'endDate': '1983-12-31',
+              'summary': 'v*/i*/1974-01-01 - v*/i*/1983-12-31'
+            }
+          ],
+          'titleInstance': {
+            'id': 'd5b0afb1-3b30-40f7-92af-c63cb45f644c',
+            'subType': {
+              'id': '2c91809c7c1054b5017c105cc1ad0017',
+              'value': 'electronic',
+              'label': 'Electronic'
+            },
+            'dateCreated': '2021-09-23T02:18:01Z',
+            'tags': '[]',
+            'lastUpdated': '2021-09-23T02:18:01Z',
+            'publicationType': {
+              'id': '2c91809c7c1054b5017c105ccbd40043',
+              'value': 'journal',
+              'label': 'Journal'
+            },
+            'identifiers': [
+              {
+                'title': {
+                  'id': 'd5b0afb1-3b30-40f7-92af-c63cb45f644c'
+                },
+                'status': {
+                  'id': '2c91809c7c1054b5017c105ccc0f0045',
+                  'value': 'approved',
+                  'label': 'approved'
+                },
+                'identifier': {
+                  'value': '148228',
+                  'ns': {
+                    'value': 'ezb'
+                  }
+                }
+              },
+              {
+                'title': {
+                  'id': 'd5b0afb1-3b30-40f7-92af-c63cb45f644c'
+                },
+                'status': {
+                  'id': '2c91809c7c1054b5017c105ccc0f0045',
+                  'value': 'approved',
+                  'label': 'approved'
+                },
+                'identifier': {
+                  'value': '2581465-5',
+                  'ns': {
+                    'value': 'zdb'
+                  }
+                }
+              }
+            ],
+            'coverage': [
+              {
+                'id': '5d6a6ec0-3930-4e8c-b04d-2fa2b98f4e60',
+                'startDate': '1974-01-01',
+                'endDate': '1983-12-31',
+                'summary': 'v*/i*/1974-01-01 - v*/i*/1983-12-31'
+              }
+            ],
+            'name': '14th century English mystics newsletter',
+            'type': {
+              'id': '2c91809c7c1054b5017c105cc1b9001a',
+              'value': 'serial',
+              'label': 'Serial'
+            },
+            'suppressFromDiscovery': false,
+            'work': {
+              'id': '9d1a4202-c2ef-43fa-a2f7-7532d25447f3'
+            },
+            'class': 'org.olf.kb.TitleInstance',
+            'longName': '14th century English mystics newsletter',
+            'relatedTitles': [
+              {
+                'id': '06b02318-7803-46b2-9a84-62f3d4a24acf',
+                'subType': {
+                  'id': '2c91809c7c1054b5017c105cc1a70016',
+                  'value': 'print',
+                  'label': 'Print'
+                },
+                'publicationType': {
+                  'id': '2c91809c7c1054b5017c105ccbd40043',
+                  'value': 'journal',
+                  'label': 'Journal'
+                },
+                'identifiers': [
+                  {
+                    'title': '{id: "06b02318-7803-46b2-9a84-62f3d4a24acf"}',
+                    'status': '{id: "2c91809c7c1054b5017c105ccc0f0045", label: "ap…}',
+                    'identifier': '{ns: {…}, value: "0737-5840"}'
+                  }
+                ],
+                'name': '14th century English mystics newsletter',
+                'type': {
+                  'id': '2c91809c7c1054b5017c105cc1b9001a',
+                  'value': 'serial',
+                  'label': 'Serial'
+                },
+                'longName': '14th century English mystics newsletter'
+              }
+            ]
+          },
+          'url': 'http://www.jstor.org/action/showPublication?journalCode=14centengmystnew',
+          'name': "'14th century English mystics newsletter' on Platform 'JSTOR'",
+          'suppressFromDiscovery': false,
+          'class': 'org.olf.kb.PlatformTitleInstance',
+          'longName': "'14th century English mystics newsletter' on Platform 'JSTOR'"
+        },
+        'pkg': {
+          'id': 'fa1b8a63-4673-4d0c-809d-1a65e66bdc10',
+          'dateCreated': '2021-09-23T02:17:25Z',
+          'lastUpdated': '2021-09-23T02:17:25Z',
+          'vendor': {
+            'id': '8b282cda-3776-4325-9c92-792d6e9c1ca2',
+            'name': 'JSTOR',
+            'orgsUuid_object': {
+              'error': 400,
+              'message': 'Bad Request'
+            }
+          },
+          'source': 'GOKb',
+          'remoteKb': {
+            'id': 'cf82d40d-54ee-4050-8532-5bc29dfad4f0',
+            'cursor': '2021-09-14T08:21:37Z',
+            'active': true,
+            'trustedSourceTI': false,
+            'activationEnabled': false,
+            'readonly': false,
+            'syncStatus': 'idle',
+            'lastCheck': 1632383230252,
+            'name': 'GOKb_TEST',
+            'type': 'org.olf.kb.adapters.GOKbOAIAdapter',
+            'fullPrefix': 'gokb',
+            'uri': 'https://gokbt.gbv.de/gokb/oai/index',
+            'supportsHarvesting': true,
+            'rectype': 1
+          },
+          'name': 'JSTOR : Arts & Sciences V Collection : NK',
+          'suppressFromDiscovery': false,
+          'reference': 'JSTOR_:_Arts_&_Sciences_V_Collection_:_NK',
+          'resourceCount': 211,
+          'class': 'org.olf.kb.Pkg'
+        },
+        'addedTimestamp': 1632363445175,
+        'name': "'14th century English mystics newsletter' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences V Collection : NK",
+        'lastSeenTimestamp': 1632363445175,
+        'suppressFromDiscovery': false,
+        'longName': "'14th century English mystics newsletter' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences V Collection : NK",
+        'class': 'org.olf.kb.PackageContentItem'
+      },
+      'rowIndex': 0
+    },
+    {
+      'class': 'org.olf.kb.PackageContentItem',
+      'id': '4b85dd43-f665-46fd-8f6c-f9026c191ae8',
+      'name': "'Acquisitions' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences V Collection : NK",
+      '_object': {
+        'id': '4b85dd43-f665-46fd-8f6c-f9026c191ae8',
+        'dateCreated': '2021-09-23T02:17:39Z',
+        'tags': '[]',
+        'lastUpdated': '2021-09-23T02:17:39Z',
+        'coverage': [
+          {
+            'id': '1ce9cf66-f1e6-4e4f-8e35-bc9b6c29faae',
+            'startDate': '1959-01-01',
+            'endDate': '1970-12-31',
+            'summary': 'v*/i*/1959-01-01 - v*/i*/1970-12-31'
+          }
+        ],
+        'pti': {
+          'id': '37beda1e-b954-410f-a74d-ef9b7358080d',
+          'dateCreated': '2021-09-23T02:17:39Z',
+          'tags': [],
+          'lastUpdated': '2021-09-23T02:17:39Z',
+          'platform': {
+            'id': 'cd7c0e30-9201-4a8b-955f-509d62adc4f0',
+            'dateCreated': '2021-09-23T02:17:25Z',
+            'lastUpdated': '2021-09-23T02:17:25Z',
+            'name': 'JSTOR',
+            'locators': [
+              {
+                'id': 'f17b8eac-49d7-4e5e-a87b-62e339ce424a',
+                'domainName': 'www.jstor.org'
+              }
+            ]
+          },
+          'templatedUrls': [
+            {
+              'id': 'b0fa7c22-3f1e-4e25-8eb2-1a019b5ce34b',
+              'url': 'http://www.jstor.org/action/showPublication?journalCode=acqufogg',
+              'name': 'defaultUrl',
+              'resource': {
+                'id': '37beda1e-b954-410f-a74d-ef9b7358080d'
+              }
+            }
+          ],
+          'coverage': [
+            {
+              'id': '9c38e952-3fec-424d-a253-553e6b840fe1',
+              'startDate': '1959-01-01',
+              'endDate': '1970-12-31',
+              'summary': 'v*/i*/1959-01-01 - v*/i*/1970-12-31'
+            }
+          ],
+          'titleInstance': {
+            'id': '2cd8f8b5-0eb4-4979-ad91-f08b078a264b',
+            'subType': {
+              'id': '2c91809c7c1054b5017c105cc1ad0017',
+              'value': 'electronic',
+              'label': 'Electronic'
+            },
+            'dateCreated': '2021-09-23T02:17:39Z',
+            'tags': '[]',
+            'lastUpdated': '2021-09-23T02:17:39Z',
+            'publicationType': {
+              'id': '2c91809c7c1054b5017c105ccbd40043',
+              'value': 'journal',
+              'label': 'Journal'
+            },
+            'identifiers': [
+              {
+                'title': {
+                  'id': '2cd8f8b5-0eb4-4979-ad91-f08b078a264b'
+                },
+                'status': {
+                  'id': '2c91809c7c1054b5017c105ccc0f0045',
+                  'value': 'approved',
+                  'label': 'approved'
+                },
+                'identifier': {
+                  'value': '109632',
+                  'ns': {
+                    'value': 'ezb'
+                  }
+                }
+              },
+              {
+                'title': '{id: "2cd8f8b5-0eb4-4979-ad91-f08b078a264b"}',
+                'status': '{id: "2c91809c7c1054b5017c105ccc0f0045", label: "ap…}',
+                'identifier': '{ns: {…}, value: "2445472-2"}'
+              }
+            ],
+            'coverage': [
+              {
+                'id': '6a104564-cb35-4278-b434-fe49bd609069',
+                'startDate': '1959-01-01',
+                'endDate': '1970-12-31',
+                'summary': 'v*/i*/1959-01-01 - v*/i*/1970-12-31'
+              }
+            ],
+            'name': 'Acquisitions',
+            'type': {
+              'id': '2c91809c7c1054b5017c105cc1b9001a',
+              'value': 'serial',
+              'label': 'Serial'
+            },
+            'suppressFromDiscovery': false,
+            'work': {
+              'id': '1773476e-cac4-49a1-952b-33cbd8723b64'
+            },
+            'class': 'org.olf.kb.TitleInstance',
+            'longName': 'Acquisitions',
+            'relatedTitles': [
+              {
+                'id': '1cc12651-5b4f-44ce-95c8-5c799ca14763',
+                'subType': {
+                  'id': '2c91809c7c1054b5017c105cc1a70016',
+                  'value': 'print',
+                  'label': 'Print'
+                },
+                'publicationType': {
+                  'id': '2c91809c7c1054b5017c105ccbd40043',
+                  'value': 'journal',
+                  'label': 'Journal'
+                },
+                'identifiers': [
+                  {
+                    'title': {
+                      'id': '1cc12651-5b4f-44ce-95c8-5c799ca14763'
+                    },
+                    'status': {
+                      'id': '2c91809c7c1054b5017c105ccc0f0045',
+                      'value': 'approved',
+                      'label': 'approved'
+                    },
+                    'identifier': {
+                      'value': '0440-3800',
+                      'ns': {
+                        'value': 'issn'
+                      }
+                    }
+                  }
+                ],
+                'name': 'Acquisitions',
+                'type': {
+                  'id': '2c91809c7c1054b5017c105cc1b9001a',
+                  'value': 'serial',
+                  'label': 'Serial'
+                },
+                'longName': 'Acquisitions'
+              }
+            ]
+          },
+          'url': 'http://www.jstor.org/action/showPublication?journalCode=acqufogg',
+          'name': "'Acquisitions' on Platform 'JSTOR'",
+          'suppressFromDiscovery': false,
+          'class': 'org.olf.kb.PlatformTitleInstance',
+          'longName': "'Acquisitions' on Platform 'JSTOR'"
+        },
+        'pkg': {
+          'id': 'fa1b8a63-4673-4d0c-809d-1a65e66bdc10',
+          'dateCreated': '2021-09-23T02:17:25Z',
+          'lastUpdated': '2021-09-23T02:17:25Z',
+          'vendor': {
+            'id': '8b282cda-3776-4325-9c92-792d6e9c1ca2',
+            'name': 'JSTOR',
+            'orgsUuid_object': {
+              'error': 400,
+              'message': 'Bad Request'
+            }
+          },
+          'source': 'GOKb',
+          'remoteKb': {
+            'id': 'cf82d40d-54ee-4050-8532-5bc29dfad4f0',
+            'cursor': '2021-09-14T08:21:37Z',
+            'active': true,
+            'trustedSourceTI': false,
+            'activationEnabled': false,
+            'readonly': false,
+            'syncStatus': 'idle',
+            'lastCheck': 1632383230252,
+            'name': 'GOKb_TEST',
+            'type': 'org.olf.kb.adapters.GOKbOAIAdapter',
+            'fullPrefix': 'gokb',
+            'uri': 'https://gokbt.gbv.de/gokb/oai/index',
+            'supportsHarvesting': true,
+            'rectype': 1
+          },
+          'name': 'JSTOR : Arts & Sciences V Collection : NK',
+          'suppressFromDiscovery': false,
+          'reference': 'JSTOR_:_Arts_&_Sciences_V_Collection_:_NK',
+          'resourceCount': 211,
+          'class': 'org.olf.kb.Pkg'
+        },
+        'addedTimestamp': 1632363445175,
+        'name': "'Acquisitions' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences V Collection : NK",
+        'lastSeenTimestamp': 1632363445175,
+        'suppressFromDiscovery': false,
+        'longName': "'Acquisitions' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences V Collection : NK",
+        'class': 'org.olf.kb.PackageContentItem'
       }
     }
-  };
+  ],
+  'index': 4,
+  'onDelete': 'ƒ onDelete() {}',
+  'onResourceSelected': 'ƒ () {}',
+  'poLines': [
+    {
+      'id': '556abc25-ebbf-3fb2-b478-1bfaff0af4dc',
+      'edition': 'First edition',
+      'checkinItems': false,
+      'agreementId': '09c6ed1b-3984-4d9a-8f9b-e1200b68b61c',
+      'acquisitionMethod': 'Purchase',
+      'alerts': [],
+      'cancellationRestriction': false,
+      'cancellationRestrictionNote': '',
+      'claims': [
+        {
+          'claimed': false,
+          'grace': 0
+        }
+      ],
+      'collection': false,
+      'contributors': [],
+      'cost': {
+        'listUnitPrice': 0,
+        'listUnitPriceElectronic': 0,
+        'currency': 'USD',
+        'additionalCost': 0,
+        'discount': 0,
+        'discountType': 'percentage',
+        'quantityPhysical': 2,
+        'quantityElectronic': 0,
+        'poLineEstimatedPrice': 0
+      },
+      'description': '',
+      'details': {
+        'receivingNote': '',
+        'productIds': '[{…}]',
+        'subscriptionInterval': 0
+      },
+      'donor': '',
+      'fundDistribution': [
+        {
+          'code': 'UNIV-SUBN',
+          'encumbrance': 'eb506834-6c70-4239-8d1a-6414a5b08014',
+          'fundId': '4428a37c-8bae-4f0d-865d-970d83d5ad55',
+          'distributionType': 'percentage',
+          'value': 100
+        }
+      ],
+      'isPackage': false,
+      'locations': [
+        {
+          'locationId': '758258bc-ecc1-41b8-abca-f7b610822ffd',
+          'quantity': 2,
+          'quantityElectronic': 0,
+          'quantityPhysical': 2
+        }
+      ],
+      'orderFormat': 'Other',
+      'paymentStatus': 'Pending',
+      'physical': {
+        'materialType': 'dd0bf600-dbd9-44ab-9ff2-e2a61a6539f1',
+        'materialSupplier': 'e0fb5df2-cdf1-11e8-a8d5-f2801f1b9fd1',
+        'volumes': [
+          'vol. 1'
+        ]
+      },
+      'poLineDescription': '',
+      'poLineNumber': '81-1',
+      'publicationDate': '1915',
+      'publisher': 'American Bar Association',
+      'purchaseOrderId': 'c27e60f9-6361-44c1-976e-0c4821a33a7d',
+      'receiptStatus': 'Pending',
+      'reportingCodes': [],
+      'requester': '',
+      'rush': false,
+      'selector': '',
+      'source': 'User',
+      'tags': {
+        'tagList': [
+          'CatalogingRecords'
+        ]
+      },
+      'titleOrPackage': 'ABA Journal',
+      'vendorDetail': {
+        'instructions': '',
+        'noteFromVendor': '',
+        'vendorAccount': '',
+        'referenceNumbers': '[]'
+      },
+      'metadata': {
+        'createdDate': '2021-09-23T01:53:26.249+00:00',
+        'updatedDate': '2021-09-23T01:53:26.249+00:00'
+      }
+    }
+  ],
+  'resource': {
+    'id': '5f3bb0a8-1921-4088-ba17-efcb8c1d25e1',
+    'class': 'org.olf.kb.PackageContentItem',
+    'name': "'14th century English mystics newsletter' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences V Collection : NK",
+    'suppressFromDiscovery': false,
+    'tags': '[]',
+    'coverage': [
+      {
+        'id': '9a8f6ee0-9dc2-420e-a429-4667bac05f94',
+        'startDate': '1974-01-01',
+        'endDate': '1983-12-31',
+        'startVolume': '1',
+        'startIssue': '1',
+        'endVolume': '9',
+        'endIssue': '4',
+        'summary': 'v1/i1/1974-01-01 - v9/i4/1983-12-31'
+      }
+    ],
+    'customCoverage': false,
+    '_object': {
+      'id': '5f3bb0a8-1921-4088-ba17-efcb8c1d25e1',
+      'dateCreated': '2021-09-23T02:18:01Z',
+      'tags': [],
+      'lastUpdated': '2021-09-23T02:18:01Z',
+      'coverage': [
+        {
+          'id': '9a8f6ee0-9dc2-420e-a429-4667bac05f94',
+          'startDate': '1974-01-01',
+          'endDate': '1983-12-31',
+          'startVolume': '1',
+          'startIssue': '1',
+          'endVolume': '9',
+          'endIssue': '4',
+          'summary': 'v1/i1/1974-01-01 - v9/i4/1983-12-31'
+        }
+      ],
+      'pti': {
+        'id': 'ed0678f1-edba-44ab-a13a-25cf2c9598bc',
+        'dateCreated': '2021-09-23T02:18:01Z',
+        'tags': '[]',
+        'lastUpdated': '2021-09-23T02:18:01Z',
+        'platform': {
+          'id': 'cd7c0e30-9201-4a8b-955f-509d62adc4f0',
+          'dateCreated': '2021-09-23T02:17:25Z',
+          'lastUpdated': '2021-09-23T02:17:25Z',
+          'name': 'JSTOR',
+          'locators': [
+            {
+              'id': 'f17b8eac-49d7-4e5e-a87b-62e339ce424a',
+              'domainName': 'www.jstor.org'
+            }
+          ]
+        },
+        'templatedUrls': [
+          {
+            'id': '183064c2-9475-4d04-b025-b33b25fe2769',
+            'url': 'http://www.jstor.org/action/showPublication?journalCode=14centengmystnew',
+            'name': 'defaultUrl',
+            'resource': {
+              'id': 'ed0678f1-edba-44ab-a13a-25cf2c9598bc'
+            }
+          }
+        ],
+        'coverage': [
+          {
+            'id': 'a97cf744-41f3-4799-a5f8-88454cddaaf8',
+            'startDate': '1974-01-01',
+            'endDate': '1983-12-31',
+            'summary': 'v*/i*/1974-01-01 - v*/i*/1983-12-31'
+          }
+        ],
+        'titleInstance': {
+          'id': 'd5b0afb1-3b30-40f7-92af-c63cb45f644c',
+          'subType': {
+            'id': '2c91809c7c1054b5017c105cc1ad0017',
+            'value': 'electronic',
+            'label': 'Electronic'
+          },
+          'dateCreated': '2021-09-23T02:18:01Z',
+          'tags': [],
+          'lastUpdated': '2021-09-23T02:18:01Z',
+          'publicationType': {
+            'id': '2c91809c7c1054b5017c105ccbd40043',
+            'value': 'journal',
+            'label': 'Journal'
+          },
+          'identifiers': [
+            {
+              'title': {
+                'id': 'd5b0afb1-3b30-40f7-92af-c63cb45f644c'
+              },
+              'status': {
+                'id': '2c91809c7c1054b5017c105ccc0f0045',
+                'value': 'approved',
+                'label': 'approved'
+              },
+              'identifier': {
+                'value': '148228',
+                'ns': {
+                  'value': 'ezb'
+                }
+              }
+            },
+            {
+              'title': {
+                'id': 'd5b0afb1-3b30-40f7-92af-c63cb45f644c'
+              },
+              'status': {
+                'id': '2c91809c7c1054b5017c105ccc0f0045',
+                'value': 'approved',
+                'label': 'approved'
+              },
+              'identifier': {
+                'value': '2581465-5',
+                'ns': '{value: "zdb"}'
+              }
+            }
+          ],
+          'coverage': [
+            {
+              'id': '5d6a6ec0-3930-4e8c-b04d-2fa2b98f4e60',
+              'startDate': '1974-01-01',
+              'endDate': '1983-12-31',
+              'summary': 'v*/i*/1974-01-01 - v*/i*/1983-12-31'
+            }
+          ],
+          'name': '14th century English mystics newsletter',
+          'type': {
+            'id': '2c91809c7c1054b5017c105cc1b9001a',
+            'value': 'serial',
+            'label': 'Serial'
+          },
+          'suppressFromDiscovery': false,
+          'work': {
+            'id': '9d1a4202-c2ef-43fa-a2f7-7532d25447f3'
+          },
+          'class': 'org.olf.kb.TitleInstance',
+          'longName': '14th century English mystics newsletter',
+          'relatedTitles': [
+            {
+              'id': '06b02318-7803-46b2-9a84-62f3d4a24acf',
+              'subType': {
+                'id': '2c91809c7c1054b5017c105cc1a70016',
+                'value': 'print',
+                'label': 'Print'
+              },
+              'publicationType': {
+                'id': '2c91809c7c1054b5017c105ccbd40043',
+                'value': 'journal',
+                'label': 'Journal'
+              },
+              'identifiers': [
+                {
+                  'title': {
+                    'id': '06b02318-7803-46b2-9a84-62f3d4a24acf'
+                  },
+                  'status': {
+                    'id': '2c91809c7c1054b5017c105ccc0f0045',
+                    'value': 'approved',
+                    'label': 'approved'
+                  },
+                  'identifier': {
+                    'value': '0737-5840',
+                    'ns': '{value: "issn"}'
+                  }
+                }
+              ],
+              'name': '14th century English mystics newsletter',
+              'type': {
+                'id': '2c91809c7c1054b5017c105cc1b9001a',
+                'value': 'serial',
+                'label': 'Serial'
+              },
+              'longName': '14th century English mystics newsletter'
+            }
+          ]
+        },
+        'url': 'http://www.jstor.org/action/showPublication?journalCode=14centengmystnew',
+        'name': "'14th century English mystics newsletter' on Platform 'JSTOR'",
+        'suppressFromDiscovery': false,
+        'class': 'org.olf.kb.PlatformTitleInstance',
+        'longName': "'14th century English mystics newsletter' on Platform 'JSTOR'"
+      },
+      'pkg': {
+        'id': 'fa1b8a63-4673-4d0c-809d-1a65e66bdc10',
+        'dateCreated': '2021-09-23T02:17:25Z',
+        'lastUpdated': '2021-09-23T02:17:25Z',
+        'vendor': {
+          'id': '8b282cda-3776-4325-9c92-792d6e9c1ca2',
+          'name': 'JSTOR'
+        },
+        'source': 'GOKb',
+        'remoteKb': {
+          'id': 'cf82d40d-54ee-4050-8532-5bc29dfad4f0',
+          'cursor': '2021-09-14T08:21:37Z',
+          'active': true,
+          'trustedSourceTI': false,
+          'activationEnabled': false,
+          'readonly': false,
+          'syncStatus': 'idle',
+          'lastCheck': 1632383230252,
+          'name': 'GOKb_TEST',
+          'type': 'org.olf.kb.adapters.GOKbOAIAdapter',
+          'fullPrefix': 'gokb',
+          'uri': 'https://gokbt.gbv.de/gokb/oai/index',
+          'supportsHarvesting': true,
+          'rectype': 1
+        },
+        'name': 'JSTOR : Arts & Sciences V Collection : NK',
+        'suppressFromDiscovery': false,
+        'reference': 'JSTOR_:_Arts_&_Sciences_V_Collection_:_NK',
+        'resourceCount': 211,
+        'class': 'org.olf.kb.Pkg'
+      },
+      'addedTimestamp': 1632363445175,
+      'name': "'14th century English mystics newsletter' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences V Collection : NK",
+      'lastSeenTimestamp': 1632363445175,
+      'suppressFromDiscovery': false,
+      'longName': "'14th century English mystics newsletter' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences V Collection : NK",
+      'class': 'org.olf.kb.PackageContentItem'
+    }
+  }
+};
 
   describe('AgreementLineField', () => {
     let renderComponent;
@@ -144,6 +899,39 @@ const data = {
       test('renders the BasketSelector component', () => {
         const { getByText } = renderComponent;
         expect(getByText('BasketSelector')).toBeInTheDocument();
+      });
+    });
+
+    describe('renders expected fields/values with initial values set', () => {
+      beforeEach(() => {
+        renderComponent = renderWithIntl(
+          <TestForm onSubmit={onSubmit}>
+            <AgreementLineField
+              index={0}
+              input={{ name:'resource' }}
+              meta={data.meta}
+              resource={data.resource}
+            />
+          </TestForm>,
+          translationsProperties
+        );
+      });
+
+      it('renders expected values', async () => {
+        await KeyValue('Name').has({ value: 'EResourceLink' });
+        await KeyValue('Publication type').has({ value: 'Journal' });
+        await KeyValue('Titles').has({ value: 'EResourceCount' });
+        await KeyValue('Provider').has({ value: 'EResourceProvider' });
+        await KeyValue('Default coverage').exists();
+      });
+
+      test('renders the CoverageFieldArray component', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('CoverageFieldArray')).toBeInTheDocument();
+      });
+      test('renders the POLinesFieldArray component', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('POLinesFieldArray')).toBeInTheDocument();
       });
     });
 
