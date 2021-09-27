@@ -51,6 +51,7 @@ const propTypes = {
   querySetter: PropTypes.func.isRequired,
   searchField: PropTypes.object,
   searchString: PropTypes.string,
+  selectedRecordId: PropTypes.string,
   source: PropTypes.shape({
     loaded: PropTypes.func,
     totalCount: PropTypes.func,
@@ -69,6 +70,7 @@ const Agreements = ({
   queryGetter,
   querySetter,
   searchString = '',
+  selectedRecordId,
   source,
 }) => {
   const count = source?.totalCount() ?? 0;
@@ -318,6 +320,7 @@ const Agreements = ({
                         </div>
                       ) : '...'
                     }
+                    isSelected={({ item }) => item.id === selectedRecordId}
                     onHeaderClick={onSort}
                     onNeedMoreData={onNeedMoreData}
                     rowProps={{
