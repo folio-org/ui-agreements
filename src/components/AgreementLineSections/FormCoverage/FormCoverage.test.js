@@ -82,7 +82,7 @@ describe('FormCoverage', () => {
     });
   });
 
-  describe('with no coverage', () => {
+  describe('with empty data', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
