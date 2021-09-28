@@ -164,7 +164,7 @@ class AgreementsRoute extends React.Component {
   }
 
   render() {
-    const { children, location, resources } = this.props;
+    const { children, location, match, resources } = this.props;
 
     if (this.source) {
       this.source.update(this.props, 'agreements');
@@ -190,6 +190,7 @@ class AgreementsRoute extends React.Component {
         querySetter={this.querySetter}
         searchField={this.searchField}
         searchString={location.search}
+        selectedRecordId={match.params.id}
         source={this.source}
       >
         {children}
