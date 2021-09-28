@@ -1,7 +1,6 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
-import userEvent from '@testing-library/user-event';
 import { Button } from '@folio/stripes-testing';
 import { FieldArray } from 'react-final-form-arrays';
 import AgreementLinesFieldArray from './AgreementLinesFieldArray';
@@ -176,35 +175,29 @@ const data = {
   }],
 };
 
-const agreementLines = [
-  {
-    'id': '65493666-6a40-4f4e-8737-d6d88d2c0429',
-    'coverage': [
-      {
-        'id': '81237316-a1f8-4406-8cac-a6eb23b24839',
-        'startDate': '2021-09-01',
-        'endDate': '2021-09-20',
-        'startVolume': '1',
-        'startIssue': '6',
-        'endVolume': '6',
-        'endIssue': '12',
-        'summary': 'v1/i6/2021-09-01 - v6/i12/2021-09-20'
-      }
-    ],
-    'poLines': [
-      {
-        'id': 'fd6428ff-e727-40d2-a9c2-fd747fb9a9f3',
-        'poLineId': 'baec48dd-1594-2712-be8f-de336bc83fcc',
-        'owner': {
-          'id': '65493666-6a40-4f4e-8737-d6d88d2c0429'
-        }
-      }
-    ],
-    'activeFrom': '2021-09-01',
-    'activeTo': '2021-09-30',
-    'note': 'agreement line note'
-  }
-];
+const agreementLines = [{
+  'id': '65493666-6a40-4f4e-8737-d6d88d2c0429',
+  'coverage': [{
+    'id': '81237316-a1f8-4406-8cac-a6eb23b24839',
+    'startDate': '2021-09-01',
+    'endDate': '2021-09-20',
+    'startVolume': '1',
+    'startIssue': '6',
+    'endVolume': '6',
+    'endIssue': '12',
+    'summary': 'v1/i6/2021-09-01 - v6/i12/2021-09-20'
+  }],
+  'poLines': [{
+    'id': 'fd6428ff-e727-40d2-a9c2-fd747fb9a9f3',
+    'poLineId': 'baec48dd-1594-2712-be8f-de336bc83fcc',
+    'owner': {
+      'id': '65493666-6a40-4f4e-8737-d6d88d2c0429'
+    }
+  }],
+  'activeFrom': '2021-09-01',
+  'activeTo': '2021-09-30',
+  'note': 'agreement line note'
+}];
 
 describe('AgreementLinesFieldArray', () => {
   describe('with empty initial values', () => {
