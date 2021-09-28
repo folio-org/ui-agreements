@@ -190,6 +190,11 @@ const routeProps = {
     push: () => jest.fn()
   },
   location: {},
+  match: {
+    params: {
+      id: undefined,
+    },
+  },
   mutator: {
     query: { update: noop },
   },
