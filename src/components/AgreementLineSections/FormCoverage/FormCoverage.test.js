@@ -16,37 +16,6 @@ const onSubmit = jest.fn();
 
 describe('FormCoverage', () => {
   let renderComponent;
-  describe('with no initialValues', () => {
-    beforeEach(() => {
-      renderComponent = renderWithIntl(
-        <TestForm onSubmit={onSubmit}>
-          <FormCoverage
-            line={line}
-            resource={resource}
-            values={values}
-          />
-        </TestForm>,
-        translationsProperties
-      );
-    });
-
-    test('renders the Coverage accordion', async () => {
-      await Accordion('Coverage').exists();
-    });
-
-    test('renders the expected Default coverage value', async () => {
-      await KeyValue('Default coverage').has({ value: 'SerialCoverage' });
-    });
-
-    test('renders the SerialCoverage component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('SerialCoverage')).toBeInTheDocument();
-    });
-
-    test('renders the expected embargo value', async () => {
-      await KeyValue('Embargo').has({ value: 'Moving wall end: 4 years' });
-    });
-  });
 
   describe('with initialValues', () => {
     beforeEach(() => {
@@ -80,9 +49,17 @@ describe('FormCoverage', () => {
       const { getByText } = renderComponent;
       expect(getByText('Embargo')).toBeInTheDocument();
     });
+
+    test('renders the expected embargo value', async () => {
+      await KeyValue('Embargo').has({ value: 'Moving wall end: 4 years' });
+    });
+
+    test('renders the expected Default coverage value', async () => {
+      await KeyValue('Default coverage').has({ value: 'SerialCoverage' });
+    });
   });
 
-  describe('with empty data', () => {
+  describe('with no initial values', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
