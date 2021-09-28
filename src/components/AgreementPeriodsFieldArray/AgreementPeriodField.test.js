@@ -36,17 +36,10 @@ describe('AgreementPeriodField', () => {
     });
 
     test('expected fields exist', async () => {
-      await Datepicker({ id: 'period-start-date-0' }).exists();
-      await Datepicker({ id: 'period-end-date-0' }).exists();
-      await Datepicker({ id: 'period-cancellation-deadline-0' }).exists();
+      await Datepicker('Start date*').exists();
+      await Datepicker('End date').exists();
+      await Datepicker('Cancellation deadline').exists();
       await TextArea({ id: 'period-note-0' }).exists();
-    });
-
-    test('expected fields have no values', async () => {
-      await Datepicker({ id: 'period-start-date-0' }).has({ inputValue: '' });
-      await Datepicker({ id: 'period-end-date-0' }).has({ inputValue: '' });
-      await Datepicker({ id: 'period-cancellation-deadline-0' }).has({ inputValue: '' });
-      await TextArea({ id: 'period-note-0' }).has({ value: '' });
     });
   });
 
@@ -67,21 +60,21 @@ describe('AgreementPeriodField', () => {
     });
 
     test('renders expected values', async () => {
-      await Datepicker({ id: 'period-start-date-0' }).has({ inputValue: '10/10/1996' });
-      await Datepicker({ id: 'period-end-date-0' }).has({ inputValue: '02/06/1999' });
-      await Datepicker({ id: 'period-cancellation-deadline-0' }).has({ inputValue: '01/01/1999' });
+      await Datepicker('Start date*').has({ inputValue: '10/10/1996' });
+      await Datepicker('End date').has({ inputValue: '02/06/1999' });
+      await Datepicker('Cancellation deadline').has({ inputValue: '01/01/1999' });
       await TextArea({ id: 'period-note-0' }).has({ value: 'Agreement period field note' });
     });
 
     test('date validation fires for invalid end date', async () => {
       const { getAllByText, queryByText } = renderComponent;
       // set end date to invalid date
-      await Datepicker({ id: 'period-end-date-0' }).clear();
-      await Datepicker({ id: 'period-end-date-0' }).fillIn('02/06/1996');
+      await Datepicker('End date').clear();
+      await Datepicker('End date').fillIn('02/06/1996');
       await waitFor(() => expect(getAllByText(/End date must be after the start date./i)?.[0]).toBeInTheDocument());
       // set back to valid date
-      await Datepicker({ id: 'period-end-date-0' }).clear();
-      await Datepicker({ id: 'period-end-date-0' }).fillIn('02/06/1999');
+      await Datepicker('End date').clear();
+      await Datepicker('End date').fillIn('02/06/1999');
       await waitFor(() => expect(queryByText(/End date must be after the start date./i)).not.toBeInTheDocument());
     });
   });
