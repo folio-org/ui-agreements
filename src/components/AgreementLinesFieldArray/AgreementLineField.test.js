@@ -902,7 +902,7 @@ const data = {
       });
     });
 
-    describe('renders expected fields/values with initial values set', () => {
+    describe('renders expected fields/values without initial values', () => {
       beforeEach(() => {
         renderComponent = renderWithIntl(
           <TestForm onSubmit={onSubmit}>
@@ -929,6 +929,7 @@ const data = {
         const { getByText } = renderComponent;
         expect(getByText('CoverageFieldArray')).toBeInTheDocument();
       });
+
       test('renders the POLinesFieldArray component', () => {
         const { getByText } = renderComponent;
         expect(getByText('POLinesFieldArray')).toBeInTheDocument();
