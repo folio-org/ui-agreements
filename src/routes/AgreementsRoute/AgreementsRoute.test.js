@@ -191,9 +191,7 @@ const routeProps = {
   },
   location: {},
   match: {
-    params: {
-      id: undefined,
-    },
+    params: {},
   },
   mutator: {
     query: { update: noop },
