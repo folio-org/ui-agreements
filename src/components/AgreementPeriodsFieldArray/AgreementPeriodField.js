@@ -51,7 +51,9 @@ export default class AgreementPeriodField extends React.Component {
     const { index, input: { name } } = this.props;
 
     return (
-      <div>
+      <div
+        data-testid="agreementPeriodField"
+      >
         <Row>
           <Col xs={4}>
             <Field
