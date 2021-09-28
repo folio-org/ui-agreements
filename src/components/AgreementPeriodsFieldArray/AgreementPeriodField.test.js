@@ -1,91 +1,88 @@
 import React from 'react';
 import { waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
-
+import { Field } from 'react-final-form';
+import { MemoryRouter } from 'react-router-dom';
+import { Datepicker, TextArea } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
 import AgreementPeriodField from './AgreementPeriodField';
 
 const onSubmit = jest.fn();
 
+const period = {
+  startDate: '1996-10-10',
+  endDate: '1999-02-06',
+  cancellationDeadline: '1999-01-01',
+  note: 'Agreement period field note'
+};
+
 describe('AgreementPeriodField', () => {
-  test('renders expected fields', () => {
-    const { getByTestId, getByRole } = renderWithIntl(
-      <TestForm onSubmit={onSubmit}>
-        <AgreementPeriodField
-          index={0}
-          input={{
-            name: 'agreementPeriodTest'
-          }}
-        />
-      </TestForm>, translationsProperties
-    );
+  let renderComponent;
+  describe('no initial values set', () => {
+    beforeEach(() => {
+      renderWithIntl(
+        <TestForm onSubmit={onSubmit}>
+          <MemoryRouter>
+            <Field
+              component={AgreementPeriodField}
+              index={0}
+              name="period"
+            />
+          </MemoryRouter>
+        </TestForm>,
+      translationsProperties
+      );
+    });
 
-    expect(getByTestId('agreementPeriodField')).toBeInTheDocument();
-    expect(getByRole('textbox', { name: /start date/i })).toBeInTheDocument();
-    expect(getByRole('textbox', { name: /end date/i })).toBeInTheDocument();
-    expect(getByRole('textbox', { name: /cancellation deadline/i })).toBeInTheDocument();
-    expect(getByRole('textbox', { name: /period note/i })).toBeInTheDocument();
+    test('expected fields exist', async () => {
+      await Datepicker({ id: 'period-start-date-0' }).exists();
+      await Datepicker({ id: 'period-end-date-0' }).exists();
+      await Datepicker({ id: 'period-cancellation-deadline-0' }).exists();
+      await TextArea({ id: 'period-note-0' }).exists();
+    });
+
+    test('expected fields have no values', async () => {
+      await Datepicker({ id: 'period-start-date-0' }).has({ inputValue: '' });
+      await Datepicker({ id: 'period-end-date-0' }).has({ inputValue: '' });
+      await Datepicker({ id: 'period-cancellation-deadline-0' }).has({ inputValue: '' });
+      await TextArea({ id: 'period-note-0' }).has({ value: '' });
+    });
   });
 
-  // Test start date/end date validation.
-  // Overlapping agreement period validation to be covered in AgreementPeriodFieldArrayTest
-  test('date validation fires for invalid end date', async () => {
-    const { getAllByText, getByRole, queryByText } = renderWithIntl(
-      <TestForm onSubmit={onSubmit}>
-        <AgreementPeriodField
-          index={0}
-          input={{
-            name: 'agreementPeriodTest'
-          }}
-        />
-      </TestForm>, translationsProperties
-    );
-    userEvent.type(getByRole('textbox', { name: /start date/i }), '01/01/2021');
-    userEvent.type(getByRole('textbox', { name: /end date/i }), '01/01/2002');
+  describe('initial values set', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <TestForm initialValues={{ period }} onSubmit={onSubmit}>
+          <MemoryRouter>
+            <Field
+              component={AgreementPeriodField}
+              index={0}
+              name="period"
+            />
+          </MemoryRouter>
+        </TestForm>,
+      translationsProperties
+      );
+    });
 
-    /*
-     * This actually works with getByText, because currently the validation only
-     * appears on the startDate field until you click away from the endDate field.
-     * This behaviour should not be relied upon though, since the validation is set up on two fields.
-     * getAllByText returns an array, so just check it has any values in it.
-     */
-    await waitFor(() => expect(getAllByText(/End date must be after the start date./i)?.[0]).toBeInTheDocument());
-    // amend end date (Have to clear it first)
-    // TODO use interactors when they become available, for fillAndBlur
-    userEvent.clear(getByRole('textbox', { name: /end date/i }));
-    userEvent.type(getByRole('textbox', { name: /end date/i }), '01/01/2022');
-    await waitFor(() => expect(queryByText(/End date must be after the start date./i)).not.toBeInTheDocument());
-  });
+    test('renders expected values', async () => {
+      await Datepicker({ id: 'period-start-date-0' }).has({ inputValue: '10/10/1996' });
+      await Datepicker({ id: 'period-end-date-0' }).has({ inputValue: '02/06/1999' });
+      await Datepicker({ id: 'period-cancellation-deadline-0' }).has({ inputValue: '01/01/1999' });
+      await TextArea({ id: 'period-note-0' }).has({ value: 'Agreement period field note' });
+    });
 
-  test('expected values are submitted', () => {
-    const { getByRole, getByTestId } = renderWithIntl(
-      <TestForm onSubmit={onSubmit}>
-        <AgreementPeriodField
-          index={0}
-          input={{
-            name: 'agreementPeriodTest'
-          }}
-        />
-      </TestForm>, translationsProperties
-    );
-    userEvent.type(getByRole('textbox', { name: /start date/i }), '10/10/1996');
-    userEvent.type(getByRole('textbox', { name: /end date/i }), '02/06/1999');
-    userEvent.type(getByRole('textbox', { name: /cancellation deadline/i }), '01/01/1999');
-    userEvent.type(getByRole('textbox', { name: /period note/i }), 'Agreement period field note');
-
-    userEvent.click(getByTestId('submit'));
-    expect(onSubmit.mock.calls.length).toBe(1);
-    const submittedValues = onSubmit.mock.calls[0][0];
-    const expectedPayload = {
-      agreementPeriodTest: {
-        startDate: '1996-10-10',
-        endDate: '1999-02-06',
-        cancellationDeadline: '1999-01-01',
-        note: 'Agreement period field note'
-      }
-    };
-    expect(submittedValues).toEqual(expectedPayload);
+    test('date validation fires for invalid end date', async () => {
+      const { getAllByText, queryByText } = renderComponent;
+      // set end date to invalid date
+      await Datepicker({ id: 'period-end-date-0' }).clear();
+      await Datepicker({ id: 'period-end-date-0' }).fillIn('02/06/1996');
+      await waitFor(() => expect(getAllByText(/End date must be after the start date./i)?.[0]).toBeInTheDocument());
+      // set back to valid date
+      await Datepicker({ id: 'period-end-date-0' }).clear();
+      await Datepicker({ id: 'period-end-date-0' }).fillIn('02/06/1999');
+      await waitFor(() => expect(queryByText(/End date must be after the start date./i)).not.toBeInTheDocument());
+    });
   });
 });
