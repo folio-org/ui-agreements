@@ -23,6 +23,7 @@ class LicensesFieldArray extends React.Component {
     licenseStatusValues: PropTypes.arrayOf(PropTypes.object),
   };
 
+  /* istanbul ignore next */
   handleLicenseSelected = (index, license = {}) => {
     const amendments = (license.amendments || []).map(a => ({
       amendmentId: a.id,
@@ -67,6 +68,7 @@ class LicensesFieldArray extends React.Component {
     return items.map((license, index) => (
       <EditCard
         key={index}
+        data-testid={`licensesFieldArray[${index}]`}
         deleteBtnProps={{
           'id': `license-delete-${index}`,
           'data-test-delete-field-button': true
