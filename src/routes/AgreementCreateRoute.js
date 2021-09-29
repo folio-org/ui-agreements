@@ -241,7 +241,9 @@ class AgreementCreateRoute extends React.Component {
     const customProperties = {};
     (this.props.resources?.supplementaryProperties?.records || [])
       .filter(term => term.primary)
-      .forEach(term => { customProperties[term.name] = ''; });
+      // Change default to be an ignored customProperty.
+      // This means any changes without setting the value will be ignored
+      .forEach(term => { customProperties[term.name] = { _delete: true }; });
     const periods = [{}];
 
     return {
