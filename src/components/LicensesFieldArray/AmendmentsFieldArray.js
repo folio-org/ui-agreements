@@ -71,6 +71,7 @@ class AmendmentsFieldArray extends React.Component {
             <Card
               key={amendment.id}
               data-test-amendment={amendment.name}
+              data-testid={`amendmentsFieldArray[${i}]`}
               headerStart={
                 <Link
                   data-test-amendment-name
