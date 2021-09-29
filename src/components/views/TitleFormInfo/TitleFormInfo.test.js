@@ -7,8 +7,8 @@ import translationsProperties from '../../../../test/helpers';
 import TitleFormInfo from './TitleFormInfo';
 
 const onSubmit = jest.fn();
-const isSuppressFromDiscoveryEnabled = jest.fn(title => true);
-const isSuppressFromDiscoveryDisabled = jest.fn(title => false);
+const isSuppressFromDiscoveryEnabled = jest.fn(_title => true);
+const isSuppressFromDiscoveryDisabled = jest.fn(_title => false);
 
 const suppressFromDiscoveryTrue = {
   'suppressFromDiscovery': true,
@@ -35,7 +35,7 @@ describe('TitleFormInfo', () => {
     test('renders suppress from discovery checkbox as checked', async () => {
       await Checkbox({ id: 'title-suppress-from-discovery' }).is({ checked: true });
     });
-  })
+  });
 
   describe('with suppressFromDiscovery as false', () => {
     beforeEach(() => renderWithIntl(
@@ -52,22 +52,20 @@ describe('TitleFormInfo', () => {
     test('renders suppress from discovery checkbox as unchecked', async () => {
       await Checkbox({ id: 'title-suppress-from-discovery' }).is({ checked: false });
     });
-  })
+  });
 
   describe('with isSuppressFromDiscovery not true for title', () => {
     let renderedComponent;
     beforeEach(() => {
       renderedComponent = renderWithIntl(
-        <TestForm initialValues={suppressFromDiscoveryTrue} onSubmit={onSubmit}>
-          <TitleFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryDisabled} />
-        </TestForm>,
+        <TitleFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryDisabled} />,
         translationsProperties
-      )
+      );
     });
 
     test('Does not render the component', () => {
-      const { container } = renderedComponent
-      expect(container.firstChild).toBeNull;
+      const { container } = renderedComponent;
+      expect(container.firstChild).toBeNull();
     });
-  })
+  });
 });
