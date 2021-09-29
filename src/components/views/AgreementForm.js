@@ -217,7 +217,7 @@ class AgreementForm extends React.Component {
                 firstMenu={this.renderFirstMenu()}
                 footer={this.renderPaneFooter()}
                 id="pane-agreement-form"
-                paneTitle={id ? name : <FormattedMessage id="ui-agreements.agreements.createAgreement" />}
+                paneTitle={id ? <FormattedMessage id="ui-agreements.agreements.editAgreement.name" values={{ name }} /> : <FormattedMessage id="ui-agreements.agreements.createAgreement" />}
               >
                 <TitleManager record={id ? name : create}>
                   <form id="form-agreement">
