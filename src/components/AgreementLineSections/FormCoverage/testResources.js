@@ -103,119 +103,6 @@ const initialValues = {
   }
 };
 
-const line = {
-  'id': '3ab8c347-4f98-4a70-8bce-63bee849444d',
-  'dateCreated': '2021-09-15T08:31:25Z',
-  'tags': '[]',
-  'lastUpdated': '2021-09-15T08:31:25Z',
-  'owner': {
-    'id': '4c4e0cbc-2301-4ef8-b170-d38255351e39',
-    'cancellationDeadline': '2021-09-28',
-    'dateCreated': '2021-09-15T08:28:39Z',
-    'isPerpetual': {
-      'id': '2c91809c7be72150017be7293b05002f',
-      'value': 'yes',
-      'label': 'Yes'
-    },
-    'name': 'MR agr test',
-    'orgs': [],
-    'externalLicenseDocs': [],
-    'outwardRelationships': [],
-    'customProperties': {},
-    'contacts': [],
-    'tags': [],
-    'lastUpdated': '2021-09-15T08:31:25Z',
-    'inwardRelationships': [],
-    'renewalPriority': {
-      'id': '2c91809c7be72150017be7293b240036',
-      'value': 'definitely_renew',
-      'label': 'Definitely renew'
-    },
-    'endDate': '2021-09-30',
-    'startDate': '2021-09-01',
-    'linkedLicenses': [],
-    'docs': [],
-    'periods': [{
-      'id': 'c38afb53-b81d-4050-83c1-27eed42560e0',
-      'startDate': '2021-09-01',
-      'cancellationDeadline': '2021-09-28',
-      'owner': {
-        'id': '4c4e0cbc-2301-4ef8-b170-d38255351e39'
-      },
-      'note': 'This is period note',
-      'endDate': '2021-09-30',
-      'periodStatus': 'current'
-    }],
-    'usageDataProviders': [],
-    'agreementStatus': {
-      'id': '2c91809c7be72150017be7293b6a003f',
-      'value': 'active',
-      'label': 'Active'
-    },
-    'supplementaryDocs': [],
-    'description': 'This is description',
-    'items': [
-      '{id: "3ab8c347-4f98-4a70-8bce-63bee849444d"}'
-    ],
-    'alternateNames': []
-  },
-  'resource': {
-    'id': '2a99a24e-53db-4328-a819-8de6415dafe6',
-    'class': 'org.olf.kb.PackageContentItem',
-    'name': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
-    'suppressFromDiscovery': false,
-    'tags': [],
-    'coverage': [
-      '{id: "89f732df-e082-447b-ab3d-e7927df5de42", startD…}'
-    ],
-    'customCoverage': false,
-    '_object': {
-      'id': '2a99a24e-53db-4328-a819-8de6415dafe6',
-      'dateCreated': '2021-09-15T02:23:20Z',
-      'tags': '[]',
-      'lastUpdated': '2021-09-15T02:23:20Z',
-      'coverage': [{
-        'id': '89f732df-e082-447b-ab3d-e7927df5de42',
-        'startDate': '1977-01-01',
-        'startVolume': '1',
-        'startIssue': '1',
-        'summary': 'v1/i1/1977-01-01 - v*/i*/*'
-      }],
-      'pti': '{class: "org.olf.kb.PlatformTitleInstance", coverag…}',
-      'pkg': '{class: "org.olf.kb.Pkg", dateCreated: "2021-09-15T…}',
-      'embargo': {
-        'movingWallEnd': {
-          'length': 4,
-          'unit': 'years'
-        }
-      },
-      'addedTimestamp': 1631672587073,
-      'name': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
-      'lastSeenTimestamp': 1631672587073,
-      'suppressFromDiscovery': false,
-      'longName': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
-      'class': 'org.olf.kb.PackageContentItem'
-    }
-  },
-  'poLines': '[]',
-  'suppressFromDiscovery': false,
-  'coverage': [{
-    'id': '89f732df-e082-447b-ab3d-e7927df5de42',
-    'startDate': '1977-01-01',
-    'startVolume': '1',
-    'startIssue': '1',
-    'summary': 'v1/i1/1977-01-01 - v*/i*/*'
-  }],
-  'customCoverage': false,
-  'explanation': 'Agreement includes this item from a package specifically',
-  'startDate': null,
-  'endDate': null,
-  'activeFrom': null,
-  'activeTo': null,
-  'contentUpdated': null,
-  'haveAccess': true
-};
-
 const resource = {
   'id': '2a99a24e-53db-4328-a819-8de6415dafe6',
   'dateCreated': '2021-09-15T02:23:20Z',
@@ -515,14 +402,7 @@ const values = {
   }
 };
 
-const basketData = {
-  'addButtonTooltipId': 'ui-agreements.agreementLine.addCustomCoverageTootlip',
-  'agreementLineSource': 'basket',
-  'basket': [
-    '{_object: {…}, class: "org.olf.kb.Pkg", id: "8b2666…}'
-  ],
-  'isSuppressFromDiscoveryEnabled': () => {},
-  'line': {
+const externalData = {
     'id': '61bb6bb8-32ed-4e7c-a6cc-32b89b8ead13',
     'type': 'external',
     'description': 'This is description',
@@ -547,60 +427,12 @@ const basketData = {
     }],
     'reference_object': '{contentType: "Online Reference", isSelected: true,…}',
     'poLines': '[]'
-  },
-  'lineId': '61bb6bb8-32ed-4e7c-a6cc-32b89b8ead13',
-  'resource': {
-    'id': '61bb6bb8-32ed-4e7c-a6cc-32b89b8ead13',
-    'type': 'external',
-    'description': 'This is description',
-    'authority': 'EKB-PACKAGE',
-    'reference': '350-1207861',
-    'explanation': null,
-    'startDate': '2021-09-04',
-    'endDate': '2021-09-24',
-    'activeFrom': '2021-09-04',
-    'activeTo': '2021-09-24',
-    'contentUpdated': null,
-    'haveAccess': true,
-    'suppressFromDiscovery': true,
-    'note': 'This is note',
-    'tags': '[]',
-    'owner': '{agreementStatus: {…}, alternateNames: Array(0), ca…}',
-    'customCoverage': true,
-    'coverage': '[{…}]',
-    'reference_object': '{contentType: "Online Reference", isSelected: true,…}',
-    'poLines': '[]'
-  },
-  'setFieldData': () => {},
-  'values': {
-    'id': '61bb6bb8-32ed-4e7c-a6cc-32b89b8ead13',
-    'type': 'external',
-    'description': 'This is description',
-    'authority': 'EKB-PACKAGE',
-    'reference': '350-1207861',
-    'explanation': null,
-    'startDate': '2021-09-04',
-    'endDate': '2021-09-24',
-    'activeFrom': '2021-09-04',
-    'activeTo': '2021-09-24',
-    'contentUpdated': null,
-    'haveAccess': true,
-    'suppressFromDiscovery': true,
-    'note': 'This is note',
-    'tags': '[]',
-    'owner': '{agreementStatus: {…}, alternateNames: Array(0), ca…}',
-    'customCoverage': true,
-    'coverage': '[{…}]',
-    'reference_object': '{contentType: "Online Reference", isSelected: true,…}',
-    'linkedResource': '{activeFrom: "2021-09-04", activeTo: "2021-09-24", …}'
-  }
-};
+  };
 
 export {
-  line,
   values,
   resource,
   handlers,
   initialValues,
-  basketData
+  externalData,
 };
