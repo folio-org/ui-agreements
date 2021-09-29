@@ -31,11 +31,14 @@ export default class Lines extends React.Component {
 
   renderAddAgreementLineButton = () => {
     return (
-      <IfPermission perm="ui-agreements.agreements.edit">
-        <Button id="add-agreement-line-button" to={urls.agreementLineCreate(this.props.agreement.id)}>
-          <FormattedMessage id="ui-agreements.agreementLines.addLine" />
-        </Button>
-      </IfPermission>
+      <>
+        <IfPermission perm="ui-agreements.agreements.edit">
+          <Button id="add-agreement-line-button" to={urls.agreementLineCreate(this.props.agreement.id)}>
+            <FormattedMessage id="ui-agreements.agreementLines.addLine" />
+          </Button>
+        </IfPermission>
+        {this.renderBadge()}
+      </>
     );
   }
 
