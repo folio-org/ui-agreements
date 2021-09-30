@@ -11,10 +11,10 @@ import {
 
 const TitleFormInfo = ({
   isSuppressFromDiscoveryEnabled,
-}) => (
-  <div data-test-title-instance-name>
-    <Row>
-      { isSuppressFromDiscoveryEnabled('title') ?
+}) => {
+  return isSuppressFromDiscoveryEnabled('title') ?
+    (
+      <Row>
         <Col xs={3}>
           <Field
             component={Checkbox}
@@ -24,11 +24,10 @@ const TitleFormInfo = ({
             type="checkbox"
             vertical
           />
-        </Col> : null
-    }
-    </Row>
-  </div>
-);
+        </Col>
+      </Row>
+    ) : null;
+};
 
 TitleFormInfo.propTypes = {
   isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,

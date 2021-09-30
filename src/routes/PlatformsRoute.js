@@ -103,7 +103,7 @@ class PlatformsRoute extends React.Component {
   }
 
   render() {
-    const { children, location, resources } = this.props;
+    const { children, location, match, resources } = this.props;
 
     if (this.source) {
       this.source.update(this.props, 'platforms');
@@ -120,6 +120,7 @@ class PlatformsRoute extends React.Component {
         queryGetter={this.queryGetter}
         querySetter={this.querySetter}
         searchString={location.search}
+        selectedRecordId={match.params.id}
         source={this.source}
       >
         {children}
