@@ -64,36 +64,4 @@ describe('PlatformFormInfo', () => {
       await TextField({ 'id': 'edit-local-platform-code' }).has({ value: 'test code' });
     });
   });
-
-  // describe('with suppressFromDiscovery as false', () => {
-  //   beforeEach(() => renderWithIntl(
-  //     <TestForm initialValues={suppressFromDiscoveryFalse} onSubmit={onSubmit}>
-  //       <TitleFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled} />
-  //     </TestForm>,
-  //     translationsProperties
-  //   ));
-
-  //   test('renders the Suppress from discovery Checkbox', async () => {
-  //     await Checkbox({ id: 'title-suppress-from-discovery' }).exists();
-  //   });
-
-  //   test('renders suppress from discovery checkbox as unchecked', async () => {
-  //     await Checkbox({ id: 'title-suppress-from-discovery' }).is({ checked: false });
-  //   });
-  // });
-
-  // describe('with isSuppressFromDiscovery not true for title', () => {
-  //   let renderedComponent;
-  //   beforeEach(() => {
-  //     renderedComponent = renderWithIntl(
-  //       <TitleFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryDisabled} />,
-  //       translationsProperties
-  //     );
-  //   });
-
-  //   test('Does not render the component', () => {
-  //     const { container } = renderedComponent;
-  //     expect(container.firstChild).toBeNull();
-  //   });
-  // });
 });
