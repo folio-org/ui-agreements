@@ -3,7 +3,7 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { Button } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
-import { initialValues, handlers, data, emptyData } from './testResources';
+import { initialValues, handlers, data, eholdingData, emptyAgreementLineSource } from './testResources';
 import FormEresource from './FormEresource';
 
 jest.mock('../EresourceSelector', () => () => <div>EresourceSelector</div>);
@@ -18,7 +18,7 @@ describe('FormEresource', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm initialValues={initialValues} onSubmit={onSubmit}>
-          <FormEresource handlers={handlers} />
+          <FormEresource handlers={handlers} validate={() => { }} />
         </TestForm>,
         translationsProperties
       );
@@ -28,13 +28,13 @@ describe('FormEresource', () => {
       await Button('Submit').exists();
     });
 
-    test('renders the EresourceSelector component', () => {
+    test('renders the FormEresourceCard component', () => {
       const { getByText } = renderComponent;
-      expect(getByText('EresourceSelector')).toBeInTheDocument();
+      expect(getByText('FormEresourceCard')).toBeInTheDocument();
     });
   });
 
-  describe('renders agreementLineSource type basket', () => {
+  describe('with agreementLineSource type basket', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
@@ -42,6 +42,9 @@ describe('FormEresource', () => {
             agreementLineSource={data.agreementLineSource}
             basket={data.basket}
             line={data.line}
+            lineId={data.lineId}
+            setFieldData={data.setFieldData}
+            validate={() => { }}
             values={data.values}
           />
         </TestForm>,
@@ -49,7 +52,7 @@ describe('FormEresource', () => {
       );
     });
 
-    test('renders link e-resource button', () => {
+    test('renders sumbmit button', () => {
       const { getByRole } = renderComponent;
       expect(getByRole('button', { name: 'Submit' })).toBeInTheDocument();
     });
@@ -60,20 +63,41 @@ describe('FormEresource', () => {
     });
   });
 
-  describe('with no resource', () => {
+  describe('with agreementLineSource type eholding', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
           <FormEresource
-            basket={emptyData.basket}
-            line={emptyData.line}
-            values={emptyData.values}
+            agreementLineSource={eholdingData.agreementLineSource}
+            basket={eholdingData.basket}
+            line={eholdingData.line}
+            lineId={eholdingData.lineId}
+            setFieldData={eholdingData.setFieldData}
+            validate={() => { }}
+            values={eholdingData.values}
           />
         </TestForm>,
         translationsProperties
       );
     });
 
+    test('renders the EresourceSelector component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('EresourceSelector')).toBeInTheDocument();
+    });
+  });
+
+  describe('with empty agreementLineSource', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <TestForm onSubmit={onSubmit}>
+          <FormEresource
+            agreementLineSource={emptyAgreementLineSource.agreementLineSource}
+          />
+        </TestForm>,
+        translationsProperties
+      );
+    });
     test('renders null', () => {
       const { queryByText } = renderComponent;
       expect(queryByText('FormEresource')).toBeNull();

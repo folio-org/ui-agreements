@@ -1,15 +1,15 @@
 const initialValues = {
-  'id': 'd1618087-e7c6-462b-84a8-c0d6479f6110',
-  'dateCreated': '2021-09-16T09:35:31Z',
+  'id': 'ead3355f-e281-4c4e-abdd-aef8a1417e7d',
+  'dateCreated': '2021-09-30T09:51:51Z',
   'activeTo': '2021-09-30',
   'tags': '[]',
-  'lastUpdated': '2021-09-16T09:35:31Z',
+  'lastUpdated': '2021-09-30T10:01:04Z',
   'owner': {
-    'id': '29e7f08e-facf-4d65-8fd6-e65f846a7ffe',
-    'cancellationDeadline': '2021-09-28',
-    'dateCreated': '2021-09-16T08:34:05Z',
+    'id': 'c11350f6-1126-4db8-9cab-88cac080e3c1',
+    'cancellationDeadline': '2021-09-20',
+    'dateCreated': '2021-09-30T09:21:58Z',
     'isPerpetual': {
-      'id': '2c91809c7bec4829017bec503685002f',
+      'id': '2c91809e7c345f9f017c34672c8f0022',
       'value': 'yes',
       'label': 'Yes'
     },
@@ -18,50 +18,212 @@ const initialValues = {
     'externalLicenseDocs': [],
     'outwardRelationships': [],
     'customProperties': {},
-    'contacts': [],
+    'contacts': [
+      '{id: "1003f3ce-a773-4d1c-a125-42fd70883d98", owner:…}'
+    ],
     'tags': [],
-    'lastUpdated': '2021-09-16T08:41:50Z',
+    'lastUpdated': '2021-09-30T10:01:04Z',
     'inwardRelationships': [],
     'renewalPriority': {
-      'id': '2c91809c7bec4829017bec5036a70036',
-      'value': 'definitely_renew',
-      'label': 'Definitely renew'
+      'id': '2c91809e7c345f9f017c34672cae002a',
+      'value': 'for_review',
+      'label': 'For review'
     },
     'endDate': '2021-09-30',
     'startDate': '2021-09-01',
     'linkedLicenses': [],
     'docs': [],
     'periods': [
-      '{cancellationDeadline: "2021-09-28", endDate: "2021…}'
+      '{cancellationDeadline: "2021-09-20", endDate: "2021…}'
     ],
     'usageDataProviders': [],
     'agreementStatus': {
-      'id': '2c91809c7bec4829017bec5036ef003f',
+      'id': '2c91809e7c345f9f017c34672ce80032',
       'value': 'active',
       'label': 'Active'
     },
     'supplementaryDocs': [],
-    'description': 'This is description',
-    'items': [
-      '{id: "7191af81-d9ae-4bbc-9780-d0350c9001ae"}',
-      '{id: "d1618087-e7c6-462b-84a8-c0d6479f6110"}',
-      '{id: "b5f420a6-b8fb-4736-adda-78fe829f12a9"}',
-      '{id: "195db78f-96c8-4859-8b7f-d36959616ef5"}'
-    ],
+    'description': 'agreement description',
     'alternateNames': []
   },
-  'activeFrom': '2021-09-01',
-  'poLines': '[{…}]',
-  'type': 'detached',
-  'suppressFromDiscovery': false,
-  'note': 'This is note',
-  'description': 'This is description',
+  'resource': {
+    'id': 'e1cdf3e3-8109-40fc-978f-5535b0a1e8d6',
+    'class': 'org.olf.kb.Pkg',
+    'name': 'Taylor & Francis:E-Books:Politics & International Relations:201905',
+    'suppressFromDiscovery': false,
+    'tags': [],
+    'customCoverage': false,
+    '_object': {
+      'id': 'e1cdf3e3-8109-40fc-978f-5535b0a1e8d6',
+      'dateCreated': '2021-09-30T01:52:44Z',
+      'tags': '[]',
+      'lastUpdated': '2021-09-30T01:52:44Z',
+      'vendor': {
+        'id': '781507c6-fdaa-4df6-961e-861798ee4722',
+        'name': 'Taylor & Francis',
+        'orgsUuid_object': {
+          'error': 400,
+          'message': 'Bad Request'
+        }
+      },
+      'coverage': '[]',
+      'source': 'GOKb',
+      'remoteKb': {
+        'id': '8f1799ba-32c6-4d85-82d9-41b060041da1',
+        'cursor': '2021-09-14T08:21:37Z',
+        'active': true,
+        'trustedSourceTI': false,
+        'activationEnabled': false,
+        'readonly': false,
+        'syncStatus': 'idle',
+        'lastCheck': 1632995124547,
+        'name': 'GOKb_TEST',
+        'type': 'org.olf.kb.adapters.GOKbOAIAdapter',
+        'fullPrefix': 'gokb',
+        'uri': 'https://gokbt.gbv.de/gokb/oai/index',
+        'supportsHarvesting': true,
+        'rectype': 1
+      },
+      'name': 'Taylor & Francis:E-Books:Politics & International Relations:201905',
+      'suppressFromDiscovery': false,
+      'reference': 'Taylor_&_Francis:E-Books:Politics_&_International_Relations:201905',
+      'resourceCount': 6118,
+      'class': 'org.olf.kb.Pkg'
+    }
+  },
+  'activeFrom': '2021-09-02',
+  'poLines': '[]',
+  'suppressFromDiscovery': true,
+  'note': 'agreement line note',
+  'description': 'agreement line description',
   'customCoverage': false,
-  'explanation': null,
-  'startDate': '2021-09-01',
+  'explanation': 'Agreement includes a package containing this item',
+  'startDate': '2021-09-02',
   'endDate': '2021-09-30',
   'contentUpdated': null,
-  'haveAccess': true
+  'haveAccess': true,
+  'linkedResource': {
+    'id': 'ead3355f-e281-4c4e-abdd-aef8a1417e7d',
+    'dateCreated': '2021-09-30T09:51:51Z',
+    'activeTo': '2021-09-30',
+    'tags': [],
+    'lastUpdated': '2021-09-30T10:01:04Z',
+    'owner': {
+      'id': 'c11350f6-1126-4db8-9cab-88cac080e3c1',
+      'cancellationDeadline': '2021-09-20',
+      'dateCreated': '2021-09-30T09:21:58Z',
+      'isPerpetual': {
+        'id': '2c91809e7c345f9f017c34672c8f0022',
+        'value': 'yes',
+        'label': 'Yes'
+      },
+      'name': 'MR agr test',
+      'orgs': '[]',
+      'externalLicenseDocs': '[]',
+      'outwardRelationships': '[]',
+      'customProperties': '{}',
+      'contacts': [{
+        'id': '1003f3ce-a773-4d1c-a125-42fd70883d98',
+        'owner': {
+          'id': 'c11350f6-1126-4db8-9cab-88cac080e3c1'
+        },
+        'role': {
+          'id': '2c91809e7c345f9f017c34672d200040',
+          'value': 'erm_librarian',
+          'label': 'ERM librarian'
+        },
+        'user': '72fa68fe-34e5-55b6-afc4-8d6b096b27be'
+      }],
+      'tags': '[]',
+      'lastUpdated': '2021-09-30T10:01:04Z',
+      'inwardRelationships': '[]',
+      'renewalPriority': {
+        'id': '2c91809e7c345f9f017c34672cae002a',
+        'value': 'for_review',
+        'label': 'For review'
+      },
+      'endDate': '2021-09-30',
+      'startDate': '2021-09-01',
+      'linkedLicenses': '[]',
+      'docs': '[]',
+      'periods': [{
+        'id': 'a6d66bf0-f1c9-4095-9a54-a6ff38525443',
+        'startDate': '2021-09-01',
+        'cancellationDeadline': '2021-09-20',
+        'owner': {
+          'id': 'c11350f6-1126-4db8-9cab-88cac080e3c1'
+        },
+        'note': 'agreement note',
+        'endDate': '2021-09-30',
+        'periodStatus': 'current'
+      }],
+      'usageDataProviders': '[]',
+      'agreementStatus': {
+        'id': '2c91809e7c345f9f017c34672ce80032',
+        'value': 'active',
+        'label': 'Active'
+      },
+      'supplementaryDocs': '[]',
+      'description': 'agreement description',
+      'alternateNames': '[]'
+    },
+    'resource': {
+      'id': 'e1cdf3e3-8109-40fc-978f-5535b0a1e8d6',
+      'class': 'org.olf.kb.Pkg',
+      'name': 'Taylor & Francis:E-Books:Politics & International Relations:201905',
+      'suppressFromDiscovery': false,
+      'tags': '[]',
+      'customCoverage': false,
+      '_object': {
+        'id': 'e1cdf3e3-8109-40fc-978f-5535b0a1e8d6',
+        'dateCreated': '2021-09-30T01:52:44Z',
+        'tags': [],
+        'lastUpdated': '2021-09-30T01:52:44Z',
+        'vendor': {
+          'id': '781507c6-fdaa-4df6-961e-861798ee4722',
+          'name': 'Taylor & Francis',
+          'orgsUuid_object': {
+            'error': 400,
+            'message': 'Bad Request'
+          }
+        },
+        'coverage': [],
+        'source': 'GOKb',
+        'remoteKb': {
+          'id': '8f1799ba-32c6-4d85-82d9-41b060041da1',
+          'cursor': '2021-09-14T08:21:37Z',
+          'active': true,
+          'trustedSourceTI': false,
+          'activationEnabled': false,
+          'readonly': false,
+          'syncStatus': 'idle',
+          'lastCheck': 1632995124547,
+          'name': 'GOKb_TEST',
+          'type': 'org.olf.kb.adapters.GOKbOAIAdapter',
+          'fullPrefix': 'gokb',
+          'uri': 'https://gokbt.gbv.de/gokb/oai/index',
+          'supportsHarvesting': true,
+          'rectype': 1
+        },
+        'name': 'Taylor & Francis:E-Books:Politics & International Relations:201905',
+        'suppressFromDiscovery': false,
+        'reference': 'Taylor_&_Francis:E-Books:Politics_&_International_Relations:201905',
+        'resourceCount': 6118,
+        'class': 'org.olf.kb.Pkg'
+      }
+    },
+    'activeFrom': '2021-09-02',
+    'poLines': [],
+    'suppressFromDiscovery': true,
+    'note': 'agreement line note',
+    'description': 'agreement line description',
+    'customCoverage': false,
+    'explanation': 'Agreement includes a package containing this item',
+    'startDate': '2021-09-02',
+    'endDate': '2021-09-30',
+    'contentUpdated': null,
+    'haveAccess': true
+  }
 };
 
 const handlers = {
@@ -510,34 +672,53 @@ const data = {
   }
 };
 
-const emptyData = {
+const eholdingData = {
   'addButtonTooltipId': 'ui-agreements.agreementLine.addCustomCoverageTootlip',
-  'agreementLineSource': 'basket',
-  'basket': [
-    {
-      'class': 'org.olf.kb.Pkg',
-      'id': '6a636f10-505c-4d38-8ac5-ff16645ba60e',
-      'name': 'Beuth: DIN, ISO, VDI',
-      '_object': {
-        'id': '6a636f10-505c-4d38-8ac5-ff16645ba60e',
-        'dateCreated': '2021-09-22T01:53:12Z',
-        'lastUpdated': '2021-09-22T01:53:12Z',
-        'vendor': '{id: "eb2d5062-27d6-4574-a444-75a052c9087b", name: …}',
-        'source': 'GOKb',
-        'remoteKb': '{activationEnabled: false, active: true, cursor: "2…}',
-        'name': 'Beuth: DIN, ISO, VDI',
-        'suppressFromDiscovery': false,
-        'reference': 'Beuth:_DIN,_ISO,_VDI',
-        'resourceCount': 3,
-        'class': 'org.olf.kb.Pkg'
-      }
-    }
-  ],
+  'agreementLineSource': 'eholdings',
+  'basket': [{
+    'id': '160e3db6-11ef-49b1-942d-ff64f8888722',
+    'class': 'org.olf.kb.PackageContentItem',
+    'name': "'180 Keywords Geld- und Währungsrecht' on Platform 'SpringerLink' in Package Springer Wirtschaftswissenschaften eBooks 2020 - German Language",
+    'suppressFromDiscovery': false,
+    'tags': [],
+    'customCoverage': false,
+    '_object': {
+      'id': '160e3db6-11ef-49b1-942d-ff64f8888722',
+      'dateCreated': '2021-10-01T01:59:28Z',
+      'tags': '[]',
+      'lastUpdated': '2021-10-01T01:59:28Z',
+      'depth': 'Fulltext',
+      'coverage': '[]',
+      'pti': '{class: "org.olf.kb.PlatformTitleInstance", coverag…}',
+      'pkg': '{class: "org.olf.kb.Pkg", dateCreated: "2021-10-01T…}',
+      'addedTimestamp': 1633053543798,
+      'name': "'180 Keywords Geld- und Währungsrecht' on Platform 'SpringerLink' in Package Springer Wirtschaftswissenschaften eBooks 2020 - German Language",
+      'lastSeenTimestamp': 1633053543798,
+      'suppressFromDiscovery': false,
+      'longName': "'180 Keywords Geld- und Währungsrecht' on Platform 'SpringerLink' in Package Springer Wirtschaftswissenschaften eBooks 2020 - German Language",
+      'class': 'org.olf.kb.PackageContentItem'
+    },
+    'rowIndex': 0
+  }],
   'isSuppressFromDiscoveryEnabled': () => {},
   'line': {},
   'lineId': '',
   'resource': {},
   'setFieldData': () => {},
+  'values': {
+    'coverage': '[{…}]'
+  }
+};
+
+const emptyAgreementLineSource = {
+  'addButtonTooltipId': 'ui-agreements.agreementLine.addCustomCoverageTootlip',
+  'agreementLineSource': '',
+  'basket': [],
+  'isSuppressFromDiscoveryEnabled': () => {},
+  'line': {},
+  'lineId': '',
+  'resource': {},
+  'setFieldData':() => {},
   'values': {}
 };
 
@@ -545,5 +726,6 @@ export {
   data,
   handlers,
   initialValues,
-  emptyData
+  eholdingData,
+  emptyAgreementLineSource
 };
