@@ -29,13 +29,16 @@ export default class Lines extends React.Component {
     id: PropTypes.string,
   }
 
-  renderAddAgreementLineButton = () => {
+  renderAddAgreementLineButtonAndBadge = () => {
     return (
-      <IfPermission perm="ui-agreements.agreements.edit">
-        <Button id="add-agreement-line-button" to={urls.agreementLineCreate(this.props.agreement.id)}>
-          <FormattedMessage id="ui-agreements.agreementLines.addLine" />
-        </Button>
-      </IfPermission>
+      <>
+        <IfPermission perm="ui-agreements.agreements.edit">
+          <Button id="add-agreement-line-button" to={urls.agreementLineCreate(this.props.agreement.id)}>
+            <FormattedMessage id="ui-agreements.agreementLines.addLine" />
+          </Button>
+        </IfPermission>
+        {this.renderBadge()}
+      </>
     );
   }
 
@@ -55,7 +58,7 @@ export default class Lines extends React.Component {
     return (
       <Accordion
         displayWhenClosed={this.renderBadge()}
-        displayWhenOpen={this.renderAddAgreementLineButton()}
+        displayWhenOpen={this.renderAddAgreementLineButtonAndBadge()}
         id={id}
         label={<FormattedMessage id="ui-agreements.agreements.agreementLines" />}
       >
