@@ -17,7 +17,7 @@ import {
 
 import { AppIcon, TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
-import PlatformFormInfo from './PlatformFormInfo';
+import PlatformFormInfo from '../PlatformFormInfo';
 
 const PlatformForm = ({
   handlers,
@@ -47,7 +47,7 @@ const PlatformForm = ({
           firstMenu={
             <PaneMenu>
               <FormattedMessage id="ui-agreements.platform.closeEdit">
-                {ariaLabel => (
+                {([ariaLabel]) => (
                   <IconButton
                     aria-label={ariaLabel}
                     icon="times"
@@ -57,7 +57,7 @@ const PlatformForm = ({
                 )}
               </FormattedMessage>
             </PaneMenu>
-        }
+          }
           footer={
             <PaneFooter
               renderEnd={(
@@ -83,7 +83,7 @@ const PlatformForm = ({
                 </Button>
               )}
             />
-        }
+          }
           id="pane-platform-form"
           paneTitle={<FormattedMessage id="ui-agreements.platform.editPlatform" values={{ name }} />}
         >
