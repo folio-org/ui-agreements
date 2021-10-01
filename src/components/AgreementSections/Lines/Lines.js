@@ -29,7 +29,7 @@ export default class Lines extends React.Component {
     id: PropTypes.string,
   }
 
-  renderAddAgreementLineButton = () => {
+  renderAddAgreementLineButtonAndBadge = () => {
     return (
       <>
         <IfPermission perm="ui-agreements.agreements.edit">
@@ -58,7 +58,7 @@ export default class Lines extends React.Component {
     return (
       <Accordion
         displayWhenClosed={this.renderBadge()}
-        displayWhenOpen={this.renderAddAgreementLineButton()}
+        displayWhenOpen={this.renderAddAgreementLineButtonAndBadge()}
         id={id}
         label={<FormattedMessage id="ui-agreements.agreements.agreementLines" />}
       >
