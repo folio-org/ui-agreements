@@ -8,7 +8,9 @@ const translationsProperties = [
   {
     prefix: 'stripes-core',
     translations: {
-      'label.missingRequiredField': 'Please fill this in to continue'
+      'label.missingRequiredField': 'Please fill this in to continue',
+      'stripes-components.saveAndClose': 'Save and close',
+      'stripes-components.cancel': 'Cancel'
     }
   }
 ];

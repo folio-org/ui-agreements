@@ -228,7 +228,8 @@
         "subPermissions": [
           "module.agreements.enabled",
           "settings.enabled",
-          "configuration.all"
+          "configuration.entries.collection.get",
+          "configuration.entries.item.put"
         ]
       },
       {
