@@ -296,8 +296,9 @@ class AgreementEditRoute extends React.Component {
       const supplementaryProperties = (props?.resources?.supplementaryProperties?.records ?? []);
       supplementaryProperties
         .filter(t => t.primary && initialValues.customProperties[t.name] === undefined)
-        .forEach(t => { initialValues.customProperties[t.name] = ''; });
-
+        // Change default to be an ignored customProperty.
+        // This means any changes without setting the value will be ignored
+        .forEach(t => { initialValues.customProperties[t.name] = [{ _delete: true }]; });
       compose(
         joinRelatedAgreements,
       )(initialValues);
