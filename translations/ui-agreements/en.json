@@ -95,6 +95,7 @@
   "agreements.closeEdit": "Close edit agreement",
   "agreements.createAgreement": "New agreement",
   "agreements.editAgreement": "Edit agreement",
+  "agreements.editAgreement.name": "Edit agreement - {name}",
   "agreements.create.callout": "<strong>Agreement created:</strong> {name}",
   "agreements.update.callout": "<strong>Agreement updated:</strong> {name}",
   "agreementLine": "Agreement line",

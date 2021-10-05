@@ -491,7 +491,7 @@
     "platform.localPlatformCode": "Codice della piattaforma locale",
     "platform.locators": "Localizzatori",
     "platform.name": "Nome",
-    "editResource": "Modifica {nome}",
+    "editResource": "Modifica {name}",
     "platform.addUrlCustomization": "Add URL Customization",
     "platform.urlCustomizer.edit": "Edit",
     "platform.urlCustomizer.delete": "Delete",

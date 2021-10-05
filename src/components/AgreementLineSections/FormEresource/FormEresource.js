@@ -10,7 +10,6 @@ import FormEresourceCard from '../FormEresourceCard';
 import BasketSelector from '../../BasketSelector';
 import EresourceSelector from '../EresourceSelector';
 
-
 const propTypes = {
   agreementLineSource: PropTypes.string,
   basket: PropTypes.arrayOf(PropTypes.object),

@@ -285,6 +285,7 @@
     "duplicateAgreementModal.linkedLicenses": "Linked licenses",
     "duplicateAgreementModal.externalLicenses": "External licenses",
     "duplicateAgreementModal.organizations": "Organizations",
+    "duplicateAgreementModal.supplementaryInformation": "Supplementary information",
     "duplicateAgreementModal.usageData": "Usage data",
     "close": "Close",
     "agreements.export": "Export",
