@@ -6,7 +6,7 @@ import { Button } from '@folio/stripes/components';
 import { Field } from 'react-final-form';
 import { isDetached, isExternal } from '../../utilities';
 
-import FormEresourceCard from '../FormeresourceCard';
+import FormEresourceCard from '../FormEresourceCard';
 import BasketSelector from '../../BasketSelector';
 import EresourceSelector from '../EresourceSelector/EresourceSelector';
 
