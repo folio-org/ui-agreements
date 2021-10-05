@@ -7,7 +7,7 @@ import { initialValues, handlers, data, eholdingData, emptyAgreementLineSource }
 import FormEresource from './FormEresource';
 
 jest.mock('../EresourceSelector/EresourceSelector', () => () => <div>EresourceSelector</div>);
-jest.mock('../FormEresourceCard', () => () => <div>FormEresourceCard</div>);
+jest.mock('../FormEresourceCard/FormEresourceCard', () => () => <div>FormEresourceCard</div>);
 jest.mock('../../BasketSelector', () => () => <div>BasketSelector</div>);
 
 const onSubmit = jest.fn();
