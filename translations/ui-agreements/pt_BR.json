@@ -506,7 +506,7 @@
     "platform.urlCustomizationCode.variables": "Variáveis: inputUrl, platformLocalCode",
     "platform.noUrlCustomization": "Sem customização de URL para esta plataforma",
     "platform.urlCustomization.delete.callout": "Customização da URL excluída",
-    "platform.urlCustomization.deleteFailed.callout": "Não foi possível excluir a customização da URL: {mensagem}",
+    "platform.urlCustomization.deleteFailed.callout": "Não foi possível excluir a customização da URL: {message}",
     "platform.platformProxySettings.name": "Nome",
     "platform.platformProxySettings.status": "Status",
     "platform.platformProxySettings.actions": "Ações",
