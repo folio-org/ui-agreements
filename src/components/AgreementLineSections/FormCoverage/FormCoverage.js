@@ -11,8 +11,8 @@ import {
   SerialCoverage
 } from '@folio/stripes-erm-components';
 
-import CoverageFieldArray from '../CoverageFieldArray';
-import { isExternal } from '../utilities';
+import CoverageFieldArray from '../../CoverageFieldArray';
+import { isExternal } from '../../utilities';
 
 const propTypes = {
   addButtonTooltipId: PropTypes.string,
