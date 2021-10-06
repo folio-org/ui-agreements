@@ -8,7 +8,7 @@ import { isDetached, isExternal } from '../../utilities';
 
 import FormEresourceCard from '../FormEresourceCard';
 import BasketSelector from '../../BasketSelector';
-import EresourceSelector from '../EresourceSelector/EresourceSelector';
+import EresourceSelector from '../EresourceSelector';
 
 const propTypes = {
   agreementLineSource: PropTypes.string,
