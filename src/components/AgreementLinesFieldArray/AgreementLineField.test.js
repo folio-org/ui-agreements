@@ -16,6 +16,8 @@ jest.mock('../EResourceProvider', () => () => <div>EResourceProvider</div>);
 jest.mock('../CoverageFieldArray', () => () => <div>CoverageFieldArray</div>);
 jest.mock('../POLinesFieldArray', () => () => <div>POLinesFieldArray</div>);
 
+const onResourceSelected = jest.fn();
+const onDelete = jest.fn();
 const onSubmit = jest.fn();
 
   describe('AgreementLineField', () => {
@@ -26,7 +28,10 @@ const onSubmit = jest.fn();
           <Field
             component={AgreementLineField}
             name="resource"
+            onDelete={onDelete}
+            onResourceSelected={onResourceSelected}
             resource={{}}
+            validate={() => { }}
           />
         </TestForm>,
         translationsProperties
@@ -42,11 +47,14 @@ const onSubmit = jest.fn();
       beforeEach(() => {
         renderComponent = renderWithIntl(
           <TestForm onSubmit={onSubmit}>
-            <AgreementLineField
+            <Field
+              component={AgreementLineField}
               index={0}
-              input={{ name:'resource' }}
-              meta={data.meta}
+              name="resource"
+              onDelete={onDelete}
+              onResourceSelected={onResourceSelected}
               resource={data.resource}
+              validate={() => { }}
             />
           </TestForm>,
           translationsProperties
@@ -76,11 +84,14 @@ const onSubmit = jest.fn();
       beforeEach(() => {
         renderComponent = renderWithIntl(
           <TestForm onSubmit={onSubmit}>
-            <AgreementLineField
+            <Field
+              component={AgreementLineField}
               index={0}
-              input={{ name:'resource' }}
-              meta={detachedData.meta}
+              name="resource"
+              onDelete={onDelete}
+              onResourceSelected={onResourceSelected}
               resource={detachedData.resource}
+              validate={() => { }}
             />
           </TestForm>,
           translationsProperties
@@ -104,11 +115,14 @@ const onSubmit = jest.fn();
         test('renders expected fields', () => {
             const { getByTestId, getByRole } = renderWithIntl(
               <TestForm initialValues={{ data }} onSubmit={onSubmit}>
-                <AgreementLineField
+                <Field
+                  component={AgreementLineField}
                   index={0}
-                  input={{ name:'resource' }}
-                  meta={data.meta}
+                  name="resource"
+                  onDelete={onDelete}
+                  onResourceSelected={onResourceSelected}
                   resource={data.resource}
+                  validate={() => { }}
                 />
               </TestForm>,
           translationsProperties
@@ -123,10 +137,12 @@ const onSubmit = jest.fn();
       test('date validation fires for invalid end date', async () => {
         const { getAllByText, queryByText, getByRole } = renderWithIntl(
           <TestForm initialValues={{ data }} onSubmit={onSubmit}>
-            <AgreementLineField
+            <Field
+              component={AgreementLineField}
               index={0}
-              input={{ name:'resource' }}
-              meta={data.meta}
+              name="resource"
+              onDelete={onDelete}
+              onResourceSelected={onResourceSelected}
               resource={data.resource}
             />
           </TestForm>,

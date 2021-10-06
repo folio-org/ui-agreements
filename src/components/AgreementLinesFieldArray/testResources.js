@@ -7,9 +7,9 @@ const detachedData = {
         'activeFrom': '2021-09-01',
         'activeTo': '2021-09-30'
       },
-      'onBlur': 'ƒ () {}',
-      'onChange': 'ƒ () {}',
-      'onFocus': 'ƒ () {}'
+      'onBlur': () => {},
+      'onChange': () => {},
+      'onFocus': () => {}
     },
     'meta': {
       'active': false,
@@ -85,7 +85,7 @@ const detachedData = {
     ],
     'index': 0,
     'onDelete': 'ƒ onDelete() {}',
-    'onResourceSelected': 'ƒ () {}',
+    'onResourceSelected': () => {},
     'poLines': [],
     'resource': {
       'id': 'f9b77ff8-97b4-44fb-84aa-4b2ed17fd836',
@@ -195,9 +195,9 @@ const detachedData = {
         'activeTo': '2021-09-28',
         'note': 'Agreement line note'
       },
-      'onBlur': 'ƒ () {}',
-      'onChange': 'ƒ () {}',
-      'onFocus': 'ƒ () {}'
+      'onBlur': () => {},
+      'onChange': () => {},
+      'onFocus': () => {}
     },
     'meta': {
       'active': false,
@@ -676,7 +676,7 @@ const detachedData = {
     ],
     'index': 4,
     'onDelete': 'ƒ onDelete() {}',
-    'onResourceSelected': 'ƒ () {}',
+    'onResourceSelected': () => {},
     'poLines': [{
       'id': '556abc25-ebbf-3fb2-b478-1bfaff0af4dc',
       'edition': 'First edition',
