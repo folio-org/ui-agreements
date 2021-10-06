@@ -19,7 +19,7 @@ describe('PlatformInfo', () => {
   });
 
   test('renders the expected local platform code key value', async () => {
-    await KeyValue('Local platform code').has({ value: '-' });
+    await KeyValue('Local platform code').has({ value: '2222' });
   });
 });
 
