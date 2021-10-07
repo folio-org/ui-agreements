@@ -1,6 +1,18 @@
 # Change history for ui-agreements
 
-## 7.0.0 (In Progress)
+## 8.0.0 2021-10-07
+* Refactor mod-configuration permissions to require specific perms instead of all permissions. ERM-1881
+* Fixed bug with error on saving an agreement if a change is made to the visibility (internal) flag of a primary property without populating it. ERM-1771
+* Upgrade to stripes v7
+* Support separate options to duplicate supplementary docs and supplementary properties on duplicating an agreement. ERM-1848
+* Standardise identifier display for titleInstances and relatedTitles. ERM-1773
+* Fall back to using identifier from `issn` namespace if no identifier in `eissn` namespace. ERM-1772
+* Add date created and last updated metadata into to Agreements. ERM-1231
+* UX improvements. ERM-1145, ERM-1853
+* Display eresource icon in eresources covered by this agreement MCL. ERM-1556
+* Fixed bug with license note not displaying in Agreements view. ERM-1750
+* Display keyboard shortcuts modal. ERM-1642
+* Add sorting capability on Agreement status by its label. ERM-1691
 * Included interface dependency for erm 5.0
 * Included interface dependency for licenses 4.0
 
