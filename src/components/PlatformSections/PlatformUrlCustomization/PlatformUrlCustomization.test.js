@@ -1,14 +1,17 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { Accordion, MultiColumnList, MultiColumnListCell } from '@folio/stripes-testing';
+import { Accordion, MultiColumnList, MultiColumnListCell, Button } from '@folio/stripes-testing';
 import data from './testResources';
 import translationsProperties from '../../../../test/helpers';
 import PlatformUrlCustomization from './PlatformUrlCustomization';
 
+const onViewUrlCustomizer = jest.fn();
+
 describe('PlatformUrlCustomization', () => {
+let renderComponent;
   beforeEach(() => {
-    renderWithIntl(
+    renderComponent = renderWithIntl(
       <PlatformUrlCustomization
         handlers={data.handlers}
         platform={data.platform}
@@ -19,6 +22,10 @@ describe('PlatformUrlCustomization', () => {
   });
   test('renders the PlatformUrlCustomization Accordion', async () => {
     await Accordion('Platform URL customization settings').exists();
+  });
+
+  test('renders the Lines list MCL', async () => {
+    await MultiColumnList('url-customization').exists();
   });
 
   test('renders expected column count', async () => {
@@ -34,5 +41,24 @@ describe('PlatformUrlCustomization', () => {
       await MultiColumnListCell({ row: 0, columnIndex: 0 }).has({ content: 'Test' }),
       await MultiColumnListCell({ row: 0, columnIndex: 1 }).has({ content: '2222' })
     ]);
+  });
+
+  test('renders the Platform URL customization settings button', async () => {
+    await Button('Platform URL customization settings').exists();
+  });
+
+  test('renders maximum number of URL customization message  ', () => {
+    const { getByText } = renderComponent;
+    expect(getByText('Maximum number of URL customizations is 1')).toBeInTheDocument();
+   });
+
+   describe('Clicking the row', () => {
+    beforeEach(async () => {
+      await MultiColumnList('url-customization').click({ row: 0, columnIndex: 0 });
+    });
+
+    test('should not call the onViewUrlCustomizer callback', () => {
+      expect(onViewUrlCustomizer).not.toHaveBeenCalled();
+    });
   });
 });
