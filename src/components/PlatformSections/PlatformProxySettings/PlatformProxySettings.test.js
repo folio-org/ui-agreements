@@ -31,7 +31,7 @@ const noProxydata = {
     },
     'proxyServers': []
   };
-  
+
   const data = {
     'id': 'platformProxySettings',
     'platform': {
@@ -181,9 +181,8 @@ describe('PlatformProxySettings', () => {
 
     test('renders expected actions value in the row', async () => {
       Promise.all([
-        // eslint-disable-next-line no-useless-escape
-        await MultiColumnListCell({ row: 0, columnIndex: 2 }).has({ content: 'Use this proxyUse the proxy \"proxy test\" for the platform \"ASCE Library\"' }),
-        await MultiColumnListCell({ row: 1, columnIndex: 2 }).has({ content: 'Do not use this proxyDo not use the proxy \"proxy test two\" for the platform \"ASCE Library\"' })
+        await MultiColumnListCell({ row: 0, columnIndex: 2 }).has({ content: 'Use this proxyUse the proxy \'proxy test\' for the platform \'ASCE Library\'' }),
+        await MultiColumnListCell({ row: 1, columnIndex: 2 }).has({ content: 'Do not use this proxyDo not use the proxy \'proxy test two\' for the platform \'ASCE Library\'' })
       ]);
     });
 
