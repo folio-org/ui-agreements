@@ -10,7 +10,7 @@ import {
   Tooltip,
   MultiColumnList
 } from '@folio/stripes/components';
-import { urls } from '../utilities';
+import { urls } from '../../utilities';
 
 const PlatformUrlCustomization = ({
   platform: { id: platformId },
