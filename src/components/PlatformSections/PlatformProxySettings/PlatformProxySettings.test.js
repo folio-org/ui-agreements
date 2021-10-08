@@ -181,8 +181,8 @@ describe('PlatformProxySettings', () => {
 
     test('renders expected actions value in the row', async () => {
       Promise.all([
-        await MultiColumnListCell({ row: 0, columnIndex: 2 }).has({ content: 'Use this proxyUse the proxy \'proxy test\' for the platform \'ASCE Library\'' }),
-        await MultiColumnListCell({ row: 1, columnIndex: 2 }).has({ content: 'Do not use this proxyDo not use the proxy \'proxy test two\' for the platform \'ASCE Library\'' })
+        await MultiColumnListCell({ row: 0, columnIndex: 2 }).has({ content: 'Use this proxyUse the proxy "proxy test" for the platform "ASCE Library"' }),
+        await MultiColumnListCell({ row: 1, columnIndex: 2 }).has({ content: 'Do not use this proxyDo not use the proxy "proxy test two" for the platform "ASCE Library"' })
       ]);
     });
 
