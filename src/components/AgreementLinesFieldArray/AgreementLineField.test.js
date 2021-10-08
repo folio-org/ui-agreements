@@ -22,7 +22,7 @@ const onSubmit = jest.fn();
 
   describe('AgreementLineField', () => {
     let renderComponent;
-    describe('renders expected fields with no initial values', () => {
+    describe('renders expected component', () => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
           <Field
