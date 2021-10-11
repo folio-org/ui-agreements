@@ -255,7 +255,7 @@ describe('AgreementLinesFieldArray', () => {
       );
     });
 
-    test('renders the sumbit button', async () => {
+    test('renders the submit button', async () => {
       await Button('Submit').exists();
     });
 
