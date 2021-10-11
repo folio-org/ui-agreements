@@ -24,5 +24,4 @@ const data = {
     'proxyServers': []
 };
 
-
 export default data;
