@@ -13,7 +13,7 @@ import {
 import FormEresource from './FormEresource';
 
 jest.mock('../EresourceSelector', () => () => <div>EresourceSelector</div>);
-jest.mock('../FormEresourceCard', () => () => <div>FormEresourceCard</div>);
+jest.mock('../FormeresourceCard', () => () => <div>FormEresourceCard</div>);
 jest.mock('../../BasketSelector', () => () => <div>BasketSelector</div>);
 
 const onSubmit = jest.fn();
