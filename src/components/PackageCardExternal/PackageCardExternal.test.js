@@ -7,6 +7,7 @@ import translationsProperties from '../../../test/helpers';
 import PackageCardExternal from './PackageCardExternal';
 
 const packageData = {
+ 'accessStatusType': 'access status type 1',
  'authority': 'EKB-PACKAGE',
  'reference': '150088-1147872',
  'name': 'Access to Research for Development and Innovation (ARDI)',
@@ -20,6 +21,7 @@ const pkg = {
  'id': 'e240e51d-567d-4597-868c-69aede89b2ff',
  'type': 'external',
  'reference_object': {
+  'accessStatusType': 'access status type 2',
   'label': 'Science Database',
   'type': 'Package',
   'provider': 'Proquest Info & Learning Co',
@@ -33,7 +35,7 @@ const pkg = {
 
 let renderComponent;
 describe('PackageCardExternal', () => {
-    describe('renders packageData resource', () => {
+    describe('with packageData resource', () => {
         beforeEach(() => {
             renderComponent = renderWithIntl(
               <Router>
@@ -54,7 +56,7 @@ describe('PackageCardExternal', () => {
             expect(getByRole('link', { name: 'Access to Research for Development and Innovation (ARDI)' })).toBeInTheDocument();
         });
 
-        test('renders the expected contentType value', async () => {
+        test('renders the expected contentType', async () => {
             await KeyValue('Package content type').has({ value: 'Aggregated Full Text' });
         });
 
@@ -63,10 +65,10 @@ describe('PackageCardExternal', () => {
         });
 
         test('renders the expected access status type', async () => {
-            await KeyValue('Access status type').has({ value: '-' });
+            await KeyValue('Access status type').has({ value: 'access status type 1' });
         });
 
-        test('renders the expected providerName value', async () => {
+        test('renders the expected providerName', async () => {
             await KeyValue('Provider').has({ value: 'Research4Life' });
         });
 
@@ -75,7 +77,7 @@ describe('PackageCardExternal', () => {
         });
     });
 
-    describe('renders pkg resource', () => {
+    describe('with pkg resource', () => {
         beforeEach(() => {
             renderComponent = renderWithIntl(
               <Router>
@@ -96,7 +98,7 @@ describe('PackageCardExternal', () => {
             expect(getByRole('link', { name: 'Science Database' })).toBeInTheDocument();
         });
 
-        test('renders the expected contentType value', async () => {
+        test('renders the expected contentType', async () => {
             await KeyValue('Package content type').has({ value: 'Aggregated Full Text' });
         });
 
@@ -105,10 +107,10 @@ describe('PackageCardExternal', () => {
         });
 
         test('renders the expected access status type', async () => {
-            await KeyValue('Access status type').has({ value: '-' });
+            await KeyValue('Access status type').has({ value: 'access status type 2' });
         });
 
-        test('renders the expected providerName value', async () => {
+        test('renders the expected providerName', async () => {
             await KeyValue('Provider').has({ value: 'Proquest Info & Learning Co' });
         });
 
