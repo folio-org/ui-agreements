@@ -184,7 +184,9 @@ export default class AgreementLineField extends React.Component {
     const { resource = {}, index, input: { name } } = this.props;
 
     return (
-      <div>
+      <div
+        data-testid="agreementLineField"
+      >
         {
           isDetached(resource) ?
             this.renderDescription(resource) :

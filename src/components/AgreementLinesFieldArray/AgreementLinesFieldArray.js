@@ -61,6 +61,7 @@ class AgreementLinesFieldArray extends React.Component {
         key={i}
         basket={this.props.data.basket}
         component={AgreementLineField}
+        data-testid={`agreementLinesFieldArray[${i}]`}
         index={i}
         name={`${this.props.name}[${i}]`}
         onDelete={() => this.props.onDeleteField(i, line)}

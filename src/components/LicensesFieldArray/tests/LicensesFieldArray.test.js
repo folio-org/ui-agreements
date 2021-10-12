@@ -167,7 +167,7 @@ describe('LicensesFieldArray', () => {
       expect(getByText('No licenses for this agreement')).toBeInTheDocument();
     });
 
-    it('clicking the add button renders the relatedAgreement field', () => {
+    it('clicking the add button renders the licenseField field', () => {
       const { getByText, getByRole } = renderComponent;
       userEvent.click(getByRole('button', { name: /Add license/i }));
       expect(getByText('LicenseField')).toBeInTheDocument();
