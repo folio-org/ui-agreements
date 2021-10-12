@@ -21,7 +21,6 @@ const isExternal = (resource) => {
   );
 };
 
-
 const isPackage = (resource) => {
   return (
     resource.class === 'org.olf.kb.Pkg' ||
@@ -36,7 +35,7 @@ const FormEresourceCard = ({
 }) => {
   return (
     <>
-      { isExternal(resource) ?
+      {isExternal(resource) ?
         isPackage(resource) ?
           <PackageCardExternal
             component={PackageCardExternal}
@@ -62,7 +61,7 @@ const FormEresourceCard = ({
             headerEnd={headerEnd}
             title={resource}
           />
-    }
+      }
     </>
   );
 };
