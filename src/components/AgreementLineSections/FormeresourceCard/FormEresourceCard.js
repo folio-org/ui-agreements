@@ -21,6 +21,7 @@ const isExternal = (resource) => {
   );
 };
 
+
 const isPackage = (resource) => {
   return (
     resource.class === 'org.olf.kb.Pkg' ||
