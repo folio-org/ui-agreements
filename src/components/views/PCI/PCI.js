@@ -14,16 +14,16 @@ import {
   collapseAllSections,
   expandAllSections
 } from '@folio/stripes/components';
-import DiscoverySettings from '../DiscoverySettings';
+import DiscoverySettings from '../../DiscoverySettings';
 
 import {
   Agreements,
   PCICoverage,
   PCIInfo,
-} from '../EResourceSections';
+} from '../../EResourceSections';
 
-import PackageCard from '../PackageCard';
-import TitleCard from '../TitleCard';
+import PackageCard from '../../PackageCard';
+import TitleCard from '../../TitleCard';
 
 export default class PCI extends React.Component {
   static propTypes = {
@@ -72,11 +72,11 @@ export default class PCI extends React.Component {
       },
       {
         name: 'expandAllSections',
-        handler: (e) => expandAllSections(e, this.accordionStatusRef),
+        handler: /* istanbul ignore next */ (e) => expandAllSections(e, this.accordionStatusRef),
       },
       {
         name: 'collapseAllSections',
-        handler: (e) => collapseAllSections(e, this.accordionStatusRef)
+        handler: /* istanbul ignore next */ (e) => collapseAllSections(e, this.accordionStatusRef)
       }
     ];
 
@@ -118,7 +118,7 @@ export default class PCI extends React.Component {
               />
               {
                 (handlers.isSuppressFromDiscoveryEnabled('pci') ||
-                handlers.isSuppressFromDiscoveryEnabled('title'))
+                  handlers.isSuppressFromDiscoveryEnabled('title'))
                 && <DiscoverySettings handlers={handlers} id="discoverySettings" pci={eresource} />
               }
             </AccordionSet>
