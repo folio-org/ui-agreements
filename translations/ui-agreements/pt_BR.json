@@ -285,7 +285,6 @@
     "duplicateAgreementModal.linkedLicenses": "Licenças vinculadas",
     "duplicateAgreementModal.externalLicenses": "Licenças externas",
     "duplicateAgreementModal.organizations": "Organizações",
-    "duplicateAgreementModal.supplementaryInformation": "Informação suplementar",
     "duplicateAgreementModal.usageData": "Dados de uso",
     "close": "Fechar",
     "agreements.export": "Exportar",
@@ -554,5 +553,8 @@
     "basketSelector.selectResourceMessage": "Por favor, selecione um recurso eletrônico para continuar",
     "title.closeEdit": "Fechar edição do título",
     "organizations.primary": "Organização primária",
-    "relatedAgreements.linkToParentError": "<strong> Erro: </strong> contrato \" {agreement} \" não foi vinculado porque um contrato não pode ser vinculado a si mesmo."
+    "relatedAgreements.linkToParentError": "<strong> Erro: </strong> contrato \" {agreement} \" não foi vinculado porque um contrato não pode ser vinculado a si mesmo.",
+    "agreements.editAgreement.name": "Edit agreement - {name}",
+    "duplicateAgreementModal.supplementaryDocuments": "Supplementary documents",
+    "duplicateAgreementModal.supplementaryProperties": "Supplementary properties"
 }

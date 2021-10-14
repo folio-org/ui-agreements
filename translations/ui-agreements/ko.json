@@ -285,7 +285,6 @@
     "duplicateAgreementModal.linkedLicenses": "연결된 라이선스",
     "duplicateAgreementModal.externalLicenses": "외부 라이선스",
     "duplicateAgreementModal.organizations": "공급사",
-    "duplicateAgreementModal.supplementaryInformation": "추가 정보",
     "duplicateAgreementModal.usageData": "통계 데이터",
     "close": "닫기",
     "agreements.export": "내보내기",
@@ -554,5 +553,8 @@
     "basketSelector.selectResourceMessage": "Please select an e-resource to continue",
     "title.closeEdit": "Close edit title",
     "organizations.primary": "Primary organization",
-    "relatedAgreements.linkToParentError": "<strong>Error:</strong> Agreement \"{agreement}\" was not linked because an agreement cannot be linked to itself."
+    "relatedAgreements.linkToParentError": "<strong>Error:</strong> Agreement \"{agreement}\" was not linked because an agreement cannot be linked to itself.",
+    "agreements.editAgreement.name": "Edit agreement - {name}",
+    "duplicateAgreementModal.supplementaryDocuments": "Supplementary documents",
+    "duplicateAgreementModal.supplementaryProperties": "Supplementary properties"
 }

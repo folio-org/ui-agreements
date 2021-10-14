@@ -285,7 +285,6 @@
     "duplicateAgreementModal.linkedLicenses": "تراخيص متصلة",
     "duplicateAgreementModal.externalLicenses": "التراخيص الخارجية",
     "duplicateAgreementModal.organizations": "المؤسسات",
-    "duplicateAgreementModal.supplementaryInformation": "معلومات تكميلية",
     "duplicateAgreementModal.usageData": "بيانات الاستخدام",
     "close": "إغلاق",
     "agreements.export": "تصدير",
@@ -554,5 +553,8 @@
     "basketSelector.selectResourceMessage": "يرجى تحديد مورد إلكتروني للمتابعة",
     "title.closeEdit": "إغلاق تحرير العنوان",
     "organizations.primary": "المؤسسة الأساسية",
-    "relatedAgreements.linkToParentError": "<strong>خطأ:</strong> لم يتم ربط الاتفاقية \"{agreement}\" لأنه لا يمكن ربط اتفاقية بنفسها."
+    "relatedAgreements.linkToParentError": "<strong>خطأ:</strong> لم يتم ربط الاتفاقية \"{agreement}\" لأنه لا يمكن ربط اتفاقية بنفسها.",
+    "agreements.editAgreement.name": "Edit agreement - {name}",
+    "duplicateAgreementModal.supplementaryDocuments": "Supplementary documents",
+    "duplicateAgreementModal.supplementaryProperties": "Supplementary properties"
 }
