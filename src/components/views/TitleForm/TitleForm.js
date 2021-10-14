@@ -17,10 +17,10 @@ import {
 
 import { AppIcon, TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
-import TitleCardInfo from '../TitleCard/TitleCardInfo';
-import TitleFormInfo from './TitleFormInfo';
+import TitleCardInfo from '../../TitleCard/TitleCardInfo';
+import TitleFormInfo from '../TitleFormInfo';
 
-import css from '../styles.css';
+import css from '../../styles.css';
 
 const TitleForm = ({
   eresource,
@@ -44,7 +44,7 @@ const TitleForm = ({
   const shortcuts = [
     {
       name: 'save',
-      handler: (e) => handleSaveKeyCommand(e, { handleSubmit, pristine, submitting }),
+      handler: /* istanbul ignore next */ (e) => handleSaveKeyCommand(e, { handleSubmit, pristine, submitting }),
     },
   ];
 
@@ -77,7 +77,7 @@ const TitleForm = ({
               renderEnd={(
                 <Button
                   buttonStyle="primary mega"
-                  disabled={pristine || submitting}
+                  disabled={pristine || /* istanbul ignore next */submitting}
                   id="clickable-update-title"
                   marginBottom0
                   onClick={handleSubmit}
