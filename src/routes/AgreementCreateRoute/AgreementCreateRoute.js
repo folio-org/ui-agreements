@@ -179,6 +179,7 @@ class AgreementCreateRoute extends React.Component {
     };
   }
 
+/* istanbul ignore next */
   handleBasketLinesAdded = () => {
     this.props.mutator.query.update({
       addFromBasket: null,
@@ -187,11 +188,13 @@ class AgreementCreateRoute extends React.Component {
     });
   }
 
+/* istanbul ignore next */
   handleClose = () => {
     const { location } = this.props;
     this.props.history.push(`${urls.agreements()}${location.search}`);
   }
 
+/* istanbul ignore next */
   handleSubmit = (agreement) => {
     const { history, location, mutator, resources } = this.props;
     const relationshipTypeValues = resources?.relationshipTypeValues?.records ?? [];

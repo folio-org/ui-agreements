@@ -3,7 +3,6 @@ import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-import { Button } from '@folio/stripes-testing';
 import { noop } from 'lodash';
 import translationsProperties from '../../../test/helpers';
 import AgreementCreateRoute from './AgreementCreateRoute';
@@ -161,7 +160,7 @@ const agreements = {
 };
 
 const data = {
-  checkAsyncValidation: () => {},
+  checkAsyncValidation: () => jest.fn(),
   handlers: {
     onDownloadFile: () => {},
     onUploadFile: () => {}
@@ -198,23 +197,9 @@ describe('AgreementCreateRoute', () => {
       );
     });
 
-    test('displays the new agreement', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('New agreement')).toBeInTheDocument();
-    });
-
-    test('displays the name label', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Name')).toBeInTheDocument();
-    });
-
-    test('display the * symbol', () => {
-      const { getAllByText } = renderComponent;
-      expect(getAllByText('*'));
-    });
-
-    test('renders the submit button', async () => {
-      await Button('stripes-components.collapseAll').exists();
+    test('renders the agreementForm component', () => {
+      const { getByTestId } = renderComponent;
+      expect(getByTestId('agreements')).toBeInTheDocument();
     });
   });
 
