@@ -27,7 +27,7 @@ const serialTitleWithRelatedTitles = {
      },
      'templatedUrls': [{
       'id': '97c538e8-3e98-4b9b-9314-2f64108af8be',
-      'url': 'http://www.jstor.org/action/showPublication?journalCode=19thcenturymusic',
+      'url': 'https://www.jstor.org/action/showPublication?journalCode=19thcenturymusic',
       'name': 'defaultUrl',
       'resource': {
        'id': 'e3344a28-b26f-4fde-9b83-6db31bab74e6'
