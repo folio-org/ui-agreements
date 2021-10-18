@@ -207,7 +207,7 @@ class AgreementForm extends React.Component {
         isWithinScope={checkScope}
         scope={document.body}
       >
-        <div data-test-agreements data-testid="agreements">
+        <div data-testid="agreements">
           <Paneset>
             <FormattedMessage id="ui-agreements.create">
               {create => (
