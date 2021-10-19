@@ -554,7 +554,7 @@
     "title.closeEdit": "Fechar edição do título",
     "organizations.primary": "Organização primária",
     "relatedAgreements.linkToParentError": "<strong> Erro: </strong> contrato \" {agreement} \" não foi vinculado porque um contrato não pode ser vinculado a si mesmo.",
-    "agreements.editAgreement.name": "Edit agreement - {name}",
-    "duplicateAgreementModal.supplementaryDocuments": "Supplementary documents",
-    "duplicateAgreementModal.supplementaryProperties": "Supplementary properties"
+    "agreements.editAgreement.name": "Editar contrato - {name}",
+    "duplicateAgreementModal.supplementaryDocuments": "Documentos suplementares",
+    "duplicateAgreementModal.supplementaryProperties": "Propriedades suplementares"
 }
