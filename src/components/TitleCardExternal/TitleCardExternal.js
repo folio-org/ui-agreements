@@ -38,7 +38,7 @@ const TitleCardExternal = ({
       headerStart={(
         <AppIcon app="eholdings" size="small">
           <strong data-test-title-instance-name>
-            <EResourceLink eresource={titleInfo} searchString={searchString} />
+            <EResourceLink eresource={title} searchString={searchString} />
           </strong>
         </AppIcon>
       )}
