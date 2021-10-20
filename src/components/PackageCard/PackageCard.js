@@ -42,6 +42,7 @@ const PackageCard = ({
     <Card
       cardStyle="positive"
       data-test-package-card
+      data-testid="packageCard"
       headerEnd={headerEnd}
       headerStart={(
         <AppIcon app="agreements" iconKey="eresource" size="small">
