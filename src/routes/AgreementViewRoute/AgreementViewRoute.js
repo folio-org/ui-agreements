@@ -9,12 +9,12 @@ import { withTags } from '@folio/stripes/smart-components';
 import { preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
-import withFileHandlers from './components/withFileHandlers';
-import View from '../components/views/Agreement';
-import { parseMclPageSize, urls } from '../components/utilities';
-import { errorTypes, resultCount } from '../constants';
+import withFileHandlers from '../components/withFileHandlers';
+import View from '../../components/views/Agreement';
+import { parseMclPageSize, urls } from '../../components/utilities';
+import { errorTypes, resultCount } from '../../constants';
 
-import { joinRelatedAgreements } from './utilities/processRelatedAgreements';
+import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
 
 const { RECORDS_PER_REQUEST_MEDIUM, RECORDS_PER_REQUEST_LARGE } = resultCount;
 
