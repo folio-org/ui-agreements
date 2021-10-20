@@ -519,6 +519,17 @@ const documentCategories = {
     'resource': 'documentCategories',
     'module': '@folio/agreements',
     'throwErrors': true
+
+};
+
+const loadingView = {
+    'hasLoaded': false,
+    'isPending': true,
+    'failed': false,
+    'records': [],
+    'successfulMutations': [],
+    'failedMutations': [],
+    'pendingMutations': []
 };
 
 export {
@@ -536,4 +547,5 @@ export {
     reasonForClosureValues,
     relationshipTypeValues,
     renewalPriorityValues,
+    loadingView
 };

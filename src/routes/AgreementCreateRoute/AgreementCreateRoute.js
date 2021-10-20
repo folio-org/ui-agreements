@@ -188,7 +188,6 @@ class AgreementCreateRoute extends React.Component {
     });
   }
 
-/* istanbul ignore next */
   handleClose = () => {
     const { location } = this.props;
     this.props.history.push(`${urls.agreements()}${location.search}`);
