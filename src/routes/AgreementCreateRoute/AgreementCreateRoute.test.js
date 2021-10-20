@@ -3,7 +3,6 @@ import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-import { screen } from '@testing-library/react';
 import { noop } from 'lodash';
 import {
   agreements,
@@ -149,7 +148,6 @@ describe('AgreementCreateRoute', () => {
     });
 
     test('renders loadingView', () => {
-      screen.debug();
       const { getByText } = renderComponent;
       expect(getByText('LoadingView')).toBeInTheDocument();
     });
@@ -170,7 +168,6 @@ describe('AgreementCreateRoute', () => {
     });
 
     test('displays the permission error', () => {
-      screen.debug();
       const { getByText } = renderComponent;
       expect(getByText('stripes-smart-components.permissionError')).toBeInTheDocument();
     });
