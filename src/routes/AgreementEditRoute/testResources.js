@@ -378,7 +378,7 @@ const reasonForClosureValues = {
     'resource': 'reasonForClosureValues',
     'module': '@folio/agreements',
     'throwErrors': true
-    };
+};
 
 const amendmentStatusValues = {
     'hasLoaded': true,
@@ -695,13 +695,52 @@ const supplementaryProperties = {
 };
 
 const users = {
-    'hasLoaded': false,
+    'hasLoaded': true,
     'isPending': false,
     'failed': false,
-    'records': [],
+    'records': [{
+        'username': 'devan',
+        'id': '9e87bfea-2d31-4cc3-9cef-9e1e67553243',
+        'barcode': '649452403745915',
+        'active': false,
+        'type': 'patron',
+        'patronGroup': 'ad0bc554-d5bc-463c-85d1-5562127ae91b',
+        'departments': [],
+        'proxyFor': [],
+        'personal': {
+            'lastName': 'Miller',
+            'firstName': 'Lolita',
+            'middleName': 'Dayton',
+            'email': 'muriel@jaskolski-hand-and-shields.so',
+            'phone': '094-136-9018 x0864',
+            'mobilePhone': '(124)569-8555 x042',
+            'dateOfBirth': '1950-10-14T00:00:00.000+00:00',
+            'addresses': '[{…}]',
+            'preferredContactTypeId': '005'
+        },
+        'enrollmentDate': '2018-09-22T00:00:00.000+00:00',
+        'expirationDate': '2020-06-13T00:00:00.000+00:00',
+        'createdDate': '2021-10-20T01:53:04.298+00:00',
+        'updatedDate': '2021-10-20T01:53:04.298+00:00',
+        'metadata': {
+            'createdDate': '2021-10-20T01:53:04.295+00:00',
+            'updatedDate': '2021-10-20T01:53:04.295+00:00'
+        }
+    }],
     'successfulMutations': [],
     'failedMutations': [],
-    'pendingMutations': []
+    'pendingMutations': [],
+    'loadedAt': 'Wed Oct 20 2021 10:28:33 GMT+0100 (British Summer Time)',
+    'url': 'https://folio-snapshot-okapi.dev.folio.org/users?limit=100&query=id%3D%3D9e87bfea-2d31-4cc3-9cef-9e1e67553243',
+    'headers': 'Headers(undefined) {"content-type" => "application/json"}',
+    'httpStatus': 200,
+    'other': {
+        'totalRecords': 1,
+        'resultInfo': '{diagnostics: Array(0), facets: Array(0), totalReco…}'
+    },
+    'resource': 'users',
+    'module': '@folio/agreements',
+    'throwErrors': true
 };
 
 const basket = [{

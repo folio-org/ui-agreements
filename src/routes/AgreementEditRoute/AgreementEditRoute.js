@@ -234,6 +234,7 @@ class AgreementEditRoute extends React.Component {
     };
   }
 
+/* istanbul ignore next */
   static getDerivedStateFromProps(props, state) {
     let updated = false;
 
@@ -332,6 +333,7 @@ class AgreementEditRoute extends React.Component {
     return null;
   }
 
+/* istanbul ignore next */
   handleBasketLinesAdded = () => {
     this.props.mutator.query.update({
       addFromBasket: null,
@@ -345,6 +347,7 @@ class AgreementEditRoute extends React.Component {
     this.props.history.push(`${urls.agreementView(match.params.id)}${location.search}`);
   }
 
+/* istanbul ignore next */
   handleSubmit = (agreement) => {
     const { history, location, mutator, resources } = this.props;
     const relationshipTypeValues = resources?.relationshipTypeValues?.records ?? [];
@@ -362,6 +365,7 @@ class AgreementEditRoute extends React.Component {
       });
   }
 
+/* istanbul ignore next */
   getAgreementLines = () => {
     return [
       ...(this.props.resources?.agreementLines?.records ?? []),
