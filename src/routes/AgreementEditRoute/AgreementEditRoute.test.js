@@ -21,10 +21,16 @@ import {
   reasonForClosureValues,
   relationshipTypeValues,
   renewalPriorityValues,
-  initialValues
+  loadingView
 } from './testResources';
 import translationsProperties from '../../../test/helpers';
 import AgreementEditRoute from './AgreementEditRoute';
+
+
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  LoadingView: () => <div>LoadingView</div>,
+}));
 
 const data = {
   checkAsyncValidation: () => jest.fn(),
@@ -73,6 +79,53 @@ const data = {
   }
 };
 
+const isPendingData = {
+  checkAsyncValidation: () => jest.fn(),
+  handlers: {
+    onDownloadFile: () => {},
+    onUploadFile: () => {}
+  },
+  history: {
+    push: () => jest.fn()
+  },
+  location: {
+    search :{}
+  },
+  match: {
+    params: {}
+  },
+  mutator: {
+    agreement: {
+      PUT: noop
+    },
+    agreements: {
+      PUT: noop
+    },
+    query: {
+      update: noop
+    },
+  },
+  resources: {
+    loadingView,
+    agreementLines,
+    agreementStatusValues,
+    amendmentStatusValues,
+    supplementaryProperties,
+    users,
+    basket,
+    contactRoleValues,
+    documentCategories,
+    isPerpetualValues,
+    licenseLinkStatusValues,
+    orderLines,
+    orgRoleValues,
+    query,
+    reasonForClosureValues,
+    relationshipTypeValues,
+    renewalPriorityValues,
+  }
+};
+
 describe('AgreementEditRoute', () => {
   describe('rendering the route with permissions', () => {
     let renderComponent;
@@ -91,22 +144,22 @@ describe('AgreementEditRoute', () => {
     });
   });
 
-  // describe('rendering the route with initialValues', () => {
-  //   let renderComponent;
-  //   beforeEach(() => {
-  //     renderComponent = renderWithIntl(
-  //       <MemoryRouter>
-  //         <AgreementEditRoute initialValues={initialValues} />
-  //       </MemoryRouter>,
-  //       translationsProperties
-  //     );
-  //   });
+  describe('rendering loading view', () => {
+    let renderComponent;
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <AgreementEditRoute {...isPendingData} />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
 
-  //   test('renders ', () => {
-  //     const { getByTestId } = renderComponent;
-  //     expect(getByTestId('agreements')).toBeInTheDocument();
-  //   });
-  // });
+    test('renders loadingView', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('LoadingView')).toBeInTheDocument();
+    });
+  });
 
   describe('rendering with no permissions', () => {
     let renderComponent;

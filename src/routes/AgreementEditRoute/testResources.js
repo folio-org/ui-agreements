@@ -340,7 +340,6 @@ const agreementStatusValues = {
     'throwErrors': true
 };
 
-
 const reasonForClosureValues = {
     'hasLoaded': true,
     'isPending': false,
@@ -379,8 +378,7 @@ const reasonForClosureValues = {
     'resource': 'reasonForClosureValues',
     'module': '@folio/agreements',
     'throwErrors': true
-};
-
+    };
 
 const amendmentStatusValues = {
     'hasLoaded': true,
@@ -421,7 +419,6 @@ const amendmentStatusValues = {
     'module': '@folio/agreements',
     'throwErrors': true
 };
-
 
 const contactRoleValues = {
     'hasLoaded': true,
@@ -498,7 +495,6 @@ const documentCategories = {
     'throwErrors': true
 };
 
-
 const isPerpetualValues = {
     'hasLoaded': true,
     'isPending': false,
@@ -528,7 +524,6 @@ const isPerpetualValues = {
     'module': '@folio/agreements',
     'throwErrors': true
 };
-
 
 const licenseLinkStatusValues = {
     'hasLoaded': true,
@@ -737,131 +732,14 @@ const query = {
     'sort': 'name'
 };
 
-
-const initialValues = {
-    'id': '72cd54bc-f152-47a1-b522-2419ea0fefb2',
-    'dateCreated': '2021-10-18T11:59:45Z',
-    'isPerpetual': 'yes',
-    'items': [{
-            'id': '63e27a0b-1101-4747-9b15-e4c5c1aa5843',
-            'dateCreated': '2021-10-18T11:59:45Z',
-            'tags': '[]',
-            'lastUpdated': '2021-10-18T12:39:16Z',
-            'owner': {
-                'id': '72cd54bc-f152-47a1-b522-2419ea0fefb2'
-            },
-            'resource': {
-                'id': '0470d995-2e89-4c4c-bd95-4ef9d43598c6',
-                'class': 'org.olf.kb.Pkg',
-                'name': 'Duncker & Humblot E-Books „Best of reprints“ WIRTSCHAFT & FINANZEN 1875–1941',
-                'suppressFromDiscovery': false,
-                'tags': [],
-                'customCoverage': false,
-                '_object': {
-                    'id': '0470d995-2e89-4c4c-bd95-4ef9d43598c6',
-                    'dateCreated': '2021-10-18T03:40:44Z',
-                    'tags': '[]',
-                    'lastUpdated': '2021-10-18T03:40:44Z',
-                    'vendor': '{id: "9f71e490-2e6d-45ef-97c5-8a67189747db", name: …}',
-                    'coverage': '[]',
-                    'source': 'GOKb',
-                    'remoteKb': '{activationEnabled: false, active: true, cursor: "2…}',
-                    'name': 'Duncker & Humblot E-Books „Best of reprints“ WIRTSCHAFT & FINANZEN 1875–1941',
-                    'suppressFromDiscovery': false,
-                    'reference': 'Duncker_&_Humblot_E-Books_„Best_of_reprints“_WIRTSCHAFT_&_FINANZEN_1875–1941',
-                    'resourceCount': 100,
-                    'class': 'org.olf.kb.Pkg'
-                }
-            },
-            'poLines': '[]',
-            'suppressFromDiscovery': false,
-            'customCoverage': false,
-            'explanation': 'Agreement includes a package containing this item',
-            'startDate': null,
-            'endDate': null,
-            'activeFrom': null,
-            'activeTo': null,
-            'contentUpdated': null,
-            'haveAccess': true
-        },
-        {
-            'id': 'aa52fd79-658d-4448-a054-ff7f8384d0c0',
-            'dateCreated': '2021-10-18T11:59:45Z',
-            'tags': '[]',
-            'lastUpdated': '2021-10-18T12:39:16Z',
-            'owner': '{id: "72cd54bc-f152-47a1-b522-2419ea0fefb2"}',
-            'resource': {
-                'id': 'cbc134bc-0573-4ebd-bad3-34a7546be904',
-                'class': 'org.olf.kb.PackageContentItem',
-                'name': "'\"Wirtschaftswissenschaft?\": [Lujo Brentano zum siebzigsten Geburtst...' on Platform 'Duncker & Humblot eJournals' in Package Duncker & Humblot E-Books „Best of reprints“ WIRTSCHAFT & FINANZEN ...",
-                'suppressFromDiscovery': false,
-                'tags': [],
-                'customCoverage': false,
-                '_object': {
-                    'id': 'cbc134bc-0573-4ebd-bad3-34a7546be904',
-                    'dateCreated': '2021-10-18T03:40:47Z',
-                    'tags': '[]',
-                    'lastUpdated': '2021-10-18T03:40:47Z',
-                    'depth': 'Fulltext',
-                    'coverage': '[]',
-                    'pti': '{class: "org.olf.kb.PlatformTitleInstance", coverag…}',
-                    'pkg': '{class: "org.olf.kb.Pkg", coverage: Array(0), dateC…}',
-                    'addedTimestamp': 1634528444791,
-                    'name': "'\"Wirtschaftswissenschaft?\": [Lujo Brentano zum siebzigsten Geburtst...' on Platform 'Duncker & Humblot eJournals' in Package Duncker & Humblot E-Books „Best of reprints“ WIRTSCHAFT & FINANZEN ...",
-                    'lastSeenTimestamp': 1634528444791,
-                    'suppressFromDiscovery': false,
-                    'longName': "'\"Wirtschaftswissenschaft?\": [Lujo Brentano zum siebzigsten Geburtstag in alter Verehrung zugeeignet]' on Platform 'Duncker & Humblot eJournals' in Package Duncker & Humblot E-Books „Best of reprints“ WIRTSCHAFT & FINANZEN 1875–1941",
-                    'class': 'org.olf.kb.PackageContentItem'
-                }
-            },
-            'poLines': '[]',
-            'suppressFromDiscovery': false,
-            'customCoverage': false,
-            'explanation': 'Agreement includes this item from a package specifically',
-            'startDate': null,
-            'endDate': null,
-            'activeFrom': null,
-            'activeTo': null,
-            'contentUpdated': null,
-            'haveAccess': true
-        }
-    ],
-    'name': 'MR agreement test',
-    'orgs': '[]',
-    'externalLicenseDocs': [{
-        'id': 'fe7d36b7-59b1-4b9f-a058-282375c15d1c',
-        'dateCreated': '2021-10-18T12:13:40Z',
-        'lastUpdated': '2021-10-18T12:13:40Z',
-        'location': 'https://www.tests.co.uk/',
-        'url': 'https://www.tests.co.uk/',
-        'name': 'test',
-        'note': 'note'
-    }],
-    'outwardRelationships': '[]',
-    'customProperties': '{}',
-    'contacts': '[]',
-    'tags': '[]',
-    'lastUpdated': '2021-10-18T12:39:16Z',
-    'inwardRelationships': '[]',
-    'renewalPriority': 'for_review',
-    'endDate': '2021-10-29',
-    'startDate': '2021-10-02',
-    'linkedLicenses': '[]',
-    'docs': '[]',
-    'periods': [{
-        'id': 'af6bcd22-bf64-41c3-84a5-d5f212526131',
-        'startDate': '2021-10-02',
-        'owner': '{id: "72cd54bc-f152-47a1-b522-2419ea0fefb2"}',
-        'endDate': '2021-10-29',
-        'periodStatus': 'current'
-    }],
-    'usageDataProviders': '[]',
-    'agreementStatus': 'active',
-    'supplementaryDocs': '[]',
-    'description': 'agreement description',
-    'cancellationDeadline': null,
-    'alternateNames': '[]',
-    'relatedAgreements': '[]'
+const loadingView = {
+    'hasLoaded': false,
+    'isPending': true,
+    'failed': false,
+    'records': [],
+    'successfulMutations': [],
+    'failedMutations': [],
+    'pendingMutations': []
 };
 
 export {
@@ -882,5 +760,5 @@ export {
     reasonForClosureValues,
     relationshipTypeValues,
     renewalPriorityValues,
-    initialValues
+    loadingView
 };
