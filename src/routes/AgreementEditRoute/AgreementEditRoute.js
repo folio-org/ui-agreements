@@ -333,7 +333,6 @@ class AgreementEditRoute extends React.Component {
     return null;
   }
 
-/* istanbul ignore next */
   handleBasketLinesAdded = () => {
     this.props.mutator.query.update({
       addFromBasket: null,
@@ -365,7 +364,6 @@ class AgreementEditRoute extends React.Component {
       });
   }
 
-/* istanbul ignore next */
   getAgreementLines = () => {
     return [
       ...(this.props.resources?.agreementLines?.records ?? []),

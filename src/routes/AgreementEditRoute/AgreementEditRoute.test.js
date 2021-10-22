@@ -58,7 +58,7 @@ const data = {
     push: () => jest.fn()
   },
   location: {
-    search :{}
+    search :''
   },
   match: {
     params: {}
