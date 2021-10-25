@@ -1,95 +1,99 @@
+const tagsEnabled = true;
+
+const handlers = {
+    'onDownloadFile': 'ƒ () {}',
+    'onUploadFile': 'ƒ () {}'
+};
+
+const history = {
+    'length': 13,
+    'action': 'PUSH',
+    'location': '{hash: "", key: "2v168o", pathname: "/erm/agreement…}',
+    'createHref': 'ƒ createHref() {}',
+    'push': 'ƒ push() {}',
+    'replace': 'ƒ replace() {}',
+    'go': 'ƒ go() {}',
+    'goBack': 'ƒ goBack() {}',
+    'goForward': 'ƒ goForward() {}',
+    'block': 'ƒ block() {}',
+    'listen': 'ƒ listen() {}'
+};
+
+const location = {
+    'pathname': '/erm/agreements/d5b622c5-2564-4d59-bed6-16fdb7c925f1',
+    'search': '?filters=agreementStatus.active%2CagreementStatus.draft%2CagreementStatus.in_negotiation%2CagreementStatus.requested&sort=name',
+    'hash': '',
+    'key': '2v168o'
+};
+
+const match = {
+    'path': '/erm/agreements/:id',
+    'url': '/erm/agreements/d5b622c5-2564-4d59-bed6-16fdb7c925f1',
+    'isExact': true,
+    'params': {
+        'id': 'd5b622c5-2564-4d59-bed6-16fdb7c925f1'
+    }
+};
+
+const intl = {
+    'formats': '{}',
+    'messages': '{stripes-acq-components.FormFooter.cancel: "Cancel"…}',
+    'timeZone': 'UTC',
+    'defaultLocale': 'en',
+    'defaultFormats': '{}',
+    'onError': 'ƒ defaultErrorHandler() {}',
+    'textComponent': 'Symbol(react.fragment)',
+    'locale': 'en-US',
+    'defaultRichTextElements': '{b: ƒ () {}, code: ƒ () {}, div: ƒ () {}, em: ƒ () …}',
+    'formatters': '{getDateTimeFormat: ƒ bound variadic() {}, getDispl…}',
+    'formatNumber': 'ƒ bound formatNumber() {}',
+    'formatNumberToParts': 'ƒ bound formatNumberToParts() {}',
+    'formatRelativeTime': 'ƒ bound formatRelativeTime() {}',
+    'formatDate': 'ƒ bound formatDate() {}',
+    'formatDateToParts': 'ƒ bound formatDateToParts() {}',
+    'formatTime': 'ƒ bound formatTime() {}',
+    'formatDateTimeRange': 'ƒ bound formatDateTimeRange() {}',
+    'formatTimeToParts': 'ƒ bound formatTimeToParts() {}',
+    'formatPlural': 'ƒ bound formatPlural() {}',
+    'formatMessage': 'ƒ bound formatMessage() {}',
+    'formatList': 'ƒ bound formatList() {}',
+    'formatListToParts': 'ƒ bound formatListToParts() {}',
+    'formatDisplayName': 'ƒ bound formatDisplayName() {}'
+};
+
+const stripes = {
+    'okapi': {
+        'url': 'https://folio-snapshot-okapi.dev.folio.org',
+        'tenant': 'diku',
+        'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkaWt1X2FkbWluIiwidXNlcl9pZCI6IjhmY2IwZGUzLTkwMzEtNTRmZi04NzI5LTlkOGJhOWUwY2JjMiIsImlhdCI6MTYzNDkwNTg5OSwidGVuYW50IjoiZGlrdSJ9.D5YnBwnqJpSRluNxVMvmxcshvndZD24zRal4t9e4HVE',
+    },
+};
+
 const agreement = {
     'hasLoaded': true,
     'isPending': false,
     'failed': false,
     'records': [{
-        'id': '373437a0-0023-48ce-b516-c4f8330576a6',
-        'cancellationDeadline': '2021-10-26',
-        'dateCreated': '2021-10-20T08:09:15Z',
+        'id': 'd5b622c5-2564-4d59-bed6-16fdb7c925f1',
+        'cancellationDeadline': '2021-10-10',
+        'dateCreated': '2021-10-22T12:36:46Z',
         'isPerpetual': {
-            'id': '2c91809c7c9b5f3a017c9b67f96a0001',
+            'id': '2c91809c7ca5ab60017ca5b2c7600028',
             'value': 'yes',
             'label': 'Yes'
         },
-        'items': [{
-            'id': 'c1b59b66-8ab6-4008-8b63-57160fc7f66c',
-            'dateCreated': '2021-10-20T08:43:22Z',
-            'activeTo': '2021-10-24',
-            'tags': [],
-            'lastUpdated': '2021-10-20T09:28:28Z',
-            'owner': {
-                'id': '373437a0-0023-48ce-b516-c4f8330576a6'
-            },
-            'resource': {
-                'id': '2116cfd8-7e69-43c5-9ca1-1556d70296ff',
-                'class': 'org.olf.kb.PackageContentItem',
-                'name': "'AI & society' on Platform 'SpringerLink' in Package Springer:Journals:Archiv:Nationallizenzen",
-                'suppressFromDiscovery': false,
-                'tags': '[]',
-                'coverage': '[{…}]',
-                'customCoverage': false,
-                '_object': '{addedTimestamp: 1634695761679, class: "org.olf.kb.…}'
-            },
-            'activeFrom': '2021-10-08',
-            'poLines': [
-                '{id: "35825e38-5658-4e58-9b1d-1e99ed54e61d", owner:…}'
-            ],
-            'suppressFromDiscovery': false,
-            'note': 'agreement line note',
-            'coverage': [
-                '{endDate: "2021-10-26", endIssue: "11", endVolume: …}'
-            ],
-            'customCoverage': true,
-            'explanation': 'Agreement includes this item from a package specifically',
-            'startDate': '2021-10-08',
-            'endDate': '2021-10-24',
-            'contentUpdated': null,
-            'haveAccess': true
-        }],
+        'items': [],
         'name': 'MR agreement test',
         'orgs': [],
         'externalLicenseDocs': [],
-        'outwardRelationships': [{
-            'id': '8e29f1cb-fcb5-481a-82f6-efee7798bc2b',
-            'type': {
-                'id': '2c91809c7c9b5f3a017c9b67fa6e002d',
-                'value': 'provides_post-cancellation_access_for',
-                'label': 'Provides post-cancellation access for'
-            },
-            'note': 'related agreement note',
-            'outward': {
-                'id': '373437a0-0023-48ce-b516-c4f8330576a6',
-                'name': 'MR agreement test',
-                'agreementStatus': '{id: "2c91809c7c9b5f3a017c9b67f9ef0011", label: "Ac…}',
-                'startDate': '2021-10-01',
-                'endDate': '2021-10-31'
-            },
-            'inward': {
-                'id': '05a372bf-ebc4-4564-913d-6b3f4ba2c654',
-                'name': 'MR agr test',
-                'agreementStatus': '{id: "2c91809c7c9b5f3a017c9b67f9ef0011", label: "Ac…}',
-                'startDate': '2021-10-15',
-                'endDate': '2021-10-24'
-            }
-        }],
+        'outwardRelationships': [],
         'customProperties': {},
-        'contacts': [{
-            'id': '4795b652-6715-4268-9013-02b7b8d2b6c3',
-            'owner': {
-                'id': '373437a0-0023-48ce-b516-c4f8330576a6'
-            },
-            'role': {
-                'id': '2c91809c7c9b5f3a017c9b67fa910034',
-                'value': 'erm_librarian',
-                'label': 'ERM librarian'
-            },
-            'user': '9e87bfea-2d31-4cc3-9cef-9e1e67553243'
-        }],
+        'contacts': [],
         'tags': [],
-        'lastUpdated': '2021-10-20T09:28:28Z',
+        'lastUpdated': '2021-10-22T12:36:46Z',
         'inwardRelationships': [],
         'renewalPriority': {
-            'id': '2c91809c7c9b5f3a017c9b67f99b0009',
+            'id': '2c91809c7ca5ab60017ca5b2c7820030',
             'value': 'for_review',
             'label': 'For review'
         },
@@ -97,44 +101,25 @@ const agreement = {
         'startDate': '2021-10-01',
         'linkedLicenses': [],
         'docs': [],
-        'periods': [{
-            'id': 'b40fe1bf-4d2f-461d-8236-81c934c0120a',
-            'startDate': '2021-10-01',
-            'cancellationDeadline': '2021-10-26',
-            'owner': {
-                'id': '373437a0-0023-48ce-b516-c4f8330576a6'
-            },
-            'note': 'agreement period note',
-            'endDate': '2021-10-31',
-            'periodStatus': 'current'
-        }],
+        'periods': [
+            '{cancellationDeadline: "2021-10-10", endDate: "2021…}'
+        ],
         'usageDataProviders': [],
         'agreementStatus': {
-            'id': '2c91809c7c9b5f3a017c9b67f9ef0011',
+            'id': '2c91809c7ca5ab60017ca5b2c7de0038',
             'value': 'active',
             'label': 'Active'
         },
         'supplementaryDocs': [],
         'description': 'agreement description',
         'alternateNames': [],
-        'relatedAgreements': [{
-            'id': '8e29f1cb-fcb5-481a-82f6-efee7798bc2b',
-            'note': 'related agreement note',
-            'agreement': {
-                'id': '05a372bf-ebc4-4564-913d-6b3f4ba2c654',
-                'name': 'MR agr test',
-                'agreementStatus': '{id: "2c91809c7c9b5f3a017c9b67f9ef0011", label: "Ac…}',
-                'startDate': '2021-10-15',
-                'endDate': '2021-10-24'
-            },
-            'type': 'provides_post-cancellation_access_for'
-        }]
+        'relatedAgreements': []
     }],
     'successfulMutations': [],
     'failedMutations': [],
     'pendingMutations': [],
-    'loadedAt': 'Wed Oct 20 2021 12:00:17 GMT+0100 (British Summer Time)',
-    'url': 'https://folio-snapshot-okapi.dev.folio.org/erm/sas/373437a0-0023-48ce-b516-c4f8330576a6',
+    'loadedAt': 'Fri Oct 22 2021 13:36:48 GMT+0100 (British Summer Time)',
+    'url': 'https://folio-snapshot-okapi.dev.folio.org/erm/sas/d5b622c5-2564-4d59-bed6-16fdb7c925f1',
     'headers': 'Headers(undefined) {"content-type" => "application/json;charset=UTF-8"}',
     'httpStatus': 200,
     'other': {
@@ -149,78 +134,21 @@ const agreementLines = {
     'hasLoaded': true,
     'isPending': false,
     'failed': false,
-    'records': [{
-        'id': 'c1b59b66-8ab6-4008-8b63-57160fc7f66c',
-        'dateCreated': '2021-10-20T08:43:22Z',
-        'activeTo': '2021-10-24',
-        'tags': [],
-        'lastUpdated': '2021-10-20T09:28:28Z',
-        'owner': {
-            'id': '373437a0-0023-48ce-b516-c4f8330576a6',
-            'cancellationDeadline': '2021-10-26',
-            'dateCreated': '2021-10-20T08:09:15Z',
-            'isPerpetual': '{id: "2c91809c7c9b5f3a017c9b67f96a0001", label: "Ye…}',
-            'name': 'MR agreement test',
-            'orgs': '[]',
-            'externalLicenseDocs': '[]',
-            'outwardRelationships': '[{…}]',
-            'customProperties': '{}',
-            'contacts': '[{…}]',
-            'tags': '[]',
-            'lastUpdated': '2021-10-20T09:28:28Z',
-            'inwardRelationships': '[]',
-            'renewalPriority': '{id: "2c91809c7c9b5f3a017c9b67f99b0009", label: "Fo…}',
-            'endDate': '2021-10-31',
-            'startDate': '2021-10-01',
-            'linkedLicenses': '[]',
-            'docs': '[]',
-            'periods': '[{…}]',
-            'usageDataProviders': '[]',
-            'agreementStatus': '{id: "2c91809c7c9b5f3a017c9b67f9ef0011", label: "Ac…}',
-            'supplementaryDocs': '[]',
-            'description': 'agreement description',
-            'alternateNames': '[]'
-        },
-        'resource': {
-            'id': '2116cfd8-7e69-43c5-9ca1-1556d70296ff',
-            'class': 'org.olf.kb.PackageContentItem',
-            'name': "'AI & society' on Platform 'SpringerLink' in Package Springer:Journals:Archiv:Nationallizenzen",
-            'suppressFromDiscovery': false,
-            'tags': '[]',
-            'coverage': '[{…}]',
-            'customCoverage': false,
-            '_object': '{addedTimestamp: 1634695761679, class: "org.olf.kb.…}'
-        },
-        'activeFrom': '2021-10-08',
-        'poLines': [
-            '{id: "35825e38-5658-4e58-9b1d-1e99ed54e61d", owner:…}'
-        ],
-        'suppressFromDiscovery': false,
-        'note': 'agreement line note',
-        'coverage': [
-            '{endDate: "2021-10-26", endIssue: "11", endVolume: …}'
-        ],
-        'customCoverage': true,
-        'explanation': 'Agreement includes this item from a package specifically',
-        'startDate': '2021-10-08',
-        'endDate': '2021-10-24',
-        'contentUpdated': null,
-        'haveAccess': true
-    }],
+    'records': [],
     'successfulMutations': [],
     'failedMutations': [],
     'pendingMutations': [],
-    'loadedAt': 'Wed Oct 20 2021 12:00:17 GMT+0100 (British Summer Time)',
-    'url': 'https://folio-snapshot-okapi.dev.folio.org/erm/entitlements?filters=owner%3D373437a0-0023-48ce-b516-c4f8330576a6&perPage=10&sort=resource.name&stats=true',
+    'loadedAt': 'Fri Oct 22 2021 13:36:48 GMT+0100 (British Summer Time)',
+    'url': 'https://folio-snapshot-okapi.dev.folio.org/erm/entitlements?filters=owner%3Dd5b622c5-2564-4d59-bed6-16fdb7c925f1&perPage=10&sort=resource.name&stats=true',
     'headers': 'Headers(undefined) {"content-type" => "application/json;charset=UTF-8"}',
     'httpStatus': 200,
     'other': {
         'pageSize': 10,
         'page': 1,
-        'totalPages': 1,
+        'totalPages': 0,
         'meta': '{}',
-        'totalRecords': 1,
-        'total': 1
+        'totalRecords': 0,
+        'total': 0
     },
     'resource': 'agreementLines',
     'module': '@folio/agreements',
@@ -231,47 +159,21 @@ const agreementEresources = {
     'hasLoaded': true,
     'isPending': false,
     'failed': false,
-    'records': [{
-        'id': '2116cfd8-7e69-43c5-9ca1-1556d70296ff',
-        'class': 'org.olf.kb.PackageContentItem',
-        'name': "'AI & society' on Platform 'SpringerLink' in Package Springer:Journals:Archiv:Nationallizenzen",
-        'suppressFromDiscovery': false,
-        'tags': [],
-        'coverage': [
-            '{endDate: "2021-10-26", endIssue: "11", endVolume: …}'
-        ],
-        'customCoverage': true,
-        '_object': {
-            'id': '2116cfd8-7e69-43c5-9ca1-1556d70296ff',
-            'dateCreated': '2021-10-20T02:12:50Z',
-            'tags': '[]',
-            'lastUpdated': '2021-10-20T02:12:50Z',
-            'depth': 'Fulltext',
-            'coverage': '[{…}]',
-            'pti': '{class: "org.olf.kb.PlatformTitleInstance", coverag…}',
-            'pkg': '{class: "org.olf.kb.Pkg", dateCreated: "2021-10-20T…}',
-            'addedTimestamp': 1634695761679,
-            'name': "'AI & society' on Platform 'SpringerLink' in Package Springer:Journals:Archiv:Nationallizenzen",
-            'lastSeenTimestamp': 1634695761679,
-            'suppressFromDiscovery': false,
-            'longName': "'AI & society' on Platform 'SpringerLink' in Package Springer:Journals:Archiv:Nationallizenzen",
-            'class': 'org.olf.kb.PackageContentItem'
-        }
-    }],
+    'records': [],
     'successfulMutations': [],
     'failedMutations': [],
     'pendingMutations': [],
-    'loadedAt': 'Wed Oct 20 2021 12:00:17 GMT+0100 (British Summer Time)',
-    'url': 'https://folio-snapshot-okapi.dev.folio.org/erm/sas/373437a0-0023-48ce-b516-c4f8330576a6/resources/current?perPage=10&sort=pti.titleInstance.name%3Basc&stats=true',
+    'loadedAt': 'Fri Oct 22 2021 13:36:48 GMT+0100 (British Summer Time)',
+    'url': 'https://folio-snapshot-okapi.dev.folio.org/erm/sas/d5b622c5-2564-4d59-bed6-16fdb7c925f1/resources/current?perPage=10&sort=pti.titleInstance.name%3Basc&stats=true',
     'headers': 'Headers(undefined) {"content-type" => "application/json;charset=UTF-8"}',
     'httpStatus': 200,
     'other': {
         'pageSize': 10,
         'page': 1,
-        'totalPages': 1,
+        'totalPages': 0,
         'meta': '{}',
-        'totalRecords': 1,
-        'total': 1
+        'totalRecords': 0,
+        'total': 0
     },
     'resource': 'agreementEresources',
     'module': '@folio/agreements',
@@ -291,100 +193,13 @@ const interfaces = {
 };
 
 const orderLines = {
-    'hasLoaded': true,
+    'hasLoaded': false,
     'isPending': false,
     'failed': false,
-    'records': [{
-        'id': '556abc25-ebbf-3fb2-b478-1bfaff0af4dc',
-        'edition': 'First edition',
-        'checkinItems': false,
-        'agreementId': '09c6ed1b-3984-4d9a-8f9b-e1200b68b61c',
-        'acquisitionMethod': 'Purchase',
-        'alerts': [],
-        'cancellationRestriction': false,
-        'cancellationRestrictionNote': '',
-        'claims': [
-            '{claimed: false, grace: 0}'
-        ],
-        'collection': false,
-        'contributors': [],
-        'cost': {
-            'listUnitPrice': 0,
-            'listUnitPriceElectronic': 0,
-            'currency': 'USD',
-            'additionalCost': 0,
-            'discount': 0,
-            'discountType': 'percentage',
-            'quantityPhysical': 2,
-            'quantityElectronic': 0,
-            'poLineEstimatedPrice': 0
-        },
-        'description': '',
-        'details': {
-            'receivingNote': '',
-            'productIds': '[{…}]',
-            'subscriptionInterval': 0
-        },
-        'donor': '',
-        'fundDistribution': [
-            '{code: "UNIV-SUBN", distributionType: "percentage",…}'
-        ],
-        'isPackage': false,
-        'locations': [
-            '{locationId: "758258bc-ecc1-41b8-abca-f7b610822ffd"…}'
-        ],
-        'orderFormat': 'Other',
-        'paymentStatus': 'Pending',
-        'physical': {
-            'materialType': 'dd0bf600-dbd9-44ab-9ff2-e2a61a6539f1',
-            'materialSupplier': 'e0fb5df2-cdf1-11e8-a8d5-f2801f1b9fd1',
-            'volumes': '["vol. 1"]'
-        },
-        'poLineDescription': '',
-        'poLineNumber': '81-1',
-        'publicationDate': '1915',
-        'publisher': 'American Bar Association',
-        'purchaseOrderId': 'c27e60f9-6361-44c1-976e-0c4821a33a7d',
-        'receiptStatus': 'Pending',
-        'reportingCodes': [],
-        'requester': '',
-        'rush': false,
-        'selector': '',
-        'source': 'User',
-        'tags': {
-            'tagList': '["CatalogingRecords"]'
-        },
-        'titleOrPackage': 'ABA Journal',
-        'vendorDetail': {
-            'instructions': '',
-            'noteFromVendor': '',
-            'vendorAccount': '',
-            'referenceNumbers': '[]'
-        },
-        'metadata': {
-            'createdDate': '2021-10-20T01:52:48.607+00:00',
-            'updatedDate': '2021-10-20T01:52:48.607+00:00'
-        }
-    }],
+    'records': [],
     'successfulMutations': [],
     'failedMutations': [],
-    'pendingMutations': [],
-    'loadedAt': 'Wed Oct 20 2021 12:00:35 GMT+0100 (British Summer Time)',
-    'url': 'https://folio-snapshot-okapi.dev.folio.org/orders/order-lines?limit=1000&query=id%3D%3D556abc25-ebbf-3fb2-b478-1bfaff0af4dc',
-    'headers': 'Headers(undefined) {"content-type" => "application/json"}',
-    'httpStatus': 200,
-    'other': {
-        'totalRecords': 1
-    },
-    'resource': 'orderLines',
-    'module': '@folio/agreements',
-    'throwErrors': false
-};
-
-const query = {
-    'query': '',
-    'filters': 'agreementStatus.active,agreementStatus.draft,agreementStatus.in_negotiation,agreementStatus.requested',
-    'sort': 'name'
+    'pendingMutations': []
 };
 
 const settings = {
@@ -395,7 +210,7 @@ const settings = {
     'successfulMutations': [],
     'failedMutations': [],
     'pendingMutations': [],
-    'loadedAt': 'Wed Oct 20 2021 12:00:17 GMT+0100 (British Summer Time)',
+    'loadedAt': 'Fri Oct 22 2021 13:36:48 GMT+0100 (British Summer Time)',
     'url': 'https://folio-snapshot-okapi.dev.folio.org/configurations/entries?query=(module=AGREEMENTS%20and%20configName=general)',
     'headers': 'Headers(undefined) {"content-type" => "application/json"}',
     'httpStatus': 200,
@@ -409,53 +224,120 @@ const settings = {
 };
 
 const users = {
-    'hasLoaded': true,
+    'hasLoaded': false,
     'isPending': false,
     'failed': false,
-    'records': [{
-        'username': 'devan',
-        'id': '9e87bfea-2d31-4cc3-9cef-9e1e67553243',
-        'barcode': '649452403745915',
-        'active': false,
-        'type': 'patron',
-        'patronGroup': 'ad0bc554-d5bc-463c-85d1-5562127ae91b',
-        'departments': [],
-        'proxyFor': [],
-        'personal': {
-            'lastName': 'Miller',
-            'firstName': 'Lolita',
-            'middleName': 'Dayton',
-            'email': 'muriel@jaskolski-hand-and-shields.so',
-            'phone': '094-136-9018 x0864',
-            'mobilePhone': '(124)569-8555 x042',
-            'dateOfBirth': '1950-10-14T00:00:00.000+00:00',
-            'addresses': '[{…}]',
-            'preferredContactTypeId': '005'
-        },
-        'enrollmentDate': '2018-09-22T00:00:00.000+00:00',
-        'expirationDate': '2020-06-13T00:00:00.000+00:00',
-        'createdDate': '2021-10-20T01:53:04.298+00:00',
-        'updatedDate': '2021-10-20T01:53:04.298+00:00',
-        'metadata': {
-            'createdDate': '2021-10-20T01:53:04.295+00:00',
-            'updatedDate': '2021-10-20T01:53:04.295+00:00'
-        }
-    }],
+    'records': [],
     'successfulMutations': [],
     'failedMutations': [],
-    'pendingMutations': [],
-    'loadedAt': 'Wed Oct 20 2021 12:00:35 GMT+0100 (British Summer Time)',
-    'url': 'https://folio-snapshot-okapi.dev.folio.org/users?limit=100&query=id%3D%3D9e87bfea-2d31-4cc3-9cef-9e1e67553243',
-    'headers': 'Headers(undefined) {"content-type" => "application/json"}',
-    'httpStatus': 200,
-    'other': {
-        'totalRecords': 1,
-        'resultInfo': '{diagnostics: Array(0), facets: Array(0), totalReco…}'
-    },
-    'resource': 'users',
-    'module': '@folio/agreements',
-    'throwErrors': true
+    'pendingMutations': []
 };
+
+const interfacesCredentials = {
+    'hasLoaded': false,
+    'isPending': false,
+    'failed': false,
+    'records': [],
+    'successfulMutations': [],
+    'failedMutations': [],
+    'pendingMutations': []
+};
+
+const query = {
+    'query': '',
+    'filters': 'agreementStatus.active,agreementStatus.draft,agreementStatus.in_negotiation,agreementStatus.requested',
+    'sort': 'name'
+};
+
+const mutator = {
+    'agreement': {
+        'DELETE': 'ƒ DELETE() {}',
+        'PUT': 'ƒ PUT() {}',
+        'POST': 'ƒ POST() {}',
+        'cancel': 'ƒ cancel() {}'
+    },
+    'agreementLines': {
+        'DELETE': 'ƒ DELETE() {}',
+        'PUT': 'ƒ PUT() {}',
+        'POST': 'ƒ POST() {}',
+        'cancel': 'ƒ cancel() {}'
+    },
+    'agreementEresources': {
+        'DELETE': 'ƒ DELETE() {}',
+        'PUT': 'ƒ PUT() {}',
+        'POST': 'ƒ POST() {}',
+        'cancel': 'ƒ cancel() {}'
+    },
+    'eresourcesFilterPath': {
+        'update': 'ƒ update() {}',
+        'replace': 'ƒ replace() {}'
+    },
+    'interfaces': {
+        'DELETE': 'ƒ DELETE() {}',
+        'PUT': 'ƒ PUT() {}',
+        'POST': 'ƒ POST() {}',
+        'cancel': 'ƒ cancel() {}'
+    },
+    'orderLines': {
+        'DELETE': 'ƒ DELETE() {}',
+        'PUT': 'ƒ PUT() {}',
+        'POST': 'ƒ POST() {}',
+        'cancel': 'ƒ cancel() {}'
+    },
+    'settings': {
+        'DELETE': 'ƒ DELETE() {}',
+        'PUT': 'ƒ PUT() {}',
+        'POST': 'ƒ POST() {}',
+        'cancel': 'ƒ cancel() {}'
+    },
+    'supplementaryProperties': {
+        'DELETE': 'ƒ DELETE() {}',
+        'PUT': 'ƒ PUT() {}',
+        'POST': 'ƒ POST() {}',
+        'cancel': 'ƒ cancel() {}'
+    },
+    'terms': {
+        'DELETE': 'ƒ DELETE() {}',
+        'PUT': 'ƒ PUT() {}',
+        'POST': 'ƒ POST() {}',
+        'cancel': 'ƒ cancel() {}'
+    },
+    'users': {
+        'DELETE': 'ƒ DELETE() {}',
+        'PUT': 'ƒ PUT() {}',
+        'POST': 'ƒ POST() {}',
+        'cancel': 'ƒ cancel() {}'
+    },
+    'interfacesCredentials': {
+        'DELETE': 'ƒ DELETE() {}',
+        'PUT': 'ƒ PUT() {}',
+        'POST': 'ƒ POST() {}',
+        'cancel': 'ƒ cancel() {}'
+    },
+    'interfaceRecord': {
+        'update': 'ƒ update() {}',
+        'replace': 'ƒ replace() {}'
+    },
+    'agreementEresourcesOffset': {
+        'update': 'ƒ update() {}',
+        'replace': 'ƒ replace() {}'
+    },
+    'agreementLinesOffset': {
+        'update': 'ƒ update() {}',
+        'replace': 'ƒ replace() {}'
+    },
+    'query': {
+        'update': 'ƒ update() {}',
+        'replace': 'ƒ replace() {}'
+    },
+    'tagSettings': {
+        'DELETE': 'ƒ DELETE() {}',
+        'PUT': 'ƒ PUT() {}',
+        'POST': 'ƒ POST() {}',
+        'cancel': 'ƒ cancel() {}'
+    }
+};
+
 
 export {
     agreement,
@@ -466,5 +348,14 @@ export {
     orderLines,
     query,
     settings,
-    users
+    users,
+    stripes,
+    history,
+    tagsEnabled,
+    location,
+    handlers,
+    match,
+    intl,
+    interfacesCredentials,
+    mutator
 };
