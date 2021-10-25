@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
@@ -6,33 +7,41 @@ import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
 import { noop } from 'lodash';
 import {
-  agreement,
-  agreementLines,
-  agreementStatusValues,
-  amendmentStatusValues,
-  supplementaryProperties,
-  users,
-  basket,
-  contactRoleValues,
-  documentCategories,
-  isPerpetualValues,
-  licenseLinkStatusValues,
-  orderLines,
-  orgRoleValues,
-  query,
-  reasonForClosureValues,
-  relationshipTypeValues,
-  renewalPriorityValues,
-  loadingView
+    okapi,
+    match,
+    location,
+    agreement,
+    agreementLines,
+    agreementStatusValues,
+    amendmentStatusValues,
+    supplementaryProperties,
+    users,
+    basket,
+    contactRoleValues,
+    documentCategories,
+    isPerpetualValues,
+    licenseLinkStatusValues,
+    orderLines,
+    orgRoleValues,
+    query,
+    reasonForClosureValues,
+    relationshipTypeValues,
+    renewalPriorityValues,
+    loadingView
 } from './testResources';
 import translationsProperties from '../../../test/helpers';
 import AgreementEditRoute from './AgreementEditRoute';
 
-
 const BasketLineButton = (props) => {
   return <Button onClick={props.handlers.onBasketLinesAdded}>BasketLineButton</Button>;
 };
+
+const CloseButton = (props) => {
+  return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
+};
+
 const queryUpdateMock = jest.fn();
+const historyPushMock = jest.fn();
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -44,6 +53,7 @@ jest.mock('../../components/views/AgreementForm', () => {
     <div>
       <div>AgreementForm</div>
       <BasketLineButton {...props} />
+      <CloseButton {...props} />
     </div>
   );
 });
@@ -55,14 +65,10 @@ const data = {
     onUploadFile: () => {}
   },
   history: {
-    push: () => jest.fn()
+    push: historyPushMock
   },
-  location: {
-    search :''
-  },
-  match: {
-    params: {}
-  },
+  location,
+  match,
   mutator: {
     agreement: {
       PUT: noop
@@ -74,6 +80,7 @@ const data = {
       update: queryUpdateMock
     },
   },
+  okapi,
   resources: {
     agreement,
     agreementLines,
@@ -162,6 +169,11 @@ describe('AgreementEditRoute', () => {
       test('calls the BasketLineButton', async () => {
         await ButtonInteractor('BasketLineButton').click();
         expect(queryUpdateMock).toHaveBeenCalled();
+      });
+
+      test('calls the CloseButton', async () => {
+        await ButtonInteractor('CloseButton').click();
+        expect(historyPushMock).toHaveBeenCalled();
       });
   });
 

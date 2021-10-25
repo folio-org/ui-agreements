@@ -1,3 +1,33 @@
+const location = {
+    'pathname': '/erm/agreements/61281b25-436c-4f73-bda8-34dddce87ad0/edit',
+    'search': '?filters=agreementStatus.active%2CagreementStatus.draft%2CagreementStatus.in_negotiation%2CagreementStatus.requested&sort=name',
+    'hash': '',
+    'key': '3278mp'
+};
+
+const match = {
+    'path': '/erm/agreements/:id/edit',
+    'url': '/erm/agreements/61281b25-436c-4f73-bda8-34dddce87ad0/edit',
+    'isExact': true,
+    'params': {
+        'id': '61281b25-436c-4f73-bda8-34dddce87ad0'
+    }
+};
+
+const okapi = {
+    'url': 'https://folio-snapshot-okapi.dev.folio.org',
+    'tenant': 'diku',
+    'translations': '{stripes-acq-components.FormFooter.cancel: "Cancel"…}',
+    'locale': 'en-US',
+    'currentUser': '{addresses: Array(0), curServicePoint: {…}, email: …}',
+    'currentPerms': '{accounts.cancel.post: true, accounts.check-pay.pos…}',
+    'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkaWt1X2FkbWluIiwidXNlcl9pZCI6ImVlMTliODQ0LWVlOTgtNWJlYy04ZGRmLTdmMTczNWE1MTFiZCIsImlhdCI6MTYzNTE1NDUwOSwidGVuYW50IjoiZGlrdSJ9.XeVH8eOdeEXWu5bDhwGisaqVKK4VAABM0MaOfQiPrFg',
+    'plugins': '{}',
+    'bindings': '{}',
+    'ssoEnabled': false,
+    'okapiReady': true
+};
+
 const agreement = {
     'hasLoaded': true,
     'isPending': false,
@@ -782,6 +812,9 @@ const loadingView = {
 };
 
 export {
+    okapi,
+    match,
+    location,
     agreement,
     agreementLines,
     agreementStatusValues,
