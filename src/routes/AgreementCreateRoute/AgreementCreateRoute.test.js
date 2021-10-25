@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
@@ -36,14 +37,19 @@ const BasketLineButton = (props) => {
   return <Button onClick={props.handlers.onBasketLinesAdded}>BasketLineButton</Button>;
 };
 
-const queryUpdateMock = jest.fn();
+const CloseButton = (props) => {
+  return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
+};
 
+const queryUpdateMock = jest.fn();
+const historyPushMock = jest.fn();
 
 jest.mock('../../components/views/AgreementForm', () => {
   return (props) => (
     <div>
       <div>AgreementForm</div>
       <BasketLineButton {...props} />
+      <CloseButton {...props} />
     </div>
   );
 });
@@ -55,7 +61,7 @@ const data = {
     onUploadFile: () => { },
   },
   history: {
-    push: noop
+    push: historyPushMock
   },
   location: {
     search: ''
@@ -145,6 +151,11 @@ describe('AgreementCreateRoute', () => {
     test('calls the BasketLineButton', async () => {
       await ButtonInteractor('BasketLineButton').click();
       expect(queryUpdateMock).toHaveBeenCalled();
+    });
+
+    test('calls the CloseButton', async () => {
+      await ButtonInteractor('CloseButton').click();
+      expect(historyPushMock).toHaveBeenCalled();
     });
   });
 
