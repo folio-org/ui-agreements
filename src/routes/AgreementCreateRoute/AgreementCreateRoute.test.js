@@ -148,11 +148,13 @@ describe('AgreementCreateRoute', () => {
       expect(getByText('BasketLineButton')).toBeInTheDocument();
     });
 
+    // we check if the button is clicked it calls the queryUpdateMock(update) function to invoke the child callback (handleBasketLinesAdded) defined in Route
     test('calls the BasketLineButton', async () => {
       await ButtonInteractor('BasketLineButton').click();
       expect(queryUpdateMock).toHaveBeenCalled();
     });
 
+    // we check if the button is clicked it calls the historyPushMock(push) function to invoke the child callback (handleClose) defined in Route
     test('calls the CloseButton', async () => {
       await ButtonInteractor('CloseButton').click();
       expect(historyPushMock).toHaveBeenCalled();
