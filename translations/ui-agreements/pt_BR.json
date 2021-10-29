@@ -138,7 +138,7 @@
     "identifier.pissn": "ISSN (Impresso)",
     "identifier.zdb": "ZDB",
     "settings.general.hideEResourcesFunctionality.title": "Ocultar base de conhecimento de acordos internos",
-    "settings.general.hideEResourcesFunctionality.description": "Se você estiver usando outro aplicativo (por exemplo, Acervo digital) como sua base de conhecimento e desejar ocultar a base de conhecimento de contratos internos, poderá verificar essa configuração. Especificamente, isso irá:",
+    "settings.general.hideEResourcesFunctionality.description": "Se você estiver usando outro aplicativo (por exemplo, Acervo digital) como sua base de conhecimento e desejar ocultar a base de conhecimento de contratos internos, poderá selecionar essa configuração. Especificamente, isso irá:",
     "agreementLines.hasCustomCoverage": "Tem cobertura customizada",
     "eresources.provider": "Fornecedor",
     "agreements.showTags": "Mostrar tags",
