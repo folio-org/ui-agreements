@@ -36,7 +36,7 @@ import {
   FormSupplementaryDocuments,
   FormSupplementaryProperties,
   FormUsageData,
-} from '../AgreementSections';
+} from '../../AgreementSections';
 
 class AgreementForm extends React.Component {
   static propTypes = {
@@ -84,7 +84,7 @@ class AgreementForm extends React.Component {
     const formState = props.form.getState();
 
     if (
-      props.data.agreementLinesToAdd.length &&
+      props.data.agreementLinesToAdd?.length &&
       state.addedLinesToAdd === false &&
       props.form.getRegisteredFields().includes('items')
     ) {
@@ -168,7 +168,7 @@ class AgreementForm extends React.Component {
     return (
       <PaneMenu>
         <FormattedMessage id="ui-agreements.agreements.closeEdit">
-          {ariaLabel => (
+          {([ariaLabel]) => (
             <IconButton
               aria-label={ariaLabel}
               icon="times"
@@ -181,6 +181,7 @@ class AgreementForm extends React.Component {
     );
   }
 
+  /* istanbul ignore next */
   shortcuts = [
     {
       name: 'save',
@@ -244,15 +245,15 @@ class AgreementForm extends React.Component {
                             <FormSupplementaryProperties {...this.getSectionProps('formSupplementaryProperties')} />
                           :
                           null
-                    }
-                          <FormSupplementaryDocuments {...this.getSectionProps('formSupplementaryDocs')} />
-                          <FormUsageData {...this.getSectionProps('formUsageProviders')} />
-                          <FormRelatedAgreements {...this.getSectionProps('formRelatedAgreements')} />
-                        </AccordionSet>
-                      </AccordionStatus>
-                    </form>
-                  </TitleManager>
-                </Pane>
+                        }
+                        <FormSupplementaryDocuments {...this.getSectionProps('formSupplementaryDocs')} />
+                        <FormUsageData {...this.getSectionProps('formUsageProviders')} />
+                        <FormRelatedAgreements {...this.getSectionProps('formRelatedAgreements')} />
+                      </AccordionSet>
+                    </AccordionStatus>
+                  </form>
+                </TitleManager>
+              </Pane>
             )}
             </FormattedMessage>
           </Paneset>
