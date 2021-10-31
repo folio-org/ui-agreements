@@ -1,4 +1,102 @@
+const checkedActivedFilters = {
+    'publicationType': [
+        'database',
+        'book',
+        'journal'
+    ],
+    'class': [
+        'package',
+        'nopackage'
+    ],
+    'type': [
+        'monograph',
+        'serial'
+    ],
+    'tags': [
+        'important',
+        'catalogingrecords',
+        'urgent'
+    ],
+    'remoteKb': [
+        '06c037fe-6089-4f65-b74d-dd9b12d4f89c'
+    ]
+};
+
+const checkedData = {
+    'eresources': [],
+    'publicationTypeValues': [{
+            'id': '2c91809c7cbf6bf7017cbf7374a00043',
+            'value': 'journal',
+            'label': 'Journal'
+        },
+        {
+            'id': '2c91809c7cbf6bf7017cbf73b2760046',
+            'value': 'book',
+            'label': 'Book'
+        },
+        {
+            'id': '2c91809c7cbf6bf7017cbf78f9400049',
+            'value': 'database',
+            'label': 'Database'
+        }
+    ],
+    'sourceValues': [{
+        'id': '06c037fe-6089-4f65-b74d-dd9b12d4f89c',
+        'cursor': '2021-09-14T08:22:05Z',
+        'active': true,
+        'trustedSourceTI': false,
+        'activationEnabled': false,
+        'readonly': false,
+        'syncStatus': 'idle',
+        'lastCheck': 1635327967406,
+        'name': 'GOKb_TEST',
+        'type': 'org.olf.kb.adapters.GOKbOAIAdapter',
+        'fullPrefix': 'gokb',
+        'uri': 'https://gokbt.gbv.de/gokb/oai/index',
+        'supportsHarvesting': true,
+        'rectype': 1
+    }],
+    'typeValues': [{
+            'id': '2c91809c7cbf6bf7017cbf736846003d',
+            'value': 'monograph',
+            'label': 'Monograph'
+        },
+        {
+            'id': '2c91809c7cbf6bf7017cbf73684b003e',
+            'value': 'serial',
+            'label': 'Serial'
+        }
+    ],
+    'tagsValues': [{
+            'id': '64850ef2-ec9e-44d2-a712-006e194e0e4f',
+            'label': 'catalogingrecords',
+            'metadata': {
+                'createdDate': '2021-10-27T08:05:35.089634Z',
+                'createdByUserId': 'a5f1a860-1b6a-5a51-a629-f29f14343099'
+            }
+        },
+        {
+            'id': '020d81d8-ec15-4db7-bf3b-49af3aae5ffb',
+            'label': 'important',
+            'metadata': {
+                'createdDate': '2021-10-27T01:52:51.763119Z'
+            }
+        },
+        {
+            'id': '6f8a28e3-1d72-4c65-8e35-ec6a61f8b82d',
+            'label': 'urgent',
+            'description': 'Requires urgent attention',
+            'metadata': {
+                'createdDate': '2021-10-27T01:52:51.763119Z'
+            }
+        }
+    ]
+};
+
+
+
 const activeFilters = {};
+
 const data = {
     'eresources': [{
             'id': '748aef4b-aaa4-4185-87aa-b96510a9053d',
@@ -1283,4 +1381,10 @@ const filterHandlers = {
     reset: () => {},
 };
 
-export { activeFilters, data, filterHandlers };
+export {
+    checkedActivedFilters,
+    checkedData,
+    activeFilters,
+    data,
+    filterHandlers
+};
