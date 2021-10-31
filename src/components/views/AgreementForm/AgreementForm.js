@@ -208,41 +208,40 @@ class AgreementForm extends React.Component {
         isWithinScope={checkScope}
         scope={document.body}
       >
-        <div data-testid="agreements">
-          <Paneset>
-            <FormattedMessage id="ui-agreements.create">
-              {create => (
-                <Pane
-                  appIcon={<AppIcon app="agreements" />}
-                  centerContent
-                  defaultWidth="100%"
-                  firstMenu={this.renderFirstMenu()}
-                  footer={this.renderPaneFooter()}
-                  id="pane-agreement-form"
-                  paneTitle={id ? <FormattedMessage id="ui-agreements.agreements.editAgreement.name" values={{ name }} /> : <FormattedMessage id="ui-agreements.agreements.createAgreement" />}
-                >
-                  <TitleManager record={id ? name : create}>
-                    <form id="form-agreement">
-                      <AccordionStatus ref={this.accordionStatusRef}>
-                        {hasLoaded ? <div id="form-loaded" /> : null}
-                        <Row end="xs">
-                          <Col xs>
-                            <ExpandAllButton />
-                          </Col>
-                        </Row>
-                        <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-                          <FormInfo {...this.getSectionProps('formInfo')} />
-                          <IfPermission perm="users.collection.get">
-                            {({ hasPermission }) => (hasPermission ?
-                              <FormInternalContacts {...this.getSectionProps('formInternalContacts')} />
+        <Paneset>
+          <FormattedMessage id="ui-agreements.create">
+            {create => (
+              <Pane
+                appIcon={<AppIcon app="agreements" />}
+                centerContent
+                defaultWidth="100%"
+                firstMenu={this.renderFirstMenu()}
+                footer={this.renderPaneFooter()}
+                id="pane-agreement-form"
+                paneTitle={id ? <FormattedMessage id="ui-agreements.agreements.editAgreement.name" values={{ name }} /> : <FormattedMessage id="ui-agreements.agreements.createAgreement" />}
+              >
+                <TitleManager record={id ? name : create}>
+                  <form id="form-agreement">
+                    <AccordionStatus ref={this.accordionStatusRef}>
+                      {hasLoaded ? <div id="form-loaded" /> : null}
+                      <Row end="xs">
+                        <Col xs>
+                          <ExpandAllButton />
+                        </Col>
+                      </Row>
+                      <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+                        <FormInfo {...this.getSectionProps('formInfo')} />
+                        <IfPermission perm="users.collection.get">
+                          {({ hasPermission }) => (hasPermission ?
+                            <FormInternalContacts {...this.getSectionProps('formInternalContacts')} />
                             :
                             null)}
-                          </IfPermission>
-                          <FormLines {...this.getSectionProps('formLines')} />
-                          <FormLicenses {...this.getSectionProps('formLicenses')} />
-                          <FormOrganizations {...this.getSectionProps('formOrganizations')} />
-                          {data.supplementaryProperties?.length > 0 ?
-                            <FormSupplementaryProperties {...this.getSectionProps('formSupplementaryProperties')} />
+                        </IfPermission>
+                        <FormLines {...this.getSectionProps('formLines')} />
+                        <FormLicenses {...this.getSectionProps('formLicenses')} />
+                        <FormOrganizations {...this.getSectionProps('formOrganizations')} />
+                        {data.supplementaryProperties?.length > 0 ?
+                          <FormSupplementaryProperties {...this.getSectionProps('formSupplementaryProperties')} />
                           :
                           null
                         }
@@ -255,9 +254,8 @@ class AgreementForm extends React.Component {
                 </TitleManager>
               </Pane>
             )}
-            </FormattedMessage>
-          </Paneset>
-        </div>
+          </FormattedMessage>
+        </Paneset>
       </HasCommand>
     );
   }
