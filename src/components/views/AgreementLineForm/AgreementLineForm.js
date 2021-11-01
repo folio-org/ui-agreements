@@ -24,10 +24,10 @@ import {
 
 import { AppIcon } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
-import { FormInfo, FormPOLines, FormCoverage, FormEresource } from '../AgreementLineSections';
-import IfEResourcesEnabled from '../IfEResourcesEnabled';
+import { FormInfo, FormPOLines, FormCoverage, FormEresource } from '../../AgreementLineSections';
+import IfEResourcesEnabled from '../../IfEResourcesEnabled';
 
-import { isDetached, isExternal } from '../utilities';
+import { isDetached, isExternal } from '../../utilities';
 
 const propTypes = {
   data: PropTypes.shape({
@@ -77,6 +77,7 @@ const AgreementLineForm = ({
 
   const accordionStatusRef = useRef();
 
+  /* istanbul ignore next */
   const shortcuts = [
     {
       name: 'save',
@@ -106,6 +107,7 @@ const AgreementLineForm = ({
     };
   };
 
+  /* istanbul ignore next */
   const renderBasketButton = () => {
     return (
       <Button
@@ -119,6 +121,7 @@ const AgreementLineForm = ({
     );
   };
 
+  /* istanbul ignore next */
   const renderEholdingsButton = () => {
     return (
       <Button
@@ -157,7 +160,7 @@ const AgreementLineForm = ({
                 >
                   <FormattedMessage id="stripes-components.saveAndClose" />
                 </Button>
-            )}
+              )}
               renderStart={(
                 <Button
                   buttonStyle="default mega"
@@ -167,52 +170,52 @@ const AgreementLineForm = ({
                 >
                   <FormattedMessage id="stripes-components.cancel" />
                 </Button>
-            )}
+              )}
             />
-        )}
+          )}
           id="pane-agreement-line-form"
           onClose={handlers.onClose}
           paneTitle={lineId ?
             <FormattedMessage id="ui-agreements.line.edit" />
             :
             <FormattedMessage id="ui-agreements.line.new" />
-        }
+          }
         >
           {hasLoaded ? <div id="form-loaded" /> : null}
           {/* Logic to render the button group. Set eholdings or basket as source based on eholdings permission / if eresources enabled */}
           {
-          (!line.id || isDetached(line)) && ( // render button group on edit only for detached line type
-            isEholdingsEnabled ? (
-              <IfEResourcesEnabled>
-                {({ isEnabled }) => {
-                  if (isEnabled) {
-                    return (
-                      <ButtonGroup>
-                        {renderBasketButton()}
-                        {renderEholdingsButton()}
-                      </ButtonGroup>
-                    );
-                  } else {
-                    setAgreementLineSource('eholdings');
-                    return null;
-                  }
-                }}
-              </IfEResourcesEnabled>
-            ) : (
-              <IfEResourcesEnabled>
-                {({ isEnabled }) => {
-                  if (isEnabled) {
-                    setAgreementLineSource('basket');
-                  } else {
-                    setAgreementLineSource('');
-                  }
+            (!line.id || isDetached(line)) && ( // render button group on edit only for detached line type
+              isEholdingsEnabled ? (
+                <IfEResourcesEnabled>
+                  {({ isEnabled }) => {
+                    if (isEnabled) {
+                      return (
+                        <ButtonGroup>
+                          {renderBasketButton()}
+                          {renderEholdingsButton()}
+                        </ButtonGroup>
+                      );
+                    } else {
+                      setAgreementLineSource('eholdings');
+                      return null;
+                    }
+                  }}
+                </IfEResourcesEnabled>
+              ) : (
+                <IfEResourcesEnabled>
+                  {({ isEnabled }) => {
+                    if (isEnabled) {
+                      setAgreementLineSource('basket');
+                    } else {
+                      setAgreementLineSource('');
+                    }
 
-                  return null;
-                }}
-              </IfEResourcesEnabled>
+                    return null;
+                  }}
+                </IfEResourcesEnabled>
+              )
             )
-          )
-        }
+          }
           <FormEresource {...getSectionProps()} />
           <FormInfo {...getSectionProps()} />
           <AccordionStatus ref={accordionStatusRef}>
