@@ -2,13 +2,15 @@ import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-import { screen } from '@testing-library/react';
+import { screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { Accordion, Checkbox } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
 import { activeFilters, data } from './testResources';
 import EResourceFilters from './EResourceFilters';
 
-const stateMock = jest.fn();
+
+jest.mock('@folio/stripes/smart-components');
+const stateMock = jest.fn(() => Promise.resolve());
 
   const filterHandlers = {
     state : stateMock,
@@ -19,7 +21,7 @@ const stateMock = jest.fn();
 };
 
 describe('EResourceFilters', () => {
-  describe('EResourceFilters with unchecked filters', () => {
+  describe(' renders the EResourceFilters', () => {
     beforeEach(() => {
        renderWithIntl(
          <MemoryRouter>
@@ -97,7 +99,7 @@ describe('EResourceFilters', () => {
         expect(screen.getByText('External data source')).toBeInTheDocument();
       });
 
-      test('renders the checkboxes  ', async () => {
+      test('renders the checkboxes', async () => {
         await Checkbox({ id: 'clickable-filter-type-monograph' }).click();
         await Checkbox({ id: 'clickable-filter-type-monograph' }).click();
         await Checkbox({ id: 'clickable-filter-publicationType-journal' }).click();
@@ -105,6 +107,7 @@ describe('EResourceFilters', () => {
         await Checkbox({ id: 'clickable-filter-publicationType-database' }).click();
         await Checkbox({ id: 'clickable-filter-class-package' }).click();
         await Checkbox({ id: 'clickable-filter-class-nopackage' }).click();
+        await waitForElementToBeRemoved(() => screen.getByText('External data source'));
         expect(stateMock).toHaveBeenCalled();
       });
     });
