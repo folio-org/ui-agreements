@@ -9,17 +9,24 @@ import translationsProperties from '../../../test/helpers';
 import BasketRoute from './BasketRoute';
 import resources from './testResources';
 
-/* const handlers = {
-  onAddToExistingAgreement: () => { },
-  onClose: () => { }
-};
- */
-const AddToExistingAgreementButton = (handlers) => {
-  return <Button onClick={handlers.onAddToExistingAgreement}>AddToExistingAgreementButton</Button>;
+const AddToExistingAgreementButton = (props) => {
+  // eslint-disable-next-line react/prop-types
+  return <Button onClick={props.handlers.onAddToExistingAgreement}>AddToExistingAgreementButton</Button>;
 };
 
-const CloseButton = (handlers) => {
-  return <Button onClick={handlers.onClose}>CloseButton</Button>;
+const AddToNewAgreementButton = (props) => {
+  // eslint-disable-next-line react/prop-types
+  return <Button onClick={props.handlers.onAddToNewAgreement}>AddToNewAgreementButton</Button>;
+};
+
+const CloseButton = (props) => {
+  // eslint-disable-next-line react/prop-types
+  return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
+};
+
+const RemoveBasketItemButton = (props) => {
+  // eslint-disable-next-line react/prop-types
+  return <Button onClick={props.handlers.onRemoveBasketItem}>RemoveBasketItemButton</Button>;
 };
 
 jest.mock('../../components/views/Basket', () => {
@@ -27,25 +34,28 @@ jest.mock('../../components/views/Basket', () => {
     <div>
       <div>Basket</div>
       <AddToExistingAgreementButton {...props} />
+      <AddToNewAgreementButton {...props} />
       <CloseButton {...props} />
+      <RemoveBasketItemButton {...props} />
     </div>
   );
 });
 
-const queryUpdateMock = jest.fn();
+// mock callbacks
+const historyPushMock = jest.fn();
 const historyGoBackMock = jest.fn();
+const mutatorBasketReplace = jest.fn();
 
 const basketRouteProps = {
   history: {
-    push: () => jest.fn(),
-    goBack: () => historyGoBackMock,
+    push: historyPushMock,
+    goBack: historyGoBackMock,
   },
   mutator: {
     basket: {
-      replace: () => jest.fn(),
+      replace: mutatorBasketReplace,
     },
     openAgreements: {},
-    query: { update: queryUpdateMock },
   },
   resources: { resources }
 };
@@ -72,21 +82,39 @@ describe('BasketRoute', () => {
       expect(getByText('AddToExistingAgreementButton')).toBeInTheDocument();
     });
 
-    // we check if the button is clicked it calls the queryUpdateMock(update) function to invoke the child callback (handleAddToNewAgreement) defined in Route
-    /* test('calls the AddToExistingAgreementButton', async () => {
+    test('calls the AddToExistingAgreementButton', async () => {
       await ButtonInteractor('AddToExistingAgreementButton').click();
-      expect(queryUpdateMock).toHaveBeenCalled();
-    }); */
+      expect(historyPushMock).toHaveBeenCalled();
+    });
+
+    test('renders the AddToNewAgreementButton component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('AddToNewAgreementButton')).toBeInTheDocument();
+    });
+
+    test('calls the AddToNewAgreementButton', async () => {
+      await ButtonInteractor('AddToNewAgreementButton').click();
+      expect(historyPushMock).toHaveBeenCalled();
+    });
 
     test('renders the CloseButton component', () => {
       const { getByText } = renderComponent;
       expect(getByText('CloseButton')).toBeInTheDocument();
     });
 
-    // we check if the button is clicked it calls the historyPushMock(push) function to invoke the child callback (handleClose) defined in Route
-    /* test('calls the CloseButton', async () => {
+    test('calls the CloseButton', async () => {
       await ButtonInteractor('CloseButton').click();
       expect(historyGoBackMock).toHaveBeenCalled();
-    }); */
+    });
+
+    test('renders the RemoveBasketItemButton component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('RemoveBasketItemButton')).toBeInTheDocument();
+    });
+
+    test('calls the RemoveBasketItemButton', async () => {
+      await ButtonInteractor('RemoveBasketItemButton').click();
+      expect(mutatorBasketReplace).toHaveBeenCalled();
+    });
   });
 });
