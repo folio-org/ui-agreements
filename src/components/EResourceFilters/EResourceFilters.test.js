@@ -2,29 +2,24 @@ import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-import { Accordion, Checkbox, Button, MultiSelect } from '@folio/stripes-testing';
+import { screen } from '@testing-library/react';
+import { Accordion, Checkbox, MultiSelect } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
 import { checkedActivedFilters, checkedData, activeFilters, data, filterHandlers } from './testResources';
 import EResourceFilters from './EResourceFilters';
 
 
-jest.mock('@folio/stripes/smart-components', () => ({
-  ...jest.requireActual('@folio/stripes/smart-components'),
-  // eslint-disable-next-line react/prop-types
-  MultiSelectionFilter: (props) => <div>{props.children}</div>,
-}));
-
 describe('EResourceFilters', () => {
   describe('EResourceFilters with unchecked filters', () => {
     beforeEach(() => {
-      renderWithIntl(
-        <MemoryRouter>
-          <EResourceFilters
-            activeFilters={activeFilters}
-            data={data}
-            filterHandlers={filterHandlers}
-          />
-        </MemoryRouter>,
+       renderWithIntl(
+         <MemoryRouter>
+           <EResourceFilters
+             activeFilters={activeFilters}
+             data={data}
+             filterHandlers={filterHandlers}
+           />
+         </MemoryRouter>,
           translationsProperties
         );
       });
@@ -65,28 +60,24 @@ describe('EResourceFilters', () => {
         await Checkbox({ id: 'clickable-filter-type-serial' }).is({ checked: false });
       });
 
-      test('renders the Type button', async () => {
-        await Button('Type').exists();
+      it('should display the correct Type filter name', () => {
+        expect(screen.getByText('Type')).toBeVisible();
       });
 
-      test('renders the Publication type button', async () => {
-        await Button('Publication type').exists();
+      it('should display the correct Publication type filter name', () => {
+        expect(screen.getByText('Publication type')).toBeVisible();
       });
 
-      test('renders the Is package button', async () => {
-        await Button('Is package').exists();
+      it('should display the correct Is package filter name', () => {
+        expect(screen.getByText('Is package')).toBeVisible();
       });
 
-      test('renders the External data source button', async () => {
-        await Button('External data source').exists();
+      it('should display the correct External data source filter name', () => {
+        expect(screen.getByText('External data source')).toBeVisible();
       });
 
-      test('renders the Tags button', async () => {
-        await Button('Tags').exists();
-      });
-
-      test('renders the Tags multiSelection', async () => {
-        await MultiSelect('Tags').select(['catalogingrecords, important, urgent']);
+      it('should display the correct Tags filter name', () => {
+        expect(screen.getByText('Tags')).toBeVisible();
       });
     });
 
@@ -132,8 +123,17 @@ describe('EResourceFilters', () => {
           await Checkbox({ id: 'clickable-filter-class-nopackage' }).is({ checked: true });
         });
 
-        test('renders the Tags multiSelection', async () => {
-          await MultiSelect('').exists();
+        it('should display filter by tags accordion', () => {
+          expect(screen.getByText('Tags')).toBeInTheDocument();
         });
+
+        // test('renders the Tags multiSelection', async () => {
+        //   await MultiSelect('Tags').exists();
+        // });
+
+        // test('renders the Tags multiSelection', async () => {
+        //   await MultiSelect('Tags').select(['catalogingrecords', 'important', 'urgent']);
+        // });
       });
   });
+
