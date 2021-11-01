@@ -1,5 +1,6 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
@@ -10,23 +11,43 @@ import BasketRoute from './BasketRoute';
 import resources from './testResources';
 
 const AddToExistingAgreementButton = (props) => {
-  // eslint-disable-next-line react/prop-types
   return <Button onClick={props.handlers.onAddToExistingAgreement}>AddToExistingAgreementButton</Button>;
 };
 
+AddToExistingAgreementButton.propTypes = {
+  handlers: PropTypes.shape({
+    onAddToExistingAgreement: PropTypes.func,
+  }),
+};
+
 const AddToNewAgreementButton = (props) => {
-  // eslint-disable-next-line react/prop-types
   return <Button onClick={props.handlers.onAddToNewAgreement}>AddToNewAgreementButton</Button>;
 };
 
+AddToNewAgreementButton.propTypes = {
+  handlers: PropTypes.shape({
+    onAddToNewAgreement: PropTypes.func,
+  }),
+};
+
 const CloseButton = (props) => {
-  // eslint-disable-next-line react/prop-types
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
 };
 
+CloseButton.propTypes = {
+  handlers: PropTypes.shape({
+    onClose: PropTypes.func,
+  }),
+};
+
 const RemoveBasketItemButton = (props) => {
-  // eslint-disable-next-line react/prop-types
   return <Button onClick={props.handlers.onRemoveBasketItem}>RemoveBasketItemButton</Button>;
+};
+
+RemoveBasketItemButton.propTypes = {
+  handlers: PropTypes.shape({
+    onRemoveBasketItem: PropTypes.func,
+  }),
 };
 
 jest.mock('../../components/views/Basket', () => {
