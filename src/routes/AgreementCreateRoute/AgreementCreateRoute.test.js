@@ -1,6 +1,5 @@
-/* eslint-disable react/prop-types */
-
 import React from 'react';
+import PropTypes from 'prop-types';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
@@ -39,6 +38,18 @@ const BasketLineButton = (props) => {
 
 const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
+};
+
+BasketLineButton.propTypes = {
+  handlers: PropTypes.shape({
+    onBasketLinesAdded: PropTypes.func,
+  }),
+};
+
+CloseButton.propTypes = {
+  handlers: PropTypes.shape({
+    onClose: PropTypes.func,
+  }),
 };
 
 const queryUpdateMock = jest.fn();
