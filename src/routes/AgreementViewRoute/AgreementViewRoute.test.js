@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
@@ -55,6 +55,54 @@ const ToggleTagsButton = (props) => {
 
 const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
+};
+
+AgreementLineButton.propTypes = {
+  handlers: PropTypes.shape({
+    onViewAgreementLine: PropTypes.func,
+  }),
+};
+
+NeedMoreLinesButton.propTypes = {
+  handlers: PropTypes.shape({
+    onNeedMoreLines: PropTypes.func,
+  }),
+};
+
+FilterEResourceButton.propTypes = {
+  handlers: PropTypes.shape({
+    onFilterEResources: PropTypes.func,
+  }),
+};
+
+FetchCredentialsButton.propTypes = {
+  handlers: PropTypes.shape({
+    onFetchCredentials: PropTypes.func,
+  }),
+};
+
+EditButton.propTypes = {
+  handlers: PropTypes.shape({
+    onEdit: PropTypes.func,
+  }),
+};
+
+NeedMoreEResourcesButton.propTypes = {
+  handlers: PropTypes.shape({
+    onNeedMoreEResources: PropTypes.func,
+  }),
+};
+
+ToggleTagsButton.propTypes = {
+  handlers: PropTypes.shape({
+    onToggleTags: PropTypes.func,
+  }),
+};
+
+CloseButton.propTypes = {
+  handlers: PropTypes.shape({
+    onClose: PropTypes.func,
+  }),
 };
 
 const mutatorReplaceMock = jest.fn();
@@ -127,7 +175,7 @@ describe('AgreementViewRoute', () => {
         <MemoryRouter>
           <AgreementViewRoute {...data} />
         </MemoryRouter>,
-        translationsProperties
+        translationsProperties,
       );
     });
 
@@ -184,6 +232,23 @@ describe('AgreementViewRoute', () => {
     test('renders the CloseButton callback', async () => {
       await ButtonInteractor('CloseButton').click();
       expect(historyPushMock).toHaveBeenCalled();
+    });
+
+    describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block
+      beforeEach(() => {
+        renderWithIntl(
+          <MemoryRouter>
+            <AgreementViewRoute {...data} />
+          </MemoryRouter>,
+          translationsProperties,
+          renderComponent.rerender
+        );
+      });
+
+      test('renders the agreements component', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('Agreement')).toBeInTheDocument();
+      });
     });
   });
 });

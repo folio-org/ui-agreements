@@ -206,7 +206,6 @@ class AgreementViewRoute extends React.Component {
 
   static contextType = CalloutContext;
 
-  /* istanbul ignore next */
   componentDidUpdate(prevProps) {
     const { mutator } = this.props;
     if (prevProps?.resources?.agreement?.records?.[0]?.id !== this.props?.resources?.agreement?.records?.[0]?.id) {
