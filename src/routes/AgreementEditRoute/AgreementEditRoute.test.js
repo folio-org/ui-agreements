@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
@@ -40,8 +40,29 @@ const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
 };
 
+const SubmitButton = (props) => {
+  return <Button onClick={props.onSubmit}>SubmitButton</Button>;
+};
+
+BasketLineButton.propTypes = {
+  handlers: PropTypes.shape({
+    onBasketLinesAdded: PropTypes.func,
+  }),
+};
+
+CloseButton.propTypes = {
+  handlers: PropTypes.shape({
+    onClose: PropTypes.func,
+  }),
+};
+
+SubmitButton.propTypes = {
+    onSubmit: PropTypes.func,
+};
+
 const queryUpdateMock = jest.fn();
 const historyPushMock = jest.fn();
+const onSubmitMock = jest.fn();
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -54,6 +75,7 @@ jest.mock('../../components/views/AgreementForm', () => {
       <div>AgreementForm</div>
       <BasketLineButton {...props} />
       <CloseButton {...props} />
+      <SubmitButton {...props} />
     </div>
   );
 });
@@ -155,7 +177,7 @@ describe('AgreementEditRoute', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <AgreementEditRoute {...data} />
+          <AgreementEditRoute {...data} onSubmit={onSubmitMock} />
         </MemoryRouter>,
         translationsProperties
       );
@@ -174,6 +196,11 @@ describe('AgreementEditRoute', () => {
       test('calls the CloseButton', async () => {
         await ButtonInteractor('CloseButton').click();
         expect(historyPushMock).toHaveBeenCalled();
+      });
+
+      test('calls the SubmitButton', async () => {
+        await ButtonInteractor('SubmitButton').click();
+        expect(onSubmitMock).toHaveBeenCalled();
       });
   });
 
