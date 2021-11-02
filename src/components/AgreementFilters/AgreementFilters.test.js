@@ -2,9 +2,10 @@ import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-import { Accordion } from '@folio/stripes-testing';
+// import { screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { Accordion, Checkbox } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
-import { activeFilters, data, filterHandlers } from './testResources';
+import { activeFilters, data } from './testResources';
 import AgreementFilters from './AgreementFilters';
 
 jest.mock('@folio/stripes-erm-components', () => ({
@@ -12,6 +13,16 @@ jest.mock('@folio/stripes-erm-components', () => ({
    OrganizationSelection: () => <div>OrganizationSelection</div>,
 }));
 
+jest.mock('@folio/stripes/smart-components');
+const stateMock = jest.fn(() => Promise.resolve());
+
+const filterHandlers = {
+    state: stateMock,
+    checkbox: () => {},
+    clear: () => {},
+    clearGroup: () => {},
+    reset: () => {},
+};
 describe('AgreementFilters', () => {
     let renderComponent;
     beforeEach(() => {
@@ -75,4 +86,19 @@ describe('AgreementFilters', () => {
       const { getByText } = renderComponent;
       expect(getByText('OrganizationSelection')).toBeInTheDocument();
     });
+
+    test('renders the checkboxes', async () => {
+        await Checkbox({ id: 'clickable-filter-agreementStatus-closed' }).click();
+        await Checkbox({ id: 'clickable-filter-agreementStatus-draft' }).click();
+        await Checkbox({ id: 'clickable-filter-agreementStatus-requested' }).click();
+        await Checkbox({ id: 'clickable-filter-agreementStatus-in-negotiation' }).click();
+        await Checkbox({ id: 'clickable-filter-agreementStatus-active' }).click();
+        await Checkbox({ id: 'clickable-filter-renewalPriority-for-review' }).click();
+        await Checkbox({ id: 'clickable-filter-renewalPriority-definitely-renew' }).click();
+        await Checkbox({ id: 'clickable-filter-renewalPriority-definitely-cancel' }).click();
+        await Checkbox({ id: 'clickable-filter-isPerpetual-yes' }).click();
+        await Checkbox({ id: 'clickable-filter-isPerpetual-no' }).click();
+        // await waitForElementToBeRemoved(() => screen.getByText('OrganizationSelection'));
+        expect(stateMock).toHaveBeenCalled();
+      });
   });

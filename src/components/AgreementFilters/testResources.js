@@ -4,171 +4,135 @@ const activeFilters = {
         'draft',
         'in_negotiation',
         'requested'
+    ],
+    'orgs': [
+        '9032ae7d-ca16-4399-abae-e6186628c669'
+    ],
+    'role': [
+        '2c91809c7cd92b6b017cd932c5a90012'
+    ],
+    'contacts': [
+        ''
+    ],
+    'contactRole': [
+        '2c91809c7cd92b6b017cd932c57f0008'
+    ],
+    'tags': [
+        'urgent',
+        'test',
+        'important',
+        'catalogingrecords'
     ]
 };
 
 const data = {
-    'agreements': [{
-        'id': '61281b25-436c-4f73-bda8-34dddce87ad0',
-        'dateCreated': '2021-10-25T09:35:49Z',
-        'isPerpetual': {
-            'id': '2c91809c7cb51f31017cb526b0d5000b',
-            'value': 'yes',
-            'label': 'Yes'
-        },
-        'items': '[]',
-        'name': 'MR agr test',
-        'orgs': '[]',
-        'externalLicenseDocs': '[]',
-        'outwardRelationships': '[]',
-        'customProperties': '{}',
-        'contacts': '[]',
-        'tags': '[]',
-        'lastUpdated': '2021-10-25T09:35:49Z',
-        'inwardRelationships': '[]',
-        'renewalPriority': {
-            'id': '2c91809c7cb51f31017cb526b1010013',
-            'value': 'for_review',
-            'label': 'For review'
-        },
-        'endDate': '2021-10-30',
-        'startDate': '2021-10-01',
-        'linkedLicenses': '[]',
-        'docs': '[]',
-        'periods': [{
-            'id': '1c4f30bd-a5a3-4f07-8840-05f6ece4ef75',
-            'startDate': '2021-10-01',
-            'owner': '{id: "61281b25-436c-4f73-bda8-34dddce87ad0"}',
-            'endDate': '2021-10-30',
-            'periodStatus': 'current'
-        }],
-        'usageDataProviders': '[]',
-        'agreementStatus': {
-            'id': '2c91809c7cb51f31017cb526b155001b',
-            'value': 'active',
-            'label': 'Active'
-        },
-        'supplementaryDocs': '[]',
-        'description': 'agreement description',
-        'cancellationDeadline': null,
-        'alternateNames': '[]'
-    }],
+    'agreements': [],
     'agreementStatusValues': [{
-            'id': 'b6f3f227a5571bc9213309228b8a486b',
+            'id': 'c2852a2226d11e472d881fa19cb9d715',
             'value': 'closed',
             'label': 'Closed'
         },
         {
-            'id': '2c91809c7cb51f31017cb526b1450018',
+            'id': '2c91809c7cd92b6b017cd932c66d0038',
             'value': 'draft',
             'label': 'Draft'
         },
         {
-            'id': '2c91809c7cb51f31017cb526b14a0019',
+            'id': '2c91809c7cd92b6b017cd932c6730039',
             'value': 'requested',
             'label': 'Requested'
         },
         {
-            'id': '2c91809c7cb51f31017cb526b14f001a',
+            'id': '2c91809c7cd92b6b017cd932c678003a',
             'value': 'in_negotiation',
             'label': 'In negotiation'
         },
         {
-            'id': '2c91809c7cb51f31017cb526b155001b',
+            'id': '2c91809c7cd92b6b017cd932c67e003b',
             'value': 'active',
             'label': 'Active'
         }
     ],
     'renewalPriorityValues': [{
-            'id': '2c91809c7cb51f31017cb526b0fb0012',
+            'id': '2c91809c7cd92b6b017cd932c6350032',
             'value': 'definitely_renew',
             'label': 'Definitely renew'
         },
         {
-            'id': '2c91809c7cb51f31017cb526b1010013',
+            'id': '2c91809c7cd92b6b017cd932c6390033',
             'value': 'for_review',
             'label': 'For review'
         },
         {
-            'id': '2c91809c7cb51f31017cb526b1060014',
+            'id': '2c91809c7cd92b6b017cd932c63f0034',
             'value': 'definitely_cancel',
             'label': 'Definitely cancel'
         }
     ],
     'isPerpetualValues': [{
-            'id': '2c91809c7cb51f31017cb526b0d5000b',
+            'id': '2c91809c7cd92b6b017cd932c617002b',
             'value': 'yes',
             'label': 'Yes'
         },
         {
-            'id': '2c91809c7cb51f31017cb526b0da000c',
+            'id': '2c91809c7cd92b6b017cd932c61b002c',
             'value': 'no',
             'label': 'No'
         }
     ],
     'contactRoleValues': [{
-            'id': '2c91809c7cb51f31017cb526b0a10001',
+            'id': '2c91809c7cd92b6b017cd932c5750006',
             'value': 'agreement_owner',
             'label': 'Agreement owner'
         },
         {
-            'id': '2c91809c7cb51f31017cb526b0a90002',
+            'id': '2c91809c7cd92b6b017cd932c57a0007',
             'value': 'authorized_signatory',
             'label': 'Authorized signatory'
         },
         {
-            'id': '2c91809c7cb51f31017cb526b0b00003',
+            'id': '2c91809c7cd92b6b017cd932c57f0008',
             'value': 'erm_librarian',
             'label': 'ERM librarian'
         },
         {
-            'id': '2c91809c7cb51f31017cb526b0b50004',
+            'id': '2c91809c7cd92b6b017cd932c5840009',
             'value': 'subject_specialist',
             'label': 'Subject specialist'
         }
     ],
     'orgRoleValues': [{
-        'id': '2c91809c7cb51f31017cb526b1fb0041',
+        'id': '2c91809c7cd92b6b017cd932c5a90012',
         'value': 'content_provider',
         'label': 'Content provider'
     }],
-    'supplementaryProperties': '[]',
+    'supplementaryProperties': [],
     'tagsValues': [{
-            'id': 'd4139528-ce38-4c2d-b844-17ddb2222208',
+            'id': 'aeb85be7-7440-474f-94de-066fd69c7604',
             'label': 'catalogingrecords',
-            'metadata': {
-                'createdDate': '2021-10-25T06:00:39.667315Z',
-                'createdByUserId': 'ee19b844-ee98-5bec-8ddf-7f1735a511bd'
-            }
+            'metadata': '{createdByUserId: "6409c3c0-cbb9-5d53-b174-393deb63…}'
         },
         {
-            'id': 'b3ed86fe-2382-409f-bbf0-bd07f59412b0',
+            'id': '621e53a7-038a-4b6c-892f-169c3fbf655c',
             'label': 'important',
-            'metadata': {
-                'createdDate': '2021-10-25T01:52:52.118149Z'
-            }
+            'metadata': '{createdDate: "2021-11-01T01:52:24.475558Z"}'
         },
         {
-            'id': '8b8a8cf2-81bf-4c5e-91ea-9041a64cd71c',
+            'id': '68e1bb44-0b36-453d-b336-1127990d02e2',
+            'label': 'test',
+            'description': 'test',
+            'metadata': '{createdByUserId: "6409c3c0-cbb9-5d53-b174-393deb63…}'
+        },
+        {
+            'id': '1d75d6c3-18e7-40b5-a5b6-08ac0acf4d54',
             'label': 'urgent',
             'description': 'Requires urgent attention',
-            'metadata': {
-                'createdDate': '2021-10-25T01:52:52.118149Z'
-            }
+            'metadata': '{createdDate: "2021-11-01T01:52:24.475558Z"}'
         }
     ]
 };
 
-const filterHandlers = {
-    state: () => {},
-    checkbox: () => {},
-    clear: () => {},
-    clearGroup: () => {},
-    reset: () => {}
-};
-
 export {
     activeFilters,
-    data,
-    filterHandlers
+    data
 };
