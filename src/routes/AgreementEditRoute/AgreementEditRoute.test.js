@@ -6,6 +6,8 @@ import { MemoryRouter } from 'react-router-dom';
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
 import { noop } from 'lodash';
+import translationsProperties from '../../../test/helpers';
+import AgreementEditRoute from './AgreementEditRoute';
 import {
     okapi,
     match,
@@ -29,8 +31,6 @@ import {
     renewalPriorityValues,
     loadingView
 } from './testResources';
-import translationsProperties from '../../../test/helpers';
-import AgreementEditRoute from './AgreementEditRoute';
 
 const BasketLineButton = (props) => {
   return <Button onClick={props.handlers.onBasketLinesAdded}>BasketLineButton</Button>;
@@ -38,10 +38,6 @@ const BasketLineButton = (props) => {
 
 const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
-};
-
-const SubmitButton = (props) => {
-  return <Button onClick={props.onSubmit}>SubmitButton</Button>;
 };
 
 BasketLineButton.propTypes = {
@@ -56,9 +52,6 @@ CloseButton.propTypes = {
   }),
 };
 
-SubmitButton.propTypes = {
-    onSubmit: PropTypes.func,
-};
 
 const queryUpdateMock = jest.fn();
 const historyPushMock = jest.fn();
@@ -75,7 +68,6 @@ jest.mock('../../components/views/AgreementForm', () => {
       <div>AgreementForm</div>
       <BasketLineButton {...props} />
       <CloseButton {...props} />
-      <SubmitButton {...props} />
     </div>
   );
 });
@@ -196,11 +188,6 @@ describe('AgreementEditRoute', () => {
       test('calls the CloseButton', async () => {
         await ButtonInteractor('CloseButton').click();
         expect(historyPushMock).toHaveBeenCalled();
-      });
-
-      test('calls the SubmitButton', async () => {
-        await ButtonInteractor('SubmitButton').click();
-        expect(onSubmitMock).toHaveBeenCalled();
       });
   });
 
