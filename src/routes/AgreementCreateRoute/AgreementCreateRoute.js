@@ -192,6 +192,7 @@ class AgreementCreateRoute extends React.Component {
     this.props.history.push(`${urls.agreements()}${location.search}`);
   }
 
+   /* istanbul ignore next */
   handleSubmit = (agreement) => {
     const { history, location, mutator, resources } = this.props;
     const relationshipTypeValues = resources?.relationshipTypeValues?.records ?? [];
