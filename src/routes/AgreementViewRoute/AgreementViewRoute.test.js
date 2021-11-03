@@ -168,7 +168,7 @@ const data = {
 };
 
 describe('AgreementViewRoute', () => {
-  describe('rendering the agreementViewRoute', () => {
+  describe('rendering the AgreementViewRoute', () => {
     let renderComponent;
     beforeEach(() => {
       renderComponent = renderWithIntl(
@@ -179,7 +179,7 @@ describe('AgreementViewRoute', () => {
       );
     });
 
-    test('renders the agreement component', () => {
+    test('renders the Agreement component', () => {
       const { getByText } = renderComponent;
       expect(getByText('Agreement')).toBeInTheDocument();
     });
@@ -204,7 +204,7 @@ describe('AgreementViewRoute', () => {
       expect(historyPushMock).toHaveBeenCalled();
     });
 
-    test('renders the  NeedMoreLinesButton callback', async () => {
+    test('renders the NeedMoreLinesButton callback', async () => {
       await ButtonInteractor('NeedMoreLinesButton').click();
       expect(mutatorReplaceMock).toHaveBeenCalled();
     });
@@ -245,7 +245,7 @@ describe('AgreementViewRoute', () => {
         );
       });
 
-      test('renders the agreements component', () => {
+      test('renders the Agreements component', () => {
         const { getByText } = renderComponent;
         expect(getByText('Agreement')).toBeInTheDocument();
       });
