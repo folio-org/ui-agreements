@@ -54,7 +54,7 @@ describe('EResourceFilters', () => {
           await Accordion('Tags').exists();
       });
 
-      test('renders the checkboxes', async () => {
+      test('clicking the checkboxes', async () => {
         await Checkbox({ id: 'clickable-filter-type-monograph' }).click();
         await Checkbox({ id: 'clickable-filter-type-monograph' }).click();
         await Checkbox({ id: 'clickable-filter-publicationType-journal' }).click();
