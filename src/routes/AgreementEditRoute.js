@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, chunk } from 'lodash';
 import compose from 'compose-function';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
@@ -339,17 +339,25 @@ class AgreementEditRoute extends React.Component {
     const poLineIdsArray = [...new Set((lines ?? []).filter(line => line.poLines && line.poLines.length)
       .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat())];
 
-    const step = 1;
-    const queriesArray = [];
-    for (let i = 0; i < poLineIdsArray.length; i += step) {
-      queriesArray.push({
-        params: {
-          query: poLineIdsArray.slice(i, i + step).map(item => `id==${item}`).join(' or ')
-        }
-      });
-    }
+    const CONCURRENT_REQUESTS = 2;
+    const STEP_SIZE = 2;
 
-    await Promise.all(queriesArray.map(query => this.props.mutator.orderLines.GET(query)));
+    const chunkedItems = chunk(poLineIdsArray, CONCURRENT_REQUESTS * STEP_SIZE);
+
+    for (const chunkedItem of chunkedItems) {
+      const queriesArray = [];
+      for (let i = 0; i < chunkedItem.length; i += STEP_SIZE) {
+        queriesArray.push(
+          this.props.mutator.orderLines.GET({
+            params: {
+              query: chunkedItem.slice(i, i + STEP_SIZE).map(item => `id==${item}`).join(' or ')
+            }
+          })
+        );
+
+        await Promise.all(queriesArray);
+      }
+    }
   }
 
   handleBasketLinesAdded = () => {
