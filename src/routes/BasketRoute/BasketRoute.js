@@ -4,8 +4,8 @@ import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import View from '../components/views/Basket';
-import { urls } from '../components/utilities';
+import View from '../../components/views/Basket';
+import { urls } from '../../components/utilities';
 
 class BasketRoute extends React.Component {
   static manifest = Object.freeze({

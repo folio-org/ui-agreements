@@ -554,7 +554,7 @@
     "title.closeEdit": "关闭编辑标题",
     "organizations.primary": "主要组织",
     "relatedAgreements.linkToParentError": "<strong>错误： </strong>协议“ {agreement} ”未链接，因为协议无法与其自身链接。",
-    "agreements.editAgreement.name": "Edit agreement - {name}",
-    "duplicateAgreementModal.supplementaryDocuments": "Supplementary documents",
-    "duplicateAgreementModal.supplementaryProperties": "Supplementary properties"
+    "agreements.editAgreement.name": "编辑协议 - {name}",
+    "duplicateAgreementModal.supplementaryDocuments": "补充文档",
+    "duplicateAgreementModal.supplementaryProperties": "补充属性"
 }
