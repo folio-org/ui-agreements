@@ -8,6 +8,7 @@ import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
 import { withAsyncValidation } from '@folio/stripes-erm-components';
+import { _ } from 'core-js';
 import withFileHandlers from './components/withFileHandlers';
 import { joinRelatedAgreements, splitRelatedAgreements } from './utilities/processRelatedAgreements';
 import View from '../components/views/AgreementForm';
@@ -35,6 +36,8 @@ class AgreementEditRoute extends React.Component {
       perRequest: RECORDS_PER_REQUEST_MEDIUM,
       records: 'results',
       recordsRequired: '1000',
+      accumulate: 'true',
+      fetch: false,
     },
     agreementStatusValues: {
       type: 'okapi',
@@ -81,18 +84,8 @@ class AgreementEditRoute extends React.Component {
       type: 'okapi',
       perRequest: RECORDS_PER_REQUEST_LARGE,
       path: 'orders/order-lines',
-      params: (_q, _p, _r, _l, props) => {
-        const query = (props?.resources?.agreementLines?.records ?? [])
-          .filter(line => line.poLines && line.poLines.length)
-          .map(line => (line.poLines
-            .map(poLine => `id==${poLine.poLineId}`)
-            .join(' or ')
-          ))
-          .join(' or ');
-
-        return query ? { query } : null;
-      },
-      fetch: props => (!!props.stripes.hasInterface('order-lines', '1.0 2.0')),
+      accumulate: 'true',
+      fetch: false,   // we will fetch the order lines in the componentDidMount
       records: 'poLines',
     },
     orgRoleValues: {
@@ -154,6 +147,14 @@ class AgreementEditRoute extends React.Component {
     mutator: PropTypes.shape({
       agreement: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
+      }),
+      agreementLines: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+
+      }),
+      orderLines: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
       }),
       agreements: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
@@ -233,6 +234,7 @@ class AgreementEditRoute extends React.Component {
       initialValues: {},
     };
   }
+
 
   static getDerivedStateFromProps(props, state) {
     let updated = false;
@@ -330,6 +332,24 @@ class AgreementEditRoute extends React.Component {
     }
 
     return null;
+  }
+
+  async componentDidMount() {
+    const lines = await this.props.mutator.agreementLines.GET();
+    const poLineIdsArray = [...new Set((lines ?? []).filter(line => line.poLines && line.poLines.length)
+      .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat())];
+
+    const step = 1;
+    const queriesArray = [];
+    for (let i = 0; i < poLineIdsArray.length; i += step) {
+      queriesArray.push({
+        params: {
+          query: poLineIdsArray.slice(i, i + step).map(item => `id==${item}`).join(' or ')
+        }
+      });
+    }
+
+    await Promise.all(queriesArray.map(query => this.props.mutator.orderLines.GET(query)));
   }
 
   handleBasketLinesAdded = () => {
