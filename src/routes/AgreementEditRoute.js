@@ -338,8 +338,8 @@ class AgreementEditRoute extends React.Component {
     const poLineIdsArray = [...new Set((lines ?? []).filter(line => line.poLines && line.poLines.length)
       .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat())];
 
-    const CONCURRENT_REQUESTS = 2;
-    const STEP_SIZE = 2;
+    const CONCURRENT_REQUESTS = 5;
+    const STEP_SIZE = 1;
 
     const chunkedItems = chunk(poLineIdsArray, CONCURRENT_REQUESTS * STEP_SIZE);
 
@@ -353,9 +353,8 @@ class AgreementEditRoute extends React.Component {
             }
           })
         );
-
-        await Promise.all(queriesArray);
       }
+      await Promise.all(queriesArray);
     }
   }
 
