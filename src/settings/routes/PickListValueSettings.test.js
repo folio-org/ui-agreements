@@ -1,0 +1,37 @@
+import React from 'react';
+import '@folio/stripes-erm-components/test/jest/__mock__';
+import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { MemoryRouter } from 'react-router-dom';
+import translationsProperties from '../../../test/helpers';
+import PickListValueSettings from './PickListValueSettings';
+import { pickListValueResources as resources } from './testResources';
+
+const props = {
+  mutator: {
+    categories: {
+      GET: jest.fn(),
+      reset: jest.fn(),
+    },
+  },
+  resources: { resources }
+};
+
+
+describe('PickListValueSettings', () => {
+  describe('rendering the PickListValueSettings', () => {
+    let renderComponent;
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <PickListValueSettings {...props} />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    test('renders the PickListValueSettings component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('ControlledVocab')).toBeInTheDocument();
+    });
+  });
+});
