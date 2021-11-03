@@ -234,7 +234,6 @@ class AgreementEditRoute extends React.Component {
     };
   }
 
-/* istanbul ignore next */
   static getDerivedStateFromProps(props, state) {
     let updated = false;
 
