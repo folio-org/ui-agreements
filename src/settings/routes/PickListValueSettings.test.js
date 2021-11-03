@@ -4,7 +4,6 @@ import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers'
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../test/helpers';
 import PickListValueSettings from './PickListValueSettings';
-import { pickListValueResources as resources } from './testResources';
 
 const props = {
   mutator: {
@@ -13,9 +12,7 @@ const props = {
       reset: jest.fn(),
     },
   },
-  resources: { resources }
 };
-
 
 describe('PickListValueSettings', () => {
   describe('rendering the PickListValueSettings', () => {
