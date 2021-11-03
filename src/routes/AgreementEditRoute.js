@@ -8,7 +8,6 @@ import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
 import { withAsyncValidation } from '@folio/stripes-erm-components';
-import { _ } from 'core-js';
 import withFileHandlers from './components/withFileHandlers';
 import { joinRelatedAgreements, splitRelatedAgreements } from './utilities/processRelatedAgreements';
 import View from '../components/views/AgreementForm';
