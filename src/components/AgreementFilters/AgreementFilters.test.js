@@ -2,7 +2,6 @@ import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-// import { screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { Accordion, Checkbox } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
 import { activeFilters, data } from './testResources';
@@ -133,7 +132,6 @@ describe('AgreementFilters', () => {
 
       test('clicking the no checkbox', async () => {
         await Checkbox({ id: 'clickable-filter-isPerpetual-no' }).click();
-        // await waitForElementToBeRemoved(() => screen.getByText('OrganizationSelection'));
         expect(stateMock).toHaveBeenCalled();
       });
   });
