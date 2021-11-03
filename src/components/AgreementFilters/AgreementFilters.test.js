@@ -13,7 +13,6 @@ jest.mock('@folio/stripes-erm-components', () => ({
    OrganizationSelection: () => <div>OrganizationSelection</div>,
 }));
 
-jest.mock('@folio/stripes/smart-components');
 const stateMock = jest.fn(() => Promise.resolve());
 
 const filterHandlers = {
@@ -87,16 +86,52 @@ describe('AgreementFilters', () => {
       expect(getByText('OrganizationSelection')).toBeInTheDocument();
     });
 
-    test('renders the checkboxes', async () => {
+    test('clicking the closed checkbox', async () => {
         await Checkbox({ id: 'clickable-filter-agreementStatus-closed' }).click();
+        expect(stateMock).toHaveBeenCalled();
+      });
+
+      test('clicking the draft checkbox', async () => {
         await Checkbox({ id: 'clickable-filter-agreementStatus-draft' }).click();
+        expect(stateMock).toHaveBeenCalled();
+      });
+
+      test('clicking the requested checkbox', async () => {
         await Checkbox({ id: 'clickable-filter-agreementStatus-requested' }).click();
+        expect(stateMock).toHaveBeenCalled();
+      });
+
+      test('clicking the in negotiation checkbox', async () => {
         await Checkbox({ id: 'clickable-filter-agreementStatus-in-negotiation' }).click();
+        expect(stateMock).toHaveBeenCalled();
+      });
+
+      test('clicking the active checkbox', async () => {
         await Checkbox({ id: 'clickable-filter-agreementStatus-active' }).click();
+        expect(stateMock).toHaveBeenCalled();
+      });
+
+      test('clicking the for review checkbox', async () => {
         await Checkbox({ id: 'clickable-filter-renewalPriority-for-review' }).click();
+        expect(stateMock).toHaveBeenCalled();
+      });
+
+      test('clicking the definitely renew checkbox', async () => {
         await Checkbox({ id: 'clickable-filter-renewalPriority-definitely-renew' }).click();
+        expect(stateMock).toHaveBeenCalled();
+      });
+
+      test('clicking the definitely cancel checkbox', async () => {
         await Checkbox({ id: 'clickable-filter-renewalPriority-definitely-cancel' }).click();
+        expect(stateMock).toHaveBeenCalled();
+      });
+
+      test('clicking the yes checkbox', async () => {
         await Checkbox({ id: 'clickable-filter-isPerpetual-yes' }).click();
+        expect(stateMock).toHaveBeenCalled();
+      });
+
+      test('clicking the no checkbox', async () => {
         await Checkbox({ id: 'clickable-filter-isPerpetual-no' }).click();
         // await waitForElementToBeRemoved(() => screen.getByText('OrganizationSelection'));
         expect(stateMock).toHaveBeenCalled();
