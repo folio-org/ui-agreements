@@ -335,26 +335,29 @@ class AgreementEditRoute extends React.Component {
 
   async componentDidMount() {
     const lines = await this.props.mutator.agreementLines.GET();
-    const poLineIdsArray = [...new Set((lines ?? []).filter(line => line.poLines && line.poLines.length)
-      .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat())];
+    const poLineIdsArray = [
+      ...new Set((lines ?? []) // Using a Set to remove duplicate ids
+        .filter(line => line.poLines && line.poLines.length)
+        .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat())
+    ];
 
-    const CONCURRENT_REQUESTS = 5;
-    const STEP_SIZE = 1;
+    const CONCURRENT_REQUESTS = 5; // Number of requests to make concurrently
+    const STEP_SIZE = 1; // Number of requests to make per concurrent request
 
-    const chunkedItems = chunk(poLineIdsArray, CONCURRENT_REQUESTS * STEP_SIZE);
+    const chunkedItems = chunk(poLineIdsArray, CONCURRENT_REQUESTS * STEP_SIZE); // Split into chunks of size CONCURRENT_REQUESTS * STEP_SIZE
 
-    for (const chunkedItem of chunkedItems) {
-      const queriesArray = [];
+    for (const chunkedItem of chunkedItems) {  // Make requests concurrently
+      const promisesArray = []; // Array of promises
       for (let i = 0; i < chunkedItem.length; i += STEP_SIZE) {
-        queriesArray.push(
-          this.props.mutator.orderLines.GET({
+        promisesArray.push( // Add promises to array
+          this.props.mutator.orderLines.GET({ // Make GET request
             params: {
-              query: chunkedItem.slice(i, i + STEP_SIZE).map(item => `id==${item}`).join(' or ')
+              query: chunkedItem.slice(i, i + STEP_SIZE).map(item => `id==${item}`).join(' or ') // Make query string
             }
           })
         );
       }
-      await Promise.all(queriesArray);
+      await Promise.all(promisesArray); // Wait for all requests to complete and move to the next chunk
     }
   }
 
