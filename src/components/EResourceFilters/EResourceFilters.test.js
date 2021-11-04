@@ -7,8 +7,9 @@ import translationsProperties from '../../../test/helpers';
 import { activeFilters, data } from './testResources';
 import EResourceFilters from './EResourceFilters';
 
-jest.mock('@folio/stripes/smart-components');
-const stateMock = jest.fn(() => Promise.resolve());
+// onChange on the filter sets the filterHandlers state passed to us via the search and sort query component.
+// We mock the filterhandlers.state callback to see if that gets invoked
+const stateMock = jest.fn();
 
 const filterHandlers = {
   state: stateMock,
