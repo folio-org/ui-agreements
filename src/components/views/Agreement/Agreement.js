@@ -23,7 +23,7 @@ import {
 import { AppIcon, TitleManager, withStripes, HandlerManager } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import DuplicateAgreementModal from '../DuplicateAgreementModal';
+import DuplicateAgreementModal from '../../DuplicateAgreementModal';
 
 import {
   AllPeriods,
@@ -41,10 +41,10 @@ import {
   SupplementaryProperties,
   Terms,
   UsageData,
-} from '../AgreementSections';
+} from '../../AgreementSections';
 
-import { urls } from '../utilities';
-import { statuses } from '../../constants';
+import { urls } from '../../utilities';
+import { statuses } from '../../../constants';
 
 class Agreement extends React.Component {
   static propTypes = {
@@ -207,6 +207,7 @@ class Agreement extends React.Component {
     if (data.agreement?.customProperties !== undefined) {
       custprops = Object.keys(data.agreement?.customProperties).length;
     }
+
     return !!(primaryprops || custprops);
   }
 
@@ -219,17 +220,17 @@ class Agreement extends React.Component {
     return stripes.hasPerm('ui-agreements.agreements.edit') ? (
       <PaneMenu>
         {handlers.onToggleTags &&
-        <FormattedMessage id="ui-agreements.agreements.showTags">
-          {ariaLabel => (
-            <IconButton
-              ariaLabel={typeof ariaLabel === 'string' ? ariaLabel : ariaLabel[0]}
-              badgeCount={agreement?.tags?.length ?? 0}
-              icon="tag"
-              id="clickable-show-tags"
-              onClick={handlers.onToggleTags}
-            />
-          )}
-        </FormattedMessage>
+          <FormattedMessage id="ui-agreements.agreements.showTags">
+            {ariaLabel => (
+              <IconButton
+                ariaLabel={typeof ariaLabel === 'string' ? ariaLabel : ariaLabel[0]}
+                badgeCount={agreement?.tags?.length ?? 0}
+                icon="tag"
+                id="clickable-show-tags"
+                onClick={handlers.onToggleTags}
+              />
+            )}
+          </FormattedMessage>
         }
       </PaneMenu>
     ) : null;
@@ -259,6 +260,7 @@ class Agreement extends React.Component {
 
     if (isLoading) return <LoadingPane data-loading {...paneProps} />;
 
+    // istanbul ignore next
     const shortcuts = [
       {
         name: 'edit',
@@ -305,18 +307,18 @@ class Agreement extends React.Component {
                 </Row>
                 <AccordionSet initialStatus={this.getInitialAccordionsState()}>
                   <AllPeriods {...this.getSectionProps('allPeriods')} />
-                  { data.agreement?.contacts?.length > 0 && <InternalContacts {...this.getSectionProps('internalContacts')} /> }
+                  {data.agreement?.contacts?.length > 0 && <InternalContacts {...this.getSectionProps('internalContacts')} />}
                   <Lines {...this.getSectionProps('lines')} />
-                  { controllingLicenses?.length > 0 && <ControllingLicense {...this.getSectionProps('controllingLicense')} /> }
-                  { futureLicenses?.length > 0 && <FutureLicenses {...this.getSectionProps('futureLicenses')} /> }
-                  { historicalLicenses?.length > 0 && <HistoricalLicenses {...this.getSectionProps('historicalLicenses')} /> }
-                  { data.agreement?.externalLicenseDocs?.length > 0 && <ExternalLicenses {...this.getSectionProps('externalLicenses')} /> }
-                  { controllingLicenses?.length > 0 && <Terms {...this.getSectionProps('terms')} /> }
-                  { data.agreement?.orgs?.length > 0 && <Organizations {...this.getSectionProps('organizations')} /> }
-                  { this.showSupplementaryPropertiesAccordion() && <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} /> }
-                  { data.agreement?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} /> }
-                  { data.agreement?.usageDataProviders?.length > 0 && <UsageData {...this.getSectionProps('usageData')} /> }
-                  { data.agreement?.relatedAgreements?.length > 0 && <RelatedAgreements {...this.getSectionProps('relatedAgreements')} /> }
+                  {controllingLicenses?.length > 0 && <ControllingLicense {...this.getSectionProps('controllingLicense')} />}
+                  {futureLicenses?.length > 0 && <FutureLicenses {...this.getSectionProps('futureLicenses')} />}
+                  {historicalLicenses?.length > 0 && <HistoricalLicenses {...this.getSectionProps('historicalLicenses')} />}
+                  {data.agreement?.externalLicenseDocs?.length > 0 && <ExternalLicenses {...this.getSectionProps('externalLicenses')} />}
+                  {controllingLicenses?.length > 0 && <Terms {...this.getSectionProps('terms')} />}
+                  {data.agreement?.orgs?.length > 0 && <Organizations {...this.getSectionProps('organizations')} />}
+                  {this.showSupplementaryPropertiesAccordion() && <SupplementaryProperties {...this.getSectionProps('supplementaryProperties')} />}
+                  {data.agreement?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...this.getSectionProps('supplementaryDocs')} />}
+                  {data.agreement?.usageDataProviders?.length > 0 && <UsageData {...this.getSectionProps('usageData')} />}
+                  {data.agreement?.relatedAgreements?.length > 0 && <RelatedAgreements {...this.getSectionProps('relatedAgreements')} />}
                   <HandlerManager data={{ data }} event="ui-agreements-extension" stripes={this.props.stripes} />
                   <NotesSmartAccordion
                     {...this.getSectionProps('notes')}
@@ -332,13 +334,13 @@ class Agreement extends React.Component {
             </TitleManager>
           </Pane>
           {helperApp}
-          { showDuplicateAgreementModal &&
-          <DuplicateAgreementModal
-            name={data.agreement.name}
-            onClone={(obj) => handlers.onClone(obj)}
-            onClose={this.closeDuplicateAgreementModal}
-          />
-        }
+          {showDuplicateAgreementModal &&
+            <DuplicateAgreementModal
+              name={data.agreement.name}
+              onClone={(obj) => handlers.onClone(obj)}
+              onClose={this.closeDuplicateAgreementModal}
+            />
+          }
           <ConfirmationModal
             buttonStyle="danger"
             confirmLabel={<FormattedMessage id="ui-agreements.delete" />}
