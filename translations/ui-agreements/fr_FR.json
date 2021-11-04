@@ -285,7 +285,6 @@
     "duplicateAgreementModal.linkedLicenses": "Licences liées",
     "duplicateAgreementModal.externalLicenses": "Licences externes",
     "duplicateAgreementModal.organizations": "Organisations",
-    "duplicateAgreementModal.supplementaryInformation": "Informations complémentaires",
     "duplicateAgreementModal.usageData": "Données d'utilisation",
     "close": "Fermer",
     "agreements.export": "Exporter",
@@ -554,5 +553,8 @@
     "basketSelector.selectResourceMessage": "Please select an e-resource to continue",
     "title.closeEdit": "Close edit title",
     "organizations.primary": "Primary organization",
-    "relatedAgreements.linkToParentError": "<strong>Error:</strong> Agreement \"{agreement}\" was not linked because an agreement cannot be linked to itself."
+    "relatedAgreements.linkToParentError": "<strong>Error:</strong> Agreement \"{agreement}\" was not linked because an agreement cannot be linked to itself.",
+    "agreements.editAgreement.name": "Edit agreement - {name}",
+    "duplicateAgreementModal.supplementaryDocuments": "Supplementary documents",
+    "duplicateAgreementModal.supplementaryProperties": "Supplementary properties"
 }

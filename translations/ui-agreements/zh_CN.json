@@ -285,7 +285,6 @@
     "duplicateAgreementModal.linkedLicenses": "链接许可证",
     "duplicateAgreementModal.externalLicenses": "外部许可证",
     "duplicateAgreementModal.organizations": "组织",
-    "duplicateAgreementModal.supplementaryInformation": "补充信息",
     "duplicateAgreementModal.usageData": "使用数据",
     "close": "关闭",
     "agreements.export": "导出",
@@ -554,5 +553,8 @@
     "basketSelector.selectResourceMessage": "请选择一个电子资源以继续",
     "title.closeEdit": "关闭编辑标题",
     "organizations.primary": "主要组织",
-    "relatedAgreements.linkToParentError": "<strong>错误： </strong>协议“ {agreement} ”未链接，因为协议无法与其自身链接。"
+    "relatedAgreements.linkToParentError": "<strong>错误： </strong>协议“ {agreement} ”未链接，因为协议无法与其自身链接。",
+    "agreements.editAgreement.name": "编辑协议 - {name}",
+    "duplicateAgreementModal.supplementaryDocuments": "补充文档",
+    "duplicateAgreementModal.supplementaryProperties": "补充属性"
 }

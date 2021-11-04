@@ -1,6 +1,10 @@
 # Change history for ui-agreements
 
 ## 8.1.0 In Progress
+
+* Upgrade `@folio/react-intl-safe-html` for `@folio/stripes` `v7` compatibility. ERM-1893.
+* Remove `OrgRoleSettings` from `src/settings`. ERM-1490
+
 ## 8.0.0 2021-10-07
 * Refactor mod-configuration permissions to require specific perms instead of all permissions. ERM-1881
 * Fixed bug with error on saving an agreement if a change is made to the visibility (internal) flag of a primary property without populating it. ERM-1771
@@ -62,7 +66,7 @@
 * Dropdowns do not display values when editing Agreements. ERM-1206
 * Agreement lines do not display correctly in Agreement edit view. ERM-1205
 * Add UI settings to control the number of items displayed in Agreements MCLs. ERM-1190
-* Add FOLIO keyboard shortcuts to Agreements-Platforms. ERM-1186 
+* Add FOLIO keyboard shortcuts to Agreements-Platforms. ERM-1186
 * Add "Edit" screen for title instance resources. ERM-1184
 * Support user access to platform records. ERM-1156
 * Add FOLIO keyboard shortcuts to Agreements. ERM-1151

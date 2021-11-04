@@ -33,6 +33,7 @@ const TitleCardExternal = ({
     <Card
       cardStyle="positive"
       data-test-title-card
+      data-testid="titleCardExternal"
       headerEnd={headerEnd}
       headerStart={(
         <AppIcon app="eholdings" size="small">
@@ -56,7 +57,7 @@ const TitleCardExternal = ({
             <div data-test-title-holding-status>
               {titleInfo?.isSelected ? <FormattedMessage id="ui-agreements.eresources.selected" />
                 : <FormattedMessage id="ui-agreements.eresources.notSelected" />
-    }
+              }
             </div>
           </KeyValue>
         </Col>

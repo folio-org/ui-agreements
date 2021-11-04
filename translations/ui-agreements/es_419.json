@@ -285,7 +285,6 @@
     "duplicateAgreementModal.linkedLicenses": "Licencias vinculadas",
     "duplicateAgreementModal.externalLicenses": "Licencias externas",
     "duplicateAgreementModal.organizations": "Organizaciones",
-    "duplicateAgreementModal.supplementaryInformation": "Información complementaria",
     "duplicateAgreementModal.usageData": "Datos de uso",
     "close": "Cerrar",
     "agreements.export": "Exportar",
@@ -322,7 +321,7 @@
     "supplementaryProperties.callout.delete.success": "Supplementary property successfully deleted.",
     "supplementaryProperties.callout.save.error": "There was an error saving the supplementary property. {error}",
     "supplementaryProperties.callout.save.success": "Supplementary property successfully saved.",
-    "supplementaryProperties.callout.delete.supplementaryPropertyInUse": "<strong>Error:</strong> Supplementary property <strong>{supplementaryPropertyName}</strong> was not deleted because it is in use on one or more agreements.",
+    "supplementaryProperties.callout.delete.supplementaryPropertyInUse": "<strong>Error:</strong> La propiedad suplementaria <strong>{supplementaryPropertyName}</strong> no se eliminó porque está en uso en uno o más acuerdos.",
     "supplementaryProperties.optionalProperties": "Optional properties",
     "supplementaryProperties.primaryProperties": "Primary properties",
     "section.supplementaryProperties": "Propiedades suplementarias",
@@ -554,5 +553,8 @@
     "basketSelector.selectResourceMessage": "Please select an e-resource to continue",
     "title.closeEdit": "Close edit title",
     "organizations.primary": "Primary organization",
-    "relatedAgreements.linkToParentError": "<strong>Error:</strong> Agreement \"{agreement}\" was not linked because an agreement cannot be linked to itself."
+    "relatedAgreements.linkToParentError": "<strong>Error:</strong> Agreement \"{agreement}\" was not linked because an agreement cannot be linked to itself.",
+    "agreements.editAgreement.name": "Edit agreement - {name}",
+    "duplicateAgreementModal.supplementaryDocuments": "Supplementary documents",
+    "duplicateAgreementModal.supplementaryProperties": "Supplementary properties"
 }
