@@ -2,7 +2,6 @@ import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-// import { screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { Accordion, Checkbox } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
 import { activeFilters, data } from './testResources';
@@ -11,12 +10,12 @@ import EResourceFilters from './EResourceFilters';
 jest.mock('@folio/stripes/smart-components');
 const stateMock = jest.fn(() => Promise.resolve());
 
-  const filterHandlers = {
-    state : stateMock,
-    checkbox: () => {},
-    clear: () => {},
-    clearGroup: () => {},
-    reset: () => {},
+const filterHandlers = {
+  state: stateMock,
+  checkbox: () => {},
+  clear: () => {},
+  clearGroup: () => {},
+  reset: () => {},
 };
 
 describe('EResourceFilters', () => {
@@ -54,17 +53,39 @@ describe('EResourceFilters', () => {
           await Accordion('Tags').exists();
       });
 
-      test('clicking the checkboxes', async () => {
+      test('clicking the monograph checkbox', async () => {
         await Checkbox({ id: 'clickable-filter-type-monograph' }).click();
-        await Checkbox({ id: 'clickable-filter-type-monograph' }).click();
+        expect(stateMock).toHaveBeenCalled();
+      });
+
+      test('clicking the serial checkbox', async () => {
+        await Checkbox({ id: 'clickable-filter-type-serial' }).click();
+        expect(stateMock).toHaveBeenCalled();
+      });
+
+      test('clicking the journal checkbox', async () => {
         await Checkbox({ id: 'clickable-filter-publicationType-journal' }).click();
+        expect(stateMock).toHaveBeenCalled();
+      });
+
+      test('clicking the book checkbox', async () => {
         await Checkbox({ id: 'clickable-filter-publicationType-book' }).click();
+        expect(stateMock).toHaveBeenCalled();
+      });
+
+      test('clicking the database checkbox', async () => {
         await Checkbox({ id: 'clickable-filter-publicationType-database' }).click();
+        expect(stateMock).toHaveBeenCalled();
+      });
+
+      test('clicking the yes checkbox', async () => {
         await Checkbox({ id: 'clickable-filter-class-package' }).click();
+        expect(stateMock).toHaveBeenCalled();
+      });
+
+      test('clicking the no checkbox', async () => {
         await Checkbox({ id: 'clickable-filter-class-nopackage' }).click();
-        // await waitForElementToBeRemoved(() => screen.getByText('Tags'));
         expect(stateMock).toHaveBeenCalled();
       });
     });
   });
-
