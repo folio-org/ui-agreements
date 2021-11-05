@@ -231,6 +231,8 @@ class AgreementEditRoute extends React.Component {
     this.state = {
       hasPerms: props.stripes.hasPerm('ui-agreements.agreements.edit'),
       initialValues: {},
+      orderLines: [],
+      isLoading: true,
     };
   }
 
@@ -334,31 +336,39 @@ class AgreementEditRoute extends React.Component {
   }
 
   async componentDidMount() {
+    const results = await this.fetchOrderLines();
+    this.setState({ orderLines: results, isLoading: false });
+  }
+
+  async fetchOrderLines() {
     const lines = await this.props.mutator.agreementLines.GET();
-    const poLineIdsArray = [
-      ...new Set((lines ?? []) // Using a Set to remove duplicate ids
-        .filter(line => line.poLines && line.poLines.length)
-        .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat())
-    ];
+    const poLineIdsArray = (lines ?? [])
+      .filter(line => line.poLines && line.poLines.length)
+      .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat();
 
     const CONCURRENT_REQUESTS = 5; // Number of requests to make concurrently
-    const STEP_SIZE = 1; // Number of requests to make per concurrent request
+    const STEP_SIZE = 60; // Number of ids to request for per concurrent request
 
     const chunkedItems = chunk(poLineIdsArray, CONCURRENT_REQUESTS * STEP_SIZE); // Split into chunks of size CONCURRENT_REQUESTS * STEP_SIZE
-
+    const data = [];
     for (const chunkedItem of chunkedItems) {  // Make requests concurrently
+      this.props.mutator.orderLines.reset();
       const promisesArray = []; // Array of promises
       for (let i = 0; i < chunkedItem.length; i += STEP_SIZE) {
         promisesArray.push( // Add promises to array
           this.props.mutator.orderLines.GET({ // Make GET request
             params: {
-              query: chunkedItem.slice(i, i + STEP_SIZE).map(item => `id==${item}`).join(' or ') // Make query string
-            }
+              query: chunkedItem.slice(i, i + STEP_SIZE).map(item => `id==${item}`).join(' or '), // Make query string
+              limit: 1000, // Limit to 1000
+            },
           })
         );
       }
-      await Promise.all(promisesArray); // Wait for all requests to complete and move to the next chunk
+      const results = await Promise.all(promisesArray); // Wait for all requests to complete and move to the next chunk
+      data.push(...results.flat()); // Add results to data
     }
+
+    return data;
   }
 
   handleBasketLinesAdded = () => {
@@ -422,7 +432,7 @@ class AgreementEditRoute extends React.Component {
 
   fetchIsPending = () => {
     return Object.values(this.props.resources)
-      .filter(r => r && r.resource !== 'agreements')
+      .filter(r => r && (r.resource !== 'agreements' || r.resource !== 'orderLines'))
       .some(r => r.isPending);
   }
 
@@ -430,7 +440,7 @@ class AgreementEditRoute extends React.Component {
     const { handlers, resources } = this.props;
 
     if (!this.state.hasPerms) return <NoPermissions />;
-    if (this.fetchIsPending()) return <LoadingView dismissible onClose={this.handleClose} />;
+    if (this.fetchIsPending() || this.state.isLoading) return <LoadingView dismissible onClose={this.handleClose} />;
 
     return (
       <View
@@ -446,7 +456,7 @@ class AgreementEditRoute extends React.Component {
           externalAgreementLine: resources?.externalAgreementLine?.records ?? [],
           isPerpetualValues: resources?.isPerpetualValues?.records ?? [],
           licenseLinkStatusValues: resources?.licenseLinkStatusValues?.records ?? [],
-          orderLines: resources?.orderLines?.records ?? [],
+          orderLines: this.state.orderLines,
           orgRoleValues: resources?.orgRoleValues?.records ?? [],
           renewalPriorityValues: resources?.renewalPriorityValues?.records ?? [],
           supplementaryProperties: resources?.supplementaryProperties?.records ?? [],
