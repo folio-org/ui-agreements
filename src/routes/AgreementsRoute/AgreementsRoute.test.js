@@ -250,7 +250,7 @@ describe('AgreementsRoute', () => {
 
     test('displays the permission error', () => {
       const { getByText } = renderComponent;
-      expect(getByText('stripes-smart-components.permissionError')).toBeInTheDocument();
+      expect(getByText('Sorry - your permissions do not allow access to this page.')).toBeInTheDocument();
     });
   });
 });

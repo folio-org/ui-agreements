@@ -9,7 +9,7 @@ describe('NoPermissions', () => {
     const { getByRole, getByText } = renderWithIntl(
       <NoPermissions />, translationsProperties
     );
-    expect(getByRole('heading', { name: 'stripes-smart-components.permissionError' })).toBeInTheDocument();
+    expect(getByRole('heading', { name: 'Sorry - your permissions do not allow access to this page.' })).toBeInTheDocument();
     expect(getByText('stripes-smart-components.permissionsDoNotAllowAccess')).toBeInTheDocument();
   });
 });
