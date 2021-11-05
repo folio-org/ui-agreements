@@ -25,9 +25,9 @@ import {
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
-import { Info, POLines, Coverage } from '../AgreementLineSections';
-import { isExternal, urls } from '../utilities';
-import DiscoverySettings from '../DiscoverySettings';
+import { Info, POLines, Coverage } from '../../AgreementLineSections';
+import { isExternal, urls } from '../../utilities';
+import DiscoverySettings from '../../DiscoverySettings';
 
 const propTypes = {
   data: PropTypes.shape({
@@ -49,9 +49,9 @@ const propTypes = {
         _object: PropTypes.object,
       }),
       startDate: PropTypes.string,
-      tags: PropTypes.shape({
+      tags: PropTypes.arrayOf(PropTypes.shape({
         length: PropTypes.number,
-      }),
+      })),
     }).isRequired,
     settings: PropTypes.object,
   }),
@@ -91,6 +91,7 @@ const AgreementLine = ({
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
   const resourceName = resource.pti?.titleInstance.name ?? resource.reference_object?.label ?? '';
 
+  // istanbul ignore next
   const shortcuts = [
     {
       name: 'edit',
@@ -141,17 +142,17 @@ const AgreementLine = ({
             <IfPermission perm="ui-agreements.agreements.edit">
               <PaneMenu>
                 {handlers.onToggleTags &&
-                <IconButton
-                  ariaLabel={intl.formatMessage({ id: 'ui-agreements.agreements.showTags' })}
-                  badgeCount={line?.tags?.length ?? 0}
-                  icon="tag"
-                  id="clickable-show-tags"
-                  onClick={handlers.onToggleTags}
-                />
-              }
+                  <IconButton
+                    ariaLabel={intl.formatMessage({ id: 'ui-agreements.agreements.showTags' })}
+                    badgeCount={line?.tags?.length ?? 0}
+                    icon="tag"
+                    id="clickable-show-tags"
+                    onClick={handlers.onToggleTags}
+                  />
+                }
               </PaneMenu>
             </IfPermission>
-        }
+          }
           paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
           {...paneProps}
         >
@@ -184,8 +185,8 @@ const AgreementLine = ({
               </FormattedMessage>
               {
                 (handlers.isSuppressFromDiscoveryEnabled('pci') ||
-                handlers.isSuppressFromDiscoveryEnabled('title') ||
-                handlers.isSuppressFromDiscoveryEnabled('agreementLine'))
+                  handlers.isSuppressFromDiscoveryEnabled('title') ||
+                  handlers.isSuppressFromDiscoveryEnabled('agreementLine'))
                 && <DiscoverySettings
                   handlers={handlers}
                   id="discoverySettings"

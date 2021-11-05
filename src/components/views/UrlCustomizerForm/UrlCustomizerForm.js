@@ -84,7 +84,7 @@ class UrlCustomizerForm extends React.Component {
     return (
       <PaneMenu>
         <FormattedMessage id="ui-agreements.platform.urlCustomizer.closeEdit">
-          {ariaLabel => (
+          {([ariaLabel]) => (
             <IconButton
               aria-label={ariaLabel}
               icon="times"
@@ -141,6 +141,7 @@ class UrlCustomizerForm extends React.Component {
                       <Field
                         component={TextField}
                         data-test-proxy-server-setting-name-edit
+                        id="proxy-server-setting-name-edit"
                         label={<FormattedMessage id="ui-agreements.platform.urlCustomization.name" />}
                         name="name"
                         required
@@ -154,6 +155,7 @@ class UrlCustomizerForm extends React.Component {
                         component={TextArea}
                         data-test-proxy-server-setting-url-customization-code
                         fullWidth
+                        id="proxy-server-setting-url-customization-code"
                         label={
                           <>
                             <FormattedMessage id="ui-agreements.platform.urlCustomization.customizationCode" />
@@ -166,7 +168,7 @@ class UrlCustomizerForm extends React.Component {
                               hideOnButtonClick
                             />
                           </>
-          }
+                        }
                         name="rule"
                         required
                         validate={requiredValidator}
