@@ -46,7 +46,7 @@ describe('Agreement', () => {
       );
     });
 
-    it('renders the AllPeriods component', () => {
+    it('renders the LoadingPane component', () => {
       const { getByText } = renderComponent;
       expect(getByText('LoadingPane')).toBeInTheDocument();
     });
