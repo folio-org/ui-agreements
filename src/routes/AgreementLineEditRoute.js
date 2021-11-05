@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import compose from 'compose-function';
-import { isEmpty } from 'lodash';
+import { isEmpty, chunk } from 'lodash';
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
@@ -20,20 +20,15 @@ class AgreementLineEditRoute extends React.Component {
     line: {
       type: 'okapi',
       path: 'erm/entitlements/:{lineId}',
+      accumulate: true,
+      fetch: false
     },
     orderLines: {
       type: 'okapi',
       perRequest: RECORDS_PER_REQUEST_LARGE,
       path: 'orders/order-lines',
-      params: (_q, _p, _r, _l, props) => {
-        const query = (props.resources.line?.records?.[0]?.poLines ?? [])
-          .map(poLine => `id==${poLine.poLineId}`)
-          .join(' or ');
-
-        return query ? { query } : null;
-      },
-
-      fetch: props => (!!props.stripes.hasInterface('order-lines', '1.0 2.0')),
+      accumulate: true,
+      fetch: false,
       records: 'poLines',
       throwErrors: false,
     },
@@ -59,6 +54,14 @@ class AgreementLineEditRoute extends React.Component {
       entitlements: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
       }),
+      line: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func
+      }),
+      orderLines: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func
+      }),
     }),
     resources: PropTypes.shape({
       basket: PropTypes.arrayOf(PropTypes.object),
@@ -79,13 +82,50 @@ class AgreementLineEditRoute extends React.Component {
 
     this.state = {
       isEholdingsEnabled: props.stripes.hasPerm('module.eholdings.enabled'),
+      orderLines: [],
+      isLoading: true,
     };
+  }
+
+  async componentDidMount() {
+    const results = await this.fetchOrderLines();
+    this.setState({ orderLines: results, isLoading: false });
+  }
+
+  async fetchOrderLines() {
+    this.props.mutator.line.reset();
+    const agreementLine = await this.props.mutator.line.GET();
+    const poLineIdsArray = ((agreementLine ?? {}).poLines ?? []).map(poLine => poLine.poLineId).flat();
+
+    const CONCURRENT_REQUESTS = 5; // Number of requests to make concurrently
+    const STEP_SIZE = 60; // Number of ids to request for per concurrent request
+
+    const chunkedItems = chunk(poLineIdsArray, CONCURRENT_REQUESTS * STEP_SIZE); // Split into chunks of size CONCURRENT_REQUESTS * STEP_SIZE
+    const data = [];
+    for (const chunkedItem of chunkedItems) {  // Make requests concurrently
+      this.props.mutator.orderLines.reset();
+      const promisesArray = []; // Array of promises
+      for (let i = 0; i < chunkedItem.length; i += STEP_SIZE) {
+        promisesArray.push( // Add promises to array
+          this.props.mutator.orderLines.GET({ // Make GET request
+            params: {
+              query: chunkedItem.slice(i, i + STEP_SIZE).map(item => `id==${item}`).join(' or '), // Make query string
+              limit: 1000, // Limit to 1000
+            },
+          })
+        );
+      }
+      const results = await Promise.all(promisesArray); // Wait for all requests to complete and move to the next chunk
+      data.push(...results.flat()); // Add results to data
+    }
+
+    return data;
   }
 
   getCompositeLine = () => {
     const { resources } = this.props;
     const line = resources.line?.records?.[0] ?? {};
-    const orderLines = resources.orderLines?.records || [];
+    const orderLines = this.state.orderLines;
 
     const poLines = (line.poLines || [])
       .map(linePOL => orderLines.find(orderLine => orderLine.id === linePOL.poLineId))
@@ -170,7 +210,7 @@ class AgreementLineEditRoute extends React.Component {
   render() {
     const { match, resources, isSuppressFromDiscoveryEnabled } = this.props;
 
-    if (this.isLoading()) return <LoadingView dismissible onClose={this.handleClose} />;
+    if (this.isLoading() || this.state.isLoading) return <LoadingView dismissible onClose={this.handleClose} />;
 
     return (
       <View
@@ -186,7 +226,7 @@ class AgreementLineEditRoute extends React.Component {
         }}
         initialValues={this.getInitialValues()}
         isEholdingsEnabled={this.state.isEholdingsEnabled}
-        isLoading={this.isLoading()}
+        isLoading={this.isLoading() || this.state.isLoading}
         lineId={match.params.lineId}
         onSubmit={this.handleSubmit}
       />

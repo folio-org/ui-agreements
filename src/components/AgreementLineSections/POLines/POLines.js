@@ -24,9 +24,9 @@ const POLines = ({
     label={<FormattedMessage id="ui-agreements.poLines.poLines" />}
   >
     {poLines.length ?
-      poLines.map(poLine => (
+      poLines.map((poLine, index) => (
         <POLineCard
-          key={poLine.id}
+          key={index}
           id={`ag-line-pol-card-${poLine.id}`}
           poLine={poLine}
         />

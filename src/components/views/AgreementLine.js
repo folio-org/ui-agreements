@@ -49,9 +49,9 @@ const propTypes = {
         _object: PropTypes.object,
       }),
       startDate: PropTypes.string,
-      tags: PropTypes.shape({
+      tags: PropTypes.arrayOf(PropTypes.shape({
         length: PropTypes.number,
-      }),
+      })),
     }).isRequired,
     settings: PropTypes.object,
   }),
@@ -141,17 +141,17 @@ const AgreementLine = ({
             <IfPermission perm="ui-agreements.agreements.edit">
               <PaneMenu>
                 {handlers.onToggleTags &&
-                <IconButton
-                  ariaLabel={intl.formatMessage({ id: 'ui-agreements.agreements.showTags' })}
-                  badgeCount={line?.tags?.length ?? 0}
-                  icon="tag"
-                  id="clickable-show-tags"
-                  onClick={handlers.onToggleTags}
-                />
-              }
+                  <IconButton
+                    ariaLabel={intl.formatMessage({ id: 'ui-agreements.agreements.showTags' })}
+                    badgeCount={line?.tags?.length ?? 0}
+                    icon="tag"
+                    id="clickable-show-tags"
+                    onClick={handlers.onToggleTags}
+                  />
+                }
               </PaneMenu>
             </IfPermission>
-        }
+          }
           paneTitle={<FormattedMessage id="ui-agreements.agreementLine" />}
           {...paneProps}
         >
@@ -184,8 +184,8 @@ const AgreementLine = ({
               </FormattedMessage>
               {
                 (handlers.isSuppressFromDiscoveryEnabled('pci') ||
-                handlers.isSuppressFromDiscoveryEnabled('title') ||
-                handlers.isSuppressFromDiscoveryEnabled('agreementLine'))
+                  handlers.isSuppressFromDiscoveryEnabled('title') ||
+                  handlers.isSuppressFromDiscoveryEnabled('agreementLine'))
                 && <DiscoverySettings
                   handlers={handlers}
                   id="discoverySettings"

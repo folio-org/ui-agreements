@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { get, flatten, uniqBy } from 'lodash';
+import { get, flatten, uniqBy, chunk } from 'lodash';
 import compose from 'compose-function';
 import { injectIntl } from 'react-intl';
 
@@ -36,6 +36,8 @@ class AgreementViewRoute extends React.Component {
         stats: 'true',
       },
       records: 'results',
+      accumulate: 'true',
+      fetch: false,
       resultOffset: (_q, _p, _r, _l, props) => {
         const { match, resources } = props;
         const resultOffset = resources?.agreementLinesOffset;
@@ -84,17 +86,8 @@ class AgreementViewRoute extends React.Component {
       type: 'okapi',
       perRequest: RECORDS_PER_REQUEST_LARGE,
       path: 'orders/order-lines',
-      params: (_q, _p, _r, _l, props) => {
-        const query = get(props.resources, 'agreementLines.records', [])
-          .filter(line => line.poLines && line.poLines.length)
-          .map(line => (line.poLines
-            .map(poLine => `id==${poLine.poLineId}`)
-            .join(' or ')
-          ))
-          .join(' or ');
-        return query ? { query } : null;
-      },
-      fetch: props => (!!props.stripes.hasInterface('order-lines', '1.0 2.0')),
+      accumulate: 'true',
+      fetch: false,
       records: 'poLines',
       throwErrors: false,
     },
@@ -164,8 +157,16 @@ class AgreementViewRoute extends React.Component {
       eresourcesFilterPath: PropTypes.shape({
         replace: PropTypes.func,
       }),
+      agreementLines: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func
+      }),
       interfaceRecord: PropTypes.shape({
         replace: PropTypes.func,
+      }),
+      orderLines: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
       }),
       agreementEresourcesOffset: PropTypes.shape({
         replace: PropTypes.func,
@@ -206,12 +207,58 @@ class AgreementViewRoute extends React.Component {
 
   static contextType = CalloutContext;
 
-  componentDidUpdate(prevProps) {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      orderLines: [],
+      isLoading: true,
+    };
+  }
+
+  async componentDidMount() {
+    await this.fetchOrderLines();
+  }
+
+  async componentDidUpdate(prevProps) {
     const { mutator } = this.props;
     if (prevProps?.resources?.agreement?.records?.[0]?.id !== this.props?.resources?.agreement?.records?.[0]?.id) {
       mutator.agreementEresourcesOffset.replace(0);
       mutator.agreementLinesOffset.replace(0);
+      await this.fetchOrderLines();
     }
+  }
+
+  async fetchOrderLines() {
+    this.props.mutator.agreementLines.reset();
+    const lines = await this.props.mutator.agreementLines.GET();
+    const poLineIdsArray = (lines ?? [])
+      .filter(line => line.poLines && line.poLines.length)
+      .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat();
+
+    const CONCURRENT_REQUESTS = 5; // Number of requests to make concurrently
+    const STEP_SIZE = 60; // Number of ids to request for per concurrent request
+
+    const chunkedItems = chunk(poLineIdsArray, CONCURRENT_REQUESTS * STEP_SIZE); // Split into chunks of size CONCURRENT_REQUESTS * STEP_SIZE
+    const data = [];
+    for (const chunkedItem of chunkedItems) {  // Make requests concurrently
+      this.props.mutator.orderLines.reset();
+      const promisesArray = []; // Array of promises
+      for (let i = 0; i < chunkedItem.length; i += STEP_SIZE) {
+        promisesArray.push( // Add promises to array
+          this.props.mutator.orderLines.GET({ // Make GET request
+            params: {
+              query: chunkedItem.slice(i, i + STEP_SIZE).map(item => `id==${item}`).join(' or '), // Make query string
+              limit: 1000, // Limit to 1000
+            },
+          })
+        );
+      }
+      const results = await Promise.all(promisesArray); // Wait for all requests to complete and move to the next chunk
+      data.push(...results.flat()); // Add results to data
+    }
+
+    this.setState({ orderLines: data, isLoading: false });
   }
 
   downloadBlob = (name) => (
@@ -258,7 +305,7 @@ class AgreementViewRoute extends React.Component {
       agreementLinesCount: get(resources, 'agreementLines.other.totalRecords') ?? 0,
       eresources: this.getAgreementEresourcesRecords(),
       eresourcesCount: get(resources, 'agreementEresources.other.totalRecords'),
-      orderLines: get(resources, 'orderLines.records'),
+      orderLines: this.state.orderLines,
       orgs,
     };
   }
@@ -508,7 +555,7 @@ class AgreementViewRoute extends React.Component {
           onViewAgreementLine: this.handleViewAgreementLine,
         }}
         helperApp={this.getHelperApp()}
-        isLoading={this.isLoading()}
+        isLoading={this.isLoading() || this.state.isLoading}
       />
     );
   }

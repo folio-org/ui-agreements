@@ -149,7 +149,7 @@ class AgreementEditRoute extends React.Component {
       }),
       agreementLines: PropTypes.shape({
         GET: PropTypes.func.isRequired,
-
+        reset: PropTypes.func,
       }),
       orderLines: PropTypes.shape({
         GET: PropTypes.func.isRequired,
@@ -341,6 +341,7 @@ class AgreementEditRoute extends React.Component {
   }
 
   async fetchOrderLines() {
+    this.props.mutator.agreementLines.reset();
     const lines = await this.props.mutator.agreementLines.GET();
     const poLineIdsArray = (lines ?? [])
       .filter(line => line.poLines && line.poLines.length)
