@@ -84,7 +84,7 @@ class UrlCustomizerForm extends React.Component {
     return (
       <PaneMenu>
         <FormattedMessage id="ui-agreements.platform.urlCustomizer.closeEdit">
-          {ariaLabel => (
+          {([ariaLabel]) => (
             <IconButton
               aria-label={ariaLabel}
               icon="times"
@@ -166,7 +166,7 @@ class UrlCustomizerForm extends React.Component {
                               hideOnButtonClick
                             />
                           </>
-          }
+                        }
                         name="rule"
                         required
                         validate={requiredValidator}

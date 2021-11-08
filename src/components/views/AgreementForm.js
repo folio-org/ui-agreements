@@ -168,7 +168,7 @@ class AgreementForm extends React.Component {
     return (
       <PaneMenu>
         <FormattedMessage id="ui-agreements.agreements.closeEdit">
-          {ariaLabel => (
+          {([ariaLabel]) => (
             <IconButton
               aria-label={ariaLabel}
               icon="times"
@@ -243,7 +243,7 @@ class AgreementForm extends React.Component {
                           <FormSupplementaryProperties {...this.getSectionProps('formSupplementaryProperties')} />
                           :
                           null
-                    }
+                        }
                         <FormSupplementaryDocuments {...this.getSectionProps('formSupplementaryDocs')} />
                         <FormUsageData {...this.getSectionProps('formUsageProviders')} />
                         <FormRelatedAgreements {...this.getSectionProps('formRelatedAgreements')} />
