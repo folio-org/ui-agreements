@@ -25,9 +25,9 @@ import {
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
-import { Info, POLines, Coverage } from '../AgreementLineSections';
-import { isExternal, urls } from '../utilities';
-import DiscoverySettings from '../DiscoverySettings';
+import { Info, POLines, Coverage } from '../../AgreementLineSections';
+import { isExternal, urls } from '../../utilities';
+import DiscoverySettings from '../../DiscoverySettings';
 
 const propTypes = {
   data: PropTypes.shape({
@@ -91,6 +91,7 @@ const AgreementLine = ({
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
   const resourceName = resource.pti?.titleInstance.name ?? resource.reference_object?.label ?? '';
 
+  // istanbul ignore next
   const shortcuts = [
     {
       name: 'edit',

@@ -8,12 +8,12 @@ import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
 import { withAsyncValidation } from '@folio/stripes-erm-components';
-import withFileHandlers from './components/withFileHandlers';
-import { joinRelatedAgreements, splitRelatedAgreements } from './utilities/processRelatedAgreements';
-import View from '../components/views/AgreementForm';
-import NoPermissions from '../components/NoPermissions';
-import { urls } from '../components/utilities';
-import { resultCount } from '../constants';
+import withFileHandlers from '../components/withFileHandlers';
+import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/processRelatedAgreements';
+import View from '../../components/views/AgreementForm';
+import NoPermissions from '../../components/NoPermissions';
+import { urls } from '../../components/utilities';
+import { resultCount } from '../../constants';
 
 const { RECORDS_PER_REQUEST_MEDIUM, RECORDS_PER_REQUEST_LARGE } = resultCount;
 class AgreementEditRoute extends React.Component {
@@ -385,6 +385,7 @@ class AgreementEditRoute extends React.Component {
     this.props.history.push(`${urls.agreementView(match.params.id)}${location.search}`);
   }
 
+  /* istanbul ignore next */
   handleSubmit = (agreement) => {
     const { history, location, mutator, resources } = this.props;
     const relationshipTypeValues = resources?.relationshipTypeValues?.records ?? [];

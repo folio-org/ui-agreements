@@ -19,7 +19,7 @@ import css from './index.css';
 import setUpRegistry from './setUpRegistry';
 
 import AgreementsRoute from './routes/AgreementsRoute';
-import AgreementCreateRoute from './routes/AgreementCreateRoute';
+import AgreementCreateRoute from './routes/AgreementCreateRoute/AgreementCreateRoute';
 import AgreementEditRoute from './routes/AgreementEditRoute';
 import AgreementViewRoute from './routes/AgreementViewRoute';
 

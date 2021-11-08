@@ -17,7 +17,13 @@ const translationsProperties = [
       'saveAndClose': 'Save and close',
       'cancel': 'Cancel',
       'paneMenuActionsToggleLabel': 'Actions'
-    }
+    },
+  },
+  {
+    prefix: 'stripes-smart-components',
+    translations: {
+      'permissionError': 'Sorry - your permissions do not allow access to this page.',
+    },
   }
 ];
 
