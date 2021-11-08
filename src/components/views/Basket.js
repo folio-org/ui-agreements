@@ -86,7 +86,7 @@ export default class Basket extends React.Component {
     return (
       <PaneMenu>
         <FormattedMessage id="ui-agreements.basket.close">
-          {ariaLabel => (
+          {([ariaLabel]) => (
             <IconButton
               aria-label={ariaLabel}
               icon="times"
@@ -163,9 +163,9 @@ export default class Basket extends React.Component {
                 data-test-agreement-id={option.id}
                 style={{ textAlign: 'left' }}
               >
-                      <Headline>{option.name}&nbsp;&#40;{option.agreementStatus.label}&#41;</Headline>{/* eslint-disable-line */}
+                <Headline>{option.name}&nbsp;&#40;{option.agreementStatus.label}&#41;</Headline>{/* eslint-disable-line */}
                 <div>
-                        <strong><FormattedMessage id="ui-agreements.agreements.startDate" />: </strong><FormattedUTCDate value={option.startDate} /> {/* eslint-disable-line */}
+                  <strong><FormattedMessage id="ui-agreements.agreements.startDate" />: </strong><FormattedUTCDate value={option.startDate} /> {/* eslint-disable-line */}
                 </div>
               </div>
             )}
@@ -177,8 +177,8 @@ export default class Basket extends React.Component {
 
                 return (
                   agreement.name.toLowerCase().includes(lowerCasedSearchString) ||
-                        agreement.agreementStatus.label.toLowerCase().includes(lowerCasedSearchString) ||
-                        (agreement.startDate && agreement.startDate.toLowerCase().includes(lowerCasedSearchString))
+                  agreement.agreementStatus.label.toLowerCase().includes(lowerCasedSearchString) ||
+                  (agreement.startDate && agreement.startDate.toLowerCase().includes(lowerCasedSearchString))
                 );
               });
             }}
@@ -186,7 +186,7 @@ export default class Basket extends React.Component {
             placeholder=" "
           />
         </Col>
-        { this.renderAddToAgreementButton() }
+        {this.renderAddToAgreementButton()}
       </div>
     );
   }
@@ -214,8 +214,8 @@ export default class Basket extends React.Component {
               onToggleItem={this.handleToggleItem}
               selectedItems={this.state.selectedItems}
             />
-            { this.renderCreateAgreementButton() }
-            { this.renderAddToAgreementSection() }
+            {this.renderCreateAgreementButton()}
+            {this.renderAddToAgreementSection()}
           </div>
         </Pane>
       </Paneset>
