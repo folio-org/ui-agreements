@@ -61,6 +61,7 @@ const PackageCardExternal = ({
     <Card
       cardStyle="positive"
       data-test-package-card
+      data-testid="packageCardExternal"
       headerEnd={headerEnd}
       headerStart={(
         <AppIcon app="eholdings" size="small">

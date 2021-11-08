@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "8.0.1",
+  "version": "8.1.0",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -67,7 +67,7 @@
     "sinon": "^7.5.0"
   },
   "dependencies": {
-    "@folio/react-intl-safe-html": "^2.0.0",
+    "@folio/react-intl-safe-html": "^3.1.0",
     "@folio/stripes-erm-components": "^6.0.0",
     "@rehooks/local-storage": "2.4.0",
     "compose-function": "^3.0.3",

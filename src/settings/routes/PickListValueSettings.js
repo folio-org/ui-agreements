@@ -4,9 +4,9 @@ import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
-import { IntlConsumer } from '@folio/stripes/core';
+import { IntlConsumer, stripesConnect } from '@folio/stripes/core';
 
-export default class PickListValueSettings extends React.Component {
+class PickListValueSettings extends React.Component {
   static manifest = {
     categories: {
       type: 'okapi',
@@ -129,3 +129,5 @@ export default class PickListValueSettings extends React.Component {
     );
   }
 }
+
+export default stripesConnect(PickListValueSettings);

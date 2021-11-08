@@ -1,5 +1,9 @@
 # Change history for ui-agreements
 
+## 8.1.0 In Progress
+* Upgrade `@folio/react-intl-safe-html` for `@folio/stripes` `v7` compatibility. ERM-1893.
+* Remove `OrgRoleSettings` from `src/settings`. ERM-1490
+
 ## 8.0.1 2021-11-08
 * Handle 414 error exception when requesting an agreement line with large number of POLines. Refs ERM-1915
 ## 8.0.0 2021-10-07

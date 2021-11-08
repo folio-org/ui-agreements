@@ -26,6 +26,7 @@ const TitleCard = ({
     <Card
       cardStyle="positive"
       data-test-title-card
+      data-testid="titleCard"
       headerEnd={headerEnd}
       headerStart={(
         <AppIcon app="agreements" iconKey="eresource" size="small">
