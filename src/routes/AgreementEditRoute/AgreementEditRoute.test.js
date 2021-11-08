@@ -9,27 +9,27 @@ import { noop } from 'lodash';
 import translationsProperties from '../../../test/helpers';
 import AgreementEditRoute from './AgreementEditRoute';
 import {
-    okapi,
-    match,
-    location,
-    agreement,
-    agreementLines,
-    agreementStatusValues,
-    amendmentStatusValues,
-    supplementaryProperties,
-    users,
-    basket,
-    contactRoleValues,
-    documentCategories,
-    isPerpetualValues,
-    licenseLinkStatusValues,
-    orderLines,
-    orgRoleValues,
-    query,
-    reasonForClosureValues,
-    relationshipTypeValues,
-    renewalPriorityValues,
-    loadingView
+  okapi,
+  match,
+  location,
+  agreement,
+  agreementLines,
+  agreementStatusValues,
+  amendmentStatusValues,
+  supplementaryProperties,
+  users,
+  basket,
+  contactRoleValues,
+  documentCategories,
+  isPerpetualValues,
+  licenseLinkStatusValues,
+  orderLines,
+  orgRoleValues,
+  query,
+  reasonForClosureValues,
+  relationshipTypeValues,
+  renewalPriorityValues,
+  loadingView
 } from './testResources';
 
 const BasketLineButton = (props) => {
@@ -75,8 +75,8 @@ jest.mock('../../components/views/AgreementForm', () => {
 const data = {
   checkAsyncValidation: () => jest.fn(),
   handlers: {
-    onDownloadFile: () => {},
-    onUploadFile: () => {}
+    onDownloadFile: () => { },
+    onUploadFile: () => { }
   },
   history: {
     push: historyPushMock
@@ -86,6 +86,14 @@ const data = {
   mutator: {
     agreement: {
       PUT: noop
+    },
+    agreementLines: {
+      reset: noop,
+      GET: noop
+    },
+    orderLines: {
+      reset: noop,
+      GET: noop
     },
     agreements: {
       PUT: noop
@@ -119,14 +127,14 @@ const data = {
 const isPendingData = {
   checkAsyncValidation: () => jest.fn(),
   handlers: {
-    onDownloadFile: () => {},
-    onUploadFile: () => {}
+    onDownloadFile: () => { },
+    onUploadFile: () => { }
   },
   history: {
     push: () => jest.fn()
   },
   location: {
-    search :{}
+    search: {}
   },
   match: {
     params: {}
@@ -176,19 +184,19 @@ describe('AgreementEditRoute', () => {
     });
 
     test('renders the agreementForm component', () => {
-        const { getByText } = renderComponent;
-        expect(getByText('AgreementForm')).toBeInTheDocument();
-      });
+      const { getByText } = renderComponent;
+      expect(getByText('AgreementForm')).toBeInTheDocument();
+    });
 
-      test('calls the BasketLineButton', async () => {
-        await ButtonInteractor('BasketLineButton').click();
-        expect(queryUpdateMock).toHaveBeenCalled();
-      });
+    test('calls the BasketLineButton', async () => {
+      await ButtonInteractor('BasketLineButton').click();
+      expect(queryUpdateMock).toHaveBeenCalled();
+    });
 
-      test('calls the CloseButton', async () => {
-        await ButtonInteractor('CloseButton').click();
-        expect(historyPushMock).toHaveBeenCalled();
-      });
+    test('calls the CloseButton', async () => {
+      await ButtonInteractor('CloseButton').click();
+      expect(historyPushMock).toHaveBeenCalled();
+    });
   });
 
   describe('rendering loading view', () => {
