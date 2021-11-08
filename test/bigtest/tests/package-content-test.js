@@ -114,7 +114,7 @@ describe('Package Content Filters', () => {
                 expect(agreementView.linesSection.coveredEresourcesList.eresourceName(0)).to.equal(currentResource.pti.titleInstance.name);
               });
 
-              it('should find enabled export button', () => {
+              it.skip('should find enabled export button', () => {
                 expect(agreementView.linesSection.coveredEresourcesList.isExportBtnDisabled).to.be.false;
               });
             });
