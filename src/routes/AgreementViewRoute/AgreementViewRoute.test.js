@@ -109,7 +109,7 @@ const mutatorReplaceMock = jest.fn();
 const historyPushMock = jest.fn();
 const mutatorEResourceReplaceMock = jest.fn();
 const mutatorFetchReplaceMock = jest.fn();
-const queryUpdateMock = jest.fn();
+const mutatorQueryUpdateMock = jest.fn();
 
 jest.mock('../../components/views/Agreement', () => {
   return (props) => (
@@ -149,7 +149,7 @@ const data = {
       replace: mutatorFetchReplaceMock,
     },
     query:{
-      update: queryUpdateMock,
+      update: mutatorQueryUpdateMock,
     }
   },
   resources: {
@@ -226,7 +226,7 @@ describe('AgreementViewRoute', () => {
 
     test('renders the ToggleTagsButton callback', async () => {
       await ButtonInteractor('ToggleTagsButton').click();
-      expect(queryUpdateMock).toHaveBeenCalled();
+      expect(mutatorQueryUpdateMock).toHaveBeenCalled();
     });
 
     test('renders the CloseButton callback', async () => {

@@ -360,7 +360,6 @@ class AgreementViewRoute extends React.Component {
       .find(i => i.id === id);
   }
 
-  /* istanbul ignore next */
   handleClone = (cloneableProperties) => {
     const { history, intl, location, match, resources, stripes: { okapi } } = this.props;
 
@@ -404,7 +403,6 @@ class AgreementViewRoute extends React.Component {
     this.props.history.push(`${urls.agreements()}${this.props.location.search}`);
   }
 
-  /* istanbul ignore next */
   handleDelete = () => {
     const { sendCallout } = this.context;
     const { history, location, mutator } = this.props;
@@ -446,7 +444,6 @@ class AgreementViewRoute extends React.Component {
     history.push(`${urls.agreementEdit(match.params.id)}${location.search}`);
   }
 
-/* istanbul ignore next */
   handleExportAgreement = () => {
     const { resources, stripes: { okapi } } = this.props;
     const { id, name } = get(resources, 'agreement.records[0]', {});
@@ -460,7 +457,6 @@ class AgreementViewRoute extends React.Component {
       .then(this.downloadBlob(name));
   }
 
-  /* istanbul ignore next */
   handleExportEResourcesAsJSON = () => {
     const { resources, stripes: { okapi } } = this.props;
     const { id, name } = get(resources, 'agreement.records[0]', {});
@@ -474,7 +470,6 @@ class AgreementViewRoute extends React.Component {
       .then(this.downloadBlob(name));
   }
 
-  /* istanbul ignore next */
   handleExportEResourcesAsKBART = () => {
     const { resources, stripes: { okapi } } = this.props;
     const { id, name } = get(resources, 'agreement.records[0]', {});
