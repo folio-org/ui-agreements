@@ -221,7 +221,7 @@ class Agreement extends React.Component {
       <PaneMenu>
         {handlers.onToggleTags &&
           <FormattedMessage id="ui-agreements.agreements.showTags">
-            {ariaLabel => (
+            {([ariaLabel]) => (
               <IconButton
                 ariaLabel={typeof ariaLabel === 'string' ? ariaLabel : ariaLabel[0]}
                 badgeCount={agreement?.tags?.length ?? 0}

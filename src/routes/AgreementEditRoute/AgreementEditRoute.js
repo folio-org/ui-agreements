@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, chunk } from 'lodash';
 import compose from 'compose-function';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
@@ -8,12 +8,12 @@ import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
 import { withAsyncValidation } from '@folio/stripes-erm-components';
-import withFileHandlers from './components/withFileHandlers';
-import { joinRelatedAgreements, splitRelatedAgreements } from './utilities/processRelatedAgreements';
-import View from '../components/views/AgreementForm';
-import NoPermissions from '../components/NoPermissions';
-import { urls } from '../components/utilities';
-import { resultCount } from '../constants';
+import withFileHandlers from '../components/withFileHandlers';
+import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/processRelatedAgreements';
+import View from '../../components/views/AgreementForm';
+import NoPermissions from '../../components/NoPermissions';
+import { urls } from '../../components/utilities';
+import { resultCount } from '../../constants';
 
 const { RECORDS_PER_REQUEST_MEDIUM, RECORDS_PER_REQUEST_LARGE } = resultCount;
 class AgreementEditRoute extends React.Component {
@@ -35,6 +35,8 @@ class AgreementEditRoute extends React.Component {
       perRequest: RECORDS_PER_REQUEST_MEDIUM,
       records: 'results',
       recordsRequired: '1000',
+      accumulate: 'true',
+      fetch: false,
     },
     agreementStatusValues: {
       type: 'okapi',
@@ -81,18 +83,8 @@ class AgreementEditRoute extends React.Component {
       type: 'okapi',
       perRequest: RECORDS_PER_REQUEST_LARGE,
       path: 'orders/order-lines',
-      params: (_q, _p, _r, _l, props) => {
-        const query = (props?.resources?.agreementLines?.records ?? [])
-          .filter(line => line.poLines && line.poLines.length)
-          .map(line => (line.poLines
-            .map(poLine => `id==${poLine.poLineId}`)
-            .join(' or ')
-          ))
-          .join(' or ');
-
-        return query ? { query } : null;
-      },
-      fetch: props => (!!props.stripes.hasInterface('order-lines', '1.0 2.0')),
+      accumulate: 'true',
+      fetch: false,   // we will fetch the order lines in the componentDidMount
       records: 'poLines',
     },
     orgRoleValues: {
@@ -154,6 +146,14 @@ class AgreementEditRoute extends React.Component {
     mutator: PropTypes.shape({
       agreement: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
+      }),
+      agreementLines: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func,
+      }),
+      orderLines: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
       }),
       agreements: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
@@ -231,8 +231,11 @@ class AgreementEditRoute extends React.Component {
     this.state = {
       hasPerms: props.stripes.hasPerm('ui-agreements.agreements.edit'),
       initialValues: {},
+      orderLines: [],
+      isLoading: true,
     };
   }
+
 
   static getDerivedStateFromProps(props, state) {
     let updated = false;
@@ -332,6 +335,43 @@ class AgreementEditRoute extends React.Component {
     return null;
   }
 
+  async componentDidMount() {
+    const results = await this.fetchOrderLines();
+    this.setState({ orderLines: results, isLoading: false });
+  }
+
+  async fetchOrderLines() {
+    this.props.mutator.agreementLines.reset();
+    const lines = await this.props.mutator.agreementLines.GET();
+    const poLineIdsArray = (lines ?? [])
+      .filter(line => line.poLines && line.poLines.length)
+      .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat();
+
+    const CONCURRENT_REQUESTS = 5; // Number of requests to make concurrently
+    const STEP_SIZE = 60; // Number of ids to request for per concurrent request
+
+    const chunkedItems = chunk(poLineIdsArray, CONCURRENT_REQUESTS * STEP_SIZE); // Split into chunks of size CONCURRENT_REQUESTS * STEP_SIZE
+    const data = [];
+    for (const chunkedItem of chunkedItems) {  // Make requests concurrently
+      this.props.mutator.orderLines.reset();
+      const promisesArray = []; // Array of promises
+      for (let i = 0; i < chunkedItem.length; i += STEP_SIZE) {
+        promisesArray.push( // Add promises to array
+          this.props.mutator.orderLines.GET({ // Make GET request
+            params: {
+              query: chunkedItem.slice(i, i + STEP_SIZE).map(item => `id==${item}`).join(' or '), // Make query string
+              limit: 1000, // Limit to 1000
+            },
+          })
+        );
+      }
+      const results = await Promise.all(promisesArray); // Wait for all requests to complete and move to the next chunk
+      data.push(...results.flat()); // Add results to data
+    }
+
+    return data;
+  }
+
   handleBasketLinesAdded = () => {
     this.props.mutator.query.update({
       addFromBasket: null,
@@ -345,6 +385,7 @@ class AgreementEditRoute extends React.Component {
     this.props.history.push(`${urls.agreementView(match.params.id)}${location.search}`);
   }
 
+  /* istanbul ignore next */
   handleSubmit = (agreement) => {
     const { history, location, mutator, resources } = this.props;
     const relationshipTypeValues = resources?.relationshipTypeValues?.records ?? [];
@@ -393,7 +434,7 @@ class AgreementEditRoute extends React.Component {
 
   fetchIsPending = () => {
     return Object.values(this.props.resources)
-      .filter(r => r && r.resource !== 'agreements')
+      .filter(r => r && (r.resource !== 'agreements' || r.resource !== 'orderLines'))
       .some(r => r.isPending);
   }
 
@@ -401,7 +442,7 @@ class AgreementEditRoute extends React.Component {
     const { handlers, resources } = this.props;
 
     if (!this.state.hasPerms) return <NoPermissions />;
-    if (this.fetchIsPending()) return <LoadingView dismissible onClose={this.handleClose} />;
+    if (this.fetchIsPending() || this.state.isLoading) return <LoadingView dismissible onClose={this.handleClose} />;
 
     return (
       <View
@@ -417,7 +458,7 @@ class AgreementEditRoute extends React.Component {
           externalAgreementLine: resources?.externalAgreementLine?.records ?? [],
           isPerpetualValues: resources?.isPerpetualValues?.records ?? [],
           licenseLinkStatusValues: resources?.licenseLinkStatusValues?.records ?? [],
-          orderLines: resources?.orderLines?.records ?? [],
+          orderLines: this.state.orderLines,
           orgRoleValues: resources?.orgRoleValues?.records ?? [],
           renewalPriorityValues: resources?.renewalPriorityValues?.records ?? [],
           supplementaryProperties: resources?.supplementaryProperties?.records ?? [],
