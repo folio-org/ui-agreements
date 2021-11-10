@@ -172,7 +172,7 @@
     "finances.none": "계약에 주문 라인이 없습니다.",
     "organizations.addOrganizationToAgreement": "공급사 추가",
     "eresource": "전자자원",
-    "eresourcePluralizable": "{카운트} {카운트, 복수, 하나의 {e-리소스} 다른 {e-resources}}",
+    "eresourcePluralizable": "{count} {count, plural, one {e-리소스} other {e-resources}}",
     "poLines.acqMethod": "수서 방법",
     "poLines.noPOLinePlugin": "\"PO 라인 찾기\"플러그인이 설치되어 있지 않습니다.",
     "poLines.poLine": "PO 라인",
@@ -553,7 +553,7 @@
     "basketSelector.selectResourceMessage": "계속하려면 전자자원을 선택하십시오.",
     "title.closeEdit": "제목 편집 닫기",
     "organizations.primary": "기본 공급사",
-    "relatedAgreements.linkToParentError": "<strong>오류:</strong> 계약 \"{계약}\"은 계약 자체를 연결할 수 없기 때문에 연결되지 않았습니다.",
+    "relatedAgreements.linkToParentError": "<strong>오류:</strong> 계약 \"{agreement}\"은 계약 자체를 연결할 수 없기 때문에 연결되지 않았습니다.",
     "agreements.editAgreement.name": "계약(Agreement) 수정 - {name}",
     "duplicateAgreementModal.supplementaryDocuments": "추가 문서",
     "duplicateAgreementModal.supplementaryProperties": "추가 속성"
