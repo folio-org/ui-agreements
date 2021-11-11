@@ -3,7 +3,7 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { FormattedMessage } from 'react-intl';
 import { MemoryRouter } from 'react-router-dom';
-import { Checkbox, Pane, PaneHeader } from '@folio/stripes-testing';
+import { Checkbox, Pane, PaneHeader, Button } from '@folio/stripes-testing';
 import translationsProperties from '../../test/helpers';
 import GeneralSettingsForm from './GeneralSettingsForm';
 
@@ -20,17 +20,20 @@ describe('GeneralSettingsForm', () => {
           <GeneralSettingsForm
             label={<FormattedMessage id="ui-agreements.settings.displaySettings" />}
             onSubmit={onSubmitMock}
-            pristine={false}
-            submitting={false}
           />
         </MemoryRouter>,
         translationsProperties
       );
     });
 
-    test('renders Save button', () => {
-      const { getByRole } = renderComponent;
-      expect(getByRole('button', { name: 'stripes-core.button.save' })).toBeInTheDocument();
+    test('renders Save button', async () => {
+      await Checkbox({ id: 'hideEResourcesFunctionality' }).click();
+      await Button('Save').exists();
+    });
+
+    test('renders the MCLPaginationFields component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('Save')).toBeInTheDocument();
     });
 
     test('renders the Hide internal agreements knowledgebase Checkbox', async () => {
