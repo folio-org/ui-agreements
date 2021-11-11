@@ -31,11 +31,6 @@ describe('GeneralSettingsForm', () => {
       await Button('Save').exists();
     });
 
-    test('renders the MCLPaginationFields component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Save')).toBeInTheDocument();
-    });
-
     test('renders the Hide internal agreements knowledgebase Checkbox', async () => {
       await Checkbox({ id: 'hideEResourcesFunctionality' }).exists();
     });
