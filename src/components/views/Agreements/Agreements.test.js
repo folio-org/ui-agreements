@@ -6,7 +6,7 @@ import { Pane, Button, TextField, MultiColumnList } from '@folio/stripes-testing
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import Agreements from './Agreements';
-import { data } from './testResources';
+import data from './testResources';
 
 jest.mock('../../IfEResourcesEnabled', () => ({ children }) => <>{children}</>);
 jest.mock('../../AgreementFilters', () => () => <div>AgreementFilters</div>);
