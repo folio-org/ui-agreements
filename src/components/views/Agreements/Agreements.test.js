@@ -3,7 +3,6 @@ import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { Pane, Button, TextField, MultiColumnList } from '@folio/stripes-testing';
-import { screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import Agreements from './Agreements';
@@ -12,9 +11,15 @@ import { data } from './testResources';
 jest.mock('../../IfEResourcesEnabled', () => ({ children }) => <>{children}</>);
 jest.mock('../../AgreementFilters', () => () => <div>AgreementFilters</div>);
 
+const mockSubmit = jest.fn();
 jest.mock('@folio/stripes-erm-components', () => ({
   ...jest.requireActual('@folio/stripes-erm-components'),
-  useHandleSubmitSearch: () => jest.fn(),
+  useHandleSubmitSearch: () => ({
+    handleSubmitSearch: jest.fn().mockImplementation((e) => {
+      e.preventDefault();
+      mockSubmit();
+    })
+  }),
 }));
 
 describe('Agreements', () => {
@@ -40,7 +45,6 @@ describe('Agreements', () => {
   });
 
   test('renders the expected Search and Filter Pane', async () => {
-    screen.debug();
     await Pane('Search and filter').is({ visible: true });
   });
 
@@ -56,6 +60,11 @@ describe('Agreements', () => {
     await Button('Reset all').exists();
   });
 
+  test('triggering the search should invoke the useHandleSubmitSearch hook', async () => {
+    await TextField({ id: 'input-agreement-search' }).fillIn('test'); // enables the disabled buttons
+    await Button('Search').click();
+    expect(mockSubmit).toHaveBeenCalled();
+  });
 
   test('renders the Agreement Filters', () => {
     const { getByText } = renderComponent;
@@ -66,7 +75,7 @@ describe('Agreements', () => {
     await Pane('Agreements').is({ visible: true });
   });
 
-  test('renders the expected number of records find pane sub text', async () => {
+  test('renders the expected number of records in the pane sub text', async () => {
     await Pane('Agreements').has({ subtitle: '"3 records found"' });
   });
 
