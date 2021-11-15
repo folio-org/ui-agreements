@@ -29,13 +29,13 @@ import {
   EResourceType,
   useHandleSubmitSearch
 } from '@folio/stripes-erm-components';
-import EResourceFilters from '../EResourceFilters';
-import IfEResourcesEnabled from '../IfEResourcesEnabled';
+import EResourceFilters from '../../EResourceFilters';
+import IfEResourcesEnabled from '../../IfEResourcesEnabled';
 
-import { urls } from '../utilities';
-import { resultCount } from '../../constants';
+import { urls } from '../../utilities';
+import { resultCount } from '../../../constants';
 
-import css from './Agreements.css';
+import css from '../Agreements.css';
 
 const propTypes = {
   children: PropTypes.object,
