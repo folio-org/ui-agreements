@@ -24,7 +24,7 @@ import stripesFinalForm from '@folio/stripes/final-form';
 import { handleSaveKeyCommand } from '@folio/stripes-erm-components';
 import css from './PCIForm.css';
 
-import { PCIFormCoverage, PCIFormInfo } from '../EResourceSections';
+import { PCIFormCoverage, PCIFormInfo } from '../../EResourceSections';
 
 class PCIForm extends React.Component {
   static propTypes = {
@@ -120,6 +120,7 @@ class PCIForm extends React.Component {
     );
   }
 
+  /* istanbul ignore next */
   shortcuts = [
     {
       name: 'save',
