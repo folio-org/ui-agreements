@@ -17,7 +17,8 @@ const translationsProperties = [
     translations: {
       'saveAndClose': 'Save and close',
       'cancel': 'Cancel',
-      'paneMenuActionsToggleLabel': 'Actions'
+      'paneMenuActionsToggleLabel': 'Actions',
+      'collapseAll': 'Collapse all'
     },
   },
   {
