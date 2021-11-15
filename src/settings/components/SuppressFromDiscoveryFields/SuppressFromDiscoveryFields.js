@@ -23,7 +23,6 @@ const SuppressFromDiscoveryFields = ({ name }) => {
         id="displaySuppressFromDiscoveryAgreementLine"
         label={<FormattedMessage id="ui-agreements.settings.general.displaySuppressFromDiscoveryAgreementLine.title" />}
         name={`${name}.agreementLine`}
-        normalize={v => !!v}
         type="checkbox"
       />
       <Field
@@ -32,7 +31,6 @@ const SuppressFromDiscoveryFields = ({ name }) => {
         id="displaySuppressFromDiscoveryPCI"
         label={<FormattedMessage id="ui-agreements.settings.general.displaySuppressFromDiscovery.titlesInPackages" />}
         name={`${name}.pci`}
-        normalize={v => !!v}
         type="checkbox"
       />
       <Field
@@ -41,7 +39,6 @@ const SuppressFromDiscoveryFields = ({ name }) => {
         id="displaySuppressFromDiscoveryTitle"
         label={<FormattedMessage id="ui-agreements.settings.general.displaySuppressFromDiscovery.titles" />}
         name={`${name}.title`}
-        normalize={v => !!v}
         type="checkbox"
       />
     </>
