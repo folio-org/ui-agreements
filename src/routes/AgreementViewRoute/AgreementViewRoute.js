@@ -261,7 +261,6 @@ class AgreementViewRoute extends React.Component {
     this.setState({ orderLines: data, isLoading: false });
   }
 
-  /* istanbul ignore next */
   downloadBlob = (name) => (
     blob => {
       const url = window.URL.createObjectURL(blob);
@@ -274,7 +273,6 @@ class AgreementViewRoute extends React.Component {
     }
   )
 
-  /* istanbul ignore next */
   getCompositeAgreement = () => {
     const { resources } = this.props;
     const agreement = get(resources, 'agreement.records[0]', {
@@ -312,7 +310,6 @@ class AgreementViewRoute extends React.Component {
     };
   }
 
-/* istanbul ignore next */
   getHelperApp = () => {
     const { match, resources } = this.props;
     const helper = resources.query.helper;

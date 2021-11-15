@@ -233,57 +233,57 @@ describe('AgreementViewRoute', () => {
       expect(getByText('Agreement')).toBeInTheDocument();
     });
 
-    test('calls the AgreementLineButton ', () => {
+    test('calls the AgreementLineButton callback', () => {
     const { getByText } = renderComponent;
     expect(getByText('AgreementLineButton')).toBeInTheDocument();
     });
 
-    test('calls the NeedMoreLinesButton ', () => {
+    test('calls the NeedMoreLinesButton callback', () => {
     const { getByText } = renderComponent;
     expect(getByText('NeedMoreLinesButton')).toBeInTheDocument();
     });
 
-    test('renders the AgreementLineButton callback', async () => {
+    test('triggers the AgreementLineButton callback', async () => {
       await ButtonInteractor('AgreementLineButton').click();
       expect(historyPushMock).toHaveBeenCalled();
     });
 
-    test('renders the EditButton callback', async () => {
+    test('triggers the EditButton callback', async () => {
       await ButtonInteractor('EditButton').click();
       expect(historyPushMock).toHaveBeenCalled();
     });
 
-    test('renders the NeedMoreLinesButton callback', async () => {
+    test('calls the NeedMoreLinesButton callback', async () => {
       await ButtonInteractor('NeedMoreLinesButton').click();
       expect(mutatorReplaceMock).toHaveBeenCalled();
     });
 
-    test('renders the FilterEResourceButton callback', async () => {
+    test('triggers the FilterEResourceButton callback', async () => {
       await ButtonInteractor('FilterEResourceButton').click();
       expect(mutatorEResourceReplaceMock).toHaveBeenCalled();
     });
 
-    test('renders the FetchCredentialsButton callback', async () => {
+    test('triggers the FetchCredentialsButton callback', async () => {
       await ButtonInteractor('FetchCredentialsButton').click();
       expect(mutatorFetchReplaceMock).toHaveBeenCalled();
     });
 
-    test('renders the NeedMoreEResourcesButton callback', async () => {
+    test('triggers the NeedMoreEResourcesButton callback', async () => {
       await ButtonInteractor('NeedMoreEResourcesButton').click();
       expect(mutatorEResourceReplaceMock).toHaveBeenCalled();
     });
 
-    test('renders the ToggleTagsButton callback', async () => {
+    test('triggers the ToggleTagsButton callback', async () => {
       await ButtonInteractor('ToggleTagsButton').click();
       expect(mutatorQueryUpdateMock).toHaveBeenCalled();
     });
 
-    test('renders the CloseButton callback', async () => {
+    test('triggers the CloseButton callback', async () => {
       await ButtonInteractor('CloseButton').click();
       expect(historyPushMock).toHaveBeenCalled();
     });
 
-    test('renders the CloneButton callback', async () => {
+    test('triggers the CloneButton callback', async () => {
       await ButtonInteractor('CloneButton').click();
       expect(historyPushMock).toHaveBeenCalled();
     });
