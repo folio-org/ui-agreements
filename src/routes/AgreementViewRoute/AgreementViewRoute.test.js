@@ -57,6 +57,18 @@ const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
 };
 
+const ExportEResourcesAsKBARTButton = (props) => {
+  return <Button onClick={props.handlers.onExportEResourcesAsKBART}>ExportEResourcesAsKBARTButton</Button>;
+};
+
+const ExportEResourcesAsJSONButton = (props) => {
+  return <Button onClick={props.handlers.onExportEResourcesAsJSON}>ExportEResourcesAsJSONButton</Button>;
+};
+
+const CloneButton = (props) => {
+  return <Button onClick={() => props.handlers.onClone({})}>CloneButton</Button>;
+};
+
 AgreementLineButton.propTypes = {
   handlers: PropTypes.shape({
     onViewAgreementLine: PropTypes.func,
@@ -105,6 +117,39 @@ CloseButton.propTypes = {
   }),
 };
 
+ExportEResourcesAsKBARTButton.propTypes = {
+  handlers: PropTypes.shape({
+    onExportEResourcesAsKBART: PropTypes.func,
+  }),
+};
+
+ExportEResourcesAsJSONButton.propTypes = {
+  handlers: PropTypes.shape({
+    onExportEResourcesAsJSON: PropTypes.func,
+  }),
+};
+
+CloneButton.propTypes = {
+  handlers: PropTypes.shape({
+    onClone: PropTypes.func,
+  }),
+};
+
+const originalFetch = window.fetch;
+window.fetch = jest.fn((url, options) => {
+  return new Promise((resolve, reject) => {
+    if (url.includes('export')) { // handle export endpoints
+      return resolve({ blob: () => Promise.resolve(true) });
+    } else if (url.includes('clone')) {
+      return resolve({ ok: true, text: () => Promise.resolve({ id: 123 }) }); // handle clone endpoint
+    } else {
+      return originalFetch(url, options)
+        .then(resp => resolve(resp))
+        .catch(error => reject(error));
+    }
+  });
+});
+
 const mutatorReplaceMock = jest.fn();
 const historyPushMock = jest.fn();
 const mutatorEResourceReplaceMock = jest.fn();
@@ -123,6 +168,9 @@ jest.mock('../../components/views/Agreement', () => {
       <NeedMoreEResourcesButton {...props} />
       <ToggleTagsButton {...props} />
       <CloseButton {...props} />
+      <ExportEResourcesAsKBARTButton {...props} />
+      <ExportEResourcesAsJSONButton {...props} />
+      <CloneButton {...props} />
     </div>
   );
 });
@@ -171,6 +219,7 @@ describe('AgreementViewRoute', () => {
   describe('rendering the AgreementViewRoute', () => {
     let renderComponent;
     beforeEach(() => {
+      fetch.mockClear();
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <AgreementViewRoute {...data} />
@@ -232,6 +281,21 @@ describe('AgreementViewRoute', () => {
     test('renders the CloseButton callback', async () => {
       await ButtonInteractor('CloseButton').click();
       expect(historyPushMock).toHaveBeenCalled();
+    });
+
+    test('renders the CloneButton callback', async () => {
+      await ButtonInteractor('CloneButton').click();
+      expect(historyPushMock).toHaveBeenCalled();
+    });
+
+    test('triggers the ExportEResourcesAsKBARTButton callback', async () => {
+      await ButtonInteractor('ExportEResourcesAsKBARTButton').click();
+      expect(fetch).toHaveBeenCalledTimes(1);
+    });
+
+    test('triggers the ExportEResourcesAsJSONButton callback', async () => {
+      await ButtonInteractor('ExportEResourcesAsJSONButton').click();
+      expect(fetch).toHaveBeenCalledTimes(1);
     });
 
     describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block

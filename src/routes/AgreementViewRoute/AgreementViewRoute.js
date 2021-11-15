@@ -360,9 +360,8 @@ class AgreementViewRoute extends React.Component {
       .find(i => i.id === id);
   }
 
-  handleClone = (cloneableProperties) => {
+  handleClone = (cloneableProperties = {}) => {
     const { history, intl, location, match, resources, stripes: { okapi } } = this.props;
-
     const name = resources?.agreement?.records?.[0].name;
 
     return fetch(`${okapi.url}/erm/sas/${match.params.id}/clone`, {
