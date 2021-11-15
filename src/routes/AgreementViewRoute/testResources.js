@@ -6,17 +6,7 @@ const handlers = {
 };
 
 const history = {
-    'length': 13,
-    'action': 'PUSH',
-    'location': '{hash: "", key: "2v168o", pathname: "/erm/agreement…}',
-    'createHref': 'ƒ createHref() {}',
-    'push': 'ƒ push() {}',
-    'replace': 'ƒ replace() {}',
-    'go': 'ƒ go() {}',
-    'goBack': 'ƒ goBack() {}',
-    'goForward': 'ƒ goForward() {}',
-    'block': 'ƒ block() {}',
-    'listen': 'ƒ listen() {}'
+    push: () => {},
 };
 
 const location = {
@@ -36,29 +26,7 @@ const match = {
 };
 
 const intl = {
-    'formats': '{}',
-    'messages': '{stripes-acq-components.FormFooter.cancel: "Cancel"…}',
-    'timeZone': 'UTC',
-    'defaultLocale': 'en',
-    'defaultFormats': '{}',
-    'onError': 'ƒ defaultErrorHandler() {}',
-    'textComponent': 'Symbol(react.fragment)',
-    'locale': 'en-US',
-    'defaultRichTextElements': '{b: ƒ () {}, code: ƒ () {}, div: ƒ () {}, em: ƒ () …}',
-    'formatters': '{getDateTimeFormat: ƒ bound variadic() {}, getDispl…}',
-    'formatNumber': 'ƒ bound formatNumber() {}',
-    'formatNumberToParts': 'ƒ bound formatNumberToParts() {}',
-    'formatRelativeTime': 'ƒ bound formatRelativeTime() {}',
-    'formatDate': 'ƒ bound formatDate() {}',
-    'formatDateToParts': 'ƒ bound formatDateToParts() {}',
-    'formatTime': 'ƒ bound formatTime() {}',
-    'formatDateTimeRange': 'ƒ bound formatDateTimeRange() {}',
-    'formatTimeToParts': 'ƒ bound formatTimeToParts() {}',
-    'formatPlural': 'ƒ bound formatPlural() {}',
-    'formatMessage': 'ƒ bound formatMessage() {}',
-    'formatList': 'ƒ bound formatList() {}',
-    'formatListToParts': 'ƒ bound formatListToParts() {}',
-    'formatDisplayName': 'ƒ bound formatDisplayName() {}'
+    'formatMessage': jest.fn(),
 };
 
 const stripes = {
