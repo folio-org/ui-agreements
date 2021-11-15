@@ -1,8 +1,8 @@
 const tagsEnabled = true;
 
 const handlers = {
-    'onDownloadFile': 'ƒ () {}',
-    'onUploadFile': 'ƒ () {}'
+    'onDownloadFile': () => {},
+    'onUploadFile': () => {},
 };
 
 const history = {
@@ -251,93 +251,92 @@ const query = {
 
 const mutator = {
     'agreement': {
-        'DELETE': 'ƒ DELETE() {}',
-        'PUT': 'ƒ PUT() {}',
-        'POST': 'ƒ POST() {}',
-        'cancel': 'ƒ cancel() {}'
+        DELETE: () => {},
+        PUT: () => {},
+        POST: () => {},
+        cancel: () => {},
     },
     'agreementLines': {
-        'DELETE': 'ƒ DELETE() {}',
-        'PUT': 'ƒ PUT() {}',
-        'POST': 'ƒ POST() {}',
-        'cancel': 'ƒ cancel() {}'
+        DELETE: () => {},
+        PUT: () => {},
+        POST: () => {},
+        cancel: () => {},
     },
     'agreementEresources': {
-        'DELETE': 'ƒ DELETE() {}',
-        'PUT': 'ƒ PUT() {}',
-        'POST': 'ƒ POST() {}',
-        'cancel': 'ƒ cancel() {}'
+        DELETE: () => {},
+        PUT: () => {},
+        POST: () => {},
+        cancel: () => {},
     },
     'eresourcesFilterPath': {
-        'update': 'ƒ update() {}',
-        'replace': 'ƒ replace() {}'
+        update: () => {},
+        replace: () => {},
     },
     'interfaces': {
-        'DELETE': 'ƒ DELETE() {}',
-        'PUT': 'ƒ PUT() {}',
-        'POST': 'ƒ POST() {}',
-        'cancel': 'ƒ cancel() {}'
+        DELETE: () => {},
+        PUT: () => {},
+        POST: () => {},
+        cancel: () => {},
     },
     'orderLines': {
-        'DELETE': 'ƒ DELETE() {}',
-        'PUT': 'ƒ PUT() {}',
-        'POST': 'ƒ POST() {}',
-        'cancel': 'ƒ cancel() {}'
+        DELETE: () => {},
+        PUT: () => {},
+        POST: () => {},
+        cancel: () => {},
     },
     'settings': {
-        'DELETE': 'ƒ DELETE() {}',
-        'PUT': 'ƒ PUT() {}',
+        'DELETE': () => {},
+        'PUT': () => {},
         'POST': 'ƒ POST() {}',
-        'cancel': 'ƒ cancel() {}'
+        'cancel': () => {},
     },
     'supplementaryProperties': {
-        'DELETE': 'ƒ DELETE() {}',
-        'PUT': 'ƒ PUT() {}',
-        'POST': 'ƒ POST() {}',
-        'cancel': 'ƒ cancel() {}'
+        'DELETE': () => {},
+        'PUT': () => {},
+        'POST': () => {},
+        'cancel': () => {},
     },
     'terms': {
-        'DELETE': 'ƒ DELETE() {}',
-        'PUT': 'ƒ PUT() {}',
-        'POST': 'ƒ POST() {}',
-        'cancel': 'ƒ cancel() {}'
+        'DELETE': () => {},
+        'PUT': () => {},
+        'POST': () => {},
+        'cancel': () => {},
     },
     'users': {
-        'DELETE': 'ƒ DELETE() {}',
-        'PUT': 'ƒ PUT() {}',
-        'POST': 'ƒ POST() {}',
-        'cancel': 'ƒ cancel() {}'
+        'DELETE': () => {},
+        'PUT': () => {},
+        'POST': () => {},
+        'cancel': () => {},
     },
     'interfacesCredentials': {
-        'DELETE': 'ƒ DELETE() {}',
-        'PUT': 'ƒ PUT() {}',
-        'POST': 'ƒ POST() {}',
-        'cancel': 'ƒ cancel() {}'
+        DELETE: () => {},
+        PUT: () => {},
+        POST: () => {},
+        cancel: () => {},
     },
     'interfaceRecord': {
-        'update': 'ƒ update() {}',
-        'replace': 'ƒ replace() {}'
+        update: () => {},
+        replace: () => {},
     },
     'agreementEresourcesOffset': {
-        'update': 'ƒ update() {}',
-        'replace': 'ƒ replace() {}'
+        update: () => {},
+        replace: () => {},
     },
     'agreementLinesOffset': {
-        'update': 'ƒ update() {}',
-        'replace': 'ƒ replace() {}'
+        update: () => {},
+        replace: () => {}
     },
     'query': {
-        'update': 'ƒ update() {}',
-        'replace': 'ƒ replace() {}'
+        update: () => {},
+        replace: () => {},
     },
     'tagSettings': {
-        'DELETE': 'ƒ DELETE() {}',
-        'PUT': 'ƒ PUT() {}',
-        'POST': 'ƒ POST() {}',
-        'cancel': 'ƒ cancel() {}'
+        DELETE: () => {},
+        PUT: () => {},
+        POST: () => {},
+        cancel: () => {},
     }
 };
-
 
 export {
     agreement,
