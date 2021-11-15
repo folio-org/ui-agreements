@@ -12,6 +12,11 @@ jest.mock('@folio/stripes-erm-components', () => ({
     CustomPropertiesConfigListFieldArray: () => <div>CustomPropertiesConfigListFieldArray</div>,
 }));
 
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  Callout: () => <div>Callout</div>,
+}));
+
 const onSubmit = jest.fn();
 const onDelete = jest.fn();
 const onSave = jest.fn();
@@ -175,8 +180,13 @@ describe('SupplementaryPropertiesConfigForm', () => {
       expect(getByText('2 saved supplementary properties')).toBeInTheDocument();
     });
 
-    test('renders the SuppressFromDiscoveryFields component', () => {
+    test('renders the CustomPropertiesConfigListFieldArray component', () => {
       const { getByText } = renderComponent;
       expect(getByText('CustomPropertiesConfigListFieldArray')).toBeInTheDocument();
+    });
+
+    test('renders the Callout component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('Callout')).toBeInTheDocument();
     });
   });
