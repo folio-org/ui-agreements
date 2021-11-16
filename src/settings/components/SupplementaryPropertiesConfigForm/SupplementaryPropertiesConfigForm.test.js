@@ -1,8 +1,10 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
+import PropTypes from 'prop-types';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-import { Pane, PaneHeader } from '@folio/stripes-testing';
+import { Button } from '@folio/stripes/components';
+import { Pane, PaneHeader, Button as ButtonInteractor } from '@folio/stripes-testing';
 import { screen } from '@testing-library/react';
 import translationsProperties from '../../../../test/helpers';
 import SupplementaryPropertiesConfigForm from './SupplementaryPropertiesConfigForm';
@@ -18,8 +20,36 @@ jest.mock('@folio/stripes/components', () => ({
 }));
 
 const onSubmit = jest.fn();
-const onDelete = jest.fn();
-const onSave = jest.fn();
+const mockDelete = jest.fn();
+const mockSave = jest.fn();
+
+// const SaveButton = (props) => {
+//   return <Button onClick={props.onSave}>SaveButton</Button>;
+// };
+
+// const DeleteButton = (props) => {
+//   return <Button onClick={props.onDelete}>DeleteButton</Button>;
+// };
+
+// jest.mock('@folio/stripes-erm-components', () => {
+//   return (props) => (
+//     <div>
+//       <div>CustomPropertiesConfigListFieldArray</div>
+//       <SaveButton {...props} />
+//       <DeleteButton {...props} />
+//     </div>
+//   );
+// });
+
+
+// DeleteButton.propTypes = {
+//   onDelete: PropTypes.func,
+// };
+
+// SaveButton.propTypes = {
+//   onSave: PropTypes.func,
+// };
+
 
 const initialValues = {
 'customProperties': '[]'
@@ -156,8 +186,8 @@ describe('SupplementaryPropertiesConfigForm', () => {
             form={form}
             initialValues={initialValues}
             match={match}
-            onDelete={onDelete}
-            onSave={onSave}
+            onDelete={mockDelete}
+            onSave={mockSave}
             onSubmit={onSubmit}
             pickLists={pickLists}
           />
@@ -175,7 +205,7 @@ describe('SupplementaryPropertiesConfigForm', () => {
       await PaneHeader('Supplementary properties').is({ visible: true });
     });
 
-    test('renders the supplementary properties subtitle', () => {
+    test('displays the supplementary properties subtitle', () => {
       const { getByText } = renderComponent;
       expect(getByText('2 saved supplementary properties')).toBeInTheDocument();
     });
@@ -189,4 +219,14 @@ describe('SupplementaryPropertiesConfigForm', () => {
       const { getByText } = renderComponent;
       expect(getByText('Callout')).toBeInTheDocument();
     });
+
+    // test('triggers the DeleteButton callback', async () => {
+    //   await ButtonInteractor('DeleteButton').click();
+    //   expect(mockDelete).toHaveBeenCalled();
+    // });
+
+    // test('triggers the SaveButton callback', async () => {
+    //   await ButtonInteractor('SaveButton').click();
+    //   expect(mockSave).toHaveBeenCalled();
+    // });
   });
