@@ -20,7 +20,7 @@ export default function withFileHandlers(WrappedComponent) {
     };
 
     static defaultProps = {
-      handlers: { },
+      handlers: {},
     }
 
     handleUploadFile = (file) => {
@@ -36,18 +36,6 @@ export default function withFileHandlers(WrappedComponent) {
           'X-Okapi-Token': okapi.token,
         },
         body: formData,
-      });
-    }
-
-    handleDeleteFile = (file) => {
-      const { stripes: { okapi } } = this.props;
-
-      return fetch(`${okapi.url}/erm/files/${file.id}`, {
-        method: 'DELETE',
-        headers: {
-          'X-Okapi-Tenant': okapi.tenant,
-          'X-Okapi-Token': okapi.token,
-        },
       });
     }
 
