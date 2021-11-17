@@ -19,9 +19,9 @@ import {
   Agreements,
   PackageContents,
   PackageInfo,
-} from '../EResourceSections';
+} from '../../EResourceSections';
 
-import { urls } from '../utilities';
+import { urls } from '../../utilities';
 
 export default class Package extends React.Component {
   static propTypes = {
@@ -56,6 +56,7 @@ export default class Package extends React.Component {
   render() {
     const { data, handlers } = this.props;
 
+    /* istanbul ignore next */
     const shortcuts = [
       {
         name: 'expandAllSections',
