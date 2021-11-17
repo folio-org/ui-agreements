@@ -5,13 +5,12 @@ import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers'
 import { MemoryRouter } from 'react-router-dom';
 import { Button } from '@folio/stripes/components';
 import { Pane, PaneHeader, Button as ButtonInteractor } from '@folio/stripes-testing';
-import { screen } from '@testing-library/react';
 import translationsProperties from '../../../../test/helpers';
 import SupplementaryPropertiesConfigForm from './SupplementaryPropertiesConfigForm';
 
 jest.mock('@folio/stripes-erm-components', () => ({
-    ...jest.requireActual('@folio/stripes-erm-components'),
-    CustomPropertiesConfigListFieldArray: () => <div>CustomPropertiesConfigListFieldArray</div>,
+  ...jest.requireActual('@folio/stripes-erm-components'),
+    CustomPropertiesConfigListFieldArray: (props) => <div><div>CustomPropertiesConfigListFieldArray</div><SaveButton {...props} /><DeleteButton {...props} /></div>
 }));
 
 jest.mock('@folio/stripes/components', () => ({
@@ -20,36 +19,24 @@ jest.mock('@folio/stripes/components', () => ({
 }));
 
 const onSubmit = jest.fn();
-const mockDelete = jest.fn();
-const mockSave = jest.fn();
+const mockDelete = jest.fn().mockImplementation(() => Promise.resolve());
+const mockSave = jest.fn().mockImplementation(() => Promise.resolve());
 
-// const SaveButton = (props) => {
-//   return <Button onClick={props.onSave}>SaveButton</Button>;
-// };
+const SaveButton = (props) => {
+  return <Button onClick={props.onSave}>SaveButton</Button>;
+};
 
-// const DeleteButton = (props) => {
-//   return <Button onClick={props.onDelete}>DeleteButton</Button>;
-// };
+const DeleteButton = (props) => {
+  return <Button onClick={props.onDelete}>DeleteButton</Button>;
+};
 
-// jest.mock('@folio/stripes-erm-components', () => {
-//   return (props) => (
-//     <div>
-//       <div>CustomPropertiesConfigListFieldArray</div>
-//       <SaveButton {...props} />
-//       <DeleteButton {...props} />
-//     </div>
-//   );
-// });
+DeleteButton.propTypes = {
+  onDelete: PropTypes.func,
+};
 
-
-// DeleteButton.propTypes = {
-//   onDelete: PropTypes.func,
-// };
-
-// SaveButton.propTypes = {
-//   onSave: PropTypes.func,
-// };
-
+SaveButton.propTypes = {
+  onSave: PropTypes.func,
+};
 
 const initialValues = {
 'customProperties': '[]'
@@ -197,7 +184,6 @@ describe('SupplementaryPropertiesConfigForm', () => {
     });
 
     test('displays the supplementary properties pane title', async () => {
-        screen.debug();
       await Pane('Supplementary properties').is({ visible: true });
     });
 
@@ -220,13 +206,13 @@ describe('SupplementaryPropertiesConfigForm', () => {
       expect(getByText('Callout')).toBeInTheDocument();
     });
 
-    // test('triggers the DeleteButton callback', async () => {
-    //   await ButtonInteractor('DeleteButton').click();
-    //   expect(mockDelete).toHaveBeenCalled();
-    // });
+    test('triggers the DeleteButton callback', async () => {
+      await ButtonInteractor('DeleteButton').click();
+      expect(mockDelete).toHaveBeenCalled();
+    });
 
-    // test('triggers the SaveButton callback', async () => {
-    //   await ButtonInteractor('SaveButton').click();
-    //   expect(mockSave).toHaveBeenCalled();
-    // });
+    test('triggers the SaveButton callback', async () => {
+      await ButtonInteractor('SaveButton').click();
+      expect(mockSave).toHaveBeenCalled();
+    });
   });
