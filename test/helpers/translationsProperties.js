@@ -17,13 +17,20 @@ const translationsProperties = [
     translations: {
       'saveAndClose': 'Save and close',
       'cancel': 'Cancel',
-      'paneMenuActionsToggleLabel': 'Actions'
+      'paneMenuActionsToggleLabel': 'Actions',
+      'collapseAll': 'Collapse all'
     },
   },
   {
     prefix: 'stripes-smart-components',
     translations: {
       'permissionError': 'Sorry - your permissions do not allow access to this page.',
+      'searchAndFilter': 'Search and filter',
+      'hideSearchPane': 'Hide search pane',
+      'search': 'Search',
+      'resetAll': 'Reset all',
+      'searchResultsCountHeader': '"{count, number} {count, plural, one {record found} other {records found}}"',
+      'new': 'New'
     },
   }
 ];

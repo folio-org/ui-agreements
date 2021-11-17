@@ -28,11 +28,11 @@ import {
 } from '@folio/stripes/smart-components';
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
-import { statuses } from '../../constants';
-import AgreementFilters from '../AgreementFilters';
-import IfEResourcesEnabled from '../IfEResourcesEnabled';
-import { urls } from '../utilities';
-import css from './Agreements.css';
+import { statuses } from '../../../constants';
+import AgreementFilters from '../../AgreementFilters';
+import IfEResourcesEnabled from '../../IfEResourcesEnabled';
+import { urls } from '../../utilities';
+import css from '../Agreements.css';
 
 const propTypes = {
   children: PropTypes.object,
