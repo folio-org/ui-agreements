@@ -11,10 +11,10 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 
-import Package from './Package';
-import Title from './Title';
-import PCI from './PCI';
-import { resourceClasses } from '../../constants';
+import Package from '../Package';
+import Title from '../Title';
+import PCI from '../PCI';
+import { resourceClasses } from '../../../constants';
 
 const propTypes = {
   data: PropTypes.shape({
