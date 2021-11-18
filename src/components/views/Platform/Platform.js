@@ -18,7 +18,7 @@ import {
   expandAllSections
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager, useStripes } from '@folio/stripes/core';
-import { PlatformInfo, PlatformUrlCustomization, PlatformProxySettings } from '../PlatformSections';
+import { PlatformInfo, PlatformUrlCustomization, PlatformProxySettings } from '../../PlatformSections';
 
 const Platform = ({
   data: { platform, stringTemplates, proxyServers },
@@ -55,6 +55,7 @@ const Platform = ({
     };
   };
 
+  /* istanbul ignote next */
   const shortcuts = [
     {
       name: 'edit',
