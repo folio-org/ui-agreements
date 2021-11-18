@@ -55,7 +55,7 @@ const Platform = ({
     };
   };
 
-  /* istanbul ignote next */
+  /* istanbul ignore next */
   const shortcuts = [
     {
       name: 'edit',
