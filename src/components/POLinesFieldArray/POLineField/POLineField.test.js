@@ -3,7 +3,7 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 import { StaticRouter as Router } from 'react-router-dom';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import translationsProperties from '../../../../test/helpers';
-import { input, id, meta, onPOLineSelected, poLine, data } from './testResources';
+import { input, id, meta, onPOLineSelected, poLine, data, errorData } from './testResources';
 import POLineField from './POLineField';
 
 jest.mock('../../POLineCard', () => () => <div>POLineCard</div>);
@@ -31,6 +31,22 @@ describe('POLineField', () => {
       expect(getByText('POLineCard')).toBeInTheDocument();
     });
   });
+
+  describe('POLineField with error ', () => {
+    beforeEach(() => {
+    renderComponent = renderWithIntl(
+      <Router>
+        <POLineField {...errorData} />,
+      </Router>,
+      translationsProperties
+    );
+  });
+
+  test('renders error message', () => {
+    const { getByText } = renderComponent;
+    expect(getByText('Please fill this in to continue')).toBeInTheDocument();
+  });
+});
 
   describe('POLineField with no PO Line', () => {
       beforeEach(() => {

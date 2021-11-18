@@ -1,14 +1,16 @@
+import { FormattedMessage } from 'react-intl';
+
 const input = {
     'name': 'poLines[0].poLineId',
     'value': '556abc25-ebbf-3fb2-b478-1bfaff0af4dc',
-    'onBlur':  () => {},
-    'onChange':  () => {},
-    'onFocus':  () => {}
+    'onBlur': () => {},
+    'onChange': () => {},
+    'onFocus': () => {}
 };
 
 const meta = {
     'active': false,
-    'data': '{}',
+    'data': {},
     'dirty': true,
     'dirtySinceLastSubmit': false,
     'invalid': false,
@@ -122,11 +124,11 @@ const data = {
         'value': '',
         'onBlur': () => {},
         'onChange': () => {},
-        'onFocus':  () => {},
+        'onFocus': () => {},
     },
     'meta': {
         'active': false,
-        'data': '{}',
+        'data': {},
         'dirty': false,
         'dirtySinceLastSubmit': false,
         'error': '<Memo />',
@@ -147,11 +149,43 @@ const data = {
     'poLine': {}
 };
 
+const errorData = {
+    'input': {
+        'name': 'poLines[0].poLineId',
+        'value': '',
+        'onBlur': () => {},
+        'onChange': () => {},
+        'onFocus': () => {},
+    },
+    'meta': {
+        'active': false,
+        'data': {},
+        'dirty': false,
+        'dirtySinceLastSubmit': false,
+        'error': <FormattedMessage id="stripes-core.label.missingRequiredField" />,
+        'invalid': true,
+        'modified': false,
+        'modifiedSinceLastSubmit': false,
+        'pristine': true,
+        'submitFailed': true,
+        'submitSucceeded': false,
+        'submitting': false,
+        'touched': true,
+        'valid': false,
+        'validating': false,
+        'visited': false
+    },
+    'id': 'edit-poline-0-0',
+    'onPOLineSelected': () => {},
+    'poLine': {}
+};
+
 export {
     input,
     id,
     meta,
     poLine,
     onPOLineSelected,
-    data
+    data,
+    errorData
 };
