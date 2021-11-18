@@ -18,7 +18,8 @@ const translationsProperties = [
       'saveAndClose': 'Save and close',
       'cancel': 'Cancel',
       'paneMenuActionsToggleLabel': 'Actions',
-      'collapseAll': 'Collapse all'
+      'collapseAll': 'Collapse all',
+      'button.edit': 'Edit'
     },
   },
   {
