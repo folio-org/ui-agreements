@@ -14,8 +14,8 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
 
-import POLineCard from '../POLineCard';
-import css from '../styles.css';
+import POLineCard from '../../POLineCard';
+import css from '../../styles.css';
 
 export default class POLineField extends React.Component {
   static propTypes = {
