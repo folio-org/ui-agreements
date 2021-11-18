@@ -37,10 +37,10 @@ const PlatformInfo = ({ platform }) => {
           <KeyValue label={<FormattedMessage id="ui-agreements.platform.locators" />}>
             <div data-test-platform-locators>
               {platform?.locators?.length ?
-                platform?.locators.map(locator => <div>{locator?.domainName}</div>)
+                platform?.locators.map((locator, index) => <div key={index}>{locator?.domainName}</div>)
                 :
                 <NoValue />
-                    }
+              }
             </div>
           </KeyValue>
         </Col>
