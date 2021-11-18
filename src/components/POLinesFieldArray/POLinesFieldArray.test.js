@@ -58,7 +58,7 @@ describe('POLinesFieldArray', () => {
   describe('clicking add button', () => {
     beforeEach(async () => { await Button('Add PO line').click(); });
 
-    test('should invoke the onFilterPackageContents callback', () => {
+    test('should invoke the onAddField callback', () => {
       expect(onAddField).not.toHaveBeenCalled();
     });
   });
