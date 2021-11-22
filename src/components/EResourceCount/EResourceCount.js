@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
+import { NoValue } from '@folio/stripes/components';
 
 import { isExternal } from '../utilities';
 
@@ -19,12 +20,18 @@ export default class EResourceCount extends React.Component {
       resourceCount: PropTypes.number,
       selectedCount: PropTypes.number,
       titleCount: PropTypes.number,
+      type: PropTypes.string,
     })
   }
 
   render() {
     const { resource } = this.props;
     if (isEmpty(resource)) return null;
+
+    // AL w/o resource
+    if (resource.type === 'detached') {
+      return <NoValue />;
+    }
 
     if (isExternal(resource)) {
       const { reference_object: { isSelected, titleCount, selectedCount } = {} } = resource;

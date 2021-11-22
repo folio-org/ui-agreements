@@ -1,5 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import '@folio/stripes-erm-components/test/jest/__mock__';
+import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import EResourceCount from './EResourceCount';
 
 const AgreementLineResource = {
@@ -298,6 +300,62 @@ const eHoldingsTitleResource = {
   'rowIndex': 0
 };
 
+// agreement lines don't need to have a resource attached, description or note is sufficient
+const detachedResource = {
+  'id': '5d8956e5-4dd1-406f-851d-2df23382c025',
+  'dateCreated': '2021-11-22T13:09:39Z',
+  'tags': [],
+  'lastUpdated': '2021-11-22T13:09:39Z',
+  'owner': {
+    'id': '29942c18-ea70-44ad-831c-9ce9c2a8b4b4',
+    'dateCreated': '2021-11-22T12:07:13Z',
+    'name': 'CM agreement',
+    'orgs': [],
+    'externalLicenseDocs': [],
+    'outwardRelationships': [],
+    'customProperties': {},
+    'contacts': [],
+    'tags': [],
+    'lastUpdated': '2021-11-22T12:16:19Z',
+    'inwardRelationships': [],
+    'startDate': '2021-01-01',
+    'linkedLicenses': [],
+    'docs': [],
+    'periods': [{
+      'id': '49bfd686-a5e3-407d-a9e4-a58ae8840397',
+      'startDate': '2021-01-01',
+      'owner': {
+        'id': '29942c18-ea70-44ad-831c-9ce9c2a8b4b4'
+      },
+      'periodStatus': 'current'
+    }],
+    'usageDataProviders': [],
+    'agreementStatus': {
+      'id': '2c91809c7d45516f017d4558e1590031',
+      'value': 'active',
+      'label': 'Active'
+    },
+    'supplementaryDocs': [],
+    'description': 'eHoldings single title status in agreement line',
+    'endDate': null,
+    'cancellationDeadline': null,
+    'alternateNames': []
+  },
+  'poLines': [],
+  'type': 'detached',
+  'suppressFromDiscovery': false,
+  'description': 'AL w/o resource',
+  'customCoverage': false,
+  'explanation': null,
+  'startDate': null,
+  'endDate': null,
+  'activeFrom': null,
+  'activeTo': null,
+  'contentUpdated': null,
+  'haveAccess': true,
+  'rowIndex': 1
+};
+
 describe('EResourceCount', () => {
   test('AgreementLine resource renders expected eresource count', () => {
     const { getByText } = render(
@@ -347,6 +405,16 @@ describe('EResourceCount', () => {
     );
 
     expect(getByText('1 / 1'));
+  });
+
+  test('Agreement line w/o resource renders a dash', () => {
+    const { getByText } = renderWithIntl(
+      <EResourceCount
+        resource={detachedResource}
+      />
+    );
+
+    expect(getByText('-'));
   });
 
   test('empty resource should render null', () => {
