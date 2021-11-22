@@ -554,7 +554,7 @@
     "title.closeEdit": "Close edit title",
     "organizations.primary": "Primary organization",
     "relatedAgreements.linkToParentError": "<strong>Error:</strong> Agreement \"{agreement}\" was not linked because an agreement cannot be linked to itself.",
-    "agreements.editAgreement.name": "Edit agreement - {name}",
+    "agreements.editAgreement.name": "Modifier l'accord - {name}",
     "duplicateAgreementModal.supplementaryDocuments": "Supplementary documents",
     "duplicateAgreementModal.supplementaryProperties": "Supplementary properties"
 }
