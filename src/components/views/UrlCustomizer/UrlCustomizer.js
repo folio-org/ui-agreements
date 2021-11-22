@@ -134,7 +134,7 @@ const UrlCustomizer = ({
 
 UrlCustomizer.propTypes = {
   data: PropTypes.shape({
-    platform: PropTypes.object.isRequired,
+    platform: PropTypes.object,
     stringTemplates: PropTypes.arrayOf(PropTypes.object),
     urlCustomization: PropTypes.shape({
       name: PropTypes.string,

@@ -15,15 +15,15 @@ import {
   expandAllSections
 } from '@folio/stripes/components';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
-import DiscoverySettings from '../DiscoverySettings';
+import DiscoverySettings from '../../DiscoverySettings';
 
 import {
   AcquisitionOptions,
   Agreements,
-} from '../EResourceSections';
+} from '../../EResourceSections';
 
-import TitleCardInfo from '../TitleCard/TitleCardInfo';
-import { urls } from '../utilities';
+import TitleCardInfo from '../../TitleCard/TitleCardInfo';
+import { urls } from '../../utilities';
 
 export default class Title extends React.Component {
   static propTypes = {
@@ -72,6 +72,7 @@ export default class Title extends React.Component {
   render() {
     const { data, handlers } = this.props;
 
+    /* istanbul ignore next */
     const shortcuts = [
       {
         name: 'edit',

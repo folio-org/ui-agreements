@@ -16,7 +16,7 @@ import {
   Selection,
 } from '@folio/stripes/components';
 
-import BasketList from '../BasketList';
+import BasketList from '../../BasketList';
 
 export default class Basket extends React.Component {
   static propTypes = {
