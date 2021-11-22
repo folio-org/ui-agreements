@@ -38,6 +38,7 @@ class POLinesFieldArray extends React.Component {
     return null;
   }
 
+  /* istanbul ignore next */
   handlePOLineSelected = (index, poLine) => {
     this.props.onUpdateField(index, { poLineId: poLine.id });
 
@@ -59,6 +60,7 @@ class POLinesFieldArray extends React.Component {
       <EditCard
         key={index}
         data-test-po-line
+        data-testid={`polinesFieldArray[${index}]`}
         deleteBtnProps={{
           'id': `poline-delete-${agreementLineIndex}-${index}`,
           'data-test-delete-field-button': true
