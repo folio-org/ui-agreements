@@ -19,7 +19,6 @@ describe('UsageDataProvidersFieldArray', () => {
       beforeEach(async () => {
         renderComponent = renderWithIntl(
           <TestForm
-            initialValues={{}}
             onSubmit={onSubmit}
           >
             <FieldArray

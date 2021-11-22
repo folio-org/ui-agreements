@@ -1,29 +1,77 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { StaticRouter as Router } from 'react-router-dom';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { MemoryRouter } from 'react-router-dom';
+import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { KeyValue } from '@folio/stripes-testing';
+import { Field } from 'react-final-form';
 import translationsProperties from '../../../../test/helpers';
-import { data, dataWithNoProvider, errorData } from './testResources';
 import UsageDataProviderField from './UsageDataProviderField';
 
+const onUDPSelected = jest.fn();
+const onSubmit = jest.fn();
+
+const input = {
+  'name': 'usageDataProviders[0].remoteId',
+  'value': '9362de60-f8b2-4073-bee3-01fa5fc8462f',
+  'onBlur': () => {},
+  'onChange': () => {},
+  'onFocus': () => {}
+};
+
+const udp = {
+  'id': 'e67924ee-aa00-454e-8fd0-c3f81339d20e',
+  'label': 'American Chemical Society',
+  'harvestingConfig': {
+    'harvestingStatus': 'active',
+    'harvestVia': 'aggregator',
+    'aggregator': {
+      'id': '5b6ba83e-d7e5-414e-ba7b-134749c0d950',
+      'name': 'German National Statistics Server',
+      'vendorCode': 'ACSO'
+    },
+    'reportRelease': 5,
+    'requestedReports': [
+      'IR',
+      'TR'
+    ],
+    'harvestingStart': '2019-01'
+  },
+  'sushiCredentials': {
+    'customerId': '0000000000',
+    'requestorId': '00000',
+    'requestorName': 'Opentown Libraries',
+    'requestorMail': 'electronic@lib.optentown.edu'
+  },
+  'latestReport': '2018-04',
+  'earliestReport': '2018-01',
+  'hasFailedReport': 'no',
+  'reportErrorCodes': [],
+  'reportTypes': [
+    'JR1'
+  ],
+  'notes': 'Please fill in your own credentials: customer ID and requestor ID, name and mail are only demonstrational.',
+  'metadata': {
+    'createdDate': '2021-11-19T01:53:55.274+00:00',
+    'updatedDate': '2021-11-19T01:53:55.274+00:00'
+  }
+};
 
 let renderComponent;
 describe('UsageDataProviderField', () => {
-  describe('UsageDataProviderField with usage data provider ', () => {
+  describe('renders expected fields with no initial values ', () => {
       beforeEach(() => {
       renderComponent = renderWithIntl(
-        <Router>
-          <UsageDataProviderField
-            {...data}
-          />
-        </Router>,
+        <TestForm onSubmit={onSubmit}>
+          <MemoryRouter>
+            <Field
+              component={UsageDataProviderField}
+              name="udp"
+              onUDPSelected={onUDPSelected}
+            />
+          </MemoryRouter>
+        </TestForm>,
         translationsProperties
       );
-    });
-
-    test('renders the expected name value', async () => {
-      await KeyValue('Name').has({ value: 'American Chemical Society' });
     });
 
     test('renders the Usage data provider card header', () => {
@@ -31,51 +79,37 @@ describe('UsageDataProviderField', () => {
       expect(getByText('Usage data provider')).toBeInTheDocument();
     });
 
-    test('renders No "find-erm-usage-data-provider" plugin is installed text', () => {
+    test('renders the default message', () => {
       const { getByText } = renderComponent;
-      expect(getByText('No "find-erm-usage-data-provider" plugin is installed')).toBeInTheDocument();
+      expect(getByText('Link a usage data provider to get started')).toBeInTheDocument();
+    });
+
+    test('renders no usage data provider text', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('No usage data provider linked')).toBeInTheDocument();
     });
   });
 
-  describe('UsageDataProviderField without usage data provider ', () => {
+  describe('renders expected fields/values with initial values set ', () => {
     beforeEach(() => {
     renderComponent = renderWithIntl(
-      <Router>
-        <UsageDataProviderField {...dataWithNoProvider} />,
-      </Router>,
+      <TestForm initialValues={{ udp }} onSubmit={onSubmit}>
+        <MemoryRouter>
+          <Field
+            component={UsageDataProviderField}
+            input={input}
+            name="udp"
+            onUDPSelected={onUDPSelected}
+            udp={udp}
+          />
+        </MemoryRouter>
+      </TestForm>,
       translationsProperties
     );
   });
 
-  test('renders the Usage data provider card header', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('Usage data provider')).toBeInTheDocument();
-  });
-
-  test('renders no usage data provider text', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('No usage data provider linked')).toBeInTheDocument();
-  });
-
-  test('renders the link UDP text', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('Link a usage data provider to get started')).toBeInTheDocument();
-  });
- });
-
- describe('UsageDataProviderField with error ', () => {
-    beforeEach(() => {
-    renderComponent = renderWithIntl(
-      <Router>
-        <UsageDataProviderField {...errorData} />,
-      </Router>,
-      translationsProperties
-    );
-  });
-
-  test('renders error message', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('Please fill this in to continue')).toBeInTheDocument();
+  test('renders the expected name value', async () => {
+    await KeyValue('Name').has({ value: 'American Chemical Society' });
   });
  });
 });
