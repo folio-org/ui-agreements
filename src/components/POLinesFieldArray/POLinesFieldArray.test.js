@@ -28,7 +28,6 @@ describe('POLinesFieldArray', () => {
       beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm
-          initialValues={{}}
           onSubmit={onSubmit}
         >
           <FieldArray
