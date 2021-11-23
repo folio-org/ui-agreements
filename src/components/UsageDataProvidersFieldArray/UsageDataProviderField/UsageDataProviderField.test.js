@@ -10,14 +10,6 @@ import UsageDataProviderField from './UsageDataProviderField';
 const onUDPSelected = jest.fn();
 const onSubmit = jest.fn();
 
-const input = {
-  'name': 'usageDataProviders[0].remoteId',
-  'value': '9362de60-f8b2-4073-bee3-01fa5fc8462f',
-  'onBlur': () => {},
-  'onChange': () => {},
-  'onFocus': () => {}
-};
-
 const udp = {
   'id': 'e67924ee-aa00-454e-8fd0-c3f81339d20e',
   'label': 'American Chemical Society',
@@ -97,7 +89,6 @@ describe('UsageDataProviderField', () => {
         <MemoryRouter>
           <Field
             component={UsageDataProviderField}
-            input={input}
             name="udp"
             onUDPSelected={onUDPSelected}
             udp={udp}
