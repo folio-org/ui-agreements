@@ -5,7 +5,7 @@ import { Field } from 'react-final-form';
 import { Button, Layout, TextArea } from '@folio/stripes/components';
 import { EditCard, requiredValidator, withKiwtFieldArray } from '@folio/stripes-erm-components';
 
-import UsageDataProviderField from './UsageDataProviderField';
+import UsageDataProviderField from '../UsageDataProviderField/UsageDataProviderField';
 
 class UsageDataProvidersFieldArray extends React.Component {
   static propTypes = {
@@ -41,6 +41,7 @@ class UsageDataProvidersFieldArray extends React.Component {
     return items.map((udp, index) => (
       <EditCard
         key={index}
+        data-testid={`usageDataProvidersFieldArray[${index}]`}
         deleteBtnProps={{
           'id': `udp-delete-${index}`,
           'data-test-delete-field-button': true
