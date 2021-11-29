@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-import { screen } from '@testing-library/react';
 import { noop } from 'lodash';
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
@@ -64,7 +63,6 @@ describe('AgreementLineCreateRoute', () => {
     });
 
     test('renders the agreementLineForm component', () => {
-        screen.debug();
       const { getByText } = renderComponent;
       expect(getByText('AgreementLineForm')).toBeInTheDocument();
     });
