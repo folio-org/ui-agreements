@@ -7,9 +7,9 @@ import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
 import { Tags } from '@folio/stripes-erm-components';
 
-import View from '../components/views/AgreementLine';
-import { urls, withSuppressFromDiscovery } from '../components/utilities';
-import { resultCount } from '../constants';
+import View from '../../components/views/AgreementLine';
+import { urls, withSuppressFromDiscovery } from '../../components/utilities';
+import { resultCount } from '../../constants';
 
 const { RECORDS_PER_REQUEST_LARGE } = resultCount;
 
