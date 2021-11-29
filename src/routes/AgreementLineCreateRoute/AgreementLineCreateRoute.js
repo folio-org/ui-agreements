@@ -5,8 +5,8 @@ import { isEmpty } from 'lodash';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { isPackage } from '@folio/stripes-erm-components';
-import View from '../components/views/AgreementLineForm';
-import { urls, withSuppressFromDiscovery } from '../components/utilities';
+import View from '../../components/views/AgreementLineForm';
+import { urls, withSuppressFromDiscovery } from '../../components/utilities';
 
 class AgreementLineCreateRoute extends React.Component {
   static manifest = Object.freeze({
@@ -82,6 +82,7 @@ class AgreementLineCreateRoute extends React.Component {
     history.push(`${urls.agreementView(agreementId)}${location.search}`);
   }
 
+  /* istanbul ignore next */
   handleSubmit = (line) => {
     const {
       match: { params: { agreementId } },
