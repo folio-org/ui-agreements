@@ -6,11 +6,11 @@ import compose from 'compose-function';
 import { stripesConnect } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
 
-import PCIForm from '../components/views/PCIForm';
-import TitleForm from '../components/views/TitleForm';
-import NoPermissions from '../components/NoPermissions';
-import { urls, withSuppressFromDiscovery } from '../components/utilities';
-import { resourceClasses } from '../constants';
+import PCIForm from '../../components/views/PCIForm';
+import TitleForm from '../../components/views/TitleForm';
+import NoPermissions from '../../components/NoPermissions';
+import { urls, withSuppressFromDiscovery } from '../../components/utilities';
+import { resourceClasses } from '../../constants';
 
 class EResourceEditRoute extends React.Component {
   static manifest = Object.freeze({
