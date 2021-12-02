@@ -26,7 +26,7 @@ describe('PickListValueSettings', () => {
       );
     });
 
-    test('renders the PickListValueSettings component', () => {
+    test('renders the ControlledVocab component', () => {
       const { getByText } = renderComponent;
       expect(getByText('ControlledVocab')).toBeInTheDocument();
     });
