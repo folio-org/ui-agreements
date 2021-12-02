@@ -20,14 +20,14 @@ const history = {
         },
         'key': '64w68l'
       },
-      'createHref': 'ƒ createHref() {}',
-      'push': 'ƒ push() {}',
-      'replace': 'ƒ replace() {}',
-      'go': 'ƒ go() {}',
-      'goBack': 'ƒ goBack() {}',
-      'goForward': 'ƒ goForward() {}',
-      'block': 'ƒ block() {}',
-      'listen': 'ƒ listen() {}'
+      'createHref': () => {},
+      'push': () => {},
+      'replace': () => {},
+      'go': () => {},
+      'goBack': () => {},
+      'goForward': () => {},
+      'block': () => {},
+      'listen': () => {},
     };
 
     const location = {
