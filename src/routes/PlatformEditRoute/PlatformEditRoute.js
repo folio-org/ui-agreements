@@ -6,9 +6,9 @@ import compose from 'compose-function';
 import { stripesConnect } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
 
-import View from '../components/views/PlatformForm';
-import NoPermissions from '../components/NoPermissions';
-import { urls } from '../components/utilities';
+import View from '../../components/views/PlatformForm';
+import NoPermissions from '../../components/NoPermissions';
+import { urls } from '../../components/utilities';
 
 class PlatformEditRoute extends React.Component {
   static manifest = Object.freeze({
