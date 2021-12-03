@@ -6,7 +6,7 @@ import { injectIntl } from 'react-intl';
 
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
-import { generateQueryParams, preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
+import { preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from '../components/withFileHandlers';
@@ -15,6 +15,7 @@ import { parseMclPageSize, urls } from '../../components/utilities';
 import { errorTypes, resultCount } from '../../constants';
 
 import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
+
 const { RECORDS_PER_REQUEST_MEDIUM, RECORDS_PER_REQUEST_LARGE } = resultCount;
 
 class AgreementViewRoute extends React.Component {
