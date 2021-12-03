@@ -55,8 +55,7 @@ class PlatformEditRoute extends React.Component {
   getInitialValues = () => {
     const { resources } = this.props;
     const platform = resources?.platform?.records?.[0] ?? {};
-    const initialValues = cloneDeep(platform);
-    return initialValues;
+    return cloneDeep(platform);
   }
 
   handleClose = () => {
