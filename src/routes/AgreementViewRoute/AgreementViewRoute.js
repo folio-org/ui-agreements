@@ -6,7 +6,7 @@ import { injectIntl } from 'react-intl';
 
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
-import { preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
+import { generateQueryParams, preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import withFileHandlers from '../components/withFileHandlers';
@@ -15,7 +15,6 @@ import { parseMclPageSize, urls } from '../../components/utilities';
 import { errorTypes, resultCount } from '../../constants';
 
 import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
-
 const { RECORDS_PER_REQUEST_MEDIUM, RECORDS_PER_REQUEST_LARGE } = resultCount;
 
 class AgreementViewRoute extends React.Component {
@@ -30,11 +29,15 @@ class AgreementViewRoute extends React.Component {
       path: 'erm/entitlements',
       limitParam: 'perPage',
       perRequest: (_q, _p, _r, _l, props) => parseMclPageSize(props.resources?.settings, 'agreementLines'),
-      params: {
-        filters: 'owner=:{id}',
-        sort: 'resource.name',
+      params: (_q, params, _r, _l, _p) => ({
+        filters: `owner=${params?.id}`,
+        sort: [
+          'resource.name;asc',
+          'reference;asc',
+          'id;asc'
+        ],
         stats: 'true',
-      },
+      }),
       records: 'results',
       accumulate: 'true',
       fetch: false,
