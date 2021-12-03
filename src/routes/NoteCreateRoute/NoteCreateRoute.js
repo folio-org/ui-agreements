@@ -2,15 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Redirect } from 'react-router-dom';
-
 import { NoteCreatePage } from '@folio/stripes/smart-components';
-
-import {
-  formatNoteReferrerEntityData,
-  urls,
-} from '../components/utilities';
-
-import { entityTypeTranslationKeys } from '../constants';
+import { formatNoteReferrerEntityData, urls } from '../../components/utilities';
+import { entityTypeTranslationKeys } from '../../constants';
 
 export default class NoteCreateRoute extends Component {
   static propTypes = {
