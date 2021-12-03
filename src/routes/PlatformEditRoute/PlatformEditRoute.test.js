@@ -7,8 +7,8 @@ import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
 import { noop } from 'lodash';
 import translationsProperties from '../../../test/helpers';
-import EResourceEditRoute from './EResourceEditRoute';
-import { eresource, settings, loadingView } from './testResources';
+import { platform, loadingView } from './testResources';
+import PlatformEditRoute from './PlatformEditRoute';
 
 const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
@@ -28,17 +28,16 @@ jest.mock('@folio/stripes/components', () => ({
   LoadingView: () => <div>LoadingView</div>,
 }));
 
-jest.mock('../../components/views/PCIForm', () => {
+jest.mock('../../components/views/PlatformForm', () => {
   return (props) => (
     <div>
-      <div>PCIForm</div>
+      <div>PlatformForm</div>
       <CloseButton {...props} />
     </div>
   );
 });
 
 const data = {
-  isSuppressFromDiscoveryEnabled: () => jest.fn(),
   history: {
     push: historyPushMock
   },
@@ -46,12 +45,9 @@ const data = {
     search: ''
   },
   mutator: {
-    pci: {
+    platform: {
       PUT: noop
-    },
-    title: {
-      PUT: noop
-    },
+    }
   },
   match: {
     params: {
@@ -59,30 +55,25 @@ const data = {
     }
   },
   resources: {
-    eresource,
-    settings,
+    platform
   }
 };
 
 const isPendingData = {
-  isSuppressFromDiscoveryEnabled: () => jest.fn(),
   history: {
     push: () => jest.fn()
   },
   location: {
     search: ''
   },
-  mutator: {
-    pci: {
-      PUT: noop
-    },
-    title: {
-      PUT: noop
-    },
-  },
   match: {
     params: {
       id: ''
+    }
+  },
+  mutator: {
+    platform: {
+      PUT: noop
     }
   },
   resources: {
@@ -90,21 +81,21 @@ const isPendingData = {
   }
 };
 
-describe('EResourceEditRoute', () => {
+describe('PlatformEditRoute', () => {
   describe('rendering the route with permissions', () => {
     let renderComponent;
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <EResourceEditRoute {...data} onSubmit={onSubmitMock} />
+          <PlatformEditRoute {...data} onSubmit={onSubmitMock} />
         </MemoryRouter>,
         translationsProperties
       );
     });
 
-    test('renders the PCIForm component', () => {
+    test('renders the PlatformForm component', () => {
       const { getByText } = renderComponent;
-      expect(getByText('PCIForm')).toBeInTheDocument();
+      expect(getByText('PlatformForm')).toBeInTheDocument();
     });
 
 
@@ -124,7 +115,7 @@ describe('EResourceEditRoute', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <EResourceEditRoute {...isPendingData} />
+          <PlatformEditRoute {...isPendingData} />
         </MemoryRouter>,
         translationsProperties
       );
@@ -141,7 +132,7 @@ describe('EResourceEditRoute', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <EResourceEditRoute
+          <PlatformEditRoute
             {...data}
             stripes={{ hasPerm: () => false }}
           />
