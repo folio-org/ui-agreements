@@ -556,5 +556,13 @@
   "settings.supplementaryProperties": "Supplementary properties",
   "settings.supplementaryPropertyPickList": "Supplementary property pick list setup",
   "settings.values": "values",
-  "settings.value": "Value"
+  "settings.value": "Value",
+  "settings.appSettings": "App settings",
+  "settings.settingsSection.fileStorage": "File storage",
+  "settings.fileStorage.s3AccessKey": "S3 access key",
+  "settings.fileStorage.s3BucketName": "S3 bucket name",
+  "settings.fileStorage.s3Endpoint": "S3 endpoint",
+  "settings.fileStorage.s3ObjectPrefix": "S3 object prefix",
+  "settings.fileStorage.s3SecretKey": "S3 secret key",
+  "settings.fileStorage.storageEngine": "Storage engine"
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
+import { useSettings } from '@k-int/stripes-kint-components';
 
 import GeneralSettings from './GeneralSettings';
 
@@ -10,8 +11,19 @@ import {
   PickListValueSettings
 } from './routes';
 
-export default class ErmSettings extends React.Component {
-  sections = [
+const REFDATA_ENDPOINT = 'erm/refdata';
+const SETTINGS_ENDPOINT = 'erm/settings/appSettings';
+
+const ErmSettings = (props) => {
+  const { isLoading, pageList, SettingsContextProvider } = useSettings({
+    dynamicPageExclusions: ['registry'], // Registry AppSettings hold StringTemplating details etc -- not for user editing
+    intlKey: 'ui-agreements',
+    persistentPages: [],
+    refdataEndpoint: REFDATA_ENDPOINT,
+    settingEndpoint: SETTINGS_ENDPOINT
+  });
+
+  const sections = [
     {
       label: <FormattedMessage id="ui-agreements.settings.general" />,
       pages: [
@@ -45,16 +57,26 @@ export default class ErmSettings extends React.Component {
           route: 'pick-list-values',
         },
       ]
+    },
+    {
+      label: <FormattedMessage id="ui-agreements.settings.appSettings" />,
+      pages: pageList
     }
-  ]
+  ];
 
-  render() {
-    return (
-      <Settings
-        {...this.props}
-        paneTitle={<FormattedMessage id="ui-agreements.meta.title" />}
-        sections={this.sections}
-      />
-    );
+  if (isLoading) {
+    return null;
   }
-}
+
+  return (
+    <SettingsContextProvider>
+      <Settings
+        paneTitle={<FormattedMessage id="ui-agreements.meta.title" />}
+        sections={sections}
+        {...props}
+      />
+    </SettingsContextProvider>
+  );
+};
+
+export default ErmSettings;

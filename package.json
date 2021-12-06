@@ -69,6 +69,7 @@
   "dependencies": {
     "@folio/react-intl-safe-html": "^3.1.0",
     "@folio/stripes-erm-components": "^6.0.0",
+    "@k-int/stripes-kint-components": "^1.4.0",
     "@rehooks/local-storage": "2.4.0",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
@@ -115,7 +116,8 @@
       "users": "13.0 14.0 15.0"
     },
     "stripesDeps": [
-      "@folio/stripes-erm-components"
+      "@folio/stripes-erm-components",
+      "@k-int/stripes-kint-components"
     ],
     "permissionSets": [
       {
