@@ -30,11 +30,15 @@ class AgreementViewRoute extends React.Component {
       path: 'erm/entitlements',
       limitParam: 'perPage',
       perRequest: (_q, _p, _r, _l, props) => parseMclPageSize(props.resources?.settings, 'agreementLines'),
-      params: {
-        filters: 'owner=:{id}',
-        sort: 'resource.name',
+      params: (_q, params, _r, _l, _p) => ({
+        filters: `owner=${params?.id}`,
+        sort: [
+          'resource.name;asc',
+          'reference;asc',
+          'id;asc'
+        ],
         stats: 'true',
-      },
+      }),
       records: 'results',
       accumulate: 'true',
       fetch: false,
