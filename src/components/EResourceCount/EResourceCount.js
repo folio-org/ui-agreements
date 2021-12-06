@@ -10,9 +10,11 @@ export default class EResourceCount extends React.Component {
       _object: PropTypes.shape({
         resourceCount: PropTypes.number,
       }),
+      authority: PropTypes.string,
       reference_object: PropTypes.shape({
         selectedCount: PropTypes.number,
         titleCount: PropTypes.number,
+        isSelected: PropTypes.bool
       }),
       resourceCount: PropTypes.number,
       selectedCount: PropTypes.number,
@@ -25,13 +27,15 @@ export default class EResourceCount extends React.Component {
     if (isEmpty(resource)) return null;
 
     if (isExternal(resource)) {
-      const { reference_object: { titleCount, selectedCount } = {} } = resource;
+      const { reference_object: { isSelected, titleCount, selectedCount } = {} } = resource;
 
       if (titleCount >= 0) {
         return selectedCount >= 0 ? `${selectedCount} / ${titleCount}` : titleCount;
       }
 
-      return 1;
+      if (resource?.authority === 'EKB-TITLE') {
+        return isSelected ? '1 / 1' : '0 / 1';
+      }
     }
 
     if (resource.titleCount && resource.titleCount >= 0) {
