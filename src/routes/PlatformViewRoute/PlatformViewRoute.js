@@ -4,8 +4,8 @@ import { get, isEmpty } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import View from '../components/views/Platform';
-import { urls } from '../components/utilities';
+import View from '../../components/views/Platform';
+import { urls } from '../../components/utilities';
 
 class PlatformViewRoute extends React.Component {
   static manifest = Object.freeze({
