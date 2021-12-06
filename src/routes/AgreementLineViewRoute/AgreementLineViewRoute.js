@@ -1,25 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import compose from 'compose-function';
-import { isEmpty, chunk } from 'lodash';
-import { LoadingView } from '@folio/stripes/components';
+import { chunk } from 'lodash';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import View from '../components/views/AgreementLineForm';
-import { urls, withSuppressFromDiscovery } from '../components/utilities';
-import { resultCount } from '../constants';
+import { withTags } from '@folio/stripes/smart-components';
+import { Tags } from '@folio/stripes-erm-components';
+
+import View from '../../components/views/AgreementLine';
+import { urls, withSuppressFromDiscovery } from '../../components/utilities';
+import { resultCount } from '../../constants';
 
 const { RECORDS_PER_REQUEST_LARGE } = resultCount;
-class AgreementLineEditRoute extends React.Component {
+
+class AgreementLineViewRoute extends React.Component {
   static manifest = Object.freeze({
-    entitlements: {
+    agreement: {
       type: 'okapi',
-      path: 'erm/entitlements',
+      path: 'erm/sas/:{agreementId}',
       fetch: false,
     },
     line: {
       type: 'okapi',
       path: 'erm/entitlements/:{lineId}',
+      throwErrors: false,
       accumulate: true,
       fetch: false
     },
@@ -32,7 +36,7 @@ class AgreementLineEditRoute extends React.Component {
       records: 'poLines',
       throwErrors: false,
     },
-    basket: { initialValue: [] },
+    query: {},
   });
 
   static propTypes = {
@@ -51,9 +55,9 @@ class AgreementLineEditRoute extends React.Component {
       }).isRequired
     }).isRequired,
     mutator: PropTypes.shape({
-      entitlements: PropTypes.shape({
+      agreement: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
-      }),
+      }).isRequired,
       line: PropTypes.shape({
         GET: PropTypes.func.isRequired,
         reset: PropTypes.func
@@ -62,26 +66,29 @@ class AgreementLineEditRoute extends React.Component {
         GET: PropTypes.func.isRequired,
         reset: PropTypes.func
       }),
-    }),
+      query: PropTypes.shape({
+        update: PropTypes.func.isRequired,
+      }).isRequired,
+    }).isRequired,
     resources: PropTypes.shape({
-      basket: PropTypes.arrayOf(PropTypes.object),
       line: PropTypes.object,
       orderLines: PropTypes.object,
-      settings: PropTypes.object,
+      query: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
       hasInterface: PropTypes.func.isRequired,
       hasPerm: PropTypes.func.isRequired,
     }).isRequired,
+    tagsEnabled: PropTypes.bool,
   };
 
   static contextType = CalloutContext;
+
 
   constructor(props) {
     super(props);
 
     this.state = {
-      isEholdingsEnabled: props.stripes.hasPerm('module.eholdings.enabled'),
       orderLines: [],
       isLoading: true,
     };
@@ -122,6 +129,26 @@ class AgreementLineEditRoute extends React.Component {
     return data;
   }
 
+
+  getHelperApp = () => {
+    const { match, resources } = this.props;
+    const helper = resources.query?.helper;
+    if (!helper) return null;
+
+    let HelperComponent = null;
+
+    if (helper === 'tags') HelperComponent = Tags;
+
+    if (!HelperComponent) return null;
+
+    return (
+      <HelperComponent
+        link={`erm/entitlements/${match.params.lineId}`}
+        onToggle={() => this.handleToggleHelper(helper)}
+      />
+    );
+  }
+
   getCompositeLine = () => {
     const { resources } = this.props;
     const line = resources.line?.records?.[0] ?? {};
@@ -137,98 +164,83 @@ class AgreementLineEditRoute extends React.Component {
     };
   }
 
-  getInitialValues = () => {
-    const line = this.props.resources.line?.records?.[0] ?? {};
-
-    return {
-      ...line,
-      linkedResource: line.type !== 'detached' ? line : undefined,
-      coverage: line.customCoverage ? line.coverage : undefined,
-    };
-  }
-
   handleClose = () => {
-    const {
-      history,
-      location,
-      match: { params: { agreementId, lineId } },
-    } = this.props;
-    history.push(`${urls.agreementLineView(agreementId, lineId)}${location.search}`);
+    const { history, location, match } = this.props;
+    history.push(`${urls.agreementView(match.params.agreementId)}${location.search}`);
   }
 
-  handleSubmit = (line) => {
+  handleDelete = () => {
     const {
       history,
       location,
       match: { params: { agreementId, lineId } },
       mutator,
     } = this.props;
+    const { sendCallout } = this.context;
 
-    let payload; // payload to be PUT to the endpoint
-    const { linkedResource, type, ...rest } = line;
-    if (linkedResource?.type === 'packages') { // On submitting a package selected from eholdings plugin
-      payload = {
-        'type': 'external',
-        'authority': 'ekb-package',
-        'reference': linkedResource.id,
-        ...rest,
-        resource: null
-      };
-    } else if (linkedResource?.type === 'resources') { // On submitting a title selected from eholdings plugin
-      payload = {
-        'type': 'external',
-        'authority': 'ekb-title',
-        'reference': linkedResource.id,
-        ...rest,
-        resource: null
-      };
-    } else if (isEmpty(linkedResource)) { // On editing a detached line but not adding a resource
-      payload = { 'type': 'detached', ...rest, resource: null };
-    } else if (type === 'detached') { // on editing a detached line and adding a resource
-      payload = { resource: linkedResource, ...rest, type: null };
-    } else if (type === 'external') { // on editing an external line
-      payload = { resource: null, ...rest, type: 'external' };
-    } else { // on editing an internal line
-      payload = { resource: linkedResource, ...rest, type };
-    }
-
-    return mutator.entitlements
-      .PUT({
-        id: lineId,
-        ...payload
+    mutator.agreement.PUT({
+      id: agreementId,
+      items: [{ id: lineId, _delete: true }]
+    })
+      .then(() => {
+        history.push(`${urls.agreementView(agreementId)}${location.search}`);
+        sendCallout({ message: <FormattedMessage id="ui-agreements.line.delete.callout" /> });
       })
-      .then(({ id }) => {
-        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.line.update.callout" /> });
-        history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
+      .catch(error => {
+        sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.line.deleteFailed.callout" values={{ message: error.message }} /> });
       });
   }
 
+  handleEdit = () => {
+    const {
+      history,
+      location,
+      match: { params: { agreementId, lineId } },
+    } = this.props;
+
+    history.push(`${urls.agreementLineEdit(agreementId, lineId)}${location.search}`);
+  }
+
+  handleToggleHelper = (helper) => {
+    const { mutator, resources } = this.props;
+    const currentHelper = resources.query.helper;
+    const nextHelper = currentHelper !== helper ? helper : null;
+
+    mutator.query.update({ helper: nextHelper });
+  }
+
+  handleToggleTags = () => {
+    this.handleToggleHelper('tags');
+  }
+
   isLoading = () => {
-    return Object.values(this.props.resources).some(r => r.resource !== 'settings' && r.isPending);
+    const { match, resources } = this.props;
+
+    return (
+      match.params.lineId !== resources.line?.records?.[0]?.id &&
+      (resources?.line?.isPending ?? true)
+    );
   }
 
   render() {
-    const { match, resources, isSuppressFromDiscoveryEnabled } = this.props;
-
-    if (this.isLoading() || this.state.isLoading) return <LoadingView dismissible onClose={this.handleClose} />;
+    const { resources, tagsEnabled, isSuppressFromDiscoveryEnabled } = this.props;
 
     return (
       <View
         key={resources.line?.loadedAt ?? 'loading'}
         data={{
-          basket: (resources?.basket ?? []),
           line: this.getCompositeLine(),
         }}
         handlers={{
           ...this.props.handlers,
           isSuppressFromDiscoveryEnabled,
           onClose: this.handleClose,
+          onDelete: this.handleDelete,
+          onEdit: this.handleEdit,
+          onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
         }}
-        initialValues={this.getInitialValues()}
-        isEholdingsEnabled={this.state.isEholdingsEnabled}
+        helperApp={this.getHelperApp()}
         isLoading={this.isLoading() || this.state.isLoading}
-        lineId={match.params.lineId}
-        onSubmit={this.handleSubmit}
       />
     );
   }
@@ -237,4 +249,5 @@ class AgreementLineEditRoute extends React.Component {
 export default compose(
   stripesConnect,
   withSuppressFromDiscovery,
-)(AgreementLineEditRoute);
+  withTags,
+)(AgreementLineViewRoute);

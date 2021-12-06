@@ -5,7 +5,7 @@ import { get } from 'lodash';
 import { Button, Card, KeyValue, Layout, Tooltip } from '@folio/stripes/components';
 import { AppIcon, Pluggable } from '@folio/stripes/core';
 
-import css from '../styles.css';
+import css from '../../styles.css';
 
 export default class UsageDataProviderField extends React.Component {
   static propTypes = {
@@ -30,12 +30,14 @@ export default class UsageDataProviderField extends React.Component {
     udp: {},
   }
 
+   /* istanbul ignore next */
   componentDidMount() {
     if (!get(this.props, 'input.value') && get(this.triggerButton, 'current')) {
       this.triggerButton.current.focus();
     }
   }
 
+   /* istanbul ignore next */
   renderLinkUDPButton = value => (
     <Pluggable
       dataKey="udp"

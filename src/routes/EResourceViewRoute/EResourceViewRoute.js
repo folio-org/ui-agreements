@@ -7,9 +7,9 @@ import { stripesConnect } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
 import { Tags } from '@folio/stripes-erm-components';
 
-import View from '../components/views/EResource';
-import { parseMclPageSize, urls, withSuppressFromDiscovery } from '../components/utilities';
-import { resultCount, resourceClasses } from '../constants';
+import View from '../../components/views/EResource';
+import { parseMclPageSize, urls, withSuppressFromDiscovery } from '../../components/utilities';
+import { resultCount, resourceClasses } from '../../constants';
 
 const { INITIAL_RESULT_COUNT, RECORDS_PER_REQUEST_MEDIUM } = resultCount;
 
@@ -175,6 +175,7 @@ class EResourceViewRoute extends React.Component {
     }
   }
 
+    /* istanbul ignore next */
   getHelperApp = (eresource = {}) => {
     const { match, resources } = this.props;
     const helper = resources.query.helper;

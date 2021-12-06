@@ -81,7 +81,7 @@ const EResources = ({
   };
 
   return (
-    <div data-test-eresources>
+    <div data-test-eresources data-testid="eresources">
       <SearchAndSortQuery
         initialFilterState={{}}
         initialSearchState={{ query: '' }}

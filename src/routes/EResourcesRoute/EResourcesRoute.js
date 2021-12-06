@@ -5,10 +5,10 @@ import { stripesConnect } from '@folio/stripes/core';
 import { StripesConnectedSource } from '@folio/stripes/smart-components';
 import { getSASParams } from '@folio/stripes-erm-components';
 
-import View from '../components/views/EResources';
-import NoPermissions from '../components/NoPermissions';
-import { urls } from '../components/utilities';
-import { resultCount } from '../constants';
+import View from '../../components/views/EResources';
+import NoPermissions from '../../components/NoPermissions';
+import { urls } from '../../components/utilities';
+import { resultCount } from '../../constants';
 
 const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT;
 

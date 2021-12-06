@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import PropTypes from 'prop-types';
-
 import { NoteEditPage } from '@folio/stripes/smart-components';
-
-import {
-  formatNoteReferrerEntityData,
-  urls,
-} from '../components/utilities';
-
+import { formatNoteReferrerEntityData, urls } from '../../components/utilities';
 import {
   entityTypeTranslationKeys,
   entityTypePluralizedTranslationKeys,
-} from '../constants';
+} from '../../constants';
 
 export default class NoteEditRoute extends Component {
   static propTypes = {
