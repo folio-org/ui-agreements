@@ -7,12 +7,12 @@ import { NoteViewPage } from '@folio/stripes/smart-components';
 import {
   formatNoteReferrerEntityData,
   urls,
-} from '../components/utilities';
+} from '../../components/utilities';
 
 import {
   entityTypeTranslationKeys,
   entityTypePluralizedTranslationKeys,
-} from '../constants';
+} from '../../constants';
 
 class NoteViewRoute extends Component {
   static propTypes = {
@@ -34,6 +34,7 @@ class NoteViewRoute extends Component {
     });
   };
 
+  /* istanbul ignore next */
   navigateBack = () => {
     const { history, location } = this.props;
 
