@@ -2,24 +2,43 @@ import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-import {
-    history,
-    location,
-    match,
-    platforms,
-    mutator
-} from './testResources';
+import platforms from './testResources';
 import translationsProperties from '../../../test/helpers';
 import PlatformsRoute from './PlatformsRoute';
 
-
 const props = {
-    history: { history },
-    location: { location },
-    match: { match },
-    mutator: { mutator },
-    resources: { platforms }
-  };
+  history: {
+    push: () => jest.fn()
+  },
+  location: {
+    pathname: '',
+    search: ''
+  },
+  match: {
+    params: {
+      id: ''
+    },
+  },
+  mutator: {
+    platforms: {
+      DELETE: () => {},
+      PUT: () => {},
+      POST: () => {},
+      cancel: () => {},
+    },
+    query: {
+      update: () => {},
+      replace: () => {},
+    },
+    resultCount: {
+      update: () => {},
+      replace: () => {},
+    }
+  },
+  resources: {
+    platforms
+  }
+};
 
 describe('PlatformsRoute', () => {
   describe('rendering the route with permissions', () => {
