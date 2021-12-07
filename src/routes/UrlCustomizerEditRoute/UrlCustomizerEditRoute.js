@@ -4,9 +4,9 @@ import { cloneDeep } from 'lodash';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import View from '../components/views/UrlCustomizerForm';
-import NoPermissions from '../components/NoPermissions';
-import { urls } from '../components/utilities';
+import View from '../../components/views/UrlCustomizerForm';
+import NoPermissions from '../../components/NoPermissions';
+import { urls } from '../../components/utilities';
 
 class UrlCustomizerEditRoute extends React.Component {
   static manifest = Object.freeze({
