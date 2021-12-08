@@ -5,9 +5,9 @@ import { stripesConnect } from '@folio/stripes/core';
 import { StripesConnectedSource } from '@folio/stripes/smart-components';
 import { getSASParams } from '@folio/stripes-erm-components';
 
-import View from '../components/views/Platforms';
-import NoPermissions from '../components/NoPermissions';
-import { urls } from '../components/utilities';
+import View from '../../components/views/Platforms';
+import NoPermissions from '../../components/NoPermissions';
+import { urls } from '../../components/utilities';
 
 const INITIAL_RESULT_COUNT = 100;
 const RESULT_COUNT_INCREMENT = 100;
