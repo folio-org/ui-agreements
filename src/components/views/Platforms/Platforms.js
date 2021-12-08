@@ -74,7 +74,7 @@ const Platforms = ({
   };
 
   return (
-    <div data-test-platforms>
+    <div data-test-platforms data-testid="platforms">
       <SearchAndSortQuery
         initialSearchState={{ query: '' }}
         initialSortState={{ sort: 'name' }}
