@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 
-import { NoteEditPage } from '@folio/stripes/smart-components';
+import { NoteViewPage } from '@folio/stripes/smart-components';
 
 import {
   formatNoteReferrerEntityData,
   urls,
-} from '../components/utilities';
+} from '../../components/utilities';
 
 import {
   entityTypeTranslationKeys,
   entityTypePluralizedTranslationKeys,
-} from '../constants';
+} from '../../constants';
 
-export default class NoteEditRoute extends Component {
+class NoteViewRoute extends Component {
   static propTypes = {
     history: ReactRouterPropTypes.history.isRequired,
     location: ReactRouterPropTypes.location.isRequired,
@@ -25,28 +25,41 @@ export default class NoteEditRoute extends Component {
     }).isRequired,
   };
 
-  goToNoteView = () => {
+  onEdit = () => {
     const { history, location, match } = this.props;
 
     history.replace({
-      pathname: urls.noteView(match.params.id),
+      pathname: urls.noteEdit(match.params.id),
       state: location.state,
     });
-  }
+  };
+
+  /* istanbul ignore next */
+  navigateBack = () => {
+    const { history, location } = this.props;
+
+    if (location.state) {
+      history.goBack();
+    } else {
+      history.push({ pathname: urls.agreements() });
+    }
+  };
 
   render() {
     const { location, match } = this.props;
 
     return (
-      <NoteEditPage
-        domain="agreements"
+      <NoteViewPage
         entityTypePluralizedTranslationKeys={entityTypePluralizedTranslationKeys}
         entityTypeTranslationKeys={entityTypeTranslationKeys}
-        navigateBack={this.goToNoteView}
+        navigateBack={this.navigateBack}
         noteId={match.params.id}
+        onEdit={this.onEdit}
         paneHeaderAppIcon="agreement"
         referredEntityData={formatNoteReferrerEntityData(location.state)}
       />
     );
   }
 }
+
+export default NoteViewRoute;
