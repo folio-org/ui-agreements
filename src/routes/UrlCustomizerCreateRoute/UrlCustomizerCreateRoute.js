@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import View from '../components/views/UrlCustomizerForm';
-import { urls } from '../components/utilities';
+import View from '../../components/views/UrlCustomizerForm';
+import { urls } from '../../components/utilities';
 
 class UrlCustomizerCreateRoute extends React.Component {
   static manifest = Object.freeze({
@@ -46,6 +46,7 @@ class UrlCustomizerCreateRoute extends React.Component {
     history.push(`${urls.platformView(platformId)}${location.search}`);
   }
 
+    /* istanbul ignore next */
   handleSubmit = (urlCustomization) => {
     const {
       history,
