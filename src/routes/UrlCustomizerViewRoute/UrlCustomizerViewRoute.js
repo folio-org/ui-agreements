@@ -4,8 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { preventResourceRefresh } from '@folio/stripes-erm-components';
 
-import View from '../components/views/UrlCustomizer';
-import { urls } from '../components/utilities';
+import View from '../../components/views/UrlCustomizer';
+import { urls } from '../../components/utilities';
 
 class UrlCustomizerViewRoute extends React.Component {
   static manifest = Object.freeze({
@@ -53,6 +53,7 @@ class UrlCustomizerViewRoute extends React.Component {
     history.push(`${urls.platformView(match.params.platformId)}${location.search}`);
   }
 
+    /* istanbul ignore next */
   handleDelete = () => {
     const {
       history,
