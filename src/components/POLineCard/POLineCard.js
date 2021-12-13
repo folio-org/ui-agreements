@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useAcqMethods } from '@folio/orders/src/common/hooks/useAcqMethods/useAcqMethods';
 import { Link } from 'react-router-dom';
 import {
   Card,
@@ -10,8 +12,10 @@ import {
   Row,
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
-
+import { getTranslatedAcqMethod } from '../utilities/getTranslatedAcqMethod';
 import { urls } from '../utilities';
+
+const invalidAcqMethod = <FormattedMessage id="ui-orders.acquisitionMethod.invalid" />;
 
 const propTypes = {
   children: PropTypes.node,
@@ -31,55 +35,62 @@ const POLineCard = ({
   headerEnd,
   id,
   poLine,
-}) => (
-  <Card
-    cardStyle="positive"
-    data-test-po-line-card
-    data-testid="polines"
-    headerEnd={headerEnd}
-    headerStart={(
-      <Link to={urls.poLineView(poLine.id)}>
-        <AppIcon app="orders" size="small">
-          <strong data-test-po-line-number>
-            <FormattedMessage id="ui-agreements.poLines.poLineWithNumber" values={{ poLineNumber: poLine.poLineNumber }} />
-          </strong>
-        </AppIcon>
-      </Link>
+}) => {
+  const { acqMethods, isLoading } = useAcqMethods(poLine.acquisitionMethod);
+  const translatedAcqMethod = (!isLoading && acqMethods[0])
+    ? getTranslatedAcqMethod(acqMethods[0].value)
+    : invalidAcqMethod;
+
+ return (
+   <Card
+     cardStyle="positive"
+     data-test-po-line-card
+     data-testid="polines"
+     headerEnd={headerEnd}
+     headerStart={(
+       <Link to={urls.poLineView(poLine.id)}>
+         <AppIcon app="orders" size="small">
+           <strong data-test-po-line-number>
+             <FormattedMessage id="ui-agreements.poLines.poLineWithNumber" values={{ poLineNumber: poLine.poLineNumber }} />
+           </strong>
+         </AppIcon>
+       </Link>
     )}
-    id={id}
-    roundedBorder
-  >
-    <div>
-      <Row>
-        <Col xs={3}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.poLines.acqMethod" />}>
-            <div data-test-po-line-acq-method>
-              {poLine.acquisitionMethod ?? <NoValue />}
-            </div>
-          </KeyValue>
-        </Col>
-        <Col xs={9}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.poLines.title" />}>
-            <div data-test-po-line-title>
-              {poLine.titleOrPackage ?? <NoValue />}
-            </div>
-          </KeyValue>
-          {poLine?.instanceId &&
-            <AppIcon app="inventory" iconKey="instance" size="small">
-              <Link
-                data-test-po-line-view-in-inventory
-                to={urls.viewInstance(poLine.instanceId)}
-              >
-                <FormattedMessage id="ui-agreements.poLines.viewInInventory" />
-              </Link>
-            </AppIcon>
+     id={id}
+     roundedBorder
+   >
+     <div>
+       <Row>
+         <Col xs={3}>
+           <KeyValue label={<FormattedMessage id="ui-agreements.poLines.acqMethod" />}>
+             <div data-test-po-line-acq-method>
+               {isLoading ? <NoValue /> : translatedAcqMethod}
+             </div>
+           </KeyValue>
+         </Col>
+         <Col xs={9}>
+           <KeyValue label={<FormattedMessage id="ui-agreements.poLines.title" />}>
+             <div data-test-po-line-title>
+               {poLine.titleOrPackage ?? <NoValue />}
+             </div>
+           </KeyValue>
+           {poLine?.instanceId &&
+           <AppIcon app="inventory" iconKey="instance" size="small">
+             <Link
+               data-test-po-line-view-in-inventory
+               to={urls.viewInstance(poLine.instanceId)}
+             >
+               <FormattedMessage id="ui-agreements.poLines.viewInInventory" />
+             </Link>
+           </AppIcon>
           }
-        </Col>
-      </Row>
-    </div>
-    {children}
-  </Card>
+         </Col>
+       </Row>
+     </div>
+     {children}
+   </Card>
 );
+};
 
 POLineCard.propTypes = propTypes;
 export default POLineCard;

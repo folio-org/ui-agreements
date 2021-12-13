@@ -87,6 +87,14 @@ class AgreementEditRoute extends React.Component {
       fetch: false,   // we will fetch the order lines in the componentDidMount
       records: 'poLines',
     },
+    acquisitionMethod: {
+      type: 'okapi',
+      path: 'orders/acquisition-methods',
+      accumulate: true,
+      fetch: false,
+      perRequest: 1000,
+      records: 'acquisitionMethods',
+    },
     orgRoleValues: {
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreementOrg/role',
@@ -155,6 +163,10 @@ class AgreementEditRoute extends React.Component {
         GET: PropTypes.func.isRequired,
         reset: PropTypes.func.isRequired,
       }),
+      acquisitionMethod: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
       agreements: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
       }),
@@ -190,6 +202,9 @@ class AgreementEditRoute extends React.Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
       orderLines: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      acquisitionMethod: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
       orgRoleValues: PropTypes.object,
@@ -459,6 +474,7 @@ class AgreementEditRoute extends React.Component {
           isPerpetualValues: resources?.isPerpetualValues?.records ?? [],
           licenseLinkStatusValues: resources?.licenseLinkStatusValues?.records ?? [],
           orderLines: this.state.orderLines,
+          acquisitionMethod: resources?.acquisitionMethod?.records ?? [],
           orgRoleValues: resources?.orgRoleValues?.records ?? [],
           renewalPriorityValues: resources?.renewalPriorityValues?.records ?? [],
           supplementaryProperties: resources?.supplementaryProperties?.records ?? [],
