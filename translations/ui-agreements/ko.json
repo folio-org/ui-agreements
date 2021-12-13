@@ -14,7 +14,7 @@
     "agreementLines.count": "카운트",
     "agreementLines.contentUpdated": "콘텐츠 업데이트",
     "agreementLines.noLines": "이 계약에 대한 계약 항목이 없습니다.",
-    "agreementLines.removeItem": "계약에서 라인 제거",
+    "agreementLines.removeItem": "계약에서 항목 제거",
     "agreementLines.createLine": "계약 항목 생성",
     "basketButton": "{count, number} {count, plural, one { item } other { items }}",
     "basket.name": "ERM 바구니",
