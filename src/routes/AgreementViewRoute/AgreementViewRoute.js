@@ -33,6 +33,7 @@ class AgreementViewRoute extends React.Component {
       params: (_q, params, _r, _l, _p) => ({
         filters: `owner=${params?.id}`,
         sort: [
+          'type;asc',
           'resource.name;asc',
           'reference;asc',
           'id;asc'
