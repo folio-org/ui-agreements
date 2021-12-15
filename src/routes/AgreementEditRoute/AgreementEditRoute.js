@@ -104,11 +104,6 @@ class AgreementEditRoute extends React.Component {
       path: 'erm/refdata/AgreementRelationship/type',
       shouldRefresh: () => false,
     },
-    // settings: {
-    //   type: 'okapi',
-    //   path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
-    //   records: 'configs',
-    // },
     supplementaryProperties: {
       type: 'okapi',
       path: 'erm/custprops',

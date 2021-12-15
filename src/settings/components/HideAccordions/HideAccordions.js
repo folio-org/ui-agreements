@@ -1,4 +1,5 @@
 import React from 'react';
+import { upperFirst } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -9,6 +10,10 @@ import {
   Layout
 } from '@folio/stripes/components';
 
+import { hiddenAccordions } from '../../../constants';
+
+const hiddenAccordionsNames = Object.keys(hiddenAccordions);
+
 const HideAccordions = ({ name }) => {
   return (
     <>
@@ -17,14 +22,23 @@ const HideAccordions = ({ name }) => {
           <FormattedMessage id="ui-agreements.settings.hideAccordions.description" />
         </strong>
       </Layout>
-      <Field
-        component={Checkbox}
-        data-test-hide-accordions-usagedata
-        id="hideAccordionsUsageData"
-        label={<FormattedMessage id="ui-agreements.settings.hideAccordions.usageData" />}
-        name={`${name}.usageData`}
-        type="checkbox"
-      />
+      {hiddenAccordionsNames.map((accordion, index) => {
+        const upperAccordion = upperFirst(accordion);
+        const toLower = accordion.toLowerCase();
+        return (
+          <div key={index}>
+            <Field
+              component={Checkbox}
+              data-testid={`hide-accordions-${toLower}`}
+              id={`hideAccordions${upperAccordion}`}
+              label={<FormattedMessage id={`ui-agreements.settings.hideAccordions.${accordion}`} />}
+              name={`${name}.${accordion}`}
+              type="checkbox"
+            />
+          </div>
+        );
+      })
+      }
     </>
   );
 };
