@@ -20,6 +20,7 @@ class GeneralSettings extends React.Component {
 
   defaultValues = {
     displaySuppressFromDiscovery: { pci: true, agreementLine: true, title: true },
+    hideAccordions: { usageData: false },
     hideEResourcesFunctionality: false,
     pageSize: defaultMclPageSize.pageSize,
   }
@@ -33,7 +34,7 @@ class GeneralSettings extends React.Component {
     try {
       const value = settings.length === 0 ? '' : settings[0].value;
       loadedValues = JSON.parse(value);
-    } catch (e) {} // eslint-disable-line no-empty
+    } catch (e) { } // eslint-disable-line no-empty
     return {
       ...this.defaultValues,
       ...loadedValues,

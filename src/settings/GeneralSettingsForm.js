@@ -13,7 +13,7 @@ import {
 
 import stripesFinalForm from '@folio/stripes/final-form';
 
-import { MCLPaginationFields, SuppressFromDiscoveryFields } from './components';
+import { HideAccordions, MCLPaginationFields, SuppressFromDiscoveryFields } from './components';
 
 class GeneralSettingsForm extends React.Component {
   static propTypes = {
@@ -74,6 +74,7 @@ class GeneralSettingsForm extends React.Component {
           </Layout>
           <MCLPaginationFields />
           <SuppressFromDiscoveryFields name="displaySuppressFromDiscovery" />
+          <HideAccordions name="hideAccordions" />
         </Pane>
       </form>
     );
