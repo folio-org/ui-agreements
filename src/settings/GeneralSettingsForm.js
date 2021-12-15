@@ -59,7 +59,6 @@ class GeneralSettingsForm extends React.Component {
             id="hideEResourcesFunctionality"
             label={<FormattedMessage id="ui-agreements.settings.general.hideEResourcesFunctionality.title" />}
             name="hideEResourcesFunctionality"
-            normalize={v => !!v}
             type="checkbox"
           />
           <Layout className="padding-bottom-gutter padding-top-gutter">

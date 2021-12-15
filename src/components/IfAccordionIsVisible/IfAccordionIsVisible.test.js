@@ -3,35 +3,20 @@ import { render } from '@testing-library/react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import IfAccordionIsVisible from './IfAccordionIsVisible';
 
-const showInternalKbResource = {
-  'settings': {
-    'hasLoaded': true,
-    'isPending': false,
-    'failed': false,
-    'records': [
-      {
-        'id': '91873ed5-7672-4bdd-9507-e565929e1c22',
-        'module': 'AGREEMENTS',
-        'configName': 'general',
-        'enabled': true,
-        'value': '{"displaySuppressFromDiscovery":{"pci":true,"agreementLine":true,"title":true},"hideEResourcesFunctionality":true,"pageSize":{"agreementLines":10,"agreementEresources":10,"entitlementOptions":10,"packageContents":10,"entitlements":10}}',
-        'metadata': {
-          'createdDate': '2021-01-20T22:10:45.116+00:00',
-          'createdByUserId': '51ffbeb5-eebf-5f6c-be84-7769e3e18291',
-          'updatedDate': '2021-01-20T22:10:45.116+00:00',
-          'updatedByUserId': '51ffbeb5-eebf-5f6c-be84-7769e3e18291'
-        }
-      }
-    ],
-    'successfulMutations': [
-      {
-        'type': 'POST',
-        'record': {
+const name = 'usageData';
+const showUsagedataAccordion = {
+  'resources': {
+    'settings': {
+      'hasLoaded': true,
+      'isPending': false,
+      'failed': false,
+      'records': [
+        {
           'id': '91873ed5-7672-4bdd-9507-e565929e1c22',
           'module': 'AGREEMENTS',
           'configName': 'general',
           'enabled': true,
-          'value': '{"displaySuppressFromDiscovery":{"pci":true,"agreementLine":true,"title":true},"hideEResourcesFunctionality":false,"pageSize":{"agreementLines":10,"agreementEresources":10,"entitlementOptions":10,"packageContents":10,"entitlements":10}}',
+          'value': '{"displaySuppressFromDiscovery":{"pci":true,"agreementLine":true,"title":true},"hideAccordions":{"usageData":false},"hideEResourcesFunctionality":true,"pageSize":{"agreementLines":10,"agreementEresources":10,"entitlementOptions":10,"packageContents":10,"entitlements":10}}',
           'metadata': {
             'createdDate': '2021-01-20T22:10:45.116+00:00',
             'createdByUserId': '51ffbeb5-eebf-5f6c-be84-7769e3e18291',
@@ -39,67 +24,69 @@ const showInternalKbResource = {
             'updatedByUserId': '51ffbeb5-eebf-5f6c-be84-7769e3e18291'
           }
         }
-      }
-    ],
-    'failedMutations': [
+      ],
+      'successfulMutations': [
+        {
+          'type': 'POST',
+          'record': {
+            'id': '91873ed5-7672-4bdd-9507-e565929e1c22',
+            'module': 'AGREEMENTS',
+            'configName': 'general',
+            'enabled': true,
+            'value': '{"displaySuppressFromDiscovery":{"pci":true,"agreementLine":true,"title":true},"hideAccordions":{"usageData":false},"hideEResourcesFunctionality":false,"pageSize":{"agreementLines":10,"agreementEresources":10,"entitlementOptions":10,"packageContents":10,"entitlements":10}}',
+            'metadata': {
+              'createdDate': '2021-01-20T22:10:45.116+00:00',
+              'createdByUserId': '51ffbeb5-eebf-5f6c-be84-7769e3e18291',
+              'updatedDate': '2021-01-20T22:10:45.116+00:00',
+              'updatedByUserId': '51ffbeb5-eebf-5f6c-be84-7769e3e18291'
+            }
+          }
+        }
+      ],
+      'failedMutations': [
 
-    ],
-    'pendingMutations': [
+      ],
+      'pendingMutations': [
 
-    ],
-    'loadedAt': '2021-01-20T22:10:52.599Z',
-    'url': 'https://folio-snapshot-okapi.dev.folio.org/configurations/entries?query=(module=AGREEMENTS%20and%20configName=general)',
-    'headers': {
+      ],
+      'loadedAt': '2021-01-20T22:10:52.599Z',
+      'url': 'https://folio-snapshot-okapi.dev.folio.org/configurations/entries?query=(module=AGREEMENTS%20and%20configName=general)',
+      'headers': {
 
-    },
-    'httpStatus': 200,
-    'other': {
-      'totalRecords': 1,
-      'resultInfo': {
+      },
+      'httpStatus': 200,
+      'other': {
         'totalRecords': 1,
-        'facets': [
+        'resultInfo': {
+          'totalRecords': 1,
+          'facets': [
 
-        ],
-        'diagnostics': [
+          ],
+          'diagnostics': [
 
-        ]
-      }
-    },
-    'resource': 'settings',
-    'module': '@folio/agreements',
-    'throwErrors': true
+          ]
+        }
+      },
+      'resource': 'settings',
+      'module': '@folio/agreements',
+      'throwErrors': true
+    }
   }
 };
 
-const hideInternalKbResource = {
-  'settings': {
-    'hasLoaded': true,
-    'isPending': false,
-    'failed': false,
-    'records': [
-      {
-        'id': '91873ed5-7672-4bdd-9507-e565929e1c22',
-        'module': 'AGREEMENTS',
-        'configName': 'general',
-        'enabled': true,
-        'value': '{"displaySuppressFromDiscovery":{"pci":true,"agreementLine":true,"title":true},"hideEResourcesFunctionality":false,"pageSize":{"agreementLines":10,"agreementEresources":10,"entitlementOptions":10,"packageContents":10,"entitlements":10}}',
-        'metadata': {
-          'createdDate': '2021-01-20T22:10:45.116+00:00',
-          'createdByUserId': '51ffbeb5-eebf-5f6c-be84-7769e3e18291',
-          'updatedDate': '2021-01-20T22:10:45.116+00:00',
-          'updatedByUserId': '51ffbeb5-eebf-5f6c-be84-7769e3e18291'
-        }
-      }
-    ],
-    'successfulMutations': [
-      {
-        'type': 'POST',
-        'record': {
+const hideUsagedataAccordion = {
+  'resources': {
+    'settings': {
+      'hasLoaded': true,
+      'isPending': false,
+      'failed': false,
+      'records': [
+        {
           'id': '91873ed5-7672-4bdd-9507-e565929e1c22',
           'module': 'AGREEMENTS',
           'configName': 'general',
           'enabled': true,
-          'value': '{"displaySuppressFromDiscovery":{"pci":true,"agreementLine":true,"title":true},"hideEResourcesFunctionality":false,"pageSize":{"agreementLines":10,"agreementEresources":10,"entitlementOptions":10,"packageContents":10,"entitlements":10}}',
+          'value': '{"displaySuppressFromDiscovery":{"pci":true,"agreementLine":true,"title":true},"hideAccordions":{"usageData":true},"hideEResourcesFunctionality":false,"pageSize":{"agreementLines":10,"agreementEresources":10,"entitlementOptions":10,"packageContents":10,"entitlements":10}}',
           'metadata': {
             'createdDate': '2021-01-20T22:10:45.116+00:00',
             'createdByUserId': '51ffbeb5-eebf-5f6c-be84-7769e3e18291',
@@ -107,42 +94,70 @@ const hideInternalKbResource = {
             'updatedByUserId': '51ffbeb5-eebf-5f6c-be84-7769e3e18291'
           }
         }
-      }
-    ],
-    'failedMutations': [
+      ],
+      'successfulMutations': [
+        {
+          'type': 'POST',
+          'record': {
+            'id': '91873ed5-7672-4bdd-9507-e565929e1c22',
+            'module': 'AGREEMENTS',
+            'configName': 'general',
+            'enabled': true,
+            'value': '{"displaySuppressFromDiscovery":{"pci":true,"agreementLine":true,"title":true},"hideAccordions":{"usageData":true},,"hideEResourcesFunctionality":false,"pageSize":{"agreementLines":10,"agreementEresources":10,"entitlementOptions":10,"packageContents":10,"entitlements":10}}',
+            'metadata': {
+              'createdDate': '2021-01-20T22:10:45.116+00:00',
+              'createdByUserId': '51ffbeb5-eebf-5f6c-be84-7769e3e18291',
+              'updatedDate': '2021-01-20T22:10:45.116+00:00',
+              'updatedByUserId': '51ffbeb5-eebf-5f6c-be84-7769e3e18291'
+            }
+          }
+        }
+      ],
+      'failedMutations': [
 
-    ],
-    'pendingMutations': [
+      ],
+      'pendingMutations': [
 
-    ],
-    'loadedAt': '2021-01-20T22:10:52.599Z',
-    'url': 'https://folio-snapshot-okapi.dev.folio.org/configurations/entries?query=(module=AGREEMENTS%20and%20configName=general)',
-    'headers': {
+      ],
+      'loadedAt': '2021-01-20T22:10:52.599Z',
+      'url': 'https://folio-snapshot-okapi.dev.folio.org/configurations/entries?query=(module=AGREEMENTS%20and%20configName=general)',
+      'headers': {
 
-    },
-    'httpStatus': 200,
-    'other': {
-      'totalRecords': 1,
-      'resultInfo': {
+      },
+      'httpStatus': 200,
+      'other': {
         'totalRecords': 1,
-        'facets': [
+        'resultInfo': {
+          'totalRecords': 1,
+          'facets': [
 
-        ],
-        'diagnostics': [
+          ],
+          'diagnostics': [
 
-        ]
-      }
-    },
-    'resource': 'settings',
-    'module': '@folio/agreements',
-    'throwErrors': true
+          ]
+        }
+      },
+      'resource': 'settings',
+      'module': '@folio/agreements',
+      'throwErrors': true
+    }
   }
+};
+
+const showProps = {
+  name,
+  ...showUsagedataAccordion
+};
+
+const hideProps = {
+  name,
+  ...hideUsagedataAccordion
 };
 
 describe('IfAccordionIsVisible', () => {
-  test('should not render children when internal kb set to true', () => {
+  test('should not render children when hide usageData accordion set to true', () => {
     const { queryByText } = render(
-      <IfAccordionIsVisible resources={showInternalKbResource}>
+      <IfAccordionIsVisible {...hideProps}>
         <div>Child</div>
       </IfAccordionIsVisible>
     );
@@ -150,9 +165,9 @@ describe('IfAccordionIsVisible', () => {
     expect(queryByText('Child')).not.toBeInTheDocument();
   });
 
-  test('should not render children when hide internal kb set to false', () => {
+  test('should render children when hide usageData accordion set to false', () => {
     const { queryByText } = render(
-      <IfAccordionIsVisible resources={hideInternalKbResource}>
+      <IfAccordionIsVisible {...showProps}>
         <div>Child</div>
       </IfAccordionIsVisible>
     );
@@ -160,9 +175,9 @@ describe('IfAccordionIsVisible', () => {
     expect(queryByText('Child')).toBeInTheDocument();
   });
 
-  test('should not render children when internal kb set to true', () => {
+  test('should not render children passed as a function when hide usageData accordion set to true', () => {
     const { queryByText } = render(
-      <IfAccordionIsVisible resources={showInternalKbResource}>
+      <IfAccordionIsVisible {...hideProps}>
         {({ isEnabled }) => (isEnabled ? (<div>Child</div>) : null)}
       </IfAccordionIsVisible>
     );
@@ -170,9 +185,9 @@ describe('IfAccordionIsVisible', () => {
     expect(queryByText('Child')).not.toBeInTheDocument();
   });
 
-  test('should not render children passed as a function when hide internal kb set to false', () => {
+  test('should render children passed as a function when hide usageData accordion set to false', () => {
     const { queryByText } = render(
-      <IfAccordionIsVisible resources={hideInternalKbResource}>
+      <IfAccordionIsVisible {...showProps}>
         {({ isEnabled }) => (isEnabled ? (<div>Child</div>) : null)}
       </IfAccordionIsVisible>
     );

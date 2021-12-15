@@ -26,7 +26,7 @@ class IfAccordionIsVisible extends React.Component {
   isHidden = () => {
     const { settings = {} } = this.props.resources;
     const parsedSettings = JSON.parse(settings?.records?.[0]?.value || '{}');
-    return parsedSettings.hideAccordions?.[this.props.name];
+    return parsedSettings.hideAccordions?.[this.props.name] || false;
   }
 
   render() {

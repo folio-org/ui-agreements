@@ -9,7 +9,7 @@ import HideAccordions from './HideAccordions';
 const onSubmit = jest.fn();
 
 const initialValues = {
-  displaySuppressFromDiscovery: { pci: true, agreementLine: true, title: true },
+  hideAccordions: { usageData: true },
 };
 
 describe('HideAccordions', () => {
@@ -20,7 +20,7 @@ describe('HideAccordions', () => {
         <TestForm onSubmit={onSubmit}>
           <MemoryRouter>
             <HideAccordions
-              name="displaySuppressFromDiscovery"
+              name="hideAccordions"
             />
           </MemoryRouter>
         </TestForm>,
@@ -30,31 +30,15 @@ describe('HideAccordions', () => {
 
     test('renders expected heading', () => {
       const { getByText } = renderComponent;
-      expect(getByText('Display "Suppress from discovery" setting on')).toBeInTheDocument();
+      expect(getByText('Hide accordions in agreement edit view')).toBeInTheDocument();
     });
 
-    test('renders the "Agreement lines" checkbox', async () => {
-      await Checkbox({ id: 'displaySuppressFromDiscoveryAgreementLine' }).exists();
+    test('renders the "Usage data" checkbox', async () => {
+      await Checkbox({ id: 'hideAccordionsUsageData' }).exists();
     });
 
-    test('renders the "Agreement lines" checkbox as not checked', async () => {
-      await Checkbox({ id: 'displaySuppressFromDiscoveryAgreementLine' }).is({ checked: false });
-    });
-
-    test('renders the "Titles in packages" checkbox', async () => {
-      await Checkbox({ id: 'displaySuppressFromDiscoveryPCI' }).exists();
-    });
-
-    test('renders the "Titles in packages" checkbox as not checked', async () => {
-      await Checkbox({ id: 'displaySuppressFromDiscoveryPCI' }).is({ checked: false });
-    });
-
-    test('renders the "Titles" checkbox', async () => {
-      await Checkbox({ id: 'displaySuppressFromDiscoveryTitle' }).exists();
-    });
-
-    test('renders the "Titles" checkbox as not checked', async () => {
-      await Checkbox({ id: 'displaySuppressFromDiscoveryTitle' }).is({ checked: false });
+    test('renders the "Usage data" checkbox as not checked', async () => {
+      await Checkbox({ id: 'hideAccordionsUsageData' }).is({ checked: false });
     });
   });
 
@@ -64,7 +48,7 @@ describe('HideAccordions', () => {
         <TestForm initialValues={initialValues} onSubmit={onSubmit}>
           <MemoryRouter>
             <HideAccordions
-              name="displaySuppressFromDiscovery"
+              name="hideAccordions"
             />
           </MemoryRouter>
         </TestForm>,
@@ -74,31 +58,15 @@ describe('HideAccordions', () => {
 
     test('renders expected heading', () => {
       const { getByText } = renderComponent;
-      expect(getByText('Display "Suppress from discovery" setting on')).toBeInTheDocument();
+      expect(getByText('Hide accordions in agreement edit view')).toBeInTheDocument();
     });
 
-    test('renders the "Agreement lines" checkbox', async () => {
-      await Checkbox({ id: 'displaySuppressFromDiscoveryAgreementLine' }).exists();
+    test('renders the "Usage data" checkbox', async () => {
+      await Checkbox({ id: 'hideAccordionsUsageData' }).exists();
     });
 
-    test('renders the "Agreement lines" checkbox as checked', async () => {
-      await Checkbox({ id: 'displaySuppressFromDiscoveryAgreementLine' }).is({ checked: true });
-    });
-
-    test('renders the "Titles in packages" checkbox', async () => {
-      await Checkbox({ id: 'displaySuppressFromDiscoveryPCI' }).exists();
-    });
-
-    test('renders the "Titles in packages" checkbox as checked', async () => {
-      await Checkbox({ id: 'displaySuppressFromDiscoveryPCI' }).is({ checked: true });
-    });
-
-    test('renders the "Titles" checkbox', async () => {
-      await Checkbox({ id: 'displaySuppressFromDiscoveryTitle' }).exists();
-    });
-
-    test('renders the "Titles" checkbox as checked', async () => {
-      await Checkbox({ id: 'displaySuppressFromDiscoveryTitle' }).is({ checked: true });
+    test('renders the "Usage data" checkbox as checked', async () => {
+      await Checkbox({ id: 'hideAccordionsUsageData' }).is({ checked: true });
     });
   });
 });
