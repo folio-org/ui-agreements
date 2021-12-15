@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { useAcqMethods } from '@folio/orders/src/common/hooks/useAcqMethods/useAcqMethods';
 import { Link } from 'react-router-dom';
 import {
   Card,
@@ -11,11 +9,9 @@ import {
   NoValue,
   Row,
 } from '@folio/stripes/components';
-import { AppIcon } from '@folio/stripes/core';
-import { getTranslatedAcqMethod } from '../utilities/getTranslatedAcqMethod';
-import { urls } from '../utilities';
 
-const invalidAcqMethod = <FormattedMessage id="ui-orders.acquisitionMethod.invalid" />;
+import { AppIcon } from '@folio/stripes/core';
+import { urls, useAcqMethods, getTranslatedAcqMethod } from '../utilities';
 
 const propTypes = {
   children: PropTypes.node,
@@ -37,9 +33,10 @@ const POLineCard = ({
   poLine,
 }) => {
   const { acqMethods, isLoading } = useAcqMethods(poLine.acquisitionMethod);
+
   const translatedAcqMethod = (!isLoading && acqMethods[0])
     ? getTranslatedAcqMethod(acqMethods[0].value)
-    : invalidAcqMethod;
+    : poLine.acquisitionMethod;
 
  return (
    <Card

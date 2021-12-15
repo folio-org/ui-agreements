@@ -1,12 +1,10 @@
-/* eslint-disable import/prefer-default-export */
-import { invert } from 'lodash';
+import invert from 'lodash/invert';
 import { FormattedMessage } from 'react-intl';
 
 import { ACQUISITION_METHOD } from '@folio/stripes-acq-components';
 
-export const getTranslatedAcqMethod = (value) => {
+export const getTranslatedAcqMethod = (value = []) => {
   const acqMethodsMap = invert(ACQUISITION_METHOD);
-
   return (
     <FormattedMessage
       defaultMessage={value}
@@ -14,3 +12,5 @@ export const getTranslatedAcqMethod = (value) => {
     />
   );
 };
+
+export default getTranslatedAcqMethod;
