@@ -30,7 +30,7 @@
     "@bigtest/interactor": "^0.9.3",
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
-    "@folio/eslint-config-stripes": "^5.2.0",
+    "@folio/eslint-config-stripes": "^6.0.0",
     "@folio/stripes": "^7.0.0",
     "@folio/stripes-cli": "^2.3.0",
     "@folio/stripes-testing": "^4.0.0",
