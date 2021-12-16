@@ -1,4 +1,5 @@
 import { useQuery } from 'react-query';
+
 import { useOkapiKy } from '@folio/stripes/core';
 
 import {
@@ -6,7 +7,7 @@ import {
   LIMIT_MAX,
 } from '@folio/stripes-acq-components';
 
-export default function useAcqMethods(methodId) {
+export const useAcqMethods = (methodId) => {
   const ky = useOkapiKy();
   const searchParams = {
     type: 'okapi',
@@ -26,5 +27,6 @@ export default function useAcqMethods(methodId) {
     acqMethods: (methodId ? [data] : data?.acquisitionMethods) ?? [],
     isLoading,
   });
-}
+};
 
+export default useAcqMethods;
