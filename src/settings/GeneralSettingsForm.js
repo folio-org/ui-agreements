@@ -13,7 +13,7 @@ import {
 
 import stripesFinalForm from '@folio/stripes/final-form';
 
-import { MCLPaginationFields, SuppressFromDiscoveryFields } from './components';
+import { HideAccordions, MCLPaginationFields, SuppressFromDiscoveryFields } from './components';
 
 class GeneralSettingsForm extends React.Component {
   static propTypes = {
@@ -59,7 +59,6 @@ class GeneralSettingsForm extends React.Component {
             id="hideEResourcesFunctionality"
             label={<FormattedMessage id="ui-agreements.settings.general.hideEResourcesFunctionality.title" />}
             name="hideEResourcesFunctionality"
-            normalize={v => !!v}
             type="checkbox"
           />
           <Layout className="padding-bottom-gutter padding-top-gutter">
@@ -74,6 +73,7 @@ class GeneralSettingsForm extends React.Component {
           </Layout>
           <MCLPaginationFields />
           <SuppressFromDiscoveryFields name="displaySuppressFromDiscovery" />
+          <HideAccordions name="hideAccordions" />
         </Pane>
       </form>
     );

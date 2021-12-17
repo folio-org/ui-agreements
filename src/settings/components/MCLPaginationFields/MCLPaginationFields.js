@@ -10,7 +10,9 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-const mclList = ['agreementLines', 'agreementEresources', 'entitlementOptions', 'packageContents', 'entitlements'];
+import { defaultMclPageSize } from '../../../constants';
+
+const mclList = Object.keys(defaultMclPageSize.pageSize);
 
 const inRange = (x, min, max) => {
   return ((x - min) * (x - max) <= 0);
@@ -33,7 +35,7 @@ const MCLPaginationFields = () => {
           <Col xs={4}> <FormattedMessage id="ui-agreements.settings.mcl.pageSize" /> </Col>
         </Row>
       </Layout>
-      { mclList.map((mcl, index) => (
+      {mclList.map((mcl, index) => (
         <div key={index}>
           <Row>
             <Col
@@ -57,7 +59,7 @@ const MCLPaginationFields = () => {
           </Row>
         </div>
       ))
-    }
+      }
     </>
   );
 };
