@@ -26,6 +26,11 @@ jest.mock('../../AgreementSections/FormSupplementaryDocuments', () => () => <div
 jest.mock('../../AgreementSections/FormSupplementaryProperties', () => () => <div>FormSupplementaryProperties</div>);
 jest.mock('../../AgreementSections/FormUsageData', () => () => <div>FormUsageData</div>);
 
+jest.mock('../../IfAccordionIsVisible', () => ({ children }) => {
+  return typeof children === 'function' ? children({ isEnabled: false }) : children;
+});
+
+
 describe('AgreementForm', () => {
   describe('with no initial values', () => {
     let renderComponent;
