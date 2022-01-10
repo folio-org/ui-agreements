@@ -1,11 +1,13 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { render } from '@testing-library/react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { render, screen } from '@testing-library/react';
+import translationsProperties from '../../../test/helpers';
 import POLineCard from './POLineCard';
 
+const data = {};
 const queryClient = new QueryClient();
-const acquisitionMethod = [];
+
 // eslint-disable-next-line react/prop-types
 const wrapper = ({ children }) => (
   <QueryClientProvider client={queryClient}>
@@ -13,22 +15,22 @@ const wrapper = ({ children }) => (
   </QueryClientProvider>
 );
 
-const renderPOLineCard = (data) => render(
+const renderPOLineCard = (props = {}) => render(
   <POLineCard
-    acquisitionMethod={acquisitionMethod}
-    {...data}
+    poLine={data}
+    {...props}
   />,
   { wrapper },
+  translationsProperties
 );
 
 describe('POLineCard', () => {
-  it('should render \'POLine Card\' view', async () => {
+  let renderComponent;
+  it('should render POLine card', () => {
     renderPOLineCard();
-    screen.debug();
-
-    expect(screen.getByText('ui-agreements.poLines.poLineWithNumber')).toBeInTheDocument();
-    expect(screen.getByText('ui-agreements.poLines.acqMethod')).toBeInTheDocument();
-    expect(screen.getByText('ui-agreements.poLines.title')).toBeInTheDocument();
-    expect(screen.getByText('ui-agreements.poLines.viewInInventory')).toBeInTheDocument();
+    const { getByText } = renderComponent;
+    expect(getByText('Acquisition method')).toBeInTheDocument();
+    expect(getByText('Title in PO line')).toBeInTheDocument();
+    expect(getByText('View in inventory')).toBeInTheDocument();
   });
 });

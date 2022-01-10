@@ -11,12 +11,14 @@ import {
 } from '@folio/stripes/components';
 
 import { AppIcon } from '@folio/stripes/core';
+
 import { urls, useAcqMethods, getTranslatedAcqMethod } from '../utilities';
 
 const propTypes = {
   children: PropTypes.node,
   headerEnd: PropTypes.node,
   id: PropTypes.string,
+   acquisitionMethod: PropTypes.string,
   poLine: PropTypes.shape({
     acquisitionMethod: PropTypes.string,
     id: PropTypes.string,
