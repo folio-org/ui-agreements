@@ -38,6 +38,8 @@ import {
   FormUsageData,
 } from '../../AgreementSections';
 
+import IfAccordionIsVisible from '../../IfAccordionIsVisible';
+
 class AgreementForm extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
@@ -246,7 +248,9 @@ class AgreementForm extends React.Component {
                           null
                         }
                         <FormSupplementaryDocuments {...this.getSectionProps('formSupplementaryDocs')} />
-                        <FormUsageData {...this.getSectionProps('formUsageProviders')} />
+                        <IfAccordionIsVisible name="usageData">
+                          <FormUsageData {...this.getSectionProps('formUsageProviders')} />
+                        </IfAccordionIsVisible>
                         <FormRelatedAgreements {...this.getSectionProps('formRelatedAgreements')} />
                       </AccordionSet>
                     </AccordionStatus>
