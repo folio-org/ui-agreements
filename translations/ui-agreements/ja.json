@@ -321,7 +321,7 @@
     "supplementaryProperties.callout.delete.success": "補足プロパティが正常に削除されました。",
     "supplementaryProperties.callout.save.error": "補足プロパティの保存中にエラーが発生しました。 {error}",
     "supplementaryProperties.callout.save.success": "補足プロパティが正常に保存されました。",
-    "supplementaryProperties.callout.delete.supplementaryPropertyInUse": "<strong>補足プロパティ</strong>は、1つ以上の契約で使用されているため削除されませんでした。",
+    "supplementaryProperties.callout.delete.supplementaryPropertyInUse": "<strong>{supplementaryPropertyName}</strong>は、1つ以上の契約で使用されているため削除されませんでした。",
     "supplementaryProperties.optionalProperties": "オプションのプロパティ",
     "supplementaryProperties.primaryProperties": "Primary properties",
     "section.supplementaryProperties": "補足プロパティ",

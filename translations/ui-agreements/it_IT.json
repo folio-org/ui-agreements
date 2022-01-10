@@ -321,7 +321,7 @@
     "supplementaryProperties.callout.delete.success": "Proprietà supplementare eliminata con successo.",
     "supplementaryProperties.callout.save.error": "Si è verificato un errore durante il salvataggio della proprietà supplementare. {error}",
     "supplementaryProperties.callout.save.success": "Proprietà supplementare salvata correttamente.",
-    "supplementaryProperties.callout.delete.supplementaryPropertyInUse": "La <strong>proprietà supplementare</strong> non è stata eliminata perché è in uso su uno o più contratti.",
+    "supplementaryProperties.callout.delete.supplementaryPropertyInUse": "La <strong>{supplementaryPropertyName}</strong> non è stata eliminata perché è in uso su uno o più contratti.",
     "supplementaryProperties.optionalProperties": "Proprietà opzionali",
     "supplementaryProperties.primaryProperties": "Proprietà principali",
     "section.supplementaryProperties": "Proprietà supplementari",
