@@ -37,11 +37,11 @@ describe('Info', () => {
     });
 
     test('displays agreement line activeFrom date', async () => {
-      await KeyValue('Active from').has({ value: '2021-08-04' });
+      await KeyValue('Active from').has({ value: '8/4/2021' });
     });
 
     test('displays agreement line activeTo date', async () => {
-      await KeyValue('Active to').has({ value: '2021-08-28' });
+      await KeyValue('Active to').has({ value: '8/28/2021' });
     });
 
     test('displays agreement line suppressFromDiscovery', async () => {
@@ -92,11 +92,11 @@ describe('Info', () => {
     });
 
     test('displays agreement line activeFrom date', async () => {
-      await KeyValue('Active from').has({ value: '2021-09-01' });
+      await KeyValue('Active from').has({ value: '9/1/2021' });
     });
 
     test('displays agreement line activeTo date', async () => {
-      await KeyValue('Active to').has({ value: '2021-09-30' });
+      await KeyValue('Active to').has({ value: '9/30/2021' });
     });
 
     test('displays agreement line suppressFromDiscovery', async () => {
