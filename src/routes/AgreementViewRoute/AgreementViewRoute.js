@@ -81,7 +81,7 @@ class AgreementViewRoute extends React.Component {
           ...new Set(interfaces.map(i => `id==${i}`))
         ].join(' or ');
 
-        return query ? { query } : null;
+        return query ? { query } : {};
       },
       fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '2.0'),
       permissionsRequired: 'organizations-storage.interfaces.collection.get',
