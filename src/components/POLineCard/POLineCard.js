@@ -11,8 +11,8 @@ import {
 } from '@folio/stripes/components';
 
 import { AppIcon } from '@folio/stripes/core';
-
-import { urls, useAcqMethods, getTranslatedAcqMethod } from '../utilities';
+import { useAcqMethods } from '../../hooks/index';
+import { urls, getTranslatedAcqMethod } from '../utilities';
 
 const propTypes = {
   children: PropTypes.node,
@@ -74,14 +74,14 @@ const POLineCard = ({
              </div>
            </KeyValue>
            {poLine?.instanceId &&
-           <AppIcon app="inventory" iconKey="instance" size="small">
-             <Link
-               data-test-po-line-view-in-inventory
-               to={urls.viewInstance(poLine.instanceId)}
-             >
-               <FormattedMessage id="ui-agreements.poLines.viewInInventory" />
-             </Link>
-           </AppIcon>
+             <AppIcon app="inventory" iconKey="instance" size="small">
+               <Link
+                 data-test-po-line-view-in-inventory
+                 to={urls.viewInstance(poLine.instanceId)}
+               >
+                 <FormattedMessage id="ui-agreements.poLines.viewInInventory" />
+               </Link>
+             </AppIcon>
           }
          </Col>
        </Row>

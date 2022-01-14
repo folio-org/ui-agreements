@@ -1,5 +1,4 @@
 import { useQuery } from 'react-query';
-
 import { useOkapiKy } from '@folio/stripes/core';
 
 import {
@@ -24,7 +23,7 @@ export const useAcqMethods = (methodId) => {
   );
 
   return ({
-    acqMethods: (methodId ? [data] : data?.acquisitionMethods) ?? [],
+    acqMethods: (methodId ? [data] : data?.acqMethod) ?? [],
     isLoading,
   });
 };

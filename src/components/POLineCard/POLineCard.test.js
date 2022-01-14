@@ -5,6 +5,12 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 import translationsProperties from '../../../test/helpers';
 import POLineCard from './POLineCard';
 
+// jest.mock('@folio/stripes/core', () => ({
+//   ...jest.requireActual('@folio/stripes/core'),
+//   useNamespace: () => ['namespace'],
+//   useOkapiKy: jest.fn(),
+// }));
+
 const data = {};
 const queryClient = new QueryClient();
 

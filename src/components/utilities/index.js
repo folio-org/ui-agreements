@@ -9,7 +9,6 @@ export { default as urls } from './urls';
 export { default as validators } from './validators';
 export { default as parseMclPageSize } from './parseMclPageSize';
 export { default as getTranslatedAcqMethod } from './getTranslatedAcqMethod';
-export { default as useAcqMethods } from './useAcqMethods';
 
 
 
