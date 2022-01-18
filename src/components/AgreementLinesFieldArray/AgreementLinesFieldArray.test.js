@@ -7,6 +7,7 @@ import AgreementLinesFieldArray from './AgreementLinesFieldArray';
 
 import translationsProperties from '../../../test/helpers';
 
+// eslint-disable-next-line react/prop-types
 jest.mock('../IfEResourcesEnabled', () => ({ children }) => <>{children}</>);
 jest.mock('./AgreementLineField', () => () => <div>AgreementLineField</div>);
 

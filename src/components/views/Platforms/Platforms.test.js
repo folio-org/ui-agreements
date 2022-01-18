@@ -8,6 +8,7 @@ import translationsProperties from '../../../../test/helpers';
 import data from './testResources';
 import Platforms from './Platforms';
 
+// eslint-disable-next-line react/prop-types
 jest.mock('../../IfEResourcesEnabled', () => ({ children }) => <>{children}</>);
 
 const mockSubmit = jest.fn();
