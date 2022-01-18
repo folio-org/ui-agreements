@@ -7,6 +7,7 @@ import translationsProperties from '../../../../test/helpers';
 import CoveredEResourcesList from './CoveredEResourcesList';
 import agreement from './testResources';
 
+// eslint-disable-next-line react/prop-types
 jest.mock('../../IfEResourcesEnabled', () => ({ children }) => <>{children}</>);
 
 const handlers = {
