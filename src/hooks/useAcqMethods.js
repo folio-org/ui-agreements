@@ -23,7 +23,7 @@ export const useAcqMethods = (methodId) => {
   );
 
   return ({
-    acqMethods: (methodId ? [data] : data?.acqMethod) ?? [],
+    acqMethods: (methodId ? [data] : data?.acquisitionMethods) ?? [],
     isLoading,
   });
 };

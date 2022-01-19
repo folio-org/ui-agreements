@@ -11,7 +11,7 @@ import {
 } from '@folio/stripes/components';
 
 import { AppIcon } from '@folio/stripes/core';
-import { useAcqMethods } from '../../hooks/index';
+import useAcqMethods from '../../hooks/index';
 import { urls, getTranslatedAcqMethod } from '../utilities';
 
 const propTypes = {
@@ -22,7 +22,7 @@ const propTypes = {
   poLine: PropTypes.shape({
     acquisitionMethod: PropTypes.string,
     id: PropTypes.string,
-    instanceId: PropTypes.any.string,
+    instanceId: PropTypes.string,
     poLineNumber: PropTypes.string,
     titleOrPackage: PropTypes.string,
   }).isRequired,

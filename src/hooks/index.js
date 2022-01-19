@@ -1,1 +1,2 @@
-export { useAcqMethods } from './useAcqMethods';
+export { default } from './useAcqMethods';
+
