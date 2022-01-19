@@ -8,6 +8,7 @@ import translationsProperties from '../../../../test/helpers';
 import data from './testResources';
 import Platforms from './Platforms';
 
+
 jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
   return typeof children === 'function' ? children({ isEnabled: true }) : children;
 });

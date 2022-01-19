@@ -8,9 +8,11 @@ import translationsProperties from '../../../../test/helpers';
 import Agreements from './Agreements';
 import data from './testResources';
 
+
 jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
   return typeof children === 'function' ? children({ isEnabled: true }) : children;
 });
+
 jest.mock('../../AgreementFilters', () => () => <div>AgreementFilters</div>);
 
 const mockSubmit = jest.fn();
