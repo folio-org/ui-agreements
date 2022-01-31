@@ -556,5 +556,15 @@
     "relatedAgreements.linkToParentError": "<strong>错误： </strong>协议“ {agreement} ”未链接，因为协议无法与其自身链接。",
     "agreements.editAgreement.name": "编辑协议 - {name}",
     "duplicateAgreementModal.supplementaryDocuments": "补充文档",
-    "duplicateAgreementModal.supplementaryProperties": "补充属性"
+    "duplicateAgreementModal.supplementaryProperties": "补充属性",
+    "settings.hideAccordions.description": "在协议编辑视图中折叠隐藏",
+    "settings.hideAccordions.usageData": "使用数据",
+    "settings.appSettings": "应用设置",
+    "settings.settingsSection.fileStorage": "文件存储",
+    "settings.fileStorage.s3AccessKey": "S3访问密钥",
+    "settings.fileStorage.s3BucketName": "S3存储桶名称",
+    "settings.fileStorage.s3Endpoint": "S3端点",
+    "settings.fileStorage.s3ObjectPrefix": "S3对象前缀",
+    "settings.fileStorage.s3SecretKey": "S3密钥",
+    "settings.fileStorage.storageEngine": "存储引擎"
 }
