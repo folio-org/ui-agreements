@@ -556,5 +556,15 @@
     "relatedAgreements.linkToParentError": "<strong>خطأ:</strong> لم يتم ربط الاتفاقية \"{agreement}\" لأنه لا يمكن ربط اتفاقية بنفسها.",
     "agreements.editAgreement.name": "تحرير الاتفاقية - {name}",
     "duplicateAgreementModal.supplementaryDocuments": "مستندات تكميلية",
-    "duplicateAgreementModal.supplementaryProperties": "خصائص تكميلية"
+    "duplicateAgreementModal.supplementaryProperties": "خصائص تكميلية",
+    "settings.hideAccordions.description": "إخفاء الأبواب في عرض تحرير الاتفاقية",
+    "settings.hideAccordions.usageData": "بيانات الاستخدام",
+    "settings.appSettings": "إعدادات التطبيق",
+    "settings.settingsSection.fileStorage": "تخزين الملفات",
+    "settings.fileStorage.s3AccessKey": "مفتاح وصول S3",
+    "settings.fileStorage.s3BucketName": "اسم حاوية S3",
+    "settings.fileStorage.s3Endpoint": "نقطة نهاية S3",
+    "settings.fileStorage.s3ObjectPrefix": "بادئة كائن S3",
+    "settings.fileStorage.s3SecretKey": "مفتاح سر S3",
+    "settings.fileStorage.storageEngine": "محرك التخزين"
 }
