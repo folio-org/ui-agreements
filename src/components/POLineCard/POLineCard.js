@@ -11,7 +11,7 @@ import {
 } from '@folio/stripes/components';
 
 import { AppIcon } from '@folio/stripes/core';
-import useAcqMethods from '../../hooks/index';
+import { useAcqMethods } from '../../hooks/useAcqMethods';
 import { urls, getTranslatedAcqMethod } from '../utilities';
 
 const propTypes = {
