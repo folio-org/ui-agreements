@@ -75,30 +75,25 @@ describe('AgreementForm', () => {
       expect(getByText('FormLines')).toBeInTheDocument();
     });
 
-
     it('renders the FormOrganizations component', () => {
       const { getByText } = renderComponent;
       expect(getByText('FormOrganizations')).toBeInTheDocument();
     });
-
 
     it('renders the FormRelatedAgreements component', () => {
       const { getByText } = renderComponent;
       expect(getByText('FormRelatedAgreements')).toBeInTheDocument();
     });
 
-
     it('renders the FormSupplementaryDocuments component', () => {
       const { getByText } = renderComponent;
       expect(getByText('FormSupplementaryDocuments')).toBeInTheDocument();
     });
 
-
     it('renders the FormSupplementaryProperties component', () => {
       const { getByText } = renderComponent;
       expect(getByText('FormSupplementaryProperties')).toBeInTheDocument();
     });
-
 
     it('renders the FormUsageData component', () => {
       const { getByText } = renderComponent;
@@ -150,30 +145,25 @@ describe('AgreementForm', () => {
       expect(getByText('FormLines')).toBeInTheDocument();
     });
 
-
     it('renders the FormOrganizations component', () => {
       const { getByText } = renderComponent;
       expect(getByText('FormOrganizations')).toBeInTheDocument();
     });
-
 
     it('renders the FormRelatedAgreements component', () => {
       const { getByText } = renderComponent;
       expect(getByText('FormRelatedAgreements')).toBeInTheDocument();
     });
 
-
     it('renders the FormSupplementaryDocuments component', () => {
       const { getByText } = renderComponent;
       expect(getByText('FormSupplementaryDocuments')).toBeInTheDocument();
     });
 
-
     it('renders the FormSupplementaryProperties component', () => {
       const { getByText } = renderComponent;
       expect(getByText('FormSupplementaryProperties')).toBeInTheDocument();
     });
-
 
     it('renders the FormUsageData component', () => {
       const { getByText } = renderComponent;

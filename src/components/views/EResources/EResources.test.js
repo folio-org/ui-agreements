@@ -8,8 +8,11 @@ import translationsProperties from '../../../../test/helpers';
 import EResources from './EResources';
 import data from './testResources';
 
-// eslint-disable-next-line react/prop-types
-jest.mock('../../IfEResourcesEnabled', () => ({ children }) => <>{children}</>);
+
+jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
+  return typeof children === 'function' ? children({ isEnabled: true }) : children;
+});
+
 jest.mock('../../EResourceFilters', () => () => <div>AgreementFilters</div>);
 
 const mockSubmit = jest.fn();
