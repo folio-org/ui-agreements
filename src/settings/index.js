@@ -11,6 +11,8 @@ import {
   PickListValueSettings
 } from './routes';
 
+import { CustomPropertiesSettings } from '@k-int/stripes-kint-components';
+
 const REFDATA_ENDPOINT = 'erm/refdata';
 const SETTINGS_ENDPOINT = 'erm/settings/appSettings';
 
@@ -38,6 +40,12 @@ const ErmSettings = (props) => {
           label: <FormattedMessage id="ui-agreements.settings.supplementaryProperties" />,
           perm: 'ui-agreements.supplementaryProperties.manage',
           route: 'supplementaryProperties',
+        },
+        {
+          component: CustomPropertiesSettings,
+          label: <FormattedMessage id="ui-agreements.settings.supplementaryProperties" />,
+          perm: 'ui-agreements.supplementaryProperties.manage',
+          route: 'customProperties',
         },
       ]
     },
