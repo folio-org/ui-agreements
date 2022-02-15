@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Settings } from '@folio/stripes/smart-components';
-import { useSettings } from '@k-int/stripes-kint-components';
+import { CustomPropertiesSettings, useSettings } from '@k-int/stripes-kint-components';
 
 import GeneralSettings from './GeneralSettings';
 
@@ -10,8 +10,6 @@ import {
   PickListSettings,
   PickListValueSettings
 } from './routes';
-
-import { CustomPropertiesSettings } from '@k-int/stripes-kint-components';
 
 const REFDATA_ENDPOINT = 'erm/refdata';
 const SETTINGS_ENDPOINT = 'erm/settings/appSettings';
