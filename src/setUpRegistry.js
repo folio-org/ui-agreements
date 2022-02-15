@@ -22,6 +22,10 @@ const setUpRegistry = (registry) => {
   // AgreementLine Resource
   const aglReg = registry.registerResource('agreementLine');
   aglReg.setViewResource(al => `/erm/agreements/${al.owner?.id}/line/${al.id}`);
+
+  // ErmPackage Resource
+  const ermPkgReg = registry.registerResource('ermPackage');
+  ermPkgReg.setViewResource(pkg => `/erm/eresources/${pkg.id}`);
 };
 
 export default setUpRegistry;
