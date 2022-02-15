@@ -147,6 +147,7 @@
   "agreementPeriods.periodNote": "Period note",
   "agreementPeriods.periodStart": "Period start",
   "agreementPeriods.periodTitle": "Agreement period {number}",
+  "eresource.moveIdentifier": "Move identifier(s)",
   "warn.clearReasonForClosure": "This reason will be cleared as status is not closed",
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
   "basket.name": "ERM basket",
