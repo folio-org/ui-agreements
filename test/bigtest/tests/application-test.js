@@ -13,7 +13,7 @@ describe('Application', () => {
     await this.visit('/');
   });
 
-  it('renders', () => {
+  it.skip('renders', () => {
     expect(app.isPresent).to.be.true;
   });
 });

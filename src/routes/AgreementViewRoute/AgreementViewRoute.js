@@ -43,7 +43,6 @@ class AgreementViewRoute extends React.Component {
       }),
       records: 'results',
       accumulate: 'true',
-      fetch: false,
       resultOffset: (_q, _p, _r, _l, props) => {
         const { match, resources } = props;
         const resultOffset = resources?.agreementLinesOffset;
@@ -228,6 +227,10 @@ class AgreementViewRoute extends React.Component {
 
   async componentDidUpdate(prevProps) {
     const { mutator } = this.props;
+    if (prevProps?.resources?.agreementLines?.records?.length !== this.props?.resources?.agreementLines?.records?.length) {
+      await this.fetchOrderLines();
+    }
+
     if (prevProps?.resources?.agreement?.records?.[0]?.id !== this.props?.resources?.agreement?.records?.[0]?.id) {
       mutator.agreementEresourcesOffset.replace(0);
       mutator.agreementLinesOffset.replace(0);
@@ -236,8 +239,7 @@ class AgreementViewRoute extends React.Component {
   }
 
   async fetchOrderLines() {
-    this.props.mutator.agreementLines.reset();
-    const lines = await this.props.mutator.agreementLines.GET();
+    const lines = this.props.resources?.agreementLines?.records ?? [];
     const poLineIdsArray = (lines ?? [])
       .filter(line => line.poLines && line.poLines.length)
       .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat();

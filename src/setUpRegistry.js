@@ -1,4 +1,4 @@
-import { InternalContactsArrayDisplay } from '@folio/stripes-erm-components';
+import { InternalContactsArrayDisplay, OrganizationsArrayDisplay } from '@folio/stripes-erm-components';
 import AgreementLookup from './AgreementLookup';
 
 const setUpRegistry = (registry) => {
@@ -12,12 +12,20 @@ const setUpRegistry = (registry) => {
     return <InternalContactsArrayDisplay contacts={record.contacts} />;
   });
 
+  agreementReg.setRenderFunction('orgs', record => {
+    return <OrganizationsArrayDisplay orgs={record.orgs} />;
+  });
+
   // Lookup plugin
   agreementReg.setLookupComponent(AgreementLookup);
 
   // AgreementLine Resource
   const aglReg = registry.registerResource('agreementLine');
   aglReg.setViewResource(al => `/erm/agreements/${al.owner?.id}/line/${al.id}`);
+
+  // ErmPackage Resource
+  const ermPkgReg = registry.registerResource('ermPackage');
+  ermPkgReg.setViewResource(pkg => `/erm/eresources/${pkg.id}`);
 };
 
 export default setUpRegistry;
