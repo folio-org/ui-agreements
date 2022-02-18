@@ -1,11 +1,8 @@
 import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-
-import { useQuery } from 'react-query';
-import { useOkapiKy } from '@folio/stripes/core';
+import { FormattedMessage } from 'react-intl';
 
 import { Settings } from '@folio/stripes/smart-components';
-import { CustomPropertiesSettings, useSettings } from '@k-int/stripes-kint-components';
+import { useSettings } from '@k-int/stripes-kint-components';
 
 import GeneralSettings from './GeneralSettings';
 
@@ -15,12 +12,14 @@ import {
   PickListValueSettings
 } from './routes';
 
-const REFDATA_ENDPOINT = 'erm/refdata';
-const SETTINGS_ENDPOINT = 'erm/settings/appSettings';
+import {
+  REFDATA_ENDPOINT,
+  SETTINGS_ENDPOINT
+} from '../constants/endpoints';
+
+import { AgreementsCustomProperties } from './components';
 
 const ErmSettings = (props) => {
-  const intl = useIntl();
-  const ky = useOkapiKy();
   const { isLoading, pageList, SettingsContextProvider } = useSettings({
     dynamicPageExclusions: ['registry'], // Registry AppSettings hold StringTemplating details etc -- not for user editing
     intlKey: 'ui-agreements',
@@ -28,27 +27,6 @@ const ErmSettings = (props) => {
     refdataEndpoint: REFDATA_ENDPOINT,
     settingEndpoint: SETTINGS_ENDPOINT
   });
-
-  const { data: custpropContexts = [] } = useQuery(
-    ['ui-agreements', 'settings', 'custpropContexts'],
-    () => ky('erm/custprops/contexts').json()
-  );
-
-  const contexts = [
-    {
-      value: '',
-      label: intl.formatMessage({ id: 'ui-agreements.settings.customProperties.all' })
-    },
-    ...custpropContexts?.map(cpc => (
-      {
-        value: cpc,
-        label: cpc
-      })),
-    {
-      value: 'isNull',
-      label: intl.formatMessage({ id: 'ui-agreements.settings.customProperties.none' })
-    }
-  ];
 
   const sections = [
     {
@@ -67,12 +45,7 @@ const ErmSettings = (props) => {
           route: 'supplementaryProperties',
         },
         {
-          component: () => (
-            <CustomPropertiesSettings
-              contextFilterOptions={contexts}
-              endpoint="erm/custprops"
-            />
-          ),
+          component: AgreementsCustomProperties,
           label: <FormattedMessage id="ui-agreements.settings.supplementaryProperties" />,
           perm: 'ui-agreements.supplementaryProperties.manage',
           route: 'customProperties',
