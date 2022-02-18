@@ -55,7 +55,6 @@
   "agreements.agreementDescription": "Description",
   "agreements.startDate": "Start date",
   "agreements.endDate": "End date",
-  "agreements.dateAgreementBegan": "Date agreement began",
   "agreements.cancellationDeadline": "Cancellation deadline",
   "agreements.currentPeriodNote": "Current period note",
   "agreements.renewalPriority": "Renewal priority",
@@ -566,5 +565,7 @@
   "settings.fileStorage.s3Endpoint": "S3 endpoint",
   "settings.fileStorage.s3ObjectPrefix": "S3 object prefix",
   "settings.fileStorage.s3SecretKey": "S3 secret key",
-  "settings.fileStorage.storageEngine": "Storage engine"
+  "settings.fileStorage.storageEngine": "Storage engine",
+  "settings.customProperties.all": "All",
+  "settings.customProperties.none": "None"
 }
