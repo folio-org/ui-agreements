@@ -1,5 +1,5 @@
 
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useQuery } from 'react-query';
 import { useOkapiKy } from '@folio/stripes/core';
@@ -33,10 +33,21 @@ const AgreementsCustomProperties = () => {
     }
   ];
 
+  const labelOverrides = {
+    paneTitle: <FormattedMessage id="ui-agreements.settings.supplementaryProperties" />,
+  };
+
+  const helpPopovers = {
+    name: <FormattedMessage id="ui-agreements.supplementaryProperty.help.name" />,
+    label: <FormattedMessage id="ui-agreements.supplementaryProperty.help.label" />
+  };
+
   return (
     <CustomPropertiesSettings
       contextFilterOptions={contexts}
       customPropertiesEndpoint={CUSTPROP_ENDPOINT}
+      helpPopovers={helpPopovers}
+      labelOverrides={labelOverrides}
       refdataEndpoint={REFDATA_ENDPOINT}
     />
   );
