@@ -95,6 +95,14 @@ class AgreementEditRoute extends React.Component {
       perRequest: 1000,
       records: 'acquisitionMethods',
     },
+    openAccessProperties: {
+      type: 'okapi',
+      path: 'erm/custprops',
+      params: {
+        filters: 'ctx==OpenAccess',
+      },
+      shouldRefresh: () => false,
+    },
     orgRoleValues: {
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreementOrg/role',
@@ -115,6 +123,9 @@ class AgreementEditRoute extends React.Component {
     supplementaryProperties: {
       type: 'okapi',
       path: 'erm/custprops',
+      params: {
+        filters: 'ctx isNull',
+      },
       shouldRefresh: () => false,
     },
     users: {
