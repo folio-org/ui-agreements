@@ -18,6 +18,14 @@ import { resultCount } from '../../constants';
 const { RECORDS_PER_REQUEST_MEDIUM, RECORDS_PER_REQUEST_LARGE } = resultCount;
 class AgreementEditRoute extends React.Component {
   static manifest = Object.freeze({
+    acquisitionMethod: {
+      type: 'okapi',
+      path: 'orders/acquisition-methods',
+      accumulate: true,
+      fetch: false,
+      perRequest: 1000,
+      records: 'acquisitionMethods',
+    },
     agreement: {
       type: 'okapi',
       path: 'erm/sas/:{id}',
@@ -79,22 +87,6 @@ class AgreementEditRoute extends React.Component {
       path: 'erm/refdata/RemoteLicenseLink/status',
       shouldRefresh: () => false,
     },
-    orderLines: {
-      type: 'okapi',
-      perRequest: RECORDS_PER_REQUEST_LARGE,
-      path: 'orders/order-lines',
-      accumulate: 'true',
-      fetch: false,   // we will fetch the order lines in the componentDidMount
-      records: 'poLines',
-    },
-    acquisitionMethod: {
-      type: 'okapi',
-      path: 'orders/acquisition-methods',
-      accumulate: true,
-      fetch: false,
-      perRequest: 1000,
-      records: 'acquisitionMethods',
-    },
     openAccessProperties: {
       type: 'okapi',
       path: 'erm/custprops',
@@ -102,6 +94,14 @@ class AgreementEditRoute extends React.Component {
         filters: 'ctx==OpenAccess',
       },
       shouldRefresh: () => false,
+    },
+    orderLines: {
+      type: 'okapi',
+      perRequest: RECORDS_PER_REQUEST_LARGE,
+      path: 'orders/order-lines',
+      accumulate: 'true',
+      fetch: false,   // we will fetch the order lines in the componentDidMount
+      records: 'poLines',
     },
     orgRoleValues: {
       type: 'okapi',
