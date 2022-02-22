@@ -8,7 +8,7 @@ export default class SupplementaryProperties extends React.Component {
   static propTypes = {
     agreement: PropTypes.object,
     id: PropTypes.string,
-    data: PropTypes.shape({ supplementaryProperties: PropTypes.arrayOf(PropTypes.object) }),
+    data: PropTypes.object,
   }
 
   renderBadge = () => {
@@ -24,19 +24,21 @@ export default class SupplementaryProperties extends React.Component {
   render() {
     const {
       agreement,
-      data: { supplementaryProperties },
+      data,
       id,
     } = this.props;
+
+    const customPropertyData = id === 'supplementaryProperties' ? data.supplementaryProperties : data.openAccessProperties;
 
     return (
       <Accordion
         displayWhenClosed={this.renderBadge()}
         id={id}
-        label={<FormattedMessage id="ui-agreements.supplementaryProperties" />}
+        label={<FormattedMessage id={`ui-agreements.${id}`} />}
       >
         <CustomPropertiesList
-          customProperties={supplementaryProperties}
-          isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.supplementaryProperties" />}
+          customProperties={customPropertyData}
+          isEmptyMessage={<FormattedMessage id={`ui-agreements.emptyAccordion.${id}`} />}
           resource={agreement}
         />
       </Accordion>

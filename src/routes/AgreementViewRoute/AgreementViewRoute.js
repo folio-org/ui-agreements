@@ -559,6 +559,7 @@ class AgreementViewRoute extends React.Component {
         data={{
           agreement: this.getCompositeAgreement(),
           eresourcesFilterPath: this.props.resources.eresourcesFilterPath,
+          openAccessProperties: get(resources, 'openAccessProperties.records', []),
           searchString: this.props.location.search,
           supplementaryProperties: get(resources, 'supplementaryProperties.records', []),
           terms: get(resources, 'terms.records', []),

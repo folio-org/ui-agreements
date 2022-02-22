@@ -218,6 +218,7 @@ class AgreementEditRoute extends React.Component {
       acquisitionMethod: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
+      openAccessProperties: PropTypes.object,
       orgRoleValues: PropTypes.object,
       query: PropTypes.shape({
         addFromBasket: PropTypes.string,
@@ -324,6 +325,13 @@ class AgreementEditRoute extends React.Component {
       initialValues.customProperties = initialValues.customProperties || {};
       const supplementaryProperties = (props?.resources?.supplementaryProperties?.records ?? []);
       supplementaryProperties
+        .filter(t => t.primary && initialValues.customProperties[t.name] === undefined)
+        // Change default to be an ignored customProperty.
+        // This means any changes without setting the value will be ignored
+        .forEach(t => { initialValues.customProperties[t.name] = [{ _delete: true }]; });
+      // the same for open access properties
+      const openAccessProperties = (props?.resources?.openAccessProperties?.records ?? []);
+      openAccessProperties
         .filter(t => t.primary && initialValues.customProperties[t.name] === undefined)
         // Change default to be an ignored customProperty.
         // This means any changes without setting the value will be ignored
@@ -484,6 +492,7 @@ class AgreementEditRoute extends React.Component {
           externalAgreementLine: resources?.externalAgreementLine?.records ?? [],
           isPerpetualValues: resources?.isPerpetualValues?.records ?? [],
           licenseLinkStatusValues: resources?.licenseLinkStatusValues?.records ?? [],
+          openAccessProperties: resources?.openAccessProperties?.records ?? [],
           orderLines: this.state.orderLines,
           acquisitionMethod: resources?.acquisitionMethod?.records ?? [],
           orgRoleValues: resources?.orgRoleValues?.records ?? [],
