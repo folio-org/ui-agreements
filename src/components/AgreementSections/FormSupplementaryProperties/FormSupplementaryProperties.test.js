@@ -46,7 +46,7 @@ describe('FormSupplementaryProperties', () => {
   beforeEach(() => {
     renderComponent = renderWithIntl(
       <TestForm onSubmit={onSubmit}>
-        <FormSupplementaryProperties data={data} />
+        <FormSupplementaryProperties data={data} id="supplementaryProperties" />
       </TestForm>, translationsProperties
     );
   });
