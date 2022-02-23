@@ -12,9 +12,13 @@ export default class SupplementaryProperties extends React.Component {
   }
 
   renderBadge = () => {
-    const { agreement: { customProperties } } = this.props;
+    const { agreement: { customProperties }, id } = this.props;
     if (customProperties !== undefined) {
-      const count = Object.keys(customProperties).length;
+      const count = id === 'openAccessProperties' ?
+        Object.values(customProperties).filter(cp => cp[0]?.type?.ctx === 'OpenAccess').length
+        :
+        Object.values(customProperties).filter(cp => cp[0]?.type?.ctx !== 'OpenAccess').length;
+
       return <Badge>{count}</Badge>;
     } else {
       return <Spinner />;
@@ -33,6 +37,7 @@ export default class SupplementaryProperties extends React.Component {
     return (
       <Accordion
         displayWhenClosed={this.renderBadge()}
+        displayWhenOpen={this.renderBadge()}
         id={id}
         label={<FormattedMessage id={`ui-agreements.${id}`} />}
       >
