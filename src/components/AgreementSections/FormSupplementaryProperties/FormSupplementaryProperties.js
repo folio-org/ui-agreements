@@ -17,6 +17,7 @@ class FormSupplementaryProperties extends React.Component {
     const { id, onToggle, open, data } = this.props;
 
     const customPropertyData = id === 'supplementaryProperties' ? data.supplementaryProperties : data.openAccessProperties;
+    // const translationKey = id === 'supplementaryProperties' ? 'supplementary' : data.openAccessProperties;
 
     return (
       <Accordion
@@ -38,7 +39,7 @@ class FormSupplementaryProperties extends React.Component {
               <FormattedMessage id={`ui-agreements.${id}.primaryProperties`} />
             </Headline>
           }
-          translationKey={id}
+          translationKey="supplementaryProperty"
         />
       </Accordion>
     );
