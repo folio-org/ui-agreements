@@ -720,15 +720,15 @@ describe('PackageInfo', () => {
     });
 
     test('renders the expcected provider', async () => {
-      await KeyValue('Provider').has({ value: 'No value set-' });
+      await KeyValue('Provider').has({ value: 'stripes-components.noValue.noValueSet-' });
     });
 
     test('renders the expcected source', async () => {
-      await KeyValue('Source').has({ value: 'No value set--' });
+      await KeyValue('Source').has({ value: 'stripes-components.noValue.noValueSet-' });
     });
 
     test('renders the expcected reference', async () => {
-      await KeyValue('Reference').has({ value: 'No value set--' });
+      await KeyValue('Reference').has({ value: 'stripes-components.noValue.noValueSet-' });
     });
   });
 });
