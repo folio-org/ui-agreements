@@ -720,15 +720,15 @@ describe('PackageInfo', () => {
     });
 
     test('renders the expcected provider', async () => {
-      await KeyValue('Provider').has({ value: '-' });
+      await KeyValue('Provider').has({ value: 'No value set-' });
     });
 
     test('renders the expcected source', async () => {
-      await KeyValue('Source').has({ value: '-' });
+      await KeyValue('Source').has({ value: 'No value set--' });
     });
 
     test('renders the expcected reference', async () => {
-      await KeyValue('Reference').has({ value: '-' });
+      await KeyValue('Reference').has({ value: 'No value set--' });
     });
   });
 });
