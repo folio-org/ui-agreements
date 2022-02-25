@@ -220,8 +220,13 @@ class AgreementViewRoute extends React.Component {
   }
 
   async componentDidUpdate(prevProps) {
+    const prevLines = prevProps.resources?.agreementLines?.records ?? [];
+    const newLines = this.props.resources?.agreementLines?.records ?? [];
     const { mutator } = this.props;
-    if (prevProps?.resources?.agreementLines?.records?.length !== this.props?.resources?.agreementLines?.records?.length) {
+    if (
+      prevProps?.resources?.agreementLines?.records?.length !== this.props?.resources?.agreementLines?.records?.length ||
+      this.countPoLines(prevLines) !== this.countPoLines(newLines)
+      ) {
       await this.fetchOrderLines();
     }
 
@@ -230,6 +235,10 @@ class AgreementViewRoute extends React.Component {
       mutator.agreementLinesOffset.replace(0);
       await this.fetchOrderLines();
     }
+  }
+
+  countPoLines(lines) {
+    return lines.reduce((agg, curr) => agg + curr?.poLines?.length, 0);
   }
 
   async fetchOrderLines() {
