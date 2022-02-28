@@ -266,6 +266,26 @@
           "settings.agreements.enabled",
           "erm.custprops.manage"
         ]
+      },
+      {
+        "permissionName": "ui-agreements.appSettings.view",
+        "displayName": "Settings (Agreements): Can view app settings",
+        "description": "Grants permission to view the Agreements application settings",
+        "visible": true,
+        "subPermissions": [
+          "settings.agreements.enabled",
+          "erm.settings.read"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.appSettings.manage",
+        "displayName": "Settings (Agreements): Can view and edit app settings",
+        "description": "Grants permission to view and edit the Agreements application settings",
+        "visible": true,
+        "subPermissions": [
+          "settings.agreements.enabled",
+          "erm.settings.manage"
+        ]
       }
     ],
     "icons": [
