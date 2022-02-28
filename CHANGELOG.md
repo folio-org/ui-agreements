@@ -1,4 +1,6 @@
 # Change history for ui-agreements
+## 8.0.2 2022-02-28
+* "Load More" button not working - Agreement Lines. Refs ERM-1999
 
 ## 8.0.1 2021-11-08
 * Handle 414 error exception when requesting an agreement line with large number of POLines. Refs ERM-1915
