@@ -99,7 +99,7 @@ const data = {
 
 let renderComponent;
 
-describe.only('FormSupplementaryProperties', () => {
+describe('FormSupplementaryProperties', () => {
   describe('with supplementaryProperties', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
