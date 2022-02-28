@@ -146,7 +146,7 @@ const EResources = ({
                       {/* TODO: Use forthcoming <SearchGroup> or similar component */}
                       <div className={css.searchGroupWrap}>
                         <FormattedMessage id="ui-agreements.agreements.searchInputLabel">
-                          {ariaLabel => (
+                          {([ariaLabel]) => (
                             <SearchField
                               aria-label={ariaLabel}
                               autoFocus

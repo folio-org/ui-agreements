@@ -9,9 +9,21 @@ const translationsProperties = [
     prefix: 'stripes-core',
     translations: {
       'label.missingRequiredField': 'Please fill this in to continue',
-      'stripes-components.saveAndClose': 'Save and close',
-      'stripes-components.cancel': 'Cancel'
     }
+  },
+  {
+    prefix: 'stripes-components',
+    translations: {
+      'saveAndClose': 'Save and close',
+      'cancel': 'Cancel',
+      'paneMenuActionsToggleLabel': 'Actions'
+    },
+  },
+  {
+    prefix: 'stripes-smart-components',
+    translations: {
+      'permissionError': 'Sorry - your permissions do not allow access to this page.',
+    },
   }
 ];
 

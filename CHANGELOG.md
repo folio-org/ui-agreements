@@ -1,5 +1,9 @@
 # Change history for ui-agreements
+## 8.0.2 2022-02-28
+* "Load More" button not working - Agreement Lines. Refs ERM-1999
 
+## 8.0.1 2021-11-08
+* Handle 414 error exception when requesting an agreement line with large number of POLines. Refs ERM-1915
 ## 8.0.0 2021-10-07
 * Refactor mod-configuration permissions to require specific perms instead of all permissions. ERM-1881
 * Fixed bug with error on saving an agreement if a change is made to the visibility (internal) flag of a primary property without populating it. ERM-1771
@@ -61,7 +65,7 @@
 * Dropdowns do not display values when editing Agreements. ERM-1206
 * Agreement lines do not display correctly in Agreement edit view. ERM-1205
 * Add UI settings to control the number of items displayed in Agreements MCLs. ERM-1190
-* Add FOLIO keyboard shortcuts to Agreements-Platforms. ERM-1186 
+* Add FOLIO keyboard shortcuts to Agreements-Platforms. ERM-1186
 * Add "Edit" screen for title instance resources. ERM-1184
 * Support user access to platform records. ERM-1156
 * Add FOLIO keyboard shortcuts to Agreements. ERM-1151
