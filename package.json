@@ -13,7 +13,7 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "yarn run test:jest && yarn run test:bigtest",
+    "test": "yarn run test:jest",
     "test:jest": "jest --ci --coverage",
     "test:bigtest": "stripes test karma --bundle --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage",
     "test-all": "yarn run test-bigtest-once; yarn run test-int",
@@ -265,6 +265,26 @@
         "subPermissions": [
           "settings.agreements.enabled",
           "erm.custprops.manage"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.appSettings.view",
+        "displayName": "Settings (Agreements): Can view app settings",
+        "description": "Grants permission to view the Agreements application settings",
+        "visible": true,
+        "subPermissions": [
+          "settings.agreements.enabled",
+          "erm.settings.read"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.appSettings.manage",
+        "displayName": "Settings (Agreements): Can view and edit app settings",
+        "description": "Grants permission to view and edit the Agreements application settings",
+        "visible": true,
+        "subPermissions": [
+          "settings.agreements.enabled",
+          "erm.settings.manage"
         ]
       }
     ],
