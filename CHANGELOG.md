@@ -1,4 +1,7 @@
 # Change history for ui-agreements
+## 8.0.3 2022-02-28
+* "Load More" button not working - Agreement Lines. (Javascript equivalence issue fix) Refs ERM-1999
+
 ## 8.0.2 2022-02-28
 * "Load More" button not working - Agreement Lines. Refs ERM-1999
 
