@@ -1,5 +1,7 @@
 # Change history for ui-agreements
 
+## 8.2.0 In progress
+
 ## 8.1.0 2022-03-03
 * ERM-1999. "Load More" button not working - Agreement Lines
 * ERM-1990. Add hyperlink to ERM Comparison comparison points (Registry entry)
