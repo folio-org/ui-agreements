@@ -1,7 +1,8 @@
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
+
 import { useOkapiKy } from '@folio/stripes/core';
 
 import { CustomPropertiesSettings } from '@k-int/stripes-kint-components';
@@ -11,6 +12,8 @@ import { REFDATA_ENDPOINT, CUSTPROP_ENDPOINT } from '../../constants/endpoints';
 const AgreementsCustomProperties = () => {
   const intl = useIntl();
   const ky = useOkapiKy();
+
+  const queryClient = useQueryClient();
 
   const { data: custpropContexts = [] } = useQuery(
     ['ui-agreements', 'settings', 'custpropContexts'],
@@ -44,6 +47,11 @@ const AgreementsCustomProperties = () => {
 
   return (
     <CustomPropertiesSettings
+      afterQueryCalls={{
+        put: () => queryClient.invalidateQueries(['ui-agreements', 'settings', 'custpropContexts']),
+        post: () => queryClient.invalidateQueries(['ui-agreements', 'settings', 'custpropContexts']),
+        delete: () => queryClient.invalidateQueries(['ui-agreements', 'settings', 'custpropContexts'])
+      }}
       contextFilterOptions={contexts}
       customPropertiesEndpoint={CUSTPROP_ENDPOINT}
       helpPopovers={helpPopovers}
