@@ -199,4 +199,4 @@ class AgreementsRoute extends React.Component {
   }
 }
 
-export default stripesConnect(AgreementsRoute);
+export default stripesConnect(AgreementsRoute, { dataKey: 'agreementsRoute' });
