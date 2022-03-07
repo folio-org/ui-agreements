@@ -45,6 +45,7 @@ class AgreementForm extends React.Component {
     data: PropTypes.shape({
       agreementLines: PropTypes.arrayOf(PropTypes.object).isRequired,
       agreementLinesToAdd: PropTypes.arrayOf(PropTypes.object).isRequired,
+      openAccessProperties: PropTypes.arrayOf(PropTypes.object).isRequired,
       supplementaryProperties: PropTypes.arrayOf(PropTypes.object).isRequired,
     }).isRequired,
     form: PropTypes.shape({
@@ -109,7 +110,8 @@ class AgreementForm extends React.Component {
       formLines: true,
       formLicenses: true,
       formOrganizations: true,
-      formSupplementaryProperties: true,
+      openAccessProperties: true,
+      supplementaryProperties: true,
       formSupplementaryDocs: true,
       formUsageProviders: true,
       formRelatedAgreements: true,
@@ -243,7 +245,7 @@ class AgreementForm extends React.Component {
                         <FormLicenses {...this.getSectionProps('formLicenses')} />
                         <FormOrganizations {...this.getSectionProps('formOrganizations')} />
                         {data.supplementaryProperties?.length > 0 ?
-                          <FormSupplementaryProperties {...this.getSectionProps('formSupplementaryProperties')} />
+                          <FormSupplementaryProperties {...this.getSectionProps('supplementaryProperties')} />
                           :
                           null
                         }
@@ -251,6 +253,11 @@ class AgreementForm extends React.Component {
                         <IfAccordionIsVisible name="usageData">
                           <FormUsageData {...this.getSectionProps('formUsageProviders')} />
                         </IfAccordionIsVisible>
+                        {data.openAccessProperties?.length > 0 ?
+                          <FormSupplementaryProperties {...this.getSectionProps('openAccessProperties')} />
+                          :
+                          null
+                        }
                         <FormRelatedAgreements {...this.getSectionProps('formRelatedAgreements')} />
                       </AccordionSet>
                     </AccordionStatus>

@@ -14,26 +14,28 @@ class FormSupplementaryProperties extends React.Component {
   };
 
   render() {
-    const { id, onToggle, open, data: { supplementaryProperties = [] } } = this.props;
+    const { id, onToggle, open, data } = this.props;
+
+    const customPropertyData = id === 'supplementaryProperties' ? data.supplementaryProperties : data.openAccessProperties;
 
     return (
       <Accordion
         id={id}
-        label={<FormattedMessage id="ui-agreements.supplementaryProperties" />}
+        label={<FormattedMessage id={`ui-agreements.${id}`} />}
         onToggle={onToggle}
         open={open}
       >
         <FormCustomProperties
-          customProperties={supplementaryProperties}
+          customProperties={customPropertyData}
           name="customProperties"
           optionalSectionLabel={
             <Headline margin="x-small" size="large" tag="h4">
-              <FormattedMessage id="ui-agreements.supplementaryProperties.optionalProperties" />
+              <FormattedMessage id={`ui-agreements.${id}.optionalProperties`} />
             </Headline>
           }
           primarySectionLabel={
             <Headline margin="x-small" size="large" tag="h4">
-              <FormattedMessage id="ui-agreements.supplementaryProperties.primaryProperties" />
+              <FormattedMessage id={`ui-agreements.${id}.primaryProperties`} />
             </Headline>
           }
           translationKey="supplementaryProperty"

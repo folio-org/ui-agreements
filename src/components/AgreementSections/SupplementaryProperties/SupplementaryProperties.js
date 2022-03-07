@@ -8,13 +8,17 @@ export default class SupplementaryProperties extends React.Component {
   static propTypes = {
     agreement: PropTypes.object,
     id: PropTypes.string,
-    data: PropTypes.shape({ supplementaryProperties: PropTypes.arrayOf(PropTypes.object) }),
+    data: PropTypes.object,
   }
 
   renderBadge = () => {
-    const { agreement: { customProperties } } = this.props;
+    const { agreement: { customProperties }, id } = this.props;
     if (customProperties !== undefined) {
-      const count = Object.keys(customProperties).length;
+      const count = id === 'openAccessProperties' ?
+        Object.values(customProperties).filter(cp => cp[0]?.type?.ctx === 'OpenAccess').length
+        :
+        Object.values(customProperties).filter(cp => cp[0]?.type?.ctx !== 'OpenAccess').length;
+
       return <Badge>{count}</Badge>;
     } else {
       return <Spinner />;
@@ -24,19 +28,22 @@ export default class SupplementaryProperties extends React.Component {
   render() {
     const {
       agreement,
-      data: { supplementaryProperties },
+      data,
       id,
     } = this.props;
+
+    const customPropertyData = id === 'supplementaryProperties' ? data.supplementaryProperties : data.openAccessProperties;
 
     return (
       <Accordion
         displayWhenClosed={this.renderBadge()}
+        displayWhenOpen={this.renderBadge()}
         id={id}
-        label={<FormattedMessage id="ui-agreements.supplementaryProperties" />}
+        label={<FormattedMessage id={`ui-agreements.${id}`} />}
       >
         <CustomPropertiesList
-          customProperties={supplementaryProperties}
-          isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.supplementaryProperties" />}
+          customProperties={customPropertyData}
+          isEmptyMessage={<FormattedMessage id={`ui-agreements.emptyAccordion.${id}`} />}
           resource={agreement}
         />
       </Accordion>
