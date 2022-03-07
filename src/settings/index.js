@@ -7,7 +7,6 @@ import { useSettings } from '@k-int/stripes-kint-components';
 import GeneralSettings from './GeneralSettings';
 
 import {
-  SupplementaryPropertiesConfigRoute,
   PickListSettings,
   PickListValueSettings
 } from './routes';
