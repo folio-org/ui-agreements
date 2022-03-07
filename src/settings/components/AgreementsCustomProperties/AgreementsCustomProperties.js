@@ -7,7 +7,7 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import { CustomPropertiesSettings } from '@k-int/stripes-kint-components';
 
-import { REFDATA_ENDPOINT, CUSTPROP_ENDPOINT } from '../../constants/endpoints';
+import { REFDATA_ENDPOINT, CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
 
 const AgreementsCustomProperties = () => {
   const intl = useIntl();

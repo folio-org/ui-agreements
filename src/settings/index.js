@@ -39,16 +39,10 @@ const ErmSettings = (props) => {
           component: GeneralSettings,
         },
         {
-          component: SupplementaryPropertiesConfigRoute,
-          label: <FormattedMessage id="ui-agreements.settings.supplementaryProperties" />,
-          perm: 'ui-agreements.supplementaryProperties.manage',
-          route: 'supplementaryProperties',
-        },
-        {
           component: AgreementsCustomProperties,
           label: <FormattedMessage id="ui-agreements.settings.supplementaryProperties" />,
           perm: 'ui-agreements.supplementaryProperties.manage',
-          route: 'customProperties',
+          route: 'supplementaryProperties',
         },
       ]
     },
