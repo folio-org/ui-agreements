@@ -243,7 +243,7 @@ class AgreementViewRoute extends React.Component {
     if (
       prevLines?.length !== newLines?.length ||
       this.countPoLines(prevLines) !== this.countPoLines(newLines)
-      ) {
+    ) {
       await this.fetchOrderLines();
     }
 

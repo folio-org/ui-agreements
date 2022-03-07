@@ -73,19 +73,8 @@ class AgreementsRoute extends React.Component {
       path: 'erm/refdata/SubscriptionAgreementOrg/role',
       shouldRefresh: () => false,
     },
-    openAccessProperties: {
-      type: 'okapi',
-      path: 'erm/custprops',
-      params: {
-        filters: 'ctx==OpenAccess',
-      },
-      shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
-    },
     supplementaryProperties: {
       type: 'okapi',
-      params: {
-        filters: 'ctx isNull',
-      },
       path: 'erm/custprops',
       shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
@@ -210,4 +199,4 @@ class AgreementsRoute extends React.Component {
   }
 }
 
-export default stripesConnect(AgreementsRoute);
+export default stripesConnect(AgreementsRoute, { dataKey: 'agreementsRoute' });
