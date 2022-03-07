@@ -241,7 +241,7 @@ class AgreementViewRoute extends React.Component {
     const newLines = this.props.resources?.agreementLines?.records ?? [];
     const { mutator } = this.props;
     if (
-      prevProps?.resources?.agreementLines?.records?.length !== this.props?.resources?.agreementLines?.records?.length ||
+      prevLines?.length !== newLines?.length ||
       this.countPoLines(prevLines) !== this.countPoLines(newLines)
       ) {
       await this.fetchOrderLines();
@@ -255,7 +255,7 @@ class AgreementViewRoute extends React.Component {
   }
 
   countPoLines(lines) {
-    return lines.reduce((agg, curr) => agg + curr?.poLines?.length, 0);
+    return lines.reduce((agg, curr) => agg + curr?.poLines?.length || 0, 0);
   }
 
   async fetchOrderLines() {
