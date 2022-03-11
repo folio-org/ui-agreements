@@ -560,6 +560,8 @@
   "settings.pickListValues": "Pick list values",
   "settings.supplementaryProperties": "Supplementary properties",
   "settings.supplementaryPropertyPickList": "Supplementary property pick list setup",
+  "settings.supplementaryProperties.retired": "Deprecated",
+  "settings.supplementaryProperties.primaryRetired": "A supplementary property cannot be both primary and deprecated",
   "settings.values": "values",
   "settings.value": "Value",
   "settings.appSettings": "App settings",

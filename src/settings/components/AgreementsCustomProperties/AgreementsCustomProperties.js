@@ -38,6 +38,8 @@ const AgreementsCustomProperties = () => {
 
   const labelOverrides = {
     paneTitle: <FormattedMessage id="ui-agreements.settings.supplementaryProperties" />,
+    retired: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.retired" />,
+    primaryRetired: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.primaryRetired" />
   };
 
   const helpPopovers = {
