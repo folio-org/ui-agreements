@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import setFieldData from 'final-form-set-field-data';
+
+import { CustomPropertiesEdit } from '@k-int/stripes-kint-components';
+
 import { handleSaveKeyCommand } from '@folio/stripes-erm-components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 
@@ -13,6 +16,7 @@ import {
   Col,
   ExpandAllButton,
   HasCommand,
+  Headline,
   IconButton,
   Pane,
   PaneFooter,
@@ -34,11 +38,12 @@ import {
   FormOrganizations,
   FormRelatedAgreements,
   FormSupplementaryDocuments,
-  FormSupplementaryProperties,
   FormUsageData,
 } from '../../AgreementSections';
 
 import IfAccordionIsVisible from '../../IfAccordionIsVisible';
+import { CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
+import useAgreementsContexts from '../../../hooks/useAgreementsContexts';
 
 const AgreementForm = ({
   data = {},
@@ -52,6 +57,9 @@ const AgreementForm = ({
 }) => {
   const accordionStatusRef = useRef();
   const [addedLinesToAdd, setAddedLinesToAdd] = useState(false);
+  const { data: custpropContexts = [] } = useAgreementsContexts();
+  // Ensure the custprops with no contexts get rendered
+  const contexts = ['isNull', ...custpropContexts];
 
   // The `agreementLinesToAdd` must be added here rather than in the parent route
   // handler because we don't want them to be part of the initialValues.
@@ -191,6 +199,25 @@ const AgreementForm = ({
                     </Row>
                     <AccordionSet initialStatus={initialAccordionsState}>
                       <FormInfo {...getSectionProps('formInfo')} />
+                      <CustomPropertiesEdit
+                        contexts={contexts}
+                        customPropertiesEndpoint={CUSTPROP_ENDPOINT}
+                        labelOverrides={{
+                          defaultTitle: (ctx) => <FormattedMessage id="ui-agreements.supplementaryProperties.defaultTitle" values={{ ctx }} />,
+                          noContext: <FormattedMessage id="ui-agreements.supplementaryProperties" />,
+                          OpenAccess: <FormattedMessage id="ui-agreements.openAccessProperties" />,
+                          primaryProperties: (
+                            <Headline margin="x-small" size="large" tag="h4">
+                              <FormattedMessage id="ui-agreements.supplementaryProperties.primaryProperties" />
+                            </Headline>
+                          ),
+                          optionalProperties: (
+                            <Headline margin="x-small" size="large" tag="h4">
+                              <FormattedMessage id="ui-agreements.supplementaryProperties.optionalProperties" />
+                            </Headline>
+                          )
+                        }}
+                      />
                       <IfPermission perm="users.collection.get">
                         {({ hasPermission }) => (hasPermission ?
                           <FormInternalContacts {...getSectionProps('formInternalContacts')} />
@@ -200,20 +227,10 @@ const AgreementForm = ({
                       <FormLines {...getSectionProps('formLines')} />
                       <FormLicenses {...getSectionProps('formLicenses')} />
                       <FormOrganizations {...getSectionProps('formOrganizations')} />
-                      {data.supplementaryProperties?.length > 0 ?
-                        <FormSupplementaryProperties {...getSectionProps('supplementaryProperties')} />
-                        :
-                        null
-                      }
                       <FormSupplementaryDocuments {...getSectionProps('formSupplementaryDocs')} />
                       <IfAccordionIsVisible name="usageData">
                         <FormUsageData {...getSectionProps('formUsageProviders')} />
                       </IfAccordionIsVisible>
-                      {data.openAccessProperties?.length > 0 ?
-                        <FormSupplementaryProperties {...getSectionProps('openAccessProperties')} />
-                        :
-                        null
-                      }
                       <FormRelatedAgreements {...getSectionProps('formRelatedAgreements')} />
                     </AccordionSet>
                   </AccordionStatus>

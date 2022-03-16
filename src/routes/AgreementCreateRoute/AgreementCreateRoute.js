@@ -75,14 +75,6 @@ class AgreementCreateRoute extends React.Component {
       path: 'erm/refdata/RemoteLicenseLink/status',
       shouldRefresh: () => false,
     },
-    openAccessProperties: {
-      type: 'okapi',
-      path: 'erm/custprops',
-      params: {
-        filters: 'ctx==OpenAccess',
-      },
-      shouldRefresh: () => false,
-    },
     orgRoleValues: {
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreementOrg/role',
@@ -98,14 +90,6 @@ class AgreementCreateRoute extends React.Component {
       path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
       limitParam: 'perPage',
       perRequest: RECORDS_PER_REQUEST_MEDIUM,
-      shouldRefresh: () => false,
-    },
-    supplementaryProperties: {
-      type: 'okapi',
-      params: {
-        filters: 'ctx isNull',
-      },
-      path: 'erm/custprops',
       shouldRefresh: () => false,
     },
     basket: { initialValue: [] },
@@ -153,7 +137,6 @@ class AgreementCreateRoute extends React.Component {
       licenseLinkStatusValues: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
-      openAccessProperties: PropTypes.object,
       orgRoleValues: PropTypes.object,
       query: PropTypes.shape({
         addFromBasket: PropTypes.string,
@@ -168,7 +151,6 @@ class AgreementCreateRoute extends React.Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
       statusValues: PropTypes.object,
-      supplementaryProperties: PropTypes.object,
       typeValues: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
@@ -251,23 +233,10 @@ class AgreementCreateRoute extends React.Component {
   }
 
   getInitialValues = () => {
-    const customProperties = {};
-    (this.props.resources?.supplementaryProperties?.records || [])
-      .filter(term => term.primary)
-      // Change default to be an ignored customProperty.
-      // This means any changes without setting the value will be ignored
-      .forEach(term => { customProperties[term.name] = [{ _delete: true }]; });
-    // same for openAccessProperties
-    (this.props.resources?.openAccessProperties?.records || [])
-      .filter(term => term.primary)
-      // Change default to be an ignored customProperty.
-      // This means any changes without setting the value will be ignored
-      .forEach(term => { customProperties[term.name] = [{ _delete: true }]; });
     const periods = [{}];
 
     return {
       periods,
-      customProperties,
     };
   }
 
@@ -286,8 +255,6 @@ class AgreementCreateRoute extends React.Component {
           reasonForClosureValues: (resources?.reasonForClosureValues?.records ?? []),
           amendmentStatusValues: (resources?.amendmentStatusValues?.records ?? []),
           basket: (resources?.basket ?? []),
-          openAccessProperties: (resources?.openAccessProperties?.records ?? []),
-          supplementaryProperties: (resources?.supplementaryProperties?.records ?? []),
           contactRoleValues: (resources?.contactRoleValues?.records ?? []),
           documentCategories: (resources?.documentCategories?.records ?? []),
           isPerpetualValues: (resources?.isPerpetualValues?.records ?? []),
