@@ -1,4 +1,3 @@
-export { default as SupplementaryProperties } from './SupplementaryProperties';
 export { default as ControllingLicense } from './ControllingLicense';
 export { default as ExternalLicenses } from './ExternalLicenses';
 export { default as FormInfo } from './FormInfo';

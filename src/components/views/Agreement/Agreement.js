@@ -23,6 +23,9 @@ import {
 import { AppIcon, TitleManager, HandlerManager, useStripes } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
+
+import { CustomPropertiesView } from '@k-int/stripes-kint-components';
+
 import DuplicateAgreementModal from '../../DuplicateAgreementModal';
 
 import {
@@ -38,13 +41,15 @@ import {
   Organizations,
   RelatedAgreements,
   SupplementaryDocs,
-  SupplementaryProperties,
   Terms,
   UsageData,
 } from '../../AgreementSections';
 
+import useAgreementsContexts from '../../../hooks/useAgreementsContexts';
+
 import { urls } from '../../utilities';
 import { statuses } from '../../../constants';
+import { CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
 
 const Agreement = ({
   data,
@@ -57,6 +62,10 @@ const Agreement = ({
   const [showDuplicateAgreementModal, setShowDuplicateAgreementModal] = useState(false);
 
   const stripes = useStripes();
+
+  const { data: custpropContexts = [] } = useAgreementsContexts();
+  // Ensure the custprops with no contexts get rendered
+  const contexts = ['isNull', ...custpropContexts];
 
   const getSectionProps = (id) => {
     return {
@@ -151,24 +160,12 @@ const Agreement = ({
       internalContacts: false,
       lines: false,
       notes: false,
-      openAccessProperties: false,
       organizations: false,
       relatedAgreements: false,
-      supplementaryProperties: false,
       supplementaryDocs: false,
       terms: false,
       usageData: false,
     };
-  };
-
-  const showCustpropAccordion = (customPropertyData) => {
-    const primaryprops = customPropertyData?.filter(p => p.primary === true).length;
-    let custprops = 0;
-    if (data.agreement?.customProperties !== undefined) {
-      custprops = Object.keys(data.agreement?.customProperties).length;
-    }
-
-    return !!(primaryprops || custprops);
   };
 
   const renderEditAgreementPaneMenu = () => {
@@ -261,10 +258,19 @@ const Agreement = ({
                 {data.agreement?.externalLicenseDocs?.length > 0 && <ExternalLicenses {...getSectionProps('externalLicenses')} />}
                 {controllingLicenses?.length > 0 && <Terms {...getSectionProps('terms')} />}
                 {data.agreement?.orgs?.length > 0 && <Organizations {...getSectionProps('organizations')} />}
-                {showCustpropAccordion(data?.supplementaryProperties) && <SupplementaryProperties {...getSectionProps('supplementaryProperties')} />}
+                <CustomPropertiesView
+                  contexts={contexts}
+                  customProperties={data.agreement.customProperties}
+                  customPropertiesEndpoint={CUSTPROP_ENDPOINT}
+                  id="supplementaryProperties"
+                  labelOverrides={{
+                    defaultTitle: (ctx) => <FormattedMessage id="ui-agreements.supplementaryProperties.defaultTitle" values={{ ctx }} />,
+                    noContext: <FormattedMessage id="ui-agreements.supplementaryProperties" />,
+                    OpenAccess: <FormattedMessage id="ui-agreements.openAccessProperties" />,
+                  }}
+                />
                 {data.agreement?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...getSectionProps('supplementaryDocs')} />}
                 {data.agreement?.usageDataProviders?.length > 0 && <UsageData {...getSectionProps('usageData')} />}
-                {showCustpropAccordion(data?.openAccessProperties) && <SupplementaryProperties {...getSectionProps('openAccessProperties')} />}
                 {data.agreement?.relatedAgreements?.length > 0 && <RelatedAgreements {...getSectionProps('relatedAgreements')} />}
                 <HandlerManager data={{ data }} event="ui-agreements-extension" stripes={stripes} />
                 <NotesSmartAccordion
@@ -313,7 +319,6 @@ Agreement.propTypes = {
     eresourcesFilterPath: PropTypes.string,
     openAccessProperties: PropTypes.arrayOf(PropTypes.object),
     searchString: PropTypes.string,
-    supplementaryProperties: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
   handlers: PropTypes.shape({
     onClone: PropTypes.func.isRequired,

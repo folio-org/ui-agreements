@@ -202,6 +202,7 @@ const AgreementForm = ({
                       <CustomPropertiesEdit
                         contexts={contexts}
                         customPropertiesEndpoint={CUSTPROP_ENDPOINT}
+                        id="supplementaryProperties"
                         labelOverrides={{
                           defaultTitle: (ctx) => <FormattedMessage id="ui-agreements.supplementaryProperties.defaultTitle" values={{ ctx }} />,
                           noContext: <FormattedMessage id="ui-agreements.supplementaryProperties" />,
