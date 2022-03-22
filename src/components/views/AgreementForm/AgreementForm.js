@@ -269,7 +269,7 @@ AgreementForm.propTypes = {
   pristine: PropTypes.bool,
   submitting: PropTypes.bool,
   values: PropTypes.object,
-}
+};
 
 export default stripesFinalForm({
   initialValuesEqual: (a, b) => isEqual(a, b),

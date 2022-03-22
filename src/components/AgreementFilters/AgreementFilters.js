@@ -5,7 +5,11 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
 import { IfPermission } from '@folio/stripes/core';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { CustomPropertyFilters, DateFilter, InternalContactSelection, OrganizationSelection } from '@folio/stripes-erm-components';
+import { DateFilter, InternalContactSelection, OrganizationSelection } from '@folio/stripes-erm-components';
+
+import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
+
+import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
 
 const propTypes = {
   activeFilters: PropTypes.object,
@@ -218,11 +222,20 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
   };
 
   const renderCustomPropertyFilters = () => {
-    return <CustomPropertyFilters
+    return <CustomPropertiesFilter
       activeFilters={activeFilters}
-      customProperties={data.supplementaryProperties}
-      custPropName="supplementaryProperty"
+      customPropertiesEndpoint={CUSTPROP_ENDPOINT}
       filterHandlers={filterHandlers}
+      labelOverrides={{
+        customProperty: <FormattedMessage id="ui-agreements.supplementaryProperty" />,
+        customProperties: <FormattedMessage id="ui-agreements.supplementaryProperties" />,
+        filtersApplied: (count) => <FormattedMessage id="ui-agreements.supplementaryProperties.filtersApplied" values={{ count }} />,
+        editCustomPropertyFilters: <FormattedMessage id="ui-agreements.supplementaryProperties.editCustomPropertyFilters" />,
+        filterBuilder: <FormattedMessage id="ui-agreements.supplementaryProperties.filterBuilder" />,
+        customPropertyFilter: (index) => <FormattedMessage id="ui-agreements.supplementaryProperties.filterIndex" values={{ index: index + 1 }} />,
+        removeFilter: (index) => <FormattedMessage id="ui-agreements.supplementaryProperties.removeFilter" values={{ index: index + 1 }} />,
+        retiredName: (name) => intl.formatMessage({ id: 'ui-agreements.supplementaryProperties.deprecated' }, { name }),
+      }}
     />;
   };
 

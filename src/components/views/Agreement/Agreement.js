@@ -267,6 +267,7 @@ const Agreement = ({
                     defaultTitle: (ctx) => <FormattedMessage id="ui-agreements.supplementaryProperties.defaultTitle" values={{ ctx }} />,
                     noContext: <FormattedMessage id="ui-agreements.supplementaryProperties" />,
                     OpenAccess: <FormattedMessage id="ui-agreements.openAccessProperties" />,
+                    retiredName: (name) => <FormattedMessage id="ui-agreements.supplementaryProperties.deprecated" values={{ name }} />,
                   }}
                 />
                 {data.agreement?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...getSectionProps('supplementaryDocs')} />}
