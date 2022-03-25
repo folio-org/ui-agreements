@@ -87,14 +87,6 @@ class AgreementViewRoute extends React.Component {
       permissionsRequired: 'organizations-storage.interfaces.collection.get',
       records: 'interfaces',
     },
-    openAccessProperties: {
-      type: 'okapi',
-      path: 'erm/custprops',
-      params: {
-        filters: 'ctx==OpenAccess',
-      },
-      shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
-    },
     orderLines: {
       type: 'okapi',
       perRequest: RECORDS_PER_REQUEST_LARGE,
@@ -108,14 +100,6 @@ class AgreementViewRoute extends React.Component {
       type: 'okapi',
       path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
       records: 'configs',
-    },
-    supplementaryProperties: {
-      type: 'okapi',
-      path: 'erm/custprops',
-      params: {
-        filters: 'ctx isNull',
-      },
-      shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
     terms: {
       type: 'okapi',
@@ -570,7 +554,6 @@ class AgreementViewRoute extends React.Component {
           eresourcesFilterPath: this.props.resources.eresourcesFilterPath,
           openAccessProperties: get(resources, 'openAccessProperties.records', []),
           searchString: this.props.location.search,
-          supplementaryProperties: get(resources, 'supplementaryProperties.records', []),
           terms: get(resources, 'terms.records', []),
         }}
         handlers={{

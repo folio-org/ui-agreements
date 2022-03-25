@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { get, isEqual } from 'lodash';
+import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import setFieldData from 'final-form-set-field-data';
+
+import { CustomPropertiesEdit } from '@k-int/stripes-kint-components';
+
 import { handleSaveKeyCommand } from '@folio/stripes-erm-components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 
@@ -13,6 +16,7 @@ import {
   Col,
   ExpandAllButton,
   HasCommand,
+  Headline,
   IconButton,
   Pane,
   PaneFooter,
@@ -34,112 +38,74 @@ import {
   FormOrganizations,
   FormRelatedAgreements,
   FormSupplementaryDocuments,
-  FormSupplementaryProperties,
   FormUsageData,
 } from '../../AgreementSections';
 
 import IfAccordionIsVisible from '../../IfAccordionIsVisible';
+import { CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
+import useAgreementsContexts from '../../../hooks/useAgreementsContexts';
 
-class AgreementForm extends React.Component {
-  static propTypes = {
-    data: PropTypes.shape({
-      agreementLines: PropTypes.arrayOf(PropTypes.object).isRequired,
-      agreementLinesToAdd: PropTypes.arrayOf(PropTypes.object).isRequired,
-      openAccessProperties: PropTypes.arrayOf(PropTypes.object).isRequired,
-      supplementaryProperties: PropTypes.arrayOf(PropTypes.object).isRequired,
-    }).isRequired,
-    form: PropTypes.shape({
-      change: PropTypes.func.isRequired,
-      getRegisteredFields: PropTypes.func.isRequired,
-      getState: PropTypes.func.isRequired,
-    }).isRequired,
-    handlers: PropTypes.PropTypes.shape({
-      onBasketLinesAdded: PropTypes.func.isRequired,
-      onClose: PropTypes.func.isRequired,
-    }),
-    initialValues: PropTypes.object,
-    handleSubmit: PropTypes.func.isRequired,
-    isLoading: PropTypes.bool,
-    onSubmit: PropTypes.func.isRequired,
-    invalid: PropTypes.bool,
-    pristine: PropTypes.bool,
-    submitting: PropTypes.bool,
-    values: PropTypes.object,
-  }
-
-  static defaultProps = {
-    initialValues: {},
-  }
-
-  constructor(props) {
-    super(props);
-    this.accordionStatusRef = React.createRef();
-  }
-
-  state = {
-    addedLinesToAdd: false, // eslint-disable-line react/no-unused-state
-  }
+const AgreementForm = ({
+  data = {},
+  form,
+  handlers,
+  handleSubmit,
+  initialValues = {},
+  pristine,
+  submitting,
+  values = {},
+}) => {
+  const accordionStatusRef = useRef();
+  const [addedLinesToAdd, setAddedLinesToAdd] = useState(false);
+  const { data: custpropContexts = [] } = useAgreementsContexts();
+  // Ensure the custprops with no contexts get rendered
+  const contexts = ['isNull', ...custpropContexts];
 
   // The `agreementLinesToAdd` must be added here rather than in the parent route
   // handler because we don't want them to be part of the initialValues.
   // After all, they're being _added_, so their presence must dirty the form.
-  static getDerivedStateFromProps(props, state) {
-    const formState = props.form.getState();
+  useEffect(() => {
+    const formState = form.getState();
 
     if (
-      props.data.agreementLinesToAdd?.length &&
-      state.addedLinesToAdd === false &&
-      props.form.getRegisteredFields().includes('items')
+      data.agreementLinesToAdd?.length &&
+      addedLinesToAdd === false &&
+      form.getRegisteredFields().includes('items')
     ) {
-      props.form.change('items', [
-        ...get(formState, 'initialValues.items', []),
-        ...props.data.agreementLinesToAdd,
+      form.change('items', [
+        ...(formState?.initialValues?.items ?? []),
+        ...data.agreementLinesToAdd,
       ]);
 
-      props.handlers.onBasketLinesAdded();
-
-      return { addedLinesToAdd: true };
+      handlers.onBasketLinesAdded();
+      setAddedLinesToAdd(true);
     }
+  }, [addedLinesToAdd, data, form, handlers]);
 
-    return null;
-  }
+  const initialAccordionsState = {
+    formInternalContacts: true,
+    formLines: true,
+    formLicenses: true,
+    formOrganizations: true,
+    openAccessProperties: true,
+    supplementaryProperties: true,
+    formSupplementaryDocs: true,
+    formUsageProviders: true,
+    formRelatedAgreements: true,
+  };
 
-  getInitialAccordionsState = () => {
-    return {
-      formInternalContacts: true,
-      formLines: true,
-      formLicenses: true,
-      formOrganizations: true,
-      openAccessProperties: true,
-      supplementaryProperties: true,
-      formSupplementaryDocs: true,
-      formUsageProviders: true,
-      formRelatedAgreements: true,
-    };
-  }
-
-  getSectionProps(id) {
-    const { data, form, handlers, initialValues, values = {} } = this.props;
-
+  const getSectionProps = (theId) => {
     return {
       data,
       form,
       handlers,
-      id,
+      id: theId,
       initialValues,
       values,
     };
-  }
+  };
 
-  renderPaneFooter() {
-    const {
-      handlers,
-      handleSubmit,
-      pristine,
-      submitting,
-      values,
-    } = this.props;
-
+  const renderPaneFooter = () => {
     return (
       <PaneFooter
         renderEnd={(
@@ -166,9 +132,9 @@ class AgreementForm extends React.Component {
         )}
       />
     );
-  }
+  };
 
-  renderFirstMenu() {
+  const renderFirstMenu = () => {
     return (
       <PaneMenu>
         <FormattedMessage id="ui-agreements.agreements.closeEdit">
@@ -177,100 +143,133 @@ class AgreementForm extends React.Component {
               aria-label={ariaLabel}
               icon="times"
               id="close-agreement-form-button"
-              onClick={this.props.handlers.onClose}
+              onClick={handlers.onClose}
             />
           )}
         </FormattedMessage>
       </PaneMenu>
     );
-  }
+  };
 
   /* istanbul ignore next */
-  shortcuts = [
+  const shortcuts = [
     {
       name: 'save',
-      handler: (e) => handleSaveKeyCommand(e, this.props),
+      handler: (e) => handleSaveKeyCommand(e, { handleSubmit, pristine, submitting }),
     },
     {
       name: 'expandAllSections',
-      handler: (e) => expandAllSections(e, this.accordionStatusRef),
+      handler: (e) => expandAllSections(e, accordionStatusRef),
     },
     {
       name: 'collapseAllSections',
-      handler: (e) => collapseAllSections(e, this.accordionStatusRef),
+      handler: (e) => collapseAllSections(e, accordionStatusRef),
     }
   ];
 
-  render() {
-    const { data, form, values: { id, name } } = this.props;
+  const { id, name } = values;
+  const hasLoaded = form.getRegisteredFields().length > 0;
 
-    const hasLoaded = form.getRegisteredFields().length > 0;
+  return (
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
+    >
+      <Paneset>
+        <FormattedMessage id="ui-agreements.create">
+          {create => (
+            <Pane
+              appIcon={<AppIcon app="agreements" />}
+              centerContent
+              defaultWidth="100%"
+              firstMenu={renderFirstMenu()}
+              footer={renderPaneFooter()}
+              id="pane-agreement-form"
+              paneTitle={id ? <FormattedMessage id="ui-agreements.agreements.editAgreement.name" values={{ name }} /> : <FormattedMessage id="ui-agreements.agreements.createAgreement" />}
+            >
+              <TitleManager record={id ? name : create}>
+                <form id="form-agreement">
+                  <AccordionStatus ref={accordionStatusRef}>
+                    {hasLoaded ? <div id="form-loaded" /> : null}
+                    <Row end="xs">
+                      <Col xs>
+                        <ExpandAllButton />
+                      </Col>
+                    </Row>
+                    <AccordionSet initialStatus={initialAccordionsState}>
+                      <FormInfo {...getSectionProps('formInfo')} />
+                      <CustomPropertiesEdit
+                        contexts={contexts}
+                        customPropertiesEndpoint={CUSTPROP_ENDPOINT}
+                        id="supplementaryProperties"
+                        labelOverrides={{
+                          defaultTitle: (ctx) => <FormattedMessage id="ui-agreements.supplementaryProperties.defaultTitle" values={{ ctx }} />,
+                          noContext: <FormattedMessage id="ui-agreements.supplementaryProperties" />,
+                          OpenAccess: <FormattedMessage id="ui-agreements.openAccessProperties" />,
+                          primaryProperties: (
+                            <Headline margin="x-small" size="large" tag="h4">
+                              <FormattedMessage id="ui-agreements.supplementaryProperties.primaryProperties" />
+                            </Headline>
+                          ),
+                          optionalProperties: (
+                            <Headline margin="x-small" size="large" tag="h4">
+                              <FormattedMessage id="ui-agreements.supplementaryProperties.optionalProperties" />
+                            </Headline>
+                          )
+                        }}
+                      />
+                      <IfPermission perm="users.collection.get">
+                        {({ hasPermission }) => (hasPermission ?
+                          <FormInternalContacts {...getSectionProps('formInternalContacts')} />
+                          :
+                          null)}
+                      </IfPermission>
+                      <FormLines {...getSectionProps('formLines')} />
+                      <FormLicenses {...getSectionProps('formLicenses')} />
+                      <FormOrganizations {...getSectionProps('formOrganizations')} />
+                      <FormSupplementaryDocuments {...getSectionProps('formSupplementaryDocs')} />
+                      <IfAccordionIsVisible name="usageData">
+                        <FormUsageData {...getSectionProps('formUsageProviders')} />
+                      </IfAccordionIsVisible>
+                      <FormRelatedAgreements {...getSectionProps('formRelatedAgreements')} />
+                    </AccordionSet>
+                  </AccordionStatus>
+                </form>
+              </TitleManager>
+            </Pane>
+          )}
+        </FormattedMessage>
+      </Paneset>
+    </HasCommand>
+  );
+};
 
-    return (
-      <HasCommand
-        commands={this.shortcuts}
-        isWithinScope={checkScope}
-        scope={document.body}
-      >
-        <Paneset>
-          <FormattedMessage id="ui-agreements.create">
-            {create => (
-              <Pane
-                appIcon={<AppIcon app="agreements" />}
-                centerContent
-                defaultWidth="100%"
-                firstMenu={this.renderFirstMenu()}
-                footer={this.renderPaneFooter()}
-                id="pane-agreement-form"
-                paneTitle={id ? <FormattedMessage id="ui-agreements.agreements.editAgreement.name" values={{ name }} /> : <FormattedMessage id="ui-agreements.agreements.createAgreement" />}
-              >
-                <TitleManager record={id ? name : create}>
-                  <form id="form-agreement">
-                    <AccordionStatus ref={this.accordionStatusRef}>
-                      {hasLoaded ? <div id="form-loaded" /> : null}
-                      <Row end="xs">
-                        <Col xs>
-                          <ExpandAllButton />
-                        </Col>
-                      </Row>
-                      <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-                        <FormInfo {...this.getSectionProps('formInfo')} />
-                        <IfPermission perm="users.collection.get">
-                          {({ hasPermission }) => (hasPermission ?
-                            <FormInternalContacts {...this.getSectionProps('formInternalContacts')} />
-                            :
-                            null)}
-                        </IfPermission>
-                        <FormLines {...this.getSectionProps('formLines')} />
-                        <FormLicenses {...this.getSectionProps('formLicenses')} />
-                        <FormOrganizations {...this.getSectionProps('formOrganizations')} />
-                        {data.supplementaryProperties?.length > 0 ?
-                          <FormSupplementaryProperties {...this.getSectionProps('supplementaryProperties')} />
-                          :
-                          null
-                        }
-                        <FormSupplementaryDocuments {...this.getSectionProps('formSupplementaryDocs')} />
-                        <IfAccordionIsVisible name="usageData">
-                          <FormUsageData {...this.getSectionProps('formUsageProviders')} />
-                        </IfAccordionIsVisible>
-                        {data.openAccessProperties?.length > 0 ?
-                          <FormSupplementaryProperties {...this.getSectionProps('openAccessProperties')} />
-                          :
-                          null
-                        }
-                        <FormRelatedAgreements {...this.getSectionProps('formRelatedAgreements')} />
-                      </AccordionSet>
-                    </AccordionStatus>
-                  </form>
-                </TitleManager>
-              </Pane>
-            )}
-          </FormattedMessage>
-        </Paneset>
-      </HasCommand>
-    );
-  }
-}
+AgreementForm.propTypes = {
+  data: PropTypes.shape({
+    agreementLines: PropTypes.arrayOf(PropTypes.object).isRequired,
+    agreementLinesToAdd: PropTypes.arrayOf(PropTypes.object).isRequired,
+    openAccessProperties: PropTypes.arrayOf(PropTypes.object).isRequired,
+    supplementaryProperties: PropTypes.arrayOf(PropTypes.object).isRequired,
+  }).isRequired,
+  form: PropTypes.shape({
+    change: PropTypes.func.isRequired,
+    getRegisteredFields: PropTypes.func.isRequired,
+    getState: PropTypes.func.isRequired,
+  }).isRequired,
+  handlers: PropTypes.PropTypes.shape({
+    onBasketLinesAdded: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
+  }),
+  initialValues: PropTypes.object,
+  handleSubmit: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  onSubmit: PropTypes.func.isRequired,
+  invalid: PropTypes.bool,
+  pristine: PropTypes.bool,
+  submitting: PropTypes.bool,
+  values: PropTypes.object,
+};
 
 export default stripesFinalForm({
   initialValuesEqual: (a, b) => isEqual(a, b),

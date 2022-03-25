@@ -1,24 +1,18 @@
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useQuery, useQueryClient } from 'react-query';
-
-import { useOkapiKy } from '@folio/stripes/core';
+import { useQueryClient } from 'react-query';
 
 import { CustomPropertiesSettings } from '@k-int/stripes-kint-components';
 
 import { REFDATA_ENDPOINT, CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
+import useAgreementsContexts from '../../../hooks/useAgreementsContexts';
 
 const AgreementsCustomProperties = () => {
   const intl = useIntl();
-  const ky = useOkapiKy();
-
   const queryClient = useQueryClient();
 
-  const { data: custpropContexts = [] } = useQuery(
-    ['ui-agreements', 'settings', 'custpropContexts'],
-    () => ky('erm/custprops/contexts').json()
-  );
+  const { data: custpropContexts = [] } = useAgreementsContexts();
 
   const contexts = [
     {
@@ -50,9 +44,9 @@ const AgreementsCustomProperties = () => {
   return (
     <CustomPropertiesSettings
       afterQueryCalls={{
-        put: () => queryClient.invalidateQueries(['ui-agreements', 'settings', 'custpropContexts']),
-        post: () => queryClient.invalidateQueries(['ui-agreements', 'settings', 'custpropContexts']),
-        delete: () => queryClient.invalidateQueries(['ui-agreements', 'settings', 'custpropContexts'])
+        put: () => queryClient.invalidateQueries(['erm/custprops/contexts']),
+        post: () => queryClient.invalidateQueries(['erm/custprops/contexts']),
+        delete: () => queryClient.invalidateQueries(['erm/custprops/contexts'])
       }}
       contextFilterOptions={contexts}
       customPropertiesEndpoint={CUSTPROP_ENDPOINT}
