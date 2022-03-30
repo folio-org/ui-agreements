@@ -8,7 +8,7 @@
 #   - YARN_TEST_OPTIONS (options to pass to 'yarn test')
 #   - SQ_ROOT_DIR (root SQ directory to scan relative to top-level directory)
 #   - PUBLISH_MOD_DESCRIPTOR (boolean 'true' or 'false')
-#   - COMPILE_TRANSLATION_FILES (boolean 'true' or 'false')
+#   - COMPILE_TRANSLATION_FILES (boolean 'true' or'false')
 
 
 
