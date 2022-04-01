@@ -4,7 +4,7 @@ import { get } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 import { StripesConnectedSource } from '@folio/stripes/smart-components';
-import { generateQueryParams, preventResourceRefresh } from '@folio/stripes-erm-components';
+import { generateQueryParams } from '@folio/stripes-erm-components';
 
 import View from '../../components/views/Agreements';
 import NoPermissions from '../../components/NoPermissions';
@@ -72,11 +72,6 @@ class AgreementsRoute extends React.Component {
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreementOrg/role',
       shouldRefresh: () => false,
-    },
-    supplementaryProperties: {
-      type: 'okapi',
-      path: 'erm/custprops',
-      shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
     tagsValues: {
       type: 'okapi',
@@ -181,7 +176,6 @@ class AgreementsRoute extends React.Component {
           isPerpetualValues: get(resources, 'isPerpetualValues.records', []),
           contactRoleValues: get(resources, 'contactRoleValues.records', []),
           orgRoleValues: get(resources, 'orgRoleValues.records', []),
-          supplementaryProperties: resources?.supplementaryProperties?.records ?? [],
           tagsValues: get(resources, 'tagsValues.records', []),
         }}
         history={this.props.history}
@@ -199,4 +193,4 @@ class AgreementsRoute extends React.Component {
   }
 }
 
-export default stripesConnect(AgreementsRoute);
+export default stripesConnect(AgreementsRoute, { dataKey: 'agreementsRoute' });

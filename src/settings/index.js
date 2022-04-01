@@ -1,18 +1,22 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+
 import { Settings } from '@folio/stripes/smart-components';
 import { useSettings } from '@k-int/stripes-kint-components';
 
 import GeneralSettings from './GeneralSettings';
 
 import {
-  SupplementaryPropertiesConfigRoute,
   PickListSettings,
   PickListValueSettings
 } from './routes';
 
-const REFDATA_ENDPOINT = 'erm/refdata';
-const SETTINGS_ENDPOINT = 'erm/settings/appSettings';
+import {
+  REFDATA_ENDPOINT,
+  SETTINGS_ENDPOINT
+} from '../constants/endpoints';
+
+import { AgreementsCustomProperties } from './components';
 
 const ErmSettings = (props) => {
   const { isLoading, pageList, SettingsContextProvider } = useSettings({
@@ -34,7 +38,7 @@ const ErmSettings = (props) => {
           component: GeneralSettings,
         },
         {
-          component: SupplementaryPropertiesConfigRoute,
+          component: AgreementsCustomProperties,
           label: <FormattedMessage id="ui-agreements.settings.supplementaryProperties" />,
           perm: 'ui-agreements.supplementaryProperties.manage',
           route: 'supplementaryProperties',
