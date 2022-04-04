@@ -25,6 +25,8 @@ class AgreementCreateRoute extends React.Component {
       shouldRefresh: () => false,
     },
     supplementaryProperties: {
+      limitParam: 'perPage',
+      perRequest: 100,
       type: 'okapi',
       path: 'erm/custprops',
       shouldRefresh: () => false,

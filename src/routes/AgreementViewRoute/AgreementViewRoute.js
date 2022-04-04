@@ -102,11 +102,15 @@ class AgreementViewRoute extends React.Component {
       records: 'configs',
     },
     supplementaryProperties: {
+      limitParam: 'perPage',
+      perRequest: 100,
       type: 'okapi',
       path: 'erm/custprops',
       shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
     terms: {
+      limitParam: 'perPage',
+      perRequest: 100,
       type: 'okapi',
       path: 'licenses/custprops',
     },
