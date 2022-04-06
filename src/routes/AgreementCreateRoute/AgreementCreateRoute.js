@@ -24,11 +24,6 @@ class AgreementCreateRoute extends React.Component {
       fetch: false,
       shouldRefresh: () => false,
     },
-    supplementaryProperties: {
-      type: 'okapi',
-      path: 'erm/custprops',
-      shouldRefresh: () => false,
-    },
     agreementStatusValues: {
       type: 'okapi',
       path: 'erm/refdata/SubscriptionAgreement/agreementStatus',
@@ -156,7 +151,6 @@ class AgreementCreateRoute extends React.Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
       statusValues: PropTypes.object,
-      supplementaryProperties: PropTypes.object,
       typeValues: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
@@ -192,7 +186,7 @@ class AgreementCreateRoute extends React.Component {
     this.props.history.push(`${urls.agreements()}${location.search}`);
   }
 
-   /* istanbul ignore next */
+  /* istanbul ignore next */
   handleSubmit = (agreement) => {
     const { history, location, mutator, resources } = this.props;
     const relationshipTypeValues = resources?.relationshipTypeValues?.records ?? [];
@@ -239,17 +233,10 @@ class AgreementCreateRoute extends React.Component {
   }
 
   getInitialValues = () => {
-    const customProperties = {};
-    (this.props.resources?.supplementaryProperties?.records || [])
-      .filter(term => term.primary)
-      // Change default to be an ignored customProperty.
-      // This means any changes without setting the value will be ignored
-      .forEach(term => { customProperties[term.name] = [{ _delete: true }]; });
     const periods = [{}];
 
     return {
       periods,
-      customProperties,
     };
   }
 
@@ -268,7 +255,6 @@ class AgreementCreateRoute extends React.Component {
           reasonForClosureValues: (resources?.reasonForClosureValues?.records ?? []),
           amendmentStatusValues: (resources?.amendmentStatusValues?.records ?? []),
           basket: (resources?.basket ?? []),
-          supplementaryProperties: (resources?.supplementaryProperties?.records ?? []),
           contactRoleValues: (resources?.contactRoleValues?.records ?? []),
           documentCategories: (resources?.documentCategories?.records ?? []),
           isPerpetualValues: (resources?.isPerpetualValues?.records ?? []),

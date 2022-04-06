@@ -23,7 +23,6 @@ jest.mock('../../AgreementSections/FormLines', () => () => <div>FormLines</div>)
 jest.mock('../../AgreementSections/FormOrganizations', () => () => <div>FormOrganizations</div>);
 jest.mock('../../AgreementSections/FormRelatedAgreements', () => () => <div>FormRelatedAgreements</div>);
 jest.mock('../../AgreementSections/FormSupplementaryDocuments', () => () => <div>FormSupplementaryDocuments</div>);
-jest.mock('../../AgreementSections/FormSupplementaryProperties', () => () => <div>FormSupplementaryProperties</div>);
 jest.mock('../../AgreementSections/FormUsageData', () => () => <div>FormUsageData</div>);
 
 jest.mock('../../IfAccordionIsVisible', () => ({ children }) => {
@@ -75,30 +74,20 @@ describe('AgreementForm', () => {
       expect(getByText('FormLines')).toBeInTheDocument();
     });
 
-
     it('renders the FormOrganizations component', () => {
       const { getByText } = renderComponent;
       expect(getByText('FormOrganizations')).toBeInTheDocument();
     });
-
 
     it('renders the FormRelatedAgreements component', () => {
       const { getByText } = renderComponent;
       expect(getByText('FormRelatedAgreements')).toBeInTheDocument();
     });
 
-
     it('renders the FormSupplementaryDocuments component', () => {
       const { getByText } = renderComponent;
       expect(getByText('FormSupplementaryDocuments')).toBeInTheDocument();
     });
-
-
-    it('renders the FormSupplementaryProperties component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('FormSupplementaryProperties')).toBeInTheDocument();
-    });
-
 
     it('renders the FormUsageData component', () => {
       const { getByText } = renderComponent;
@@ -150,30 +139,20 @@ describe('AgreementForm', () => {
       expect(getByText('FormLines')).toBeInTheDocument();
     });
 
-
     it('renders the FormOrganizations component', () => {
       const { getByText } = renderComponent;
       expect(getByText('FormOrganizations')).toBeInTheDocument();
     });
-
 
     it('renders the FormRelatedAgreements component', () => {
       const { getByText } = renderComponent;
       expect(getByText('FormRelatedAgreements')).toBeInTheDocument();
     });
 
-
     it('renders the FormSupplementaryDocuments component', () => {
       const { getByText } = renderComponent;
       expect(getByText('FormSupplementaryDocuments')).toBeInTheDocument();
     });
-
-
-    it('renders the FormSupplementaryProperties component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('FormSupplementaryProperties')).toBeInTheDocument();
-    });
-
 
     it('renders the FormUsageData component', () => {
       const { getByText } = renderComponent;

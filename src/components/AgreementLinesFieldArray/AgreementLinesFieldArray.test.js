@@ -7,7 +7,10 @@ import AgreementLinesFieldArray from './AgreementLinesFieldArray';
 
 import translationsProperties from '../../../test/helpers';
 
-jest.mock('../IfEResourcesEnabled', () => ({ children }) => <>{children}</>);
+jest.mock('../IfEResourcesEnabled', () => ({ children }) => {
+  return typeof children === 'function' ? children({ isEnabled: true }) : children;
+});
+
 jest.mock('./AgreementLineField', () => () => <div>AgreementLineField</div>);
 
 const onSubmit = jest.fn();

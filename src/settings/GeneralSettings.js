@@ -23,7 +23,7 @@ class GeneralSettings extends React.Component {
     hideAccordions: hiddenAccordions,
     hideEResourcesFunctionality: false,
     pageSize: defaultMclPageSize.pageSize,
-  }
+  };
 
   beforeSave(data) {
     return JSON.stringify(data);
