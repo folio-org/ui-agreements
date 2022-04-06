@@ -1,5 +1,9 @@
 # Change history for ui-agreements
 
+## 8.1.1 2022-04-06
+* ERM-2072. A maximum of 10 custom properties are retrieved for agreements and licenses
+* ERM-2063. Users information not retrieved/displayed for Internal Contact for agreement
+
 ## 8.1.0 2022-03-03
 * ERM-1999. "Load More" button not working - Agreement Lines
 * ERM-1990. Add hyperlink to ERM Comparison comparison points (Registry entry)

@@ -102,11 +102,15 @@ class AgreementViewRoute extends React.Component {
       records: 'configs',
     },
     supplementaryProperties: {
+      limitParam: 'perPage',
+      perRequest: 100,
       type: 'okapi',
       path: 'erm/custprops',
       shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
     },
     terms: {
+      limitParam: 'perPage',
+      perRequest: 100,
       type: 'okapi',
       path: 'licenses/custprops',
     },
@@ -120,9 +124,12 @@ class AgreementViewRoute extends React.Component {
           .map(contact => `id==${contact.user}`)
           .join(' or ');
 
-        return query ? { query } : null;
+        return query ? { query } : '';
       },
-      fetch: props => !!props.stripes.hasInterface('users', '15.0'),
+      fetch: props => (
+        !!props.stripes.hasInterface('users', '15.0') &&
+        props?.resources?.agreement?.records?.[0]?.contacts?.length > 0
+      ),
       permissionsRequired: 'users.collection.get',
       records: 'users',
     },

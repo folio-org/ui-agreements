@@ -10,7 +10,8 @@ class SupplementaryPropertiesConfigRoute extends React.Component {
       type: 'okapi',
       path: 'erm/custprops',
       params: {
-        sort: 'id;desc'
+        sort: 'id;desc',
+        perPage: '100'
       },
       clientGeneratePk: false,
       throwErrors: false,
