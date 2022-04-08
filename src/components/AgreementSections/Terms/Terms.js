@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Accordion } from '@folio/stripes/components';
-import { CustomPropertiesList } from '@folio/stripes-erm-components';
+import { CustomPropertyCard } from '@k-int/stripes-kint-components';
 
 export default class Terms extends React.Component {
   static propTypes = {
@@ -14,19 +14,32 @@ export default class Terms extends React.Component {
         }).isRequired,
       })),
     }),
-    data: PropTypes.shape({
-      terms: PropTypes.arrayOf(PropTypes.object),
-    }),
     id: PropTypes.string,
+    terms: PropTypes.arrayOf(PropTypes.object),
+  }
+
+  static defaultProps = {
+    terms: [],
   }
 
   renderTermsList = (controllingLicense) => {
-    const license = controllingLicense.remoteId_object;
+    const customProperties = controllingLicense.remoteId_object?.customProperties || [];
+    const terms = this.props.terms;
     return (
-      <CustomPropertiesList
-        customProperties={this.props.data.terms}
-        resource={license}
-      />
+      <div>
+        {terms.map((term, index) => (
+          <CustomPropertyCard
+            key={`custom-property-card[${index}]`}
+            ctx={term.ctx}
+            customProperty={customProperties?.[term.name]?.[0]}
+            customPropertyDefinition={term}
+            index={index}
+            labelOverrides={{
+              retiredName: (name) => <FormattedMessage id="ui-agreements.supplementaryProperties.deprecated" values={{ name }} />,
+            }}
+          />
+        ))}
+      </div>
     );
   }
 

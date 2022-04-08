@@ -24,7 +24,7 @@ import { AppIcon, TitleManager, HandlerManager, useStripes } from '@folio/stripe
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
-import { CustomPropertiesView } from '@k-int/stripes-kint-components';
+import { CustomPropertiesView, useCustomProperties } from '@k-int/stripes-kint-components';
 
 import DuplicateAgreementModal from '../../DuplicateAgreementModal';
 
@@ -49,7 +49,7 @@ import useAgreementsContexts from '../../../hooks/useAgreementsContexts';
 
 import { urls } from '../../utilities';
 import { statuses } from '../../../constants';
-import { CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
+import { CUSTPROP_ENDPOINT, LICENSE_CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
 
 const Agreement = ({
   data,
@@ -67,6 +67,18 @@ const Agreement = ({
   // Ensure the custprops with no contexts get rendered
   const contexts = ['isNull', ...custpropContexts];
 
+  const { data: terms } = useCustomProperties({
+    endpoint: LICENSE_CUSTPROP_ENDPOINT,
+    returnQueryObject: true,
+    options: {
+      sort: [
+        { path: 'retired' }, // Place retired custprops at the end
+        { path: 'primary', direction: 'desc' }, // Primary properties should display before optional
+        { path: 'label' } // Within those groups, sort by label
+      ]
+    }
+  });
+
   const getSectionProps = (id) => {
     return {
       agreement: data.agreement,
@@ -75,6 +87,7 @@ const Agreement = ({
       id,
       handlers,
       searchString: data.searchString,
+      terms
     };
   };
 
