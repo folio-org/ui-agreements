@@ -64,19 +64,19 @@ export default class PackageInfo extends React.Component {
         <Row>
           <Col xs={3}>
             <KeyValue
-              label="Provider"
+              label={<FormattedMessage id="ui-agreements.eresources.provider" />}
               value={eresource?.vendor?.name || <NoValue />}
             />
           </Col>
           <Col xs={3}>
             <KeyValue
-              label="Source"
+              label={<FormattedMessage id="ui-agreements.eresources.source" />}
               value={eresource.source || <NoValue />}
             />
           </Col>
           <Col xs={6}>
             <KeyValue
-              label="Reference"
+              label={<FormattedMessage id="ui-agreements.eresources.reference" />}
               value={eresource.reference || <NoValue />}
             />
           </Col>
