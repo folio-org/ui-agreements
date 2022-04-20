@@ -23,6 +23,7 @@ import {
 } from '../../EResourceSections';
 
 import { urls } from '../../utilities';
+import importedEresource from '../../EResourceSections/ExtendedPackageInformation/testResources';
 
 export default class Package extends React.Component {
   static propTypes = {
@@ -56,7 +57,14 @@ export default class Package extends React.Component {
   }
 
   render() {
+    // TEST
+    const alternateResourceNames = importedEresource.alternateResourceNames;
+    const description = importedEresource.description;
+    const packageDescriptionUrls = importedEresource.packageDescriptionUrls;
+    // console.log(importedEresource);
+    // END TEST
     const { data, handlers } = this.props;
+    // const { data: { eresource: { alternateResourceNames, description, packageDescriptionUrls } } } = this.props;
 
     /* istanbul ignore next */
     const shortcuts = [
@@ -85,7 +93,11 @@ export default class Package extends React.Component {
               </Col>
             </Row>
             <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-              <ExtendedPackageInformation {...this.getSectionProps('extendedPackageInformation')} />
+              {description || alternateResourceNames?.length > 0 || packageDescriptionUrls?.length > 0 ?
+                <ExtendedPackageInformation {...this.getSectionProps('extendedPackageInformation')} />
+                :
+                null}
+              {/* <ExtendedPackageInformation {...this.getSectionProps('extendedPackageInformation')} /> */}
               <Agreements
                 {...this.getSectionProps('eresourceAgreements')}
                 isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsPackage" />}
