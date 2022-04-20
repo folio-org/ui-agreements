@@ -275,6 +275,7 @@
   "eresources.coverage": "Coverage",
   "eresources.defaultCoverage": "Default coverage",
   "eresources.description": "Description",
+  "eresources.extendedPackageInformation": "Extended package information",
   "eresources.packageDescriptionUrls": "Package description URLs",
   "eresources.availability": "Availability",
   "eresources.sourceCreated": "Source created",

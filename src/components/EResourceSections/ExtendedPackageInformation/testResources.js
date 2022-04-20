@@ -88,7 +88,7 @@ const eresource = {
   },
   'suppressFromDiscovery': false,
   'sourceDataCreated': '2022-03-21T23:00:04Z',
-  'description': 'bla bla bla',
+  'description': 'a package description',
   'reference': 'IGI_Global:IGI_Global_InfoSci-Journals:Konsortiallizenz',
   'resourceCount': 0,
   'class': 'org.olf.kb.Pkg'

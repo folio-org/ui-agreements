@@ -14,9 +14,6 @@ import { FormattedDateTime } from '@folio/stripes-erm-components';
 import { resourceClasses } from '../../../constants';
 
 import AddToBasketButton from '../../AddToBasketButton';
-// TEST
-import eresource from '../ExtendedPackageInformation/testResources';
-// END TEST
 
 export default class PackageInfo extends React.Component {
   static propTypes = {
@@ -73,7 +70,7 @@ export default class PackageInfo extends React.Component {
   );
 
   render() {
-    // const { data: { eresource } } = this.props;
+    const { data: { eresource } } = this.props;
     const entitlementOption = {
       class: resourceClasses.PACKAGE,
       id: eresource.id,

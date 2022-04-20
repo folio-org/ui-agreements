@@ -5,9 +5,9 @@ import { FormattedMessage } from 'react-intl';
 import {
   Accordion,
   Col,
-  Headline,
+  Icon,
   KeyValue,
-  NoValue,
+  MultiColumnList,
   Row
 } from '@folio/stripes/components';
 
@@ -15,41 +15,64 @@ const ExtendedPackageInformation = ({
   eresource: { alternateResourceNames, description, packageDescriptionUrls },
   id
 }) => {
-  // const renderAlternativeNames
+  const renderAlternativeNames = () => (
+    <MultiColumnList
+      columnMapping={{ name: <FormattedMessage id="ui-agreements.alternativeNames" /> }}
+      contentData={alternateResourceNames}
+      id="alternate-resource-names-list"
+      visibleColumns={['name']}
+    />
+  );
+
+  const renderPackageDescriptionUrls = () => (
+    <MultiColumnList
+      columnMapping={{ url: <FormattedMessage id="ui-agreements.eresources.packageDescriptionUrls" /> }}
+      contentData={packageDescriptionUrls}
+      formatter={{
+        url: item => (
+          <a
+            href={item.url}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <Icon icon="external-link" iconPosition="end">{item.url}</Icon>
+          </a>
+        ),
+      }}
+      id="package-description-urls-list"
+      visibleColumns={['url']}
+    />
+  );
+
   return (
     <Accordion
       id={id}
-      label="Extended package information"
+      label={<FormattedMessage id="ui-agreements.eresources.extendedPackageInformation" />}
     >
-      <Row>
-        <Col xs={12}>
-          {/* <Headline>
-              <FormattedMessage id="ui-agreements.eresources.description" />
-            </Headline> */}
-          <KeyValue
-            label={<FormattedMessage id="ui-agreements.eresources.description" />}
-            value={description ?? <NoValue />}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          <div>
-            <Headline>
-              <FormattedMessage id="ui-agreements.eresources.packageDescriptionUrls" />
-            </Headline>
-          </div>
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          <div>
-            <Headline>
-              <FormattedMessage id="ui-agreements.alternativeNames" />
-            </Headline>
-          </div>
-        </Col>
-      </Row>
+      {description &&
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-agreements.eresources.description" />}
+              value={description}
+            />
+          </Col>
+        </Row>
+      }
+      {packageDescriptionUrls?.length > 0 &&
+        <Row>
+          <Col xs={12}>
+            {renderPackageDescriptionUrls()}
+          </Col>
+        </Row>
+      }
+      {alternateResourceNames?.length > 0 &&
+        <Row>
+          <Col xs={12}>
+            {renderAlternativeNames()}
+          </Col>
+        </Row>
+      }
     </Accordion>
   );
 };
@@ -67,7 +90,10 @@ ExtendedPackageInformation.propTypes = {
     }),
     contentTypes: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string,
-      contentType: PropTypes.string
+      contentType: PropTypes.shape({
+        label: PropTypes.string,
+        value: PropTypes.string
+      }),
     })),
     description: PropTypes.string,
     id: PropTypes.string,
