@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+
+import { useMutation, useQuery } from 'react-query';
+import { useIntl } from 'react-intl';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
+
 import { get, flatten, uniqBy, chunk } from 'lodash';
 import compose from 'compose-function';
-import { injectIntl } from 'react-intl';
 
-import { CalloutContext, stripesConnect } from '@folio/stripes/core';
+import { CalloutContext, stripesConnect, useOkapiKy } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
-import { preventResourceRefresh, Tags } from '@folio/stripes-erm-components';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
+
+import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import withFileHandlers from '../components/withFileHandlers';
 import View from '../../components/views/Agreement';
@@ -16,263 +20,167 @@ import { errorTypes, resultCount } from '../../constants';
 
 import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
 
+import { useAgreementsHelperApp, useInfiniteFetch } from '../../hooks';
+
 const { RECORDS_PER_REQUEST_MEDIUM, RECORDS_PER_REQUEST_LARGE } = resultCount;
 
 const credentialsArray = [];
-class AgreementViewRoute extends React.Component {
-  static manifest = Object.freeze({
-    agreement: {
-      type: 'okapi',
-      path: 'erm/sas/:{id}',
-      shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
+const AgreementViewRoute = ({
+  handlers = {},
+  history,
+  location,
+  match: { params: { id: agreementId } },
+  mutator,
+  resources,
+  stripes,
+  tagsEnabled
+}) => {
+  const { okapi } = stripes;
+
+  const [orderLines, setOrderLines] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [eresourcesFilterPath, setEresourcesFilterPath] = useState('current');
+
+  const intl = useIntl();
+
+  const callout = useContext(CalloutContext);
+
+  const ky = useOkapiKy();
+
+  const {
+    handleToggleTags,
+    HelperComponent,
+    TagButton,
+  } = useAgreementsHelperApp(tagsEnabled);
+
+  const agreementPath = `erm/sas/${agreementId}`;
+  const agreementLinePath = 'erm/entitlements';
+  const agreementEresourcesPath = `erm/sas/${agreementId}/resources/${eresourcesFilterPath}`;
+
+  const {
+    data: agreement = {
+      contacts: [],
+      orgs: []
     },
-    agreementLines: {
-      type: 'okapi',
-      path: 'erm/entitlements',
-      limitParam: 'perPage',
-      perRequest: (_q, _p, _r, _l, props) => parseMclPageSize(props.resources?.settings, 'agreementLines'),
-      params: (_q, params, _r, _l, _p) => ({
-        filters: `owner=${params?.id}`,
-        sort: [
-          'type;asc',
-          'resource.name;asc',
-          'reference;asc',
-          'id;asc'
+    isLoading: isAgreementLoading
+  } = useQuery(
+    [agreementPath, 'ui-agreements', 'AgreementViewRoute', 'getAgreement'],
+    () => ky.get(agreementPath).json()
+  );
+
+  const { mutateAsync: deleteAgreement } = useMutation(
+    [agreementPath, 'ui-agreements', 'AgreementViewRoute', 'deleteAgreement'],
+    () => ky.delete(agreementPath)
+  );
+
+  // AGREEMENT LINES INFINITE FETCH
+  const agreementLineQueryParams = useMemo(() => (
+    generateKiwtQueryParams(
+      {
+        filters: [
+          {
+            path: 'owner',
+            value: agreementId
+          }
         ],
-        stats: 'true',
-      }),
-      records: 'results',
-      accumulate: 'true',
-      resultOffset: (_q, _p, _r, _l, props) => {
-        const { match, resources } = props;
-        const resultOffset = resources?.agreementLinesOffset;
-        const agreementId = resources?.agreement?.records?.[0]?.id;
-        return agreementId !== match.params.id ? 0 : resultOffset;
+        sort: [
+          { path: 'type' },
+          { path: 'resource.name' },
+          { path: 'reference' },
+          { path: 'id' }
+        ],
+        perPage: parseMclPageSize(resources?.settings, 'agreementLines')
       },
-      shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
+      {}
+    )
+  ), [agreementId, resources?.settings]);
+
+  const {
+    infiniteQueryObject: {
+      fetchNextPage: fetchNextLinesPage,
+      isLoading: areLinesLoading
     },
-    agreementEresources: {
-      type: 'okapi',
-      path: 'erm/sas/:{id}/resources/%{eresourcesFilterPath}',
-      limitParam: 'perPage',
-      perRequest: (_q, _p, _r, _l, props) => parseMclPageSize(props.resources?.settings, 'agreementEresources'),
-      records: 'results',
-      resultOffset: (_q, _p, _r, _l, props) => {
-        const { match, resources } = props;
-        const resultOffset = resources?.agreementEresourcesOffset;
-        const agreementId = resources?.agreement?.records?.[0]?.id;
-        return agreementId !== match.params.id ? 0 : resultOffset;
-      },
-      params: {
-        sort: 'pti.titleInstance.name;asc',
-        stats: 'true',
-      },
-      shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
-    },
-    eresourcesFilterPath: { initialValue: 'current' },
-    interfaces: {
-      type: 'okapi',
-      path: 'organizations-storage/interfaces',
-      perRequest: RECORDS_PER_REQUEST_MEDIUM,
-      params: (_q, _p, _r, _l, props) => {
-        const orgs = get(props.resources, 'agreement.records[0].orgs', []);
-        const interfaces = flatten(orgs.map(o => get(o, 'org.orgsUuid_object.interfaces', [])));
-        const query = [
-          ...new Set(interfaces.map(i => `id==${i}`))
-        ].join(' or ');
-
-        return query ? { query } : {};
-      },
-      fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '2.0'),
-      permissionsRequired: 'organizations-storage.interfaces.collection.get',
-      records: 'interfaces',
-    },
-    orderLines: {
-      type: 'okapi',
-      perRequest: RECORDS_PER_REQUEST_LARGE,
-      path: 'orders/order-lines',
-      accumulate: 'true',
-      fetch: false,
-      records: 'poLines',
-      throwErrors: false,
-    },
-    settings: {
-      type: 'okapi',
-      path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
-      records: 'configs',
-    },
-    users: {
-      type: 'okapi',
-      path: 'users',
-      perRequest: RECORDS_PER_REQUEST_MEDIUM,
-      params: (_q, _p, _r, _l, props) => {
-        const query = get(props.resources, 'agreement.records[0].contacts', [])
-          .filter(contact => contact.user)
-          .map(contact => `id==${contact.user}`)
-          .join(' or ');
-
-        return query ? { query } : '';
-      },
-      fetch: props => (
-        !!props.stripes.hasInterface('users', '15.0') &&
-        props?.resources?.agreement?.records?.[0]?.contacts?.length > 0
-      ),
-      permissionsRequired: 'users.collection.get',
-      records: 'users',
-    },
-    interfacesCredentials: {
-      clientGeneratePk: false,
-      throwErrors: false,
-      path: 'organizations-storage/interfaces/%{interfaceRecord.id}/credentials',
-      type: 'okapi',
-      pk: 'FAKE_PK',  // it's done to fool stripes-connect not to add cred id to the path's end.
-      permissionsRequired: 'organizations-storage.interfaces.credentials.item.get',
-      fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '1.0 2.0'),
-    },
-    interfaceRecord: {},
-    agreementEresourcesOffset: { initialValue: 0 },
-    agreementLinesOffset: { initialValue: 0 },
-    query: {},
-  });
-
-  static propTypes = {
-    handlers: PropTypes.object,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    intl: PropTypes.object,
-    location: PropTypes.shape({
-      search: PropTypes.string.isRequired,
-    }).isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-      }).isRequired
-    }).isRequired,
-    mutator: PropTypes.shape({
-      agreement: PropTypes.shape({
-        DELETE: PropTypes.func.isRequired,
-      }),
-      eresourcesFilterPath: PropTypes.shape({
-        replace: PropTypes.func,
-      }),
-      agreementLines: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
-        reset: PropTypes.func
-      }),
-      interfaceRecord: PropTypes.shape({
-        replace: PropTypes.func,
-      }),
-      orderLines: PropTypes.shape({
-        GET: PropTypes.func,
-        reset: PropTypes.func,
-      }),
-      agreementEresourcesOffset: PropTypes.shape({
-        replace: PropTypes.func,
-      }).isRequired,
-      agreementLinesOffset: PropTypes.shape({
-        replace: PropTypes.func,
-      }).isRequired,
-      query: PropTypes.shape({
-        update: PropTypes.func.isRequired,
-      }).isRequired,
-    }).isRequired,
-    resources: PropTypes.shape({
-      agreement: PropTypes.object,
-      agreementLines: PropTypes.object,
-      agreementEresources: PropTypes.object,
-      eresourcesFilterPath: PropTypes.string,
-      interfaces: PropTypes.object,
-      orderLines: PropTypes.object,
-      query: PropTypes.object,
-      settings: PropTypes.object,
-      users: PropTypes.object,
-    }).isRequired,
-    stripes: PropTypes.shape({
-      hasInterface: PropTypes.func.isRequired,
-      hasPerm: PropTypes.func.isRequired,
-      okapi: PropTypes.shape({
-        tenant: PropTypes.string.isRequired,
-        token: PropTypes.string.isRequired,
-        url: PropTypes.string.isRequired,
-      }).isRequired,
-    }).isRequired,
-    tagsEnabled: PropTypes.bool,
-  };
-
-  static defaultProps = {
-    handlers: {},
-  }
-
-  static contextType = CalloutContext;
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      orderLines: [],
-      isLoading: true,
-    };
-  }
-
-  async componentDidMount() {
-    await this.fetchOrderLines();
-  }
-
-  async componentDidUpdate(prevProps) {
-    const prevLines = prevProps.resources?.agreementLines?.records ?? [];
-    const newLines = this.props.resources?.agreementLines?.records ?? [];
-    const { mutator } = this.props;
-    if (
-      prevLines?.length !== newLines?.length ||
-      this.countPoLines(prevLines) !== this.countPoLines(newLines)
-    ) {
-      await this.fetchOrderLines();
+    results: agreementLines = [],
+    total: agreementLineCount = 0
+  } = useInfiniteFetch(
+    [agreementLinePath, agreementLineQueryParams, 'ui-agreements', 'AgreementViewRoute', 'getLines'],
+    ({ pageParam = 0 }) => {
+      const params = [...agreementLineQueryParams, `offset=${pageParam}`];
+      return ky.get(`${agreementLinePath}?${params?.join('&')}`).json();
     }
+  );
 
-    if (prevProps?.resources?.agreement?.records?.[0]?.id !== this.props?.resources?.agreement?.records?.[0]?.id) {
-      mutator.agreementEresourcesOffset.replace(0);
-      mutator.agreementLinesOffset.replace(0);
-      await this.fetchOrderLines();
+  // AGREEMENT ERESOURCES INFINITE FETCH
+  const agreementEresourcesQueryParams = useMemo(() => (
+    generateKiwtQueryParams({
+      sort: [
+        { path: 'pti.titleInstance.name' }
+      ],
+      perPage: parseMclPageSize(resources?.settings, 'agreementEresources')
+    }, {})
+  ), [resources?.settings]);
+
+  const {
+    infiniteQueryObject: {
+      fetchNextPage: fetchNextEresourcePage,
+      isLoading: areEresourcesLoading
+    },
+    results: agreementEresources = [],
+    total: agreementEresourcesCount = 0
+  } = useInfiniteFetch(
+    [agreementEresourcesPath, agreementEresourcesQueryParams, 'ui-agreements', 'AgreementViewRoute', 'getEresources'],
+    ({ pageParam = 0 }) => {
+      const params = [...agreementEresourcesQueryParams, `offset=${pageParam}`];
+      return ky.get(`${agreementEresourcesPath}?${params?.join('&')}`).json();
     }
-  }
+  );
 
-  countPoLines(lines) {
-    return lines.reduce((agg, curr) => agg + curr?.poLines?.length || 0, 0);
-  }
-
-  async fetchOrderLines() {
-    const lines = this.props.resources?.agreementLines?.records ?? [];
-    const poLineIdsArray = (lines ?? [])
+  /*
+   * Calculate poLineIdsArray outside of the useEffect hook,
+   * so we can accurately tell if it changes and avoid infinite loop
+   */
+  const poLineIdsArray = useMemo(() => (
+    agreementLines
       .filter(line => line.poLines && line.poLines.length)
-      .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat();
+      .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat()
+  ), [agreementLines]);
 
-    const CONCURRENT_REQUESTS = 5; // Number of requests to make concurrently
-    const STEP_SIZE = 60; // Number of ids to request for per concurrent request
+  // On mount, fetch order lines and then set states
+  useEffect(() => {
+    if (!isAgreementLoading && !areLinesLoading && !areEresourcesLoading) {
+      const fetchOrderLines = async () => {
+        const CONCURRENT_REQUESTS = 5; // Number of requests to make concurrently
+        const STEP_SIZE = 60; // Number of ids to request for per concurrent request
 
-    const chunkedItems = chunk(poLineIdsArray, CONCURRENT_REQUESTS * STEP_SIZE); // Split into chunks of size CONCURRENT_REQUESTS * STEP_SIZE
-    const data = [];
-    for (const chunkedItem of chunkedItems) {  // Make requests concurrently
-      this.props.mutator.orderLines.reset();
-      const promisesArray = []; // Array of promises
-      for (let i = 0; i < chunkedItem.length; i += STEP_SIZE) {
-        promisesArray.push( // Add promises to array
-          this.props.mutator.orderLines.GET({ // Make GET request
-            params: {
-              query: chunkedItem.slice(i, i + STEP_SIZE).map(item => `id==${item}`).join(' or '), // Make query string
-              limit: 1000, // Limit to 1000
-            },
-          })
-        );
-      }
-      const results = await Promise.all(promisesArray); // Wait for all requests to complete and move to the next chunk
-      data.push(...results.flat()); // Add results to data
+        const chunkedItems = chunk(poLineIdsArray, CONCURRENT_REQUESTS * STEP_SIZE); // Split into chunks of size CONCURRENT_REQUESTS * STEP_SIZE
+        const data = [];
+        for (const chunkedItem of chunkedItems) {  // Make requests concurrently
+          mutator.orderLines.reset();
+          const promisesArray = []; // Array of promises
+          for (let i = 0; i < chunkedItem.length; i += STEP_SIZE) {
+            promisesArray.push( // Add promises to array
+              mutator.orderLines.GET({ // Make GET request
+                params: {
+                  query: chunkedItem.slice(i, i + STEP_SIZE).map(item => `id==${item}`).join(' or '), // Make query string
+                  limit: 1000, // Limit to 1000
+                },
+              })
+            );
+          }
+          const results = await Promise.all(promisesArray); // Wait for all requests to complete and move to the next chunk
+          data.push(...results.flat()); // Add results to data
+        }
+
+        setOrderLines(data);
+        setIsLoading(false);
+      };
+
+      fetchOrderLines();
     }
+  }, [poLineIdsArray, mutator.orderLines, isAgreementLoading, areEresourcesLoading, areLinesLoading]);
 
-    this.setState({ orderLines: data, isLoading: false });
-  }
-
-  downloadBlob = (name) => (
+  const downloadBlob = (name) => (
     blob => {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -282,18 +190,17 @@ class AgreementViewRoute extends React.Component {
       a.click();
       a.remove();
     }
-  )
+  );
 
-  getCompositeAgreement = () => {
-    const { resources } = this.props;
-    const agreement = get(resources, 'agreement.records[0]', {
-      contacts: [],
-      orgs: [],
-    });
+  const getRecord = (id, resourceType) => {
+    return get(resources, `${resourceType}.records`, [])
+      .find(i => i.id === id);
+  };
 
+  const getCompositeAgreement = () => {
     const contacts = agreement.contacts.map(c => ({
       ...c,
-      user: this.getRecord(c.user, 'users') || c.user,
+      user: getRecord(c.user, 'users') || c.user,
     }));
 
     const interfacesCredentials = uniqBy(get(resources, 'interfacesCredentials.records', []), 'id');
@@ -309,7 +216,7 @@ class AgreementViewRoute extends React.Component {
       ...o,
       interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
         .map(id => ({
-          ...this.getRecord(id, 'interfaces') || {},
+          ...getRecord(id, 'interfaces') || {},
           credentials: credentialsArray.find(cred => cred.interfaceId === id)
         })),
     }));
@@ -319,67 +226,17 @@ class AgreementViewRoute extends React.Component {
     return {
       ...agreement,
       contacts,
-      lines: this.getLinesRecords(),
-      agreementLinesCount: get(resources, 'agreementLines.other.totalRecords') ?? 0,
-      eresources: this.getAgreementEresourcesRecords(),
-      eresourcesCount: get(resources, 'agreementEresources.other.totalRecords'),
-      orderLines: this.state.orderLines,
+      lines: !areLinesLoading ? agreementLines : undefined,
+      agreementLinesCount: agreementLineCount,
+      eresources: !areEresourcesLoading ? agreementEresources : undefined,
+      eresourcesCount: agreementEresourcesCount,
+      orderLines,
       orgs,
     };
-  }
+  };
 
-  getHelperApp = () => {
-    const { match, resources } = this.props;
-    const helper = resources.query.helper;
-    if (!helper) return null;
-
-    let HelperComponent = null;
-
-    if (helper === 'tags') HelperComponent = Tags;
-
-    if (!HelperComponent) return null;
-
-    return (
-      <HelperComponent
-        link={`erm/sas/${match.params.id}`}
-        onToggle={() => this.handleToggleHelper(helper)}
-      />
-    );
-  }
-
-  getAgreementEresourcesRecords = () => {
-    const { resources, match } = this.props;
-    const agreementEresourcesUrl = resources?.agreementEresources?.url ?? '';
-    // If a new agreement is selected or if the filter has changed return undefined until the new set of records is fetched
-    if (agreementEresourcesUrl.indexOf(`${match.params.id}`) === -1 ||
-      agreementEresourcesUrl.indexOf(`resources/${resources.eresourcesFilterPath}`) === -1) {
-      return undefined;
-    } else {
-      return resources?.agreementEresources?.records;
-    }
-  }
-
-  getLinesRecords = () => {
-    const { resources, match } = this.props;
-    const agreementLinesUrl = resources?.agreementLines?.url ?? '';
-    // If a new agreement is selected return undefined until the new set of records is fetched
-    if (agreementLinesUrl.indexOf(`${match.params.id}`) === -1) {
-      return undefined;
-    } else {
-      return resources?.agreementLines?.records;
-    }
-  }
-
-  getRecord = (id, resourceType) => {
-    return get(this.props.resources, `${resourceType}.records`, [])
-      .find(i => i.id === id);
-  }
-
-  handleClone = (cloneableProperties = {}) => {
-    const { history, intl, location, match, resources, stripes: { okapi } } = this.props;
-    const name = resources?.agreement?.records?.[0].name;
-
-    return fetch(`${okapi.url}/erm/sas/${match.params.id}/clone`, {
+  const handleClone = (cloneableProperties = {}) => { // FIXME make this a useMutation
+    return fetch(`${okapi.url}/erm/sas/${agreementId}/clone`, {
       method: 'POST',
       headers: {
         'X-Okapi-Tenant': okapi.tenant,
@@ -395,7 +252,7 @@ class AgreementViewRoute extends React.Component {
           .then(({ errors }) => {
             throw new Error(intl.formatMessage(
               { id: `ui-agreements.duplicateAgreementModal.${errors[0].i18n_code}` }, // use the i18n_code to find the corresponding translation
-              { name },
+              { name: agreement?.name },
             ));
           });
       } else {
@@ -411,56 +268,49 @@ class AgreementViewRoute extends React.Component {
     }).catch(error => {
       throw error;
     });
-  }
+  };
 
-  handleClose = () => {
-    this.props.history.push(`${urls.agreements()}${this.props.location.search}`);
-  }
+  const handleClose = () => {
+    history.push(`${urls.agreements()}${location.search}`);
+  };
 
-  handleDelete = () => {
-    const { sendCallout } = this.context;
-    const { history, location, mutator } = this.props;
-    const agreement = this.getCompositeAgreement();
+  const handleDelete = () => {
+    const compositeAgreement = getCompositeAgreement();
 
-    if (agreement.items?.length) {
-      sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasAgreementLines" /> });
+    if (compositeAgreement.items?.length) {
+      callout.sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasAgreementLines" /> });
       return;
     }
 
-    if (agreement.linkedLicenses?.length) {
-      sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasLicenses" /> });
+    if (compositeAgreement.linkedLicenses?.length) {
+      callout.sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasLicenses" /> });
       return;
     }
 
-    if (agreement.relatedAgreements?.length) {
-      sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasRelatedAgreements" /> });
+    if (compositeAgreement.relatedAgreements?.length) {
+      callout.sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasRelatedAgreements" /> });
       return;
     }
 
-    mutator.agreement.DELETE(agreement)
-      .then(() => {
-        history.push(`${urls.agreements()}${location.search}`);
-        sendCallout({ message: <SafeHTMLMessage id="ui-agreements.agreements.deletedAgreement" values={{ name: agreement.name }} /> });
-      })
-      .catch(error => {
-        sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteAgreementBackendError" values={{ message: error.message }} /> });
-      });
-  }
+    deleteAgreement().then(() => {
+      history.push(`${urls.agreements()}${location.search}`);
+      callout.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.agreements.deletedAgreement" values={{ name: compositeAgreement.name }} /> });
+    })
+    .catch(error => {
+      callout.sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteAgreementBackendError" values={{ message: error.message }} /> });
+    });
+  };
 
-  handleFilterEResources = (path) => {
-    const { mutator } = this.props;
-    mutator.eresourcesFilterPath.replace(path);
-    mutator.agreementEresourcesOffset.replace(0);
-  }
+  const handleFilterEResources = (path) => {
+    setEresourcesFilterPath(path);
+  };
 
-  handleEdit = () => {
-    const { history, location, match } = this.props;
-    history.push(`${urls.agreementEdit(match.params.id)}${location.search}`);
-  }
+  const handleEdit = () => {
+    history.push(`${urls.agreementEdit(agreementId)}${location.search}`);
+  };
 
-  handleExportAgreement = () => {
-    const { resources, stripes: { okapi } } = this.props;
-    const { id, name } = get(resources, 'agreement.records[0]', {});
+  const handleExportAgreement = () => { // FIXME, make this another useQuery
+    const { id, name } = agreement;
 
     return fetch(`${okapi.url}/erm/sas/${id}/export/current`, {
       headers: {
@@ -468,117 +318,195 @@ class AgreementViewRoute extends React.Component {
         'X-Okapi-Token': okapi.token,
       },
     }).then(response => response.blob())
-      .then(this.downloadBlob(name));
-  }
+      .then(downloadBlob(name));
+  };
 
-  handleExportEResourcesAsJSON = () => {
-    const { resources, stripes: { okapi } } = this.props;
-    const { id, name } = get(resources, 'agreement.records[0]', {});
+  const handleExportEResourcesAsJSON = () => {// FIXME, make this another useQuery
+    const { id, name } = agreement;
 
-    return fetch(`${okapi.url}/erm/sas/${id}/resources/export/${resources.eresourcesFilterPath}`, {
+    return fetch(`${okapi.url}/erm/sas/${id}/resources/export/${eresourcesFilterPath}`, {
       headers: {
         'X-Okapi-Tenant': okapi.tenant,
         'X-Okapi-Token': okapi.token,
       },
     }).then(response => response.blob())
-      .then(this.downloadBlob(name));
-  }
+      .then(downloadBlob(name));
+  };
 
-  handleExportEResourcesAsKBART = () => {
-    const { resources, stripes: { okapi } } = this.props;
-    const { id, name } = get(resources, 'agreement.records[0]', {});
+  const handleExportEResourcesAsKBART = () => {// FIXME, make this another useQuery
+    const { id, name } = agreement;
 
-    return fetch(`${okapi.url}/erm/sas/${id}/resources/export/${resources.eresourcesFilterPath}/kbart`, {
+    return fetch(`${okapi.url}/erm/sas/${id}/resources/export/${eresourcesFilterPath}/kbart`, {
       headers: {
         'X-Okapi-Tenant': okapi.tenant,
         'X-Okapi-Token': okapi.token,
       },
     }).then(response => response.blob())
-      .then(this.downloadBlob(name));
-  }
+      .then(downloadBlob(name));
+  };
 
-  handleFetchCredentials = (id) => {
-    const { mutator } = this.props;
+  const handleFetchCredentials = (id) => {
     mutator.interfaceRecord.replace({ id });
-  }
+  };
 
-  handleNeedMoreLines = (_askAmount, index) => {
-    const { mutator } = this.props;
-    mutator.agreementLinesOffset.replace(index);
-  }
+  const handleViewAgreementLine = (lineId) => {
+    history.push(`${urls.agreementLineView(agreementId, lineId)}${location.search}`);
+  };
 
-  handleNeedMoreEResources = (_askAmount, index) => {
-    const { mutator } = this.props;
-    mutator.agreementEresourcesOffset.replace(index);
-  }
-
-  handleToggleHelper = (helper) => {
-    const { mutator, resources } = this.props;
-    const currentHelper = resources.query.helper;
-    const nextHelper = currentHelper !== helper ? helper : null;
-
-    mutator.query.update({ helper: nextHelper });
-  }
-
-  handleToggleTags = () => {
-    this.handleToggleHelper('tags');
-  }
-
-  handleViewAgreementLine = (lineId) => {
-    const { history, location, match } = this.props;
-    history.push(`${urls.agreementLineView(match.params.id, lineId)}${location.search}`);
-  }
-
-  isLoading = () => {
-    const { match, resources } = this.props;
-
+  const isPaneLoading = () => {
     return (
-      match.params.id !== get(resources, 'agreement.records[0].id') &&
-      get(resources, 'agreement.isPending', true)
+      agreementId !== agreement?.id &&
+      isAgreementLoading
     );
-  }
+  };
 
-  render() {
-    const {
-      handlers,
-      resources,
-      tagsEnabled,
-    } = this.props;
+  return (
+    <View
+      key={`agreement-view-pane-${agreementId}`}
+      components={{
+        HelperComponent,
+        TagButton
+      }}
+      data={{
+        agreement: getCompositeAgreement(),
+        eresourcesFilterPath,
+        searchString: location.search,
+        tagsLink: agreementPath
+      }}
+      handlers={{
+        ...handlers,
+        onClone: handleClone,
+        onClose: handleClose,
+        onDelete: handleDelete,
+        onEdit: handleEdit,
+        onExportAgreement: handleExportAgreement,
+        onExportEResourcesAsJSON: handleExportEResourcesAsJSON,
+        onExportEResourcesAsKBART: handleExportEResourcesAsKBART,
+        onFetchCredentials: handleFetchCredentials,
+        onFilterEResources: handleFilterEResources,
+        onNeedMoreEResources: (_askAmount, index) => fetchNextEresourcePage({ pageParam: index }),
+        onNeedMoreLines: (_askAmount, index) => fetchNextLinesPage({ pageParam: index }),
+        onToggleTags: handleToggleTags,
+        onViewAgreementLine: handleViewAgreementLine,
+      }}
+      isLoading={isPaneLoading() || isLoading}
+    />
+  );
+};
 
-    return (
-      <View
-        key={get(resources, 'agreement.loadedAt', 'loading')}
-        data={{
-          agreement: this.getCompositeAgreement(),
-          eresourcesFilterPath: this.props.resources.eresourcesFilterPath,
-          openAccessProperties: get(resources, 'openAccessProperties.records', []),
-          searchString: this.props.location.search,
-        }}
-        handlers={{
-          ...handlers,
-          onClone: this.handleClone,
-          onClose: this.handleClose,
-          onDelete: this.handleDelete,
-          onEdit: this.handleEdit,
-          onExportAgreement: this.handleExportAgreement,
-          onExportEResourcesAsJSON: this.handleExportEResourcesAsJSON,
-          onExportEResourcesAsKBART: this.handleExportEResourcesAsKBART,
-          onFetchCredentials: this.handleFetchCredentials,
-          onFilterEResources: this.handleFilterEResources,
-          onNeedMoreEResources: this.handleNeedMoreEResources,
-          onNeedMoreLines: this.handleNeedMoreLines,
-          onToggleTags: tagsEnabled ? this.handleToggleTags : undefined,
-          onViewAgreementLine: this.handleViewAgreementLine,
-        }}
-        helperApp={this.getHelperApp()}
-        isLoading={this.isLoading() || this.state.isLoading}
-      />
-    );
-  }
-}
+AgreementViewRoute.manifest = Object.freeze({
+  interfaces: {
+    type: 'okapi',
+    path: 'organizations-storage/interfaces',
+    perRequest: RECORDS_PER_REQUEST_MEDIUM,
+    params: (_q, _p, _r, _l, props) => {
+      const orgs = get(props.resources, 'agreement.records[0].orgs', []);
+      const interfaces = flatten(orgs.map(o => get(o, 'org.orgsUuid_object.interfaces', [])));
+      const query = [
+        ...new Set(interfaces.map(i => `id==${i}`))
+      ].join(' or ');
+
+      return query ? { query } : {};
+    },
+    fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '2.0'),
+    permissionsRequired: 'organizations-storage.interfaces.collection.get',
+    records: 'interfaces',
+  },
+  orderLines: {
+    type: 'okapi',
+    perRequest: RECORDS_PER_REQUEST_LARGE,
+    path: 'orders/order-lines',
+    accumulate: 'true',
+    fetch: false,
+    records: 'poLines',
+    throwErrors: false,
+  },
+  settings: {
+    type: 'okapi',
+    path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
+    records: 'configs',
+    shouldRefresh: false,
+  },
+  users: {
+    type: 'okapi',
+    path: 'users',
+    perRequest: RECORDS_PER_REQUEST_MEDIUM,
+    params: (_q, _p, _r, _l, props) => {
+      const query = get(props.resources, 'agreement.records[0].contacts', [])
+        .filter(contact => contact.user)
+        .map(contact => `id==${contact.user}`)
+        .join(' or ');
+
+      return query ? { query } : '';
+    },
+    fetch: props => (
+      !!props.stripes.hasInterface('users', '15.0') &&
+      props?.resources?.agreement?.records?.[0]?.contacts?.length > 0
+    ),
+    permissionsRequired: 'users.collection.get',
+    records: 'users',
+  },
+  interfacesCredentials: {
+    clientGeneratePk: false,
+    throwErrors: false,
+    path: 'organizations-storage/interfaces/%{interfaceRecord.id}/credentials',
+    type: 'okapi',
+    pk: 'FAKE_PK',  // it's done to fool stripes-connect not to add cred id to the path's end.
+    permissionsRequired: 'organizations-storage.interfaces.credentials.item.get',
+    fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '1.0 2.0'),
+  },
+  interfaceRecord: {},
+});
+
+AgreementViewRoute.propTypes = {
+  handlers: PropTypes.object,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired
+  }).isRequired,
+  mutator: PropTypes.shape({
+    eresourcesFilterPath: PropTypes.shape({
+      replace: PropTypes.func,
+    }),
+    interfaceRecord: PropTypes.shape({
+      replace: PropTypes.func,
+    }),
+    orderLines: PropTypes.shape({
+      GET: PropTypes.func,
+      reset: PropTypes.func,
+    }),
+  }).isRequired,
+  resources: PropTypes.shape({
+    agreement: PropTypes.object,
+    agreementLines: PropTypes.object,
+    agreementEresources: PropTypes.object,
+    eresourcesFilterPath: PropTypes.string,
+    interfaces: PropTypes.object,
+    orderLines: PropTypes.object,
+    query: PropTypes.object,
+    settings: PropTypes.object,
+    users: PropTypes.object,
+  }).isRequired,
+  stripes: PropTypes.shape({
+    hasInterface: PropTypes.func.isRequired,
+    hasPerm: PropTypes.func.isRequired,
+    okapi: PropTypes.shape({
+      tenant: PropTypes.string.isRequired,
+      token: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  tagsEnabled: PropTypes.bool,
+};
 
 export default compose(
-  injectIntl,
   withFileHandlers,
   stripesConnect,
   withTags,

@@ -10,5 +10,3 @@ export { default as validators } from './validators';
 export { default as parseMclPageSize } from './parseMclPageSize';
 export { default as getTranslatedAcqMethod } from './getTranslatedAcqMethod';
 
-
-
