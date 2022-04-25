@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { useStripes, AppIcon, IfPermission } from '@folio/stripes/core';
 
 import {
@@ -12,7 +12,6 @@ import {
   ExpandAllButton,
   HasCommand,
   Icon,
-  IconButton,
   LoadingPane,
   Pane,
   PaneMenu,
@@ -30,6 +29,7 @@ import { isExternal, urls } from '../../utilities';
 import DiscoverySettings from '../../DiscoverySettings';
 
 const propTypes = {
+  components: PropTypes.object,
   data: PropTypes.shape({
     line: PropTypes.shape({
       coverage: PropTypes.arrayOf(PropTypes.object),
@@ -53,6 +53,7 @@ const propTypes = {
         length: PropTypes.number,
       })),
     }).isRequired,
+    tagsLink: PropTypes.string,
     settings: PropTypes.object,
   }),
   handlers: PropTypes.shape({
@@ -67,9 +68,12 @@ const propTypes = {
 };
 
 const AgreementLine = ({
-  data: { line },
+  components: {
+    TagButton,
+    HelperComponent,
+  },
+  data: { line, tagsLink },
   handlers,
-  helperApp,
   isLoading,
 }) => {
   const stripes = useStripes();
@@ -83,7 +87,6 @@ const AgreementLine = ({
 
   const accordionStatusRef = useRef();
 
-  const intl = useIntl();
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
 
   if (isLoading) return <LoadingPane data-loading {...paneProps} />;
@@ -141,15 +144,9 @@ const AgreementLine = ({
           lastMenu={
             <IfPermission perm="ui-agreements.agreements.edit">
               <PaneMenu>
-                {handlers.onToggleTags &&
-                  <IconButton
-                    ariaLabel={intl.formatMessage({ id: 'ui-agreements.agreements.showTags' })}
-                    badgeCount={line?.tags?.length ?? 0}
-                    icon="tag"
-                    id="clickable-show-tags"
-                    onClick={handlers.onToggleTags}
-                  />
-                }
+                <TagButton
+                  entity={line}
+                />
               </PaneMenu>
             </IfPermission>
           }
@@ -196,7 +193,10 @@ const AgreementLine = ({
             </AccordionSet>
           </AccordionStatus>
         </Pane>
-        {helperApp}
+        <HelperComponent
+          link={tagsLink}
+          onToggle={handlers.onToggleTags}
+        />
         <ConfirmationModal
           buttonStyle="danger"
           confirmLabel={<FormattedMessage id="ui-agreements.delete" />}
