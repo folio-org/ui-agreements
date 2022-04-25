@@ -745,10 +745,9 @@ describe('PackageInfo', () => {
       await KeyValue('Content type').exists();
     });
 
-    // test a list of values rendered
-    // test('renders the expcected content types', async () => {
-    //   await KeyValue('Content type').has({ value: '' });
-    // });
+    test('renders the expcected content types', async () => {
+      await KeyValue('Content type').has({ value: 'PrintElectronic' });
+    });
 
     test('renders the Availability field', async () => {
       await KeyValue('Availability').exists();
@@ -762,16 +761,28 @@ describe('PackageInfo', () => {
       await KeyValue('Source created').exists();
     });
 
-    test('renders the expcected source created date', async () => {
-      await KeyValue('Source created').has({ value: '3/21/2022 11:00 PM' });
+    // NOTE: this test will fail because of &nbsp; in the FormattedDateTime component:
+    // test('renders the expcected source created date', async () => {
+    //   await KeyValue('Source created').has({ value: '3/21/2022 11:00 PM' });
+    // });
+
+    test('renders the expected source created date', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('3/21/2022 11:00 PM')).toBeInTheDocument();
     });
 
     test('renders the Source last updated field', async () => {
       await KeyValue('Source last updated').exists();
     });
 
-    test('renders the expcected source last updated date', async () => {
-      await KeyValue('Source last updated').has({ value: '3/28/2022 3:09 AM' });
+    // NOTE: this test will fail because of &nbsp; in the FormattedDateTime component:
+    // test('renders the expcected source last updated date', async () => {
+    //   await KeyValue('Source last updated').has({ value: '3/28/2022 3:09 AM' });
+    // });
+
+    test('renders the expected source last updated date', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('3/28/2022 3:09 AM')).toBeInTheDocument();
     });
   });
 
