@@ -8,14 +8,14 @@ const eresource = {
   'dateCreated': '2022-03-28T13:51:12Z',
   'packageDescriptionUrls': [{
     'id': 'e7d503b0-5901-421f-9861-d86b21f7f6a9',
-    'url': 'http://blobb',
+    'url': 'https://blobb',
     'owner': {
       'id': 'c53fab4d-7813-40b5-9c4b-376a6d19a34c'
     }
   },
   {
     'id': '98389b98-5ab0-42c2-9027-bbddc6bf769f',
-    'url': 'http://blubb',
+    'url': 'https://blubb',
     'owner': {
       'id': 'c53fab4d-7813-40b5-9c4b-376a6d19a34c'
     }
