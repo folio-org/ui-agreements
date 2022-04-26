@@ -36,6 +36,10 @@ describe('Agreement', () => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <Agreement
+            components={{
+              HelperComponent: () => <div>HelperComponent</div>,
+              TagButton: () => <div>TagButton</div>
+            }}
             data={data}
             handlers={handlers}
             isLoading
@@ -56,6 +60,10 @@ describe('Agreement', () => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <Agreement
+            components={{
+              HelperComponent: () => <div>HelperComponent</div>,
+              TagButton: () => <div>TagButton</div>
+            }}
             data={data}
             handlers={handlers}
             isLoading={false}

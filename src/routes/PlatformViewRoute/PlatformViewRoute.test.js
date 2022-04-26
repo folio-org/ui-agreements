@@ -50,8 +50,6 @@ ClickProxyServerActionButton.propTypes = {
 };
 
 const historyPushMock = jest.fn();
-const mutatorProxyPutMock = jest.fn();
-
 jest.mock('../../components/views/Platform', () => {
   return (props) => (
     <div>
@@ -74,11 +72,6 @@ const props = {
   match:{
     params:{
       id:''
-    }
-  },
-  mutator:{
-    proxyServers:{
-      PUT: mutatorProxyPutMock
     }
   },
   resources: {
@@ -133,11 +126,6 @@ describe('PlatformViewRoute', () => {
     test('calls the ViewUrlCustomizerButton callback', () => {
     const { getByText } = renderComponent;
     expect(getByText('ViewUrlCustomizerButton')).toBeInTheDocument();
-    });
-
-    test('triggers the ClickProxyServerActionButton callback', async () => {
-      await ButtonInteractor('ClickProxyServerActionButton').click();
-      expect(mutatorProxyPutMock).toHaveBeenCalled();
     });
 
     test('renders the ClickProxyServerActionButton button', () => {

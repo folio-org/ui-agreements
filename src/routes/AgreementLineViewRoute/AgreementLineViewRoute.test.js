@@ -46,8 +46,6 @@ ToggleTagsButton.propTypes = {
 };
 
 const historyPushMock = jest.fn();
-const mutatorAgreementPutMock = jest.fn();
-const mutatorQueryUpdateMock = jest.fn();
 
 jest.mock('../../components/views/AgreementLine', () => {
   return (props) => (
@@ -69,19 +67,13 @@ const data = {
         search: ''
     },
     mutator: {
-        agreement: {
-            PUT: mutatorAgreementPutMock,
-        },
-        line: {
-            GET: noop,
-            reset: () => {},
-        },
-        orderLines: {
-            GET: noop,
-            reset: () => {},
-        },
-        query: {
-          update: mutatorQueryUpdateMock,
+      line: {
+          GET: noop,
+          reset: () => {},
+      },
+      orderLines: {
+          GET: noop,
+          reset: () => {},
       },
     },
     resources: {
@@ -122,11 +114,6 @@ describe('AgreementLineViewRoute', () => {
     test('triggers the EditButton callback', async () => {
       await ButtonInteractor('EditButton').click();
       expect(historyPushMock).toHaveBeenCalled();
-    });
-
-    test('triggers the ToggleTagsButton callback', async () => {
-      await ButtonInteractor('ToggleTagsButton').click();
-      expect(mutatorQueryUpdateMock).toHaveBeenCalled();
     });
   });
 });
