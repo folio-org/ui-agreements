@@ -1,132 +1,124 @@
-import React from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { stripesConnect } from '@folio/stripes/core';
-import { StripesConnectedSource } from '@folio/stripes/smart-components';
-import { getSASParams } from '@folio/stripes-erm-components';
+import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
+import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Platforms';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
+import { useInfiniteFetch } from '../../hooks';
 
-const INITIAL_RESULT_COUNT = 100;
-const RESULT_COUNT_INCREMENT = 100;
+const INITIAL_RESULT_COUNT = 50;
 
-class PlatformsRoute extends React.Component {
-  static manifest = Object.freeze({
-    platforms: {
-      type: 'okapi',
-      path: 'erm/platforms',
-      records: 'results',
-      recordsRequired: '%{resultCount}',
-      perRequest: 100,
-      limitParam: 'perPage',
-      params: getSASParams({
-        searchKey: 'name',
-      }),
+const PlatformsRoute = ({
+  children,
+  history,
+  location,
+  match,
+  mutator,
+  resources,
+  stripes
+}) => {
+  const ky = useOkapiKy();
+  const hasPerms = stripes.hasPerm('ui-agreements.platforms.view');
+  const searchField = useRef();
+
+  useEffect(() => {
+    if (searchField.current) {
+      searchField.current.focus();
+    }
+  }, []); // This isn't particularly great, but in the interests of saving time migrating, it will have to do
+
+  const platformsPath = 'erm/platforms';
+
+  const platformsQueryParams = useMemo(() => (
+    generateKiwtQueryParams({
+      searchKey: 'name',
+      perPage: INITIAL_RESULT_COUNT
+    }, (resources?.query ?? {}))
+  ), [resources?.query]);
+
+  const {
+    infiniteQueryObject: {
+      error: platformsError,
+      fetchNextPage: fetchNextPlatformPage,
+      isLoading: arePlatformsLoading,
+      isError: isPlatformError
     },
-    query: { initialValue: {} },
-    resultCount: { initialValue: INITIAL_RESULT_COUNT },
-  });
+    results: platforms = [],
+    total: platformsCount = 0
+  } = useInfiniteFetch(
+    [platformsPath, platformsQueryParams, 'ui-agreements', 'PlatformsRoute', 'getPlatforms'],
+    ({ pageParam = 0 }) => {
+      const params = [...platformsQueryParams, `offset=${pageParam}`];
+      return ky.get(encodeURI(`${platformsPath}?${params?.join('&')}`)).json();
+    }
+  );
 
-  static propTypes = {
-    children: PropTypes.node,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      pathname: PropTypes.string,
-      search: PropTypes.string,
-    }).isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        id: PropTypes.string,
-      }),
+  useEffect(() => {
+    if (platformsCount === 1) {
+      history.push(`${urls.platformView(platforms[0].id)}${location.search}`);
+    }
+  }, [platforms, platformsCount, history, location.search]);
+
+  const querySetter = ({ nsValues }) => {
+    mutator.query.update(nsValues);
+  };
+
+  const queryGetter = () => {
+    return resources?.query ?? {};
+  };
+
+  if (!hasPerms) return <NoPermissions />;
+
+  return (
+    <View
+      data={{
+        platforms,
+      }}
+      onNeedMoreData={(_askAmount, index) => fetchNextPlatformPage({ pageParam: index })}
+      queryGetter={queryGetter}
+      querySetter={querySetter}
+      searchString={location.search}
+      selectedRecordId={match.params.id}
+      source={{ // Fake source from useQuery return values;
+        totalCount: () => platformsCount,
+        loaded: () => !arePlatformsLoading,
+        pending: () => arePlatformsLoading,
+        failure: () => isPlatformError,
+        failureMessage: () => platformsError.message
+      }}
+    >
+      {children}
+    </View>
+  );
+};
+
+PlatformsRoute.manifest = Object.freeze({
+  query: { initialValue: {} },
+});
+
+PlatformsRoute.propTypes = {
+  children: PropTypes.node,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+    search: PropTypes.string,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
     }),
-    mutator: PropTypes.object,
-    resources: PropTypes.object,
-    stripes: PropTypes.shape({
-      hasPerm: PropTypes.func.isRequired,
-      logger: PropTypes.object,
-    }),
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.logger = props.stripes.logger;
-    this.searchField = React.createRef();
-
-    this.state = {
-      hasPerms: props.stripes.hasPerm('ui-agreements.platforms.view'),
-    };
-  }
-
-  componentDidMount() {
-    this.source = new StripesConnectedSource(this.props, this.logger, 'platforms');
-
-    if (this.searchField.current) {
-      this.searchField.current.focus();
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const newCount = this.source.totalCount();
-    const newRecords = this.source.records();
-
-    if (newCount === 1) {
-      const { history, location } = this.props;
-
-      const prevSource = new StripesConnectedSource(prevProps, this.logger, 'platforms');
-      const oldCount = prevSource.totalCount();
-      const oldRecords = prevSource.records();
-
-      if (oldCount !== 1 || (oldCount === 1 && oldRecords[0].id !== newRecords[0].id)) {
-        const record = newRecords[0];
-        history.push(`${urls.platformView(record.id)}${location.search}`);
-      }
-    }
-  }
-
-  handleNeedMoreData = () => {
-    if (this.source) {
-      this.source.fetchMore(RESULT_COUNT_INCREMENT);
-    }
-  }
-
-  querySetter = ({ nsValues }) => {
-    this.props.mutator.query.update(nsValues);
-  }
-
-  queryGetter = () => {
-    return this.props.resources?.query ?? {};
-  }
-
-  render() {
-    const { children, location, match, resources } = this.props;
-
-    if (this.source) {
-      this.source.update(this.props, 'platforms');
-    }
-
-    if (!this.state.hasPerms) return <NoPermissions />;
-
-    return (
-      <View
-        data={{
-          platforms: resources?.platforms?.records ?? [],
-        }}
-        onNeedMoreData={this.handleNeedMoreData}
-        queryGetter={this.queryGetter}
-        querySetter={this.querySetter}
-        searchString={location.search}
-        selectedRecordId={match.params.id}
-        source={this.source}
-      >
-        {children}
-      </View>
-    );
-  }
-}
+  }),
+  mutator: PropTypes.object,
+  resources: PropTypes.object,
+  stripes: PropTypes.shape({
+    hasPerm: PropTypes.func.isRequired,
+    logger: PropTypes.object,
+  }),
+};
 
 export default stripesConnect(PlatformsRoute);
