@@ -222,6 +222,30 @@ const AgreementViewRoute = ({
     }
   );
 
+  const { refetch: exportAgreement } = useQuery(
+    [`${agreementPath}/export/current`, 'ui-agreements', 'AgreementViewRoute', 'exportAgreement'],
+    () => ky.get(`${agreementPath}/export/current`).blob().then(downloadBlob(agreement.name)),
+    {
+      enabled: false
+    }
+  );
+
+  const { refetch: exportEresourcesAsJson } = useQuery(
+    [`${agreementPath}/resources/export/${eresourcesFilterPath}`, 'ui-agreements', 'AgreementViewRoute', 'exportEresourcesJson'],
+    () => ky.get(`${agreementPath}/resources/export/${eresourcesFilterPath}`).blob().then(downloadBlob(agreement.name)),
+    {
+      enabled: false
+    }
+  );
+
+  const { refetch: exportEresourcesAsKBART } = useQuery(
+    [`${agreementPath}/resources/export/${eresourcesFilterPath}/kbart`, 'ui-agreements', 'AgreementViewRoute', 'exportEresourcesKbart'],
+    () => ky.get(`${agreementPath}/resources/export/${eresourcesFilterPath}/kbart`).blob().then(downloadBlob(agreement.name)),
+    {
+      enabled: false
+    }
+  );
+
   const getRecord = (id, resourceType) => {
     return get(resources, `${resourceType}.records`, [])
       .find(i => i.id === id);
@@ -304,42 +328,6 @@ const AgreementViewRoute = ({
     history.push(`${urls.agreementEdit(agreementId)}${location.search}`);
   };
 
-  const handleExportAgreement = () => { // FIXME, make this another useQuery
-    const { id, name } = agreement;
-
-    return fetch(`${okapi.url}/erm/sas/${id}/export/current`, {
-      headers: {
-        'X-Okapi-Tenant': okapi.tenant,
-        'X-Okapi-Token': okapi.token,
-      },
-    }).then(response => response.blob())
-      .then(downloadBlob(name));
-  };
-
-  const handleExportEResourcesAsJSON = () => {// FIXME, make this another useQuery
-    const { id, name } = agreement;
-
-    return fetch(`${okapi.url}/erm/sas/${id}/resources/export/${eresourcesFilterPath}`, {
-      headers: {
-        'X-Okapi-Tenant': okapi.tenant,
-        'X-Okapi-Token': okapi.token,
-      },
-    }).then(response => response.blob())
-      .then(downloadBlob(name));
-  };
-
-  const handleExportEResourcesAsKBART = () => {// FIXME, make this another useQuery
-    const { id, name } = agreement;
-
-    return fetch(`${okapi.url}/erm/sas/${id}/resources/export/${eresourcesFilterPath}/kbart`, {
-      headers: {
-        'X-Okapi-Tenant': okapi.tenant,
-        'X-Okapi-Token': okapi.token,
-      },
-    }).then(response => response.blob())
-      .then(downloadBlob(name));
-  };
-
   const handleFetchCredentials = (id) => {
     mutator.interfaceRecord.replace({ id });
   };
@@ -374,9 +362,9 @@ const AgreementViewRoute = ({
         onClose: handleClose,
         onDelete: handleDelete,
         onEdit: handleEdit,
-        onExportAgreement: handleExportAgreement,
-        onExportEResourcesAsJSON: handleExportEResourcesAsJSON,
-        onExportEResourcesAsKBART: handleExportEResourcesAsKBART,
+        onExportAgreement: exportAgreement,
+        onExportEResourcesAsJSON: exportEresourcesAsJson,
+        onExportEResourcesAsKBART: exportEresourcesAsKBART,
         onFetchCredentials: handleFetchCredentials,
         onFilterEResources: handleFilterEResources,
         onNeedMoreEResources: (_askAmount, index) => fetchNextEresourcePage({ pageParam: index }),
