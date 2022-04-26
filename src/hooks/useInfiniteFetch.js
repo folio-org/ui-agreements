@@ -11,6 +11,10 @@ const useInfiniteFetch = (namespaceArray, fetchResources, queryParams) => {
   const { results = [], total = 0 } = useMemo(() => (infiniteQueryObject?.data?.pages?.reduce(
     (acc, curr) => {
       const newAcc = { ...acc };
+      if (!curr) {
+        return newAcc;
+      }
+
       for (const [key, value] of Object.entries(curr)) {
         if (
           key !== 'page' &&

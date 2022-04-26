@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useIntl } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
@@ -36,6 +36,7 @@ const AgreementViewRoute = ({
   tagsEnabled
 }) => {
   const { okapi } = stripes;
+  const queryClient = useQueryClient();
 
   const [orderLines, setOrderLines] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -54,7 +55,8 @@ const AgreementViewRoute = ({
     TagButton,
   } = useAgreementsHelperApp(tagsEnabled);
 
-  const agreementPath = `erm/sas/${agreementId}`;
+  const agreementsPath = 'erm/sas';
+  const agreementPath = `${agreementsPath}/${agreementId}`;
   const agreementLinePath = 'erm/entitlements';
   const agreementEresourcesPath = `erm/sas/${agreementId}/resources/${eresourcesFilterPath}`;
 
@@ -71,7 +73,7 @@ const AgreementViewRoute = ({
 
   const { mutateAsync: deleteAgreement } = useMutation(
     [agreementPath, 'ui-agreements', 'AgreementViewRoute', 'deleteAgreement'],
-    () => ky.delete(agreementPath)
+    () => ky.delete(agreementPath).then(() => queryClient.invalidateQueries(agreementsPath))
   );
 
   // AGREEMENT LINES INFINITE FETCH
@@ -180,6 +182,34 @@ const AgreementViewRoute = ({
     }
   }, [poLineIdsArray, mutator.orderLines, isAgreementLoading, areEresourcesLoading, areLinesLoading]);
 
+  const { mutateAsync: cloneAgreement } = useMutation(
+    [agreementPath, 'ui-agreements', 'AgreementViewRoute', 'cloneAgreement'],
+    (cloneableProperties) => ky.post(`${agreementPath}/clone`, { json: cloneableProperties }).then(response => {
+      if (response.ok) {
+        return response.text(); // Parse it as text
+      } else if (response.status === 422) { // handle 422 error specifically
+        return response.json()
+          .then(({ errors }) => {
+            throw new Error(intl.formatMessage(
+              { id: `ui-agreements.duplicateAgreementModal.${errors[0].i18n_code}` }, // use the i18n_code to find the corresponding translation
+              { name: agreement?.name },
+            ));
+          });
+      } else {
+        throw new Error(errorTypes.JSON_ERROR);
+      }
+    }).then(text => {
+      const data = JSON.parse(text); // Try to parse it as json
+      if (data.id) {
+        return Promise.resolve(history.push(`${urls.agreementEdit(data.id)}${location.search}`));
+      } else {
+        throw new Error(errorTypes.INVALID_JSON_ERROR); // when the json response body doesn't contain an id
+      }
+    }).catch(error => {
+      throw error;
+    })
+  );
+
   const downloadBlob = (name) => (
     blob => {
       const url = window.URL.createObjectURL(blob);
@@ -235,7 +265,7 @@ const AgreementViewRoute = ({
     };
   };
 
-  const handleClone = (cloneableProperties = {}) => { // FIXME make this a useMutation
+/*   const handleClone = (cloneableProperties = {}) => { // FIXME make this a useMutation
     return fetch(`${okapi.url}/erm/sas/${agreementId}/clone`, {
       method: 'POST',
       headers: {
@@ -268,7 +298,7 @@ const AgreementViewRoute = ({
     }).catch(error => {
       throw error;
     });
-  };
+  }; */
 
   const handleClose = () => {
     history.push(`${urls.agreements()}${location.search}`);
@@ -375,7 +405,7 @@ const AgreementViewRoute = ({
       }}
       handlers={{
         ...handlers,
-        onClone: handleClone,
+        onClone: cloneAgreement,
         onClose: handleClose,
         onDelete: handleDelete,
         onEdit: handleEdit,
