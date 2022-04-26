@@ -17,6 +17,7 @@ import PCI from '../PCI';
 import { resourceClasses } from '../../../constants';
 
 const propTypes = {
+  components: PropTypes.object,
   data: PropTypes.shape({
     eresource: PropTypes.shape({
       class: PropTypes.string,
@@ -35,14 +36,15 @@ const propTypes = {
 };
 
 const EResource = ({
+  components: {
+    HelperComponent,
+    TagButton
+  },
   data = {},
-  data: { eresource },
-  helperApp,
+  data: { eresource, tagsInvalidateLinks, tagsLink } = {},
   handlers,
   isLoading,
 }) => {
-  const intl = useIntl();
-
   const paneProps = {
     defaultWidth: '55%',
     dismissible: true,
@@ -70,12 +72,8 @@ const EResource = ({
               <IfPermission perm="ui-agreements.resources.edit">
                 <PaneMenu>
                   {handlers.onToggleTags &&
-                    <IconButton
-                      ariaLabel={intl.formatMessage({ id: 'ui-agreements.agreements.showTags' })}
-                      badgeCount={eresource?.tags?.length ?? 0}
-                      icon="tag"
-                      id="clickable-show-tags"
-                      onClick={handlers.onToggleTags}
+                    <TagButton
+                      entity={eresource}
                     />
                   }
                   <Button
@@ -98,7 +96,11 @@ const EResource = ({
           <EResourceViewComponent data={data} handlers={handlers} />
         </TitleManager>
       </Pane>
-      {helperApp(eresource)}
+      <HelperComponent
+        invalidateLinks={tagsInvalidateLinks}
+        link={tagsLink}
+        onToggle={handlers.onToggleTags}
+      />
     </>
   );
 };

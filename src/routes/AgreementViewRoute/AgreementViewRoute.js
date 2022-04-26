@@ -58,7 +58,7 @@ const AgreementViewRoute = ({
   const agreementsPath = 'erm/sas';
   const agreementPath = `${agreementsPath}/${agreementId}`;
   const agreementLinePath = 'erm/entitlements';
-  const agreementEresourcesPath = `erm/sas/${agreementId}/resources/${eresourcesFilterPath}`;
+  const agreementEresourcesPath = `${agreementsPath}/${agreementId}/resources/${eresourcesFilterPath}`;
 
   const {
     data: agreement = {
@@ -264,41 +264,6 @@ const AgreementViewRoute = ({
       orgs,
     };
   };
-
-/*   const handleClone = (cloneableProperties = {}) => { // FIXME make this a useMutation
-    return fetch(`${okapi.url}/erm/sas/${agreementId}/clone`, {
-      method: 'POST',
-      headers: {
-        'X-Okapi-Tenant': okapi.tenant,
-        'X-Okapi-Token': okapi.token,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(cloneableProperties),
-    }).then(response => {
-      if (response.ok) {
-        return response.text(); // Parse it as text
-      } else if (response.status === 422) { // handle 422 error specifically
-        return response.json()
-          .then(({ errors }) => {
-            throw new Error(intl.formatMessage(
-              { id: `ui-agreements.duplicateAgreementModal.${errors[0].i18n_code}` }, // use the i18n_code to find the corresponding translation
-              { name: agreement?.name },
-            ));
-          });
-      } else {
-        throw new Error(errorTypes.JSON_ERROR);
-      }
-    }).then(text => {
-      const data = JSON.parse(text); // Try to parse it as json
-      if (data.id) {
-        return Promise.resolve(history.push(`${urls.agreementEdit(data.id)}${location.search}`));
-      } else {
-        throw new Error(errorTypes.INVALID_JSON_ERROR); // when the json response body doesn't contain an id
-      }
-    }).catch(error => {
-      throw error;
-    });
-  }; */
 
   const handleClose = () => {
     history.push(`${urls.agreements()}${location.search}`);
