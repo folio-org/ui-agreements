@@ -34,16 +34,15 @@ const [
   'SubscriptionAgreementOrg.Role',
 ];
 
-const AgreementsRoute = (props) => {
-  const {
-    children,
-    history,
-    location,
-    match,
-    mutator,
-    resources,
-    stripes
-  } = props;
+const AgreementsRoute = ({
+  children,
+  history,
+  location,
+  match,
+  mutator,
+  resources,
+  stripes
+}) => {
   const ky = useOkapiKy();
   const hasPerms = stripes.hasPerm('ui-agreements.agreements.view');
   const searchField = useRef();
@@ -180,7 +179,6 @@ AgreementsRoute.propTypes = {
 AgreementsRoute.manifest = Object.freeze({
   basket: { initialValue: [] },
   query: { initialValue: {} },
-  resultCount: { initialValue: INITIAL_RESULT_COUNT },
 });
 
 export default stripesConnect(AgreementsRoute, { dataKey: 'agreementsRoute' });
