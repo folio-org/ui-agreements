@@ -61,6 +61,7 @@ const EResourceViewRoute = ({
   const {
     infiniteQueryObject: {
       fetchNextPage: fetchNextEntitlementsPage,
+      isLoading: areEntitlementsLoading
     },
     results: entitlements = [],
     total: entitlementsCount = 0
@@ -86,7 +87,8 @@ const EResourceViewRoute = ({
   const {
     infiniteQueryObject: {
       fetchNextPage: fetchNextRelatedEntitlementsPage,
-      data: { pageParams: relatedEntitlementPageParams } = {}
+      data: { pageParams: relatedEntitlementPageParams } = {},
+      isLoading: areRelatedEntitlementsLoading
     },
     results: relatedEntitlements = [],
     total: relatedEntitlementsCount = 0
@@ -121,6 +123,7 @@ const EResourceViewRoute = ({
   const {
     infiniteQueryObject: {
       fetchNextPage: fetchNextEntitlementOptionsPage,
+      isLoading: areEntitlementOptionsLoading
     },
     results: entitlementOptions = [],
     total: entitlementOptionsCount = 0
@@ -155,6 +158,7 @@ const EResourceViewRoute = ({
   const {
     infiniteQueryObject: {
       fetchNextPage: fetchNextContentsPage,
+      isLoading: areContentsLoading
     },
     results: packageContents = [],
     total: packageContentsCount = 0
@@ -204,6 +208,10 @@ const EResourceViewRoute = ({
         TagButton
       }}
       data={{
+        areEntitlementOptionsLoading,
+        areEntitlementsLoading,
+        areContentsLoading,
+        areRelatedEntitlementsLoading,
         eresource,
         entitlementOptions,
         entitlementOptionsCount,
