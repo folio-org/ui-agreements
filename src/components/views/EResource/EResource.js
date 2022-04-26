@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   Button,
-  IconButton,
   LoadingPane,
   Pane,
   PaneMenu,

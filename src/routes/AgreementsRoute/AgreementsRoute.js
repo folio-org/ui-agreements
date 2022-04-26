@@ -16,8 +16,6 @@ import { REFDATA_ENDPOINT } from '../../constants/endpoints';
 
 const {
   INITIAL_RESULT_COUNT,
-  RESULT_COUNT_INCREMENT,
-  RECORDS_PER_REQUEST_MEDIUM
 } = resultCount;
 
 const [

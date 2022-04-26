@@ -32,10 +32,8 @@ const AgreementViewRoute = ({
   match: { params: { id: agreementId } },
   mutator,
   resources,
-  stripes,
   tagsEnabled
 }) => {
-  const { okapi } = stripes;
   const queryClient = useQueryClient();
 
   const [orderLines, setOrderLines] = useState([]);

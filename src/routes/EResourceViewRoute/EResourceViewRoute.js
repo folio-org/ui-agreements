@@ -106,7 +106,7 @@ const EResourceViewRoute = ({
       relatedEntitlements?.length !== relatedEntitlementsCount &&
       relatedEntitlements?.length < entitlementsCount
     ) {
-      fetchNextRelatedEntitlementsPage({ pageParam: (relatedEntitlementPageParams[-1] ?? 0) + RECORDS_PER_REQUEST_MEDIUM })
+      fetchNextRelatedEntitlementsPage({ pageParam: (relatedEntitlementPageParams[-1] ?? 0) + RECORDS_PER_REQUEST_MEDIUM });
     }
   });
 
@@ -137,7 +137,7 @@ const EResourceViewRoute = ({
 
   // PACKAGE CONTENTS FOR ERESOURCE
   const [contentFilter, setContentFilter] = useState('current');
-  const packageContentPath = `erm/packages/${eresourceId}/content/${contentFilter}`
+  const packageContentPath = `erm/packages/${eresourceId}/content/${contentFilter}`;
 
   const packageContentsParams = useMemo(() => (
     generateKiwtQueryParams(
