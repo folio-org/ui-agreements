@@ -132,38 +132,47 @@ const SourceTitleIdentifierField = () => {
       return newArr;
     }, {});
 
-    const renderGroupedIdentifiers = () => {
-      for (const [identifierNamespace, identifierValues] of Object.entries(groupedIdentifiers)) {
-        return (
-          identifierValues?.map((vi, index) => {
-            return (
-              <Row>
-                <Col md={6} xs={12}>
-                  <Field
-                    key={`${title.id}.${identifierNamespace}.${vi}-electronicIdentifiers`}
-                    checked={values?.[`${title.id}`]?.[`${identifierNamespace}`]?.includes(vi)}
-                    component={Checkbox}
-                    id={`source-title-identifier-field-${title.id}[${index}]`}
-                    label={`${identifierNamespace}: ${vi}`}
-                    name={`${title.id}.${identifierNamespace}[${index}]`}
-                    onChange={e => {
-                      if (e.target.checked) {
-                        change(`${title.id}.${identifierNamespace}[${index}]`, vi);
-                      } else {
-                        change(`${title.id}.${identifierNamespace}[${index}]`);
-                      }
-                    }}
-                    type="checkBox"
-                  />
-                </Col>
-              </Row>
-            );
-          })
-        );
+    /*
+     * Thanks to final form having opinions about numeric keys ALWAYS creating objects,
+     * we are forced to manually construct a submit object containing an array of values instead,
+     * to avoid having to parse those arrays (which could have lengths in the 10s of thousands)
+     * This grouping will take the shape:
+     *
+      {
+        issn: ['2092-6731', '8237-3432'],
+        ezb: ['34567']
       }
+    */
+    const renderGroupedIdentifiers = () => (
+      Object.entries(groupedIdentifiers).map(identifierConfig => {
+        const [identifierNamespace, identifierValues] = identifierConfig;
 
-      return null;
-    };
+        return (
+          identifierValues?.map((vi, index) => (
+            <Row>
+              <Col md={6} xs={12}>
+                <Field
+                  key={`${title.id}.${identifierNamespace}.${vi}-electronicIdentifiers`}
+                  checked={values?.[`${title.id}`]?.[`${identifierNamespace}`]?.includes(vi)}
+                  component={Checkbox}
+                  id={`source-title-identifier-field-${title.id}-${identifierNamespace}[${index}]`}
+                  label={`${identifierNamespace}: ${vi}`}
+                  name={`${title.id}.${identifierNamespace}[${index}]`}
+                  onChange={e => {
+                    if (e.target.checked) {
+                      change(`${title.id}.${identifierNamespace}[${index}]`, vi);
+                    } else {
+                      change(`${title.id}.${identifierNamespace}[${index}]`);
+                    }
+                  }}
+                  type="checkBox"
+                />
+              </Col>
+            </Row>
+          ))
+        );
+      })
+    );
 
     return (
       <>
@@ -180,7 +189,10 @@ const SourceTitleIdentifierField = () => {
       <Headline size="large" tag="h3">
         <FormattedMessage id="ui-agreements.identifiers.identifiersToMove" />
       </Headline>
-      {renderTitleIdentifierFields(sourceTI)}
+      <Layout className="padding-bottom-gutter">
+        {renderTitleIdentifierFields(sourceTI)}
+      </Layout>
+      <div />
       {sourceTI?.relatedTitles?.map(rt => (
         <>
           <div className={css.separator} />
@@ -202,12 +214,10 @@ const SourceTitleIdentifierField = () => {
                 <Link target="_blank" to={urls.eresourceView(sourceTI?.id)}>
                   {sourceTI.name}
                 </Link>
-                {/* TODO NOT SURE ABOUT THIS FORMATTING */}
-                . {sourceTI.publicationType?.label}
+                <> · {sourceTI.publicationType?.label}</>
               </>
               :
               <FormattedMessage id="ui-agreements.eresource.moveIdetifiers.title" /> }
-            {sourceTI?.id ? ` . ${sourceTI.publicationType?.label}` : null}
           </strong>
         </AppIcon>
       )}

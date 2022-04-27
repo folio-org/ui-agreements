@@ -607,5 +607,6 @@
   "supplementaryProperties.filterBuilder": "Supplementary property filter builder",
   "supplementaryProperties.filterIndex": "Supplementary property filter {index}",
   "supplementaryProperties.removeFilter": "Remove supplementary property filter {index}",
-  "supplementaryProperties.deprecated": "DEPRECATED: {name}"
+  "supplementaryProperties.deprecated": "DEPRECATED: {name}",
+  "job.created.success.org.olf.general.jobs.IdentifierReassignmentJob": "<strong>Identifier reassignment job created </strong>: {name}"
 }

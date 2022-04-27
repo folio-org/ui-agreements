@@ -2,7 +2,8 @@ import React, { useState, useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Form } from 'react-final-form';
-import { CalloutContext } from '@folio/stripes/core';
+import { useMutation } from 'react-query';
+import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 
 import {
   Button,
@@ -42,21 +43,57 @@ const IdentifierReassignmentForm = ({
     onClose,
     eresourceName,
   }) => {
-  const [submitValue, setSubmitValue] = useState('');
+  const callout = useContext(CalloutContext);
   const [previewModal, setPreviewModal] = useState(false);
 
-  const submitHandler = (value) => {
-    console.log('submited value: %o:', value);
-  };
+  const ky = useOkapiKy();
 
-  const callout = useContext(CalloutContext);
-  const saveTitleCallout = useCallback(() => {
-    callout.sendCallout({
-      type: 'success',
-      message: (
-        <FormattedMessage id="ui-agreements.titleUpdated-callout" values={{ eresourceName }} />)
+  const { mutateAsync: postIdentifierReassignmentJob } = useMutation(
+    ['erm/jobs/identifierReassignment', 'ui-agreements', 'identifierReassignmentForm', 'postJob'],
+    (payload) => ky.post('erm/jobs/identifierReassignment', { json: payload }).json().then(res => {
+      callout.sendCallout({
+        type: 'success',
+        message: (
+          <FormattedMessage id="ui-agreements.job.created.success.org.olf.general.jobs.IdentifierReassignmentJob" values={{ name: res?.name }} />)
+      });
+      console.log("Res: %o", res);
+    })
+  );
+
+  const submitHandler = (values) => {
+    const identifierReassignmentArray = [];
+    for (const [key, value] of Object.entries(values)) {
+      if (
+        key !== 'sourceTIObject' &&
+        key !== 'destinationTIObject' &&
+        key !== 'destinationTitle'
+      ) {
+        /* The remaining keys all correspond to potential moving identifiers and take the shape
+          {
+            issn: ['1234-5678'],
+            ezb: ['325425325', 'undefined', '325325']
+          },
+         * We will construct an IdentifierReassignmentJob shape from them, see https://issues.folio.org/browse/ERM-1987
+         */
+        for (const [nsKey, idVals] of Object.entries(value)) {
+          idVals.forEach(idVal => {
+            if (idVal) {
+              identifierReassignmentArray.push({
+                initialTitleInstanceId: key,
+                targetTitleInstanceId: values.destinationTitle,
+                identifierNamespace: nsKey,
+                identifierValue: idVal
+              });
+            }
+          });
+        }
+      }
+    }
+
+    postIdentifierReassignmentJob({
+      payload: identifierReassignmentArray
     });
-  }, [eresourceName, callout]);
+  };
 
   return (
     <Form onSubmit={submitHandler}>
@@ -65,6 +102,11 @@ const IdentifierReassignmentForm = ({
           onClose(e);
           setPreviewModal(false);
           restart();
+        };
+
+        const saveCloseAndClearForm = e => {
+          handleSubmit();
+          closeAndClearForm(e);
         };
 
         return (
@@ -80,7 +122,7 @@ const IdentifierReassignmentForm = ({
                     buttonStyle="primary mega"
                     disabled={!values?.destinationTitle}
                     id={`clickable-${!previewModal ? 'submit' : 'preview'}`}
-                    onClick={previewModal ? (() => handleSubmit() && saveTitleCallout()) : () => setPreviewModal(true)}
+                    onClick={previewModal ? (() => saveCloseAndClearForm()) : () => setPreviewModal(true)}
                   >
                     {previewModal ?
                       <FormattedMessage id="ui-agreements.updatetitlesAndClose" />
