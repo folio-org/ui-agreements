@@ -27,10 +27,19 @@ const propTypes = {
   previewModal: PropTypes.bool,
 };
 
-const DestinationTitleIdentifierField = ({ formRestart, previewModal }) => {
+const DestinationTitleIdentifierField = () => {
   let triggerButton = useRef(null);
   const [destinationTI, setDestinationTI] = useState();
+
+  const { values } = useFormState();
   const { change } = useForm();
+
+  useEffect(() => {
+    const initialDestinationTI = values?.destinationTIObject;
+    if (initialDestinationTI) {
+      setDestinationTI(initialDestinationTI);
+    }
+  }, [change, values?.destinationTIObject]);
 
   const renderEmptyDestination = () => (
     <div>
@@ -46,55 +55,63 @@ const DestinationTitleIdentifierField = ({ formRestart, previewModal }) => {
   );
 
   const renderDestinationTitleLinkButton = (value) => (
-    <Pluggable
-      dataKey="destinationIdentifierLookup"
-      onEresourceSelected={ti => {
-        setDestinationTI(ti._object);
-        change('destinationTitle');
-      }}
-      renderTrigger={(pluggableRenderProps) => {
-        triggerButton = pluggableRenderProps.buttonRef;
-        const eresourceName = destinationTI?.name;
-        const buttonProps = {
-          'aria-haspopup': 'true',
-          'buttonRef': triggerButton,
-          'buttonStyle': value ? 'default' : 'primary',
-          'id': 'destinationIdentifierLookup-find-eresource-btn',
-          'marginBottom0': true,
-          'onClick': pluggableRenderProps.onClick
-        };
+    <Field
+      // This field holds the dest title object
+      name="destinationTIObject"
+      render={() => (
+        <Pluggable
+          dataKey="destinationIdentifierLookup"
+          onEresourceSelected={ti => {
+            setDestinationTI(ti._object);
+            change('destinationTIObject', ti?._object);
+            change('destinationTitle');
+          }}
+          renderTrigger={(pluggableRenderProps) => {
+            triggerButton = pluggableRenderProps.buttonRef;
+            const eresourceName = destinationTI?.name;
+            const buttonProps = {
+              'aria-haspopup': 'true',
+              'buttonRef': triggerButton,
+              'buttonStyle': value ? 'default' : 'primary',
+              'id': 'destinationIdentifierLookup-find-eresource-btn',
+              'marginBottom0': true,
+              'onClick': pluggableRenderProps.onClick
+            };
 
-        if (value) {
-          return (
-            <Tooltip
-              id="destinationIdentifierLookup-title-button-tooltip"
-              text={<FormattedMessage id="ui-agreements.moveIdentifiers.replaceTitleSpecific" values={{ eresourceName }} />}
-              triggerRef={triggerButton}
-            >
-              {({ ariaIds }) => (
-                <Button
-                  aria-labelledby={ariaIds.text}
-                  {...buttonProps}
+            if (value) {
+              return (
+                <Tooltip
+                  id="destinationIdentifierLookup-title-button-tooltip"
+                  text={<FormattedMessage id="ui-agreements.moveIdentifiers.replaceTitleSpecific" values={{ eresourceName }} />}
+                  triggerRef={triggerButton}
                 >
-                  <FormattedMessage id="ui-agreements.moveIdentifiers.replaceTitle" />
-                </Button>
-              )}
-            </Tooltip>
-          );
-        }
+                  {({ ariaIds }) => (
+                    <Button
+                      aria-labelledby={ariaIds.text}
+                      {...buttonProps}
+                    >
+                      <FormattedMessage id="ui-agreements.moveIdentifiers.replaceTitle" />
+                    </Button>
+                  )}
+                </Tooltip>
+              );
+            }
 
-        return (
-          <Button
-            {...buttonProps}
-          >
-            <FormattedMessage id="ui-agreements.moveIdentifiers.selectTitle" />
-          </Button>
-        );
-      }}
-      type="find-eresource"
-    >
-      <FormattedMessage id="ui-agreements.moveIdentifiers.noPlugin" />
-    </Pluggable>
+            return (
+              <Button
+                {...buttonProps}
+              >
+                <FormattedMessage id="ui-agreements.moveIdentifiers.selectTitle" />
+              </Button>
+            );
+          }}
+          showPackages={false}
+          type="find-eresource"
+        >
+          <FormattedMessage id="ui-agreements.moveIdentifiers.noPlugin" />
+        </Pluggable>
+      )}
+    />
   );
 
   const renderTitleRadioButton = (title) => {

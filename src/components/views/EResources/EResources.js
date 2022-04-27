@@ -300,15 +300,15 @@ const EResources = ({
                   />
                 </Pane>
                 {children}
-                <IdentifierReassignmentForm
-                  onClose={() => setMoveIdentifiersModal(false)}
-                  open={moveIdentifiersModal}
-                />
               </PersistedPaneset>
             );
           }
         }
       </SearchAndSortQuery>
+      <IdentifierReassignmentForm
+        onClose={() => setMoveIdentifiersModal(false)}
+        open={moveIdentifiersModal}
+      />
     </div>
   );
 };

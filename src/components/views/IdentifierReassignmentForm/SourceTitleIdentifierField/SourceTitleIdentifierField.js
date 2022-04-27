@@ -27,87 +27,87 @@ const propTypes = {
   previewModal: PropTypes.bool,
 };
 
-const SourceTitleIdentifierField = ({ formRestart, previewModal }) => {
+const SourceTitleIdentifierField = () => {
   let triggerButton = useRef(null);
 
-  const { initialValues, values } = useFormState();
-  const initialSourceTI = initialValues?.sourceTI?.ti._object;
-  const [sourceTI, setSourceTI] = useState(initialSourceTI ?? {});
+  const { values } = useFormState();
+  const [sourceTI, setSourceTI] = useState({});
   const { change } = useForm();
 
   useEffect(() => {
+    const initialSourceTI = values?.sourceTIObject;
     if (initialSourceTI) {
       setSourceTI(initialSourceTI);
     }
-  }, [initialSourceTI]);
+  }, [change, values?.sourceTIObject]);
 
   const renderSourceTitleLinkButton = (value) => (
-    <>
-      <Field
-        name="sourceTitleInstance"
-        render={() => {
-          const handleSetSourceTI = (ti) => {
-            setSourceTI(ti._object);
-            change('sourceTitleInstance', ti.id);
-            formRestart();
-          };
-
-          return (
-            <Pluggable
-              dataKey="sourceIdentifierLookup"
-              onEresourceSelected={handleSetSourceTI}
-              renderTrigger={(pluggableRenderProps) => {
-              triggerButton = pluggableRenderProps.buttonRef;
-              const eresourceName = sourceTI?.name;
-              const buttonProps = {
-                'aria-haspopup': 'true',
-                'buttonRef': triggerButton,
-                'buttonStyle': value ? 'default' : 'primary',
-                'id': 'sourceIdentifierLookup-find-eresource-btn',
-                'marginBottom0': true,
-                'onClick': pluggableRenderProps.onClick
-              };
-
-              if (value) {
-                return (
-                  <Tooltip
-                    id="sourceIdentifierLookup-title-button-tooltip"
-                    text={<FormattedMessage id="ui-agreements.moveIdentifiers.replaceTitleSpecific" values={{ eresourceName }} />}
-                    triggerRef={triggerButton}
-                  >
-                    {({ ariaIds }) => (
-                      <Button
-                        aria-labelledby={ariaIds.text}
-                        {...buttonProps}
-                      >
-                        <FormattedMessage id="ui-agreements.moveIdentifiers.replaceTitle" />
-                      </Button>
-                    )}
-                  </Tooltip>
-                );
+    <Field
+      id="sourceTIObject"
+      // This field holds the sourceTI object
+      name="sourceTIObject"
+      render={() => (
+        <Pluggable
+          dataKey="sourceIdentifierLookup"
+          onEresourceSelected={ti => {
+            // Change any keys that are not destination metadata
+            Object.keys(values).forEach(key => {
+              if (
+                key !== 'destinationTI' &&
+                key !== 'destinationTitle'
+              ) {
+                change(key);
               }
-              return (
-                <Button
-                  {...buttonProps}
-                >
-                  <FormattedMessage id="ui-agreements.moveIdentifiers.selectTitle" />
-                </Button>
-              );
-            }}
-              type="find-eresource"
-            >
-              <FormattedMessage id="ui-agreements.moveIdentifiers.noPlugin" />
-            </Pluggable>
-          );
-        }}
-      />
-    </>
-  );
+            });
 
-  const renderHeadLine = () => (
-    <Headline size="large" tag="h3">
-      <FormattedMessage id="ui-agreements.identifiers.identifiersToMove" />
-    </Headline>
+            setSourceTI(ti._object);
+            change('sourceTIObject', ti._object);
+          }}
+          renderTrigger={(pluggableRenderProps) => {
+            triggerButton = pluggableRenderProps.buttonRef;
+            const eresourceName = sourceTI?.name;
+            const buttonProps = {
+              'aria-haspopup': 'true',
+              'buttonRef': triggerButton,
+              'buttonStyle': value ? 'default' : 'primary',
+              'id': 'sourceIdentifierLookup-find-eresource-btn',
+              'marginBottom0': true,
+              'onClick': pluggableRenderProps.onClick
+            };
+
+            if (value) {
+              return (
+                <Tooltip
+                  id="sourceIdentifierLookup-title-button-tooltip"
+                  text={<FormattedMessage id="ui-agreements.moveIdentifiers.replaceTitleSpecific" values={{ eresourceName }} />}
+                  triggerRef={triggerButton}
+                >
+                  {({ ariaIds }) => (
+                    <Button
+                      aria-labelledby={ariaIds.text}
+                      {...buttonProps}
+                    >
+                      <FormattedMessage id="ui-agreements.moveIdentifiers.replaceTitle" />
+                    </Button>
+                  )}
+                </Tooltip>
+              );
+            }
+            return (
+              <Button
+                {...buttonProps}
+              >
+                <FormattedMessage id="ui-agreements.moveIdentifiers.selectTitle" />
+              </Button>
+            );
+          }}
+          showPackages={false}
+          type="find-eresource"
+        >
+          <FormattedMessage id="ui-agreements.moveIdentifiers.noPlugin" />
+        </Pluggable>
+      )}
+    />
   );
 
   const renderEmptySource = () => (
@@ -123,147 +123,98 @@ const SourceTitleIdentifierField = ({ formRestart, previewModal }) => {
     </div>
   );
 
-  const renderElectronicIdentifier = () => (
-    <KeyValue>
-      <strong>{sourceTI?.subType?.label}</strong>
-    </KeyValue>
-  );
+  const renderTitleIdentifierFields = (title) => {
+    const validIdentifiers = title?.identifiers?.filter(tiId => tiId?.status?.value === 'approved');
+    const groupedIdentifiers = validIdentifiers.reduce((arr, curr) => {
+      const newArr = { ...arr };
+      newArr[curr.identifier?.ns?.value] = [...(newArr[curr.identifier?.ns?.value] ?? []), curr.identifier?.value];
 
-  const renderIdentifierField = () => {
-    const validIdentifiers = sourceTI?.identifiers?.filter(tiId => tiId?.status?.value === 'approved');
-    return (
-      validIdentifiers?.map((vi, index) => {
+      return newArr;
+    }, {});
+
+    const renderGroupedIdentifiers = () => {
+      for (const [identifierNamespace, identifierValues] of Object.entries(groupedIdentifiers)) {
         return (
-          <>
-            {previewModal ?
-              <Row>
-                <Col>
-                  <KeyValue label={<FormattedMessage id="ui-agreements.eresources.materialType" />}>
-                    <div>
-                      {sourceTI?.subType?.label}
-                    </div>
-                  </KeyValue>
-                </Col>
-              </Row>
-              :
+          identifierValues?.map((vi, index) => {
+            return (
               <Row>
                 <Col md={6} xs={12}>
                   <Field
-                    key={`${sourceTI?.id}.${vi?.identifier?.ns?.value}.${vi?.identifier?.value} electroniceIdentifiers`}
+                    key={`${title.id}.${identifierNamespace}.${vi}-electronicIdentifiers`}
+                    checked={values?.[`${title.id}`]?.[`${identifierNamespace}`]?.includes(vi)}
                     component={Checkbox}
-                    id="source-title-identifier"
-                    label={`${vi?.identifier?.ns?.value}: ${vi?.identifier?.value}`}
-                    // name="identifiersSelected"
-                    name={`${sourceTI?.id}.${vi?.identifier?.ns?.value}.${vi?.identifier?.value}`}
+                    id={`source-title-identifier-field-${title.id}[${index}]`}
+                    label={`${identifierNamespace}: ${vi}`}
+                    name={`${title.id}.${identifierNamespace}[${index}]`}
+                    onChange={e => {
+                      if (e.target.checked) {
+                        change(`${title.id}.${identifierNamespace}[${index}]`, vi);
+                      } else {
+                        change(`${title.id}.${identifierNamespace}[${index}]`);
+                      }
+                    }}
                     type="checkBox"
                   />
                 </Col>
               </Row>
-            }
-          </>
+            );
+          })
         );
-      })
+      }
+
+      return null;
+    };
+
+    return (
+      <>
+        <KeyValue>
+          <strong>{title?.subType?.label}</strong>
+        </KeyValue>
+        {renderGroupedIdentifiers()}
+      </>
     );
   };
 
-  const renderRelatedTitleField = (relatedTitle) => {
-    // for now we assume that the related titles are print
-    const printIdentifiers = relatedTitle?.identifiers?.filter(rtId => rtId?.status?.value === 'approved');
-    return (
-      printIdentifiers?.map((pi) => {
-        return (
-          <>
-            <br /><div className={css.separator} />
-            {previewModal ?
-              <Row>
-                <Col md={6} xs={12}>
-                  <KeyValue label={<FormattedMessage id="ui-agreements.eresources.materialType" />}>
-                    <div>
-                      {relatedTitle?.subType?.label}
-                    </div>
-                  </KeyValue>
-                </Col>
-                <Col md={6} xs={12}>
-                  <KeyValue label={pi?.identifier?.ns?.value}>
-                    <div>
-                      {pi?.identifier?.value}
-                    </div>
-                  </KeyValue>
-                </Col>
-              </Row>
-              :
-              <Row>
-                <Col md={6} xs={12}>
-                  <KeyValue>
-                    <strong>{relatedTitle?.subType?.label}</strong>
-                  </KeyValue>
-                  <Field
-                    key={`${relatedTitle?.id}.${pi?.identifier?.ns?.value}.${pi?.identifier?.value}`}
-                    component={Checkbox}
-                    id="source-title-identifier"
-                    label={`${pi?.identifier?.ns?.value}: ${pi?.identifier?.value}`}
-                  // name={`${relatedTitle?.id}.${pi?.identifier?.ns?.value}.${pi?.identifier?.value} printIdentifiers`}
-                    name="printIdentifiers"
-                    type="checkbox"
-                  />
-                </Col>
-              </Row>
-            }
-          </>
-        );
-      })
-    );
-  };
+  const renderTitleFields = () => (
+    <>
+      <Headline size="large" tag="h3">
+        <FormattedMessage id="ui-agreements.identifiers.identifiersToMove" />
+      </Headline>
+      {renderTitleIdentifierFields(sourceTI)}
+      {sourceTI?.relatedTitles?.map(rt => (
+        <>
+          <div className={css.separator} />
+          {renderTitleIdentifierFields(rt)}
+        </>
+      ))}
+    </>
+  );
 
   return (
-    <>
-      {previewModal ?
-        <Card
-          cardStyle="positive"
-          headerStart={(
-            <AppIcon app="agreements" iconKey="eresource" size="small">
-              <strong>
-                {sourceTI.id ?
-                  <Link target="_blank" to={urls.eresourceView(sourceTI?.id)}>
-                    {sourceTI?.id ? sourceTI?.name : <FormattedMessage id="ui-agreements.eresource.moveIdetifiers.title" /> }
-                  </Link>
-                    :
-                  <FormattedMessage id="ui-agreements.eresource.moveIdetifiers.title" /> }
-              </strong>
-            </AppIcon>
-        )}
-          roundedBorder
-        >
-          {renderIdentifierField()}
-          {sourceTI?.id ? renderIdentifierField() : null}
-          {sourceTI?.id ? sourceTI?.relatedTitles?.map(rt => renderRelatedTitleField(rt)) : null}
-        </Card>
-          :
-        <Card
-          cardStyle={sourceTI?.id ? 'positive' : 'negative'}
-          headerEnd={renderSourceTitleLinkButton(sourceTI?.id)}
-          headerStart={(
-            <AppIcon app="agreements" iconKey="eresource" size="small">
-              <strong>
-                {sourceTI.id ?
-                  <Link target="_blank" to={urls.eresourceView(sourceTI?.id)}>
-                    {sourceTI?.id ? sourceTI?.name : <FormattedMessage id="ui-agreements.eresource.moveIdetifiers.title" /> }
-                  </Link>
-                  :
-                  <FormattedMessage id="ui-agreements.eresource.moveIdetifiers.title" /> }
-                {sourceTI?.id ? ` . ${sourceTI.publicationType?.label}` : null}
-              </strong>
-            </AppIcon>
-          )}
-          roundedBorder
-        >
-          {renderIdentifierField() ? renderHeadLine() : null}
-          {renderIdentifierField() ? renderElectronicIdentifier() : null}
-          {sourceTI?.id ? renderIdentifierField() : renderEmptySource()}
-          {sourceTI?.id ? sourceTI?.relatedTitles?.map(rt => renderRelatedTitleField(rt)) : null}
-        </Card>
-        }
-    </>
+    <Card
+      cardStyle={sourceTI?.id ? 'positive' : 'negative'}
+      headerEnd={renderSourceTitleLinkButton(sourceTI?.id)}
+      headerStart={(
+        <AppIcon app="agreements" iconKey="eresource" size="small">
+          <strong>
+            {sourceTI?.id ?
+              <>
+                <Link target="_blank" to={urls.eresourceView(sourceTI?.id)}>
+                  {sourceTI.name}
+                </Link>
+                {/* TODO NOT SURE ABOUT THIS FORMATTING */}
+                . {sourceTI.publicationType?.label}
+              </>
+              :
+              <FormattedMessage id="ui-agreements.eresource.moveIdetifiers.title" /> }
+            {sourceTI?.id ? ` . ${sourceTI.publicationType?.label}` : null}
+          </strong>
+        </AppIcon>
+      )}
+      roundedBorder
+    >
+      {sourceTI?.id ? renderTitleFields() : renderEmptySource()}
+    </Card>
   );
 };
 
