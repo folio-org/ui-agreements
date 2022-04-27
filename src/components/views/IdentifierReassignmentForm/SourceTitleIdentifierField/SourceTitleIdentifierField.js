@@ -149,7 +149,9 @@ const SourceTitleIdentifierField = () => {
 
         return (
           identifierValues?.map((vi, index) => (
-            <Row>
+            <Row
+              key={`${title.id}.${identifierNamespace}.${vi}-electronicIdentifiers-row`}
+            >
               <Col md={6} xs={12}>
                 <Field
                   key={`${title.id}.${identifierNamespace}.${vi}-electronicIdentifiers`}

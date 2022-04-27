@@ -13,6 +13,7 @@ import {
   Row,
   Col,
   Headline,
+  MessageBanner,
 } from '@folio/stripes/components';
 
 import SourceTitleIdentifierField from './SourceTitleIdentifierField';
@@ -45,6 +46,7 @@ const IdentifierReassignmentForm = ({
   }) => {
   const callout = useContext(CalloutContext);
   const [previewModal, setPreviewModal] = useState(false);
+  const [idJobCreated, setIdJobCreated] = useState();
 
   const ky = useOkapiKy();
 
@@ -56,7 +58,7 @@ const IdentifierReassignmentForm = ({
         message: (
           <FormattedMessage id="ui-agreements.job.created.success.org.olf.general.jobs.IdentifierReassignmentJob" values={{ name: res?.name }} />)
       });
-      console.log("Res: %o", res);
+      setIdJobCreated(res?.name);
     })
   );
 
@@ -97,16 +99,30 @@ const IdentifierReassignmentForm = ({
 
   return (
     <Form onSubmit={submitHandler}>
-      {({ handleSubmit, form:{ restart }, values }) => {
+      {({ handleSubmit, form:{ change, restart }, values }) => {
         const closeAndClearForm = e => {
           onClose(e);
           setPreviewModal(false);
           restart();
+          setIdJobCreated();
         };
 
         const saveCloseAndClearForm = e => {
           handleSubmit();
           closeAndClearForm(e);
+        };
+
+        const saveAndReturnToMove = () => {
+          handleSubmit();
+
+          // Cache source/destination object
+          const sourceTIObject = values.sourceTIObject;
+          const destinationTIObject = values.destinationTIObject;
+          // Restart and then reset the source/destination objects
+          restart();
+          change('sourceTIObject', sourceTIObject)
+          change('destinationTIObject', destinationTIObject)
+          setPreviewModal(false);
         };
 
         return (
@@ -130,6 +146,16 @@ const IdentifierReassignmentForm = ({
                       <FormattedMessage id="ui-agreements.preview" />
                     }
                   </Button>
+                  {previewModal &&
+                    <Button
+                      buttonStyle="default mega"
+                      id="clickable-save-and-move-more-identifiers"
+                      marginBottom0
+                      onClick={saveAndReturnToMove}
+                    >
+                      <FormattedMessage id="ui-agreements.updatetitlesAndMoveMore" />
+                    </Button>
+                  }
                   <Button
                     buttonStyle="default mega"
                     id={`clickable-${previewModal ? 'back' : 'cancel'}`}
@@ -153,6 +179,11 @@ const IdentifierReassignmentForm = ({
               open={open}
               size="large"
             >
+              {idJobCreated &&
+                <MessageBanner type="warning">
+                  <FormattedMessage id="ui-agreements.updateMoreIdentifierWarning" values={{ name: idJobCreated }} />
+                </MessageBanner>
+              }
               {previewModal ?
                 <>
                   <FormattedMessage id="ui-agreements.preview.updateAndContinue" />
