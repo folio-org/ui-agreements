@@ -61,10 +61,9 @@ const IdentifierReassignmentForm = ({
   return (
     <Form onSubmit={submitHandler}>
       {({ handleSubmit, form:{ restart }, values }) => {
-        console.log("FORM VALUES: %o", values)
-
         const closeAndClearForm = e => {
           onClose(e);
+          setPreviewModal(false);
           restart();
         };
 
@@ -89,19 +88,6 @@ const IdentifierReassignmentForm = ({
                       <FormattedMessage id="ui-agreements.preview" />
                     }
                   </Button>
-{/*                   {previewModal ?
-                    <div style={{ float: 'right' }}>
-                      <Button
-                        buttonStyle="default mega"
-                        id="clickable-preview-and-update"
-                        onClick={saveTitleCallout}
-                      >
-                        <FormattedMessage id="ui-agreements.updatetitlesAndMoveMore" />
-                      </Button>
-                    </div>
-                  :
-                  null
-                  } */}
                   <Button
                     buttonStyle="default mega"
                     id={`clickable-${previewModal ? 'back' : 'cancel'}`}

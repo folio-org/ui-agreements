@@ -53,7 +53,7 @@ const SourceTitleIdentifierField = () => {
             // Change any keys that are not destination metadata
             Object.keys(values).forEach(key => {
               if (
-                key !== 'destinationTI' &&
+                key !== 'destinationTIObject' &&
                 key !== 'destinationTitle'
               ) {
                 change(key);
