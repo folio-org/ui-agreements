@@ -218,7 +218,6 @@
     "eresources.packageAgreements": "اتفاقيات لهذه الحزمة",
     "eresources.addPackageToBasket": "إضافة حزمة إلى السلة",
     "note": "ملاحظة",
-    "agreements.dateAgreementBegan": "تاريخ بدء الاتفاقية",
     "agreementPeriods": "فترات الاتفاقية",
     "agreementPeriods.addPeriod": "إضافة فترات اتفاقية",
     "agreementPeriods.periodEnd": "انتهاء الفترة",
@@ -566,5 +565,15 @@
     "settings.fileStorage.s3Endpoint": "نقطة نهاية S3",
     "settings.fileStorage.s3ObjectPrefix": "بادئة كائن S3",
     "settings.fileStorage.s3SecretKey": "مفتاح سر S3",
-    "settings.fileStorage.storageEngine": "محرك التخزين"
+    "settings.fileStorage.storageEngine": "محرك التخزين",
+    "emptyAccordion.openAccessProperties": "لا توجد خصائص وصول مفتوح لهذه الاتفاقية",
+    "openAccessProperties": "خصائص الوصول المفتوح",
+    "openAccessProperties.optionalProperties": "خصائص اختيارية",
+    "openAccessProperties.primaryProperties": "خصائص رئيسية",
+    "settings.supplementaryProperties.retired": "مهمَل",
+    "settings.supplementaryProperties.primaryRetired": "لا يمكن أن تكون الخاصية التكميلية أساسية ومهمَلة في نفس الوقت",
+    "settings.customProperties.all": "الكل",
+    "settings.customProperties.none": "لا شيء",
+    "supplementaryProperty.help.label": "يتم استخدام مصطلح الاتفاقية ' ملصق' عند عرض الخاصية التكميلية للمستخدمين داخل فوليو وفي أي أنظمة أخرى تعرض خصائص الاتفاقية التكميلية للمستخدمين. يجب أن يكون الملصق مقطعًا نصيًا قصيرًا يوضح المعلومات التي يتم تسجيلها بوضوح في الخاصية التكميلية. يجب استخدام الوصف عند الحاجة إلى شرح إضافي للخاصية التكميلية لعرضه على المستخدمين.",
+    "supplementaryProperty.help.name": "يستخدم مصطلح الاتفاقية 'الاسم' عند إخراج بيانات الخاصية التكميلية بتنسيق قابل للقراءة آليًا. وليس المقصود أن يتم عرضه على المستخدمين (الموظفين أو المستفيدين). يجب أن يكون الاسم مقطعًا من أحرف أبجدية لاتينية قصيرة يمكن استخدامها من قبل أي أنظمة أو برامج خارجية يمكنها الوصول إلى بيانات خاصية الاتفاقية التكميلية. يقترح استخدام camelCase لكن ذلك غير مطلوب. من شأن التغييرات التي تطرأ على اسم خاصية الاتفاقية التكميلية  أن تؤثر على أي أنظمة خارجية تستخدم بيانات خاصية الاتفاقية التكميلية، ويجب عدم إجراء التغييرات دون استشارة المسؤولين عن الأنظمة والبرامج الخارجية ذات الصلة."
 }

@@ -1,4 +1,3 @@
-export { default as SupplementaryProperties } from './SupplementaryProperties';
 export { default as ControllingLicense } from './ControllingLicense';
 export { default as ExternalLicenses } from './ExternalLicenses';
 export { default as FormInfo } from './FormInfo';
@@ -8,7 +7,6 @@ export { default as FormLines } from './FormLines';
 export { default as FormOrganizations } from './FormOrganizations';
 export { default as FormRelatedAgreements } from './FormRelatedAgreements';
 export { default as FormSupplementaryDocuments } from './FormSupplementaryDocuments';
-export { default as FormSupplementaryProperties } from './FormSupplementaryProperties';
 export { default as FormUsageData } from './FormUsageData';
 export { default as FutureLicenses } from './FutureLicenses';
 export { default as Header } from './Header';

@@ -101,11 +101,6 @@ class AgreementViewRoute extends React.Component {
       path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
       records: 'configs',
     },
-    supplementaryProperties: {
-      type: 'okapi',
-      path: 'erm/custprops',
-      shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
-    },
     terms: {
       type: 'okapi',
       path: 'licenses/custprops',
@@ -120,9 +115,12 @@ class AgreementViewRoute extends React.Component {
           .map(contact => `id==${contact.user}`)
           .join(' or ');
 
-        return query ? { query } : null;
+        return query ? { query } : '';
       },
-      fetch: props => !!props.stripes.hasInterface('users', '15.0'),
+      fetch: props => (
+        !!props.stripes.hasInterface('users', '15.0') &&
+        props?.resources?.agreement?.records?.[0]?.contacts?.length > 0
+      ),
       permissionsRequired: 'users.collection.get',
       records: 'users',
     },
@@ -232,7 +230,7 @@ class AgreementViewRoute extends React.Component {
     if (
       prevLines?.length !== newLines?.length ||
       this.countPoLines(prevLines) !== this.countPoLines(newLines)
-      ) {
+    ) {
       await this.fetchOrderLines();
     }
 
@@ -557,8 +555,8 @@ class AgreementViewRoute extends React.Component {
         data={{
           agreement: this.getCompositeAgreement(),
           eresourcesFilterPath: this.props.resources.eresourcesFilterPath,
+          openAccessProperties: get(resources, 'openAccessProperties.records', []),
           searchString: this.props.location.search,
-          supplementaryProperties: get(resources, 'supplementaryProperties.records', []),
           terms: get(resources, 'terms.records', []),
         }}
         handlers={{
