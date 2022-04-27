@@ -130,7 +130,6 @@ const SourceTitleIdentifierField = ({ formRestart, previewModal }) => {
   );
 
   const renderIdentifierField = () => {
-    console.log('source TI: %o', sourceTI);
     const validIdentifiers = sourceTI?.identifiers?.filter(tiId => tiId?.status?.value === 'approved');
     return (
       validIdentifiers?.map((vi, index) => {
@@ -168,8 +167,7 @@ const SourceTitleIdentifierField = ({ formRestart, previewModal }) => {
   };
 
   const renderRelatedTitleField = (relatedTitle) => {
-    console.log('relatedTitle %o', relatedTitle);
-    // for now we assume that the related titels are print
+    // for now we assume that the related titles are print
     const printIdentifiers = relatedTitle?.identifiers?.filter(rtId => rtId?.status?.value === 'approved');
     return (
       printIdentifiers?.map((pi) => {
@@ -217,11 +215,6 @@ const SourceTitleIdentifierField = ({ formRestart, previewModal }) => {
     );
   };
 
-  console.log('selected: %o', values?.relatedTitle?.id);
-  console.log('formValues source Identifier: %o', values);
-  console.log('initialValues: %o', initialValues);
-
-  // console.log('SourceTI, source Identifier: %o', sourceTI);
   return (
     <>
       {previewModal ?

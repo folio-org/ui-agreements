@@ -17,6 +17,9 @@ import {
 import SourceTitleIdentifierField from './SourceTitleIdentifierField';
 import DestinationTitleIdentifierField from './DestinationTitleIdentifierField';
 
+import SourceTitlePreview from './SourceTitlePreview/SourceTitlePreview';
+import DestinationTitlePreview from './DestinationTitlePreview/DestinationTitlePreview';
+
 const propTypes = {
   handlers: PropTypes.PropTypes.shape({
     onClose: PropTypes.func.isRequired,
@@ -47,7 +50,7 @@ const IdentifierReassignmentForm = ({
   };
 
   const callout = useContext(CalloutContext);
-  const onSaveTitle = useCallback(() => {
+  const saveTitleCallout = useCallback(() => {
     callout.sendCallout({
       type: 'success',
       message: (
@@ -58,6 +61,7 @@ const IdentifierReassignmentForm = ({
   return (
     <Form onSubmit={submitHandler}>
       {({ handleSubmit, form:{ restart }, values }) => {
+        console.log("FORM VALUES: %o", values)
         return (
           <form
             onSubmit={handleSubmit}
@@ -69,29 +73,29 @@ const IdentifierReassignmentForm = ({
                   {/* We change the behaviour of these buttons depending on if we're on the form screen or the preview screen */}
                   <Button
                     buttonStyle="primary mega"
-                    disabled={!values?.identifiersSelected}
+                    disabled={!values?.sourceTitle}
                     id={`clickable-${!previewModal ? 'submit' : 'preview'}`}
-                    onClick={previewModal ? (() => handleSubmit() && onSaveTitle) : () => setPreviewModal(true)}
+                    onClick={previewModal ? (() => handleSubmit() && saveTitleCallout()) : () => setPreviewModal(true)}
                   >
                     {previewModal ?
-                      <FormattedMessage id="ui-agreements.updateTitelsAndClose" />
+                      <FormattedMessage id="ui-agreements.updatetitlesAndClose" />
                       :
                       <FormattedMessage id="ui-agreements.preview" />
                     }
                   </Button>
-                  {previewModal ?
+{/*                   {previewModal ?
                     <div style={{ float: 'right' }}>
                       <Button
                         buttonStyle="default mega"
                         id="clickable-preview-and-update"
-                        onClick={onSaveTitle}
+                        onClick={saveTitleCallout}
                       >
-                        <FormattedMessage id="ui-agreements.updateTitelsAndMoveMore" />
+                        <FormattedMessage id="ui-agreements.updatetitlesAndMoveMore" />
                       </Button>
                     </div>
                   :
                   null
-                  }
+                  } */}
                   <Button
                     buttonStyle="default mega"
                     id={`clickable-${previewModal ? 'back' : 'cancel'}`}
@@ -115,31 +119,50 @@ const IdentifierReassignmentForm = ({
               open={open}
               size="large"
             >
-              {previewModal ? `identifiers ${''}: ${''}(${''}) and ${''}: ${''}(${''}) will be moved from ${''} to ${''}, ${''}: ${''}.`
-                 : null}
               {previewModal ?
-                <FormattedMessage id="ui-agreements.preview.updateAndContinue" /> : null}
-              <Row>
-                <Col md={5.5} xs={12}>
-                  <h2>
-                    <FormattedMessage id="ui-agreements.eresource.sourceTitle" />
-                  </h2>
-                  <SourceTitleIdentifierField
-                    formRestart={restart}
-                    previewModal={previewModal}
-                  />
-                </Col>
-                <Icon icon="caret-right" />
-                <Col md={5.5} xs={12}>
-                  <h2>
-                    <FormattedMessage id="ui-agreements.eresource.destinationTitle" />
-                  </h2>
-                  <DestinationTitleIdentifierField
-                    formRestart={restart}
-                    previewModal={previewModal}
-                  />
-                </Col>
-              </Row>
+                <>
+                  <FormattedMessage id="ui-agreements.preview.updateAndContinue" />
+                  <Row>
+                    <Col md={5.5} xs={12}>
+                      <h2>
+                        <FormattedMessage id="ui-agreements.eresource.sourceTitle" />
+                      </h2>
+                      <SourceTitlePreview />
+                    </Col>
+                    <Icon icon="caret-right" />
+                    <Col md={5.5} xs={12}>
+                      <h2>
+                        <FormattedMessage id="ui-agreements.eresource.destinationTitle" />
+                      </h2>
+                      <DestinationTitlePreview />
+                    </Col>
+                  </Row>
+                </>
+                :
+                <>
+                  <Row>
+                    <Col md={5.5} xs={12}>
+                      <h2>
+                        <FormattedMessage id="ui-agreements.eresource.sourceTitle" />
+                      </h2>
+                      <SourceTitleIdentifierField
+                        formRestart={restart}
+                        previewModal={previewModal}
+                      />
+                    </Col>
+                    <Icon icon="caret-right" />
+                    <Col md={5.5} xs={12}>
+                      <h2>
+                        <FormattedMessage id="ui-agreements.eresource.destinationTitle" />
+                      </h2>
+                      <DestinationTitleIdentifierField
+                        formRestart={restart}
+                        previewModal={previewModal}
+                      />
+                    </Col>
+                  </Row>
+                </>
+              }
             </Modal>
           </form>
         );

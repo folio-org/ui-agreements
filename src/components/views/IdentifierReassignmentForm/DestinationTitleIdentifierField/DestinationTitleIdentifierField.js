@@ -43,9 +43,6 @@ const DestinationTitleIdentifierField = ({ formRestart, previewModal }) => {
 
   const renderEmptyDestination = () => (
     <div>
-      <Headline size="large" tag="h3">
-        <FormattedMessage id="ui-agreements.identifiers.identifierDestination" />
-      </Headline>
       <Layout className="textCentered">
         <strong>
           <FormattedMessage id="ui-agreements.eresource.moveIdentifier.noDestinationTitle" />
@@ -56,10 +53,6 @@ const DestinationTitleIdentifierField = ({ formRestart, previewModal }) => {
       </Layout>
     </div>
   );
-
-  // const renderHeadLine = () => (
-
-  // );
 
   const renderDestinationTitleLinkButton = (value) => (
     <>
@@ -125,148 +118,79 @@ const DestinationTitleIdentifierField = ({ formRestart, previewModal }) => {
     </>
   );
 
-  const renderIdentifierRadioButtons = (title) => {
-    console.log('destinationTIsource TI: %o', title);
+  const renderTitleRadioButton = (title) => {
     const validIdentifiers = title?.identifiers?.filter(tiId => tiId?.status?.value === 'approved');
     return (
-      <KeyValue label={<FormattedMessage id="ui-agreements.eresources.materialType" />}>
-      {validIdentifiers?.map((vi, index) => {
-        return (
-          <>
-            {previewModal ?
-              <Row>
-                <Col md={6} xs={12}>
-                  <KeyValue label={<FormattedMessage id="ui-agreements.eresources.materialType" />}>
-                    <div>
-                      {title?.subType?.label}
-                    </div>
-                  </KeyValue>
-                </Col>
-                <Col md={6} xs={12}>
-                  <KeyValue label={vi?.identifier?.ns?.value}>
-                    <div>
-                      {vi?.identifier?.value}
-                    </div>
-                  </KeyValue>
-                </Col>
-              </Row>
-              :
-              <RadioButtonGroup>
-                  <Col md={6} xs={12}>
-                    <Field
-                      key={index}
-                      component={RadioButton}
-                      label={<KeyValue label={vi?.identifier?.ns?.value}>
-                        {vi?.identifier?.value}
-                      </KeyValue>}
-                      name="identifiersName"
-                      value={validIdentifiers?.identifier?.value}
-                    />
-                  </Col>
-
-              </RadioButtonGroup>
-            }
-          </>
-        );
-      })}
-      </KeyValue>
+      <Row>
+        <Col md={6} xs={12}>
+          <RadioButtonGroup>
+            <Field
+              key={title.id}
+              component={RadioButton}
+              label={<KeyValue label={<FormattedMessage id="ui-agreements.eresources.materialType" />}>{title?.subType?.label}</KeyValue>}
+              name="sourceTitle"
+              type="radio"
+              value={title?.id}
+            />
+          </RadioButtonGroup>
+        </Col>
+        <Col md={6} xs={12}>
+          {validIdentifiers?.map((vi, index) => {
+            return (
+              <KeyValue
+                key={`title-${title?.id}-identifier[${index}]`}
+                label={vi?.identifier?.ns?.value}
+              >
+                {vi?.identifier?.value}
+              </KeyValue>
+            );
+          })}
+        </Col>
+      </Row>
     );
   };
 
-  // const renderRelatedTitleField = (relatedTitle) => {
-  //   const printIdentifiers = relatedTitle?.identifiers?.filter(rtId => rtId?.status?.value === 'approved');
-  //   console.log('related title: %o', relatedTitle);
-  //   return (
-  //     printIdentifiers?.map((pi, index) => {
-  //       return (
-  //         <>
-  //           <div className={css.separator} />
-  //           {previewModal ?
-  //             <Row>
-  //               <Col>
-  //                 <KeyValue label={<FormattedMessage id="ui-agreements.eresources.materialType" />}>
-  //                   <div>
-  //                     {relatedTitle?.subType?.label}
-  //                   </div>
-  //                 </KeyValue>
-  //               </Col>
-  //             </Row>
-  //             :
-  //             <RadioButtonGroup>
-  //               <KeyValue label={<FormattedMessage id="ui-agreements.eresources.materialType" />}>
-  //                 <Row>
-  //                   <Col md={6} xs={12}>
-  //                     <RadioButton
-  //                       key={index}
-  //                       label={relatedTitle?.subType?.label}
-  //                       name="identifiersName"
-  //                       value={pi?.identifier?.value}
-  //                     />
-  //                   </Col>
-  //                 </Row>
-  //               </KeyValue>
-  //               <KeyValue label={pi?.identifier?.ns?.value}>
-  //                 {pi?.identifier?.value}
-  //               </KeyValue>
-  //             </RadioButtonGroup>
-  //             }
-  //         </>
-  //       );
-  //     })
-  //   );
-  // };
-
-  console.log('formValues destination Identifier: %o', values);
+  const renderTitleFields = () => {
+    return (
+      <>
+        <Headline size="large" tag="h3">
+          <FormattedMessage id="ui-agreements.identifiers.identifierDestination" />
+        </Headline>
+        {renderTitleRadioButton(destinationTI)}
+        {destinationTI?.relatedTitles?.map(rt => (
+          <>
+            <div className={css.separator} />
+            {renderTitleRadioButton(rt)}
+          </>
+        ))}
+      </>
+    );
+  };
 
   return (
-    <>
-      {previewModal ?
-        <Card
-          cardStyle="positive"
-          headerStart={(
-            <AppIcon app="agreements" iconKey="eresource" size="small">
-              <strong>
-                {destinationTI.id ?
-                  <Link target="_blank" to={urls.eresourceView(destinationTI?.id)}>
-                    {destinationTI?.id ? destinationTI?.name : <FormattedMessage id="ui-agreements.eresource.moveIdetifiers.title" /> }
-                  </Link>
-                      :
-                  <FormattedMessage id="ui-agreements.eresource.moveIdetifiers.title" /> }
-              </strong>
-            </AppIcon>
-    )}
-          roundedBorder
-        >
-          {renderIdentifierRadioButtons(destinationTI)}
-          {destinationTI?.id ? renderIdentifierRadioButtons() : null}
-          {destinationTI?.id ? destinationTI?.relatedTitles?.map(rt => renderIdentifierRadioButtons(rt)) : null}
-        </Card>
+    <Card
+      cardStyle={destinationTI?.id ? 'positive' : 'negative'}
+      headerEnd={renderDestinationTitleLinkButton(destinationTI?.id)}
+      headerStart={(
+        <AppIcon app="agreements" iconKey="eresource" size="small">
+          <strong>
+            {destinationTI.id ?
+              <>
+                <Link to={urls.eresourceView(destinationTI?.id)}>
+                  {destinationTI?.name}
+                </Link>
+                {/* TODO not sure about this formatting */}
+                <> . {destinationTI.publicationType?.label}</>
+              </>
           :
-        <Card
-          cardStyle={destinationTI?.id ? 'positive' : 'negative'}
-          headerEnd={renderDestinationTitleLinkButton(destinationTI?.id)}
-          headerStart={(
-            <AppIcon app="agreements" iconKey="eresource" size="small">
-              <strong>
-                {destinationTI.id ?
-                  <Link to={urls.eresourceView(destinationTI?.id)}>
-                    {destinationTI?.id ? destinationTI?.name : <FormattedMessage id="ui-agreements.eresource.moveIdetifiers.title" />}
-                  </Link>
-              :
-                  <FormattedMessage id="ui-agreements.eresource.moveIdetifiers.title" /> }
-                {destinationTI?.id ? ` . ${destinationTI.publicationType?.label}` : null}
-              </strong>
-            </AppIcon>
+              <FormattedMessage id="ui-agreements.eresource.moveIdetifiers.title" /> }
+          </strong>
+        </AppIcon>
       )}
-          roundedBorder
-        >
-          {/* {renderIdentifierRadioButtons(destinationTI) ? renderHeadLine() : null} */}
-          {/* {destinationTI?.vi?.identifier?.value} */}
-          {destinationTI?.id ? renderIdentifierRadioButtons(destinationTI) : renderEmptyDestination()}
-          {destinationTI?.id ? destinationTI?.relatedTitles?.map(rt => renderDestinationTitleLinkButton(rt)) : null}
-        </Card>
-    }
-    </>
+      roundedBorder
+    >
+      {destinationTI?.id ? renderTitleFields() : renderEmptyDestination()}
+    </Card>
   );
 };
 
