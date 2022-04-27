@@ -62,6 +62,12 @@ const IdentifierReassignmentForm = ({
     <Form onSubmit={submitHandler}>
       {({ handleSubmit, form:{ restart }, values }) => {
         console.log("FORM VALUES: %o", values)
+
+        const closeAndClearForm = e => {
+          onClose(e);
+          restart();
+        };
+
         return (
           <form
             onSubmit={handleSubmit}
@@ -73,7 +79,7 @@ const IdentifierReassignmentForm = ({
                   {/* We change the behaviour of these buttons depending on if we're on the form screen or the preview screen */}
                   <Button
                     buttonStyle="primary mega"
-                    disabled={!values?.sourceTitle}
+                    disabled={!values?.destinationTitle}
                     id={`clickable-${!previewModal ? 'submit' : 'preview'}`}
                     onClick={previewModal ? (() => handleSubmit() && saveTitleCallout()) : () => setPreviewModal(true)}
                   >
@@ -100,7 +106,7 @@ const IdentifierReassignmentForm = ({
                     buttonStyle="default mega"
                     id={`clickable-${previewModal ? 'back' : 'cancel'}`}
                     marginBottom0
-                    onClick={previewModal ? () => setPreviewModal(false) : onClose}
+                    onClick={previewModal ? () => setPreviewModal(false) : closeAndClearForm}
                   >
                     {previewModal ?
                       <FormattedMessage id="ui-agreements.back" />
@@ -115,7 +121,7 @@ const IdentifierReassignmentForm = ({
                 <FormattedMessage id="ui-agreements.preview" />
                 :
                 <FormattedMessage id="ui-agreements.eresource.moveIdentifier" />}
-              onClose={onClose}
+              onClose={closeAndClearForm}
               open={open}
               size="large"
             >

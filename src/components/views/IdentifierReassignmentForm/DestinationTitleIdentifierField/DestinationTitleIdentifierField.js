@@ -29,17 +29,8 @@ const propTypes = {
 
 const DestinationTitleIdentifierField = ({ formRestart, previewModal }) => {
   let triggerButton = useRef(null);
-
-  const { initialValues, values } = useFormState();
-  const initialDestinationTI = initialValues?.destinationTI?.ti._object;
-  const [destinationTI, setDestinationTI] = useState(initialDestinationTI ?? {});
+  const [destinationTI, setDestinationTI] = useState();
   const { change } = useForm();
-
-  useEffect(() => {
-    if (initialDestinationTI) {
-      setDestinationTI(initialDestinationTI);
-    }
-  }, [initialDestinationTI]);
 
   const renderEmptyDestination = () => (
     <div>
@@ -55,67 +46,55 @@ const DestinationTitleIdentifierField = ({ formRestart, previewModal }) => {
   );
 
   const renderDestinationTitleLinkButton = (value) => (
-    <>
-      <Field
-        name="destinationTitleInstance"
-        render={() => {
-          const handleSetDestinationTI = (ti) => {
-            setDestinationTI(ti._object);
-            change('destinationTitleInstance', ti.id);
-            formRestart();
-          };
+    <Pluggable
+      dataKey="destinationIdentifierLookup"
+      onEresourceSelected={ti => {
+        setDestinationTI(ti._object);
+        change('destinationTitle');
+      }}
+      renderTrigger={(pluggableRenderProps) => {
+        triggerButton = pluggableRenderProps.buttonRef;
+        const eresourceName = destinationTI?.name;
+        const buttonProps = {
+          'aria-haspopup': 'true',
+          'buttonRef': triggerButton,
+          'buttonStyle': value ? 'default' : 'primary',
+          'id': 'destinationIdentifierLookup-find-eresource-btn',
+          'marginBottom0': true,
+          'onClick': pluggableRenderProps.onClick
+        };
 
+        if (value) {
           return (
-            <Pluggable
-              dataKey="destinationIdentifierLookup"
-              onEresourceSelected={handleSetDestinationTI}
-              renderTrigger={(pluggableRenderProps) => {
-                triggerButton = pluggableRenderProps.buttonRef;
-                const eresourceName = destinationTI?.name;
-                const buttonProps = {
-                  'aria-haspopup': 'true',
-                  'buttonRef': triggerButton,
-                  'buttonStyle': value ? 'default' : 'primary',
-                  'id': 'destinationIdentifierLookup-find-eresource-btn',
-                  'marginBottom0': true,
-                  'onClick': pluggableRenderProps.onClick
-                };
-
-                if (value) {
-                  return (
-                    <Tooltip
-                      id="destinationIdentifierLookup-title-button-tooltip"
-                      text={<FormattedMessage id="ui-agreements.moveIdentifiers.replaceTitleSpecific" values={{ eresourceName }} />}
-                      triggerRef={triggerButton}
-                    >
-                      {({ ariaIds }) => (
-                        <Button
-                          aria-labelledby={ariaIds.text}
-                          {...buttonProps}
-                        >
-                          <FormattedMessage id="ui-agreements.moveIdentifiers.replaceTitle" />
-                        </Button>
-                      )}
-                    </Tooltip>
-                  );
-                }
-
-                return (
-                  <Button
-                    {...buttonProps}
-                  >
-                    <FormattedMessage id="ui-agreements.moveIdentifiers.selectTitle" />
-                  </Button>
-                );
-              }}
-              type="find-eresource"
+            <Tooltip
+              id="destinationIdentifierLookup-title-button-tooltip"
+              text={<FormattedMessage id="ui-agreements.moveIdentifiers.replaceTitleSpecific" values={{ eresourceName }} />}
+              triggerRef={triggerButton}
             >
-              <FormattedMessage id="ui-agreements.moveIdentifiers.noPlugin" />
-            </Pluggable>
+              {({ ariaIds }) => (
+                <Button
+                  aria-labelledby={ariaIds.text}
+                  {...buttonProps}
+                >
+                  <FormattedMessage id="ui-agreements.moveIdentifiers.replaceTitle" />
+                </Button>
+              )}
+            </Tooltip>
           );
-        }}
-      />
-    </>
+        }
+
+        return (
+          <Button
+            {...buttonProps}
+          >
+            <FormattedMessage id="ui-agreements.moveIdentifiers.selectTitle" />
+          </Button>
+        );
+      }}
+      type="find-eresource"
+    >
+      <FormattedMessage id="ui-agreements.moveIdentifiers.noPlugin" />
+    </Pluggable>
   );
 
   const renderTitleRadioButton = (title) => {
@@ -128,7 +107,7 @@ const DestinationTitleIdentifierField = ({ formRestart, previewModal }) => {
               key={title.id}
               component={RadioButton}
               label={<KeyValue label={<FormattedMessage id="ui-agreements.eresources.materialType" />}>{title?.subType?.label}</KeyValue>}
-              name="sourceTitle"
+              name="destinationTitle"
               type="radio"
               value={title?.id}
             />
@@ -174,13 +153,13 @@ const DestinationTitleIdentifierField = ({ formRestart, previewModal }) => {
       headerStart={(
         <AppIcon app="agreements" iconKey="eresource" size="small">
           <strong>
-            {destinationTI.id ?
+            {destinationTI?.id ?
               <>
                 <Link to={urls.eresourceView(destinationTI?.id)}>
                   {destinationTI?.name}
                 </Link>
                 {/* TODO not sure about this formatting */}
-                <> . {destinationTI.publicationType?.label}</>
+                <> . {destinationTI?.publicationType?.label}</>
               </>
           :
               <FormattedMessage id="ui-agreements.eresource.moveIdetifiers.title" /> }
