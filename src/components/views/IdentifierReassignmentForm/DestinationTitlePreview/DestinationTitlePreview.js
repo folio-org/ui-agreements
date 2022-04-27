@@ -1,16 +1,10 @@
-import { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Field, useFormState, useForm } from 'react-final-form';
+import { useFormState } from 'react-final-form';
 import { Link } from 'react-router-dom';
 
 import {
-  RadioButton,
-  RadioButtonGroup,
-  Tooltip,
-  Button,
   Card,
-  Layout,
   KeyValue,
   Row,
   Col,
