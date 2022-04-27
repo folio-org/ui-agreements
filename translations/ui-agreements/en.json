@@ -18,6 +18,7 @@
   "action": "Action",
   "default": "Default",
   "preview" : "Preview",
+  "back" : "Back",
   "titleUpdated-callout": "<strong>Titel updated:</strong> {eresourceName}",
   "appMenu.keyboardShortcuts": "Keyboard shortcuts",
   "agreement": "Agreement",
