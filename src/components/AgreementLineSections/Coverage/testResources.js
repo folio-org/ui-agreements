@@ -51,23 +51,23 @@ const defaultLine = {
     'supplementaryDocs': [],
     'description': 'This is description',
     'items': [{
-        'id': '49808d2c-6576-448d-9f1d-9321f357c03d'
-      },
-      {
-        'id': 'c1ca6ea3-9c65-46b6-bf35-ef00d420536d'
-      },
-      {
-        'id': 'f3db0f83-bf7b-4a4b-b43a-673a323bf387'
-      },
-      {
-        'id': '736212aa-a81b-4829-acf7-cbaa586bc6de'
-      },
-      {
-        'id': '42a71f30-0561-44dc-9f03-b7199de1795e'
-      },
-      {
-        'id': 'd04ae7c1-8604-4808-b8f4-13531e319a26'
-      }
+      'id': '49808d2c-6576-448d-9f1d-9321f357c03d'
+    },
+    {
+      'id': 'c1ca6ea3-9c65-46b6-bf35-ef00d420536d'
+    },
+    {
+      'id': 'f3db0f83-bf7b-4a4b-b43a-673a323bf387'
+    },
+    {
+      'id': '736212aa-a81b-4829-acf7-cbaa586bc6de'
+    },
+    {
+      'id': '42a71f30-0561-44dc-9f03-b7199de1795e'
+    },
+    {
+      'id': 'd04ae7c1-8604-4808-b8f4-13531e319a26'
+    }
     ],
     'alternateNames': []
   },
@@ -272,53 +272,53 @@ const defaultResource = {
         'label': 'Journal'
       },
       'identifiers': [{
-          'title': {
-            'id': 'bdf174a9-2516-4bac-bb98-507c63134460'
-          },
-          'status': {
-            'id': '2c91809c7bdd85f6017bdd8e16350045',
-            'value': 'approved',
-            'label': 'approved'
-          },
-          'identifier': {
-            'value': '2598375-1',
-            'ns': {
-              'value': 'zdb'
-            }
-          }
+        'title': {
+          'id': 'bdf174a9-2516-4bac-bb98-507c63134460'
         },
-        {
-          'title': {
-            'id': 'bdf174a9-2516-4bac-bb98-507c63134460'
-          },
-          'status': {
-            'id': '2c91809c7bdd85f6017bdd8e16350045',
-            'value': 'approved',
-            'label': 'approved'
-          },
-          'identifier': {
-            'value': '151865',
-            'ns': {
-              'value': 'ezb'
-            }
-          }
+        'status': {
+          'id': '2c91809c7bdd85f6017bdd8e16350045',
+          'value': 'approved',
+          'label': 'approved'
         },
-        {
-          'title': {
-            'id': 'bdf174a9-2516-4bac-bb98-507c63134460'
-          },
-          'status': {
-            'id': '2c91809c7bdd85f6017bdd8e16350045',
-            'value': 'approved',
-            'label': 'approved'
-          },
-          'identifier': {
-            'value': '2191-2491',
-            'ns': {
-              'value': 'issn'
-            }
+        'identifier': {
+          'value': '2598375-1',
+          'ns': {
+            'value': 'zdb'
           }
         }
+      },
+      {
+        'title': {
+          'id': 'bdf174a9-2516-4bac-bb98-507c63134460'
+        },
+        'status': {
+          'id': '2c91809c7bdd85f6017bdd8e16350045',
+          'value': 'approved',
+          'label': 'approved'
+        },
+        'identifier': {
+          'value': '151865',
+          'ns': {
+            'value': 'ezb'
+          }
+        }
+      },
+      {
+        'title': {
+          'id': 'bdf174a9-2516-4bac-bb98-507c63134460'
+        },
+        'status': {
+          'id': '2c91809c7bdd85f6017bdd8e16350045',
+          'value': 'approved',
+          'label': 'approved'
+        },
+        'identifier': {
+          'value': '2191-2491',
+          'ns': {
+            'value': 'issn'
+          }
+        }
+      }
       ],
       'coverage': [{
         'id': '93a4058f-bc54-4d94-967c-7f4bb1738aae',
@@ -466,26 +466,26 @@ const line = {
     'supplementaryDocs': [],
     'description': 'This is description',
     'items': [{
-        'id': 'eff58b3e-63a1-428a-8067-1234d4031bf6'
-      },
-      {
-        'id': 'dae4130d-a3d8-4cd8-b693-2b68513a1b07'
-      },
-      {
-        'id': 'a1cac4fc-c03a-4d65-8650-204f23584d98'
-      },
-      {
-        'id': '41ef4fae-00ab-45a2-9aa0-18203c50967c'
-      },
-      {
-        'id': '4128ca8b-cf88-4544-bd28-f2fe1d1e3201'
-      },
-      {
-        'id': '0b2a6181-636d-420a-99b1-16708e8a21d6'
-      },
-      {
-        'id': '5732b2c9-3dbd-4a0e-9343-6d41d275861d'
-      }
+      'id': 'eff58b3e-63a1-428a-8067-1234d4031bf6'
+    },
+    {
+      'id': 'dae4130d-a3d8-4cd8-b693-2b68513a1b07'
+    },
+    {
+      'id': 'a1cac4fc-c03a-4d65-8650-204f23584d98'
+    },
+    {
+      'id': '41ef4fae-00ab-45a2-9aa0-18203c50967c'
+    },
+    {
+      'id': '4128ca8b-cf88-4544-bd28-f2fe1d1e3201'
+    },
+    {
+      'id': '0b2a6181-636d-420a-99b1-16708e8a21d6'
+    },
+    {
+      'id': '5732b2c9-3dbd-4a0e-9343-6d41d275861d'
+    }
     ],
     'alternateNames': []
   },
@@ -537,25 +537,25 @@ const line = {
   'note': 'This is note',
   'description': 'This is description',
   'coverage': [{
-      'id': 'aed3502a-f150-4be1-91d9-6f1b6777893d',
-      'startDate': '2021-09-01',
-      'endDate': '2021-09-30',
-      'startVolume': '1',
-      'startIssue': '1',
-      'endVolume': '8',
-      'endIssue': '12',
-      'summary': 'v1/i1/2021-09-01 - v8/i12/2021-09-30'
-    },
-    {
-      'id': '6a9621c7-b190-402a-bb1a-5586ac623b6a',
-      'startDate': '2021-10-01',
-      'endDate': '2021-10-30',
-      'startVolume': '6',
-      'startIssue': 'Jan',
-      'endVolume': '1',
-      'endIssue': '20',
-      'summary': 'v6/iJan/2021-10-01 - v1/i20/2021-10-30'
-    }
+    'id': 'aed3502a-f150-4be1-91d9-6f1b6777893d',
+    'startDate': '2021-09-01',
+    'endDate': '2021-09-30',
+    'startVolume': '1',
+    'startIssue': '1',
+    'endVolume': '8',
+    'endIssue': '12',
+    'summary': 'v1/i1/2021-09-01 - v8/i12/2021-09-30'
+  },
+  {
+    'id': '6a9621c7-b190-402a-bb1a-5586ac623b6a',
+    'startDate': '2021-10-01',
+    'endDate': '2021-10-30',
+    'startVolume': '6',
+    'startIssue': 'Jan',
+    'endVolume': '1',
+    'endIssue': '20',
+    'summary': 'v6/iJan/2021-10-01 - v1/i20/2021-10-30'
+  }
   ],
   'customCoverage': true,
   'explanation': 'Agreement includes this item from a package specifically',

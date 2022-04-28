@@ -156,7 +156,7 @@ class AgreementLineEditRoute extends React.Component {
     history.push(`${urls.agreementLineView(agreementId, lineId)}${location.search}`);
   }
 
-    /* istanbul ignore next */
+  /* istanbul ignore next */
   handleSubmit = (line) => {
     const {
       history,

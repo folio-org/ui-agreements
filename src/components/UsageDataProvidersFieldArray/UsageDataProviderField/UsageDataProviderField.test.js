@@ -51,7 +51,7 @@ const udp = {
 let renderComponent;
 describe('UsageDataProviderField', () => {
   describe('renders expected fields with no initial values ', () => {
-      beforeEach(() => {
+    beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
           <MemoryRouter>
@@ -84,23 +84,23 @@ describe('UsageDataProviderField', () => {
 
   describe('renders expected fields/values with initial values set ', () => {
     beforeEach(() => {
-    renderComponent = renderWithIntl(
-      <TestForm initialValues={{ udp }} onSubmit={onSubmit}>
-        <MemoryRouter>
-          <Field
-            component={UsageDataProviderField}
-            name="udp"
-            onUDPSelected={onUDPSelected}
-            udp={udp}
-          />
-        </MemoryRouter>
-      </TestForm>,
-      translationsProperties
-    );
-  });
+      renderComponent = renderWithIntl(
+        <TestForm initialValues={{ udp }} onSubmit={onSubmit}>
+          <MemoryRouter>
+            <Field
+              component={UsageDataProviderField}
+              name="udp"
+              onUDPSelected={onUDPSelected}
+              udp={udp}
+            />
+          </MemoryRouter>
+        </TestForm>,
+        translationsProperties
+      );
+    });
 
-  test('renders the expected name value', async () => {
-    await KeyValue('Name').has({ value: 'American Chemical Society' });
+    test('renders the expected name value', async () => {
+      await KeyValue('Name').has({ value: 'American Chemical Society' });
+    });
   });
- });
 });
