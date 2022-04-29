@@ -10,6 +10,7 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
+import { FormattedDateTime } from '@folio/stripes-erm-components';
 import { resourceClasses } from '../../../constants';
 
 import AddToBasketButton from '../../AddToBasketButton';
@@ -18,16 +19,55 @@ export default class PackageInfo extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       eresource: PropTypes.shape({
+        alternateResourceNames: PropTypes.arrayOf(PropTypes.shape({
+          id: PropTypes.string,
+          name: PropTypes.string
+        })),
+        availabilityScope: PropTypes.shape({
+          id: PropTypes.string,
+          label: PropTypes.string,
+          value: PropTypes.string
+        }),
+        contentTypes: PropTypes.arrayOf(PropTypes.shape({
+          id: PropTypes.string,
+          contentType: PropTypes.shape({
+            label: PropTypes.string,
+            value: PropTypes.string
+          }),
+        })),
+        description: PropTypes.string,
         id: PropTypes.string,
+        lifecycleStatus: PropTypes.shape({
+          id: PropTypes.string,
+          label: PropTypes.string,
+          value: PropTypes.string
+        }),
         name: PropTypes.string,
+        packageDescriptionUrls: PropTypes.arrayOf(PropTypes.shape({
+          id: PropTypes.string,
+          url: PropTypes.string
+        })),
         reference: PropTypes.string,
         source: PropTypes.string,
+        sourceDataCreated: PropTypes.string,
+        sourceDataUpdated: PropTypes.string,
         vendor: PropTypes.shape({
           name: PropTypes.string,
         })
       })
     }).isRequired,
   }
+
+  renderContentTypes = (contentTypes) => (
+    contentTypes.map(ct => {
+      const { contentType: { label, value } } = ct;
+      return (
+        <li key={value}>
+          {label}
+        </li>
+      );
+    })
+  );
 
   render() {
     const { data: { eresource } } = this.props;
@@ -74,10 +114,42 @@ export default class PackageInfo extends React.Component {
               value={eresource.source || <NoValue />}
             />
           </Col>
-          <Col xs={6}>
+          <Col xs={3}>
+            <KeyValue
+              label={<FormattedMessage id="ui-agreements.eresources.status" />}
+              value={eresource?.lifecycleStatus?.label || <NoValue />}
+            />
+          </Col>
+          <Col xs={3}>
             <KeyValue
               label={<FormattedMessage id="ui-agreements.eresources.reference" />}
               value={eresource.reference || <NoValue />}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={3}>
+            <KeyValue
+              label={<FormattedMessage id="ui-agreements.eresources.contentType" />}
+              value={eresource?.contentTypes?.length > 0 ? this.renderContentTypes(eresource.contentTypes) : <NoValue />}
+            />
+          </Col>
+          <Col xs={3}>
+            <KeyValue
+              label={<FormattedMessage id="ui-agreements.eresources.availability" />}
+              value={eresource?.availabilityScope?.label || <NoValue />}
+            />
+          </Col>
+          <Col xs={3}>
+            <KeyValue
+              label={<FormattedMessage id="ui-agreements.eresources.sourceCreated" />}
+              value={eresource?.sourceDataCreated ? <FormattedDateTime date={eresource.sourceDataCreated} /> : <NoValue />}
+            />
+          </Col>
+          <Col xs={3}>
+            <KeyValue
+              label={<FormattedMessage id="ui-agreements.eresources.sourceLastUpdated" />}
+              value={eresource?.sourceDataUpdated ? <FormattedDateTime date={eresource.sourceDataUpdated} /> : <NoValue />}
             />
           </Col>
         </Row>
