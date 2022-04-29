@@ -46,8 +46,8 @@ const data = {
   },
   match: {
     params: {
-        platformId: '',
-        templateId: ''
+      platformId: '',
+      templateId: ''
     }
   },
   mutator: {
@@ -69,8 +69,8 @@ const isPendingData = {
   },
   match: {
     params: {
-        platformId: '082ef5fe-fac7-46ba-a37c-b636ae7aa266',
-        templateId: '8c195c10-086a-4c51-a7cb-d3e5d66b4042'
+      platformId: '082ef5fe-fac7-46ba-a37c-b636ae7aa266',
+      templateId: '8c195c10-086a-4c51-a7cb-d3e5d66b4042'
     }
   },
   mutator: {

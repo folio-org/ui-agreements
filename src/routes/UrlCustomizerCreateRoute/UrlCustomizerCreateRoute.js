@@ -46,7 +46,7 @@ class UrlCustomizerCreateRoute extends React.Component {
     history.push(`${urls.platformView(platformId)}${location.search}`);
   }
 
-    /* istanbul ignore next */
+  /* istanbul ignore next */
   handleSubmit = (urlCustomization) => {
     const {
       history,

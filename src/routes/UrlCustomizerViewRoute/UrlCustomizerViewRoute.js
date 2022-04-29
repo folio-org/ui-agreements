@@ -53,7 +53,7 @@ class UrlCustomizerViewRoute extends React.Component {
     history.push(`${urls.platformView(match.params.platformId)}${location.search}`);
   }
 
-    /* istanbul ignore next */
+  /* istanbul ignore next */
   handleDelete = () => {
     const {
       history,

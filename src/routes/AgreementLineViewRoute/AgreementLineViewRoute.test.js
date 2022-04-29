@@ -61,39 +61,39 @@ jest.mock('../../components/views/AgreementLine', () => {
 });
 
 const data = {
-    isSuppressFromDiscoveryEnabled: () => jest.fn(),
-    history: {
-        push: historyPushMock
+  isSuppressFromDiscoveryEnabled: () => jest.fn(),
+  history: {
+    push: historyPushMock
+  },
+  location: {
+    search: ''
+  },
+  mutator: {
+    agreement: {
+      PUT: mutatorAgreementPutMock,
     },
-    location: {
-        search: ''
+    line: {
+      GET: noop,
+      reset: () => {},
     },
-    mutator: {
-        agreement: {
-            PUT: mutatorAgreementPutMock,
-        },
-        line: {
-            GET: noop,
-            reset: () => {},
-        },
-        orderLines: {
-            GET: noop,
-            reset: () => {},
-        },
-        query: {
-          update: mutatorQueryUpdateMock,
-      },
+    orderLines: {
+      GET: noop,
+      reset: () => {},
     },
-    resources: {
-      line,
-      query,
-      orderLines,
-     },
-    match
+    query: {
+      update: mutatorQueryUpdateMock,
+    },
+  },
+  resources: {
+    line,
+    query,
+    orderLines,
+  },
+  match
 };
 
 describe('AgreementLineViewRoute', () => {
-    let renderComponent;
+  let renderComponent;
   describe('rendering the route', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(

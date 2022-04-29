@@ -29,9 +29,9 @@ CloseButton.propTypes = {
 const historyPushMock = jest.fn();
 
 jest.mock('@folio/stripes/components', () => ({
-    ...jest.requireActual('@folio/stripes/components'),
-    LoadingView: () => <div>LoadingView</div>,
-  }));
+  ...jest.requireActual('@folio/stripes/components'),
+  LoadingView: () => <div>LoadingView</div>,
+}));
 
 jest.mock('../../components/views/AgreementLineForm', () => {
   return (props) => (
@@ -43,54 +43,25 @@ jest.mock('../../components/views/AgreementLineForm', () => {
 });
 
 const data = {
-    isSuppressFromDiscoveryEnabled: () => jest.fn(),
-    history: {
-        push: historyPushMock
-    },
-    location: {
-        search: ''
-    },
-    mutator: {
-        entitlements: {
-            PUT: noop,
-        },
-        line: {
-            GET: noop,
-            reset: () => {},
-        },
-        orderLines: {
-            GET: noop,
-            reset: () => {},
-        }
-    },
-    resources: {
-      line,
-      settings,
-      orderLines,
-      basket,
-      entitlements
-     },
-    match
-};
-
-const isLoadingData = {
   isSuppressFromDiscoveryEnabled: () => jest.fn(),
   history: {
-      push: historyPushMock
+    push: historyPushMock
   },
   location: {
-      search: ''
+    search: ''
   },
   mutator: {
-      entitlements: {
-          PUT: noop,
-      },
-      line: {
-          GET: noop,
-      },
-      orderLines: {
-          GET: noop,
-      }
+    entitlements: {
+      PUT: noop,
+    },
+    line: {
+      GET: noop,
+      reset: () => {},
+    },
+    orderLines: {
+      GET: noop,
+      reset: () => {},
+    }
   },
   resources: {
     line,
@@ -98,12 +69,41 @@ const isLoadingData = {
     orderLines,
     basket,
     entitlements
-   },
+  },
+  match
+};
+
+const isLoadingData = {
+  isSuppressFromDiscoveryEnabled: () => jest.fn(),
+  history: {
+    push: historyPushMock
+  },
+  location: {
+    search: ''
+  },
+  mutator: {
+    entitlements: {
+      PUT: noop,
+    },
+    line: {
+      GET: noop,
+    },
+    orderLines: {
+      GET: noop,
+    }
+  },
+  resources: {
+    line,
+    settings,
+    orderLines,
+    basket,
+    entitlements
+  },
   match,
 };
 
 describe('AgreementLineEditRoute', () => {
-    let renderComponent;
+  let renderComponent;
   describe('rendering the route', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
