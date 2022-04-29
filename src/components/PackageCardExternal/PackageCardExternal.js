@@ -69,12 +69,12 @@ const PackageCardExternal = ({
             <EResourceLink eresource={eresource} searchString={searchString} />
           </strong>
         </AppIcon>
-        )}
+      )}
       roundedBorder
     >
       <Row>
         <Col xs={3}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.eresources.contentType" />}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.eresources.packageContentType" />}>
             <div data-test-package-content-type>
               {pkgObject?.contentType ?? <NoValue />}
             </div>
@@ -85,7 +85,7 @@ const PackageCardExternal = ({
             <div data-test-package-holding-status>
               {pkgObject?.isSelected ? <FormattedMessage id="ui-agreements.eresources.selected" />
                 : <FormattedMessage id="ui-agreements.eresources.notSelected" />
-    }
+              }
             </div>
           </KeyValue>
         </Col>

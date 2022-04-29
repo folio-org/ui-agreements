@@ -1,6 +1,7 @@
 const data = {
   'eresource': {
     'id': '1010759a-e8ba-4b97-9e88-97db31e99909',
+    'description': 'This is a package description',
     'dateCreated': '2021-11-17T02:49:32Z',
     'lastUpdated': '2021-11-17T02:49:32Z',
     'normalizedName': 'acm digtal library',
