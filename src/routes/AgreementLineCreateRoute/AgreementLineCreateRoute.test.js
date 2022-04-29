@@ -7,8 +7,8 @@ import { noop } from 'lodash';
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
 import {
-    match,
-    resources,
+  match,
+  resources,
 } from './testResources';
 import translationsProperties from '../../../test/helpers';
 import AgreementLineCreateRoute from './AgreementLineCreateRoute';
@@ -34,20 +34,20 @@ jest.mock('../../components/views/AgreementLineForm', () => {
 });
 
 const data = {
-    isSuppressFromDiscoveryEnabled: () => jest.fn(),
-    history: {
-        push: historyPushMock
-    },
-    location: {
-        search: ''
-    },
-    mutator: {
-        entitlements: {
-            POST: noop
-        }
-    },
-    match,
-    resources:{ resources },
+  isSuppressFromDiscoveryEnabled: () => jest.fn(),
+  history: {
+    push: historyPushMock
+  },
+  location: {
+    search: ''
+  },
+  mutator: {
+    entitlements: {
+      POST: noop
+    }
+  },
+  match,
+  resources:{ resources },
 };
 
 describe('AgreementLineCreateRoute', () => {

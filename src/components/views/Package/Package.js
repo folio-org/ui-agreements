@@ -17,6 +17,7 @@ import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
 import {
   Agreements,
+  ExtendedPackageInformation,
   PackageContents,
   PackageInfo,
 } from '../../EResourceSections';
@@ -48,6 +49,7 @@ export default class Package extends React.Component {
   getInitialAccordionsState = () => {
     return {
       eresourceAgreements: false,
+      extendedPackageInformation: false,
       notes: false,
       packageContents: false,
     };
@@ -55,6 +57,7 @@ export default class Package extends React.Component {
 
   render() {
     const { data, handlers } = this.props;
+    const { data: { eresource: { alternateResourceNames, description, packageDescriptionUrls } } } = this.props;
 
     /* istanbul ignore next */
     const shortcuts = [
@@ -83,6 +86,9 @@ export default class Package extends React.Component {
               </Col>
             </Row>
             <AccordionSet initialStatus={this.getInitialAccordionsState()}>
+              {(description || alternateResourceNames?.length > 0 || packageDescriptionUrls?.length > 0) &&
+                <ExtendedPackageInformation {...this.getSectionProps('extendedPackageInformation')} />
+              }
               <Agreements
                 {...this.getSectionProps('eresourceAgreements')}
                 isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsPackage" />}

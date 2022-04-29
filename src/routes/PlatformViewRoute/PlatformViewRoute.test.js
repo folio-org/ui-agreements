@@ -124,8 +124,8 @@ describe('PlatformViewRoute', () => {
     });
 
     test('calls the ViewUrlCustomizerButton callback', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('ViewUrlCustomizerButton')).toBeInTheDocument();
+      const { getByText } = renderComponent;
+      expect(getByText('ViewUrlCustomizerButton')).toBeInTheDocument();
     });
 
     test('renders the ClickProxyServerActionButton button', () => {

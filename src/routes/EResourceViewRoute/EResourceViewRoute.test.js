@@ -185,8 +185,8 @@ describe('EResourceViewRoute', () => {
     });
 
     test('calls the EResourceClickButton callback', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('EResourceClickButton')).toBeInTheDocument();
+      const { getByText } = renderComponent;
+      expect(getByText('EResourceClickButton')).toBeInTheDocument();
     });
 
     test('renders the NeedMoreEntitlementsButton button', () => {

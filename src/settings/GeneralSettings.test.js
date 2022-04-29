@@ -6,20 +6,20 @@ import translationsProperties from '../../test/helpers';
 import GeneralSettings from './GeneralSettings';
 
 describe('GeneralSettings', () => {
-    describe('rendering the GeneralSettings component', () => {
-      let renderComponent;
-      beforeEach(() => {
-        renderComponent = renderWithIntl(
-          <MemoryRouter>
-            <GeneralSettings />
-          </MemoryRouter>,
-          translationsProperties
-        );
-      });
+  describe('rendering the GeneralSettings component', () => {
+    let renderComponent;
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <GeneralSettings />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
 
-      test('renders ConfigManager component ', () => {
-        const { getByText } = renderComponent;
-        expect(getByText('ConfigManager')).toBeInTheDocument();
-      });
+    test('renders ConfigManager component ', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('ConfigManager')).toBeInTheDocument();
     });
   });
+});
