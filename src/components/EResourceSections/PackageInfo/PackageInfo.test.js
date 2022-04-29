@@ -42,7 +42,33 @@ const data = {
     'suppressFromDiscovery': false,
     'reference': 'AVA_VOD_Library',
     'resourceCount': 2,
-    'class': 'org.olf.kb.Pkg'
+    'class': 'org.olf.kb.Pkg',
+    'lifecycleStatus': {
+      'id': 'ff8081817fd0b47d017fd0b5b6d20006',
+      'value': 'current',
+      'label': 'Current'
+    },
+    'contentTypes': [{
+      'id': '54e14560-caf5-4c3f-8769-e5ce173fc2b8',
+      'contentType': {
+        'value': 'print',
+        'label': 'Print'
+      }
+    },
+    {
+      'id': 'b5295cf8-db3c-4159-b923-92797ca2be28',
+      'contentType': {
+        'value': 'electronic',
+        'label': 'Electronic'
+      }
+    }],
+    'availabilityScope': {
+      'id': 'ff8081817fd0b47d017fd0b5b6810001',
+      'value': 'global',
+      'label': 'Global'
+    },
+    'sourceDataCreated': '2022-03-21T23:00:04Z',
+    'sourceDataUpdated': '2022-03-28T03:09:04Z',
   },
   'entitlementOptions': [
 
@@ -699,6 +725,14 @@ describe('PackageInfo', () => {
       await KeyValue('Source').has({ value: 'GOKb' });
     });
 
+    test('renders the Status field', async () => {
+      await KeyValue('Status').exists();
+    });
+
+    test('renders the expcected status', async () => {
+      await KeyValue('Status').has({ value: 'Current' });
+    });
+
     test('renders the Reference field', async () => {
       await KeyValue('Reference').exists();
     });
@@ -706,9 +740,53 @@ describe('PackageInfo', () => {
     test('renders the expcected reference', async () => {
       await KeyValue('Reference').has({ value: 'AVA_VOD_Library' });
     });
+
+    test('renders the Content type field', async () => {
+      await KeyValue('Content type').exists();
+    });
+
+    test('renders the expcected content types', async () => {
+      await KeyValue('Content type').has({ value: 'PrintElectronic' });
+    });
+
+    test('renders the Availability field', async () => {
+      await KeyValue('Availability').exists();
+    });
+
+    test('renders the expcected availability', async () => {
+      await KeyValue('Availability').has({ value: 'Global' });
+    });
+
+    test('renders the Source created field', async () => {
+      await KeyValue('Source created').exists();
+    });
+
+    // NOTE: this test will fail because of &nbsp; in the FormattedDateTime component:
+    // test('renders the expcected source created date', async () => {
+    //   await KeyValue('Source created').has({ value: '3/21/2022 11:00 PM' });
+    // });
+
+    test('renders the expected source created date', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('3/21/2022 11:00 PM')).toBeInTheDocument();
+    });
+
+    test('renders the Source last updated field', async () => {
+      await KeyValue('Source last updated').exists();
+    });
+
+    // NOTE: this test will fail because of &nbsp; in the FormattedDateTime component:
+    // test('renders the expcected source last updated date', async () => {
+    //   await KeyValue('Source last updated').has({ value: '3/28/2022 3:09 AM' });
+    // });
+
+    test('renders the expected source last updated date', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('3/28/2022 3:09 AM')).toBeInTheDocument();
+    });
   });
 
-  describe('when data with empty provider, source and reference is passed', () => {
+  describe('when data with empty provider, source, status, reference, content type, availability, source dates is passed', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
@@ -728,8 +806,28 @@ describe('PackageInfo', () => {
       await KeyValue('Source').has({ value: 'stripes-components.noValue.noValueSet-' });
     });
 
+    test('renders the expcected status', async () => {
+      await KeyValue('Status').has({ value: 'stripes-components.noValue.noValueSet-' });
+    });
+
     test('renders the expcected reference', async () => {
       await KeyValue('Reference').has({ value: 'stripes-components.noValue.noValueSet-' });
+    });
+
+    test('renders the expcected content type', async () => {
+      await KeyValue('Content type').has({ value: 'stripes-components.noValue.noValueSet-' });
+    });
+
+    test('renders the expcected availability', async () => {
+      await KeyValue('Availability').has({ value: 'stripes-components.noValue.noValueSet-' });
+    });
+
+    test('renders the expcected source created date', async () => {
+      await KeyValue('Source created').has({ value: 'stripes-components.noValue.noValueSet-' });
+    });
+
+    test('renders the expcected source last updated date', async () => {
+      await KeyValue('Source last updated').has({ value: 'stripes-components.noValue.noValueSet-' });
     });
   });
 });
