@@ -59,7 +59,7 @@ const IdentifierReassignmentForm = ({
         key !== 'destinationTIObject' &&
         key !== 'destinationTitle'
       ) {
-          /* The remaining keys all correspond to potential moving identifiers and take the shape
+        /* The remaining keys all correspond to potential moving identifiers and take the shape
             {
               issn: ['1234-5678'],
               ezb: ['325425325', 'undefined', '325325']
