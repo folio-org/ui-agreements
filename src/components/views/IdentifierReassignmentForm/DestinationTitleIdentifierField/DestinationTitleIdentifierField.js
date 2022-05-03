@@ -23,7 +23,7 @@ import { urls } from '../../../utilities';
 
 
 const propTypes = {
-  formRestart: PropTypes.func.isRequired,
+  formRestart: PropTypes.func,
   previewModal: PropTypes.bool,
 };
 
@@ -166,6 +166,7 @@ const DestinationTitleIdentifierField = () => {
   return (
     <Card
       cardStyle={destinationTI?.id ? 'positive' : 'negative'}
+      data-testid="destinationTitleCard"
       headerEnd={renderDestinationTitleLinkButton(destinationTI?.id)}
       headerStart={(
         <AppIcon app="agreements" iconKey="eresource" size="small">

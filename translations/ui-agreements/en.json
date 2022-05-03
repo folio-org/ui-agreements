@@ -157,9 +157,9 @@
   "eresource.destinationTitle": "Destination title",
   "eresource.sourceTitleSelectionText" : "Select the source title for the identifier(s)",
   "eresource.destinationTitleSelectionText" : "Select the destination title for the identifier(s)",
-  "eresource.moveIdentifier.selectTitle" : "Select Title",
+  "eresource.moveIdentifier.selectTitle" : "Select title",
   "eresource.moveIdetifiers.title" : "Title",
-  "moveIdentifiers.selectTitle" : "Select Title",
+  "moveIdentifiers.selectTitle" : "Select title",
   "moveIdentifiers.replaceTitle" : "Replace Title",
   "moveIdentifiers.replaceTitleSpecific" : "Replace eresource {eresourceName}",
   "identifier.type" : "{label} ",
@@ -168,7 +168,7 @@
   "moveIdentifiers.noPlugin": "No \"find-eresource\" plugin is installed",
   "updatetitlesAndMoveMore":  "Update title & move more identifiers",
   "updateMoreIdentifierWarning": "WIP!!! ASK OWEN!! An IdentifierReassignmentJob ({name}) has been created, and identifiers as displayed on this screen are liable to change. If you attempt to move an identifier in a subsequent IdentifierReassignmentJob that was already moved away in an earlier one, the second move will not occur. You can track the status of this job in the local-kb-admin app.",
-  "updatetitlesAndClose": "Update title and close",
+  "updatetitlesAndClose": "Update title & close",
   "preview.updateAndContinue" : "Select \"Update titles & more identifiers\" or \"Update titles & close\" to continue",
   "warn.clearReasonForClosure": "This reason will be cleared as status is not closed",
   "basketButton": "View {count, number} {count, plural, one {item} other {items}}",
@@ -609,5 +609,5 @@
   "supplementaryProperties.filterIndex": "Supplementary property filter {index}",
   "supplementaryProperties.removeFilter": "Remove supplementary property filter {index}",
   "supplementaryProperties.deprecated": "DEPRECATED: {name}",
-  "job.created.success.org.olf.general.jobs.IdentifierReassignmentJob": "<strong>Identifier reassignment job created </strong>: {name}"
+  "job.created.success.org.olf.general.jobs.IdentifierReassignmentJob": "<strong>Title updated: </strong>"
 }

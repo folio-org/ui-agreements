@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Form } from 'react-final-form';
@@ -12,7 +12,6 @@ import {
   Icon,
   Row,
   Col,
-  Headline,
   MessageBanner,
 } from '@folio/stripes/components';
 
@@ -24,25 +23,15 @@ import DestinationTitlePreview from './DestinationTitlePreview/DestinationTitleP
 
 const propTypes = {
   handlers: PropTypes.PropTypes.shape({
-    onClose: PropTypes.func.isRequired,
-    handleBack: PropTypes.func.isRequired,
+    onClose: PropTypes.func,
   }),
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-
-  eresourceName: PropTypes.string,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-  location: PropTypes.shape({
-    search: PropTypes.string.isRequired,
-  }).isRequired,
+  onClose: PropTypes.func,
+  open: PropTypes.bool,
 };
 
 const IdentifierReassignmentForm = ({
     open,
     onClose,
-    eresourceName,
   }) => {
   const callout = useContext(CalloutContext);
   const [previewModal, setPreviewModal] = useState(false);
@@ -56,7 +45,7 @@ const IdentifierReassignmentForm = ({
       callout.sendCallout({
         type: 'success',
         message: (
-          <FormattedMessage id="ui-agreements.job.created.success.org.olf.general.jobs.IdentifierReassignmentJob" values={{ name: res?.name }} />)
+          <FormattedMessage id="ui-agreements.job.created.success.org.olf.general.jobs.IdentifierReassignmentJob" />)
       });
       setIdJobCreated(res?.name);
     })
@@ -120,13 +109,14 @@ const IdentifierReassignmentForm = ({
           const destinationTIObject = values.destinationTIObject;
           // Restart and then reset the source/destination objects
           restart();
-          change('sourceTIObject', sourceTIObject)
-          change('destinationTIObject', destinationTIObject)
+          change('sourceTIObject', sourceTIObject);
+          change('destinationTIObject', destinationTIObject);
           setPreviewModal(false);
         };
 
         return (
           <form
+            data-testid="identifierReassignmentForm"
             onSubmit={handleSubmit}
           >
             <Modal

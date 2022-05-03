@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useFormState } from 'react-final-form';
 import { Link } from 'react-router-dom';
@@ -36,6 +35,7 @@ const DestinationTitlePreview = () => {
               ezb: ['34567']
             }
            */
+          /* istanbul ignore next */
           for (const [nsKey, idVals] of Object.entries(value)) {
             idVals.forEach(idVal => {
               if (idVal) {
@@ -60,7 +60,7 @@ const DestinationTitlePreview = () => {
         <Col md={6} xs={12}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.materialType" />}>{title?.subType?.label}</KeyValue>
         </Col>
-        <Col md={6} xs={12}>
+        <Col key={`title-${title?.id}-identifier`} md={6} xs={12}>
           {validIdentifiers?.map((vi, index) => {
             return (
               <KeyValue
@@ -102,6 +102,7 @@ const DestinationTitlePreview = () => {
   return (
     <Card
       cardStyle="positive"
+      data-testid="destination-title-identifier-preview"
       headerStart={(
         <AppIcon app="agreements" iconKey="eresource" size="small">
           <strong>

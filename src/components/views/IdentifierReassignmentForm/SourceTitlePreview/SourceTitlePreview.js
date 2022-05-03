@@ -32,6 +32,7 @@ const SourceTitlePreview = () => {
             ezb: ['34567', undefined]
           }
         */
+        /* istanbul ignore next */
         for (const [nsKey, idVals] of Object.entries(value)) {
           identifiers.push(
             ...validIdentifiers?.filter(vId => vId.identifier?.ns?.value === nsKey && !idVals.includes(vId.identifier.value))
@@ -87,6 +88,7 @@ const SourceTitlePreview = () => {
   return (
     <Card
       cardStyle="positive"
+      data-testid="source-title-identifier-preview"
       headerStart={(
         <AppIcon app="agreements" iconKey="eresource" size="small">
           <strong>

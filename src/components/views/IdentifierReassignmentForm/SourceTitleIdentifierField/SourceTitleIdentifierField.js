@@ -21,9 +21,6 @@ import css from '../../../styles.css';
 import { urls } from '../../../utilities';
 
 const propTypes = {
-  formRestart: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
-  preview: PropTypes.func.isRequired,
   previewModal: PropTypes.bool,
 };
 
@@ -149,28 +146,31 @@ const SourceTitleIdentifierField = () => {
 
         return (
           identifierValues?.map((vi, index) => (
-            <Row
-              key={`${title.id}.${identifierNamespace}.${vi}-electronicIdentifiers-row`}
-            >
-              <Col md={6} xs={12}>
-                <Field
-                  key={`${title.id}.${identifierNamespace}.${vi}-electronicIdentifiers`}
-                  checked={values?.[`${title.id}`]?.[`${identifierNamespace}`]?.includes(vi)}
-                  component={Checkbox}
-                  id={`source-title-identifier-field-${title.id}-${identifierNamespace}[${index}]`}
-                  label={`${identifierNamespace}: ${vi}`}
-                  name={`${title.id}.${identifierNamespace}[${index}]`}
-                  onChange={e => {
+
+            <div data-testid="source-title-identifier-field">
+              <Row
+                key={`${title.id}.${identifierNamespace}.${vi}-electronicIdentifiers-row`}
+              >
+                <Col md={6} xs={12}>
+                  <Field
+                    key={`${title.id}.${identifierNamespace}.${vi}-electronicIdentifiers`}
+                    checked={values?.[`${title.id}`]?.[`${identifierNamespace}`]?.includes(vi)}
+                    component={Checkbox}
+                    id={`source-title-identifier-field-${title.id}-${identifierNamespace}[${index}]`}
+                    label={`${identifierNamespace}: ${vi}`}
+                    name={`${title.id}.${identifierNamespace}[${index}]`}
+                    onChange={e => {
                     if (e.target.checked) {
                       change(`${title.id}.${identifierNamespace}[${index}]`, vi);
                     } else {
                       change(`${title.id}.${identifierNamespace}[${index}]`);
                     }
                   }}
-                  type="checkBox"
-                />
-              </Col>
-            </Row>
+                    type="checkBox"
+                  />
+                </Col>
+              </Row>
+            </div>
           ))
         );
       })
@@ -207,6 +207,7 @@ const SourceTitleIdentifierField = () => {
   return (
     <Card
       cardStyle={sourceTI?.id ? 'positive' : 'negative'}
+      data-testid="sourceTitleCard"
       headerEnd={renderSourceTitleLinkButton(sourceTI?.id)}
       headerStart={(
         <AppIcon app="agreements" iconKey="eresource" size="small">
