@@ -319,8 +319,7 @@ const AgreementViewRoute = ({
     deleteAgreement().then(() => {
       history.push(`${urls.agreements()}${location.search}`);
       callout.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.agreements.deletedAgreement" values={{ name: compositeAgreement.name }} /> });
-    })
-    .catch(error => {
+    }).catch(error => {
       callout.sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteAgreementBackendError" values={{ message: error.message }} /> });
     });
   };

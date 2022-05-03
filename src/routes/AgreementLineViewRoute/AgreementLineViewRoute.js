@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -25,21 +25,37 @@ const AgreementLineViewRoute = ({
   location,
   match: { params: { agreementId, lineId } },
   mutator,
-  resources,
   tagsEnabled
 }) => {
   const [orderLines, setOrderLines] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const callout = useContext(CalloutContext);
+  const queryClient = useQueryClient();
 
   const ky = useOkapiKy();
 
-  const agreementLinePath = `erm/entitlements/${lineId}`;
+  const agreementLinesPath = 'erm/entitlements';
+  const agreementLinePath = `${agreementLinesPath}/${lineId}`;
+
 
   const { data: agreementLine = {}, isLoading: isLineQueryLoading } = useQuery(
     [agreementLinePath, 'ui-agreements', 'AgreementLineViewRoute', 'getLine'],
     () => ky.get(agreementLinePath).json()
+  );
+
+  const { mutateAsync: deleteAgreementLine } = useMutation(
+    [agreementLinePath, 'ui-agreements', 'AgreementLineViewRoute', 'deleteAgreementLine'],
+    () => ky.put(agreementLinePath, {
+      id: agreementId,
+      items: [{ id: lineId, _delete: true }]
+    }).then(() => {
+      queryClient.invalidateQueries(agreementLinesPath);
+      history.push(`${urls.agreementView(agreementId)}${location.search}`);
+      callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.delete.callout" /> });
+    }).catch(error => {
+      callout.sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.line.deleteFailed.callout" values={{ message: error.message }} /> });
+    })
   );
 
   const {
@@ -97,19 +113,6 @@ const AgreementLineViewRoute = ({
     history.push(`${urls.agreementView(agreementId)}${location.search}`);
   };
 
-  const handleDelete = () => {
-    mutator.agreement.PUT({
-      id: agreementId,
-      items: [{ id: lineId, _delete: true }]
-    })
-      .then(() => {
-        history.push(`${urls.agreementView(agreementId)}${location.search}`);
-        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.delete.callout" /> });
-      })
-      .catch(error => {
-        callout.sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.line.deleteFailed.callout" values={{ message: error.message }} /> });
-      });
-  };
 
   const handleEdit = () => {
     history.push(`${urls.agreementLineEdit(agreementId, lineId)}${location.search}`);
@@ -123,7 +126,7 @@ const AgreementLineViewRoute = ({
 
   return (
     <View
-      key={resources.line?.loadedAt ?? 'loading'}
+      key={`agreement-line-view-pane-${lineId}`}
       components={{
         TagButton,
         HelperComponent
@@ -136,7 +139,7 @@ const AgreementLineViewRoute = ({
         ...handlers,
         isSuppressFromDiscoveryEnabled,
         onClose: handleClose,
-        onDelete: handleDelete,
+        onDelete: deleteAgreementLine,
         onEdit: handleEdit,
         onToggleTags: handleToggleTags
       }}
@@ -146,18 +149,6 @@ const AgreementLineViewRoute = ({
 };
 
 AgreementLineViewRoute.manifest = Object.freeze({
-  agreement: {
-    type: 'okapi',
-    path: 'erm/sas/:{agreementId}',
-    fetch: false,
-  },
-  line: {
-    type: 'okapi',
-    path: 'erm/entitlements/:{lineId}',
-    throwErrors: false,
-    accumulate: true,
-    fetch: false
-  },
   orderLines: {
     type: 'okapi',
     perRequest: RECORDS_PER_REQUEST_LARGE,
@@ -166,8 +157,7 @@ AgreementLineViewRoute.manifest = Object.freeze({
     fetch: false,
     records: 'poLines',
     throwErrors: false,
-  },
-  query: {},
+  }
 });
 
 AgreementLineViewRoute.propTypes = {
@@ -186,25 +176,13 @@ AgreementLineViewRoute.propTypes = {
     }).isRequired
   }).isRequired,
   mutator: PropTypes.shape({
-    agreement: PropTypes.shape({
-      PUT: PropTypes.func.isRequired,
-    }).isRequired,
-    line: PropTypes.shape({
-      GET: PropTypes.func.isRequired,
-      reset: PropTypes.func
-    }),
     orderLines: PropTypes.shape({
       GET: PropTypes.func.isRequired,
       reset: PropTypes.func
     }),
-    query: PropTypes.shape({
-      update: PropTypes.func.isRequired,
-    }).isRequired,
   }).isRequired,
   resources: PropTypes.shape({
-    line: PropTypes.object,
     orderLines: PropTypes.object,
-    query: PropTypes.object,
   }).isRequired,
   stripes: PropTypes.shape({
     hasInterface: PropTypes.func.isRequired,

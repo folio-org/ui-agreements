@@ -6,7 +6,7 @@ import { useQuery } from 'react-query';
 
 import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
-import { useInfiniteFetch } from '@folio/stripes-erm-components';
+import { useInfiniteFetch, useBatchedFetch } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/EResource';
@@ -74,41 +74,14 @@ const EResourceViewRoute = ({
     }
   );
 
-  // RELATED ENTITLEMENTS FOR ERESOURCE INFINITE FETCH
-  // For this one we want to keep batch fetching until we have all of them or entitlementsCount, whichever comes first
-  const eresourceRelatedEntitlementsParams = useMemo(() => (
-    generateKiwtQueryParams(
-      {
-        perPage: RECORDS_PER_REQUEST_MEDIUM
-      },
-      {}
-    )
-  ), []);
 
+  // RELATED ENTITLEMENTS FOR ERESOURCE BATCH FETCH
   const {
-    infiniteQueryObject: {
-      fetchNextPage: fetchNextRelatedEntitlementsPage,
-      data: { pageParams: relatedEntitlementPageParams } = {},
-      isLoading: areRelatedEntitlementsLoading
-    },
-    results: relatedEntitlements = [],
-    total: relatedEntitlementsCount = 0
-  } = useInfiniteFetch(
-    [relatedEntitlementsPath, eresourceRelatedEntitlementsParams, 'ui-agreements', 'EresourceViewRoute', 'getRelatedEntitlements'],
-    ({ pageParam = 0 }) => {
-      const params = [...eresourceRelatedEntitlementsParams, `offset=${pageParam}`];
-      return ky.get(`${relatedEntitlementsPath}?${params?.join('&')}`).json();
-    }
-  );
-
-  // Keep fetching them in chunks until we have all the values we require
-  useEffect(() => {
-    if (
-      relatedEntitlements?.length !== relatedEntitlementsCount &&
-      relatedEntitlements?.length < entitlementsCount
-    ) {
-      fetchNextRelatedEntitlementsPage({ pageParam: (relatedEntitlementPageParams[-1] ?? 0) + RECORDS_PER_REQUEST_MEDIUM });
-    }
+    results: relatedEntitlements,
+    isLoading: areRelatedEntitlementsLoading
+  } = useBatchedFetch({
+    batchLimit: entitlementsCount,
+    batchSize: RECORDS_PER_REQUEST_MEDIUM
   });
 
   // ENTITLEMENT OPTIONS FOR ERESOURCE INFINITE FETCH
