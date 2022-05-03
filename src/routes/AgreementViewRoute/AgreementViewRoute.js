@@ -9,7 +9,7 @@ import { get, flatten, uniqBy, chunk } from 'lodash';
 import compose from 'compose-function';
 
 import { CalloutContext, stripesConnect, useOkapiKy } from '@folio/stripes/core';
-import { useInfiniteFetch } from '@folio/stripes-erm-components';
+import { useInfiniteFetch, useUsers } from '@folio/stripes-erm-components';
 import { withTags } from '@folio/stripes/smart-components';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
@@ -80,6 +80,9 @@ const AgreementViewRoute = ({
     ['configurations/entries', 'query=(module=AGREEMENTS and configName=general)', 'ui-agreements', 'AgreementViewRoute', 'getSettings'],
     () => ky.get('configurations/entries?query=(module=AGREEMENTS and configName=general)').json()
   );
+
+  // Users
+  const { data: { users = [] } = {} } = useUsers(agreement?.contacts.filter(c => c.user)?.map(c => c.user));
 
   // AGREEMENT LINES INFINITE FETCH
   const agreementLineQueryParams = useMemo(() => (
@@ -259,7 +262,7 @@ const AgreementViewRoute = ({
   const getCompositeAgreement = () => {
     const contacts = agreement.contacts.map(c => ({
       ...c,
-      user: getRecord(c.user, 'users') || c.user,
+      user: users?.find(user => user?.id === c.user) || c.user,
     }));
 
     const interfacesCredentials = uniqBy(get(resources, 'interfacesCredentials.records', []), 'id');
@@ -408,25 +411,6 @@ AgreementViewRoute.manifest = Object.freeze({
     records: 'poLines',
     throwErrors: false,
   },
-  users: {
-    type: 'okapi',
-    path: 'users',
-    perRequest: RECORDS_PER_REQUEST_MEDIUM,
-    params: (_q, _p, _r, _l, props) => {
-      const query = get(props.resources, 'agreement.records[0].contacts', [])
-        .filter(contact => contact.user)
-        .map(contact => `id==${contact.user}`)
-        .join(' or ');
-
-      return query ? { query } : '';
-    },
-    fetch: props => (
-      !!props.stripes.hasInterface('users', '15.0') &&
-      props?.resources?.agreement?.records?.[0]?.contacts?.length > 0
-    ),
-    permissionsRequired: 'users.collection.get',
-    records: 'users',
-  },
   interfacesCredentials: {
     clientGeneratePk: false,
     throwErrors: false,
@@ -472,7 +456,6 @@ AgreementViewRoute.propTypes = {
     interfaces: PropTypes.object,
     orderLines: PropTypes.object,
     query: PropTypes.object,
-    users: PropTypes.object,
   }).isRequired,
   stripes: PropTypes.shape({
     hasInterface: PropTypes.func.isRequired,
