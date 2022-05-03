@@ -132,15 +132,15 @@ describe('POLineCard', () => {
           poLine={data}
         />
       </Router>,
-     { wrapper },
-    translationsProperties
-  );
-});
+      { wrapper },
+      translationsProperties
+    );
+  });
 
   test('renders POLineCard component', () => {
     const { getByTestId } = renderComponent;
     expect(getByTestId('polines')).toBeInTheDocument();
-   });
+  });
 
   test('renders the POLineCard component', () => {
     const { getByText } = renderComponent;
