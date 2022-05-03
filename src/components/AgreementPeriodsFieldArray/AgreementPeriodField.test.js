@@ -31,7 +31,7 @@ describe('AgreementPeriodField', () => {
             />
           </MemoryRouter>
         </TestForm>,
-      translationsProperties
+        translationsProperties
       );
     });
 
@@ -55,7 +55,7 @@ describe('AgreementPeriodField', () => {
             />
           </MemoryRouter>
         </TestForm>,
-      translationsProperties
+        translationsProperties
       );
     });
 
