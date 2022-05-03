@@ -2,12 +2,12 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
+import { useInfiniteFetch } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Platforms';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { useInfiniteFetch } from '../../hooks';
 
 const INITIAL_RESULT_COUNT = 50;
 

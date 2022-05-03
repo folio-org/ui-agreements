@@ -6,13 +6,14 @@ import { useQuery } from 'react-query';
 
 import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
+import { useInfiniteFetch } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/EResource';
 import { parseMclPageSize, urls, withSuppressFromDiscovery } from '../../components/utilities';
 import { resultCount, resourceClasses } from '../../constants';
 
-import { useAgreementsHelperApp, useInfiniteFetch } from '../../hooks';
+import { useAgreementsHelperApp } from '../../hooks';
 
 const { RECORDS_PER_REQUEST_MEDIUM } = resultCount;
 

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useQuery } from 'react-query';
 
 import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
-import { useTags } from '@folio/stripes-erm-components';
+import { useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams, refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/EResources';
@@ -12,7 +12,6 @@ import NoPermissions from '../../components/NoPermissions';
 import { getRefdataValuesByDesc, urls } from '../../components/utilities';
 import { resultCount } from '../../constants';
 
-import { useInfiniteFetch } from '../../hooks';
 import { REFDATA_ENDPOINT } from '../../constants/endpoints';
 
 const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT;

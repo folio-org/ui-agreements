@@ -9,6 +9,7 @@ import { get, flatten, uniqBy, chunk } from 'lodash';
 import compose from 'compose-function';
 
 import { CalloutContext, stripesConnect, useOkapiKy } from '@folio/stripes/core';
+import { useInfiniteFetch } from '@folio/stripes-erm-components';
 import { withTags } from '@folio/stripes/smart-components';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
@@ -20,7 +21,7 @@ import { errorTypes, resultCount } from '../../constants';
 
 import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
 
-import { useAgreementsHelperApp, useInfiniteFetch } from '../../hooks';
+import { useAgreementsHelperApp } from '../../hooks';
 
 const { RECORDS_PER_REQUEST_MEDIUM, RECORDS_PER_REQUEST_LARGE } = resultCount;
 

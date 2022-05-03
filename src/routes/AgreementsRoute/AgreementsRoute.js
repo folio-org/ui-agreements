@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 
 import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
-import { useTags } from '@folio/stripes-erm-components';
+import { useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
 
 import { generateKiwtQueryParams, useRefdata, refdataOptions } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Agreements';
 import NoPermissions from '../../components/NoPermissions';
 import { getRefdataValuesByDesc, urls } from '../../components/utilities';
-import { useInfiniteFetch } from '../../hooks';
 import { resultCount } from '../../constants';
 import { REFDATA_ENDPOINT } from '../../constants/endpoints';
 
