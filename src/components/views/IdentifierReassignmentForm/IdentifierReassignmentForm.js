@@ -52,13 +52,13 @@ const IdentifierReassignmentForm = ({
   );
 
   const submitHandler = (values) => {
-      const identifierReassignmentArray = [];
-      for (const [key, value] of Object.entries(values)) {
-        if (
-          key !== 'sourceTIObject' &&
-          key !== 'destinationTIObject' &&
-          key !== 'destinationTitle'
-        ) {
+    const identifierReassignmentArray = [];
+    for (const [key, value] of Object.entries(values)) {
+      if (
+        key !== 'sourceTIObject' &&
+        key !== 'destinationTIObject' &&
+        key !== 'destinationTitle'
+      ) {
           /* The remaining keys all correspond to potential moving identifiers and take the shape
             {
               issn: ['1234-5678'],
@@ -66,20 +66,20 @@ const IdentifierReassignmentForm = ({
             },
            * We will construct an IdentifierReassignmentJob shape from them, see https://issues.folio.org/browse/ERM-1987
            */
-          for (const [nsKey, idVals] of Object.entries(value)) {
-            idVals.forEach(idVal => {
-              if (idVal) {
-                identifierReassignmentArray.push({
-                  initialTitleInstanceId: key,
-                  targetTitleInstanceId: values.destinationTitle,
-                  identifierNamespace: nsKey,
-                  identifierValue: idVal
-                });
-              }
-            });
-          }
+        for (const [nsKey, idVals] of Object.entries(value)) {
+          idVals.forEach(idVal => {
+            if (idVal) {
+              identifierReassignmentArray.push({
+                initialTitleInstanceId: key,
+                targetTitleInstanceId: values.destinationTitle,
+                identifierNamespace: nsKey,
+                identifierValue: idVal
+              });
+            }
+          });
         }
       }
+    }
 
     postIdentifierReassignmentJob({
       payload: identifierReassignmentArray

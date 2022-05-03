@@ -7,11 +7,11 @@ import translationsProperties from '../../../../../test/helpers';
 import SourceTitleIdentifierField from './SourceTitleIdentifierField';
 
 jest.mock('react-final-form', () => ({
-    ...jest.requireActual('react-final-form'),
-    useFormContext: () => ({
-        handleSubmit: () => jest.fn(),
-        getValues: () => jest.fn(),
-    }),
+  ...jest.requireActual('react-final-form'),
+  useFormContext: () => ({
+    handleSubmit: () => jest.fn(),
+    getValues: () => jest.fn(),
+  }),
 }));
 
 const onSubmitMock = jest.fn();

@@ -9,8 +9,8 @@ import SourceTitlePreview from './SourceTitlePreview';
 jest.mock('react-final-form', () => ({
   ...jest.requireActual('react-final-form'),
   useFormContext: () => ({
-      handleSubmit: () => jest.fn(),
-      getValues: () => jest.fn(),
+    handleSubmit: () => jest.fn(),
+    getValues: () => jest.fn(),
   }),
 }));
 

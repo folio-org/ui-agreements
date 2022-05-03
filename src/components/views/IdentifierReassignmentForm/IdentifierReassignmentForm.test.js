@@ -37,7 +37,7 @@ describe('IdentifierReassignmentForm', () => {
         <div>SourceTitlePreview</div>
         <div>DestinationTitlePreview</div>
       </TestForm>,
-        translationsProperties
+      translationsProperties
     );
   });
 

@@ -178,7 +178,7 @@ const DestinationTitleIdentifierField = () => {
                 </Link>
                 <> · {destinationTI?.publicationType?.label}</>
               </>
-          :
+              :
               <FormattedMessage id="ui-agreements.eresource.moveIdetifiers.title" /> }
           </strong>
         </AppIcon>
