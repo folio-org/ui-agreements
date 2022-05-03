@@ -14,34 +14,34 @@ jest.mock('react-final-form', () => ({
     }),
 }));
 
-  const onSubmitMock = jest.fn();
+const onSubmitMock = jest.fn();
 
-  describe('SourceTitleIdentifierField', () => {
-    let renderComponent;
-    beforeEach(() => {
-      renderComponent = renderWithIntl(
-        <Router>
-          <TestForm onSubmit={onSubmitMock}>
-            <SourceTitleIdentifierField
-              data={{}}
-            />
-          </TestForm>,
-        </Router>,
-        translationsProperties
-      );
-    });
+describe('SourceTitleIdentifierField', () => {
+  let renderComponent;
+  beforeEach(() => {
+    renderComponent = renderWithIntl(
+      <Router>
+        <TestForm onSubmit={onSubmitMock}>
+          <SourceTitleIdentifierField
+            data={{}}
+          />
+        </TestForm>,
+      </Router>,
+      translationsProperties
+    );
+  });
 
-    it('renders the sourceTitleIdentifierCard card', () => {
-      const { getByTestId } = renderComponent;
-      expect(getByTestId('sourceTitleCard')).toBeInTheDocument();
-    });
+  it('renders the sourceTitleIdentifierCard card', () => {
+    const { getByTestId } = renderComponent;
+    expect(getByTestId('sourceTitleCard')).toBeInTheDocument();
+  });
 
-    test('renders the submit button', async () => {
-      await Button('Submit').exists();
-    });
+  test('renders the submit button', async () => {
+    await Button('Submit').exists();
+  });
 
-    test('clicking the submit button ', async () => {
-      await Button('Submit').click();
-      expect(onSubmitMock.mock.calls.length).toBe(1);
-    });
+  test('clicking the submit button ', async () => {
+    await Button('Submit').click();
+    expect(onSubmitMock.mock.calls.length).toBe(1);
+  });
 });

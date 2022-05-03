@@ -7,41 +7,41 @@ import translationsProperties from '../../../../../test/helpers';
 import DestinationTitleIdentifierField from './DestinationTitleIdentifierField';
 
 jest.mock('react-final-form', () => ({
-    ...jest.requireActual('react-final-form'),
-    useFormContext: () => ({
-        handleSubmit: () => jest.fn(),
-        getValues: () => jest.fn(),
-    }),
+  ...jest.requireActual('react-final-form'),
+  useFormContext: () => ({
+      handleSubmit: () => jest.fn(),
+      getValues: () => jest.fn(),
+  }),
 }));
 
-  const onSubmitMock = jest.fn();
+const onSubmitMock = jest.fn();
 
-  describe('DestinationTitleIdentifierField', () => {
-    let renderComponent;
-    beforeEach(() => {
-      renderComponent = renderWithIntl(
-        <Router>
-          <TestForm onSubmit={onSubmitMock}>
-            <DestinationTitleIdentifierField
-              data={{}}
-            />
-          </TestForm>,
-        </Router>,
-        translationsProperties
-      );
-    });
+describe('DestinationTitleIdentifierField', () => {
+  let renderComponent;
+  beforeEach(() => {
+    renderComponent = renderWithIntl(
+      <Router>
+        <TestForm onSubmit={onSubmitMock}>
+          <DestinationTitleIdentifierField
+            data={{}}
+          />
+        </TestForm>,
+      </Router>,
+      translationsProperties
+    );
+  });
 
-    it('renders the DestinationTitleIdentifierField card', () => {
-      const { getByTestId } = renderComponent;
-      expect(getByTestId('destinationTitleCard')).toBeInTheDocument();
-    });
+  it('renders the DestinationTitleIdentifierField card', () => {
+    const { getByTestId } = renderComponent;
+    expect(getByTestId('destinationTitleCard')).toBeInTheDocument();
+  });
 
-    test('renders the submit button', async () => {
-      await Button('Submit').exists();
-    });
+  test('renders the submit button', async () => {
+    await Button('Submit').exists();
+  });
 
-    test('clicking the submit button ', async () => {
-      await Button('Submit').click();
-      expect(onSubmitMock.mock.calls.length).toBe(1);
-    });
+  test('clicking the submit button ', async () => {
+    await Button('Submit').click();
+    expect(onSubmitMock.mock.calls.length).toBe(1);
+  });
 });

@@ -146,7 +146,6 @@ const SourceTitleIdentifierField = () => {
 
         return (
           identifierValues?.map((vi, index) => (
-
             <div data-testid="source-title-identifier-field">
               <Row
                 key={`${title.id}.${identifierNamespace}.${vi}-electronicIdentifiers-row`}
@@ -160,12 +159,12 @@ const SourceTitleIdentifierField = () => {
                     label={`${identifierNamespace}: ${vi}`}
                     name={`${title.id}.${identifierNamespace}[${index}]`}
                     onChange={e => {
-                    if (e.target.checked) {
-                      change(`${title.id}.${identifierNamespace}[${index}]`, vi);
-                    } else {
-                      change(`${title.id}.${identifierNamespace}[${index}]`);
-                    }
-                  }}
+                      if (e.target.checked) {
+                        change(`${title.id}.${identifierNamespace}[${index}]`, vi);
+                      } else {
+                        change(`${title.id}.${identifierNamespace}[${index}]`);
+                      }
+                    }}
                     type="checkBox"
                   />
                 </Col>

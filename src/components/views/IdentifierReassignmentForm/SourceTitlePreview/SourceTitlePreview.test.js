@@ -7,52 +7,51 @@ import translationsProperties from '../../../../../test/helpers';
 import SourceTitlePreview from './SourceTitlePreview';
 
 jest.mock('react-final-form', () => ({
-    ...jest.requireActual('react-final-form'),
-    useFormContext: () => ({
-        handleSubmit: () => jest.fn(),
-        getValues: () => jest.fn(),
-    }),
+  ...jest.requireActual('react-final-form'),
+  useFormContext: () => ({
+      handleSubmit: () => jest.fn(),
+      getValues: () => jest.fn(),
+  }),
 }));
 
+const onSubmitMock = jest.fn();
 const previewModal = false;
 
-  const onSubmitMock = jest.fn();
+describe('SourceTitlePreview', () => {
+  let renderComponent;
+  beforeEach(() => {
+    renderComponent = renderWithIntl(
+      <Router>
+        <TestForm onSubmit={onSubmitMock}>
+          <SourceTitlePreview
+            data={{}}
+            previewModal={previewModal}
+          />
+        </TestForm>,
+      </Router>,
+      translationsProperties
+    );
+  });
 
-  describe('SourceTitlePreview', () => {
-    let renderComponent;
-    beforeEach(() => {
-      renderComponent = renderWithIntl(
-        <Router>
-          <TestForm onSubmit={onSubmitMock}>
-            <SourceTitlePreview
-              data={{}}
-              previewModal={previewModal}
-            />
-          </TestForm>,
-        </Router>,
-        translationsProperties
-      );
-    });
+  it('renders the SourceTitlePreview card', () => {
+    const { getByTestId } = renderComponent;
+    expect(getByTestId('source-title-identifier-preview')).toBeInTheDocument();
+  });
 
-    it('renders the SourceTitlePreview card', () => {
-      const { getByTestId } = renderComponent;
-      expect(getByTestId('source-title-identifier-preview')).toBeInTheDocument();
-    });
+  it('renders expected values', async () => {
+    await KeyValue('Material type').exists();
+  });
 
-    it('renders expected values', async () => {
-      await KeyValue('Material type').exists();
-    });
+  test('renders the expcected source', async () => {
+    await KeyValue('Material type').has({ value: 'stripes-components.noValue.noValueSet-' });
+  });
 
-    test('renders the expcected source', async () => {
-      await KeyValue('Material type').has({ value: 'stripes-components.noValue.noValueSet-' });
-    });
+  test('renders the submit button', async () => {
+    await Button('Submit').exists();
+  });
 
-    test('renders the submit button', async () => {
-      await Button('Submit').exists();
-    });
-
-    test('clicking the submit button ', async () => {
-      await Button('Submit').click();
-      expect(onSubmitMock.mock.calls.length).toBe(1);
-    });
+  test('clicking the submit button ', async () => {
+    await Button('Submit').click();
+    expect(onSubmitMock.mock.calls.length).toBe(1);
+  });
 });
