@@ -74,6 +74,12 @@ const AgreementViewRoute = ({
     () => ky.delete(agreementPath).then(() => queryClient.invalidateQueries(agreementsPath))
   );
 
+  // Settings
+  const { data: { configs: settings } = {} } = useQuery(
+    ['configurations/entries', 'query=(module=AGREEMENTS and configName=general)', 'ui-agreements', 'AgreementViewRoute', 'getSettings'],
+    () => ky.get('configurations/entries?query=(module=AGREEMENTS and configName=general)').json()
+  );
+
   // AGREEMENT LINES INFINITE FETCH
   const agreementLineQueryParams = useMemo(() => (
     generateKiwtQueryParams(
@@ -90,11 +96,11 @@ const AgreementViewRoute = ({
           { path: 'reference' },
           { path: 'id' }
         ],
-        perPage: parseMclPageSize(resources?.settings, 'agreementLines')
+        perPage: parseMclPageSize(settings, 'agreementLines')
       },
       {}
     )
-  ), [agreementId, resources?.settings]);
+  ), [agreementId, settings]);
 
   const {
     infiniteQueryObject: {
@@ -117,9 +123,9 @@ const AgreementViewRoute = ({
       sort: [
         { path: 'pti.titleInstance.name' }
       ],
-      perPage: parseMclPageSize(resources?.settings, 'agreementEresources')
+      perPage: parseMclPageSize(settings, 'agreementEresources')
     }, {})
-  ), [resources?.settings]);
+  ), [settings]);
 
   const {
     infiniteQueryObject: {
@@ -402,12 +408,6 @@ AgreementViewRoute.manifest = Object.freeze({
     records: 'poLines',
     throwErrors: false,
   },
-  settings: {
-    type: 'okapi',
-    path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
-    records: 'configs',
-    shouldRefresh: false,
-  },
   users: {
     type: 'okapi',
     path: 'users',
@@ -472,7 +472,6 @@ AgreementViewRoute.propTypes = {
     interfaces: PropTypes.object,
     orderLines: PropTypes.object,
     query: PropTypes.object,
-    settings: PropTypes.object,
     users: PropTypes.object,
   }).isRequired,
   stripes: PropTypes.shape({
