@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import compose from 'compose-function';
 import { isEmpty, chunk } from 'lodash';
 import { LoadingView } from '@folio/stripes/components';
@@ -7,7 +9,6 @@ import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import View from '../../components/views/AgreementLineForm';
 import { urls, withSuppressFromDiscovery } from '../../components/utilities';
 import { resultCount } from '../../constants';
-import { FormattedMessage } from 'react-intl';
 
 const { RECORDS_PER_REQUEST_LARGE } = resultCount;
 class AgreementLineEditRoute extends React.Component {

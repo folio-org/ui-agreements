@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import compose from 'compose-function';
 import { isEmpty } from 'lodash';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { isPackage } from '@folio/stripes-erm-components';
 import View from '../../components/views/AgreementLineForm';
 import { urls, withSuppressFromDiscovery } from '../../components/utilities';
-import { FormattedMessage } from 'react-intl';
 
 class AgreementLineCreateRoute extends React.Component {
   static manifest = Object.freeze({
