@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import View from '../../components/views/UrlCustomizerForm';
 import { urls } from '../../components/utilities';
 
@@ -58,7 +59,7 @@ class UrlCustomizerCreateRoute extends React.Component {
     return mutator.stringTemplate
       .POST({ ...urlCustomization, 'idScopes': [platformId], 'context': 'urlCustomiser' })
       .then(({ id }) => {
-        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.platform.urlCustomization.create.callout" /> });
+        this.context.sendCallout({ message: <FormattedMessage id="ui-agreements.platform.urlCustomization.create.callout" /> });
         history.push(`${urls.urlCustomizerView(platformId, id)}${location.search}`);
       });
   }

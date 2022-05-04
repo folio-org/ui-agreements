@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import compose from 'compose-function';
 
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
@@ -13,6 +12,7 @@ import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 import { resultCount } from '../../constants';
+import { FormattedMessage } from 'react-intl';
 
 const { RECORDS_PER_REQUEST_MEDIUM } = resultCount;
 
@@ -199,7 +199,7 @@ class AgreementCreateRoute extends React.Component {
     return mutator.agreements
       .POST(agreement)
       .then(({ id }) => {
-        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
+        this.context.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
         history.push(`${urls.agreementView(id)}${location.search}`);
       });
   }

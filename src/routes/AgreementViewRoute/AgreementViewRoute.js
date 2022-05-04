@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useIntl } from 'react-intl';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { get, flatten, uniqBy, chunk } from 'lodash';
 import compose from 'compose-function';
@@ -300,25 +299,25 @@ const AgreementViewRoute = ({
     const compositeAgreement = getCompositeAgreement();
 
     if (compositeAgreement.items?.length) {
-      callout.sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasAgreementLines" /> });
+      callout.sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.errors.noDeleteHasAgreementLines" /> });
       return;
     }
 
     if (compositeAgreement.linkedLicenses?.length) {
-      callout.sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasLicenses" /> });
+      callout.sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.errors.noDeleteHasLicenses" /> });
       return;
     }
 
     if (compositeAgreement.relatedAgreements?.length) {
-      callout.sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteHasRelatedAgreements" /> });
+      callout.sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.errors.noDeleteHasRelatedAgreements" /> });
       return;
     }
 
     deleteAgreement().then(() => {
       history.push(`${urls.agreements()}${location.search}`);
-      callout.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.agreements.deletedAgreement" values={{ name: compositeAgreement.name }} /> });
+      callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.deletedAgreement" values={{ name: compositeAgreement.name }} /> });
     }).catch(error => {
-      callout.sendCallout({ type: 'error', timeout: 0, message: <SafeHTMLMessage id="ui-agreements.errors.noDeleteAgreementBackendError" values={{ message: error.message }} /> });
+      callout.sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.errors.noDeleteAgreementBackendError" values={{ message: error.message }} /> });
     });
   };
 

@@ -22,7 +22,6 @@ import {
 } from '@folio/stripes/components';
 
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import { Info, POLines, Coverage } from '../../AgreementLineSections';
 import { isExternal, urls } from '../../utilities';
@@ -203,7 +202,7 @@ const AgreementLine = ({
           data-test-delete-confirmation-modal
           heading={<FormattedMessage id="ui-agreements.agreementLines.deleteAgreementLine" />}
           id="delete-agreement-line-confirmation"
-          message={<SafeHTMLMessage id="ui-agreements.agreementLines.deleteConfirmMessage" values={{ name: resourceName }} />}
+          message={<FormattedMessage id="ui-agreements.agreementLines.deleteConfirmMessage" values={{ name: resourceName }} />}
           onCancel={() => setShowDeleteConfirmationModal(false)}
           onConfirm={() => {
             handlers.onDelete();

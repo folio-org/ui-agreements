@@ -21,7 +21,6 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager, HandlerManager, useStripes } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import { CustomPropertiesView, useCustomProperties } from '@k-int/stripes-kint-components';
 
@@ -311,7 +310,7 @@ const Agreement = ({
           data-test-delete-confirmation-modal
           heading={<FormattedMessage id="ui-agreements.agreements.deleteAgreement" />}
           id="delete-agreement-confirmation"
-          message={<SafeHTMLMessage id="ui-agreements.agreements.deleteConfirmMessage" values={{ name: data.agreement?.name }} />}
+          message={<FormattedMessage id="ui-agreements.agreements.deleteConfirmMessage" values={{ name: data.agreement?.name }} />}
           onCancel={() => setShowDeleteConfirmationModal(false)}
           onConfirm={() => {
             handlers.onDelete();

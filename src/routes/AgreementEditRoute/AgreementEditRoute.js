@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { cloneDeep, chunk } from 'lodash';
 import compose from 'compose-function';
 
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
@@ -14,6 +13,7 @@ import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 import { resultCount } from '../../constants';
+import { FormattedMessage } from 'react-intl';
 
 const { RECORDS_PER_REQUEST_MEDIUM, RECORDS_PER_REQUEST_LARGE } = resultCount;
 class AgreementEditRoute extends React.Component {
@@ -432,7 +432,7 @@ class AgreementEditRoute extends React.Component {
     return mutator.agreement
       .PUT(agreement)
       .then(({ id }) => {
-        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
+        this.context.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
         history.push(`${urls.agreementView(id)}${location.search}`);
       });
   }

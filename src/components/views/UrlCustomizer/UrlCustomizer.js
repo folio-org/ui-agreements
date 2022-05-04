@@ -17,7 +17,6 @@ import {
   checkScope
 } from '@folio/stripes/components';
 import { TitleManager, useStripes } from '@folio/stripes/core';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 const UrlCustomizer = ({
   data: { urlCustomization },
@@ -119,7 +118,7 @@ const UrlCustomizer = ({
           data-test-delete-confirmation-modal
           heading={<FormattedMessage id="ui-agreements.platform.urlCustomization.delete" />}
           id="delete-agreement-confirmation"
-          message={<SafeHTMLMessage id="ui-agreements.platform.urlCustomization.deleteConfirmMessage" values={{ name: urlCustomization?.name }} />}
+          message={<FormattedMessage id="ui-agreements.platform.urlCustomization.deleteConfirmMessage" values={{ name: urlCustomization?.name }} />}
           onCancel={closeDeleteConfirmationModal}
           onConfirm={() => {
             handlers.onDelete();
