@@ -15,6 +15,7 @@ import {
   MessageBanner,
 } from '@folio/stripes/components';
 
+import css from '../../styles.css';
 import SourceTitleIdentifierField from './SourceTitleIdentifierField';
 import DestinationTitleIdentifierField from './DestinationTitleIdentifierField';
 
@@ -137,6 +138,7 @@ const IdentifierReassignmentForm = ({
                     }
                   </Button>
                   {previewModal &&
+                  <span className={css.moveMoreIdentifiers}>
                     <Button
                       buttonStyle="default mega"
                       id="clickable-save-and-move-more-identifiers"
@@ -145,6 +147,7 @@ const IdentifierReassignmentForm = ({
                     >
                       <FormattedMessage id="ui-agreements.updatetitlesAndMoveMore" />
                     </Button>
+                  </span>
                   }
                   <Button
                     buttonStyle="default mega"

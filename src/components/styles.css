@@ -18,3 +18,9 @@
   padding-left: var(--gutter-static-one-third);
   padding-right: var(--gutter-static-one-third);
 }
+
+.moveMoreIdentifiers {
+  margin-bottom: 1rem;
+  padding-left: 40%;
+  padding-right: -20%;
+}
