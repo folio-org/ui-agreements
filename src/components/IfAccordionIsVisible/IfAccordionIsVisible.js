@@ -1,44 +1,26 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { stripesConnect } from '@folio/stripes/core';
+
 import { hiddenAccordions } from '../../constants';
+import { useAgreementsSettings } from '../../hooks';
 
 const hiddenAccordionsNames = Object.keys(hiddenAccordions);
 
-class IfAccordionIsVisible extends React.Component {
-  static manifest = {
-    settings: {
-      type: 'okapi',
-      path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
-      records: 'configs',
-      shouldRefresh: () => false,
-    },
-  };
+const IfAccordionIsVisible = ({ children, name }) => {
+  const settings = useAgreementsSettings();
 
-  static propTypes = {
-    children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-    name: PropTypes.oneOf(hiddenAccordionsNames).isRequired,
-    resources: PropTypes.shape({
-      settings: PropTypes.object,
-    }),
-  };
+  const isHidden = settings?.parsedSettings.hideAccordions?.[name] || false;
+  const isEnabled = !isHidden; // This takes advantage of truthiness to also make sure the path above exists
 
-  isHidden = () => {
-    const { settings = {} } = this.props.resources;
-    const parsedSettings = JSON.parse(settings?.records?.[0]?.value || '{}');
-    return parsedSettings.hideAccordions?.[this.props.name] || false;
+  if (typeof children === 'function') {
+    return children({ isEnabled });
   }
 
-  render() {
-    const { children } = this.props;
-    const isEnabled = !this.isHidden();
+  return isEnabled ? children : null;
+};
 
-    if (typeof children === 'function') {
-      return children({ isEnabled });
-    }
+IfAccordionIsVisible.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  name: PropTypes.oneOf(hiddenAccordionsNames).isRequired,
+};
 
-    return isEnabled ? children : null;
-  }
-}
-
-export default stripesConnect(IfAccordionIsVisible);
+export default IfAccordionIsVisible;

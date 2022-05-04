@@ -11,7 +11,7 @@ import View from '../../components/views/Agreements';
 import NoPermissions from '../../components/NoPermissions';
 import { getRefdataValuesByDesc, urls } from '../../components/utilities';
 import { resultCount } from '../../constants';
-import { REFDATA_ENDPOINT } from '../../constants/endpoints';
+import { AGREEMENTS_ENDPOINT, REFDATA_ENDPOINT } from '../../constants/endpoints';
 
 const {
   INITIAL_RESULT_COUNT,
@@ -64,8 +64,6 @@ const AgreementsRoute = ({
     }
   }, []); // This isn't particularly great, but in the interests of saving time migrating, it will have to do
 
-  const agreementsPath = 'erm/sas';
-
   const agreementsQueryParams = useMemo(() => (
     generateKiwtQueryParams({
       searchKey: 'name,alternateNames.name,description',
@@ -97,10 +95,10 @@ const AgreementsRoute = ({
     results: agreements = [],
     total: agreementsCount = 0
   } = useInfiniteFetch(
-    [agreementsPath, agreementsQueryParams, 'ui-agreements', 'AgreementsRoute', 'getAgreements'],
+    [AGREEMENTS_ENDPOINT, agreementsQueryParams, 'ui-agreements', 'AgreementsRoute', 'getAgreements'],
     ({ pageParam = 0 }) => {
       const params = [...agreementsQueryParams, `offset=${pageParam}`];
-      return ky.get(encodeURI(`${agreementsPath}?${params?.join('&')}`)).json();
+      return ky.get(encodeURI(`${AGREEMENTS_ENDPOINT}?${params?.join('&')}`)).json();
     }
   );
 

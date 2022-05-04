@@ -21,7 +21,8 @@ import { errorTypes, resultCount } from '../../constants';
 
 import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
 
-import { useAgreementsHelperApp } from '../../hooks';
+import { useAgreementsHelperApp, useAgreementsSettings } from '../../hooks';
+import { AGREEMENTS_ENDPOINT, AGREEMENT_ENDPOINT, AGREEMENT_ERESOURCES_ENDPOINT, AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
 
 const { RECORDS_PER_REQUEST_MEDIUM, RECORDS_PER_REQUEST_LARGE } = resultCount;
 
@@ -54,10 +55,8 @@ const AgreementViewRoute = ({
     TagButton,
   } = useAgreementsHelperApp(tagsEnabled);
 
-  const agreementsPath = 'erm/sas';
-  const agreementPath = `${agreementsPath}/${agreementId}`;
-  const agreementLinePath = 'erm/entitlements';
-  const agreementEresourcesPath = `${agreementsPath}/${agreementId}/resources/${eresourcesFilterPath}`;
+  const agreementPath = AGREEMENT_ENDPOINT(agreementId);
+  const agreementEresourcesPath = AGREEMENT_ERESOURCES_ENDPOINT(agreementId, eresourcesFilterPath);
 
   const {
     data: agreement = {
@@ -72,14 +71,10 @@ const AgreementViewRoute = ({
 
   const { mutateAsync: deleteAgreement } = useMutation(
     [agreementPath, 'ui-agreements', 'AgreementViewRoute', 'deleteAgreement'],
-    () => ky.delete(agreementPath).then(() => queryClient.invalidateQueries(agreementsPath))
+    () => ky.delete(agreementPath).then(() => queryClient.invalidateQueries(AGREEMENTS_ENDPOINT))
   );
 
-  // Settings
-  const { data: { configs: settings } = {} } = useQuery(
-    ['configurations/entries', 'query=(module=AGREEMENTS and configName=general)', 'ui-agreements', 'AgreementViewRoute', 'getSettings'],
-    () => ky.get('configurations/entries?query=(module=AGREEMENTS and configName=general)').json()
-  );
+  const settings = useAgreementsSettings();
 
   // Users
   const { data: { users = [] } = {} } = useUsers(agreement?.contacts.filter(c => c.user)?.map(c => c.user));
@@ -114,10 +109,10 @@ const AgreementViewRoute = ({
     results: agreementLines = [],
     total: agreementLineCount = 0
   } = useInfiniteFetch(
-    [agreementLinePath, agreementLineQueryParams, 'ui-agreements', 'AgreementViewRoute', 'getLines'],
+    [AGREEMENT_LINES_ENDPOINT, agreementLineQueryParams, 'ui-agreements', 'AgreementViewRoute', 'getLines'],
     ({ pageParam = 0 }) => {
       const params = [...agreementLineQueryParams, `offset=${pageParam}`];
-      return ky.get(`${agreementLinePath}?${params?.join('&')}`).json();
+      return ky.get(`${AGREEMENT_LINES_ENDPOINT}?${params?.join('&')}`).json();
     }
   );
 

@@ -12,7 +12,7 @@ import NoPermissions from '../../components/NoPermissions';
 import { getRefdataValuesByDesc, urls } from '../../components/utilities';
 import { resultCount } from '../../constants';
 
-import { REFDATA_ENDPOINT } from '../../constants/endpoints';
+import { ERESOURCES_ELECTRONIC_ENDPOINT, REFDATA_ENDPOINT } from '../../constants/endpoints';
 
 const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT;
 
@@ -55,9 +55,6 @@ const EResourcesRoute = ({
 
   const { data: { tags = [] } = {} } = useTags();
 
-
-  const eresourcesPath = 'erm/resource/electronic';
-
   const eresourcesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
       searchKey: 'name,identifiers.identifier.value',
@@ -89,10 +86,10 @@ const EResourcesRoute = ({
     results: eresources = [],
     total: eresourcesCount = 0
   } = useInfiniteFetch(
-    [eresourcesPath, eresourcesQueryParams, 'ui-agreements', 'EresourcesRoute', 'getEresources'],
+    [ERESOURCES_ELECTRONIC_ENDPOINT, eresourcesQueryParams, 'ui-agreements', 'EresourcesRoute', 'getEresources'],
     ({ pageParam = 0 }) => {
       const params = [...eresourcesQueryParams, `offset=${pageParam}`];
-      return ky.get(encodeURI(`${eresourcesPath}?${params?.join('&')}`)).json();
+      return ky.get(encodeURI(`${ERESOURCES_ELECTRONIC_ENDPOINT}?${params?.join('&')}`)).json();
     }
   );
 

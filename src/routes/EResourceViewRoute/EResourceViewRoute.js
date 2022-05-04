@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import compose from 'compose-function';
 
@@ -13,7 +13,8 @@ import View from '../../components/views/EResource';
 import { parseMclPageSize, urls, withSuppressFromDiscovery } from '../../components/utilities';
 import { resultCount, resourceClasses } from '../../constants';
 
-import { useAgreementsHelperApp } from '../../hooks';
+import { useAgreementsHelperApp, useAgreementsSettings } from '../../hooks';
+import { ERESOURCE_ENDPOINT, ERESOURCE_ENTITLEMENTS_ENDPOINT, ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT } from '../../constants/endpoints';
 
 const { RECORDS_PER_REQUEST_MEDIUM } = resultCount;
 
@@ -32,22 +33,17 @@ const EResourceViewRoute = ({
     TagButton,
   } = useAgreementsHelperApp(tagsEnabled);
 
-  const eresourcesPath = 'erm/resource';
-  const eresourcePath = `${eresourcesPath}/${eresourceId}`;
+  const eresourcePath = ERESOURCE_ENDPOINT(eresourceId);
 
   const { data: eresource = {}, isLoading: isEresourceLoading } = useQuery(
     [eresourcePath, 'ui-agreements', 'EresourceViewRoute', 'getEresource'],
     () => ky.get(eresourcePath).json()
   );
 
-  const { data: { configs: settings } = {} } = useQuery(
-    ['configurations/entries', 'query=(module=AGREEMENTS and configName=general)', 'ui-agreements', 'EresourceViewRoute', 'getSettings'],
-    () => ky.get('configurations/entries?query=(module=AGREEMENTS and configName=general)').json()
-  );
+  const settings = useAgreementsSettings();
 
-  const entitlementsPath = `${eresourcePath}/entitlements`;
-  const relatedEntitlementsPath = `${entitlementsPath}/related`;
-  const entitlementOptionsPath = `${eresourcePath}/entitlementOptions`;
+  const entitlementsPath = ERESOURCE_ENTITLEMENTS_ENDPOINT(eresourceId);
+  const entitlementOptionsPath = ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT(eresourceId);
 
   // AGREEMENTS FOR ERESOURCE INFINITE FETCH
   const eresourceAgreementParams = useMemo(() => (

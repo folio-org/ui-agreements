@@ -15,6 +15,7 @@ import { urls, withSuppressFromDiscovery } from '../../components/utilities';
 import { resultCount } from '../../constants';
 
 import { useAgreementsHelperApp } from '../../hooks';
+import { AGREEMENT_LINES_ENDPOINT, AGREEMENT_LINE_ENDPOINT } from '../../constants/endpoints';
 
 const { RECORDS_PER_REQUEST_LARGE } = resultCount;
 
@@ -35,9 +36,7 @@ const AgreementLineViewRoute = ({
 
   const ky = useOkapiKy();
 
-  const agreementLinesPath = 'erm/entitlements';
-  const agreementLinePath = `${agreementLinesPath}/${lineId}`;
-
+  const agreementLinePath = AGREEMENT_LINE_ENDPOINT(lineId);
 
   const { data: agreementLine = {}, isLoading: isLineQueryLoading } = useQuery(
     [agreementLinePath, 'ui-agreements', 'AgreementLineViewRoute', 'getLine'],
@@ -50,7 +49,7 @@ const AgreementLineViewRoute = ({
       id: agreementId,
       items: [{ id: lineId, _delete: true }]
     }).then(() => {
-      queryClient.invalidateQueries(agreementLinesPath);
+      queryClient.invalidateQueries(AGREEMENT_LINES_ENDPOINT);
       history.push(`${urls.agreementView(agreementId)}${location.search}`);
       callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.delete.callout" /> });
     }).catch(error => {
