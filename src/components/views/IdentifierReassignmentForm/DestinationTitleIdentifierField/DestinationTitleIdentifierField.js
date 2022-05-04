@@ -25,9 +25,10 @@ import { urls } from '../../../utilities';
 const propTypes = {
   formRestart: PropTypes.func,
   previewModal: PropTypes.bool,
+  setTitleName: PropTypes.bool,
 };
 
-const DestinationTitleIdentifierField = () => {
+const DestinationTitleIdentifierField = ({ setTitleName }) => {
   let triggerButton = useRef(null);
   const [destinationTI, setDestinationTI] = useState();
 
@@ -186,6 +187,7 @@ const DestinationTitleIdentifierField = () => {
       roundedBorder
     >
       {destinationTI?.id ? renderTitleFields() : renderEmptyDestination()}
+      {destinationTI?.id ? setTitleName(destinationTI.name) : null}
     </Card>
   );
 };

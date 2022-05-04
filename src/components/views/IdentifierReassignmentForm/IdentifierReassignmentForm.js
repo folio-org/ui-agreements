@@ -37,16 +37,30 @@ const IdentifierReassignmentForm = ({
   const callout = useContext(CalloutContext);
   const [previewModal, setPreviewModal] = useState(false);
   const [idJobCreated, setIdJobCreated] = useState();
+  const [sourceTitleName, setSourceTitleName] = useState('');
+  const [destinationTitleName, setDestinationTitleName] = useState('');
 
   const ky = useOkapiKy();
 
-  const { mutateAsync: postIdentifierReassignmentJob } = useMutation(
+  const { mutateAsync: postSourceIdentifierJob } = useMutation(
     ['erm/jobs/identifierReassignment', 'ui-agreements', 'identifierReassignmentForm', 'postJob'],
     (payload) => ky.post('erm/jobs/identifierReassignment', { json: payload }).json().then(res => {
       callout.sendCallout({
         type: 'success',
         message: (
-          <FormattedMessage id="ui-agreements.job.created.success.org.olf.general.jobs.IdentifierReassignmentJob" />)
+          <FormattedMessage id="ui-agreements.job.created.success.org.olf.general.jobs.IdentifierReassignmentJob" values={{ sourceTitleName }} />)
+      });
+      setIdJobCreated(res?.name);
+    })
+  );
+
+  const { mutateAsync: postDestinationIdentifierJob } = useMutation(
+    ['erm/jobs/identifierReassignment', 'ui-agreements', 'identifierReassignmentForm', 'postJob'],
+    (payload) => ky.post('erm/jobs/identifierReassignment', { json: payload }).json().then(res => {
+      callout.sendCallout({
+        type: 'success',
+        message: (
+          <FormattedMessage id="ui-agreements.job.created.success.org.olf.general.jobs.destination" values={{ destinationTitleName }} />)
       });
       setIdJobCreated(res?.name);
     })
@@ -82,7 +96,11 @@ const IdentifierReassignmentForm = ({
       }
     }
 
-    postIdentifierReassignmentJob({
+    postSourceIdentifierJob({
+      payload: identifierReassignmentArray
+    });
+
+    postDestinationIdentifierJob({
       payload: identifierReassignmentArray
     });
   };
@@ -206,6 +224,7 @@ const IdentifierReassignmentForm = ({
                       <SourceTitleIdentifierField
                         formRestart={restart}
                         previewModal={previewModal}
+                        setTitleName={setSourceTitleName}
                       />
                     </Col>
                     <Icon icon="caret-right" />
@@ -216,6 +235,7 @@ const IdentifierReassignmentForm = ({
                       <DestinationTitleIdentifierField
                         formRestart={restart}
                         previewModal={previewModal}
+                        setTitleName={setDestinationTitleName}
                       />
                     </Col>
                   </Row>

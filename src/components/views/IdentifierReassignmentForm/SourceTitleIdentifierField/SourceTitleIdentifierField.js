@@ -22,9 +22,10 @@ import { urls } from '../../../utilities';
 
 const propTypes = {
   previewModal: PropTypes.bool,
+  setTitleName: PropTypes.func
 };
 
-const SourceTitleIdentifierField = () => {
+const SourceTitleIdentifierField = ({ setTitleName }) => {
   let triggerButton = useRef(null);
 
   const { values } = useFormState();
@@ -226,6 +227,7 @@ const SourceTitleIdentifierField = () => {
       roundedBorder
     >
       {sourceTI?.id ? renderTitleFields() : renderEmptySource()}
+      {sourceTI?.id ? setTitleName(sourceTI.name) : null}
     </Card>
   );
 };
