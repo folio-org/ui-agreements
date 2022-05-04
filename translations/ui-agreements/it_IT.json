@@ -575,5 +575,20 @@
     "settings.customProperties.all": "Tutti",
     "settings.customProperties.none": "Nessuno",
     "supplementaryProperty.help.label": "Una 'etichetta' di un termine del contratto viene utilizzata quando si visualizza la proprietà supplementare agli utenti all'interno di Folio e in qualsiasi altro sistema che mostra tali proprietà agli utenti. Dovrebbe essere una breve stringa di testo che comunichi chiaramente quali informazioni sono registrate nella proprietà. La descrizione deve essere utilizzata laddove è necessaria un'ulteriore spiegazione del termine per la visualizzazione agli utenti.",
-    "supplementaryProperty.help.name": "Il \"nome\" di un termine del contratto viene utilizzato quando si invia la proprietà supplementare in un formato leggibile dalla macchina. Non è destinato ad essere mostrato agli utenti (personale o utenti finali). Dovrebbe essere una breve stringa alfabetica che può essere utilizzata da qualsiasi sistema o programma esterno che accede ai dati sulla proprietà supplementare dei contratti. L'uso di camelCase è consigliato ma non obbligatorio. Le modifiche al nome della proprietà supplementare del contratto influenzerebbero tutti i sistemi esterni che utilizzano i dati della proprietà supplementare del contratto e le modifiche dovrebbero essere apportate dopo aver consultato i responsabili dei sistemi e software esterni pertinenti."
+    "supplementaryProperty.help.name": "Il \"nome\" di un termine del contratto viene utilizzato quando si invia la proprietà supplementare in un formato leggibile dalla macchina. Non è destinato ad essere mostrato agli utenti (personale o utenti finali). Dovrebbe essere una breve stringa alfabetica che può essere utilizzata da qualsiasi sistema o programma esterno che accede ai dati sulla proprietà supplementare dei contratti. L'uso di camelCase è consigliato ma non obbligatorio. Le modifiche al nome della proprietà supplementare del contratto influenzerebbero tutti i sistemi esterni che utilizzano i dati della proprietà supplementare del contratto e le modifiche dovrebbero essere apportate dopo aver consultato i responsabili dei sistemi e software esterni pertinenti.",
+    "eresources.packageContentType": "Package content type",
+    "eresources.availability": "Availability",
+    "eresources.extendedPackageInformation": "Extended package information",
+    "eresources.packageDescriptionUrls": "Package description URLs",
+    "eresources.sourceCreated": "Source created",
+    "eresources.sourceLastUpdated": "Source last updated",
+    "eresources.status": "Status",
+    "supplementaryProperty": "Supplementary property",
+    "supplementaryProperties.defaultTitle": "Supplementary properties ({ctx})",
+    "supplementaryProperties.filtersApplied": "{count} supplementary property filters applied",
+    "supplementaryProperties.editCustomPropertyFilters": "Edit supplementary property filters",
+    "supplementaryProperties.filterBuilder": "Supplementary property filter builder",
+    "supplementaryProperties.filterIndex": "Supplementary property filter {index}",
+    "supplementaryProperties.removeFilter": "Remove supplementary property filter {index}",
+    "supplementaryProperties.deprecated": "DEPRECATED: {name}"
 }
