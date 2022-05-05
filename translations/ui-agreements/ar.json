@@ -575,5 +575,20 @@
     "settings.customProperties.all": "الكل",
     "settings.customProperties.none": "لا شيء",
     "supplementaryProperty.help.label": "يتم استخدام مصطلح الاتفاقية ' ملصق' عند عرض الخاصية التكميلية للمستخدمين داخل فوليو وفي أي أنظمة أخرى تعرض خصائص الاتفاقية التكميلية للمستخدمين. يجب أن يكون الملصق مقطعًا نصيًا قصيرًا يوضح المعلومات التي يتم تسجيلها بوضوح في الخاصية التكميلية. يجب استخدام الوصف عند الحاجة إلى شرح إضافي للخاصية التكميلية لعرضه على المستخدمين.",
-    "supplementaryProperty.help.name": "يستخدم مصطلح الاتفاقية 'الاسم' عند إخراج بيانات الخاصية التكميلية بتنسيق قابل للقراءة آليًا. وليس المقصود أن يتم عرضه على المستخدمين (الموظفين أو المستفيدين). يجب أن يكون الاسم مقطعًا من أحرف أبجدية لاتينية قصيرة يمكن استخدامها من قبل أي أنظمة أو برامج خارجية يمكنها الوصول إلى بيانات خاصية الاتفاقية التكميلية. يقترح استخدام camelCase لكن ذلك غير مطلوب. من شأن التغييرات التي تطرأ على اسم خاصية الاتفاقية التكميلية  أن تؤثر على أي أنظمة خارجية تستخدم بيانات خاصية الاتفاقية التكميلية، ويجب عدم إجراء التغييرات دون استشارة المسؤولين عن الأنظمة والبرامج الخارجية ذات الصلة."
+    "supplementaryProperty.help.name": "يستخدم مصطلح الاتفاقية 'الاسم' عند إخراج بيانات الخاصية التكميلية بتنسيق قابل للقراءة آليًا. وليس المقصود أن يتم عرضه على المستخدمين (الموظفين أو المستفيدين). يجب أن يكون الاسم مقطعًا من أحرف أبجدية لاتينية قصيرة يمكن استخدامها من قبل أي أنظمة أو برامج خارجية يمكنها الوصول إلى بيانات خاصية الاتفاقية التكميلية. يقترح استخدام camelCase لكن ذلك غير مطلوب. من شأن التغييرات التي تطرأ على اسم خاصية الاتفاقية التكميلية  أن تؤثر على أي أنظمة خارجية تستخدم بيانات خاصية الاتفاقية التكميلية، ويجب عدم إجراء التغييرات دون استشارة المسؤولين عن الأنظمة والبرامج الخارجية ذات الصلة.",
+    "eresources.packageContentType": "Package content type",
+    "eresources.availability": "Availability",
+    "eresources.extendedPackageInformation": "Extended package information",
+    "eresources.packageDescriptionUrls": "Package description URLs",
+    "eresources.sourceCreated": "Source created",
+    "eresources.sourceLastUpdated": "Source last updated",
+    "eresources.status": "Status",
+    "supplementaryProperty": "Supplementary property",
+    "supplementaryProperties.defaultTitle": "Supplementary properties ({ctx})",
+    "supplementaryProperties.filtersApplied": "{count} supplementary property filters applied",
+    "supplementaryProperties.editCustomPropertyFilters": "Edit supplementary property filters",
+    "supplementaryProperties.filterBuilder": "Supplementary property filter builder",
+    "supplementaryProperties.filterIndex": "Supplementary property filter {index}",
+    "supplementaryProperties.removeFilter": "Remove supplementary property filter {index}",
+    "supplementaryProperties.deprecated": "DEPRECATED: {name}"
 }
