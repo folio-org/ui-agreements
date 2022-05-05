@@ -190,7 +190,6 @@ const IdentifierReassignmentForm = ({
               open={open}
               size="large"
             >
-              {previewModal ? `identifiers ${'-'} and ${'-'} will be moved from ${sourceTitleName} to ${destinationTitleName}.` : null}<br />
               {idJobCreated &&
                 <MessageBanner type="warning">
                   <FormattedMessage id="ui-agreements.updateMoreIdentifierWarning" values={{ name: idJobCreated }} />
