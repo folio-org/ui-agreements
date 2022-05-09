@@ -30,14 +30,14 @@ export default class UsageDataProviderField extends React.Component {
     udp: {},
   }
 
-   /* istanbul ignore next */
+  /* istanbul ignore next */
   componentDidMount() {
     if (!get(this.props, 'input.value') && get(this.triggerButton, 'current')) {
       this.triggerButton.current.focus();
     }
   }
 
-   /* istanbul ignore next */
+  /* istanbul ignore next */
   renderLinkUDPButton = value => (
     <Pluggable
       dataKey="udp"

@@ -8,6 +8,7 @@ import Package from './Package';
 import { data, handlers } from './testResources';
 
 jest.mock('../../EResourceSections/Agreements', () => () => <div>Agreements</div>);
+jest.mock('../../EResourceSections/ExtendedPackageInformation', () => () => <div>ExtendedPackageInformation</div>);
 jest.mock('../../EResourceSections/PackageContents', () => () => <div>PackageContents</div>);
 jest.mock('../../EResourceSections/PackageInfo', () => () => <div>PackageInfo</div>);
 
@@ -28,6 +29,11 @@ describe('Package', () => {
   it('renders the PackageInfo component', () => {
     const { getByText } = renderComponent;
     expect(getByText('PackageInfo')).toBeInTheDocument();
+  });
+
+  it('renders the ExtendedPackageInformation component', () => {
+    const { getByText } = renderComponent;
+    expect(getByText('ExtendedPackageInformation')).toBeInTheDocument();
   });
 
   it('renders the Agreements component', () => {

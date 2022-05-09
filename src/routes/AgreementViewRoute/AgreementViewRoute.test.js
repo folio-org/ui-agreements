@@ -201,15 +201,15 @@ const data = {
     }
   },
   resources: {
-      agreement,
-      agreementLines,
-      agreementEresources,
-      eresourcesFilterPath,
-      interfaces,
-      orderLines,
-      query,
-      settings,
-      users,
+    agreement,
+    agreementLines,
+    agreementEresources,
+    eresourcesFilterPath,
+    interfaces,
+    orderLines,
+    query,
+    settings,
+    users,
   },
   stripes,
   tagsEnabled
@@ -234,13 +234,13 @@ describe('AgreementViewRoute', () => {
     });
 
     test('calls the AgreementLineButton callback', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('AgreementLineButton')).toBeInTheDocument();
+      const { getByText } = renderComponent;
+      expect(getByText('AgreementLineButton')).toBeInTheDocument();
     });
 
     test('calls the NeedMoreLinesButton callback', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('NeedMoreLinesButton')).toBeInTheDocument();
+      const { getByText } = renderComponent;
+      expect(getByText('NeedMoreLinesButton')).toBeInTheDocument();
     });
 
     test('triggers the AgreementLineButton callback', async () => {

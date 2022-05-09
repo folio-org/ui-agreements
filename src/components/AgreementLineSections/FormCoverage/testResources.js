@@ -232,23 +232,23 @@ const values = {
   'poLines': '[]',
   'suppressFromDiscovery': false,
   'coverage': [{
-      '_delete': false,
-      'startDate': '2021-09-01',
-      'startVolume': '1',
-      'startIssue': '1',
-      'endDate': '2021-09-30',
-      'endVolume': '8',
-      'endIssue': '12'
-    },
-    {
-      '_delete': false,
-      'startDate': '2021-10-01',
-      'endDate': '2021-10-30',
-      'startVolume': '6',
-      'startIssue': 'Nov',
-      'endVolume': '2',
-      'endIssue': '14'
-    }
+    '_delete': false,
+    'startDate': '2021-09-01',
+    'startVolume': '1',
+    'startIssue': '1',
+    'endDate': '2021-09-30',
+    'endVolume': '8',
+    'endIssue': '12'
+  },
+  {
+    '_delete': false,
+    'startDate': '2021-10-01',
+    'endDate': '2021-10-30',
+    'startVolume': '6',
+    'startIssue': 'Nov',
+    'endVolume': '2',
+    'endIssue': '14'
+  }
   ],
   'customCoverage': false,
   'explanation': 'Agreement includes this item from a package specifically',
@@ -403,31 +403,31 @@ const values = {
 };
 
 const externalData = {
-    'id': '61bb6bb8-32ed-4e7c-a6cc-32b89b8ead13',
-    'type': 'external',
-    'description': 'This is description',
-    'authority': 'EKB-PACKAGE',
-    'reference': '350-1207861',
-    'explanation': null,
-    'startDate': '2021-09-04',
-    'endDate': '2021-09-24',
-    'activeFrom': '2021-09-04',
-    'activeTo': '2021-09-24',
-    'contentUpdated': null,
-    'haveAccess': true,
-    'suppressFromDiscovery': true,
-    'note': 'This is note',
-    'tags': '[]',
-    'owner': '{agreementStatus: {…}, alternateNames: Array(0), ca…}',
-    'customCoverage': true,
-    'coverage': [{
-      'startDate': '2020-09-01',
-      'endDate': '2020-10-21',
-      'summary': 'v*/i*/2020-09-01 - v*/i*/2020-10-21'
-    }],
-    'reference_object': '{contentType: "Online Reference", isSelected: true,…}',
-    'poLines': '[]'
-  };
+  'id': '61bb6bb8-32ed-4e7c-a6cc-32b89b8ead13',
+  'type': 'external',
+  'description': 'This is description',
+  'authority': 'EKB-PACKAGE',
+  'reference': '350-1207861',
+  'explanation': null,
+  'startDate': '2021-09-04',
+  'endDate': '2021-09-24',
+  'activeFrom': '2021-09-04',
+  'activeTo': '2021-09-24',
+  'contentUpdated': null,
+  'haveAccess': true,
+  'suppressFromDiscovery': true,
+  'note': 'This is note',
+  'tags': '[]',
+  'owner': '{agreementStatus: {…}, alternateNames: Array(0), ca…}',
+  'customCoverage': true,
+  'coverage': [{
+    'startDate': '2020-09-01',
+    'endDate': '2020-10-21',
+    'summary': 'v*/i*/2020-09-01 - v*/i*/2020-10-21'
+  }],
+  'reference_object': '{contentType: "Online Reference", isSelected: true,…}',
+  'poLines': '[]'
+};
 
 export {
   values,

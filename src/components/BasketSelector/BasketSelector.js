@@ -109,7 +109,7 @@ export default class BasketSelector extends React.Component {
                 {addButtonLabel}
               </Button>
             </div>
-            )}
+          )}
         </Tooltip>
       );
     }

@@ -1,15 +1,13 @@
 {
   "extends": "@folio/eslint-config-stripes",
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "rules": {
-    "react/jsx-sort-props": "error",
-
-     // TODO: Remove when https://issues.folio.org/browse/STRIPES-742 to reinstate these rules. 
-     "template-curly-spacing" : "off",
-     "indent" : "off"
+    "react/jsx-sort-props": "error"
   },
   "env": {
     "jest/globals": true
   },
-  "plugins": ["jest"]
+  "plugins": [
+    "jest"
+  ]
 }

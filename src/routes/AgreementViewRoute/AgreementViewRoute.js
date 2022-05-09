@@ -101,10 +101,6 @@ class AgreementViewRoute extends React.Component {
       path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
       records: 'configs',
     },
-    terms: {
-      type: 'okapi',
-      path: 'licenses/custprops',
-    },
     users: {
       type: 'okapi',
       path: 'users',
@@ -557,7 +553,6 @@ class AgreementViewRoute extends React.Component {
           eresourcesFilterPath: this.props.resources.eresourcesFilterPath,
           openAccessProperties: get(resources, 'openAccessProperties.records', []),
           searchString: this.props.location.search,
-          terms: get(resources, 'terms.records', []),
         }}
         handlers={{
           ...handlers,

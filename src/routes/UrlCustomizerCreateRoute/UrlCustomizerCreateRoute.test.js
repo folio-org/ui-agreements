@@ -20,10 +20,10 @@ const stringTemplate = {
 
 const mutator = {
   'stringTemplate': {
-      'DELETE': () => {},
-      'PUT': () => {},
-      'POST': () => {},
-      'cancel': () => {},
+    'DELETE': () => {},
+    'PUT': () => {},
+    'POST': () => {},
+    'cancel': () => {},
   }
 };
 
@@ -48,20 +48,20 @@ jest.mock('../../components/views/UrlCustomizerForm', () => {
 });
 
 const data = {
-    history: {
-        push: historyPushMock
-    },
-    location: {
-        search: ''
-    },
-    mutator: { mutator },
-    match:{
-        params: {
-            agreementId: '',
-            platformId: '082ef5fe-fac7-46ba-a37c-b636ae7aa266'
-        }
-    },
-    resources:{ stringTemplate },
+  history: {
+    push: historyPushMock
+  },
+  location: {
+    search: ''
+  },
+  mutator: { mutator },
+  match:{
+    params: {
+      agreementId: '',
+      platformId: '082ef5fe-fac7-46ba-a37c-b636ae7aa266'
+    }
+  },
+  resources:{ stringTemplate },
 };
 
 describe('UrlCustomizerCreateRoute', () => {

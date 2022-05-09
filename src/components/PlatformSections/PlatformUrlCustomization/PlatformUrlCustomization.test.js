@@ -9,7 +9,7 @@ import PlatformUrlCustomization from './PlatformUrlCustomization';
 const onViewUrlCustomizer = jest.fn();
 
 describe('PlatformUrlCustomization', () => {
-let renderComponent;
+  let renderComponent;
   beforeEach(() => {
     renderComponent = renderWithIntl(
       <PlatformUrlCustomization
@@ -50,9 +50,9 @@ let renderComponent;
   test('renders maximum number of URL customization message  ', () => {
     const { getByText } = renderComponent;
     expect(getByText('Maximum number of URL customizations is 1')).toBeInTheDocument();
-   });
+  });
 
-   describe('Clicking the row', () => {
+  describe('Clicking the row', () => {
     beforeEach(async () => {
       await MultiColumnList('url-customization').click({ row: 0, columnIndex: 0 });
     });

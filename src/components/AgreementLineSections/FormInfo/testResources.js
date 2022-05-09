@@ -65,7 +65,7 @@ const data = {
     'endDate': '2021-08-28',
     'contentUpdated': null,
     'haveAccess': true
-    }
+  }
 };
 
 const handlers = {
