@@ -12,7 +12,7 @@ import {
 
 import { AppIcon } from '@folio/stripes/core';
 import css from '../../styles.css';
-import { urls } from '../../utilities';
+import { filterIgnoreObjectKeys, urls } from '../../utilities';
 
 const DestinationTitlePreview = () => {
   const { values } = useFormState();
@@ -20,39 +20,40 @@ const DestinationTitlePreview = () => {
 
   const renderTitleIds = (title) => {
     const validIdentifiers = title?.identifiers?.filter(tiId => tiId?.status?.value === 'approved');
+
     if (title?.id === values?.destinationTitle) {
-      for (const [key, value] of Object.entries(values)) {
-        if (
-          key !== 'destinationTIObject' &&
-          key !== 'destinationTitle' &&
-          key !== 'sourceTIObject'
-        ) {
-          // This is an object containing identifiers from a source object
-          /*
-           * Shape:
-            {
-              issn: ['2092-6731', '8237-3432'],
-              ezb: ['34567']
-            }
-           */
-          /* istanbul ignore next */
-          for (const [nsKey, idVals] of Object.entries(value)) {
-            idVals.forEach(idVal => {
-              if (idVal) {
-                validIdentifiers.push({
-                  identifier: {
-                    ns: {
-                      value: nsKey
-                    },
-                    value: idVal,
-                    isNew: true // Track the newly added ids
-                  }
-                });
-              }
-            });
+      // Construct a new object which ignores the non-relevant keys
+      const filteredValues = filterIgnoreObjectKeys(
+        values,
+        ['sourceTIObject', 'destinationTIObject', 'destinationTitle']
+      );
+
+      Object.values(filteredValues)?.forEach(value => {
+        // This is an object containing identifiers from a source object
+        /*
+          * Shape:
+          {
+            issn: ['2092-6731', '8237-3432'],
+            ezb: ['34567']
           }
+          */
+        /* istanbul ignore next */
+        for (const [nsKey, idVals] of Object.entries(value)) {
+          idVals.forEach(idVal => {
+            if (idVal) {
+              validIdentifiers.push({
+                identifier: {
+                  ns: {
+                    value: nsKey
+                  },
+                  value: idVal,
+                  isNew: true // Track the newly added ids
+                }
+              });
+            }
+          });
         }
-      }
+      });
     }
 
     return (

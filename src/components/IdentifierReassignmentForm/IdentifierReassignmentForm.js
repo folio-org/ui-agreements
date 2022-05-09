@@ -21,6 +21,7 @@ import DestinationTitleIdentifierField from './DestinationTitleIdentifierField';
 
 import SourceTitlePreview from './SourceTitlePreview/SourceTitlePreview';
 import DestinationTitlePreview from './DestinationTitlePreview/DestinationTitlePreview';
+import { filterIgnoreObjectKeys } from '../utilities';
 
 const propTypes = {
   handlers: PropTypes.PropTypes.shape({
@@ -63,31 +64,31 @@ const IdentifierReassignmentForm = ({
 
   const submitHandler = (values) => {
     const identifierReassignmentArray = [];
-    for (const [key, value] of Object.entries(values)) {
-      if (
-        key !== 'sourceTIObject' &&
-        key !== 'destinationTIObject' &&
-        key !== 'destinationTitle'
-      ) {
-        /* The remaining keys all correspond to potential moving identifiers and take the shape
-            {
-              issn: ['1234-5678'],
-              ezb: ['325425325', 'undefined', '325325']
-            },
-           * We will construct an IdentifierReassignmentJob shape from them, see https://issues.folio.org/browse/ERM-1987
-           */
-        for (const [nsKey, idVals] of Object.entries(value)) {
-          idVals.forEach(idVal => {
-            if (idVal) {
-              identifierReassignmentArray.push({
-                initialTitleInstanceId: key,
-                targetTitleInstanceId: values.destinationTitle,
-                identifierNamespace: nsKey,
-                identifierValue: idVal
-              });
-            }
-          });
-        }
+
+    const filteredValues = filterIgnoreObjectKeys(
+      values,
+      ['sourceTIObject', 'destinationTIObject', 'destinationTitle']
+    );
+
+    for (const [key, value] of Object.entries(filteredValues)) {
+      /* The remaining keys all correspond to potential moving identifiers and take the shape
+          {
+            issn: ['1234-5678'],
+            ezb: ['325425325', 'undefined', '325325']
+          },
+          * We will construct an IdentifierReassignmentJob shape from them, see https://issues.folio.org/browse/ERM-1987
+          */
+      for (const [nsKey, idVals] of Object.entries(value)) {
+        idVals.forEach(idVal => {
+          if (idVal) {
+            identifierReassignmentArray.push({
+              initialTitleInstanceId: key,
+              targetTitleInstanceId: values.destinationTitle,
+              identifierNamespace: nsKey,
+              identifierValue: idVal
+            });
+          }
+        });
       }
     }
 
@@ -133,45 +134,56 @@ const IdentifierReassignmentForm = ({
               dismissible
               footer={(
                 <ModalFooter>
-                  {/* We change the behaviour of these buttons depending on if we're on the form screen or the preview screen */}
-                  <Button
-                    buttonStyle="primary mega"
-                    disabled={!values?.destinationTitle}
-                    id={`clickable-${!previewModal ? 'submit' : 'preview'}`}
-                    onClick={previewModal ? (() => saveCloseAndClearForm()) : () => setPreviewModal(true)}
-                  >
-                    {previewModal ?
-                      <FormattedMessage id="ui-agreements.updatetitlesAndClose" />
-                      :
-                      <FormattedMessage id="ui-agreements.preview" />
-                    }
-                  </Button>
-                  {previewModal &&
-                  <span className={css.moveMoreIdentifiers}>
-                    <Button
-                      buttonStyle="default mega"
-                      id="clickable-save-and-move-more-identifiers"
-                      marginBottom0
-                      onClick={saveAndReturnToMove}
-                    >
-                      <FormattedMessage id="ui-agreements.updatetitlesAndMoveMore" />
-                    </Button>
-                  </span>
+                  {previewModal ?
+                    <>
+                      <Button
+                        buttonStyle="primary mega"
+                        disabled={!values?.destinationTitle}
+                        id="clickable-submit"
+                        onClick={() => saveCloseAndClearForm()}
+                      >
+                        <FormattedMessage id="ui-agreements.updatetitlesAndClose" />
+                      </Button>
+                      <span className={css.moveMoreIdentifiers}>
+                        <Button
+                          buttonStyle="default mega"
+                          id="clickable-save-and-move-more-identifiers"
+                          marginBottom0
+                          onClick={saveAndReturnToMove}
+                        >
+                          <FormattedMessage id="ui-agreements.updatetitlesAndMoveMore" />
+                        </Button>
+                      </span>
+                      <Button
+                        buttonStyle="default mega"
+                        id="clickable-back"
+                        marginBottom0
+                        onClick={() => setPreviewModal(false)}
+                      >
+                        <FormattedMessage id="ui-agreements.back" />
+                      </Button>
+                    </> :
+                    <>
+                      <Button
+                        buttonStyle="primary mega"
+                        disabled={!values?.destinationTitle}
+                        id="clickable-preview"
+                        onClick={() => setPreviewModal(true)}
+                      >
+                        <FormattedMessage id="ui-agreements.preview" />
+                      </Button>
+                      <Button
+                        buttonStyle="default mega"
+                        id="clickable-cancel"
+                        marginBottom0
+                        onClick={closeAndClearForm}
+                      >
+                        <FormattedMessage id="stripes-components.cancel" />
+                      </Button>
+                    </>
                   }
-                  <Button
-                    buttonStyle="default mega"
-                    id={`clickable-${previewModal ? 'back' : 'cancel'}`}
-                    marginBottom0
-                    onClick={previewModal ? () => setPreviewModal(false) : closeAndClearForm}
-                  >
-                    {previewModal ?
-                      <FormattedMessage id="ui-agreements.back" />
-                      :
-                      <FormattedMessage id="stripes-components.cancel" />
-                    }
-                  </Button>
                 </ModalFooter>
-                )}
+              )}
               id="move-identifiers-modal"
               label={previewModal ?
                 <FormattedMessage id="ui-agreements.preview" />

@@ -20,29 +20,19 @@ const SourceTitlePreview = () => {
 
   const renderTitleIds = (title) => {
     const validIdentifiers = title?.identifiers?.filter(tiId => tiId?.status?.value === 'approved');
-
     const identifiers = [];
-    // Crawl through ids to be moved and look for any for this title
-    for (const [key, value] of Object.entries(values)) {
-      if (key === title?.id) {
-        // This is an object of shape
-        /*
-          {
-            issn: ['2092-6731', '8237-3432'],
-            ezb: ['34567', undefined]
-          }
-        */
-        /* istanbul ignore next */
-        identifiers.push(
-          ...validIdentifiers?.filter(vId => (
-            // Include all valid Identifiers where the namespace doesn't show up in the list of ids to move
-            !Object.keys(value)?.includes(vId.identifier?.ns?.value) ||
-            // Include all valid identifiers where the value isn't in the list to move
-            !value[vId.identifier?.ns?.value]?.includes(vId.identifier?.value)
-          ))
-        );
-      }
-    }
+
+    // Crawl through all valid identifiers and filter out any that appear in the form values to be moved
+    const identifiersToMove = values[title?.id] ?? {};
+
+    identifiers.push(
+      ...validIdentifiers?.filter(vId => (
+        // Include all valid Identifiers where the namespace doesn't show up in the list of ids to move
+        !Object.keys(identifiersToMove)?.includes(vId.identifier?.ns?.value) ||
+        // Include all valid identifiers where the value isn't in the list to move
+        !identifiersToMove[vId.identifier?.ns?.value]?.includes(vId.identifier?.value)
+      ))
+    );
 
     return (
       <Row>
