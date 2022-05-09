@@ -341,7 +341,7 @@ const initialState = {
       'records-editor.records':'1.1',
       'rtac':'1.4',
       'message-delivery':'1.0',
-      'source-manager-job-executions':'2.0',
+      'source-manager-job-executions':'3.0',
       'source-manager-records':'1.0',
       'source-manager-parsed-records':'2.0',
       'mapping-rules-provider':'1.0',
