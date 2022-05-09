@@ -110,8 +110,7 @@ const DestinationTitlePreview = () => {
               <Link to={urls.eresourceView(destinationTI?.id)}>
                 {destinationTI?.name}
               </Link>
-              {/* TODO not sure about this formatting */}
-              <> . {destinationTI?.publicationType?.label}</>
+              <> · {destinationTI?.publicationType?.label}</>
             </>
           </strong>
         </AppIcon>

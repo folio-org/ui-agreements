@@ -99,8 +99,7 @@ const SourceTitlePreview = () => {
               <Link to={urls.eresourceView(sourceTI?.id)}>
                 {sourceTI?.name}
               </Link>
-              {/* TODO not sure about this formatting */}
-              <> . {sourceTI?.publicationType?.label}</>
+              <> · {sourceTI?.publicationType?.label}</>
             </>
           </strong>
         </AppIcon>

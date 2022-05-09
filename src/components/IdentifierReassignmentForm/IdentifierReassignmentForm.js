@@ -42,19 +42,7 @@ const IdentifierReassignmentForm = ({
 
   const ky = useOkapiKy();
 
-  const { mutateAsync: postSourceIdentifierJob } = useMutation(
-    ['erm/jobs/identifierReassignment', 'ui-agreements', 'identifierReassignmentForm', 'postJob'],
-    (payload) => ky.post('erm/jobs/identifierReassignment', { json: payload }).json().then(res => {
-      callout.sendCallout({
-        type: 'success',
-        message: (
-          <FormattedMessage id="ui-agreements.job.created.success.org.olf.general.jobs.IdentifierReassignmentJob" values={{ sourceTitleName }} />)
-      });
-      setIdJobCreated(res?.name);
-    })
-  );
-
-  const { mutateAsync: postDestinationIdentifierJob } = useMutation(
+  const { mutateAsync: postIdentifierReassignmentJob } = useMutation(
     ['erm/jobs/identifierReassignment', 'ui-agreements', 'identifierReassignmentForm', 'postJob'],
     (payload) => ky.post('erm/jobs/identifierReassignment', { json: payload }).json().then(res => {
       callout.sendCallout({
@@ -62,6 +50,13 @@ const IdentifierReassignmentForm = ({
         message: (
           <FormattedMessage id="ui-agreements.job.created.success.org.olf.general.jobs.destination" values={{ destinationTitleName }} />)
       });
+
+      callout.sendCallout({
+        type: 'success',
+        message: (
+          <FormattedMessage id="ui-agreements.job.created.success.org.olf.general.jobs.IdentifierReassignmentJob" values={{ sourceTitleName }} />)
+      });
+
       setIdJobCreated(res?.name);
     })
   );
@@ -96,11 +91,7 @@ const IdentifierReassignmentForm = ({
       }
     }
 
-    postSourceIdentifierJob({
-      payload: identifierReassignmentArray
-    });
-
-    postDestinationIdentifierJob({
+    postIdentifierReassignmentJob({
       payload: identifierReassignmentArray
     });
   };
