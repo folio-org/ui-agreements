@@ -175,7 +175,7 @@ class EResourceViewRoute extends React.Component {
     }
   }
 
-    /* istanbul ignore next */
+  /* istanbul ignore next */
   getHelperApp = (eresource = {}) => {
     const { match, resources } = this.props;
     const helper = resources.query.helper;

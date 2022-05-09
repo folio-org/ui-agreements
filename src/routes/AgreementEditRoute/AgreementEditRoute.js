@@ -18,6 +18,14 @@ import { resultCount } from '../../constants';
 const { RECORDS_PER_REQUEST_MEDIUM, RECORDS_PER_REQUEST_LARGE } = resultCount;
 class AgreementEditRoute extends React.Component {
   static manifest = Object.freeze({
+    acquisitionMethod: {
+      type: 'okapi',
+      path: 'orders/acquisition-methods',
+      accumulate: true,
+      fetch: false,
+      perRequest: 1000,
+      records: 'acquisitionMethods',
+    },
     agreement: {
       type: 'okapi',
       path: 'erm/sas/:{id}',
@@ -79,6 +87,14 @@ class AgreementEditRoute extends React.Component {
       path: 'erm/refdata/RemoteLicenseLink/status',
       shouldRefresh: () => false,
     },
+    openAccessProperties: {
+      type: 'okapi',
+      path: 'erm/custprops',
+      params: {
+        filters: 'ctx==OpenAccess',
+      },
+      shouldRefresh: () => false,
+    },
     orderLines: {
       type: 'okapi',
       perRequest: RECORDS_PER_REQUEST_LARGE,
@@ -107,6 +123,9 @@ class AgreementEditRoute extends React.Component {
     supplementaryProperties: {
       type: 'okapi',
       path: 'erm/custprops',
+      params: {
+        filters: 'ctx isNull',
+      },
       shouldRefresh: () => false,
     },
     users: {
@@ -155,6 +174,10 @@ class AgreementEditRoute extends React.Component {
         GET: PropTypes.func.isRequired,
         reset: PropTypes.func.isRequired,
       }),
+      acquisitionMethod: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
       agreements: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
       }),
@@ -192,6 +215,10 @@ class AgreementEditRoute extends React.Component {
       orderLines: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
+      acquisitionMethod: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      openAccessProperties: PropTypes.object,
       orgRoleValues: PropTypes.object,
       query: PropTypes.shape({
         addFromBasket: PropTypes.string,
@@ -298,6 +325,13 @@ class AgreementEditRoute extends React.Component {
       initialValues.customProperties = initialValues.customProperties || {};
       const supplementaryProperties = (props?.resources?.supplementaryProperties?.records ?? []);
       supplementaryProperties
+        .filter(t => t.primary && initialValues.customProperties[t.name] === undefined)
+        // Change default to be an ignored customProperty.
+        // This means any changes without setting the value will be ignored
+        .forEach(t => { initialValues.customProperties[t.name] = [{ _delete: true }]; });
+      // the same for open access properties
+      const openAccessProperties = (props?.resources?.openAccessProperties?.records ?? []);
+      openAccessProperties
         .filter(t => t.primary && initialValues.customProperties[t.name] === undefined)
         // Change default to be an ignored customProperty.
         // This means any changes without setting the value will be ignored
@@ -458,7 +492,9 @@ class AgreementEditRoute extends React.Component {
           externalAgreementLine: resources?.externalAgreementLine?.records ?? [],
           isPerpetualValues: resources?.isPerpetualValues?.records ?? [],
           licenseLinkStatusValues: resources?.licenseLinkStatusValues?.records ?? [],
+          openAccessProperties: resources?.openAccessProperties?.records ?? [],
           orderLines: this.state.orderLines,
+          acquisitionMethod: resources?.acquisitionMethod?.records ?? [],
           orgRoleValues: resources?.orgRoleValues?.records ?? [],
           renewalPriorityValues: resources?.renewalPriorityValues?.records ?? [],
           supplementaryProperties: resources?.supplementaryProperties?.records ?? [],

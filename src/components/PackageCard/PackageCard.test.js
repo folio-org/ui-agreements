@@ -16,7 +16,17 @@ const pkg = {
   'name': 'JSTOR : Arts & Sciences III Collection : NK',
   'reference': 'JSTOR_:_Arts_&_Sciences_III_Collection_:_NK',
   'resourceCount': 228,
-  'class': 'org.olf.kb.Pkg'
+  'class': 'org.olf.kb.Pkg',
+  'availabilityScope': {
+    'id': 'ff8081817fd0b47d017fd0b5b6810001',
+    'value': 'global',
+    'label': 'Global'
+  },
+  'lifecycleStatus': {
+    'id': 'ff8081817fd0b47d017fd0b5b6d20006',
+    'value': 'current',
+    'label': 'Current'
+  },
 };
 
 const pkgWithObject = {
@@ -262,6 +272,14 @@ describe('PackageCard', () => {
     test('renders the expected reference', async () => {
       await KeyValue('Reference').has({ value: 'JSTOR_:_Arts_&_Sciences_III_Collection_:_NK' });
     });
+
+    test('renders the expected lifecycle status', async () => {
+      await KeyValue('Status').has({ value: 'Current' });
+    });
+
+    test('renders the expected availability scope', async () => {
+      await KeyValue('Availability').has({ value: 'Global' });
+    });
   });
 
   describe('with pkg._object resource', () => {
@@ -303,6 +321,14 @@ describe('PackageCard', () => {
 
     test('renders the expected reference', async () => {
       await KeyValue('Reference').has({ value: 'JSTOR_:_Arts_&_Sciences_V_Collection_:_NK' });
+    });
+
+    test('renders the expcected status', async () => {
+      await KeyValue('Status').has({ value: 'stripes-components.noValue.noValueSet-' });
+    });
+
+    test('renders the expcected availability', async () => {
+      await KeyValue('Availability').has({ value: 'stripes-components.noValue.noValueSet-' });
     });
   });
 });

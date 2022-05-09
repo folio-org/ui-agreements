@@ -11,7 +11,7 @@ jest.mock('../../POLineCard', () => () => <div>POLineCard</div>);
 let renderComponent;
 describe('POLineField', () => {
   describe('POLineField with linked PO Line ', () => {
-      beforeEach(() => {
+    beforeEach(() => {
       renderComponent = renderWithIntl(
         <Router>
           <POLineField
@@ -34,22 +34,22 @@ describe('POLineField', () => {
 
   describe('POLineField with error ', () => {
     beforeEach(() => {
-    renderComponent = renderWithIntl(
-      <Router>
-        <POLineField {...errorData} />,
-      </Router>,
-      translationsProperties
-    );
-  });
+      renderComponent = renderWithIntl(
+        <Router>
+          <POLineField {...errorData} />,
+        </Router>,
+        translationsProperties
+      );
+    });
 
-  test('renders error message', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('Please fill this in to continue')).toBeInTheDocument();
+    test('renders error message', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('Please fill this in to continue')).toBeInTheDocument();
+    });
   });
-});
 
   describe('POLineField with no PO Line', () => {
-      beforeEach(() => {
+    beforeEach(() => {
       renderComponent = renderWithIntl(
         <Router>
           <POLineField

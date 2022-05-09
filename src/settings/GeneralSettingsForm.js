@@ -20,12 +20,15 @@ class GeneralSettingsForm extends React.Component {
     handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
-    label: PropTypes.string,
+    label: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node,
+      PropTypes.element
+    ]),
   };
 
   getLastMenu = () => {
     const { pristine, submitting } = this.props;
-
     return (
       <Button
         buttonStyle="primary"
@@ -37,7 +40,7 @@ class GeneralSettingsForm extends React.Component {
         <FormattedMessage id="stripes-core.button.save" />
       </Button>
     );
-  }
+  };
 
   render() {
     const {
@@ -66,7 +69,7 @@ class GeneralSettingsForm extends React.Component {
           </Layout>
           <Layout className="margin-both-gutter">
             <List
-              itemFormatter={item => <FormattedMessage id={`ui-agreements.settings.hideEResources.result.${item}`} tagName="li" />}
+              itemFormatter={item => <FormattedMessage key={`hideEResources.result.${item}`} id={`ui-agreements.settings.hideEResources.result.${item}`} tagName="li" />}
               items={[1, 2, 3]}
               listStyle="bullets"
             />

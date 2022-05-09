@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "8.1.0",
+  "version": "8.2.0",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -13,7 +13,7 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "yarn run test:jest && yarn run test:bigtest",
+    "test": "yarn run test:jest",
     "test:jest": "jest --ci --coverage",
     "test:bigtest": "stripes test karma --bundle --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage",
     "test-all": "yarn run test-bigtest-once; yarn run test-int",
@@ -30,22 +30,22 @@
     "@bigtest/interactor": "^0.9.3",
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
-    "@folio/eslint-config-stripes": "^6.0.0",
-    "@folio/stripes": "^7.0.0",
-    "@folio/stripes-cli": "^2.3.0",
-    "@folio/stripes-testing": "^4.0.0",
+    "@folio/eslint-config-stripes": "^6.1.0",
+    "@folio/stripes": "^7.1.0",
+    "@folio/stripes-cli": "^2.5.0",
+    "@folio/stripes-testing": "^4.2.0",
     "@formatjs/cli": "^4.2.31",
     "@testing-library/dom": "^7.26.6",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.2",
     "@testing-library/user-event": "^12.2.2",
-    "babel-eslint": "^10.0.0",
+    "@babel/eslint-parser": "^7.15.0",
     "babel-jest": "^26.6.3",
     "babel-plugin-module-resolver": "^4.0.0",
     "chai": "^4.2.0",
     "chai-spies": "^1.0.0",
     "core-js": "^3.6.1",
-    "eslint": "^6.2.1",
+    "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.1.3",
     "eslint-plugin-jest-dom": "^3.2.4",
@@ -56,21 +56,25 @@
     "jest": "^26.6.3",
     "jest-css-modules": "^2.1.0",
     "jest-junit": "^12.0.0",
+    "jest-webpack": "^0.5.1",
     "miragejs": "^0.1.40",
     "mocha": "^6.2.2",
     "moment": "^2.22.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-intl": "^5.8.1",
+    "react-query": "^3.6.0",
     "react-router-dom": "^5.2.0",
     "regenerator-runtime": "^0.13.3",
     "sinon": "^7.5.0"
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^3.1.0",
-    "@folio/stripes-erm-components": "^6.0.0",
-    "@k-int/stripes-kint-components": "^1.6.0",
+    "@folio/stripes-acq-components": "^3.1.0",
+    "@folio/stripes-erm-components": "^6.1.0",
+    "@k-int/stripes-kint-components": "^2.3.0",
     "@rehooks/local-storage": "2.4.0",
+    "@testing-library/react-hooks": "^7.0.2",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
     "final-form-arrays": "^3.0.1",
@@ -83,7 +87,7 @@
     "react-router-prop-types": "^1.0.4"
   },
   "peerDependencies": {
-    "@folio/stripes": "^7.0.0",
+    "@folio/stripes": "^7.1.0",
     "moment": "^2.22.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -261,6 +265,26 @@
         "subPermissions": [
           "settings.agreements.enabled",
           "erm.custprops.manage"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.appSettings.view",
+        "displayName": "Settings (Agreements): Can view app settings",
+        "description": "Grants permission to view the Agreements application settings",
+        "visible": true,
+        "subPermissions": [
+          "settings.agreements.enabled",
+          "erm.settings.read"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.appSettings.manage",
+        "displayName": "Settings (Agreements): Can view and edit app settings",
+        "description": "Grants permission to view and edit the Agreements application settings",
+        "visible": true,
+        "subPermissions": [
+          "settings.agreements.enabled",
+          "erm.settings.manage"
         ]
       }
     ],

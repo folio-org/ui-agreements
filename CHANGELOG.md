@@ -1,9 +1,105 @@
 # Change history for ui-agreements
 
-## 8.1.0 In Progress
-* Upgrade `@folio/react-intl-safe-html` for `@folio/stripes` `v7` compatibility. ERM-1893.
-* Remove `OrgRoleSettings` from `src/settings`. ERM-1490
-* Add hide accordions option to settings. ERM-1762
+## 8.2.0 In progress
+* ERM-2096 Replace babel-eslint with @babel/eslint-parser
+
+## 8.1.0 2022-03-03
+* ERM-1999. "Load More" button not working - Agreement Lines
+* ERM-1990. Add hyperlink to ERM Comparison comparison points (Registry entry)
+* ERM-1976. Agreements > Agreement line: Wrong date format when in view screen
+* ERM-1974. Agreements: Organization interface credentials malfunction
+* ERM-1973. Agreements: Organization interface data hidden
+* ERM-1953. Re-implement display of acquistionsMethods following order-lines 3.0 interface
+* ERM-1948. Error on accessing /erm/eresources
+* ERM-1940. Add AppSettings panel to Agreements
+* ERM-1937. Support order-lines 3.0 interface
+* ERM-1931. Sort agreement lines by name then reference then UUID in the UI
+* ERM-1929. Support configuration of document storage in agreement settings
+* ERM-1922. Display "-" in Count column for Agreement lines that do not link to a resource
+* ERM-1921. Display selected status of single title resources from eHoldings in Agreement Line
+* ERM-1893. Upgrade `@folio/react-intl-safe-html` for `@folio/stripes` `v7` compatibility.
+* ERM-1887. Select an agreement results in Error
+* ERM-1762. Add hide accordions option to settings.
+* ERM-1757. Agreements: Apply keyboard shortcuts modal guidelines
+* ERM-1744. Add Organisations to Agreements simple search widget definition
+* ERM-1490. Remove `OrgRoleSettings` from `src/settings`.
+* FAT-81. ui-agreements: UI tests replacement with RTL/Jest
+  * ERM-1661. components / views
+    * ERM-1681. UrlCustomizerForm
+    * ERM-1680. UrlCustomizer
+    * ERM-1678. TitleForm
+    * ERM-1677. Title
+    * ERM-1676. Platforms
+    * ERM-1673. Platform
+    * ERM-1672. Package
+    * ERM-1671. PCIForm
+    * ERM-1670. PCI
+    * ERM-1669. EResources
+    * ERM-1668. EResource
+    * ERM-1667. Basket
+    * ERM-1666. Agreements
+    * ERM-1665. AgreementLineForm
+    * ERM-1664. AgreementLine
+    * ERM-1663. AgreementForm
+    * ERM-1662. Agreement
+  * ERM-1495. SupplementaryPropertiesConfigForm
+  * ERM-1494. SuppressFromDiscoveryFields
+  * ERM-1493. SupplementaryPropertiesConfigRoute
+  * ERM-1492. PickListValueSettings
+  * ERM-1491. PickListSettings
+  * ERM-1490. OrgRoleSettings
+  * ERM-1489. GeneralSettingsForm
+  * ERM-1488. GeneralSettings
+  * ERM-1487. withFileHandlers
+  * ERM-1486. UrlCustomizerViewRoute
+  * ERM-1485. UrlCustomizerEditRoute
+  * ERM-1484. UrlCustomizerCreateRoute
+  * ERM-1483. PlatformsRoute
+  * ERM-1482. PlatformViewRoute
+  * ERM-1481. PlatformEditRoute
+  * ERM-1480. NoteViewRoute
+  * ERM-1479. NoteEditRoute
+  * ERM-1478. NoteCreateRoute
+  * ERM-1477. EResourcesRoute
+  * ERM-1476. EResourceViewRoute
+  * ERM-1475. EResourceEditRoute
+  * ERM-1474. BasketRoute
+  * ERM-1472. AgreementViewRoute
+  * ERM-1471. AgreementLineViewRoute
+  * ERM-1470. AgreementLineEditRoute
+  * ERM-1469. AgreementLineCreateRoute
+  * ERM-1468. AgreementEditRoute
+  * ERM-1467. AgreementCreateRoute
+  * ERM-1292 UsageDataProvidersFieldArray
+    * ERM-1411. UsageDataProvidersFieldArray
+    * ERM-1410. UsageDataProviderField
+  * ERM-1291. TitleCardExternal
+  * ERM-1290. TitleCard
+    * ERM-1409. TitleCardInfo
+    * ERM-1408. TitleCard
+    * ERM-1407. SerialResourceInfo
+    * ERM-1406. MonographResourceInfo
+  * ERM-1289. RelatedTitleInfo
+  * ERM-1287. PlatformSections
+    * ERM-1403. PlatformUrlCustomization
+    * ERM-1402. PlatformProxySettings
+    * ERM-1401. PlatformInfo
+  * ERM-1286. PackageCardExternal
+  * ERM-1285. PackageCard
+  * ERM-1284. POLinesFieldArray
+    * ERM-1400. POLinesFieldArray
+    * ERM-1399. POLineField
+  * ERM-1282. OpenBasketButton
+  * ERM-1269. EResourceFilters
+  * ERM-1260. AgreementsPeriodsFieldArray
+    * ERM-1357. AgreementPeriodsFieldArray
+    * ERM-1356. AgreementPeriodField
+  * ERM-1259. AgreementLinesFieldArray
+    * ERM-1355. AgreementLinesFieldArray
+    * ERM-1354. AgreementLineField
+  * ERM-1258. AgreementLineSections
+    * ERM-1348. FormEresource
+  * ERM-1257. AgreementFilters
 
 ## 8.0.1 2021-11-08
 * Handle 414 error exception when requesting an agreement line with large number of POLines. Refs ERM-1915

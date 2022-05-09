@@ -1,178 +1,178 @@
 const serialTitleWithRelatedTitles = {
-    'id': 'a0ca10a1-68b9-4aab-981e-e78cb33b0644',
+  'id': 'a0ca10a1-68b9-4aab-981e-e78cb33b0644',
+  'dateCreated': '2021-09-14T13:35:21Z',
+  'tags': [],
+  'lastUpdated': '2021-09-14T13:35:21Z',
+  'coverage': [{
+    'id': '767efc2b-e120-4c77-9a09-99aff8c8aaba',
+    'startDate': '1977-01-01',
+    'startVolume': '1',
+    'startIssue': '1',
+    'summary': 'v1/i1/1977-01-01 - v*/i*/*'
+  }],
+  'pti': {
+    'id': 'e3344a28-b26f-4fde-9b83-6db31bab74e6',
     'dateCreated': '2021-09-14T13:35:21Z',
     'tags': [],
     'lastUpdated': '2021-09-14T13:35:21Z',
-    'coverage': [{
-     'id': '767efc2b-e120-4c77-9a09-99aff8c8aaba',
-     'startDate': '1977-01-01',
-     'startVolume': '1',
-     'startIssue': '1',
-     'summary': 'v1/i1/1977-01-01 - v*/i*/*'
-    }],
-    'pti': {
-     'id': 'e3344a28-b26f-4fde-9b83-6db31bab74e6',
-     'dateCreated': '2021-09-14T13:35:21Z',
-     'tags': [],
-     'lastUpdated': '2021-09-14T13:35:21Z',
-     'platform': {
+    'platform': {
       'id': '1e05b8e7-3d24-40a5-959b-ba7a4371334a',
       'dateCreated': '2021-09-14T13:24:45Z',
       'lastUpdated': '2021-09-14T13:24:45Z',
       'name': 'JSTOR',
       'locators': [{
-       'id': '067427d6-cbaa-4f7e-87e3-60e500ebb725',
-       'domainName': 'www.jstor.org'
+        'id': '067427d6-cbaa-4f7e-87e3-60e500ebb725',
+        'domainName': 'www.jstor.org'
       }]
-     },
-     'templatedUrls': [{
+    },
+    'templatedUrls': [{
       'id': '97c538e8-3e98-4b9b-9314-2f64108af8be',
       'url': 'https://www.jstor.org/action/showPublication?journalCode=19thcenturymusic',
       'name': 'defaultUrl',
       'resource': {
-       'id': 'e3344a28-b26f-4fde-9b83-6db31bab74e6'
+        'id': 'e3344a28-b26f-4fde-9b83-6db31bab74e6'
       }
-     }],
-     'coverage': [{
+    }],
+    'coverage': [{
       'id': '0ae119e9-5911-48fc-888f-a0b8b412b8d4',
       'startDate': '1977-01-01',
       'summary': 'v*/i*/1977-01-01 - v*/i*/*'
-     }],
-     'titleInstance': {
+    }],
+    'titleInstance': {
       'id': 'e7a033b3-4c92-4f85-9a9d-ff714e8f938c',
       'subType': {
-       'id': '02d318287be424d6017be432dd8a000c',
-       'value': 'electronic',
-       'label': 'Electronic'
+        'id': '02d318287be424d6017be432dd8a000c',
+        'value': 'electronic',
+        'label': 'Electronic'
       },
       'dateCreated': '2021-09-14T13:35:21Z',
       'tags': [],
       'lastUpdated': '2021-09-14T13:35:21Z',
       'publicationType': {
-       'id': '02d318287be424d6017be432e5eb0043',
-       'value': 'journal',
-       'label': 'Journal'
+        'id': '02d318287be424d6017be432e5eb0043',
+        'value': 'journal',
+        'label': 'Journal'
       },
       'identifiers': [{
-       'title': {
-        'id': 'e7a033b3-4c92-4f85-9a9d-ff714e8f938c'
-       },
-       'status': {
-        'id': '02d318287be424d6017be432e64b0045',
-        'value': 'approved',
-        'label': 'approved'
-       },
-       'identifier': {
-        'value': '2052442-0',
-        'ns': {
-         'value': 'zdb'
+        'title': {
+          'id': 'e7a033b3-4c92-4f85-9a9d-ff714e8f938c'
+        },
+        'status': {
+          'id': '02d318287be424d6017be432e64b0045',
+          'value': 'approved',
+          'label': 'approved'
+        },
+        'identifier': {
+          'value': '2052442-0',
+          'ns': {
+            'value': 'zdb'
+          }
         }
-       }
       }, {
-       'title': {
-        'id': 'e7a033b3-4c92-4f85-9a9d-ff714e8f938c'
-       },
-       'status': {
-        'id': '02d318287be424d6017be432e64b0045',
-        'value': 'approved',
-        'label': 'approved'
-       },
-       'identifier': {
-        'value': '38504',
-        'ns': {
-         'value': 'ezb'
+        'title': {
+          'id': 'e7a033b3-4c92-4f85-9a9d-ff714e8f938c'
+        },
+        'status': {
+          'id': '02d318287be424d6017be432e64b0045',
+          'value': 'approved',
+          'label': 'approved'
+        },
+        'identifier': {
+          'value': '38504',
+          'ns': {
+            'value': 'ezb'
+          }
         }
-       }
       }, {
-       'title': {
-        'id': 'e7a033b3-4c92-4f85-9a9d-ff714e8f938c'
-       },
-       'status': {
-        'id': '02d318287be424d6017be432e64b0045',
-        'value': 'approved',
-        'label': 'approved'
-       },
-       'identifier': {
-        'value': '1533-8606',
-        'ns': {
-         'value': 'issn'
+        'title': {
+          'id': 'e7a033b3-4c92-4f85-9a9d-ff714e8f938c'
+        },
+        'status': {
+          'id': '02d318287be424d6017be432e64b0045',
+          'value': 'approved',
+          'label': 'approved'
+        },
+        'identifier': {
+          'value': '1533-8606',
+          'ns': {
+            'value': 'issn'
+          }
         }
-       }
       }],
       'coverage': [{
-       'id': '6bcad692-bc61-4fe2-ae69-5dcb9bc011d9',
-       'startDate': '1977-01-01',
-       'summary': 'v*/i*/1977-01-01 - v*/i*/*'
+        'id': '6bcad692-bc61-4fe2-ae69-5dcb9bc011d9',
+        'startDate': '1977-01-01',
+        'summary': 'v*/i*/1977-01-01 - v*/i*/*'
       }],
       'name': '19th century music',
       'type': {
-       'id': '02d318287be424d6017be432dd9d000f',
-       'value': 'serial',
-       'label': 'Serial'
+        'id': '02d318287be424d6017be432dd9d000f',
+        'value': 'serial',
+        'label': 'Serial'
       },
       'suppressFromDiscovery': false,
       'work': {
-       'id': '7931fe0a-f0bd-48fc-b1b4-18de59373d45'
+        'id': '7931fe0a-f0bd-48fc-b1b4-18de59373d45'
       },
       'class': 'org.olf.kb.TitleInstance',
       'longName': '19th century music',
       'relatedTitles': [{
-       'id': 'e3710a12-0f8e-4e65-adeb-371ba03f1bd4',
-       'subType': {
-        'id': '02d318287be424d6017be432dd80000b',
-        'value': 'print',
-        'label': 'Print'
-       },
-       'publicationType': {
-        'id': '02d318287be424d6017be432e5eb0043',
-        'value': 'journal',
-        'label': 'Journal'
-       },
-       'identifiers': [{
-        'title': {
-         'id': 'e3710a12-0f8e-4e65-adeb-371ba03f1bd4'
+        'id': 'e3710a12-0f8e-4e65-adeb-371ba03f1bd4',
+        'subType': {
+          'id': '02d318287be424d6017be432dd80000b',
+          'value': 'print',
+          'label': 'Print'
         },
-        'status': {
-         'id': '02d318287be424d6017be432e64b0045',
-         'value': 'approved',
-         'label': 'approved'
+        'publicationType': {
+          'id': '02d318287be424d6017be432e5eb0043',
+          'value': 'journal',
+          'label': 'Journal'
         },
-        'identifier': {
-         'value': '0148-2076',
-         'ns': {
-          'value': 'issn'
-         }
-        }
-       }],
-       'name': '19th century music',
-       'type': {
-        'id': '02d318287be424d6017be432dd9d000f',
-        'value': 'serial',
-        'label': 'Serial'
-       },
-       'longName': '19th century music'
+        'identifiers': [{
+          'title': {
+            'id': 'e3710a12-0f8e-4e65-adeb-371ba03f1bd4'
+          },
+          'status': {
+            'id': '02d318287be424d6017be432e64b0045',
+            'value': 'approved',
+            'label': 'approved'
+          },
+          'identifier': {
+            'value': '0148-2076',
+            'ns': {
+              'value': 'issn'
+            }
+          }
+        }],
+        'name': '19th century music',
+        'type': {
+          'id': '02d318287be424d6017be432dd9d000f',
+          'value': 'serial',
+          'label': 'Serial'
+        },
+        'longName': '19th century music'
       }]
-     },
-     'url': 'http://www.jstor.org/action/showPublication?journalCode=19thcenturymusic',
-     'name': "'19th century music' on Platform 'JSTOR'",
-     'suppressFromDiscovery': false,
-     'class': 'org.olf.kb.PlatformTitleInstance',
-     'longName': "'19th century music' on Platform 'JSTOR'"
     },
-    'pkg': {
-     'id': 'd01a73b8-2978-40dc-88bb-820e96794b4a',
-     'dateCreated': '2021-09-14T13:34:59Z',
-     'lastUpdated': '2021-09-14T13:34:59Z',
-     'vendor': {
+    'url': 'http://www.jstor.org/action/showPublication?journalCode=19thcenturymusic',
+    'name': "'19th century music' on Platform 'JSTOR'",
+    'suppressFromDiscovery': false,
+    'class': 'org.olf.kb.PlatformTitleInstance',
+    'longName': "'19th century music' on Platform 'JSTOR'"
+  },
+  'pkg': {
+    'id': 'd01a73b8-2978-40dc-88bb-820e96794b4a',
+    'dateCreated': '2021-09-14T13:34:59Z',
+    'lastUpdated': '2021-09-14T13:34:59Z',
+    'vendor': {
       'id': '5bb9ab56-2833-45e5-bca0-25445b23758f',
       'name': 'JSTOR',
       'orgsUuid_object': {
-       'error': 400,
-       'message': 'Bad Request'
+        'error': 400,
+        'message': 'Bad Request'
       }
-     },
-     'source': 'GOKb',
-     'remoteKb': {
+    },
+    'source': 'GOKb',
+    'remoteKb': {
       'id': '7fba4705-37ab-4712-944b-d69c87714fb5',
       'cursor': '2021-08-18T12:21:55Z',
       'active': true,
@@ -186,28 +186,28 @@ const serialTitleWithRelatedTitles = {
       'uri': 'https://gokbt.gbv.de/gokb/oai/index',
       'supportsHarvesting': true,
       'rectype': 1
-     },
-     'name': 'JSTOR : Arts & Sciences III Collection : NK',
-     'suppressFromDiscovery': false,
-     'reference': 'JSTOR_:_Arts_&_Sciences_III_Collection_:_NK',
-     'resourceCount': 228,
-     'class': 'org.olf.kb.Pkg'
     },
-    'embargo': {
-     'movingWallEnd': {
+    'name': 'JSTOR : Arts & Sciences III Collection : NK',
+    'suppressFromDiscovery': false,
+    'reference': 'JSTOR_:_Arts_&_Sciences_III_Collection_:_NK',
+    'resourceCount': 228,
+    'class': 'org.olf.kb.Pkg'
+  },
+  'embargo': {
+    'movingWallEnd': {
       'length': 4,
       'unit': 'years'
-     }
-    },
-    'addedTimestamp': 1631626499053,
-    'name': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
-    'lastSeenTimestamp': 1631626499053,
-    'suppressFromDiscovery': false,
-    'longName': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
-    'class': 'org.olf.kb.PackageContentItem'
-   };
+    }
+  },
+  'addedTimestamp': 1631626499053,
+  'name': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
+  'lastSeenTimestamp': 1631626499053,
+  'suppressFromDiscovery': false,
+  'longName': "'19th century music' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences III Collection : NK",
+  'class': 'org.olf.kb.PackageContentItem'
+};
 
-   const monographTitle = {
+const monographTitle = {
   'id': 'cfe6cb34-955e-4fec-a0f6-5b1e240cc115',
   'dateCreated': '2021-09-14T12:13:46Z',
   'tags': [],
@@ -351,4 +351,4 @@ const serialTitleWithRelatedTitles = {
   'class': 'org.olf.kb.PackageContentItem'
 };
 
-   export { monographTitle, serialTitleWithRelatedTitles };
+export { monographTitle, serialTitleWithRelatedTitles };

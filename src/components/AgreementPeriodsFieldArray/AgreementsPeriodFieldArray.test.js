@@ -12,30 +12,30 @@ import translationsProperties from '../../../test/helpers';
 const onSubmit = jest.fn();
 
 const singlePeriod = [
-    {
-        _delete: false,
-        endDate: '2022-01-26',
-        startDate: '2021-01-20',
-        cancellationDeadline: '2022-01-01',
-        note: ''
-    }
+  {
+    _delete: false,
+    endDate: '2022-01-26',
+    startDate: '2021-01-20',
+    cancellationDeadline: '2022-01-01',
+    note: ''
+  }
 ];
 
 const multiplePeriods = [
-    {
-        _delete: false,
-        endDate: '2022-01-25',
-        startDate: '2021-01-26',
-        cancellationDeadline: '2022-01-01',
-        note: 'multiple period note 1'
-    },
-    {
-        _delete: false,
-        endDate: '2023-01-25',
-        startDate: '2022-01-26',
-        cancellationDeadline: '2023-01-01',
-        note: 'multiple period note 2'
-    }
+  {
+    _delete: false,
+    endDate: '2022-01-25',
+    startDate: '2021-01-26',
+    cancellationDeadline: '2022-01-01',
+    note: 'multiple period note 1'
+  },
+  {
+    _delete: false,
+    endDate: '2023-01-25',
+    startDate: '2022-01-26',
+    cancellationDeadline: '2023-01-01',
+    note: 'multiple period note 2'
+  }
 ];
 
 describe('AgreementPeriodsFieldArray', () => {
@@ -166,18 +166,18 @@ describe('AgreementPeriodsFieldArray', () => {
     const expectedPayload = {
       agreementPeriodsFieldArrayTest: [
         {
-            _delete: false,
-            endDate: '2022-01-25',
-            startDate: '2021-01-26',
-            cancellationDeadline: '2022-01-01',
-            note: 'multiple period note 1'
+          _delete: false,
+          endDate: '2022-01-25',
+          startDate: '2021-01-26',
+          cancellationDeadline: '2022-01-01',
+          note: 'multiple period note 1'
         },
         {
-            _delete: false,
-            endDate: '2023-01-25',
-            startDate: '2022-01-26',
-            cancellationDeadline: '2023-01-01',
-            note: 'multiple period note 2'
+          _delete: false,
+          endDate: '2023-01-25',
+          startDate: '2022-01-26',
+          cancellationDeadline: '2023-01-01',
+          note: 'multiple period note 2'
         }
       ]
     };

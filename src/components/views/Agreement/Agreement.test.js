@@ -24,7 +24,6 @@ jest.mock('../../AgreementSections/Lines', () => () => <div>Lines</div>);
 jest.mock('../../AgreementSections/Organizations', () => () => <div>Organizations</div>);
 jest.mock('../../AgreementSections/RelatedAgreements', () => () => <div>RelatedAgreements</div>);
 jest.mock('../../AgreementSections/SupplementaryDocs', () => () => <div>SupplementaryDocs</div>);
-jest.mock('../../AgreementSections/SupplementaryProperties', () => () => <div>SupplementaryProperties</div>);
 jest.mock('../../AgreementSections/Terms', () => () => <div>Terms</div>);
 jest.mock('../../AgreementSections/UsageData', () => () => <div>UsageData</div>);
 
@@ -133,12 +132,6 @@ describe('Agreement', () => {
     it('renders the SupplementaryDocs component', () => {
       const { getByText } = renderComponent;
       expect(getByText('SupplementaryDocs')).toBeInTheDocument();
-    });
-
-
-    it('renders the SupplementaryProperties component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('SupplementaryProperties')).toBeInTheDocument();
     });
 
 

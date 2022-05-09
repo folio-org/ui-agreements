@@ -18,6 +18,7 @@ import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
 
 const { RECORDS_PER_REQUEST_MEDIUM, RECORDS_PER_REQUEST_LARGE } = resultCount;
 
+const credentialsArray = [];
 class AgreementViewRoute extends React.Component {
   static manifest = Object.freeze({
     agreement: {
@@ -42,7 +43,6 @@ class AgreementViewRoute extends React.Component {
       }),
       records: 'results',
       accumulate: 'true',
-      fetch: false,
       resultOffset: (_q, _p, _r, _l, props) => {
         const { match, resources } = props;
         const resultOffset = resources?.agreementLinesOffset;
@@ -81,7 +81,7 @@ class AgreementViewRoute extends React.Component {
           ...new Set(interfaces.map(i => `id==${i}`))
         ].join(' or ');
 
-        return query ? { query } : null;
+        return query ? { query } : {};
       },
       fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '2.0'),
       permissionsRequired: 'organizations-storage.interfaces.collection.get',
@@ -101,15 +101,6 @@ class AgreementViewRoute extends React.Component {
       path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
       records: 'configs',
     },
-    supplementaryProperties: {
-      type: 'okapi',
-      path: 'erm/custprops',
-      shouldRefresh: preventResourceRefresh({ 'agreement': ['DELETE'] }),
-    },
-    terms: {
-      type: 'okapi',
-      path: 'licenses/custprops',
-    },
     users: {
       type: 'okapi',
       path: 'users',
@@ -120,9 +111,12 @@ class AgreementViewRoute extends React.Component {
           .map(contact => `id==${contact.user}`)
           .join(' or ');
 
-        return query ? { query } : null;
+        return query ? { query } : '';
       },
-      fetch: props => !!props.stripes.hasInterface('users', '15.0'),
+      fetch: props => (
+        !!props.stripes.hasInterface('users', '15.0') &&
+        props?.resources?.agreement?.records?.[0]?.contacts?.length > 0
+      ),
       permissionsRequired: 'users.collection.get',
       records: 'users',
     },
@@ -226,7 +220,16 @@ class AgreementViewRoute extends React.Component {
   }
 
   async componentDidUpdate(prevProps) {
+    const prevLines = prevProps.resources?.agreementLines?.records ?? [];
+    const newLines = this.props.resources?.agreementLines?.records ?? [];
     const { mutator } = this.props;
+    if (
+      prevLines?.length !== newLines?.length ||
+      this.countPoLines(prevLines) !== this.countPoLines(newLines)
+    ) {
+      await this.fetchOrderLines();
+    }
+
     if (prevProps?.resources?.agreement?.records?.[0]?.id !== this.props?.resources?.agreement?.records?.[0]?.id) {
       mutator.agreementEresourcesOffset.replace(0);
       mutator.agreementLinesOffset.replace(0);
@@ -234,9 +237,12 @@ class AgreementViewRoute extends React.Component {
     }
   }
 
+  countPoLines(lines) {
+    return lines.reduce((agg, curr) => agg + curr?.poLines?.length || 0, 0);
+  }
+
   async fetchOrderLines() {
-    this.props.mutator.agreementLines.reset();
-    const lines = await this.props.mutator.agreementLines.GET();
+    const lines = this.props.resources?.agreementLines?.records ?? [];
     const poLineIdsArray = (lines ?? [])
       .filter(line => line.poLines && line.poLines.length)
       .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat();
@@ -292,12 +298,19 @@ class AgreementViewRoute extends React.Component {
 
     const interfacesCredentials = uniqBy(get(resources, 'interfacesCredentials.records', []), 'id');
 
+    if (interfacesCredentials[0]) {
+      const index = credentialsArray.findIndex(object => object.id === interfacesCredentials[0].id);
+      if (index === -1) {
+        credentialsArray.push(interfacesCredentials[0]);
+      }
+    }
+
     const orgs = agreement.orgs.map(o => ({
       ...o,
       interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
         .map(id => ({
           ...this.getRecord(id, 'interfaces') || {},
-          credentials: interfacesCredentials.find(cred => cred.interfaceId === id)
+          credentials: credentialsArray.find(cred => cred.interfaceId === id)
         })),
     }));
 
@@ -538,9 +551,8 @@ class AgreementViewRoute extends React.Component {
         data={{
           agreement: this.getCompositeAgreement(),
           eresourcesFilterPath: this.props.resources.eresourcesFilterPath,
+          openAccessProperties: get(resources, 'openAccessProperties.records', []),
           searchString: this.props.location.search,
-          supplementaryProperties: get(resources, 'supplementaryProperties.records', []),
-          terms: get(resources, 'terms.records', []),
         }}
         handlers={{
           ...handlers,

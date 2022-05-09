@@ -37,7 +37,7 @@ describe('AgreementLineInfo', () => {
 
       if (externalResource?.activeFrom) {
         it('should render parent agreements activeFrom date', () => {
-          expect(interactor.activeFrom).to.equal(externalResource.activeFrom);
+          expect(interactor.activeFrom).to.equal('1/1/2020');
         });
       } else {
         it('should render \'-\'', () => {
@@ -47,7 +47,7 @@ describe('AgreementLineInfo', () => {
 
       if (externalResource?.activeTo) {
         it('should render parent agreements activeTo date', () => {
-          expect(interactor.activeTo).to.equal(externalResource.activeTo);
+          expect(interactor.activeTo).to.equal('12/31/2020');
         });
       } else {
         it('should render \'-\'', () => {
