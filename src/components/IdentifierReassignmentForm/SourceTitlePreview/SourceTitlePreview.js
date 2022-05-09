@@ -33,11 +33,14 @@ const SourceTitlePreview = () => {
           }
         */
         /* istanbul ignore next */
-        for (const [nsKey, idVals] of Object.entries(value)) {
-          identifiers.push(
-            ...validIdentifiers?.filter(vId => vId.identifier?.ns?.value === nsKey && !idVals.includes(vId.identifier.value))
-          );
-        }
+        identifiers.push(
+          ...validIdentifiers?.filter(vId => (
+            // Include all valid Identifiers where the namespace doesn't show up in the list of ids to move
+            !Object.keys(value)?.includes(vId.identifier?.ns?.value) ||
+            // Include all valid identifiers where the value isn't in the list to move
+            !value[vId.identifier?.ns?.value]?.includes(vId.identifier?.value)
+          ))
+        );
       }
     }
 
