@@ -3,8 +3,8 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { StaticRouter as Router } from 'react-router-dom';
 import { Button } from '@folio/stripes-testing';
-import translationsProperties from '../../../../../test/helpers';
-import SourceTitleIdentifierField from './SourceTitleIdentifierField';
+import translationsProperties from '../../../../test/helpers';
+import DestinationTitleIdentifierField from './DestinationTitleIdentifierField';
 
 jest.mock('react-final-form', () => ({
   ...jest.requireActual('react-final-form'),
@@ -16,13 +16,13 @@ jest.mock('react-final-form', () => ({
 
 const onSubmitMock = jest.fn();
 
-describe('SourceTitleIdentifierField', () => {
+describe('DestinationTitleIdentifierField', () => {
   let renderComponent;
   beforeEach(() => {
     renderComponent = renderWithIntl(
       <Router>
         <TestForm onSubmit={onSubmitMock}>
-          <SourceTitleIdentifierField
+          <DestinationTitleIdentifierField
             data={{}}
           />
         </TestForm>,
@@ -31,9 +31,9 @@ describe('SourceTitleIdentifierField', () => {
     );
   });
 
-  it('renders the sourceTitleIdentifierCard card', () => {
+  it('renders the DestinationTitleIdentifierField card', () => {
     const { getByTestId } = renderComponent;
-    expect(getByTestId('sourceTitleCard')).toBeInTheDocument();
+    expect(getByTestId('destinationTitleCard')).toBeInTheDocument();
   });
 
   test('renders the submit button', async () => {

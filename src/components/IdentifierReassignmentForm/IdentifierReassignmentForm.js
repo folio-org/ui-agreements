@@ -15,7 +15,7 @@ import {
   MessageBanner,
 } from '@folio/stripes/components';
 
-import css from '../../styles.css';
+import css from '../styles.css';
 import SourceTitleIdentifierField from './SourceTitleIdentifierField';
 import DestinationTitleIdentifierField from './DestinationTitleIdentifierField';
 

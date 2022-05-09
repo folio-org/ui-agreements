@@ -2,9 +2,9 @@ import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { StaticRouter as Router } from 'react-router-dom';
-import { KeyValue, Button } from '@folio/stripes-testing';
-import translationsProperties from '../../../../../test/helpers';
-import SourceTitlePreview from './SourceTitlePreview';
+import { Button } from '@folio/stripes-testing';
+import translationsProperties from '../../../../test/helpers';
+import SourceTitleIdentifierField from './SourceTitleIdentifierField';
 
 jest.mock('react-final-form', () => ({
   ...jest.requireActual('react-final-form'),
@@ -15,17 +15,15 @@ jest.mock('react-final-form', () => ({
 }));
 
 const onSubmitMock = jest.fn();
-const previewModal = false;
 
-describe('SourceTitlePreview', () => {
+describe('SourceTitleIdentifierField', () => {
   let renderComponent;
   beforeEach(() => {
     renderComponent = renderWithIntl(
       <Router>
         <TestForm onSubmit={onSubmitMock}>
-          <SourceTitlePreview
+          <SourceTitleIdentifierField
             data={{}}
-            previewModal={previewModal}
           />
         </TestForm>,
       </Router>,
@@ -33,17 +31,9 @@ describe('SourceTitlePreview', () => {
     );
   });
 
-  it('renders the SourceTitlePreview card', () => {
+  it('renders the sourceTitleIdentifierCard card', () => {
     const { getByTestId } = renderComponent;
-    expect(getByTestId('source-title-identifier-preview')).toBeInTheDocument();
-  });
-
-  it('renders expected values', async () => {
-    await KeyValue('Material type').exists();
-  });
-
-  test('renders the expcected source', async () => {
-    await KeyValue('Material type').has({ value: 'stripes-components.noValue.noValueSet-' });
+    expect(getByTestId('sourceTitleCard')).toBeInTheDocument();
   });
 
   test('renders the submit button', async () => {

@@ -11,8 +11,8 @@ import {
 } from '@folio/stripes/components';
 
 import { AppIcon } from '@folio/stripes/core';
-import css from '../../../styles.css';
-import { urls } from '../../../utilities';
+import css from '../../styles.css';
+import { urls } from '../../utilities';
 
 const SourceTitlePreview = () => {
   const { values } = useFormState();

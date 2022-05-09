@@ -31,7 +31,7 @@ import {
 } from '@folio/stripes-erm-components';
 import EResourceFilters from '../../EResourceFilters';
 import IfEResourcesEnabled from '../../IfEResourcesEnabled';
-import IdentifierReassignmentForm from '../IdentifierReassignmentForm';
+import IdentifierReassignmentForm from '../../IdentifierReassignmentForm';
 
 import { urls } from '../../utilities';
 import { resultCount } from '../../../constants';

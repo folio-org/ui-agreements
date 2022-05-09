@@ -17,8 +17,8 @@ import {
 } from '@folio/stripes/components';
 
 import { AppIcon, Pluggable } from '@folio/stripes/core';
-import css from '../../../styles.css';
-import { urls } from '../../../utilities';
+import css from '../../styles.css';
+import { urls } from '../../utilities';
 
 const propTypes = {
   previewModal: PropTypes.bool,
