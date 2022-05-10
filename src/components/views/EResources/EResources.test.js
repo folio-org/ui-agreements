@@ -14,6 +14,7 @@ jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
 });
 
 jest.mock('../../EResourceFilters', () => () => <div>AgreementFilters</div>);
+jest.mock('../../IdentifierReassignmentForm', () => () => <div>IdentifierReassignmentForm</div>);
 
 const mockSubmit = jest.fn();
 jest.mock('@folio/stripes-erm-components', () => ({
@@ -75,6 +76,11 @@ describe('EResources', () => {
   test('renders the Agreement Filters', () => {
     const { getByText } = renderComponent;
     expect(getByText('AgreementFilters')).toBeInTheDocument();
+  });
+
+  test('renders the IdentifierReassignmentForm', () => {
+    const { getByText } = renderComponent;
+    expect(getByText('IdentifierReassignmentForm')).toBeInTheDocument();
   });
 
   test('renders the expected E-resources Pane', async () => {
