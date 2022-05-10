@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import compose from 'compose-function';
 import { isEmpty, chunk } from 'lodash';
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import View from '../../components/views/AgreementLineForm';
 import { urls, withSuppressFromDiscovery } from '../../components/utilities';
 import { resultCount } from '../../constants';
@@ -199,7 +200,7 @@ class AgreementLineEditRoute extends React.Component {
         ...payload
       })
       .then(({ id }) => {
-        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.line.update.callout" /> });
+        this.context.sendCallout({ message: <FormattedMessage id="ui-agreements.line.update.callout" /> });
         history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
       });
   }

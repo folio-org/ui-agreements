@@ -24,6 +24,10 @@ describe('EResource', () => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <EResource
+            components={{
+              HelperComponent: () => <div>HelperComponent</div>,
+              TagButton: () => <div>TagButton</div>
+            }}
             data={titleData}
             handlers={handlers}
             helperApp={helperApp}
@@ -45,6 +49,10 @@ describe('EResource', () => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <EResource
+            components={{
+              HelperComponent: () => <div>HelperComponent</div>,
+              TagButton: () => <div>TagButton</div>
+            }}
             data={titleData}
             handlers={handlers}
             helperApp={helperApp}
@@ -70,6 +78,10 @@ describe('EResource', () => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <EResource
+            components={{
+              HelperComponent: () => <div>HelperComponent</div>,
+              TagButton: () => <div>TagButton</div>
+            }}
             data={packageData}
             handlers={handlers}
             helperApp={helperApp}
@@ -95,6 +107,10 @@ describe('EResource', () => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <EResource
+            components={{
+              HelperComponent: () => <div>HelperComponent</div>,
+              TagButton: () => <div>TagButton</div>
+            }}
             data={PCIdata}
             handlers={handlers}
             helperApp={helperApp}

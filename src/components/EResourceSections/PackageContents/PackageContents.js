@@ -22,6 +22,7 @@ import { resultCount } from '../../../constants';
 export default class PackageContents extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
+      areContentsLoading: PropTypes.bool,
       packageContents: PropTypes.arrayOf(PropTypes.object),
       packageContentsCount: PropTypes.number,
       packageContentsFilter: PropTypes.string,
@@ -99,8 +100,8 @@ export default class PackageContents extends React.Component {
   renderDate = date => (date ? <FormattedUTCDate value={date} /> : '');
 
   renderBadge = () => {
-    const count = this.props.data?.packageContentsCount;
-    return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
+    const { packageContentsCount: count, areContentsLoading: isLoading } = this.props.data;
+    return (count !== undefined && !isLoading) ? <Badge>{count}</Badge> : <Spinner />;
   };
 
   renderFilterButton = filter => (
@@ -128,7 +129,7 @@ export default class PackageContents extends React.Component {
 
   render() {
     const {
-      data: { packageContents, packageContentsCount },
+      data: { areContentsLoading, packageContents, packageContentsCount },
       id,
     } = this.props;
 
@@ -142,7 +143,7 @@ export default class PackageContents extends React.Component {
         }
       >
         {this.renderFilterButtons()}
-        {packageContents ? (
+        {(packageContents && !areContentsLoading) ? (
           this.renderList(packageContents, packageContentsCount)
         ) : (
           <Spinner />

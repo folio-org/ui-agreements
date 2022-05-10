@@ -11,7 +11,6 @@ import {
   ExpandAllButton,
   HasCommand,
   Icon,
-  IconButton,
   LoadingPane,
   Pane,
   PaneMenu,
@@ -22,7 +21,6 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager, HandlerManager, useStripes } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import { CustomPropertiesView, useCustomProperties } from '@k-int/stripes-kint-components';
 
@@ -52,10 +50,13 @@ import { statuses } from '../../../constants';
 import { CUSTPROP_ENDPOINT, LICENSE_CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
 
 const Agreement = ({
+  components: {
+    HelperComponent,
+    TagButton
+  },
   data,
   isLoading,
   handlers,
-  helperApp,
 }) => {
   const accordionStatusRef = useRef();
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
@@ -186,17 +187,9 @@ const Agreement = ({
     return stripes.hasPerm('ui-agreements.agreements.edit') ? (
       <PaneMenu>
         {handlers.onToggleTags &&
-          <FormattedMessage id="ui-agreements.agreements.showTags">
-            {([ariaLabel]) => (
-              <IconButton
-                ariaLabel={typeof ariaLabel === 'string' ? ariaLabel : ariaLabel[0]}
-                badgeCount={agreement?.tags?.length ?? 0}
-                icon="tag"
-                id="clickable-show-tags"
-                onClick={handlers.onToggleTags}
-              />
-            )}
-          </FormattedMessage>
+          <TagButton
+            entity={agreement}
+          />
         }
       </PaneMenu>
     ) : null;
@@ -300,7 +293,10 @@ const Agreement = ({
             </AccordionStatus>
           </TitleManager>
         </Pane>
-        {helperApp}
+        <HelperComponent
+          link={data.tagsLink}
+          onToggle={handlers.onToggleTags}
+        />
         {showDuplicateAgreementModal &&
           <DuplicateAgreementModal
             name={data.agreement.name}
@@ -314,7 +310,7 @@ const Agreement = ({
           data-test-delete-confirmation-modal
           heading={<FormattedMessage id="ui-agreements.agreements.deleteAgreement" />}
           id="delete-agreement-confirmation"
-          message={<SafeHTMLMessage id="ui-agreements.agreements.deleteConfirmMessage" values={{ name: data.agreement?.name }} />}
+          message={<FormattedMessage id="ui-agreements.agreements.deleteConfirmMessage" values={{ name: data.agreement?.name }} />}
           onCancel={() => setShowDeleteConfirmationModal(false)}
           onConfirm={() => {
             handlers.onDelete();
@@ -328,11 +324,12 @@ const Agreement = ({
 };
 
 Agreement.propTypes = {
+  components: PropTypes.object,
   data: PropTypes.shape({
     agreement: PropTypes.object.isRequired,
     eresourcesFilterPath: PropTypes.string,
-    openAccessProperties: PropTypes.arrayOf(PropTypes.object),
     searchString: PropTypes.string,
+    tagsLink: PropTypes.string
   }).isRequired,
   handlers: PropTypes.shape({
     onClone: PropTypes.func.isRequired,
