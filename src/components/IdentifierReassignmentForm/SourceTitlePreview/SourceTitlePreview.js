@@ -26,7 +26,7 @@ const SourceTitlePreview = () => {
     const identifiersToMove = values[title?.id] ?? {};
 
     identifiers.push(
-      ...validIdentifiers?.filter(vId => (
+      ...(validIdentifiers ?? [])?.filter(vId => (
         // Include all valid Identifiers where the namespace doesn't show up in the list of ids to move
         !Object.keys(identifiersToMove)?.includes(vId.identifier?.ns?.value) ||
         // Include all valid identifiers where the value isn't in the list to move

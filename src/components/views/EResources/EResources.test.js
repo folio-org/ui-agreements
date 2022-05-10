@@ -14,7 +14,7 @@ jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
 });
 
 jest.mock('../../EResourceFilters', () => () => <div>AgreementFilters</div>);
-jest.mock('../IdentifierReassignmentForm', () => () => <div>IdentifierReassignmentForm</div>);
+jest.mock('../../IdentifierReassignmentForm', () => () => <div>IdentifierReassignmentForm</div>);
 
 const mockSubmit = jest.fn();
 jest.mock('@folio/stripes-erm-components', () => ({

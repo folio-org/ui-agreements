@@ -38,7 +38,7 @@ const DestinationTitlePreview = () => {
           }
           */
         /* istanbul ignore next */
-        for (const [nsKey, idVals] of Object.entries(value)) {
+        for (const [nsKey, idVals = []] of Object.entries(value)) {
           idVals.forEach(idVal => {
             if (idVal) {
               validIdentifiers.push({
