@@ -31,6 +31,7 @@ import {
 } from '@folio/stripes-erm-components';
 import EResourceFilters from '../../EResourceFilters';
 import IfEResourcesEnabled from '../../IfEResourcesEnabled';
+import IdentifierReassignmentForm from '../../IdentifierReassignmentForm';
 
 import { urls } from '../../utilities';
 import { resultCount } from '../../../constants';
@@ -74,6 +75,7 @@ const EResources = ({
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
   const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
+  const [moveIdentifiersModal, setMoveIdentifiersModal] = useState(false);
 
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
@@ -104,6 +106,17 @@ const EResources = ({
           }) => {
             const disableReset = () => (!filterChanged && !searchChanged);
             const filterCount = activeFilters.string ? activeFilters.string.split(',').length : 0;
+
+            const getActionMenu = () => (
+              <Button
+                buttonStyle="dropdownItem"
+                id="clickable-move-identifier"
+                onClick={setMoveIdentifiersModal}
+              >
+                <Icon icon="arrow-right" iconPosition="end" />
+                <FormattedMessage id="ui-agreements.eresource.moveIdentifier" />
+              </Button>
+            );
 
             return (
               <PersistedPaneset appId="@folio/agreements" id="eresources-paneset">
@@ -194,6 +207,7 @@ const EResources = ({
                   </Pane>
                 }
                 <Pane
+                  actionMenu={getActionMenu}
                   appIcon={<AppIcon app="agreements" iconKey="eresource" size="small" />}
                   defaultWidth="fill"
                   firstMenu={
@@ -291,6 +305,10 @@ const EResources = ({
           }
         }
       </SearchAndSortQuery>
+      <IdentifierReassignmentForm
+        onClose={() => setMoveIdentifiersModal(false)}
+        open={moveIdentifiersModal}
+      />
     </div>
   );
 };
