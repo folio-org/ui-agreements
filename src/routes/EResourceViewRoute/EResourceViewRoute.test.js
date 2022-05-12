@@ -102,13 +102,6 @@ ToggleTagsButton.propTypes = {
 };
 
 const historyPushMock = jest.fn();
-const mutatorEntitlementsCountMock = jest.fn();
-const mutatorEntitlementsOffsetMock = jest.fn();
-const mutatorQueryUpdateMock = jest.fn();
-const mutatorEntitlementOptionsOffsetMock = jest.fn();
-const mutatorPackageContentsCountMock = jest.fn();
-const mutatorPackageContentsOffsetMock = jest.fn();
-const mutatorPackageContentsFilterMock = jest.fn();
 
 jest.mock('../../components/views/EResource', () => {
   return (props) => (
@@ -136,29 +129,6 @@ const data = {
     search: ''
   },
   match,
-  mutator:{
-    entitlementsCount:{
-      replace: mutatorEntitlementsCountMock,
-    },
-    entitlementsOffset:{
-      replace: mutatorEntitlementsOffsetMock,
-    },
-    entitlementOptionsOffset:{
-      replace: mutatorEntitlementOptionsOffsetMock,
-    },
-    packageContentsCount:{
-      replace: mutatorPackageContentsCountMock,
-    },
-    packageContentsOffset:{
-      replace: mutatorPackageContentsOffsetMock,
-    },
-    packageContentsFilter:{
-      replace: mutatorPackageContentsFilterMock,
-    },
-    query:{
-      update: mutatorQueryUpdateMock,
-    }
-  },
   resources: {
     entitlements,
     entitlementsCount,
@@ -219,19 +189,9 @@ describe('EResourceViewRoute', () => {
       expect(getByText('EResourceClickButton')).toBeInTheDocument();
     });
 
-    test('triggers the NeedMoreEntitlementsButton callback', async () => {
-      await ButtonInteractor('NeedMoreEntitlementsButton').click();
-      expect(mutatorEntitlementsOffsetMock).toHaveBeenCalled();
-    });
-
     test('renders the NeedMoreEntitlementsButton button', () => {
       const { getByText } = renderComponent;
       expect(getByText('NeedMoreEntitlementsButton')).toBeInTheDocument();
-    });
-
-    test('calls the NeedMoreEntitlementOptionsButton callback', async () => {
-      await ButtonInteractor('NeedMoreEntitlementOptionsButton').click();
-      expect(mutatorEntitlementOptionsOffsetMock).toHaveBeenCalled();
     });
 
     test('renders the NeedMoreEntitlementOptionsButton button', () => {
@@ -239,29 +199,14 @@ describe('EResourceViewRoute', () => {
       expect(getByText('NeedMoreEntitlementOptionsButton')).toBeInTheDocument();
     });
 
-    test('triggers the NeedMorePackageContentsButton callback', async () => {
-      await ButtonInteractor('NeedMorePackageContentsButton').click();
-      expect(mutatorPackageContentsOffsetMock).toHaveBeenCalled();
-    });
-
     test('renders the NeedMorePackageContentsButton button', () => {
       const { getByText } = renderComponent;
       expect(getByText('NeedMorePackageContentsButton')).toBeInTheDocument();
     });
 
-    test('triggers the FilterPackageContentsButton callback', async () => {
-      await ButtonInteractor('FilterPackageContentsButton').click();
-      expect(mutatorPackageContentsFilterMock).toHaveBeenCalled();
-    });
-
     test('renders the FilterPackageContentsButton button', () => {
       const { getByText } = renderComponent;
       expect(getByText('FilterPackageContentsButton')).toBeInTheDocument();
-    });
-
-    test('triggers the ToggleTagsButton callback', async () => {
-      await ButtonInteractor('ToggleTagsButton').click();
-      expect(mutatorQueryUpdateMock).toHaveBeenCalled();
     });
 
     test('renders the ToggleTagsButton button', () => {

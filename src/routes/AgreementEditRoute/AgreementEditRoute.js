@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import { cloneDeep, chunk } from 'lodash';
 import compose from 'compose-function';
 
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 
@@ -432,7 +433,7 @@ class AgreementEditRoute extends React.Component {
     return mutator.agreement
       .PUT(agreement)
       .then(({ id }) => {
-        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
+        this.context.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
         history.push(`${urls.agreementView(id)}${location.search}`);
       });
   }

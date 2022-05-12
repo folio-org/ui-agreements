@@ -17,6 +17,7 @@ import { isExternal } from '../../utilities';
 class AcquisitionOptions extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
+      areEntitlementOptionsLoading: PropTypes.bool,
       entitlementOptions: PropTypes.arrayOf(PropTypes.object),
       entitlementOptionsCount: PropTypes.number,
       eresource: PropTypes.shape({
@@ -46,8 +47,8 @@ class AcquisitionOptions extends React.Component {
   }
 
   renderBadge = () => {
-    const count = this.props?.data?.entitlementOptionsCount;
-    return count !== undefined ? <Badge>{count}</Badge> : <Spinner />;
+    const { entitlementOptionsCount: count, areEntitlementOptionsLoading: isLoading } = this.props?.data;
+    return (count !== undefined && !isLoading) ? <Badge>{count}</Badge> : <Spinner />;
   }
 
   renderParentPackage = (eresource) => {
@@ -144,7 +145,7 @@ class AcquisitionOptions extends React.Component {
 
   render() {
     const {
-      data: { entitlementOptions },
+      data: { areEntitlementOptionsLoading, entitlementOptions },
       id,
     } = this.props;
 
@@ -155,7 +156,7 @@ class AcquisitionOptions extends React.Component {
         id={id}
         label={<FormattedMessage id="ui-agreements.eresources.acqOptions" />}
       >
-        {entitlementOptions ? this.renderOptions() : <Spinner />}
+        {(entitlementOptions && !areEntitlementOptionsLoading) ? this.renderOptions() : <Spinner />}
       </Accordion>
     );
   }

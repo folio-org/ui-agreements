@@ -3,7 +3,6 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { StaticRouter as Router } from 'react-router-dom';
 import { Button } from '@folio/stripes-testing';
-import { screen } from '@testing-library/react';
 import translationsProperties from '../../../../test/helpers';
 import DestinationTitleIdentifierField from './DestinationTitleIdentifierField';
 
@@ -84,7 +83,6 @@ describe('DestinationTitleIdentifierField', () => {
   });
 
   it('renders the DestinationTitleIdentifierField card', () => {
-    screen.debug();
     const { getByTestId } = renderComponent;
     expect(getByTestId('destinationTitleCard')).toBeInTheDocument();
   });
@@ -103,7 +101,6 @@ describe('DestinationTitleIdentifierField', () => {
     const { getByText } = renderComponent;
     expect(getByText('Select the destination title for the identifier(s)')).toBeInTheDocument();
   });
-
 
   test('renders the submit button', async () => {
     await Button('Submit').exists();

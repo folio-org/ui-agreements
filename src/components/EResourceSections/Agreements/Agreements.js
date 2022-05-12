@@ -14,6 +14,8 @@ import EntitlementAgreementsList from '../../EntitlementsAgreementsList';
 export default class Agreements extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
+      areEntitlementsLoading: PropTypes.bool,
+      areRelatedEntitlementsLoading: PropTypes.bool,
       entitlements: PropTypes.arrayOf(PropTypes.object),
       entitlementsCount: PropTypes.number,
       eresource: PropTypes.shape({
@@ -38,12 +40,16 @@ export default class Agreements extends React.Component {
   };
 
   renderEntitlementAgreements = () => {
-    const { entitlements = [], entitlementsCount } = this.props.data;
+    const { areEntitlementsLoading, entitlements, entitlementsCount } = this.props.data;
     const { handlers: { onNeedMoreEntitlements }, headline, isEmptyMessage, visibleColumns } = this.props;
+
+    if (areEntitlementsLoading || !entitlements) {
+      return <Spinner />;
+    }
 
     return (
       <EntitlementAgreementsList
-        entitlements={entitlements}
+        entitlements={entitlements ?? []}
         headline={headline}
         id="pci-agreements-list"
         isEmptyMessage={isEmptyMessage}
@@ -55,7 +61,16 @@ export default class Agreements extends React.Component {
   }
 
   renderRelatedEntitlementAgreements = () => {
-    const { eresource, relatedEntitlements = [] } = this.props.data;
+    const { areRelatedEntitlementsLoading, eresource, relatedEntitlements = [] } = this.props.data;
+    const { renderRelatedEntitlements } = this.props;
+
+    if (!renderRelatedEntitlements) {
+      return null;
+    }
+
+    if (areRelatedEntitlementsLoading || !relatedEntitlements) {
+      return <Spinner />;
+    }
 
     return (
       <EntitlementAgreementsList
@@ -72,19 +87,25 @@ export default class Agreements extends React.Component {
   }
 
   renderBadge = () => {
-    const { entitlements, entitlementsCount, relatedEntitlements } = this.props.data;
+    const { areEntitlementsLoading, areRelatedEntitlementsLoading, entitlements, entitlementsCount, relatedEntitlements } = this.props.data;
 
-    return (entitlements && relatedEntitlements) ?
-      <Badge>{entitlementsCount + relatedEntitlements?.length}</Badge>
-      :
+    return (
+      entitlements &&
+      relatedEntitlements &&
+      !areEntitlementsLoading &&
+      !areRelatedEntitlementsLoading
+    ) ?
+      <Badge>{entitlementsCount + relatedEntitlements?.length}</Badge> :
       <Spinner />;
   }
 
   render() {
     const {
-      data: { entitlements, eresource, relatedEntitlements },
+      data: {
+        entitlements,
+        eresource,
+      },
       id,
-      renderRelatedEntitlements,
     } = this.props;
 
     const label = (eresource.class === resourceClasses.PACKAGE) ?
@@ -98,11 +119,8 @@ export default class Agreements extends React.Component {
         id={id}
         label={label}
       >
-        {entitlements ? this.renderEntitlementAgreements(entitlements) : <Spinner />}
-        {renderRelatedEntitlements ? (
-          relatedEntitlements ?
-            this.renderRelatedEntitlementAgreements() :
-            <Spinner />) : null}
+        {this.renderEntitlementAgreements(entitlements)}
+        {this.renderRelatedEntitlementAgreements()}
       </Accordion>
     );
   }
