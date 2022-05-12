@@ -13,7 +13,7 @@ import {
   PaneMenu,
 } from '@folio/stripes/components';
 
-import { AppIcon, IfPermission } from '@folio/stripes/core';
+import { AppIcon, IfPermission, useStripes } from '@folio/stripes/core';
 
 import {
   CollapseFilterPaneButton,
@@ -52,6 +52,9 @@ const propTypes = {
     loaded: PropTypes.func,
     totalCount: PropTypes.func,
   }),
+  stripes: PropTypes.shape({
+    hasPerm: PropTypes.func
+  }),
 };
 
 const filterPaneVisibilityKey = '@folio/agreements/eresourcesFilterPaneVisibility';
@@ -64,7 +67,7 @@ const EResources = ({
   querySetter,
   searchString,
   selectedRecordId,
-  source,
+  source
 }) => {
   const count = source?.totalCount() ?? 0;
   const query = queryGetter() ?? {};
@@ -77,6 +80,7 @@ const EResources = ({
   const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
   const [moveIdentifiersModal, setMoveIdentifiersModal] = useState(false);
 
+  const stripes = useStripes();
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
@@ -107,16 +111,22 @@ const EResources = ({
             const disableReset = () => (!filterChanged && !searchChanged);
             const filterCount = activeFilters.string ? activeFilters.string.split(',').length : 0;
 
-            const getActionMenu = () => (
-              <Button
-                buttonStyle="dropdownItem"
-                id="clickable-move-identifier"
-                onClick={setMoveIdentifiersModal}
-              >
-                <Icon icon="arrow-right" iconPosition="end" />
-                <FormattedMessage id="ui-agreements.eresource.moveIdentifier" />
-              </Button>
-            );
+            const getActionMenu = () => {
+              const button = [];
+              if (stripes.hasPerm('ui-agreements.resources.edit')) {
+                button.push(
+                  <Button
+                    buttonStyle="dropdownItem"
+                    id="clickable-move-identifier"
+                    onClick={setMoveIdentifiersModal}
+                  >
+                    <Icon icon="arrow-right" iconPosition="end" />
+                    <FormattedMessage id="ui-agreements.eresource.moveIdentifier" />
+                  </Button>
+                );
+              }
+              return button.length ? button : null;
+            };
 
             return (
               <PersistedPaneset appId="@folio/agreements" id="eresources-paneset">
