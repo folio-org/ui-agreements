@@ -112,7 +112,7 @@ const AgreementEditRoute = ({
   const { data: { users = [] } = {} } = useUsers(agreement?.contacts.filter(c => c.user)?.map(c => c.user));
 
   const { mutateAsync: putAgreement } = useMutation(
-    [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementViewRoute', 'editAgreement'],
+    [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
     (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: payload }).json()
       .then(({ name }) => {
         /* Invalidate cached queries */

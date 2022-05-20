@@ -9,6 +9,7 @@ export const AGREEMENT_ENDPOINT = (agreementId) => `${AGREEMENTS_ENDPOINT}/${agr
 export const AGREEMENT_ERESOURCES_ENDPOINT = (agreementId, filterPath) => `${AGREEMENT_ENDPOINT(agreementId)}/resources/${filterPath}`;
 
 export const AGREEMENT_LINES_ENDPOINT = 'erm/entitlements';
+export const AGREEMENT_LINES_EXTERNAL_ENDPOINT = 'erm/entitlements/external';
 export const AGREEMENT_LINE_ENDPOINT = (lineId) => `${AGREEMENT_LINES_ENDPOINT}/${lineId}`;
 
 export const ERESOURCES_ENDPOINT = 'erm/resource';
