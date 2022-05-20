@@ -19,3 +19,5 @@ export const ERESOURCE_ENTITLEMENTS_ENDPOINT = (eresourceId) => `${ERESOURCE_END
 export const ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT = (eresourceId) => `${ERESOURCE_ENDPOINT(eresourceId)}/entitlementOptions`;
 
 export const MOD_SETTINGS_ENDPOINT = 'configurations/entries';
+
+export const ORDER_LINES_ENDPOINT = 'orders/order-lines';
