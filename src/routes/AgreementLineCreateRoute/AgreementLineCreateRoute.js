@@ -32,7 +32,7 @@ const AgreementLineCreateRoute = ({
   };
 
   const { mutateAsync: postAgreementLine } = useMutation(
-    [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementLineCreateRoute', 'createAgreementLine'],
+    [AGREEMENT_LINES_ENDPOINT, 'ui-agreements', 'AgreementLineCreateRoute', 'createAgreementLine'],
     (payload) => ky.post(AGREEMENT_LINES_ENDPOINT, { json: { ...payload, owner: agreementId } }).json()
       .then(({ id }) => {
         /* Invalidate cached queries */
