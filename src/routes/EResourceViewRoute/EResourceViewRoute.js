@@ -5,15 +5,15 @@ import compose from 'compose-function';
 import { useQuery } from 'react-query';
 
 import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
-import { withTags } from '@folio/stripes/smart-components';
+
 import { useInfiniteFetch, useBatchedFetch } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/EResource';
-import { parseMclPageSize, urls, withSuppressFromDiscovery } from '../../components/utilities';
+import { parseMclPageSize, urls } from '../../components/utilities';
 import { resultCount, resourceClasses } from '../../constants';
 
-import { useAgreementsHelperApp, useAgreementsSettings } from '../../hooks';
+import { useAgreementsHelperApp, useAgreementsSettings, useSuppressFromDiscovery } from '../../hooks';
 import { ERESOURCE_ENDPOINT, ERESOURCE_ENTITLEMENTS_ENDPOINT, ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT } from '../../constants/endpoints';
 
 const { RECORDS_PER_REQUEST_MEDIUM } = resultCount;
@@ -22,16 +22,16 @@ const EResourceViewRoute = ({
   handlers = [],
   history,
   location,
-  isSuppressFromDiscoveryEnabled,
   match: { params: { id: eresourceId } },
-  tagsEnabled,
 }) => {
   const ky = useOkapiKy();
   const {
     handleToggleTags,
     HelperComponent,
     TagButton,
-  } = useAgreementsHelperApp(tagsEnabled);
+  } = useAgreementsHelperApp();
+
+  const isSuppressFromDiscoveryEnabled = useSuppressFromDiscovery();
 
   const eresourcePath = ERESOURCE_ENDPOINT(eresourceId);
 
@@ -217,7 +217,6 @@ EResourceViewRoute.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
   }).isRequired,
@@ -226,12 +225,7 @@ EResourceViewRoute.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired
   }).isRequired,
-  tagsEnabled: PropTypes.bool,
 };
 
 
-export default compose(
-  stripesConnect,
-  withSuppressFromDiscovery,
-  withTags,
-)(EResourceViewRoute);
+export default stripesConnect(EResourceViewRoute);

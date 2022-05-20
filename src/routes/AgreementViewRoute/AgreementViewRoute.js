@@ -9,7 +9,6 @@ import compose from 'compose-function';
 
 import { CalloutContext, stripesConnect, useOkapiKy } from '@folio/stripes/core';
 import { useInfiniteFetch, useUsers } from '@folio/stripes-erm-components';
-import { withTags } from '@folio/stripes/smart-components';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
@@ -20,10 +19,10 @@ import { errorTypes, resultCount } from '../../constants';
 
 import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
 
-import { useAgreementsHelperApp, useAgreementsSettings } from '../../hooks';
+import { useAgreementsHelperApp, useAgreementsSettings, useChunkedOrderLines } from '../../hooks';
 import { AGREEMENTS_ENDPOINT, AGREEMENT_ENDPOINT, AGREEMENT_ERESOURCES_ENDPOINT, AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
 
-const { RECORDS_PER_REQUEST_MEDIUM, RECORDS_PER_REQUEST_LARGE } = resultCount;
+const { RECORDS_PER_REQUEST_MEDIUM } = resultCount;
 
 const credentialsArray = [];
 const AgreementViewRoute = ({
@@ -33,12 +32,8 @@ const AgreementViewRoute = ({
   match: { params: { id: agreementId } },
   mutator,
   resources,
-  tagsEnabled
 }) => {
   const queryClient = useQueryClient();
-
-  const [orderLines, setOrderLines] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   const [eresourcesFilterPath, setEresourcesFilterPath] = useState('current');
 
@@ -52,7 +47,7 @@ const AgreementViewRoute = ({
     handleToggleTags,
     HelperComponent,
     TagButton,
-  } = useAgreementsHelperApp(tagsEnabled);
+  } = useAgreementsHelperApp();
 
   const agreementPath = AGREEMENT_ENDPOINT(agreementId);
   const agreementEresourcesPath = AGREEMENT_ERESOURCES_ENDPOINT(agreementId, eresourcesFilterPath);
@@ -150,39 +145,7 @@ const AgreementViewRoute = ({
       .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat()
   ), [agreementLines]);
 
-  // On mount, fetch order lines and then set states
-  useEffect(() => {
-    if (!isAgreementLoading && !areLinesLoading && !areEresourcesLoading) {
-      const fetchOrderLines = async () => {
-        const CONCURRENT_REQUESTS = 5; // Number of requests to make concurrently
-        const STEP_SIZE = 60; // Number of ids to request for per concurrent request
-
-        const chunkedItems = chunk(poLineIdsArray, CONCURRENT_REQUESTS * STEP_SIZE); // Split into chunks of size CONCURRENT_REQUESTS * STEP_SIZE
-        const data = [];
-        for (const chunkedItem of chunkedItems) {  // Make requests concurrently
-          mutator.orderLines.reset();
-          const promisesArray = []; // Array of promises
-          for (let i = 0; i < chunkedItem.length; i += STEP_SIZE) {
-            promisesArray.push( // Add promises to array
-              mutator.orderLines.GET({ // Make GET request
-                params: {
-                  query: chunkedItem.slice(i, i + STEP_SIZE).map(item => `id==${item}`).join(' or '), // Make query string
-                  limit: 1000, // Limit to 1000
-                },
-              })
-            );
-          }
-          const results = await Promise.all(promisesArray); // Wait for all requests to complete and move to the next chunk
-          data.push(...results.flat()); // Add results to data
-        }
-
-        setOrderLines(data);
-        setIsLoading(false);
-      };
-
-      fetchOrderLines();
-    }
-  }, [poLineIdsArray, mutator.orderLines, isAgreementLoading, areEresourcesLoading, areLinesLoading]);
+  const { orderLines, isLoading: areOrderLinesLoading } = useChunkedOrderLines(poLineIdsArray);
 
   const { mutateAsync: cloneAgreement } = useMutation(
     [agreementPath, 'ui-agreements', 'AgreementViewRoute', 'cloneAgreement'],
@@ -373,7 +336,7 @@ const AgreementViewRoute = ({
         onToggleTags: handleToggleTags,
         onViewAgreementLine: handleViewAgreementLine,
       }}
-      isLoading={isPaneLoading() || isLoading}
+      isLoading={isPaneLoading() || areOrderLinesLoading}
     />
   );
 };
@@ -395,15 +358,6 @@ AgreementViewRoute.manifest = Object.freeze({
     fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '2.0'),
     permissionsRequired: 'organizations-storage.interfaces.collection.get',
     records: 'interfaces',
-  },
-  orderLines: {
-    type: 'okapi',
-    perRequest: RECORDS_PER_REQUEST_LARGE,
-    path: 'orders/order-lines',
-    accumulate: 'true',
-    fetch: false,
-    records: 'poLines',
-    throwErrors: false,
   },
   interfacesCredentials: {
     clientGeneratePk: false,
@@ -437,18 +391,13 @@ AgreementViewRoute.propTypes = {
     interfaceRecord: PropTypes.shape({
       replace: PropTypes.func,
     }),
-    orderLines: PropTypes.shape({
-      GET: PropTypes.func,
-      reset: PropTypes.func,
-    }),
-  }).isRequired,
+  }),
   resources: PropTypes.shape({
     agreement: PropTypes.object,
     agreementLines: PropTypes.object,
     agreementEresources: PropTypes.object,
     eresourcesFilterPath: PropTypes.string,
     interfaces: PropTypes.object,
-    orderLines: PropTypes.object,
     query: PropTypes.object,
   }).isRequired,
   stripes: PropTypes.shape({
@@ -460,11 +409,9 @@ AgreementViewRoute.propTypes = {
       url: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  tagsEnabled: PropTypes.bool,
 };
 
 export default compose(
   withFileHandlers,
   stripesConnect,
-  withTags,
 )(AgreementViewRoute);

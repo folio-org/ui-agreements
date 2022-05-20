@@ -73,7 +73,7 @@ const useChunkedOrderLines = (poLineIdsArray) => {
     isLoading,
     // Offer all fetched orderLines in flattened array once ready
     orderLines: isLoading ? [] : orderLineQueries.reduce((acc, curr) => {
-      return [...acc, ...curr?.data?.poLines];
+      return [...acc, ...(curr?.data?.poLines ?? [])];
     }, [])
   };
 };
