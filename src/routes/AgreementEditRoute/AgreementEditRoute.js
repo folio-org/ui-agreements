@@ -19,6 +19,7 @@ import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
 import { getRefdataValuesByDesc, urls } from '../../components/utilities';
 import { endpoints, resultCount } from '../../constants';
+import { useChunkedOrderLines } from '../../hooks';
 
 const { RECORDS_PER_REQUEST_LARGE } = resultCount;
 const { AGREEMENTS_ENDPOINT, AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT, REFDATA_ENDPOINT } = endpoints;
@@ -79,9 +80,6 @@ const AgreementEditRoute = ({
     options: { ...refdataOptions, sort: [{ path: 'desc' }] }
   });
 
-  const [orderLines, setOrderLines] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
   const { data: agreement, isLoading: isAgreementLoading } = useQuery(
     [AGREEMENT_ENDPOINT(agreementId), 'AgreementEditRoute', 'getAgreement'],
     () => ky.get(AGREEMENT_ENDPOINT(agreementId)).json()
@@ -114,7 +112,7 @@ const AgreementEditRoute = ({
   const { data: { users = [] } = {} } = useUsers(agreement?.contacts.filter(c => c.user)?.map(c => c.user));
 
   const { mutateAsync: putAgreement } = useMutation(
-    [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementViewRoute', 'deleteAgreement'],
+    [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementViewRoute', 'editAgreement'],
     (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: payload }).json()
       .then(({ name }) => {
         /* Invalidate cached queries */
@@ -206,39 +204,7 @@ const AgreementEditRoute = ({
       .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat()
   ), [agreementLines]);
 
-  // On mount, fetch order lines and then set states
-  useEffect(() => {
-    if (!isAgreementLoading && !areLinesLoading) {
-      const fetchOrderLines = async () => {
-        const CONCURRENT_REQUESTS = 5; // Number of requests to make concurrently
-        const STEP_SIZE = 60; // Number of ids to request for per concurrent request
-
-        const chunkedItems = chunk(poLineIdsArray, CONCURRENT_REQUESTS * STEP_SIZE); // Split into chunks of size CONCURRENT_REQUESTS * STEP_SIZE
-        const data = [];
-        for (const chunkedItem of chunkedItems) {  // Make requests concurrently
-          mutator.orderLines.reset();
-          const promisesArray = []; // Array of promises
-          for (let i = 0; i < chunkedItem.length; i += STEP_SIZE) {
-            promisesArray.push( // Add promises to array
-              mutator.orderLines.GET({ // Make GET request
-                params: {
-                  query: chunkedItem.slice(i, i + STEP_SIZE).map(item => `id==${item}`).join(' or '), // Make query string
-                  limit: 1000, // Limit to 1000
-                },
-              })
-            );
-          }
-          const results = await Promise.all(promisesArray); // Wait for all requests to complete and move to the next chunk
-          data.push(...results.flat()); // Add results to data
-        }
-
-        setOrderLines(data);
-        setIsLoading(false);
-      };
-
-      fetchOrderLines();
-    }
-  }, [poLineIdsArray, mutator.orderLines, isAgreementLoading, areLinesLoading]);
+  const { orderLines, isLoading: areOrderLinesLoading } = useChunkedOrderLines(poLineIdsArray);
 
   const handleBasketLinesAdded = () => {
     mutator.query.update({
@@ -289,7 +255,7 @@ const AgreementEditRoute = ({
   };
 
   if (!stripes.hasPerm('ui-agreements.agreements.edit')) return <NoPermissions />;
-  if (fetchIsPending() || isLoading) return <LoadingView dismissible onClose={handleClose} />;
+  if (fetchIsPending() || areOrderLinesLoading) return <LoadingView dismissible onClose={handleClose} />;
 
   return (
     <View
