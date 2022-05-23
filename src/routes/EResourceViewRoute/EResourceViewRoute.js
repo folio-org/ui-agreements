@@ -14,7 +14,7 @@ import { parseMclPageSize, urls } from '../../components/utilities';
 import { resultCount, resourceClasses } from '../../constants';
 
 import { useAgreementsHelperApp, useAgreementsSettings, useSuppressFromDiscovery } from '../../hooks';
-import { ERESOURCE_ENDPOINT, ERESOURCE_ENTITLEMENTS_ENDPOINT, ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT } from '../../constants/endpoints';
+import { ERESOURCE_ENDPOINT, ERESOURCE_ENTITLEMENTS_ENDPOINT, ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT, ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT } from '../../constants/endpoints';
 
 const { RECORDS_PER_REQUEST_MEDIUM } = resultCount;
 
@@ -77,7 +77,8 @@ const EResourceViewRoute = ({
     isLoading: areRelatedEntitlementsLoading
   } = useBatchedFetch({
     batchLimit: entitlementsCount,
-    batchSize: RECORDS_PER_REQUEST_MEDIUM
+    batchSize: RECORDS_PER_REQUEST_MEDIUM,
+    path: ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT(eresourceId)
   });
 
   // ENTITLEMENT OPTIONS FOR ERESOURCE INFINITE FETCH

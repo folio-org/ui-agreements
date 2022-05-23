@@ -17,6 +17,7 @@ export const ERESOURCES_ELECTRONIC_ENDPOINT = `${ERESOURCES_ENDPOINT}/electronic
 export const ERESOURCE_ENDPOINT = (eresourceId) => `${ERESOURCES_ENDPOINT}/${eresourceId}`;
 
 export const ERESOURCE_ENTITLEMENTS_ENDPOINT = (eresourceId) => `${ERESOURCE_ENDPOINT(eresourceId)}/entitlements`;
+export const ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT = (eresourceId) => `${ERESOURCE_ENDPOINT(eresourceId)}/entitlements/related`;
 export const ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT = (eresourceId) => `${ERESOURCE_ENDPOINT(eresourceId)}/entitlementOptions`;
 
 export const MOD_SETTINGS_ENDPOINT = 'configurations/entries';
