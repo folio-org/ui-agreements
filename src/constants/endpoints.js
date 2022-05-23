@@ -20,6 +20,11 @@ export const ERESOURCE_ENTITLEMENTS_ENDPOINT = (eresourceId) => `${ERESOURCE_END
 export const ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT = (eresourceId) => `${ERESOURCE_ENDPOINT(eresourceId)}/entitlements/related`;
 export const ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT = (eresourceId) => `${ERESOURCE_ENDPOINT(eresourceId)}/entitlementOptions`;
 
+export const PCIS_ENDPOINT = 'erm/pci';
+export const PCI_ENDPOINT = (pciId) => `erm/pci/${pciId}`;
+export const TITLES_ENDPOINT = 'erm/titles';
+export const TITLE_ENDPOINT = (tiId) => `erm/titles/${tiId}`;
+
 export const MOD_SETTINGS_ENDPOINT = 'configurations/entries';
 
 export const ORDER_LINES_ENDPOINT = 'orders/order-lines';
