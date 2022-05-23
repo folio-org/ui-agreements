@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import { useQuery } from 'react-query';
 
-import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
-import { generateKiwtQueryParams, refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
+import { generateKiwtQueryParams, refdataOptions, useKiwtSASQuery, useRefdata } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/EResources';
 import NoPermissions from '../../components/NoPermissions';
@@ -29,10 +29,8 @@ const EResourcesRoute = ({
   history,
   location,
   match,
-  mutator,
-  resources,
-  stripes
 }) => {
+  const stripes = useStripes();
   const ky = useOkapiKy();
   const hasPerms = stripes.hasPerm('ui-agreements.agreements.view');
   const searchField = useRef();
@@ -54,6 +52,7 @@ const EResourcesRoute = ({
   });
 
   const { data: { tags = [] } = {} } = useTags();
+  const { query, querySetter, queryGetter } = useKiwtSASQuery();
 
   const eresourcesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
@@ -72,8 +71,8 @@ const EResourcesRoute = ({
         type: 'type.value'
       },
       perPage: RESULT_COUNT_INCREMENT
-    }, (resources?.query ?? {}))
-  ), [resources?.query]);
+    }, (query ?? {}))
+  ), [query]);
 
 
   const {
@@ -105,14 +104,6 @@ const EResourcesRoute = ({
     () => ky.get(kbsPath).json()
   );
 
-  const querySetter = ({ nsValues }) => {
-    mutator.query.update(nsValues);
-  };
-
-  const queryGetter = () => {
-    return resources?.query ?? {};
-  };
-
   if (!hasPerms) return <NoPermissions />;
 
   return (
@@ -142,10 +133,6 @@ const EResourcesRoute = ({
   );
 };
 
-EResourcesRoute.manifest = Object.freeze({
-  query: { initialValue: {} },
-});
-
 EResourcesRoute.propTypes = {
   children: PropTypes.node,
   history: PropTypes.shape({
@@ -160,12 +147,6 @@ EResourcesRoute.propTypes = {
       id: PropTypes.string,
     }),
   }),
-  mutator: PropTypes.object,
-  resources: PropTypes.object,
-  stripes: PropTypes.shape({
-    hasPerm: PropTypes.func.isRequired,
-    logger: PropTypes.object,
-  }),
 };
 
-export default stripesConnect(EResourcesRoute);
+export default EResourcesRoute;

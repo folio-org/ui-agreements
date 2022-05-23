@@ -342,7 +342,7 @@ const AgreementViewRoute = ({
 };
 
 AgreementViewRoute.manifest = Object.freeze({
-  interfaces: {
+  interfaces: { // We can and shouold migrate these to react-query at some point as a separate task
     type: 'okapi',
     path: 'organizations-storage/interfaces',
     perRequest: RECORDS_PER_REQUEST_MEDIUM,

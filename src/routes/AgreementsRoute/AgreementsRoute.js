@@ -1,11 +1,10 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 
-import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
+import { stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
 
-import { generateKiwtQueryParams, useRefdata, refdataOptions } from '@k-int/stripes-kint-components';
+import { generateKiwtQueryParams, useRefdata, refdataOptions, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Agreements';
 import NoPermissions from '../../components/NoPermissions';
@@ -36,11 +35,9 @@ const AgreementsRoute = ({
   history,
   location,
   match,
-  mutator,
-  resources,
-  stripes
 }) => {
   const ky = useOkapiKy();
+  const stripes = useStripes();
   const hasPerms = stripes.hasPerm('ui-agreements.agreements.view');
   const searchField = useRef();
 
@@ -57,6 +54,7 @@ const AgreementsRoute = ({
   });
 
   const { data: { tags = [] } = {} } = useTags();
+  const { query, queryGetter, querySetter } = useKiwtSASQuery();
 
   useEffect(() => {
     if (searchField.current) {
@@ -81,9 +79,8 @@ const AgreementsRoute = ({
         agreementStatus: 'agreementStatus.label',
       },
       perPage: INITIAL_RESULT_COUNT
-    }, (resources?.query ?? {}))
-  ), [resources?.query]);
-
+    }, (query ?? {}))
+  ), [query]);
 
   const {
     infiniteQueryObject: {
@@ -107,14 +104,6 @@ const AgreementsRoute = ({
       history.push(`${urls.agreementView(agreements[0].id)}${location.search}`);
     }
   }, [agreements, agreementsCount, history, location.search]);
-
-  const querySetter = ({ nsValues }) => {
-    mutator.query.update(nsValues);
-  };
-
-  const queryGetter = () => {
-    return get(resources, 'query', {});
-  };
 
   if (!hasPerms) return <NoPermissions />;
 
@@ -163,17 +152,10 @@ AgreementsRoute.propTypes = {
       id: PropTypes.string,
     }),
   }),
-  mutator: PropTypes.object,
-  resources: PropTypes.object,
-  stripes: PropTypes.shape({
-    hasPerm: PropTypes.func.isRequired,
-    logger: PropTypes.object,
-  }),
 };
 
 AgreementsRoute.manifest = Object.freeze({
   basket: { initialValue: [] },
-  query: { initialValue: {} },
 });
 
-export default stripesConnect(AgreementsRoute, { dataKey: 'agreementsRoute' });
+export default stripesConnect(AgreementsRoute);
