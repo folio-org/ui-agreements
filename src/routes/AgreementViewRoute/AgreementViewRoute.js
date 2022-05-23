@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { get, flatten, uniqBy, chunk } from 'lodash';
+import { get, flatten, uniqBy } from 'lodash';
 import compose from 'compose-function';
 
 import { CalloutContext, stripesConnect, useOkapiKy } from '@folio/stripes/core';

@@ -57,7 +57,7 @@ const AgreementCreateRoute = ({
   const { authority, referenceId } = queryString.parse(location?.search);
   const [query, setQuery] = useState(queryString.parse(location?.search));
 
-  // TODO on Monday, look into hookifying this into a single solution
+  // TODO look into hookifying this into a single solution
   useEffect(() => {
     const newQuery = queryString.parse(location.search);
     if (!isEqual(newQuery, query)
@@ -91,7 +91,7 @@ const AgreementCreateRoute = ({
   const { mutateAsync: postAgreement } = useMutation(
     [AGREEMENTS_ENDPOINT, 'ui-agreements', 'AgreementCreateRoute', 'createAgreement'],
     (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: payload }).json()
-      .then(({ id }) => {
+      .then(({ id, name }) => {
         /* Invalidate cached queries */
         queryClient.invalidateQueries(AGREEMENTS_ENDPOINT);
 
@@ -104,11 +104,11 @@ const AgreementCreateRoute = ({
     const queryArray = [];
 
     if (authority) {
-      queryArray.push(`authority=${authority}`)
+      queryArray.push(`authority=${authority}`);
     }
 
     if (referenceId) {
-      queryArray.push(`reference=${referenceId}`)
+      queryArray.push(`reference=${referenceId}`);
     }
 
 
@@ -161,7 +161,7 @@ const AgreementCreateRoute = ({
     }
 
     if (externalEntitlement) {
-      linesToAdd.push(externalEntitlement)
+      linesToAdd.push(externalEntitlement);
     }
 
     linesToAdd.push(...basketLines);
@@ -227,6 +227,7 @@ AgreementCreateRoute.propTypes = {
   }).isRequired,
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired
   }).isRequired,
   resources: PropTypes.shape({
     basket: PropTypes.arrayOf(PropTypes.object),

@@ -1,8 +1,8 @@
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { cloneDeep, chunk } from 'lodash';
+import { cloneDeep } from 'lodash';
 import compose from 'compose-function';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';

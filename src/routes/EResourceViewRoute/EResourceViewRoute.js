@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import compose from 'compose-function';
 
 import { useQuery } from 'react-query';
 

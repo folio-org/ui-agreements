@@ -41,7 +41,7 @@ const AgreementLineEditRoute = ({
       .then(({ id }) => {
         /* Invalidate cached queries */
         queryClient.invalidateQueries(AGREEMENT_ENDPOINT(agreementId));
-        queryClient.invalidateQueries(AGREEMENT_LINE_ENDPOINT(lineId))
+        queryClient.invalidateQueries(AGREEMENT_LINE_ENDPOINT(lineId));
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.update.callout" /> });
         history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
