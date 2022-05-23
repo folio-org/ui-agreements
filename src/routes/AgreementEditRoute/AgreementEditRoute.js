@@ -18,10 +18,9 @@ import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/proc
 import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
 import { getRefdataValuesByDesc, urls } from '../../components/utilities';
-import { endpoints, resultCount } from '../../constants';
-import { useChunkedOrderLines } from '../../hooks';
+import { endpoints } from '../../constants';
+import { useAddFromBasket, useChunkedOrderLines } from '../../hooks';
 
-const { RECORDS_PER_REQUEST_LARGE } = resultCount;
 const { AGREEMENTS_ENDPOINT, AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT, REFDATA_ENDPOINT } = endpoints;
 
 const [
@@ -54,7 +53,6 @@ const AgreementEditRoute = ({
   history,
   location,
   match: { params: { id: agreementId } },
-  mutator,
   resources
 }) => {
   const ky = useOkapiKy();
@@ -62,6 +60,11 @@ const AgreementEditRoute = ({
 
   const callout = useContext(CalloutContext);
   const stripes = useStripes();
+
+  const {
+    handleBasketLinesAdded,
+    getAgreementLinesToAdd
+  } = useAddFromBasket(resources?.basket);
 
   const refdata = useRefdata({
     desc: [
@@ -124,7 +127,7 @@ const AgreementEditRoute = ({
       })
   );
 
-  const getInitialValues = useCallback(() => { // TODO really not sure about this initialValues handling
+  const getInitialValues = useCallback(() => {
     let initialValues = {};
 
     if (agreement.id === agreementId) { // Not sure what this protects against right now
@@ -206,14 +209,6 @@ const AgreementEditRoute = ({
 
   const { orderLines, isLoading: areOrderLinesLoading } = useChunkedOrderLines(poLineIdsArray);
 
-  const handleBasketLinesAdded = () => {
-    mutator.query.update({
-      addFromBasket: null,
-      authority: null,
-      referenceId: null,
-    });
-  };
-
   const handleClose = () => {
     history.push(`${urls.agreementView(agreementId)}${location.search}`);
   };
@@ -225,24 +220,6 @@ const AgreementEditRoute = ({
     putAgreement(values);
   };
 
-  const getAgreementLinesToAdd = () => {
-    const { query: { addFromBasket } } = resources;
-
-    let basketLines = [];
-    if (resources.query.addFromBasket) {
-      const basket = resources?.basket ?? [];
-
-      basketLines = addFromBasket
-        .split(',')
-        .map(index => ({ resource: basket[parseInt(index, 10)] }))
-        .filter(line => line.resource); // sanity check that there _was_ an item at that index
-    }
-
-    return [
-      ...basketLines,
-    ];
-  };
-
   const getAgreementLines = () => {
     return [
       ...agreementLines,
@@ -251,11 +228,11 @@ const AgreementEditRoute = ({
   };
 
   const fetchIsPending = () => {
-    return resources?.orderLines?.isPending || isAgreementLoading;
+    return areOrderLinesLoading || isAgreementLoading;
   };
 
   if (!stripes.hasPerm('ui-agreements.agreements.edit')) return <NoPermissions />;
-  if (fetchIsPending() || areOrderLinesLoading) return <LoadingView dismissible onClose={handleClose} />;
+  if (fetchIsPending()) return <LoadingView dismissible onClose={handleClose} />;
 
   return (
     <View
@@ -304,16 +281,8 @@ AgreementEditRoute.manifest = Object.freeze({
     perRequest: 1000,
     records: 'acquisitionMethods',
   },
-  orderLines: {
-    type: 'okapi',
-    perRequest: RECORDS_PER_REQUEST_LARGE,
-    path: 'orders/order-lines',
-    accumulate: 'true',
-    fetch: false,   // we will fetch the order lines in the componentDidMount
-    records: 'poLines',
-  },
+  // TODO we don't want to be using this, see https://issues.folio.org/browse/ERM-2183
   basket: { initialValue: [] },
-  query: { initialValue: {} },
 });
 
 AgreementEditRoute.propTypes = {
@@ -331,10 +300,6 @@ AgreementEditRoute.propTypes = {
     }).isRequired,
   }).isRequired,
   mutator: PropTypes.shape({
-    orderLines: PropTypes.shape({
-      GET: PropTypes.func.isRequired,
-      reset: PropTypes.func.isRequired,
-    }),
     acquisitionMethod: PropTypes.shape({
       GET: PropTypes.func.isRequired,
       reset: PropTypes.func.isRequired,
@@ -345,10 +310,6 @@ AgreementEditRoute.propTypes = {
   }).isRequired,
   resources: PropTypes.shape({
     basket: PropTypes.arrayOf(PropTypes.object),
-    orderLines: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-      isPending: PropTypes.bool
-    }),
     acquisitionMethod: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),

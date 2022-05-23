@@ -4,3 +4,4 @@ export { default as useAgreementsHelperApp } from './useAgreementsHelperApp';
 export { default as useAgreementsSettings } from './useAgreementsSettings';
 export { default as useChunkedOrderLines } from './useChunkedOrderLines';
 export { default as useSuppressFromDiscovery } from './useSuppressFromDiscovery';
+export { default as useAddFromBasket } from './useAddFromBasket';

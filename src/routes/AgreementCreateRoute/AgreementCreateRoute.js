@@ -1,16 +1,12 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import isEqual from 'lodash/isEqual';
-
 import compose from 'compose-function';
 
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 import { refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
-
-import queryString from 'query-string';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
@@ -21,7 +17,8 @@ import { splitRelatedAgreements } from '../utilities/processRelatedAgreements';
 import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
 import { getRefdataValuesByDesc, urls } from '../../components/utilities';
-import { AGREEMENTS_ENDPOINT, AGREEMENT_LINES_EXTERNAL_ENDPOINT, REFDATA_ENDPOINT } from '../../constants/endpoints';
+import { AGREEMENTS_ENDPOINT, REFDATA_ENDPOINT } from '../../constants/endpoints';
+import { useAddFromBasket } from '../../hooks';
 
 const [
   AGREEMENT_STATUS,
@@ -54,22 +51,16 @@ const AgreementCreateRoute = ({
   location,
   resources
 }) => {
-  const { authority, referenceId } = queryString.parse(location?.search);
-  const [query, setQuery] = useState(queryString.parse(location?.search));
-
-  // TODO look into hookifying this into a single solution
-  useEffect(() => {
-    const newQuery = queryString.parse(location.search);
-    if (!isEqual(newQuery, query)
-    ) {
-      setQuery(newQuery);
-    }
-  }, [location.search, query]);
-
   const callout = useContext(CalloutContext);
   const stripes = useStripes();
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
+
+  const {
+    handleBasketLinesAdded,
+    isExternalEntitlementLoading,
+    getAgreementLinesToAdd
+  } = useAddFromBasket(resources?.basket);
 
   const refdata = useRefdata({
     desc: [
@@ -100,41 +91,6 @@ const AgreementCreateRoute = ({
       })
   );
 
-  const getExternalEntitlementQuery = useCallback(() => {
-    const queryArray = [];
-
-    if (authority) {
-      queryArray.push(`authority=${authority}`);
-    }
-
-    if (referenceId) {
-      queryArray.push(`reference=${referenceId}`);
-    }
-
-
-    if (queryArray.length) {
-      return `?${queryArray.join('&')}`;
-    }
-    return '';
-  }, [authority, referenceId]);
-
-  const { data: externalEntitlement, isLoading: isExternalEntitlementLoading } = useQuery(
-    [AGREEMENT_LINES_EXTERNAL_ENDPOINT, authority, referenceId, 'AgreementCreateRoute', 'getExternalEntitlements'],
-    () => ky.get(`${AGREEMENT_LINES_EXTERNAL_ENDPOINT}${getExternalEntitlementQuery()}`).json(),
-    {
-      enabled: (!!referenceId || !!authority)
-    }
-  );
-
-  const handleBasketLinesAdded = () => {
-    // This is a replacement of the old "query" management we had previously.
-    // This could be centralised
-    history.push({
-      pathname: location.pathname,
-      search: ''
-    });
-  };
-
   const handleClose = () => {
     history.push(`${urls.agreements()}${location.search}`);
   };
@@ -145,29 +101,6 @@ const AgreementCreateRoute = ({
     splitRelatedAgreements(agreement, relationshipTypeValues);
 
     postAgreement(agreement);
-  };
-
-  const getAgreementLinesToAdd = () => {
-    const linesToAdd = [];
-
-    let basketLines = [];
-    if (query.addFromBasket) {
-      const basket = resources?.basket ?? [];
-
-      basketLines = query.addFromBasket
-        .split(',')
-        .map(index => ({ resource: basket[parseInt(index, 10)] }))
-        .filter(line => line.resource); // check that there _was_ a basket item at that index
-    }
-
-    if (externalEntitlement) {
-      linesToAdd.push(externalEntitlement);
-    }
-
-    linesToAdd.push(...basketLines);
-
-
-    return linesToAdd;
   };
 
   const fetchIsPending = () => {
@@ -216,6 +149,7 @@ const AgreementCreateRoute = ({
 };
 
 AgreementCreateRoute.manifest = Object.freeze({
+  // TODO we don't want to be using this, see https://issues.folio.org/browse/ERM-2183
   basket: { initialValue: [] },
 });
 
