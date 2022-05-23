@@ -59,7 +59,7 @@ const AgreementViewRoute = ({
     },
     isLoading: isAgreementLoading
   } = useQuery(
-    [agreementPath, 'ui-agreements', 'AgreementViewRoute', 'getAgreement'],
+    [agreementPath, 'getAgreement'],
     () => ky.get(agreementPath).json()
   );
 

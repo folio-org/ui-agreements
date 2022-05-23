@@ -28,7 +28,7 @@ const AgreementLineEditRoute = ({
   const isSuppressFromDiscoveryEnabled = useSuppressFromDiscovery();
 
   const { data: agreementLine = {}, isLoading: isLineLoading } = useQuery(
-    [AGREEMENT_LINE_ENDPOINT(lineId), 'ui-agreements', 'AgreementLineEditRoute', 'getLine'],
+    [AGREEMENT_LINE_ENDPOINT(lineId), 'getLine'],
     () => ky.get(AGREEMENT_LINE_ENDPOINT(lineId)).json()
   );
 

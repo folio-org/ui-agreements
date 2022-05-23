@@ -81,7 +81,7 @@ const AgreementEditRoute = ({
   });
 
   const { data: agreement, isLoading: isAgreementLoading } = useQuery(
-    [AGREEMENT_ENDPOINT(agreementId), 'AgreementEditRoute', 'getAgreement'],
+    [AGREEMENT_ENDPOINT(agreementId), 'getAgreement'],
     () => ky.get(AGREEMENT_ENDPOINT(agreementId)).json()
   );
 

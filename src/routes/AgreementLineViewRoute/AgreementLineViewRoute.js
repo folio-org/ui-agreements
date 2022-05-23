@@ -27,7 +27,7 @@ const AgreementLineViewRoute = ({
   const agreementLinePath = AGREEMENT_LINE_ENDPOINT(lineId);
 
   const { data: agreementLine = {}, isLoading: isLineQueryLoading } = useQuery(
-    [agreementLinePath, 'ui-agreements', 'AgreementLineViewRoute', 'getLine'],
+    [AGREEMENT_LINE_ENDPOINT(lineId), 'getLine'],
     () => ky.get(agreementLinePath).json()
   );
 

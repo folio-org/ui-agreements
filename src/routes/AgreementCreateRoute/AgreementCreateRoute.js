@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { isEqual } from 'lodash/isEqual';
+import isEqual from 'lodash/isEqual';
 
 import compose from 'compose-function';
 
@@ -118,7 +118,7 @@ const AgreementCreateRoute = ({
     return '';
   }, [authority, referenceId]);
 
-  const { data: externalEntitlement = {}, isLoading: isExternalEntitlementLoading } = useQuery(
+  const { data: externalEntitlement, isLoading: isExternalEntitlementLoading } = useQuery(
     [AGREEMENT_LINES_EXTERNAL_ENDPOINT, authority, referenceId, 'AgreementCreateRoute', 'getExternalEntitlements'],
     () => ky.get(`${AGREEMENT_LINES_EXTERNAL_ENDPOINT}${getExternalEntitlementQuery()}`).json(),
     {
@@ -148,6 +148,8 @@ const AgreementCreateRoute = ({
   };
 
   const getAgreementLinesToAdd = () => {
+    const linesToAdd = [];
+
     let basketLines = [];
     if (query.addFromBasket) {
       const basket = resources?.basket ?? [];
@@ -158,10 +160,14 @@ const AgreementCreateRoute = ({
         .filter(line => line.resource); // check that there _was_ a basket item at that index
     }
 
-    return [
-      externalEntitlement,
-      ...basketLines,
-    ];
+    if (externalEntitlement) {
+      linesToAdd.push(externalEntitlement)
+    }
+
+    linesToAdd.push(...basketLines);
+
+
+    return linesToAdd;
   };
 
   const fetchIsPending = () => {

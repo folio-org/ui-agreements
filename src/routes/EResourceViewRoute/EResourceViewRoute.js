@@ -36,7 +36,7 @@ const EResourceViewRoute = ({
   const eresourcePath = ERESOURCE_ENDPOINT(eresourceId);
 
   const { data: eresource = {}, isLoading: isEresourceLoading } = useQuery(
-    [eresourcePath, 'ui-agreements', 'EresourceViewRoute', 'getEresource'],
+    [eresourcePath, 'getEresource'],
     () => ky.get(eresourcePath).json()
   );
 
