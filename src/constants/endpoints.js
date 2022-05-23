@@ -25,6 +25,9 @@ export const PCI_ENDPOINT = (pciId) => `erm/pci/${pciId}`;
 export const TITLES_ENDPOINT = 'erm/titles';
 export const TITLE_ENDPOINT = (tiId) => `erm/titles/${tiId}`;
 
+export const PLATFORMS_ENDPOINT = 'erm/platforms';
+export const PLATFORM_ENDPOINT = (platformId) => `${PLATFORMS_ENDPOINT}/${platformId}`;
+
 export const MOD_SETTINGS_ENDPOINT = 'configurations/entries';
 
 export const ORDER_LINES_ENDPOINT = 'orders/order-lines';

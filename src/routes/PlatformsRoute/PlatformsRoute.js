@@ -8,6 +8,7 @@ import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 import View from '../../components/views/Platforms';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
+import { PLATFORMS_ENDPOINT } from '../../constants/endpoints';
 
 const INITIAL_RESULT_COUNT = 50;
 
@@ -30,8 +31,6 @@ const PlatformsRoute = ({
     }
   }, []); // This isn't particularly great, but in the interests of saving time migrating, it will have to do
 
-  const platformsPath = 'erm/platforms';
-
   const platformsQueryParams = useMemo(() => (
     generateKiwtQueryParams({
       searchKey: 'name',
@@ -49,10 +48,10 @@ const PlatformsRoute = ({
     results: platforms = [],
     total: platformsCount = 0
   } = useInfiniteFetch(
-    [platformsPath, platformsQueryParams, 'ui-agreements', 'PlatformsRoute', 'getPlatforms'],
+    [PLATFORMS_ENDPOINT, platformsQueryParams, 'ui-agreements', 'PlatformsRoute', 'getPlatforms'],
     ({ pageParam = 0 }) => {
       const params = [...platformsQueryParams, `offset=${pageParam}`];
-      return ky.get(encodeURI(`${platformsPath}?${params?.join('&')}`)).json();
+      return ky.get(encodeURI(`${PLATFORMS_ENDPOINT}?${params?.join('&')}`)).json();
     }
   );
 
