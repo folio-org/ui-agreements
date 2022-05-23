@@ -11,7 +11,6 @@ import { refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
 
-import { withAsyncValidation } from '@folio/stripes-erm-components';
 import withFileHandlers from '../components/withFileHandlers';
 import { splitRelatedAgreements } from '../utilities/processRelatedAgreements';
 import View from '../../components/views/AgreementForm';
@@ -45,7 +44,6 @@ const [
 ];
 
 const AgreementCreateRoute = ({
-  checkAsyncValidation,
   handlers = {},
   history,
   location,
@@ -138,7 +136,6 @@ const AgreementCreateRoute = ({
       handlers={{
         ...handlers,
         onBasketLinesAdded: handleBasketLinesAdded,
-        onAsyncValidate: checkAsyncValidation,
         onClose: handleClose,
       }}
       initialValues={getInitialValues()}
@@ -154,7 +151,6 @@ AgreementCreateRoute.manifest = Object.freeze({
 });
 
 AgreementCreateRoute.propTypes = {
-  checkAsyncValidation: PropTypes.func,
   handlers: PropTypes.object,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
@@ -174,6 +170,5 @@ AgreementCreateRoute.propTypes = {
 
 export default compose(
   withFileHandlers,
-  withAsyncValidation,
   stripesConnect
 )(AgreementCreateRoute);

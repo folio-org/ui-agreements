@@ -48,7 +48,6 @@ const [
 ];
 
 const AgreementEditRoute = ({
-  checkAsyncValidation,
   handlers = {},
   history,
   location,
@@ -256,7 +255,6 @@ const AgreementEditRoute = ({
       handlers={{
         ...handlers,
         onBasketLinesAdded: handleBasketLinesAdded,
-        onAsyncValidate: checkAsyncValidation,
         onClose: handleClose,
       }}
       initialValues={getInitialValues()}
@@ -286,7 +284,6 @@ AgreementEditRoute.manifest = Object.freeze({
 });
 
 AgreementEditRoute.propTypes = {
-  checkAsyncValidation: PropTypes.func,
   handlers: PropTypes.object,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
