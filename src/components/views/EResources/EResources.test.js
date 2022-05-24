@@ -1,7 +1,7 @@
 
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
@@ -22,12 +22,7 @@ jest.mock('../../IdentifierReassignmentForm', () => () => <div>IdentifierReassig
 const mockSubmit = jest.fn();
 jest.mock('@folio/stripes-erm-components', () => ({
   ...jest.requireActual('@folio/stripes-erm-components'),
-  useHandleSubmitSearch: () => ({
-    handleSubmitSearch: jest.fn().mockImplementation((e) => {
-      e.preventDefault();
-      mockSubmit();
-    })
-  }),
+  ...mockErmComponents
 }));
 
 describe('EResources', () => {

@@ -4,7 +4,7 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 import { useQuery } from 'react-query';
 import { useStripes } from '@folio/stripes/core';
 
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
 import { noop } from 'lodash';
 import eresources from './testResources';
@@ -25,6 +25,10 @@ const routeProps = {
   resources: { eresources }
 };
 
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  ...mockErmComponents
+}));
 
 useQuery.mockImplementation(() => ({
   data: [],

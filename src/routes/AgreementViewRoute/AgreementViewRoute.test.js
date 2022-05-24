@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 
-import { useMutation, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
@@ -139,6 +139,11 @@ CloneButton.propTypes = {
 
 const historyPushMock = jest.fn();
 const mutatorFetchReplaceMock = jest.fn();
+
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  ...mockErmComponents
+}));
 
 jest.mock('../../components/views/Agreement', () => {
   return (props) => (

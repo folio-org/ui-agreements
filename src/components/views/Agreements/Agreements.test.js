@@ -1,7 +1,7 @@
 
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
@@ -19,6 +19,10 @@ jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
 
 jest.mock('../../AgreementFilters', () => () => <div>AgreementFilters</div>);
 
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  ...mockErmComponents
+}));
 
 const mockSubmit = jest.fn();
 describe('Agreements', () => {
