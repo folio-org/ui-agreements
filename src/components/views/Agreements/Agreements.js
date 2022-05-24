@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
+// FIXME DO NOT MERGE THIS
+import { NumberGeneratorModalButton, NumberGeneratorButton, useGenerateNumber } from '@folio/service-interaction';
+
 import {
   Button,
   ButtonGroup,
@@ -84,6 +87,12 @@ const Agreements = ({
     setFilterPaneIsVisible(!filterPaneIsVisible);
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
   };
+
+  const { generate } = useGenerateNumber({
+    generator: 'UserBarcode',
+    sequence: 'patron',
+    callback: (num) => console.log("HOMEROLLED: %o", num)
+  })
 
   const goToNew = () => {
     history.push(`${urls.agreementCreate()}${searchString}`);
@@ -267,6 +276,22 @@ const Agreements = ({
                     paneTitle={<FormattedMessage id="ui-agreements.agreements" />}
                     paneTitleRef={resultsPaneTitleRef}
                   >
+                    {/* FIXME DO NOT MERGE THIS */}
+                    <NumberGeneratorModalButton
+                      id="agreements-number-generator"
+                      callback={(gen) => console.log(gen)}
+                      generator={'UserBarcode'}
+                    />
+                    <NumberGeneratorButton
+                      callback={(n) => console.log("SEPARATE BUTTON: %o", n)}
+                      generator={'UserBarcode'}
+                      sequence={'patron'}
+                    />
+                    <Button
+                      onClick={generate}
+                    >
+                      home rolled gen
+                    </Button>
                     <MultiColumnList
                       autosize
                       columnMapping={{
