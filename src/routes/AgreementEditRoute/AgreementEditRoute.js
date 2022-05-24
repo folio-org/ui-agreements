@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { cloneDeep } from 'lodash';
-import compose from 'compose-function';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 

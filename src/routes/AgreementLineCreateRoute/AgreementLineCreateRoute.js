@@ -4,20 +4,19 @@ import { FormattedMessage } from 'react-intl';
 
 import { useMutation, useQueryClient } from 'react-query';
 
-import compose from 'compose-function';
 import { isEmpty } from 'lodash';
 
 import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { isPackage } from '@folio/stripes-erm-components';
 
 import View from '../../components/views/AgreementLineForm';
-import { urls, withSuppressFromDiscovery } from '../../components/utilities';
+import { urls } from '../../components/utilities';
 import { AGREEMENT_LINES_ENDPOINT, AGREEMENT_ENDPOINT } from '../../constants/endpoints';
+import { useSuppressFromDiscovery } from '../../hooks';
 
 const AgreementLineCreateRoute = ({
   handlers,
   history,
-  isSuppressFromDiscoveryEnabled,
   location,
   match: { params: { agreementId } },
   resources
@@ -26,6 +25,8 @@ const AgreementLineCreateRoute = ({
   const ky = useOkapiKy();
   const stripes = useStripes();
   const queryClient = useQueryClient();
+
+  const isSuppressFromDiscoveryEnabled = useSuppressFromDiscovery();
 
   const handleClose = () => {
     history.push(`${urls.agreementView(agreementId)}${location.search}`);
@@ -102,7 +103,6 @@ AgreementLineCreateRoute.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
   }).isRequired,
@@ -120,7 +120,4 @@ AgreementLineCreateRoute.propTypes = {
   }).isRequired,
 };
 
-export default compose(
-  stripesConnect,
-  withSuppressFromDiscovery,
-)(AgreementLineCreateRoute);
+export default stripesConnect(AgreementLineCreateRoute);
