@@ -69,10 +69,9 @@ describe('EResourcesRoute', () => {
   describe('rendering with no permissions', () => {
     let renderComponent;
     beforeEach(() => {
-      useStripes.mockImplementationOnce(() => ({
-        ...useStripes(),
-        hasPerm: () => false
-      }));
+      const { hasPerm } = useStripes();
+      hasPerm.mockImplementation(() => false);
+
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <EResourcesRoute

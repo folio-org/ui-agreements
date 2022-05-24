@@ -2,9 +2,13 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
+
 import { Pane, Button, TextField, MultiColumnList } from '@folio/stripes-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
+
 import Agreements from './Agreements';
 import data from './testResources';
 
@@ -15,18 +19,14 @@ jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
 
 jest.mock('../../AgreementFilters', () => () => <div>AgreementFilters</div>);
 
-const mockSubmit = jest.fn();
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  useHandleSubmitSearch: () => ({
-    handleSubmitSearch: jest.fn().mockImplementation((e) => {
-      e.preventDefault();
-      mockSubmit();
-    })
-  }),
-}));
 
+const mockSubmit = jest.fn();
 describe('Agreements', () => {
+  useHandleSubmitSearch.mockImplementation(() => ({
+    handleSubmitSearch: mockSubmit,
+    resultsPaneTitleRef: null
+  }));
+
   let renderComponent;
   beforeEach(() => {
     renderComponent = renderWithIntl(
@@ -37,8 +37,11 @@ describe('Agreements', () => {
           queryGetter={jest.fn()}
           querySetter={jest.fn()}
           source={{
-            loaded: () => true,
-            totalCount: () => data.agreements.length
+            totalCount: jest.fn(() => data.agreements.length),
+            loaded: jest.fn(() => true),
+            pending: jest.fn(() => false),
+            failure: jest.fn(() => false),
+            failureMessage: jest.fn(() => null)
           }}
         >
           <div>children</div>

@@ -2,6 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { useQuery } from 'react-query';
+import { useStripes } from '@folio/stripes/core';
+
 import { MemoryRouter } from 'react-router-dom';
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
@@ -38,57 +42,21 @@ jest.mock('../../components/views/PCIForm', () => {
 });
 
 const data = {
-  isSuppressFromDiscoveryEnabled: () => jest.fn(),
   history: {
     push: historyPushMock
   },
   location: {
     search: ''
   },
-  mutator: {
-    pci: {
-      PUT: noop
-    },
-    title: {
-      PUT: noop
-    },
-  },
   match: {
     params: {
       id: ''
     }
   },
-  resources: {
-    eresource,
-    settings,
-  }
 };
 
-const isPendingData = {
-  isSuppressFromDiscoveryEnabled: () => jest.fn(),
-  history: {
-    push: () => jest.fn()
-  },
-  location: {
-    search: ''
-  },
-  mutator: {
-    pci: {
-      PUT: noop
-    },
-    title: {
-      PUT: noop
-    },
-  },
-  match: {
-    params: {
-      id: ''
-    }
-  },
-  resources: {
-    loadingView
-  }
-};
+// Default mock implementation
+useQuery.mockImplementation(() => ({ data: eresource, isLoading: false }));
 
 describe('EResourceEditRoute', () => {
   describe('rendering the route with permissions', () => {
@@ -122,9 +90,10 @@ describe('EResourceEditRoute', () => {
   describe('rendering loading view', () => {
     let renderComponent;
     beforeEach(() => {
+      useQuery.mockImplementation(() => ({ data: {}, isLoading: true }));
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <EResourceEditRoute {...isPendingData} />
+          <EResourceEditRoute {...data} />
         </MemoryRouter>,
         translationsProperties
       );
@@ -139,6 +108,9 @@ describe('EResourceEditRoute', () => {
   describe('rendering with no permissions', () => {
     let renderComponent;
     beforeEach(() => {
+      const { hasPerm } = useStripes();
+      hasPerm.mockImplementation(() => false);
+
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <EResourceEditRoute

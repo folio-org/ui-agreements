@@ -43,7 +43,7 @@ import {
 
 import IfAccordionIsVisible from '../../IfAccordionIsVisible';
 import { CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
-import useAgreementsContexts from '../../../hooks/useAgreementsContexts';
+import { useAgreementsContexts } from '../../../hooks';
 
 const AgreementForm = ({
   data = {},
