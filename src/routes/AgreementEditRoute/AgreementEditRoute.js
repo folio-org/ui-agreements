@@ -109,7 +109,7 @@ const AgreementEditRoute = ({
   });
 
   // Users
-  const { data: { users = [] } = {} } = useUsers(agreement?.contacts.filter(c => c.user)?.map(c => c.user));
+  const { data: { users = [] } = {} } = useUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user));
 
   const { mutateAsync: putAgreement } = useMutation(
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
@@ -295,22 +295,14 @@ AgreementEditRoute.propTypes = {
       GET: PropTypes.func.isRequired,
       reset: PropTypes.func.isRequired,
     }),
-    query: PropTypes.shape({
-      update: PropTypes.func.isRequired
-    }).isRequired,
   }).isRequired,
   resources: PropTypes.shape({
     basket: PropTypes.arrayOf(PropTypes.object),
     acquisitionMethod: PropTypes.shape({
       records: PropTypes.arrayOf(PropTypes.object),
     }),
-    query: PropTypes.shape({
-      addFromBasket: PropTypes.string,
-    }),
   }).isRequired,
   stripes: PropTypes.shape({
-    hasInterface: PropTypes.func.isRequired,
     hasPerm: PropTypes.func.isRequired,
-    okapi: PropTypes.object.isRequired,
   }).isRequired,
 };
