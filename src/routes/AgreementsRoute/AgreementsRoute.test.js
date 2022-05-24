@@ -3,7 +3,8 @@ import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-import { noop } from 'lodash';
+
+import { useStripes } from '@folio/stripes/core';
 import translationsProperties from '../../../test/helpers';
 import AgreementsRoute from './AgreementsRoute';
 
@@ -15,6 +16,11 @@ jest.mock('@folio/stripes-erm-components', () => ({
 jest.mock('@folio/stripes-components', () => ({
   ...jest.requireActual('@folio/stripes-components'),
   Selection: () => <div>Selection</div>,
+}));
+
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useAgreementsSettings: jest.fn(() => ({ data: { configs: [{}] } })),
 }));
 
 const agreements = {
@@ -193,10 +199,6 @@ const routeProps = {
   match: {
     params: {},
   },
-  mutator: {
-    query: { update: noop },
-  },
-  resources: { agreements }
 };
 
 describe('AgreementsRoute', () => {
@@ -237,11 +239,12 @@ describe('AgreementsRoute', () => {
   describe('rendering with no permissions', () => {
     let renderComponent;
     beforeEach(() => {
+      const { hasPerm } = useStripes();
+      hasPerm.mockImplementation(() => false);
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <AgreementsRoute
             {...routeProps}
-            stripes={{ hasPerm: () => false }}
           />
         </MemoryRouter>,
         translationsProperties

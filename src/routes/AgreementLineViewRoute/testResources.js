@@ -28,25 +28,7 @@ const line = {
   'throwErrors': false
 };
 
-const orderLines = {
-  'hasLoaded': false,
-  'isPending': false,
-  'failed': false,
-  'records': [],
-  'successfulMutations': [],
-  'failedMutations': [],
-  'pendingMutations': []
-};
-
-const query = {
-  'query': '',
-  'filters': 'agreementStatus.active,agreementStatus.draft,agreementStatus.in_negotiation,agreementStatus.requested',
-  'sort': 'name'
-};
-
 export {
   match,
   line,
-  orderLines,
-  query
 };

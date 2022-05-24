@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '@folio/stripes-erm-components/test/jest/__mock__';
+
+import { useQuery } from 'react-query';
+
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-import { noop } from 'lodash';
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
 import {
   match,
   line,
-  orderLines,
-  query
 } from './testResources';
 import translationsProperties from '../../../test/helpers';
 import AgreementLineViewRoute from './AgreementLineViewRoute';
@@ -47,6 +47,11 @@ ToggleTagsButton.propTypes = {
 
 const historyPushMock = jest.fn();
 
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useSuppressFromDiscovery: jest.fn(() => () => true),
+}));
+
 jest.mock('../../components/views/AgreementLine', () => {
   return (props) => (
     <div>
@@ -59,36 +64,16 @@ jest.mock('../../components/views/AgreementLine', () => {
 });
 
 const data = {
-  isSuppressFromDiscoveryEnabled: () => jest.fn(),
   history: {
     push: historyPushMock
   },
   location: {
     search: ''
   },
-  mutator: {
-    line: {
-      GET: noop,
-      reset: () => {},
-    },
-    mutator: {
-      line: {
-        GET: noop,
-        reset: () => {},
-      },
-      orderLines: {
-        GET: noop,
-        reset: () => {},
-      },
-    },
-  },
-  resources: {
-    line,
-    query,
-    orderLines,
-  },
   match
 };
+
+useQuery.mockImplementation(() => ({ data: line, isLoading: false }));
 
 describe('AgreementLineViewRoute', () => {
   let renderComponent;

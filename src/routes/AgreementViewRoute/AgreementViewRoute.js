@@ -69,7 +69,7 @@ const AgreementViewRoute = ({
   const settings = useAgreementsSettings();
 
   // Users
-  const { data: { users = [] } = {} } = useUsers(agreement?.contacts.filter(c => c.user)?.map(c => c.user));
+  const { data: { users = [] } = {} } = useUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user));
 
   // AGREEMENT LINES INFINITE FETCH
   const agreementLineQueryParams = useMemo(() => (
@@ -383,29 +383,17 @@ AgreementViewRoute.propTypes = {
     }).isRequired
   }).isRequired,
   mutator: PropTypes.shape({
-    eresourcesFilterPath: PropTypes.shape({
-      replace: PropTypes.func,
-    }),
     interfaceRecord: PropTypes.shape({
       replace: PropTypes.func,
     }),
   }),
   resources: PropTypes.shape({
-    agreement: PropTypes.object,
-    agreementLines: PropTypes.object,
-    agreementEresources: PropTypes.object,
-    eresourcesFilterPath: PropTypes.string,
     interfaces: PropTypes.object,
     query: PropTypes.object,
   }).isRequired,
   stripes: PropTypes.shape({
     hasInterface: PropTypes.func.isRequired,
     hasPerm: PropTypes.func.isRequired,
-    okapi: PropTypes.shape({
-      tenant: PropTypes.string.isRequired,
-      token: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-    }).isRequired,
   }).isRequired,
 };
 

@@ -24,6 +24,11 @@ CloseButton.propTypes = {
 };
 const historyPushMock = jest.fn();
 
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useSuppressFromDiscovery: jest.fn(() => () => true),
+}));
+
 jest.mock('../../components/views/AgreementLineForm', () => {
   return (props) => (
     <div>

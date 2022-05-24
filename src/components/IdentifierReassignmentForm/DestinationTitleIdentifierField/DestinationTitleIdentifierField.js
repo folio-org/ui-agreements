@@ -25,7 +25,7 @@ import { urls } from '../../utilities';
 const propTypes = {
   formRestart: PropTypes.func,
   previewModal: PropTypes.bool,
-  setTitleName: PropTypes.bool,
+  setTitleName: PropTypes.func,
 };
 
 const DestinationTitleIdentifierField = ({ setTitleName }) => {

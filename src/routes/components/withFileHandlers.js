@@ -22,14 +22,7 @@ export default function withFileHandlers(WrappedComponent) {
   };
 
   WithFileHandlers.propTypes = {
-    handlers: PropTypes.object,
-    stripes: PropTypes.shape({
-      okapi: PropTypes.shape({
-        tenant: PropTypes.string.isRequired,
-        token: PropTypes.string.isRequired,
-        url: PropTypes.string,
-      }).isRequired,
-    }).isRequired,
+    handlers: PropTypes.object
   };
 
   WithFileHandlers.displayName = `WithFileHandlers(${getDisplayName(WrappedComponent)})`;
