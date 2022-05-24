@@ -5,14 +5,12 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { get, flatten, uniqBy } from 'lodash';
-import compose from 'compose-function';
 
 import { CalloutContext, stripesConnect, useOkapiKy } from '@folio/stripes/core';
 import { useInfiniteFetch, useUsers } from '@folio/stripes-erm-components';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
-import withFileHandlers from '../components/withFileHandlers';
 import View from '../../components/views/Agreement';
 import { parseMclPageSize, urls } from '../../components/utilities';
 import { errorTypes, resultCount } from '../../constants';
@@ -411,7 +409,4 @@ AgreementViewRoute.propTypes = {
   }).isRequired,
 };
 
-export default compose(
-  withFileHandlers,
-  stripesConnect,
-)(AgreementViewRoute);
+export default stripesConnect(AgreementViewRoute);

@@ -13,7 +13,6 @@ import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { useBatchedFetch, useUsers } from '@folio/stripes-erm-components';
 
-import withFileHandlers from '../components/withFileHandlers';
 import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/processRelatedAgreements';
 import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
@@ -264,10 +263,7 @@ const AgreementEditRoute = ({
   );
 };
 
-export default compose(
-  withFileHandlers,
-  stripesConnect
-)(AgreementEditRoute);
+export default stripesConnect(AgreementEditRoute);
 
 AgreementEditRoute.manifest = Object.freeze({
   acquisitionMethod: {

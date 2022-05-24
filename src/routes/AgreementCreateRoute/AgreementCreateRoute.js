@@ -2,8 +2,6 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import compose from 'compose-function';
-
 import { useMutation, useQueryClient } from 'react-query';
 
 import { refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
@@ -11,7 +9,6 @@ import { refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
 
-import withFileHandlers from '../components/withFileHandlers';
 import { splitRelatedAgreements } from '../utilities/processRelatedAgreements';
 import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
@@ -168,7 +165,4 @@ AgreementCreateRoute.propTypes = {
   }).isRequired,
 };
 
-export default compose(
-  withFileHandlers,
-  stripesConnect
-)(AgreementCreateRoute);
+export default stripesConnect(AgreementCreateRoute);

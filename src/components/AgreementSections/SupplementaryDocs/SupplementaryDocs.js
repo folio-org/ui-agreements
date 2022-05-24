@@ -3,22 +3,22 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { Accordion, Badge } from '@folio/stripes/components';
-import { DocumentCard } from '@folio/stripes-erm-components';
+import { DocumentCard, useFileHandlers } from '@folio/stripes-erm-components';
 import { useStripes } from '@folio/stripes/core';
 
 const SupplementaryDocs = ({
   agreement: { supplementaryDocs = [] } = {},
-  handlers,
   id
 }) => {
   const stripes = useStripes();
+  const { handleDownloadFile } = useFileHandlers('erm/files');
 
   const renderDocs = (docs) => {
     return docs.map(doc => (
       <DocumentCard
         key={doc.id}
         hasDownloadPerm={stripes.hasPerm('ui-agreements.agreements.file.download')}
-        onDownloadFile={handlers.onDownloadFile}
+        onDownloadFile={handleDownloadFile}
         {...doc}
       />
     ));
@@ -45,9 +45,6 @@ const SupplementaryDocs = ({
 };
 
 SupplementaryDocs.propTypes = {
-  handlers: PropTypes.shape({
-    onDownloadFile: PropTypes.func,
-  }),
   agreement: PropTypes.shape({
     supplementaryDocs: PropTypes.arrayOf(
       PropTypes.shape({
