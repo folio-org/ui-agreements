@@ -11,7 +11,7 @@ import { refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useBatchedFetch, useUsers, withAsyncValidation } from '@folio/stripes-erm-components';
+import { useBatchedFetch, useUsers } from '@folio/stripes-erm-components';
 
 import withFileHandlers from '../components/withFileHandlers';
 import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/processRelatedAgreements';
@@ -266,7 +266,6 @@ const AgreementEditRoute = ({
 
 export default compose(
   withFileHandlers,
-  withAsyncValidation,
   stripesConnect
 )(AgreementEditRoute);
 
