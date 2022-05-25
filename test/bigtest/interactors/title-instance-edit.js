@@ -3,7 +3,7 @@ import {
   interactor,
   isPresent,
   property,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 export default @interactor class TitleInstanceEditPaneInteractor {
   isTitleForm = isPresent('#pane-title-form');

@@ -2,7 +2,7 @@ import {
   collection,
   interactor,
   text,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 @interactor class RelatedTitleInteractor {
   titleInstanceName = text('[data-test-title-instance-name]');

@@ -2,7 +2,7 @@ import {
   interactor,
   clickable,
   property,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 

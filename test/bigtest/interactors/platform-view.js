@@ -2,7 +2,7 @@ import {
   interactor,
   isPresent,
   text
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 export default @interactor class PlatformViewInteractor {
   isLoading = isPresent('#pane-view-platform[data-loading]');
