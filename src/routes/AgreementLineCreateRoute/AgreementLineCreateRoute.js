@@ -1,94 +1,50 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import compose from 'compose-function';
+import { useMutation, useQueryClient } from 'react-query';
+
 import { isEmpty } from 'lodash';
-import { CalloutContext, stripesConnect } from '@folio/stripes/core';
+
+import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { isPackage } from '@folio/stripes-erm-components';
+
 import View from '../../components/views/AgreementLineForm';
-import { urls, withSuppressFromDiscovery } from '../../components/utilities';
+import { urls } from '../../components/utilities';
+import { AGREEMENT_LINES_ENDPOINT, AGREEMENT_ENDPOINT } from '../../constants/endpoints';
+import { useSuppressFromDiscovery } from '../../hooks';
 
-class AgreementLineCreateRoute extends React.Component {
-  static manifest = Object.freeze({
-    entitlements: {
-      type: 'okapi',
-      path: 'erm/entitlements',
-      fetch: false,
-    },
-    basket: { initialValue: [] },
-  });
+const AgreementLineCreateRoute = ({
+  handlers,
+  history,
+  location,
+  match: { params: { agreementId } },
+  resources
+}) => {
+  const callout = useContext(CalloutContext);
+  const ky = useOkapiKy();
+  const stripes = useStripes();
+  const queryClient = useQueryClient();
 
-  static propTypes = {
-    handlers: PropTypes.object,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
-    location: PropTypes.shape({
-      search: PropTypes.string.isRequired,
-    }).isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        agreementId: PropTypes.string.isRequired,
-      }).isRequired
-    }).isRequired,
-    mutator: PropTypes.shape({
-      entitlements: PropTypes.shape({
-        POST: PropTypes.func.isRequired,
-      }),
-    }),
-    resources: PropTypes.shape({
-      basket: PropTypes.arrayOf(PropTypes.object),
-      line: PropTypes.object,
-      orderLines: PropTypes.object,
-    }).isRequired,
-    stripes: PropTypes.shape({
-      hasInterface: PropTypes.func.isRequired,
-      hasPerm: PropTypes.func.isRequired,
-    }).isRequired,
+  const isSuppressFromDiscoveryEnabled = useSuppressFromDiscovery();
+
+  const handleClose = () => {
+    history.push(`${urls.agreementView(agreementId)}${location.search}`);
   };
 
-  static contextType = CalloutContext;
+  const { mutateAsync: postAgreementLine } = useMutation(
+    [AGREEMENT_LINES_ENDPOINT, 'ui-agreements', 'AgreementLineCreateRoute', 'createAgreementLine'],
+    (payload) => ky.post(AGREEMENT_LINES_ENDPOINT, { json: { ...payload, owner: agreementId } }).json()
+      .then(({ id }) => {
+        /* Invalidate cached queries */
+        queryClient.invalidateQueries(AGREEMENT_ENDPOINT(agreementId));
 
-  constructor(props) {
-    super(props);
+        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.create.callout" /> });
+        history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
+      })
+  );
 
-    this.state = {
-      isEholdingsEnabled: props.stripes.hasPerm('module.eholdings.enabled'),
-    };
-  }
-
-  getCompositeLine = () => {
-    const { resources } = this.props;
-    const line = resources.line?.records?.[0] ?? {};
-    const orderLines = resources.orderLines?.records || [];
-
-    const poLines = (line.poLines || [])
-      .map(linePOL => orderLines.find(orderLine => orderLine.id === linePOL.poLineId))
-      .filter(poLine => poLine);
-
-    return {
-      ...line,
-      poLines,
-    };
-  }
-
-  handleClose = () => {
-    const {
-      history,
-      location,
-      match: { params: { agreementId } },
-    } = this.props;
-    history.push(`${urls.agreementView(agreementId)}${location.search}`);
-  }
-
-  /* istanbul ignore next */
-  handleSubmit = (line) => {
-    const {
-      match: { params: { agreementId } },
-    } = this.props;
-
+  const handleSubmit = (line) => {
     const {
       linkedResource: resource,
       coverage,
@@ -119,41 +75,49 @@ class AgreementLineCreateRoute extends React.Component {
       };
     }
 
-    const {
-      history,
-      location,
-      mutator,
-    } = this.props;
+    postAgreementLine(items);
+  };
 
-    return mutator.entitlements
-      .POST({ ...items, 'owner': agreementId })
-      .then(({ id }) => {
-        this.context.sendCallout({ message: <FormattedMessage id="ui-agreements.line.create.callout" /> });
-        history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
-      });
-  }
+  return (
+    <View
+      data={{
+        basket: (resources?.basket ?? []),
+      }}
+      handlers={{
+        ...handlers,
+        isSuppressFromDiscoveryEnabled,
+        onClose: handleClose,
+      }}
+      isEholdingsEnabled={stripes.hasPerm('module.eholdings.enabled')}
+      onSubmit={handleSubmit}
+    />
+  );
+};
 
-  render() {
-    const { resources, isSuppressFromDiscoveryEnabled } = this.props;
+AgreementLineCreateRoute.manifest = Object.freeze({
+  basket: { initialValue: [] },
+});
 
-    return (
-      <View
-        data={{
-          basket: (resources?.basket ?? []),
-        }}
-        handlers={{
-          ...this.props.handlers,
-          isSuppressFromDiscoveryEnabled,
-          onClose: this.handleClose,
-        }}
-        isEholdingsEnabled={this.state.isEholdingsEnabled}
-        onSubmit={this.handleSubmit}
-      />
-    );
-  }
-}
+AgreementLineCreateRoute.propTypes = {
+  handlers: PropTypes.object,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      agreementId: PropTypes.string.isRequired,
+    }).isRequired
+  }).isRequired,
+  resources: PropTypes.shape({
+    basket: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+  stripes: PropTypes.shape({
+    hasInterface: PropTypes.func.isRequired,
+    hasPerm: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
-export default compose(
-  stripesConnect,
-  withSuppressFromDiscovery,
-)(AgreementLineCreateRoute);
+export default stripesConnect(AgreementLineCreateRoute);

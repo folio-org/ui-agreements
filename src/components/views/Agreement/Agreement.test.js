@@ -1,6 +1,7 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
 import { Button, Modal } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
@@ -10,6 +11,16 @@ import Agreement from './Agreement';
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   LoadingPane: () => <div>LoadingPane</div>,
+}));
+
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  ...mockErmComponents
+}));
+
+jest.mock('../../../hooks', () => ({
+  ...jest.requireActual('../../../hooks'),
+  useAgreementsContexts: jest.fn(() => ({ data: [] }))
 }));
 
 jest.mock('../../AgreementSections/AllPeriods', () => () => <div>AllPeriods</div>);
@@ -128,6 +139,11 @@ describe('Agreement', () => {
     it('renders the Organizations component', () => {
       const { getByText } = renderComponent;
       expect(getByText('Organizations')).toBeInTheDocument();
+    });
+
+    it('renders the CustomPropertiesView component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('CustomPropertiesView')).toBeInTheDocument();
     });
 
 

@@ -3,16 +3,17 @@ import PropTypes from 'prop-types';
 
 import { useQuery } from 'react-query';
 
-import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
-import { generateKiwtQueryParams, refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
+import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/EResources';
 import NoPermissions from '../../components/NoPermissions';
 import { getRefdataValuesByDesc, urls } from '../../components/utilities';
 import { resultCount } from '../../constants';
 
-import { ERESOURCES_ELECTRONIC_ENDPOINT, REFDATA_ENDPOINT } from '../../constants/endpoints';
+import { ERESOURCES_ELECTRONIC_ENDPOINT } from '../../constants/endpoints';
+import { useAgreementsRefdata } from '../../hooks';
 
 const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT;
 
@@ -29,10 +30,8 @@ const EResourcesRoute = ({
   history,
   location,
   match,
-  mutator,
-  resources,
-  stripes
 }) => {
+  const stripes = useStripes();
   const ky = useOkapiKy();
   const hasPerms = stripes.hasPerm('ui-agreements.agreements.view');
   const searchField = useRef();
@@ -44,16 +43,15 @@ const EResourcesRoute = ({
     }
   }, []); // This isn't particularly great, but in the interests of saving time migrating, it will have to do
 
-  const refdata = useRefdata({
+  const refdata = useAgreementsRefdata({
     desc: [
       PUB_TYPE,
       TYPE
-    ],
-    endpoint: REFDATA_ENDPOINT,
-    options: { ...refdataOptions, sort: [{ path: 'desc' }] }
+    ]
   });
 
   const { data: { tags = [] } = {} } = useTags();
+  const { query, querySetter, queryGetter } = useKiwtSASQuery();
 
   const eresourcesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
@@ -72,8 +70,8 @@ const EResourcesRoute = ({
         type: 'type.value'
       },
       perPage: RESULT_COUNT_INCREMENT
-    }, (resources?.query ?? {}))
-  ), [resources?.query]);
+    }, (query ?? {}))
+  ), [query]);
 
 
   const {
@@ -105,14 +103,6 @@ const EResourcesRoute = ({
     () => ky.get(kbsPath).json()
   );
 
-  const querySetter = ({ nsValues }) => {
-    mutator.query.update(nsValues);
-  };
-
-  const queryGetter = () => {
-    return resources?.query ?? {};
-  };
-
   if (!hasPerms) return <NoPermissions />;
 
   return (
@@ -142,10 +132,6 @@ const EResourcesRoute = ({
   );
 };
 
-EResourcesRoute.manifest = Object.freeze({
-  query: { initialValue: {} },
-});
-
 EResourcesRoute.propTypes = {
   children: PropTypes.node,
   history: PropTypes.shape({
@@ -160,12 +146,6 @@ EResourcesRoute.propTypes = {
       id: PropTypes.string,
     }),
   }),
-  mutator: PropTypes.object,
-  resources: PropTypes.object,
-  stripes: PropTypes.shape({
-    hasPerm: PropTypes.func.isRequired,
-    logger: PropTypes.object,
-  }),
 };
 
-export default stripesConnect(EResourcesRoute);
+export default EResourcesRoute;

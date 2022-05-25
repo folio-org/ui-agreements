@@ -1,5 +1,7 @@
+import orderBy from 'lodash/orderBy';
+
 const getRefdataValuesByDesc = (refdata, desc) => {
-  return refdata?.find(rd => rd.desc === desc)?.values ?? [];
+  return orderBy(refdata?.find(rd => rd.desc === desc)?.values ?? [], 'label', 'asc');
 };
 
 export default getRefdataValuesByDesc;

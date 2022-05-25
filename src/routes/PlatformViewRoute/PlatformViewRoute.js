@@ -7,6 +7,7 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import View from '../../components/views/Platform';
 import { urls } from '../../components/utilities';
+import { PLATFORM_ENDPOINT } from '../../constants/endpoints';
 
 const PlatformViewRoute = ({
   history,
@@ -15,10 +16,9 @@ const PlatformViewRoute = ({
 }) => {
   const ky = useOkapiKy();
 
-  const platformPath = `erm/platforms/${platformId}`;
   const { data: platform, isLoading: isPlatformLoading } = useQuery(
-    [platformPath, 'ui-agreements', 'PlatformViewRoute', 'getPlatform'],
-    () => ky.get(platformPath).json()
+    [PLATFORM_ENDPOINT(platformId), 'getPlatform'],
+    () => ky.get(PLATFORM_ENDPOINT(platformId)).json()
   );
 
   const stringTemplatesPath = `erm/sts/template/${platformId}`;

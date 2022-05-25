@@ -4,9 +4,10 @@ import { FormattedMessage } from 'react-intl';
 import { useHelperApp } from '@k-int/stripes-kint-components';
 
 import { IconButton } from '@folio/stripes/components';
-import { Tags } from '@folio/stripes-erm-components';
+import { Tags, useTagsEnabled } from '@folio/stripes-erm-components';
 
-const useAgreementsHelperApp = (tagsEnabled) => {
+const useAgreementsHelperApp = () => {
+  const tagsEnabled = useTagsEnabled();
   const { HelperComponent, helperToggleFunctions, isOpen } = useHelperApp({
     tags: Tags,
   });
@@ -17,7 +18,7 @@ const useAgreementsHelperApp = (tagsEnabled) => {
     }
   };
 
-  const TagButton = ({ entity, onClick = () => null }) => (
+  const TagButton = tagsEnabled ? ({ entity, onClick = () => null }) => (
     <FormattedMessage id="ui-agreements.agreements.showTags">
       {ariaLabel => (
         <IconButton
@@ -34,7 +35,7 @@ const useAgreementsHelperApp = (tagsEnabled) => {
         />
       )}
     </FormattedMessage>
-  );
+  ) : () => null;
 
   TagButton.propTypes = {
     entity: PropTypes.object,
