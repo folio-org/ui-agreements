@@ -5,14 +5,15 @@ import { useQuery } from 'react-query';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
-import { generateKiwtQueryParams, refdataOptions, useKiwtSASQuery, useRefdata } from '@k-int/stripes-kint-components';
+import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/EResources';
 import NoPermissions from '../../components/NoPermissions';
 import { getRefdataValuesByDesc, urls } from '../../components/utilities';
 import { resultCount } from '../../constants';
 
-import { ERESOURCES_ELECTRONIC_ENDPOINT, REFDATA_ENDPOINT } from '../../constants/endpoints';
+import { ERESOURCES_ELECTRONIC_ENDPOINT } from '../../constants/endpoints';
+import { useAgreementsRefdata } from '../../hooks';
 
 const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT;
 
@@ -42,13 +43,11 @@ const EResourcesRoute = ({
     }
   }, []); // This isn't particularly great, but in the interests of saving time migrating, it will have to do
 
-  const refdata = useRefdata({
+  const refdata = useAgreementsRefdata({
     desc: [
       PUB_TYPE,
       TYPE
-    ],
-    endpoint: REFDATA_ENDPOINT,
-    options: { ...refdataOptions, sort: [{ path: 'desc' }] }
+    ]
   });
 
   const { data: { tags = [] } = {} } = useTags();

@@ -6,8 +6,6 @@ import { cloneDeep } from 'lodash';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
-
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { useBatchedFetch, useUsers } from '@folio/stripes-erm-components';
@@ -17,9 +15,9 @@ import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
 import { getRefdataValuesByDesc, urls } from '../../components/utilities';
 import { endpoints } from '../../constants';
-import { useAddFromBasket, useChunkedOrderLines } from '../../hooks';
+import { useAddFromBasket, useAgreementsRefdata, useChunkedOrderLines } from '../../hooks';
 
-const { AGREEMENTS_ENDPOINT, AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT, REFDATA_ENDPOINT } = endpoints;
+const { AGREEMENTS_ENDPOINT, AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT } = endpoints;
 
 const [
   AGREEMENT_STATUS,
@@ -63,7 +61,7 @@ const AgreementEditRoute = ({
     getAgreementLinesToAdd
   } = useAddFromBasket(resources?.basket);
 
-  const refdata = useRefdata({
+  const refdata = useAgreementsRefdata({
     desc: [
       AGREEMENT_STATUS,
       REASON_FOR_CLOSURE,
@@ -75,9 +73,7 @@ const AgreementEditRoute = ({
       ORG_ROLE,
       RENEWAL_PRIORITY,
       RELATIONSHIP_TYPE
-    ],
-    endpoint: REFDATA_ENDPOINT,
-    options: { ...refdataOptions, sort: [{ path: 'desc' }] }
+    ]
   });
 
   const { data: agreement, isLoading: isAgreementLoading } = useQuery(

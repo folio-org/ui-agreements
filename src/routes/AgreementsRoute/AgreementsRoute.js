@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 import { stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
 
-import { generateKiwtQueryParams, useRefdata, refdataOptions, useKiwtSASQuery } from '@k-int/stripes-kint-components';
+import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Agreements';
 import NoPermissions from '../../components/NoPermissions';
 import { getRefdataValuesByDesc, urls } from '../../components/utilities';
 import { resultCount } from '../../constants';
-import { AGREEMENTS_ENDPOINT, REFDATA_ENDPOINT } from '../../constants/endpoints';
+import { AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
+import { useAgreementsRefdata } from '../../hooks';
 
 const {
   INITIAL_RESULT_COUNT,
@@ -41,16 +42,14 @@ const AgreementsRoute = ({
   const hasPerms = stripes.hasPerm('ui-agreements.agreements.view');
   const searchField = useRef();
 
-  const refdata = useRefdata({
+  const refdata = useAgreementsRefdata({
     desc: [
       AGREEMENT_STATUS,
       RENEWAL_PRIORITY,
       IS_PERPETUAL,
       CONTACT_ROLE,
       ORG_ROLE
-    ],
-    endpoint: REFDATA_ENDPOINT,
-    options: { ...refdataOptions, sort: [{ path: 'desc' }] }
+    ]
   });
 
   const { data: { tags = [] } = {} } = useTags();

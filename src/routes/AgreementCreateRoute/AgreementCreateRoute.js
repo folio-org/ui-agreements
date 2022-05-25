@@ -4,8 +4,6 @@ import { FormattedMessage } from 'react-intl';
 
 import { useMutation, useQueryClient } from 'react-query';
 
-import { refdataOptions, useRefdata } from '@k-int/stripes-kint-components';
-
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
 
@@ -13,8 +11,8 @@ import { splitRelatedAgreements } from '../utilities/processRelatedAgreements';
 import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
 import { getRefdataValuesByDesc, urls } from '../../components/utilities';
-import { AGREEMENTS_ENDPOINT, REFDATA_ENDPOINT } from '../../constants/endpoints';
-import { useAddFromBasket } from '../../hooks';
+import { AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
+import { useAddFromBasket, useAgreementsRefdata } from '../../hooks';
 
 const [
   AGREEMENT_STATUS,
@@ -57,7 +55,7 @@ const AgreementCreateRoute = ({
     getAgreementLinesToAdd
   } = useAddFromBasket(resources?.basket);
 
-  const refdata = useRefdata({
+  const refdata = useAgreementsRefdata({
     desc: [
       AGREEMENT_STATUS,
       REASON_FOR_CLOSURE,
@@ -69,9 +67,7 @@ const AgreementCreateRoute = ({
       ORG_ROLE,
       RENEWAL_PRIORITY,
       RELATIONSHIP_TYPE
-    ],
-    endpoint: REFDATA_ENDPOINT,
-    options: { ...refdataOptions, sort: [{ path: 'desc' }] }
+    ]
   });
 
   const { mutateAsync: postAgreement } = useMutation(
