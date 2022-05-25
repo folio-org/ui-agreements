@@ -1,35 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
+
+import { useQuery } from 'react-query';
+import { useStripes } from '@folio/stripes/core';
+
 import { Button } from '@folio/stripes/components';
+
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
-import { noop } from 'lodash';
 import translationsProperties from '../../../test/helpers';
 import AgreementEditRoute from './AgreementEditRoute';
 import {
-  okapi,
   match,
   location,
   agreement,
-  agreementLines,
-  agreementStatusValues,
-  amendmentStatusValues,
-  supplementaryProperties,
-  users,
   basket,
-  contactRoleValues,
-  documentCategories,
-  isPerpetualValues,
-  licenseLinkStatusValues,
-  orderLines,
-  orgRoleValues,
-  query,
-  reasonForClosureValues,
-  relationshipTypeValues,
-  renewalPriorityValues,
-  loadingView
 } from './testResources';
 
 const BasketLineButton = (props) => {
@@ -52,14 +39,27 @@ CloseButton.propTypes = {
   }),
 };
 
-
-const queryUpdateMock = jest.fn();
 const historyPushMock = jest.fn();
 const onSubmitMock = jest.fn();
+
+const mockBasketLinesAdded = jest.fn();
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   LoadingView: () => <div>LoadingView</div>,
+}));
+
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  ...mockErmComponents
+}));
+
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useAddFromBasket: () => ({
+    getAgreementLinesToAdd: () => [],
+    handleBasketLinesAdded: mockBasketLinesAdded
+  }),
 }));
 
 jest.mock('../../components/views/AgreementForm', () => {
@@ -73,103 +73,18 @@ jest.mock('../../components/views/AgreementForm', () => {
 });
 
 const data = {
-  checkAsyncValidation: () => jest.fn(),
-  handlers: {
-    onDownloadFile: () => { },
-    onUploadFile: () => { }
-  },
   history: {
     push: historyPushMock
   },
   location,
   match,
-  mutator: {
-    agreement: {
-      PUT: noop
-    },
-    agreementLines: {
-      reset: noop,
-      GET: noop
-    },
-    orderLines: {
-      reset: noop,
-      GET: noop
-    },
-    agreements: {
-      PUT: noop
-    },
-    query: {
-      update: queryUpdateMock
-    },
-  },
-  okapi,
   resources: {
-    agreement,
-    agreementLines,
-    agreementStatusValues,
-    amendmentStatusValues,
-    supplementaryProperties,
-    users,
     basket,
-    contactRoleValues,
-    documentCategories,
-    isPerpetualValues,
-    licenseLinkStatusValues,
-    orderLines,
-    orgRoleValues,
-    query,
-    reasonForClosureValues,
-    relationshipTypeValues,
-    renewalPriorityValues,
   }
 };
 
-const isPendingData = {
-  checkAsyncValidation: () => jest.fn(),
-  handlers: {
-    onDownloadFile: () => { },
-    onUploadFile: () => { }
-  },
-  history: {
-    push: () => jest.fn()
-  },
-  location: {
-    search: {}
-  },
-  match: {
-    params: {}
-  },
-  mutator: {
-    agreement: {
-      PUT: noop
-    },
-    agreements: {
-      PUT: noop
-    },
-    query: {
-      update: noop
-    },
-  },
-  resources: {
-    loadingView,
-    agreementLines,
-    agreementStatusValues,
-    amendmentStatusValues,
-    supplementaryProperties,
-    users,
-    basket,
-    contactRoleValues,
-    documentCategories,
-    isPerpetualValues,
-    licenseLinkStatusValues,
-    orderLines,
-    orgRoleValues,
-    query,
-    reasonForClosureValues,
-    relationshipTypeValues,
-    renewalPriorityValues,
-  }
-};
+// Default mock implementation
+useQuery.mockImplementation(() => ({ data: agreement, isLoading: false }));
 
 describe('AgreementEditRoute', () => {
   describe('rendering the route with permissions', () => {
@@ -190,7 +105,7 @@ describe('AgreementEditRoute', () => {
 
     test('calls the BasketLineButton', async () => {
       await ButtonInteractor('BasketLineButton').click();
-      expect(queryUpdateMock).toHaveBeenCalled();
+      expect(mockBasketLinesAdded).toHaveBeenCalled();
     });
 
     test('calls the CloseButton', async () => {
@@ -202,12 +117,19 @@ describe('AgreementEditRoute', () => {
   describe('rendering loading view', () => {
     let renderComponent;
     beforeEach(() => {
+      // We have multiple useQuery calls, so make sure they're all loading for this test
+      useQuery.mockImplementation(() => ({ data: {}, isLoading: true }));
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <AgreementEditRoute {...isPendingData} />
+          <AgreementEditRoute {...data} />
         </MemoryRouter>,
         translationsProperties
       );
+    });
+
+    afterEach(() => {
+      // Reset to the default implementation after this test
+      useQuery.mockImplementation(() => ({ data: agreement, isLoading: false }));
     });
 
     test('renders loadingView', () => {
@@ -219,6 +141,9 @@ describe('AgreementEditRoute', () => {
   describe('rendering with no permissions', () => {
     let renderComponent;
     beforeEach(() => {
+      const { hasPerm } = useStripes();
+      hasPerm.mockImplementation(() => false);
+
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <AgreementEditRoute

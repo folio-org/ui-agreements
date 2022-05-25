@@ -116,6 +116,7 @@ const EResources = ({
               if (stripes.hasPerm('ui-agreements.resources.edit')) {
                 button.push(
                   <Button
+                    key="clickable-move-identifier"
                     buttonStyle="dropdownItem"
                     id="clickable-move-identifier"
                     onClick={setMoveIdentifiersModal}

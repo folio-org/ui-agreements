@@ -43,7 +43,7 @@ import {
   UsageData,
 } from '../../AgreementSections';
 
-import useAgreementsContexts from '../../../hooks/useAgreementsContexts';
+import { useAgreementsContexts } from '../../../hooks';
 
 import { urls } from '../../utilities';
 import { statuses } from '../../../constants';

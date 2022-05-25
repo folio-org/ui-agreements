@@ -6,7 +6,7 @@ import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
 import { IntlConsumer, stripesConnect } from '@folio/stripes/core';
 
-class PickListValueSettings extends React.Component {
+class PickListValueSettings extends React.Component { // We should use the EditableRefdataList from stripes-kint-components
   static manifest = {
     categories: {
       type: 'okapi',

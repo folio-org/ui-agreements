@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { useQuery } from 'react-query';
+import { useStripes } from '@folio/stripes/core';
+
 import { MemoryRouter } from 'react-router-dom';
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
-import { noop } from 'lodash';
 import translationsProperties from '../../../test/helpers';
 import EResourceEditRoute from './EResourceEditRoute';
-import { eresource, settings, loadingView } from './testResources';
+import { eresource } from './testResources';
 
 const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
@@ -28,6 +31,11 @@ jest.mock('@folio/stripes/components', () => ({
   LoadingView: () => <div>LoadingView</div>,
 }));
 
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  ...mockErmComponents
+}));
+
 jest.mock('../../components/views/PCIForm', () => {
   return (props) => (
     <div>
@@ -38,57 +46,21 @@ jest.mock('../../components/views/PCIForm', () => {
 });
 
 const data = {
-  isSuppressFromDiscoveryEnabled: () => jest.fn(),
   history: {
     push: historyPushMock
   },
   location: {
     search: ''
   },
-  mutator: {
-    pci: {
-      PUT: noop
-    },
-    title: {
-      PUT: noop
-    },
-  },
   match: {
     params: {
       id: ''
     }
   },
-  resources: {
-    eresource,
-    settings,
-  }
 };
 
-const isPendingData = {
-  isSuppressFromDiscoveryEnabled: () => jest.fn(),
-  history: {
-    push: () => jest.fn()
-  },
-  location: {
-    search: ''
-  },
-  mutator: {
-    pci: {
-      PUT: noop
-    },
-    title: {
-      PUT: noop
-    },
-  },
-  match: {
-    params: {
-      id: ''
-    }
-  },
-  resources: {
-    loadingView
-  }
-};
+// Default mock implementation
+useQuery.mockImplementation(() => ({ data: eresource, isLoading: false }));
 
 describe('EResourceEditRoute', () => {
   describe('rendering the route with permissions', () => {
@@ -122,9 +94,10 @@ describe('EResourceEditRoute', () => {
   describe('rendering loading view', () => {
     let renderComponent;
     beforeEach(() => {
+      useQuery.mockImplementation(() => ({ data: {}, isLoading: true }));
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <EResourceEditRoute {...isPendingData} />
+          <EResourceEditRoute {...data} />
         </MemoryRouter>,
         translationsProperties
       );
@@ -139,6 +112,9 @@ describe('EResourceEditRoute', () => {
   describe('rendering with no permissions', () => {
     let renderComponent;
     beforeEach(() => {
+      const { hasPerm } = useStripes();
+      hasPerm.mockImplementation(() => false);
+
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <EResourceEditRoute

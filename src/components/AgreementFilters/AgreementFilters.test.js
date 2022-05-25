@@ -1,6 +1,6 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
 import { Accordion, Checkbox } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
@@ -9,10 +9,11 @@ import AgreementFilters from './AgreementFilters';
 
 jest.mock('@folio/stripes-erm-components', () => ({
   ...jest.requireActual('@folio/stripes-erm-components'),
+  ...mockErmComponents,
   OrganizationSelection: () => <div>OrganizationSelection</div>,
 }));
 
-const stateMock = jest.fn(() => Promise.resolve());
+const stateMock = jest.fn();
 
 const filterHandlers = {
   state: stateMock,
@@ -76,8 +77,9 @@ describe('AgreementFilters', () => {
     await Accordion('Tags').exists();
   });
 
-  test('renders the Supplementary properties Accordion', async () => {
-    await Accordion('Supplementary properties').exists();
+  test('renders the CustomPropertiesFilter component', () => {
+    const { getByText } = renderComponent;
+    expect(getByText('CustomPropertiesFilter')).toBeInTheDocument();
   });
 
   test('renders the OrganizationSelection component', () => {

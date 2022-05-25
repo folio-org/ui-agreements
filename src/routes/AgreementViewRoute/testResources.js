@@ -29,73 +29,47 @@ const intl = {
   'formatMessage': jest.fn(),
 };
 
-const stripes = {
-  'okapi': {
-    'url': 'https://folio-snapshot-okapi.dev.folio.org',
-    'tenant': 'diku',
-    'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkaWt1X2FkbWluIiwidXNlcl9pZCI6IjhmY2IwZGUzLTkwMzEtNTRmZi04NzI5LTlkOGJhOWUwY2JjMiIsImlhdCI6MTYzNDkwNTg5OSwidGVuYW50IjoiZGlrdSJ9.D5YnBwnqJpSRluNxVMvmxcshvndZD24zRal4t9e4HVE',
-  },
-};
-
 const agreement = {
-  'hasLoaded': true,
-  'isPending': false,
-  'failed': false,
-  'records': [{
-    'id': 'd5b622c5-2564-4d59-bed6-16fdb7c925f1',
-    'cancellationDeadline': '2021-10-10',
-    'dateCreated': '2021-10-22T12:36:46Z',
-    'isPerpetual': {
-      'id': '2c91809c7ca5ab60017ca5b2c7600028',
-      'value': 'yes',
-      'label': 'Yes'
-    },
-    'items': [],
-    'name': 'MR agreement test',
-    'orgs': [],
-    'externalLicenseDocs': [],
-    'outwardRelationships': [],
-    'customProperties': {},
-    'contacts': [],
-    'tags': [],
-    'lastUpdated': '2021-10-22T12:36:46Z',
-    'inwardRelationships': [],
-    'renewalPriority': {
-      'id': '2c91809c7ca5ab60017ca5b2c7820030',
-      'value': 'for_review',
-      'label': 'For review'
-    },
-    'endDate': '2021-10-31',
-    'startDate': '2021-10-01',
-    'linkedLicenses': [],
-    'docs': [],
-    'periods': [
-      '{cancellationDeadline: "2021-10-10", endDate: "2021…}'
-    ],
-    'usageDataProviders': [],
-    'agreementStatus': {
-      'id': '2c91809c7ca5ab60017ca5b2c7de0038',
-      'value': 'active',
-      'label': 'Active'
-    },
-    'supplementaryDocs': [],
-    'description': 'agreement description',
-    'alternateNames': [],
-    'relatedAgreements': []
-  }],
-  'successfulMutations': [],
-  'failedMutations': [],
-  'pendingMutations': [],
-  'loadedAt': 'Fri Oct 22 2021 13:36:48 GMT+0100 (British Summer Time)',
-  'url': 'https://folio-snapshot-okapi.dev.folio.org/erm/sas/d5b622c5-2564-4d59-bed6-16fdb7c925f1',
-  'headers': 'Headers(undefined) {"content-type" => "application/json;charset=UTF-8"}',
-  'httpStatus': 200,
-  'other': {
-    'totalRecords': null
+  'id': 'd5b622c5-2564-4d59-bed6-16fdb7c925f1',
+  'cancellationDeadline': '2021-10-10',
+  'dateCreated': '2021-10-22T12:36:46Z',
+  'isPerpetual': {
+    'id': '2c91809c7ca5ab60017ca5b2c7600028',
+    'value': 'yes',
+    'label': 'Yes'
   },
-  'resource': 'agreement',
-  'module': '@folio/agreements',
-  'throwErrors': true
+  'items': [],
+  'name': 'MR agreement test',
+  'orgs': [],
+  'externalLicenseDocs': [],
+  'outwardRelationships': [],
+  'customProperties': {},
+  'contacts': [],
+  'tags': [],
+  'lastUpdated': '2021-10-22T12:36:46Z',
+  'inwardRelationships': [],
+  'renewalPriority': {
+    'id': '2c91809c7ca5ab60017ca5b2c7820030',
+    'value': 'for_review',
+    'label': 'For review'
+  },
+  'endDate': '2021-10-31',
+  'startDate': '2021-10-01',
+  'linkedLicenses': [],
+  'docs': [],
+  'periods': [
+    '{cancellationDeadline: "2021-10-10", endDate: "2021…}'
+  ],
+  'usageDataProviders': [],
+  'agreementStatus': {
+    'id': '2c91809c7ca5ab60017ca5b2c7de0038',
+    'value': 'active',
+    'label': 'Active'
+  },
+  'supplementaryDocs': [],
+  'description': 'agreement description',
+  'alternateNames': [],
+  'relatedAgreements': []
 };
 
 const agreementLines = {
@@ -316,7 +290,6 @@ export {
   query,
   settings,
   users,
-  stripes,
   history,
   tagsEnabled,
   location,

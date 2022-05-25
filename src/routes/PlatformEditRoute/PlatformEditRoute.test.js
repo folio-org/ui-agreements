@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '@folio/stripes-erm-components/test/jest/__mock__';
+
+import { useQuery } from 'react-query';
+import { useStripes } from '@folio/stripes/core';
+
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
-import { noop } from 'lodash';
 import translationsProperties from '../../../test/helpers';
-import { platform, loadingView } from './testResources';
+import { platform } from './testResources';
 import PlatformEditRoute from './PlatformEditRoute';
 
 const CloseButton = (props) => {
@@ -44,42 +47,15 @@ const data = {
   location: {
     search: ''
   },
-  mutator: {
-    platform: {
-      PUT: noop
-    }
-  },
   match: {
     params: {
       id: ''
     }
   },
-  resources: {
-    platform
-  }
 };
 
-const isPendingData = {
-  history: {
-    push: () => jest.fn()
-  },
-  location: {
-    search: ''
-  },
-  match: {
-    params: {
-      id: ''
-    }
-  },
-  mutator: {
-    platform: {
-      PUT: noop
-    }
-  },
-  resources: {
-    loadingView
-  }
-};
+// Default mock implementation
+useQuery.mockImplementation(() => ({ data: platform, isLoading: false }));
 
 describe('PlatformEditRoute', () => {
   describe('rendering the route with permissions', () => {
@@ -113,9 +89,10 @@ describe('PlatformEditRoute', () => {
   describe('rendering loading view', () => {
     let renderComponent;
     beforeEach(() => {
+      useQuery.mockImplementationOnce(() => ({ data: {}, isLoading: true }));
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <PlatformEditRoute {...isPendingData} />
+          <PlatformEditRoute {...data} />
         </MemoryRouter>,
         translationsProperties
       );
@@ -130,11 +107,14 @@ describe('PlatformEditRoute', () => {
   describe('rendering with no permissions', () => {
     let renderComponent;
     beforeEach(() => {
+      // Mock hasPerm differently here
+      const { hasPerm } = useStripes();
+      hasPerm.mockImplementation(() => false);
+
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <PlatformEditRoute
             {...data}
-            stripes={{ hasPerm: () => false }}
           />
         </MemoryRouter>,
         translationsProperties

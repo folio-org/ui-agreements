@@ -6,19 +6,19 @@ import { FieldArray } from 'react-final-form-arrays';
 
 import { Accordion, Headline, KeyValue, TextArea } from '@folio/stripes/components';
 import { useStripes } from '@folio/stripes/core';
-import { DocumentsFieldArray } from '@folio/stripes-erm-components';
+import { DocumentsFieldArray, useFileHandlers } from '@folio/stripes-erm-components';
 
 import LicensesFieldArray from '../../LicensesFieldArray';
 
 const FormLicenses = ({
   data,
   form,
-  handlers,
   id,
   onToggle,
   open,
 }) => {
   const stripes = useStripes();
+  const { handleDownloadFile, handleUploadFile } = useFileHandlers('erm/files');
 
   const renderNote = () => (
     <Field
@@ -68,8 +68,8 @@ const FormLicenses = ({
             hasDownloadPerm={stripes.hasPerm('ui-agreements.agreements.file.download')}
             isEmptyMessage={<FormattedMessage id="ui-agreements.license.noExternalLicenses" />}
             name="externalLicenseDocs"
-            onDownloadFile={handlers.onDownloadFile}
-            onUploadFile={handlers.onUploadFile}
+            onDownloadFile={handleDownloadFile}
+            onUploadFile={handleUploadFile}
           />
         </KeyValue>
       </div>
@@ -97,7 +97,6 @@ FormLicenses.propTypes = {
     licenseLinkStatusValues: PropTypes.arrayOf(PropTypes.object),
   }),
   form: PropTypes.object,
-  handlers: PropTypes.object,
   id: PropTypes.string,
   onToggle: PropTypes.func,
   open: PropTypes.bool,

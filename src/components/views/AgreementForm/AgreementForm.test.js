@@ -16,6 +16,11 @@ jest.mock('@folio/stripes-erm-components', () => ({
   handleSaveKeyCommand: () => jest.fn()
 }));
 
+jest.mock('../../../hooks', () => ({
+  ...jest.requireActual('../../../hooks'),
+  useAgreementsContexts: jest.fn(() => ({ data: [] }))
+}));
+
 jest.mock('../../AgreementSections/FormInfo', () => () => <div>FormInfo</div>);
 jest.mock('../../AgreementSections/FormInternalContacts', () => () => <div>FormInternalContacts</div>);
 jest.mock('../../AgreementSections/FormLicenses', () => () => <div>FormLicenses</div>);

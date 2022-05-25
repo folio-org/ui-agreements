@@ -175,11 +175,6 @@ const form = {
   }
 };
 
-const onAsyncValidate = jest.fn(val => val);
-const handlers = {
-  onAsyncValidate
-};
-
 const values = {
   'periods': [
     {}
@@ -236,7 +231,6 @@ const initialValues = {
 export {
   data,
   form,
-  handlers,
   initialValues,
   values
 };

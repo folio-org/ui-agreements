@@ -1,13 +1,14 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { useInfiniteFetch } from '@folio/stripes-erm-components';
-import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
+import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Platforms';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
+import { PLATFORMS_ENDPOINT } from '../../constants/endpoints';
 
 const INITIAL_RESULT_COUNT = 50;
 
@@ -16,11 +17,9 @@ const PlatformsRoute = ({
   history,
   location,
   match,
-  mutator,
-  resources,
-  stripes
 }) => {
   const ky = useOkapiKy();
+  const stripes = useStripes();
   const hasPerms = stripes.hasPerm('ui-agreements.platforms.view');
   const searchField = useRef();
 
@@ -30,14 +29,14 @@ const PlatformsRoute = ({
     }
   }, []); // This isn't particularly great, but in the interests of saving time migrating, it will have to do
 
-  const platformsPath = 'erm/platforms';
+  const { query, queryGetter, querySetter } = useKiwtSASQuery();
 
   const platformsQueryParams = useMemo(() => (
     generateKiwtQueryParams({
       searchKey: 'name',
       perPage: INITIAL_RESULT_COUNT
-    }, (resources?.query ?? {}))
-  ), [resources?.query]);
+    }, (query ?? {}))
+  ), [query]);
 
   const {
     infiniteQueryObject: {
@@ -49,10 +48,10 @@ const PlatformsRoute = ({
     results: platforms = [],
     total: platformsCount = 0
   } = useInfiniteFetch(
-    [platformsPath, platformsQueryParams, 'ui-agreements', 'PlatformsRoute', 'getPlatforms'],
+    [PLATFORMS_ENDPOINT, platformsQueryParams, 'ui-agreements', 'PlatformsRoute', 'getPlatforms'],
     ({ pageParam = 0 }) => {
       const params = [...platformsQueryParams, `offset=${pageParam}`];
-      return ky.get(encodeURI(`${platformsPath}?${params?.join('&')}`)).json();
+      return ky.get(encodeURI(`${PLATFORMS_ENDPOINT}?${params?.join('&')}`)).json();
     }
   );
 
@@ -61,14 +60,6 @@ const PlatformsRoute = ({
       history.push(`${urls.platformView(platforms[0].id)}${location.search}`);
     }
   }, [platforms, platformsCount, history, location.search]);
-
-  const querySetter = ({ nsValues }) => {
-    mutator.query.update(nsValues);
-  };
-
-  const queryGetter = () => {
-    return resources?.query ?? {};
-  };
 
   if (!hasPerms) return <NoPermissions />;
 
@@ -95,10 +86,6 @@ const PlatformsRoute = ({
   );
 };
 
-PlatformsRoute.manifest = Object.freeze({
-  query: { initialValue: {} },
-});
-
 PlatformsRoute.propTypes = {
   children: PropTypes.node,
   history: PropTypes.shape({
@@ -113,12 +100,10 @@ PlatformsRoute.propTypes = {
       id: PropTypes.string,
     }),
   }),
-  mutator: PropTypes.object,
-  resources: PropTypes.object,
   stripes: PropTypes.shape({
     hasPerm: PropTypes.func.isRequired,
     logger: PropTypes.object,
   }),
 };
 
-export default stripesConnect(PlatformsRoute);
+export default PlatformsRoute;
