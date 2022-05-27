@@ -3,7 +3,7 @@ import {
   clickable,
   fillable,
   isPresent,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 

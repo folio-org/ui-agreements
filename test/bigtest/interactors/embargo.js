@@ -2,7 +2,7 @@ import {
   attribute,
   interactor,
   isPresent,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 @interactor class EmbargoInteractor {
   static defaultScope = '[data-test-embargo]';

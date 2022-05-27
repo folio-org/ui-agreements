@@ -2,7 +2,7 @@ import {
   interactor,
   isPresent,
   text,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 @interactor class MonographCoverageInteractor {
   static defaultScope = '[data-test-monograph-coverage]';

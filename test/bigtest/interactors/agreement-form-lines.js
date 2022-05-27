@@ -5,7 +5,7 @@ import {
   count,
   isPresent,
   text,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 @interactor class POLineFieldInteractor {
   isSelected = isPresent('[data-test-po-line-title]');

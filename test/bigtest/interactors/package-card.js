@@ -1,7 +1,7 @@
 import {
   interactor,
   text,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 export default @interactor class PackageCardInteractor {
   static defaultScope = '[data-test-package-card]';

@@ -1,7 +1,7 @@
 import {
   interactor,
   clickable,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 export default @interactor class BasketInteractor {
   clickOpenBasket = clickable('#open-basket-button');

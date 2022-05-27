@@ -2,7 +2,7 @@ import {
   clickable,
   interactor,
   isPresent,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 import DuplicateModalInteractor from '@folio/stripes-erm-components/lib/DuplicateModal/tests/interactor';
 import AgreementLinesInteractor from './agreement-lines';

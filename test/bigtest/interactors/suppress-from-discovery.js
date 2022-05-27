@@ -3,7 +3,7 @@ import {
   interactor,
   isPresent,
   property,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 export default @interactor class SuppressFromDiscoveryInteractor {
   isDescription = isPresent('[data-test-sfdfa-description]');

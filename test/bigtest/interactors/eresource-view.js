@@ -3,7 +3,7 @@ import {
   isPresent,
   clickable,
   text,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 import PackageContentInteractor from './package-content';
 
