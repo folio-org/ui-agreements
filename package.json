@@ -23,6 +23,7 @@
     "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-agreements ./translations/ui-agreements/compiled"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.15.0",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-proposal-decorators": "^7.12.1",
     "@babel/plugin-transform-runtime": "^7.12.1",
@@ -39,7 +40,6 @@
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.2",
     "@testing-library/user-event": "^12.2.2",
-    "@babel/eslint-parser": "^7.15.0",
     "babel-jest": "^26.6.3",
     "babel-plugin-module-resolver": "^4.0.0",
     "chai": "^4.2.0",
@@ -71,7 +71,7 @@
   "dependencies": {
     "@folio/stripes-acq-components": "^3.1.0",
     "@folio/stripes-erm-components": "^6.1.0",
-    "@k-int/stripes-kint-components": "^2.5.0",
+    "@k-int/stripes-kint-components": "^2.5.1",
     "@rehooks/local-storage": "2.4.0",
     "@testing-library/react-hooks": "^7.0.2",
     "compose-function": "^3.0.3",
@@ -107,7 +107,6 @@
     "displayName": "ui-agreements.meta.title",
     "route": "/erm",
     "home": "/erm/agreements",
-    "queryResource": "query",
     "okapiInterfaces": {
       "configuration": "2.0 3.0 4.0 5.0",
       "erm": "2.0 3.0 4.0 5.0",

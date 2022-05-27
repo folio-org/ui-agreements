@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useInfiniteFetch } from '@folio/stripes-erm-components';
+import { useInfiniteFetch, useSingleResultRedirect } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Platforms';
@@ -14,7 +14,6 @@ const INITIAL_RESULT_COUNT = 50;
 
 const PlatformsRoute = ({
   children,
-  history,
   location,
   match,
 }) => {
@@ -55,11 +54,8 @@ const PlatformsRoute = ({
     }
   );
 
-  useEffect(() => {
-    if (platformsCount === 1) {
-      history.push(`${urls.platformView(platforms[0].id)}${location.search}`);
-    }
-  }, [platforms, platformsCount, history, location.search]);
+  // Special hook to redirect if only one result is returned
+  useSingleResultRedirect(platformsCount, platforms?.[0]?.id, urls.platformView);
 
   if (!hasPerms) return <NoPermissions />;
 

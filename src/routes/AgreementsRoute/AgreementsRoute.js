@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
+import { useTags, useInfiniteFetch, useSingleResultRedirect } from '@folio/stripes-erm-components';
 
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
@@ -35,13 +35,14 @@ const AgreementsRoute = ({
   children,
   history,
   location,
-  match,
+  match
 }) => {
   const ky = useOkapiKy();
   const stripes = useStripes();
   const hasPerms = stripes.hasPerm('ui-agreements.agreements.view');
   const searchField = useRef();
 
+  // Agreements redirect stuff
   const refdata = useAgreementsRefdata({
     desc: [
       AGREEMENT_STATUS,
@@ -98,11 +99,8 @@ const AgreementsRoute = ({
     }
   );
 
-  useEffect(() => {
-    if (agreementsCount === 1) {
-      history.push(`${urls.agreementView(agreements[0].id)}${location.search}`);
-    }
-  }, [agreements, agreementsCount, history, location.search]);
+  // Special hook to redirect if only one result is returned
+  useSingleResultRedirect(agreementsCount, agreements?.[0]?.id, urls.agreementView);
 
   if (!hasPerms) return <NoPermissions />;
 

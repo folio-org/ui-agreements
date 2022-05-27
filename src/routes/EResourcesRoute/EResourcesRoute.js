@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useQuery } from 'react-query';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
+import { useTags, useInfiniteFetch, useSingleResultRedirect } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/EResources';
@@ -27,7 +27,6 @@ const [
 
 const EResourcesRoute = ({
   children,
-  history,
   location,
   match,
 }) => {
@@ -35,7 +34,6 @@ const EResourcesRoute = ({
   const ky = useOkapiKy();
   const hasPerms = stripes.hasPerm('ui-agreements.agreements.view');
   const searchField = useRef();
-
 
   useEffect(() => {
     if (searchField.current) {
@@ -91,11 +89,8 @@ const EResourcesRoute = ({
     }
   );
 
-  useEffect(() => {
-    if (eresourcesCount === 1) {
-      history.push(`${urls.eresourceView(eresources[0].id)}${location.search}`);
-    }
-  }, [eresources, eresourcesCount, history, location.search]);
+  // Special hook to redirect if only one result is returned
+  useSingleResultRedirect(eresourcesCount, eresources?.[0]?.id, urls.eresourceView);
 
   const kbsPath = 'erm/kbs';
   const { data: kbs = [] } = useQuery(
