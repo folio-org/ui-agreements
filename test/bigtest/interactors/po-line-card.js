@@ -3,7 +3,7 @@ import {
   interactor,
   isPresent,
   text,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 export default @interactor class POLineCardInteractor {
   static defaultScope = '[data-test-po-line-card]';

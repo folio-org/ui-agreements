@@ -7,7 +7,7 @@ throw new Error(
 );
 */
 
-import { Interactor } from '@bigtest/interactor';
+import { Interactor } from '@interactors/html';
 
 /**
  * Adds stats to the accumulator and returns `stats.value`

@@ -2,7 +2,7 @@ import {
   interactor,
   isPresent,
   text,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 export default @interactor class AgreementLineInfoInteractor {
   isTitleCardPresent = isPresent('[data-test-title-card]');

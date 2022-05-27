@@ -3,7 +3,7 @@ import {
   isPresent,
   clickable,
   count,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 
