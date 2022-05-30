@@ -31,6 +31,8 @@ const AgreementsCustomProperties = () => {
   ];
 
   const labelOverrides = {
+    modalTitleEdit: <FormattedMessage id="ui-agreements.supplementaryProperty.editModal" />,
+    modalTitleNew: <FormattedMessage id="ui-agreements.supplementaryProperty.newModal" />,
     paneTitle: <FormattedMessage id="ui-agreements.settings.supplementaryProperties" />,
     retired: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.retired" />,
     primaryRetired: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.primaryRetired" />
