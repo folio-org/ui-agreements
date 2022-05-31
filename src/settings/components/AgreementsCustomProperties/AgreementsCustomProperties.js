@@ -40,7 +40,8 @@ const AgreementsCustomProperties = () => {
 
   const helpPopovers = {
     name: <FormattedMessage id="ui-agreements.supplementaryProperty.help.name" />,
-    label: <FormattedMessage id="ui-agreements.supplementaryProperty.help.label" />
+    label: <FormattedMessage id="ui-agreements.supplementaryProperty.help.label" />,
+    category: <FormattedMessage id="ui-agreements.supplementaryProperty.help.category" />
   };
 
   return (
