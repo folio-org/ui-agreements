@@ -31,14 +31,19 @@ const AgreementsCustomProperties = () => {
   ];
 
   const labelOverrides = {
+    modalTitleEdit: <FormattedMessage id="ui-agreements.supplementaryProperty.editModal" />,
+    modalTitleNew: <FormattedMessage id="ui-agreements.supplementaryProperty.newModal" />,
     paneTitle: <FormattedMessage id="ui-agreements.settings.supplementaryProperties" />,
     retired: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.retired" />,
-    primaryRetired: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.primaryRetired" />
+    primaryRetired: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.primaryRetired" />,
+    ctx: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.category" />,
+    category: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.pickList" />
   };
 
   const helpPopovers = {
     name: <FormattedMessage id="ui-agreements.supplementaryProperty.help.name" />,
-    label: <FormattedMessage id="ui-agreements.supplementaryProperty.help.label" />
+    label: <FormattedMessage id="ui-agreements.supplementaryProperty.help.label" />,
+    ctx: <FormattedMessage id="ui-agreements.supplementaryProperty.help.category" />
   };
 
   return (
