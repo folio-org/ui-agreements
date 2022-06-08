@@ -18,10 +18,16 @@ import { useAgreementsRefdata } from '../../hooks';
 const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT;
 
 const [
+  CONTENT_TYPE,
+  LIFECYCLE_STATUS,
   PUB_TYPE,
+  SCOPE,
   TYPE
 ] = [
+  'ContentType.ContentType',
+  'Pkg.LifecycleStatus',
   'TitleInstance.PublicationType',
+  'Pkg.AvailabilityScope',
   'TitleInstance.Type',
 ];
 
@@ -45,7 +51,10 @@ const EResourcesRoute = ({
 
   const refdata = useAgreementsRefdata({
     desc: [
+      CONTENT_TYPE,
+      LIFECYCLE_STATUS,
       PUB_TYPE,
+      SCOPE,
       TYPE
     ]
   });
@@ -55,7 +64,7 @@ const EResourcesRoute = ({
 
   const eresourcesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
-      searchKey: 'name,identifiers.identifier.value',
+      searchKey: 'name,identifiers.identifier.value,alternateResourceNames.name,description',
       filterConfig: [{
         name: 'class',
         values: [
@@ -64,7 +73,10 @@ const EResourcesRoute = ({
         ]
       }],
       filterKeys: {
+        contentType: 'contentTypes.contentType.value',
         remoteKb: 'remoteKb.id',
+        scope: 'availabilityScope.value',
+        status: 'lifecycleStatus.value',
         tags: 'tags.value',
         publicationType: 'publicationType.value',
         type: 'type.value'
@@ -108,9 +120,12 @@ const EResourcesRoute = ({
   return (
     <View
       data={{
+        contentTypeValues: getRefdataValuesByDesc(refdata, CONTENT_TYPE),
         eresources,
         publicationTypeValues: getRefdataValuesByDesc(refdata, PUB_TYPE),
+        scopeValues: getRefdataValuesByDesc(refdata, SCOPE),
         sourceValues: kbs,
+        statusValues: getRefdataValuesByDesc(refdata, LIFECYCLE_STATUS),
         typeValues: getRefdataValuesByDesc(refdata, TYPE),
         tagsValues: tags,
       }}

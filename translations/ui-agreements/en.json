@@ -621,5 +621,8 @@
   "supplementaryProperties.removeFilter": "Remove supplementary property filter {index}",
   "supplementaryProperties.deprecated": "DEPRECATED: {name}",
   "job.created.success.org.olf.general.jobs.IdentifierReassignmentJob": "<strong>Title updated: {sourceTitleName} </strong>",
-  "job.created.success.org.olf.general.jobs.destination": "<strong>Title updated: {destinationTitleName} </strong>"
+  "job.created.success.org.olf.general.jobs.destination": "<strong>Title updated: {destinationTitleName} </strong>",
+  "eresources.filters.titleFilters": "Title filters",
+  "eresources.filters.packageFilters": "Package filters",
+  "eresources.scope": "Scope"
 }

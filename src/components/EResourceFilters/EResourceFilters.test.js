@@ -88,5 +88,38 @@ describe('EResourceFilters', () => {
       await Checkbox({ id: 'clickable-filter-class-nopackage' }).click();
       expect(stateMock).toHaveBeenCalled();
     });
+
+    // Dummy data to check scope checkbox filters
+    test('clicking the scope1 checkbox', async () => {
+      await Checkbox({ id: 'clickable-filter-scope-scope-1' }).click();
+      expect(stateMock).toHaveBeenCalled();
+    });
+
+    test('clicking the scope2 checkbox', async () => {
+      await Checkbox({ id: 'clickable-filter-scope-scope-2' }).click();
+      expect(stateMock).toHaveBeenCalled();
+    });
+
+    // Dummy data to check status checkbox filters
+    test('clicking the status1 checkbox', async () => {
+      await Checkbox({ id: 'clickable-filter-status-status-1' }).click();
+      expect(stateMock).toHaveBeenCalled();
+    });
+
+    test('clicking the status2 checkbox', async () => {
+      await Checkbox({ id: 'clickable-filter-status-status-2' }).click();
+      expect(stateMock).toHaveBeenCalled();
+    });
+
+    // Dummy data to check content type checkbox filters
+    test('clicking the contentType1 checkbox', async () => {
+      await Checkbox({ id: 'clickable-filter-contentType-content-type-1' }).click();
+      expect(stateMock).toHaveBeenCalled();
+    });
+
+    test('clicking the contentType2 checkbox', async () => {
+      await Checkbox({ id: 'clickable-filter-contentType-content-type-2' }).click();
+      expect(stateMock).toHaveBeenCalled();
+    });
   });
 });
