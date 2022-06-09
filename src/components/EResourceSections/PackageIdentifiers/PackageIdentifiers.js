@@ -13,54 +13,35 @@ const PackageIdentifiers = ({
     return identifiers?.find(id => id?.identifier?.ns?.value === ns)?.identifier;
   };
 
-  const isil = findIdByNamespace('isil');
-  const zdb = findIdByNamespace('zdb-pkg');
-  const ezb = findIdByNamespace('ezb-collection-id');
-  const eBookPool = findIdByNamespace('ebp-id-pkg');
-  const gokbId = findIdByNamespace('gokb_id');
-  const gokbUUID = findIdByNamespace('gokb_uuid');
+  const identifierValues = {
+    isil: findIdByNamespace('isil'),
+    zdb: findIdByNamespace('zdb-pkg'),
+    ezb: findIdByNamespace('ezb-collection-id'),
+    eBookPool: findIdByNamespace('ebp-id-pkg'),
+    gokbId: findIdByNamespace('gokb_id'),
+    gokbUUID: findIdByNamespace('gokb_uuid')
+  };
+
+  const identifierSection = (identifierNamespace) => (
+    <Col xs={3}>
+      <KeyValue
+        label={<FormattedMessage id={`ui-agreements.packageIdentifiers.${identifierNamespace}`} />}
+        value={identifierValues[identifierNamespace] ? identifierValues[identifierNamespace].value : <NoValue />}
+      />
+    </Col>
+  );
 
   return (
     <>
       <Row>
-        <Col xs={3}>
-          <KeyValue
-            label={<FormattedMessage id="ui-agreements.packageIdentifiers.isil" />}
-            value={isil ? isil.value : <NoValue />}
-          />
-        </Col>
-        <Col xs={3}>
-          <KeyValue
-            label={<FormattedMessage id="ui-agreements.packageIdentifiers.zdb" />}
-            value={zdb ? zdb.value : <NoValue />}
-          />
-        </Col>
-        <Col xs={3}>
-          <KeyValue
-            label={<FormattedMessage id="ui-agreements.packageIdentifiers.ezb" />}
-            value={ezb ? ezb.value : <NoValue />}
-          />
-        </Col>
-        <Col xs={3}>
-          <KeyValue
-            label={<FormattedMessage id="ui-agreements.packageIdentifiers.eBookPool" />}
-            value={eBookPool ? eBookPool.value : <NoValue />}
-          />
-        </Col>
+        {identifierSection('isil')}
+        {identifierSection('zdb')}
+        {identifierSection('ezb')}
+        {identifierSection('eBookPool')}
       </Row>
       <Row>
-        <Col xs={3}>
-          <KeyValue
-            label={<FormattedMessage id="ui-agreements.packageIdentifiers.gokbId" />}
-            value={gokbId ? gokbId.value : <NoValue />}
-          />
-        </Col>
-        <Col xs={3}>
-          <KeyValue
-            label={<FormattedMessage id="ui-agreements.packageIdentifiers.gokbUUID" />}
-            value={gokbUUID ? gokbUUID.value : <NoValue />}
-          />
-        </Col>
+        {identifierSection('gokbId')}
+        {identifierSection('gokbUUID')}
       </Row>
     </>
   );
