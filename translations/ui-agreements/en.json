@@ -624,5 +624,11 @@
   "job.created.success.org.olf.general.jobs.destination": "<strong>Title updated: {destinationTitleName} </strong>",
   "eresources.filters.titleFilters": "Title filters",
   "eresources.filters.packageFilters": "Package filters",
-  "eresources.scope": "Scope"
+  "eresources.scope": "Scope",
+  "packageIdentifiers.isil": "ISIL",
+  "packageIdentifiers.zdb": "ZDB",
+  "packageIdentifiers.ezb": "EZB",
+  "packageIdentifiers.eBookPool": "E-Book Pool",
+  "packageIdentifiers.gokbId": "GOKb ID",
+  "packageIdentifiers.gokbUUID": "GOKb UUID"
 }
