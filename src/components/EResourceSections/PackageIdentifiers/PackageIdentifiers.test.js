@@ -60,12 +60,10 @@ const pkg = {
   ]
 };
 
-let renderComponent;
-
 describe('PackageInfo', () => {
   describe('when data is passed', () => {
     beforeEach(() => {
-      renderComponent = renderWithIntl(
+      renderWithIntl(
         <MemoryRouter>
           <PackageIdentifiers
             pkg={pkg}
