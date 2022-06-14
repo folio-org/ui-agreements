@@ -48,7 +48,7 @@ const EResourceViewRoute = ({
   const eresourceAgreementParams = useMemo(() => (
     generateKiwtQueryParams(
       {
-        perPage: parseMclPageSize({ records: settings }, 'entitlements')
+        perPage: parseMclPageSize(settings, 'entitlements')
       },
       {}
     )
@@ -84,7 +84,7 @@ const EResourceViewRoute = ({
   const eresourceEntitlementOptionsParams = useMemo(() => (
     generateKiwtQueryParams(
       {
-        perPage: parseMclPageSize({ records: settings }, 'entitlementOptions')
+        perPage: parseMclPageSize(settings, 'entitlementOptions')
       },
       {}
     )
@@ -119,7 +119,7 @@ const EResourceViewRoute = ({
         sort: [{
           path: 'pti.titleInstance.name'
         }],
-        perPage: parseMclPageSize({ records: settings }, 'packageContents')
+        perPage: parseMclPageSize(settings, 'packageContents')
       },
       {}
     )
