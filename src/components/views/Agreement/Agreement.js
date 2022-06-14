@@ -62,6 +62,11 @@ const Agreement = ({
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
   const [showDuplicateAgreementModal, setShowDuplicateAgreementModal] = useState(false);
 
+  const licenses = data.agreement?.linkedLicenses || [];
+  const controllingLicenses = licenses.filter(l => l.status.value === statuses.CONTROLLING);
+  const futureLicenses = licenses.filter(l => l.status.value === statuses.FUTURE);
+  const historicalLicenses = licenses.filter(l => l.status.value === statuses.HISTORICAL);
+
   const stripes = useStripes();
 
   const { data: custpropContexts = [] } = useAgreementsContexts();
@@ -70,14 +75,17 @@ const Agreement = ({
 
   const { data: terms } = useCustomProperties({
     endpoint: LICENSE_CUSTPROP_ENDPOINT,
-    returnQueryObject: true,
     options: {
       sort: [
         { path: 'retired' }, // Place retired custprops at the end
         { path: 'primary', direction: 'desc' }, // Primary properties should display before optional
         { path: 'label' } // Within those groups, sort by label
       ]
-    }
+    },
+    queryParams: {
+      enabled: licenses?.length > 0
+    },
+    returnQueryObject: true,
   });
 
   const getSectionProps = (id) => {
@@ -201,11 +209,6 @@ const Agreement = ({
     id: 'pane-view-agreement',
     onClose: handlers.onClose,
   };
-
-  const licenses = data.agreement?.linkedLicenses || [];
-  const controllingLicenses = licenses.filter(l => l.status.value === statuses.CONTROLLING);
-  const futureLicenses = licenses.filter(l => l.status.value === statuses.FUTURE);
-  const historicalLicenses = licenses.filter(l => l.status.value === statuses.HISTORICAL);
 
   if (isLoading) return <LoadingPane data-loading {...paneProps} />;
 
