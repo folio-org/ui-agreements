@@ -37,7 +37,8 @@ const AgreementsCustomProperties = () => {
     retired: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.retired" />,
     primaryRetired: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.primaryRetired" />,
     ctx: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.category" />,
-    category: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.pickList" />
+    category: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.pickList" />,
+    deleteError: (error, custProp) => (<FormattedMessage id="ui-agreements.settings.supplementaryProperties.deleteError" values={{ label: custProp?.label, error }} />)
   };
 
   const helpPopovers = {
