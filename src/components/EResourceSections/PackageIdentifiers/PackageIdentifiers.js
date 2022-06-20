@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Col, KeyValue, NoValue, Row } from '@folio/stripes/components';
+import { Col, KeyValue, Row } from '@folio/stripes/components';
+import chunk from 'lodash/chunk';
 
 const PackageIdentifiers = ({
   pkg: {
@@ -22,28 +23,29 @@ const PackageIdentifiers = ({
     gokbUUID: findIdByNamespace('gokb_uuid')
   };
 
-  const identifierSection = (identifierNamespace) => (
-    <Col xs={3}>
-      <KeyValue
-        label={<FormattedMessage id={`ui-agreements.packageIdentifiers.${identifierNamespace}`} />}
-        value={identifierValues[identifierNamespace] ? identifierValues[identifierNamespace].value : <NoValue />}
-      />
-    </Col>
-  );
+  const identifiersSection = () => {
+    const identifierRenderArray = [];
+
+    for (const [key, value] of Object.entries(identifierValues)) {
+      if (value) {
+        identifierRenderArray.push(
+          <Col xs={3}>
+            <KeyValue
+              label={<FormattedMessage id={`ui-agreements.packageIdentifiers.${key}`} />}
+              value={value.value}
+            />
+          </Col>
+        );
+      }
+    }
+
+    // Chunk into rows of 4 (Should stay dynamic however many we add in future)
+    const rowChunkedArray = chunk(identifierRenderArray, 4);
+    return rowChunkedArray.map(elements => <Row>{elements}</Row>);
+  };
 
   return (
-    <>
-      <Row>
-        {identifierSection('isil')}
-        {identifierSection('zdb')}
-        {identifierSection('ezb')}
-        {identifierSection('eBookPool')}
-      </Row>
-      <Row>
-        {identifierSection('gokbId')}
-        {identifierSection('gokbUUID')}
-      </Row>
-    </>
+    identifiersSection()
   );
 };
 
