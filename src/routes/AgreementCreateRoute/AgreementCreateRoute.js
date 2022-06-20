@@ -6,11 +6,12 @@ import { useMutation, useQueryClient } from 'react-query';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 
 import { splitRelatedAgreements } from '../utilities/processRelatedAgreements';
 import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
-import { getRefdataValuesByDesc, urls } from '../../components/utilities';
+import { urls } from '../../components/utilities';
 import { AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
 import { useAddFromBasket, useAgreementsRefdata } from '../../hooks';
 

@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import { useQuery } from 'react-query';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/EResources';
 import NoPermissions from '../../components/NoPermissions';
-import { getRefdataValuesByDesc, urls } from '../../components/utilities';
+import { urls } from '../../components/utilities';
 import { resultCount } from '../../constants';
 
 import { ERESOURCES_ELECTRONIC_ENDPOINT } from '../../constants/endpoints';

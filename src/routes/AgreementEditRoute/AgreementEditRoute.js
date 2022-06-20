@@ -8,12 +8,12 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useBatchedFetch, useUsers } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, useBatchedFetch, useUsers } from '@folio/stripes-erm-components';
 
 import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/processRelatedAgreements';
 import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
-import { getRefdataValuesByDesc, urls } from '../../components/utilities';
+import { urls } from '../../components/utilities';
 import { endpoints } from '../../constants';
 import { useAddFromBasket, useAgreementsRefdata, useChunkedOrderLines } from '../../hooks';
 
