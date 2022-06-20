@@ -2,13 +2,13 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
 
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Agreements';
 import NoPermissions from '../../components/NoPermissions';
-import { getRefdataValuesByDesc, urls } from '../../components/utilities';
+import { urls } from '../../components/utilities';
 import { resultCount } from '../../constants';
 import { AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
 import { useAgreementsRefdata } from '../../hooks';
