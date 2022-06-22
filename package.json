@@ -244,7 +244,8 @@
           "module.agreements.enabled",
           "settings.enabled",
           "configuration.entries.collection.get",
-          "configuration.entries.item.put"
+          "configuration.entries.item.put",
+          "configuration.entries.item.post"
         ]
       },
       {
