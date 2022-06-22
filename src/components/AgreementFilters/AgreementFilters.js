@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import isEqual from 'lodash/isEqual';
+
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
@@ -8,6 +10,7 @@ import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-compo
 import { DateFilter, InternalContactSelection, OrganizationSelection } from '@folio/stripes-erm-components';
 
 import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
+
 
 import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
 
@@ -38,7 +41,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
     const newState = {};
     FILTERS.forEach(filter => {
       const values = data[`${filter}Values`];
-      if (values.length !== filterState[filter]?.length) {
+      if (!isEqual(values, filterState[filter])) {
         newState[filter] = values;
       }
     });

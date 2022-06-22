@@ -13,6 +13,7 @@ import { AppIcon } from '@folio/stripes/core';
 import EResourceCount from '../EResourceCount';
 import EResourceLink from '../EResourceLink';
 import EResourceProvider from '../EResourceProvider';
+import PackageIdentifiers from '../EResourceSections/PackageIdentifiers';
 
 const propTypes = {
   headerEnd: PropTypes.oneOfType([
@@ -96,6 +97,7 @@ const PackageCard = ({
           </KeyValue>
         </Col>
       </Row>
+      <PackageIdentifiers pkg={pkgObject} />
     </Card>
   );
 };
