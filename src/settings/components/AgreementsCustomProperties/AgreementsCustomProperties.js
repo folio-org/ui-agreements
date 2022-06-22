@@ -3,10 +3,12 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useQueryClient } from 'react-query';
 
-import { CustomPropertiesSettings } from '@k-int/stripes-kint-components';
+import { customPropertyContants, CustomPropertiesSettings } from '@k-int/stripes-kint-components';
 
 import { REFDATA_ENDPOINT, CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
 import useAgreementsContexts from '../../../hooks/useAgreementsContexts';
+
+const { REFDATA_CLASS_NAME, MULTI_REFDATA_CLASS_NAME } = customPropertyContants;
 
 const AgreementsCustomProperties = () => {
   const intl = useIntl();
@@ -40,6 +42,10 @@ const AgreementsCustomProperties = () => {
     category: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.pickList" />,
     deleteError: (error, custProp) => (<FormattedMessage id="ui-agreements.settings.supplementaryProperties.deleteError" values={{ label: custProp?.label, error }} />)
   };
+
+  // These overrides need to be formatted as strings because they will be utilised in a select
+  labelOverrides[REFDATA_CLASS_NAME] = intl.formatMessage({ id: 'ui-agreements.settings.supplementaryProperties.pickList' });
+  labelOverrides[MULTI_REFDATA_CLASS_NAME] = intl.formatMessage({ id: 'ui-agreements.settings.supplementaryProperties.multiPickList' });
 
   const helpPopovers = {
     name: <FormattedMessage id="ui-agreements.supplementaryProperty.help.name" />,
