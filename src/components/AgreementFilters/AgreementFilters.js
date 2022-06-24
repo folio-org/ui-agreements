@@ -24,7 +24,6 @@ const FILTERS = [
   'agreementStatus',
   'renewalPriority',
   'isPerpetual',
-  'tags'
 ];
 
 export default function AgreementFilters({ activeFilters, data, filterHandlers }) {
