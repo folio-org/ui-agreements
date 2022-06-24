@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
 // FIXME DO NOT MERGE THIS
-import { NumberGeneratorModalButton, NumberGeneratorButton, useGenerateNumber } from '@folio/service-interaction';
+import { NumberGeneratorModalButton, NumberGeneratorButton, NumberGeneratorModal, useGenerateNumber } from '@folio/service-interaction';
 
 import {
   Button,
@@ -82,6 +82,7 @@ const Agreements = ({
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
   const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
+  const [numberGenOpen, setNumberGenOpen] = useState(false);
 
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
@@ -292,6 +293,11 @@ const Agreements = ({
                     >
                       home rolled gen
                     </Button>
+                    <Button
+                      onClick={() => setNumberGenOpen(true)}
+                    >
+                      Open separate NumberGeneratorModal
+                    </Button>
                     <MultiColumnList
                       autosize
                       columnMapping={{
@@ -370,6 +376,17 @@ const Agreements = ({
             }
           }
         </SearchAndSortQuery>
+        <NumberGeneratorModal
+          callback={(generated) => {
+            console.log(`Number gen through separate modal: ${generated}`);
+            setNumberGenOpen(false);
+          }}
+          label="TESTING LABEL OVERRIDE"
+          generator="UserBarcode"
+          id="separate-number-gen-modal"
+          onClose={() => setNumberGenOpen(false)}
+          open={numberGenOpen}
+        />
       </div>
     </HasCommand>
   );
