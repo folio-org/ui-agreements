@@ -12,7 +12,7 @@ import { useSuppressFromDiscovery, useChunkedOrderLines } from '../../hooks';
 import { urls } from '../../components/utilities';
 import { endpoints } from '../../constants';
 
-const { AGREEMENT_ENDPOINT, AGREEMENT_LINE_ENDPOINT } = endpoints;
+const { AGREEMENT_LINE_ENDPOINT } = endpoints;
 
 const AgreementLineEditRoute = ({
   handlers,
@@ -40,7 +40,7 @@ const AgreementLineEditRoute = ({
     (payload) => ky.put(AGREEMENT_LINE_ENDPOINT(lineId), { json: payload }).json()
       .then(({ id }) => {
         /* Invalidate cached queries */
-        queryClient.invalidateQueries(AGREEMENT_ENDPOINT(agreementId));
+        queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
         queryClient.invalidateQueries(AGREEMENT_LINE_ENDPOINT(lineId));
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.update.callout" /> });

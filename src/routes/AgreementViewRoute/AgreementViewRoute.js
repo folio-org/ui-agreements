@@ -57,7 +57,7 @@ const AgreementViewRoute = ({
     },
     isLoading: isAgreementLoading
   } = useQuery(
-    [agreementPath, 'getAgreement'],
+    ['ERM', 'Agreement', agreementId, agreementPath], // This pattern may need to be expanded to other fetches in Nolana
     () => ky.get(agreementPath).json()
   );
 

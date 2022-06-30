@@ -11,7 +11,7 @@ import { isPackage } from '@folio/stripes-erm-components';
 
 import View from '../../components/views/AgreementLineForm';
 import { urls } from '../../components/utilities';
-import { AGREEMENT_LINES_ENDPOINT, AGREEMENT_ENDPOINT } from '../../constants/endpoints';
+import { AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
 import { useSuppressFromDiscovery } from '../../hooks';
 
 const AgreementLineCreateRoute = ({
@@ -37,7 +37,7 @@ const AgreementLineCreateRoute = ({
     (payload) => ky.post(AGREEMENT_LINES_ENDPOINT, { json: { ...payload, owner: agreementId } }).json()
       .then(({ id }) => {
         /* Invalidate cached queries */
-        queryClient.invalidateQueries(AGREEMENT_ENDPOINT(agreementId));
+        queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.create.callout" /> });
         history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
