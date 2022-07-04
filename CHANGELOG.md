@@ -1,5 +1,7 @@
 # Change history for ui-agreements
 
+## 8.3.0 In progress
+
 ## 8.2.0 2022-07-04
 * ERM-2229 On creating Agreement, agreement creation view does not close after save
 * ERM-2225 Amendment/License link status values do not update immediately after Agreement edit
