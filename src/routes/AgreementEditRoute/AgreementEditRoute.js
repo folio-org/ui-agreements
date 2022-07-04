@@ -112,7 +112,7 @@ const AgreementEditRoute = ({
     (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: payload }).json()
       .then(({ name, linkedLicenses }) => {
         // Invalidate any linked license's linkedAgreements calls
-        if (linkedLicenses.length) {
+        if (linkedLicenses?.length) {
           linkedLicenses.forEach(linkLic => {
             // I'm still not 100% sure this is the "right" way to go about this.
             queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
