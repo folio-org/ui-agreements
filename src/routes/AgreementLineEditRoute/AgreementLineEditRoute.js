@@ -1,170 +1,78 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import compose from 'compose-function';
-import { isEmpty, chunk } from 'lodash';
+import { FormattedMessage } from 'react-intl';
+
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+
+import { isEmpty } from 'lodash';
 import { LoadingView } from '@folio/stripes/components';
-import { CalloutContext, stripesConnect } from '@folio/stripes/core';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
+import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
 import View from '../../components/views/AgreementLineForm';
-import { urls, withSuppressFromDiscovery } from '../../components/utilities';
-import { resultCount } from '../../constants';
+import { useSuppressFromDiscovery, useChunkedOrderLines } from '../../hooks';
+import { urls } from '../../components/utilities';
+import { endpoints } from '../../constants';
 
-const { RECORDS_PER_REQUEST_LARGE } = resultCount;
-class AgreementLineEditRoute extends React.Component {
-  static manifest = Object.freeze({
-    entitlements: {
-      type: 'okapi',
-      path: 'erm/entitlements',
-      fetch: false,
-    },
-    line: {
-      type: 'okapi',
-      path: 'erm/entitlements/:{lineId}',
-      accumulate: true,
-      fetch: false
-    },
-    orderLines: {
-      type: 'okapi',
-      perRequest: RECORDS_PER_REQUEST_LARGE,
-      path: 'orders/order-lines',
-      accumulate: true,
-      fetch: false,
-      records: 'poLines',
-      throwErrors: false,
-    },
-    basket: { initialValue: [] },
-  });
+const { AGREEMENT_LINE_ENDPOINT } = endpoints;
 
-  static propTypes = {
-    handlers: PropTypes.object,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
-    location: PropTypes.shape({
-      search: PropTypes.string.isRequired,
-    }).isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        agreementId: PropTypes.string.isRequired,
-        lineId: PropTypes.string.isRequired,
-      }).isRequired
-    }).isRequired,
-    mutator: PropTypes.shape({
-      entitlements: PropTypes.shape({
-        PUT: PropTypes.func.isRequired,
-      }),
-      line: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
-        reset: PropTypes.func
-      }),
-      orderLines: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
-        reset: PropTypes.func
-      }),
-    }),
-    resources: PropTypes.shape({
-      basket: PropTypes.arrayOf(PropTypes.object),
-      line: PropTypes.object,
-      orderLines: PropTypes.object,
-      settings: PropTypes.object,
-    }).isRequired,
-    stripes: PropTypes.shape({
-      hasInterface: PropTypes.func.isRequired,
-      hasPerm: PropTypes.func.isRequired,
-    }).isRequired,
-  };
+const AgreementLineEditRoute = ({
+  handlers,
+  history,
+  location,
+  match: { params: { agreementId, lineId } },
+  resources
+}) => {
+  const ky = useOkapiKy();
+  const callout = useContext(CalloutContext);
+  const stripes = useStripes();
+  const queryClient = useQueryClient();
+  const isSuppressFromDiscoveryEnabled = useSuppressFromDiscovery();
 
-  static contextType = CalloutContext;
+  const { data: agreementLine = {}, isLoading: isLineLoading } = useQuery(
+    [AGREEMENT_LINE_ENDPOINT(lineId), 'getLine'],
+    () => ky.get(AGREEMENT_LINE_ENDPOINT(lineId)).json()
+  );
 
-  constructor(props) {
-    super(props);
+  const poLineIdsArray = (agreementLine.poLines ?? []).map(poLine => poLine.poLineId).flat();
+  const { orderLines, isLoading: areOrderLinesLoading } = useChunkedOrderLines(poLineIdsArray);
 
-    this.state = {
-      isEholdingsEnabled: props.stripes.hasPerm('module.eholdings.enabled'),
-      orderLines: [],
-      isLoading: true,
-    };
-  }
+  const { mutateAsync: putAgreementLine } = useMutation(
+    [AGREEMENT_LINE_ENDPOINT(lineId), 'ui-agreements', 'AgreementLineEditRoute', 'editAgreementLine'],
+    (payload) => ky.put(AGREEMENT_LINE_ENDPOINT(lineId), { json: payload }).json()
+      .then(({ id }) => {
+        /* Invalidate cached queries */
+        queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
+        queryClient.invalidateQueries(AGREEMENT_LINE_ENDPOINT(lineId));
 
-  async componentDidMount() {
-    const results = await this.fetchOrderLines();
-    this.setState({ orderLines: results, isLoading: false });
-  }
+        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.update.callout" /> });
+        history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
+      })
+  );
 
-  async fetchOrderLines() {
-    this.props.mutator.line.reset();
-    const agreementLine = await this.props.mutator.line.GET();
-    const poLineIdsArray = ((agreementLine ?? {}).poLines ?? []).map(poLine => poLine.poLineId).flat();
-
-    const CONCURRENT_REQUESTS = 5; // Number of requests to make concurrently
-    const STEP_SIZE = 60; // Number of ids to request for per concurrent request
-
-    const chunkedItems = chunk(poLineIdsArray, CONCURRENT_REQUESTS * STEP_SIZE); // Split into chunks of size CONCURRENT_REQUESTS * STEP_SIZE
-    const data = [];
-    for (const chunkedItem of chunkedItems) {  // Make requests concurrently
-      this.props.mutator.orderLines.reset();
-      const promisesArray = []; // Array of promises
-      for (let i = 0; i < chunkedItem.length; i += STEP_SIZE) {
-        promisesArray.push( // Add promises to array
-          this.props.mutator.orderLines.GET({ // Make GET request
-            params: {
-              query: chunkedItem.slice(i, i + STEP_SIZE).map(item => `id==${item}`).join(' or '), // Make query string
-              limit: 1000, // Limit to 1000
-            },
-          })
-        );
-      }
-      const results = await Promise.all(promisesArray); // Wait for all requests to complete and move to the next chunk
-      data.push(...results.flat()); // Add results to data
-    }
-
-    return data;
-  }
-
-  getCompositeLine = () => {
-    const { resources } = this.props;
-    const line = resources.line?.records?.[0] ?? {};
-    const orderLines = this.state.orderLines;
-
-    const poLines = (line.poLines || [])
+  const getCompositeLine = () => {
+    const poLines = (agreementLine.poLines || [])
       .map(linePOL => orderLines.find(orderLine => orderLine.id === linePOL.poLineId))
       .filter(poLine => poLine);
 
     return {
-      ...line,
+      ...agreementLine,
       poLines,
     };
-  }
+  };
 
-  getInitialValues = () => {
-    const line = this.props.resources.line?.records?.[0] ?? {};
-
+  const getInitialValues = () => {
     return {
-      ...line,
-      linkedResource: line.type !== 'detached' ? line : undefined,
-      coverage: line.customCoverage ? line.coverage : undefined,
+      ...agreementLine,
+      linkedResource: agreementLine.type !== 'detached' ? agreementLine : undefined,
+      coverage: agreementLine.customCoverage ? agreementLine.coverage : undefined,
     };
-  }
+  };
 
-  handleClose = () => {
-    const {
-      history,
-      location,
-      match: { params: { agreementId, lineId } },
-    } = this.props;
+  const handleClose = () => {
     history.push(`${urls.agreementLineView(agreementId, lineId)}${location.search}`);
-  }
+  };
 
-    /* istanbul ignore next */
-  handleSubmit = (line) => {
-    const {
-      history,
-      location,
-      match: { params: { agreementId, lineId } },
-      mutator,
-    } = this.props;
-
+  /* istanbul ignore next */
+  const handleSubmit = (line) => {
     let payload; // payload to be PUT to the endpoint
     const { linkedResource, type, ...rest } = line;
     if (linkedResource?.type === 'packages') { // On submitting a package selected from eholdings plugin
@@ -193,49 +101,60 @@ class AgreementLineEditRoute extends React.Component {
       payload = { resource: linkedResource, ...rest, type };
     }
 
-    return mutator.entitlements
-      .PUT({
-        id: lineId,
-        ...payload
-      })
-      .then(({ id }) => {
-        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.line.update.callout" /> });
-        history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
-      });
-  }
+    putAgreementLine({
+      id: lineId,
+      ...payload
+    });
+  };
 
-  isLoading = () => {
-    return Object.values(this.props.resources).some(r => r.resource !== 'settings' && r.isPending);
-  }
+  if (isLineLoading || areOrderLinesLoading) return <LoadingView dismissible onClose={handleClose} />;
 
-  render() {
-    const { match, resources, isSuppressFromDiscoveryEnabled } = this.props;
+  return (
+    <View
+      key={`agreement-line-edit-pane-${lineId}`}
+      data={{
+        basket: (resources?.basket ?? []),
+        line: getCompositeLine(),
+      }}
+      handlers={{
+        ...handlers,
+        isSuppressFromDiscoveryEnabled,
+        onClose: handleClose,
+      }}
+      initialValues={getInitialValues()}
+      isEholdingsEnabled={stripes.hasPerm('module.eholdings.enabled')}
+      isLoading={isLineLoading || areOrderLinesLoading}
+      lineId={lineId}
+      onSubmit={handleSubmit}
+    />
+  );
+};
 
-    if (this.isLoading() || this.state.isLoading) return <LoadingView dismissible onClose={this.handleClose} />;
+AgreementLineEditRoute.manifest = Object.freeze({
+  basket: { initialValue: [] },
+});
 
-    return (
-      <View
-        key={resources.line?.loadedAt ?? 'loading'}
-        data={{
-          basket: (resources?.basket ?? []),
-          line: this.getCompositeLine(),
-        }}
-        handlers={{
-          ...this.props.handlers,
-          isSuppressFromDiscoveryEnabled,
-          onClose: this.handleClose,
-        }}
-        initialValues={this.getInitialValues()}
-        isEholdingsEnabled={this.state.isEholdingsEnabled}
-        isLoading={this.isLoading() || this.state.isLoading}
-        lineId={match.params.lineId}
-        onSubmit={this.handleSubmit}
-      />
-    );
-  }
-}
+AgreementLineEditRoute.propTypes = {
+  handlers: PropTypes.object,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      agreementId: PropTypes.string.isRequired,
+      lineId: PropTypes.string.isRequired,
+    }).isRequired
+  }).isRequired,
+  resources: PropTypes.shape({
+    basket: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+  stripes: PropTypes.shape({
+    hasInterface: PropTypes.func.isRequired,
+    hasPerm: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
-export default compose(
-  stripesConnect,
-  withSuppressFromDiscovery,
-)(AgreementLineEditRoute);
+export default stripesConnect(AgreementLineEditRoute);

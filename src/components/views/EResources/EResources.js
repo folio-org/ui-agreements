@@ -13,7 +13,7 @@ import {
   PaneMenu,
 } from '@folio/stripes/components';
 
-import { AppIcon, IfPermission } from '@folio/stripes/core';
+import { AppIcon, IfPermission, useStripes } from '@folio/stripes/core';
 
 import {
   CollapseFilterPaneButton,
@@ -31,6 +31,7 @@ import {
 } from '@folio/stripes-erm-components';
 import EResourceFilters from '../../EResourceFilters';
 import IfEResourcesEnabled from '../../IfEResourcesEnabled';
+import IdentifierReassignmentForm from '../../IdentifierReassignmentForm';
 
 import { urls } from '../../utilities';
 import { resultCount } from '../../../constants';
@@ -51,6 +52,9 @@ const propTypes = {
     loaded: PropTypes.func,
     totalCount: PropTypes.func,
   }),
+  stripes: PropTypes.shape({
+    hasPerm: PropTypes.func
+  }),
 };
 
 const filterPaneVisibilityKey = '@folio/agreements/eresourcesFilterPaneVisibility';
@@ -63,7 +67,7 @@ const EResources = ({
   querySetter,
   searchString,
   selectedRecordId,
-  source,
+  source
 }) => {
   const count = source?.totalCount() ?? 0;
   const query = queryGetter() ?? {};
@@ -74,7 +78,9 @@ const EResources = ({
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
   const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
+  const [moveIdentifiersModal, setMoveIdentifiersModal] = useState(false);
 
+  const stripes = useStripes();
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
@@ -104,6 +110,24 @@ const EResources = ({
           }) => {
             const disableReset = () => (!filterChanged && !searchChanged);
             const filterCount = activeFilters.string ? activeFilters.string.split(',').length : 0;
+
+            const getActionMenu = () => {
+              const button = [];
+              if (stripes.hasPerm('ui-agreements.resources.edit')) {
+                button.push(
+                  <Button
+                    key="clickable-move-identifier"
+                    buttonStyle="dropdownItem"
+                    id="clickable-move-identifier"
+                    onClick={setMoveIdentifiersModal}
+                  >
+                    <Icon icon="arrow-right" iconPosition="end" />
+                    <FormattedMessage id="ui-agreements.eresource.moveIdentifier" />
+                  </Button>
+                );
+              }
+              return button.length ? button : null;
+            };
 
             return (
               <PersistedPaneset appId="@folio/agreements" id="eresources-paneset">
@@ -194,6 +218,7 @@ const EResources = ({
                   </Pane>
                 }
                 <Pane
+                  actionMenu={getActionMenu}
                   appIcon={<AppIcon app="agreements" iconKey="eresource" size="small" />}
                   defaultWidth="fill"
                   firstMenu={
@@ -291,6 +316,10 @@ const EResources = ({
           }
         }
       </SearchAndSortQuery>
+      <IdentifierReassignmentForm
+        onClose={() => setMoveIdentifiersModal(false)}
+        open={moveIdentifiersModal}
+      />
     </div>
   );
 };

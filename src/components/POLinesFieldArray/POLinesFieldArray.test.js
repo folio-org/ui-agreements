@@ -9,23 +9,23 @@ import POLinesFieldArray from './POLinesFieldArray';
 
 jest.mock('./POLineField', () => () => <div>POLineField</div>);
 
- const onSubmit = jest.fn();
+const onSubmit = jest.fn();
 
- const poLines = [
-      {
-        '_delete': false,
-        'poLineId': 'baec48dd-1594-2712-be8f-de336bc83fcc'
-      },
-      {
-        '_delete': false,
-        'poLineId': '647c1dca-b9bf-47af-8456-bfb6dfef9eee'
-      }
-    ];
+const poLines = [
+  {
+    '_delete': false,
+    'poLineId': 'baec48dd-1594-2712-be8f-de336bc83fcc'
+  },
+  {
+    '_delete': false,
+    'poLineId': '647c1dca-b9bf-47af-8456-bfb6dfef9eee'
+  }
+];
 
 let renderComponent;
 describe('POLinesFieldArray', () => {
   describe('render with empty initial values ', () => {
-      beforeEach(() => {
+    beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm
           onSubmit={onSubmit}
@@ -66,22 +66,22 @@ describe('POLinesFieldArray', () => {
 
   describe('render with initial values set ', () => {
     beforeEach(() => {
-    renderComponent = renderWithIntl(
-      <TestForm
-        initialValues={{ poLines }}
-        onSubmit={onSubmit}
-      >
-        <FieldArray
-          component={POLinesFieldArray}
-          name="poLines"
-        />
-      </TestForm>, translationsProperties
-    );
-  });
+      renderComponent = renderWithIntl(
+        <TestForm
+          initialValues={{ poLines }}
+          onSubmit={onSubmit}
+        >
+          <FieldArray
+            component={POLinesFieldArray}
+            name="poLines"
+          />
+        </TestForm>, translationsProperties
+      );
+    });
 
-  it('renders expected number of fields', () => {
-    const { queryAllByTestId } = renderComponent;
-    expect(queryAllByTestId(/polinesFieldArray\[.*\]/).length).toEqual(poLines.length);
+    it('renders expected number of fields', () => {
+      const { queryAllByTestId } = renderComponent;
+      expect(queryAllByTestId(/polinesFieldArray\[.*\]/).length).toEqual(poLines.length);
+    });
   });
- });
 });

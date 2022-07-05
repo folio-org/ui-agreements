@@ -1,6 +1,37 @@
 # Change history for ui-agreements
 
-## 8.2.0 In progress
+## 8.3.0 In progress
+
+## 8.2.0 2022-07-04
+* ERM-2229 On creating Agreement, agreement creation view does not close after save
+* ERM-2225 Amendment/License link status values do not update immediately after Agreement edit
+* ERM-2223 Select tags in Search and Filter screen does not work
+* ERM-2217 In custom property Type dropdown Refdata and Refdata (multi-select) should be labelled "Pick list" and "Pick list (multi-select)"
+* ERM-2208 Resources per page for "E-resources in package" not obeying display setting
+* ERM-2207 User with permission "ui-agreements.generalSettings.manage" cannot edit settings
+* ERM-2206 ISSN not displaying in "E-resources covered by this agreement" list
+* ERM-2205 List of Agreement statuses in search and filter does not update after changing label
+* ERM-2204 Toast error message not displayed on failure to delete custom property
+* ERM-2203 Only retrieve license terms if there is at least one license linked to agreement
+* ERM-2176 Chunked order line fetching broken in Agreements following migration to react-query
+* ERM-2175 Migrate Edit/Create routes to react-query where we have regressions
+* ERM-2159 Bump frontend dependency on stripes-kint-components
+* ERM-2147 update outdated dependencies in ui-agreements
+* ERM-2106 Refactor away from react-intl-safe-html (ui-agreements)
+* ERM-2096 Replace babel-eslint with @babel/eslint-parser
+* ERM-2086 Labels in PackageInfo component are not translatable
+* ERM-2079 Display of related license terms in agreements should use stripes-kint-components
+* ERM-2076 Display package status and availability in package card
+* ERM-2072 A maximum of 10 custom properties are retrieved for agreements and licenses
+* ERM-2066 Number of tags doesn't update on adding tags to agreement line (Refactor to react-query from stripes-connect)
+* ERM-2063 Users information not retrieved/displayed for Internal Contact for agreement
+* ERM-2061 Search by extended Package metadata in resource search
+* ERM-2060 Display extended Package metadata in package display
+* ERM-2048 Add support for Date across Agreement filters
+* ERM-2044 Ability to make custom properties deprecated
+* ERM-1979 Add/Edit configurable OA properties for an Agreement
+* ERM-1971 Bump eslint-config stripes version
+* ERM-778 Add Date type to customProperties
 
 ## 8.1.0 2022-03-03
 * ERM-1999. "Load More" button not working - Agreement Lines

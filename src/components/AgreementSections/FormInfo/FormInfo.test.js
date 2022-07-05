@@ -1,28 +1,33 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { TestForm, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { TestForm, renderWithIntl, mockErmComponents } from '@folio/stripes-erm-components/test/jest/helpers';
+import { useAsyncValidation } from '@folio/stripes-erm-components';
+
 import userEvent from '@testing-library/user-event';
 import FormInfo from './FormInfo';
 import translationsProperties from '../../../../test/helpers';
-import { data, form, handlers, initialValues, values } from './testResources';
+import { data, form, initialValues, values } from './testResources';
 
 jest.mock('../../AgreementPeriodsFieldArray', () => () => <div>AgreementPeriodsFieldArray</div>);
 
 jest.mock('@folio/stripes-erm-components', () => ({
   ...jest.requireActual('@folio/stripes-erm-components'),
+  ...mockErmComponents,
   AlternativeNamesFieldArray: () => <div>AlternativeNamesFieldArray</div>,
 }));
 
 const onSubmit = jest.fn();
+const onAsyncValidate = jest.fn();
 
 let renderComponent;
 
 describe('FormInfo', () => {
+  useAsyncValidation.mockImplementation(() => (onAsyncValidate));
   describe('with no initial values', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <TestForm onSubmit={onSubmit}>
-          <FormInfo data={data} form={form} handlers={handlers} values={values} />
+          <FormInfo data={data} form={form} values={values} />
         </TestForm>, translationsProperties
       );
     });
@@ -77,7 +82,7 @@ describe('FormInfo', () => {
     beforeEach(() => {
       renderWithIntl(
         <TestForm initialValues={initialValues} onSubmit={onSubmit}>
-          <FormInfo data={data} form={form} handlers={handlers} values={values} />
+          <FormInfo data={data} form={form} values={values} />
         </TestForm>, translationsProperties
       );
     });
@@ -125,7 +130,7 @@ describe('FormInfo', () => {
     test('typing in the name field should fire the onAsyncValidate callback', () => {
       const { getByRole } = renderComponent;
       userEvent.type(getByRole('textbox', { name: 'Name' }), 'a');
-      expect(handlers.onAsyncValidate).toHaveBeenCalled();
+      expect(onAsyncValidate).toHaveBeenCalled();
     });
   });
 });

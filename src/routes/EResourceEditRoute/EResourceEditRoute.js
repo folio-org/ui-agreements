@@ -1,145 +1,109 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { cloneDeep } from 'lodash';
-import compose from 'compose-function';
 
-import { stripesConnect } from '@folio/stripes/core';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
 
 import PCIForm from '../../components/views/PCIForm';
 import TitleForm from '../../components/views/TitleForm';
 import NoPermissions from '../../components/NoPermissions';
-import { urls, withSuppressFromDiscovery } from '../../components/utilities';
+import { urls } from '../../components/utilities';
 import { resourceClasses } from '../../constants';
+import { useSuppressFromDiscovery } from '../../hooks';
+import { ERESOURCE_ENDPOINT, PCI_ENDPOINT, TITLE_ENDPOINT } from '../../constants/endpoints';
 
-class EResourceEditRoute extends React.Component {
-  static manifest = Object.freeze({
-    eresource: {
-      type: 'okapi',
-      path: 'erm/resource/:{id}',
-      shouldRefresh: () => false,
-    },
-    pci: {
-      type: 'okapi',
-      path: 'erm/pci/:{id}',
-      fetch: false
-    },
-    title: {
-      type: 'okapi',
-      path: 'erm/titles/:{id}',
-      fetch: false
-    },
-  });
+const EResourceEditRoute = ({
+  handlers,
+  history,
+  location,
+  match: { params: { id: eresourceId } },
+}) => {
+  const stripes = useStripes();
+  const isSuppressFromDiscoveryEnabled = useSuppressFromDiscovery();
+  const ky = useOkapiKy();
+  const queryClient = useQueryClient();
 
-  static propTypes = {
-    handlers: PropTypes.object,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
-    location: PropTypes.shape({
-      search: PropTypes.string.isRequired,
-    }).isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-      }).isRequired,
-    }).isRequired,
-    mutator: PropTypes.shape({
-      pci: PropTypes.shape({
-        PUT: PropTypes.func.isRequired,
-      }),
-      title: PropTypes.shape({
-        PUT: PropTypes.func.isRequired,
-      }),
-    }).isRequired,
-    resources: PropTypes.shape({
-      eresource: PropTypes.object,
-      settings: PropTypes.object,
-    }).isRequired,
-    stripes: PropTypes.shape({
-      hasPerm: PropTypes.func.isRequired,
-    }).isRequired,
+  const eresourcePath = ERESOURCE_ENDPOINT(eresourceId);
+  const { data: eresource = {}, isLoading: isEresourceLoading } = useQuery(
+    [eresourcePath, 'getEresource'],
+    () => ky.get(eresourcePath).json()
+  );
+  const eresourceClass = eresource?.class;
+
+  const { mutateAsync: putPCI } = useMutation(
+    [PCI_ENDPOINT(eresourceId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
+    (payload) => ky.put(PCI_ENDPOINT(eresourceId), { json: payload }).json()
+  );
+
+  const { mutateAsync: putTitle } = useMutation(
+    [TITLE_ENDPOINT(eresourceId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
+    (payload) => ky.put(TITLE_ENDPOINT(eresourceId), { json: payload }).json()
+  );
+
+  const handleClose = () => {
+    history.push(`${urls.eresourceView(eresourceId)}${location.search}`);
   };
 
-  constructor(props) {
-    super(props);
+  const handleSubmit = (values) => {
+    const { coverage, id, suppressFromDiscovery } = values;
 
-    this.state = {
-      hasPerms: props.stripes.hasPerm('ui-agreements.resources.edit'),
-    };
-  }
-
-  getInitialValues = () => {
-    const { resources } = this.props;
-    const eresource = resources?.eresource?.records?.[0] ?? {};
-    const initialValues = cloneDeep(eresource);
-    return initialValues;
-  }
-
-  handleClose = () => {
-    const { location, match } = this.props;
-    this.props.history.push(`${urls.eresourceView(match.params.id)}${location.search}`);
-  }
-
-  handleSubmit = (eresource) => {
-    const { history, location, mutator } = this.props;
-    const { coverage, id, suppressFromDiscovery } = eresource;
-    const eresourceClass = eresource?.class;
+    let putFunc;
 
     if (eresourceClass === resourceClasses.TITLEINSTANCE) {
-      return mutator.title
-        .PUT({
-          id,
-          suppressFromDiscovery
-        })
-        .then(() => {
-          history.push(`${urls.eresourceView(id)}${location.search}`);
-        });
+      putFunc = () => putTitle({
+        id,
+        suppressFromDiscovery
+      });
     } else {
-      return mutator.pci
-        .PUT({
-          id,
-          coverage,
-          suppressFromDiscovery
-        })
-        .then(() => {
-          history.push(`${urls.eresourceView(id)}${location.search}`);
-        });
+      putFunc = () => putPCI({
+        id,
+        coverage,
+        suppressFromDiscovery
+      });
     }
-  }
 
-  fetchIsPending = () => {
-    return Object.values(this.props.resources)
-      .filter(r => r && r.eresource !== 'pci')
-      .some(r => r.isPending);
-  }
+    putFunc().then(() => {
+      /* Invalidate cached queries */
+      queryClient.invalidateQueries(ERESOURCE_ENDPOINT(eresourceId));
 
-  render() {
-    if (!this.state.hasPerms) return <NoPermissions />;
-    if (this.fetchIsPending()) return <LoadingView dismissible onClose={this.handleClose} />;
-    const { isSuppressFromDiscoveryEnabled } = this.props;
-    const eresource = this.props.resources?.eresource?.records[0];
-    const eresourceClass = eresource?.class;
+      history.push(`${urls.eresourceView(eresourceId)}${location.search}`);
+    });
+  };
 
-    const EResourceViewComponent = eresourceClass === resourceClasses.TITLEINSTANCE ? TitleForm : PCIForm;
+  if (!stripes.hasPerm('ui-agreements.resources.edit')) return <NoPermissions />;
+  if (isEresourceLoading) return <LoadingView dismissible onClose={handleClose} />;
 
-    return (
-      <EResourceViewComponent
-        eresource={eresource}
-        handlers={{
-          ...this.props.handlers,
-          isSuppressFromDiscoveryEnabled,
-          onClose: this.handleClose,
-        }}
-        initialValues={this.getInitialValues()}
-        onSubmit={this.handleSubmit}
-      />
-    );
-  }
-}
+  const EResourceViewComponent = eresourceClass === resourceClasses.TITLEINSTANCE ? TitleForm : PCIForm;
 
-export default compose(
-  stripesConnect,
-  withSuppressFromDiscovery
-)(EResourceEditRoute);
+  return (
+    <EResourceViewComponent
+      eresource={eresource}
+      handlers={{
+        ...handlers,
+        isSuppressFromDiscoveryEnabled,
+        onClose: handleClose,
+      }}
+      initialValues={eresource}
+      onSubmit={handleSubmit}
+    />
+  );
+};
+
+export default EResourceEditRoute;
+
+EResourceEditRoute.propTypes = {
+  handlers: PropTypes.object,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+};

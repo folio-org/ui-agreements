@@ -11,7 +11,6 @@ import {
   ExpandAllButton,
   HasCommand,
   Icon,
-  IconButton,
   LoadingPane,
   Pane,
   PaneMenu,
@@ -22,9 +21,8 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager, HandlerManager, useStripes } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
-import { CustomPropertiesView } from '@k-int/stripes-kint-components';
+import { CustomPropertiesView, useCustomProperties } from '@k-int/stripes-kint-components';
 
 import DuplicateAgreementModal from '../../DuplicateAgreementModal';
 
@@ -45,27 +43,50 @@ import {
   UsageData,
 } from '../../AgreementSections';
 
-import useAgreementsContexts from '../../../hooks/useAgreementsContexts';
+import { useAgreementsContexts } from '../../../hooks';
 
 import { urls } from '../../utilities';
 import { statuses } from '../../../constants';
-import { CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
+import { CUSTPROP_ENDPOINT, LICENSE_CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
 
 const Agreement = ({
+  components: {
+    HelperComponent,
+    TagButton
+  },
   data,
   isLoading,
   handlers,
-  helperApp,
 }) => {
   const accordionStatusRef = useRef();
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
   const [showDuplicateAgreementModal, setShowDuplicateAgreementModal] = useState(false);
+
+  const licenses = data.agreement?.linkedLicenses || [];
+  const controllingLicenses = licenses.filter(l => l.status.value === statuses.CONTROLLING);
+  const futureLicenses = licenses.filter(l => l.status.value === statuses.FUTURE);
+  const historicalLicenses = licenses.filter(l => l.status.value === statuses.HISTORICAL);
 
   const stripes = useStripes();
 
   const { data: custpropContexts = [] } = useAgreementsContexts();
   // Ensure the custprops with no contexts get rendered
   const contexts = ['isNull', ...custpropContexts];
+
+  const { data: terms } = useCustomProperties({
+    endpoint: LICENSE_CUSTPROP_ENDPOINT,
+    options: {
+      sort: [
+        { path: 'retired' }, // Place retired custprops at the end
+        { path: 'primary', direction: 'desc' }, // Primary properties should display before optional
+        { path: 'label' } // Within those groups, sort by label
+      ]
+    },
+    queryParams: {
+      enabled: licenses?.length > 0
+    },
+    returnQueryObject: true,
+  });
 
   const getSectionProps = (id) => {
     return {
@@ -75,6 +96,7 @@ const Agreement = ({
       id,
       handlers,
       searchString: data.searchString,
+      terms
     };
   };
 
@@ -173,17 +195,9 @@ const Agreement = ({
     return stripes.hasPerm('ui-agreements.agreements.edit') ? (
       <PaneMenu>
         {handlers.onToggleTags &&
-          <FormattedMessage id="ui-agreements.agreements.showTags">
-            {([ariaLabel]) => (
-              <IconButton
-                ariaLabel={typeof ariaLabel === 'string' ? ariaLabel : ariaLabel[0]}
-                badgeCount={agreement?.tags?.length ?? 0}
-                icon="tag"
-                id="clickable-show-tags"
-                onClick={handlers.onToggleTags}
-              />
-            )}
-          </FormattedMessage>
+          <TagButton
+            entity={agreement}
+          />
         }
       </PaneMenu>
     ) : null;
@@ -195,11 +209,6 @@ const Agreement = ({
     id: 'pane-view-agreement',
     onClose: handlers.onClose,
   };
-
-  const licenses = data.agreement?.linkedLicenses || [];
-  const controllingLicenses = licenses.filter(l => l.status.value === statuses.CONTROLLING);
-  const futureLicenses = licenses.filter(l => l.status.value === statuses.FUTURE);
-  const historicalLicenses = licenses.filter(l => l.status.value === statuses.HISTORICAL);
 
   if (isLoading) return <LoadingPane data-loading {...paneProps} />;
 
@@ -287,7 +296,10 @@ const Agreement = ({
             </AccordionStatus>
           </TitleManager>
         </Pane>
-        {helperApp}
+        <HelperComponent
+          link={data.tagsLink}
+          onToggle={handlers.onToggleTags}
+        />
         {showDuplicateAgreementModal &&
           <DuplicateAgreementModal
             name={data.agreement.name}
@@ -301,7 +313,7 @@ const Agreement = ({
           data-test-delete-confirmation-modal
           heading={<FormattedMessage id="ui-agreements.agreements.deleteAgreement" />}
           id="delete-agreement-confirmation"
-          message={<SafeHTMLMessage id="ui-agreements.agreements.deleteConfirmMessage" values={{ name: data.agreement?.name }} />}
+          message={<FormattedMessage id="ui-agreements.agreements.deleteConfirmMessage" values={{ name: data.agreement?.name }} />}
           onCancel={() => setShowDeleteConfirmationModal(false)}
           onConfirm={() => {
             handlers.onDelete();
@@ -315,11 +327,12 @@ const Agreement = ({
 };
 
 Agreement.propTypes = {
+  components: PropTypes.object,
   data: PropTypes.shape({
     agreement: PropTypes.object.isRequired,
     eresourcesFilterPath: PropTypes.string,
-    openAccessProperties: PropTypes.arrayOf(PropTypes.object),
     searchString: PropTypes.string,
+    tagsLink: PropTypes.string
   }).isRequired,
   handlers: PropTypes.shape({
     onClone: PropTypes.func.isRequired,

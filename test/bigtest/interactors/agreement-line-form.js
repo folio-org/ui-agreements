@@ -5,7 +5,7 @@ import {
   clickable,
   fillable,
   value,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 import POLineCardInteractor from './po-line-card';
 import CustomCoverageFieldInteractor from './coverage-field';

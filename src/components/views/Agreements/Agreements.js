@@ -42,7 +42,6 @@ const propTypes = {
     isPerpetualValues: PropTypes.arrayOf(PropTypes.object).isRequired,
     orgRoleValues: PropTypes.arrayOf(PropTypes.object).isRequired,
     renewalPriorityValues: PropTypes.arrayOf(PropTypes.object).isRequired,
-    supplementaryProperties: PropTypes.arrayOf(PropTypes.object).isRequired,
     tagsValues: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
   history: PropTypes.object,

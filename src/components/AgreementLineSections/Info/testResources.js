@@ -61,11 +61,11 @@ const externalLine = {
     'supplementaryDocs': [],
     'description': 'This is description.',
     'items': [{
-        'id': 'a4255fc3-986e-47a3-94cb-6bd30b828d1d'
-      },
-      {
-        'id': '1c247260-bd39-4a5a-887f-25c40cfc53d2'
-      }
+      'id': 'a4255fc3-986e-47a3-94cb-6bd30b828d1d'
+    },
+    {
+      'id': '1c247260-bd39-4a5a-887f-25c40cfc53d2'
+    }
     ],
     'alternateNames': []
   },
@@ -167,11 +167,11 @@ const externalResource = {
     'supplementaryDocs': [],
     'description': 'This is description',
     'items': [{
-        'id': 'a4255fc3-986e-47a3-94cb-6bd30b828d1d'
-      },
-      {
-        'id': '1c247260-bd39-4a5a-887f-25c40cfc53d2'
-      }
+      'id': 'a4255fc3-986e-47a3-94cb-6bd30b828d1d'
+    },
+    {
+      'id': '1c247260-bd39-4a5a-887f-25c40cfc53d2'
+    }
     ],
     'alternateNames': []
   },
@@ -263,11 +263,11 @@ const packageLine = {
     'supplementaryDocs': [],
     'description': 'this is description',
     'items': [{
-        'id': 'c995ebbe-67a7-41ca-bae7-eefe66ce615a'
-      },
-      {
-        'id': '13672d4d-1c9e-4957-b4c8-975e48fd9365'
-      }
+      'id': 'c995ebbe-67a7-41ca-bae7-eefe66ce615a'
+    },
+    {
+      'id': '13672d4d-1c9e-4957-b4c8-975e48fd9365'
+    }
     ],
     'alternateNames': []
   },

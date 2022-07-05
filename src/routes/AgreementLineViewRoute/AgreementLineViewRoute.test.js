@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '@folio/stripes-erm-components/test/jest/__mock__';
+
+import { useQuery } from 'react-query';
+
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-import { noop } from 'lodash';
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
 import {
   match,
   line,
-  orderLines,
-  query
 } from './testResources';
 import translationsProperties from '../../../test/helpers';
 import AgreementLineViewRoute from './AgreementLineViewRoute';
@@ -46,8 +46,11 @@ ToggleTagsButton.propTypes = {
 };
 
 const historyPushMock = jest.fn();
-const mutatorAgreementPutMock = jest.fn();
-const mutatorQueryUpdateMock = jest.fn();
+
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useSuppressFromDiscovery: jest.fn(() => () => true),
+}));
 
 jest.mock('../../components/views/AgreementLine', () => {
   return (props) => (
@@ -61,39 +64,19 @@ jest.mock('../../components/views/AgreementLine', () => {
 });
 
 const data = {
-    isSuppressFromDiscoveryEnabled: () => jest.fn(),
-    history: {
-        push: historyPushMock
-    },
-    location: {
-        search: ''
-    },
-    mutator: {
-        agreement: {
-            PUT: mutatorAgreementPutMock,
-        },
-        line: {
-            GET: noop,
-            reset: () => {},
-        },
-        orderLines: {
-            GET: noop,
-            reset: () => {},
-        },
-        query: {
-          update: mutatorQueryUpdateMock,
-      },
-    },
-    resources: {
-      line,
-      query,
-      orderLines,
-     },
-    match
+  history: {
+    push: historyPushMock
+  },
+  location: {
+    search: ''
+  },
+  match
 };
 
+useQuery.mockImplementation(() => ({ data: line, isLoading: false }));
+
 describe('AgreementLineViewRoute', () => {
-    let renderComponent;
+  let renderComponent;
   describe('rendering the route', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
@@ -122,11 +105,6 @@ describe('AgreementLineViewRoute', () => {
     test('triggers the EditButton callback', async () => {
       await ButtonInteractor('EditButton').click();
       expect(historyPushMock).toHaveBeenCalled();
-    });
-
-    test('triggers the ToggleTagsButton callback', async () => {
-      await ButtonInteractor('ToggleTagsButton').click();
-      expect(mutatorQueryUpdateMock).toHaveBeenCalled();
     });
   });
 });

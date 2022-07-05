@@ -1,10 +1,17 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { useStripes } from '@folio/stripes/core';
+
 import { MemoryRouter } from 'react-router-dom';
-import platforms from './platforms';
 import translationsProperties from '../../../test/helpers';
 import PlatformsRoute from './PlatformsRoute';
+
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  ...mockErmComponents
+}));
 
 const props = {
   history: {
@@ -19,25 +26,6 @@ const props = {
       id: ''
     },
   },
-  mutator: {
-    platforms: {
-      DELETE: () => {},
-      PUT: () => {},
-      POST: () => {},
-      cancel: () => {},
-    },
-    query: {
-      update: () => {},
-      replace: () => {},
-    },
-    resultCount: {
-      update: () => {},
-      replace: () => {},
-    }
-  },
-  resources: {
-    platforms
-  }
 };
 
 describe('PlatformsRoute', () => {
@@ -78,11 +66,13 @@ describe('PlatformsRoute', () => {
   describe('rendering with no permissions', () => {
     let renderComponent;
     beforeEach(() => {
+      const { hasPerm } = useStripes();
+      hasPerm.mockImplementation(() => false);
+
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <PlatformsRoute
             {...props}
-            stripes={{ hasPerm: () => false }}
           />
         </MemoryRouter>,
         translationsProperties

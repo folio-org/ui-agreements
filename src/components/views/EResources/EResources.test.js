@@ -1,7 +1,10 @@
 
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
+
 import { Pane, Button, TextField, MultiColumnList } from '@folio/stripes-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
@@ -14,19 +17,20 @@ jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
 });
 
 jest.mock('../../EResourceFilters', () => () => <div>AgreementFilters</div>);
+jest.mock('../../IdentifierReassignmentForm', () => () => <div>IdentifierReassignmentForm</div>);
 
 const mockSubmit = jest.fn();
 jest.mock('@folio/stripes-erm-components', () => ({
   ...jest.requireActual('@folio/stripes-erm-components'),
-  useHandleSubmitSearch: () => ({
-    handleSubmitSearch: jest.fn().mockImplementation((e) => {
-      e.preventDefault();
-      mockSubmit();
-    })
-  }),
+  ...mockErmComponents
 }));
 
 describe('EResources', () => {
+  useHandleSubmitSearch.mockImplementation(() => ({
+    handleSubmitSearch: mockSubmit,
+    resultsPaneTitleRef: null
+  }));
+
   let renderComponent;
   beforeEach(() => {
     renderComponent = renderWithIntl(
@@ -75,6 +79,11 @@ describe('EResources', () => {
   test('renders the Agreement Filters', () => {
     const { getByText } = renderComponent;
     expect(getByText('AgreementFilters')).toBeInTheDocument();
+  });
+
+  test('renders the IdentifierReassignmentForm', () => {
+    const { getByText } = renderComponent;
+    expect(getByText('IdentifierReassignmentForm')).toBeInTheDocument();
   });
 
   test('renders the expected E-resources Pane', async () => {

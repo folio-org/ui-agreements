@@ -4,7 +4,7 @@ import {
   interactor,
   isPresent,
   value,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 export default @interactor class CustomCoverageFieldInteractor {
   static defaultScope = '[data-test-coverage-number]';

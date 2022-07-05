@@ -25,6 +25,10 @@ describe('AgreementLine', () => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <AgreementLine
+            components={{
+              HelperComponent: () => <div>HelperComponent</div>,
+              TagButton: () => <div>TagButton</div>
+            }}
             data={data}
             handlers={handlers}
             isLoading
@@ -45,6 +49,10 @@ describe('AgreementLine', () => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <AgreementLine
+            components={{
+              HelperComponent: () => <div>HelperComponent</div>,
+              TagButton: () => <div>TagButton</div>
+            }}
             data={data}
             handlers={handlers}
             isLoading={false}

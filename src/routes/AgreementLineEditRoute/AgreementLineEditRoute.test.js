@@ -3,15 +3,13 @@ import PropTypes from 'prop-types';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-import { noop } from 'lodash';
+
+import { useQuery } from 'react-query';
+
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
 import {
-  entitlements,
-  line,
   basket,
-  orderLines,
-  settings,
   match
 } from './testResources';
 import translationsProperties from '../../../test/helpers';
@@ -28,10 +26,15 @@ CloseButton.propTypes = {
 };
 const historyPushMock = jest.fn();
 
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useSuppressFromDiscovery: jest.fn(() => () => true),
+}));
+
 jest.mock('@folio/stripes/components', () => ({
-    ...jest.requireActual('@folio/stripes/components'),
-    LoadingView: () => <div>LoadingView</div>,
-  }));
+  ...jest.requireActual('@folio/stripes/components'),
+  LoadingView: () => <div>LoadingView</div>,
+}));
 
 jest.mock('../../components/views/AgreementLineForm', () => {
   return (props) => (
@@ -43,67 +46,23 @@ jest.mock('../../components/views/AgreementLineForm', () => {
 });
 
 const data = {
-    isSuppressFromDiscoveryEnabled: () => jest.fn(),
-    history: {
-        push: historyPushMock
-    },
-    location: {
-        search: ''
-    },
-    mutator: {
-        entitlements: {
-            PUT: noop,
-        },
-        line: {
-            GET: noop,
-            reset: () => {},
-        },
-        orderLines: {
-            GET: noop,
-            reset: () => {},
-        }
-    },
-    resources: {
-      line,
-      settings,
-      orderLines,
-      basket,
-      entitlements
-     },
-    match
-};
-
-const isLoadingData = {
-  isSuppressFromDiscoveryEnabled: () => jest.fn(),
   history: {
-      push: historyPushMock
+    push: historyPushMock
   },
   location: {
-      search: ''
-  },
-  mutator: {
-      entitlements: {
-          PUT: noop,
-      },
-      line: {
-          GET: noop,
-      },
-      orderLines: {
-          GET: noop,
-      }
+    search: ''
   },
   resources: {
-    line,
-    settings,
-    orderLines,
     basket,
-    entitlements
-   },
-  match,
+  },
+  match
 };
 
+// Default mock implementation
+useQuery.mockImplementation(() => ({ data: {}, isLoading: false }));
+
 describe('AgreementLineEditRoute', () => {
-    let renderComponent;
+  let renderComponent;
   describe('rendering the route', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
@@ -132,9 +91,10 @@ describe('AgreementLineEditRoute', () => {
 
   describe('renders loading view', () => {
     beforeEach(() => {
+      useQuery.mockImplementationOnce(() => ({ data: {}, isLoading: true }));
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <AgreementLineEditRoute {...isLoadingData} />
+          <AgreementLineEditRoute {...data} />
         </MemoryRouter>,
         translationsProperties
       );

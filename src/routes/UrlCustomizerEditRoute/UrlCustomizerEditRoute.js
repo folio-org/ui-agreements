@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+
 import { cloneDeep } from 'lodash';
 import { CalloutContext, stripesConnect } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import View from '../../components/views/UrlCustomizerForm';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
@@ -77,7 +78,7 @@ class UrlCustomizerEditRoute extends React.Component {
     return mutator.urlCustomization
       .PUT(urlCustomization)
       .then(({ id }) => {
-        this.context.sendCallout({ message: <SafeHTMLMessage id="ui-agreements.platform.urlCustomization.update.callout" /> });
+        this.context.sendCallout({ message: <FormattedMessage id="ui-agreements.platform.urlCustomization.update.callout" /> });
         history.push(`${urls.urlCustomizerView(platformId, id)}${location.search}`);
       });
   }

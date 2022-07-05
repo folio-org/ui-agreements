@@ -1,196 +1,160 @@
-import React from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
 
-import { stripesConnect } from '@folio/stripes/core';
-import { StripesConnectedSource } from '@folio/stripes/smart-components';
-import { generateQueryParams } from '@folio/stripes-erm-components';
+import { stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { getRefdataValuesByDesc, useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
+
+import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Agreements';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 import { resultCount } from '../../constants';
+import { AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
+import { useAgreementsRefdata } from '../../hooks';
 
 const {
   INITIAL_RESULT_COUNT,
-  RESULT_COUNT_INCREMENT,
-  RECORDS_PER_REQUEST_MEDIUM
 } = resultCount;
 
+const [
+  AGREEMENT_STATUS,
+  RENEWAL_PRIORITY,
+  IS_PERPETUAL,
+  CONTACT_ROLE,
+  ORG_ROLE
+] = [
+  'SubscriptionAgreement.AgreementStatus',
+  'SubscriptionAgreement.RenewalPriority',
+  'Global.Yes_No',
+  'InternalContact.Role',
+  'SubscriptionAgreementOrg.Role',
+];
 
-class AgreementsRoute extends React.Component {
-  static manifest = Object.freeze({
-    agreements: {
-      type: 'okapi',
-      path: 'erm/sas',
-      records: 'results',
-      recordsRequired: '%{resultCount}',
-      perRequest: 100,
-      limitParam: 'perPage',
-      params: generateQueryParams({
-        searchKey: 'name,alternateNames.name,description',
-        filterKeys: {
-          agreementStatus: 'agreementStatus.value',
-          contacts: 'contacts.user',
-          contactRole: 'contacts.role',
-          isPerpetual: 'isPerpetual.value',
-          orgs: 'orgs.org',
-          renewalPriority: 'renewalPriority.value',
-          role: 'orgs.roles.role',
-          tags: 'tags.value',
-        },
-        sortKeys: {
-          agreementStatus: 'agreementStatus.label',
-        },
-      }),
-    },
-    agreementStatusValues: {
-      type: 'okapi',
-      path: 'erm/refdata/SubscriptionAgreement/agreementStatus',
-      shouldRefresh: () => false,
-    },
-    renewalPriorityValues: {
-      limitParam: 'perPage',
-      type: 'okapi',
-      path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
-      perRequest: RECORDS_PER_REQUEST_MEDIUM,
-      shouldRefresh: () => false,
-    },
-    isPerpetualValues: {
-      type: 'okapi',
-      path: 'erm/refdata/SubscriptionAgreement/isPerpetual',
-      shouldRefresh: () => false,
-    },
-    contactRoleValues: {
-      type: 'okapi',
-      path: 'erm/refdata/InternalContact/role',
-      limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST_MEDIUM,
-      shouldRefresh: () => false,
-    },
-    orgRoleValues: {
-      type: 'okapi',
-      path: 'erm/refdata/SubscriptionAgreementOrg/role',
-      shouldRefresh: () => false,
-    },
-    tagsValues: {
-      type: 'okapi',
-      path: 'tags',
-      params: {
-        limit: '1000',
-        query: 'cql.allRecords=1 sortby label',
-      },
-      records: 'tags',
-    },
-    basket: { initialValue: [] },
-    query: { initialValue: {} },
-    resultCount: { initialValue: INITIAL_RESULT_COUNT },
+const AgreementsRoute = ({
+  children,
+  history,
+  location,
+  match,
+}) => {
+  const ky = useOkapiKy();
+  const stripes = useStripes();
+  const hasPerms = stripes.hasPerm('ui-agreements.agreements.view');
+  const searchField = useRef();
+
+  const refdata = useAgreementsRefdata({
+    desc: [
+      AGREEMENT_STATUS,
+      RENEWAL_PRIORITY,
+      IS_PERPETUAL,
+      CONTACT_ROLE,
+      ORG_ROLE
+    ]
   });
 
-  static propTypes = {
-    children: PropTypes.node,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      pathname: PropTypes.string,
-      search: PropTypes.string,
-    }).isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        id: PropTypes.string,
-      }),
+  const { data: { tags = [] } = {} } = useTags();
+  const { query, queryGetter, querySetter } = useKiwtSASQuery();
+
+  useEffect(() => {
+    if (searchField.current) {
+      searchField.current.focus();
+    }
+  }, []); // This isn't particularly great, but in the interests of saving time migrating, it will have to do
+
+  const agreementsQueryParams = useMemo(() => (
+    generateKiwtQueryParams({
+      searchKey: 'name,alternateNames.name,description',
+      filterKeys: {
+        agreementStatus: 'agreementStatus.value',
+        contacts: 'contacts.user',
+        contactRole: 'contacts.role',
+        isPerpetual: 'isPerpetual.value',
+        orgs: 'orgs.org',
+        renewalPriority: 'renewalPriority.value',
+        role: 'orgs.roles.role',
+        tags: 'tags.value',
+      },
+      sortKeys: {
+        agreementStatus: 'agreementStatus.label',
+      },
+      perPage: INITIAL_RESULT_COUNT
+    }, (query ?? {}))
+  ), [query]);
+
+  const {
+    infiniteQueryObject: {
+      error: agreementsError,
+      fetchNextPage: fetchNextAgreementPage,
+      isLoading: areAgreementsLoading,
+      isError: isAgreementsError
+    },
+    results: agreements = [],
+    total: agreementsCount = 0
+  } = useInfiniteFetch(
+    [AGREEMENTS_ENDPOINT, agreementsQueryParams, 'ui-agreements', 'AgreementsRoute', 'getAgreements'],
+    ({ pageParam = 0 }) => {
+      const params = [...agreementsQueryParams, `offset=${pageParam}`];
+      return ky.get(encodeURI(`${AGREEMENTS_ENDPOINT}?${params?.join('&')}`)).json();
+    }
+  );
+
+  useEffect(() => {
+    if (agreementsCount === 1) {
+      history.push(`${urls.agreementView(agreements[0].id)}${location.search}`);
+    }
+  }, [agreements, agreementsCount, history, location.search]);
+
+  if (!hasPerms) return <NoPermissions />;
+
+  return (
+    <View
+      data={{
+        agreements,
+        agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
+        renewalPriorityValues: getRefdataValuesByDesc(refdata, RENEWAL_PRIORITY),
+        isPerpetualValues: getRefdataValuesByDesc(refdata, IS_PERPETUAL),
+        contactRoleValues: getRefdataValuesByDesc(refdata, CONTACT_ROLE),
+        orgRoleValues: getRefdataValuesByDesc(refdata, ORG_ROLE),
+        tagsValues: tags,
+      }}
+      history={history}
+      onNeedMoreData={(_askAmount, index) => fetchNextAgreementPage({ pageParam: index })}
+      queryGetter={queryGetter}
+      querySetter={querySetter}
+      searchField={searchField}
+      searchString={location.search}
+      selectedRecordId={match.params.id}
+      source={{ // Fake source from useQuery return values;
+        totalCount: () => agreementsCount,
+        loaded: () => !areAgreementsLoading,
+        pending: () => areAgreementsLoading,
+        failure: () => isAgreementsError,
+        failureMessage: () => agreementsError.message
+      }}
+    >
+      {children}
+    </View>
+  );
+};
+
+AgreementsRoute.propTypes = {
+  children: PropTypes.node,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+    search: PropTypes.string,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
     }),
-    mutator: PropTypes.object,
-    resources: PropTypes.object,
-    stripes: PropTypes.shape({
-      hasPerm: PropTypes.func.isRequired,
-      logger: PropTypes.object,
-    }),
-  }
+  }),
+};
 
-  constructor(props) {
-    super(props);
+AgreementsRoute.manifest = Object.freeze({
+  basket: { initialValue: [] },
+});
 
-    this.logger = props.stripes.logger;
-    this.state = {
-      hasPerms: props.stripes.hasPerm('ui-agreements.agreements.view'),
-    };
-    this.searchField = React.createRef();
-  }
-
-  componentDidMount() {
-    this.source = new StripesConnectedSource(this.props, this.logger, 'agreements');
-    if (this.searchField.current) {
-      this.searchField.current.focus();
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const newCount = this.source.totalCount();
-    const newRecords = this.source.records();
-
-    if (newCount === 1) {
-      const { history, location } = this.props;
-
-      const prevSource = new StripesConnectedSource(prevProps, this.logger, 'agreements');
-      const oldCount = prevSource.totalCount();
-      const oldRecords = prevSource.records();
-
-      if (oldCount !== 1 || (oldCount === 1 && oldRecords[0].id !== newRecords[0].id)) {
-        const record = newRecords[0];
-        history.push(`${urls.agreementView(record.id)}${location.search}`);
-      }
-    }
-  }
-
-  handleNeedMoreData = () => {
-    if (this.source) {
-      this.source.fetchMore(RESULT_COUNT_INCREMENT);
-    }
-  }
-
-  querySetter = ({ nsValues }) => {
-    this.props.mutator.query.update(nsValues);
-  }
-
-  queryGetter = () => {
-    return get(this.props.resources, 'query', {});
-  }
-
-  render() {
-    const { children, location, match, resources } = this.props;
-
-    if (this.source) {
-      this.source.update(this.props, 'agreements');
-    }
-
-    if (!this.state.hasPerms) return <NoPermissions />;
-
-    return (
-      <View
-        data={{
-          agreements: get(resources, 'agreements.records', []),
-          agreementStatusValues: get(resources, 'agreementStatusValues.records', []),
-          renewalPriorityValues: get(resources, 'renewalPriorityValues.records', []),
-          isPerpetualValues: get(resources, 'isPerpetualValues.records', []),
-          contactRoleValues: get(resources, 'contactRoleValues.records', []),
-          orgRoleValues: get(resources, 'orgRoleValues.records', []),
-          tagsValues: get(resources, 'tagsValues.records', []),
-        }}
-        history={this.props.history}
-        onNeedMoreData={this.handleNeedMoreData}
-        queryGetter={this.queryGetter}
-        querySetter={this.querySetter}
-        searchField={this.searchField}
-        searchString={location.search}
-        selectedRecordId={match.params.id}
-        source={this.source}
-      >
-        {children}
-      </View>
-    );
-  }
-}
-
-export default stripesConnect(AgreementsRoute, { dataKey: 'agreementsRoute' });
+export default stripesConnect(AgreementsRoute);

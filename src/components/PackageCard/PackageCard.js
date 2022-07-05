@@ -13,6 +13,7 @@ import { AppIcon } from '@folio/stripes/core';
 import EResourceCount from '../EResourceCount';
 import EResourceLink from '../EResourceLink';
 import EResourceProvider from '../EResourceProvider';
+import PackageIdentifiers from '../EResourceSections/PackageIdentifiers';
 
 const propTypes = {
   headerEnd: PropTypes.oneOfType([
@@ -50,7 +51,7 @@ const PackageCard = ({
             <EResourceLink eresource={pkg} searchString={searchString} />
           </strong>
         </AppIcon>
-        )}
+      )}
       roundedBorder
     >
       <Row>
@@ -66,26 +67,37 @@ const PackageCard = ({
             </div>
           </KeyValue>
         </Col>
-        <Col xs={6}>
+        <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.provider" />}>
             <div data-test-vendor-name>
               <EResourceProvider resource={pkg} />
             </div>
           </KeyValue>
         </Col>
-      </Row>
-      <Row>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.source" />}>
             <div data-test-package-source>{pkgObject?.source ?? pkgObject?.authority ?? <NoValue />}</div>
           </KeyValue>
         </Col>
-        <Col xs={9}>
+      </Row>
+      <Row>
+        <Col xs={3}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.eresources.status" />}>
+            <div data-test-package-reference>{pkgObject?.lifecycleStatus?.label ?? <NoValue />}</div>
+          </KeyValue>
+        </Col>
+        <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.reference" />}>
             <div data-test-package-reference>{pkgObject?.reference ?? <NoValue />}</div>
           </KeyValue>
         </Col>
+        <Col xs={3}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.eresources.availability" />}>
+            <div data-test-package-reference>{pkgObject?.availabilityScope?.label ?? <NoValue />}</div>
+          </KeyValue>
+        </Col>
       </Row>
+      <PackageIdentifiers pkg={pkgObject} />
     </Card>
   );
 };

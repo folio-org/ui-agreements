@@ -8,7 +8,7 @@ import {
   isPresent,
   property,
   value,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 import DatepickerInteractor from '@folio/stripes-components/lib/Datepicker/tests/interactor'; // eslint-disable-line
 

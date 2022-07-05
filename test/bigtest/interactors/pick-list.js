@@ -5,7 +5,7 @@ import {
   count,
   isPresent,
   property,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 import SelectInteractor from '@folio/stripes-components/lib/Select/tests/interactor'; // eslint-disable-line
 

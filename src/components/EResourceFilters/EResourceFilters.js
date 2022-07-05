@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
+import { Accordion, AccordionSet, FilterAccordionHeader, Headline, Selection } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
 
 const propTypes = {
@@ -12,6 +12,9 @@ const propTypes = {
 };
 
 const FILTERS = [
+  'contentType',
+  'scope',
+  'status',
   'publicationType',
   'type',
   'tags'
@@ -19,7 +22,10 @@ const FILTERS = [
 
 export default function EResourceFilters({ activeFilters, data, filterHandlers }) {
   const [filterState, setFilterState] = useState({
+    contentType: [],
     publicationType: [],
+    scope: [],
+    status: [],
     type: [],
     tags: [],
     isPackage: [
@@ -129,11 +135,30 @@ export default function EResourceFilters({ activeFilters, data, filterHandlers }
 
   return (
     <AccordionSet>
+      {renderTagsFilter()}
+      {renderCheckboxFilter('isPackage')}
+      <hr />
+      <Headline
+        faded
+        margin="none"
+        size="large"
+      >
+        <FormattedMessage id="ui-agreements.eresources.filters.titleFilters" />
+      </Headline>
       {renderCheckboxFilter('type')}
       {renderCheckboxFilter('publicationType')}
-      {renderCheckboxFilter('isPackage')}
+      <hr />
+      <Headline
+        faded
+        margin="none"
+        size="large"
+      >
+        <FormattedMessage id="ui-agreements.eresources.filters.packageFilters" />
+      </Headline>
       {renderRemoteKbFilter()}
-      {renderTagsFilter()}
+      {renderCheckboxFilter('scope')}
+      {renderCheckboxFilter('status')}
+      {renderCheckboxFilter('contentType')}
     </AccordionSet>
   );
 }
