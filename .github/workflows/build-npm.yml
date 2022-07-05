@@ -23,8 +23,9 @@ jobs:
       COMPILE_TRANSLATION_FILES: 'true'
       PUBLISH_MOD_DESCRIPTOR: 'true'
       FOLIO_NPM_REGISTRY: 'https://repository.folio.org/repository/npm-folioci/'
+      FOLIO_NPM_REGISTRY_AUTH: '//repository.folio.org/repository/npm-folioci/'
       FOLIO_MD_REGISTRY: 'https://folio-registry.dev.folio.org'
-      NODEJS_VERSION: '12'
+      NODEJS_VERSION: '16'
       JEST_JUNIT_OUTPUT_DIR: 'artifacts/jest-junit'
       JEST_COVERAGE_REPORT_DIR: 'artifacts/coverage-jest/lcov-report/'
       BIGTEST_JUNIT_OUTPUT_DIR: 'artifacts/runTest'
@@ -157,10 +158,9 @@ jobs:
           always-auth: true
 
       - name: Set _auth in .npmrc
-        if: ${{ github.ref == 'refs/heads/master' || github.ref  == 'refs/heads/main' }}
         run: |
           npm config set @folio:registry $FOLIO_NPM_REGISTRY
-          npm config set _auth $NODE_AUTH_TOKEN
+          npm config set $FOLIO_NPM_REGISTRY_AUTH:_auth $NODE_AUTH_TOKEN
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -170,6 +170,7 @@ jobs:
           echo ".github" >> .npmignore
           echo ".scannerwork" >> .npmignore
           cat .npmignore
+          
       - name: Publish NPM
         if: ${{ github.ref == 'refs/heads/master' || github.ref  == 'refs/heads/main' }}
         run: npm publish
