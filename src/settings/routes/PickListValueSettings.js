@@ -11,6 +11,7 @@ const PickListValues = () => {
   const intl = useIntl();
 
   const rdcOptions = useAgreementsRefdata()?.map(rdv => ({ value: rdv.desc, label: rdv.desc }));
+
   const [selectedPickList, setSelectedPickList] = useState('');
   const history = useHistory();
 
