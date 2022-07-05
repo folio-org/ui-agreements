@@ -5,14 +5,6 @@ import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../test/helpers';
 import PickListValueSettings from './PickListValueSettings';
 
-const props = {
-  mutator: {
-    categories: {
-      GET: jest.fn(),
-      reset: jest.fn(),
-    },
-  },
-};
 
 describe('PickListValueSettings', () => {
   describe('rendering the PickListValueSettings', () => {
@@ -20,15 +12,15 @@ describe('PickListValueSettings', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <PickListValueSettings {...props} />
+          <PickListValueSettings />
         </MemoryRouter>,
         translationsProperties
       );
     });
 
-    test('renders the ControlledVocab component', () => {
+    test('renders the EditableRefdataList component', () => {
       const { getByText } = renderComponent;
-      expect(getByText('ControlledVocab')).toBeInTheDocument();
+      expect(getByText('EditableRefdataList')).toBeInTheDocument();
     });
   });
 });
