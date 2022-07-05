@@ -581,7 +581,7 @@
     "eresources.extendedPackageInformation": "Extended package information",
     "eresources.packageDescriptionUrls": "Package description URLs",
     "eresources.sourceCreated": "Source created",
-    "eresources.sourceLastUpdated": "Source last updated",
+    "eresources.sourceLastUpdated": "Fuente actualizada por última vez",
     "eresources.status": "Estado",
     "supplementaryProperty": "Supplementary property",
     "supplementaryProperties.defaultTitle": "Propiedades suplementarias ({ctx})",
