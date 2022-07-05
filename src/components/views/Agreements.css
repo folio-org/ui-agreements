@@ -25,3 +25,15 @@
   }
 }
 
+/* FIXME DO NOT MERGE */
+.buttonStyle1 {
+  color: var(--warn);
+  background-color: #f27c05;
+  margin-left: var(--gutter-static-one-third);
+}
+
+.buttonStyle2 {
+  color: var(--success);
+  background-color: #1d9e03;
+  margin-left: var(--gutter-static-one-third);
+}

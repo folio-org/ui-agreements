@@ -4,6 +4,9 @@ import { FormattedMessage } from 'react-intl';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
 // FIXME DO NOT MERGE THIS
+import { CycleButton } from '@k-int/stripes-kint-components';
+
+// FIXME DO NOT MERGE THIS
 import { NumberGeneratorModalButton, NumberGeneratorButton, NumberGeneratorModal, useGenerateNumber } from '@folio/service-interaction';
 
 import {
@@ -263,6 +266,20 @@ const Agreements = ({
                               </Button>
                             )}
                           </FormattedMessage>
+                          <CycleButton
+                            buttons={[
+                              {
+                                icon: "comment",
+                                onClick: () => console.log("CLICKED BUTTON"),
+                                className: css.buttonStyle1
+                              },
+                              {
+                                icon: "trash",
+                                onClick: () => console.log("CLICKED OTHER BUTTON"),
+                                className: css.buttonStyle2
+                              }
+                            ]}
+                          />
                         </PaneMenu>
                       </IfPermission>
                     )}

@@ -20,6 +20,9 @@ import {
 import { validationEndPoint, statuses } from '../../../constants';
 
 import AgreementPeriodsFieldArray from '../../AgreementPeriodsFieldArray';
+import { IconSelect } from '@k-int/stripes-kint-components';
+
+import css from './FormInfo.css';
 
 class FormInfo extends React.Component {
   static propTypes = {
@@ -85,11 +88,12 @@ class FormInfo extends React.Component {
   render() {
     const { agreementStatusValues, isPerpetualValues, renewalPriorityValues, reasonForClosureValues } = this.state;
     const { values } = this.props;
+    console.log("VALUES: %o", values)
 
     return (
       <div data-test-edit-agreement-info>
         <Row>
-          <Col xs={12}>
+          <Col xs={10}>
             <Field
               autoFocus
               component={TextField}
@@ -102,6 +106,35 @@ class FormInfo extends React.Component {
                 requiredValidator,
                 this.validateAsyncBackend,
               )}
+            />
+          </Col>
+          <Col xs={2}>
+            <Field
+              component={IconSelect}
+              label="IconSelect"
+              name="agreementStatus"
+              options={[
+                {
+                  icon: "trash",
+                  value: "active",
+                  label: "ACTIVE",
+                  iconProps: {
+                    iconClassName: css.trashIcon
+                  },
+                  buttonProps: {
+                    className: css.buttonStyle1
+                  }
+                },
+                {
+                  value: "closed",
+                  label: "CLOSED",
+                  buttonProps: {
+                    className: css.buttonStyle1
+                  }
+                }
+              ]}
+              parse={v => v}
+              required
             />
           </Col>
         </Row>
