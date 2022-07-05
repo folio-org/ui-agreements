@@ -1,4 +1,4 @@
-import { interactor } from '@bigtest/interactor';
+import { interactor } from '@interactors/html';
 
 // https://bigtestjs.io/guides/interactors/introduction/
 export default @interactor class ApplicationInteractor {

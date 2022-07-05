@@ -4,11 +4,13 @@ import { FormattedMessage } from 'react-intl';
 import { FieldArray } from 'react-final-form-arrays';
 
 import { Accordion } from '@folio/stripes/components';
-import { DocumentsFieldArray } from '@folio/stripes-erm-components';
+import { DocumentsFieldArray, useFileHandlers } from '@folio/stripes-erm-components';
 import { useStripes } from '@folio/stripes/core';
 
-const FormSupplementaryDocuments = ({ data, handlers, id, onToggle, open }) => {
+const FormSupplementaryDocuments = ({ data, id, onToggle, open }) => {
   const stripes = useStripes();
+
+  const { handleDownloadFile, handleUploadFile } = useFileHandlers('erm/files');
 
   return (
     <Accordion
@@ -25,8 +27,8 @@ const FormSupplementaryDocuments = ({ data, handlers, id, onToggle, open }) => {
         hasDownloadPerm={stripes.hasPerm('ui-agreements.agreements.file.download')}
         isEmptyMessage={<FormattedMessage id="ui-agreements.supplementaryDocs.agreementHasNone" />}
         name="supplementaryDocs"
-        onDownloadFile={handlers.onDownloadFile}
-        onUploadFile={handlers.onUploadFile}
+        onDownloadFile={handleDownloadFile}
+        onUploadFile={handleUploadFile}
       />
     </Accordion>
   );
@@ -36,10 +38,6 @@ FormSupplementaryDocuments.propTypes = {
   data: PropTypes.shape({
     documentCategories: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
-  handlers: PropTypes.shape({
-    onDownloadFile: PropTypes.func.isRequired,
-    onUploadFile: PropTypes.func.isRequired,
-  }),
   id: PropTypes.string,
   onToggle: PropTypes.func,
   open: PropTypes.bool

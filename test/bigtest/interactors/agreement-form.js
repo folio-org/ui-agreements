@@ -8,7 +8,7 @@ import {
   selectable,
   text,
   value,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 import AgreementFormLinesInteractor from './agreement-form-lines';
 

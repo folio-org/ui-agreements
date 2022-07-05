@@ -1224,6 +1224,39 @@ const data = {
     'label': 'Database'
   }
   ],
+  'scopeValues': [{
+    'id': '2c91809c7cba4275907jsl4c23g1001a',
+    'value': 'scope1',
+    'label': 'Scope 1'
+  },
+  {
+    'id': '2c91809c7cba4275907jsl4c23g1001b',
+    'value': 'scope2',
+    'label': 'Scope 2'
+  }
+  ],
+  'statusValues': [{
+    'id': '2c91809c7cba4275907jsl4c23g1001c',
+    'value': 'status1',
+    'label': 'Status 1'
+  },
+  {
+    'id': '2c91809c7cba4275907jsl4c23g1001d',
+    'value': 'status2',
+    'label': 'Status 2'
+  }
+  ],
+  'contentTypeValues': [{
+    'id': '2c91809c7cba4275907jsl4c23g1001e',
+    'value': 'contentType1',
+    'label': 'Content type 1'
+  },
+  {
+    'id': '2c91809c7cba4275907jsl4c23g1001f',
+    'value': 'contentType2',
+    'label': 'Content type 2'
+  }
+  ],
   'sourceValues': [{
     'id': '94ee72b0-2a67-4ad0-8d1d-1d65beea01f7',
     'cursor': '2021-09-14T08:22:05Z',

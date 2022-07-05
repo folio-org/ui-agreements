@@ -1,285 +1,172 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import compose from 'compose-function';
+import { useMutation, useQueryClient } from 'react-query';
 
 import { LoadingView } from '@folio/stripes/components';
-import { CalloutContext, stripesConnect } from '@folio/stripes/core';
+import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 
-import { withAsyncValidation } from '@folio/stripes-erm-components';
-import withFileHandlers from '../components/withFileHandlers';
 import { splitRelatedAgreements } from '../utilities/processRelatedAgreements';
 import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { resultCount } from '../../constants';
+import { AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
+import { useAddFromBasket, useAgreementsRefdata } from '../../hooks';
 
-const { RECORDS_PER_REQUEST_MEDIUM } = resultCount;
+const [
+  AGREEMENT_STATUS,
+  REASON_FOR_CLOSURE,
+  AMENDMENT_STATUS,
+  CONTACT_ROLE,
+  DOC_ATTACHMENT_TYPE,
+  IS_PERPETUAL,
+  REMOTE_LICENSE_LINK_STATUS,
+  ORG_ROLE,
+  RENEWAL_PRIORITY,
+  RELATIONSHIP_TYPE
+] = [
+  'SubscriptionAgreement.AgreementStatus',
+  'SubscriptionAgreement.ReasonForClosure',
+  'LicenseAmendmentStatus.Status',
+  'InternalContact.Role',
+  'DocumentAttachment.AtType',
+  'SubscriptionAgreement.IsPerpetual',
+  'RemoteLicenseLink.Status',
+  'SubscriptionAgreementOrg.Role',
+  'SubscriptionAgreement.RenewalPriority',
+  'AgreementRelationship.Type'
+];
 
-class AgreementCreateRoute extends React.Component {
-  static manifest = Object.freeze({
-    agreements: {
-      type: 'okapi',
-      path: 'erm/sas',
-      fetch: false,
-      shouldRefresh: () => false,
-    },
-    agreementStatusValues: {
-      type: 'okapi',
-      path: 'erm/refdata/SubscriptionAgreement/agreementStatus',
-      shouldRefresh: () => false,
-    },
-    reasonForClosureValues: {
-      type: 'okapi',
-      path: 'erm/refdata/SubscriptionAgreement/reasonForClosure',
-      limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST_MEDIUM,
-      shouldRefresh: () => false,
-    },
-    amendmentStatusValues: {
-      type: 'okapi',
-      path: 'erm/refdata/LicenseAmendmentStatus/status',
-      shouldRefresh: () => false,
-    },
-    contactRoleValues: {
-      type: 'okapi',
-      path: 'erm/refdata/InternalContact/role',
-      limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST_MEDIUM,
-      shouldRefresh: () => false,
-    },
-    documentCategories: {
-      type: 'okapi',
-      path: 'erm/refdata/DocumentAttachment/atType',
-      limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST_MEDIUM,
-      shouldRefresh: () => false,
-    },
-    externalAgreementLine: {
-      type: 'okapi',
-      path: 'erm/entitlements/external',
-      shouldRefresh: () => false,
-      params: {
-        authority: '?{authority}',
-        reference: '?{referenceId}',
-      },
-      throwErrors: false,
-    },
-    isPerpetualValues: {
-      type: 'okapi',
-      path: 'erm/refdata/SubscriptionAgreement/isPerpetual',
-      shouldRefresh: () => false,
-    },
-    licenseLinkStatusValues: {
-      type: 'okapi',
-      path: 'erm/refdata/RemoteLicenseLink/status',
-      shouldRefresh: () => false,
-    },
-    orgRoleValues: {
-      type: 'okapi',
-      path: 'erm/refdata/SubscriptionAgreementOrg/role',
-      shouldRefresh: () => false,
-    },
-    relationshipTypeValues: {
-      type: 'okapi',
-      path: 'erm/refdata/AgreementRelationship/type',
-      shouldRefresh: () => false,
-    },
-    renewalPriorityValues: {
-      type: 'okapi',
-      path: 'erm/refdata/SubscriptionAgreement/renewalPriority',
-      limitParam: 'perPage',
-      perRequest: RECORDS_PER_REQUEST_MEDIUM,
-      shouldRefresh: () => false,
-    },
-    basket: { initialValue: [] },
-    query: { initialValue: {} },
+const AgreementCreateRoute = ({
+  handlers = {},
+  history,
+  location,
+  resources
+}) => {
+  const callout = useContext(CalloutContext);
+  const stripes = useStripes();
+  const ky = useOkapiKy();
+  const queryClient = useQueryClient();
+
+  const {
+    handleBasketLinesAdded,
+    isExternalEntitlementLoading,
+    getAgreementLinesToAdd
+  } = useAddFromBasket(resources?.basket);
+
+  const refdata = useAgreementsRefdata({
+    desc: [
+      AGREEMENT_STATUS,
+      REASON_FOR_CLOSURE,
+      AMENDMENT_STATUS,
+      CONTACT_ROLE,
+      DOC_ATTACHMENT_TYPE,
+      IS_PERPETUAL,
+      REMOTE_LICENSE_LINK_STATUS,
+      ORG_ROLE,
+      RENEWAL_PRIORITY,
+      RELATIONSHIP_TYPE
+    ]
   });
 
-  static propTypes = {
-    checkAsyncValidation: PropTypes.func,
-    handlers: PropTypes.object,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      search: PropTypes.string.isRequired,
-    }).isRequired,
-    mutator: PropTypes.shape({
-      agreements: PropTypes.shape({
-        POST: PropTypes.func.isRequired,
-      }).isRequired,
-      query: PropTypes.shape({
-        update: PropTypes.func.isRequired
-      }).isRequired,
-    }),
-    resources: PropTypes.shape({
-      agreement: PropTypes.object,
-      agreementStatusValues: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      amendmentStatusValues: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      basket: PropTypes.arrayOf(PropTypes.object),
-      contactRoleValues: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      documentCategories: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      externalAgreementLine: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      isPerpetualValues: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      licenseLinkStatusValues: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      orgRoleValues: PropTypes.object,
-      query: PropTypes.shape({
-        addFromBasket: PropTypes.string,
-      }),
-      reasonForClosureValues: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      relationshipTypeValues: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      renewalPriorityValues: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      statusValues: PropTypes.object,
-      typeValues: PropTypes.object,
-    }).isRequired,
-    stripes: PropTypes.shape({
-      hasPerm: PropTypes.func.isRequired,
-      okapi: PropTypes.object.isRequired,
-    }).isRequired,
+  const { mutateAsync: postAgreement } = useMutation(
+    [AGREEMENTS_ENDPOINT, 'ui-agreements', 'AgreementCreateRoute', 'createAgreement'],
+    (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: payload }).json()
+      .then(({ id, name, linkedLicenses }) => {
+        // Invalidate any linked license's linkedAgreements calls
+        if (linkedLicenses?.length) {
+          linkedLicenses.forEach(linkLic => {
+            // I'm still not 100% sure this is the "right" way to go about this.
+            queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
+          });
+        }
+        /* Invalidate cached queries */
+        queryClient.invalidateQueries(AGREEMENTS_ENDPOINT);
+
+        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
+        history.push(`${urls.agreementView(id)}${location.search}`);
+      })
+  );
+
+  const handleClose = () => {
+    history.push(`${urls.agreements()}${location.search}`);
   };
 
-  static defaultProps = {
-    handlers: {},
-  }
+  const handleSubmit = (agreement) => {
+    const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
 
-  static contextType = CalloutContext;
+    splitRelatedAgreements(agreement, relationshipTypeValues);
 
-  constructor(props) {
-    super(props);
+    postAgreement(agreement);
+  };
 
-    this.state = {
-      hasPerms: props.stripes.hasPerm('ui-agreements.agreements.edit'),
-    };
-  }
+  const fetchIsPending = () => {
+    return resources?.basket?.isPending || isExternalEntitlementLoading;
+  };
 
-  handleBasketLinesAdded = () => {
-    this.props.mutator.query.update({
-      addFromBasket: null,
-      authority: null,
-      referenceId: null,
-    });
-  }
-
-  handleClose = () => {
-    const { location } = this.props;
-    this.props.history.push(`${urls.agreements()}${location.search}`);
-  }
-
-  /* istanbul ignore next */
-  handleSubmit = (agreement) => {
-    const { history, location, mutator, resources } = this.props;
-    const relationshipTypeValues = resources?.relationshipTypeValues?.records ?? [];
-
-    const name = agreement?.name;
-    compose(
-      splitRelatedAgreements,
-    )(agreement, relationshipTypeValues);
-
-    return mutator.agreements
-      .POST(agreement)
-      .then(({ id }) => {
-        this.context.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
-        history.push(`${urls.agreementView(id)}${location.search}`);
-      });
-  }
-
-  getAgreementLinesToAdd = () => {
-    const { resources } = this.props;
-    const { query = {} } = resources;
-
-    const externalAgreementLines = resources?.externalAgreementLine?.records ?? [];
-
-    let basketLines = [];
-    if (query.addFromBasket) {
-      const basket = resources?.basket ?? [];
-
-      basketLines = query.addFromBasket
-        .split(',')
-        .map(index => ({ resource: basket[parseInt(index, 10)] }))
-        .filter(line => line.resource); // check that there _was_ a basket item at that index
-    }
-
-    return [
-      ...externalAgreementLines,
-      ...basketLines,
-    ];
-  }
-
-  fetchIsPending = () => {
-    return Object.values(this.props.resources)
-      .filter(r => r && r.resource !== 'agreements')
-      .some(r => r.isPending);
-  }
-
-  getInitialValues = () => {
+  const getInitialValues = () => {
     const periods = [{}];
 
     return {
       periods,
     };
-  }
+  };
 
-  render() {
-    const { handlers, resources } = this.props;
+  if (!stripes.hasPerm('ui-agreements.agreements.edit')) return <NoPermissions />;
+  if (fetchIsPending()) return <LoadingView dismissible onClose={handleClose} />;
 
-    if (!this.state.hasPerms) return <NoPermissions />;
-    if (this.fetchIsPending()) return <LoadingView dismissible onClose={this.handleClose} />;
+  return (
+    <View
+      data={{
+        agreementLines: getAgreementLinesToAdd(),
+        agreementLinesToAdd: getAgreementLinesToAdd(),
+        agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
+        reasonForClosureValues: getRefdataValuesByDesc(refdata, REASON_FOR_CLOSURE),
+        amendmentStatusValues: getRefdataValuesByDesc(refdata, AMENDMENT_STATUS),
+        basket: (resources?.basket ?? []),
+        contactRoleValues: getRefdataValuesByDesc(refdata, CONTACT_ROLE),
+        documentCategories: getRefdataValuesByDesc(refdata, DOC_ATTACHMENT_TYPE),
+        isPerpetualValues: getRefdataValuesByDesc(refdata, IS_PERPETUAL),
+        licenseLinkStatusValues: getRefdataValuesByDesc(refdata, REMOTE_LICENSE_LINK_STATUS),
+        orgRoleValues: getRefdataValuesByDesc(refdata, ORG_ROLE),
+        renewalPriorityValues: getRefdataValuesByDesc(refdata, RENEWAL_PRIORITY),
+        users: [],
+      }}
+      handlers={{
+        ...handlers,
+        onBasketLinesAdded: handleBasketLinesAdded,
+        onClose: handleClose,
+      }}
+      initialValues={getInitialValues()}
+      isLoading={fetchIsPending()}
+      onSubmit={handleSubmit}
+    />
+  );
+};
 
-    return (
-      <View
-        data={{
-          agreementLines: this.getAgreementLinesToAdd(),
-          agreementLinesToAdd: this.getAgreementLinesToAdd(),
-          agreementStatusValues: (resources?.agreementStatusValues?.records ?? []),
-          reasonForClosureValues: (resources?.reasonForClosureValues?.records ?? []),
-          amendmentStatusValues: (resources?.amendmentStatusValues?.records ?? []),
-          basket: (resources?.basket ?? []),
-          contactRoleValues: (resources?.contactRoleValues?.records ?? []),
-          documentCategories: (resources?.documentCategories?.records ?? []),
-          isPerpetualValues: (resources?.isPerpetualValues?.records ?? []),
-          licenseLinkStatusValues: (resources?.licenseLinkStatusValues?.records ?? []),
-          orgRoleValues: (resources?.orgRoleValues?.records ?? []),
-          renewalPriorityValues: (resources?.renewalPriorityValues?.records ?? []),
-          users: [],
-        }}
-        handlers={{
-          ...handlers,
-          onBasketLinesAdded: this.handleBasketLinesAdded,
-          onAsyncValidate: this.props.checkAsyncValidation,
-          onClose: this.handleClose,
-        }}
-        initialValues={this.getInitialValues()}
-        isLoading={this.fetchIsPending()}
-        onSubmit={this.handleSubmit}
-      />
-    );
-  }
-}
+AgreementCreateRoute.manifest = Object.freeze({
+  // TODO we don't want to be using this, see https://issues.folio.org/browse/ERM-2183
+  basket: { initialValue: [] },
+});
 
-export default compose(
-  withFileHandlers,
-  withAsyncValidation,
-  stripesConnect
-)(AgreementCreateRoute);
+AgreementCreateRoute.propTypes = {
+  handlers: PropTypes.object,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired
+  }).isRequired,
+  resources: PropTypes.shape({
+    basket: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+  stripes: PropTypes.shape({
+    hasPerm: PropTypes.func.isRequired,
+    okapi: PropTypes.object.isRequired,
+  }).isRequired,
+};
+
+export default stripesConnect(AgreementCreateRoute);

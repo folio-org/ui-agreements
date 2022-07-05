@@ -89,7 +89,7 @@ export default class CoveredEResourcesList extends React.Component {
     },
     issn: e => {
       const titleInstance = get(e._object, 'pti.titleInstance', {});
-      return getResourceIdentifier(titleInstance, 'eissn') || getResourceIdentifier(titleInstance, 'pissn');
+      return getResourceIdentifier(titleInstance, 'issn') || getResourceIdentifier(titleInstance, 'eissn') || getResourceIdentifier(titleInstance, 'pissn');
     },
     platform: e => {
       const pti = e?._object?.pti ?? {};

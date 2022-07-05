@@ -43,7 +43,7 @@ import {
 
 import IfAccordionIsVisible from '../../IfAccordionIsVisible';
 import { CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
-import useAgreementsContexts from '../../../hooks/useAgreementsContexts';
+import { useAgreementsContexts } from '../../../hooks';
 
 const AgreementForm = ({
   data = {},
@@ -249,8 +249,6 @@ AgreementForm.propTypes = {
   data: PropTypes.shape({
     agreementLines: PropTypes.arrayOf(PropTypes.object).isRequired,
     agreementLinesToAdd: PropTypes.arrayOf(PropTypes.object).isRequired,
-    openAccessProperties: PropTypes.arrayOf(PropTypes.object).isRequired,
-    supplementaryProperties: PropTypes.arrayOf(PropTypes.object).isRequired,
   }).isRequired,
   form: PropTypes.shape({
     change: PropTypes.func.isRequired,

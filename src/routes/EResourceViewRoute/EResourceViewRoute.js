@@ -1,20 +1,19 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import compose from 'compose-function';
 
 import { useQuery } from 'react-query';
 
 import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
-import { withTags } from '@folio/stripes/smart-components';
+
 import { useInfiniteFetch, useBatchedFetch } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/EResource';
-import { parseMclPageSize, urls, withSuppressFromDiscovery } from '../../components/utilities';
+import { parseMclPageSize, urls } from '../../components/utilities';
 import { resultCount, resourceClasses } from '../../constants';
 
-import { useAgreementsHelperApp, useAgreementsSettings } from '../../hooks';
-import { ERESOURCE_ENDPOINT, ERESOURCE_ENTITLEMENTS_ENDPOINT, ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT } from '../../constants/endpoints';
+import { useAgreementsHelperApp, useAgreementsSettings, useSuppressFromDiscovery } from '../../hooks';
+import { ERESOURCE_ENDPOINT, ERESOURCE_ENTITLEMENTS_ENDPOINT, ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT, ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT } from '../../constants/endpoints';
 
 const { RECORDS_PER_REQUEST_MEDIUM } = resultCount;
 
@@ -22,21 +21,21 @@ const EResourceViewRoute = ({
   handlers = [],
   history,
   location,
-  isSuppressFromDiscoveryEnabled,
   match: { params: { id: eresourceId } },
-  tagsEnabled,
 }) => {
   const ky = useOkapiKy();
   const {
     handleToggleTags,
     HelperComponent,
     TagButton,
-  } = useAgreementsHelperApp(tagsEnabled);
+  } = useAgreementsHelperApp();
+
+  const isSuppressFromDiscoveryEnabled = useSuppressFromDiscovery();
 
   const eresourcePath = ERESOURCE_ENDPOINT(eresourceId);
 
   const { data: eresource = {}, isLoading: isEresourceLoading } = useQuery(
-    [eresourcePath, 'ui-agreements', 'EresourceViewRoute', 'getEresource'],
+    [eresourcePath, 'getEresource'],
     () => ky.get(eresourcePath).json()
   );
 
@@ -49,7 +48,7 @@ const EResourceViewRoute = ({
   const eresourceAgreementParams = useMemo(() => (
     generateKiwtQueryParams(
       {
-        perPage: parseMclPageSize({ records: settings }, 'entitlements')
+        perPage: parseMclPageSize(settings, 'entitlements')
       },
       {}
     )
@@ -77,14 +76,15 @@ const EResourceViewRoute = ({
     isLoading: areRelatedEntitlementsLoading
   } = useBatchedFetch({
     batchLimit: entitlementsCount,
-    batchSize: RECORDS_PER_REQUEST_MEDIUM
+    batchSize: RECORDS_PER_REQUEST_MEDIUM,
+    path: ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT(eresourceId)
   });
 
   // ENTITLEMENT OPTIONS FOR ERESOURCE INFINITE FETCH
   const eresourceEntitlementOptionsParams = useMemo(() => (
     generateKiwtQueryParams(
       {
-        perPage: parseMclPageSize({ records: settings }, 'entitlementOptions')
+        perPage: parseMclPageSize(settings, 'entitlementOptions')
       },
       {}
     )
@@ -119,7 +119,7 @@ const EResourceViewRoute = ({
         sort: [{
           path: 'pti.titleInstance.name'
         }],
-        perPage: parseMclPageSize({ records: settings }, 'packageContents')
+        perPage: parseMclPageSize(settings, 'packageContents')
       },
       {}
     )
@@ -217,7 +217,6 @@ EResourceViewRoute.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
   }).isRequired,
@@ -226,12 +225,7 @@ EResourceViewRoute.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired
   }).isRequired,
-  tagsEnabled: PropTypes.bool,
 };
 
 
-export default compose(
-  stripesConnect,
-  withSuppressFromDiscovery,
-  withTags,
-)(EResourceViewRoute);
+export default stripesConnect(EResourceViewRoute);

@@ -2,7 +2,7 @@ import {
   interactor,
   isPresent,
   text,
-} from '@bigtest/interactor';
+} from '@interactors/html';
 
 @interactor class SerialCoverageInteractor {
   static defaultScope = '[data-test-serial-coverage]';

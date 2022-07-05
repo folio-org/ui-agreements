@@ -1,35 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '@folio/stripes-erm-components/test/jest/__mock__';
+
+import { useStripes } from '@folio/stripes/core';
+
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-import { noop } from 'lodash';
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
 
-import {
-  agreements,
-  agreementStatusValues,
-  amendmentStatusValues,
-  basket,
-  contactRoleValues,
-  documentCategories,
-  externalAgreementLine,
-  isPerpetualValues,
-  licenseLinkStatusValues,
-  orgRoleValues,
-  query,
-  reasonForClosureValues,
-  relationshipTypeValues,
-  renewalPriorityValues,
-  loadingView
-} from './testResources';
+import basket from './testResources';
+
+import { useAddFromBasket } from '../../hooks';
+
 import translationsProperties from '../../../test/helpers';
 import AgreementCreateRoute from './AgreementCreateRoute';
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   LoadingView: () => <div>LoadingView</div>,
+}));
+
+const mockBasketLinesAdded = jest.fn();
+
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useAddFromBasket: jest.fn(() => ({
+    isExternalEntitlementLoading: false,
+    getAgreementLinesToAdd: () => [],
+    handleBasketLinesAdded: mockBasketLinesAdded
+  })),
 }));
 
 const BasketLineButton = (props) => {
@@ -52,7 +52,6 @@ CloseButton.propTypes = {
   }),
 };
 
-const queryUpdateMock = jest.fn();
 const historyPushMock = jest.fn();
 
 jest.mock('../../components/views/AgreementForm', () => {
@@ -66,74 +65,15 @@ jest.mock('../../components/views/AgreementForm', () => {
 });
 
 const data = {
-  checkAsyncValidation: () => jest.fn(),
-  handlers: {
-    onDownloadFile: () => { },
-    onUploadFile: () => { },
-  },
   history: {
     push: historyPushMock
   },
   location: {
-    search: ''
-  },
-  mutator: {
-    agreements: {
-      POST: noop
-    },
-    query: {
-      update: queryUpdateMock
-    },
+    search: '',
+    pathname: ''
   },
   resources: {
-    agreements,
-    agreementStatusValues,
-    amendmentStatusValues,
     basket,
-    contactRoleValues,
-    documentCategories,
-    externalAgreementLine,
-    isPerpetualValues,
-    licenseLinkStatusValues,
-    orgRoleValues,
-    query,
-    reasonForClosureValues,
-    relationshipTypeValues,
-    renewalPriorityValues,
-  }
-};
-
-const isPendingData = {
-  checkAsyncValidation: () => jest.fn(),
-  handlers: {
-    onDownloadFile: () => { },
-    onUploadFile: () => { }
-  },
-  history: {
-    push: () => jest.fn()
-  },
-  location: {},
-  mutator: {
-    agreements: {
-      POST: noop
-    },
-    query: {
-      update: noop
-    },
-  },
-  resources: {
-    loadingView,
-    agreementStatusValues,
-    basket,
-    contactRoleValues,
-    documentCategories,
-    isPerpetualValues,
-    licenseLinkStatusValues,
-    orgRoleValues,
-    query,
-    reasonForClosureValues,
-    relationshipTypeValues,
-    renewalPriorityValues,
   }
 };
 
@@ -159,10 +99,9 @@ describe('AgreementCreateRoute', () => {
       expect(getByText('BasketLineButton')).toBeInTheDocument();
     });
 
-    // we check if the button is clicked it calls the queryUpdateMock(update) function to invoke the child callback (handleBasketLinesAdded) defined in Route
     test('calls the BasketLineButton', async () => {
       await ButtonInteractor('BasketLineButton').click();
-      expect(queryUpdateMock).toHaveBeenCalled();
+      expect(mockBasketLinesAdded).toHaveBeenCalled();
     });
 
     // we check if the button is clicked it calls the historyPushMock(push) function to invoke the child callback (handleClose) defined in Route
@@ -175,9 +114,13 @@ describe('AgreementCreateRoute', () => {
   describe('rendering loading view', () => {
     let renderComponent;
     beforeEach(() => {
+      useAddFromBasket.mockImplementationOnce(() => ({
+        ...useAddFromBasket(),
+        isExternalEntitlementLoading: true
+      }));
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <AgreementCreateRoute {...isPendingData} />
+          <AgreementCreateRoute {...data} />
         </MemoryRouter>,
         translationsProperties
       );
@@ -192,11 +135,12 @@ describe('AgreementCreateRoute', () => {
   describe('rendering with no permissions', () => {
     let renderComponent;
     beforeEach(() => {
+      const { hasPerm } = useStripes();
+      hasPerm.mockImplementation(() => false);
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <AgreementCreateRoute
             {...data}
-            stripes={{ hasPerm: () => false }}
           />
         </MemoryRouter>,
         translationsProperties

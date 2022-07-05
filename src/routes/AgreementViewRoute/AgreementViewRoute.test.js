@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { useQuery } from 'react-query';
+
+import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
@@ -15,7 +18,6 @@ import {
   query,
   settings,
   users,
-  stripes,
   tagsEnabled,
   location,
   handlers,
@@ -135,23 +137,13 @@ CloneButton.propTypes = {
   }),
 };
 
-const originalFetch = window.fetch;
-window.fetch = jest.fn((url, options) => {
-  return new Promise((resolve, reject) => {
-    if (url.includes('export')) { // handle export endpoints
-      return resolve({ blob: () => Promise.resolve(true) });
-    } else if (url.includes('clone')) {
-      return resolve({ ok: true, text: () => Promise.resolve({ id: 123 }) }); // handle clone endpoint
-    } else {
-      return originalFetch(url, options)
-        .then(resp => resolve(resp))
-        .catch(error => reject(error));
-    }
-  });
-});
-
 const historyPushMock = jest.fn();
 const mutatorFetchReplaceMock = jest.fn();
+
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  ...mockErmComponents
+}));
 
 jest.mock('../../components/views/Agreement', () => {
   return (props) => (
@@ -196,15 +188,15 @@ const data = {
     settings,
     users,
   },
-  stripes,
   tagsEnabled
 };
+
+useQuery.mockImplementation(() => ({ data: agreement, isLoading: false }));
 
 describe('AgreementViewRoute', () => {
   describe('rendering the AgreementViewRoute', () => {
     let renderComponent;
     beforeEach(() => {
-      fetch.mockClear();
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <AgreementViewRoute {...data} />
@@ -218,12 +210,12 @@ describe('AgreementViewRoute', () => {
       expect(getByText('Agreement')).toBeInTheDocument();
     });
 
-    test('calls the AgreementLineButton callback', () => {
+    test('renders the AgreementLineButton', () => {
       const { getByText } = renderComponent;
       expect(getByText('AgreementLineButton')).toBeInTheDocument();
     });
 
-    test('calls the NeedMoreLinesButton callback', () => {
+    test('renders the NeedMoreLinesButton', () => {
       const { getByText } = renderComponent;
       expect(getByText('NeedMoreLinesButton')).toBeInTheDocument();
     });
