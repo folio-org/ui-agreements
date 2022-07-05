@@ -74,7 +74,14 @@ const AgreementCreateRoute = ({
   const { mutateAsync: postAgreement } = useMutation(
     [AGREEMENTS_ENDPOINT, 'ui-agreements', 'AgreementCreateRoute', 'createAgreement'],
     (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: payload }).json()
-      .then(({ id, name }) => {
+      .then(({ id, name, linkedLicenses }) => {
+        // Invalidate any linked license's linkedAgreements calls
+        if (linkedLicenses?.length) {
+          linkedLicenses.forEach(linkLic => {
+            // I'm still not 100% sure this is the "right" way to go about this.
+            queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
+          });
+        }
         /* Invalidate cached queries */
         queryClient.invalidateQueries(AGREEMENTS_ENDPOINT);
 

@@ -77,7 +77,7 @@ const AgreementEditRoute = ({
   });
 
   const { data: agreement, isLoading: isAgreementLoading } = useQuery(
-    [AGREEMENT_ENDPOINT(agreementId), 'getAgreement'],
+    ['ERM', 'Agreement', agreementId, AGREEMENT_ENDPOINT(agreementId)], // This pattern may need to be expanded to other fetches in Nolana
     () => ky.get(AGREEMENT_ENDPOINT(agreementId)).json()
   );
 
@@ -110,10 +110,18 @@ const AgreementEditRoute = ({
   const { mutateAsync: putAgreement } = useMutation(
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
     (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: payload }).json()
-      .then(({ name }) => {
+      .then(({ name, linkedLicenses }) => {
+        // Invalidate any linked license's linkedAgreements calls
+        if (linkedLicenses?.length) {
+          linkedLicenses.forEach(linkLic => {
+            // I'm still not 100% sure this is the "right" way to go about this.
+            queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
+          });
+        }
+
         /* Invalidate cached queries */
         queryClient.invalidateQueries(AGREEMENTS_ENDPOINT);
-        queryClient.invalidateQueries(AGREEMENT_ENDPOINT(agreementId));
+        queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
         history.push(`${urls.agreementView(agreementId)}${location.search}`);

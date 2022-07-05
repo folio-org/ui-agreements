@@ -600,6 +600,7 @@
   "settings.supplementaryProperties.primaryRetired": "A supplementary property cannot be both primary and deprecated",
   "settings.supplementaryProperties.category": "Category",
   "settings.supplementaryProperties.pickList": "Pick list",
+  "settings.supplementaryProperties.multiPickList": "Pick list (multi-select)",
   "settings.supplementaryProperties.deleteError": "There was an error deleting supplementary property: <strong>{label}</strong>. {error}",
   "settings.values": "values",
   "settings.value": "Value",

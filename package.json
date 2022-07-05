@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "8.2.0",
+  "version": "8.3.0",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -31,8 +31,8 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^6.1.0",
-    "@folio/stripes": "^7.1.0",
-    "@folio/stripes-cli": "^2.5.0",
+    "@folio/stripes": "^7.2.0",
+    "@folio/stripes-cli": "^2.6.0",
     "@folio/stripes-testing": "^4.2.0",
     "@formatjs/cli": "^4.2.31",
     "@testing-library/dom": "^8.13.0",
@@ -80,8 +80,8 @@
   },
   "dependencies": {
     "@folio/stripes-acq-components": "^3.1.0",
-    "@folio/stripes-erm-components": "^6.1.0",
     "@k-int/stripes-kint-components": "^2.7.0",
+    "@folio/stripes-erm-components": "^6.2.0",
     "@rehooks/local-storage": "2.4.4",
     "@testing-library/react-hooks": "^8.0.0",
     "compose-function": "^3.0.3",
@@ -96,7 +96,7 @@
     "react-router-prop-types": "^1.0.4"
   },
   "peerDependencies": {
-    "@folio/stripes": "^7.1.0",
+    "@folio/stripes": "^7.2.0",
     "moment": "^2.29.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -244,7 +244,8 @@
           "module.agreements.enabled",
           "settings.enabled",
           "configuration.entries.collection.get",
-          "configuration.entries.item.put"
+          "configuration.entries.item.put",
+          "configuration.entries.item.post"
         ]
       },
       {
