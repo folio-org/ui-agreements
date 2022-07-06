@@ -17,9 +17,9 @@ describe('PickListSettings', () => {
       );
     });
 
-    test('renders the ControlledVocab component', () => {
+    test('renders the EditableRefdataCategoryList component', () => {
       const { getByText } = renderComponent;
-      expect(getByText('ControlledVocab')).toBeInTheDocument();
+      expect(getByText('EditableRefdataCategoryList')).toBeInTheDocument();
     });
   });
 });

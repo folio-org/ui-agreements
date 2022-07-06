@@ -1,60 +1,37 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 
 import { FormattedMessage } from 'react-intl';
-import { ControlledVocab } from '@folio/stripes/smart-components';
-import { IntlConsumer, stripesConnect } from '@folio/stripes/core';
-import { NoValue } from '@folio/stripes/components';
 
+import { Pane } from '@folio/stripes/components';
 
-class PickListSettings extends React.Component {
-  static propTypes = {
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
-    }).isRequired,
-  };
+import { EditableRefdataCategoryList } from '@k-int/stripes-kint-components';
+import { REFDATA_ENDPOINT } from '../../constants/endpoints';
 
-  constructor(props) {
-    super(props);
-    this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
-  }
+const PickListSettings = () => {
+  const history = useHistory();
 
-  suppressDelete = (category) => {
-    const { internal, values = [] } = category;
+  return (
+    <Pane
+      defaultWidth="fill"
+      dismissible
+      id="edit-refdata-desc"
+      onClose={() => history.push('/settings/erm')}
+      paneTitle={
+        <FormattedMessage id="ui-agreements.settings.pickLists" />
+      }
+    >
+      <EditableRefdataCategoryList
+        label={
+          <FormattedMessage id="ui-agreements.settings.pickLists" />
+        }
+        labelOverrides={{
+          deleteRefdataCategory: <FormattedMessage id="ui-agreements.settings.pickList.deletePickList" />,
+          deleteError: (err, category) => <FormattedMessage id="ui-agreements.settings.pickList.deletePickListError" values={{ name: category.desc, error: err }} />
+        }}
+        refdataEndpoint={REFDATA_ENDPOINT}
+      />
+    </Pane>
+  );
+};
 
-    return internal || values.length;
-  }
-
-  render() {
-    const { stripes } = this.props;
-
-    return (
-      <IntlConsumer>
-        {intl => (
-          <this.connectedControlledVocab
-            actionSuppressor={{ edit: () => true, delete: this.suppressDelete }}
-            baseUrl="erm/refdata"
-            columnMapping={{
-              desc: intl.formatMessage({ id: 'ui-agreements.settings.pickList' }),
-              actions: intl.formatMessage({ id: 'ui-agreements.settings.actions' }),
-            }}
-            formatter={{ numberOfObjects: (item) => item.values?.length ?? <NoValue /> }}
-            hiddenFields={['lastUpdated']}
-            id="pick-lists"
-            itemTemplate={{ desc: this.desc, values: [] }}
-            label={<FormattedMessage id="ui-agreements.settings.pickLists" />}
-            labelSingular={intl.formatMessage({ id: 'ui-agreements.settings.pickList' })}
-            limitParam="perPage"
-            nameKey="desc"
-            objectLabel={<FormattedMessage id="ui-agreements.settings.values" />}
-            sortby="desc"
-            stripes={stripes}
-            visibleFields={['desc']}
-          />
-        )}
-      </IntlConsumer>
-    );
-  }
-}
-
-export default stripesConnect(PickListSettings);
+export default PickListSettings;
