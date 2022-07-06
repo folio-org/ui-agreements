@@ -359,12 +359,12 @@ describe('PackageContents', () => {
   });
 
   test('renders the filter buttons', async () => {
-    Promise.all(
+    Promise.all([
       await Button('Current').exists(),
       await Button('Future').exists(),
       await Button('Dropped').exists(),
       await Button('All').exists()
-    );
+    ]);
   });
 
   test('renders the PackageContents mcl', async () => {

@@ -7,9 +7,6 @@
     "registry": "https://repository.folio.org/repository/npm-folio/"
   },
   "license": "Apache-2.0",
-  "engines": {
-    "node": ">=10.0.0"
-  },
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
@@ -20,6 +17,7 @@
     "test-bigtest-once": "stripes test karma --karma.singleRun",
     "test-erm": "yarn run test-int; yarn run test-licenses-int",
     "lint": "eslint src test",
+    "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
     "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-agreements ./translations/ui-agreements/compiled"
   },
   "devDependencies": {
