@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
-import { IconSelect } from '@k-int/stripes-kint-components';
+import { IconSelect, RichSelect, useSelectedOption } from '@k-int/stripes-kint-components';
 
 import {
   Col,
+  IconButton,
   Row,
   Select,
   TextArea,
@@ -40,6 +41,11 @@ const FormInfo = ({
 }) => {
   // deal with this in a second
   const validateAsyncBackend = useAsyncValidation('ui-agreements', validationEndPoint.AGREEMENTPATH);
+  const [richSelectRef, selectedOption] = useSelectedOption();
+  console.log("SelectedOption: %o", selectedOption);
+
+  const [iconSelectRef, selectedOptionIcon] = useSelectedOption();
+  console.log("SelectedOption (icon): %o", selectedOptionIcon);
 
   return (
     <div data-test-edit-agreement-info>
@@ -61,6 +67,7 @@ const FormInfo = ({
         </Col>
         <Col xs={2}>
           <Field
+            ref={iconSelectRef}
             component={IconSelect}
             label="IconSelect"
             name="agreementStatus"
@@ -77,6 +84,7 @@ const FormInfo = ({
                 }
               },
               {
+                icon: "comment",
                 value: "closed",
                 label: "CLOSED",
                 buttonProps: {
@@ -87,6 +95,48 @@ const FormInfo = ({
             parse={v => v}
             required
           />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={2}>
+          <Field
+            label="RichSelect"
+            name="agreementStatus"
+            parse={v => v}
+            render={fieldProps => (
+              <RichSelect
+                {...fieldProps}
+                ref={richSelectRef}
+                options={[
+                  {
+                    icon: "trash",
+                    value: "active",
+                    label: "Active (label)",
+                    iconProps: {
+                      iconClassName: css.trashIcon
+                    },
+                  },
+                  {
+                    value: "closed",
+                    label: "Closed (label)",
+                    buttonProps: {
+                      className: css.buttonStyle1
+                    }
+                  }
+                ]}
+                required
+              />
+            )}
+          />
+        </Col>
+        <Col xs={2}>
+          <IconButton
+            icon="caret-right"
+            iconPosition="end"
+            onClick={() => alert("CLICKED")}
+          >
+            IconButton
+          </IconButton>
         </Col>
       </Row>
       <Row>
