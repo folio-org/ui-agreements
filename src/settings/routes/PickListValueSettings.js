@@ -1,133 +1,51 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { get } from 'lodash';
-import { FormattedMessage } from 'react-intl';
-import { ControlledVocab } from '@folio/stripes/smart-components';
-import { Select } from '@folio/stripes/components';
-import { IntlConsumer, stripesConnect } from '@folio/stripes/core';
+import { useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useHistory } from 'react-router-dom';
 
-class PickListValueSettings extends React.Component { // We should use the EditableRefdataList from stripes-kint-components
-  static manifest = {
-    categories: {
-      type: 'okapi',
-      path: 'erm/refdata',
-      params: {
-        perPage: '100',
-        sort: 'desc;asc',
-      },
-      accumulate: true,
-    },
-  };
+import { Pane, Select } from '@folio/stripes/components';
+import { EditableRefdataList } from '@k-int/stripes-kint-components';
+import { REFDATA_ENDPOINT } from '../../constants/endpoints';
+import { useAgreementsRefdata } from '../../hooks';
 
-  static propTypes = {
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
-    }).isRequired,
-    resources: PropTypes.shape({
-      categories: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.shape({
-          desc: PropTypes.string,
-          id: PropTypes.string,
-          internal: PropTypes.bool,
-          values: PropTypes.arrayOf(PropTypes.shape({
-            id: PropTypes.string,
-            value: PropTypes.string,
-            label: PropTypes.string,
-          })),
-        }))
-      }),
-    }),
-    mutator: PropTypes.shape({
-      categories: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
-        reset: PropTypes.func.isRequired,
-      }),
-    })
-  };
+const PickListValues = () => {
+  const intl = useIntl();
 
-  constructor(props) {
-    super(props);
-    this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
+  const rdcOptions = useAgreementsRefdata()?.map(rdv => ({ value: rdv.desc, label: rdv.desc }));
 
-    this.state = {
-      selectedCategory: null,
-    };
-  }
+  const [selectedPickList, setSelectedPickList] = useState('');
+  const history = useHistory();
 
-  /**
-   * Refresh lookup tables when the component mounts. Fetches in the manifest
-   * will only run once (in the constructor) but because this object may be
-   * unmounted/remounted without being destroyed/recreated, the lookup tables
-   * will be stale if they change between unmounting/remounting.
-   */
-  componentDidMount() {
-    this.props.mutator.categories.reset();
-    this.props.mutator.categories.GET();
-  }
-
-  onChangeCategory = (e) => {
-    const records = this.props?.resources?.categories?.records ?? [];
-    const selectedCategory = records.find(item => item.id === e.target.value);
-    this.setState({ selectedCategory });
-  }
-
-  renderCategories(intl) {
-    return [
-      { value: 'empty', label: intl.formatMessage({ id: 'ui-agreements.settings.pickListSelect' }) },
-      ...get(this.props, 'resources.categories.records', []).map(c => ({ value: c.id, label: c.desc })),
-    ];
-  }
-
-  renderRowFilter(intl) {
-    return (
+  return (
+    <Pane
+      defaultWidth="fill"
+      dismissible
+      id="edit-refdata"
+      onClose={() => history.push('/settings/erm')}
+      paneTitle={
+        <FormattedMessage id="ui-agreements.settings.pickListValues" />
+      }
+    >
       <Select
-        dataOptions={this.renderCategories(intl)}
-        id="categorySelect"
+        dataOptions={[{ value: '', label: intl.formatMessage({ id: 'ui-agreements.settings.pickListSelect' }) }, ...rdcOptions]}
         label={<FormattedMessage id="ui-agreements.settings.pickList" />}
-        name="categorySelect"
-        onChange={this.onChangeCategory}
+        onChange={(e) => setSelectedPickList(e.target.value)}
+        value={selectedPickList}
       />
-    );
-  }
+      {selectedPickList && (
+        <EditableRefdataList
+          desc={selectedPickList}
+          label={
+            <FormattedMessage id="ui-agreements.settings.pickListValues" />
+          }
+          labelOverrides={{
+            deleteRefdataCategory: <FormattedMessage id="ui-agreements.settings.pickListValues.deletePickListValue" />,
+            deleteError: (err, refdata) => <FormattedMessage id="ui-agreements.settings.pickListValues.deletePickListValueError" values={{ name: refdata.label, error: err }} />
+          }}
+          refdataEndpoint={REFDATA_ENDPOINT}
+        />
+      )}
+    </Pane>
+  );
+};
 
-  render() {
-    const { selectedCategory } = this.state;
-
-    return (
-      <IntlConsumer>
-        {intl => (
-          <this.connectedControlledVocab
-            {...this.props}
-            actionSuppressor={{ edit: () => false, delete: () => selectedCategory?.internal }}
-            actuatorType="refdata"
-            baseUrl={`erm/refdata/${selectedCategory?.id}`}
-            canCreate={!selectedCategory?.internal}
-            columnMapping={{
-              label: intl.formatMessage({ id: 'ui-agreements.settings.label' }),
-              value: intl.formatMessage({ id: 'ui-agreements.settings.value' }),
-              actions: intl.formatMessage({ id: 'ui-agreements.settings.actions' }),
-            }}
-            // We have to unset the dataKey to prevent the props.resources in
-            // <ControlledVocab> from being overwritten by the props.resources here.
-            dataKey={undefined}
-            hiddenFields={['lastUpdated', 'numberOfObjects']}
-            id="pick-list-values"
-            label={<FormattedMessage id="ui-agreements.settings.pickListValues" />}
-            labelSingular={intl.formatMessage({ id: 'ui-agreements.settings.label' })}
-            listSuppressor={() => !selectedCategory?.id}
-            nameKey="label"
-            objectLabel={<FormattedMessage id="ui-agreements.settings.values" />}
-            readOnlyFields={['value']}
-            records="values"
-            rowFilter={this.renderRowFilter(intl)}
-            sortby="label"
-            stripes={this.props.stripes}
-            visibleFields={['label', 'value']}
-          />
-        )}
-      </IntlConsumer>
-    );
-  }
-}
-
-export default stripesConnect(PickListValueSettings);
+export default PickListValues;

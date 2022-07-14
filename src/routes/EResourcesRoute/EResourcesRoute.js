@@ -96,7 +96,7 @@ const EResourcesRoute = ({
     results: eresources = [],
     total: eresourcesCount = 0
   } = useInfiniteFetch(
-    [ERESOURCES_ELECTRONIC_ENDPOINT, eresourcesQueryParams, 'ui-agreements', 'EresourcesRoute', 'getEresources'],
+    ['ERM', 'EResources', eresourcesQueryParams, ERESOURCES_ELECTRONIC_ENDPOINT],
     ({ pageParam = 0 }) => {
       const params = [...eresourcesQueryParams, `offset=${pageParam}`];
       return ky.get(encodeURI(`${ERESOURCES_ELECTRONIC_ENDPOINT}?${params?.join('&')}`)).json();
@@ -111,7 +111,7 @@ const EResourcesRoute = ({
 
   const kbsPath = 'erm/kbs';
   const { data: kbs = [] } = useQuery(
-    [kbsPath, 'ui-agreements', 'EresourcesRoute', 'getKbs'],
+    ['ERM', 'KnowledgeBases', kbsPath],
     () => ky.get(kbsPath).json()
   );
 
