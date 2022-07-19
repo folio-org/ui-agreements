@@ -17,7 +17,7 @@ import { urls } from '../../components/utilities';
 import { endpoints } from '../../constants';
 import { useAddFromBasket, useAgreementsRefdata, useChunkedOrderLines } from '../../hooks';
 
-const { AGREEMENTS_ENDPOINT, AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT } = endpoints;
+const { AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT } = endpoints;
 
 const [
   AGREEMENT_STATUS,
@@ -120,7 +120,7 @@ const AgreementEditRoute = ({
         }
 
         /* Invalidate cached queries */
-        queryClient.invalidateQueries(AGREEMENTS_ENDPOINT);
+        queryClient.invalidateQueries(['ERM', 'Agreements']);
         queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
