@@ -83,7 +83,7 @@ const AgreementCreateRoute = ({
           });
         }
         /* Invalidate cached queries */
-        queryClient.invalidateQueries(AGREEMENTS_ENDPOINT);
+        queryClient.invalidateQueries(['ERM', 'Agreements']);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
         history.push(`${urls.agreementView(id)}${location.search}`);
