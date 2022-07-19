@@ -19,8 +19,14 @@ import { LicenseEndDate, requiredValidator, withKiwtFieldArray } from '@folio/st
 
 import { urls, getConflictWarnings } from '../utilities';
 
-const AmendmentStatusSelect = (props, amendment, amendmentStatusValues, setWarnings, warnings) => {
-  return <Select
+const AmendmentStatusSelect = ({
+  amendment,
+  amendmentStatusValues,
+  setWarnings,
+  warnings,
+  ...props
+}) => (
+  <Select
     {...props}
     dataOptions={amendmentStatusValues}
     label={<FormattedMessage id="ui-agreements.license.prop.status" />}
@@ -38,13 +44,22 @@ const AmendmentStatusSelect = (props, amendment, amendmentStatusValues, setWarni
     }}
     placeholder=" "
     required
-  />;
+  />
+);
+
+AmendmentStatusSelect.propTypes = {
+  amendment: PropTypes.object,
+  amendmentStatusValues: PropTypes.arrayOf(PropTypes.object),
+  input: PropTypes.object,
+  setWarnings: PropTypes.func.isRequired,
+  warnings: PropTypes.arrayOf(PropTypes.string)
 };
+
 
 const AmendmentsFieldArray = ({
   amendmentStatusValues,
   items,
-  license,
+  license = {},
   name,
 }) => {
   const [warnings, setWarnings] = useState([]);
