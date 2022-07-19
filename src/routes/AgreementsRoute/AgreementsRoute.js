@@ -91,7 +91,7 @@ const AgreementsRoute = ({
     results: agreements = [],
     total: agreementsCount = 0
   } = useInfiniteFetch(
-    [AGREEMENTS_ENDPOINT, agreementsQueryParams, 'ui-agreements', 'AgreementsRoute', 'getAgreements'],
+    ['ERM', 'Agreements', agreementsQueryParams, AGREEMENTS_ENDPOINT],
     ({ pageParam = 0 }) => {
       const params = [...agreementsQueryParams, `offset=${pageParam}`];
       return ky.get(encodeURI(`${AGREEMENTS_ENDPOINT}?${params?.join('&')}`)).json();
