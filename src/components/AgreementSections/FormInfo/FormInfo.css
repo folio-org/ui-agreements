@@ -2,8 +2,8 @@
 
 /* FIXME DO NOT MERGE */
 .buttonStyle1 {
-  color: var(--warn);
-  background-color: #f27c05;
+  color: #fff;
+  background-color: var(--warn);
   margin-left: var(--gutter-static-one-third);
 }
 
