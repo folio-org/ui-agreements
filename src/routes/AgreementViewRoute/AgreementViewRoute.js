@@ -18,7 +18,7 @@ import { errorTypes, resultCount } from '../../constants';
 import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
 
 import { useAgreementsHelperApp, useAgreementsSettings, useChunkedOrderLines } from '../../hooks';
-import { AGREEMENTS_ENDPOINT, AGREEMENT_ENDPOINT, AGREEMENT_ERESOURCES_ENDPOINT, AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
+import { AGREEMENT_ENDPOINT, AGREEMENT_ERESOURCES_ENDPOINT, AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
 
 const { RECORDS_PER_REQUEST_MEDIUM } = resultCount;
 
@@ -63,7 +63,7 @@ const AgreementViewRoute = ({
 
   const { mutateAsync: deleteAgreement } = useMutation(
     [agreementPath, 'ui-agreements', 'AgreementViewRoute', 'deleteAgreement'],
-    () => ky.delete(agreementPath).then(() => queryClient.invalidateQueries(AGREEMENTS_ENDPOINT))
+    () => ky.delete(agreementPath).then(() => queryClient.invalidateQueries(['ERM', 'Agreements']))
   );
 
   const settings = useAgreementsSettings();
