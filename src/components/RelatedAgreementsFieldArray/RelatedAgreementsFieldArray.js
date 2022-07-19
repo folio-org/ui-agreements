@@ -106,7 +106,7 @@ const RelatedAgreementsFieldArray = ({
   return (
     <div data-test-ra-fa>
       <div>
-        {items.length ? renderRelatedAgreements(items) : renderEmpty()}
+        {items.length ? renderRelatedAgreements() : renderEmpty()}
       </div>
       <Button
         data-test-ra-fa-add-button
