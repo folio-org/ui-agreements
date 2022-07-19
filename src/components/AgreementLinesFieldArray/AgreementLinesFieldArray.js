@@ -4,7 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import { Button, Layout } from '@folio/stripes/components';
-import { requiredObjectValidator, withKiwtFieldArray } from '@folio/stripes-erm-components';
+import { requiredObjectValidator } from '@folio/stripes-erm-components';
+import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
 import IfEResourcesEnabled from '../IfEResourcesEnabled';
 import { isExternal } from '../utilities';
@@ -13,12 +14,10 @@ import AgreementLineField from './AgreementLineField';
 
 const AgreementLinesFieldArray = ({
   data,
-  items,
-  name,
-  onAddField,
-  onDeleteField,
-  onReplaceField,
+  fields: { name },
 }) => {
+  const { items, onAddField, onDeleteField, onReplaceField } = useKiwtFieldArray(name, true);
+
   const getLineResource = (line) => {
     if (line.resource) return line.resource;
 
@@ -84,11 +83,9 @@ AgreementLinesFieldArray.propTypes = {
     agreementLines: PropTypes.arrayOf(PropTypes.object),
     orderLines: PropTypes.arrayOf(PropTypes.object),
   }),
-  items: PropTypes.arrayOf(PropTypes.object),
-  name: PropTypes.string.isRequired,
-  onAddField: PropTypes.func.isRequired,
-  onDeleteField: PropTypes.func.isRequired,
-  onReplaceField: PropTypes.func.isRequired,
+  fields: PropTypes.shape({
+    name: PropTypes.string,
+  }),
 };
 
-export default withKiwtFieldArray(AgreementLinesFieldArray);
+export default AgreementLinesFieldArray;

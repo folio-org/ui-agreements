@@ -3,17 +3,15 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import { Button, Layout, TextArea } from '@folio/stripes/components';
-import { EditCard, requiredValidator, withKiwtFieldArray } from '@folio/stripes-erm-components';
+import { EditCard, requiredValidator } from '@folio/stripes-erm-components';
+import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
 import UsageDataProviderField from '../UsageDataProviderField/UsageDataProviderField';
 
 const UsageDataProvidersFieldArray = ({
-  items,
-  name,
-  onAddField,
-  onDeleteField,
-  onUpdateField,
+  fields: { name }
 }) => {
+  const { items, onAddField, onDeleteField, onUpdateField } = useKiwtFieldArray(name);
   const [udps, setUdps] = useState({});
 
   const handleUDPSelected = (index, udp) => {
@@ -82,11 +80,9 @@ const UsageDataProvidersFieldArray = ({
 };
 
 UsageDataProvidersFieldArray.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object),
-  name: PropTypes.string.isRequired,
-  onAddField: PropTypes.func.isRequired,
-  onDeleteField: PropTypes.func.isRequired,
-  onUpdateField: PropTypes.func.isRequired,
+  fields: PropTypes.shape({
+    name: PropTypes.string,
+  }),
 };
 
-export default withKiwtFieldArray(UsageDataProvidersFieldArray);
+export default UsageDataProvidersFieldArray;

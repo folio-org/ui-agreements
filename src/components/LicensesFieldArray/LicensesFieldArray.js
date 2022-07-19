@@ -4,7 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 import { Button, Col, Layout, Row, Select, TextArea } from '@folio/stripes/components';
-import { composeValidators, requiredValidator, EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
+import { composeValidators, requiredValidator, EditCard } from '@folio/stripes-erm-components';
+import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
 import AmendmentsFieldArray from './AmendmentsFieldArray';
 import LicenseField from './LicenseField';
@@ -14,13 +15,10 @@ const CONTROLLING_STATUS = 'controlling';
 const LicensesFieldArray = ({
   amendmentStatusValues,
   form,
-  items,
-  name,
-  onAddField,
-  onDeleteField,
-  onUpdateField,
+  fields: { name },
   licenseStatusValues,
 }) => {
+  const { items, onAddField, onDeleteField, onUpdateField } = useKiwtFieldArray(name);
   /* istanbul ignore next */
   const handleLicenseSelected = (index, license = {}) => {
     const amendments = (license.amendments || []).map(a => ({
@@ -131,12 +129,10 @@ const LicensesFieldArray = ({
 LicensesFieldArray.propTypes = {
   amendmentStatusValues: PropTypes.arrayOf(PropTypes.object),
   form: PropTypes.object,
-  items: PropTypes.arrayOf(PropTypes.object),
-  name: PropTypes.string.isRequired,
-  onAddField: PropTypes.func.isRequired,
-  onDeleteField: PropTypes.func.isRequired,
-  onUpdateField: PropTypes.func.isRequired,
+  fields: PropTypes.shape({
+    name: PropTypes.string,
+  }),
   licenseStatusValues: PropTypes.arrayOf(PropTypes.object),
 };
 
-export default withKiwtFieldArray(LicensesFieldArray);
+export default LicensesFieldArray;

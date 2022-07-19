@@ -4,27 +4,23 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import { Button, Layout } from '@folio/stripes/components';
-import { EditCard, withKiwtFieldArray, requiredValidator } from '@folio/stripes-erm-components';
+import { EditCard, requiredValidator } from '@folio/stripes-erm-components';
+import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
 import POLineField from './POLineField';
 
 const POLinesFieldArray = ({
   agreementLineIndex,
-  items,
-  name,
-  onAddField,
-  onDeleteField,
-  onUpdateField,
+  fields: { name },
   poLines: propPoLines,
 }) => {
+  const { items, onAddField, onDeleteField, onUpdateField } = useKiwtFieldArray(name, true);
   const [poLines, setPoLines] = useState([]);
 
   useEffect(() => {
     if (!poLines.length && propPoLines.length) {
-      return { poLines: propPoLines };
+      setPoLines(propPoLines);
     }
-
-    return null;
   }, [propPoLines, poLines]);
 
   /* istanbul ignore next */
@@ -84,12 +80,10 @@ const POLinesFieldArray = ({
 };
 
 POLinesFieldArray.propTypes = {
-  agreementLineIndex: PropTypes.number.isRequired,
-  items: PropTypes.arrayOf(PropTypes.object),
-  name: PropTypes.string.isRequired,
-  onAddField: PropTypes.func.isRequired,
-  onDeleteField: PropTypes.func.isRequired,
-  onUpdateField: PropTypes.func.isRequired,
+  agreementLineIndex: PropTypes.number,
+  fields: PropTypes.shape({
+    name: PropTypes.string,
+  }),
   poLines: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     poLineNumber: PropTypes.string,
@@ -97,7 +91,7 @@ POLinesFieldArray.propTypes = {
 };
 
 POLinesFieldArray.defaultProps = {
-  poLines: [],
+  poLines: []
 };
 
-export default withKiwtFieldArray(POLinesFieldArray);
+export default POLinesFieldArray;

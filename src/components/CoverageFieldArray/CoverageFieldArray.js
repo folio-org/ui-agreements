@@ -4,7 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import { Button, Layout, Tooltip } from '@folio/stripes/components';
 
-import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
+import { EditCard } from '@folio/stripes-erm-components';
+import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 import CoverageField from './CoverageField';
 
 const CoverageFieldArray = ({
@@ -15,12 +16,10 @@ const CoverageFieldArray = ({
   disabled,
   headerId,
   id,
-  items,
-  name,
-  onAddField,
-  onDeleteField,
+  fields: { name },
   isEmptyCoverageId,
 }) => {
+  const { items, onAddField, onDeleteField } = useKiwtFieldArray(name);
   const renderCoverages = () => {
     return items.length ? items.map((coverage, index) => (
       <EditCard
@@ -91,10 +90,9 @@ CoverageFieldArray.propTypes = {
   disabled: PropTypes.bool,
   headerId: PropTypes.string,
   id: PropTypes.string,
-  items: PropTypes.arrayOf(PropTypes.object),
-  name: PropTypes.string.isRequired,
-  onAddField: PropTypes.func.isRequired,
-  onDeleteField: PropTypes.func.isRequired,
+  fields: PropTypes.shape({
+    name: PropTypes.string,
+  }),
   isEmptyCoverageId: PropTypes.string,
 };
 
@@ -102,4 +100,4 @@ CoverageFieldArray.defaultProps = {
   isEmptyCoverageId: 'ui-agreements.emptyAccordion.lineCustomCoverage',
 };
 
-export default withKiwtFieldArray(CoverageFieldArray);
+export default CoverageFieldArray;

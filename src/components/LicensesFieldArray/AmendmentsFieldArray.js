@@ -15,7 +15,8 @@ import {
   TextArea,
   NoValue
 } from '@folio/stripes/components';
-import { LicenseEndDate, requiredValidator, withKiwtFieldArray } from '@folio/stripes-erm-components';
+import { LicenseEndDate, requiredValidator } from '@folio/stripes-erm-components';
+import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
 import { urls, getConflictWarnings } from '../utilities';
 
@@ -52,16 +53,16 @@ AmendmentStatusSelect.propTypes = {
   amendmentStatusValues: PropTypes.arrayOf(PropTypes.object),
   input: PropTypes.object,
   setWarnings: PropTypes.func.isRequired,
-  warnings: PropTypes.arrayOf(PropTypes.string)
+  warnings: PropTypes.arrayOf(PropTypes.object)
 };
 
 
 const AmendmentsFieldArray = ({
   amendmentStatusValues,
-  items,
   license = {},
-  name,
+  fields: { name },
 }) => {
+  const { items } = useKiwtFieldArray(name);
   const [warnings, setWarnings] = useState([]);
 
   const { amendments = [] } = license;
@@ -131,29 +132,6 @@ const AmendmentsFieldArray = ({
                       warnings={warnings}
                     />
                   )}
-                  {/* {props => (
-                    <Select
-                      {...props}
-                      dataOptions={amendmentStatusValues}
-                      label={<FormattedMessage id="ui-agreements.license.prop.status" />}
-                      onChange={(e) => {
-                        const { value } = e.target;
-
-                        const warning = getConflictWarnings.amendmentWarning({
-                          ...amendment,
-                          statusForThisAgreement: { value },
-                        });
-
-                        setWarnings([
-                          ...warnings,
-                          warning
-                        ]);
-                        props.input.onChange(e);
-                      }}
-                      placeholder=" "
-                      required
-                    />
-                  )} */}
                 </Field>
               </Col>
               <Col md={8} xs={12}>
@@ -185,7 +163,6 @@ AmendmentsFieldArray.propTypes = {
       setFieldData: PropTypes.func.isRequired,
     }).isRequired,
   }).isRequired,
-  items: PropTypes.arrayOf(PropTypes.object),
   license: PropTypes.shape({
     amendments: PropTypes.arrayOf(PropTypes.shape({
       endDate: PropTypes.string,
@@ -199,17 +176,9 @@ AmendmentsFieldArray.propTypes = {
     })),
     id: PropTypes.string,
   }),
-  name: PropTypes.string.isRequired,
-};
-
-AmendmentStatusSelect.propTypes = {
-  // amendment: PropTypes.object,
-  amendmentStatusValues: PropTypes.arrayOf(PropTypes.object),
-  input: PropTypes.shape({
-    onChange: PropTypes.func
+  fields: PropTypes.shape({
+    name: PropTypes.string,
   }),
-  // setWarnings: PropTypes.func.isRequired,
-  // warnings: PropTypes.arrayOf(PropTypes.object)
 };
 
-export default withKiwtFieldArray(AmendmentsFieldArray);
+export default AmendmentsFieldArray;

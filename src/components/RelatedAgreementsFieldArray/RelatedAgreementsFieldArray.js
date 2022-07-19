@@ -6,9 +6,9 @@ import { Field } from 'react-final-form';
 import { Button, Layout, MessageBanner, Select, TextArea } from '@folio/stripes/components';
 import {
   EditCard,
-  requiredValidator,
-  withKiwtFieldArray
+  requiredValidator
 } from '@folio/stripes-erm-components';
+import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
 import RelatedAgreementField from './RelatedAgreementField';
 import { agreementRelationshipTypes } from '../../constants';
@@ -16,12 +16,9 @@ import { agreementRelationshipTypes } from '../../constants';
 const RelatedAgreementsFieldArray = ({
   currentAgreementId,
   currentAgreementName,
-  items,
-  name,
-  onAddField,
-  onDeleteField,
-  onUpdateField,
+  fields: { name }
 }) => {
+  const { items, onAddField, onDeleteField, onUpdateField } = useKiwtFieldArray(name);
   const relationshipTypes = [{ label: '', value: '' }];
 
   agreementRelationshipTypes.forEach(type => {
@@ -125,11 +122,9 @@ const RelatedAgreementsFieldArray = ({
 RelatedAgreementsFieldArray.propTypes = {
   currentAgreementId: PropTypes.string,
   currentAgreementName: PropTypes.string,
-  items: PropTypes.arrayOf(PropTypes.object),
-  name: PropTypes.string.isRequired,
-  onAddField: PropTypes.func.isRequired,
-  onDeleteField: PropTypes.func.isRequired,
-  onUpdateField: PropTypes.func.isRequired,
+  fields: PropTypes.shape({
+    name: PropTypes.string,
+  })
 };
 
-export default withKiwtFieldArray(RelatedAgreementsFieldArray);
+export default RelatedAgreementsFieldArray;

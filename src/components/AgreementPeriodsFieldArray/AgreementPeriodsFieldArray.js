@@ -8,15 +8,15 @@ import {
   Headline,
 } from '@folio/stripes/components';
 
-import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
+import { EditCard } from '@folio/stripes-erm-components';
+import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 import AgreementPeriodField from './AgreementPeriodField';
 
 const AgreementPeriodsFieldArray = ({
-  items,
-  name,
-  onAddField,
-  onDeleteField,
+  fields: { name },
 }) => {
+  const { items, onAddField, onDeleteField } = useKiwtFieldArray(name);
+
   const renderPeriods = () => {
     return items.map((period, index) => (
       <EditCard
@@ -55,14 +55,9 @@ const AgreementPeriodsFieldArray = ({
 };
 
 AgreementPeriodsFieldArray.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object),
-  name: PropTypes.string.isRequired,
-  onAddField: PropTypes.func.isRequired,
-  onDeleteField: PropTypes.func.isRequired,
+  fields: PropTypes.shape({
+    name: PropTypes.string,
+  }),
 };
 
-AgreementPeriodsFieldArray.defaultProps = {
-  items: [],
-};
-
-export default withKiwtFieldArray(AgreementPeriodsFieldArray);
+export default AgreementPeriodsFieldArray;
