@@ -13,49 +13,43 @@ import {
 import RelatedAgreementField from './RelatedAgreementField';
 import { agreementRelationshipTypes } from '../../constants';
 
-class RelatedAgreementsFieldArray extends React.Component {
-  static propTypes = {
-    currentAgreementId: PropTypes.string,
-    currentAgreementName: PropTypes.string,
-    items: PropTypes.arrayOf(PropTypes.object),
-    name: PropTypes.string.isRequired,
-    onAddField: PropTypes.func.isRequired,
-    onDeleteField: PropTypes.func.isRequired,
-    onUpdateField: PropTypes.func.isRequired,
+const RelatedAgreementsFieldArray = ({
+  currentAgreementId,
+  currentAgreementName,
+  items,
+  name,
+  onAddField,
+  onDeleteField,
+  onUpdateField,
+}) => {
+  const relationshipTypes = [{ label: '', value: '' }];
+
+  agreementRelationshipTypes.forEach(type => {
+    relationshipTypes.push(type.outward);
+    // we should only add the inward relation to the select list
+    // if outward and inward relation label is not the same
+    if (type.outward.label !== type.inward.label) {
+      relationshipTypes.push(type.inward);
+    }
+  });
+
+  const handleAgreementSelected = (index, agreement) => {
+    onUpdateField(index, { agreement });
   };
 
-  constructor(props) {
-    super(props);
-
-    this.relationshipTypes = [{ label: '', value: '' }];
-
-    agreementRelationshipTypes.forEach(type => {
-      this.relationshipTypes.push(type.outward);
-      // we should only add the inward relation to the select list
-      // if outward and inward relation label is not the same
-      if (type.outward.label !== type.inward.label) {
-        this.relationshipTypes.push(type.inward);
-      }
-    });
-  }
-
-  handleAgreementSelected = (index, agreement) => {
-    this.props.onUpdateField(index, { agreement });
-  }
-
-  renderEmpty = () => (
+  const renderEmpty = () => (
     <Layout className="padding-bottom-gutter" data-test-ra-empty-message>
       <FormattedMessage id="ui-agreements.relatedAgreements.agreementHasNone" />
     </Layout>
   );
 
-  renderRelationshipSummary = (relatedAgreement) => {
+  const renderRelationshipSummary = (relatedAgreement) => {
     const { agreement = {}, type } = relatedAgreement;
     if (!agreement.id || !type) return null;
 
     const source = agreement.name;
-    const relationship = this.relationshipTypes.find(t => t.value === type).label;
-    const target = this.props.currentAgreementName;
+    const relationship = relationshipTypes.find(t => t.value === type).label;
+    const target = currentAgreementName;
 
     const translationKey = `ui-agreements.relatedAgreements.${target ? 'relationshipSummary' : 'relationshipSummaryForNewAgreement'}`;
 
@@ -64,9 +58,9 @@ class RelatedAgreementsFieldArray extends React.Component {
         <FormattedMessage id={translationKey} values={{ source, relationship, target }} />
       </MessageBanner>
     );
-  }
+  };
 
-  renderRelatedAgreements = (items) => {
+  const renderRelatedAgreements = () => {
     return items.map((relatedAgreement, index) => (
       <EditCard
         key={index}
@@ -78,58 +72,64 @@ class RelatedAgreementsFieldArray extends React.Component {
         deleteButtonTooltipText={<FormattedMessage id="ui-agreements.relatedAgreements.remove" values={{ index: index + 1 }} />}
         header={<FormattedMessage id="ui-agreements.relatedAgreements.relatedAgreementIndex" values={{ index: index + 1 }} />}
         id={`edit-ra-card-${index}`}
-        onDelete={() => this.props.onDeleteField(index, relatedAgreement)}
+        onDelete={() => onDeleteField(index, relatedAgreement)}
       >
         <Field
           agreement={relatedAgreement.agreement}
           component={RelatedAgreementField}
           id={`ra-agreement-${index}`}
           index={index}
-          name={`${this.props.name}[${index}].agreement`}
-          onAgreementSelected={selectedAgreement => this.handleAgreementSelected(index, selectedAgreement)}
-          parentAgreementId={this.props.currentAgreementId}
-          parentAgreementName={this.props.currentAgreementName}
+          name={`${name}[${index}].agreement`}
+          onAgreementSelected={selectedAgreement => handleAgreementSelected(index, selectedAgreement)}
+          parentAgreementId={currentAgreementId}
+          parentAgreementName={currentAgreementName}
           validate={requiredValidator}
         />
         <Field
           component={Select}
-          dataOptions={this.relationshipTypes}
+          dataOptions={relationshipTypes}
           disabled={!get(relatedAgreement, 'agreement.id')}
           id={`ra-type-${index}`}
           label={<FormattedMessage id="ui-agreements.relatedAgreements.relationshipToThisAgreement" />}
-          name={`${this.props.name}[${index}].type`}
+          name={`${name}[${index}].type`}
           required
           validate={requiredValidator}
         />
-        {this.renderRelationshipSummary(relatedAgreement)}
+        {renderRelationshipSummary(relatedAgreement)}
         <Field
           component={TextArea}
           id={`ra-note-${index}`}
           label={<FormattedMessage id="ui-agreements.note" />}
-          name={`${this.props.name}[${index}].note`}
-          parse={v => v} // Lets us send an empty string instead of `undefined`
+          name={`${name}[${index}].note`}
+          parse={v => v}
         />
       </EditCard>
     ));
-  }
-
-  render() {
-    const { items, onAddField } = this.props;
-    return (
-      <div data-test-ra-fa>
-        <div>
-          {items.length ? this.renderRelatedAgreements(items) : this.renderEmpty()}
-        </div>
-        <Button
-          data-test-ra-fa-add-button
-          id="add-ra-btn"
-          onClick={() => onAddField()}
-        >
-          <FormattedMessage id="ui-agreements.relatedAgreements.addRelatedAgreement" />
-        </Button>
+  };
+  return (
+    <div data-test-ra-fa>
+      <div>
+        {items.length ? renderRelatedAgreements(items) : renderEmpty()}
       </div>
-    );
-  }
-}
+      <Button
+        data-test-ra-fa-add-button
+        id="add-ra-btn"
+        onClick={() => onAddField()}
+      >
+        <FormattedMessage id="ui-agreements.relatedAgreements.addRelatedAgreement" />
+      </Button>
+    </div>
+  );
+};
+
+RelatedAgreementsFieldArray.propTypes = {
+  currentAgreementId: PropTypes.string,
+  currentAgreementName: PropTypes.string,
+  items: PropTypes.arrayOf(PropTypes.object),
+  name: PropTypes.string.isRequired,
+  onAddField: PropTypes.func.isRequired,
+  onDeleteField: PropTypes.func.isRequired,
+  onUpdateField: PropTypes.func.isRequired,
+};
 
 export default withKiwtFieldArray(RelatedAgreementsFieldArray);

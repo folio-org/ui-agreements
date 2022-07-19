@@ -11,40 +11,36 @@ import LicenseField from './LicenseField';
 
 const CONTROLLING_STATUS = 'controlling';
 
-class LicensesFieldArray extends React.Component {
-  static propTypes = {
-    amendmentStatusValues: PropTypes.arrayOf(PropTypes.object),
-    form: PropTypes.object,
-    items: PropTypes.arrayOf(PropTypes.object),
-    name: PropTypes.string.isRequired,
-    onAddField: PropTypes.func.isRequired,
-    onDeleteField: PropTypes.func.isRequired,
-    onUpdateField: PropTypes.func.isRequired,
-    licenseStatusValues: PropTypes.arrayOf(PropTypes.object),
-  };
-
+const LicensesFieldArray = ({
+  amendmentStatusValues,
+  form,
+  items,
+  name,
+  onAddField,
+  onDeleteField,
+  onUpdateField,
+  licenseStatusValues,
+}) => {
   /* istanbul ignore next */
-  handleLicenseSelected = (index, license = {}) => {
+  const handleLicenseSelected = (index, license = {}) => {
     const amendments = (license.amendments || []).map(a => ({
       amendmentId: a.id,
     }));
 
-    this.props.onUpdateField(index, {
+    onUpdateField(index, {
       amendments,
       remoteId: license.id,
       remoteId_object: license,
     });
-  }
+  };
 
-  renderEmpty = () => (
+  const renderEmpty = () => (
     <Layout className="padding-bottom-gutter" data-test-license-empty-message>
       <FormattedMessage id="ui-agreements.license.agreementHasNone" />
     </Layout>
-  )
+  );
 
-  validateOnlyOneControllingLicense = (value, allValues) => {
-    const { name } = this.props;
-
+  const validateOnlyOneControllingLicense = (value, allValues) => {
     if (value === CONTROLLING_STATUS) {
       const controllingLicenses = allValues[name].filter(l => l.status === CONTROLLING_STATUS);
       if (controllingLicenses.length > 1) {
@@ -53,18 +49,9 @@ class LicensesFieldArray extends React.Component {
     }
 
     return undefined;
-  }
+  };
 
-  renderLicenseFields = () => {
-    const {
-      amendmentStatusValues,
-      form,
-      items,
-      licenseStatusValues,
-      name,
-      onDeleteField
-    } = this.props;
-
+  const renderLicenseFields = () => {
     return items.map((license, index) => (
       <EditCard
         key={index}
@@ -84,7 +71,7 @@ class LicensesFieldArray extends React.Component {
           index={index}
           license={license.remoteId_object}
           name={`${name}[${index}].remoteId`}
-          onLicenseSelected={selectedLicense => this.handleLicenseSelected(index, selectedLicense)}
+          onLicenseSelected={selectedLicense => handleLicenseSelected(index, selectedLicense)}
           validate={requiredValidator}
         />
         <Row>
@@ -99,7 +86,7 @@ class LicensesFieldArray extends React.Component {
               placeholder=" "
               required
               validate={composeValidators(
-                this.validateOnlyOneControllingLicense,
+                validateOnlyOneControllingLicense,
                 requiredValidator,
               )}
             />
@@ -123,25 +110,33 @@ class LicensesFieldArray extends React.Component {
         />
       </EditCard>
     ));
-  }
+  };
 
-  render() {
-    const { items, onAddField } = this.props;
-    return (
-      <div data-test-license-fa>
-        <div>
-          {items.length ? this.renderLicenseFields() : this.renderEmpty()}
-        </div>
-        <Button
-          data-test-license-fa-add-button
-          id="add-license-btn"
-          onClick={() => onAddField()}
-        >
-          <FormattedMessage id="ui-agreements.license.addLicense" />
-        </Button>
+  return (
+    <div data-test-license-fa>
+      <div>
+        {items.length ? renderLicenseFields() : renderEmpty()}
       </div>
-    );
-  }
-}
+      <Button
+        data-test-license-fa-add-button
+        id="add-license-btn"
+        onClick={() => onAddField()}
+      >
+        <FormattedMessage id="ui-agreements.license.addLicense" />
+      </Button>
+    </div>
+  );
+};
+
+LicensesFieldArray.propTypes = {
+  amendmentStatusValues: PropTypes.arrayOf(PropTypes.object),
+  form: PropTypes.object,
+  items: PropTypes.arrayOf(PropTypes.object),
+  name: PropTypes.string.isRequired,
+  onAddField: PropTypes.func.isRequired,
+  onDeleteField: PropTypes.func.isRequired,
+  onUpdateField: PropTypes.func.isRequired,
+  licenseStatusValues: PropTypes.arrayOf(PropTypes.object),
+};
 
 export default withKiwtFieldArray(LicensesFieldArray);

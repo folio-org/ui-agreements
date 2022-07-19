@@ -11,27 +11,19 @@ import { isExternal } from '../utilities';
 
 import AgreementLineField from './AgreementLineField';
 
-class AgreementLinesFieldArray extends React.Component {
-  static propTypes = {
-    data: PropTypes.shape({
-      basket: PropTypes.arrayOf(PropTypes.object),
-      agreementLines: PropTypes.arrayOf(PropTypes.object),
-      orderLines: PropTypes.arrayOf(PropTypes.object),
-    }),
-    items: PropTypes.arrayOf(PropTypes.object),
-    name: PropTypes.string.isRequired,
-    onAddField: PropTypes.func.isRequired,
-    onDeleteField: PropTypes.func.isRequired,
-    onReplaceField: PropTypes.func.isRequired,
-  }
-
-  getLineResource = (line) => {
-    const { data: { agreementLines } } = this.props;
-
+const AgreementLinesFieldArray = ({
+  data,
+  items,
+  name,
+  onAddField,
+  onDeleteField,
+  onReplaceField,
+}) => {
+  const getLineResource = (line) => {
     if (line.resource) return line.resource;
 
     if (line.id) {
-      const savedLine = agreementLines.find(l => l.id === line.id);
+      const savedLine = data.agreementLines.find(l => l.id === line.id);
       if (savedLine) {
         if (savedLine.type === 'detached') return savedLine;
         return isExternal(savedLine) ? savedLine : savedLine.resource;
@@ -43,50 +35,60 @@ class AgreementLinesFieldArray extends React.Component {
     }
 
     return undefined;
-  }
+  };
 
-  handleResourceSelected = (index, resource) => {
-    this.props.onReplaceField(index, { resource });
-  }
+  const handleResourceSelected = (index, resource) => {
+    onReplaceField(index, { resource });
+  };
 
-  renderEmpty = () => (
+  const renderEmpty = () => (
     <Layout className="padding-bottom-gutter">
       <FormattedMessage id="ui-agreements.agreementLines.noLines" />
     </Layout>
-  )
+  );
 
-  renderLines = () => {
-    return this.props.items.map((line, i) => (
+  const renderLines = () => {
+    return items.map((line, i) => (
       <Field
         key={i}
-        basket={this.props.data.basket}
+        basket={data.basket}
         component={AgreementLineField}
         data-testid={`agreementLinesFieldArray[${i}]`}
         index={i}
-        name={`${this.props.name}[${i}]`}
-        onDelete={() => this.props.onDeleteField(i, line)}
-        onResourceSelected={this.handleResourceSelected}
-        poLines={this.props.data.orderLines || []}
-        resource={this.getLineResource(line)}
+        name={`${name}[${i}]`}
+        onDelete={() => onDeleteField(i, line)}
+        onResourceSelected={handleResourceSelected}
+        poLines={data.orderLines || []}
+        resource={getLineResource(line)}
         validate={requiredObjectValidator}
       />
     ));
-  }
-
-  render() {
-    return (
-      <div>
-        <div id="agreement-form-lines">
-          {this.props.items.length ? this.renderLines() : this.renderEmpty()}
-        </div>
-        <IfEResourcesEnabled>
-          <Button id="add-agreement-line-button" onClick={() => this.props.onAddField()}>
-            <FormattedMessage id="ui-agreements.agreementLines.addLine" />
-          </Button>
-        </IfEResourcesEnabled>
+  };
+  return (
+    <div>
+      <div id="agreement-form-lines">
+        {items.length ? renderLines() : renderEmpty()}
       </div>
-    );
-  }
-}
+      <IfEResourcesEnabled>
+        <Button id="add-agreement-line-button" onClick={() => onAddField()}>
+          <FormattedMessage id="ui-agreements.agreementLines.addLine" />
+        </Button>
+      </IfEResourcesEnabled>
+    </div>
+  );
+};
+
+AgreementLinesFieldArray.propTypes = {
+  data: PropTypes.shape({
+    basket: PropTypes.arrayOf(PropTypes.object),
+    agreementLines: PropTypes.arrayOf(PropTypes.object),
+    orderLines: PropTypes.arrayOf(PropTypes.object),
+  }),
+  items: PropTypes.arrayOf(PropTypes.object),
+  name: PropTypes.string.isRequired,
+  onAddField: PropTypes.func.isRequired,
+  onDeleteField: PropTypes.func.isRequired,
+  onReplaceField: PropTypes.func.isRequired,
+};
 
 export default withKiwtFieldArray(AgreementLinesFieldArray);
