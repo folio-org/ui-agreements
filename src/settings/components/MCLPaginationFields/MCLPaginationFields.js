@@ -13,13 +13,12 @@ import {
 import { defaultMclPageSize } from '../../../constants';
 
 const mclList = Object.keys(defaultMclPageSize.pageSize);
-
-const inRange = (x, min, max) => {
-  return ((x - min) * (x - max) <= 0);
-};
+const MIN_RANGE = 1;
+const MAX_RANGE = 100;
 
 const validate = (fieldValue, min, max) => {
-  return (!inRange(fieldValue, min, max)) ?
+  const fieldValueInt = (typeof fieldValue !== 'number' ? parseInt(fieldValue) : fieldValue);
+  return (!fieldValue || fieldValueInt >= max || fieldValueInt < min) ?
     <FormattedMessage id="ui-agreements.settings.error.valueNotInRange" values={{ min, max }} /> : undefined;
 };
 
@@ -46,14 +45,13 @@ const MCLPaginationFields = () => {
             </Col>
             <Col xs={4}>
               <Field
-                ariaLabelledBy={`pageSize-${mcl}`}
+                ariaLabel={`pageSize.${mcl}`}
                 component={TextField}
                 data-testid={mcl}
-                id={`pageSize-${mcl}`}
                 name={`pageSize.${mcl}`}
                 parse={v => parseInt(v, 10)}
                 type="number"
-                validate={v => validate(v, 1, 100)}
+                validate={v => validate(v, MIN_RANGE, MAX_RANGE)}
               />
             </Col>
           </Row>
