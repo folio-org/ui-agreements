@@ -118,7 +118,7 @@ const LicensesFieldArray = ({
       <Button
         data-test-license-fa-add-button
         id="add-license-btn"
-        onClick={() => onAddField()}
+        onClick={onAddField}
       >
         <FormattedMessage id="ui-agreements.license.addLicense" />
       </Button>

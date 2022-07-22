@@ -2,6 +2,8 @@ import React from 'react';
 import { within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@folio/stripes-erm-components/test/jest/__mock__';
+
+import { Button, IconButton, Select, TextArea, TextField } from '@folio/stripes-testing';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { FieldArray } from 'react-final-form-arrays';
 import LicensesFieldArray from '..';
@@ -167,28 +169,36 @@ describe('LicensesFieldArray', () => {
       expect(getByText('No licenses for this agreement')).toBeInTheDocument();
     });
 
-    it('clicking the add button renders the licenseField field', () => {
-      const { getByText, getByRole } = renderComponent;
-      userEvent.click(getByRole('button', { name: /Add license/i }));
-      expect(getByText('LicenseField')).toBeInTheDocument();
+    it('clicking the add button renders the licenseField field', async () => {
+      const { getByText } = renderComponent;
+      await Button('Add license').click();
+
+      await expect(getByText('LicenseField')).toBeInTheDocument();
     });
 
-    it('clicking and blurring the Status select dropdown should render an error', () => {
-      const { getByText, getByRole } = renderComponent;
-      userEvent.click(getByRole('button', { name: /Add license/i }));
-      userEvent.click(getByRole('combobox', { name: 'Status (this agreement)' }));
-      userEvent.click(getByRole('textbox', { name: 'Note' }));
+    it('clicking and blurring the Status select dropdown should render an error', async () => {
+      const { getByText } = renderComponent;
+      await Button('Add license').click();
+
+      await Select('Status (this agreement)*').focus();
+      await TextArea('Note').focus();
+
       expect(getByText('Please fill this in to continue')).toBeInTheDocument();
     });
 
-    it('adding/removing fields using the add/remove works as expected', () => {
+    it('adding/removing fields using the add/remove works as expected', async () => {
       const { getByRole, queryAllByTestId } = renderComponent;
-      expect(getByRole('button', { name: /Add license/i })).toBeInTheDocument();
-      userEvent.click(getByRole('button', { name: /Add license/i }));
+      const addButton = Button('Add license');
+
+      await addButton.exists();
+      await addButton.click();
       expect(queryAllByTestId(/licensesFieldArray\[.*\]/i).length).toEqual(1);
-      userEvent.click(getByRole('button', { name: /Add license/i }));
+
+      await addButton.click();
       expect(queryAllByTestId(/licensesFieldArray\[.*\]/i).length).toEqual(2);
-      userEvent.click(getByRole('button', { name: /Remove license 2/i }));
+      
+      const trashButton = getByRole('button', { name: 'Remove license 2' });
+      await userEvent.click(trashButton);
       expect(queryAllByTestId(/licensesFieldArray\[.*\]/i).length).toEqual(1);
     });
   });
