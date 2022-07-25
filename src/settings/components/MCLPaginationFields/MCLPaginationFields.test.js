@@ -3,47 +3,40 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 
 import { Button, TextField } from '@folio/stripes-testing';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
-import userEvent from '@testing-library/user-event';
 import MCLPaginationFields from './MCLPaginationFields';
 
 import { defaultMclPageSize } from '../../../constants';
-
-import { screen } from '@testing-library/dom';
 
 
 const onSubmit = jest.fn();
 const mclList = Object.keys(defaultMclPageSize.pageSize);
 
-
 describe('MCLPaginationFields', () => {
-  test('renders mcl fields', () => {
-    const { getByTestId } = renderWithIntl(
+  test('renders mcl fields', async () => {
+    renderWithIntl(
       <TestForm onSubmit={onSubmit}>
         <MCLPaginationFields />
       </TestForm>
     );
-    mclList.forEach(async (mcl) => {
-      //expect(getByTestId(`${mcl}-page-size`)).toBeInTheDocument();
-      const textField = TextField({ id: `${mcl}-page-size-id` });
-      expect(await textField.exists());
-    });
+
+    for (const mcl of mclList) {
+      await TextField({ 'id': `${mcl}-page-size-id` }).exists();
+    }
   });
 
   it('submitted expected payload', async () => {
-    const { getByTestId } = renderWithIntl(
+    renderWithIntl(
       <TestForm onSubmit={onSubmit}>
         <MCLPaginationFields />
       </TestForm>
     );
 
-    mclList.forEach(async (mcl) => {
-      const textField = TextField({ id: `${mcl}-page-size-id` });
-      await textField.fillIn('15'.toString());
-      //userEvent.type(getByTestId(`${mcl}-page-size`), '15');
-    });
+    for (const mcl of mclList) {
+      await TextField({ 'id': `${mcl}-page-size-id` }).fillIn('15');
+    }
 
-    await Button("Submit").exists();
-    await Button("Submit").click();
+    await Button('Submit').exists();
+    await Button('Submit').click();
 
     await expect(onSubmit.mock.calls.length).toBe(1);
 

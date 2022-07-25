@@ -46,12 +46,12 @@ const MCLPaginationFields = () => {
             <Field
               ariaLabel={`${mcl}-page-size`}
               component={TextField}
-              data-testid={`${mcl}-page-size`}
+              data-testid={`${mcl}-page-size-testId`}
               id={`${mcl}-page-size-id`}
               name={`pageSize.${mcl}`}
-              //parse={v => parseInt(v, 10)}
-              //type="number"
-              //validate={v => validate(v, MIN_RANGE, MAX_RANGE)}
+              parse={v => parseInt(v, 10)}
+              type="number"
+              validate={v => validate(v, MIN_RANGE, MAX_RANGE)}
             />
           </Col>
         </Row>
