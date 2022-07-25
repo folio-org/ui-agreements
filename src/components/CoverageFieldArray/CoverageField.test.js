@@ -2,6 +2,8 @@ import React from 'react';
 import { waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@folio/stripes-erm-components/test/jest/__mock__';
+import { Button, Datepicker, TextField } from '@folio/stripes-testing';
+
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import CoverageField from './CoverageField';
 
@@ -34,7 +36,7 @@ describe('CoverageField', () => {
   // Test start date/end date validation.
   // Overlapping and multiple open ended coverage validation to be covered in CoverageFieldArrayTest
   test('date validation fires for invalid end date', async () => {
-    const { getAllByText, getByRole, queryByText } = renderWithIntl(
+    const { getAllByText, queryByText } = renderWithIntl(
       <TestForm onSubmit={onSubmit}>
         <CoverageField
           index={0}
@@ -44,8 +46,9 @@ describe('CoverageField', () => {
         />
       </TestForm>, translationsProperties
     );
-    userEvent.type(getByRole('textbox', { name: /start date/i }), '01/01/2021');
-    userEvent.type(getByRole('textbox', { name: /end date/i }), '01/01/2002');
+
+    await Datepicker('Start date*').fillIn('01/01/2021');
+    await Datepicker('End date').fillIn('01/01/2002');
 
     /*
      * This actually works with getByText, because currently the validation only
@@ -55,14 +58,14 @@ describe('CoverageField', () => {
      */
     await waitFor(() => expect(getAllByText(/End date must be after the start date./i)?.[0]).toBeInTheDocument());
     // amend end date (Have to clear it first)
-    // TODO use interactors when they become available, for fillAndBlur
-    userEvent.clear(getByRole('textbox', { name: /end date/i }));
-    userEvent.type(getByRole('textbox', { name: /end date/i }), '01/01/2022');
+    await Datepicker('End date').clear();
+    await Datepicker('End date').fillIn('01/01/2022');
+
     await waitFor(() => expect(queryByText(/End date must be after the start date./i)).not.toBeInTheDocument());
   });
 
-  test('expected values are submitted', () => {
-    const { getByRole, getByTestId } = renderWithIntl(
+  test('expected values are submitted', async () => {
+    const { getByRole } = renderWithIntl(
       <TestForm onSubmit={onSubmit}>
         <CoverageField
           index={0}
@@ -72,14 +75,16 @@ describe('CoverageField', () => {
         />
       </TestForm>, translationsProperties
     );
-    userEvent.type(getByRole('textbox', { name: /start date/i }), '10/10/1996');
-    userEvent.type(getByRole('textbox', { name: /end date/i }), '02/06/1999');
-    userEvent.type(getByRole('textbox', { name: /start volume/i }), '1');
-    userEvent.type(getByRole('textbox', { name: /end volume/i }), '5');
-    userEvent.type(getByRole('textbox', { name: /start issue/i }), '3rd');
-    userEvent.type(getByRole('textbox', { name: /end issue/i }), '9th');
 
-    userEvent.click(getByTestId('submit'));
+    await Datepicker('Start date*').fillIn('10/10/1996');
+    await Datepicker('End date').fillIn('02/06/1999');
+    await TextField('Start volume').fillIn('1');
+    await TextField('End volume').fillIn('5');
+    await TextField('Start issue').fillIn('3rd');
+    await TextField('End issue').fillIn('9th');
+
+    await Button('Submit').click();
+
     expect(onSubmit.mock.calls.length).toBe(1);
     const submittedValues = onSubmit.mock.calls[0][0];
     const expectedPayload = {

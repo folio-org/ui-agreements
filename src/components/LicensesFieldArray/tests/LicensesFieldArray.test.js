@@ -3,7 +3,7 @@ import { within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 
-import { Button, IconButton, Select, TextArea, TextField } from '@folio/stripes-testing';
+import { Button, Select, TextArea } from '@folio/stripes-testing';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { FieldArray } from 'react-final-form-arrays';
 import LicensesFieldArray from '..';
@@ -196,7 +196,7 @@ describe('LicensesFieldArray', () => {
 
       await addButton.click();
       expect(queryAllByTestId(/licensesFieldArray\[.*\]/i).length).toEqual(2);
-      
+
       const trashButton = getByRole('button', { name: 'Remove license 2' });
       await userEvent.click(trashButton);
       expect(queryAllByTestId(/licensesFieldArray\[.*\]/i).length).toEqual(1);
