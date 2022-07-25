@@ -5,6 +5,11 @@ import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../test/helpers';
 import PickListSettings from './PickListSettings';
 
+jest.mock('@k-int/stripes-kint-components', () => ({
+  ...jest.requireActual('@k-int/stripes-kint-components'),
+  EditableRefdataCategoryList: () => <div>EditableRefdataCategoryList</div>,
+}));
+
 describe('PickListSettings', () => {
   describe('rendering the PickListSettings', () => {
     let renderComponent;
