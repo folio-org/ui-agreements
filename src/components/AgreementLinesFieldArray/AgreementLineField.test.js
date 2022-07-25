@@ -3,8 +3,7 @@ import { waitFor } from '@testing-library/react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { Field } from 'react-final-form';
-import { KeyValue } from '@folio/stripes-testing';
-import userEvent from '@testing-library/user-event';
+import { KeyValue, TextField } from '@folio/stripes-testing';
 import { detachedData, data } from './testResources';
 import AgreementLineField from './AgreementLineField';
 import translationsProperties from '../../../test/helpers';
@@ -31,7 +30,6 @@ describe('AgreementLineField', () => {
           onDelete={onDelete}
           onResourceSelected={onResourceSelected}
           resource={{}}
-          validate={() => { }}
         />
       </TestForm>,
       translationsProperties
@@ -54,7 +52,6 @@ describe('AgreementLineField', () => {
             onDelete={onDelete}
             onResourceSelected={onResourceSelected}
             resource={data.resource}
-            validate={() => { }}
           />
         </TestForm>,
         translationsProperties
@@ -91,7 +88,6 @@ describe('AgreementLineField', () => {
             onDelete={onDelete}
             onResourceSelected={onResourceSelected}
             resource={detachedData.resource}
-            validate={() => { }}
           />
         </TestForm>,
         translationsProperties
@@ -122,7 +118,6 @@ describe('AgreementLineField', () => {
             onDelete={onDelete}
             onResourceSelected={onResourceSelected}
             resource={data.resource}
-            validate={() => { }}
           />
         </TestForm>,
         translationsProperties
@@ -135,7 +130,7 @@ describe('AgreementLineField', () => {
     });
 
     test('date validation fires for invalid end date', async () => {
-      const { getAllByText, queryByText, getByRole } = renderWithIntl(
+      const { getAllByText, queryByText } = renderWithIntl(
         <TestForm initialValues={{ data }} onSubmit={onSubmit}>
           <Field
             component={AgreementLineField}
@@ -149,13 +144,14 @@ describe('AgreementLineField', () => {
         translationsProperties
       );
 
-      userEvent.type(getByRole('textbox', { name: /active from/i }), '01/01/2021');
-      userEvent.type(getByRole('textbox', { name: /active to/i }), '01/01/2002');
+      await TextField('Active from').fillIn('01/01/2021');
+      await TextField('Active to').fillIn('01/01/2002');
 
       await waitFor(() => expect(getAllByText(/End date must be after the start date./i)?.[0]).toBeInTheDocument());
 
-      userEvent.clear(getByRole('textbox', { name: /active to/i }));
-      userEvent.type(getByRole('textbox', { name: /active to/i }), '01/01/2022');
+      await TextField('Active to').clear();
+      await TextField('Active to').fillIn('01/01/2022');
+
       await waitFor(() => expect(queryByText(/End date must be after the start date./i)).not.toBeInTheDocument());
     });
   });

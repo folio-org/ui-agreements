@@ -14,7 +14,12 @@ export default class UsageDataProviderField extends React.Component {
     input: PropTypes.shape({
       name: PropTypes.string,
       onChange: PropTypes.func.isRequired,
-      value: PropTypes.string,
+      value: PropTypes.oneOfType([
+        PropTypes.shape({
+          description: PropTypes.string,
+        }),
+        PropTypes.string // input.value can be '' when unset/initialised
+      ]),
     }).isRequired,
     meta: PropTypes.shape({
       error: PropTypes.node,

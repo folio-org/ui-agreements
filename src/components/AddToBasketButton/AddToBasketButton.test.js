@@ -87,14 +87,14 @@ describe('AddToBasketButton', () => {
     handleReplace.mockClear();
   });
 
-  test('clicking the remove button invokes the callback with expected value', () => {
-    const { getByTestId } = render(
+  test('clicking the remove button invokes the callback with expected value', async () => {
+    render(
       <AddToBasketButton
         {...AddToBasketButtonPropsWithItem}
       />
     );
 
-    userEvent.click(getByTestId('addtobasketbutton'));
+    await Button('Remove button').click();
     expect(handleReplace.mock.calls.length).toBe(1);
     handleReplace.mockClear();
   });
