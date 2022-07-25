@@ -101,6 +101,7 @@ const AgreementEditRoute = ({
         { path: 'id' }
       ],
     },
+    nsArray: ['ERM', 'Agreement', agreementId, 'AgreementLines', AGREEMENT_LINES_ENDPOINT, 'AgreementEditRoute'],
     path: AGREEMENT_LINES_ENDPOINT
   });
 
