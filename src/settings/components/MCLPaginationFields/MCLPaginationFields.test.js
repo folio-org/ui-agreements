@@ -5,10 +5,15 @@ import { Button, TextField } from '@folio/stripes-testing';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import userEvent from '@testing-library/user-event';
 import MCLPaginationFields from './MCLPaginationFields';
+
+import { defaultMclPageSize } from '../../../constants';
+
 import { screen } from '@testing-library/dom';
 
+
 const onSubmit = jest.fn();
-const mclList = ['agreementLines', 'agreementEresources', 'entitlementOptions', 'packageContents', 'entitlements'];
+const mclList = Object.keys(defaultMclPageSize.pageSize);
+
 
 describe('MCLPaginationFields', () => {
   test('renders mcl fields', () => {
@@ -17,8 +22,10 @@ describe('MCLPaginationFields', () => {
         <MCLPaginationFields />
       </TestForm>
     );
-    mclList.forEach((mcl) => {
-      expect(getByTestId(mcl)).toBeInTheDocument();
+    mclList.forEach(async (mcl) => {
+      //expect(getByTestId(`${mcl}-page-size`)).toBeInTheDocument();
+      const textField = TextField({ id: `${mcl}-page-size-id` });
+      expect(await textField.exists());
     });
   });
 
@@ -30,11 +37,10 @@ describe('MCLPaginationFields', () => {
     );
 
     mclList.forEach(async (mcl) => {
-      const textField = TextField({ id: `pageSize-${mcl}` });
-      await textField.fillIn('15');
-      //userEvent.type(getByTestId(mcl), '15');
+      const textField = TextField({ id: `${mcl}-page-size-id` });
+      await textField.fillIn('15'.toString());
+      //userEvent.type(getByTestId(`${mcl}-page-size`), '15');
     });
-
 
     await Button("Submit").exists();
     await Button("Submit").click();
