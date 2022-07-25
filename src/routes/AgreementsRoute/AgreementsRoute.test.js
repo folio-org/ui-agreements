@@ -7,6 +7,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { useStripes } from '@folio/stripes/core';
 import translationsProperties from '../../../test/helpers';
 import AgreementsRoute from './AgreementsRoute';
+import mockRefdata from '../../../test/jest/refdata';
 
 jest.mock('@folio/stripes-erm-components', () => ({
   ...jest.requireActual('@folio/stripes-erm-components'),
@@ -22,6 +23,7 @@ jest.mock('@folio/stripes-components', () => ({
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useAgreementsSettings: jest.fn(() => ({ data: { configs: [{}] } })),
+  useAgreementsRefdata: () => mockRefdata,
 }));
 
 const routeProps = {
