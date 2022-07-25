@@ -1,6 +1,8 @@
 import React from 'react';
 import { within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Button } from '@folio/stripes-testing';
+
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { FieldArray } from 'react-final-form-arrays';
@@ -69,20 +71,27 @@ describe('RelatedAgreementsFieldArray', () => {
       expect(getByText('No related agreements for this agreement')).toBeInTheDocument();
     });
 
-    it('clicking the add button renders the relatedAgreement field', () => {
-      const { getByText, getByRole } = renderComponent;
-      userEvent.click(getByRole('button', { name: /Add related agreement/i }));
-      expect(getByText('RelatedAgreementField')).toBeInTheDocument();
+    it('clicking the add button renders the relatedAgreement field', async () => {
+      const { getByText } = renderComponent;
+      await Button('Add related agreement').click();
+
+      await expect(getByText('RelatedAgreementField')).toBeInTheDocument();
     });
 
-    it('adding/removing fields using the add/remove works as expected', () => {
+
+    it('adding/removing fields using the add/remove works as expected', async () => {
       const { getByRole, queryAllByTestId } = renderComponent;
-      expect(getByRole('button', { name: /Add related agreement/i })).toBeInTheDocument();
-      userEvent.click(getByRole('button', { name: /Add related agreement/i }));
+      const addButton = Button('Add related agreement');
+
+      await addButton.exists();
+      await addButton.click();
       expect(queryAllByTestId(/relatedAgreementsFieldArray\[.*\]/i).length).toEqual(1);
-      userEvent.click(getByRole('button', { name: /Add related agreement/i }));
+
+      await addButton.click();
       expect(queryAllByTestId(/relatedAgreementsFieldArray\[.*\]/i).length).toEqual(2);
-      userEvent.click(getByRole('button', { name: /Remove related agreement 2/i }));
+
+      const trashButton = getByRole('button', { name: 'Remove related agreement 2' });
+      await userEvent.click(trashButton);
       expect(queryAllByTestId(/relatedAgreementsFieldArray\[.*\]/i).length).toEqual(1);
     });
   });

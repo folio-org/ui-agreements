@@ -2,6 +2,8 @@ import React from 'react';
 import { waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@folio/stripes-erm-components/test/jest/__mock__';
+import { Button, Datepicker } from '@folio/stripes-testing';
+
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { FieldArray } from 'react-final-form-arrays';
 
@@ -79,7 +81,7 @@ describe('CoverageFieldArray', () => {
 
 
 
-  test('add coverage/delete coverage buttons work as expected', () => {
+  test('add coverage/delete coverage buttons work as expected', async () => {
     const { getByRole, queryAllByTestId } = renderWithIntl(
       <TestForm
         initialValues={{ coverageFieldArrayTest:singleCoverage }}
@@ -101,25 +103,37 @@ describe('CoverageFieldArray', () => {
     // Expect remove coverage button
     expect(getByRole('button', { name: /remove custom coverage 1/i })).toBeInTheDocument();
 
-    // TODO Hover/Unhover don't do anything at the momement, since our tooltip component is rendered in the DOM at all times
-    // userEvent.hover(getByRole('button', {name: /remove custom coverage 1/i}));
+    // IconButton calls seem to not work right now
+    const removeButton = getByRole('button', { name: 'Remove custom coverage 1' });
+    // const removeButton = IconButton('Remove custom coverage 1');
+
+    const addButton = Button('Add custom coverage');
+
+    // Expect add and remove buttons to exist
+    // IconButton calls seem to not work right now
+    // await removeButton.exists();
+    expect(removeButton).toBeInTheDocument();
+    await addButton.exists();
+
+    // Expect tooltip to exist on remove button
+    // Tooltip calls seem to not work right now
+    // await Tooltip('Remove custom coverage 1').exists();
     expect(getByRole('tooltip', { name: /remove custom coverage 1/i })).toBeInTheDocument();
-    // userEvent.unhover(getByRole('button', {name: /remove custom coverage 1/i}));
-    // expect(queryByRole('tooltip', { name: /remove custom coverage 1/i })).not.toBeInTheDocument()
 
     // Double check we currently have a coverage edit card
     // use length of queryAllBy to avoid relying on indexes which may give false positives
     expect(queryAllByTestId(/coverageFieldArray\[.*\]/i).length).toEqual(1);
+
     // Remove it from form
-    userEvent.click(getByRole('button', { name: /remove custom coverage 1/i }));
+    // IconButton calls seem to not work right now
+    // await removeButton.click();
+    await userEvent.click(removeButton);
     expect(queryAllByTestId(/coverageFieldArray\[.*\]/i).length).toEqual(0);
 
-    // Expect add coverage button
-    expect(getByRole('button', { name: /add custom coverage/i })).toBeInTheDocument();
-    userEvent.click(getByRole('button', { name: /add custom coverage/i }));
+    // Expect adding to work
+    await addButton.click();
     expect(queryAllByTestId(/coverageFieldArray\[.*\]/i).length).toEqual(1);
   });
-
 
   test('multiple coverages render as expected', () => {
     const { getByTestId, queryAllByTestId } = renderWithIntl(
@@ -157,7 +171,7 @@ describe('CoverageFieldArray', () => {
   });
 
   test('multiple open ended coverages warning works as expected', async () => {
-    const { getByTestId, queryByText, queryAllByText } = renderWithIntl(
+    const { queryByText, queryAllByText } = renderWithIntl(
       <TestForm
         initialValues={{ coverageFieldArrayTest:doubleCoverage }}
         onSubmit={onSubmit}
@@ -175,10 +189,12 @@ describe('CoverageFieldArray', () => {
       </TestForm>, translationsProperties
     );
 
-    userEvent.clear(within(getByTestId('coverageFieldArray[0]')).getByRole('textbox', { name: /end date/i }));
-    userEvent.clear(within(getByTestId('coverageFieldArray[1]')).getByRole('textbox', { name: /end date/i }));
+    await Datepicker({ id: 'cc-end-date-0' }).clear();
+    await Datepicker({ id: 'cc-end-date-1' }).clear();
+
     await waitFor(() => expect(queryAllByText(/Cannot have multiple open-ended coverage statements./i)[0]).toBeInTheDocument());
-    userEvent.type(within(getByTestId('coverageFieldArray[0]')).getByRole('textbox', { name: /end date/i }), '01/26/2021');
+
+    await Datepicker({ id: 'cc-end-date-0' }).fillIn('01/26/2021');
     await waitFor(() => expect(queryByText(/Cannot have multiple open-ended coverage statements./i)).not.toBeInTheDocument());
   });
 
@@ -202,7 +218,6 @@ describe('CoverageFieldArray', () => {
     );
 
     userEvent.clear(within(getByTestId('coverageFieldArray[1]')).getByRole('textbox', { name: /end date/i }));
-    // TODO This one currently only fires in the UI if you click away
     userEvent.click(within(getByTestId('coverageFieldArray[1]')).getByRole('textbox', { name: /start date/i }));
 
     await waitFor(() => expect(queryAllByText(/The following coverages have overlapping dates:/i)[0]).toBeInTheDocument());
@@ -211,8 +226,8 @@ describe('CoverageFieldArray', () => {
   });
 
 
-  test('expected values are submitted', () => {
-    const { getByTestId } = renderWithIntl(
+  test('expected values are submitted', async () => {
+    renderWithIntl(
       <TestForm
         initialValues={{ coverageFieldArrayTest:doubleCoverage }}
         onSubmit={onSubmit}
@@ -230,7 +245,7 @@ describe('CoverageFieldArray', () => {
       </TestForm>, translationsProperties
     );
 
-    userEvent.click(getByTestId('submit'));
+    await Button('Submit').click();
     expect(onSubmit.mock.calls.length).toBe(1);
     const submittedValues = onSubmit.mock.calls[0][0];
     const expectedPayload = {
