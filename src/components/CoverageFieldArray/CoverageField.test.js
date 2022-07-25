@@ -1,6 +1,5 @@
 import React from 'react';
 import { waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { Button, Datepicker, TextField } from '@folio/stripes-testing';
 
@@ -65,7 +64,7 @@ describe('CoverageField', () => {
   });
 
   test('expected values are submitted', async () => {
-    const { getByRole } = renderWithIntl(
+    renderWithIntl(
       <TestForm onSubmit={onSubmit}>
         <CoverageField
           index={0}

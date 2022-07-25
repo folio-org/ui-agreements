@@ -105,13 +105,13 @@ describe('CoverageFieldArray', () => {
 
     // IconButton calls seem to not work right now
     const removeButton = getByRole('button', { name: 'Remove custom coverage 1' });
-    //const removeButton = IconButton('Remove custom coverage 1');
+    // const removeButton = IconButton('Remove custom coverage 1');
 
     const addButton = Button('Add custom coverage');
 
     // Expect add and remove buttons to exist
     // IconButton calls seem to not work right now
-    //await removeButton.exists();
+    // await removeButton.exists();
     expect(removeButton).toBeInTheDocument();
     await addButton.exists();
 
@@ -126,7 +126,7 @@ describe('CoverageFieldArray', () => {
 
     // Remove it from form
     // IconButton calls seem to not work right now
-    //await removeButton.click();
+    // await removeButton.click();
     await userEvent.click(removeButton);
     expect(queryAllByTestId(/coverageFieldArray\[.*\]/i).length).toEqual(0);
 

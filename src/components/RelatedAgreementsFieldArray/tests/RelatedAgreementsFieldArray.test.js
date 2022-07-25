@@ -79,22 +79,22 @@ describe('RelatedAgreementsFieldArray', () => {
     });
 
 
-  it('adding/removing fields using the add/remove works as expected', async () => {
-    const { getByRole, queryAllByTestId } = renderComponent;
-    const addButton = Button('Add related agreement');
+    it('adding/removing fields using the add/remove works as expected', async () => {
+      const { getByRole, queryAllByTestId } = renderComponent;
+      const addButton = Button('Add related agreement');
 
-    await addButton.exists();
-    await addButton.click();
-    expect(queryAllByTestId(/relatedAgreementsFieldArray\[.*\]/i).length).toEqual(1);
+      await addButton.exists();
+      await addButton.click();
+      expect(queryAllByTestId(/relatedAgreementsFieldArray\[.*\]/i).length).toEqual(1);
 
-    await addButton.click();
-    expect(queryAllByTestId(/relatedAgreementsFieldArray\[.*\]/i).length).toEqual(2);
-    
-    const trashButton = getByRole('button', { name: 'Remove related agreement 2' });
-    await userEvent.click(trashButton);
-    expect(queryAllByTestId(/relatedAgreementsFieldArray\[.*\]/i).length).toEqual(1);
+      await addButton.click();
+      expect(queryAllByTestId(/relatedAgreementsFieldArray\[.*\]/i).length).toEqual(2);
+
+      const trashButton = getByRole('button', { name: 'Remove related agreement 2' });
+      await userEvent.click(trashButton);
+      expect(queryAllByTestId(/relatedAgreementsFieldArray\[.*\]/i).length).toEqual(1);
+    });
   });
-});
 
   describe('rendering with initial values set', () => {
     let renderComponent;
