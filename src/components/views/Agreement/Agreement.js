@@ -297,6 +297,7 @@ const Agreement = ({
           </TitleManager>
         </Pane>
         <HelperComponent
+          invalidateLinks={data.tagsInvalidateLinks}
           link={data.tagsLink}
           onToggle={handlers.onToggleTags}
         />
@@ -332,7 +333,8 @@ Agreement.propTypes = {
     agreement: PropTypes.object.isRequired,
     eresourcesFilterPath: PropTypes.string,
     searchString: PropTypes.string,
-    tagsLink: PropTypes.string
+    tagsLink: PropTypes.string,
+    tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.array)
   }).isRequired,
   handlers: PropTypes.shape({
     onClone: PropTypes.func.isRequired,
