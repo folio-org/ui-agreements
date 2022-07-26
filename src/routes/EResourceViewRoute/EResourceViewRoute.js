@@ -35,6 +35,7 @@ const EResourceViewRoute = ({
   const eresourcePath = ERESOURCE_ENDPOINT(eresourceId);
 
   const { data: eresource = {}, isLoading: isEresourceLoading } = useQuery(
+    // NOTE Used in invalidateLinks for tags below!
     [eresourcePath, 'getEresource'],
     () => ky.get(eresourcePath).json()
   );

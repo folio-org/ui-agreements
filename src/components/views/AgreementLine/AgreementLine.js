@@ -52,6 +52,7 @@ const propTypes = {
         length: PropTypes.number,
       })),
     }).isRequired,
+    tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.array),
     tagsLink: PropTypes.string,
     settings: PropTypes.object,
   }),
@@ -71,7 +72,7 @@ const AgreementLine = ({
     TagButton,
     HelperComponent,
   },
-  data: { line, tagsLink },
+  data: { line, tagsLink, tagsInvalidateLinks },
   handlers,
   isLoading,
 }) => {
@@ -193,6 +194,7 @@ const AgreementLine = ({
           </AccordionStatus>
         </Pane>
         <HelperComponent
+          invalidateLinks={tagsInvalidateLinks}
           link={tagsLink}
           onToggle={handlers.onToggleTags}
         />
