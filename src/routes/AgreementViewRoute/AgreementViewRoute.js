@@ -316,7 +316,8 @@ const AgreementViewRoute = ({
         agreement: getCompositeAgreement(),
         eresourcesFilterPath,
         searchString: location.search,
-        tagsLink: agreementPath
+        tagsLink: agreementPath,
+        tagsInvalidateLinks: [['ERM', 'Agreement', agreementId]],
       }}
       handlers={{
         ...handlers,
