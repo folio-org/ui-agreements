@@ -38,20 +38,25 @@ describe('UsageDataProvidersFieldArray', () => {
       await Button('Add usage data provider').exists();
     });
 
-    it('clicking the add button renders the usage data provider field', () => {
-      const { getByText, getByRole } = renderComponent;
-      userEvent.click(getByRole('button', { name: /Add usage data provider/i }));
+    it('clicking the add button renders the usage data provider field', async () => {
+      const { getByText } = renderComponent;
+      await Button('Add usage data provider').click();
       expect(getByText('UsageDataProviderField')).toBeInTheDocument();
     });
 
-    it('adding/removing fields using the add/remove works as expected', () => {
+    it('adding/removing fields using the add/remove works as expected', async () => {
       const { getByRole, queryAllByTestId } = renderComponent;
-      expect(getByRole('button', { name: /Add usage data provider/i })).toBeInTheDocument();
-      userEvent.click(getByRole('button', { name: /Add usage data provider/i }));
+      await Button('Add usage data provider').exists();
+      await Button('Add usage data provider').click();
       expect(queryAllByTestId(/usageDataProvidersFieldArray\[.*\]/i).length).toEqual(1);
-      userEvent.click(getByRole('button', { name: /Add usage data provider/i }));
+
+      await Button('Add usage data provider').exists();
+      await Button('Add usage data provider').click();
       expect(queryAllByTestId(/usageDataProvidersFieldArray\[.*\]/i).length).toEqual(2);
-      userEvent.click(getByRole('button', { name: /usage data provider 1/i }));
+
+      // IconButton calls seem not to work as expected
+      // await IconButton('Remove usage data provider 1').click();
+      await userEvent.click(getByRole('button', { name: /Remove usage data provider 1/i }));
       expect(queryAllByTestId(/usageDataProvidersFieldArray\[.*\]/i).length).toEqual(1);
     });
   });

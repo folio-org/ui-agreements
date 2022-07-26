@@ -9,6 +9,11 @@ import PickListValueSettings from './PickListValueSettings';
 
 import mockRefdata from '../../../test/jest/refdata';
 
+jest.mock('@k-int/stripes-kint-components', () => ({
+  ...jest.requireActual('@k-int/stripes-kint-components'),
+  EditableRefdataList: () => <div>EditableRefdataList</div>,
+}));
+
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useAgreementsRefdata: () => mockRefdata,

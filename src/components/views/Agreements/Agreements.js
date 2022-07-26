@@ -93,7 +93,7 @@ const Agreements = ({
   };
 
   const { generate } = useGenerateNumber({
-    generator: 'UserBarcode',
+    generator: 'Patron',
     sequence: 'patron',
     callback: (num) => console.log("HOMEROLLED: %o", num)
   })
@@ -295,14 +295,21 @@ const Agreements = ({
                   >
                     {/* FIXME DO NOT MERGE THIS */}
                     <NumberGeneratorModalButton
-                      id="agreements-number-generator"
+                      buttonLabel="All generators"
                       callback={(gen) => console.log(gen)}
-                      generator={'UserBarcode'}
+                      generateButtonLabel="Do the generate"
+                      id="agreements-number-generator-all"
+                    />
+                    <NumberGeneratorModalButton
+                      buttonLabel="Patron sequences"
+                      callback={(gen) => console.log(gen)}
+                      generator="Patron"
+                      id="agreements-number-generator"
                     />
                     <NumberGeneratorButton
                       callback={(n) => console.log("SEPARATE BUTTON: %o", n)}
-                      generator={'UserBarcode'}
-                      sequence={'patron'}
+                      generator="Patron"
+                      sequence="patron"
                     />
                     <Button
                       onClick={generate}
@@ -397,9 +404,9 @@ const Agreements = ({
             console.log(`Number gen through separate modal: ${generated}`);
             setNumberGenOpen(false);
           }}
-          label="TESTING LABEL OVERRIDE"
-          generator="UserBarcode"
+          generator="Patron"
           id="separate-number-gen-modal"
+          label="TESTING LABEL OVERRIDE"
           onClose={() => setNumberGenOpen(false)}
           open={numberGenOpen}
         />

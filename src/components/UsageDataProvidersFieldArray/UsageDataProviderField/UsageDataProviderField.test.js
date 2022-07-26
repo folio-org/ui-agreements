@@ -57,6 +57,7 @@ describe('UsageDataProviderField', () => {
           <MemoryRouter>
             <Field
               component={UsageDataProviderField}
+              index={0}
               name="udp"
               onUDPSelected={onUDPSelected}
             />
@@ -89,6 +90,7 @@ describe('UsageDataProviderField', () => {
           <MemoryRouter>
             <Field
               component={UsageDataProviderField}
+              index={0}
               name="udp"
               onUDPSelected={onUDPSelected}
               udp={udp}

@@ -10,7 +10,7 @@ import View from '../../components/views/AgreementLine';
 import { urls } from '../../components/utilities';
 
 import { useAgreementsHelperApp, useChunkedOrderLines, useSuppressFromDiscovery } from '../../hooks';
-import { AGREEMENT_LINES_ENDPOINT, AGREEMENT_LINE_ENDPOINT } from '../../constants/endpoints';
+import { AGREEMENT_ENDPOINT, AGREEMENT_LINE_ENDPOINT } from '../../constants/endpoints';
 
 const AgreementLineViewRoute = ({
   handlers,
@@ -25,19 +25,21 @@ const AgreementLineViewRoute = ({
   const ky = useOkapiKy();
 
   const agreementLinePath = AGREEMENT_LINE_ENDPOINT(lineId);
+  const agreementPath = AGREEMENT_ENDPOINT(agreementId);
 
   const { data: agreementLine = {}, isLoading: isLineQueryLoading } = useQuery(
-    [AGREEMENT_LINE_ENDPOINT(lineId), 'getLine'],
+    ['ERM', 'AgreementLine', lineId, agreementLinePath],
     () => ky.get(agreementLinePath).json()
   );
 
   const { mutateAsync: deleteAgreementLine } = useMutation(
-    [agreementLinePath, 'ui-agreements', 'AgreementLineViewRoute', 'deleteAgreementLine'],
-    () => ky.put(agreementLinePath, {
+    // As opposed to ['ERM', 'AgreementLine', lineId, 'DELETE', agreementLinePath] if we did this via a DELETE call to entitlements endpoint
+    ['ERM', 'AgreementLine', lineId, 'DELETE', agreementPath],
+    () => ky.put(agreementPath, { json: {
       id: agreementId,
       items: [{ id: lineId, _delete: true }]
-    }).then(() => {
-      queryClient.invalidateQueries(AGREEMENT_LINES_ENDPOINT);
+    } }).then(() => {
+      queryClient.invalidateQueries('ERM', 'Agreement', agreementId); // Invalidate relevant Agreement
       history.push(`${urls.agreementView(agreementId)}${location.search}`);
       callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.delete.callout" /> });
     }).catch(error => {
@@ -89,7 +91,8 @@ const AgreementLineViewRoute = ({
       }}
       data={{
         line: getCompositeLine(),
-        tagsLink: agreementLinePath
+        tagsLink: agreementLinePath,
+        tagsInvalidateLinks: [['ERM', 'AgreementLine', lineId]]
       }}
       handlers={{
         ...handlers,

@@ -8,24 +8,16 @@ import {
   Headline,
 } from '@folio/stripes/components';
 
-import { EditCard, withKiwtFieldArray } from '@folio/stripes-erm-components';
+import { EditCard } from '@folio/stripes-erm-components';
+import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 import AgreementPeriodField from './AgreementPeriodField';
 
-class AgreementPeriodsFieldArray extends React.Component {
-  static propTypes = {
-    items: PropTypes.arrayOf(PropTypes.object),
-    name: PropTypes.string.isRequired,
-    onAddField: PropTypes.func.isRequired,
-    onDeleteField: PropTypes.func.isRequired,
-  }
+const AgreementPeriodsFieldArray = ({
+  fields: { name },
+}) => {
+  const { items, onAddField, onDeleteField } = useKiwtFieldArray(name);
 
-  static defaultProps = {
-    items: [],
-  }
-
-  renderPeriods = () => {
-    const { items, name } = this.props;
-
+  const renderPeriods = () => {
     return items.map((period, index) => (
       <EditCard
         key={index}
@@ -33,7 +25,7 @@ class AgreementPeriodsFieldArray extends React.Component {
         data-testid={`agreementPeriodsFieldArray[${index}]`}
         deleteButtonTooltipText={<FormattedMessage id="ui-agreements.agreementPeriods.removePeriod" values={{ periodNum: index + 1 }} />}
         header={<FormattedMessage id="ui-agreements.agreementPeriods.periodTitle" values={{ number: index + 1 }} />}
-        onDelete={index !== 0 ? () => this.props.onDeleteField(index, period) : undefined}
+        onDelete={index !== 0 ? () => onDeleteField(index, period) : undefined}
       >
         <Field
           component={AgreementPeriodField}
@@ -42,26 +34,30 @@ class AgreementPeriodsFieldArray extends React.Component {
         />
       </EditCard>
     ));
-  }
+  };
 
-  render = () => {
-    return (
-      <div>
-        <Headline margin="x-small" size="large" tag="h3">
-          <FormattedMessage id="ui-agreements.agreementPeriods" />
-        </Headline>
-        <div
-          data-testid="agreementPeriodsFieldArray"
-          id="agreement-form-periods"
-        >
-          {this.renderPeriods()}
-        </div>
-        <Button id="add-period-button" onClick={() => this.props.onAddField()}>
-          <FormattedMessage id="ui-agreements.agreementPeriods.addPeriod" />
-        </Button>
+  return (
+    <div>
+      <Headline margin="x-small" size="large" tag="h3">
+        <FormattedMessage id="ui-agreements.agreementPeriods" />
+      </Headline>
+      <div
+        data-testid="agreementPeriodsFieldArray"
+        id="agreement-form-periods"
+      >
+        {renderPeriods()}
       </div>
-    );
-  }
-}
+      <Button id="add-period-button" onClick={() => onAddField()}>
+        <FormattedMessage id="ui-agreements.agreementPeriods.addPeriod" />
+      </Button>
+    </div>
+  );
+};
 
-export default withKiwtFieldArray(AgreementPeriodsFieldArray);
+AgreementPeriodsFieldArray.propTypes = {
+  fields: PropTypes.shape({
+    name: PropTypes.string,
+  }),
+};
+
+export default AgreementPeriodsFieldArray;

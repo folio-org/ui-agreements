@@ -19,6 +19,8 @@ import {
   basket,
 } from './testResources';
 
+import mockRefdata from '../../../test/jest/refdata';
+
 const BasketLineButton = (props) => {
   return <Button onClick={props.handlers.onBasketLinesAdded}>BasketLineButton</Button>;
 };
@@ -60,6 +62,7 @@ jest.mock('../../hooks', () => ({
     getAgreementLinesToAdd: () => [],
     handleBasketLinesAdded: mockBasketLinesAdded
   }),
+  useAgreementsRefdata: () => mockRefdata,
 }));
 
 jest.mock('../../components/views/AgreementForm', () => {

@@ -1,39 +1,4 @@
 const detachedData = {
-  'input': {
-    'name': 'items[0]',
-    'value': {
-      'id': 'f9b77ff8-97b4-44fb-84aa-4b2ed17fd836',
-      'poLines': [],
-      'activeFrom': '2021-09-01',
-      'activeTo': '2021-09-30'
-    },
-    'onBlur': () => {},
-    'onChange': () => {},
-    'onFocus': () => {}
-  },
-  'meta': {
-    'active': false,
-    'data': '{}',
-    'dirty': true,
-    'dirtySinceLastSubmit': false,
-    'initial': {
-      'id': '9273bce6-c034-4c6a-be56-1e6ed5d96d31',
-      'poLines': [],
-      'activeFrom': null,
-      'activeTo': null
-    },
-    'invalid': false,
-    'modified': false,
-    'modifiedSinceLastSubmit': false,
-    'pristine': false,
-    'submitFailed': false,
-    'submitSucceeded': false,
-    'submitting': false,
-    'touched': false,
-    'valid': true,
-    'validating': false,
-    'visited': false
-  },
   'basket': [{
     'id': '3ec3a630-4270-4a1e-84a5-1204d646f3e5',
     'class': 'org.olf.kb.PackageContentItem',
@@ -84,8 +49,6 @@ const detachedData = {
   }
   ],
   'index': 0,
-  'onDelete': 'ƒ onDelete() {}',
-  'onResourceSelected': () => {},
   'poLines': [],
   'resource': {
     'id': 'f9b77ff8-97b4-44fb-84aa-4b2ed17fd836',
@@ -170,75 +133,6 @@ const detachedData = {
 };
 
 const data = {
-  'input': {
-    'name': 'items[4]',
-    'value': {
-      'id': '67bb4fb0-1498-43e0-aafd-1a8f8aff6995',
-      'coverage': [{
-        'id': '19374063-ec48-462a-bdc2-567733462660',
-        'startDate': '2021-09-04',
-        'endDate': '2021-09-30',
-        'startVolume': '5',
-        'startIssue': '11',
-        'endVolume': '20',
-        'endIssue': '26',
-        'summary': 'v5/i11/2021-09-04 - v20/i26/2021-09-30'
-      }],
-      'poLines': [{
-        'id': 'f05ba56a-79e5-4b73-884a-95259e35aca6',
-        'poLineId': '556abc25-ebbf-3fb2-b478-1bfaff0af4dc',
-        'owner': {
-          'id': '67bb4fb0-1498-43e0-aafd-1a8f8aff6995'
-        }
-      }],
-      'activeFrom': '2021-09-02',
-      'activeTo': '2021-09-28',
-      'note': 'Agreement line note'
-    },
-    'onBlur': () => {},
-    'onChange': () => {},
-    'onFocus': () => {}
-  },
-  'meta': {
-    'active': false,
-    'data': '{}',
-    'dirty': false,
-    'dirtySinceLastSubmit': false,
-    'initial': {
-      'id': '67bb4fb0-1498-43e0-aafd-1a8f8aff6995',
-      'coverage': [{
-        'id': '19374063-ec48-462a-bdc2-567733462660',
-        'startDate': '2021-09-04',
-        'endDate': '2021-09-30',
-        'startVolume': '5',
-        'startIssue': '11',
-        'endVolume': '20',
-        'endIssue': '26',
-        'summary': 'v5/i11/2021-09-04 - v20/i26/2021-09-30'
-      }],
-      'poLines': [{
-        'id': 'f05ba56a-79e5-4b73-884a-95259e35aca6',
-        'poLineId': '556abc25-ebbf-3fb2-b478-1bfaff0af4dc',
-        'owner': {
-          'id': '67bb4fb0-1498-43e0-aafd-1a8f8aff6995'
-        }
-      }],
-      'activeFrom': '2021-09-02',
-      'activeTo': '2021-09-28',
-      'note': 'Agreement line note'
-    },
-    'invalid': false,
-    'modified': false,
-    'modifiedSinceLastSubmit': false,
-    'pristine': true,
-    'submitFailed': false,
-    'submitSucceeded': false,
-    'submitting': false,
-    'touched': false,
-    'valid': true,
-    'validating': false,
-    'visited': false
-  },
   'basket': [{
     'id': 'fa1b8a63-4673-4d0c-809d-1a65e66bdc10',
     'class': 'org.olf.kb.Pkg',
@@ -675,8 +569,6 @@ const data = {
   }
   ],
   'index': 4,
-  'onDelete': 'ƒ onDelete() {}',
-  'onResourceSelected': () => {},
   'poLines': [{
     'id': '556abc25-ebbf-3fb2-b478-1bfaff0af4dc',
     'edition': 'First edition',

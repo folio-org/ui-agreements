@@ -27,21 +27,22 @@ const AgreementLineEditRoute = ({
   const queryClient = useQueryClient();
   const isSuppressFromDiscoveryEnabled = useSuppressFromDiscovery();
 
+  const agreementLinePath = AGREEMENT_LINE_ENDPOINT(lineId);
+
   const { data: agreementLine = {}, isLoading: isLineLoading } = useQuery(
-    [AGREEMENT_LINE_ENDPOINT(lineId), 'getLine'],
-    () => ky.get(AGREEMENT_LINE_ENDPOINT(lineId)).json()
+    ['ERM', 'AgreementLine', lineId, agreementLinePath],
+    () => ky.get(agreementLinePath).json()
   );
 
   const poLineIdsArray = (agreementLine.poLines ?? []).map(poLine => poLine.poLineId).flat();
   const { orderLines, isLoading: areOrderLinesLoading } = useChunkedOrderLines(poLineIdsArray);
 
   const { mutateAsync: putAgreementLine } = useMutation(
-    [AGREEMENT_LINE_ENDPOINT(lineId), 'ui-agreements', 'AgreementLineEditRoute', 'editAgreementLine'],
-    (payload) => ky.put(AGREEMENT_LINE_ENDPOINT(lineId), { json: payload }).json()
+    ['ERM', 'AgreementLine', lineId, 'PUT', agreementLinePath],
+    (payload) => ky.put(agreementLinePath, { json: payload }).json()
       .then(({ id }) => {
         /* Invalidate cached queries */
         queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
-        queryClient.invalidateQueries(AGREEMENT_LINE_ENDPOINT(lineId));
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.update.callout" /> });
         history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);

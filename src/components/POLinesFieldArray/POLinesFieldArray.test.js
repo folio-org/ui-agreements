@@ -46,20 +46,31 @@ describe('POLinesFieldArray', () => {
       await Button('Add PO line').exists();
     });
 
-    it('clicking the add button renders the po line field', () => {
-      const { getByText, getByRole } = renderComponent;
-      userEvent.click(getByRole('button', { name: /Add PO line/i }));
+    it('clicking the add button renders the po line field', async () => {
+      const { getByText } = renderComponent;
+      const addButton = Button('Add PO line');
+      await addButton.exists();
+      await addButton.click();
       expect(getByText('POLineField')).toBeInTheDocument();
     });
 
-    it('adding/removing fields using the add/remove works as expected', () => {
+    it('adding/removing fields using the add/remove works as expected', async () => {
       const { getByRole, queryAllByTestId } = renderComponent;
-      expect(getByRole('button', { name: /Add PO line/i })).toBeInTheDocument();
-      userEvent.click(getByRole('button', { name: /Add PO line/i }));
+      const addButton = Button('Add PO line');
+
+      await addButton.exists();
+
+      await addButton.click();
       expect(queryAllByTestId(/polinesFieldArray\[.*\]/i).length).toEqual(1);
-      userEvent.click(getByRole('button', { name: /Add PO line/i }));
+
+      await addButton.click();
       expect(queryAllByTestId(/polinesFieldArray\[.*\]/i).length).toEqual(2);
-      userEvent.click(getByRole('button', { name: /Remove PO line 1/i }));
+
+      // IconButton calls don't seem to work as expected
+      // const removeButton = IconButton('Remove PO line');
+      const removeButton = getByRole('button', { name: /Remove PO line 1/i });
+      // await removeButton.click();
+      await userEvent.click(removeButton);
       expect(queryAllByTestId(/polinesFieldArray\[.*\]/i).length).toEqual(1);
     });
   });
