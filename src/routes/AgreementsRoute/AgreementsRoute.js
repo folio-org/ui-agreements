@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { getRefdataValuesByDesc, useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
 
-import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
+import { generateKiwtQueryParams, useKiwtSASQuery, useQIndex } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Agreements';
 import NoPermissions from '../../components/NoPermissions';
@@ -61,9 +61,11 @@ const AgreementsRoute = ({
     }
   }, []); // This isn't particularly great, but in the interests of saving time migrating, it will have to do
 
+  const { 0: qIndex } = useQIndex(); // We don't need the setter here;
+
   const agreementsQueryParams = useMemo(() => (
     generateKiwtQueryParams({
-      searchKey: 'name,alternateNames.name,description',
+      searchKey: qIndex,
       filterKeys: {
         agreementStatus: 'agreementStatus.value',
         contacts: 'contacts.user',
@@ -79,7 +81,7 @@ const AgreementsRoute = ({
       },
       perPage: INITIAL_RESULT_COUNT
     }, (query ?? {}))
-  ), [query]);
+  ), [qIndex, query]);
 
   const {
     infiniteQueryObject: {

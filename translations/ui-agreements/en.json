@@ -138,6 +138,7 @@
   "agreementLines.customCoverage.endVolume": "End volume",
   "agreementLines.customCoverage.coverageType": "Coverage type",
   "alternativeNames": "Alternative names",
+  "alternativeName": "Alternative name",
   "agreementPeriods.period": "Period",
   "agreementPeriods.current": "Current",
   "agreementPeriods.next": "Next",

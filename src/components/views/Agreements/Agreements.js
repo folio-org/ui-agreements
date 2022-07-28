@@ -26,7 +26,7 @@ import {
   SearchAndSortNoResultsMessage,
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
-import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
+import { SearchKeyControl, useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
 import { statuses } from '../../../constants';
 import AgreementFilters from '../../AgreementFilters';
@@ -107,7 +107,7 @@ const Agreements = ({
           initialFilterState={{
             agreementStatus: ['active', 'draft', 'in_negotiation', 'requested']
           }}
-          initialSearchState={{ query: '' }}
+          initialSearchState={{ query: '', qindex: 'name,alternateNames.name,description' }}
           initialSortState={{ sort: 'name' }}
           queryGetter={queryGetter}
           querySetter={querySetter}
@@ -188,6 +188,22 @@ const Agreements = ({
                               />
                             )}
                           </FormattedMessage>
+                          <SearchKeyControl
+                            options={[
+                              {
+                                label: <FormattedMessage id="ui-agreements.agreements.name" />,
+                                key: 'name'
+                              },
+                              {
+                                label: <FormattedMessage id="ui-agreements.alternativeName" />,
+                                key: 'alternateNames.name',
+                              },
+                              {
+                                label: <FormattedMessage id="ui-agreements.description" />,
+                                key: 'description'
+                              },
+                            ]}
+                          />
                           <Button
                             buttonStyle="primary"
                             disabled={!searchValue.query || searchValue.query === ''}
