@@ -9,7 +9,7 @@ import { generateKiwtQueryParams, useKiwtSASQuery, useQIndex } from '@k-int/stri
 import View from '../../components/views/Agreements';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { resultCount } from '../../constants';
+import { defaultQIndex, resultCount } from '../../constants';
 import { AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
 import { useAgreementsRefdata } from '../../hooks';
 
@@ -65,7 +65,7 @@ const AgreementsRoute = ({
 
   const agreementsQueryParams = useMemo(() => (
     generateKiwtQueryParams({
-      searchKey: qIndex,
+      searchKey: qIndex ?? defaultQIndex,
       filterKeys: {
         agreementStatus: 'agreementStatus.value',
         contacts: 'contacts.user',

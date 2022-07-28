@@ -28,7 +28,7 @@ import {
 } from '@folio/stripes/smart-components';
 import { SearchKeyControl, useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
-import { statuses } from '../../../constants';
+import { defaultQIndex, statuses } from '../../../constants';
 import AgreementFilters from '../../AgreementFilters';
 import IfEResourcesEnabled from '../../IfEResourcesEnabled';
 import { urls } from '../../utilities';
@@ -107,7 +107,7 @@ const Agreements = ({
           initialFilterState={{
             agreementStatus: ['active', 'draft', 'in_negotiation', 'requested']
           }}
-          initialSearchState={{ query: '', qindex: 'name,alternateNames.name,description' }}
+          initialSearchState={{ query: '', qindex: defaultQIndex }}
           initialSortState={{ sort: 'name' }}
           queryGetter={queryGetter}
           querySetter={querySetter}
@@ -188,6 +188,7 @@ const Agreements = ({
                               />
                             )}
                           </FormattedMessage>
+                          {/* The options here reflect the constant defaultQIndex */}
                           <SearchKeyControl
                             options={[
                               {
