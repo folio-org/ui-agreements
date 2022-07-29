@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "8.2.0",
+  "version": "8.2.1",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -80,8 +80,8 @@
   },
   "dependencies": {
     "@folio/stripes-acq-components": "^3.1.0",
-    "@folio/stripes-erm-components": "^6.2.0",
-    "@k-int/stripes-kint-components": "^2.6.5",
+    "@folio/stripes-erm-components": "^6.2.1",
+    "@k-int/stripes-kint-components": "^2.8.2",
     "@rehooks/local-storage": "2.4.4",
     "@testing-library/react-hooks": "^8.0.0",
     "compose-function": "^3.0.3",
