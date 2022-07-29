@@ -2,6 +2,14 @@
 
 ## 8.3.0 In progress
 
+## 8.2.1 2022-07-29
+* ERM-2300 On loading entitlements for Agreement edit screen incorrect parameters are supplied
+* ERM-2299 Error on trying to save an agreement with a linked license
+* ERM-2297 Number of tags doesn't update on adding tags to agreement or agreement line
+* ERM-2284 Attempt to delete Agreement Line fails
+* ERM-2282 Toast message fails to display to user
+* ERM-2280 Incorrect labels in move identifiers UI
+
 ## 8.2.0 2022-07-04
 * ERM-2229 On creating Agreement, agreement creation view does not close after save
 * ERM-2225 Amendment/License link status values do not update immediately after Agreement edit
