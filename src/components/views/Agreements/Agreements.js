@@ -111,6 +111,15 @@ const Agreements = ({
           initialSortState={{ sort: 'name' }}
           queryGetter={queryGetter}
           querySetter={querySetter}
+          /*
+            Not entirely happy with the fact this boilerplate
+            needs to be here for qIndex to work as expected.
+            See https://folio-project.slack.com/archives/C210UCHQ9/p1659014709252189
+          */
+          searchParamsMapping={{
+            query: (v) => ({ query: v }),
+            qindex: (v) => ({ qindex: v })
+          }}
           syncToLocationSearch
         >
           {
