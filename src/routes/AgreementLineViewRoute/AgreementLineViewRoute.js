@@ -91,7 +91,8 @@ const AgreementLineViewRoute = ({
       }}
       data={{
         line: getCompositeLine(),
-        tagsLink: agreementLinePath
+        tagsLink: agreementLinePath,
+        tagsInvalidateLinks: [['ERM', 'AgreementLine', lineId]]
       }}
       handlers={{
         ...handlers,
