@@ -1,5 +1,8 @@
 # Change history for ui-agreements
 
+## 8.2.2 2022-08-02
+* ERM-2297 Number of tags doesn't update on adding tags to agreement or agreement line
+
 ## 8.2.1 2022-07-29
 * ERM-2300 On loading entitlements for Agreement edit screen incorrect parameters are supplied
 * ERM-2299 Error on trying to save an agreement with a linked license
