@@ -35,12 +35,12 @@ const AgreementsCustomProperties = () => {
   const labelOverrides = {
     modalTitleEdit: <FormattedMessage id="ui-agreements.supplementaryProperty.editModal" />,
     modalTitleNew: <FormattedMessage id="ui-agreements.supplementaryProperty.newModal" />,
-    paneTitle: <FormattedMessage id="ui-agreements.settings.supplementaryProperties" />,
+    //paneTitle: <FormattedMessage id="ui-agreements.settings.supplementaryProperties" />,
     retired: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.retired" />,
     primaryRetired: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.primaryRetired" />,
     ctx: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.category" />,
     category: <FormattedMessage id="ui-agreements.settings.supplementaryProperties.pickList" />,
-    deleteError: (error, custProp) => (<FormattedMessage id="ui-agreements.settings.supplementaryProperties.deleteError" values={{ label: custProp?.label, error }} />)
+    //deleteError: (error, custProp) => (<FormattedMessage id="ui-agreements.settings.supplementaryProperties.deleteError" values={{ label: custProp?.label, error }} />)
   };
 
   // These overrides need to be formatted as strings because they will be utilised in a select
@@ -63,6 +63,7 @@ const AgreementsCustomProperties = () => {
       contextFilterOptions={contexts}
       customPropertiesEndpoint={CUSTPROP_ENDPOINT}
       helpPopovers={helpPopovers}
+      intlKey="ui-agreements"
       labelOverrides={labelOverrides}
       refdataEndpoint={REFDATA_ENDPOINT}
     />
