@@ -639,5 +639,7 @@
   "packageIdentifiers.gokbId": "GOKb ID",
   "packageIdentifiers.gokbUUID": "GOKb UUID",
   "customProperties": "Supplementary properties",
-  "customProperties.delete.errorMessage": "There was an error deleting supplementary property: <strong>{label}</strong>. {error}"
+  "customProperties.delete.errorMessage": "There was an error deleting supplementary property: <strong>{label}</strong>. {error}",
+  "customProperties.delete.confirmHeading": "Delete supplementary property",
+  "customProperties.delete.confirmMessage": "Supplementary property <strong>{name}</strong> will be <strong>deleted</strong>.",
 }
