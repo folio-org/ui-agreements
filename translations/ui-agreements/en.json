@@ -5,6 +5,7 @@
   "yes": "Yes",
   "no": "No",
   "new": "New",
+  "edit": "Edit",
   "loading": "Loading...",
   "create": "Create",
   "close": "Close",
@@ -639,7 +640,9 @@
   "packageIdentifiers.gokbId": "GOKb ID",
   "packageIdentifiers.gokbUUID": "GOKb UUID",
   "customProperties": "Supplementary properties",
-  "customProperties.delete.errorMessage": "There was an error deleting supplementary property: <strong>{label}</strong>. {error}",
-  "customProperties.delete.confirmHeading": "Delete supplementary property",
-  "customProperties.delete.confirmMessage": "Supplementary property <strong>{name}</strong> will be <strong>deleted</strong>.",
+  "customProperties.config.delete.errorMessage": "There was an error deleting supplementary property: <strong>{label}</strong>. {error}",
+  "customProperties.config.delete.confirmHeading": "Delete supplementary property",
+  "customProperties.config.delete.confirmMessage": "Supplementary property <strong>{name}</strong> will be <strong>deleted</strong>.",
+  "customProperties.config.newModal": "New supplementary property",
+  "customProperties.config.editModal": "Edit {name}"
 }
