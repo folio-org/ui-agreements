@@ -11,3 +11,4 @@ export { default as validationEndPoint } from './validationEndPoint';
 export { default as defaultMclPageSize } from './defaultMclPageSize';
 export { default as hiddenAccordions } from './hiddenAccordions';
 export * as endpoints from './endpoints';
+export { default as defaultQIndex } from './defaultQIndex';

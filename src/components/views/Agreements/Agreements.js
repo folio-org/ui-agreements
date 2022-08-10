@@ -26,9 +26,9 @@ import {
   SearchAndSortNoResultsMessage,
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
-import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
+import { SearchKeyControl, useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
-import { statuses } from '../../../constants';
+import { defaultQIndex, statuses } from '../../../constants';
 import AgreementFilters from '../../AgreementFilters';
 import IfEResourcesEnabled from '../../IfEResourcesEnabled';
 import { urls } from '../../utilities';
@@ -107,10 +107,19 @@ const Agreements = ({
           initialFilterState={{
             agreementStatus: ['active', 'draft', 'in_negotiation', 'requested']
           }}
-          initialSearchState={{ query: '' }}
+          initialSearchState={{ query: '', qindex: defaultQIndex }}
           initialSortState={{ sort: 'name' }}
           queryGetter={queryGetter}
           querySetter={querySetter}
+          /*
+            Not entirely happy with the fact this boilerplate
+            needs to be here for qIndex to work as expected.
+            See https://folio-project.slack.com/archives/C210UCHQ9/p1659014709252189
+          */
+          searchParamsMapping={{
+            query: (v) => ({ query: v }),
+            qindex: (v) => ({ qindex: v })
+          }}
           syncToLocationSearch
         >
           {
@@ -188,6 +197,23 @@ const Agreements = ({
                               />
                             )}
                           </FormattedMessage>
+                          {/* The options here reflect the constant defaultQIndex */}
+                          <SearchKeyControl
+                            options={[
+                              {
+                                label: <FormattedMessage id="ui-agreements.agreements.name" />,
+                                key: 'name'
+                              },
+                              {
+                                label: <FormattedMessage id="ui-agreements.alternativeName" />,
+                                key: 'alternateNames.name',
+                              },
+                              {
+                                label: <FormattedMessage id="ui-agreements.description" />,
+                                key: 'description'
+                              },
+                            ]}
+                          />
                           <Button
                             buttonStyle="primary"
                             disabled={!searchValue.query || searchValue.query === ''}
