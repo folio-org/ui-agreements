@@ -637,5 +637,6 @@
     "packageIdentifiers.ezb": "EZB",
     "packageIdentifiers.eBookPool": "E-Book Pool",
     "packageIdentifiers.gokbId": "GOKb ID",
-    "packageIdentifiers.gokbUUID": "GOKb UUID"
+    "packageIdentifiers.gokbUUID": "GOKb UUID",
+    "alternativeName": "Alternative name"
 }
