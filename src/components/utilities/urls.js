@@ -4,6 +4,7 @@ const urls = {
   agreementEdit: id => `/erm/agreements/${id}/edit`,
   agreementCreate: () => '/erm/agreements/create',
 
+  agreementLines: () => '/erm/agreementLines',
   agreementLineView: (aId, lId) => `/erm/agreements/${aId}/line/${lId}`,
   agreementLineCreate: aId => `/erm/agreements/${aId}/line/create`,
   agreementLineEdit: (aId, lId) => `/erm/agreements/${aId}/line/${lId}/edit`,

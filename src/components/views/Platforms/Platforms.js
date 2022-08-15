@@ -122,6 +122,16 @@ const Platforms = ({
                             <FormattedMessage id="ui-agreements.agreements" />
                           </Button>
                           <Button
+                            id="clickable-nav-agreementLines"
+                            to={urls.agreementLines()}
+                          >
+                            <FormattedMessage id="ui-agreements.agreementLines" />
+                          </Button>
+                        </ButtonGroup>
+                      </IfEResourcesEnabled>
+                      <IfEResourcesEnabled>
+                        <ButtonGroup fullWidth>
+                          <Button
                             id="clickable-nav-eresources"
                             to={urls.eresources()}
                           >
