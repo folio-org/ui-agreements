@@ -91,7 +91,7 @@
   "agreements.reviewDate": "Review date",
   "agreements.reviewDecision": "Decision",
   "agreements.reviewNotes": "Decision notes",
-  "agreements.agreementLineType": "Agreement line type",
+  "agreementLines.agreementLineType": "Agreement line type",
   "agreements.financesAgreementLines": "Finances - agreement lines",
   "agreements.editFinancesAgreementLines": "Edit agreement lines",
   "agreements.showInvoicesLink": "Show invoices",
