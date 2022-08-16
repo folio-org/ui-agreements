@@ -8,8 +8,7 @@ import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-compo
 import { DateFilter } from '@folio/stripes-erm-components';
 
 import AgreementFilterButton from '../AgreementFilterButton';
-// import POLineField from '../POLinesFieldArray/POLineField';
-
+import POLineField from '../POLinesFieldArray/POLineField';
 
 const propTypes = {
   activeFilters: PropTypes.object,
@@ -37,6 +36,7 @@ export default function AgreementLineFilters({ activeFilters, data, filterHandle
     purchaseOrderLine: [],
     tags: []
   });
+
 
   useEffect(() => {
     const newState = {};
@@ -84,36 +84,35 @@ export default function AgreementLineFilters({ activeFilters, data, filterHandle
     );
   };
 
-  // const renderPOLines = (orderLine) => {
-  //   let disabled = false;
-  //   if (orderLine) {
-  //     disabled = true;
-  //   }
-  //   const poLineFilters = activeFilters.polines || [];
-  //   return (
-  //     <Accordion
-  //       closedByDefault
-  //       displayClearButton={poLineFilters.length > 0}
-  //       header={FilterAccordionHeader}
-  //       label={<FormattedMessage id="ui-agreements.agreementLines.POLines" />}
-  //       onClearFilter={() => {
-  //         filterHandlers.state({
-  //           ...activeFilters,
-  //           polines: [],
-  //         });
-  //       }}
-  //       separator={false}
-  //     >
-  //       <POLineField
-  //         disabled={disabled}
-  //         onPolineSelected={(poline) => {
-  //           filterHandlers.state({ ...activeFilters, [orderLine]: [poline.id] });
-  //         }}
-  //         orderLine={orderLine}
-  //       />
-  //     </Accordion>
-  //   );
-  // };
+  const renderPOLines = (poLines, props) => {
+    const groupFilters = activeFilters[poLines] || [];
+
+    let disabled = false;
+    if (poLines) {
+      disabled = true;
+    }
+
+    return (
+      <Accordion
+        displayClearButton={groupFilters.length > 0}
+        header={FilterAccordionHeader}
+        id={`filter-accordion-${poLines}`}
+        label={<FormattedMessage id={`ui-agreements.agreementLines.POLines ${poLines}`} />}
+        name={poLines}
+        onClearFilter={() => { filterHandlers.clearGroup(poLines); }}
+        separator={false}
+        {...props}
+      >
+        {/* <POLineField
+          disabled={disabled}
+          onPOLineSelected={(poline) => {
+            filterHandlers.state({ ...activeFilters, [poLines]: [poline.id] });
+          }}
+          orderLine={poLines}
+        /> */}
+      </Accordion>
+    );
+  };
 
   const renderAgreement = (name, props) => {
     const groupFilters = activeFilters[name] || [];
@@ -198,7 +197,7 @@ export default function AgreementLineFilters({ activeFilters, data, filterHandle
       {renderCheckboxFilter('agreementLineType')}
       {renderActiveFromDate()}
       {renderActiveToDate()}
-      {/* {renderPOLines()} */}
+      {renderPOLines()}
       {renderTagsFilter()}
     </AccordionSet>
   );
