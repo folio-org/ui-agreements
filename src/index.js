@@ -170,7 +170,7 @@ class App extends React.Component {
                   </Route>
 
                   <Route component={AgreementLinesRoute} path={`${path}/agreementLines/:id?`}>
-                    <Route component={AgreementLineViewRoute} path={`${path}/agreements/agreementLines/:agreementId/line/:lineId`} />
+                    <Route component={AgreementLineViewRoute} path={`${path}/agreementLines/:lineId/agreement/:agreementId`} />
                   </Route>
 
                   <Route component={EResourceEditRoute} path={`${path}/eresources/:id/edit`} />
