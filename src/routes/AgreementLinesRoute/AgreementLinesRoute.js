@@ -20,7 +20,7 @@ const AgreementLinesRoute = ({
   children,
   history,
   location,
-  match,
+  match
 }) => {
   const ky = useOkapiKy();
   const stripes = useStripes();
@@ -41,11 +41,8 @@ const AgreementLinesRoute = ({
       searchKey: 'name,reference,description,note',
       filterKeys: {
         name: 'class',
-        agreement: 'agreement.value',
-        agreementLinesType: 'agreementLinesType.type',
-        activeFrom: 'activeFrom.value',
-        activeTo: 'activeTo.value',
-        poLine: 'poLines.value',
+        agreement: 'owner.id',
+        poLine: 'poLines.id',
         tags: 'tags.value',
       },
       perPage: INITIAL_RESULT_COUNT
@@ -69,9 +66,9 @@ const AgreementLinesRoute = ({
     }
   );
 
-  useEffect((lineId) => {
+  useEffect(() => {
     if (agreementLinesCount === 1) {
-      history.push(`${urls.agreementLineView(lineId)}${location.search}`);
+      history.push(`${urls.agreementLineNativeView(agreementLines[0].owner.id, agreementLines[0].id)}${location.search}`);
     }
   }, [agreementLines, agreementLinesCount, history, location.search]);
 
