@@ -39,13 +39,14 @@ const AgreementLinesRoute = ({
   const eresourcesEnabled = useEresourcesEnabled();
 
   const searchKey = eresourcesEnabled ? 'resource.name,reference,description,note' : 'reference,description,note';
+
   const agreementLinesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
       searchKey,
       filterKeys: {
         agreement: 'owner.id',
-        agreementLineType: 'reference',
-        poLine: 'poLines.id',
+        // DO NOT INCLUDE "lineType" as filterKey, so that the values will be passed as is to the backend
+        poLine: 'poLines.poLineId',
         tags: 'tags.value',
       },
       perPage: INITIAL_RESULT_COUNT

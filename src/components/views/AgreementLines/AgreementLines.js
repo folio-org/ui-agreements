@@ -34,11 +34,11 @@ import css from '../Agreements.css';
 
 const propTypes = {
   children: PropTypes.object,
-  match: PropTypes.object,
   data: PropTypes.shape({
     agreementLines: PropTypes.arrayOf(PropTypes.object).isRequired,
     tagsValues: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
+  history: PropTypes.object,
   onNeedMoreData: PropTypes.func.isRequired,
   queryGetter: PropTypes.func.isRequired,
   querySetter: PropTypes.func.isRequired,
@@ -64,7 +64,6 @@ const AgreementLines = ({
   querySetter,
   searchString = '',
   selectedRecordId,
-  match: { params: { lineId, agreementId } = {} } = {},
   source,
 }) => {
   const count = source?.totalCount() ?? 0;

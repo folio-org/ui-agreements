@@ -7,21 +7,22 @@ import { Pluggable } from '@folio/stripes/core';
 const propTypes = {
   disabled: PropTypes.bool,
   name: PropTypes.string,
-  onAgreementSelected: PropTypes.func.isRequired,
+  onPOLineSelected: PropTypes.func.isRequired,
 };
 
-const AgreementFilterButton = ({ disabled, name, onAgreementSelected }) => {
+const POLineFilterButton = ({ disabled, name, onPOLineSelected }) => {
   let triggerButton = useRef(null);
   return (
     <Pluggable
-      dataKey={`agreement-filter-button-${name}`}
-      onAgreementSelected={onAgreementSelected}
+      addLines={poLines => onPOLineSelected(poLines[0])}
+      dataKey={`po-line-filter-button-${name}`}
+      isSingleSelect
       renderTrigger={(pluggableRenderProps) => {
         triggerButton = pluggableRenderProps.buttonRef;
         const buttonProps = {
           'aria-haspopup': 'true',
           'buttonRef': triggerButton,
-          'id': `${name}-agreement-search-button`,
+          'id': `${name}-po-line-search-button`,
           'onClick': pluggableRenderProps.onClick,
         };
         return (
@@ -31,18 +32,18 @@ const AgreementFilterButton = ({ disabled, name, onAgreementSelected }) => {
             {...buttonProps}
           >
             <FormattedMessage
-              id="ui-agreements.agreementLines.selectAgreement"
+              id="ui-agreements.agreementLines.selectPOLine"
             />
           </Button>
         );
       }}
-      type="find-agreement"
+      type="find-po-line"
     >
-      <FormattedMessage id="ui-agreements.agreementLines.noAgreementPlugin" />
+      <FormattedMessage id="ui-agreements.agreementLines.noPOLinePlugin" />
     </Pluggable>
   );
 };
 
-AgreementFilterButton.propTypes = propTypes;
+POLineFilterButton.propTypes = propTypes;
 
-export default AgreementFilterButton;
+export default POLineFilterButton;

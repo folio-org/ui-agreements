@@ -63,8 +63,11 @@
   "agreementLines.activeTo": "Active to",
   "agreementLines.nameReference": "Name/Reference",
   "agreementLines.POLines": "Purchase Order Line",
-  "agreementsLine.selectAgreement": "Select agreement",
-  "agreementsLine.noAgreementPlugin": "No agreement plugin",
+  "agreementLines.selectAgreement": "Select agreement",
+  "agreementLines.noAgreementPlugin": "No agreement plugin",
+  "agreementLines.selectPOLine": "Select PO line",
+  "agreementLines.noPOLinePlugin": "No PO line plugin",
+  "agreementLines.poLine": "Select PO line",
   "agreements.agreementDescription": "Description",
   "agreements.startDate": "Start date",
   "agreements.endDate": "End date",
@@ -647,5 +650,9 @@
   "packageIdentifiers.ezb": "EZB",
   "packageIdentifiers.eBookPool": "E-Book Pool",
   "packageIdentifiers.gokbId": "GOKb ID",
-  "packageIdentifiers.gokbUUID": "GOKb UUID"
+  "packageIdentifiers.gokbUUID": "GOKb UUID",
+  "agreementLines.lineType": "Agreement line type",
+  "agreementLines.lineType.detached": "Detached",
+  "agreementLines.lineType.internal": "Internal",
+  "agreementLines.lineType.external": "External"
 }
