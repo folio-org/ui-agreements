@@ -7,7 +7,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { get, flatten, uniqBy } from 'lodash';
 
 import { CalloutContext, stripesConnect, useOkapiKy } from '@folio/stripes/core';
-import { useInfiniteFetch, useUsers } from '@folio/stripes-erm-components';
+import { useAgreement, useInfiniteFetch, useUsers } from '@folio/stripes-erm-components';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
@@ -50,16 +50,7 @@ const AgreementViewRoute = ({
   const agreementPath = AGREEMENT_ENDPOINT(agreementId);
   const agreementEresourcesPath = AGREEMENT_ERESOURCES_ENDPOINT(agreementId, eresourcesFilterPath);
 
-  const {
-    data: agreement = {
-      contacts: [],
-      orgs: []
-    },
-    isLoading: isAgreementLoading
-  } = useQuery(
-    ['ERM', 'Agreement', agreementId, agreementPath], // This pattern may need to be expanded to other fetches in Nolana
-    () => ky.get(agreementPath).json()
-  );
+  const { agreement, isAgreementLoading } = useAgreement({ agreementId });
 
   const { mutateAsync: deleteAgreement } = useMutation(
     [agreementPath, 'ui-agreements', 'AgreementViewRoute', 'deleteAgreement'],

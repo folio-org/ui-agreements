@@ -7,14 +7,11 @@ import {
   Button,
   ButtonGroup,
   FormattedUTCDate,
-  HasCommand,
   Icon,
   MultiColumnList,
   Pane,
   PaneMenu,
   SearchField,
-  checkScope,
-
 } from '@folio/stripes/components';
 
 import { AppIcon, IfPermission } from '@folio/stripes/core';
@@ -26,22 +23,19 @@ import {
   SearchAndSortNoResultsMessage,
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
-import { SearchKeyControl, useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
-import { defaultQIndex, statuses } from '../../../constants';
-import AgreementFilters from '../../AgreementFilters';
+import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
+
+import AgreementLineFilters from '../../AgreementLineFilters';
 import IfEResourcesEnabled from '../../IfEResourcesEnabled';
+import { resultCount } from '../../../constants';
 import { urls } from '../../utilities';
 import css from '../Agreements.css';
 
 const propTypes = {
   children: PropTypes.object,
   data: PropTypes.shape({
-    agreements: PropTypes.arrayOf(PropTypes.object).isRequired,
-    agreementStatusValues: PropTypes.arrayOf(PropTypes.object).isRequired,
-    isPerpetualValues: PropTypes.arrayOf(PropTypes.object).isRequired,
-    orgRoleValues: PropTypes.arrayOf(PropTypes.object).isRequired,
-    renewalPriorityValues: PropTypes.arrayOf(PropTypes.object).isRequired,
+    agreementLines: PropTypes.arrayOf(PropTypes.object).isRequired,
     tagsValues: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
   history: PropTypes.object,
@@ -58,9 +52,9 @@ const propTypes = {
   }),
 };
 
-const filterPaneVisibilityKey = '@folio/agreements/agreementsFilterPaneVisibility';
+const filterPaneVisibilityKey = '@folio/agreements/agreementLinesFilterPaneVisibility';
 
-const Agreements = ({
+const AgreementLines = ({
   children,
   data = {},
   history,
@@ -85,44 +79,18 @@ const Agreements = ({
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
   };
 
-  const goToNew = () => {
-    history.push(`${urls.agreementCreate()}${searchString}`);
-  };
-
-  const shortcuts = [
-    {
-      name: 'new',
-      handler: goToNew,
-    },
-  ];
-
   return (
-    <HasCommand
-      commands={shortcuts}
-      isWithinScope={checkScope}
-      scope={document.body}
-    >
-      <div data-test-agreements data-testid="agreements">
-        <SearchAndSortQuery
-          initialFilterState={{
-            agreementStatus: ['active', 'draft', 'in_negotiation', 'requested']
-          }}
-          initialSearchState={{ query: '', qindex: defaultQIndex }}
-          initialSortState={{ sort: 'name' }}
-          queryGetter={queryGetter}
-          querySetter={querySetter}
-          /*
-            Not entirely happy with the fact this boilerplate
-            needs to be here for qIndex to work as expected.
-            See https://folio-project.slack.com/archives/C210UCHQ9/p1659014709252189
-          */
-          searchParamsMapping={{
-            query: (v) => ({ query: v }),
-            qindex: (v) => ({ qindex: v })
-          }}
-          syncToLocationSearch
-        >
-          {
+    <div data-testid="agreementLines">
+      <SearchAndSortQuery
+        initialFilterState={{}}
+        initialSearchState={{ query: '' }}
+        initialSortState={{ sort: 'name' }}
+        queryGetter={queryGetter}
+        querySetter={querySetter}
+        sortableColumns={['name']}
+        syncToLocationSearch
+      >
+        {
             ({
               searchValue,
               getSearchHandlers,
@@ -139,12 +107,12 @@ const Agreements = ({
               return (
                 <PersistedPaneset
                   appId="@folio/agreements"
-                  id="agreements-paneset"
+                  id="agreementLines-paneset"
                 >
                   {filterPaneIsVisible &&
                     <Pane
                       defaultWidth="20%"
-                      id="pane-agreement-search"
+                      id="pane-agreementLines-search"
                       lastMenu={
                         <PaneMenu>
                           <CollapseFilterPaneButton onClick={toggleFilterPane} />
@@ -155,14 +123,14 @@ const Agreements = ({
                       <form onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}>
                         <ButtonGroup fullWidth>
                           <Button
-                            buttonStyle="primary"
                             id="clickable-nav-agreements"
+                            to={urls.agreements()}
                           >
                             <FormattedMessage id="ui-agreements.agreements" />
                           </Button>
                           <Button
+                            buttonStyle="primary"
                             id="clickable-nav-agreementLines"
-                            to={urls.agreementLines()}
                           >
                             <FormattedMessage id="ui-agreements.agreementLines" />
                           </Button>
@@ -194,8 +162,7 @@ const Agreements = ({
                               <SearchField
                                 aria-label={ariaLabel}
                                 className={css.searchField}
-                                data-test-agreement-search-input
-                                id="input-agreement-search"
+                                id="input-agreementLine-search"
                                 inputRef={searchField}
                                 marginBottom0
                                 name="query"
@@ -205,28 +172,11 @@ const Agreements = ({
                               />
                             )}
                           </FormattedMessage>
-                          {/* The options here reflect the constant defaultQIndex */}
-                          <SearchKeyControl
-                            options={[
-                              {
-                                label: <FormattedMessage id="ui-agreements.agreements.name" />,
-                                key: 'name'
-                              },
-                              {
-                                label: <FormattedMessage id="ui-agreements.alternativeName" />,
-                                key: 'alternateNames.name',
-                              },
-                              {
-                                label: <FormattedMessage id="ui-agreements.description" />,
-                                key: 'description'
-                              },
-                            ]}
-                          />
                           <Button
                             buttonStyle="primary"
                             disabled={!searchValue.query || searchValue.query === ''}
                             fullWidth
-                            id="clickable-search-agreements"
+                            id="clickable-search-agreementLines"
                             marginBottom0
                             type="submit"
                           >
@@ -245,7 +195,7 @@ const Agreements = ({
                             </Icon>
                           </Button>
                         </div>
-                        <AgreementFilters
+                        <AgreementLineFilters
                           activeFilters={activeFilters.state}
                           data={data}
                           filterHandlers={getFilterHandlers()}
@@ -254,7 +204,7 @@ const Agreements = ({
                     </Pane>
                   }
                   <Pane
-                    appIcon={<AppIcon app="agreements" />}
+                    appIcon={<AppIcon app="agreements" size="small" />}
                     defaultWidth="fill"
                     firstMenu={
                       !filterPaneIsVisible ?
@@ -269,26 +219,7 @@ const Agreements = ({
                         :
                         null
                     }
-                    id="pane-agreement-list"
-                    lastMenu={(
-                      <IfPermission perm="ui-agreements.agreements.edit">
-                        <PaneMenu>
-                          <FormattedMessage id="ui-agreements.agreements.createAgreement">
-                            {ariaLabel => (
-                              <Button
-                                aria-label={ariaLabel}
-                                buttonStyle="primary"
-                                id="clickable-new-agreement"
-                                marginBottom0
-                                to={`${urls.agreementCreate()}${searchString}`}
-                              >
-                                <FormattedMessage id="stripes-smart-components.new" />
-                              </Button>
-                            )}
-                          </FormattedMessage>
-                        </PaneMenu>
-                      </IfPermission>
-                    )}
+                    id="pane-agreementLine-list"
                     noOverflow
                     padContent={false}
                     paneSub={
@@ -297,67 +228,71 @@ const Agreements = ({
                         :
                         <FormattedMessage id="stripes-smart-components.searchCriteria" />
                     }
-                    paneTitle={<FormattedMessage id="ui-agreements.agreements" />}
+                    paneTitle={<FormattedMessage id="ui-agreements.agreementLines" />}
                     paneTitleRef={resultsPaneTitleRef}
                   >
                     <MultiColumnList
                       autosize
                       columnMapping={{
-                        name: <FormattedMessage id="ui-agreements.agreements.name" />,
-                        agreementStatus: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
-                        startDate: <FormattedMessage id="ui-agreements.agreements.startDate" />,
-                        endDate: <FormattedMessage id="ui-agreements.agreements.endDate" />,
-                        cancellationDeadline: <FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />,
+                        name: <FormattedMessage id="ui-agreements.agreementLines.nameReference" />,
+                        activeFrom: <FormattedMessage id="ui-agreements.agreementLines.activeFrom" />,
+                        note: <FormattedMessage id="ui-agreements.agreementLines.note" />,
+                        description: <FormattedMessage id="ui-agreements.agreementLines.description" />,
+                        activeTo: <FormattedMessage id="ui-agreements.agreementLines.activeTo" />,
                       }}
                       columnWidths={{
-                        name: 500,
-                        agreementStatus: 150,
-                        startDate: 120,
-                        endDate: 120,
-                        cancellationDeadline: 120,
+                        name: 300,
+                        description: 200,
+                        note: 200,
+                        activeFrom: 150,
+                        activeTo: 150,
                       }}
-                      contentData={data.agreements}
+                      contentData={data.agreementLines}
                       formatter={{
-                        name: a => {
-                          const iconKey = a?.agreementStatus?.value === statuses.CLOSED ? 'closedAgreement' : 'app';
+                        name: line => {
+                          if (line.type === 'detached') return '';
+                          let output;
+                          if (line.type === 'external') {
+                            output = line.reference;
+                          } else {
+                            output = line.resource?.name;
+                          }
                           return (
                             <AppIcon
                               app="agreements"
                               iconAlignment="baseline"
-                              iconKey={iconKey}
                               size="small"
                             >
-                              <div style={{ overflowWrap: 'break-word', width: 460 }}>
-                                {a.name}
-                              </div>
+                              {output}
                             </AppIcon>
                           );
                         },
-                        agreementStatus: a => a?.agreementStatus?.label,
-                        startDate: a => (a.startDate ? <FormattedUTCDate value={a.startDate} /> : ''),
-                        endDate: a => (a.endDate ? <FormattedUTCDate value={a.endDate} /> : ''),
-                        cancellationDeadline: a => (a.cancellationDeadline ? <FormattedUTCDate value={a.cancellationDeadline} /> : ''),
+                        note: line => <div style={{ overflowWrap: 'break-word', maxWidth: 250, whiteSpace: 'pre-wrap' }}>{line.note}</div>,
+                        activeFrom: line => (line.activeFrom ? <FormattedUTCDate value={line.activeFrom} /> : ''),
+                        activeTo: line => (line.activeTo ? <FormattedUTCDate value={line.activeTo} /> : ''),
                       }}
                       hasMargin
-                      id="list-agreements"
+                      id="list-agreementLines"
                       isEmptyMessage={
                         source ? (
-                          <div data-test-agreements-no-results-message>
-                            <SearchAndSortNoResultsMessage
-                              filterPaneIsVisible
-                              searchTerm={query.query ?? ''}
-                              source={source}
-                              toggleFilterPane={toggleFilterPane}
-                            />
-                          </div>
+                          <SearchAndSortNoResultsMessage
+                            filterPaneIsVisible
+                            searchTerm={query.query ?? ''}
+                            source={source}
+                            toggleFilterPane={toggleFilterPane}
+                          />
                         ) : '...'
                       }
                       isSelected={({ item }) => item.id === selectedRecordId}
                       onHeaderClick={onSort}
                       onNeedMoreData={onNeedMoreData}
+                      onRowClick={(_e, row) => {
+                        history.push(`${urls.agreementLineNativeView(row.owner.id, row.id)}${searchString}`);
+                      }}
+                      pageAmount={resultCount.RESULT_COUNT_INCREMENT}
+                      pagingType="click"
                       rowProps={{
-                        to: id => `${urls.agreementView(id)}${searchString}`,
-                        labelStrings: ({ rowData }) => ([rowData.name, rowData.agreementStatus?.label]),
+                        labelStrings: ({ rowData }) => ([rowData.name]),
                       }}
                       sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                       sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
@@ -365,10 +300,10 @@ const Agreements = ({
                       virtualize
                       visibleColumns={[
                         'name',
-                        'agreementStatus',
-                        'startDate',
-                        'endDate',
-                        'cancellationDeadline'
+                        'description',
+                        'note',
+                        'activeFrom',
+                        'activeTo',
                       ]}
                     />
                   </Pane>
@@ -377,12 +312,11 @@ const Agreements = ({
               );
             }
           }
-        </SearchAndSortQuery>
-      </div>
-    </HasCommand>
+      </SearchAndSortQuery>
+    </div>
   );
 };
 
-Agreements.propTypes = propTypes;
+AgreementLines.propTypes = propTypes;
 
-export default Agreements;
+export default AgreementLines;
