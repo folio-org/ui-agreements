@@ -10,44 +10,38 @@ const propTypes = {
   onAgreementSelected: PropTypes.func.isRequired,
 };
 
-export default function AgreementLineAgrFilter({ disabled, name, onAgreementSelected }) {
+const AgreementFilterButton = ({ disabled, name, onAgreementSelected }) => {
   let triggerButton = useRef(null);
-  const renderFilterAgreementButton = () => {
-    return (
-      <Pluggable
-        dataKey={`agreement-${name}`}
-        onAgreementSelected={onAgreementSelected}
-        renderTrigger={(pluggableRenderProps) => {
-          triggerButton = pluggableRenderProps.buttonRef;
-          const buttonProps = {
-            'aria-haspopup': 'true',
-            'buttonRef': triggerButton,
-            'id': `${name}-agreement-search-button`,
-            'onClick': pluggableRenderProps.onClick,
-          };
-          return (
-            <Button
-              key={`data-test-add-${name}-agreement-filter`}
-              disabled={disabled}
-              {...buttonProps}
-            >
-              <FormattedMessage id="ui-agreements.agreementsLine.selectAgreement" />
-            </Button>
-          );
-        }}
-        type="find-agreement"
-      >
-        <FormattedMessage id="ui-agreements.agreementsLine.noAgreementPlugin" />
-      </Pluggable>
-    );
-  };
-
   return (
-    renderFilterAgreementButton()
+    <Pluggable
+      dataKey={`agreement-filter-button-${name}`}
+      onAgreementSelected={onAgreementSelected}
+      renderTrigger={(pluggableRenderProps) => {
+        triggerButton = pluggableRenderProps.buttonRef;
+        const buttonProps = {
+          'aria-haspopup': 'true',
+          'buttonRef': triggerButton,
+          'id': `${name}-agreement-search-button`,
+          'onClick': pluggableRenderProps.onClick,
+        };
+        return (
+          <Button
+            disabled={disabled}
+            {...buttonProps}
+          >
+            <FormattedMessage
+              id="ui-agreements.agreementsLine.selectAgreement"
+            />
+          </Button>
+        );
+      }}
+      type="find-agreement"
+    >
+      <FormattedMessage id="ui-agreements.agreementsLine.noAgreementPlugin" />
+    </Pluggable>
   );
-}
-
-AgreementLineAgrFilter.propTypes = propTypes;
-AgreementLineAgrFilter.defaultProps = {
-  activeFilters: {}
 };
+
+AgreementFilterButton.propTypes = propTypes;
+
+export default AgreementFilterButton;

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import isEqual from 'lodash/isEqual';
 
 import { FormattedMessage } from 'react-intl';
-import { Accordion, AccordionSet, FilterAccordionHeader, Layout } from '@folio/stripes/components';
+import { Accordion, AccordionSet, FilterAccordionHeader, Layout, Spinner } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { DateFilter } from '@folio/stripes-erm-components';
+import { DateFilter, useAgreement } from '@folio/stripes-erm-components';
 
 import AgreementFilterButton from '../AgreementFilterButton';
 import POLineField from '../POLinesFieldArray/POLineField';
@@ -18,35 +17,29 @@ const propTypes = {
   value: PropTypes.string
 };
 
-const FILTERS = [
-  'agreement',
-  'agreementLineType',
-  'activeFrom',
-  'activeTo',
-  'purchaseOrderLine',
-  'tags'
-];
-
-export default function AgreementLineFilters({ activeFilters, data, filterHandlers }) {
+const AgreementLineFilters = ({
+  activeFilters = {},
+  data,
+  filterHandlers
+}) => {
   const [filterState, setFilterState] = useState({
-    agreement: [],
     agreementLineType: [],
-    activeFrom: [],
-    activeTo: [],
-    purchaseOrderLine: [],
     tags: []
   });
 
+  const [agreementFilterName, setAgreementFilterName] = useState();
+  const agreementId = activeFilters?.agreement?.[0];
+
+  const { isAgreementLoading } = useAgreement({
+    agreementId,
+    afterQueryCall: (res) => {
+      setAgreementFilterName(res.name);
+    },
+    queryOptions: { enabled: !!agreementId && !agreementFilterName }
+  });
 
   useEffect(() => {
     const newState = {};
-    FILTERS.forEach(filter => {
-      const values = data[`${filter}Values`];
-      if (!isEqual(values, filterState[filter])) {
-        newState[filter] = values;
-      }
-    });
-
     if ((data?.tagsValues?.length ?? 0) !== filterState.tags?.length) {
       newState.tags = data.tagsValues.map(({ label }) => ({ value: label, label }));
     }
@@ -114,35 +107,46 @@ export default function AgreementLineFilters({ activeFilters, data, filterHandle
     );
   };
 
-  const renderAgreement = (name, props) => {
+  const renderAgreementFilter = (name, props) => {
     const groupFilters = activeFilters[name] || [];
 
-    let disabled = false;
-    if (name) {
-      disabled = true;
-    }
+    const displayAgreementName = () => {
+      if (isAgreementLoading) {
+        return <Spinner />;
+      }
+
+      if (agreementFilterName) {
+        return (
+          <Layout className="padding-bottom-gutter">
+            {agreementFilterName}
+          </Layout>
+        );
+      }
+
+      return null;
+    };
 
     return (
       <Accordion
         displayClearButton={groupFilters.length > 0}
         header={FilterAccordionHeader}
         id={`filter-accordion-${name}`}
-        label={<FormattedMessage id={`ui-agreements.agreement${name}`} />}
+        label={<FormattedMessage id="ui-agreements.agreement" />}
         name={name}
-        onClearFilter={() => { filterHandlers.clearGroup(name); }}
+        onClearFilter={() => {
+          filterHandlers.clearGroup(name);
+          setAgreementFilterName();
+        }}
         separator={false}
         {...props}
       >
-        {(name) ?
-          <Layout className="padding-bottom-gutter">
-            {[`${name}Value`]}
-          </Layout> : null
-        }
+        {displayAgreementName()}
         <AgreementFilterButton
-          disabled={disabled}
+          disabled={!!agreementFilterName || isAgreementLoading}
           name={name}
           onAgreementSelected={(agreement) => {
             filterHandlers.state({ ...activeFilters, [name]: [agreement.id] });
+            setAgreementFilterName(agreement.name);
           }}
         />
       </Accordion>
@@ -193,17 +197,16 @@ export default function AgreementLineFilters({ activeFilters, data, filterHandle
 
   return (
     <AccordionSet>
-      {renderAgreement('')}
-      {renderCheckboxFilter('agreementLineType')}
+      {renderAgreementFilter('agreement')}
+      {/*renderCheckboxFilter('agreementLineType')*/}
       {renderActiveFromDate()}
       {renderActiveToDate()}
-      {renderPOLines()}
+      {/*renderPOLines()*/}
       {renderTagsFilter()}
     </AccordionSet>
   );
 }
 
 AgreementLineFilters.propTypes = propTypes;
-AgreementLineFilters.defaultProps = {
-  activeFilters: {}
-};
+
+export default AgreementLineFilters;

@@ -43,8 +43,8 @@ const AgreementLinesRoute = ({
     generateKiwtQueryParams({
       searchKey,
       filterKeys: {
-        name: 'class',
         agreement: 'owner.id',
+        agreementLineType: 'reference',
         poLine: 'poLines.id',
         tags: 'tags.value',
       },
