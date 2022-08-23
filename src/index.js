@@ -26,6 +26,7 @@ import AgreementCreateRoute from './routes/AgreementCreateRoute/AgreementCreateR
 import AgreementEditRoute from './routes/AgreementEditRoute';
 import AgreementViewRoute from './routes/AgreementViewRoute';
 
+import AgreementLinesRoute from './routes/AgreementLinesRoute';
 import AgreementLineCreateRoute from './routes/AgreementLineCreateRoute';
 import AgreementLineEditRoute from './routes/AgreementLineEditRoute';
 import AgreementLineViewRoute from './routes/AgreementLineViewRoute';
@@ -81,6 +82,8 @@ const App = (props) => {
       return 'input-eresource-search';
     } else if (pathname.search('/erm/platforms') === 0) {
       return 'input-platform-search';
+    } else if (pathname.search('/erm/agreementLines') === 0) {
+      return 'input-agreementLine-search';
     } else {
       return undefined;
     }
@@ -150,6 +153,12 @@ const App = (props) => {
                     <Route component={AgreementViewRoute} path={`${path}/agreements/:id`} />
                   </Switch>
                 </Route>
+
+                <Route component={AgreementLineEditRoute} path={`${path}/agreementLines/:lineId/agreement/:agreementId/edit`} />
+                <Route component={AgreementLinesRoute} path={`${path}/agreementLines/:id?`}>
+                  <Route component={AgreementLineViewRoute} path={`${path}/agreementLines/:lineId/agreement/:agreementId`} />
+                </Route>
+
 
                 <Route component={EResourceEditRoute} path={`${path}/eresources/:id/edit`} />
                 <Route component={EResourcesRoute} path={`${path}/eresources/:id?`}>

@@ -24,7 +24,7 @@ export default class FormLines extends React.Component {
     return (
       <Accordion
         id={id}
-        label={<FormattedMessage id="ui-agreements.agreements.agreementLines" />}
+        label={<FormattedMessage id="ui-agreements.agreementLines" />}
         onToggle={onToggle}
         open={open}
       >

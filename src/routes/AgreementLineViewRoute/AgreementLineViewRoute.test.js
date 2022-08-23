@@ -68,7 +68,8 @@ const data = {
     push: historyPushMock
   },
   location: {
-    search: ''
+    search: '',
+    pathname: '/erm/agreements/...'
   },
   match
 };
@@ -77,7 +78,7 @@ useQuery.mockImplementation(() => ({ data: line, isLoading: false }));
 
 describe('AgreementLineViewRoute', () => {
   let renderComponent;
-  describe('rendering the route', () => {
+  describe('rendering the route from agreements', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
@@ -99,12 +100,53 @@ describe('AgreementLineViewRoute', () => {
 
     test('triggers the CloseButton callback', async () => {
       await ButtonInteractor('CloseButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      expect(historyPushMock).toHaveBeenCalledWith(`/erm/agreements/${match.params.agreementId}`);
     });
 
     test('triggers the EditButton callback', async () => {
       await ButtonInteractor('EditButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      expect(historyPushMock).toHaveBeenCalledWith(`/erm/agreements/${match.params.agreementId}/line/${match.params.lineId}/edit`);
+    });
+  });
+
+  describe('rendering the route from agreementLines', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <AgreementLineViewRoute
+            {
+              ...{
+                ...data,
+                location: {
+                  ...data?.location,
+                  pathname: '/erm/agreementLines/...'
+                }
+              }
+            }
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    test('renders the AgreementLine component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('AgreementLine')).toBeInTheDocument();
+    });
+
+    test('renders the CloseButton ', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('CloseButton')).toBeInTheDocument();
+    });
+
+    test('triggers the CloseButton callback', async () => {
+      await ButtonInteractor('CloseButton').click();
+      expect(historyPushMock).toHaveBeenCalledWith('/erm/agreementLines');
+    });
+
+    test('triggers the EditButton callback', async () => {
+      await ButtonInteractor('EditButton').click();
+      expect(historyPushMock).toHaveBeenCalledWith(`/erm/agreementLines/${match.params.lineId}/agreement/${match.params.agreementId}/edit`);
     });
   });
 });

@@ -153,14 +153,22 @@ const Agreements = ({
                       paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                     >
                       <form onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}>
+                        <ButtonGroup fullWidth>
+                          <Button
+                            buttonStyle="primary"
+                            id="clickable-nav-agreements"
+                          >
+                            <FormattedMessage id="ui-agreements.agreements" />
+                          </Button>
+                          <Button
+                            id="clickable-nav-agreementLines"
+                            to={urls.agreementLines()}
+                          >
+                            <FormattedMessage id="ui-agreements.agreementLines" />
+                          </Button>
+                        </ButtonGroup>
                         <IfEResourcesEnabled>
                           <ButtonGroup fullWidth>
-                            <Button
-                              buttonStyle="primary"
-                              id="clickable-nav-agreements"
-                            >
-                              <FormattedMessage id="ui-agreements.agreements" />
-                            </Button>
                             <IfPermission perm="ui-agreements.resources.view">
                               <Button
                                 id="clickable-nav-eresources"

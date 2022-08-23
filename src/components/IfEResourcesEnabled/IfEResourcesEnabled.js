@@ -1,11 +1,8 @@
 import PropTypes from 'prop-types';
-import { useAgreementsSettings } from '../../hooks';
+import { useEresourcesEnabled } from '../../hooks';
 
 const IfEResourcesEnabled = ({ children }) => {
-  const settings = useAgreementsSettings();
-
-  const isHidden = settings?.parsedSettings?.hideEResourcesFunctionality;
-  const isEnabled = !isHidden; // This takes advantage of truthiness to also make sure the path above exists
+  const isEnabled = useEresourcesEnabled();
 
   if (typeof children === 'function') {
     return children({ isEnabled });

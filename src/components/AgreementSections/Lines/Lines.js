@@ -60,7 +60,7 @@ export default class Lines extends React.Component {
         displayWhenClosed={this.renderBadge()}
         displayWhenOpen={this.renderAddAgreementLineButtonAndBadge()}
         id={id}
-        label={<FormattedMessage id="ui-agreements.agreements.agreementLines" />}
+        label={<FormattedMessage id="ui-agreements.agreementLines" />}
       >
         <LinesList
           agreement={agreement}
