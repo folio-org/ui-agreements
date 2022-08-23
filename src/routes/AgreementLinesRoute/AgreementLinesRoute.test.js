@@ -1,12 +1,17 @@
 
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
 
 import translationsProperties from '../../../test/helpers';
 import AgreementLinesRoute from './AgreementLinesRoute';
 import mockRefdata from '../../../test/jest/refdata';
+
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  ...mockErmComponents
+}));
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),

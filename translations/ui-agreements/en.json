@@ -67,7 +67,7 @@
   "agreementLines.noAgreementPlugin": "No agreement plugin",
   "agreementLines.selectPOLine": "Select PO line",
   "agreementLines.noPOLinePlugin": "No PO line plugin",
-  "agreementLines.poLine": "Select PO line",
+  "agreementLines.poLine": "PO line",
   "agreementLines.lineType": "Agreement line type",
   "agreementLines.lineType.detached": "Detached",
   "agreementLines.lineType.internal": "Internal",
