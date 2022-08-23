@@ -68,12 +68,22 @@ const AgreementLineViewRoute = ({
   };
 
   const handleClose = () => {
-    history.push(`${urls.agreementView(agreementId)}${location.search}`);
+    // If we're coming from agreements, go back to agreements, else go back to line view
+    if (location.pathname.startsWith('/erm/agreements')) {
+      history.push(`${urls.agreementView(agreementId)}${location.search}`);
+    } else {
+      history.push(`${urls.agreementLines()}${location.search}`);
+    }
   };
 
 
   const handleEdit = () => {
-    history.push(`${urls.agreementLineEdit(agreementId, lineId)}${location.search}`);
+    // If we're coming from agreements, go back to agreements, else go back to line view
+    if (location.pathname.startsWith('/erm/agreements')) {
+      history.push(`${urls.agreementLineEdit(agreementId, lineId)}${location.search}`);
+    } else {
+      history.push(`${urls.agreementLineNativeEdit(agreementId, lineId)}${location.search}`);
+    }
   };
 
   const isLineLoading = () => {

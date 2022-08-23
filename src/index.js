@@ -169,6 +169,7 @@ class App extends React.Component {
                     </Switch>
                   </Route>
 
+                  <Route component={AgreementLineEditRoute} path={`${path}/agreementLines/:lineId/agreement/:agreementId/edit`} />
                   <Route component={AgreementLinesRoute} path={`${path}/agreementLines/:id?`}>
                     <Route component={AgreementLineViewRoute} path={`${path}/agreementLines/:lineId/agreement/:agreementId`} />
                   </Route>

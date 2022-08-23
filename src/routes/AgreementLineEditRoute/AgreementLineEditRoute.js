@@ -69,7 +69,11 @@ const AgreementLineEditRoute = ({
   };
 
   const handleClose = () => {
-    history.push(`${urls.agreementLineView(agreementId, lineId)}${location.search}`);
+    if (location.pathname.startsWith('/erm/agreements')) {
+      history.push(`${urls.agreementLineView(agreementId, lineId)}${location.search}`);
+    } else {
+      history.push(`${urls.agreementLineNativeView(agreementId, lineId)}${location.search}`);
+    }
   };
 
   /* istanbul ignore next */

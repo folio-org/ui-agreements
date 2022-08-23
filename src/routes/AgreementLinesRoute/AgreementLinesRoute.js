@@ -38,7 +38,7 @@ const AgreementLinesRoute = ({
 
   const agreementLinesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
-      searchKey: 'name,reference,description,note',
+      searchKey: 'resource.name,reference,description,note',
       filterKeys: {
         name: 'class',
         agreement: 'owner.id',

@@ -57,6 +57,7 @@ const filterPaneVisibilityKey = '@folio/agreements/agreementLinesFilterPaneVisib
 const AgreementLines = ({
   children,
   data = {},
+  history,
   onNeedMoreData,
   searchField,
   queryGetter,
@@ -206,7 +207,7 @@ const AgreementLines = ({
                     </Pane>
                   }
                   <Pane
-                    appIcon={<AppIcon app="agreements" iconKey="agreementLine" size="small" />}
+                    appIcon={<AppIcon app="agreements" size="small" />}
                     defaultWidth="fill"
                     firstMenu={
                       !filterPaneIsVisible ?
@@ -264,7 +265,6 @@ const AgreementLines = ({
                             <AppIcon
                               app="agreements"
                               iconAlignment="baseline"
-                              iconKey="agreementLine"
                               size="small"
                             >
                               {output}
@@ -291,10 +291,12 @@ const AgreementLines = ({
                       isSelected={({ item }) => item.id === selectedRecordId}
                       onHeaderClick={onSort}
                       onNeedMoreData={onNeedMoreData}
+                      onRowClick={(_e, row) => {
+                        history.push(`${urls.agreementLineNativeView(row.owner.id, row.id)}${searchString}`);
+                      }}
                       pageAmount={resultCount.RESULT_COUNT_INCREMENT}
                       pagingType="click"
                       rowProps={{
-                        to: () => `/erm/agreementLines/${lineId}/agreement/${agreementId}${searchString}`,
                         labelStrings: ({ rowData }) => ([rowData.name]),
                       }}
                       sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
