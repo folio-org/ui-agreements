@@ -123,6 +123,7 @@ AgreementLineViewRoute.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
     search: PropTypes.string.isRequired,
   }).isRequired,
   match: PropTypes.shape({

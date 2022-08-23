@@ -243,7 +243,7 @@ const AgreementLineFilters = ({
       {renderTagsFilter()}
     </AccordionSet>
   );
-}
+};
 
 AgreementLineFilters.propTypes = propTypes;
 

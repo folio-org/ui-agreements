@@ -45,11 +45,10 @@ const AgreementLineEditRoute = ({
     }
   };
 
-
   const { mutateAsync: putAgreementLine } = useMutation(
     ['ERM', 'AgreementLine', lineId, 'PUT', agreementLinePath],
     (payload) => ky.put(agreementLinePath, { json: payload }).json()
-      .then(({ id }) => {
+      .then(() => {
         /* Invalidate cached queries */
         queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
@@ -146,6 +145,7 @@ AgreementLineEditRoute.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
     search: PropTypes.string.isRequired,
   }).isRequired,
   match: PropTypes.shape({
