@@ -199,21 +199,13 @@ const AgreementLineFilters = ({
     );
   };
 
-  const renderActiveFromDate = () => {
+  const renderDateFilter = (name) => {
     return <DateFilter
+      accordionLabel={<FormattedMessage id={`ui-agreements.agreementLines.${name}`} />}
       activeFilters={activeFilters}
       filterHandlers={filterHandlers}
-      hideNoDateSetCheckbox
-      name="activeFrom"
-    />;
-  };
-
-  const renderActiveToDate = () => {
-    return <DateFilter
-      activeFilters={activeFilters}
-      filterHandlers={filterHandlers}
-      hideNoDateSetCheckbox
-      name="activeTo"
+      name={name}
+      noDateSetCheckboxLabel={<FormattedMessage id={`ui-agreements.agreementLines.${name}.includeNoDateSet`} />}
     />;
   };
 
@@ -245,8 +237,8 @@ const AgreementLineFilters = ({
     <AccordionSet>
       {renderAgreementFilter('agreement')}
       {renderCheckboxFilter('lineType')}
-      {renderActiveFromDate()}
-      {renderActiveToDate()}
+      {renderDateFilter('activeFrom')}
+      {renderDateFilter('activeTo')}
       {renderPOLineFilter('poLine')}
       {renderTagsFilter()}
     </AccordionSet>

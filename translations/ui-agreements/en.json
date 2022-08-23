@@ -68,6 +68,12 @@
   "agreementLines.selectPOLine": "Select PO line",
   "agreementLines.noPOLinePlugin": "No PO line plugin",
   "agreementLines.poLine": "Select PO line",
+  "agreementLines.lineType": "Agreement line type",
+  "agreementLines.lineType.detached": "Detached",
+  "agreementLines.lineType.internal": "Internal",
+  "agreementLines.lineType.external": "External",
+  "agreementLines.activeFrom.includeNoDateSet": "Include lines with no active from date set",
+  "agreementLines.activeTo.includeNoDateSet": "Include lines with no active to date set",
   "agreements.agreementDescription": "Description",
   "agreements.startDate": "Start date",
   "agreements.endDate": "End date",
@@ -650,9 +656,5 @@
   "packageIdentifiers.ezb": "EZB",
   "packageIdentifiers.eBookPool": "E-Book Pool",
   "packageIdentifiers.gokbId": "GOKb ID",
-  "packageIdentifiers.gokbUUID": "GOKb UUID",
-  "agreementLines.lineType": "Agreement line type",
-  "agreementLines.lineType.detached": "Detached",
-  "agreementLines.lineType.internal": "Internal",
-  "agreementLines.lineType.external": "External"
+  "packageIdentifiers.gokbUUID": "GOKb UUID"
 }
