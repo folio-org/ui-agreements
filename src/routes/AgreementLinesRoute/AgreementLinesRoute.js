@@ -10,6 +10,7 @@ import View from '../../components/views/AgreementLines';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 import { resultCount } from '../../constants';
+import { useEresourcesEnabled } from '../../hooks';
 import { AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
 
 const {
@@ -35,10 +36,12 @@ const AgreementLinesRoute = ({
 
   const { data: { tags = [] } = {} } = useTags();
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
+  const eresourcesEnabled = useEresourcesEnabled();
 
+  const searchKey = eresourcesEnabled ? 'resource.name,reference,description,note' : 'reference,description,note';
   const agreementLinesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
-      searchKey: 'resource.name,reference,description,note',
+      searchKey,
       filterKeys: {
         name: 'class',
         agreement: 'owner.id',
@@ -47,7 +50,7 @@ const AgreementLinesRoute = ({
       },
       perPage: INITIAL_RESULT_COUNT
     }, (query ?? {}))
-  ), [query]);
+  ), [query, searchKey]);
 
   const {
     infiniteQueryObject: {

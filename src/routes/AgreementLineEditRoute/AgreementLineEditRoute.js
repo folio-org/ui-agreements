@@ -37,6 +37,15 @@ const AgreementLineEditRoute = ({
   const poLineIdsArray = (agreementLine.poLines ?? []).map(poLine => poLine.poLineId).flat();
   const { orderLines, isLoading: areOrderLinesLoading } = useChunkedOrderLines(poLineIdsArray);
 
+  const handleClose = () => {
+    if (location.pathname.startsWith('/erm/agreements')) {
+      history.push(`${urls.agreementLineView(agreementId, lineId)}${location.search}`);
+    } else {
+      history.push(`${urls.agreementLineNativeView(agreementId, lineId)}${location.search}`);
+    }
+  };
+
+
   const { mutateAsync: putAgreementLine } = useMutation(
     ['ERM', 'AgreementLine', lineId, 'PUT', agreementLinePath],
     (payload) => ky.put(agreementLinePath, { json: payload }).json()
@@ -45,7 +54,7 @@ const AgreementLineEditRoute = ({
         queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.update.callout" /> });
-        history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
+        handleClose();
       })
   );
 
@@ -66,14 +75,6 @@ const AgreementLineEditRoute = ({
       linkedResource: agreementLine.type !== 'detached' ? agreementLine : undefined,
       coverage: agreementLine.customCoverage ? agreementLine.coverage : undefined,
     };
-  };
-
-  const handleClose = () => {
-    if (location.pathname.startsWith('/erm/agreements')) {
-      history.push(`${urls.agreementLineView(agreementId, lineId)}${location.search}`);
-    } else {
-      history.push(`${urls.agreementLineNativeView(agreementId, lineId)}${location.search}`);
-    }
   };
 
   /* istanbul ignore next */

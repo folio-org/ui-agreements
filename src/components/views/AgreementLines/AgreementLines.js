@@ -122,22 +122,20 @@ const AgreementLines = ({
                       paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                     >
                       <form onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}>
-                        <IfEResourcesEnabled>
-                          <ButtonGroup fullWidth>
-                            <Button
-                              id="clickable-nav-agreements"
-                              to={urls.agreements()}
-                            >
-                              <FormattedMessage id="ui-agreements.agreements" />
-                            </Button>
-                            <Button
-                              buttonStyle="primary"
-                              id="clickable-nav-agreementLines"
-                            >
-                              <FormattedMessage id="ui-agreements.agreementLines" />
-                            </Button>
-                          </ButtonGroup>
-                        </IfEResourcesEnabled>
+                        <ButtonGroup fullWidth>
+                          <Button
+                            id="clickable-nav-agreements"
+                            to={urls.agreements()}
+                          >
+                            <FormattedMessage id="ui-agreements.agreements" />
+                          </Button>
+                          <Button
+                            buttonStyle="primary"
+                            id="clickable-nav-agreementLines"
+                          >
+                            <FormattedMessage id="ui-agreements.agreementLines" />
+                          </Button>
+                        </ButtonGroup>
                         <IfEResourcesEnabled>
                           <ButtonGroup fullWidth>
                             <IfPermission perm="ui-agreements.resources.view">
@@ -253,14 +251,13 @@ const AgreementLines = ({
                       contentData={data.agreementLines}
                       formatter={{
                         name: line => {
-                          if (line.type === 'detached') return;
+                          if (line.type === 'detached') return '';
                           let output;
                           if (line.type === 'external') {
                             output = line.reference;
                           } else {
                             output = line.resource?.name;
                           }
-                          // eslint-disable-next-line consistent-return
                           return (
                             <AppIcon
                               app="agreements"
@@ -271,7 +268,6 @@ const AgreementLines = ({
                             </AppIcon>
                           );
                         },
-
                         note: line => <div style={{ overflowWrap: 'break-word', maxWidth: 250, whiteSpace: 'pre-wrap' }}>{line.note}</div>,
                         activeFrom: line => (line.activeFrom ? <FormattedUTCDate value={line.activeFrom} /> : ''),
                         activeTo: line => (line.activeTo ? <FormattedUTCDate value={line.activeTo} /> : ''),
