@@ -50,7 +50,8 @@ const data = {
     push: historyPushMock
   },
   location: {
-    search: ''
+    search: '',
+    pathname: '/erm/agreements/...'
   },
   resources: {
     basket,
@@ -63,7 +64,7 @@ useQuery.mockImplementation(() => ({ data: {}, isLoading: false }));
 
 describe('AgreementLineEditRoute', () => {
   let renderComponent;
-  describe('rendering the route', () => {
+  describe('rendering the route from agreements', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
@@ -85,7 +86,43 @@ describe('AgreementLineEditRoute', () => {
 
     test('triggers the CloseButton callback', async () => {
       await ButtonInteractor('CloseButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      expect(historyPushMock).toHaveBeenCalledWith(`/erm/agreements/${match.params?.agreementId}/line/${match.params?.lineId}`);
+    });
+  });
+
+  describe('rendering the route from agreement lines', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <AgreementLineEditRoute
+            {
+              ...{
+                ...data,
+                location: {
+                  ...data?.location,
+                  pathname: '/erm/agreementLines/...'
+                }
+              }
+            }
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    test('renders the agreementLineForm component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('AgreementLineForm')).toBeInTheDocument();
+    });
+
+    test('renders the CloseButton ', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('CloseButton')).toBeInTheDocument();
+    });
+
+    test('triggers the CloseButton callback', async () => {
+      await ButtonInteractor('CloseButton').click();
+      expect(historyPushMock).toHaveBeenCalledWith(`/erm/agreementLines/${match.params?.lineId}/agreement/${match.params?.agreementId}`);
     });
   });
 

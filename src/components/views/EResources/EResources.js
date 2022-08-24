@@ -152,6 +152,14 @@ const EResources = ({
                             <FormattedMessage id="ui-agreements.agreements" />
                           </Button>
                           <Button
+                            id="clickable-nav-agreementLines"
+                            to={urls.agreementLines()}
+                          >
+                            <FormattedMessage id="ui-agreements.agreementLines" />
+                          </Button>
+                        </ButtonGroup>
+                        <ButtonGroup fullWidth>
+                          <Button
                             buttonStyle="primary"
                             id="clickable-nav-eresources"
                           >
@@ -217,6 +225,7 @@ const EResources = ({
                     </form>
                   </Pane>
                 }
+
                 <Pane
                   actionMenu={getActionMenu}
                   appIcon={<AppIcon app="agreements" iconKey="eresource" size="small" />}
