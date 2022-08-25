@@ -24,3 +24,7 @@
   padding-left: 40%;
   padding-right: -20%;
 }
+
+.listStyleDefault:nth-child(odd) {
+  background-color: #fff;
+}

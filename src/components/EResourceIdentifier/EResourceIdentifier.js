@@ -27,8 +27,9 @@ const EResourceIdentifier = (
         label={<FormattedMessage id={`ui-agreements.identifier.${type}`} />}
       >
         <List
+          id="eresourceIdentifier"
           items={identifier}
-          listClass={css.list}
+          listClass={css.listStyleDefault}
         />
       </KeyValue>
     </Col>
