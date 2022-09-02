@@ -2,6 +2,8 @@ import { FormattedMessage } from 'react-intl';
 import { useFormState } from 'react-final-form';
 import { Link } from 'react-router-dom';
 
+import { AppIcon } from '@folio/stripes/core';
+
 import {
   Card,
   KeyValue,
@@ -10,7 +12,8 @@ import {
   Headline,
 } from '@folio/stripes/components';
 
-import { AppIcon } from '@folio/stripes/core';
+import { NewBox } from '@folio/stripes-erm-components';
+
 import css from '../../styles.css';
 import { filterIgnoreObjectKeys, urls } from '../../utilities';
 
@@ -70,9 +73,7 @@ const DestinationTitlePreview = () => {
               >
                 {vi?.identifier?.value}
                 {vi?.identifier?.isNew ?
-                  <span className={css.newBox}>
-                    <FormattedMessage id="ui-agreements.new" />
-                  </span> :
+                  <NewBox /> :
                   null
                 }
               </KeyValue>

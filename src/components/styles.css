@@ -9,16 +9,6 @@
   margin-bottom: var(--gutter);
 }
 
-.newBox {
-  border-radius: var(--radius);
-  background-color: var(--success);
-  color: #fff;
-  font-weight: var(--text-weight-bold);
-  margin-left: var(--gutter-static-one-third);
-  padding-left: var(--gutter-static-one-third);
-  padding-right: var(--gutter-static-one-third);
-}
-
 .moveMoreIdentifiers {
   margin-bottom: 1rem;
   padding-left: 40%;
