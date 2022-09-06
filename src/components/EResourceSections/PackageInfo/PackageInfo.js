@@ -15,6 +15,7 @@ import { resourceClasses } from '../../../constants';
 
 import AddToBasketButton from '../../AddToBasketButton';
 import PackageIdentifiers from '../PackageIdentifiers';
+import css from '../../styles.css';
 
 const PackageInfo = ({
   data: {
@@ -102,6 +103,7 @@ const PackageInfo = ({
               <List
                 id="availabilityConstraints"
                 items={eresource?.availabilityConstraints?.map(ac => ac?.body?.label)}
+                listClass={css.fontNormal}
                 listStyle="bullets"
                 marginBottom0
               />

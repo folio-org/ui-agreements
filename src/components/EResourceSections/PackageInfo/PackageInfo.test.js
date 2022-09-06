@@ -62,6 +62,24 @@ const data = {
         'label': 'Electronic'
       }
     }],
+    'availabilityConstraints': [
+      {
+        'id': 'f9a5977e-17a1-4399-8107-82f902007bae',
+        'body': {
+          'id': '02d3182883136e56018313ba8dfa0012',
+          'value': 'hbz',
+          'label': 'HBZ'
+        }
+      },
+      {
+        'id': '8155baae-aac2-4699-a914-f60e5eed481b',
+        'body': {
+          'id': '02d3182883136e56018313ba8df10011',
+          'value': 'gbv',
+          'label': 'GBV'
+        }
+      }
+    ],
     'availabilityScope': {
       'id': 'ff8081817fd0b47d017fd0b5b6810001',
       'value': 'global',
@@ -755,6 +773,10 @@ describe('PackageInfo', () => {
 
     test('renders the expcected availability', async () => {
       await KeyValue('Availability').has({ value: 'Global' });
+    });
+
+    test('renders the expcected availability constraints', async () => {
+      await KeyValue('Availability').has({ subValue: 'HBZGBV' });
     });
 
     test('renders the Source created field', async () => {
