@@ -7,6 +7,7 @@ import {
   Layout,
   Row,
   NoValue,
+  List,
 } from '@folio/stripes/components';
 
 import { FormattedDateTime } from '@folio/stripes-erm-components';
@@ -97,6 +98,16 @@ const PackageInfo = ({
         <Col xs={3}>
           <KeyValue
             label={<FormattedMessage id="ui-agreements.eresources.availability" />}
+            subValue={eresource?.availabilityConstraints?.length > 0 ?
+              <List
+                id="availabilityConstraints"
+                items={eresource?.availabilityConstraints?.map(ac => ac?.body?.label)}
+                listStyle="bullets"
+                marginBottom0
+              />
+              :
+              null
+}
             value={eresource?.availabilityScope?.label || <NoValue />}
           />
         </Col>
@@ -124,6 +135,14 @@ PackageInfo.propTypes = {
       alternateResourceNames: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string,
         name: PropTypes.string
+      })),
+      availabilityConstraints:  PropTypes.arrayOf(PropTypes.shape({
+        body: PropTypes.shape({
+          id: PropTypes.string,
+          label: PropTypes.string,
+          value: PropTypes.string
+        }),
+        id: PropTypes.string
       })),
       availabilityScope: PropTypes.shape({
         id: PropTypes.string,
