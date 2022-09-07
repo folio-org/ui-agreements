@@ -135,7 +135,6 @@ export default function EResourceFilters({ activeFilters, data, filterHandlers }
     );
   };
 
-  console.log(filterState.availability);
   const renderAvailabilityFilter = () => {
     const availabilityFilters = activeFilters.availability || [];
 
@@ -145,7 +144,7 @@ export default function EResourceFilters({ activeFilters, data, filterHandlers }
         header={FilterAccordionHeader}
         id="clickable-availability-filter"
         label={<FormattedMessage id="ui-agreements.eresources.availability" />}
-        onClearFilter={() => { filterHandlers.clearGroup('availablity'); }}
+        onClearFilter={() => { filterHandlers.clearGroup('availability'); }}
         separator={false}
       >
         <MultiSelectionFilter
