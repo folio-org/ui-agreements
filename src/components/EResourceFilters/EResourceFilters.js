@@ -12,6 +12,7 @@ const propTypes = {
 };
 
 const FILTERS = [
+  'availability',
   'contentType',
   'scope',
   'status',
@@ -22,6 +23,7 @@ const FILTERS = [
 
 export default function EResourceFilters({ activeFilters, data, filterHandlers }) {
   const [filterState, setFilterState] = useState({
+    availability: [],
     contentType: [],
     publicationType: [],
     scope: [],
@@ -133,6 +135,30 @@ export default function EResourceFilters({ activeFilters, data, filterHandlers }
     );
   };
 
+  console.log(filterState.availability);
+  const renderAvailabilityFilter = () => {
+    const availabilityFilters = activeFilters.availability || [];
+
+    return (
+      <Accordion
+        displayClearButton={availabilityFilters.length > 0}
+        header={FilterAccordionHeader}
+        id="clickable-availability-filter"
+        label={<FormattedMessage id="ui-agreements.eresources.availability" />}
+        onClearFilter={() => { filterHandlers.clearGroup('availablity'); }}
+        separator={false}
+      >
+        <MultiSelectionFilter
+          dataOptions={filterState.availability || []}
+          id="availability-filter"
+          name="availability"
+          onChange={e => filterHandlers.state({ ...activeFilters, availability: e.values })}
+          selectedValues={availabilityFilters}
+        />
+      </Accordion>
+    );
+  };
+
   return (
     <AccordionSet>
       {renderTagsFilter()}
@@ -156,8 +182,9 @@ export default function EResourceFilters({ activeFilters, data, filterHandlers }
         <FormattedMessage id="ui-agreements.eresources.filters.packageFilters" />
       </Headline>
       {renderRemoteKbFilter()}
-      {renderCheckboxFilter('scope')}
       {renderCheckboxFilter('status')}
+      {renderCheckboxFilter('scope')}
+      {renderAvailabilityFilter()}
       {renderCheckboxFilter('contentType')}
     </AccordionSet>
   );
