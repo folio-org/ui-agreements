@@ -18,12 +18,14 @@ import { useAgreementsRefdata } from '../../hooks';
 const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT;
 
 const [
+  AVAILABILITY_CONSTRAINT,
   CONTENT_TYPE,
   LIFECYCLE_STATUS,
   PUB_TYPE,
   SCOPE,
   TYPE
 ] = [
+  'AvailabilityConstraint.Body',
   'ContentType.ContentType',
   'Pkg.LifecycleStatus',
   'TitleInstance.PublicationType',
@@ -51,6 +53,7 @@ const EResourcesRoute = ({
 
   const refdata = useAgreementsRefdata({
     desc: [
+      AVAILABILITY_CONSTRAINT,
       CONTENT_TYPE,
       LIFECYCLE_STATUS,
       PUB_TYPE,
@@ -73,6 +76,7 @@ const EResourcesRoute = ({
         ]
       }],
       filterKeys: {
+        availability: 'availabilityConstraints.body.value',
         contentType: 'contentTypes.contentType.value',
         remoteKb: 'remoteKb.id',
         scope: 'availabilityScope.value',
@@ -120,6 +124,7 @@ const EResourcesRoute = ({
   return (
     <View
       data={{
+        availabilityValues: getRefdataValuesByDesc(refdata, AVAILABILITY_CONSTRAINT),
         contentTypeValues: getRefdataValuesByDesc(refdata, CONTENT_TYPE),
         eresources,
         publicationTypeValues: getRefdataValuesByDesc(refdata, PUB_TYPE),
