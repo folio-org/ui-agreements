@@ -656,5 +656,7 @@
     "agreementLines.lineType.external": "خارجي",
     "agreementLines.activeFrom.includeNoDateSet": "قم بإدراج السطور التي لم يتم تعيين تاريخ نشط من لها",
     "agreementLines.activeTo.includeNoDateSet": "قم بإدراج السطور التي لم يتم تعيين تاريخ نشط حتى لها",
-    "agreementLines.agreementLineType": "نوع بند الاتفاقية"
+    "agreementLines.agreementLineType": "نوع بند الاتفاقية",
+    "agreementsSearch": "بحث الاتفاقيات",
+    "localKBSearch": "بحث قاعدة المعرفة المحلية"
 }

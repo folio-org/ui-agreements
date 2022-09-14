@@ -656,5 +656,7 @@
     "agreementLines.lineType.external": "外部的",
     "agreementLines.activeFrom.includeNoDateSet": "包含沒有設定啟用起始日的細項",
     "agreementLines.activeTo.includeNoDateSet": "包含沒有設定啟用到期日的細項",
-    "agreementLines.agreementLineType": "協議細項類型"
+    "agreementLines.agreementLineType": "協議細項類型",
+    "agreementsSearch": "Agreements search",
+    "localKBSearch": "Local KB search"
 }
