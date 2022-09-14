@@ -589,7 +589,7 @@
     "supplementaryProperties.filterBuilder": "추가 속성 필터 빌더",
     "supplementaryProperties.filterIndex": "추가 속성 필터 {index}",
     "supplementaryProperties.removeFilter": "추가 속성 필터 {index} 제거",
-    "supplementaryProperties.deprecated": "사용되지 않음: {이름}",
+    "supplementaryProperties.deprecated": "사용되지 않음: {name}",
     "new": "신규",
     "preview": "미리보기",
     "back": "뒤로",
@@ -656,5 +656,7 @@
     "agreementLines.lineType.external": "External",
     "agreementLines.activeFrom.includeNoDateSet": "Include lines with no active from date set",
     "agreementLines.activeTo.includeNoDateSet": "Include lines with no active to date set",
-    "agreementLines.agreementLineType": "Agreement line type"
+    "agreementLines.agreementLineType": "Agreement line type",
+    "agreementsSearch": "Agreements search",
+    "localKBSearch": "Local KB search"
 }
