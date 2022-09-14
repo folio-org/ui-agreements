@@ -5,7 +5,6 @@ import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
 import {
   Button,
-  ButtonGroup,
   FormattedUTCDate,
   HasCommand,
   Icon,
@@ -30,7 +29,8 @@ import { SearchKeyControl, useHandleSubmitSearch } from '@folio/stripes-erm-comp
 
 import { defaultQIndex, statuses } from '../../../constants';
 import AgreementFilters from '../../AgreementFilters';
-import IfEResourcesEnabled from '../../IfEResourcesEnabled';
+import RouteSwitcher from '../../RouteSwitcher';
+
 import { urls } from '../../utilities';
 import css from '../Agreements.css';
 
@@ -153,40 +153,7 @@ const Agreements = ({
                       paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                     >
                       <form onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}>
-                        <ButtonGroup fullWidth>
-                          <Button
-                            buttonStyle="primary"
-                            id="clickable-nav-agreements"
-                          >
-                            <FormattedMessage id="ui-agreements.agreements" />
-                          </Button>
-                          <Button
-                            id="clickable-nav-agreementLines"
-                            to={urls.agreementLines()}
-                          >
-                            <FormattedMessage id="ui-agreements.agreementLines" />
-                          </Button>
-                        </ButtonGroup>
-                        <IfEResourcesEnabled>
-                          <ButtonGroup fullWidth>
-                            <IfPermission perm="ui-agreements.resources.view">
-                              <Button
-                                id="clickable-nav-eresources"
-                                to={urls.eresources()}
-                              >
-                                <FormattedMessage id="ui-agreements.eresources" />
-                              </Button>
-                            </IfPermission>
-                            <IfPermission perm="ui-agreements.platforms.view">
-                              <Button
-                                id="clickable-nav-platforms"
-                                to={urls.platforms()}
-                              >
-                                <FormattedMessage id="ui-agreements.platforms" />
-                              </Button>
-                            </IfPermission>
-                          </ButtonGroup>
-                        </IfEResourcesEnabled>
+                        <RouteSwitcher />
                         {/* TODO: Use forthcoming <SearchGroup> or similar component */}
                         <div className={css.searchGroupWrap}>
                           <FormattedMessage id="ui-agreements.agreements.searchInputLabel">

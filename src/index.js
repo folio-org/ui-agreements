@@ -5,6 +5,8 @@ import { Switch } from 'react-router-dom';
 
 import { AppContextMenu, Route } from '@folio/stripes/core';
 import {
+  Button,
+  ButtonGroup,
   CommandList,
   HasCommand,
   KeyboardShortcutsModal,
@@ -53,14 +55,14 @@ import IfEResourcesEnabled from './components/IfEResourcesEnabled';
 import OpenBasketButton from './components/OpenBasketButton';
 
 import Settings from './settings';
+import { useEresourcesEnabled } from './hooks';
 
 const App = (props) => {
+  // Destructure important props
   const {
     actAs,
     history,
-    location: {
-      pathname
-    },
+    location: { pathname },
     match: { path },
     stripes
   } = props;
@@ -69,6 +71,8 @@ const App = (props) => {
 
   const addKey = useIntlKeyStore(state => state.addKey);
   addKey('ui-agreements');
+
+  const eresourcesEnabled = useEresourcesEnabled();
 
   const shortcutModalToggle = (handleToggle) => {
     handleToggle();
@@ -106,12 +110,47 @@ const App = (props) => {
     {
       name: 'openShortcutModal',
       handler: setShowKeyboardShortcutsModal
-    }
+    },
   ];
 
   if (actAs === 'settings') {
     return <Settings {...props} />;
   }
+
+  const renderTabGroup = () => {
+    // If local KB is enabled, display a tab group to switch between agreements/agreementLines and ereosurces/platforms
+    if (eresourcesEnabled) {
+      return (
+        <ButtonGroup>
+          <Button
+            buttonStyle={
+              (pathname?.startsWith('/erm/agreements') ||
+              pathname?.startsWith('/erm/agreementLines')) ?
+                'primary' :
+                'default'
+            }
+            to="/erm/agreements"
+          >
+            <FormattedMessage id="ui-agreements.agreementsSearch" />
+          </Button>
+          <Button
+            buttonStyle={
+              (pathname?.startsWith('/erm/eresources') ||
+              pathname?.startsWith('/erm/platforms')) ?
+                'primary' :
+                'default'
+            }
+            to="/erm/eresources"
+          >
+            <FormattedMessage id="ui-agreements.localKBSearch" />
+          </Button>
+        </ButtonGroup>
+      );
+    }
+
+    // Otherwise render an empty div so that the spacing still works out as expected
+    return <div />;
+  };
 
   return (
     <>
@@ -137,7 +176,9 @@ const App = (props) => {
           </AppContextMenu>
           <div className={css.container}>
             <IfEResourcesEnabled>
-              <Layout className={`${css.header} display-flex justify-end full padding-top-gutter padding-start-gutter padding-end-gutter`}>
+              <Layout className={`${css.header} display-flex full padding-top-gutter padding-start-gutter padding-end-gutter`}>
+                <div /> {/* Empty start item so we can get centre/end aligned */}
+                {renderTabGroup()}
                 <OpenBasketButton />
               </Layout>
             </IfEResourcesEnabled>
@@ -158,7 +199,6 @@ const App = (props) => {
                 <Route component={AgreementLinesRoute} path={`${path}/agreementLines/:id?`}>
                   <Route component={AgreementLineViewRoute} path={`${path}/agreementLines/:lineId/agreement/:agreementId`} />
                 </Route>
-
 
                 <Route component={EResourceEditRoute} path={`${path}/eresources/:id/edit`} />
                 <Route component={EResourcesRoute} path={`${path}/eresources/:id?`}>
@@ -196,9 +236,6 @@ const App = (props) => {
   );
 };
 
-
-export default App;
-
 App.eventHandler = (event, _s, data) => {
   if (event === 'LOAD_STRIPES_REGISTRY') {
     // Data should contain Registry singleton:
@@ -218,4 +255,5 @@ App.propTypes = {
   stripes: PropTypes.object.isRequired,
 };
 
+export default App;
 export { default as Agreements } from './components/views/Agreements';

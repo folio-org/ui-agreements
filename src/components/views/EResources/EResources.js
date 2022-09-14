@@ -9,11 +9,10 @@ import {
   Pane,
   Icon,
   Button,
-  ButtonGroup,
   PaneMenu,
 } from '@folio/stripes/components';
 
-import { AppIcon, IfPermission, useStripes } from '@folio/stripes/core';
+import { AppIcon, useStripes } from '@folio/stripes/core';
 
 import {
   CollapseFilterPaneButton,
@@ -30,13 +29,13 @@ import {
   useHandleSubmitSearch
 } from '@folio/stripes-erm-components';
 import EResourceFilters from '../../EResourceFilters';
-import IfEResourcesEnabled from '../../IfEResourcesEnabled';
 import IdentifierReassignmentForm from '../../IdentifierReassignmentForm';
 
 import { urls } from '../../utilities';
 import { resultCount } from '../../../constants';
 
 import css from '../Agreements.css';
+import RouteSwitcher from '../../RouteSwitcher';
 
 const propTypes = {
   children: PropTypes.object,
@@ -143,38 +142,7 @@ const EResources = ({
                     paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                   >
                     <form onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}>
-                      <IfEResourcesEnabled>
-                        <ButtonGroup fullWidth>
-                          <Button
-                            id="clickable-nav-agreements"
-                            to={urls.agreements()}
-                          >
-                            <FormattedMessage id="ui-agreements.agreements" />
-                          </Button>
-                          <Button
-                            id="clickable-nav-agreementLines"
-                            to={urls.agreementLines()}
-                          >
-                            <FormattedMessage id="ui-agreements.agreementLines" />
-                          </Button>
-                        </ButtonGroup>
-                        <ButtonGroup fullWidth>
-                          <Button
-                            buttonStyle="primary"
-                            id="clickable-nav-eresources"
-                          >
-                            <FormattedMessage id="ui-agreements.eresources" />
-                          </Button>
-                          <IfPermission perm="ui-agreements.platforms.view">
-                            <Button
-                              id="clickable-nav-platforms"
-                              to={urls.platforms()}
-                            >
-                              <FormattedMessage id="ui-agreements.platforms" />
-                            </Button>
-                          </IfPermission>
-                        </ButtonGroup>
-                      </IfEResourcesEnabled>
+                      <RouteSwitcher />
                       {/* TODO: Use forthcoming <SearchGroup> or similar component */}
                       <div className={css.searchGroupWrap}>
                         <FormattedMessage id="ui-agreements.agreements.searchInputLabel">

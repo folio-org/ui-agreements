@@ -52,7 +52,7 @@ const propTypes = {
         length: PropTypes.number,
       })),
     }).isRequired,
-    tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.array),
+    tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
     tagsLink: PropTypes.string,
     settings: PropTypes.object,
   }),

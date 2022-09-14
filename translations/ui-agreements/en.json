@@ -25,6 +25,8 @@
   "preview" : "Preview",
   "back" : "Back",
   "search": "Search",
+  "agreementsSearch": "Agreements search",
+  "localKBSearch": "Local KB search",
   "titleUpdated-callout": "<strong>title updated:</strong> {eresourceName}",
   "appMenu.keyboardShortcuts": "Keyboard shortcuts",
   "agreement": "Agreement",
