@@ -334,7 +334,7 @@ Agreement.propTypes = {
     eresourcesFilterPath: PropTypes.string,
     searchString: PropTypes.string,
     tagsLink: PropTypes.string,
-    tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.array)
+    tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
   }).isRequired,
   handlers: PropTypes.shape({
     onClone: PropTypes.func.isRequired,

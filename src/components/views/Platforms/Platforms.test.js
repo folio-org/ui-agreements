@@ -1,12 +1,11 @@
-
-import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
+import ReactRouterDom, { MemoryRouter } from 'react-router-dom';
+
 import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
 import { Pane, Button, TextField, MultiColumnList } from '@folio/stripes-testing';
-import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import data from './testResources';
 import Platforms from './Platforms';
@@ -15,6 +14,10 @@ import Platforms from './Platforms';
 jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
   return typeof children === 'function' ? children({ isEnabled: true }) : children;
 });
+
+// This is seemingly the only method to override imported __mock__ functions.
+// (This probably means this setup SUCKS and needs changing)
+ReactRouterDom.useLocation = jest.requireActual('react-router-dom').useLocation;
 
 const mockSubmit = jest.fn();
 jest.mock('@folio/stripes-erm-components', () => ({
@@ -30,7 +33,9 @@ describe('Platforms', () => {
   let renderComponent;
   beforeEach(() => {
     renderComponent = renderWithIntl(
-      <MemoryRouter>
+      <MemoryRouter
+        initialEntries={['/erm/eresources']}
+      >
         <Platforms
           data={data}
           onNeedMoreData={jest.fn()}
@@ -52,8 +57,7 @@ describe('Platforms', () => {
     await Pane('Search and filter').is({ visible: true });
   });
 
-  test('renders the expected Agreements/E-resources/Platforms Buttons', async () => {
-    await Button('Agreements').exists();
+  test('renders the expected Agreements/Agreement lines buttons', async () => {
     await Button('E-resources').exists();
     await Button('Platforms').exists();
   });
