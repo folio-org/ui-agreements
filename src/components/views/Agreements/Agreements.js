@@ -5,7 +5,6 @@ import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
 import {
   Button,
-  ButtonGroup,
   FormattedUTCDate,
   HasCommand,
   Icon,
@@ -30,7 +29,6 @@ import { SearchKeyControl, useHandleSubmitSearch } from '@folio/stripes-erm-comp
 
 import { defaultQIndex, statuses } from '../../../constants';
 import AgreementFilters from '../../AgreementFilters';
-import IfEResourcesEnabled from '../../IfEResourcesEnabled';
 import RouteSwitcher from '../../RouteSwitcher';
 
 import { urls } from '../../utilities';

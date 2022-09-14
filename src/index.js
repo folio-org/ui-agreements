@@ -246,7 +246,7 @@ App.propTypes = {
   match: PropTypes.object.isRequired,
   actAs: PropTypes.string.isRequired,
   stripes: PropTypes.object.isRequired,
-}; 
+};
 
 export default App;
 export { default as Agreements } from './components/views/Agreements';

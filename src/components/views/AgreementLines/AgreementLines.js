@@ -5,7 +5,6 @@ import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
 import {
   Button,
-  ButtonGroup,
   FormattedUTCDate,
   Icon,
   MultiColumnList,
@@ -14,7 +13,7 @@ import {
   SearchField,
 } from '@folio/stripes/components';
 
-import { AppIcon, IfPermission } from '@folio/stripes/core';
+import { AppIcon } from '@folio/stripes/core';
 
 import {
   CollapseFilterPaneButton,
@@ -27,7 +26,6 @@ import {
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
 import AgreementLineFilters from '../../AgreementLineFilters';
-import IfEResourcesEnabled from '../../IfEResourcesEnabled';
 import { resultCount } from '../../../constants';
 import { urls } from '../../utilities';
 import css from '../Agreements.css';

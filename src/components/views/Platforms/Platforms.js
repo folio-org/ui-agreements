@@ -5,7 +5,6 @@ import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
 import {
   Button,
-  ButtonGroup,
   Icon,
   MultiColumnList,
   Pane,
@@ -25,7 +24,6 @@ import {
 
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
-import IfEResourcesEnabled from '../../IfEResourcesEnabled';
 import { urls } from '../../utilities';
 import css from '../Agreements.css';
 import RouteSwitcher from '../../RouteSwitcher';

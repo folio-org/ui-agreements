@@ -9,11 +9,10 @@ import {
   Pane,
   Icon,
   Button,
-  ButtonGroup,
   PaneMenu,
 } from '@folio/stripes/components';
 
-import { AppIcon, IfPermission, useStripes } from '@folio/stripes/core';
+import { AppIcon, useStripes } from '@folio/stripes/core';
 
 import {
   CollapseFilterPaneButton,
@@ -30,7 +29,6 @@ import {
   useHandleSubmitSearch
 } from '@folio/stripes-erm-components';
 import EResourceFilters from '../../EResourceFilters';
-import IfEResourcesEnabled from '../../IfEResourcesEnabled';
 import IdentifierReassignmentForm from '../../IdentifierReassignmentForm';
 
 import { urls } from '../../utilities';
