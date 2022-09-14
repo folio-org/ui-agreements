@@ -77,7 +77,15 @@ const AgreementLineFilters = ({
     if (Object.keys(newState).length) {
       setFilterState(prevState => ({ ...prevState, ...newState }));
     }
-  }, [data, filterState]);
+
+    if (!agreementId && agreementFilterName) {
+      setAgreementFilterName();
+    }
+
+    if (!poLineId && poLineFilterNumber) {
+      setPOLineFilterNumber();
+    }
+  }, [agreementFilterName, agreementId, data, filterState, poLineFilterNumber, poLineId]);
 
   const renderCheckboxFilter = (name, prps) => {
     const groupFilters = activeFilters[name] || [];
