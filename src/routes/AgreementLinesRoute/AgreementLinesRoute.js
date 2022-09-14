@@ -57,8 +57,9 @@ const AgreementLinesRoute = ({
     infiniteQueryObject: {
       error: agreementLinesError,
       fetchNextPage: fetchNextAgreementLinePage,
-      isLoading: areAgreementLinesLoading,
-      isError: isAgreementLinesError
+      isError: isAgreementLinesError,
+      isIdle: isAgreementLinesIdle,
+      isLoading: areAgreementLinesLoading
     },
     results: agreementLines = [],
     total: agreementLinesCount = 0
@@ -67,8 +68,12 @@ const AgreementLinesRoute = ({
     ({ pageParam = 0 }) => {
       const params = [...agreementLinesQueryParams, `offset=${pageParam}`];
       return ky.get(encodeURI(`${AGREEMENT_LINES_ENDPOINT}?${params?.join('&')}`)).json();
+    },
+    {
+      enabled: !!query?.filters || !!query?.query
     }
   );
+
 
   useEffect(() => {
     if (agreementLinesCount === 1) {
@@ -93,7 +98,7 @@ const AgreementLinesRoute = ({
       selectedRecordId={match.params.lineId}
       source={{ // Fake source from useQuery return values;
         totalCount: () => agreementLinesCount,
-        loaded: () => !areAgreementLinesLoading,
+        loaded: () => !isAgreementLinesIdle,
         pending: () => areAgreementLinesLoading,
         failure: () => isAgreementLinesError,
         failureMessage: () => agreementLinesError.message
