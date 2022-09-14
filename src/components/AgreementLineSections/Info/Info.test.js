@@ -32,8 +32,13 @@ describe('Info', () => {
       expect(getByTestId('lineInfo')).toBeInTheDocument();
     });
 
-    test('displays parent agreements name', async () => {
-      await KeyValue('Parent agreement').has({ value: 'MR test Info' });
+    // test('displays parent agreements name', async () => {
+    //   await KeyValue('Parent agreement').has({ value: 'MR test Info' });
+    // });
+
+    test('renders a link with the parent agreements name', () => {
+      const { getByRole } = renderComponent;
+      expect(getByRole('link', { name: 'MR test Info' })).toBeInTheDocument();
     });
 
     test('displays agreement line activeFrom date', async () => {
@@ -87,8 +92,13 @@ describe('Info', () => {
       expect(getByTestId('lineInfo')).toBeInTheDocument();
     });
 
-    test('displays parent agreements name', async () => {
-      await KeyValue('Parent agreement').has({ value: 'MR agr packages' });
+    // test('displays parent agreements name', async () => {
+    //   await KeyValue('Parent agreement').has({ value: 'MR agr packages' });
+    // });
+
+    test('renders a link with the parent agreements name', () => {
+      const { getByRole } = renderComponent;
+      expect(getByRole('link', { name: 'MR agr packages' })).toBeInTheDocument();
     });
 
     test('displays agreement line activeFrom date', async () => {
