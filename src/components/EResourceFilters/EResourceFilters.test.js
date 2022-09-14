@@ -56,6 +56,10 @@ describe('EResourceFilters', () => {
       await Accordion('Tags').exists();
     });
 
+    test('renders the Availability Accordion', async () => {
+      await Accordion('Availability').exists();
+    });
+
 
     let index = 1;
     const testEresourceFilterCheckbox = (field, value) => (
