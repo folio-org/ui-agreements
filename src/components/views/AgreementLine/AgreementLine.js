@@ -140,7 +140,7 @@ const AgreementLine = ({
               </Button>
             </>
           ) : null)}
-          appIcon={<AppIcon app="agreements" />}
+          appIcon={<AppIcon app="agreements" iconKey="agreementLine" />}
           lastMenu={
             <IfPermission perm="ui-agreements.agreements.edit">
               <PaneMenu>
