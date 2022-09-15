@@ -656,5 +656,7 @@
     "agreementLines.lineType.external": "外部的",
     "agreementLines.activeFrom.includeNoDateSet": "包括没有设置有效起始日期的行",
     "agreementLines.activeTo.includeNoDateSet": "包括没有设置有效终止日期的行",
-    "agreementLines.agreementLineType": "协议行类型"
+    "agreementLines.agreementLineType": "协议行类型",
+    "agreementsSearch": "Agreements search",
+    "localKBSearch": "Local KB search"
 }

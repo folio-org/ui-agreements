@@ -294,6 +294,11 @@
         "title": "Agreements"
       },
       {
+        "name": "agreementLine",
+        "alt": " ",
+        "title": "Agreement line"
+      },
+      {
         "name": "closedAgreement",
         "alt": " ",
         "title": "Closed agreement"

@@ -170,7 +170,7 @@ const AgreementLines = ({
                     </Pane>
                   }
                   <Pane
-                    appIcon={<AppIcon app="agreements" size="small" />}
+                    appIcon={<AppIcon app="agreements" iconKey="agreementLine" size="small" />}
                     defaultWidth="fill"
                     firstMenu={
                       !filterPaneIsVisible ?
@@ -205,6 +205,7 @@ const AgreementLines = ({
                         note: <FormattedMessage id="ui-agreements.agreementLines.note" />,
                         description: <FormattedMessage id="ui-agreements.agreementLines.description" />,
                         activeTo: <FormattedMessage id="ui-agreements.agreementLines.activeTo" />,
+                        owner: <FormattedMessage id="ui-agreements.line.parentAgreement" />,
                       }}
                       columnWidths={{
                         name: 300,
@@ -212,6 +213,7 @@ const AgreementLines = ({
                         note: 200,
                         activeFrom: 150,
                         activeTo: 150,
+                        owner: 200
                       }}
                       contentData={data.agreementLines}
                       formatter={{
@@ -227,6 +229,7 @@ const AgreementLines = ({
                             <AppIcon
                               app="agreements"
                               iconAlignment="baseline"
+                              iconKey="agreementLine"
                               size="small"
                             >
                               {output}
@@ -236,6 +239,7 @@ const AgreementLines = ({
                         note: line => <div style={{ overflowWrap: 'break-word', maxWidth: 250, whiteSpace: 'pre-wrap' }}>{line.note}</div>,
                         activeFrom: line => (line.activeFrom ? <FormattedUTCDate value={line.activeFrom} /> : ''),
                         activeTo: line => (line.activeTo ? <FormattedUTCDate value={line.activeTo} /> : ''),
+                        owner: line => (line.owner?.id ? line.owner.name : null)
                       }}
                       hasMargin
                       id="list-agreementLines"
@@ -270,6 +274,7 @@ const AgreementLines = ({
                         'note',
                         'activeFrom',
                         'activeTo',
+                        'owner'
                       ]}
                     />
                   </Pane>
