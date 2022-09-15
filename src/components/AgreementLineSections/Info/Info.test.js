@@ -1,6 +1,7 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { MemoryRouter } from 'react-router-dom';
 import { KeyValue } from '@folio/stripes-testing';
 import { externalLine, externalResource, packageLine, packageResource } from './testResources';
 import translationsProperties from '../../../../test/helpers';
@@ -18,11 +19,13 @@ describe('Info', () => {
   describe('Info with external type', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
-        <Info
-          isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
-          line={externalLine}
-          resource={externalResource}
-        />,
+        <MemoryRouter>
+          <Info
+            isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
+            line={externalLine}
+            resource={externalResource}
+          />
+        </MemoryRouter>,
         translationsProperties
       );
     });
@@ -32,9 +35,9 @@ describe('Info', () => {
       expect(getByTestId('lineInfo')).toBeInTheDocument();
     });
 
-    // test('displays parent agreements name', async () => {
-    //   await KeyValue('Parent agreement').has({ value: 'MR test Info' });
-    // });
+    test('displays parent agreements name', async () => {
+      await KeyValue('Parent agreement').has({ value: 'MR test Info' });
+    });
 
     test('renders a link with the parent agreements name', () => {
       const { getByRole } = renderComponent;
@@ -53,15 +56,15 @@ describe('Info', () => {
       await KeyValue('Suppress from discovery').has({ value: 'Yes' });
     });
 
-    test('dispalys agreement line note', async () => {
+    test('displays agreement line note', async () => {
       await KeyValue('Note').has({ value: 'This is note.' });
     });
 
-    test('dispalys agreement line description', async () => {
+    test('displays agreement line description', async () => {
       await KeyValue('Description').has({ value: 'This is description.' });
     });
 
-    test('dispalys agreement line title on platfrom URL', async () => {
+    test('displays agreement line title on platfrom URL', async () => {
       await KeyValue('Title on platform URL').has({ value: 'https://libra.ibuk.pl/book/166729' });
     });
     test('renders the PackageCardExternal component', () => {
@@ -78,11 +81,13 @@ describe('Info', () => {
   describe('Info with type packages', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
-        <Info
-          isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
-          line={packageLine}
-          resource={packageResource}
-        />,
+        <MemoryRouter>
+          <Info
+            isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
+            line={packageLine}
+            resource={packageResource}
+          />
+        </MemoryRouter>,
         translationsProperties
       );
     });
@@ -92,9 +97,9 @@ describe('Info', () => {
       expect(getByTestId('lineInfo')).toBeInTheDocument();
     });
 
-    // test('displays parent agreements name', async () => {
-    //   await KeyValue('Parent agreement').has({ value: 'MR agr packages' });
-    // });
+    test('displays parent agreements name', async () => {
+      await KeyValue('Parent agreement').has({ value: 'MR agr packages' });
+    });
 
     test('renders a link with the parent agreements name', () => {
       const { getByRole } = renderComponent;
@@ -113,15 +118,15 @@ describe('Info', () => {
       await KeyValue('Suppress from discovery').has({ value: 'Yes' });
     });
 
-    test('dispalys agreement line note', async () => {
+    test('displays agreement line note', async () => {
       await KeyValue('Note').has({ value: 'This is note' });
     });
 
-    test('dispalys agreement line description', async () => {
+    test('displays agreement line description', async () => {
       await KeyValue('Description').has({ value: 'This is agreement line description' });
     });
 
-    test('dispalys agreement line title on platfrom URL', async () => {
+    test('displays agreement line title on platfrom URL', async () => {
       await KeyValue('Title on platform URL').has({ value: 'https://doi.org/10.4337/9781845425678' });
     });
 
