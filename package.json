@@ -31,8 +31,8 @@
     "@babel/preset-typescript": "^7.18.6",
     "@folio/eslint-config-stripes": "^6.1.0",
     "@folio/stripes": "^7.2.0",
-    "@folio/stripes-erm-components": "^6.2.0",
     "@folio/stripes-cli": "^2.6.0",
+    "@folio/stripes-erm-components": "^6.2.0",
     "@folio/stripes-testing": "^4.2.0",
     "@formatjs/cli": "^4.2.31",
     "@interactors/html": "^1.0.0-rc1.2",
@@ -118,8 +118,7 @@
       "users": "13.0 14.0 15.0 16.0"
     },
     "stripesDeps": [
-      "@folio/stripes-erm-components",
-      "@k-int/stripes-kint-components"
+      "@folio/stripes-erm-components"
     ],
     "permissionSets": [
       {
