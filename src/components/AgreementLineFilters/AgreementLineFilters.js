@@ -93,7 +93,7 @@ const AgreementLineFilters = ({
      * of a list of values since for historical reasons having no filterKey means that the
      * filters get sent separately instead of joined by ||.
      */
-    const groupFilters = activeFilters[name] || [''];
+    const groupFilters = activeFilters[name] || [];
 
     return (
       <Accordion
@@ -108,12 +108,13 @@ const AgreementLineFilters = ({
           dataOptions={filterState[name] || []}
           name={name}
           onChange={(group) => {
+            const newValue = group.values?.filter(gv => !!gv)?.join('||') ?? '';
             filterHandlers.state({
               ...activeFilters,
-              [group.name]: [group.values?.filter(gv => !!gv)?.join('||') ?? '']
+              [group.name]: (newValue ? [newValue] : [])
             });
           }}
-          selectedValues={groupFilters[0]?.split('||')}
+          selectedValues={groupFilters[0]?.split('||') ?? []}
         />
       </Accordion>
     );
