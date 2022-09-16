@@ -39,6 +39,10 @@ const AgreementLinesRoute = ({
   const eresourcesEnabled = useEresourcesEnabled();
 
   const searchKey = eresourcesEnabled ? 'resource.name,reference,description,note' : 'reference,description,note';
+  const testQuery = {
+    ...query
+    
+  };
 
   const agreementLinesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
@@ -52,6 +56,9 @@ const AgreementLinesRoute = ({
       perPage: INITIAL_RESULT_COUNT
     }, (query ?? {}))
   ), [query, searchKey]);
+  console.log('query agreement line %o', query);
+  console.log('searchKey %o', searchKey);
+  console.log('testQuery %o', testQuery);
 
   const {
     infiniteQueryObject: {

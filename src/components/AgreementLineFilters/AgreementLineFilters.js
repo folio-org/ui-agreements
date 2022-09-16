@@ -29,21 +29,10 @@ const AgreementLineFilters = ({
   const ky = useOkapiKy();
 
   const [filterState, setFilterState] = useState({
-    lineType: [
-      {
-        value: 'type==detached',
-        label: <FormattedMessage id="ui-agreements.agreementLines.lineType.detached" />
-      },
-      {
-        value: 'type==external',
-        label: <FormattedMessage id="ui-agreements.agreementLines.lineType.external" />
-      },
-      {
-        value: 'type isNull',
-        label: <FormattedMessage id="ui-agreements.agreementLines.lineType.internal" />
-      }],
+    lineType: [],
     tags: []
   });
+  console.log('filterState %o', filterState);
 
   const [agreementFilterName, setAgreementFilterName] = useState();
   const agreementId = activeFilters?.agreement?.[0];
@@ -73,6 +62,7 @@ const AgreementLineFilters = ({
     if ((data?.tagsValues?.length ?? 0) !== filterState.tags?.length) {
       newState.tags = data.tagsValues.map(({ label }) => ({ value: label, label }));
     }
+    console.log('data %o', data);
 
     if (Object.keys(newState).length) {
       setFilterState(prevState => ({ ...prevState, ...newState }));
