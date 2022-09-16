@@ -87,8 +87,13 @@ const AgreementLineFilters = ({
     }
   }, [agreementFilterName, agreementId, data, filterState, poLineFilterNumber, poLineId]);
 
-  const renderCheckboxFilter = (name, prps) => {
-    const groupFilters = activeFilters[name] || [];
+  const renderLineTypeFilter = () => {
+    const name = 'lineType';
+    /* Do some wrangling to make sure we always have a single || separated string instead
+     * of a list of values since for historical reasons having no filterKey means that the
+     * filters get sent separately instead of joined by ||.
+     */
+    const groupFilters = activeFilters[name] || [''];
 
     return (
       <Accordion
@@ -98,7 +103,6 @@ const AgreementLineFilters = ({
         label={<FormattedMessage id={`ui-agreements.agreementLines.${name}`} />}
         onClearFilter={() => { filterHandlers.clearGroup(name); }}
         separator={false}
-        {...prps}
       >
         <CheckboxFilter
           dataOptions={filterState[name] || []}
@@ -106,10 +110,10 @@ const AgreementLineFilters = ({
           onChange={(group) => {
             filterHandlers.state({
               ...activeFilters,
-              [group.name]: group.values
+              [group.name]: [group.values?.filter(gv => !!gv)?.join('||') ?? '']
             });
           }}
-          selectedValues={groupFilters}
+          selectedValues={groupFilters[0]?.split('||')}
         />
       </Accordion>
     );
@@ -244,7 +248,7 @@ const AgreementLineFilters = ({
   return (
     <AccordionSet>
       {renderAgreementFilter('agreement')}
-      {renderCheckboxFilter('lineType')}
+      {renderLineTypeFilter()}
       {renderDateFilter('activeFrom')}
       {renderDateFilter('activeTo')}
       {renderPOLineFilter('poLine')}
