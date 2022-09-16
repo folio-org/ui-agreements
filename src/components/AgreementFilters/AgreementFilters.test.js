@@ -15,11 +15,6 @@ jest.mock('@folio/stripes-erm-components', () => ({
   OrganizationSelection: () => <div>OrganizationSelection</div>,
 }));
 
-jest.mock('@k-int/stripes-kint-components', () => ({
-  ...jest.requireActual('@k-int/stripes-kint-components'),
-  CustomPropertiesFilter: () => <div>CustomPropertiesFilter</div>,
-}));
-
 const stateMock = jest.fn();
 
 const filterHandlers = {

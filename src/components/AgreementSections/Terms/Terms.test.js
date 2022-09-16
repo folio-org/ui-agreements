@@ -5,11 +5,6 @@ import { Accordion } from '@folio/stripes-testing';
 import Terms from './Terms';
 import translationsProperties from '../../../../test/helpers';
 
-jest.mock('@k-int/stripes-kint-components', () => ({
-  ...jest.requireActual('@k-int/stripes-kint-components'),
-  CustomPropertyCard: () => <div>CustomPropertyCard</div>,
-}));
-
 const agreement = {
   'id': '5644b8c6-561b-4f6b-95bd-b3f044918b8a',
   'dateCreated': '2021-08-03T14:19:44Z',

@@ -1,7 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { Settings } from '@folio/stripes/smart-components';
 import { useSettings } from '@k-int/stripes-kint-components';
 
 import GeneralSettings from './GeneralSettings';
@@ -19,9 +18,8 @@ import {
 import { AgreementsCustomProperties } from './components';
 
 const ErmSettings = (props) => {
-  const { isLoading, pageList, SettingsContextProvider } = useSettings({
+  const { isLoading, pageList, SettingsComponent } = useSettings({
     dynamicPageExclusions: ['registry'], // Registry AppSettings hold StringTemplating details etc -- not for user editing
-    intlKey: 'ui-agreements',
     persistentPages: [],
     refdataEndpoint: REFDATA_ENDPOINT,
     settingEndpoint: SETTINGS_ENDPOINT
@@ -73,13 +71,12 @@ const ErmSettings = (props) => {
   }
 
   return (
-    <SettingsContextProvider>
-      <Settings
-        paneTitle={<FormattedMessage id="ui-agreements.meta.title" />}
-        sections={sections}
-        {...props}
-      />
-    </SettingsContextProvider>
+    <SettingsComponent
+      pages={null} // Override the default pages implementation in favour of sections
+      paneTitle={<FormattedMessage id="ui-agreements.meta.title" />}
+      sections={sections}
+      {...props}
+    />
   );
 };
 
