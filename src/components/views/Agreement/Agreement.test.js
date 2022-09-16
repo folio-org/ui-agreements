@@ -18,11 +18,6 @@ jest.mock('@folio/stripes-erm-components', () => ({
   ...mockErmComponents
 }));
 
-jest.mock('@k-int/stripes-kint-components', () => ({
-  ...jest.requireActual('@k-int/stripes-kint-components'),
-  CustomPropertiesView: () => <div>CustomPropertiesView</div>,
-}));
-
 jest.mock('../../../hooks', () => ({
   ...jest.requireActual('../../../hooks'),
   useAgreementsContexts: jest.fn(() => ({ data: [] }))

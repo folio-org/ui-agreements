@@ -16,7 +16,6 @@ import {
   Col,
   ExpandAllButton,
   HasCommand,
-  Headline,
   IconButton,
   Pane,
   PaneFooter,
