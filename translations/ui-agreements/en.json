@@ -636,7 +636,7 @@
   "settings.customProperties.all": "All",
   "settings.customProperties.none": "None",
   "settings.noCurrentValue": "No current value",
-  "settings.default": "No current value",
+  "settings.default": "default",
   "settings.valueFor": "Value for setting {name}",
   "supplementaryProperty": "Supplementary property",
   "supplementaryProperty.help.label": "An agreement term 'label' is used when displaying the supplementary property to users within Folio and in any other systems that display agreement's supplementary properties to users. It should be a short text string that clearly communicates what information is recorded in the supplementary property. The Description should be used where further explanation of the supplementary property is required for display to users.",
