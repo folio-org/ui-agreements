@@ -24,10 +24,6 @@ const PickListSettings = () => {
         label={
           <FormattedMessage id="ui-agreements.settings.pickLists" />
         }
-        labelOverrides={{
-          deleteRefdataCategory: <FormattedMessage id="ui-agreements.settings.pickList.deletePickList" />,
-          deleteError: (err, category) => <FormattedMessage id="ui-agreements.settings.pickList.deletePickListError" values={{ name: category.desc, error: err }} />
-        }}
         refdataEndpoint={REFDATA_ENDPOINT}
       />
     </Pane>

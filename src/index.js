@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Switch } from 'react-router-dom';
+
 import { AppContextMenu, Route } from '@folio/stripes/core';
 import {
   Button,
@@ -16,6 +17,8 @@ import {
   checkScope,
   defaultKeyboardShortcuts,
 } from '@folio/stripes/components';
+
+import { useIntlKeyStore } from '@k-int/stripes-kint-components';
 
 import css from './index.css';
 import setUpRegistry from './setUpRegistry';
@@ -65,6 +68,10 @@ const App = (props) => {
   } = props;
 
   const [showKeyboardShortcutsModal, setShowKeyboardShortcutsModal] = useState(false);
+
+  const addKey = useIntlKeyStore(state => state.addKey);
+  addKey('ui-agreements');
+
   const eresourcesEnabled = useEresourcesEnabled();
 
   const shortcutModalToggle = (handleToggle) => {

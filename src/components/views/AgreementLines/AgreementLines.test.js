@@ -96,7 +96,7 @@ describe('Agreement lines', () => {
   });
 
   test('renders the expcted number of MCL columns', async () => {
-    await MultiColumnList({ columnCount: 5 }).exists();
+    await MultiColumnList({ columnCount: 6 }).exists();
   });
 
   test('renders the expcted number of MCL rows', async () => {
@@ -110,7 +110,8 @@ describe('Agreement lines', () => {
         'Description',
         'Note',
         'Active from',
-        'Active to'
+        'Active to',
+        'Parent agreement'
       ],
     }).exists();
   });

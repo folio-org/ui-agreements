@@ -143,7 +143,7 @@ const AgreementLineForm = ({
     >
       <Paneset>
         <Pane
-          appIcon={<AppIcon app="agreements" />}
+          appIcon={<AppIcon app="agreements" iconKey="agreementLine" />}
           centerContent
           defaultWidth="100%"
           dismissible
