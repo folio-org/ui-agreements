@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Accordion, Badge } from '@folio/stripes/components';
+import { IfPermission } from '@folio/stripes/core';
 import POLineCard from '../../POLineCard';
 
 const propTypes = {
@@ -23,17 +24,20 @@ const POLines = ({
     id="agreement-line-po-lines"
     label={<FormattedMessage id="ui-agreements.poLines.poLines" />}
   >
-    {poLines.length ?
-      poLines.map((poLine, index) => (
-        <POLineCard
-          key={index}
-          id={`ag-line-pol-card-${poLine.id}`}
-          poLine={poLine}
-        />
-      ))
-      :
-      <FormattedMessage id="ui-agreements.emptyAccordion.linePOLines" />
-    }
+    <IfPermission perm="orders.po-lines.collection.get">
+      {({ hasPermission }) => (hasPermission ?
+        (poLines.length ?
+          poLines.map((poLine, index) => (
+            <POLineCard
+              key={index}
+              id={`ag-line-pol-card-${poLine.id}`}
+              poLine={poLine}
+            />
+          ))
+          : <FormattedMessage id="ui-agreements.emptyAccordion.linePOLines" />)
+        : <FormattedMessage id="ui-agreements.agreementLines.noPoLinePerm" />
+      )}
+    </IfPermission>
   </Accordion>
 );
 
