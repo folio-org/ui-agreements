@@ -24,9 +24,9 @@ const POLines = ({
     id="agreement-line-po-lines"
     label={<FormattedMessage id="ui-agreements.poLines.poLines" />}
   >
-    <IfPermission perm="orders.po-lines.collection.get">
-      {({ hasPermission }) => (hasPermission ?
-        (poLines.length ?
+    {poLines.length ?
+      <IfPermission perm="orders.po-lines.collection.get">
+        {({ hasPermission }) => (hasPermission ?
           poLines.map((poLine, index) => (
             <POLineCard
               key={index}
@@ -34,10 +34,10 @@ const POLines = ({
               poLine={poLine}
             />
           ))
-          : <FormattedMessage id="ui-agreements.emptyAccordion.linePOLines" />)
-        : <FormattedMessage id="ui-agreements.agreementLines.noPoLinePerm" />
-      )}
-    </IfPermission>
+          : <FormattedMessage id="ui-agreements.agreementLines.noPoLinePerm" />
+        )}
+      </IfPermission>
+      : <FormattedMessage id="ui-agreements.emptyAccordion.linePOLines" />}
   </Accordion>
 );
 
