@@ -36,7 +36,7 @@ const ExtendedPackageInformation = ({
         type: item => (item.identifier.ns.value)
       }}
       id="identifiers-list"
-      visibleColumns={['identifier', 'type']}
+      visibleColumns={['type', 'identifier']}
     />
   );
 
