@@ -126,7 +126,7 @@ ExtendedPackageInformation.propTypes = {
         ns: PropTypes.shape({
           value: PropTypes.string
         })
-      }).isRequired
+      })
     })),
     lifecycleStatus: PropTypes.shape({
       id: PropTypes.string,
