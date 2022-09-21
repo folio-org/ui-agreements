@@ -647,6 +647,8 @@
   "eresources.filters.titleFilters": "Title filters",
   "eresources.filters.packageFilters": "Package filters",
   "eresources.scope": "Scope",
+  "packageIdentifiers.identifier": "Identifier",
+  "packageIdentifiers.type": "Type",
   "packageIdentifiers.isil": "ISIL",
   "packageIdentifiers.zdb": "ZDB",
   "packageIdentifiers.ezb": "EZB",
