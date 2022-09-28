@@ -615,7 +615,7 @@
   "settings.pickListSelect": "Select pick list",
   "settings.pickListValues": "Pick list values",
   "settings.pickListValues.deletePickListValue": "Delete pick list value",
-  "settings.pickListValues.deletePickListValueError": "<strong>Error:</strong> Pick list value <strong>{lable}</strong> was not deleted because it is in use in one or more supplementary properties on one or more agreements.",
+  "settings.pickListValues.deletePickListValueError": "<strong>Error:</strong> Pick list value <strong>{label}</strong> was not deleted because it is in use in one or more supplementary properties on one or more agreements.",
   "settings.supplementaryProperties": "Supplementary properties",
   "settings.supplementaryPropertyPickList": "Supplementary property pick list setup",
   "settings.supplementaryProperties.primaryRetired": "A supplementary property cannot be both primary and deprecated",

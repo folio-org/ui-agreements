@@ -607,7 +607,7 @@
     "settings.pickList.deletePickList": "Delete pick list",
     "settings.pickList.deletePickListError": "There was an error deleting pick list: <strong>{label}</strong>. {error}",
     "settings.pickListValues.deletePickListValue": "Delete pick list value",
-    "settings.pickListValues.deletePickListValueError": "<strong>Error:</strong> Pick list value <strong>{lable}</strong> was not deleted because it is in use in one or more supplementary properties on one or more agreements.",
+    "settings.pickListValues.deletePickListValueError": "<strong>Error:</strong> Pick list value <strong>{label}</strong> was not deleted because it is in use in one or more supplementary properties on one or more agreements.",
     "settings.supplementaryProperties.category": "Category",
     "settings.supplementaryProperties.pickList": "Pick list",
     "settings.supplementaryProperties.multiPickList": "Pick list (multi-select)",
