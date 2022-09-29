@@ -272,9 +272,6 @@ const Agreement = ({
                   customProperties={data.agreement.customProperties}
                   customPropertiesEndpoint={CUSTPROP_ENDPOINT}
                   id="supplementaryProperties"
-                  labelOverrides={{
-                    OpenAccess: <FormattedMessage id="ui-agreements.openAccessProperties" />,
-                  }}
                 />
                 {data.agreement?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...getSectionProps('supplementaryDocs')} />}
                 {data.agreement?.usageDataProviders?.length > 0 && <UsageData {...getSectionProps('usageData')} />}
