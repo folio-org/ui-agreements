@@ -31,7 +31,7 @@ const AgreementLineFilters = ({
   const [filterState, setFilterState] = useState({
     lineType: [
       {
-        value: 'type==detached',
+        value: 'type==unlinked',
         label: <FormattedMessage id="ui-agreements.agreementLines.lineType.detached" />
       },
       {
