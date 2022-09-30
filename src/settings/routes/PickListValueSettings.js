@@ -37,9 +37,6 @@ const PickListValues = () => {
           label={
             <FormattedMessage id="ui-agreements.settings.pickListValues" />
           }
-          labelOverrides={{
-            deleteError: 'ui-agreements.settings.pickListValues.deletePickListValueError'
-          }}
           refdataEndpoint={REFDATA_ENDPOINT}
         />
       )}
