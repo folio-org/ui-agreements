@@ -723,7 +723,7 @@
     "apply": "Apply",
     "refdata.deleteRefdataValue": "Delete pick list value",
     "refdata.deleteRefdataValue.confirmMessage": "<strong>{name}</strong> will be deleted.",
-    "refdata.deleteRefdataValue.errorMessage": "<strong>Error: {label}</strong> was not deleted. {error}",
+    "refdata.deleteRefdataValue.errorMessage": "<strong>Error:</strong> Pick list value <strong>{label}</strong> was not deleted because it is in use in one or more supplementary properties on one or more agreements.",
     "refdata.label": "Label",
     "refdata.value": "Value",
     "refdata.editAriaLabel": "Edit value {label}",
