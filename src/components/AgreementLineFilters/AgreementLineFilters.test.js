@@ -76,7 +76,7 @@ describe('AgreementFilters', () => {
     })
   );
 
-  testAgreementLineFilterCheckbox('lineType', 'type-unlinked', 'unlinked');
+  testAgreementLineFilterCheckbox('lineType', 'type-detached', 'detached');
   testAgreementLineFilterCheckbox('lineType', 'type-external', 'external');
   testAgreementLineFilterCheckbox('lineType', 'type-is-null', 'internal');
 });

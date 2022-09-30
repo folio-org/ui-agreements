@@ -71,7 +71,7 @@ const AgreementLineEditRoute = ({
   const getInitialValues = () => {
     return {
       ...agreementLine,
-      linkedResource: agreementLine.type !== 'unlinked' ? agreementLine : undefined,
+      linkedResource: agreementLine.type !== 'detached' ? agreementLine : undefined,
       coverage: agreementLine.customCoverage ? agreementLine.coverage : undefined,
     };
   };
@@ -97,8 +97,8 @@ const AgreementLineEditRoute = ({
         resource: null
       };
     } else if (isEmpty(linkedResource)) { // On editing a detached line but not adding a resource
-      payload = { 'type': 'unliked', ...rest, resource: null };
-    } else if (type === 'unlinked') { // on editing a detached line and adding a resource
+      payload = { 'type': 'detached', ...rest, resource: null };
+    } else if (type === 'detached') { // on editing a detached line and adding a resource
       payload = { resource: linkedResource, ...rest, type: null };
     } else if (type === 'external') { // on editing an external line
       payload = { resource: null, ...rest, type: 'external' };
