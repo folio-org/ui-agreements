@@ -21,6 +21,34 @@ const eresource = {
     }
   }
   ],
+  'identifiers': [
+    {
+      'identifier': {
+        'value': '1452686',
+        'ns': {
+          'value': 'gokb_id'
+        }
+      },
+      'status': {
+        'id': '2c91809c835db8af01835dc0ba57006a',
+        'value': 'approved',
+        'label': 'approved'
+      }
+    },
+    {
+      'identifier': {
+        'value': '9a91cc3b-c42a-411b-be70-64fa93e0931b',
+        'ns': {
+          'value': 'gokb_uuid'
+        }
+      },
+      'status': {
+        'id': '2c91809c835db8af01835dc0ba57006a',
+        'value': 'approved',
+        'label': 'approved'
+      }
+    }
+  ],
   'lastUpdated': '2022-04-04T10:11:59Z',
   'normalizedName': 'igi global:igi global infosci-journals:konsortiallizenz',
   'vendor': {
