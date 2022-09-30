@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Switch } from 'react-router-dom';
 
-import { AppContextMenu, Route } from '@folio/stripes/core';
+import { AppContextMenu, IfPermission, Route } from '@folio/stripes/core';
 import {
   Button,
   ButtonGroup,
@@ -179,7 +179,13 @@ const App = (props) => {
               <Layout className={`${css.header} display-flex full padding-top-gutter padding-start-gutter padding-end-gutter`}>
                 <div /> {/* Empty start item so we can get centre/end aligned */}
                 {renderTabGroup()}
-                <OpenBasketButton />
+                <IfPermission perm="ui-agreements.agreements.edit">
+                  {({ hasPermission }) => (hasPermission ?
+                    <OpenBasketButton />
+                    :
+                    <div />
+                  )}
+                </IfPermission>
               </Layout>
             </IfEResourcesEnabled>
             <div className={css.body}>
