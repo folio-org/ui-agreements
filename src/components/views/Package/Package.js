@@ -57,7 +57,7 @@ export default class Package extends React.Component {
 
   render() {
     const { data, handlers } = this.props;
-    const { data: { eresource: { alternateResourceNames, description, packageDescriptionUrls } } } = this.props;
+    const { data: { eresource: { alternateResourceNames, description, identifiers, packageDescriptionUrls } } } = this.props;
 
     /* istanbul ignore next */
     const shortcuts = [
@@ -86,7 +86,7 @@ export default class Package extends React.Component {
               </Col>
             </Row>
             <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-              {(description || alternateResourceNames?.length > 0 || packageDescriptionUrls?.length > 0) &&
+              {(description || alternateResourceNames?.length > 0 || packageDescriptionUrls?.length || identifiers?.length) &&
                 <ExtendedPackageInformation {...this.getSectionProps('extendedPackageInformation')} />
               }
               <Agreements

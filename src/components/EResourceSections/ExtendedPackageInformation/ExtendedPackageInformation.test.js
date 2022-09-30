@@ -33,4 +33,8 @@ describe('ExtendedPackageInformation', () => {
   test('renders the package description urls MCL', async () => {
     await MultiColumnList('package-description-urls-list').exists();
   });
+
+  test('renders the identifiers MCL', async () => {
+    await MultiColumnList('identifiers-list').exists();
+  });
 });
