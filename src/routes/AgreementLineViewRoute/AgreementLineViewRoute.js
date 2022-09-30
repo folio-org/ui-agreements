@@ -58,9 +58,8 @@ const AgreementLineViewRoute = ({
 
   const getCompositeLine = () => {
     const poLines = (agreementLine.poLines || [])
-      .map(linePOL => orderLines.find(orderLine => orderLine.id === linePOL.poLineId))
+      .map(linePOL => orderLines.find(orderLine => orderLine.id === linePOL.poLineId) ?? { id: linePOL.poLineId })
       .filter(poLine => poLine);
-
     return {
       ...agreementLine,
       poLines,
