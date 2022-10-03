@@ -123,7 +123,7 @@ const AgreementLines = ({
                         <RouteSwitcher />
                         {/* TODO: Use forthcoming <SearchGroup> or similar component */}
                         <div className={css.searchGroupWrap}>
-                          <FormattedMessage id="ui-agreements.agreements.searchInputLabel">
+                          <FormattedMessage id="ui-agreements.agreements.agreementLines.searchInputLabel">
                             {([ariaLabel]) => (
                               <SearchField
                                 aria-label={ariaLabel}

@@ -35,6 +35,7 @@
   "eresource": "E-resource",
   "eresourcePluralizable": "{count} {count, plural, one {e-resource} other {e-resources}}",
   "agreements.searchInputLabel": "Search Agreements",
+  "agreements.agreementLines.searchInputLabel": "Search Agreement lines",
   "eresources.searchInputLabel": "Search E-resources",
   "description": "Description",
   "note": "Note",
