@@ -76,7 +76,7 @@
   "agreementLines.noPOLinePlugin": "No PO line plugin",
   "agreementLines.poLine": "PO line",
   "agreementLines.lineType": "Agreement line type",
-  "agreementLines.lineType.detached": "Detached",
+  "agreementLines.lineType.detached": "Unlinked",
   "agreementLines.lineType.internal": "Internal",
   "agreementLines.lineType.external": "External",
   "agreementLines.activeFrom.includeNoDateSet": "Include lines with no active from date set",
