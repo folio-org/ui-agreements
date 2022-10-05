@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
 import { useOkapiKy } from '@folio/stripes/core';
@@ -12,6 +13,7 @@ import { DateFilter, useAgreement } from '@folio/stripes-erm-components';
 
 import AgreementFilterButton from '../AgreementFilterButton';
 import POLineFilterButton from '../POLineFilterButton';
+import { urls } from '../utilities';
 
 const propTypes = {
   activeFilters: PropTypes.object,
@@ -131,7 +133,11 @@ const AgreementLineFilters = ({
       if (poLineFilterNumber) {
         return (
           <Layout className="padding-bottom-gutter">
-            {poLineFilterNumber}
+            <Link
+              to={urls.poLineView(poLineId)}
+            >
+              {poLineFilterNumber}
+            </Link>
           </Layout>
         );
       }
@@ -177,7 +183,11 @@ const AgreementLineFilters = ({
       if (agreementFilterName) {
         return (
           <Layout className="padding-bottom-gutter">
-            {agreementFilterName}
+            <Link
+              to={urls.agreementView(agreementId)}
+            >
+              {agreementFilterName}
+            </Link>
           </Layout>
         );
       }
