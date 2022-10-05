@@ -27,7 +27,7 @@ import {
 } from '@folio/stripes/smart-components';
 import { SearchKeyControl, useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
-import { defaultQIndex, statuses } from '../../../constants';
+import { statuses } from '../../../constants';
 import AgreementFilters from '../../AgreementFilters';
 import RouteSwitcher from '../../RouteSwitcher';
 
@@ -107,7 +107,7 @@ const Agreements = ({
           initialFilterState={{
             agreementStatus: ['active', 'draft', 'in_negotiation', 'requested']
           }}
-          initialSearchState={{ query: '', qindex: defaultQIndex }}
+          initialSearchState={{ query: '' }}
           initialSortState={{ sort: 'name' }}
           queryGetter={queryGetter}
           querySetter={querySetter}
