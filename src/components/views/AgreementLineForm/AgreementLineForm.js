@@ -80,7 +80,6 @@ const AgreementLineForm = ({
   const hasLoaded = form.getRegisteredFields().length > 0;
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
   const [agreementLineSource, setAgreementLineSource] = useState('basket');
-  // const [isCreateAnotherChecked, setCreateAnotherChecked] = useState(false);
 
   const accordionStatusRef = useRef();
   /* istanbul ignore next */
