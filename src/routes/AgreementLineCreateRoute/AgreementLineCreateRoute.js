@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -25,7 +25,7 @@ const AgreementLineCreateRoute = ({
   const ky = useOkapiKy();
   const stripes = useStripes();
   const queryClient = useQueryClient();
-
+  const [isCreateAnotherChecked, setCreateAnotherChecked] = useState(false);
   const isSuppressFromDiscoveryEnabled = useSuppressFromDiscovery();
 
   const handleClose = () => {
@@ -40,7 +40,11 @@ const AgreementLineCreateRoute = ({
         queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.create.callout" /> });
-        history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
+        if (isCreateAnotherChecked) {
+          history.push(`${urls.agreementLineCreate(agreementId)}${location.search}`);
+        } else {
+          history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
+        }
       })
   );
 
@@ -74,9 +78,9 @@ const AgreementLineCreateRoute = ({
         ...rest
       };
     }
-
     postAgreementLine(items);
   };
+
 
   return (
     <View
@@ -88,8 +92,10 @@ const AgreementLineCreateRoute = ({
         isSuppressFromDiscoveryEnabled,
         onClose: handleClose,
       }}
+      isCreateAnotherChecked={isCreateAnotherChecked}
       isEholdingsEnabled={stripes.hasPerm('module.eholdings.enabled')}
       onSubmit={handleSubmit}
+      toggleCreateAnother={setCreateAnotherChecked}
     />
   );
 };

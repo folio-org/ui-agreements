@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -25,6 +25,7 @@ const AgreementLineEditRoute = ({
   const callout = useContext(CalloutContext);
   const stripes = useStripes();
   const queryClient = useQueryClient();
+  const [isCreateAnotherChecked, setCreateAnotherChecked] = useState(false);
   const isSuppressFromDiscoveryEnabled = useSuppressFromDiscovery();
 
   const agreementLinePath = AGREEMENT_LINE_ENDPOINT(lineId);
@@ -53,7 +54,9 @@ const AgreementLineEditRoute = ({
         queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.update.callout" /> });
-        handleClose();
+        if (!isCreateAnotherChecked) {
+          handleClose();
+        }
       })
   );
 
@@ -127,10 +130,12 @@ const AgreementLineEditRoute = ({
         onClose: handleClose,
       }}
       initialValues={getInitialValues()}
+      isCreateAnotherChecked={isCreateAnotherChecked}
       isEholdingsEnabled={stripes.hasPerm('module.eholdings.enabled')}
       isLoading={isLineLoading || areOrderLinesLoading}
       lineId={lineId}
       onSubmit={handleSubmit}
+      toggleCreateAnother={setCreateAnotherChecked}
     />
   );
 };
