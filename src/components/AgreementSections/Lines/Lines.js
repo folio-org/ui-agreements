@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { IfPermission } from '@folio/stripes/core';
-import { Button, Accordion, Badge, Spinner, Icon } from '@folio/stripes/components';
+import { Button, Accordion, Badge, Spinner, Icon, Dropdown, DropdownMenu } from '@folio/stripes/components';
 
 import CoveredEResourcesList from '../CoveredEResourcesList';
 import LinesList from '../LinesList';
@@ -31,28 +31,54 @@ export default class Lines extends React.Component {
   }
 
   getActionMenu = () => {
-    const buttons = [];
-    buttons.push(
-      <IfPermission perm="ui-agreements.agreements.edit">
-        <Button buttonStyle="dropdownItem" id="add-agreement-line-button" to={urls.agreementLineCreate(this.props.agreement.id)}>
-          <Icon icon="plus-sign" />
-          <FormattedMessage id="ui-agreements.agreementLines.newLine" />
-        </Button>
-      </IfPermission>
-    );
-    buttons.push(
-      <IfPermission perm="ui-agreements.agreements.edit">
-        <Button
-          buttonStyle="dropdownItem"
-          id="add-agreement-line-button"
-          // to={`${urls.agreementlines()}?filters=agreement.${agreementId}`}
-        >
-          <Icon icon="search" />
-          <FormattedMessage id="ui-agreements.agreementLines.viewInSearch" />
-        </Button>
-      </IfPermission>
-    );
-    return buttons.length ? buttons : null;
+    if (this.props.agreement?.agreementLinesCount > 0) {
+      return (
+        <>
+          <Dropdown
+            buttonProps={{ buttonStyle: 'primary' }}
+            data-testid="line-listing-action-dropdown"
+            label={<FormattedMessage id="stripes-components.paneMenuActionsToggleLabel" />}
+          >
+            <DropdownMenu>
+              <IfPermission perm="ui-agreements.agreements.edit">
+                <Button
+                  buttonStyle="dropdownItem"
+                  id="add-agreement-line-button"
+                  to={urls.agreementLineCreate(this.props.agreement.id)}
+                >
+                  <Icon icon="plus-sign">
+                    <FormattedMessage id="ui-agreements.agreementLines.newLine" />
+                  </Icon>
+                </Button>
+              </IfPermission>
+              <IfPermission perm="ui-agreements.agreements.edit">
+                <Button
+                  buttonStyle="dropdownItem"
+                  id="add-agreement-line-button"
+                  to={urls.agreementLineCreate(this.props.agreement.id)}
+                >
+                  <Icon icon="search">
+                    <FormattedMessage id="ui-agreements.agreementLines.viewInSearch" />
+                  </Icon>
+                </Button>
+              </IfPermission>
+            </DropdownMenu>
+          </Dropdown>
+          {this.renderBadge()}
+        </>
+      );
+    } else {
+      return (
+        <>
+          <IfPermission perm="ui-agreements.agreements.edit">
+            <Button id="add-agreement-line-button" to={urls.agreementLineCreate(this.props.agreement.id)}>
+              <FormattedMessage id="ui-agreements.agreementLines.addLine" />
+            </Button>
+          </IfPermission>
+          {this.renderBadge()}
+        </>
+      );
+    }
   }
 
   renderBadge = () => {
