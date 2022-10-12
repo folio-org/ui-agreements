@@ -32,26 +32,26 @@ export default class Lines extends React.Component {
 
   getActionMenu = () => {
     const buttons = [];
-      buttons.push(
-        <IfPermission perm="ui-agreements.agreements.edit">
-          <Button id="add-agreement-line-button" to={urls.agreementLineCreate(this.props.agreement.id)} buttonStyle="dropdownItem">
-            <Icon icon="plus-sign" />
-            <FormattedMessage id="ui-agreements.agreementLines.newLine" />
-          </Button>
-        </IfPermission>
-      );
-      buttons.push(
-        <IfPermission perm="ui-agreements.agreements.edit">
-          <Button
-            id="add-agreement-line-button"
-            //to={`${urls.agreementlines()}?filters=agreement.${agreementId}`}
-            buttonStyle="dropdownItem"
-          >
-            <Icon icon="search" />
-            <FormattedMessage id="ui-agreements.agreementLines.viewInSearch" />
-          </Button>
-        </IfPermission>
-      );
+    buttons.push(
+      <IfPermission perm="ui-agreements.agreements.edit">
+        <Button buttonStyle="dropdownItem" id="add-agreement-line-button" to={urls.agreementLineCreate(this.props.agreement.id)}>
+          <Icon icon="plus-sign" />
+          <FormattedMessage id="ui-agreements.agreementLines.newLine" />
+        </Button>
+      </IfPermission>
+    );
+    buttons.push(
+      <IfPermission perm="ui-agreements.agreements.edit">
+        <Button
+          buttonStyle="dropdownItem"
+          id="add-agreement-line-button"
+          // to={`${urls.agreementlines()}?filters=agreement.${agreementId}`}
+        >
+          <Icon icon="search" />
+          <FormattedMessage id="ui-agreements.agreementLines.viewInSearch" />
+        </Button>
+      </IfPermission>
+    );
     return buttons.length ? buttons : null;
   }
 
