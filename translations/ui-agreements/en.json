@@ -137,8 +137,6 @@
   "agreementLine.provideEresource": "Please provide an e-resource or description to continue",
   "agreementLine.addCustomCoverageTootlip": "Custom coverage can be added when an e-resource is linked",
   "agreementLines.addLine": "Add agreement line",
-  "agreementLines.newLine": "New agreement line",
-  "agreementLines.viewInSearch": "View in agreement lines search",
   "agreementLines.addCustomCoverage": "Add custom coverage",
   "agreementLines.costType": "Cost type",
   "agreementLines.count": "Count",

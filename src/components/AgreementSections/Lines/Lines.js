@@ -37,7 +37,7 @@ export default class Lines extends React.Component {
           <Dropdown
             buttonProps={{ buttonStyle: 'primary' }}
             data-testid="line-listing-action-dropdown"
-            label={<FormattedMessage id="stripes-components.paneMenuActionsToggleLabel" />}
+            label={<FormattedMessage id="ui-agreements.actions" />}
           >
             <DropdownMenu>
               <IfPermission perm="ui-agreements.agreements.edit">
@@ -55,7 +55,7 @@ export default class Lines extends React.Component {
                 <Button
                   buttonStyle="dropdownItem"
                   id="add-agreement-line-button"
-                  to={urls.agreementLineCreate(this.props.agreement.id)}
+                  to={`${urls.agreementLines()}?filters=agreement.${this.props.agreement.id}`}
                 >
                   <Icon icon="search">
                     <FormattedMessage id="ui-agreements.agreementLines.viewInSearch" />
