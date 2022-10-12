@@ -25,7 +25,12 @@ const AgreementLineCreateRoute = ({
   const ky = useOkapiKy();
   const stripes = useStripes();
   const queryClient = useQueryClient();
-  const [isCreateAnotherChecked, setCreateAnotherChecked] = useState(false);
+
+  /*
+ * This state tracks a checkbox on the form marked "Create another",
+ * which allows the user to redirect back to this form on submit
+ */
+  const [createAnother, setCreateAnother] = useState(false);
   const isSuppressFromDiscoveryEnabled = useSuppressFromDiscovery();
 
   const handleClose = () => {
@@ -40,7 +45,7 @@ const AgreementLineCreateRoute = ({
         queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.create.callout" /> });
-        if (isCreateAnotherChecked) {
+        if (createAnother) {
           history.push(`${urls.agreementLineCreate(agreementId)}${location.search}`);
         } else {
           history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
@@ -84,6 +89,7 @@ const AgreementLineCreateRoute = ({
 
   return (
     <View
+      createAnother={createAnother}
       data={{
         basket: (resources?.basket ?? []),
       }}
@@ -92,10 +98,9 @@ const AgreementLineCreateRoute = ({
         isSuppressFromDiscoveryEnabled,
         onClose: handleClose,
       }}
-      isCreateAnotherChecked={isCreateAnotherChecked}
       isEholdingsEnabled={stripes.hasPerm('module.eholdings.enabled')}
       onSubmit={handleSubmit}
-      toggleCreateAnother={setCreateAnotherChecked}
+      toggleCreateAnother={() => setCreateAnother(!createAnother)}
     />
   );
 };

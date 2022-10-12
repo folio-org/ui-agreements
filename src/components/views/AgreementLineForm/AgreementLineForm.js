@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'react-final-form';
 import setFieldData from 'final-form-set-field-data';
 import { handleSaveKeyCommand } from '@folio/stripes-erm-components';
 
@@ -59,7 +58,7 @@ const propTypes = {
   pristine: PropTypes.bool,
   submitting: PropTypes.bool,
   values: PropTypes.object,
-  isCreateAnotherChecked: PropTypes.bool,
+  createAnother: PropTypes.bool,
   toggleCreateAnother: PropTypes.func.isRequired,
 };
 
@@ -74,7 +73,7 @@ const AgreementLineForm = ({
   pristine,
   submitting,
   values,
-  isCreateAnotherChecked = false,
+  createAnother = false,
   toggleCreateAnother,
 }) => {
   const hasLoaded = form.getRegisteredFields().length > 0;
@@ -157,16 +156,15 @@ const AgreementLineForm = ({
               renderEnd={(
                 <>
                   <span className={css.createAnotherCheckbox}>
-                    <Field
-                      checked={isCreateAnotherChecked}
+                    <Checkbox
+                      // checked={createAnother}
                       component={Checkbox}
                       id="agreement-line-create-another"
                       inline
                       label={<FormattedMessage id="ui-agreements.agreementLines.createAnother" />}
-                      name="createAnother"
                       onChange={e => toggleCreateAnother(e.target.checked)}
                       type="checkbox"
-                      value={isCreateAnotherChecked}
+                      // value={createAnother}
                       vartical
                     />
                   </span>
@@ -178,7 +176,7 @@ const AgreementLineForm = ({
                     onClick={handleSubmit}
                     type="submit"
                   >
-                    <FormattedMessage id={isCreateAnotherChecked ? 'stripes-core.button.save' : 'stripes-components.saveAndClose'} />
+                    <FormattedMessage id={createAnother ? 'stripes-core.button.save' : 'stripes-components.saveAndClose'} />
                   </Button>
                 </>
               )}

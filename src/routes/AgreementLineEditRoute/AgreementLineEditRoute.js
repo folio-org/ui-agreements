@@ -26,7 +26,12 @@ const AgreementLineEditRoute = ({
   const callout = useContext(CalloutContext);
   const stripes = useStripes();
   const queryClient = useQueryClient();
-  const [isCreateAnotherChecked, setCreateAnotherChecked] = useState(false);
+
+  /*
+ * This state tracks a checkbox on the form marked "Create another",
+ * which allows the user to redirect back to this form on submit
+ */
+  const [createAnother, setCreateAnother] = useState(false);
   const isSuppressFromDiscoveryEnabled = useSuppressFromDiscovery();
 
   const agreementLinePath = AGREEMENT_LINE_ENDPOINT(lineId);
@@ -67,7 +72,7 @@ const AgreementLineEditRoute = ({
         queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.update.callout" /> });
-        if (!isCreateAnotherChecked) {
+        if (!createAnother) {
           handleClose();
         }
       })
@@ -122,7 +127,7 @@ const AgreementLineEditRoute = ({
       payload = { resource: linkedResource, ...rest, type };
     }
 
-    if (isCreateAnotherChecked) {
+    if (createAnother) {
       postAgreementLine(line);
     } else {
       putAgreementLine({
@@ -137,6 +142,7 @@ const AgreementLineEditRoute = ({
   return (
     <View
       key={`agreement-line-edit-pane-${lineId}`}
+      createAnother={createAnother}
       data={{
         basket: (resources?.basket ?? []),
         line: getCompositeLine(),
@@ -147,12 +153,11 @@ const AgreementLineEditRoute = ({
         onClose: handleClose,
       }}
       initialValues={getInitialValues()}
-      isCreateAnotherChecked={isCreateAnotherChecked}
       isEholdingsEnabled={stripes.hasPerm('module.eholdings.enabled')}
       isLoading={isLineLoading || areOrderLinesLoading}
       lineId={lineId}
       onSubmit={handleSubmit}
-      toggleCreateAnother={setCreateAnotherChecked}
+      toggleCreateAnother={() => setCreateAnother(!createAnother)}
     />
   );
 };
