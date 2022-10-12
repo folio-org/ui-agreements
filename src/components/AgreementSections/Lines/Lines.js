@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { IfPermission } from '@folio/stripes/core';
-import { Button, Accordion, Badge, Spinner, MenuSection } from '@folio/stripes/components';
+import { Button, Accordion, Badge, Spinner, Icon } from '@folio/stripes/components';
 
 import CoveredEResourcesList from '../CoveredEResourcesList';
 import LinesList from '../LinesList';
 import { urls } from '../../utilities';
 
-const intl = useIntl();
 
 export default class Lines extends React.Component {
   static propTypes = {
@@ -31,52 +30,29 @@ export default class Lines extends React.Component {
     id: PropTypes.string,
   }
 
-  renderAddAgreementLineButtonAndBadge = () => {
-    return (
-      <>
-        <MenuSection
-          label={<FormattedMessage id="ui-agreements.actions" />}
-          id="actions-menu-section"
-        >
-          <IfPermission perm="ui-agreements.agreements.edit">
-            <PaneMenu>
-              <FormattedMessage id="stripes-smart-components.addNew">
-                {ariaLabel => (
-                  <Button
-                    id="add-agreement-line-button"
-                    aria-label={ariaLabel}
-                    to={urls.agreementLineCreate(this.props.agreement.id)}
-                    buttonStyle="dropdownItem"
-                    marginBottom0
-                  >
-                    <Icon icon="plus-sign">
-                      <FormattedMessage id="stripes-smart-components.new" />
-                    </Icon>
-                  </Button>
-                )}
-              </FormattedMessage>
-            </PaneMenu>
-          </IfPermission>
-          {/*<IfPermission perm="ui-users.lost-items.requiring-actual-cost">*/}
-          {/*  <Button*/}
-          {/*    id="requiring-actual-cost"*/}
-          {/*    to="/users/lost-items"*/}
-          {/*    buttonStyle="dropdownItem"*/}
-          {/*  >*/}
-          {/*    <Icon icon="edit">*/}
-          {/*      <FormattedMessage id="ui-users.actionMenu.lostItems" />*/}
-          {/*    </Icon>*/}
-          {/*  </Button>*/}
-          {/*</IfPermission>*/}
-        </MenuSection>
-        {/*<IfPermission perm="ui-agreements.agreements.edit">*/}
-        {/*  <Button id="add-agreement-line-button" to={urls.agreementLineCreate(this.props.agreement.id)}>*/}
-        {/*    <FormattedMessage id="ui-agreements.agreementLines.addLine" />*/}
-        {/*  </Button>*/}
-        {/*</IfPermission>*/}
-        {this.renderBadge()}
-      </>
-    );
+  getActionMenu = () => {
+    const buttons = [];
+      buttons.push(
+        <IfPermission perm="ui-agreements.agreements.edit">
+          <Button id="add-agreement-line-button" to={urls.agreementLineCreate(this.props.agreement.id)} buttonStyle="dropdownItem">
+            <Icon icon="plus-sign" />
+            <FormattedMessage id="ui-agreements.agreementLines.newLine" />
+          </Button>
+        </IfPermission>
+      );
+      buttons.push(
+        <IfPermission perm="ui-agreements.agreements.edit">
+          <Button
+            id="add-agreement-line-button"
+            //to={`${urls.agreementlines()}?filters=agreement.${agreementId}`}
+            buttonStyle="dropdownItem"
+          >
+            <Icon icon="search" />
+            <FormattedMessage id="ui-agreements.agreementLines.viewInSearch" />
+          </Button>
+        </IfPermission>
+      );
+    return buttons.length ? buttons : null;
   }
 
   renderBadge = () => {
@@ -95,7 +71,7 @@ export default class Lines extends React.Component {
     return (
       <Accordion
         displayWhenClosed={this.renderBadge()}
-        displayWhenOpen={this.renderAddAgreementLineButtonAndBadge()}
+        displayWhenOpen={this.getActionMenu()}
         id={id}
         label={<FormattedMessage id="ui-agreements.agreementLines" />}
       >
