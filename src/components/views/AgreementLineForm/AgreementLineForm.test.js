@@ -3,7 +3,6 @@ import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { Checkbox } from '@folio/stripes-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { screen } from '@testing-library/react';
 import translationsProperties from '../../../../test/helpers';
 import AgreementLineForm from './AgreementLineForm';
 
