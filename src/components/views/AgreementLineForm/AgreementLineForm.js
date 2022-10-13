@@ -19,11 +19,13 @@ import {
   Row,
   checkScope,
   collapseAllSections,
-  expandAllSections
+  expandAllSections,
+  Checkbox
 } from '@folio/stripes/components';
 
 import { AppIcon } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
+import css from './AgreementLineForm.css';
 import { FormInfo, FormPOLines, FormCoverage, FormEresource } from '../../AgreementLineSections';
 import IfEResourcesEnabled from '../../IfEResourcesEnabled';
 
@@ -56,6 +58,8 @@ const propTypes = {
   pristine: PropTypes.bool,
   submitting: PropTypes.bool,
   values: PropTypes.object,
+  createAnother: PropTypes.bool,
+  toggleCreateAnother: PropTypes.func.isRequired,
 };
 
 
@@ -69,14 +73,14 @@ const AgreementLineForm = ({
   pristine,
   submitting,
   values,
+  createAnother = false,
+  toggleCreateAnother,
 }) => {
   const hasLoaded = form.getRegisteredFields().length > 0;
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
-
   const [agreementLineSource, setAgreementLineSource] = useState('basket');
 
   const accordionStatusRef = useRef();
-
   /* istanbul ignore next */
   const shortcuts = [
     {
@@ -150,16 +154,31 @@ const AgreementLineForm = ({
           footer={(
             <PaneFooter
               renderEnd={(
-                <Button
-                  buttonStyle="primary mega"
-                  disabled={pristine || submitting}
-                  id="clickable-update-agreement-line"
-                  marginBottom0
-                  onClick={handleSubmit}
-                  type="submit"
-                >
-                  <FormattedMessage id="stripes-components.saveAndClose" />
-                </Button>
+                <>
+                  <span className={css.createAnotherCheckbox}>
+                    <Checkbox
+                      // checked={createAnother}
+                      component={Checkbox}
+                      id="agreement-line-create-another"
+                      inline
+                      label={<FormattedMessage id="ui-agreements.agreementLines.createAnother" />}
+                      onChange={e => toggleCreateAnother(e.target.checked)}
+                      type="checkbox"
+                      // value={createAnother}
+                      vartical
+                    />
+                  </span>
+                  <Button
+                    buttonStyle="primary mega"
+                    disabled={pristine || submitting}
+                    id="clickable-update-agreement-line"
+                    marginBottom0
+                    onClick={handleSubmit}
+                    type="submit"
+                  >
+                    <FormattedMessage id={createAnother ? 'stripes-core.button.save' : 'stripes-components.saveAndClose'} />
+                  </Button>
+                </>
               )}
               renderStart={(
                 <Button
