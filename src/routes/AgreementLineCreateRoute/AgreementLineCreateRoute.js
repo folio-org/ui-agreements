@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -26,6 +26,11 @@ const AgreementLineCreateRoute = ({
   const stripes = useStripes();
   const queryClient = useQueryClient();
 
+  /*
+ * This state tracks a checkbox on the form marked "Create another",
+ * which allows the user to redirect back to this form on submit
+ */
+  const [createAnother, setCreateAnother] = useState(false);
   const isSuppressFromDiscoveryEnabled = useSuppressFromDiscovery();
 
   const handleClose = () => {
@@ -40,7 +45,11 @@ const AgreementLineCreateRoute = ({
         queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.create.callout" /> });
-        history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
+        if (createAnother) {
+          history.push(`${urls.agreementLineCreate(agreementId)}${location.search}`);
+        } else {
+          history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
+        }
       })
   );
 
@@ -74,12 +83,13 @@ const AgreementLineCreateRoute = ({
         ...rest
       };
     }
-
     postAgreementLine(items);
   };
 
+
   return (
     <View
+      createAnother={createAnother}
       data={{
         basket: (resources?.basket ?? []),
       }}
@@ -90,6 +100,7 @@ const AgreementLineCreateRoute = ({
       }}
       isEholdingsEnabled={stripes.hasPerm('module.eholdings.enabled')}
       onSubmit={handleSubmit}
+      toggleCreateAnother={() => setCreateAnother(!createAnother)}
     />
   );
 };
