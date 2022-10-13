@@ -17,7 +17,7 @@
     "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-agreements ./translations/ui-agreements/compiled"
   },
   "devDependencies": {
-    "@babel/core": "7.18.6",
+    "@babel/core": "^7.18.6",
     "@babel/eslint-parser": "^7.15.0",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-proposal-decorators": "^7.12.1",
@@ -32,6 +32,7 @@
     "@folio/eslint-config-stripes": "^6.1.0",
     "@folio/stripes": "^7.2.0",
     "@folio/stripes-cli": "^2.6.0",
+    "@folio/stripes-erm-components": "^6.2.0",
     "@folio/stripes-testing": "^4.2.0",
     "@formatjs/cli": "^4.2.31",
     "@interactors/html": "^1.0.0-rc1.2",
@@ -73,8 +74,7 @@
   },
   "dependencies": {
     "@folio/stripes-acq-components": "^3.1.0",
-    "@folio/stripes-erm-components": "^6.2.0",
-    "@k-int/stripes-kint-components": "^2.8.2",
+    "@k-int/stripes-kint-components": "^3.0.2",
     "@rehooks/local-storage": "2.4.4",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
@@ -89,6 +89,7 @@
   },
   "peerDependencies": {
     "@folio/stripes": "^7.2.0",
+    "@folio/stripes-erm-components": "^6.2.0",
     "moment": "^2.29.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -114,11 +115,10 @@
     "optionalOkapiInterfaces": {
       "order-lines": "2.0 3.0",
       "organizations-storage.interfaces": "2.0",
-      "users": "13.0 14.0 15.0"
+      "users": "13.0 14.0 15.0 16.0"
     },
     "stripesDeps": [
-      "@folio/stripes-erm-components",
-      "@k-int/stripes-kint-components"
+      "@folio/stripes-erm-components"
     ],
     "permissionSets": [
       {
@@ -291,6 +291,11 @@
         "name": "app",
         "alt": "ERM agreement functionality for Stripes",
         "title": "Agreements"
+      },
+      {
+        "name": "agreementLine",
+        "alt": " ",
+        "title": "Agreement line"
       },
       {
         "name": "closedAgreement",

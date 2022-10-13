@@ -1,6 +1,7 @@
 
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
+import { HTML, including } from '@folio/stripes-testing';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import EResourceIdentifier from './EResourceIdentifier';
 
@@ -33,6 +34,22 @@ const titleInstanceWithIdentifier = {
       },
       'identifier':{
         'value':'9781845425678',
+        'ns':{
+          'value':'isbn'
+        }
+      }
+    },
+    {
+      'title':{
+        'id':'e77aa4d1-3f93-4996-ae1e-878612bf2556'
+      },
+      'status':{
+        'id':'2c9180b476aa415c0176aa41cda80047',
+        'value':'approved',
+        'label':'approved'
+      },
+      'identifier':{
+        'value':'9781845425679',
         'ns':{
           'value':'isbn'
         }
@@ -98,15 +115,23 @@ const titleInstanceWithoutIdentifier = {
 };
 
 describe('EResourceIdentifier', () => {
-  test('renders expected identifier for Title with identifier', () => {
-    const { getByTestId } = renderWithIntl(
+  describe('renders expected identifiers for Title with identifiers', () => {
+    renderWithIntl(
       <EResourceIdentifier
         titleInstance={titleInstanceWithIdentifier}
         type="isbn"
       />
     );
 
-    expect(getByTestId('eresourceIdentifier')).toHaveTextContent('9781845425678');
+    /* the following is a workaround
+       if PR https://issues.folio.org/browse/STCOM-1040 is fixed
+       write new test(s) with the List and ListItem interactor
+       (https://github.com/folio-org/stripes-testing/blob/master/doc/interactors.md#list)
+    */
+
+    test('renders the identifier as a List ', async () => {
+      await HTML({ className: including('list') }).exists();
+    });
   });
 
   test('renders null for Title with no identifier ', () => {
@@ -120,5 +145,3 @@ describe('EResourceIdentifier', () => {
     expect(container.firstChild).toBeNull();
   });
 });
-
-

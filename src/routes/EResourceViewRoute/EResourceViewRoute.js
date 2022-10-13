@@ -70,7 +70,6 @@ const EResourceViewRoute = ({
     }
   );
 
-
   // RELATED ENTITLEMENTS FOR ERESOURCE BATCH FETCH
   const {
     results: relatedEntitlements,
@@ -78,7 +77,10 @@ const EResourceViewRoute = ({
   } = useBatchedFetch({
     batchLimit: entitlementsCount,
     batchSize: RECORDS_PER_REQUEST_MEDIUM,
-    path: ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT(eresourceId)
+    path: ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT(eresourceId),
+    queryParams: {
+      enabled: (!!eresource?.id && eresource?.class !== 'org.olf.kb.Pkg')
+    }
   });
 
   // ENTITLEMENT OPTIONS FOR ERESOURCE INFINITE FETCH

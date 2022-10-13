@@ -34,9 +34,6 @@ export default class Terms extends React.Component {
             customProperty={customProperties?.[term.name]?.[0]}
             customPropertyDefinition={term}
             index={index}
-            labelOverrides={{
-              retiredName: (name) => <FormattedMessage id="ui-agreements.supplementaryProperties.deprecated" values={{ name }} />,
-            }}
           />
         ))}
       </div>

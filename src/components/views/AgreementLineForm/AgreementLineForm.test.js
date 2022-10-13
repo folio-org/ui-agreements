@@ -1,6 +1,7 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { Checkbox } from '@folio/stripes-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import AgreementLineForm from './AgreementLineForm';
@@ -29,6 +30,7 @@ describe('AgreementLineForm', () => {
     renderComponent = renderWithIntl(
       <MemoryRouter>
         <AgreementLineForm
+          createAnother
           data={{}}
           form={{
             change: () => jest.fn(),
@@ -65,5 +67,13 @@ describe('AgreementLineForm', () => {
   it('renders the FormEresource component', () => {
     const { getByText } = renderComponent;
     expect(getByText('FormEresource')).toBeInTheDocument();
+  });
+
+  test('renders the create another Checkbox', async () => {
+    await Checkbox({ id: 'agreement-line-create-another' }).exists();
+  });
+
+  test('renders the create another Checkbox as checked', async () => {
+    Checkbox('Create another').is({ checked: true });
   });
 });

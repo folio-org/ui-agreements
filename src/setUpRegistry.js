@@ -21,6 +21,7 @@ const setUpRegistry = (registry) => {
 
   // AgreementLine Resource
   const aglReg = registry.registerResource('agreementLine');
+  aglReg.setViewResources(al => `/erm/agreementLines/${al.id}`);
   aglReg.setViewResource(al => `/erm/agreements/${al.owner?.id}/line/${al.id}`);
 
   // ErmPackage Resource

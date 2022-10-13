@@ -1,4 +1,6 @@
 import React from 'react';
+import { waitFor } from '@testing-library/dom';
+
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
@@ -11,11 +13,6 @@ jest.mock('@folio/stripes-erm-components', () => ({
   ...jest.requireActual('@folio/stripes-erm-components'),
   ...mockErmComponents,
   OrganizationSelection: () => <div>OrganizationSelection</div>,
-}));
-
-jest.mock('@k-int/stripes-kint-components', () => ({
-  ...jest.requireActual('@k-int/stripes-kint-components'),
-  CustomPropertiesFilter: () => <div>CustomPropertiesFilter</div>,
 }));
 
 const stateMock = jest.fn();
@@ -92,53 +89,31 @@ describe('AgreementFilters', () => {
     expect(getByText('OrganizationSelection')).toBeInTheDocument();
   });
 
-  test('clicking the closed checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-agreementStatus-closed' }).click();
-    expect(stateMock).toHaveBeenCalled();
-  });
+  let index = 1;
+  const testAgreementFilterCheckbox = (field, value) => (
+    test(`clicking the ${value} checkbox`, async () => {
+      await waitFor(async () => {
+        await Checkbox({ id: `clickable-filter-${field}-${value}` }).click();
+      });
 
-  test('clicking the draft checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-agreementStatus-draft' }).click();
-    expect(stateMock).toHaveBeenCalled();
-  });
+      await waitFor(() => {
+        expect(stateMock.mock.calls.length).toEqual(index);
+      });
 
-  test('clicking the requested checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-agreementStatus-requested' }).click();
-    expect(stateMock).toHaveBeenCalled();
-  });
+      index++;
+    })
+  );
 
-  test('clicking the in negotiation checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-agreementStatus-in-negotiation' }).click();
-    expect(stateMock).toHaveBeenCalled();
-  });
+  testAgreementFilterCheckbox('agreementStatus', 'closed');
+  testAgreementFilterCheckbox('agreementStatus', 'draft');
+  testAgreementFilterCheckbox('agreementStatus', 'requested');
+  testAgreementFilterCheckbox('agreementStatus', 'in-negotiation');
+  testAgreementFilterCheckbox('agreementStatus', 'active');
 
-  test('clicking the active checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-agreementStatus-active' }).click();
-    expect(stateMock).toHaveBeenCalled();
-  });
+  testAgreementFilterCheckbox('renewalPriority', 'for-review');
+  testAgreementFilterCheckbox('renewalPriority', 'definitely-renew');
+  testAgreementFilterCheckbox('renewalPriority', 'definitely-cancel');
 
-  test('clicking the for review checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-renewalPriority-for-review' }).click();
-    expect(stateMock).toHaveBeenCalled();
-  });
-
-  test('clicking the definitely renew checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-renewalPriority-definitely-renew' }).click();
-    expect(stateMock).toHaveBeenCalled();
-  });
-
-  test('clicking the definitely cancel checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-renewalPriority-definitely-cancel' }).click();
-    expect(stateMock).toHaveBeenCalled();
-  });
-
-  test('clicking the yes checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-isPerpetual-yes' }).click();
-    expect(stateMock).toHaveBeenCalled();
-  });
-
-  test('clicking the no checkbox', async () => {
-    await Checkbox({ id: 'clickable-filter-isPerpetual-no' }).click();
-    expect(stateMock).toHaveBeenCalled();
-  });
+  testAgreementFilterCheckbox('isPerpetual', 'yes');
+  testAgreementFilterCheckbox('isPerpetual', 'no');
 });

@@ -272,12 +272,6 @@ const Agreement = ({
                   customProperties={data.agreement.customProperties}
                   customPropertiesEndpoint={CUSTPROP_ENDPOINT}
                   id="supplementaryProperties"
-                  labelOverrides={{
-                    defaultTitle: (ctx) => <FormattedMessage id="ui-agreements.supplementaryProperties.defaultTitle" values={{ ctx }} />,
-                    noContext: <FormattedMessage id="ui-agreements.supplementaryProperties" />,
-                    OpenAccess: <FormattedMessage id="ui-agreements.openAccessProperties" />,
-                    retiredName: (name) => <FormattedMessage id="ui-agreements.supplementaryProperties.deprecated" values={{ name }} />,
-                  }}
                 />
                 {data.agreement?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...getSectionProps('supplementaryDocs')} />}
                 {data.agreement?.usageDataProviders?.length > 0 && <UsageData {...getSectionProps('usageData')} />}
@@ -334,7 +328,7 @@ Agreement.propTypes = {
     eresourcesFilterPath: PropTypes.string,
     searchString: PropTypes.string,
     tagsLink: PropTypes.string,
-    tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.array)
+    tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
   }).isRequired,
   handlers: PropTypes.shape({
     onClone: PropTypes.func.isRequired,

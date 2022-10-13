@@ -5,7 +5,6 @@ import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
 import {
   Button,
-  ButtonGroup,
   Icon,
   MultiColumnList,
   Pane,
@@ -25,9 +24,9 @@ import {
 
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
-import IfEResourcesEnabled from '../../IfEResourcesEnabled';
 import { urls } from '../../utilities';
 import css from '../Agreements.css';
+import RouteSwitcher from '../../RouteSwitcher';
 
 const propTypes = {
   children: PropTypes.object,
@@ -113,28 +112,7 @@ const Platforms = ({
                     paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                   >
                     <form onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}>
-                      <IfEResourcesEnabled>
-                        <ButtonGroup fullWidth>
-                          <Button
-                            id="clickable-nav-agreements"
-                            to={urls.agreements()}
-                          >
-                            <FormattedMessage id="ui-agreements.agreements" />
-                          </Button>
-                          <Button
-                            id="clickable-nav-eresources"
-                            to={urls.eresources()}
-                          >
-                            <FormattedMessage id="ui-agreements.eresources" />
-                          </Button>
-                          <Button
-                            buttonStyle="primary"
-                            id="clickable-nav-platforms"
-                          >
-                            <FormattedMessage id="ui-agreements.platforms" />
-                          </Button>
-                        </ButtonGroup>
-                      </IfEResourcesEnabled>
+                      <RouteSwitcher />
                       {/* TODO: Use forthcoming <SearchGroup> or similar component */}
                       <div className={css.searchGroupWrap}>
                         <FormattedMessage id="ui-agreements.agreements.searchInputLabel">
