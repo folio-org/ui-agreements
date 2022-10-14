@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitFor, within, screen } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { Button, Datepicker, TextField } from '@folio/stripes-testing';
@@ -214,8 +214,6 @@ describe('CoverageFieldArray', () => {
       </TestForm>, translationsProperties
     );
 
-
-
     userEvent.clear(within(getByTestId('coverageFieldArray[1]')).getByRole('textbox', { name: /end date/i }));
     userEvent.click(within(getByTestId('coverageFieldArray[1]')).getByRole('textbox', { name: /start date/i }));
 
@@ -224,7 +222,6 @@ describe('CoverageFieldArray', () => {
     await TextField({ id: 'cc-end-date-0' }).fillIn('The following coverages have overlapping dates:');
     await waitFor(() => expect(queryByText(/The following coverages have overlapping dates:/i)).not.toBeInTheDocument());
   });
-
 
   test('expected values are submitted', async () => {
     renderWithIntl(
