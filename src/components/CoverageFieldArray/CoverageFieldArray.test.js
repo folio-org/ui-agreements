@@ -1,8 +1,8 @@
 import React from 'react';
-import { waitFor, within } from '@testing-library/react';
+import { waitFor, within, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { Button, Datepicker } from '@folio/stripes-testing';
+import { Button, Datepicker, TextField } from '@folio/stripes-testing';
 
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { FieldArray } from 'react-final-form-arrays';
@@ -77,9 +77,6 @@ describe('CoverageFieldArray', () => {
     expect(within(getByTestId('coverageFieldArray[0]')).getByRole('textbox', { name: /end volume/i })).toBeInTheDocument();
     expect(within(getByTestId('coverageFieldArray[0]')).getByRole('textbox', { name: /end issue/i })).toBeInTheDocument();
   });
-
-
-
 
   test('add coverage/delete coverage buttons work as expected', async () => {
     const { getByRole, queryAllByTestId } = renderWithIntl(
@@ -217,11 +214,14 @@ describe('CoverageFieldArray', () => {
       </TestForm>, translationsProperties
     );
 
+
+
     userEvent.clear(within(getByTestId('coverageFieldArray[1]')).getByRole('textbox', { name: /end date/i }));
     userEvent.click(within(getByTestId('coverageFieldArray[1]')).getByRole('textbox', { name: /start date/i }));
 
     await waitFor(() => expect(queryAllByText(/The following coverages have overlapping dates:/i)[0]).toBeInTheDocument());
     userEvent.type(within(getByTestId('coverageFieldArray[1]')).getByRole('textbox', { name: /end date/i }), '05/10/2007');
+    await TextField({ id: 'cc-end-date-0' }).fillIn('The following coverages have overlapping dates:');
     await waitFor(() => expect(queryByText(/The following coverages have overlapping dates:/i)).not.toBeInTheDocument());
   });
 
