@@ -1,5 +1,5 @@
 import React from 'react';
-import { waitFor, within } from '@testing-library/react';
+import { within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { Button, TextField } from '@folio/stripes-testing';
@@ -133,7 +133,7 @@ describe('CoverageFieldArray', () => {
   });
 
   test('multiple coverages render as expected', async () => {
-    const { getByTestId, queryAllByTestId } = renderWithIntl(
+    const { queryAllByTestId } = renderWithIntl(
       <TestForm
         initialValues={{ coverageFieldArrayTest:doubleCoverage }}
         onSubmit={onSubmit}
