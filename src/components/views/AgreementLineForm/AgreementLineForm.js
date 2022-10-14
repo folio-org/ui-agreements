@@ -54,7 +54,6 @@ const propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   isEholdingsEnabled: PropTypes.bool,
   lineId: PropTypes.string,
-  onSubmit: PropTypes.func,
   pristine: PropTypes.bool,
   submitting: PropTypes.bool,
   values: PropTypes.object,
