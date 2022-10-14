@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 import {
   Col,
@@ -17,7 +18,7 @@ import PackageCard from '../../PackageCard';
 import PackageCardExternal from '../../PackageCardExternal';
 import TitleCard from '../../TitleCard';
 import TitleCardExternal from '../../TitleCardExternal';
-import { isDetached, isExternal } from '../../utilities';
+import { isDetached, isExternal, urls } from '../../utilities';
 
 const propTypes = {
   isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
@@ -30,6 +31,7 @@ const propTypes = {
     lastUpdated: PropTypes.string,
     note: PropTypes.string,
     owner: PropTypes.shape({
+      id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     }),
     resource: PropTypes.shape({
@@ -59,7 +61,7 @@ const Info = ({
       />
       <KeyValue label={<FormattedMessage id="ui-agreements.line.parentAgreement" />}>
         <div data-test-agreement-line-agreement>
-          {line.owner?.name ?? <NoValue />}
+          {line.owner?.id ? <Link to={urls.agreementView(line.owner.id)}>{line.owner.name}</Link> : <NoValue />}
         </div>
       </KeyValue>
       <Row>

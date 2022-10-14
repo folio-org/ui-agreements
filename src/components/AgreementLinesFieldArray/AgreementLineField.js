@@ -28,9 +28,12 @@ export default class AgreementLineField extends React.Component {
     index: PropTypes.number,
     input: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      value: PropTypes.shape({
-        description: PropTypes.string,
-      })
+      value: PropTypes.oneOfType([
+        PropTypes.shape({
+          description: PropTypes.string,
+        }),
+        PropTypes.string // input.value can be '' when unset/initialised
+      ]),
     }).isRequired,
     meta: PropTypes.shape({
       error: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
@@ -39,11 +42,11 @@ export default class AgreementLineField extends React.Component {
     onResourceSelected: PropTypes.func,
     poLines: PropTypes.arrayOf(PropTypes.object),
     resource: PropTypes.object,
-  }
+  };
 
   static defaultProps = {
     resource: {},
-  }
+  };
 
   validateDateOrder = (value, allValues, meta) => {
     if (value && meta) {

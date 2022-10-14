@@ -2,6 +2,8 @@ import React from 'react';
 import { waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@folio/stripes-erm-components/test/jest/__mock__';
+import { Button, Datepicker, TextArea, TextField } from '@folio/stripes-testing';
+
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { FieldArray } from 'react-final-form-arrays';
 
@@ -64,7 +66,7 @@ describe('AgreementPeriodsFieldArray', () => {
     expect(within(getByTestId('agreementPeriodsFieldArray[0]')).getByRole('textbox', { name: /period note/i })).toBeInTheDocument();
   });
 
-  test('add period/delete period buttons work as expected', () => {
+  test('add period/delete period buttons work as expected', async () => {
     const { getByRole, queryAllByTestId } = renderWithIntl(
       <TestForm
         initialValues={{ agreementPeriodsFieldArrayTest:multiplePeriods }}
@@ -79,25 +81,29 @@ describe('AgreementPeriodsFieldArray', () => {
     );
 
     // Expect remove agreement period button 2
+    // IconButton calls seem to not work right now
+    // await IconButton('Remove agreement period 2').exists();
     expect(getByRole('button', { name: /remove agreement period 2/i })).toBeInTheDocument();
     // Expect remove agreement period tooltip 2
+    // Tooltip calls seem to not work right now
+    // await Tooltip('Remove agreement period 2').exists();
     expect(getByRole('tooltip', { name: /remove agreement period 2/i })).toBeInTheDocument();
 
     // Double check we currently have 2 agreement period edit cards
     // use length of queryAllBy to avoid relying on indexes which may give false positives
     expect(queryAllByTestId(/agreementPeriodsFieldArray\[.*\]/i).length).toEqual(2);
     // Remove second card from form
-    userEvent.click(getByRole('button', { name: /remove agreement period 2/i }));
+    await waitFor(() => userEvent.click(getByRole('button', { name: /remove agreement period 2/i })));
     expect(queryAllByTestId(/agreementPeriodsFieldArray\[.*\]/i).length).toEqual(1);
 
     // Expect add agreement period button
-    expect(getByRole('button', { name: /add agreement period/i })).toBeInTheDocument();
-    userEvent.click(getByRole('button', { name: /add agreement period/i }));
+    await Button('Add agreement period').exists();
+    await Button('Add agreement period').click();
     expect(queryAllByTestId(/agreementPeriodsFieldArray\[.*\]/i).length).toEqual(2);
   });
 
-  test('multiple agreement periods render as expected', () => {
-    const { getByTestId, queryAllByTestId } = renderWithIntl(
+  test('multiple agreement periods render as expected', async () => {
+    const { queryAllByTestId } = renderWithIntl(
       <TestForm
         initialValues={{ agreementPeriodsFieldArrayTest:multiplePeriods }}
         onSubmit={onSubmit}
@@ -110,16 +116,20 @@ describe('AgreementPeriodsFieldArray', () => {
       </TestForm>, translationsProperties
     );
 
+    // Interactors inside field arrays aren't super helpful
     expect(queryAllByTestId(/agreementPeriodsFieldArray\[.*\]/i).length).toEqual(2);
-    expect(within(getByTestId('agreementPeriodsFieldArray[0]')).getByRole('textbox', { name: /start date/i }).value).toEqual('01/26/2021');
-    expect(within(getByTestId('agreementPeriodsFieldArray[0]')).getByRole('textbox', { name: /end date/i }).value).toEqual('01/25/2022');
-    expect(within(getByTestId('agreementPeriodsFieldArray[0]')).getByRole('textbox', { name: /cancellation deadline/i }).value).toEqual('01/01/2022');
-    expect(within(getByTestId('agreementPeriodsFieldArray[0]')).getByRole('textbox', { name: /period note/i }).value).toEqual('multiple period note 1');
 
-    expect(within(getByTestId('agreementPeriodsFieldArray[1]')).getByRole('textbox', { name: /start date/i }).value).toEqual('01/26/2022');
-    expect(within(getByTestId('agreementPeriodsFieldArray[1]')).getByRole('textbox', { name: /end date/i }).value).toEqual('01/25/2023');
-    expect(within(getByTestId('agreementPeriodsFieldArray[1]')).getByRole('textbox', { name: /cancellation deadline/i }).value).toEqual('01/01/2023');
-    expect(within(getByTestId('agreementPeriodsFieldArray[1]')).getByRole('textbox', { name: /period note/i }).value).toEqual('multiple period note 2');
+    await Datepicker({ id: 'period-start-date-0' }).has({ inputValue: '01/26/2021' });
+    await Datepicker({ id: 'period-end-date-0' }).has({ inputValue: '01/25/2022' });
+
+    await TextField({ id: 'period-cancellation-deadline-0' }).has({ value: '01/01/2022' });
+    await TextArea({ id: 'period-note-0' }).has({ value: 'multiple period note 1' });
+
+    await Datepicker({ id: 'period-start-date-1' }).has({ inputValue: '01/26/2022' });
+    await Datepicker({ id: 'period-end-date-1' }).has({ inputValue: '01/25/2023' });
+
+    await TextField({ id: 'period-cancellation-deadline-1' }).has({ value: '01/01/2023' });
+    await TextArea({ id: 'period-note-1' }).has({ value: 'multiple period note 2' });
   });
 
   test('overlapping period warning works as expected', async () => {
@@ -136,17 +146,17 @@ describe('AgreementPeriodsFieldArray', () => {
       </TestForm>, translationsProperties
     );
 
-    userEvent.clear(within(getByTestId('agreementPeriodsFieldArray[0]')).getByRole('textbox', { name: /end date/i }));
+    await userEvent.clear(within(getByTestId('agreementPeriodsFieldArray[0]')).getByRole('textbox', { name: /end date/i }));
     // This one currently only fires in the UI if you click away
-    userEvent.click(within(getByTestId('agreementPeriodsFieldArray[0]')).getByRole('textbox', { name: /start date/i }));
+    await waitFor(() => userEvent.click(within(getByTestId('agreementPeriodsFieldArray[0]')).getByRole('textbox', { name: /start date/i })));
 
     await waitFor(() => expect(queryAllByText(/The following periods have overlapping dates:/i)[0]).toBeInTheDocument());
     await waitFor(() => expect(queryAllByText(/The following periods have overlapping dates:/i)[1]).toBeInTheDocument());
-    userEvent.type(within(getByTestId('agreementPeriodsFieldArray[0]')).getByRole('textbox', { name: /end date/i }), '01/25/2022');
+    await waitFor(() => userEvent.type(within(getByTestId('agreementPeriodsFieldArray[0]')).getByRole('textbox', { name: /end date/i }), '01/25/2022'));
     await waitFor(() => expect(queryByText(/The following periods have overlapping dates:/i)).not.toBeInTheDocument());
   });
 
-  test('expected values are submitted', () => {
+  test('expected values are submitted', async () => {
     const { getByTestId } = renderWithIntl(
       <TestForm
         initialValues={{ agreementPeriodsFieldArrayTest:multiplePeriods }}
@@ -159,6 +169,8 @@ describe('AgreementPeriodsFieldArray', () => {
         />
       </TestForm>, translationsProperties
     );
+
+    await Button('Submit').click();
 
     userEvent.click(getByTestId('submit'));
     expect(onSubmit.mock.calls.length).toBe(1);

@@ -2,6 +2,8 @@ import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { TestForm, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import userEvent from '@testing-library/user-event';
+import { Button } from '@interactors/html';
+import { Selection } from '@folio/stripes-testing';
 import BasketSelector from './BasketSelector';
 
 import translationsProperties from '../../../test/helpers';
@@ -229,8 +231,8 @@ const basketSelectorProps = {
   'required':true
 };
 describe('BasketSelector', () => {
-  test('renders add To Basket button', () => {
-    const { getByLabelText } = renderWithIntl(
+  test('renders add To Basket button', async () => {
+    renderWithIntl(
       <TestForm onSubmit={onSubmit}>
         <BasketSelector
           {...basketSelectorProps}
@@ -238,10 +240,10 @@ describe('BasketSelector', () => {
       </TestForm>, translationsProperties
     );
 
-    expect(getByLabelText(/basketSelector/i)).toBeInTheDocument();
+    await Button('add button').exists();
   });
 
-  test('renders add To Basket button', () => {
+  test('clicking add To Basket button', async () => {
     const { getByText } = renderWithIntl(
       <TestForm onSubmit={onSubmit}>
         <BasketSelector
@@ -251,9 +253,17 @@ describe('BasketSelector', () => {
 
     );
 
-    userEvent.click(getByText(/industrial upgrading/i));
-    userEvent.click(getByText(/Finance:Nationallizenz/i));
-    userEvent.click(getByText('add button'));
+    const selector = Selection('basketSelector*');
+    await selector.exists();
+
+    // Selection calls seem to not work as expected
+    // await selector.choose('Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz');
+    // await selector.choose("\"Institutions, industrial upgrading, and economic performance in Ja...' on Platform 'Elgaronline' in Package Edward Elgar:Edward Elgar E-Book Archive in Business & Management, ...");
+
+    await userEvent.click(getByText(/industrial upgrading/i));
+    await userEvent.click(getByText(/Finance:Nationallizenz/i));
+
+    await Button('add button').click();
     expect(onAdd.mock.calls.length).toBe(1);
   });
 });

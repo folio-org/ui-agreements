@@ -15,6 +15,7 @@ import { useAddFromBasket } from '../../hooks';
 
 import translationsProperties from '../../../test/helpers';
 import AgreementCreateRoute from './AgreementCreateRoute';
+import mockRefdata from '../../../test/jest/refdata';
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -30,6 +31,7 @@ jest.mock('../../hooks', () => ({
     getAgreementLinesToAdd: () => [],
     handleBasketLinesAdded: mockBasketLinesAdded
   })),
+  useAgreementsRefdata: () => mockRefdata,
 }));
 
 const BasketLineButton = (props) => {

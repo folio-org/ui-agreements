@@ -272,12 +272,6 @@ const Agreement = ({
                   customProperties={data.agreement.customProperties}
                   customPropertiesEndpoint={CUSTPROP_ENDPOINT}
                   id="supplementaryProperties"
-                  labelOverrides={{
-                    defaultTitle: (ctx) => <FormattedMessage id="ui-agreements.supplementaryProperties.defaultTitle" values={{ ctx }} />,
-                    noContext: <FormattedMessage id="ui-agreements.supplementaryProperties" />,
-                    OpenAccess: <FormattedMessage id="ui-agreements.openAccessProperties" />,
-                    retiredName: (name) => <FormattedMessage id="ui-agreements.supplementaryProperties.deprecated" values={{ name }} />,
-                  }}
                 />
                 {data.agreement?.supplementaryDocs?.length > 0 && <SupplementaryDocs {...getSectionProps('supplementaryDocs')} />}
                 {data.agreement?.usageDataProviders?.length > 0 && <UsageData {...getSectionProps('usageData')} />}
@@ -297,6 +291,7 @@ const Agreement = ({
           </TitleManager>
         </Pane>
         <HelperComponent
+          invalidateLinks={data.tagsInvalidateLinks}
           link={data.tagsLink}
           onToggle={handlers.onToggleTags}
         />
@@ -332,7 +327,8 @@ Agreement.propTypes = {
     agreement: PropTypes.object.isRequired,
     eresourcesFilterPath: PropTypes.string,
     searchString: PropTypes.string,
-    tagsLink: PropTypes.string
+    tagsLink: PropTypes.string,
+    tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
   }).isRequired,
   handlers: PropTypes.shape({
     onClone: PropTypes.func.isRequired,

@@ -6,3 +6,4 @@ export { default as useChunkedOrderLines } from './useChunkedOrderLines';
 export { default as useSuppressFromDiscovery } from './useSuppressFromDiscovery';
 export { default as useAddFromBasket } from './useAddFromBasket';
 export { default as useAgreementsRefdata } from './useAgreementsRefdata';
+export { default as useEresourcesEnabled } from './useEresourcesEnabled';

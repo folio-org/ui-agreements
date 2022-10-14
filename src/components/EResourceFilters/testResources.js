@@ -1307,7 +1307,19 @@ const data = {
       'createdDate': '2021-10-26T01:52:23.809974Z'
     }
   }
-  ]
+  ],
+  'availabilityValues': [
+    {
+      'id': '02d3182883136e56018313ba8df10011',
+      'value': 'gbv',
+      'label': 'GBV'
+    },
+    {
+      'id': '02d3182883136e56018313ba8dfa0012',
+      'value': 'hbz',
+      'label': 'HBZ'
+    }
+  ],
 };
 
 export {

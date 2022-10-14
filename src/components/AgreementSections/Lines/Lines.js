@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { IfPermission } from '@folio/stripes/core';
-import { Button, Accordion, Badge, Spinner } from '@folio/stripes/components';
+import { Button, Accordion, Badge, Spinner, Icon, Dropdown, DropdownMenu } from '@folio/stripes/components';
 
 import CoveredEResourcesList from '../CoveredEResourcesList';
 import LinesList from '../LinesList';
 import { urls } from '../../utilities';
+
 
 export default class Lines extends React.Component {
   static propTypes = {
@@ -29,14 +30,37 @@ export default class Lines extends React.Component {
     id: PropTypes.string,
   }
 
-  renderAddAgreementLineButtonAndBadge = () => {
+  getActionMenu = () => {
     return (
       <>
-        <IfPermission perm="ui-agreements.agreements.edit">
-          <Button id="add-agreement-line-button" to={urls.agreementLineCreate(this.props.agreement.id)}>
-            <FormattedMessage id="ui-agreements.agreementLines.addLine" />
-          </Button>
-        </IfPermission>
+        <Dropdown
+          buttonProps={{ buttonStyle: 'primary' }}
+          data-testid="line-listing-action-dropdown"
+          label={<FormattedMessage id="ui-agreements.actions" />}
+        >
+          <DropdownMenu>
+            <IfPermission perm="ui-agreements.agreements.edit">
+              <Button
+                buttonStyle="dropdownItem"
+                id="add-agreement-line-button"
+                to={urls.agreementLineCreate(this.props.agreement.id)}
+              >
+                <Icon icon="plus-sign">
+                  <FormattedMessage id="ui-agreements.agreementLines.newLine" />
+                </Icon>
+              </Button>
+            </IfPermission>
+            <Button
+              buttonStyle="dropdownItem"
+              id="agreement-line-search"
+              to={`${urls.agreementLines()}?filters=agreement.${this.props.agreement.id}`}
+            >
+              <Icon icon="search">
+                <FormattedMessage id="ui-agreements.agreementLines.viewInSearch" />
+              </Icon>
+            </Button>
+          </DropdownMenu>
+        </Dropdown>
         {this.renderBadge()}
       </>
     );
@@ -58,9 +82,9 @@ export default class Lines extends React.Component {
     return (
       <Accordion
         displayWhenClosed={this.renderBadge()}
-        displayWhenOpen={this.renderAddAgreementLineButtonAndBadge()}
+        displayWhenOpen={this.getActionMenu()}
         id={id}
-        label={<FormattedMessage id="ui-agreements.agreements.agreementLines" />}
+        label={<FormattedMessage id="ui-agreements.agreementLines" />}
       >
         <LinesList
           agreement={agreement}

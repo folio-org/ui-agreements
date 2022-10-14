@@ -1,6 +1,6 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { renderWithIntl } from '@folio/stripes-erm-components';
 import Coverage from './Coverage';
 
 const serialResource = {

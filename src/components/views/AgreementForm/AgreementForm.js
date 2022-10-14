@@ -16,7 +16,6 @@ import {
   Col,
   ExpandAllButton,
   HasCommand,
-  Headline,
   IconButton,
   Pane,
   PaneFooter,
@@ -203,21 +202,6 @@ const AgreementForm = ({
                         contexts={contexts}
                         customPropertiesEndpoint={CUSTPROP_ENDPOINT}
                         id="supplementaryProperties"
-                        labelOverrides={{
-                          defaultTitle: (ctx) => <FormattedMessage id="ui-agreements.supplementaryProperties.defaultTitle" values={{ ctx }} />,
-                          noContext: <FormattedMessage id="ui-agreements.supplementaryProperties" />,
-                          OpenAccess: <FormattedMessage id="ui-agreements.openAccessProperties" />,
-                          primaryProperties: (
-                            <Headline margin="x-small" size="large" tag="h4">
-                              <FormattedMessage id="ui-agreements.supplementaryProperties.primaryProperties" />
-                            </Headline>
-                          ),
-                          optionalProperties: (
-                            <Headline margin="x-small" size="large" tag="h4">
-                              <FormattedMessage id="ui-agreements.supplementaryProperties.optionalProperties" />
-                            </Headline>
-                          )
-                        }}
                       />
                       <IfPermission perm="users.collection.get">
                         {({ hasPermission }) => (hasPermission ?

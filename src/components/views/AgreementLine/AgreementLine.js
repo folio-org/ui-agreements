@@ -52,6 +52,7 @@ const propTypes = {
         length: PropTypes.number,
       })),
     }).isRequired,
+    tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
     tagsLink: PropTypes.string,
     settings: PropTypes.object,
   }),
@@ -71,7 +72,7 @@ const AgreementLine = ({
     TagButton,
     HelperComponent,
   },
-  data: { line, tagsLink },
+  data: { line, tagsLink, tagsInvalidateLinks },
   handlers,
   isLoading,
 }) => {
@@ -139,7 +140,7 @@ const AgreementLine = ({
               </Button>
             </>
           ) : null)}
-          appIcon={<AppIcon app="agreements" />}
+          appIcon={<AppIcon app="agreements" iconKey="agreementLine" />}
           lastMenu={
             <IfPermission perm="ui-agreements.agreements.edit">
               <PaneMenu>
@@ -193,6 +194,7 @@ const AgreementLine = ({
           </AccordionStatus>
         </Pane>
         <HelperComponent
+          invalidateLinks={tagsInvalidateLinks}
           link={tagsLink}
           onToggle={handlers.onToggleTags}
         />

@@ -228,16 +228,6 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       activeFilters={activeFilters}
       customPropertiesEndpoint={CUSTPROP_ENDPOINT}
       filterHandlers={filterHandlers}
-      labelOverrides={{
-        customProperty: <FormattedMessage id="ui-agreements.supplementaryProperty" />,
-        customProperties: <FormattedMessage id="ui-agreements.supplementaryProperties" />,
-        filtersApplied: (count) => <FormattedMessage id="ui-agreements.supplementaryProperties.filtersApplied" values={{ count }} />,
-        editCustomPropertyFilters: <FormattedMessage id="ui-agreements.supplementaryProperties.editCustomPropertyFilters" />,
-        filterBuilder: <FormattedMessage id="ui-agreements.supplementaryProperties.filterBuilder" />,
-        customPropertyFilter: (index) => <FormattedMessage id="ui-agreements.supplementaryProperties.filterIndex" values={{ index: index + 1 }} />,
-        removeFilter: (index) => <FormattedMessage id="ui-agreements.supplementaryProperties.removeFilter" values={{ index: index + 1 }} />,
-        retiredName: (name) => intl.formatMessage({ id: 'ui-agreements.supplementaryProperties.deprecated' }, { name }),
-      }}
     />;
   };
 

@@ -7,7 +7,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { get, flatten, uniqBy } from 'lodash';
 
 import { CalloutContext, stripesConnect, useOkapiKy } from '@folio/stripes/core';
-import { useInfiniteFetch, useUsers } from '@folio/stripes-erm-components';
+import { useAgreement, useInfiniteFetch, useUsers } from '@folio/stripes-erm-components';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
@@ -50,16 +50,7 @@ const AgreementViewRoute = ({
   const agreementPath = AGREEMENT_ENDPOINT(agreementId);
   const agreementEresourcesPath = AGREEMENT_ERESOURCES_ENDPOINT(agreementId, eresourcesFilterPath);
 
-  const {
-    data: agreement = {
-      contacts: [],
-      orgs: []
-    },
-    isLoading: isAgreementLoading
-  } = useQuery(
-    ['ERM', 'Agreement', agreementId, agreementPath], // This pattern may need to be expanded to other fetches in Nolana
-    () => ky.get(agreementPath).json()
-  );
+  const { agreement, isAgreementLoading } = useAgreement({ agreementId });
 
   const { mutateAsync: deleteAgreement } = useMutation(
     [agreementPath, 'ui-agreements', 'AgreementViewRoute', 'deleteAgreement'],
@@ -101,7 +92,7 @@ const AgreementViewRoute = ({
     results: agreementLines = [],
     total: agreementLineCount = 0
   } = useInfiniteFetch(
-    [AGREEMENT_LINES_ENDPOINT, agreementLineQueryParams, 'ui-agreements', 'AgreementViewRoute', 'getLines'],
+    ['ERM', 'Agreement', agreementId, 'AgreementLines', AGREEMENT_LINES_ENDPOINT, agreementLineQueryParams],
     ({ pageParam = 0 }) => {
       const params = [...agreementLineQueryParams, `offset=${pageParam}`];
       return ky.get(`${AGREEMENT_LINES_ENDPOINT}?${params?.join('&')}`).json();
@@ -316,7 +307,8 @@ const AgreementViewRoute = ({
         agreement: getCompositeAgreement(),
         eresourcesFilterPath,
         searchString: location.search,
-        tagsLink: agreementPath
+        tagsLink: agreementPath,
+        tagsInvalidateLinks: [['ERM', 'Agreement', agreementId]],
       }}
       handlers={{
         ...handlers,

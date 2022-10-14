@@ -5,7 +5,6 @@ import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
 import {
   Button,
-  ButtonGroup,
   FormattedUTCDate,
   HasCommand,
   Icon,
@@ -26,11 +25,12 @@ import {
   SearchAndSortNoResultsMessage,
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
-import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
+import { SearchKeyControl, useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
 import { statuses } from '../../../constants';
 import AgreementFilters from '../../AgreementFilters';
-import IfEResourcesEnabled from '../../IfEResourcesEnabled';
+import RouteSwitcher from '../../RouteSwitcher';
+
 import { urls } from '../../utilities';
 import css from '../Agreements.css';
 
@@ -111,6 +111,15 @@ const Agreements = ({
           initialSortState={{ sort: 'name' }}
           queryGetter={queryGetter}
           querySetter={querySetter}
+          /*
+            Not entirely happy with the fact this boilerplate
+            needs to be here for qIndex to work as expected.
+            See https://folio-project.slack.com/archives/C210UCHQ9/p1659014709252189
+          */
+          searchParamsMapping={{
+            query: (v) => ({ query: v }),
+            qindex: (v) => ({ qindex: v })
+          }}
           syncToLocationSearch
         >
           {
@@ -144,32 +153,7 @@ const Agreements = ({
                       paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                     >
                       <form onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}>
-                        <IfEResourcesEnabled>
-                          <ButtonGroup fullWidth>
-                            <Button
-                              buttonStyle="primary"
-                              id="clickable-nav-agreements"
-                            >
-                              <FormattedMessage id="ui-agreements.agreements" />
-                            </Button>
-                            <IfPermission perm="ui-agreements.resources.view">
-                              <Button
-                                id="clickable-nav-eresources"
-                                to={urls.eresources()}
-                              >
-                                <FormattedMessage id="ui-agreements.eresources" />
-                              </Button>
-                            </IfPermission>
-                            <IfPermission perm="ui-agreements.platforms.view">
-                              <Button
-                                id="clickable-nav-platforms"
-                                to={urls.platforms()}
-                              >
-                                <FormattedMessage id="ui-agreements.platforms" />
-                              </Button>
-                            </IfPermission>
-                          </ButtonGroup>
-                        </IfEResourcesEnabled>
+                        <RouteSwitcher />
                         {/* TODO: Use forthcoming <SearchGroup> or similar component */}
                         <div className={css.searchGroupWrap}>
                           <FormattedMessage id="ui-agreements.agreements.searchInputLabel">
@@ -188,6 +172,23 @@ const Agreements = ({
                               />
                             )}
                           </FormattedMessage>
+                          {/* The options here reflect the constant defaultQIndex */}
+                          <SearchKeyControl
+                            options={[
+                              {
+                                label: <FormattedMessage id="ui-agreements.agreements.name" />,
+                                key: 'name'
+                              },
+                              {
+                                label: <FormattedMessage id="ui-agreements.alternativeName" />,
+                                key: 'alternateNames.name',
+                              },
+                              {
+                                label: <FormattedMessage id="ui-agreements.description" />,
+                                key: 'description'
+                              },
+                            ]}
+                          />
                           <Button
                             buttonStyle="primary"
                             disabled={!searchValue.query || searchValue.query === ''}

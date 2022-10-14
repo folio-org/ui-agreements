@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -8,6 +8,7 @@ import { isEmpty } from 'lodash';
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
 import View from '../../components/views/AgreementLineForm';
+import { AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
 import { useSuppressFromDiscovery, useChunkedOrderLines } from '../../hooks';
 import { urls } from '../../components/utilities';
 import { endpoints } from '../../constants';
@@ -25,26 +26,55 @@ const AgreementLineEditRoute = ({
   const callout = useContext(CalloutContext);
   const stripes = useStripes();
   const queryClient = useQueryClient();
+
+  /*
+ * This state tracks a checkbox on the form marked "Create another",
+ * which allows the user to redirect back to this form on submit
+ */
+  const [createAnother, setCreateAnother] = useState(false);
   const isSuppressFromDiscoveryEnabled = useSuppressFromDiscovery();
 
+  const agreementLinePath = AGREEMENT_LINE_ENDPOINT(lineId);
+
   const { data: agreementLine = {}, isLoading: isLineLoading } = useQuery(
-    [AGREEMENT_LINE_ENDPOINT(lineId), 'getLine'],
-    () => ky.get(AGREEMENT_LINE_ENDPOINT(lineId)).json()
+    ['ERM', 'AgreementLine', lineId, agreementLinePath],
+    () => ky.get(agreementLinePath).json()
   );
 
   const poLineIdsArray = (agreementLine.poLines ?? []).map(poLine => poLine.poLineId).flat();
   const { orderLines, isLoading: areOrderLinesLoading } = useChunkedOrderLines(poLineIdsArray);
 
-  const { mutateAsync: putAgreementLine } = useMutation(
-    [AGREEMENT_LINE_ENDPOINT(lineId), 'ui-agreements', 'AgreementLineEditRoute', 'editAgreementLine'],
-    (payload) => ky.put(AGREEMENT_LINE_ENDPOINT(lineId), { json: payload }).json()
-      .then(({ id }) => {
+  const handleClose = () => {
+    if (location.pathname.startsWith('/erm/agreements')) {
+      history.push(`${urls.agreementLineView(agreementId, lineId)}${location.search}`);
+    } else {
+      history.push(`${urls.agreementLineNativeView(agreementId, lineId)}${location.search}`);
+    }
+  };
+
+  const { mutateAsync: postAgreementLine } = useMutation(
+    ['ERM', 'Agreement', agreementId, 'AgreementLines', 'POST', AGREEMENT_LINES_ENDPOINT],
+    (payload) => ky.post(AGREEMENT_LINES_ENDPOINT, { json: { ...payload, owner: agreementId } }).json()
+      .then(() => {
         /* Invalidate cached queries */
         queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
-        queryClient.invalidateQueries(AGREEMENT_LINE_ENDPOINT(lineId));
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.update.callout" /> });
-        history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
+        history.push(`${urls.agreementLineCreate(agreementId)}${location.search}`);
+      })
+  );
+
+  const { mutateAsync: putAgreementLine } = useMutation(
+    ['ERM', 'AgreementLine', lineId, 'PUT', agreementLinePath],
+    (payload) => ky.put(agreementLinePath, { json: payload }).json()
+      .then(() => {
+        /* Invalidate cached queries */
+        queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
+
+        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.update.callout" /> });
+        if (!createAnother) {
+          handleClose();
+        }
       })
   );
 
@@ -65,10 +95,6 @@ const AgreementLineEditRoute = ({
       linkedResource: agreementLine.type !== 'detached' ? agreementLine : undefined,
       coverage: agreementLine.customCoverage ? agreementLine.coverage : undefined,
     };
-  };
-
-  const handleClose = () => {
-    history.push(`${urls.agreementLineView(agreementId, lineId)}${location.search}`);
   };
 
   /* istanbul ignore next */
@@ -101,10 +127,14 @@ const AgreementLineEditRoute = ({
       payload = { resource: linkedResource, ...rest, type };
     }
 
-    putAgreementLine({
-      id: lineId,
-      ...payload
-    });
+    if (createAnother) {
+      postAgreementLine(line);
+    } else {
+      putAgreementLine({
+        id: lineId,
+        ...payload
+      });
+    }
   };
 
   if (isLineLoading || areOrderLinesLoading) return <LoadingView dismissible onClose={handleClose} />;
@@ -112,6 +142,7 @@ const AgreementLineEditRoute = ({
   return (
     <View
       key={`agreement-line-edit-pane-${lineId}`}
+      createAnother={createAnother}
       data={{
         basket: (resources?.basket ?? []),
         line: getCompositeLine(),
@@ -126,6 +157,7 @@ const AgreementLineEditRoute = ({
       isLoading={isLineLoading || areOrderLinesLoading}
       lineId={lineId}
       onSubmit={handleSubmit}
+      toggleCreateAnother={() => setCreateAnother(!createAnother)}
     />
   );
 };
@@ -140,6 +172,7 @@ AgreementLineEditRoute.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
     search: PropTypes.string.isRequired,
   }).isRequired,
   match: PropTypes.shape({

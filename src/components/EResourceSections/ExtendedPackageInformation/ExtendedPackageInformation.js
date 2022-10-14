@@ -12,7 +12,7 @@ import {
 } from '@folio/stripes/components';
 
 const ExtendedPackageInformation = ({
-  eresource: { alternateResourceNames, description, packageDescriptionUrls },
+  eresource: { alternateResourceNames, description, identifiers, packageDescriptionUrls },
   id
 }) => {
   const renderAlternativeNames = () => (
@@ -21,6 +21,22 @@ const ExtendedPackageInformation = ({
       contentData={alternateResourceNames}
       id="alternate-resource-names-list"
       visibleColumns={['name']}
+    />
+  );
+
+  const renderIdentifiers = () => (
+    <MultiColumnList
+      columnMapping={{
+        identifier: <FormattedMessage id="ui-agreements.packageIdentifiers.identifier" />,
+        type: <FormattedMessage id="ui-agreements.packageIdentifiers.type" />
+      }}
+      contentData={identifiers}
+      formatter={{
+        identifier: item => (item.identifier.value),
+        type: item => (item.identifier.ns.value)
+      }}
+      id="identifiers-list"
+      visibleColumns={['type', 'identifier']}
     />
   );
 
@@ -73,6 +89,13 @@ const ExtendedPackageInformation = ({
           </Col>
         </Row>
       }
+      {identifiers?.length > 0 &&
+        <Row>
+          <Col xs={12}>
+            {renderIdentifiers()}
+          </Col>
+        </Row>
+      }
     </Accordion>
   );
 };
@@ -97,6 +120,14 @@ ExtendedPackageInformation.propTypes = {
     })),
     description: PropTypes.string,
     id: PropTypes.string,
+    identifiers: PropTypes.arrayOf(PropTypes.shape({
+      identifier: PropTypes.shape({
+        value: PropTypes.string,
+        ns: PropTypes.shape({
+          value: PropTypes.string
+        })
+      })
+    })),
     lifecycleStatus: PropTypes.shape({
       id: PropTypes.string,
       label: PropTypes.string,

@@ -35,6 +35,7 @@ const EResourceViewRoute = ({
   const eresourcePath = ERESOURCE_ENDPOINT(eresourceId);
 
   const { data: eresource = {}, isLoading: isEresourceLoading } = useQuery(
+    // NOTE Used in invalidateLinks for tags below!
     [eresourcePath, 'getEresource'],
     () => ky.get(eresourcePath).json()
   );
@@ -69,7 +70,6 @@ const EResourceViewRoute = ({
     }
   );
 
-
   // RELATED ENTITLEMENTS FOR ERESOURCE BATCH FETCH
   const {
     results: relatedEntitlements,
@@ -77,7 +77,10 @@ const EResourceViewRoute = ({
   } = useBatchedFetch({
     batchLimit: entitlementsCount,
     batchSize: RECORDS_PER_REQUEST_MEDIUM,
-    path: ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT(eresourceId)
+    path: ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT(eresourceId),
+    queryParams: {
+      enabled: (!!eresource?.id && eresource?.class !== 'org.olf.kb.Pkg')
+    }
   });
 
   // ENTITLEMENT OPTIONS FOR ERESOURCE INFINITE FETCH

@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
-import userEvent from '@testing-library/user-event';
 import { Button } from '@folio/stripes-testing';
 import AddToBasketButton from './AddToBasketButton';
 
@@ -87,14 +86,14 @@ describe('AddToBasketButton', () => {
     handleReplace.mockClear();
   });
 
-  test('clicking the remove button invokes the callback with expected value', () => {
-    const { getByTestId } = render(
+  test('clicking the remove button invokes the callback with expected value', async () => {
+    render(
       <AddToBasketButton
         {...AddToBasketButtonPropsWithItem}
       />
     );
 
-    userEvent.click(getByTestId('addtobasketbutton'));
+    await Button('Remove button').click();
     expect(handleReplace.mock.calls.length).toBe(1);
     handleReplace.mockClear();
   });
