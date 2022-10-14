@@ -122,6 +122,8 @@
     "agreementLines.gross": "YTD Gross",
     "agreementLines.net": "YTD Net",
     "agreementLines.addLine": "Add agreement line",
+    "agreementLines.newLine": "New agreement line",
+    "agreementLines.viewInSearch": "View in agreement lines search",
     "agreementLines.lineTitle": "Agreement line {number}",
     "eresources.titles": "Titles",
     "agreements.showInvoicesLink": "Show invoices",
