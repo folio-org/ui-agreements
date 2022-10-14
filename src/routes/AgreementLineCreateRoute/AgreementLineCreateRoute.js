@@ -46,6 +46,8 @@ const AgreementLineCreateRoute = ({
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.create.callout" /> });
         if (createAnother) {
+          // Very briefly redirect to view so form rerenders
+          history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
           history.push(`${urls.agreementLineCreate(agreementId)}${location.search}`);
         } else {
           history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
@@ -89,6 +91,7 @@ const AgreementLineCreateRoute = ({
 
   return (
     <View
+      key="agreement-line-create-form"
       createAnother={createAnother}
       data={{
         basket: (resources?.basket ?? []),
