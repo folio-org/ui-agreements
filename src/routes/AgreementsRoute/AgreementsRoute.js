@@ -65,7 +65,8 @@ const AgreementsRoute = ({
 
   const agreementsQueryParams = useMemo(() => (
     generateKiwtQueryParams({
-      searchKey: qIndex ?? defaultQIndex,
+      /* There were problems with using truthiness ?? on an empty string '' */
+      searchKey: (!!qIndex && qIndex !== '') ? qIndex : defaultQIndex,
       filterKeys: {
         agreementStatus: 'agreementStatus.value',
         contacts: 'contacts.user',
