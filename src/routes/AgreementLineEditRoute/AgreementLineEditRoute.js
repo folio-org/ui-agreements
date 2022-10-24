@@ -8,7 +8,6 @@ import { isEmpty } from 'lodash';
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
 import View from '../../components/views/AgreementLineForm';
-import { AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
 import { useSuppressFromDiscovery, useChunkedOrderLines } from '../../hooks';
 import { urls } from '../../components/utilities';
 import { endpoints } from '../../constants';
@@ -52,18 +51,6 @@ const AgreementLineEditRoute = ({
     }
   };
 
-  const { mutateAsync: postAgreementLine } = useMutation(
-    ['ERM', 'Agreement', agreementId, 'AgreementLines', 'POST', AGREEMENT_LINES_ENDPOINT],
-    (payload) => ky.post(AGREEMENT_LINES_ENDPOINT, { json: { ...payload, owner: agreementId } }).json()
-      .then(() => {
-        /* Invalidate cached queries */
-        queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
-
-        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.update.callout" /> });
-        history.push(`${urls.agreementLineCreate(agreementId)}${location.search}`);
-      })
-  );
-
   const { mutateAsync: putAgreementLine } = useMutation(
     ['ERM', 'AgreementLine', lineId, 'PUT', agreementLinePath],
     (payload) => ky.put(agreementLinePath, { json: payload }).json()
@@ -74,6 +61,8 @@ const AgreementLineEditRoute = ({
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.update.callout" /> });
         if (!createAnother) {
           handleClose();
+        } else {
+          history.push(`${urls.agreementLineCreate(agreementId)}${location.search}`);
         }
       })
   );
@@ -127,14 +116,10 @@ const AgreementLineEditRoute = ({
       payload = { resource: linkedResource, ...rest, type };
     }
 
-    if (createAnother) {
-      postAgreementLine(line);
-    } else {
-      putAgreementLine({
-        id: lineId,
-        ...payload
-      });
-    }
+    putAgreementLine({
+      id: lineId,
+      ...payload
+    });
   };
 
   if (isLineLoading || areOrderLinesLoading) return <LoadingView dismissible onClose={handleClose} />;
