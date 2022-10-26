@@ -622,6 +622,7 @@
   "settings.fileStorage.s3ObjectPrefix": "S3 object prefix",
   "settings.fileStorage.s3SecretKey": "S3 secret key",
   "settings.fileStorage.storageEngine": "Storage engine",
+  "settings.fileStorage.s3BucketRegion": "S3 bucket region",
   "settings.customProperties.all": "All",
   "settings.customProperties.none": "None",
   "settings.noCurrentValue": "No current value",

@@ -118,7 +118,7 @@ const EResources = ({
                     key="clickable-move-identifier"
                     buttonStyle="dropdownItem"
                     id="clickable-move-identifier"
-                    onClick={setMoveIdentifiersModal}
+                    onClick={() => setMoveIdentifiersModal(true)}
                   >
                     <Icon icon="arrow-right" iconPosition="end" />
                     <FormattedMessage id="ui-agreements.eresource.moveIdentifier" />
