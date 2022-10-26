@@ -736,5 +736,10 @@
     "operator.doesNotContain": "Does not contain",
     "packageIdentifiers.identifier": "Identifier",
     "packageIdentifiers.type": "Type",
-    "agreements.agreementLines.searchInputLabel": "Search Agreement lines"
+    "agreements.agreementLines.searchInputLabel": "Search Agreement lines",
+    "agreementLines.createAnother": "Create another",
+    "settings.supplementaryProperties": "Supplementary properties",
+    "settings.supplementaryPropertyPickList": "Supplementary properties pick list setup",
+    "settings.pickListSelect": "Select pick list",
+    "settings.fileStorage.s3BucketRegion": "S3 bucket region"
 }
