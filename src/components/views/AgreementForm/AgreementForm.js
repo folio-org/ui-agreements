@@ -187,7 +187,7 @@ const AgreementForm = ({
               id="pane-agreement-form"
               paneTitle={id ? <FormattedMessage id="ui-agreements.agreements.editAgreement.name" values={{ name }} /> : <FormattedMessage id="ui-agreements.agreements.createAgreement" />}
             >
-              <TitleManager record={id ? name : create}>
+              <TitleManager record={id ? name : create?.[0]}>
                 <form id="form-agreement">
                   <AccordionStatus ref={accordionStatusRef}>
                     {hasLoaded ? <div id="form-loaded" /> : null}
