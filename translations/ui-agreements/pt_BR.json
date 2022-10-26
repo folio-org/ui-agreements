@@ -675,7 +675,7 @@
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyLocalDate": "Data",
     "customProperties.type.com.k_int.web.toolkit.custprops.types.CustomPropertyMultiRefdata": "Lista de escolha (multi-seleção)",
     "customProperties.config.all": "Todos",
-    "customProperties.config.delete.errorMessage": "Houve um erro ao eliminar propriedade suplementar: <strong>{label}</strong>. {erro}.",
+    "customProperties.config.delete.errorMessage": "Houve um erro ao eliminar propriedade suplementar: <strong>{label}</strong>. {error}.",
     "customProperties.config.delete.confirmHeading": "Excluir propriedade suplementar",
     "customProperties.config.delete.confirmMessage": "A propriedade suplementar <strong> {name} </strong> será <strong> excluída </strong> .",
     "customProperties.config.newModal": "Nova propriedade suplementar",
