@@ -1,5 +1,7 @@
 # Change history for ui-agreements
 
+## 8.4.0 In progress
+
 ## 8.3.0 2022-10-27
 * ERM-2382 Unchecking all search field boxes in Agreements carries out search with no fields
 * ERM-2377 Show a user-friendly message when deleting a pick list with 0 values which is assigned to a Supplementary Property
