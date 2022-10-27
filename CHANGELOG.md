@@ -1,10 +1,44 @@
 # Change history for ui-agreements
 
-## 8.3.0 In progress
+## 8.3.0 2022-10-27
+* ERM-2382 Unchecking all search field boxes in Agreements carries out search with no fields
+* ERM-2377 Show a user-friendly message when deleting a pick list with 0 values which is assigned to a Supplementary Property
+* ERM-2371 In custom property Type dropdown Refdata and Refdata (multi-select) should be labelled "Pick list" and "Pick list (multi-select)"
+* ERM-2369 Agreements: Open Access properties accordion name is incorrect
+* ERM-2368 Add links from the Agreement lines search to the parent Agreements
+* ERM-2359 Values entered into decimal and integer supp prop fields display as "NaN"
+* ERM-2355 Aria label for agreement line search incorrect
+* ERM-2353 Replace "Detached" with "Unlinked" in Agreement Line filter
+* ERM-2352 Navigation to switch between Agreements / Local KB does not display correctly if basket button not present
+* ERM-2351 Show error on Agreement line view if user does not have permission for orders.po-lines.collection.get
+* ERM-2347 Add all available package identifiers to extended package information in the package view
+* ERM-2346 Related Entitlement endpoint unnecessarily hit on package view
+* ERM-2344 Add link from an Agreement to an Agreement lines search filtered by the agreementAdd link from an Agreement to an Agreement lines search filtered by the agreement
+* ERM-2343 Default selection of Agreement text search fields
+* ERM-2340 "Reset all" in Agreement Line search does not correctly reset Agreement or Order filters
+* ERM-2338 Selecting "Agreement line type" boxes in filter should use OR (||) not AND
+* ERM-2335 Agreement lines search and filter updates
+* ERM-2318 stripes-erm-components should be a peer
+* ERM-2316 Update for stripes-kint-components translation handling changes
+* ERM-2315 Display all identifiers in a namespace for a resource
+* ERM-2293 Remove BigTest/Nightmare dependencies and tests (ui-agreements)
+* ERM-2290 Add property options to Agreements text search
+* ERM-2283 Upgrade Users interface to 16.0
+* ERM-2278 Refactor ui-plugin-find-agreement to react-query
+* ERM-2234 Replace withKiwtFieldArray with useKiwtFieldArray
+* ERM-2233 Remove redundant duplicate utility functions in ui-agreements
+* ERM-2220 ERM Comparisons: e-resources plugin is not filtering by Package when used for first time
+* ERM-2214 Migrate ERM Picklist Settings to new EditableRefdataList component
+  * ERM-2215 Migrate ui-agreements Picklist Settings
+* ERM-2173 New / Edit supplementary property and Term modals: UX improvements (Settings app)
+* ERM-2157 Add multi-select support for custom properties
+* ERM-2120 Display package identifiers in Agreements UI
+* ERM-1986 Move identifiers between title instances
+* ERM-1906 Re-work Supplementary Properties settings screen to use list that can be filtered and fourth pane display
+* Bump to stripes-erm-components ^7.0.0
 
 ## 8.2.2 2022-08-02
 * ERM-2297 Number of tags doesn't update on adding tags to agreement or agreement line
-* Bump to stripes-erm-components ^7.0.0
 
 ## 8.2.1 2022-07-29
 * ERM-2300 On loading entitlements for Agreement edit screen incorrect parameters are supplied
