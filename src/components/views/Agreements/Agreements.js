@@ -212,12 +212,12 @@ const Agreements = ({
                             </Icon>
                           </Button>
                         </div>
-                        <AgreementFilters
-                          activeFilters={activeFilters.state}
-                          data={data}
-                          filterHandlers={getFilterHandlers()}
-                        />
                       </form>
+                      <AgreementFilters
+                        activeFilters={activeFilters.state}
+                        data={data}
+                        filterHandlers={getFilterHandlers()}
+                      />
                     </Pane>
                   }
                   <Pane
