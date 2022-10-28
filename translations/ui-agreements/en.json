@@ -82,6 +82,8 @@
   "agreementLines.activeFrom.includeNoDateSet": "Include lines with no active from date set",
   "agreementLines.activeTo.includeNoDateSet": "Include lines with no active to date set",
   "agreementLines.createAnother": "Create another",
+  "agreementLines.newLine": "New agreement line",
+  "agreementLines.viewInSearch": "View in agreement lines search",
   "agreements.agreementDescription": "Description",
   "agreements.startDate": "Start date",
   "agreements.endDate": "End date",
