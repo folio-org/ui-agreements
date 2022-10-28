@@ -20,7 +20,19 @@ export default class EResourceCount extends React.Component {
       resourceCount: PropTypes.number,
       selectedCount: PropTypes.number,
       titleCount: PropTypes.number,
-      type: PropTypes.string,
+      /*
+       * Type here could be the line type,
+       * or the resource type, depending on the return value
+       * of getResourceFromEntitlement.
+       *
+       * We should probably shore up return type of that function.
+       */
+      type: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.shape({
+          value: PropTypes.string
+        })
+      ]),
     })
   }
 
