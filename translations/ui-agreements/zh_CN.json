@@ -741,5 +741,7 @@
     "settings.supplementaryProperties": "补充属性",
     "settings.supplementaryPropertyPickList": "补充属性选取清单设置",
     "settings.pickListSelect": "选择选取清单",
-    "settings.fileStorage.s3BucketRegion": "S3 bucket region"
+    "settings.fileStorage.s3BucketRegion": "S3 bucket region",
+    "agreementLines.newLine": "New agreement line",
+    "agreementLines.viewInSearch": "View in agreement lines search"
 }
