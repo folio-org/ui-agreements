@@ -741,5 +741,7 @@
     "settings.supplementaryProperties": "Proprietà supplementari",
     "settings.supplementaryPropertyPickList": "Impostazione dell'elenco di selezione delle proprietà supplementari",
     "settings.pickListSelect": "Scegli la lista di selezione",
-    "settings.fileStorage.s3BucketRegion": "S3 bucket region"
+    "settings.fileStorage.s3BucketRegion": "S3 bucket region",
+    "agreementLines.newLine": "New agreement line",
+    "agreementLines.viewInSearch": "View in agreement lines search"
 }
