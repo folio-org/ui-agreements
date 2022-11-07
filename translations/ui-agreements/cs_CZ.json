@@ -741,5 +741,7 @@
     "settings.supplementaryProperties": "Doplňkové vlastnosti",
     "settings.supplementaryPropertyPickList": "Nastavení doplňkových vlastností výběrového seznamu",
     "settings.pickListSelect": "Vyberte výběrový seznam",
-    "settings.fileStorage.s3BucketRegion": "S3 bucket region"
+    "settings.fileStorage.s3BucketRegion": "Region segmentu S3",
+    "agreementLines.newLine": "New agreement line",
+    "agreementLines.viewInSearch": "View in agreement lines search"
 }
