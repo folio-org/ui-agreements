@@ -58,7 +58,8 @@ const AgreementLineFilters = ({
     afterQueryCall: (res) => {
       setAgreementFilterName(res.name);
     },
-    queryOptions: { enabled: !!agreementId && !agreementFilterName }
+    queryOptions: { enabled: !!agreementId && !agreementFilterName },
+    queryParams: ['excludes=items', 'excludes=linkedLicenses']
   });
 
 
