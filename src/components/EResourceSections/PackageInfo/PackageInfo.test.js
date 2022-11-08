@@ -821,35 +821,35 @@ describe('PackageInfo', () => {
     });
 
     test('renders the expcected provider', async () => {
-      await KeyValue('Provider').has({ value: 'stripes-components.noValue.noValueSet-' });
+      await KeyValue('Provider').has({ value: 'No value set-' });
     });
 
     test('renders the expcected source', async () => {
-      await KeyValue('Source').has({ value: 'stripes-components.noValue.noValueSet-' });
+      await KeyValue('Source').has({ value: 'No value set-' });
     });
 
     test('renders the expcected status', async () => {
-      await KeyValue('Status').has({ value: 'stripes-components.noValue.noValueSet-' });
+      await KeyValue('Status').has({ value: 'No value set-' });
     });
 
     test('renders the expcected reference', async () => {
-      await KeyValue('Reference').has({ value: 'stripes-components.noValue.noValueSet-' });
+      await KeyValue('Reference').has({ value: 'No value set-' });
     });
 
     test('renders the expcected content type', async () => {
-      await KeyValue('Content type').has({ value: 'stripes-components.noValue.noValueSet-' });
+      await KeyValue('Content type').has({ value: 'No value set-' });
     });
 
     test('renders the expcected availability', async () => {
-      await KeyValue('Availability').has({ value: 'stripes-components.noValue.noValueSet-' });
+      await KeyValue('Availability').has({ value: 'No value set-' });
     });
 
     test('renders the expcected source created date', async () => {
-      await KeyValue('Source created').has({ value: 'stripes-components.noValue.noValueSet-' });
+      await KeyValue('Source created').has({ value: 'No value set-' });
     });
 
     test('renders the expcected source last updated date', async () => {
-      await KeyValue('Source last updated').has({ value: 'stripes-components.noValue.noValueSet-' });
+      await KeyValue('Source last updated').has({ value: 'No value set-' });
     });
   });
 });

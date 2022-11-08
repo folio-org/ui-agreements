@@ -324,11 +324,11 @@ describe('PackageCard', () => {
     });
 
     test('renders the expcected status', async () => {
-      await KeyValue('Status').has({ value: 'stripes-components.noValue.noValueSet-' });
+      await KeyValue('Status').has({ value: 'No value set-' });
     });
 
     test('renders the expcected availability', async () => {
-      await KeyValue('Availability').has({ value: 'stripes-components.noValue.noValueSet-' });
+      await KeyValue('Availability').has({ value: 'No value set-' });
     });
   });
 });
