@@ -1,6 +1,6 @@
 import React from 'react';
 import '@folio/stripes-erm-testing/jest/directMocks';
-import { renderWithIntl } from '@folio/stripes-erm-components';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import Coverage from './Coverage';
 
 const serialResource = {
