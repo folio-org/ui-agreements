@@ -1,6 +1,6 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import '@folio/stripes-erm-testing/jest/directMocks';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { PaneHeader, Button, Selection, SelectionList as SelectListInteractor, SelectionOption as SelectionOptionInteractor } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';

@@ -1,7 +1,7 @@
 // adding a second test file here to test the ifEresourcesDisabled branch
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import '@folio/stripes-erm-testing/jest/directMocks';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import AgreementLineForm from './AgreementLineForm';

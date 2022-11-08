@@ -1,6 +1,6 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
+import '@folio/stripes-erm-testing/jest/directMocks';
+import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import { StaticRouter as Router } from 'react-router-dom';
 import { Button } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';

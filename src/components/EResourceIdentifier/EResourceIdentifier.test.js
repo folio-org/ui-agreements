@@ -1,8 +1,8 @@
 
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+import '@folio/stripes-erm-testing/jest/directMocks';
 import { HTML, including } from '@folio/stripes-testing';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import EResourceIdentifier from './EResourceIdentifier';
 
 const titleInstanceWithIdentifier = {

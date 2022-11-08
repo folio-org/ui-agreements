@@ -1,5 +1,5 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+import '@folio/stripes-erm-testing/jest/directMocks';
 import { renderWithIntl } from '@folio/stripes-erm-components';
 import Coverage from './Coverage';
 

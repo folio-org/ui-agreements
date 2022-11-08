@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+import '@folio/stripes-erm-testing/jest/directMocks';
 import { Button } from '@folio/stripes-testing';
 import AddToBasketButton from './AddToBasketButton';
 

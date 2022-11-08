@@ -1,10 +1,10 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+import '@folio/stripes-erm-testing/jest/directMocks';
 
 import { useQuery } from 'react-query';
 import { useStripes } from '@folio/stripes/core';
 
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { noop } from 'lodash';
 import eresources from './testResources';

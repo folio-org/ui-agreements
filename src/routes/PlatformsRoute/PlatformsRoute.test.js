@@ -1,6 +1,6 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import '@folio/stripes-erm-testing/jest/directMocks';
+import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { useStripes } from '@folio/stripes/core';
 
