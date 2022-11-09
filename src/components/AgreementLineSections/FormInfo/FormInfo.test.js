@@ -1,6 +1,6 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { TestForm, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import '@folio/stripes-erm-testing/jest/directMocks';
+import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Datepicker, Checkbox } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import FormInfo from './FormInfo';

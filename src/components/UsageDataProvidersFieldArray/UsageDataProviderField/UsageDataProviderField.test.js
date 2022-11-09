@@ -1,7 +1,7 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+import '@folio/stripes-erm-testing/jest/directMocks';
 import { MemoryRouter } from 'react-router-dom';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
+import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import { KeyValue } from '@folio/stripes-testing';
 import { Field } from 'react-final-form';
 import translationsProperties from '../../../../test/helpers';

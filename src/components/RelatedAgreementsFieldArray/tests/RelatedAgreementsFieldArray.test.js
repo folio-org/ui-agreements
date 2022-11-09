@@ -3,8 +3,8 @@ import { within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Button } from '@folio/stripes-testing';
 
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
+import '@folio/stripes-erm-testing/jest/directMocks';
+import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import { FieldArray } from 'react-final-form-arrays';
 import RelatedAgreementsFieldArray from '../RelatedAgreementsFieldArray';
 

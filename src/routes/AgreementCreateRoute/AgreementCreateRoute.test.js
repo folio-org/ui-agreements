@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+import '@folio/stripes-erm-testing/jest/directMocks';
 
 import { useStripes } from '@folio/stripes/core';
 
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';

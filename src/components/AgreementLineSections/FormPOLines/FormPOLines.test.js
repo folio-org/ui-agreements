@@ -1,9 +1,9 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+import '@folio/stripes-erm-testing/jest/directMocks';
 import {
   TestForm,
   renderWithIntl,
-} from '@folio/stripes-erm-components/test/jest/helpers';
+} from '@folio/stripes-erm-testing';
 import { Accordion } from '@folio/stripes-testing';
 import { line, initialValues } from './testResources';
 import FormPOLines from './FormPOLines';

@@ -1,8 +1,8 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+import '@folio/stripes-erm-testing/jest/directMocks';
 
 import { Button, TextField } from '@folio/stripes-testing';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
+import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import MCLPaginationFields from './MCLPaginationFields';
 
 import { defaultMclPageSize } from '../../../constants';

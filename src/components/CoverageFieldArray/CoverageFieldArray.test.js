@@ -1,10 +1,10 @@
 import React from 'react';
 import { within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+import '@folio/stripes-erm-testing/jest/directMocks';
 import { Button, TextField } from '@folio/stripes-testing';
 
-import { DatepickerInteractor as Datepicker, renderWithIntl, TestForm } from '@folio/stripes-erm-components';
+import { DatepickerInteractor as Datepicker, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import { FieldArray } from 'react-final-form-arrays';
 
 import CoverageFieldArray from './CoverageFieldArray';

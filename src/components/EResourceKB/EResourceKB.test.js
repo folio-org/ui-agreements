@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import '@folio/stripes-erm-testing/jest/directMocks';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import EResourceKB from './EResourceKB';
 
 const PackageResource = {

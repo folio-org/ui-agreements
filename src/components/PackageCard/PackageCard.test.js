@@ -1,8 +1,8 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+import '@folio/stripes-erm-testing/jest/directMocks';
 import { StaticRouter as Router } from 'react-router-dom';
 import { KeyValue } from '@folio/stripes-testing';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import translationsProperties from '../../../test/helpers';
 import PackageCard from './PackageCard';
 
@@ -324,11 +324,11 @@ describe('PackageCard', () => {
     });
 
     test('renders the expcected status', async () => {
-      await KeyValue('Status').has({ value: 'stripes-components.noValue.noValueSet-' });
+      await KeyValue('Status').has({ value: 'No value set-' });
     });
 
     test('renders the expcected availability', async () => {
-      await KeyValue('Availability').has({ value: 'stripes-components.noValue.noValueSet-' });
+      await KeyValue('Availability').has({ value: 'No value set-' });
     });
   });
 });

@@ -1,6 +1,6 @@
 import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { TestForm, renderWithIntl, mockErmComponents } from '@folio/stripes-erm-components/test/jest/helpers';
+import '@folio/stripes-erm-testing/jest/directMocks';
+import { TestForm, renderWithIntl, mockErmComponents } from '@folio/stripes-erm-testing';
 import { useAsyncValidation } from '@folio/stripes-erm-components';
 
 import userEvent from '@testing-library/user-event';

@@ -1,7 +1,7 @@
-import '@folio/stripes-erm-components/test/jest/__mock__';
+import '@folio/stripes-erm-testing/jest/directMocks';
 import ReactRouterDom, { MemoryRouter } from 'react-router-dom';
 
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
