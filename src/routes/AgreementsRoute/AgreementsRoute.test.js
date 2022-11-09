@@ -15,11 +15,6 @@ jest.mock('@folio/stripes-erm-components', () => ({
   InternalContactSelection: () => <div>InternalContactSelection</div>,
 }));
 
-jest.mock('@folio/stripes-components', () => ({
-  ...jest.requireActual('@folio/stripes-components'),
-  Selection: () => <div>Selection</div>,
-}));
-
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useAgreementsSettings: jest.fn(() => ({ data: { configs: [{}] } })),
