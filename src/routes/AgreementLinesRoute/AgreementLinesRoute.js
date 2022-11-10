@@ -68,7 +68,7 @@ const AgreementLinesRoute = ({
     ['ERM', 'AgreementLines', agreementLinesQueryParams, AGREEMENT_LINES_ENDPOINT],
     ({ pageParam = 0 }) => {
       const params = [...agreementLinesQueryParams, `offset=${pageParam}`];
-      return ky.get(encodeURI(`${AGREEMENT_LINES_ENDPOINT}?${params?.join('&')}`)).json();
+      return ky.get(`${AGREEMENT_LINES_ENDPOINT}?${params?.join('&')}`).json();
     },
     {
       enabled: !!query?.filters || !!query?.query
