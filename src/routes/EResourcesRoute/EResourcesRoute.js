@@ -103,7 +103,7 @@ const EResourcesRoute = ({
     ['ERM', 'EResources', eresourcesQueryParams, ERESOURCES_ELECTRONIC_ENDPOINT],
     ({ pageParam = 0 }) => {
       const params = [...eresourcesQueryParams, `offset=${pageParam}`];
-      return ky.get(encodeURI(`${ERESOURCES_ELECTRONIC_ENDPOINT}?${params?.join('&')}`)).json();
+      return ky.get(`${ERESOURCES_ELECTRONIC_ENDPOINT}?${params?.join('&')}`).json();
     }
   );
 

@@ -97,7 +97,7 @@ const AgreementsRoute = ({
     ['ERM', 'Agreements', agreementsQueryParams, AGREEMENTS_ENDPOINT],
     ({ pageParam = 0 }) => {
       const params = [...agreementsQueryParams, `offset=${pageParam}`];
-      return ky.get(encodeURI(`${AGREEMENTS_ENDPOINT}?${params?.join('&')}`)).json();
+      return ky.get(`${AGREEMENTS_ENDPOINT}?${params?.join('&')}`).json();
     }
   );
 

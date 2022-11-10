@@ -23,9 +23,10 @@ const filterHandlers = {
   clearGroup: () => {},
   reset: () => {},
 };
-describe('AgreementFilters', () => {
+describe('AgreementLineFilters', () => {
+  let renderComponent;
   beforeEach(() => {
-    renderWithIntl(
+    renderComponent = renderWithIntl(
       <MemoryRouter>
         <AgreementLineFilters
           activeFilters={activeFilters}
@@ -45,12 +46,9 @@ describe('AgreementFilters', () => {
     await Accordion('Agreement line type').exists();
   });
 
-  test('renders the Active from date Accordion', async () => {
-    await Accordion('Active from').exists();
-  });
-
-  test('renders the Active to date Accordion', async () => {
-    await Accordion('Active to').exists();
+  test('renders two DateFilter components', () => {
+    const { getAllByText } = renderComponent;
+    expect(getAllByText('DateFilter').length).toEqual(2);
   });
 
   test('renders the PoLine Accordion', async () => {

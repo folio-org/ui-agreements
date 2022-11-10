@@ -51,12 +51,9 @@ describe('AgreementFilters', () => {
     await Accordion('Is perpetual').exists();
   });
 
-  test('renders the Start date Accordion', async () => {
-    await Accordion('Start date').exists();
-  });
-
-  test('renders the End date Accordion', async () => {
-    await Accordion('End date').exists();
+  test('renders two DateFilter components', () => {
+    const { getAllByText } = renderComponent;
+    expect(getAllByText('DateFilter').length).toEqual(2);
   });
 
   test('renders the Organizations Accordion', async () => {

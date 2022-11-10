@@ -51,7 +51,7 @@ const PlatformsRoute = ({
     [PLATFORMS_ENDPOINT, platformsQueryParams, 'ui-agreements', 'PlatformsRoute', 'getPlatforms'],
     ({ pageParam = 0 }) => {
       const params = [...platformsQueryParams, `offset=${pageParam}`];
-      return ky.get(encodeURI(`${PLATFORMS_ENDPOINT}?${params?.join('&')}`)).json();
+      return ky.get(`${PLATFORMS_ENDPOINT}?${params?.join('&')}`).json();
     }
   );
 
