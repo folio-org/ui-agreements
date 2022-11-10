@@ -172,8 +172,8 @@ describe('Agreement', () => {
     it('renders the Duplicate modal on clicking the duplicate button from the actions dropdown', async () => {
       await Button('Actions').click();
       await Button('Duplicate').click();
-      await Modal('Duplicate agreement').exists();
-      await Button('Cancel').click(); // close the modal
+      const { getByText } = renderComponent;
+      expect(getByText('DuplicateModal')).toBeInTheDocument();
     });
 
     it('renders the Confirmation modal on clicking the delete button from the actions dropdown', async () => {
