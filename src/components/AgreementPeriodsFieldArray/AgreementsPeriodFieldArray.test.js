@@ -1,9 +1,9 @@
 import { waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { Button, Datepicker, TextArea, TextField } from '@folio/stripes-testing';
+import { Button, TextArea, TextField } from '@folio/stripes-testing';
 
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
+import { renderWithIntl, DatepickerInteractor as Datepicker, TestForm } from '@folio/stripes-erm-testing';
 import { FieldArray } from 'react-final-form-arrays';
 
 import AgreementPeriodsFieldArray from './AgreementPeriodsFieldArray';
@@ -132,7 +132,7 @@ describe('AgreementPeriodsFieldArray', () => {
   });
 
   test('overlapping period warning works as expected', async () => {
-    const { getByTestId, queryByText, queryAllByText } = renderWithIntl(
+    renderWithIntl(
       <TestForm
         initialValues={{ agreementPeriodsFieldArrayTest:multiplePeriods }}
         onSubmit={onSubmit}
@@ -145,14 +145,25 @@ describe('AgreementPeriodsFieldArray', () => {
       </TestForm>, translationsProperties
     );
 
-    await userEvent.clear(within(getByTestId('agreementPeriodsFieldArray[0]')).getByRole('textbox', { name: /end date/i }));
-    // This one currently only fires in the UI if you click away
-    await waitFor(() => userEvent.click(within(getByTestId('agreementPeriodsFieldArray[0]')).getByRole('textbox', { name: /start date/i })));
+    await waitFor(async () => {
+      await Datepicker({ id: 'period-end-date-0' }).clear();
+    });
 
-    await waitFor(() => expect(queryAllByText(/The following periods have overlapping dates:/i)[0]).toBeInTheDocument());
-    await waitFor(() => expect(queryAllByText(/The following periods have overlapping dates:/i)[1]).toBeInTheDocument());
-    await waitFor(() => userEvent.type(within(getByTestId('agreementPeriodsFieldArray[0]')).getByRole('textbox', { name: /end date/i }), '01/25/2022'));
-    await waitFor(() => expect(queryByText(/The following periods have overlapping dates:/i)).not.toBeInTheDocument());
+    await waitFor(async () => {
+      await Datepicker({ id: 'period-start-date-0' }).focus();
+    });
+
+    await waitFor(async () => {
+      await Datepicker({ id: 'period-end-date-0' }).has({ errorText: 'The following periods have overlapping dates: 2 & 1' });
+    });
+
+    await waitFor(async () => {
+      await Datepicker({ id: 'period-end-date-0' }).fillIn('01/25/2022');
+    });
+
+    await waitFor(async () => {
+      await Datepicker({ id: 'period-end-date-0' }).has({ errorText: undefined });
+    });
   });
 
   test('expected values are submitted', async () => {

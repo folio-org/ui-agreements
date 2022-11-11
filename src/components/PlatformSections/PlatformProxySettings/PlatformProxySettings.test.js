@@ -19,10 +19,10 @@ const noProxydata = {
     }]
   },
   'handlers': {
-    'onClose': 'ƒ () {}',
-    'onEdit': 'ƒ () {}',
-    'onViewUrlCustomizer': 'ƒ () {}',
-    'onClickProxyServerAction': 'ƒ () {}'
+    'onClose': jest.fn(),
+    'onEdit': jest.fn(),
+    'onViewUrlCustomizer': jest.fn(),
+    'onClickProxyServerAction': jest.fn()
   },
   'stringTemplates': {
     'urlProxiers': '[]',
@@ -45,10 +45,10 @@ const data = {
     }]
   },
   'handlers': {
-    'onClose': 'ƒ () {}',
-    'onEdit': 'ƒ () {}',
-    'onViewUrlCustomizer': 'ƒ () {}',
-    'onClickProxyServerAction': 'ƒ () {}'
+    'onClose': jest.fn(),
+    'onEdit': jest.fn(),
+    'onViewUrlCustomizer': jest.fn(),
+    'onClickProxyServerAction': jest.fn()
   },
   'stringTemplates': {
     'urlProxiers': [{

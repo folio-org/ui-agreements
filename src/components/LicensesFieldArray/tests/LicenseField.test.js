@@ -101,11 +101,9 @@ describe('LicenseField', () => {
       );
     });
 
-    it('renders expected values', async () => {
-      await KeyValue('Type').has({ value: 'Local' });
-      await KeyValue('Status').has({ value: 'Active' });
-      await KeyValue('Start date').has({ value: '9/21/2021' });
-      await KeyValue('End date').has({ value: '9/22/2021' });
+    test('renders the LicenseCard component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('LicenseCard')).toBeInTheDocument();
     });
   });
 });

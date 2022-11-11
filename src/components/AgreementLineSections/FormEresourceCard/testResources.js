@@ -64,7 +64,7 @@ const initialValuesData = {
   'isEholdingsEnabled': true,
   'isLoading': false,
   'lineId': '986dd5b8-b252-485e-9f7b-2021ab38c422',
-  'onSubmit': 'ƒ () {}'
+  'onSubmit': jest.fn()
 };
 
 const line = {

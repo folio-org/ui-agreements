@@ -30,10 +30,7 @@ jest.mock('../../hooks', () => ({
   useSuppressFromDiscovery: jest.fn(() => () => true),
 }));
 
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  LoadingView: () => <div>LoadingView</div>,
-}));
+
 
 jest.mock('../../components/views/AgreementLineForm', () => {
   return (props) => (

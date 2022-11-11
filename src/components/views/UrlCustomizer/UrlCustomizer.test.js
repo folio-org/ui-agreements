@@ -6,10 +6,7 @@ import translationsProperties from '../../../../test/helpers';
 import { data, handlers } from './testResources';
 import UrlCustomizer from './UrlCustomizer';
 
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  LoadingPane: () => <div>LoadingPane</div>,
-}));
+
 
 describe('UrlCustomizer', () => {
   let renderComponent;

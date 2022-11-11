@@ -6,10 +6,7 @@ import translationsProperties from '../../../../test/helpers';
 import { titleData, packageData, PCIdata, helperApp, handlers } from './testResources';
 import EResource from './EResource';
 
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  LoadingPane: () => <div>LoadingPane</div>,
-}));
+
 
 jest.mock('../Package', () => () => <div>Package</div>);
 jest.mock('../Title', () => () => <div>Title</div>);

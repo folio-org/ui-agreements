@@ -16,10 +16,7 @@ import translationsProperties from '../../../test/helpers';
 import AgreementCreateRoute from './AgreementCreateRoute';
 import mockRefdata from '../../../test/jest/refdata';
 
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  LoadingView: () => <div>LoadingView</div>,
-}));
+
 
 const mockBasketLinesAdded = jest.fn();
 

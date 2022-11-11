@@ -22,10 +22,7 @@ CloseButton.propTypes = {
 const historyPushMock = jest.fn();
 const onSubmitMock = jest.fn();
 
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  LoadingView: () => <div>LoadingView</div>,
-}));
+
 
 jest.mock('../../components/views/UrlCustomizerForm', () => {
   return (props) => (
