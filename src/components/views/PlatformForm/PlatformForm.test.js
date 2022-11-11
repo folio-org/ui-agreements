@@ -1,5 +1,3 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
@@ -21,11 +19,6 @@ const initialValues = {
     }
   ]
 };
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  handleSaveKeyCommand: () => jest.fn()
-}));
 
 jest.mock('../PlatformFormInfo', () => () => <div>PlatformFormInfo</div>);
 

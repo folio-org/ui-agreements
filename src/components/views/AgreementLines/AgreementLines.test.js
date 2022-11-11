@@ -1,7 +1,6 @@
-import '@folio/stripes-erm-testing/jest/directMocks';
 import ReactRouterDom, { MemoryRouter } from 'react-router-dom';
 
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
 import { Pane, Button, TextField, MultiColumnList } from '@folio/stripes-testing';
@@ -16,11 +15,6 @@ jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
 });
 
 jest.mock('../../AgreementLineFilters', () => () => <div>AgreementLineFilters</div>);
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents
-}));
 
 // This is seemingly the only method to override imported __mock__ functions.
 // (This probably means this setup SUCKS and needs changing)

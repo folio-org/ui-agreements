@@ -1,6 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import '@folio/stripes-erm-testing/jest/directMocks';
+
 
 import { useQuery } from 'react-query';
 

@@ -1,14 +1,7 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { Accordion } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import SupplementaryDocs from './SupplementaryDocs';
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  DocumentCard: () => <div>DocumentCard</div>,
-}));
 
 const agreement = {
   'id': '5644b8c6-561b-4f6b-95bd-b3f044918b8a',

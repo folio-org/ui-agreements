@@ -1,6 +1,3 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
-
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
@@ -11,11 +8,6 @@ import { data, initialValues } from './testResources';
 const onSubmitMock = jest.fn();
 const onCloseMock = jest.fn();
 const onBasketLinesAddedMock = jest.fn();
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  handleSaveKeyCommand: () => jest.fn()
-}));
 
 jest.mock('../../../hooks', () => ({
   ...jest.requireActual('../../../hooks'),

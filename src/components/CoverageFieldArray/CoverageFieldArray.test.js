@@ -1,7 +1,6 @@
-import React from 'react';
 import { within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import '@folio/stripes-erm-testing/jest/directMocks';
+
 import { Button, TextField } from '@folio/stripes-testing';
 
 import { DatepickerInteractor as Datepicker, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';

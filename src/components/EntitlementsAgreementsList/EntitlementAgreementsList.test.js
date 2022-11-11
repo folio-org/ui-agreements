@@ -1,6 +1,5 @@
-import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import '@folio/stripes-erm-testing/jest/directMocks';
+
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import EntitlementAgreementsList from './EntitlementAgreementsList';
 

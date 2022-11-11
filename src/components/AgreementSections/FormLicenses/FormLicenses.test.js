@@ -1,14 +1,7 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
 import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Accordion, KeyValue } from '@folio/stripes-testing';
 import FormLicenses from './FormLicenses';
 import translationsProperties from '../../../../test/helpers';
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  DocumentsFieldArray: () => <div>DocumentsFieldArray</div>,
-}));
 
 jest.mock('../../LicensesFieldArray', () => () => <div>LicensesFieldArray</div>);
 

@@ -1,7 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import '@folio/stripes-erm-testing/jest/directMocks';
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-testing';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { useQuery } from 'react-query';
 import { useStripes } from '@folio/stripes/core';
@@ -25,16 +24,6 @@ CloseButton.propTypes = {
 
 const historyPushMock = jest.fn();
 const onSubmitMock = jest.fn();
-
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  LoadingView: () => <div>LoadingView</div>,
-}));
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents
-}));
 
 jest.mock('../../components/views/PCIForm', () => {
   return (props) => (

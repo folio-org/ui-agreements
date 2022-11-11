@@ -1,5 +1,3 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { PaneHeader, Button as ButtonInteractor } from '@folio/stripes-testing';
@@ -9,11 +7,6 @@ import PCIForm from './PCIForm';
 import { handlers, initialValues, form } from './testResources';
 
 const onSubmitMock = jest.fn();
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  handleSaveKeyCommand: () => jest.fn()
-}));
 
 jest.mock('../../EResourceSections/PCIFormInfo', () => () => <div>PCIFormInfo</div>);
 jest.mock('../../EResourceSections/PCIFormCoverage', () => () => <div>PCIFormCoverage</div>);

@@ -1,18 +1,7 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
 import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Accordion } from '@folio/stripes-testing';
 import FormInternalContacts from './FormInternalContacts';
 import translationsProperties from '../../../../test/helpers';
-
-/* We mock the InternalContactsFieldArray component here and test if that component renders as expected as a part of this test.
-We neednt test out the  InternalContactsFieldArray functionality in theses tests because we shouldnt be concerned with the
-underlying implementation of the child component */
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  InternalContactsFieldArray: () => <div>InternalContactsFieldArray</div>,
-}));
 
 const onSubmit = jest.fn();
 

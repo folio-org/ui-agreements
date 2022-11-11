@@ -1,14 +1,7 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { Accordion } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import Organizations from './Organizations';
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ViewOrganizationCard: () => <div>ViewOrganizationCard</div>,
-}));
 
 const agreement = {
   orgs: [

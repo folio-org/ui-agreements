@@ -1,5 +1,3 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { Checkbox } from '@folio/stripes-testing';
 import { MemoryRouter } from 'react-router-dom';
@@ -9,11 +7,6 @@ import AgreementLineForm from './AgreementLineForm';
 const onSubmitMock = jest.fn();
 const onCloseMock = jest.fn();
 const isSuppressFromDiscoveryEnabledMock = jest.fn();
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  handleSaveKeyCommand: () => jest.fn()
-}));
 
 jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
   return typeof children === 'function' ? children({ isEnabled: true }) : children;

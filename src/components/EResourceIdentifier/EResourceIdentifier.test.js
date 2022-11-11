@@ -1,6 +1,5 @@
 
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
+
 import { HTML, including } from '@folio/stripes-testing';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import EResourceIdentifier from './EResourceIdentifier';

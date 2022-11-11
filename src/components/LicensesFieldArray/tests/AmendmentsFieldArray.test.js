@@ -1,5 +1,3 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import { FieldArray } from 'react-final-form-arrays';
 import { MemoryRouter } from 'react-router-dom';
@@ -15,11 +13,6 @@ const form = {
     setFieldData: jest.fn()
   }
 };
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  LicenseCard: () => <div>LicenseCard</div>,
-}));
 
 const amendments = [
   {

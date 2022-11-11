@@ -1,5 +1,4 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
+
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
