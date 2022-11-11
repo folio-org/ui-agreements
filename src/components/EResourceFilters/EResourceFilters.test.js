@@ -1,7 +1,6 @@
-import React from 'react';
 import { waitFor } from '@testing-library/dom';
 
-import '@folio/stripes-erm-testing/jest/directMocks';
+
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { Accordion, Checkbox } from '@folio/stripes-testing';

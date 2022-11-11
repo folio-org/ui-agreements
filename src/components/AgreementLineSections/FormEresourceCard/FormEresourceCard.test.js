@@ -1,6 +1,5 @@
 
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
+
 import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
 import FormEresourceCard from './FormEresourceCard';
 import { internalPackage, externalPackage, initialValuesData, line, handlers, initialValues, interalTitle, externalTitle } from './testResources';

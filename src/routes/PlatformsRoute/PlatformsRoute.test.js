@@ -1,17 +1,10 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { useStripes } from '@folio/stripes/core';
 
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../test/helpers';
 import PlatformsRoute from './PlatformsRoute';
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents
-}));
 
 const props = {
   history: {

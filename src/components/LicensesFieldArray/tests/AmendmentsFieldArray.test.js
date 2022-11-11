@@ -1,12 +1,19 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
+import { mockErmComponents, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import { FieldArray } from 'react-final-form-arrays';
 import { MemoryRouter } from 'react-router-dom';
 import { KeyValue, Select } from '@folio/stripes-testing';
 import AmendmentsFieldArray from '../AmendmentsFieldArray';
 
 import translationsProperties from '../../../../test/helpers';
+
+/* For this test we would like to retain the actual stripes-erm-components version of LicenseEndDate */
+/* See LicenseAmendmentList.test.js for the full breakdown */
+jest.unmock('@folio/stripes-erm-components');
+const { LicenseEndDate: _mockLicenseEndDate, ...mockedERMComps } = mockErmComponents;
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  ...mockedERMComps
+}));
 
 const onSubmit = jest.fn();
 
@@ -15,11 +22,6 @@ const form = {
     setFieldData: jest.fn()
   }
 };
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  LicenseCard: () => <div>LicenseCard</div>,
-}));
 
 const amendments = [
   {

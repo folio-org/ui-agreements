@@ -1,19 +1,11 @@
-import React from 'react';
 import { waitFor } from '@testing-library/dom';
 
-import '@folio/stripes-erm-testing/jest/directMocks';
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { Accordion, Checkbox } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
 import { activeFilters, data } from './testResources';
 import AgreementFilters from './AgreementFilters';
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents,
-  OrganizationSelection: () => <div>OrganizationSelection</div>,
-}));
 
 const stateMock = jest.fn();
 
@@ -24,6 +16,7 @@ const filterHandlers = {
   clearGroup: () => {},
   reset: () => {},
 };
+
 describe('AgreementFilters', () => {
   let renderComponent;
   beforeEach(() => {

@@ -1,5 +1,4 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
+
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import NoPermissions from './NoPermissions';
 import translationsProperties from '../../../test/helpers';

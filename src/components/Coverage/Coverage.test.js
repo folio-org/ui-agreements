@@ -1,5 +1,4 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
+
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import Coverage from './Coverage';
 
@@ -376,15 +375,14 @@ const monographResource = {
 };
 
 describe('Coverage', () => {
-  test('renders expected serial coverage when passed as a pci', () => {
-    const { getByTestId } = renderWithIntl(
+  test('renders SerialCoverage component when passed as a pci', () => {
+    const { getByText } = renderWithIntl(
       <Coverage
         pci={serialResource}
       />
-
     );
 
-    expect(getByTestId('serialCoverage')).toBeInTheDocument();
+    expect(getByText('SerialCoverage')).toBeInTheDocument();
   });
 
   test('renders expected monograph coverage when passed as a pci', () => {
@@ -392,22 +390,20 @@ describe('Coverage', () => {
       <Coverage
         pci={monographResource}
       />
-
     );
 
     expect(getByTestId('monographCoverage')).toBeInTheDocument();
   });
 
-  test('renders expected serial coverage when passed as a line', () => {
+  test('renders SerialCoverage component when passed as a line', () => {
     const line = monographResource;
-    const { getByTestId } = renderWithIntl(
+    const { getByText } = renderWithIntl(
       <Coverage
         line={line}
       />
-
     );
 
-    expect(getByTestId('serialCoverage')).toBeInTheDocument();
+    expect(getByText('SerialCoverage')).toBeInTheDocument();
   });
 
   test('renders expected monograph coverage when passed as a line with an _object', () => {

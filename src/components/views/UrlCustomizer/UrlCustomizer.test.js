@@ -1,5 +1,4 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
+
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { Button, PaneHeader } from '@folio/stripes-testing';
@@ -7,10 +6,7 @@ import translationsProperties from '../../../../test/helpers';
 import { data, handlers } from './testResources';
 import UrlCustomizer from './UrlCustomizer';
 
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  LoadingPane: () => <div>LoadingPane</div>,
-}));
+
 
 describe('UrlCustomizer', () => {
   let renderComponent;

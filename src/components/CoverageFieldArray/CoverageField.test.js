@@ -1,6 +1,5 @@
-import React from 'react';
 import { waitFor } from '@testing-library/react';
-import '@folio/stripes-erm-testing/jest/directMocks';
+
 import { Button, Datepicker, TextField } from '@folio/stripes-testing';
 
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';

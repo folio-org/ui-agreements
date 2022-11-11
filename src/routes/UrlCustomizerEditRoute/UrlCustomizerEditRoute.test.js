@@ -1,6 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import '@folio/stripes-erm-testing/jest/directMocks';
+
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { Button } from '@folio/stripes/components';
@@ -23,10 +22,7 @@ CloseButton.propTypes = {
 const historyPushMock = jest.fn();
 const onSubmitMock = jest.fn();
 
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  LoadingView: () => <div>LoadingView</div>,
-}));
+
 
 jest.mock('../../components/views/UrlCustomizerForm', () => {
   return (props) => (

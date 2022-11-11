@@ -1,5 +1,4 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
+
 import { StaticRouter as Router } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
 import { QueryClient, QueryClientProvider } from 'react-query';

@@ -1,7 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import '@folio/stripes-erm-testing/jest/directMocks';
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-testing';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { useFileHandlers } from '@folio/stripes-erm-components';
 
@@ -9,11 +8,6 @@ import { Button as ButtonInteractor } from '@folio/stripes-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../test/helpers';
 import withFileHandlers from './withFileHandlers';
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents
-}));
 
 const MockApp = (props) => {
   return (

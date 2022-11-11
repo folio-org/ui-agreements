@@ -1,5 +1,3 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { TextField, TextArea } from '@folio/stripes-testing';
@@ -23,11 +21,6 @@ const initialValues = {
     'a61f41d3-dcfd-48be-bc0f-19cccfcf9f8f'
   ]
 };
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  handleSaveKeyCommand: () => jest.fn()
-}));
 
 describe('UrlCustomizerForm', () => {
   describe('without initialValues', () => {

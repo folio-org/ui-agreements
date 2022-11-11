@@ -1,5 +1,4 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
+
 import { StaticRouter as Router } from 'react-router-dom';
 import { Button } from '@folio/stripes-testing';
 import { renderWithIntl } from '@folio/stripes-erm-testing';

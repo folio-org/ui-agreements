@@ -1,7 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import '@folio/stripes-erm-testing/jest/directMocks';
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-testing';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 
 import { useQuery } from 'react-query';
@@ -45,16 +44,6 @@ const historyPushMock = jest.fn();
 const onSubmitMock = jest.fn();
 
 const mockBasketLinesAdded = jest.fn();
-
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  LoadingView: () => <div>LoadingView</div>,
-}));
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents
-}));
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),

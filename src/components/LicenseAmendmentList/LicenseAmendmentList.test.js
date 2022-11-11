@@ -1,11 +1,25 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+
+import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-testing';
 import { MultiColumnList, MultiColumnListCell } from '@folio/stripes-testing';
+
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../test/helpers';
 import LicenseAmendmentList from './LicenseAmendmentList';
 import { currentAmendments, futureAmendments, historicalAmendments } from './testResources';
+
+/* EXAMPLE -- Overriding a particular jest mock */
+/* For this test we would like to retain the actual stripes-erm-components version of LicenseEndDate */
+
+/* First undo the manual mock in question */
+jest.unmock('@folio/stripes-erm-components');
+/* Then we can grab all the mocks except the one we don't want in use */
+const { LicenseEndDate: _mockLicenseEndDate, ...mockedERMComps } = mockErmComponents;
+
+/* Finally remock the module for this test */
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  ...mockedERMComps
+}));
 
 describe('LicenseAmendmentList', () => {
   describe('List of current amendments', () => {

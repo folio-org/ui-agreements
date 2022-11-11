@@ -1,20 +1,55 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
-import { Button } from '@folio/stripes-testing';
+import { useForm, useFormState } from 'react-final-form';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
+
+import { Button } from '@folio/stripes/components';
+import { Button as ButtonInteractor } from '@folio/stripes-testing';
+
 import translationsProperties from '../../../test/helpers';
 import IdentifierReassignmentForm from './IdentifierReassignmentForm';
 
-jest.mock('@folio/stripes/core', () => ({
-  ...jest.requireActual('@folio/stripes/core'),
-  useOkapiKy: jest.fn(),
-}));
+import SourceTitleIdentifierField from './SourceTitleIdentifierField';
+import DestinationTitleIdentifierField from './DestinationTitleIdentifierField';
 
-const onSubmitMock = jest.fn();
 const onCloseMock = jest.fn();
 
-jest.mock('./SourceTitleIdentifierField', () => () => <div>SourceTitleIdentifierField</div>);
-jest.mock('./DestinationTitleIdentifierField', () => () => <div>DestinationTitleIdentifierField</div>);
+const MockSourceTitleIdentifierField = ({ setTitleName }) => {
+  return (
+    <>
+      <Button
+        onClick={() => setTitleName('test source title')}
+      >
+        setSourceTitle
+      </Button>
+      <div>SourceTitleIdentifierField</div>
+    </>
+  );
+};
+
+const MockDestinationTitleIdentifierField = ({ setTitleName }) => {
+  const { change } = useForm();
+
+  return (
+    <>
+      <Button
+        onClick={() => {
+          change('destinationTitle', 'test destination title');
+          setTitleName('test destination title');
+        }}
+      >
+        setDestinationTitle
+      </Button>
+      <div>DestinationTitleIdentifierField</div>
+    </>
+  );
+};
+
+/* EXAMPLE testing, mocking Component with complicated return */
+jest.mock('./SourceTitleIdentifierField');
+jest.mock('./DestinationTitleIdentifierField');
+SourceTitleIdentifierField.mockImplementation(MockSourceTitleIdentifierField);
+DestinationTitleIdentifierField.mockImplementation(MockDestinationTitleIdentifierField);
+
 jest.mock('./SourceTitlePreview/SourceTitlePreview', () => () => <div>SourceTitlePreview</div>);
 jest.mock('./DestinationTitlePreview/DestinationTitlePreview', () => () => <div>DestinationTitlePreview</div>);
 
@@ -22,43 +57,18 @@ describe('IdentifierReassignmentForm', () => {
   let renderComponent;
   beforeEach(() => {
     renderComponent = renderWithIntl(
-      <TestForm onClose={onCloseMock} onSubmit={onSubmitMock}>
-        <IdentifierReassignmentForm
-          data={{}}
-          form={{
-            change: () => jest.fn(),
-          }}
-          handlers={{
-            onClose: onCloseMock,
-          }}
-        />
-        <div>SourceTitleIdentifierField</div>
-        <div>DestinationTitleIdentifierField</div>
-        <div>SourceTitlePreview</div>
-        <div>DestinationTitlePreview</div>
-      </TestForm>,
+      <IdentifierReassignmentForm
+        data={{}}
+        form={{
+          change: () => jest.fn(),
+        }}
+        handlers={{
+          onClose: onCloseMock,
+        }}
+        open
+      />,
       translationsProperties
     );
-  });
-
-  it('renders the SourceTitleIdentifierField component', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('SourceTitleIdentifierField')).toBeInTheDocument();
-  });
-
-  it('renders the DestinationTitleIdentifierField component', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('DestinationTitleIdentifierField')).toBeInTheDocument();
-  });
-
-  it('renders the SourceTitlePreview component', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('SourceTitlePreview')).toBeInTheDocument();
-  });
-
-  it('renders the DestinationTitlePreview component', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('DestinationTitlePreview')).toBeInTheDocument();
   });
 
   test('renders the identifierReassignmentForm form', () => {
@@ -66,12 +76,40 @@ describe('IdentifierReassignmentForm', () => {
     expect(getByTestId('identifierReassignmentForm')).toBeInTheDocument();
   });
 
-  test('renders the submit button', async () => {
-    await Button('Submit').exists();
+  describe('Before picking resources', () => {
+    it('renders the SourceTitleIdentifierField component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('SourceTitleIdentifierField')).toBeInTheDocument();
+    });
+
+    it('renders the DestinationTitleIdentifierField component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('DestinationTitleIdentifierField')).toBeInTheDocument();
+    });
+
+    it('renders a disabled \'preview\' button', async () => {
+      await ButtonInteractor('Preview').has({ disabled: true });
+    });
   });
 
-  test('clicking the submit button ', async () => {
-    await Button('Submit').click();
-    expect(onSubmitMock.mock.calls.length).toBe(1);
+  describe('Picking resources', () => {
+    beforeEach(async () => {
+      // Set source/destination titles
+      await ButtonInteractor('setSourceTitle').click();
+      await ButtonInteractor('setDestinationTitle').click();
+
+      // Click preview
+      await ButtonInteractor('Preview').click();
+    });
+
+    it('renders the SourceTitlePreview component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('SourceTitlePreview')).toBeInTheDocument();
+    });
+
+    it('renders the DestinationTitlePreview component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('DestinationTitlePreview')).toBeInTheDocument();
+    });
   });
 });

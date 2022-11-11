@@ -1,19 +1,11 @@
 
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 
 import { useStripes } from '@folio/stripes/core';
 import translationsProperties from '../../../test/helpers';
 import AgreementsRoute from './AgreementsRoute';
 import mockRefdata from '../../../test/jest/refdata';
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents,
-  InternalContactSelection: () => <div>InternalContactSelection</div>,
-}));
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),

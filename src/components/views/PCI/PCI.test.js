@@ -1,16 +1,9 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 
 import PCI from './PCI';
 import { data, handlers } from './testResources';
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  handleSaveKeyCommand: () => jest.fn()
-}));
 
 jest.mock('../../PackageCard', () => () => <div>PackageCard</div>);
 jest.mock('../../TitleCard', () => () => <div>TitleCard</div>);

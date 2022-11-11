@@ -1,7 +1,6 @@
-import '@folio/stripes-erm-testing/jest/directMocks';
 import ReactRouterDom, { MemoryRouter } from 'react-router-dom';
 
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
@@ -23,10 +22,6 @@ jest.mock('../../IdentifierReassignmentForm', () => () => <div>IdentifierReassig
 ReactRouterDom.useLocation = jest.requireActual('react-router-dom').useLocation;
 
 const mockSubmit = jest.fn();
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents
-}));
 
 describe('EResources', () => {
   useHandleSubmitSearch.mockImplementation(() => ({

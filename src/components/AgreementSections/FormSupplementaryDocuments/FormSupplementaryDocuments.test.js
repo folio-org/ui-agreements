@@ -1,18 +1,7 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
 import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Accordion } from '@folio/stripes-testing';
 import FormSupplementaryDocuments from './FormSupplementaryDocuments';
 import translationsProperties from '../../../../test/helpers';
-
-/* We mock the DocumentsFieldArray component here and test if that component renders as expected as a part of this test.
-We neednt test out the  FormSupplementaryDocuments functionality in theses tests because we shouldnt be concerned with the
-underlying implementation of the child component */
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  DocumentsFieldArray: () => <div>DocumentsFieldArray</div>,
-}));
 
 const onSubmit = jest.fn();
 

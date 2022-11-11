@@ -1,5 +1,4 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
+
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { Accordion, MultiColumnList, MultiColumnListCell, Button } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
@@ -20,10 +19,10 @@ const noProxydata = {
     }]
   },
   'handlers': {
-    'onClose': 'ƒ () {}',
-    'onEdit': 'ƒ () {}',
-    'onViewUrlCustomizer': 'ƒ () {}',
-    'onClickProxyServerAction': 'ƒ () {}'
+    'onClose': jest.fn(),
+    'onEdit': jest.fn(),
+    'onViewUrlCustomizer': jest.fn(),
+    'onClickProxyServerAction': jest.fn()
   },
   'stringTemplates': {
     'urlProxiers': '[]',
@@ -46,10 +45,10 @@ const data = {
     }]
   },
   'handlers': {
-    'onClose': 'ƒ () {}',
-    'onEdit': 'ƒ () {}',
-    'onViewUrlCustomizer': 'ƒ () {}',
-    'onClickProxyServerAction': 'ƒ () {}'
+    'onClose': jest.fn(),
+    'onEdit': jest.fn(),
+    'onViewUrlCustomizer': jest.fn(),
+    'onClickProxyServerAction': jest.fn()
   },
   'stringTemplates': {
     'urlProxiers': [{

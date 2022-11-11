@@ -1,5 +1,4 @@
-import React from 'react';
-import '@folio/stripes-erm-testing/jest/directMocks';
+
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { Select } from '@folio/stripes-testing';
 
@@ -8,11 +7,6 @@ import translationsProperties from '../../../test/helpers';
 import PickListValueSettings from './PickListValueSettings';
 
 import mockRefdata from '../../../test/jest/refdata';
-
-jest.mock('@k-int/stripes-kint-components', () => ({
-  ...jest.requireActual('@k-int/stripes-kint-components'),
-  EditableRefdataList: () => <div>EditableRefdataList</div>,
-}));
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
