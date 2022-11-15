@@ -1356,6 +1356,7 @@ const handlers = {
   onDelete: jest.fn(),
   onEdit: jest.fn(),
   onExportAgreement: jest.fn(),
+  onExportAgreementAsJSON: jest.fn(),
   onToggleTags: jest.fn()
 };
 

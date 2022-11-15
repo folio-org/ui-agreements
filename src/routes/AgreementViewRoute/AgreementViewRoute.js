@@ -274,9 +274,7 @@ const AgreementViewRoute = ({
   };
 
   const exportAgreementAsJSON = () => {
-    if (exportAgreement?.length) {
-      callout.sendCallout({ timeout: 0, message: <FormattedMessage id="ui-agreements.agreements.exportingAgreement" /> });
-    }
+    callout.sendCallout({ timeout: 0, message: <FormattedMessage id="ui-agreements.agreements.exportingAgreement" /> });
   };
 
   const handleFilterEResources = (path) => {
