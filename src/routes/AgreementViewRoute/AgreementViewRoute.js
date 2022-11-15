@@ -273,6 +273,12 @@ const AgreementViewRoute = ({
     });
   };
 
+  const exportAgreementAsJSON = () => {
+    if (exportAgreement?.length) {
+      callout.sendCallout({ timeout: 0, message: <FormattedMessage id="ui-agreements.agreements.exportingAgreement" /> });
+    }
+  };
+
   const handleFilterEResources = (path) => {
     setEresourcesFilterPath(path);
   };
@@ -313,6 +319,7 @@ const AgreementViewRoute = ({
       handlers={{
         ...handlers,
         onClone: cloneAgreement,
+        onExportAgreementAsJSON: exportAgreementAsJSON,
         onClose: handleClose,
         onDelete: handleDelete,
         onEdit: handleEdit,
