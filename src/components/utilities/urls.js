@@ -37,6 +37,8 @@ const urls = {
 
   poLineView: id => `/orders/lines/view/${id}`,
 
+  titles: () => '/erm/titles',
+
   viewInstance: id => `/inventory/view/${id}`,
 
   udpView: id => `/eusage/view/${id}`,

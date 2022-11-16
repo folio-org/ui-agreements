@@ -47,6 +47,8 @@ import PlatformsRoute from './routes/PlatformsRoute';
 import PlatformViewRoute from './routes/PlatformViewRoute';
 import PlatformEditRoute from './routes/PlatformEditRoute';
 
+import TitlesRoute from './routes/TitlesRoute';
+
 import UrlCustomizerEditRoute from './routes/UrlCustomizerEditRoute';
 import UrlCustomizerViewRoute from './routes/UrlCustomizerViewRoute';
 import UrlCustomizerCreateRoute from './routes/UrlCustomizerCreateRoute';
@@ -209,6 +211,10 @@ const App = (props) => {
                 <Route component={EResourceEditRoute} path={`${path}/eresources/:id/edit`} />
                 <Route component={EResourcesRoute} path={`${path}/eresources/:id?`}>
                   <Route component={EResourceViewRoute} path={`${path}/eresources/:id`} />
+                </Route>
+
+                <Route component={TitlesRoute} path={`${path}/titles/:id?`}>
+                  <Route component={EResourceViewRoute} path={`${path}/titles/:id`} />
                 </Route>
 
                 <Route component={NoteCreateRoute} path={`${path}/notes/create`} />
