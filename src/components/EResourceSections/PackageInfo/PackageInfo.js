@@ -116,13 +116,27 @@ const PackageInfo = ({
         <Col xs={3}>
           <KeyValue
             label={<FormattedMessage id="ui-agreements.eresources.sourceCreated" />}
-            value={eresource?.sourceDataCreated ? <FormattedDateTime date={eresource.sourceDataCreated} /> : <NoValue />}
+            value={
+              eresource?.sourceDataCreated ?
+                <FormattedDateTime
+                  date={eresource.sourceDataCreated}
+                  id="source-data-created-datetime"
+                /> :
+                <NoValue />
+            }
           />
         </Col>
         <Col xs={3}>
           <KeyValue
             label={<FormattedMessage id="ui-agreements.eresources.sourceLastUpdated" />}
-            value={eresource?.sourceDataUpdated ? <FormattedDateTime date={eresource.sourceDataUpdated} /> : <NoValue />}
+            value={
+              eresource?.sourceDataUpdated ?
+                <FormattedDateTime
+                  date={eresource.sourceDataUpdated}
+                  id="source-data-updated-datetime"
+                /> :
+                <NoValue />
+            }
           />
         </Col>
       </Row>
