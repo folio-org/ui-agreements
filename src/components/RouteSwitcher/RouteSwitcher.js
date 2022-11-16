@@ -68,7 +68,6 @@ const RouteSwitcher = ({ primary }) => {
   if (stripes.hasPerm('ui-agreements.resources.view')) {
     button.push(
       <Button
-        // buttonStyle={pathname?.startsWith('/erm/eresources') ? 'primary' : 'default'}
         key="clickable-nav-eresources"
         id="clickable-nav-eresources"
         to={pathname?.startsWith('/erm/eresources') ? null : urls.eresources()}
@@ -81,7 +80,6 @@ const RouteSwitcher = ({ primary }) => {
   if (stripes.hasPerm('ui-agreements.platforms.view')) {
     button.push(
       <Button
-          // buttonStyle={pathname?.startsWith('/erm/platforms') ? 'primary' : 'default'}
         key="clickable-nav-platforms"
         id="clickable-nav-platforms"
         to={pathname?.startsWith('/erm/platforms') ? null : urls.platforms()}
