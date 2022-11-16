@@ -1,4 +1,4 @@
-import { useForm, useFormState } from 'react-final-form';
+import { useForm } from 'react-final-form';
 
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 
