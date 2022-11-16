@@ -27,7 +27,7 @@ import {
 } from '@folio/stripes/smart-components';
 import { SearchKeyControl, useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
-import { statuses } from '../../../constants';
+import { AGREEMENTS_TAB_FILTER_PANE, AGREEMENTS_TAB_PANESET, AGREEMENTS_TAB_PANE_ID, statuses } from '../../../constants';
 import AgreementFilters from '../../AgreementFilters';
 import RouteSwitcher from '../../RouteSwitcher';
 
@@ -139,12 +139,12 @@ const Agreements = ({
               return (
                 <PersistedPaneset
                   appId="@folio/agreements"
-                  id="agreements-paneset"
+                  id={AGREEMENTS_TAB_PANESET}
                 >
                   {filterPaneIsVisible &&
                     <Pane
                       defaultWidth="20%"
-                      id="pane-agreement-search"
+                      id={AGREEMENTS_TAB_FILTER_PANE}
                       lastMenu={
                         <PaneMenu>
                           <CollapseFilterPaneButton onClick={toggleFilterPane} />
@@ -236,7 +236,7 @@ const Agreements = ({
                         :
                         null
                     }
-                    id="pane-agreement-list"
+                    id={AGREEMENTS_TAB_PANE_ID}
                     lastMenu={(
                       <IfPermission perm="ui-agreements.agreements.edit">
                         <PaneMenu>

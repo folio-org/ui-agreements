@@ -32,7 +32,7 @@ import EResourceFilters from '../../EResourceFilters';
 import IdentifierReassignmentForm from '../../IdentifierReassignmentForm';
 
 import { urls } from '../../utilities';
-import { resultCount } from '../../../constants';
+import { KB_TAB_FILTER_PANE, KB_TAB_PANESET, KB_TAB_PANE_ID, resultCount } from '../../../constants';
 
 import css from '../Agreements.css';
 import RouteSwitcher from '../../RouteSwitcher';
@@ -129,11 +129,11 @@ const EResources = ({
             };
 
             return (
-              <PersistedPaneset appId="@folio/agreements" id="eresources-paneset">
+              <PersistedPaneset appId="@folio/agreements" id={KB_TAB_PANESET}>
                 {filterPaneIsVisible &&
                   <Pane
                     defaultWidth="20%"
-                    id="pane-eresources-search"
+                    id={KB_TAB_FILTER_PANE}
                     lastMenu={
                       <PaneMenu>
                         <CollapseFilterPaneButton onClick={toggleFilterPane} />
@@ -211,7 +211,7 @@ const EResources = ({
                       :
                       null
                   }
-                  id="pane-eresources-list"
+                  id={KB_TAB_PANE_ID}
                   noOverflow
                   padContent={false}
                   paneSub={

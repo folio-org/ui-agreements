@@ -54,11 +54,8 @@ const RouteSwitcher = ({ primary }) => {
     case 'eresources':
       selectedIndex = 0;
       break;
-    case 'titles':
-      selectedIndex = 1;
-      break;
     case 'platforms':
-      selectedIndex = 2;
+      selectedIndex = 1;
       break;
     default:
       break;
