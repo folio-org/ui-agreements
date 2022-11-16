@@ -12,18 +12,25 @@ const RouteSwitcher = ({ primary }) => {
   const stripes = useStripes();
   let selectedIndex;
 
+  switch (primary) {
+    case 'agreements':
+      selectedIndex = 0;
+      break;
+    case 'agreementLines':
+      selectedIndex = 1;
+      break;
+    case 'eresources':
+      selectedIndex = 0;
+      break;
+    case 'platforms':
+      selectedIndex = 1;
+      break;
+    default:
+      break;
+  }
+
   // Render agreement search options
   if (pathname?.startsWith('/erm/agreements') || pathname?.startsWith('/erm/agreementLines')) {
-    switch (primary) {
-      case 'agreements':
-        selectedIndex = 0;
-        break;
-      case 'agreementLines':
-        selectedIndex = 1;
-        break;
-      default:
-        break;
-    }
     return (
       <ResponsiveButtonGroup
         fullWidth
@@ -50,17 +57,6 @@ const RouteSwitcher = ({ primary }) => {
   }
 
   // Render internal KB search options
-  switch (primary) {
-    case 'eresources':
-      selectedIndex = 0;
-      break;
-    case 'platforms':
-      selectedIndex = 1;
-      break;
-    default:
-      break;
-  }
-
   const button = [];
   if (stripes.hasPerm('ui-agreements.resources.view')) {
     button.push(
