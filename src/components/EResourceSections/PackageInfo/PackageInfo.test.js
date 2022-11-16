@@ -1,5 +1,5 @@
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { FormattedDateTimeInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { KeyValue } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
@@ -782,28 +782,18 @@ describe('PackageInfo', () => {
       await KeyValue('Source created').exists();
     });
 
-    // NOTE: this test will fail because of &nbsp; in the FormattedDateTime component:
-    // test('renders the expcected source created date', async () => {
-    //   await KeyValue('Source created').has({ value: '3/21/2022 11:00 PM' });
-    // });
-
-    test('renders the expected source created date', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('3/21/2022 11:00 PM')).toBeInTheDocument();
+    test('renders the expected source created date and time', async () => {
+      await FormattedDateTimeInteractor({ id: 'source-data-created-datetime' }).has({ date: '3/21/2022' });
+      await FormattedDateTimeInteractor({ id: 'source-data-created-datetime' }).has({ time: '11:00 PM' });
     });
 
     test('renders the Source last updated field', async () => {
       await KeyValue('Source last updated').exists();
     });
 
-    // NOTE: this test will fail because of &nbsp; in the FormattedDateTime component:
-    // test('renders the expcected source last updated date', async () => {
-    //   await KeyValue('Source last updated').has({ value: '3/28/2022 3:09 AM' });
-    // });
-
-    test('renders the expected source last updated date', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('3/28/2022 3:09 AM')).toBeInTheDocument();
+    test('renders the expected source updated date and time', async () => {
+      await FormattedDateTimeInteractor({ id: 'source-data-updated-datetime' }).has({ date: '3/28/2022' });
+      await FormattedDateTimeInteractor({ id: 'source-data-updated-datetime' }).has({ time: '3:09 AM' });
     });
   });
 
