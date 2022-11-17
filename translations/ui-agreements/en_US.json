@@ -285,7 +285,7 @@
     "duplicateAgreementModal.organizations": "Organizations",
     "duplicateAgreementModal.usageData": "Usage data",
     "close": "Close",
-    "agreements.export": "Export",
+    "agreements.export": "Export agreement (JSON)",
     "agreements.view": "View",
     "eresourcesCovered.exportButton.tooltip": "Exports only supported for current or all resources",
     "license.unsetAmendments": "Unassigned amendments",

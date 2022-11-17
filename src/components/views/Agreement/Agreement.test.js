@@ -172,9 +172,9 @@ describe('Agreement', () => {
       await Button('Cancel').click(); // close the modal
     });
 
-    it('Clicking the export button should trigger the callback', async () => {
+    it('Clicking the Export agreement (JSON) button should trigger the callback', async () => {
       await Button('Actions').click();
-      await Button('Export').click();
+      await Button('Export agreement (JSON)').click();
       expect(handlers.onExportAgreement).toHaveBeenCalled();
     });
   });
