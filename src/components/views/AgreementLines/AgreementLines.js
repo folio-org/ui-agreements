@@ -26,7 +26,7 @@ import {
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
 import AgreementLineFilters from '../../AgreementLineFilters';
-import { resultCount } from '../../../constants';
+import { AGREEMENTS_TAB_FILTER_PANE, AGREEMENTS_TAB_PANESET, AGREEMENTS_TAB_PANE_ID, resultCount } from '../../../constants';
 import { urls } from '../../utilities';
 import css from '../Agreements.css';
 import RouteSwitcher from '../../RouteSwitcher';
@@ -106,12 +106,12 @@ const AgreementLines = ({
               return (
                 <PersistedPaneset
                   appId="@folio/agreements"
-                  id="agreementLines-paneset"
+                  id={AGREEMENTS_TAB_PANESET}
                 >
                   {filterPaneIsVisible &&
                     <Pane
                       defaultWidth="20%"
-                      id="pane-agreementLines-search"
+                      id={AGREEMENTS_TAB_FILTER_PANE}
                       lastMenu={
                         <PaneMenu>
                           <CollapseFilterPaneButton onClick={toggleFilterPane} />
@@ -120,7 +120,7 @@ const AgreementLines = ({
                       paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                     >
                       <form onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}>
-                        <RouteSwitcher />
+                        <RouteSwitcher primary="agreementLines" />
                         {/* TODO: Use forthcoming <SearchGroup> or similar component */}
                         <div className={css.searchGroupWrap}>
                           <FormattedMessage id="ui-agreements.agreements.agreementLines.searchInputLabel">
@@ -185,7 +185,7 @@ const AgreementLines = ({
                         :
                         null
                     }
-                    id="pane-agreementLine-list"
+                    id={AGREEMENTS_TAB_PANE_ID}
                     noOverflow
                     padContent={false}
                     paneSub={
