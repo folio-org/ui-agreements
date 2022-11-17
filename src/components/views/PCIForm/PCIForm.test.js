@@ -4,7 +4,7 @@ import { PaneHeader, Button as ButtonInteractor } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 
 import PCIForm from './PCIForm';
-import { handlers, initialValues, form } from './testResources';
+import { handlers, initialValues } from './testResources';
 
 const onSubmitMock = jest.fn();
 
@@ -17,7 +17,6 @@ describe('PCIForm', () => {
     renderComponent = renderWithIntl(
       <MemoryRouter>
         <PCIForm
-          form={form}
           handlers={handlers}
           initialValues={initialValues}
           onSubmit={onSubmitMock}
