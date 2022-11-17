@@ -141,7 +141,6 @@ const Agreement = ({
           id="clickable-dropdown-export-agreement"
           onClick={() => {
             handlers.onExportAgreement();
-            handlers.onExportAgreementAsJSON();
             onToggle();
           }}
         >
@@ -338,7 +337,6 @@ Agreement.propTypes = {
     onEdit: PropTypes.func,
     onExportAgreement: PropTypes.func,
     onToggleTags: PropTypes.func,
-    onExportAgreementAsJSON:PropTypes.func,
   }).isRequired,
   helperApp: PropTypes.node,
   isLoading: PropTypes.bool.isRequired,

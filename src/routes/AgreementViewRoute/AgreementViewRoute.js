@@ -178,7 +178,8 @@ const AgreementViewRoute = ({
 
   const { refetch: exportAgreement } = useQuery(
     [`${agreementPath}/export/current`, 'ui-agreements', 'AgreementViewRoute', 'exportAgreement'],
-    () => ky.get(`${agreementPath}/export/current`).blob().then(downloadBlob(agreement.name)),
+    () => ky.get(`${agreementPath}/export/current`).blob().then(downloadBlob(agreement.name))
+      .then(callout.sendCallout({ type: 'success', message: <FormattedMessage id="ui-agreements.agreements.exportingAgreement" /> })),
     {
       enabled: false
     }
@@ -273,10 +274,6 @@ const AgreementViewRoute = ({
     });
   };
 
-  const exportAgreementAsJSON = () => {
-    callout.sendCallout({ type: 'success', message: <FormattedMessage id="ui-agreements.agreements.exportingAgreement" /> });
-  };
-
   const handleFilterEResources = (path) => {
     setEresourcesFilterPath(path);
   };
@@ -317,7 +314,6 @@ const AgreementViewRoute = ({
       handlers={{
         ...handlers,
         onClone: cloneAgreement,
-        onExportAgreementAsJSON: exportAgreementAsJSON,
         onClose: handleClose,
         onDelete: handleDelete,
         onEdit: handleEdit,

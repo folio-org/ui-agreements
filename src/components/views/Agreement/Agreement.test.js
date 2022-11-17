@@ -176,7 +176,6 @@ describe('Agreement', () => {
       await Button('Actions').click();
       await Button('Export agreement (JSON)').click();
       expect(handlers.onExportAgreement).toHaveBeenCalled();
-      expect(handlers.onExportAgreementAsJSON).toHaveBeenCalled();
     });
   });
 });
