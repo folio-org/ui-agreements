@@ -3,10 +3,6 @@ const handlers = {
   onClose: jest.fn(),
 };
 
-const form = {
-  getRegisteredFields: jest.fn().mockImplementation(() => ({ length: 2 })) // > 1 to test the form has loaded
-};
-
 const initialValues = {
   'id': '04a31da6-b9da-4a46-8194-8da3b9971024',
   'accessStart': '2008-01-01',
@@ -143,4 +139,4 @@ const initialValues = {
   'class': 'org.olf.kb.PackageContentItem'
 };
 
-export { handlers, form, initialValues };
+export { handlers, initialValues };
