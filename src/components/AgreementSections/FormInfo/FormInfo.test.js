@@ -1,5 +1,5 @@
 import { Select, TextArea, TextField } from '@folio/stripes-testing';
-import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
+import { TestForm, renderWithIntl, SelectInteractor } from '@folio/stripes-erm-testing';
 import { useAsyncValidation } from '@folio/stripes-erm-components';
 
 import FormInfo from './FormInfo';
@@ -61,6 +61,38 @@ describe('FormInfo', () => {
       await Select('Reason for closure').choose('Ceased');
       await Select('Reason for closure').choose('Rejected');
       await Select('Reason for closure').choose('Superseded');
+    });
+
+    /* EXAMPLE -- Testing warning set by setFieldData (When using stripes Select interactor as is) */
+    /* test('Reason for closure warning shows up when set and status !== closed', async () => {
+      // First set status to closed
+      await Select('Status*').choose('Closed');
+
+      // Now set reason for closure, ensure we FOCUS, so that meta.touched works as expected
+      await Select('Reason for closure').focus();
+      await Select('Reason for closure').choose('Cancelled');
+
+      // Now set Status away from 'Closed'. Focus here because 'blur' action DOES NOT WORK as expected,
+      // so this is the equivalent of bluring
+      await Select('Status*').focus();
+      await Select('Status*').choose('Active');
+
+      // Finally test the warning itself
+      await Select('Reason for closure').has({ warning: 'This reason will be cleared as status is not closed' });
+    }); */
+
+    /* EXAMPLE -- Testing warning set by setFieldData (using stripes-erm-testing Select Interactor) */
+    test('Reason for closure warning shows up when set and status !== closed', async () => {
+      // First set status to closed
+      await SelectInteractor('Status*').choose('Closed');
+      // Next set the reason for closure dropdown USING CHOOSEANDBLUR to ensure 'touched' meta value is set
+      await SelectInteractor('Reason for closure').chooseAndBlur('Cancelled');
+
+      // Now set Status away from 'Closed'.
+      await SelectInteractor('Status*').choose('Active');
+
+      // Finally test the warning itself
+      await SelectInteractor('Reason for closure').has({ warning: 'This reason will be cleared as status is not closed' });
     });
 
     test('renders the Renewal priority dropdown  with correct options', async () => {

@@ -71,30 +71,26 @@ const FormInfo = ({
         <Col md={6} xs={12}>
           <Field name="agreementStatus" validate={requiredValidator}>
             {({ input, meta }) => {
-              return (<Select
-                {...input}
-                dataOptions={agreementStatusValues}
-                error={meta && meta.touched && meta.error}
-                id="edit-agreement-status"
-                label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
-                onChange={(e) => {
-                  input.onChange(e);
+              return (
+                <Select
+                  {...input}
+                  dataOptions={agreementStatusValues}
+                  error={meta && meta.touched && meta.error}
+                  id="edit-agreement-status"
+                  label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
+                  onChange={(e) => {
+                    input.onChange(e);
+                    let warning;
 
-                  let warning;
-
-                  if (values.reasonForClosure && e.target.value !== statuses.CLOSED) {
-                    warning = (
-                      <div data-test-warn-clear-reason-for-closure>
-                        <FormattedMessage id="ui-agreements.warn.clearReasonForClosure" />
-                      </div>
-                    );
-                  }
-
-                  mutators.setFieldData('reasonForClosure', { warning });
-                }}
-                placeholder=" "
-                required
-              />);
+                    if (values.reasonForClosure && e.target.value !== statuses.CLOSED) {
+                      warning = <FormattedMessage id="ui-agreements.warn.clearReasonForClosure" />;
+                    }
+                    mutators.setFieldData('reasonForClosure', { warning });
+                  }}
+                  placeholder=" "
+                  required
+                />
+              );
             }}
           </Field>
         </Col>
