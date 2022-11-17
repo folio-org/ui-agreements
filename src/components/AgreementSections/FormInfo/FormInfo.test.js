@@ -1,11 +1,10 @@
-
+import { Select, TextArea, TextField } from '@folio/stripes-testing';
 import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
 import { useAsyncValidation } from '@folio/stripes-erm-components';
 
-import userEvent from '@testing-library/user-event';
 import FormInfo from './FormInfo';
 import translationsProperties from '../../../../test/helpers';
-import { data, form, initialValues, values } from './testResources';
+import { data, initialValues } from './testResources';
 
 jest.mock('../../AgreementPeriodsFieldArray', () => () => <div>AgreementPeriodsFieldArray</div>);
 
@@ -19,45 +18,62 @@ describe('FormInfo', () => {
   describe('with no initial values', () => {
     beforeEach(() => {
       renderComponent = renderWithIntl(
-        <TestForm onSubmit={onSubmit}>
-          <FormInfo data={data} form={form} values={values} />
+        <TestForm
+          onSubmit={onSubmit}
+        >
+          {({ form, values }) => (
+            <FormInfo data={data} form={form} values={values} />
+          )}
         </TestForm>, translationsProperties
       );
     });
 
-    test('renders the Name field', () => {
-      const { getByRole } = renderComponent;
-      expect(getByRole('textbox', { name: 'Name' }));
+    test('renders the Name field', async () => {
+      await TextField('Name*').exists();
     });
 
-    test('renders the Description field', () => {
-      const { getByRole } = renderComponent;
-      expect(getByRole('textbox', { name: 'Description' }));
+    test('renders the Description field', async () => {
+      await TextArea('Description').exists();
     });
 
-    test('renders the Status dropdown', () => {
-      const { getByRole } = renderComponent;
-      expect(getByRole('combobox', { name: 'Status' }));
+    test('renders the Status dropdown with correct options', async () => {
+      await Select('Status*').exists();
+      await Select('Status*').choose('Active');
+      await Select('Status*').choose('Closed');
+      await Select('Status*').choose('Draft');
+      await Select('Status*').choose('In negotiation');
+      await Select('Status*').choose('Requested');
     });
 
-    test('renders the Reason for closure dropdown', () => {
-      const { getByRole } = renderComponent;
-      expect(getByRole('combobox', { name: 'Reason for closure' }));
+    test('renders a disabled Reason for closure dropdown', async () => {
+      await Select('Reason for closure').has({ disabled: true });
     });
 
-    test('renders a disabled Reason for closure dropdown', () => {
-      const { getByRole } = renderComponent;
-      expect(getByRole('combobox', { name: 'Reason for closure' })).toBeDisabled();
+    test('Reason for closure dropdown activates when correct status is selected and has correct options', async () => {
+      await Select('Status*').choose('Active');
+      await Select('Reason for closure').has({ disabled: true });
+
+      await Select('Status*').choose('Closed');
+      await Select('Status*').blur();
+
+      await Select('Reason for closure').has({ disabled: false });
+      await Select('Reason for closure').choose('Cancelled');
+      await Select('Reason for closure').choose('Ceased');
+      await Select('Reason for closure').choose('Rejected');
+      await Select('Reason for closure').choose('Superseded');
     });
 
-    test('renders the Renewal priority dropdown', () => {
-      const { getByRole } = renderComponent;
-      expect(getByRole('combobox', { name: 'Renewal priority' }));
+    test('renders the Renewal priority dropdown  with correct options', async () => {
+      await Select('Renewal priority').exists();
+      await Select('Renewal priority').choose('Definitely renew');
+      await Select('Renewal priority').choose('For review');
+      await Select('Renewal priority').choose('Definitely cancel');
     });
 
-    test('renders the Is perpertual dropdown', () => {
-      const { getByRole } = renderComponent;
-      expect(getByRole('combobox', { name: 'Is perpetual' }));
+    test('renders the Is perpetual dropdown with correct options', async () => {
+      await Select('Is perpetual').exists();
+      await Select('Is perpetual').choose('Yes');
+      await Select('Is perpetual').choose('No');
     });
 
     test('renders the AlternativeNames FieldArray', () => {
@@ -73,41 +89,40 @@ describe('FormInfo', () => {
 
   describe('with initial values', () => {
     beforeEach(() => {
-      renderWithIntl(
-        <TestForm initialValues={initialValues} onSubmit={onSubmit}>
-          <FormInfo data={data} form={form} values={values} />
+      renderComponent = renderWithIntl(
+        <TestForm
+          initialValues={initialValues}
+          onSubmit={onSubmit}
+        >
+          {({ form, values }) => (
+            <FormInfo data={data} form={form} values={values} />
+          )}
         </TestForm>, translationsProperties
       );
     });
 
-    test('renders the expected value in the Name field', () => {
-      const { getByRole } = renderComponent;
-      expect(getByRole('textbox', { name: 'Name' })).toHaveDisplayValue('AM ag 1');
+    test('renders the expected value in the Name field', async () => {
+      await TextField('Name*').has({ value: 'AM ag 1' });
     });
 
-    test('renders the expected value in the Description field', () => {
-      const { getByRole } = renderComponent;
-      expect(getByRole('textbox', { name: 'Description' })).toHaveDisplayValue('description for this agreement');
+    test('renders the expected value in the Description field', async () => {
+      await TextArea('Description').has({ value: 'description for this agreement' });
     });
 
-    test('renders the expected value in the Status dropdown', () => {
-      const { getByRole } = renderComponent;
-      expect(getByRole('combobox', { name: 'Status' })).toHaveDisplayValue('Active');
+    test('renders the expected value in the Status dropdown', async () => {
+      await Select('Status*').has({ value: 'active' });
     });
 
-    test('renders a disabled Reason for closure dropdown', () => {
-      const { getByRole } = renderComponent;
-      expect(getByRole('combobox', { name: 'Reason for closure' })).toBeDisabled();
+    test('renders a disabled Reason for closure dropdown', async () => {
+      await Select('Reason for closure').has({ disabled: true });
     });
 
-    test('renders the expected value in the Renewal priority dropdown', () => {
-      const { getByRole } = renderComponent;
-      expect(getByRole('combobox', { name: 'Renewal priority' })).toHaveDisplayValue('Definitely renew');
+    test('renders the expected value in the Renewal priority dropdown', async () => {
+      await Select('Renewal priority').has({ value: 'definitely_renew' });
     });
 
-    test('renders the expected value in the Is perpertual dropdown', () => {
-      const { getByRole } = renderComponent;
-      expect(getByRole('combobox', { name: 'Is perpetual' })).toHaveDisplayValue('Yes');
+    test('renders the expected value in the Is perpetual dropdown', async () => {
+      await Select('Is perpetual').has({ value: 'yes' });
     });
 
     test('renders the AlternativeNames FieldArray', () => {
@@ -120,9 +135,8 @@ describe('FormInfo', () => {
       expect(getByText('AgreementPeriodsFieldArray')).toBeInTheDocument();
     });
 
-    test('typing in the name field should fire the onAsyncValidate callback', () => {
-      const { getByRole } = renderComponent;
-      userEvent.type(getByRole('textbox', { name: 'Name' }), 'a');
+    test('typing in the name field should fire the onAsyncValidate callback', async () => {
+      await TextField('Name*').fillIn('a');
       expect(onAsyncValidate).toHaveBeenCalled();
     });
   });

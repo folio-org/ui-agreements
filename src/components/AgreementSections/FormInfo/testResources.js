@@ -1,185 +1,22 @@
+import refdata from '../../../../test/jest/refdata';
+
+const findRefdata = (desc) => (refdata.find(obj => obj.desc === desc)?.values);
+
 const data = {
   'agreementLines': [],
   'agreementLinesToAdd': [],
-  'agreementStatusValues': [
-    {
-      'id': '5bdba58bd113e2027768debda7633c7e',
-      'value': 'closed',
-      'label': 'Closed'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c62f003c',
-      'value': 'draft',
-      'label': 'Draft'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c633003d',
-      'value': 'requested',
-      'label': 'Requested'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c638003e',
-      'value': 'in_negotiation',
-      'label': 'In negotiation'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c63d003f',
-      'value': 'active',
-      'label': 'Active'
-    }
-  ],
-  'reasonForClosureValues': [
-    {
-      'id': '5393ea3fabe15df10ab9968a5d1a15a3',
-      'value': 'rejected',
-      'label': 'Rejected'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c6150039',
-      'value': 'cancelled',
-      'label': 'Cancelled'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c61e003a',
-      'value': 'ceased',
-      'label': 'Ceased'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c622003b',
-      'value': 'superseded',
-      'label': 'Superseded'
-    }
-  ],
-  'amendmentStatusValues': [
-    {
-      'id': '2c9180be7b19833e017b1983c5380007',
-      'value': 'current',
-      'label': 'Current'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c53d0008',
-      'value': 'future',
-      'label': 'Future'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c5410009',
-      'value': 'historical',
-      'label': 'Historical'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c546000a',
-      'value': 'does_not_apply',
-      'label': 'Does not apply'
-    }
-  ],
+  'agreementStatusValues': findRefdata('SubscriptionAgreement.AgreementStatus'),
+  'reasonForClosureValues': findRefdata('SubscriptionAgreement.ReasonForClosure'),
+  'amendmentStatusValues': findRefdata('LicenseAmendmentStatus.Status'),
   'basket': [],
   'supplementaryProperties': [],
-  'contactRoleValues': [
-    {
-      'id': '2c9180be7b19833e017b1983c54d000c',
-      'value': 'agreement_owner',
-      'label': 'Agreement owner'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c552000d',
-      'value': 'authorized_signatory',
-      'label': 'Authorized signatory'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c556000e',
-      'value': 'erm_librarian',
-      'label': 'ERM librarian'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c55b000f',
-      'value': 'subject_specialist',
-      'label': 'Subject specialist'
-    }
-  ],
-  'documentCategories': [
-    {
-      'id': '2c9180be7b19833e017b1983c5620011',
-      'value': 'license',
-      'label': 'License'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c5680012',
-      'value': 'misc',
-      'label': 'Misc'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c56d0013',
-      'value': 'consortium_negotiation_document',
-      'label': 'Consortium negotiation document'
-    }
-  ],
-  'isPerpetualValues': [
-    {
-      'id': '2c9180be7b19833e017b1983c5db002f',
-      'value': 'yes',
-      'label': 'Yes'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c5de0030',
-      'value': 'no',
-      'label': 'No'
-    }
-  ],
-  'licenseLinkStatusValues': [
-    {
-      'id': '2c9180be7b19833e017b1983c5a30021',
-      'value': 'controlling',
-      'label': 'Controlling'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c5a70022',
-      'value': 'future',
-      'label': 'Future'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c5ac0023',
-      'value': 'historical',
-      'label': 'Historical'
-    }
-  ],
-  'orgRoleValues': [
-    {
-      'id': '2c9180be7b19833e017b1983c6450041',
-      'value': 'content_provider',
-      'label': 'Content provider'
-    }
-  ],
-  'renewalPriorityValues': [
-    {
-      'id': '2c9180be7b19833e017b1983c5fa0036',
-      'value': 'definitely_renew',
-      'label': 'Definitely renew'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c5fe0037',
-      'value': 'for_review',
-      'label': 'For review'
-    },
-    {
-      'id': '2c9180be7b19833e017b1983c6020038',
-      'value': 'definitely_cancel',
-      'label': 'Definitely cancel'
-    }
-  ],
+  'contactRoleValues': findRefdata('InternalContact.Role'),
+  'documentCategories': findRefdata('DocumentAttachment.AtType'),
+  'isPerpetualValues': findRefdata('Global.Yes_No'),
+  'licenseLinkStatusValues': findRefdata('RemoteLicenseLink.Status'),
+  'orgRoleValues': findRefdata('SubscriptionAgreementOrg.Role'),
+  'renewalPriorityValues': findRefdata('SubscriptionAgreement.RenewalPriority'),
   'users': []
-};
-
-const form = {
-  'mutators': {
-    setFieldData: () => { }
-  }
-};
-
-const values = {
-  'periods': [
-    {}
-  ],
-  'customProperties': {}
 };
 
 const initialValues = {
@@ -230,7 +67,5 @@ const initialValues = {
 
 export {
   data,
-  form,
   initialValues,
-  values
 };
