@@ -38,7 +38,6 @@ const RouteSwitcher = ({ primary }) => {
       >
         <Button
           key="clickable-nav-agreements"
-          buttonStyle={pathname?.startsWith('/erm/agreements') ? 'primary' : 'default'}
           id="clickable-nav-agreements"
           to={pathname?.startsWith('/erm/agreements') ? null : urls.agreements()}
         >
@@ -46,7 +45,6 @@ const RouteSwitcher = ({ primary }) => {
         </Button>
         <Button
           key="clickable-nav-agreementLines"
-          buttonStyle={pathname?.startsWith('/erm/agreementLines') ? 'primary' : 'default'}
           id="clickable-nav-agreementLines"
           to={pathname?.startsWith('/erm/agreementLines') ? null : urls.agreementLines()}
         >
