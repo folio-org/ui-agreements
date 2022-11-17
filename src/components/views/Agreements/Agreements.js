@@ -27,7 +27,7 @@ import {
 } from '@folio/stripes/smart-components';
 import { SearchKeyControl, useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
-import { statuses } from '../../../constants';
+import { AGREEMENTS_TAB_FILTER_PANE, AGREEMENTS_TAB_PANESET, AGREEMENTS_TAB_PANE_ID, statuses } from '../../../constants';
 import AgreementFilters from '../../AgreementFilters';
 import RouteSwitcher from '../../RouteSwitcher';
 
@@ -139,12 +139,12 @@ const Agreements = ({
               return (
                 <PersistedPaneset
                   appId="@folio/agreements"
-                  id="agreements-paneset"
+                  id={AGREEMENTS_TAB_PANESET}
                 >
                   {filterPaneIsVisible &&
                     <Pane
                       defaultWidth="20%"
-                      id="pane-agreement-search"
+                      id={AGREEMENTS_TAB_FILTER_PANE}
                       lastMenu={
                         <PaneMenu>
                           <CollapseFilterPaneButton onClick={toggleFilterPane} />
@@ -153,7 +153,7 @@ const Agreements = ({
                       paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                     >
                       <form onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}>
-                        <RouteSwitcher />
+                        <RouteSwitcher primary="agreements" />
                         {/* TODO: Use forthcoming <SearchGroup> or similar component */}
                         <div className={css.searchGroupWrap}>
                           <FormattedMessage id="ui-agreements.agreements.searchInputLabel">
@@ -236,7 +236,7 @@ const Agreements = ({
                         :
                         null
                     }
-                    id="pane-agreement-list"
+                    id={AGREEMENTS_TAB_PANE_ID}
                     lastMenu={(
                       <IfPermission perm="ui-agreements.agreements.edit">
                         <PaneMenu>
