@@ -40,7 +40,7 @@ import RouteSwitcher from '../../RouteSwitcher';
 const propTypes = {
   children: PropTypes.object,
   data: PropTypes.shape({
-    eresources: PropTypes.arrayOf(PropTypes.object).isRequired,
+    titles: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
   onNeedMoreData: PropTypes.func.isRequired,
   queryGetter: PropTypes.func.isRequired,
@@ -239,7 +239,7 @@ const Titles = ({
                       eissn: 150,
                       pissn: 150,
                     }}
-                    contentData={data.eresources}
+                    contentData={data.titles}
                     formatter={{
                       name: e => {
                         return (

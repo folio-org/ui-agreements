@@ -48,7 +48,7 @@ const RouteSwitcher = () => {
       <IfPermission perm="ui-agreements.resources.view">
         <Button
           buttonStyle={pathname?.startsWith('/erm/titles') ? 'primary' : 'default'}
-          id="clickable-nav-eresources"
+          id="clickable-nav-titles"
           to={pathname?.startsWith('/erm/titles') ? null : urls.titles()}
         >
           <FormattedMessage id="ui-agreements.eresources.titles" />

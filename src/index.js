@@ -138,6 +138,7 @@ const App = (props) => {
           <Button
             buttonStyle={
               (pathname?.startsWith('/erm/eresources') ||
+              pathname?.startsWith('/erm/titles') ||
               pathname?.startsWith('/erm/platforms')) ?
                 'primary' :
                 'default'

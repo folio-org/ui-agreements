@@ -97,8 +97,8 @@ const TitlesRoute = ({
       isLoading: areEresourcesLoading,
       isError: isEresourcesError
     },
-    results: eresources = [],
-    total: eresourcesCount = 0
+    results: titles = [],
+    total: titlesCount = 0
   } = useInfiniteFetch(
     ['ERM', 'EResources', eresourcesQueryParams, TITLES_ENDPOINT],
     ({ pageParam = 0 }) => {
@@ -108,10 +108,10 @@ const TitlesRoute = ({
   );
 
   useEffect(() => {
-    if (eresourcesCount === 1) {
-      history.push(`${urls.eresourceView(eresources[0].id)}${location.search}`);
+    if (titlesCount === 1) {
+      history.push(`${urls.eresourceView(titles[0].id)}${location.search}`);
     }
-  }, [eresources, eresourcesCount, history, location.search]);
+  }, [titles, titlesCount, history, location.search]);
 
   const kbsPath = 'erm/kbs';
   const { data: kbs = [] } = useQuery(
@@ -126,7 +126,7 @@ const TitlesRoute = ({
       data={{
         availabilityValues: getRefdataValuesByDesc(refdata, AVAILABILITY_CONSTRAINT),
         contentTypeValues: getRefdataValuesByDesc(refdata, CONTENT_TYPE),
-        eresources,
+        titles,
         publicationTypeValues: getRefdataValuesByDesc(refdata, PUB_TYPE),
         scopeValues: getRefdataValuesByDesc(refdata, SCOPE),
         sourceValues: kbs,
@@ -140,7 +140,7 @@ const TitlesRoute = ({
       searchString={location.search}
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;
-        totalCount: () => eresourcesCount,
+        totalCount: () => titlesCount,
         loaded: () => !areEresourcesLoading,
         pending: () => areEresourcesLoading,
         failure: () => isEresourcesError,
