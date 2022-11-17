@@ -27,6 +27,7 @@ import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 import { urls } from '../../utilities';
 import css from '../Agreements.css';
 import RouteSwitcher from '../../RouteSwitcher';
+import { KB_TAB_FILTER_PANE, KB_TAB_PANESET, KB_TAB_PANE_ID } from '../../../constants';
 
 const propTypes = {
   children: PropTypes.object,
@@ -97,13 +98,13 @@ const Platforms = ({
 
             return (
               <PersistedPaneset
-                appId="@folio/platforms"
-                id="platforms-paneset"
+                appId="@folio/agreements"
+                id={KB_TAB_PANESET}
               >
                 {filterPaneIsVisible &&
                   <Pane
                     defaultWidth="20%"
-                    id="pane-platform-search"
+                    id={KB_TAB_FILTER_PANE}
                     lastMenu={
                       <PaneMenu>
                         <CollapseFilterPaneButton onClick={toggleFilterPane} />
@@ -112,7 +113,7 @@ const Platforms = ({
                     paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                   >
                     <form onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}>
-                      <RouteSwitcher />
+                      <RouteSwitcher primary="platforms" />
                       {/* TODO: Use forthcoming <SearchGroup> or similar component */}
                       <div className={css.searchGroupWrap}>
                         <FormattedMessage id="ui-agreements.agreements.searchInputLabel">
@@ -174,7 +175,7 @@ const Platforms = ({
                       :
                       null
                   }
-                  id="pane-platform-list"
+                  id={KB_TAB_PANE_ID}
                   noOverflow
                   padContent={false}
                   paneSub={
