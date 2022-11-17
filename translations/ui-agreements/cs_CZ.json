@@ -504,7 +504,7 @@
     "platform.platformProxySettings.actions": "Akce",
     "platform.platformProxySettings.used": "Použité",
     "platform.platformProxySettings.notUsed": "Nepoužívá se",
-    "platform.platformProxySettings.useThisProxy": "Použijte tento proxy",
+    "platform.platformProxySettings.useThisProxy": "Použijte tuto proxy",
     "platform.platformProxySettings.doNotUseThisProxy": "Nepoužívejte tento proxy",
     "platform.platformProxyServerSettings": "Nastavení proxy serveru platformy",
     "platform.noplatformProxyServer": "Žádné nastavení proxy serveru platformy",
@@ -566,7 +566,7 @@
     "settings.customProperties.all": "Všechny",
     "settings.customProperties.none": "Žádné",
     "supplementaryProperty.help.label": "Při zobrazování doplňkové vlastnosti uživatelům v rámci Folio a v jakýchkoli jiných systémech, které uživatelům zobrazují doplňkové vlastnosti smlouvy, se používá termín smlouvy „štítek“. Měl by to být krátký textový řetězec, který jasně sděluje, jaké informace jsou zaznamenány v doplňkové vlastnosti. Popis by se měl použít tam, kde je pro zobrazení uživatelům vyžadováno další vysvětlení doplňkové vlastnosti.",
-    "supplementaryProperty.help.name": "Při výstupu doplňkových dat vlastností ve strojově čitelném formátu se používá smluvní termín 'název'. Není určeno k zobrazení uživatelům (zaměstnancům nebo čtenářům). Mělo by se jednat o krátký řetězec latinské abecedy, který mohou používat jakékoli externí systémy nebo programy, které přistupují k doplňkovým údajům o vlastnictví smlouvy. Použití camelCase je doporučeno, ale není vyžadováno. Změny názvu doplňkového majetku smlouvy by ovlivnily jakékoli externí systémy využívající doplňková data vlastnictví smlouvy a změny by neměly být prováděny bez konzultace s osobami odpovědnými za příslušné externí systémy a software.",
+    "supplementaryProperty.help.name": "Při výstupu doplňkových dat vlastností ve strojově čitelném formátu se používá smluvní termín 'název'. Není určeno k zobrazení uživatelům (zaměstnancům nebo čtenářům). Mělo by se jednat o krátký řetězec latinské abecedy, který mohou používat jakékoli externí systémy nebo programy, které přistupují k doplňkovým údajům o vlastnictví smlouvy. Využití camelCase je doporučeno, ale není vyžadováno. Změny názvu doplňkového majetku smlouvy by ovlivnily jakékoli externí systémy využívající doplňková data vlastnictví smlouvy a změny by neměly být prováděny bez konzultace s osobami odpovědnými za příslušné externí systémy a software.",
     "eresources.packageContentType": "Typ obsahu balíčku",
     "eresources.availability": "Dostupnost",
     "eresources.extendedPackageInformation": "Rozšířené informace o balíčku",
@@ -688,7 +688,6 @@
     "customProperties.optionalProperties": "Volitelné vlastnosti",
     "customProperties.primaryProperties": "Primární vlastnosti",
     "customProperties.addProperty": "Přidat vlastnost",
-    "customProperties.ctx.title": "Prázdné",
     "customProperty.optionalPropertyHeader": "Doplňková vlastnost {number}",
     "customProperty.remove": "Odebrat doplňkovou vlastnost {number}",
     "customProperty": "Doplňková vlastnost",
@@ -742,6 +741,6 @@
     "settings.supplementaryPropertyPickList": "Nastavení doplňkových vlastností výběrového seznamu",
     "settings.pickListSelect": "Vyberte výběrový seznam",
     "settings.fileStorage.s3BucketRegion": "Region segmentu S3",
-    "agreementLines.newLine": "New agreement line",
-    "agreementLines.viewInSearch": "View in agreement lines search"
+    "agreementLines.newLine": "Nový řádek smlouvy",
+    "agreementLines.viewInSearch": "Zobrazit v hledání řádků smlouvy"
 }
