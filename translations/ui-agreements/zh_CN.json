@@ -688,7 +688,6 @@
     "customProperties.optionalProperties": "可选属性",
     "customProperties.primaryProperties": "主要属性",
     "customProperties.addProperty": "添加属性",
-    "customProperties.ctx.title": "空",
     "customProperty.optionalPropertyHeader": "补充属性{number}",
     "customProperty.remove": "移除补充属性{number}",
     "customProperty": "补充属性",
