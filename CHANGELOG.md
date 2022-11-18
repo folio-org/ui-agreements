@@ -1,5 +1,8 @@
 # Change history for ui-agreements
 
+## 8.2.3 2022-11-18
+* ERM-2464 Is Perpetual dropdown not populated in Agreement create/edit form (MG back port)
+
 ## 8.2.2 2022-08-02
 * ERM-2297 Number of tags doesn't update on adding tags to agreement or agreement line
 
