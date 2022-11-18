@@ -1,4 +1,10 @@
 # Change history for ui-agreements
+## 8.3.1 2022-11-18
+* ERM-2465 Is Perpetual dropdown not populated in Agreement create/edit form
+* ERM-2434 "customProperties.ctx.title": "" in en.json
+* ERM-2423 Performance issues on displaying external agreement lines
+* ERM-2399 Missing Translations
+* ERM-2397 AgreementFilters should not be rendered within <form> intended for search field
 
 ## 8.3.0 2022-10-27
 * ERM-2382 Unchecking all search field boxes in Agreements carries out search with no fields

@@ -688,7 +688,6 @@
     "customProperties.optionalProperties": "Proprietà opzionali",
     "customProperties.primaryProperties": "Proprietà principali",
     "customProperties.addProperty": "Aggiungi proprietà",
-    "customProperties.ctx.title": "",
     "customProperty.optionalPropertyHeader": "Proprietà supplementare {number}",
     "customProperty.remove": "Rimuovere la proprietà supplementare {number}",
     "customProperty": "Proprietà supplementare",

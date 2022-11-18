@@ -1,9 +1,10 @@
 import React from 'react';
 import '@folio/stripes-erm-components/test/jest/__mock__';
 import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
+import { KeyValue } from '@folio/stripes-testing';
+
 import { MemoryRouter } from 'react-router-dom';
 import { Field } from 'react-final-form';
-import { KeyValue } from '@folio/stripes-testing';
 import LicenseField from '../LicenseField';
 
 import translationsProperties from '../../../../test/helpers';

@@ -49,7 +49,8 @@ const AgreementLinesRoute = ({
         poLine: 'poLines.poLineId',
         tags: 'tags.value',
       },
-      perPage: INITIAL_RESULT_COUNT
+      perPage: INITIAL_RESULT_COUNT,
+      fetchExternalResources: false,
     }, (query ?? {}))
   ), [query, searchKey]);
 

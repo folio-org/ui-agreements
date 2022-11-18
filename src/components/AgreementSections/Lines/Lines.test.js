@@ -30,8 +30,8 @@ describe('Lines', () => {
 
   test('Action menu has two items', async () => {
     await Button('Actions').click();
-    await Button('ui-agreements.agreementLines.newLine').click();
-    await Button('ui-agreements.agreementLines.viewInSearch').click();
+    await Button('New agreement line').click();
+    await Button('View in agreement lines search').click();
   });
 
   test('renders Lines list MCL', async () => {
