@@ -85,6 +85,12 @@ const TitlesRoute = ({
         publicationType: 'publicationType.value',
         type: 'type.value'
       },
+      filters: [
+        {
+          path: 'subType.value',
+          value: 'electronic'
+        }
+      ],
       perPage: RESULT_COUNT_INCREMENT
     }, (query ?? {}))
   ), [query]);

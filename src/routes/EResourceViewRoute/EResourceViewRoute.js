@@ -13,7 +13,7 @@ import { parseMclPageSize, urls } from '../../components/utilities';
 import { resultCount, resourceClasses } from '../../constants';
 
 import { useAgreementsHelperApp, useAgreementsSettings, useSuppressFromDiscovery } from '../../hooks';
-import { TITLE_ENDPOINT, ERESOURCE_ENDPOINT, ERESOURCE_ENTITLEMENTS_ENDPOINT, ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT, ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT } from '../../constants/endpoints';
+import { ERESOURCE_ENDPOINT, ERESOURCE_ENTITLEMENTS_ENDPOINT, ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT, ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT } from '../../constants/endpoints';
 
 const { RECORDS_PER_REQUEST_MEDIUM } = resultCount;
 
@@ -32,7 +32,7 @@ const EResourceViewRoute = ({
 
   const isSuppressFromDiscoveryEnabled = useSuppressFromDiscovery();
 
-  const eresourcePath = TITLE_ENDPOINT(eresourceId);
+  const eresourcePath = ERESOURCE_ENDPOINT(eresourceId);
 
   const { data: eresource = {}, isLoading: isEresourceLoading } = useQuery(
     // NOTE Used in invalidateLinks for tags below!
@@ -144,7 +144,13 @@ const EResourceViewRoute = ({
   );
 
   const handleClose = () => {
-    history.push(`${urls.eresources()}${location.search}`);
+    if (location.pathname?.startsWith('/erm/titles')) {
+      history.push(`${urls.titles()}${location.search}`);
+    // } else if (location.pathname?.startsWith('/erm/packages')) {
+    //   history.push(`${urls.packages()}${location.search}`);
+    } else {
+      history.push(`${urls.eresources()}${location.search}`);
+    }
   };
 
   const handleEdit = () => {
@@ -221,6 +227,7 @@ EResourceViewRoute.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
     search: PropTypes.string.isRequired,
   }).isRequired,
   match: PropTypes.shape({

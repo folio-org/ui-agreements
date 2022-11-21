@@ -249,14 +249,14 @@ const Titles = ({
                             iconKey="eresource"
                             size="small"
                           >
-                            {e._object?.longName ?? e.name}
+                            {e?.longName ?? e.name}
                           </AppIcon>
                         );
                       },
                       publicationType: e => <EResourceType resource={e} />,
-                      isbn: e => getResourceIdentifier(e._object, 'isbn'),
-                      eissn: e => getResourceIdentifier(e._object, 'eissn') ?? getResourceIdentifier(e._object, 'issn'),
-                      pissn: e => getResourceIdentifier(e._object, 'pissn') ?? getSiblingIdentifier(e._object, 'issn'),
+                      isbn: e => getResourceIdentifier(e, 'isbn'),
+                      eissn: e => getResourceIdentifier(e, 'eissn') ?? getResourceIdentifier(e, 'issn'),
+                      pissn: e => getResourceIdentifier(e, 'pissn') ?? getSiblingIdentifier(e, 'issn'),
                     }}
                     id="list-eresources"
                     isEmptyMessage={
@@ -278,7 +278,7 @@ const Titles = ({
                     pagingType="click"
                     rowProps={{
                       labelStrings: ({ rowData }) => [rowData.name],
-                      to: id => `${urls.eresourceView(id)}${searchString}`,
+                      to: id => `${urls.titleView(id)}${searchString}`,
                     }}
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
