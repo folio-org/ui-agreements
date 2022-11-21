@@ -17,11 +17,11 @@ jest.mock('@folio/stripes-erm-components', () => ({
 
 const onSubmit = jest.fn();
 
-const form = {
+/* const form = {
   mutators: {
     setFieldData: jest.fn()
   }
-};
+}; */
 
 const amendments = [
   {
@@ -237,11 +237,13 @@ describe('AmendmentsFieldArray', () => {
           initialValues={{}}
           onSubmit={onSubmit}
         >
-          <FieldArray
-            component={AmendmentsFieldArray}
-            form={form}
-            name="amendments"
-          />
+          {({ form }) => (
+            <FieldArray
+              component={AmendmentsFieldArray}
+              form={form}
+              name="amendments"
+            />
+          )}
         </TestForm>, translationsProperties
       );
     });
@@ -261,13 +263,15 @@ describe('AmendmentsFieldArray', () => {
             initialValues={{ amendments }}
             onSubmit={onSubmit}
           >
-            <FieldArray
-              amendmentStatusValues={amendmentStatusValues}
-              component={AmendmentsFieldArray}
-              form={form}
-              license={license}
-              name="amendments"
-            />
+            {({ form }) => (
+              <FieldArray
+                amendmentStatusValues={amendmentStatusValues}
+                component={AmendmentsFieldArray}
+                form={form}
+                license={license}
+                name="amendments"
+              />
+            )}
           </TestForm>
         </MemoryRouter>,
         translationsProperties
@@ -307,13 +311,15 @@ describe('AmendmentsFieldArray', () => {
             initialValues={{ amendments: amendmentWithFutureStatus }}
             onSubmit={onSubmit}
           >
-            <FieldArray
-              amendmentStatusValues={amendmentStatusValues}
-              component={AmendmentsFieldArray}
-              form={form}
-              license={licenseWithRejectedStatus}
-              name="amendments"
-            />
+            {({ form }) => (
+              <FieldArray
+                amendmentStatusValues={amendmentStatusValues}
+                component={AmendmentsFieldArray}
+                form={form}
+                license={licenseWithRejectedStatus}
+                name="amendments"
+              />
+            )}
           </TestForm>
         </MemoryRouter>,
         translationsProperties
