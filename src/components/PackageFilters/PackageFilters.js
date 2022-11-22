@@ -152,12 +152,12 @@ export default function PackageFilters({ activeFilters, data, filterHandlers }) 
 
   return (
     <AccordionSet>
-      {renderTagsFilter()}
       {renderRemoteKbFilter()}
       {renderCheckboxFilter('status')}
       {renderCheckboxFilter('scope')}
       {renderAvailabilityFilter()}
       {renderCheckboxFilter('contentType')}
+      {renderTagsFilter()}
     </AccordionSet>
   );
 }
