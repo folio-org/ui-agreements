@@ -22,6 +22,9 @@ const urls = {
   eresourceView: id => `/erm/eresources/${id}`,
   eresourceEdit: id => `/erm/eresources/${id}/edit`,
 
+  packages: () => '/erm/packages',
+  packageView: id => `erm/packages/${id}`,
+
   licenseView: id => `/licenses/${id}`,
 
   notes: () => '/erm/notes',

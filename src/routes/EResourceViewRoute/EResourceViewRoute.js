@@ -145,6 +145,11 @@ const EResourceViewRoute = ({
 
   const handleClose = () => {
     history.push(`${urls.eresources()}${location.search}`);
+    if (location.pathname?.startsWith('/erm/packages')) {
+      history.push(`${urls.packages()}${location.search}`);
+    } else {
+      history.push(`${urls.eresources()}${location.search}`);
+    }
   };
 
   const handleEdit = () => {
@@ -222,6 +227,7 @@ EResourceViewRoute.propTypes = {
   }).isRequired,
   location: PropTypes.shape({
     search: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired,
   }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
