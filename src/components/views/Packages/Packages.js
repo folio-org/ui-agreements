@@ -231,7 +231,7 @@ const Packages = ({
                       source: e => (e.source),
                       status: e => (e.lifecycleStatus?.label),
                     }}
-                    id="list-eresources"
+                    id="list-packages"
                     isEmptyMessage={
                       source ? (
                         <div data-test-eresources-no-results-message>
