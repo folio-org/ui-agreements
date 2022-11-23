@@ -32,6 +32,12 @@ const EResourceEditRoute = ({
   );
   const eresourceClass = eresource?.class;
 
+  const historyUrl = (
+    eresourceClass === resourceClasses.TITLEINSTANCE ? `${urls.titleView(eresourceId)}${location.search}`
+      :
+      `${urls.packageView(eresourceId)}${location.search}`
+  );
+
   const { mutateAsync: putPCI } = useMutation(
     [PCI_ENDPOINT(eresourceId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
     (payload) => ky.put(PCI_ENDPOINT(eresourceId), { json: payload }).json()
@@ -43,7 +49,7 @@ const EResourceEditRoute = ({
   );
 
   const handleClose = () => {
-    history.push(`${urls.eresourceView(eresourceId)}${location.search}`);
+    history.push(historyUrl);
   };
 
   const handleSubmit = (values) => {
@@ -68,7 +74,7 @@ const EResourceEditRoute = ({
       /* Invalidate cached queries */
       queryClient.invalidateQueries(ERESOURCE_ENDPOINT(eresourceId));
 
-      history.push(`${urls.eresourceView(eresourceId)}${location.search}`);
+      history.push(historyUrl);
     });
   };
 
