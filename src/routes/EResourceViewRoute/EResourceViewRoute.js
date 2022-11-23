@@ -158,7 +158,11 @@ const EResourceViewRoute = ({
   };
 
   const handleEResourceClick = (id) => {
-    history.push(`${urls.eresourceView(id)}${location.search}`);
+    if (location.pathname?.startsWith('/erm/titles')) {
+      history.push(`${urls.packageView(id)}${location.search}`);
+    } else {
+      history.push(`${urls.eresourceView(id)}${location.search}`);
+    }
   };
 
   const isLoading = () => {
