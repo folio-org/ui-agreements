@@ -39,6 +39,8 @@ import EResourcesRoute from './routes/EResourcesRoute';
 import EResourceViewRoute from './routes/EResourceViewRoute';
 import EResourceEditRoute from './routes/EResourceEditRoute';
 
+import PackagesRoute from './routes/PackagesRoute';
+
 import NoteCreateRoute from './routes/NoteCreateRoute';
 import NoteEditRoute from './routes/NoteEditRoute';
 import NoteViewRoute from './routes/NoteViewRoute';
@@ -86,6 +88,8 @@ const App = (props) => {
       return 'input-agreement-search';
     } else if (pathname.search('/erm/eresources') === 0) {
       return 'input-eresource-search';
+    } else if (pathname.search('/erm/packages') === 0) {
+      return 'input-package-search';
     } else if (pathname.search('/erm/platforms') === 0) {
       return 'input-platform-search';
     } else if (pathname.search('/erm/titles') === 0) {
@@ -141,6 +145,7 @@ const App = (props) => {
             buttonStyle={
               (pathname?.startsWith('/erm/eresources') ||
               pathname?.startsWith('/erm/titles') ||
+              pathname?.startsWith('/erm/packages') ||
               pathname?.startsWith('/erm/platforms')) ?
                 'primary' :
                 'default'
@@ -218,6 +223,10 @@ const App = (props) => {
 
                 <Route component={TitlesRoute} path={`${path}/titles/:id?`}>
                   <Route component={EResourceViewRoute} path={`${path}/titles/:id`} />
+                </Route>
+
+                <Route component={PackagesRoute} path={`${path}/packages/:id?`}>
+                  <Route component={EResourceViewRoute} path={`${path}/packages/:id`} />
                 </Route>
 
                 <Route component={NoteCreateRoute} path={`${path}/notes/create`} />
