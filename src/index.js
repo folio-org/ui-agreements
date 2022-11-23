@@ -88,6 +88,8 @@ const App = (props) => {
       return 'input-eresource-search';
     } else if (pathname.search('/erm/platforms') === 0) {
       return 'input-platform-search';
+    } else if (pathname.search('/erm/titles') === 0) {
+      return 'input-title-search';
     } else if (pathname.search('/erm/agreementLines') === 0) {
       return 'input-agreementLine-search';
     } else {

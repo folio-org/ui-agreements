@@ -1,8 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { useQuery } from 'react-query';
-
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { getRefdataValuesByDesc, useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
@@ -18,18 +16,10 @@ import { useAgreementsRefdata } from '../../hooks';
 const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT;
 
 const [
-  AVAILABILITY_CONSTRAINT,
-  CONTENT_TYPE,
-  LIFECYCLE_STATUS,
   PUB_TYPE,
-  SCOPE,
   TYPE
 ] = [
-  'AvailabilityConstraint.Body',
-  'ContentType.ContentType',
-  'Pkg.LifecycleStatus',
   'TitleInstance.PublicationType',
-  'Pkg.AvailabilityScope',
   'TitleInstance.Type',
 ];
 
@@ -53,11 +43,7 @@ const TitlesRoute = ({
 
   const refdata = useAgreementsRefdata({
     desc: [
-      AVAILABILITY_CONSTRAINT,
-      CONTENT_TYPE,
-      LIFECYCLE_STATUS,
       PUB_TYPE,
-      SCOPE,
       TYPE
     ]
   });
@@ -65,22 +51,10 @@ const TitlesRoute = ({
   const { data: { tags = [] } = {} } = useTags();
   const { query, querySetter, queryGetter } = useKiwtSASQuery();
 
-  const eresourcesQueryParams = useMemo(() => (
+  const titlesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
       searchKey: 'name,identifiers.identifier.value,alternateResourceNames.name,description',
-      filterConfig: [{
-        name: 'class',
-        values: [
-          { name: 'package', value: 'org.olf.kb.Pkg' },
-          { name: 'nopackage', value: 'org.olf.kb.TitleInstance' },
-        ]
-      }],
       filterKeys: {
-        availability: 'availabilityConstraints.body.value',
-        contentType: 'contentTypes.contentType.value',
-        remoteKb: 'remoteKb.id',
-        scope: 'availabilityScope.value',
-        status: 'lifecycleStatus.value',
         tags: 'tags.value',
         publicationType: 'publicationType.value',
         type: 'type.value'
@@ -98,59 +72,48 @@ const TitlesRoute = ({
 
   const {
     infiniteQueryObject: {
-      error: eresourcesError,
-      fetchNextPage: fetchNextEresourcesPage,
-      isLoading: areEresourcesLoading,
-      isError: isEresourcesError
+      error: titlesError,
+      fetchNextPage: fetchNextTitlesPage,
+      isLoading: areTitlesLoading,
+      isError: isTitlesError
     },
     results: titles = [],
     total: titlesCount = 0
   } = useInfiniteFetch(
-    ['ERM', 'EResources', eresourcesQueryParams, TITLES_ENDPOINT],
+    ['ERM', 'Titles', titlesQueryParams, TITLES_ENDPOINT],
     ({ pageParam = 0 }) => {
-      const params = [...eresourcesQueryParams, `offset=${pageParam}`];
+      const params = [...titlesQueryParams, `offset=${pageParam}`];
       return ky.get(`${TITLES_ENDPOINT}?${params?.join('&')}`).json();
     }
   );
 
   useEffect(() => {
     if (titlesCount === 1) {
-      history.push(`${urls.eresourceView(titles[0].id)}${location.search}`);
+      history.push(`${urls.titleView(titles[0].id)}${location.search}`);
     }
   }, [titles, titlesCount, history, location.search]);
-
-  const kbsPath = 'erm/kbs';
-  const { data: kbs = [] } = useQuery(
-    ['ERM', 'KnowledgeBases', kbsPath],
-    () => ky.get(kbsPath).json()
-  );
 
   if (!hasPerms) return <NoPermissions />;
 
   return (
     <View
       data={{
-        availabilityValues: getRefdataValuesByDesc(refdata, AVAILABILITY_CONSTRAINT),
-        contentTypeValues: getRefdataValuesByDesc(refdata, CONTENT_TYPE),
         titles,
         publicationTypeValues: getRefdataValuesByDesc(refdata, PUB_TYPE),
-        scopeValues: getRefdataValuesByDesc(refdata, SCOPE),
-        sourceValues: kbs,
-        statusValues: getRefdataValuesByDesc(refdata, LIFECYCLE_STATUS),
         typeValues: getRefdataValuesByDesc(refdata, TYPE),
         tagsValues: tags,
       }}
-      onNeedMoreData={(_askAmount, index) => fetchNextEresourcesPage({ pageParam: index })}
+      onNeedMoreData={(_askAmount, index) => fetchNextTitlesPage({ pageParam: index })}
       queryGetter={queryGetter}
       querySetter={querySetter}
       searchString={location.search}
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;
         totalCount: () => titlesCount,
-        loaded: () => !areEresourcesLoading,
-        pending: () => areEresourcesLoading,
-        failure: () => isEresourcesError,
-        failureMessage: () => eresourcesError.message
+        loaded: () => !areTitlesLoading,
+        pending: () => areTitlesLoading,
+        failure: () => isTitlesError,
+        failureMessage: () => titlesError.message
       }}
     >
       {children}

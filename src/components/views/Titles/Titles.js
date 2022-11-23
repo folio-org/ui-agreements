@@ -28,7 +28,7 @@ import {
   EResourceType,
   useHandleSubmitSearch
 } from '@folio/stripes-erm-components';
-import EResourceFilters from '../../EResourceFilters';
+import TitleFilters from '../../TitleFilters';
 import IdentifierReassignmentForm from '../../IdentifierReassignmentForm';
 
 import { urls } from '../../utilities';
@@ -86,7 +86,7 @@ const Titles = ({
   };
 
   return (
-    <div data-test-eresources data-testid="eresources">
+    <div data-test-titles data-testid="titles">
       <SearchAndSortQuery
         initialFilterState={{}}
         initialSearchState={{ query: '' }}
@@ -129,11 +129,11 @@ const Titles = ({
             };
 
             return (
-              <PersistedPaneset appId="@folio/agreements" id="eresources-paneset">
+              <PersistedPaneset appId="@folio/agreements" id="titles-paneset">
                 {filterPaneIsVisible &&
                   <Pane
                     defaultWidth="20%"
-                    id="pane-eresources-search"
+                    id="pane-titles-search"
                     lastMenu={
                       <PaneMenu>
                         <CollapseFilterPaneButton onClick={toggleFilterPane} />
@@ -151,8 +151,8 @@ const Titles = ({
                               aria-label={ariaLabel}
                               autoFocus
                               className={css.searchField}
-                              data-test-eresource-search-input
-                              id="input-eresource-search"
+                              data-test-title-search-input
+                              id="input-title-search"
                               inputRef={searchField}
                               marginBottom0
                               name="query"
@@ -166,7 +166,7 @@ const Titles = ({
                           buttonStyle="primary"
                           disabled={!searchValue.query || searchValue.query === ''}
                           fullWidth
-                          id="clickable-search-eresources"
+                          id="clickable-search-titles"
                           marginBottom0
                           type="submit"
                         >
@@ -185,7 +185,7 @@ const Titles = ({
                           </Icon>
                         </Button>
                       </div>
-                      <EResourceFilters
+                      <TitleFilters
                         activeFilters={activeFilters.state}
                         data={data}
                         filterHandlers={getFilterHandlers()}
@@ -211,7 +211,7 @@ const Titles = ({
                       :
                       null
                   }
-                  id="pane-eresources-list"
+                  id="pane-titles-list"
                   noOverflow
                   padContent={false}
                   paneSub={
@@ -220,7 +220,7 @@ const Titles = ({
                       :
                       <FormattedMessage id="stripes-smart-components.searchCriteria" />
                   }
-                  paneTitle={<FormattedMessage id="ui-agreements.eresources" />}
+                  paneTitle={<FormattedMessage id="ui-agreements.eresources.titles" />}
                   paneTitleRef={resultsPaneTitleRef}
                 >
                   <MultiColumnList
@@ -258,7 +258,7 @@ const Titles = ({
                       eissn: e => getResourceIdentifier(e, 'eissn') ?? getResourceIdentifier(e, 'issn'),
                       pissn: e => getResourceIdentifier(e, 'pissn') ?? getSiblingIdentifier(e, 'issn'),
                     }}
-                    id="list-eresources"
+                    id="list-titles"
                     isEmptyMessage={
                       source ? (
                         <div data-test-eresources-no-results-message>
