@@ -285,7 +285,7 @@
     "duplicateAgreementModal.organizations": "Organizações",
     "duplicateAgreementModal.usageData": "Dados de uso",
     "close": "Fechar",
-    "agreements.export": "Exportar",
+    "agreements.export": "Acordo de exportação (JSON)",
     "agreements.view": "Visualizar",
     "eresourcesCovered.exportButton.tooltip": "Exportações são apenas possíveis para os recursos atuais ou todos os recursos",
     "license.unsetAmendments": "Alterações não atribuídas",
@@ -742,5 +742,6 @@
     "settings.pickListSelect": "Selecione a lista de seleção",
     "settings.fileStorage.s3BucketRegion": "Região do bucket S3",
     "agreementLines.newLine": "Nova linha de contrato",
-    "agreementLines.viewInSearch": "Ver linhas de contrato na busca"
+    "agreementLines.viewInSearch": "Ver linhas de contrato na busca",
+    "agreements.exportingAgreement": "<strong> Contrato de exportação: </strong> O arquivo JSON será baixado em seu navegador quando concluído. Se o contrato tiver um grande número de títulos, isso pode levar algum tempo."
 }
