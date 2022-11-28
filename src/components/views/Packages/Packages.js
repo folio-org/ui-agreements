@@ -82,7 +82,7 @@ const Packages = ({
   };
 
   return (
-    <div data-test-eresources data-testid="packages">
+    <div data-testid="packages">
       <SearchAndSortQuery
         initialFilterState={{}}
         initialSearchState={{ query: '' }}
