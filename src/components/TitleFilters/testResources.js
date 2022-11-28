@@ -1,7 +1,7 @@
 const activeFilters = {};
 
 const data = {
-  'eresources': [{
+  'titles': [{
     'id': '748aef4b-aaa4-4185-87aa-b96510a9053d',
     'class': 'org.olf.kb.TitleInstance',
     'name': "\"Institutions, industrial upgrading, and economic performance in Japan: the 'flying-geese' paradigm of catch-up growth\"",
@@ -11,7 +11,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '22fe36fe-13dd-44c0-9012-ab85451d537b',
@@ -23,7 +23,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '596beef5-9a94-4808-b01b-daa22df04f35',
@@ -35,7 +35,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '4a2f3358-adff-4ae7-ab4b-2a391ea0850e',
@@ -47,7 +47,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '02efd7c5-5835-40f2-84a1-99ba4578ae6f',
@@ -59,7 +59,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'ad0ae3c0-4802-4ca1-928b-9a5eddb5cfbf',
@@ -71,7 +71,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '8123ff37-922f-4625-85cf-8fda3cccda05',
@@ -83,7 +83,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '27d82ada-a664-463f-8875-b60524bf3bb8',
@@ -95,7 +95,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'c9a72856-6df7-407d-aece-a17654fad0fa',
@@ -107,7 +107,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'a41db923-bc39-4b5e-80d3-3c5492341a41',
@@ -119,7 +119,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '1aac1e4b-9a64-426c-854f-152f3e3bcfd4',
@@ -132,7 +132,7 @@ const data = {
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'coverage': '[{…}]',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '6a1c2b1f-d9f6-430b-97ef-189c0b96b09e',
@@ -144,7 +144,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '2593fd5d-bc46-44df-8b81-1fb4e673050c',
@@ -156,7 +156,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '56a1850f-d991-4e91-bbdc-e16d79e40fe7',
@@ -169,7 +169,7 @@ const data = {
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'coverage': '[{…}]',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '7f03c3c6-98a7-41c6-af97-b4c21291f88b',
@@ -181,7 +181,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '3b3fef17-6294-44c2-9c07-afd20088f32a',
@@ -193,7 +193,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'fc1d8de1-67d0-45ac-8f90-ddf4c97250cc',
@@ -205,7 +205,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '22ff13af-eecd-4584-93eb-49c769eeae7d',
@@ -218,7 +218,7 @@ const data = {
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'coverage': '[{…}]',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '26799de5-f1e1-4497-9d0d-f601b651e27c',
@@ -231,7 +231,7 @@ const data = {
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'coverage': '[{…}]',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'ea59fe94-e64b-475b-9312-bfce4196926c',
@@ -243,7 +243,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '22acfde5-7e8b-4b9d-9b71-e1b4a88ea28b',
@@ -256,7 +256,7 @@ const data = {
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'coverage': '[{…}]',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '0e1cd2d5-3d3f-4b13-8a11-873044a13be6',
@@ -268,7 +268,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'eedd4066-c862-4e3c-a736-09e47513bb8e',
@@ -280,7 +280,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '6a478eda-5860-40ae-ba43-5abe288e2dd0',
@@ -292,7 +292,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '85fc9f48-5826-4a86-8256-eb3485622ee6',
@@ -304,7 +304,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'a6ea00f4-87e8-4301-a82d-581e376762f9',
@@ -316,7 +316,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'f6f14f3c-8452-415d-a751-e35221826191',
@@ -328,7 +328,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '5d3c4004-d80e-4ea7-a3c9-101ac77e21dd',
@@ -340,7 +340,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'f5abfa13-e4bb-409a-b5d6-150836cfad91',
@@ -352,7 +352,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'a7e9234d-1f95-47f6-bcfa-92dc18373e0e',
@@ -364,7 +364,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'c4bb9d40-4721-4874-9031-e827d76a5bfe',
@@ -376,7 +376,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '5744f775-4cfa-4aac-b15c-b28fb9d839e0',
@@ -388,7 +388,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '5158f3c5-95f2-4d64-b04a-7b9e883c9c80',
@@ -400,7 +400,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '9929009c-ab0d-4768-a06f-bed614f7a63e',
@@ -412,7 +412,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'f1b0c939-00b1-40cb-8133-d8f869241862',
@@ -424,7 +424,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '28337196-253b-4ffc-b891-466fca83201b',
@@ -436,7 +436,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'ecb579bb-4093-460f-afb2-61a02bb8cc1e',
@@ -448,7 +448,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '068defb2-cd07-4122-99cb-fb6b4102c915',
@@ -460,7 +460,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'd568181c-e5a7-4d33-85bd-de1e59739ca5',
@@ -472,7 +472,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '3f6b6a2f-c164-4a2c-bbba-13ca3ee813b4',
@@ -484,7 +484,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '658516b8-f542-48ec-a90b-fb8267d52af9',
@@ -496,7 +496,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'bc2678dd-da21-489b-84c1-d900d2527c85',
@@ -508,7 +508,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '5535a821-08c2-4939-afdf-eedc98966188',
@@ -520,7 +520,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '4981ef8c-99c8-4b0b-baa5-9d7f6766a84a',
@@ -532,7 +532,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'd47db4e0-dce4-4083-9a87-5f9247238aaa',
@@ -544,7 +544,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '8fe4bbc4-dbdc-4543-9d2f-91d43c70773c',
@@ -556,7 +556,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '15d47c8d-11bf-4905-a244-a10a45e3237a',
@@ -568,7 +568,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '1d25f09c-1460-4315-a713-e6e33fda1229',
@@ -580,7 +580,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '400c7e08-6113-40cd-bef0-658b0da626b9',
@@ -592,7 +592,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '39e4355e-4d78-470d-b05f-5a6d0fc422c2',
@@ -604,7 +604,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'c12f7a13-9519-4d92-8943-a56de38a7451',
@@ -616,7 +616,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '04818d7c-af8c-4b73-9e74-407efb65e985',
@@ -628,7 +628,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'cbb88c37-9763-4769-b4c5-7fbdd711756c',
@@ -640,7 +640,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'd23fbaa9-c6d3-4419-bed4-882cb2187df6',
@@ -652,7 +652,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '684eb3e2-44e2-4f5d-b023-1dd413f290d9',
@@ -664,7 +664,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'e51cff58-61db-4a99-b0ef-ab555c48be2c',
@@ -676,7 +676,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '0f4ce7ff-cc6e-4f16-8bc9-7cfa1b4267d1',
@@ -688,7 +688,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '069f2520-18f0-4158-b1f5-12c4520ca544',
@@ -700,7 +700,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '0fc4d030-8e29-47f1-8cdc-6703c2b622ab',
@@ -712,7 +712,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '5253edbf-1d1b-4814-9932-89cfc59b6660',
@@ -724,7 +724,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'c9934180-c27b-423c-a587-063e7d032430',
@@ -736,7 +736,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '1d524c25-59fe-4d94-a585-c0fcbecdd708',
@@ -748,7 +748,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'c7a8f7ee-9abf-4bb6-a0c0-ae62f744ebdb',
@@ -760,7 +760,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'ad5031c3-595b-4b84-83c2-132932bba3b7',
@@ -772,7 +772,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'ca9d60fd-0c1b-4b6f-9624-47a34d7420bf',
@@ -784,7 +784,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '70818e98-b92e-423a-a811-1e06549a0252',
@@ -796,7 +796,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '534ad346-8f0b-47a9-858f-7f2a18f29dd3',
@@ -808,7 +808,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '8a977a08-9f98-4e43-ab73-5797f9239a1f',
@@ -820,7 +820,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'd50f834c-5fe2-49f3-a24c-f84bd44c47f0',
@@ -832,7 +832,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '81ccc2e0-0432-4d6c-91ac-eb864b2ea91c',
@@ -844,7 +844,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '878d69bd-4af7-4e2f-b875-e2d1c342f24a',
@@ -856,7 +856,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'dccb0d2b-0890-40bd-807c-78a140a75349',
@@ -868,7 +868,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'ef474bb2-7936-4145-9613-20a1bbf82ff4',
@@ -880,7 +880,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '7d1181d7-bbac-47fd-a278-801aab081550',
@@ -892,7 +892,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '6a2f1e2d-1cd7-462b-af63-288deeb3e88c',
@@ -904,7 +904,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '6f5977c8-1de1-4369-a5cb-61105ce57d3c',
@@ -916,7 +916,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'a9f7f2b6-9cae-4b9b-83bc-9fe80d23494f',
@@ -928,7 +928,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'e17e0901-a769-4db5-b1a3-6fb72de875b9',
@@ -940,7 +940,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '3b32f418-1540-4277-a8b3-b8504c3b1277',
@@ -952,7 +952,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'b136367d-36c4-474a-ad50-3054c9781bdb',
@@ -964,7 +964,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '45582f33-1419-41f0-97e5-ebc02dc855d8',
@@ -976,7 +976,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '848a3ed5-ee69-45eb-b479-5a08c1a03fde',
@@ -988,7 +988,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '7477c0c8-8bc5-4811-a3ae-2cedaeade96c',
@@ -1000,7 +1000,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'af13f5f1-d4ff-4bc2-9b8b-4741eb83eeb7',
@@ -1012,7 +1012,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'ff91e28b-9240-40da-9292-ceda80227f6a',
@@ -1024,7 +1024,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '3f849c87-46df-4a9d-b8c6-bc9b6178ea16',
@@ -1037,7 +1037,7 @@ const data = {
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'coverage': '[{…}]',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '49e93155-bb00-4fc6-b950-f5abcb859078',
@@ -1049,7 +1049,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '2b3a0527-a892-40dd-8366-a131def978e4',
@@ -1061,7 +1061,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '2886ad2d-9a3e-49b6-8ee8-6e4e3cc994a2',
@@ -1073,7 +1073,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'c08a0c08-30cc-4565-ae72-c2d26b720e9d',
@@ -1085,7 +1085,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'd2fd11d3-bb05-4a38-838f-cdaf0db4fd51',
@@ -1097,7 +1097,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '853214a1-4784-448e-aa20-7f093fac37ef',
@@ -1109,7 +1109,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '758a23b8-9dc3-409e-85e1-a4c22842178f',
@@ -1121,7 +1121,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'dddc2e91-286e-4cd9-a7db-c0dc08a12045',
@@ -1133,7 +1133,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '3751fa3a-be6b-4722-9dd1-ec9d48d0d3b8',
@@ -1145,7 +1145,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '0152fa56-b82b-4555-a816-96da8f525d54',
@@ -1157,7 +1157,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '26d79b31-d759-4b69-8af0-b5029108f6df',
@@ -1169,7 +1169,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '1e5b37c4-2038-483b-b834-c7ae16c0f79d',
@@ -1181,7 +1181,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': 'cfdf9401-5679-4b12-b129-eddf3bbb3c6f',
@@ -1193,7 +1193,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   },
   {
     'id': '4926149e-2060-43b3-be96-203739fbe6b8',
@@ -1205,7 +1205,7 @@ const data = {
     'publicationType': '{id: "2c91809c7cba4524017cba4cdc830046", label: "Bo…}',
     'subType': '{id: "2c91809c7cba4524017cba4c99e9001d", label: "El…}',
     'customCoverage': false,
-    '_object': '{class: "org.olf.kb.TitleInstance", coverage: Array…}'
+
   }
   ],
   'publicationTypeValues': [{
