@@ -4,9 +4,8 @@ import { useStripes } from '@folio/stripes/core';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { noop } from 'lodash';
-// import eresources from './testResources';
 import translationsProperties from '../../../test/helpers';
-import EResourcesRoute from './EResourcesRoute';
+import PackagesRoute from './PackagesRoute';
 
 const routeProps = {
   history: {
@@ -19,7 +18,6 @@ const routeProps = {
   mutator: {
     query: { update: noop },
   },
-  // resources: { eresources }
 };
 
 useQuery.mockImplementation(() => ({
@@ -27,37 +25,37 @@ useQuery.mockImplementation(() => ({
   isLoading: false
 }));
 
-describe('EResourcesRoute', () => {
+describe('PackagesRoute', () => {
   describe('rendering the route with permissions', () => {
     let renderComponent;
     beforeEach(() => {
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <EResourcesRoute {...routeProps} />
+          <PackagesRoute {...routeProps} />
         </MemoryRouter>,
         translationsProperties
       );
     });
 
-    test('renders the eresources component', () => {
+    test('renders the packages component', () => {
       const { getByTestId } = renderComponent;
-      expect(getByTestId('eresources')).toBeInTheDocument();
+      expect(getByTestId('packages')).toBeInTheDocument();
     });
 
     describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block
       beforeEach(() => {
         renderWithIntl(
           <MemoryRouter>
-            <EResourcesRoute {...routeProps} />
+            <PackagesRoute {...routeProps} />
           </MemoryRouter>,
           translationsProperties,
           renderComponent.rerender
         );
       });
 
-      test('renders the eresources component', () => {
+      test('renders the packages component', () => {
         const { getByTestId } = renderComponent;
-        expect(getByTestId('eresources')).toBeInTheDocument();
+        expect(getByTestId('packages')).toBeInTheDocument();
       });
     });
   });
@@ -70,7 +68,7 @@ describe('EResourcesRoute', () => {
 
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <EResourcesRoute
+          <PackagesRoute
             {...routeProps}
             stripes={{ hasPerm: () => false }}
           />
