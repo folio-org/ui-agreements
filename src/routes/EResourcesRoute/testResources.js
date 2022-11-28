@@ -1,4 +1,4 @@
-const eresources = {
+const titles = {
   'hasLoaded': true,
   'isPending': false,
   'failed': false,
@@ -124,4 +124,4 @@ const eresources = {
   'throwErrors': true
 };
 
-export default eresources;
+export default titles;

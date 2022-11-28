@@ -125,6 +125,7 @@ const data = {
     push: historyPushMock,
   },
   location: {
+    pathname: '',
     search: ''
   },
   match,
