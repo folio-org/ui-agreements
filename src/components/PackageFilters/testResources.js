@@ -121,7 +121,7 @@ const data = {
     }],
     'packageDescriptionUrls': [{
       'id': '0f1ee0a3-cf80-49fd-a738-0ca2555c5087',
-      'url': 'http://gokbt.gbv.de/package/e7672e03-9b0a-4f76-ab43-25fef0289d3d'
+      'url': 'https://gokbt.gbv.de/package/e7672e03-9b0a-4f76-ab43-25fef0289d3d'
     }],
     'lastUpdated': '2022-11-27T14:58:42Z',
     'normalizedName': 'acm digtal library',
@@ -207,7 +207,7 @@ const data = {
     'availabilityConstraints': '[]',
     'packageDescriptionUrls': [{
       'id': 'ed75a99d-af56-477c-aeaa-9ba9177ab8dd',
-      'url': 'http://gokbt.gbv.de/package/c6c02a7f-4581-487e-86da-73249df9316e'
+      'url': 'https://gokbt.gbv.de/package/c6c02a7f-4581-487e-86da-73249df9316e'
     }],
     'lastUpdated': '2022-11-27T15:57:18Z',
     'normalizedName': 'acs in focus test',
@@ -273,30 +273,6 @@ const data = {
       }
     }
     ]
-  },
-  {
-    'id': 'f6aa5716-733e-4d78-a486-0ec22580533f',
-    'availabilityScope': '{id: "2c91809c84b954b10184b95c73c4003f", label: "Gl…}',
-    'dateCreated': '2022-11-27T14:39:40Z',
-    'availabilityConstraints': '[]',
-    'packageDescriptionUrls': '[{…}, {…}]',
-    'lastUpdated': '2022-11-27T14:39:40Z',
-    'normalizedName': 'aiaa journals',
-    'vendor': '{id: "a5596d18-b2d2-4299-bbef-157430f88bd0", name: …}',
-    'sourceDataUpdated': '2021-09-20T08:33:19Z',
-    'source': 'GOKb',
-    'remoteKb': '{activationEnabled: false, active: true, cursor: "2…}',
-    'contentTypes': '[]',
-    'alternateResourceNames': '[]',
-    'name': 'AIAA Journals',
-    'lifecycleStatus': '{id: "2c91809c84b954b10184b95c73c80041", label: "Cu…}',
-    'suppressFromDiscovery': false,
-    'sourceDataCreated': '2021-09-14T13:15:44Z',
-    'description': 'Reporting on the most important aerospace advances, AIAA‘s eight active technical journals feature original research papers spanning the spectrum of aerospace science and technology.',
-    'reference': 'AIAA_Journals_2',
-    'resourceCount': 1373,
-    'class': 'org.olf.kb.Pkg',
-    'identifiers': '[{…}, {…}]'
   }
   ],
   'scopeValues': [{

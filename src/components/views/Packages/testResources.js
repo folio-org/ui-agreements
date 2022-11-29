@@ -13,7 +13,7 @@ const data = {
     }],
     'packageDescriptionUrls': [{
       'id': '60961956-4d1e-422e-8689-93d8b7cc83e8',
-      'url': 'http://gokbt.gbv.de/package/e7672e03-9b0a-4f76-ab43-25fef0289d3d'
+      'url': 'https://gokbt.gbv.de/package/e7672e03-9b0a-4f76-ab43-25fef0289d3d'
     }],
     'lastUpdated': '2022-11-26T14:58:48Z',
     'normalizedName': 'acm digtal library',
