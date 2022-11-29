@@ -86,7 +86,7 @@ const SourceTitlePreview = () => {
         <AppIcon app="agreements" iconKey="eresource" size="small">
           <strong>
             <>
-              <Link to={urls.eresourceView(sourceTI?.id)}>
+              <Link to={urls.titleView(sourceTI?.id)}>
                 {sourceTI?.name}
               </Link>
               <> · {sourceTI?.publicationType?.label}</>

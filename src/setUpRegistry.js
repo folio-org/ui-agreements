@@ -26,7 +26,7 @@ const setUpRegistry = (registry) => {
 
   // ErmPackage Resource
   const ermPkgReg = registry.registerResource('ermPackage');
-  ermPkgReg.setViewResource(pkg => `/erm/eresources/${pkg.id}`);
+  ermPkgReg.setViewResource(pkg => `/erm/packages/${pkg.id}`);
 };
 
 export default setUpRegistry;

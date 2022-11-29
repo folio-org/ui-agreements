@@ -83,7 +83,7 @@ export default class CoveredEResourcesList extends React.Component {
           iconKey="eresource"
           size="small"
         >
-          <Link to={urls.eresourceView(e.id)}>{titleInstanceName}</Link>
+          <Link to={urls.packageView(e.id)}>{titleInstanceName}</Link>
         </AppIcon>
       );
     },

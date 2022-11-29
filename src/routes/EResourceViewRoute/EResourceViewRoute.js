@@ -79,7 +79,7 @@ const EResourceViewRoute = ({
     batchSize: RECORDS_PER_REQUEST_MEDIUM,
     path: ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT(eresourceId),
     queryParams: {
-      enabled: (!!eresource?.id && eresource?.class !== 'org.olf.kb.Pkg')
+      enabled: (!!eresource?.id && eresource?.class !== resourceClasses?.PACKAGE)
     }
   });
 
@@ -144,15 +144,31 @@ const EResourceViewRoute = ({
   );
 
   const handleClose = () => {
-    history.push(`${urls.eresources()}${location.search}`);
+    if (location.pathname?.startsWith('/erm/titles')) {
+      history.push(`${urls.titles()}${location.search}`);
+    } else if (location.pathname?.startsWith('/erm/packages')) {
+      history.push(`${urls.packages()}${location.search}`);
+    } else {
+      history.push(`${urls.eresources()}${location.search}`);
+    }
   };
 
   const handleEdit = () => {
-    history.push(`${urls.eresourceEdit(eresourceId)}${location.search}`);
+    // We currently only have edit for non-package resources
+    history.push(`${urls.titleEdit(eresourceId)}${location.search}`);
   };
 
-  const handleEResourceClick = (id) => {
-    history.push(`${urls.eresourceView(id)}${location.search}`);
+  /*
+   * This method is currently only used in "Options for acquiring e-resource",
+   * which is found on a Title view. This link could need to redirect to either
+   * the packages OR the titles route, depending on context.
+   */
+  const handleEResourceClick = (id, destination = 'TITLE') => {
+    if (destination === 'TITLE') {
+      history.push(`${urls.titleView(id)}${location.search}`);
+    } else {
+      history.push(`${urls.packageView(id)}${location.search}`);
+    }
   };
 
   const isLoading = () => {
@@ -221,7 +237,8 @@ EResourceViewRoute.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   location: PropTypes.shape({
-    search: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired
   }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({

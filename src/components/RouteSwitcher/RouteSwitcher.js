@@ -22,8 +22,14 @@ const RouteSwitcher = ({ primary }) => {
     case 'eresources':
       selectedIndex = 0;
       break;
-    case 'platforms':
+    case 'packages':
       selectedIndex = 1;
+      break;
+    case 'titles':
+      selectedIndex = 2;
+      break;
+    case 'platforms':
+      selectedIndex = 3;
       break;
     default:
       break;
@@ -64,6 +70,26 @@ const RouteSwitcher = ({ primary }) => {
         to={pathname?.startsWith('/erm/eresources') ? null : urls.eresources()}
       >
         <FormattedMessage id="ui-agreements.eresources" />
+      </Button>
+    );
+
+    button.push(
+      <Button
+        key="clickable-nav-packages"
+        id="clickable-nav-packages"
+        to={pathname?.startsWith('/erm/packages') ? null : urls.packages()}
+      >
+        <FormattedMessage id="ui-agreements.packages" />
+      </Button>
+    );
+
+    button.push(
+      <Button
+        key="clickable-nav-titles"
+        id="clickable-nav-titles"
+        to={pathname?.startsWith('/erm/titles') ? null : urls.titles()}
+      >
+        <FormattedMessage id="ui-agreements.eresources.titles" />
       </Button>
     );
   }

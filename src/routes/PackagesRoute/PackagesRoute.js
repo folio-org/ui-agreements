@@ -7,12 +7,12 @@ import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { getRefdataValuesByDesc, useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
-import View from '../../components/views/EResources';
+import View from '../../components/views/Packages';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 import { resourceClasses, resultCount } from '../../constants';
 
-import { ERESOURCES_ELECTRONIC_ENDPOINT } from '../../constants/endpoints';
+import { PACKAGES_ENDPOINT } from '../../constants/endpoints';
 import { useAgreementsRefdata } from '../../hooks';
 
 const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT;
@@ -21,19 +21,15 @@ const [
   AVAILABILITY_CONSTRAINT,
   CONTENT_TYPE,
   LIFECYCLE_STATUS,
-  PUB_TYPE,
   SCOPE,
-  TYPE
 ] = [
   'AvailabilityConstraint.Body',
   'ContentType.ContentType',
   'Pkg.LifecycleStatus',
-  'TitleInstance.PublicationType',
   'Pkg.AvailabilityScope',
-  'TitleInstance.Type',
 ];
 
-const EResourcesRoute = ({
+const PackagesRoute = ({
   children,
   history,
   location,
@@ -43,7 +39,6 @@ const EResourcesRoute = ({
   const ky = useOkapiKy();
   const hasPerms = stripes.hasPerm('ui-agreements.agreements.view');
   const searchField = useRef();
-
 
   useEffect(() => {
     if (searchField.current) {
@@ -56,23 +51,20 @@ const EResourcesRoute = ({
       AVAILABILITY_CONSTRAINT,
       CONTENT_TYPE,
       LIFECYCLE_STATUS,
-      PUB_TYPE,
       SCOPE,
-      TYPE
     ]
   });
 
   const { data: { tags = [] } = {} } = useTags();
   const { query, querySetter, queryGetter } = useKiwtSASQuery();
 
-  const eresourcesQueryParams = useMemo(() => (
+  const packagesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
       searchKey: 'name,identifiers.identifier.value,alternateResourceNames.name,description',
       filterConfig: [{
         name: 'class',
         values: [
           { name: 'package', value: resourceClasses?.PACKAGE },
-          { name: 'nopackage', value: resourceClasses?.TITLEINSTANCE },
         ]
       }],
       filterKeys: {
@@ -82,9 +74,12 @@ const EResourcesRoute = ({
         scope: 'availabilityScope.value',
         status: 'lifecycleStatus.value',
         tags: 'tags.value',
-        publicationType: 'publicationType.value',
-        type: 'type.value'
       },
+      filters: [
+        {
+          value: 'electronic'
+        }
+      ],
       perPage: RESULT_COUNT_INCREMENT
     }, (query ?? {}))
   ), [query]);
@@ -93,25 +88,25 @@ const EResourcesRoute = ({
   const {
     infiniteQueryObject: {
       error: eresourcesError,
-      fetchNextPage: fetchNextEresourcesPage,
+      fetchNextPage: fetchNextPackagesPage,
       isLoading: areEresourcesLoading,
       isError: isEresourcesError
     },
-    results: eresources = [],
-    total: eresourcesCount = 0
+    results: packages = [],
+    total: packagesCount = 0
   } = useInfiniteFetch(
-    ['ERM', 'EResources', eresourcesQueryParams, ERESOURCES_ELECTRONIC_ENDPOINT],
+    ['ERM', 'Packages', packagesQueryParams, PACKAGES_ENDPOINT],
     ({ pageParam = 0 }) => {
-      const params = [...eresourcesQueryParams, `offset=${pageParam}`];
-      return ky.get(`${ERESOURCES_ELECTRONIC_ENDPOINT}?${params?.join('&')}`).json();
+      const params = [...packagesQueryParams, `offset=${pageParam}`];
+      return ky.get(`${PACKAGES_ENDPOINT}?${params?.join('&')}`).json();
     }
   );
 
   useEffect(() => {
-    if (eresourcesCount === 1) {
-      history.push(`${urls.eresourceView(eresources[0].id)}${location.search}`);
+    if (packagesCount === 1) {
+      history.push(`${urls.packageView(packages[0].id)}${location.search}`);
     }
-  }, [eresources, eresourcesCount, history, location.search]);
+  }, [packages, packagesCount, history, location.search]);
 
   const kbsPath = 'erm/kbs';
   const { data: kbs = [] } = useQuery(
@@ -126,21 +121,19 @@ const EResourcesRoute = ({
       data={{
         availabilityValues: getRefdataValuesByDesc(refdata, AVAILABILITY_CONSTRAINT),
         contentTypeValues: getRefdataValuesByDesc(refdata, CONTENT_TYPE),
-        eresources,
-        publicationTypeValues: getRefdataValuesByDesc(refdata, PUB_TYPE),
+        packages,
         scopeValues: getRefdataValuesByDesc(refdata, SCOPE),
         sourceValues: kbs,
         statusValues: getRefdataValuesByDesc(refdata, LIFECYCLE_STATUS),
-        typeValues: getRefdataValuesByDesc(refdata, TYPE),
         tagsValues: tags,
       }}
-      onNeedMoreData={(_askAmount, index) => fetchNextEresourcesPage({ pageParam: index })}
+      onNeedMoreData={(_askAmount, index) => fetchNextPackagesPage({ pageParam: index })}
       queryGetter={queryGetter}
       querySetter={querySetter}
       searchString={location.search}
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;
-        totalCount: () => eresourcesCount,
+        totalCount: () => packagesCount,
         loaded: () => !areEresourcesLoading,
         pending: () => areEresourcesLoading,
         failure: () => isEresourcesError,
@@ -152,7 +145,7 @@ const EResourcesRoute = ({
   );
 };
 
-EResourcesRoute.propTypes = {
+PackagesRoute.propTypes = {
   children: PropTypes.node,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
@@ -168,4 +161,4 @@ EResourcesRoute.propTypes = {
   }),
 };
 
-export default EResourcesRoute;
+export default PackagesRoute;
