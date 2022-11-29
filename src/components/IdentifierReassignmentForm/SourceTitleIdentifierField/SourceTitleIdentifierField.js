@@ -214,7 +214,7 @@ const SourceTitleIdentifierField = ({ setTitleName }) => {
           <strong>
             {sourceTI?.id ?
               <>
-                <Link target="_blank" to={urls.eresourceView(sourceTI?.id)}>
+                <Link target="_blank" to={urls.titleView(sourceTI?.id)}>
                   {sourceTI.name}
                 </Link>
                 <> · {sourceTI.publicationType?.label}</>

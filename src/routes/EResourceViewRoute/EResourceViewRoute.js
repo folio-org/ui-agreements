@@ -157,11 +157,16 @@ const EResourceViewRoute = ({
     history.push(`${urls.eresourceEdit(eresourceId)}${location.search}`);
   };
 
-  const handleEResourceClick = (id) => {
-    if (location.pathname?.startsWith('/erm/titles')) {
-      history.push(`${urls.packageView(id)}${location.search}`);
+  /*
+   * This method is currently only used in "Options for acquiring e-resource",
+   * which is found on a Title view. This link could need to redirect to either
+   * the packages OR the titles route, depending on context.
+   */
+  const handleEResourceClick = (id, destination = 'TITLE') => {
+    if (destination === 'TITLE') {
+      history.push(`${urls.titleView(id)}${location.search}`);
     } else {
-      history.push(`${urls.eresourceView(id)}${location.search}`);
+      history.push(`${urls.packageView(id)}${location.search}`);
     }
   };
 

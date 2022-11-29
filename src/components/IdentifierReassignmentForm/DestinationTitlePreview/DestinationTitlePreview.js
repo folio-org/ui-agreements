@@ -109,7 +109,7 @@ const DestinationTitlePreview = () => {
         <AppIcon app="agreements" iconKey="eresource" size="small">
           <strong>
             <>
-              <Link to={urls.eresourceView(destinationTI?.id)}>
+              <Link to={urls.titleView(destinationTI?.id)}>
                 {destinationTI?.name}
               </Link>
               <> · {destinationTI?.publicationType?.label}</>

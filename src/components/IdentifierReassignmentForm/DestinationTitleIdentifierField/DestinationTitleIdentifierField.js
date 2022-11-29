@@ -174,7 +174,7 @@ const DestinationTitleIdentifierField = ({ setTitleName }) => {
           <strong>
             {destinationTI?.id ?
               <>
-                <Link to={urls.eresourceView(destinationTI?.id)}>
+                <Link to={urls.titleView(destinationTI?.id)}>
                   {destinationTI?.name}
                 </Link>
                 <> · {destinationTI?.publicationType?.label}</>

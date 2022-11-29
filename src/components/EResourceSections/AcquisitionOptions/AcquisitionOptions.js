@@ -40,10 +40,11 @@ class AcquisitionOptions extends React.Component {
   }
 
   onRowClick = (_, row) => {
-    const { id } = row;
+    const { id, class: clazz } = row;
     const { handlers: { onEResourceClick } } = this.props;
 
-    onEResourceClick(id);
+    // Redirect to Package view if package, title view otherwise
+    onEResourceClick(id, clazz === 'org.olf.kb.Pkg' ? 'PKG' : 'TITLE');
   }
 
   renderBadge = () => {

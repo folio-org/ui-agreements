@@ -120,7 +120,6 @@ const Packages = ({
                   >
                     <form onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}>
                       <RouteSwitcher primary="packages" />
-                      {/* TODO: Use forthcoming <SearchGroup> or similar component */}
                       <div className={css.searchGroupWrap}>
                         <FormattedMessage id="ui-agreements.agreements.searchInputLabel">
                           {([ariaLabel]) => (
