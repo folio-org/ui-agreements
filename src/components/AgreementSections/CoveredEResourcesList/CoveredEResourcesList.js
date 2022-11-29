@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
 
 import {
   Button,
@@ -33,7 +32,7 @@ import Coverage from '../../Coverage';
 import CustomCoverageIcon from '../../CustomCoverageIcon';
 import IfEResourcesEnabled from '../../IfEResourcesEnabled';
 import { resultCount } from '../../../constants';
-import { urls } from '../../utilities';
+import EResourceLink from '../../EResourceLink';
 
 export default class CoveredEResourcesList extends React.Component {
   static propTypes = {
@@ -75,7 +74,6 @@ export default class CoveredEResourcesList extends React.Component {
 
   formatter = {
     name: e => {
-      const titleInstanceName = e?._object?.pti?.titleInstance?.name;
       return (
         <AppIcon
           app="agreements"
@@ -83,7 +81,7 @@ export default class CoveredEResourcesList extends React.Component {
           iconKey="eresource"
           size="small"
         >
-          <Link to={urls.eresourceView(e.id)}>{titleInstanceName}</Link>
+          <EResourceLink eresource={e} />
         </AppIcon>
       );
     },
