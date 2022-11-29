@@ -37,14 +37,12 @@ class EResourceLink extends React.Component {
     const pti = eresource?._object?.pti ?? eresource?.pti;
     const id = pti?.titleInstance?.id ?? eresource.id;
 
-    // return id ? urls.packageView(id) : undefined;
-
-    return id ?
-      eresource.class === resourceClasses.TITLEINSTANCE || eresource.class === resourceClasses.PCI ?
+    if (id) {
+      return eresource.class === resourceClasses.TITLEINSTANCE || eresource.class === resourceClasses.PCI ?
         urls.titleView(id) :
-        urls.packageView(id)
-      :
-      undefined;
+        urls.packageView(id);
+    }
+    return undefined;
   }
 
   render() {
