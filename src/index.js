@@ -84,17 +84,17 @@ const App = (props) => {
   };
 
   const searchInput = () => {
-    if (pathname.search('/erm/agreements') === 0) {
+    if (pathname?.startsWith('/erm/agreements')) {
       return 'input-agreement-search';
-    } else if (pathname.search('/erm/eresources') === 0) {
+    } else if (pathname?.startsWith('/erm/eresources')) {
       return 'input-eresource-search';
-    } else if (pathname.search('/erm/packages') === 0) {
+    } else if (pathname?.startsWith('/erm/packages')) {
       return 'input-package-search';
-    } else if (pathname.search('/erm/platforms') === 0) {
+    } else if (pathname?.startsWith('/erm/platforms')) {
       return 'input-platform-search';
-    } else if (pathname.search('/erm/titles') === 0) {
+    } else if (pathname?.startsWith('/erm/titles')) {
       return 'input-title-search';
-    } else if (pathname.search('/erm/agreementLines') === 0) {
+    } else if (pathname?.startsWith('/erm/agreementLines')) {
       return 'input-agreementLine-search';
     } else {
       return undefined;
