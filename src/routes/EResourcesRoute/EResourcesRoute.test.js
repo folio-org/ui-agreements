@@ -4,7 +4,7 @@ import { useStripes } from '@folio/stripes/core';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { noop } from 'lodash';
-// import eresources from './testResources';
+import eresources from './testResources';
 import translationsProperties from '../../../test/helpers';
 import EResourcesRoute from './EResourcesRoute';
 
@@ -19,7 +19,7 @@ const routeProps = {
   mutator: {
     query: { update: noop },
   },
-  // resources: { eresources }
+  resources: { eresources }
 };
 
 useQuery.mockImplementation(() => ({
