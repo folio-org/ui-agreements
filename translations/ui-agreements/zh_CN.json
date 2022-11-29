@@ -742,5 +742,6 @@
     "settings.pickListSelect": "选择选取清单",
     "settings.fileStorage.s3BucketRegion": "S3 bucket region",
     "agreementLines.newLine": "New agreement line",
-    "agreementLines.viewInSearch": "View in agreement lines search"
+    "agreementLines.viewInSearch": "View in agreement lines search",
+    "agreements.exportingAgreement": "<strong>Exporting agreement:</strong> The JSON file will download to your browser when complete. If the agreement has a large number of titles this may take some time."
 }

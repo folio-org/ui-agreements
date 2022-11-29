@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { NoValue } from '@folio/stripes/components';
 import { isExternal, urls } from '../utilities';
+import { resourceClasses } from '../../constants';
 
 class EResourceLink extends React.Component {
   static propTypes = {
@@ -36,7 +37,14 @@ class EResourceLink extends React.Component {
     const pti = eresource?._object?.pti ?? eresource?.pti;
     const id = pti?.titleInstance?.id ?? eresource.id;
 
-    return id ? urls.eresourceView(id) : undefined;
+    // return id ? urls.packageView(id) : undefined;
+
+    return id ?
+      eresource.class === resourceClasses.TITLEINSTANCE || eresource.class === resourceClasses.PCI ?
+        urls.titleView(id) :
+        urls.packageView(id)
+      :
+      undefined;
   }
 
   render() {
