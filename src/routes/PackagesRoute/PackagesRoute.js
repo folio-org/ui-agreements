@@ -10,7 +10,7 @@ import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-co
 import View from '../../components/views/Packages';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { resultCount } from '../../constants';
+import { resourceClasses, resultCount } from '../../constants';
 
 import { PACKAGES_ENDPOINT } from '../../constants/endpoints';
 import { useAgreementsRefdata } from '../../hooks';
@@ -64,7 +64,7 @@ const PackagesRoute = ({
       filterConfig: [{
         name: 'class',
         values: [
-          { name: 'package', value: 'org.olf.kb.Pkg' },
+          { name: 'package', value: resourceClasses?.PACKAGE },
         ]
       }],
       filterKeys: {

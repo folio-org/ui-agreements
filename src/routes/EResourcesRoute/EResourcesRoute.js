@@ -10,7 +10,7 @@ import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-co
 import View from '../../components/views/EResources';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { resultCount } from '../../constants';
+import { resourceClasses, resultCount } from '../../constants';
 
 import { ERESOURCES_ELECTRONIC_ENDPOINT } from '../../constants/endpoints';
 import { useAgreementsRefdata } from '../../hooks';
@@ -71,8 +71,8 @@ const EResourcesRoute = ({
       filterConfig: [{
         name: 'class',
         values: [
-          { name: 'package', value: 'org.olf.kb.Pkg' },
-          { name: 'nopackage', value: 'org.olf.kb.TitleInstance' },
+          { name: 'package', value: resourceClasses?.PACKAGE },
+          { name: 'nopackage', value: resourceClasses?.TITLEINSTANCE },
         ]
       }],
       filterKeys: {

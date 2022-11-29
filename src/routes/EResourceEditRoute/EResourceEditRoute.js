@@ -32,11 +32,8 @@ const EResourceEditRoute = ({
   );
   const eresourceClass = eresource?.class;
 
-  const historyUrl = (
-    eresourceClass === resourceClasses.TITLEINSTANCE ? `${urls.titleView(eresourceId)}${location.search}`
-      :
-      `${urls.packageView(eresourceId)}${location.search}`
-  );
+  // We currently only have edit for non-package eresources
+  const historyUrl = `${urls.titleView(eresourceId)}${location.search}`;
 
   const { mutateAsync: putPCI } = useMutation(
     [PCI_ENDPOINT(eresourceId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],

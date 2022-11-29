@@ -42,6 +42,7 @@ const urls = {
 
   titles: () => '/erm/titles',
   titleView: id => `/erm/titles/${id}`,
+  titleEdit: id => `/erm/titles/${id}/edit`,
 
   viewInstance: id => `/inventory/view/${id}`,
 

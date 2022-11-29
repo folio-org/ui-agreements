@@ -4,6 +4,7 @@ import PackageCard from '../../PackageCard';
 import PackageCardExternal from '../../PackageCardExternal';
 import TitleCard from '../../TitleCard';
 import TitleCardExternal from '../../TitleCardExternal';
+import { resourceClasses } from '../../../constants';
 
 const propTypes = {
   headerEnd: PropTypes.oneOfType([
@@ -23,7 +24,7 @@ const isExternal = (resource) => {
 
 const isPackage = (resource) => {
   return (
-    resource.class === 'org.olf.kb.Pkg' ||
+    resource.class === resourceClasses?.PACKAGE ||
     resource.reference_object?.type === 'Package' ||
     resource.type === 'packages'
   );

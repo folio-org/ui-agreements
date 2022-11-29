@@ -221,6 +221,7 @@ const App = (props) => {
                   <Route component={EResourceViewRoute} path={`${path}/eresources/:id`} />
                 </Route>
 
+                <Route component={EResourceEditRoute} path={`${path}/titles/:id/edit`} />
                 <Route component={TitlesRoute} path={`${path}/titles/:id?`}>
                   <Route component={EResourceViewRoute} path={`${path}/titles/:id`} />
                 </Route>

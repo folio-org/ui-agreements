@@ -79,7 +79,7 @@ const EResourceViewRoute = ({
     batchSize: RECORDS_PER_REQUEST_MEDIUM,
     path: ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT(eresourceId),
     queryParams: {
-      enabled: (!!eresource?.id && eresource?.class !== 'org.olf.kb.Pkg')
+      enabled: (!!eresource?.id && eresource?.class !== resourceClasses?.PACKAGE)
     }
   });
 
@@ -154,7 +154,8 @@ const EResourceViewRoute = ({
   };
 
   const handleEdit = () => {
-    history.push(`${urls.eresourceEdit(eresourceId)}${location.search}`);
+    // We currently only have edit for non-package resources
+    history.push(`${urls.titleEdit(eresourceId)}${location.search}`);
   };
 
   /*

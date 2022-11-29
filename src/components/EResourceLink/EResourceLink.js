@@ -38,9 +38,10 @@ class EResourceLink extends React.Component {
     const id = pti?.titleInstance?.id ?? eresource.id;
 
     if (id) {
-      return eresource.class === resourceClasses.TITLEINSTANCE || eresource.class === resourceClasses.PCI ?
-        urls.titleView(id) :
-        urls.packageView(id);
+      // Only redirect to package lookup for a package, all other resources go to title lookup
+      return eresource.class === resourceClasses.PACKAGE ?
+        urls.packageView(id) :
+        urls.titleView(id);
     }
     return undefined;
   }

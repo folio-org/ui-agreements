@@ -13,6 +13,7 @@ import Coverage from '../../Coverage';
 import EResourceKB from '../../EResourceKB';
 
 import { isExternal } from '../../utilities';
+import { resourceClasses } from '../../../constants';
 
 class AcquisitionOptions extends React.Component {
   static propTypes = {
@@ -44,7 +45,7 @@ class AcquisitionOptions extends React.Component {
     const { handlers: { onEResourceClick } } = this.props;
 
     // Redirect to Package view if package, title view otherwise
-    onEResourceClick(id, clazz === 'org.olf.kb.Pkg' ? 'PKG' : 'TITLE');
+    onEResourceClick(id, clazz === resourceClasses?.PACKAGE ? 'PKG' : 'TITLE');
   }
 
   renderBadge = () => {
