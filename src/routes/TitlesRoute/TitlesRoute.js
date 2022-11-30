@@ -84,6 +84,9 @@ const TitlesRoute = ({
     ({ pageParam = 0 }) => {
       const params = [...titlesQueryParams, `offset=${pageParam}`];
       return ky.get(`${TITLES_ENDPOINT}?${params?.join('&')}`).json();
+    },
+    {
+      enabled: !!query?.filters || !!query?.query
     }
   );
 

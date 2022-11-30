@@ -52,6 +52,9 @@ const PlatformsRoute = ({
     ({ pageParam = 0 }) => {
       const params = [...platformsQueryParams, `offset=${pageParam}`];
       return ky.get(`${PLATFORMS_ENDPOINT}?${params?.join('&')}`).json();
+    },
+    {
+      enabled: !!query?.filters || !!query?.query
     }
   );
 

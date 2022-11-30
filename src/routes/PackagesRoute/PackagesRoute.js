@@ -99,6 +99,9 @@ const PackagesRoute = ({
     ({ pageParam = 0 }) => {
       const params = [...packagesQueryParams, `offset=${pageParam}`];
       return ky.get(`${PACKAGES_ENDPOINT}?${params?.join('&')}`).json();
+    },
+    {
+      enabled: !!query?.filters || !!query?.query
     }
   );
 
