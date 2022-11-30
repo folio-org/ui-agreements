@@ -146,10 +146,8 @@ const EResourceViewRoute = ({
   const handleClose = () => {
     if (location.pathname?.startsWith('/erm/titles')) {
       history.push(`${urls.titles()}${location.search}`);
-    } else if (location.pathname?.startsWith('/erm/packages')) {
-      history.push(`${urls.packages()}${location.search}`);
     } else {
-      history.push(`${urls.eresources()}${location.search}`);
+      history.push(`${urls.packages()}${location.search}`);
     }
   };
 

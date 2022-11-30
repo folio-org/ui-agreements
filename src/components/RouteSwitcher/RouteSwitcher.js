@@ -19,17 +19,14 @@ const RouteSwitcher = ({ primary }) => {
     case 'agreementLines':
       selectedIndex = 1;
       break;
-    case 'eresources':
+    case 'packages':
       selectedIndex = 0;
       break;
-    case 'packages':
+    case 'titles':
       selectedIndex = 1;
       break;
-    case 'titles':
-      selectedIndex = 2;
-      break;
     case 'platforms':
-      selectedIndex = 3;
+      selectedIndex = 2;
       break;
     default:
       break;
@@ -63,16 +60,6 @@ const RouteSwitcher = ({ primary }) => {
   // Render internal KB search options
   const button = [];
   if (stripes.hasPerm('ui-agreements.resources.view')) {
-    button.push(
-      <Button
-        key="clickable-nav-eresources"
-        id="clickable-nav-eresources"
-        to={pathname?.startsWith('/erm/eresources') ? null : urls.eresources()}
-      >
-        <FormattedMessage id="ui-agreements.eresources" />
-      </Button>
-    );
-
     button.push(
       <Button
         key="clickable-nav-packages"
