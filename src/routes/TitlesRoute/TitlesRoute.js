@@ -13,7 +13,7 @@ import { resultCount } from '../../constants';
 import { TITLES_ENDPOINT } from '../../constants/endpoints';
 import { useAgreementsRefdata } from '../../hooks';
 
-const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT;
+const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT_MEDIUM;
 
 const [
   PUB_TYPE,
