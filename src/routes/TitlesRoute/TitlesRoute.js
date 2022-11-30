@@ -13,7 +13,7 @@ import { resultCount } from '../../constants';
 import { TITLES_ENDPOINT } from '../../constants/endpoints';
 import { useAgreementsRefdata } from '../../hooks';
 
-const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT;
+const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT_MEDIUM;
 
 const [
   PUB_TYPE,
@@ -75,6 +75,7 @@ const TitlesRoute = ({
       error: titlesError,
       fetchNextPage: fetchNextTitlesPage,
       isLoading: areTitlesLoading,
+      isIdle: isTitlesIdle,
       isError: isTitlesError
     },
     results: titles = [],
@@ -84,6 +85,9 @@ const TitlesRoute = ({
     ({ pageParam = 0 }) => {
       const params = [...titlesQueryParams, `offset=${pageParam}`];
       return ky.get(`${TITLES_ENDPOINT}?${params?.join('&')}`).json();
+    },
+    {
+      enabled: !!query?.filters || !!query?.query
     }
   );
 
@@ -110,7 +114,7 @@ const TitlesRoute = ({
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;
         totalCount: () => titlesCount,
-        loaded: () => !areTitlesLoading,
+        loaded: () => !isTitlesIdle,
         pending: () => areTitlesLoading,
         failure: () => isTitlesError,
         failureMessage: () => titlesError.message
