@@ -43,6 +43,7 @@ const PlatformsRoute = ({
       error: platformsError,
       fetchNextPage: fetchNextPlatformPage,
       isLoading: arePlatformsLoading,
+      isIdle: isPlatformsIdle,
       isError: isPlatformError
     },
     results: platforms = [],
@@ -52,6 +53,9 @@ const PlatformsRoute = ({
     ({ pageParam = 0 }) => {
       const params = [...platformsQueryParams, `offset=${pageParam}`];
       return ky.get(`${PLATFORMS_ENDPOINT}?${params?.join('&')}`).json();
+    },
+    {
+      enabled: !!query?.filters || !!query?.query
     }
   );
 
@@ -75,7 +79,7 @@ const PlatformsRoute = ({
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;
         totalCount: () => platformsCount,
-        loaded: () => !arePlatformsLoading,
+        loaded: () => !isPlatformsIdle,
         pending: () => arePlatformsLoading,
         failure: () => isPlatformError,
         failureMessage: () => platformsError.message
