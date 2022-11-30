@@ -52,8 +52,9 @@ describe('Platforms', () => {
     await Pane('Search and filter').is({ visible: true });
   });
 
-  test('renders the expected Agreements/Agreement lines buttons', async () => {
-    await Button('E-resources').exists();
+  test('renders the expected local kb buttons', async () => {
+    await Button('Packages').exists();
+    await Button('Titles').exists();
     await Button('Platforms').exists();
   });
 
