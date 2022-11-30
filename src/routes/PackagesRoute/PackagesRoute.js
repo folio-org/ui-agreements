@@ -15,7 +15,7 @@ import { resourceClasses, resultCount } from '../../constants';
 import { PACKAGES_ENDPOINT } from '../../constants/endpoints';
 import { useAgreementsRefdata } from '../../hooks';
 
-const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT;
+const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT_MEDIUM;
 
 const [
   AVAILABILITY_CONSTRAINT,
@@ -90,6 +90,7 @@ const PackagesRoute = ({
       error: eresourcesError,
       fetchNextPage: fetchNextPackagesPage,
       isLoading: areEresourcesLoading,
+      isIdle: isPackagesIdle,
       isError: isEresourcesError
     },
     results: packages = [],
@@ -99,6 +100,9 @@ const PackagesRoute = ({
     ({ pageParam = 0 }) => {
       const params = [...packagesQueryParams, `offset=${pageParam}`];
       return ky.get(`${PACKAGES_ENDPOINT}?${params?.join('&')}`).json();
+    },
+    {
+      enabled: !!query?.filters || !!query?.query
     }
   );
 
@@ -134,7 +138,7 @@ const PackagesRoute = ({
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;
         totalCount: () => packagesCount,
-        loaded: () => !areEresourcesLoading,
+        loaded: () => !isPackagesIdle,
         pending: () => areEresourcesLoading,
         failure: () => isEresourcesError,
         failureMessage: () => eresourcesError.message
