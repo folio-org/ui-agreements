@@ -90,6 +90,7 @@ const PackagesRoute = ({
       error: eresourcesError,
       fetchNextPage: fetchNextPackagesPage,
       isLoading: areEresourcesLoading,
+      isIdle: isPackagesIdle,
       isError: isEresourcesError
     },
     results: packages = [],
@@ -137,7 +138,7 @@ const PackagesRoute = ({
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;
         totalCount: () => packagesCount,
-        loaded: () => !areEresourcesLoading,
+        loaded: () => !isPackagesIdle,
         pending: () => areEresourcesLoading,
         failure: () => isEresourcesError,
         failureMessage: () => eresourcesError.message

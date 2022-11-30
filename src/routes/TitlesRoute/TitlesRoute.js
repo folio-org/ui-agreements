@@ -75,6 +75,7 @@ const TitlesRoute = ({
       error: titlesError,
       fetchNextPage: fetchNextTitlesPage,
       isLoading: areTitlesLoading,
+      isIdle: isTitlesIdle,
       isError: isTitlesError
     },
     results: titles = [],
@@ -113,7 +114,7 @@ const TitlesRoute = ({
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;
         totalCount: () => titlesCount,
-        loaded: () => !areTitlesLoading,
+        loaded: () => !isTitlesIdle,
         pending: () => areTitlesLoading,
         failure: () => isTitlesError,
         failureMessage: () => titlesError.message

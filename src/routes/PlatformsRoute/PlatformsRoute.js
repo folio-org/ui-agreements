@@ -43,6 +43,7 @@ const PlatformsRoute = ({
       error: platformsError,
       fetchNextPage: fetchNextPlatformPage,
       isLoading: arePlatformsLoading,
+      isIdle: isPltaformsIdle,
       isError: isPlatformError
     },
     results: platforms = [],
@@ -78,7 +79,7 @@ const PlatformsRoute = ({
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;
         totalCount: () => platformsCount,
-        loaded: () => !arePlatformsLoading,
+        loaded: () => !isPltaformsIdle,
         pending: () => arePlatformsLoading,
         failure: () => isPlatformError,
         failureMessage: () => platformsError.message
