@@ -18,10 +18,6 @@ const urls = {
   eholdingsPackageView: id => `/eholdings/packages/${id}`,
   eholdingsResourceView: id => `/eholdings/resources/${id}`,
 
-  eresources: () => '/erm/eresources',
-  eresourceView: id => `/erm/eresources/${id}`,
-  eresourceEdit: id => `/erm/eresources/${id}/edit`,
-
   packages: () => '/erm/packages',
   packageView: id => `/erm/packages/${id}`,
 

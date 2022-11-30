@@ -35,7 +35,6 @@ import AgreementLineViewRoute from './routes/AgreementLineViewRoute';
 
 import BasketRoute from './routes/BasketRoute';
 
-import EResourcesRoute from './routes/EResourcesRoute';
 import EResourceViewRoute from './routes/EResourceViewRoute';
 import EResourceEditRoute from './routes/EResourceEditRoute';
 
@@ -86,8 +85,6 @@ const App = (props) => {
   const searchInput = () => {
     if (pathname?.startsWith('/erm/agreements')) {
       return 'input-agreement-search';
-    } else if (pathname?.startsWith('/erm/eresources')) {
-      return 'input-eresource-search';
     } else if (pathname?.startsWith('/erm/packages')) {
       return 'input-package-search';
     } else if (pathname?.startsWith('/erm/platforms')) {
@@ -143,14 +140,13 @@ const App = (props) => {
           </Button>
           <Button
             buttonStyle={
-              (pathname?.startsWith('/erm/eresources') ||
-              pathname?.startsWith('/erm/titles') ||
+              (pathname?.startsWith('/erm/titles') ||
               pathname?.startsWith('/erm/packages') ||
               pathname?.startsWith('/erm/platforms')) ?
                 'primary' :
                 'default'
             }
-            to="/erm/eresources"
+            to="/erm/packages"
           >
             <FormattedMessage id="ui-agreements.localKBSearch" />
           </Button>
@@ -214,11 +210,6 @@ const App = (props) => {
                 <Route component={AgreementLineEditRoute} path={`${path}/agreementLines/:lineId/agreement/:agreementId/edit`} />
                 <Route component={AgreementLinesRoute} path={`${path}/agreementLines/:id?`}>
                   <Route component={AgreementLineViewRoute} path={`${path}/agreementLines/:lineId/agreement/:agreementId`} />
-                </Route>
-
-                <Route component={EResourceEditRoute} path={`${path}/eresources/:id/edit`} />
-                <Route component={EResourcesRoute} path={`${path}/eresources/:id?`}>
-                  <Route component={EResourceViewRoute} path={`${path}/eresources/:id`} />
                 </Route>
 
                 <Route component={EResourceEditRoute} path={`${path}/titles/:id/edit`} />
