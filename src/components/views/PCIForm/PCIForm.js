@@ -19,7 +19,7 @@ import {
   collapseAllSections,
   expandAllSections
 } from '@folio/stripes/components';
-import { TitleManager } from '@folio/stripes/core';
+import { AppIcon, TitleManager } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
 import { handleSaveKeyCommand } from '@folio/stripes-erm-components';
 import css from './PCIForm.css';
@@ -149,6 +149,7 @@ class PCIForm extends React.Component {
       >
         <Paneset>
           <Pane
+            appIcon={<AppIcon app="agreements" iconKey="pci" />}
             centerContent
             defaultWidth="100%"
             firstMenu={this.renderFirstMenu()}

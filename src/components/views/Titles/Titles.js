@@ -195,7 +195,7 @@ const Titles = ({
 
                 <Pane
                   actionMenu={getActionMenu}
-                  appIcon={<AppIcon app="agreements" iconKey="eresource" size="small" />}
+                  appIcon={<AppIcon app="agreements" iconKey="title" size="small" />}
                   defaultWidth="fill"
                   firstMenu={
                     !filterPaneIsVisible ?
@@ -245,7 +245,7 @@ const Titles = ({
                           <AppIcon
                             app="agreements"
                             iconAlignment="baseline"
-                            iconKey="eresource"
+                            iconKey="title"
                             size="small"
                           >
                             {e?.longName ?? e.name}

@@ -53,17 +53,20 @@ const EResource = ({
   if (isLoading) return <LoadingPane data-loading id="pane-view-eresource" {...paneProps} />;
 
   let EResourceViewComponent = Package;
+  let icon = 'package';
 
   if (eresource.class === resourceClasses.TITLEINSTANCE) {
     EResourceViewComponent = Title;
+    icon = 'title';
   } else if (eresource.class === resourceClasses.PCI) {
     EResourceViewComponent = PCI;
+    icon = 'pci';
   }
 
   return (
     <>
       <Pane
-        appIcon={<AppIcon app="agreements" iconKey="eresource" size="small" />}
+        appIcon={<AppIcon app="agreements" iconKey={icon} size="small" />}
         id="pane-view-eresource"
         lastMenu={
           (eresource.class === resourceClasses.PCI || eresource.class === resourceClasses.TITLEINSTANCE) ?

@@ -170,7 +170,7 @@ const DestinationTitleIdentifierField = ({ setTitleName }) => {
       data-testid="destinationTitleCard"
       headerEnd={renderDestinationTitleLinkButton(destinationTI?.id)}
       headerStart={(
-        <AppIcon app="agreements" iconKey="eresource" size="small">
+        <AppIcon app="agreements" iconKey="title" size="small">
           <strong>
             {destinationTI?.id ?
               <>

@@ -46,7 +46,7 @@ const PackageCard = ({
       data-testid="packageCard"
       headerEnd={headerEnd}
       headerStart={(
-        <AppIcon app="agreements" iconKey="eresource" size="small">
+        <AppIcon app="agreements" iconKey="package" size="small">
           <strong data-test-package-link>
             <EResourceLink eresource={pkg} searchString={searchString} />
           </strong>

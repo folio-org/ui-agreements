@@ -171,7 +171,7 @@ const Packages = ({
                 }
 
                 <Pane
-                  appIcon={<AppIcon app="agreements" iconKey="eresource" size="small" />}
+                  appIcon={<AppIcon app="agreements" iconKey="package" size="small" />}
                   defaultWidth="fill"
                   firstMenu={
                     !filterPaneIsVisible ?
@@ -219,7 +219,7 @@ const Packages = ({
                           <AppIcon
                             app="agreements"
                             iconAlignment="baseline"
-                            iconKey="eresource"
+                            iconKey="package"
                             size="small"
                           >
                             {e._object?.longName ?? e.name}

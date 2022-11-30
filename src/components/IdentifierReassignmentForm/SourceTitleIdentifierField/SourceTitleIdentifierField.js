@@ -210,7 +210,7 @@ const SourceTitleIdentifierField = ({ setTitleName }) => {
       data-testid="sourceTitleCard"
       headerEnd={renderSourceTitleLinkButton(sourceTI?.id)}
       headerStart={(
-        <AppIcon app="agreements" iconKey="eresource" size="small">
+        <AppIcon app="agreements" iconKey="title" size="small">
           <strong>
             {sourceTI?.id ?
               <>
