@@ -309,6 +309,21 @@
         "title": "eresource"
       },
       {
+        "name": "package",
+        "alt": " ",
+        "title": "Package"
+      },
+      {
+        "name": "pci",
+        "alt": " ",
+        "title": "PCI"
+      },
+      {
+        "name": "title",
+        "alt": " ",
+        "title": "Title"
+      },
+      {
         "name": "platform",
         "alt": " ",
         "title": "platform"

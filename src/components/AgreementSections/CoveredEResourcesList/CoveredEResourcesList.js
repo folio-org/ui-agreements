@@ -80,7 +80,7 @@ export default class CoveredEResourcesList extends React.Component {
         <AppIcon
           app="agreements"
           iconAlignment="baseline"
-          iconKey="eresource"
+          iconKey="pci"
           size="small"
         >
           <Link to={urls.packageView(e.id)}>{titleInstanceName}</Link>

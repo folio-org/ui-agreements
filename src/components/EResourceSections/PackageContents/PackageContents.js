@@ -52,7 +52,7 @@ export default class PackageContents extends React.Component {
         <AppIcon
           app="agreements"
           iconAlignment="baseline"
-          iconKey="eresource"
+          iconKey="pci"
           size="small"
         >
           <EResourceLink eresource={pci.pti.titleInstance} searchString={this.props.data?.searchString} />

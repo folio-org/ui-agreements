@@ -29,7 +29,7 @@ const TitleCard = ({
       data-testid="titleCard"
       headerEnd={headerEnd}
       headerStart={(
-        <AppIcon app="agreements" iconKey="eresource" size="small">
+        <AppIcon app="agreements" iconKey="title" size="small">
           <strong data-test-title-instance-name>
             <EResourceLink eresource={title} searchString={searchString} />
           </strong>
