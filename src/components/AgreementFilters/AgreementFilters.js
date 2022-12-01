@@ -22,6 +22,7 @@ const propTypes = {
 
 const FILTERS = [
   'agreementStatus',
+  'reasonForClosure',
   'renewalPriority',
   'isPerpetual',
 ];
@@ -69,6 +70,36 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       >
         <CheckboxFilter
           dataOptions={filterState[name] || []}
+          name={name}
+          onChange={(group) => {
+            filterHandlers.state({
+              ...activeFilters,
+              [group.name]: group.values
+            });
+          }}
+          selectedValues={groupFilters}
+        />
+      </Accordion>
+    );
+  };
+
+  const renderMultiSelectFilter = (name, prps) => {
+    const groupFilters = activeFilters[name] || [];
+
+    return (
+      <Accordion
+        displayClearButton={groupFilters.length > 0}
+        header={FilterAccordionHeader}
+        // ID differs from the checkbox above just to avoid any clashes
+        id={`filter-ms-accordion-${name}`}
+        label={<FormattedMessage id={`ui-agreements.agreements.${name}`} />}
+        onClearFilter={() => { filterHandlers.clearGroup(name); }}
+        separator={false}
+        {...prps}
+      >
+        <MultiSelectionFilter
+          dataOptions={filterState[name] || []}
+          id="availability-filter"
           name={name}
           onChange={(group) => {
             filterHandlers.state({
@@ -252,6 +283,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
   return (
     <AccordionSet>
       {renderCheckboxFilter('agreementStatus')}
+      {renderMultiSelectFilter('reasonForClosure')}
       {renderCheckboxFilter('renewalPriority', { closedByDefault: true })}
       {renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
       {renderStartDateFilter()}

@@ -19,12 +19,14 @@ const {
 
 const [
   AGREEMENT_STATUS,
+  REASON_FOR_CLOSURE,
   RENEWAL_PRIORITY,
   IS_PERPETUAL,
   CONTACT_ROLE,
   ORG_ROLE
 ] = [
   'SubscriptionAgreement.AgreementStatus',
+  'SubscriptionAgreement.ReasonForClosure',
   'SubscriptionAgreement.RenewalPriority',
   'Global.Yes_No',
   'InternalContact.Role',
@@ -45,6 +47,7 @@ const AgreementsRoute = ({
   const refdata = useAgreementsRefdata({
     desc: [
       AGREEMENT_STATUS,
+      REASON_FOR_CLOSURE,
       RENEWAL_PRIORITY,
       IS_PERPETUAL,
       CONTACT_ROLE,
@@ -73,6 +76,7 @@ const AgreementsRoute = ({
         contactRole: 'contacts.role',
         isPerpetual: 'isPerpetual.value',
         orgs: 'orgs.org',
+        reasonForClosure: 'reasonForClosure.value',
         renewalPriority: 'renewalPriority.value',
         role: 'orgs.roles.role',
         tags: 'tags.value',
@@ -114,6 +118,7 @@ const AgreementsRoute = ({
       data={{
         agreements,
         agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
+        reasonForClosureValues: getRefdataValuesByDesc(refdata, REASON_FOR_CLOSURE),
         renewalPriorityValues: getRefdataValuesByDesc(refdata, RENEWAL_PRIORITY),
         isPerpetualValues: getRefdataValuesByDesc(refdata, IS_PERPETUAL),
         contactRoleValues: getRefdataValuesByDesc(refdata, CONTACT_ROLE),
