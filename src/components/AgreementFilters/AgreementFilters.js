@@ -99,7 +99,6 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       >
         <MultiSelectionFilter
           dataOptions={filterState[name] || []}
-          id="availability-filter"
           name={name}
           onChange={(group) => {
             filterHandlers.state({
