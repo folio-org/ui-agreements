@@ -18,7 +18,7 @@ const data = {
     'onClickProxyServerAction': () => {},
   },
   'stringTemplates': {
-    'urlProxiers': '[]',
+    'urlProxiers': [],
     'urlCustomisers': [{
       'id': '87f74265-4a5a-4913-9d0b-47ce0b8924c4',
       'dateCreated': '2021-10-05T15:07:28Z',

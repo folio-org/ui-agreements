@@ -113,7 +113,10 @@ PlatformUrlCustomization.propTypes = {
   platform: PropTypes.shape({
     id: PropTypes.string,
   }),
-  stringTemplates: PropTypes.arrayOf(PropTypes.object)
+  stringTemplates: PropTypes.shape({
+    urlProxiers: PropTypes.arrayOf(PropTypes.object),
+    urlCustomisers: PropTypes.arrayOf(PropTypes.object),
+  })
 };
 
 export default PlatformUrlCustomization;

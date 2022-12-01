@@ -1,9 +1,8 @@
 
 import { StaticRouter as Router } from 'react-router-dom';
-import { IntlProvider } from 'react-intl';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { render } from '@testing-library/react';
 import { KeyValue } from '@folio/stripes-testing';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../test/helpers';
 import POLineCard from './POLineCard';
 
@@ -11,18 +10,6 @@ jest.mock('../../hooks/useAcqMethods', () => ({
   useAcqMethods: jest.fn().mockReturnValue({ acqMethods: [], isLoading: false }),
 }));
 
-const queryClient = new QueryClient();
-
-// eslint-disable-next-line react/prop-types
-const wrapper = ({ children }) => (
-  <Router>
-    <IntlProvider locale="en" messages={{}}>
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>,
-    </IntlProvider>
-  </Router>
-);
 const data = {
   'id': 'e96f0dbc-48f9-4e49-a394-35187507c25b',
   'edition': 'First edition',
@@ -124,14 +111,13 @@ const data = {
 let renderComponent;
 describe('POLineCard', () => {
   beforeEach(() => {
-    renderComponent = render(
+    renderComponent = renderWithIntl(
       <Router>
         <POLineCard
           id="polines"
           poLine={data}
         />
       </Router>,
-      { wrapper },
       translationsProperties
     );
   });
@@ -143,34 +129,34 @@ describe('POLineCard', () => {
 
   test('renders the POLineCard component', () => {
     const { getByText } = renderComponent;
-    expect(getByText('ui-agreements.poLines.poLineWithNumber')).toBeInTheDocument();
+    expect(getByText('PO line: 10011-1')).toBeInTheDocument();
   });
 
   test('renders a link with the poLineNumber', () => {
     const { getByRole } = renderComponent;
-    expect(getByRole('link', { name: 'ui-agreements.poLines.poLineWithNumber' })).toBeInTheDocument();
+    expect(getByRole('link', { name: 'PO line: 10011-1' })).toBeInTheDocument();
   });
 
   test('renders the POLineCard component', () => {
     const { getByText } = renderComponent;
-    expect(getByText('ui-agreements.poLines.acqMethod')).toBeInTheDocument();
+    expect(getByText('Acquisition method')).toBeInTheDocument();
   });
 
   test('renders the expected acquisitionMethod value', async () => {
-    await KeyValue('ui-agreements.poLines.acqMethod').has({ value: 'Purchase' });
+    await KeyValue('Acquisition method').has({ value: 'Purchase' });
   });
 
   test('renders the POLineCard component', () => {
     const { getByText } = renderComponent;
-    expect(getByText('ui-agreements.poLines.title')).toBeInTheDocument();
+    expect(getByText('Title in PO line')).toBeInTheDocument();
   });
 
   test('renders title in poline', async () => {
-    await KeyValue('ui-agreements.poLines.title').has({ value: 'ABA Journal' });
+    await KeyValue('Title in PO line').has({ value: 'ABA Journal' });
   });
 
   test('renders a link with instanceId', () => {
     const { getByRole } = renderComponent;
-    expect(getByRole('link', { name: 'ui-agreements.poLines.viewInInventory' })).toBeInTheDocument();
+    expect(getByRole('link', { name: 'View in inventory' })).toBeInTheDocument();
   });
 });

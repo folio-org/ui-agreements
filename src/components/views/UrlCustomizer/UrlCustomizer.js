@@ -61,6 +61,7 @@ const UrlCustomizer = ({
             if (stripes.hasPerm('ui-agreements.platforms.edit')) {
               buttons.push(
                 <Button
+                  key="clickable-dropdown-edit-url-customizer"
                   buttonStyle="dropdownItem"
                   id="clickable-dropdown-edit-url-customizer"
                   onClick={handlers.onEdit}
@@ -72,6 +73,7 @@ const UrlCustomizer = ({
               );
               buttons.push(
                 <Button
+                  key="clickable-dropdown-delete-url-customizer"
                   buttonStyle="dropdownItem"
                   id="clickable-dropdown-delete-url-customizer"
                   onClick={() => {

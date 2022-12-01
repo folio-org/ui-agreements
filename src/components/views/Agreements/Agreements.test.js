@@ -21,7 +21,7 @@ jest.mock('../../AgreementFilters', () => () => <div>AgreementFilters</div>);
 // (This probably means this setup SUCKS and needs changing)
 ReactRouterDom.useLocation = jest.requireActual('react-router-dom').useLocation;
 
-const mockSubmit = jest.fn();
+const mockSubmit = jest.fn(e => e.preventDefault());
 describe('Agreements', () => {
   useHandleSubmitSearch.mockImplementation(() => ({
     handleSubmitSearch: mockSubmit,

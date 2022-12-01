@@ -10,6 +10,7 @@ import {
   AccordionStatus,
   Button,
   ButtonGroup,
+  Checkbox,
   Col,
   ExpandAllButton,
   HasCommand,
@@ -20,16 +21,15 @@ import {
   checkScope,
   collapseAllSections,
   expandAllSections,
-  Checkbox
 } from '@folio/stripes/components';
 
 import { AppIcon } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
 import css from './AgreementLineForm.css';
 import { FormInfo, FormPOLines, FormCoverage, FormEresource } from '../../AgreementLineSections';
-import IfEResourcesEnabled from '../../IfEResourcesEnabled';
 
 import { isDetached, isExternal } from '../../utilities';
+import { useEresourcesEnabled } from '../../../hooks';
 
 const propTypes = {
   data: PropTypes.shape({
@@ -61,7 +61,6 @@ const propTypes = {
   toggleCreateAnother: PropTypes.func.isRequired,
 };
 
-
 const AgreementLineForm = ({
   data: { basket = [], line = {} },
   form,
@@ -78,6 +77,8 @@ const AgreementLineForm = ({
   const hasLoaded = form.getRegisteredFields().length > 0;
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
   const [agreementLineSource, setAgreementLineSource] = useState('basket');
+
+  const isEresourcesEnabled = useEresourcesEnabled();
 
   const accordionStatusRef = useRef();
   /* istanbul ignore next */
@@ -138,6 +139,32 @@ const AgreementLineForm = ({
     );
   };
 
+
+  const renderButtonGroup = () => {
+    if ((!!line.id && !isDetached(line))) {
+      return null;
+    }
+
+    if (isEholdingsEnabled && isEresourcesEnabled) {
+      return (
+        <ButtonGroup>
+          {renderBasketButton()}
+          {renderEholdingsButton()}
+        </ButtonGroup>
+      );
+    } else if (isEholdingsEnabled && agreementLineSource !== 'eholdings') {
+      setAgreementLineSource('eholdings');
+      return null;
+    } else if (isEresourcesEnabled && agreementLineSource !== 'basket') {
+      setAgreementLineSource('basket');
+      return null;
+    } else if (!isEholdingsEnabled && !isEresourcesEnabled && agreementLineSource !== '') {
+      setAgreementLineSource('');
+    }
+
+    return null;
+  };
+
   return (
     <HasCommand
       commands={shortcuts}
@@ -164,7 +191,7 @@ const AgreementLineForm = ({
                       onChange={e => toggleCreateAnother(e.target.checked)}
                       type="checkbox"
                       // value={createAnother}
-                      vartical
+                      vertical
                     />
                   </span>
                   <Button
@@ -201,39 +228,7 @@ const AgreementLineForm = ({
         >
           {hasLoaded ? <div id="form-loaded" /> : null}
           {/* Logic to render the button group. Set eholdings or basket as source based on eholdings permission / if eresources enabled */}
-          {
-            (!line.id || isDetached(line)) && ( // render button group on edit only for detached line type
-              isEholdingsEnabled ? (
-                <IfEResourcesEnabled>
-                  {({ isEnabled }) => {
-                    if (isEnabled) {
-                      return (
-                        <ButtonGroup>
-                          {renderBasketButton()}
-                          {renderEholdingsButton()}
-                        </ButtonGroup>
-                      );
-                    } else {
-                      setAgreementLineSource('eholdings');
-                      return null;
-                    }
-                  }}
-                </IfEResourcesEnabled>
-              ) : (
-                <IfEResourcesEnabled>
-                  {({ isEnabled }) => {
-                    if (isEnabled) {
-                      setAgreementLineSource('basket');
-                    } else {
-                      setAgreementLineSource('');
-                    }
-
-                    return null;
-                  }}
-                </IfEResourcesEnabled>
-              )
-            )
-          }
+          {renderButtonGroup()}
           <FormEresource {...getSectionProps()} />
           <FormInfo {...getSectionProps()} />
           <AccordionStatus ref={accordionStatusRef}>
