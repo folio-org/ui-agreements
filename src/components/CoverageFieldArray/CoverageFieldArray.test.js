@@ -1,4 +1,3 @@
-import { within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Button, TextField } from '@folio/stripes-testing';
@@ -9,6 +8,7 @@ import { FieldArray } from 'react-final-form-arrays';
 import CoverageFieldArray from './CoverageFieldArray';
 
 import translationsProperties from '../../../test/helpers';
+import { waitFor } from '@testing-library/dom';
 
 const onSubmit = jest.fn();
 const singleCoverage = [
@@ -45,7 +45,7 @@ const doubleCoverage = [
 ];
 
 describe('CoverageFieldArray', () => {
-  test('renders expected fields', () => {
+  test('renders expected fields', async () => {
     const { getByTestId } = renderWithIntl(
       <TestForm
         initialValues={{ coverageFieldArrayTest:singleCoverage }}
@@ -69,12 +69,12 @@ describe('CoverageFieldArray', () => {
     // renders a coverageField component within that
     expect(getByTestId('coverageFieldArray[0]')).toBeInTheDocument();
     // Check all the expected fields render with correct values
-    expect(within(getByTestId('coverageFieldArray[0]')).getByRole('textbox', { name: /start date/i })).toBeInTheDocument();
-    expect(within(getByTestId('coverageFieldArray[0]')).getByRole('textbox', { name: /start volume/i })).toBeInTheDocument();
-    expect(within(getByTestId('coverageFieldArray[0]')).getByRole('textbox', { name: /start issue/i })).toBeInTheDocument();
-    expect(within(getByTestId('coverageFieldArray[0]')).getByRole('textbox', { name: /end date/i })).toBeInTheDocument();
-    expect(within(getByTestId('coverageFieldArray[0]')).getByRole('textbox', { name: /end volume/i })).toBeInTheDocument();
-    expect(within(getByTestId('coverageFieldArray[0]')).getByRole('textbox', { name: /end issue/i })).toBeInTheDocument();
+    await Datepicker({ id: 'cc-start-date-0' }).exists();
+    await TextField({ id: 'cc-start-volume-0' }).exists();
+    await TextField({ id: 'cc-start-issue-0' }).exists();
+    await Datepicker({ id: 'cc-end-date-0' }).exists();
+    await TextField({ id: 'cc-end-volume-0' }).exists();
+    await TextField({ id: 'cc-end-issue-0' }).exists();
   });
 
   test('add coverage/delete coverage buttons work as expected', async () => {
@@ -186,13 +186,17 @@ describe('CoverageFieldArray', () => {
       </TestForm>, translationsProperties
     );
 
-    await Datepicker({ id: 'cc-end-date-0' }).clear();
-    await Datepicker({ id: 'cc-end-date-1' }).clear();
+    await waitFor(async () => {
+      await Datepicker({ id: 'cc-end-date-0' }).clear();
+      await Datepicker({ id: 'cc-end-date-1' }).clear();
+    });
 
     await Datepicker({ id: 'cc-end-date-0' }).has({ errorText: 'Cannot have multiple open-ended coverage statements.' });
 
-    await Datepicker({ id: 'cc-end-date-0' }).fillIn('01/26/2021');
-    await Datepicker({ id: 'cc-end-date-1' }).fillIn('10/05/2007');
+    await waitFor(async () => {
+      await Datepicker({ id: 'cc-end-date-0' }).fillIn('01/26/2021');
+      await Datepicker({ id: 'cc-end-date-1' }).fillIn('10/05/2007');
+    });
 
     await Datepicker({ id: 'cc-end-date-0' }).has({ errorText: undefined });
   });
@@ -216,13 +220,17 @@ describe('CoverageFieldArray', () => {
       </TestForm>, translationsProperties
     );
 
-    await Datepicker({ id: 'cc-end-date-1' }).clear();
-    await Datepicker({ id: 'cc-start-date-1' }).focus();
+    await waitFor(async () => {
+      await Datepicker({ id: 'cc-end-date-1' }).clear();
+      await Datepicker({ id: 'cc-start-date-1' }).focus();
+    });
 
     await Datepicker({ id: 'cc-end-date-0' }).has({ errorText: 'The following coverages have overlapping dates: 1 & 2' });
 
-    await Datepicker({ id: 'cc-end-date-1' }).fillIn('05/10/2007');
-    await Datepicker({ id: 'cc-end-date-1' }).blur();
+    await waitFor(async () => {
+      await Datepicker({ id: 'cc-end-date-1' }).fillIn('05/10/2007');
+      await Datepicker({ id: 'cc-end-date-1' }).blur();
+    });
 
     await Datepicker({ id: 'cc-end-date-0' }).has({ errorText: undefined });
   });

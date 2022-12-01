@@ -25,17 +25,13 @@ describe('AgreementLineForm', () => {
         <AgreementLineForm
           createAnother
           data={{}}
-          form={{
-            change: () => jest.fn(),
-            getRegisteredFields: () => jest.fn(),
-            getState: () => jest.fn()
-          }}
           handlers={{
             onClose: onCloseMock,
             isSuppressFromDiscoveryEnabled: isSuppressFromDiscoveryEnabledMock
           }}
           isEholdingsEnabled
           onSubmit={onSubmitMock}
+          toggleCreateAnother={jest.fn()}
         />
       </MemoryRouter>,
       translationsProperties

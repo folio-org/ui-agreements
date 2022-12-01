@@ -24,16 +24,12 @@ describe('AgreementLineForm', () => {
         <MemoryRouter>
           <AgreementLineForm
             data={{}}
-            form={{
-              change: () => jest.fn(),
-              getRegisteredFields: () => jest.fn(),
-              getState: () => jest.fn()
-            }}
             handlers={{
               onClose: onCloseMock,
               isSuppressFromDiscoveryEnabled: isSuppressFromDiscoveryEnabledMock
             }}
             onSubmit={onSubmitMock}
+            toggleCreateAnother={jest.fn()}
           />
         </MemoryRouter>,
         translationsProperties

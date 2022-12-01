@@ -77,13 +77,16 @@ export default class LicenseAmendmentList extends React.Component {
                 text={this.renderStatusMismatchWarnings(a)}
               >
                 {({ ref, ariaIds }) => (
-                  <Icon
-                    ref={ref}
+                  <div
+                    ref={ref} /* can't pass ref directly to Icon without issues */
                     aria-labelledby={ariaIds.text}
-                    icon="exclamation-circle"
-                    iconClassName={css.tooltipIcon}
-                    tabIndex="0"
-                  />
+                  >
+                    <Icon
+                      icon="exclamation-circle"
+                      iconClassName={css.tooltipIcon}
+                      tabIndex="0"
+                    />
+                  </div>
                 )}
               </Tooltip> : ''
           ),
