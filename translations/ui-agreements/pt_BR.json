@@ -743,5 +743,8 @@
     "settings.fileStorage.s3BucketRegion": "Região do bucket S3",
     "agreementLines.newLine": "Nova linha de contrato",
     "agreementLines.viewInSearch": "Ver linhas de contrato na busca",
-    "agreements.exportingAgreement": "<strong> Contrato de exportação: </strong> O arquivo JSON será baixado em seu navegador quando concluído. Se o contrato tiver um grande número de títulos, isso pode levar algum tempo."
+    "agreements.exportingAgreement": "<strong> Contrato de exportação: </strong> O arquivo JSON será baixado em seu navegador quando concluído. Se o contrato tiver um grande número de títulos, isso pode levar algum tempo.",
+    "packages": "Packages",
+    "permission.packages.view": "Agreements: Search & view packages",
+    "packages.source": "Source (external data source)"
 }
