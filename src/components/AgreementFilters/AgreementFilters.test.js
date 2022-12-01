@@ -36,6 +36,10 @@ describe('AgreementFilters', () => {
     await Accordion('Status').exists();
   });
 
+  test('renders the Status Accordion', async () => {
+    await Accordion('Reason for closure').exists();
+  });
+
   test('renders the Renewal priority Accordion', async () => {
     await Accordion('Renewal priority').exists();
   });
