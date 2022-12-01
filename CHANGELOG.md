@@ -1,4 +1,8 @@
 # Change history for ui-agreements
+
+## 8.3.2 2022-12-01
+* ERM-2489 Reduce number of eresources retrieved to 25 rather than 100
+
 ## 8.3.1 2022-11-18
 * ERM-2465 Is Perpetual dropdown not populated in Agreement create/edit form
 * ERM-2434 "customProperties.ctx.title": "" in en.json

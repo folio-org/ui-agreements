@@ -15,7 +15,7 @@ import { resultCount } from '../../constants';
 import { ERESOURCES_ELECTRONIC_ENDPOINT } from '../../constants/endpoints';
 import { useAgreementsRefdata } from '../../hooks';
 
-const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT;
+const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT_MEDIUM;
 
 const [
   AVAILABILITY_CONSTRAINT,
