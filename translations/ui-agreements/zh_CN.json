@@ -285,7 +285,7 @@
     "duplicateAgreementModal.organizations": "组织",
     "duplicateAgreementModal.usageData": "使用数据",
     "close": "关闭",
-    "agreements.export": "导出",
+    "agreements.export": "导出协议 (JSON)",
     "agreements.view": "查看",
     "eresourcesCovered.exportButton.tooltip": "仅支持当前或所有资源导出",
     "license.unsetAmendments": "未分配的修订",
@@ -740,8 +740,11 @@
     "settings.supplementaryProperties": "补充属性",
     "settings.supplementaryPropertyPickList": "补充属性选取清单设置",
     "settings.pickListSelect": "选择选取清单",
-    "settings.fileStorage.s3BucketRegion": "S3 bucket region",
-    "agreementLines.newLine": "New agreement line",
-    "agreementLines.viewInSearch": "View in agreement lines search",
-    "agreements.exportingAgreement": "<strong>Exporting agreement:</strong> The JSON file will download to your browser when complete. If the agreement has a large number of titles this may take some time."
+    "settings.fileStorage.s3BucketRegion": "S3存储桶区域",
+    "agreementLines.newLine": "新建协议行",
+    "agreementLines.viewInSearch": "在协议行搜索中查看",
+    "agreements.exportingAgreement": "<strong>导出协议： </strong> JSON 文件将在完成后下载到您的浏览器。如果协议包含大量标题，可能需要一些时间。",
+    "packages": "Packages",
+    "permission.packages.view": "Agreements: Search & view packages",
+    "packages.source": "Source (external data source)"
 }
