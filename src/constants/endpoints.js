@@ -23,6 +23,7 @@ export const ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT = (eresourceId) => `${ERESOU
 export const PCIS_ENDPOINT = 'erm/pci';
 export const PCI_ENDPOINT = (pciId) => `erm/pci/${pciId}`;
 export const TITLES_ENDPOINT = 'erm/titles';
+export const TITLES_ELECTRONIC_ENDPOINT = `${TITLES_ENDPOINT}/electronic`;
 export const TITLE_ENDPOINT = (tiId) => `erm/titles/${tiId}`;
 
 export const PACKAGES_ENDPOINT = 'erm/packages';
