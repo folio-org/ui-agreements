@@ -10,7 +10,7 @@ import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 import { resultCount } from '../../constants';
 
-import { TITLES_ENDPOINT } from '../../constants/endpoints';
+import { TITLES_ELECTRONIC_ENDPOINT } from '../../constants/endpoints';
 import { useAgreementsRefdata } from '../../hooks';
 
 const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT_MEDIUM;
@@ -59,12 +59,6 @@ const TitlesRoute = ({
         publicationType: 'publicationType.value',
         type: 'type.value'
       },
-      filters: [
-        {
-          path: 'subType.value',
-          value: 'electronic'
-        }
-      ],
       perPage: RESULT_COUNT_INCREMENT
     }, (query ?? {}))
   ), [query]);
@@ -81,10 +75,10 @@ const TitlesRoute = ({
     results: titles = [],
     total: titlesCount = 0
   } = useInfiniteFetch(
-    ['ERM', 'Titles', titlesQueryParams, TITLES_ENDPOINT],
+    ['ERM', 'Titles', titlesQueryParams, TITLES_ELECTRONIC_ENDPOINT],
     ({ pageParam = 0 }) => {
       const params = [...titlesQueryParams, `offset=${pageParam}`];
-      return ky.get(`${TITLES_ENDPOINT}?${params?.join('&')}`).json();
+      return ky.get(`${TITLES_ELECTRONIC_ENDPOINT}?${params?.join('&')}`).json();
     },
     {
       enabled: !!query?.filters || !!query?.query
