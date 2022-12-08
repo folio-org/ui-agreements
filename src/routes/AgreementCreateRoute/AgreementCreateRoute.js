@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { useMutation, useQueryClient } from 'react-query';
 
 import { LoadingView } from '@folio/stripes/components';
-import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 
 import { splitRelatedAgreements } from '../utilities/processRelatedAgreements';
@@ -13,7 +13,7 @@ import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 import { AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
-import { useAddFromBasket, useAgreementsRefdata } from '../../hooks';
+import { useAddFromBasket, useAgreementsRefdata, useBasket } from '../../hooks';
 
 const [
   AGREEMENT_STATUS,
@@ -43,18 +43,19 @@ const AgreementCreateRoute = ({
   handlers = {},
   history,
   location,
-  resources
 }) => {
   const callout = useContext(CalloutContext);
   const stripes = useStripes();
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
 
+  const { basket = [] } = useBasket();
+
   const {
     handleBasketLinesAdded,
     isExternalEntitlementLoading,
     getAgreementLinesToAdd
-  } = useAddFromBasket(resources?.basket);
+  } = useAddFromBasket(basket);
 
   const refdata = useAgreementsRefdata({
     desc: [
@@ -103,7 +104,7 @@ const AgreementCreateRoute = ({
   };
 
   const fetchIsPending = () => {
-    return resources?.basket?.isPending || isExternalEntitlementLoading;
+    return isExternalEntitlementLoading;
   };
 
   const getInitialValues = () => {
@@ -125,7 +126,7 @@ const AgreementCreateRoute = ({
         agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
         reasonForClosureValues: getRefdataValuesByDesc(refdata, REASON_FOR_CLOSURE),
         amendmentStatusValues: getRefdataValuesByDesc(refdata, AMENDMENT_STATUS),
-        basket: (resources?.basket ?? []),
+        basket,
         contactRoleValues: getRefdataValuesByDesc(refdata, CONTACT_ROLE),
         documentCategories: getRefdataValuesByDesc(refdata, DOC_ATTACHMENT_TYPE),
         isPerpetualValues: getRefdataValuesByDesc(refdata, GLOBAL_YES_NO),
@@ -146,11 +147,6 @@ const AgreementCreateRoute = ({
   );
 };
 
-AgreementCreateRoute.manifest = Object.freeze({
-  // TODO we don't want to be using this, see https://issues.folio.org/browse/ERM-2183
-  basket: { initialValue: [] },
-});
-
 AgreementCreateRoute.propTypes = {
   handlers: PropTypes.object,
   history: PropTypes.shape({
@@ -160,13 +156,6 @@ AgreementCreateRoute.propTypes = {
     search: PropTypes.string.isRequired,
     pathname: PropTypes.string.isRequired
   }).isRequired,
-  resources: PropTypes.shape({
-    basket: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
-  stripes: PropTypes.shape({
-    hasPerm: PropTypes.func.isRequired,
-    okapi: PropTypes.object.isRequired,
-  }).isRequired,
 };
 
-export default stripesConnect(AgreementCreateRoute);
+export default AgreementCreateRoute;

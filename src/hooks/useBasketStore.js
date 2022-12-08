@@ -6,7 +6,7 @@ import { persist } from 'zustand/middleware';
 
 const useBasketStore = create(
   /* persist( */
-  (set, get) => ({
+  (set) => ({
     basketStore: {},
     addToBasket: (item) => set((state) => {
       if (state.basketStore[item.id] || !item.id) {
