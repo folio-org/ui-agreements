@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { useQuery } from 'react-query';
 
-import { stripesConnect, useOkapiKy } from '@folio/stripes/core';
+import { useOkapiKy } from '@folio/stripes/core';
 
 import { useInfiniteFetch, useBatchedFetch } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
@@ -246,4 +246,4 @@ EResourceViewRoute.propTypes = {
 };
 
 
-export default stripesConnect(EResourceViewRoute);
+export default EResourceViewRoute;

@@ -43,7 +43,8 @@ const AddToBasketButton = ({
 
   const coverage = JSON.stringify(get(item, '_object.coverage[0]', {}));
 
-  const onClick = useCallback(() => {
+  const onClick = useCallback((e) => {
+    e.stopPropagation();
     if (itemExistsInBasket) {
       removeFromBasket(item);
     } else {
