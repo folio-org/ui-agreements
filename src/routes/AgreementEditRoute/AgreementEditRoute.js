@@ -250,7 +250,6 @@ const AgreementEditRoute = ({
         isPerpetualValues: getRefdataValuesByDesc(refdata, GLOBAL_YES_NO),
         licenseLinkStatusValues: getRefdataValuesByDesc(refdata, REMOTE_LICENSE_LINK_STATUS),
         orderLines,
-        acquisitionMethod: resources?.acquisitionMethod?.records ?? [],
         orgRoleValues: getRefdataValuesByDesc(refdata, ORG_ROLE),
         renewalPriorityValues: getRefdataValuesByDesc(refdata, RENEWAL_PRIORITY),
         users,
@@ -270,14 +269,6 @@ const AgreementEditRoute = ({
 export default stripesConnect(AgreementEditRoute);
 
 AgreementEditRoute.manifest = Object.freeze({
-  acquisitionMethod: {
-    type: 'okapi',
-    path: 'orders/acquisition-methods',
-    accumulate: true,
-    fetch: false,
-    perRequest: 1000,
-    records: 'acquisitionMethods',
-  },
   // TODO we don't want to be using this, see https://issues.folio.org/browse/ERM-2183
   basket: { initialValue: [] },
 });
@@ -295,17 +286,8 @@ AgreementEditRoute.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  mutator: PropTypes.shape({
-    acquisitionMethod: PropTypes.shape({
-      GET: PropTypes.func.isRequired,
-      reset: PropTypes.func.isRequired,
-    }),
-  }).isRequired,
   resources: PropTypes.shape({
     basket: PropTypes.arrayOf(PropTypes.object),
-    acquisitionMethod: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
   }).isRequired,
   stripes: PropTypes.shape({
     hasPerm: PropTypes.func.isRequired,
