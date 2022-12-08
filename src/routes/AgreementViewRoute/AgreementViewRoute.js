@@ -7,7 +7,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { get, flatten, uniqBy } from 'lodash';
 
 import { CalloutContext, stripesConnect, useOkapiKy } from '@folio/stripes/core';
-import { useAgreement, useInfiniteFetch, useUsers } from '@folio/stripes-erm-components';
+import { useAgreement, useInfiniteFetch, useUsers, downloadBlob } from '@folio/stripes-erm-components';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
@@ -162,18 +162,6 @@ const AgreementViewRoute = ({
     }).catch(error => {
       throw error;
     })
-  );
-
-  const downloadBlob = (name) => (
-    blob => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = name;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    }
   );
 
   const { refetch: exportAgreement } = useQuery(
