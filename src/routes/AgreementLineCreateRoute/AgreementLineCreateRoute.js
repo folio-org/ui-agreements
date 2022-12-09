@@ -6,25 +6,26 @@ import { useMutation, useQueryClient } from 'react-query';
 
 import { isEmpty } from 'lodash';
 
-import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { isPackage } from '@folio/stripes-erm-components';
 
 import View from '../../components/views/AgreementLineForm';
 import { urls } from '../../components/utilities';
 import { AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
-import { useSuppressFromDiscovery } from '../../hooks';
+import { useBasket, useSuppressFromDiscovery } from '../../hooks';
 
 const AgreementLineCreateRoute = ({
   handlers,
   history,
   location,
   match: { params: { agreementId } },
-  resources
 }) => {
   const callout = useContext(CalloutContext);
   const ky = useOkapiKy();
   const stripes = useStripes();
   const queryClient = useQueryClient();
+
+  const { basket = [] } = useBasket();
 
   /*
  * This state tracks a checkbox on the form marked "Create another",
@@ -94,7 +95,7 @@ const AgreementLineCreateRoute = ({
       key="agreement-line-create-form"
       createAnother={createAnother}
       data={{
-        basket: (resources?.basket ?? []),
+        basket,
       }}
       handlers={{
         ...handlers,
@@ -107,10 +108,6 @@ const AgreementLineCreateRoute = ({
     />
   );
 };
-
-AgreementLineCreateRoute.manifest = Object.freeze({
-  basket: { initialValue: [] },
-});
 
 AgreementLineCreateRoute.propTypes = {
   handlers: PropTypes.object,
@@ -134,4 +131,4 @@ AgreementLineCreateRoute.propTypes = {
   }).isRequired,
 };
 
-export default stripesConnect(AgreementLineCreateRoute);
+export default AgreementLineCreateRoute;

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import { getRefdataValuesByDesc, useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
 
 import { generateKiwtQueryParams, useKiwtSASQuery, useQIndex } from '@k-int/stripes-kint-components';
@@ -161,8 +161,4 @@ AgreementsRoute.propTypes = {
   }),
 };
 
-AgreementsRoute.manifest = Object.freeze({
-  basket: { initialValue: [] },
-});
-
-export default stripesConnect(AgreementsRoute);
+export default AgreementsRoute;

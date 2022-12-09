@@ -7,3 +7,5 @@ export { default as useSuppressFromDiscovery } from './useSuppressFromDiscovery'
 export { default as useAddFromBasket } from './useAddFromBasket';
 export { default as useAgreementsRefdata } from './useAgreementsRefdata';
 export { default as useEresourcesEnabled } from './useEresourcesEnabled';
+export { default as useBasket } from './useBasket';
+export { default as useBasketStore } from './useBasketStore';

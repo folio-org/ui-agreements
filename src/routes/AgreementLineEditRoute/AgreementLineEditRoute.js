@@ -1,16 +1,19 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 
+import { FormattedMessage } from 'react-intl';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import { isEmpty } from 'lodash';
+
+import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
-import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
-import View from '../../components/views/AgreementLineForm';
-import { useSuppressFromDiscovery, useChunkedOrderLines } from '../../hooks';
+
+import { useSuppressFromDiscovery, useChunkedOrderLines, useBasket } from '../../hooks';
 import { urls } from '../../components/utilities';
 import { endpoints } from '../../constants';
+
+import View from '../../components/views/AgreementLineForm';
 
 const { AGREEMENT_LINE_ENDPOINT } = endpoints;
 
@@ -19,12 +22,13 @@ const AgreementLineEditRoute = ({
   history,
   location,
   match: { params: { agreementId, lineId } },
-  resources
 }) => {
   const ky = useOkapiKy();
   const callout = useContext(CalloutContext);
   const stripes = useStripes();
   const queryClient = useQueryClient();
+
+  const { basket = [] } = useBasket();
 
   /*
  * This state tracks a checkbox on the form marked "Create another",
@@ -129,7 +133,7 @@ const AgreementLineEditRoute = ({
       key={`agreement-line-edit-pane-${lineId}`}
       createAnother={createAnother}
       data={{
-        basket: (resources?.basket ?? []),
+        basket,
         line: getCompositeLine(),
       }}
       handlers={{
@@ -147,10 +151,6 @@ const AgreementLineEditRoute = ({
   );
 };
 
-AgreementLineEditRoute.manifest = Object.freeze({
-  basket: { initialValue: [] },
-});
-
 AgreementLineEditRoute.propTypes = {
   handlers: PropTypes.object,
   history: PropTypes.shape({
@@ -166,13 +166,6 @@ AgreementLineEditRoute.propTypes = {
       lineId: PropTypes.string.isRequired,
     }).isRequired
   }).isRequired,
-  resources: PropTypes.shape({
-    basket: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
-  stripes: PropTypes.shape({
-    hasInterface: PropTypes.func.isRequired,
-    hasPerm: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
-export default stripesConnect(AgreementLineEditRoute);
+export default AgreementLineEditRoute;

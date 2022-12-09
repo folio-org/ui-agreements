@@ -5,10 +5,10 @@ import { Button, TextField } from '@folio/stripes-testing';
 import { DatepickerInteractor as Datepicker, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import { FieldArray } from 'react-final-form-arrays';
 
+import { waitFor } from '@testing-library/dom';
 import CoverageFieldArray from './CoverageFieldArray';
 
 import translationsProperties from '../../../test/helpers';
-import { waitFor } from '@testing-library/dom';
 
 const onSubmit = jest.fn();
 const singleCoverage = [

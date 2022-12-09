@@ -7,7 +7,15 @@ import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
 import BasketRoute from './BasketRoute';
-import resources from './testResources';
+
+const mockRemoveFromBasket = jest.fn();
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useBasket: () => ({
+    basket: [],
+    removeFromBasket: mockRemoveFromBasket
+  })
+}));
 
 const AddToExistingAgreementButton = (props) => {
   return <Button onClick={props.handlers.onAddToExistingAgreement}>AddToExistingAgreementButton</Button>;
@@ -64,20 +72,12 @@ jest.mock('../../components/views/Basket', () => {
 // mock callbacks
 const historyPushMock = jest.fn();
 const historyGoBackMock = jest.fn();
-const mutatorBasketReplace = jest.fn();
 
 const basketRouteProps = {
   history: {
     push: historyPushMock,
     goBack: historyGoBackMock,
   },
-  mutator: {
-    basket: {
-      replace: mutatorBasketReplace,
-    },
-    openAgreements: {},
-  },
-  resources: { resources }
 };
 
 describe('BasketRoute', () => {
@@ -134,7 +134,7 @@ describe('BasketRoute', () => {
 
     test('calls the RemoveBasketItemButton', async () => {
       await ButtonInteractor('RemoveBasketItemButton').click();
-      expect(mutatorBasketReplace).toHaveBeenCalled();
+      expect(mockRemoveFromBasket).toHaveBeenCalled();
     });
   });
 });
