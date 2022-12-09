@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { useHistory, useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
 import { Button } from '@folio/stripes/components';
