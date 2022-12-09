@@ -10,19 +10,8 @@ import { Button } from '@folio/stripes/components';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
 import {
   agreement,
-  agreementLines,
-  agreementEresources,
-  eresourcesFilterPath,
-  interfaces,
-  orderLines,
-  query,
-  settings,
-  users,
-  tagsEnabled,
   location,
-  handlers,
   match,
-  intl
 } from './testResources';
 import translationsProperties from '../../../test/helpers';
 import AgreementViewRoute from './AgreementViewRoute';
@@ -37,10 +26,6 @@ const NeedMoreLinesButton = (props) => {
 
 const FilterEResourceButton = (props) => {
   return <Button onClick={props.handlers.onFilterEResources}>FilterEResourceButton</Button>;
-};
-
-const FetchCredentialsButton = (props) => {
-  return <Button onClick={props.handlers.onFetchCredentials}>FetchCredentialsButton</Button>;
 };
 
 const EditButton = (props) => {
@@ -89,12 +74,6 @@ FilterEResourceButton.propTypes = {
   }),
 };
 
-FetchCredentialsButton.propTypes = {
-  handlers: PropTypes.shape({
-    onFetchCredentials: PropTypes.func,
-  }),
-};
-
 EditButton.propTypes = {
   handlers: PropTypes.shape({
     onEdit: PropTypes.func,
@@ -138,7 +117,6 @@ CloneButton.propTypes = {
 };
 
 const historyPushMock = jest.fn();
-const mutatorFetchReplaceMock = jest.fn();
 
 jest.mock('@folio/stripes-erm-components', () => ({
   ...jest.requireActual('@folio/stripes-erm-components'),
@@ -152,7 +130,6 @@ jest.mock('../../components/views/Agreement', () => {
       <AgreementLineButton {...props} />
       <NeedMoreLinesButton {...props} />
       <FilterEResourceButton {...props} />
-      <FetchCredentialsButton {...props} />
       <EditButton {...props} />
       <NeedMoreEResourcesButton {...props} />
       <ToggleTagsButton {...props} />
@@ -165,30 +142,11 @@ jest.mock('../../components/views/Agreement', () => {
 });
 
 const data = {
-  handlers,
   history:{
     push: historyPushMock,
   },
-  intl,
   location,
   match,
-  mutator:{
-    interfaceRecord:{
-      replace: mutatorFetchReplaceMock,
-    },
-  },
-  resources: {
-    agreement,
-    agreementLines,
-    agreementEresources,
-    eresourcesFilterPath,
-    interfaces,
-    orderLines,
-    query,
-    settings,
-    users,
-  },
-  tagsEnabled
 };
 
 useQuery.mockImplementation(() => ({ data: agreement, isLoading: false }));
@@ -228,11 +186,6 @@ describe('AgreementViewRoute', () => {
     test('triggers the EditButton callback', async () => {
       await ButtonInteractor('EditButton').click();
       expect(historyPushMock).toHaveBeenCalled();
-    });
-
-    test('triggers the FetchCredentialsButton callback', async () => {
-      await ButtonInteractor('FetchCredentialsButton').click();
-      expect(mutatorFetchReplaceMock).toHaveBeenCalled();
     });
 
     test('triggers the CloseButton callback', async () => {
