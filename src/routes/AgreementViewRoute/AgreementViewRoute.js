@@ -6,8 +6,8 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { flatten } from 'lodash';
 
+import { useAgreement, useInfiniteFetch, useInterfaces, useUsers, downloadBlob } from '@folio/stripes-erm-components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
-import { useAgreement, useInfiniteFetch, useInterfaces, useUsers } from '@folio/stripes-erm-components';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
@@ -164,21 +164,9 @@ const AgreementViewRoute = ({
     })
   );
 
-  const downloadBlob = (name) => (
-    blob => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = name;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    }
-  );
-
   const { refetch: exportAgreement } = useQuery(
     [`${agreementPath}/export/current`, 'ui-agreements', 'AgreementViewRoute', 'exportAgreement'],
-    () => ky.get(`${agreementPath}/export/current`).blob().then(downloadBlob(agreement.name))
+    () => ky.get(`${agreementPath}/export/current`).blob().then(downloadBlob(agreement.name, { fileExt: 'json' }))
       .then(callout.sendCallout({ type: 'success', message: <FormattedMessage id="ui-agreements.agreements.exportingAgreement" /> })),
     {
       enabled: false
@@ -187,7 +175,7 @@ const AgreementViewRoute = ({
 
   const { refetch: exportEresourcesAsJson } = useQuery(
     [`${agreementPath}/resources/export/${eresourcesFilterPath}`, 'ui-agreements', 'AgreementViewRoute', 'exportEresourcesJson'],
-    () => ky.get(`${agreementPath}/resources/export/${eresourcesFilterPath}`).blob().then(downloadBlob(agreement.name)),
+    () => ky.get(`${agreementPath}/resources/export/${eresourcesFilterPath}`).blob().then(downloadBlob(agreement.name, { fileExt: 'json' })),
     {
       enabled: false
     }
@@ -195,7 +183,7 @@ const AgreementViewRoute = ({
 
   const { refetch: exportEresourcesAsKBART } = useQuery(
     [`${agreementPath}/resources/export/${eresourcesFilterPath}/kbart`, 'ui-agreements', 'AgreementViewRoute', 'exportEresourcesKbart'],
-    () => ky.get(`${agreementPath}/resources/export/${eresourcesFilterPath}/kbart`).blob().then(downloadBlob(agreement.name)),
+    () => ky.get(`${agreementPath}/resources/export/${eresourcesFilterPath}/kbart`).blob().then(downloadBlob(agreement.name, { fileExt: 'txt' })),
     {
       enabled: false
     }
