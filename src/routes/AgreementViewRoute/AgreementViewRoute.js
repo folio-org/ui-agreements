@@ -166,7 +166,7 @@ const AgreementViewRoute = ({
 
   const { refetch: exportAgreement } = useQuery(
     [`${agreementPath}/export/current`, 'ui-agreements', 'AgreementViewRoute', 'exportAgreement'],
-    () => ky.get(`${agreementPath}/export/current`).blob().then(downloadBlob(agreement.name))
+    () => ky.get(`${agreementPath}/export/current`).blob().then(downloadBlob(agreement.name, { fileExt: 'json' }))
       .then(callout.sendCallout({ type: 'success', message: <FormattedMessage id="ui-agreements.agreements.exportingAgreement" /> })),
     {
       enabled: false
@@ -175,7 +175,7 @@ const AgreementViewRoute = ({
 
   const { refetch: exportEresourcesAsJson } = useQuery(
     [`${agreementPath}/resources/export/${eresourcesFilterPath}`, 'ui-agreements', 'AgreementViewRoute', 'exportEresourcesJson'],
-    () => ky.get(`${agreementPath}/resources/export/${eresourcesFilterPath}`).blob().then(downloadBlob(agreement.name)),
+    () => ky.get(`${agreementPath}/resources/export/${eresourcesFilterPath}`).blob().then(downloadBlob(agreement.name, { fileExt: 'json' })),
     {
       enabled: false
     }
@@ -183,7 +183,7 @@ const AgreementViewRoute = ({
 
   const { refetch: exportEresourcesAsKBART } = useQuery(
     [`${agreementPath}/resources/export/${eresourcesFilterPath}/kbart`, 'ui-agreements', 'AgreementViewRoute', 'exportEresourcesKbart'],
-    () => ky.get(`${agreementPath}/resources/export/${eresourcesFilterPath}/kbart`).blob().then(downloadBlob(agreement.name)),
+    () => ky.get(`${agreementPath}/resources/export/${eresourcesFilterPath}/kbart`).blob().then(downloadBlob(agreement.name, { fileExt: 'txt' })),
     {
       enabled: false
     }
