@@ -7,7 +7,7 @@ import { cloneDeep } from 'lodash';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import { LoadingView } from '@folio/stripes/components';
-import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { getRefdataValuesByDesc, useBatchedFetch, useUsers } from '@folio/stripes-erm-components';
 
 import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/processRelatedAgreements';
@@ -15,7 +15,7 @@ import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 import { endpoints } from '../../constants';
-import { useAddFromBasket, useAgreementsRefdata, useChunkedOrderLines } from '../../hooks';
+import { useAddFromBasket, useAgreementsRefdata, useBasket, useChunkedOrderLines } from '../../hooks';
 
 const { AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT } = endpoints;
 
@@ -48,7 +48,6 @@ const AgreementEditRoute = ({
   history,
   location,
   match: { params: { id: agreementId } },
-  resources
 }) => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
@@ -56,10 +55,12 @@ const AgreementEditRoute = ({
   const callout = useContext(CalloutContext);
   const stripes = useStripes();
 
+  const { basket = [] } = useBasket();
+
   const {
     handleBasketLinesAdded,
     getAgreementLinesToAdd
-  } = useAddFromBasket(resources?.basket);
+  } = useAddFromBasket(basket);
 
   const refdata = useAgreementsRefdata({
     desc: [
@@ -244,13 +245,12 @@ const AgreementEditRoute = ({
         agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
         reasonForClosureValues: getRefdataValuesByDesc(refdata, REASON_FOR_CLOSURE),
         amendmentStatusValues: getRefdataValuesByDesc(refdata, AMENDMENT_STATUS),
-        basket: resources?.basket ?? [],
+        basket,
         contactRoleValues: getRefdataValuesByDesc(refdata, CONTACT_ROLE),
         documentCategories: getRefdataValuesByDesc(refdata, DOC_ATTACHMENT_TYPE),
         isPerpetualValues: getRefdataValuesByDesc(refdata, GLOBAL_YES_NO),
         licenseLinkStatusValues: getRefdataValuesByDesc(refdata, REMOTE_LICENSE_LINK_STATUS),
         orderLines,
-        acquisitionMethod: resources?.acquisitionMethod?.records ?? [],
         orgRoleValues: getRefdataValuesByDesc(refdata, ORG_ROLE),
         renewalPriorityValues: getRefdataValuesByDesc(refdata, RENEWAL_PRIORITY),
         users,
@@ -267,20 +267,7 @@ const AgreementEditRoute = ({
   );
 };
 
-export default stripesConnect(AgreementEditRoute);
-
-AgreementEditRoute.manifest = Object.freeze({
-  acquisitionMethod: {
-    type: 'okapi',
-    path: 'orders/acquisition-methods',
-    accumulate: true,
-    fetch: false,
-    perRequest: 1000,
-    records: 'acquisitionMethods',
-  },
-  // TODO we don't want to be using this, see https://issues.folio.org/browse/ERM-2183
-  basket: { initialValue: [] },
-});
+export default AgreementEditRoute;
 
 AgreementEditRoute.propTypes = {
   handlers: PropTypes.object,
@@ -294,20 +281,5 @@ AgreementEditRoute.propTypes = {
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
     }).isRequired,
-  }).isRequired,
-  mutator: PropTypes.shape({
-    acquisitionMethod: PropTypes.shape({
-      GET: PropTypes.func.isRequired,
-      reset: PropTypes.func.isRequired,
-    }),
-  }).isRequired,
-  resources: PropTypes.shape({
-    basket: PropTypes.arrayOf(PropTypes.object),
-    acquisitionMethod: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-  }).isRequired,
-  stripes: PropTypes.shape({
-    hasPerm: PropTypes.func.isRequired,
   }).isRequired,
 };

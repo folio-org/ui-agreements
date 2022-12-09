@@ -1,57 +1,49 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+
+import { useHistory, useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
-import { stripesConnect } from '@folio/stripes/core';
 import { Button } from '@folio/stripes/components';
 
 import { urls } from '../utilities';
 import css from './OpenBasketButton.css';
+import { useBasket } from '../../hooks';
 
-class OpenBasketButton extends React.Component {
-  static manifest = Object.freeze({
-    basket: {
-      initialValue: [],
-    },
-    query: {},
-  });
+const OpenBasketButton = () => {
+  const history = useHistory();
+  const location = useLocation();
+  const handleClick = () => {
+    history.push(`${urls.basket()}${location.search}`);
+  };
 
-  static propTypes = {
-    mutator: PropTypes.shape({
-      basket: PropTypes.object,
-      query: PropTypes.object,
-    }),
-    resources: PropTypes.shape({
-      basket: PropTypes.arrayOf(PropTypes.object),
-    }),
-  }
+  const { basket } = useBasket();
 
-  handleClick = () => {
-    this.props.mutator.query.update({
-      _path: urls.basket(),
-    });
-  }
+  return (
+    <Button
+      buttonClass={css.button}
+      buttonStyle="primary"
+      data-test-basket-size={basket.length}
+      data-test-open-basket-button
+      disabled={basket.length === 0}
+      id="open-basket-button"
+      onClick={handleClick}
+    >
+      <FormattedMessage
+        id="ui-agreements.basketButton"
+        values={{ count: basket.length }}
+      />
+    </Button>
+  );
+};
 
-  render() {
-    const basket = this.props.resources.basket || [];
+OpenBasketButton.propTypes = {
+  mutator: PropTypes.shape({
+    basket: PropTypes.object,
+    query: PropTypes.object,
+  }),
+  resources: PropTypes.shape({
+    basket: PropTypes.arrayOf(PropTypes.object),
+  }),
+};
 
-    return (
-      <Button
-        buttonClass={css.button}
-        buttonStyle="primary"
-        data-test-basket-size={basket.length}
-        data-test-open-basket-button
-        disabled={basket.length === 0}
-        id="open-basket-button"
-        onClick={this.handleClick}
-      >
-        <FormattedMessage
-          id="ui-agreements.basketButton"
-          values={{ count: basket.length }}
-        />
-      </Button>
-    );
-  }
-}
-
-export default stripesConnect(OpenBasketButton);
+export default OpenBasketButton;
