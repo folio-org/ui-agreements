@@ -155,10 +155,6 @@ const agreement = {
   ]
 };
 
-const handlers = {
-  onFetchCredentials: () => { }
-};
-
 let renderComponent;
 
 describe('Organizations', () => {
@@ -167,7 +163,6 @@ describe('Organizations', () => {
       renderComponent = renderWithIntl(
         <Organizations
           agreement={agreement}
-          handlers={handlers}
           id="organizations"
         />,
         translationsProperties
@@ -189,7 +184,6 @@ describe('Organizations', () => {
       renderComponent = renderWithIntl(
         <Organizations
           agreement={{}}
-          handlers={handlers}
           id="organizations"
         />,
         translationsProperties
