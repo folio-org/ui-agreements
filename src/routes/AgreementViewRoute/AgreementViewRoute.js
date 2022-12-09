@@ -7,7 +7,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { get, flatten, uniqBy } from 'lodash';
 
 import { CalloutContext, stripesConnect, useOkapiKy } from '@folio/stripes/core';
-import { useAgreement, useInfiniteFetch, useUsers } from '@folio/stripes-erm-components';
+import { useAgreement, useInfiniteFetch, useInterfaceCredentials, useInterfaces, useUsers } from '@folio/stripes-erm-components';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
@@ -51,6 +51,13 @@ const AgreementViewRoute = ({
   const agreementEresourcesPath = AGREEMENT_ERESOURCES_ENDPOINT(agreementId, eresourcesFilterPath);
 
   const { agreement, isAgreementLoading } = useAgreement({ agreementId });
+
+
+  const interfaces = useInterfaces({
+    interfaceIds: flatten((agreement?.orgs ?? []).map(o => o?.org?.orgsUuid_object?.interfaces ?? []))
+  }) ?? [];
+
+  console.log("INTERFACES DATA: %o", interfaces);
 
   const { mutateAsync: deleteAgreement } = useMutation(
     [agreementPath, 'ui-agreements', 'AgreementViewRoute', 'deleteAgreement'],
@@ -201,11 +208,6 @@ const AgreementViewRoute = ({
     }
   );
 
-  const getRecord = (id, resourceType) => {
-    return get(resources, `${resourceType}.records`, [])
-      .find(i => i.id === id);
-  };
-
   const getCompositeAgreement = () => {
     const contacts = agreement.contacts.map(c => ({
       ...c,
@@ -223,9 +225,9 @@ const AgreementViewRoute = ({
 
     const orgs = agreement.orgs.map(o => ({
       ...o,
-      interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
+      interfaces: (o?.org?.orgsUuid_object?.interfaces ?? [])
         .map(id => ({
-          ...getRecord(id, 'interfaces') || {},
+          ...(interfaces?.find(int => int?.id === id) ?? {}),
           credentials: credentialsArray.find(cred => cred.interfaceId === id)
         })),
     }));
@@ -283,6 +285,7 @@ const AgreementViewRoute = ({
   };
 
   const handleFetchCredentials = (id) => {
+    //setInterfaceId(id);
     mutator.interfaceRecord.replace({ id });
   };
 
