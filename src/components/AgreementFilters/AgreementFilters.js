@@ -279,6 +279,15 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
     />;
   };
 
+  const renderCancellationDeadlineFilter = () => {
+    return <DateFilter
+      activeFilters={activeFilters}
+      filterHandlers={filterHandlers}
+      name="cancellationDeadline"
+      resourceName={intl.formatMessage({ id: 'ui-agreements.agreements' }).toLowerCase()}
+    />;
+  };
+
   return (
     <AccordionSet>
       {renderCheckboxFilter('agreementStatus')}
@@ -287,6 +296,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       {renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
       {renderStartDateFilter()}
       {renderEndDateFilter()}
+      {renderCancellationDeadlineFilter()}
       {renderOrganizationFilter()}
       {renderOrganizationRoleFilter()}
       {renderInternalContactFilter()}

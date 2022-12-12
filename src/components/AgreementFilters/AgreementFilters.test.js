@@ -48,9 +48,9 @@ describe('AgreementFilters', () => {
     await Accordion('Is perpetual').exists();
   });
 
-  test('renders two DateFilter components', () => {
+  test('renders three DateFilter components', () => {
     const { getAllByText } = renderComponent;
-    expect(getAllByText('DateFilter').length).toEqual(2);
+    expect(getAllByText('DateFilter').length).toEqual(3);
   });
 
   test('renders the Organizations Accordion', async () => {
