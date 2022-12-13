@@ -744,7 +744,7 @@
     "agreementLines.newLine": "Nova linha de contrato",
     "agreementLines.viewInSearch": "Ver linhas de contrato na busca",
     "agreements.exportingAgreement": "<strong> Contrato de exportação: </strong> O arquivo JSON será baixado em seu navegador quando concluído. Se o contrato tiver um grande número de títulos, isso pode levar algum tempo.",
-    "packages": "Packages",
-    "permission.packages.view": "Agreements: Search & view packages",
-    "packages.source": "Source (external data source)"
+    "packages": "Pacotes",
+    "permission.packages.view": "Contratos: Buscar e visualizar pacotes",
+    "packages.source": "Fonte (fonte de dados externa)"
 }

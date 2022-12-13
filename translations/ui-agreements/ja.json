@@ -744,7 +744,7 @@
     "agreementLines.newLine": "New agreement line",
     "agreementLines.viewInSearch": "View in agreement lines search",
     "agreements.exportingAgreement": "<strong>Exporting agreement:</strong> The JSON file will download to your browser when complete. If the agreement has a large number of titles this may take some time.",
-    "packages": "Packages",
-    "permission.packages.view": "Agreements: Search & view packages",
-    "packages.source": "Source (external data source)"
+    "packages": "パッケージ",
+    "permission.packages.view": "契約: パッケージの検索と表示",
+    "packages.source": "ソース (外部データ ソース)"
 }
