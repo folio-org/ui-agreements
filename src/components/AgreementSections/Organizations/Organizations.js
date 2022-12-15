@@ -35,9 +35,6 @@ export default class Organizations extends React.Component {
         }),
       ),
     }).isRequired,
-    handlers: PropTypes.shape({
-      onFetchCredentials: PropTypes.func,
-    }),
     id: PropTypes.string,
   };
 
@@ -52,7 +49,6 @@ export default class Organizations extends React.Component {
         <ViewOrganizationCard
           key={`${org.orgsUuid}`}
           data-test-organizations-org
-          fetchCredentials={this.props.handlers.onFetchCredentials}
           headerStart={
             <span>
               <AppIcon app="organizations" size="small">
@@ -66,6 +62,7 @@ export default class Organizations extends React.Component {
           }
           interfaces={interfaces}
           note={note}
+          org={org}
           roles={roles}
         />
       );

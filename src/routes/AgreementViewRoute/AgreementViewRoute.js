@@ -4,32 +4,27 @@ import PropTypes from 'prop-types';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { get, flatten, uniqBy } from 'lodash';
+import { flatten } from 'lodash';
 
-import { CalloutContext, stripesConnect, useOkapiKy } from '@folio/stripes/core';
-import { useInfiniteFetch, useUsers } from '@folio/stripes-erm-components';
+import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
+import { useInfiniteFetch, useInterfaces, useUsers } from '@folio/stripes-erm-components';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Agreement';
 import { parseMclPageSize, urls } from '../../components/utilities';
-import { errorTypes, resultCount } from '../../constants';
+import { errorTypes } from '../../constants';
 
 import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
 
 import { useAgreementsHelperApp, useAgreementsSettings, useChunkedOrderLines } from '../../hooks';
 import { AGREEMENTS_ENDPOINT, AGREEMENT_ENDPOINT, AGREEMENT_ERESOURCES_ENDPOINT, AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
 
-const { RECORDS_PER_REQUEST_MEDIUM } = resultCount;
-
-const credentialsArray = [];
 const AgreementViewRoute = ({
   handlers = {},
   history,
   location,
   match: { params: { id: agreementId } },
-  mutator,
-  resources,
 }) => {
   const queryClient = useQueryClient();
 
@@ -60,6 +55,11 @@ const AgreementViewRoute = ({
     ['ERM', 'Agreement', agreementId, agreementPath], // This pattern may need to be expanded to other fetches in Nolana
     () => ky.get(agreementPath).json()
   );
+
+
+  const interfaces = useInterfaces({
+    interfaceIds: flatten((agreement?.orgs ?? []).map(o => o?.org?.orgsUuid_object?.interfaces ?? []))
+  }) ?? [];
 
   const { mutateAsync: deleteAgreement } = useMutation(
     [agreementPath, 'ui-agreements', 'AgreementViewRoute', 'deleteAgreement'],
@@ -209,32 +209,18 @@ const AgreementViewRoute = ({
     }
   );
 
-  const getRecord = (id, resourceType) => {
-    return get(resources, `${resourceType}.records`, [])
-      .find(i => i.id === id);
-  };
-
   const getCompositeAgreement = () => {
     const contacts = agreement.contacts.map(c => ({
       ...c,
       user: users?.find(user => user?.id === c.user) || c.user,
     }));
 
-    const interfacesCredentials = uniqBy(get(resources, 'interfacesCredentials.records', []), 'id');
-
-    if (interfacesCredentials[0]) {
-      const index = credentialsArray.findIndex(object => object.id === interfacesCredentials[0].id);
-      if (index === -1) {
-        credentialsArray.push(interfacesCredentials[0]);
-      }
-    }
-
     const orgs = agreement.orgs.map(o => ({
       ...o,
-      interfaces: get(o, 'org.orgsUuid_object.interfaces', [])
+      interfaces: (o?.org?.orgsUuid_object?.interfaces ?? [])
         .map(id => ({
-          ...getRecord(id, 'interfaces') || {},
-          credentials: credentialsArray.find(cred => cred.interfaceId === id)
+          ...(interfaces?.find(int => int?.id === id) ?? {}),
+          /* Credentials are now handled by ViewOrganizationCard directly */
         })),
     }));
 
@@ -290,10 +276,6 @@ const AgreementViewRoute = ({
     history.push(`${urls.agreementEdit(agreementId)}${location.search}`);
   };
 
-  const handleFetchCredentials = (id) => {
-    mutator.interfaceRecord.replace({ id });
-  };
-
   const handleViewAgreementLine = (lineId) => {
     history.push(`${urls.agreementLineView(agreementId, lineId)}${location.search}`);
   };
@@ -328,7 +310,6 @@ const AgreementViewRoute = ({
         onExportAgreement: exportAgreement,
         onExportEResourcesAsJSON: exportEresourcesAsJson,
         onExportEResourcesAsKBART: exportEresourcesAsKBART,
-        onFetchCredentials: handleFetchCredentials,
         onFilterEResources: handleFilterEResources,
         onNeedMoreEResources: (_askAmount, index) => fetchNextEresourcePage({ pageParam: index }),
         onNeedMoreLines: (_askAmount, index) => fetchNextLinesPage({ pageParam: index }),
@@ -339,36 +320,6 @@ const AgreementViewRoute = ({
     />
   );
 };
-
-AgreementViewRoute.manifest = Object.freeze({
-  interfaces: { // We can and shouold migrate these to react-query at some point as a separate task
-    type: 'okapi',
-    path: 'organizations-storage/interfaces',
-    perRequest: RECORDS_PER_REQUEST_MEDIUM,
-    params: (_q, _p, _r, _l, props) => {
-      const orgs = get(props.resources, 'agreement.records[0].orgs', []);
-      const interfaces = flatten(orgs.map(o => get(o, 'org.orgsUuid_object.interfaces', [])));
-      const query = [
-        ...new Set(interfaces.map(i => `id==${i}`))
-      ].join(' or ');
-
-      return query ? { query } : {};
-    },
-    fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '2.0'),
-    permissionsRequired: 'organizations-storage.interfaces.collection.get',
-    records: 'interfaces',
-  },
-  interfacesCredentials: {
-    clientGeneratePk: false,
-    throwErrors: false,
-    path: 'organizations-storage/interfaces/%{interfaceRecord.id}/credentials',
-    type: 'okapi',
-    pk: 'FAKE_PK',  // it's done to fool stripes-connect not to add cred id to the path's end.
-    permissionsRequired: 'organizations-storage.interfaces.credentials.item.get',
-    fetch: props => !!props.stripes.hasInterface('organizations-storage.interfaces', '1.0 2.0'),
-  },
-  interfaceRecord: {},
-});
 
 AgreementViewRoute.propTypes = {
   handlers: PropTypes.object,
@@ -383,19 +334,6 @@ AgreementViewRoute.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired
   }).isRequired,
-  mutator: PropTypes.shape({
-    interfaceRecord: PropTypes.shape({
-      replace: PropTypes.func,
-    }),
-  }),
-  resources: PropTypes.shape({
-    interfaces: PropTypes.object,
-    query: PropTypes.object,
-  }).isRequired,
-  stripes: PropTypes.shape({
-    hasInterface: PropTypes.func.isRequired,
-    hasPerm: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
-export default stripesConnect(AgreementViewRoute);
+export default AgreementViewRoute;

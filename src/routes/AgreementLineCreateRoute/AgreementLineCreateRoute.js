@@ -112,12 +112,8 @@ AgreementLineCreateRoute.propTypes = {
     }).isRequired
   }).isRequired,
   resources: PropTypes.shape({
-    basket: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
-  stripes: PropTypes.shape({
-    hasInterface: PropTypes.func.isRequired,
-    hasPerm: PropTypes.func.isRequired,
-  }).isRequired,
+    basket: PropTypes.arrayOf(PropTypes.object)
+  })
 };
 
 export default stripesConnect(AgreementLineCreateRoute);
