@@ -1,5 +1,8 @@
 # Change history for ui-agreements
 
+## 8.2.4 2022-12-15
+* ERM-2538 On agreement and license view not all linked Org interfaces displaying
+
 ## 8.2.3 2022-11-18
 * ERM-2464 Is Perpetual dropdown not populated in Agreement create/edit form (MG back port)
 

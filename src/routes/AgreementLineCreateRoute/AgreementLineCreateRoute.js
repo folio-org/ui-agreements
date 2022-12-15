@@ -111,6 +111,9 @@ AgreementLineCreateRoute.propTypes = {
       agreementId: PropTypes.string.isRequired,
     }).isRequired
   }).isRequired,
+  resources: PropTypes.shape({
+    basket: PropTypes.arrayOf(PropTypes.object)
+  })
 };
 
 export default stripesConnect(AgreementLineCreateRoute);
