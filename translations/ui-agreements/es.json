@@ -743,8 +743,8 @@
     "settings.fileStorage.s3BucketRegion": "S3 bucket region",
     "agreementLines.newLine": "New agreement line",
     "agreementLines.viewInSearch": "View in agreement lines search",
-    "agreements.exportingAgreement": "<strong>Exporting agreement:</strong> The JSON file will download to your browser when complete. If the agreement has a large number of titles this may take some time.",
-    "packages": "Packages",
-    "permission.packages.view": "Agreements: Search & view packages",
-    "packages.source": "Source (external data source)"
+    "agreements.exportingAgreement": "<strong>Acuerdo de exportación:</strong> El archivo JSON se descargará en su navegador cuando esté completo. Si el acuerdo tiene un gran número de títulos, esto puede llevar algún tiempo.",
+    "packages": "Paquetes",
+    "permission.packages.view": "Acuerdos: Buscar y ver paquetes",
+    "packages.source": "Fuente (fuente de datos externa)"
 }

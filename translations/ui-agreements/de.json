@@ -145,11 +145,11 @@
     "settings.hideEResources.result.1": "E-Ressourcen-Tab in der eManagement-App ausblenden",
     "settings.hideEResources.result.2": "Merklistensymbol in der eManagement-App ausblenden",
     "settings.hideEResources.result.3": "Akkordeon \"Unter diese Vereinbarung fallende E-Ressourcen\" in den einzelnen Vereinbarungen ausblenden",
-    "interface.name": "Interface Name",
+    "interface.name": "Interfacename",
     "interface.username": "Kennung",
     "interface.password": "Passwort",
     "interface.uri": "URI",
-    "interface.type": "Interface-Typ",
+    "interface.type": "Interfacetyp",
     "interface.notes": "Bemerkungen",
     "interface.notFound": "Keine Interfaces gefunden",
     "loading": "Wird geladen...",
@@ -743,8 +743,8 @@
     "settings.fileStorage.s3BucketRegion": "S3 Bucket Region",
     "agreementLines.newLine": "Neue Vereinbarungskomponente",
     "agreementLines.viewInSearch": "In der Vereinbarungskomponentensuche ansehen",
-    "agreements.exportingAgreement": "<strong>Exporting agreement:</strong> The JSON file will download to your browser when complete. If the agreement has a large number of titles this may take some time.",
-    "packages": "Packages",
-    "permission.packages.view": "Agreements: Search & view packages",
-    "packages.source": "Source (external data source)"
+    "agreements.exportingAgreement": "<strong>Vereinbarung exportieren:</strong> Die JSON-Datei wird nach Fertigstellung heruntergeladen. Wenn die Vereinbarung eine große Anzahl von Titeln enthält, kann dies einige Zeit dauern.",
+    "packages": "Pakete",
+    "permission.packages.view": "Vereinbarungen: Pakete suchen und anzeigen",
+    "packages.source": "Quelle (externe Datenquelle)"
 }
