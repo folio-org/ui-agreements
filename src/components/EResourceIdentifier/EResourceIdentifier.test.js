@@ -1,6 +1,6 @@
 
 
-import { HTML, including } from '@folio/stripes-testing';
+import { HTML, including, List } from '@folio/stripes-testing';
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import EResourceIdentifier from './EResourceIdentifier';
 
@@ -122,25 +122,21 @@ describe('EResourceIdentifier', () => {
       />
     );
 
-    /* the following is a workaround
-       if PR https://issues.folio.org/browse/STCOM-1040 is fixed
-       write new test(s) with the List and ListItem interactor
-       (https://github.com/folio-org/stripes-testing/blob/master/doc/interactors.md#list)
-    */
-
     test('renders the identifier as a List ', async () => {
-      await HTML({ className: including('list') }).exists();
+      await List('eresourceIdentifier').exists();
     });
   });
 
-  test('renders null for Title with no identifier ', () => {
-    const { container } = renderWithIntl(
+  describe('renders null for Title with no identifier ', () => {
+    renderWithIntl(
       <EResourceIdentifier
         titleInstance={titleInstanceWithoutIdentifier}
         type="isbn"
       />
     );
 
-    expect(container.firstChild).toBeNull();
+    test('does not renders the List ', async () => {
+      await List('eresourceIdentifier').absent();
+    });
   });
 });
