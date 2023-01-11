@@ -1,116 +1,83 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { CalloutContext, stripesConnect } from '@folio/stripes/core';
-import { preventResourceRefresh } from '@folio/stripes-erm-components';
+
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+
+import { useCallout, useOkapiKy } from '@folio/stripes/core';
 
 import View from '../../components/views/UrlCustomizer';
 import { urls } from '../../components/utilities';
+import { STRING_TEMPLATE_ENDPOINT } from '../../constants/endpoints';
 
-class UrlCustomizerViewRoute extends React.Component {
-  static manifest = Object.freeze({
-    urlCustomization: {
-      type: 'okapi',
-      path: 'erm/sts/:{templateId}',
-      clientGeneratePk: false,
-      throwErrors: false,
-      shouldRefresh: preventResourceRefresh({ 'urlCustomization': ['DELETE'] }),
-    },
-  });
+const UrlCustomizerViewRoute = ({
+  handlers,
+  history,
+  location,
+  match: { params: { platformId, templateId } },
+}) => {
+  const callout = useCallout();
+  const ky = useOkapiKy();
+  const queryClient = useQueryClient();
 
-  static propTypes = {
-    handlers: PropTypes.object,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      search: PropTypes.string.isRequired,
-    }).isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        templateId: PropTypes.string.isRequired,
-        platformId: PropTypes.string.isRequired,
-      }).isRequired
-    }).isRequired,
-    mutator: PropTypes.shape({
-      urlCustomization: PropTypes.shape({
-        DELETE: PropTypes.func.isRequired,
-      }).isRequired,
-    }).isRequired,
-    resources: PropTypes.shape({
-      urlCustomization: PropTypes.object,
-    }).isRequired,
-    stripes: PropTypes.shape({
-      hasInterface: PropTypes.func.isRequired,
-      hasPerm: PropTypes.func.isRequired,
-    }).isRequired,
+  const handleClose = () => {
+    history.push(`${urls.platformView(platformId)}${location.search}`);
   };
 
-  static contextType = CalloutContext;
+  const urlCustomizerPath = STRING_TEMPLATE_ENDPOINT(templateId);
 
-  handleClose = () => {
-    const { history, location, match } = this.props;
-    history.push(`${urls.platformView(match.params.platformId)}${location.search}`);
-  }
+  const { data: urlCustomizer, isLoading } = useQuery(
+    ['ERM', 'URLCustomizer', templateId, 'GET', urlCustomizerPath],
+    () => ky.get(urlCustomizerPath).json()
+  );
 
-  /* istanbul ignore next */
-  handleDelete = () => {
-    const {
-      history,
-      location,
-      match: { params: { templateId } },
-      mutator,
-    } = this.props;
-    const { sendCallout } = this.context;
+  const { mutateAsync: deleteUrlCustomizer } = useMutation(
+    // As opposed to ['ERM', 'AgreementLine', lineId, 'DELETE', agreementLinePath] if we did this via a DELETE call to entitlements endpoint
+    ['ERM', 'URLCustomizer', templateId, 'DELETE', urlCustomizerPath],
+    () => ky.delete(urlCustomizerPath).then(() => {
+      history.push(`${urls.platformView(platformId)}${location.search}`);
 
-    mutator.urlCustomization.DELETE(templateId)
-      .then(() => {
-        history.push(`${urls.platforms()}${location.search}`);
-        sendCallout({ message: <FormattedMessage id="ui-agreements.platform.urlCustomization.delete.callout" /> });
-      })
-      .catch(error => {
-        sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.platform.urlCustomization..deleteFailed.callout" values={{ message: error.message }} /> });
-      });
-  }
+      queryClient.invalidateQueries('ERM', 'URLCustomizer');
+      callout.sendCallout({ message: <FormattedMessage id="ui-agreements.platform.urlCustomization.delete.callout" /> });
+    }).catch(error => {
+      callout.sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.platform.urlCustomization..deleteFailed.callout" values={{ message: error.message }} /> });
+    })
+  );
 
-  handleEdit = () => {
-    const {
-      history,
-      location,
-      match: { params: { platformId, templateId } },
-    } = this.props;
-
+  const handleEdit = () => {
     history.push(`${urls.urlCustomizerEdit(platformId, templateId)}${location.search}`);
-  }
+  };
 
-  isLoading = () => {
-    const { match, resources: { urlCustomization = {} } } = this.props;
+  return (
+    <View
+      data={{
+        urlCustomization: urlCustomizer,
+      }}
+      handlers={{
+        ...handlers,
+        onClose: handleClose,
+        onDelete: deleteUrlCustomizer,
+        onEdit: handleEdit,
+      }}
+      isLoading={isLoading}
+    />
+  );
+};
 
-    return (
-      match.params.templateId !== urlCustomization?.records?.[0]?.id &&
-      (urlCustomization?.isPending ?? true)
-    );
-  }
+UrlCustomizerViewRoute.propTypes = {
+  handlers: PropTypes.object,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      templateId: PropTypes.string.isRequired,
+      platformId: PropTypes.string.isRequired,
+    }).isRequired
+  }).isRequired,
+};
 
-  render() {
-    const { resources } = this.props;
-    const urlCustomizationRecord = (resources?.urlCustomization?.records?.[0] ?? {});
-
-    return (
-      <View
-        data={{
-          urlCustomization: urlCustomizationRecord,
-        }}
-        handlers={{
-          ...this.props.handlers,
-          onClose: this.handleClose,
-          onDelete: this.handleDelete,
-          onEdit: this.handleEdit,
-        }}
-        isLoading={this.isLoading()}
-      />
-    );
-  }
-}
-
-export default stripesConnect(UrlCustomizerViewRoute);
+export default UrlCustomizerViewRoute;

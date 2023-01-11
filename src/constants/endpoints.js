@@ -35,3 +35,6 @@ export const PLATFORM_ENDPOINT = (platformId) => `${PLATFORMS_ENDPOINT}/${platfo
 export const MOD_SETTINGS_ENDPOINT = 'configurations/entries';
 
 export const ORDER_LINES_ENDPOINT = 'orders/order-lines';
+
+export const STRING_TEMPLATES_ENDPOINT = 'erm/sts';
+export const STRING_TEMPLATE_ENDPOINT = (id) => `${STRING_TEMPLATES_ENDPOINT}/${id}`;
