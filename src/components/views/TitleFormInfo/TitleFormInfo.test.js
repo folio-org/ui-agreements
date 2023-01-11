@@ -54,17 +54,15 @@ describe('TitleFormInfo', () => {
   });
 
   describe('with isSuppressFromDiscovery not true for title', () => {
-    let renderedComponent;
     beforeEach(() => {
-      renderedComponent = renderWithIntl(
+      renderWithIntl(
         <TitleFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryDisabled} />,
         translationsProperties
       );
     });
 
-    test('Does not render the component', () => {
-      const { container } = renderedComponent;
-      expect(container.firstChild).toBeNull();
+    test('does not render the Suppress from discovery Checkbox', async () => {
+      await Checkbox({ id: 'title-suppress-from-discovery' }).absent();
     });
   });
 });
