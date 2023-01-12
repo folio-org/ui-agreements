@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 
@@ -14,52 +13,47 @@ import {
   entityTypePluralizedTranslationKeys,
 } from '../../constants';
 
-class NoteViewRoute extends Component {
-  static propTypes = {
-    history: ReactRouterPropTypes.history.isRequired,
-    location: ReactRouterPropTypes.location.isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-      }).isRequired,
-    }).isRequired,
-  };
-
-  onEdit = () => {
-    const { history, location, match } = this.props;
-
+const NoteViewRoute = ({
+  history,
+  location: { state: locationState },
+  match: { params: { id } }
+}) => {
+  const onEdit = () => {
     history.replace({
-      pathname: urls.noteEdit(match.params.id),
-      state: location.state,
+      pathname: urls.noteEdit(id),
+      state: locationState,
     });
   };
 
-  /* istanbul ignore next */
-  navigateBack = () => {
-    const { history, location } = this.props;
-
-    if (location.state) {
+  const navigateBack = () => {
+    if (locationState) {
       history.goBack();
     } else {
       history.push({ pathname: urls.agreements() });
     }
   };
 
-  render() {
-    const { location, match } = this.props;
+  return (
+    <NoteViewPage
+      entityTypePluralizedTranslationKeys={entityTypePluralizedTranslationKeys}
+      entityTypeTranslationKeys={entityTypeTranslationKeys}
+      navigateBack={navigateBack}
+      noteId={id}
+      onEdit={onEdit}
+      paneHeaderAppIcon="agreement"
+      referredEntityData={formatNoteReferrerEntityData(locationState)}
+    />
+  );
+};
 
-    return (
-      <NoteViewPage
-        entityTypePluralizedTranslationKeys={entityTypePluralizedTranslationKeys}
-        entityTypeTranslationKeys={entityTypeTranslationKeys}
-        navigateBack={this.navigateBack}
-        noteId={match.params.id}
-        onEdit={this.onEdit}
-        paneHeaderAppIcon="agreement"
-        referredEntityData={formatNoteReferrerEntityData(location.state)}
-      />
-    );
-  }
-}
+NoteViewRoute.propTypes = {
+  history: ReactRouterPropTypes.history.isRequired,
+  location: ReactRouterPropTypes.location.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+};
 
 export default NoteViewRoute;
