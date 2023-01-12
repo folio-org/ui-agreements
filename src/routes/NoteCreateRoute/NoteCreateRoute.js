@@ -5,7 +5,7 @@ import { NoteCreatePage } from '@folio/stripes/smart-components';
 import { formatNoteReferrerEntityData, urls } from '../../components/utilities';
 import { entityTypeTranslationKeys } from '../../constants';
 
-const NoteCreateRoute = ({ history, location: { state: locationState} }) => {
+const NoteCreateRoute = ({ history, location: { state: locationState } }) => {
   const renderCreatePage = () => {
     return (
       <NoteCreatePage
