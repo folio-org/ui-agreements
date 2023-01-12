@@ -2,79 +2,69 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { CalloutContext, stripesConnect } from '@folio/stripes/core';
+import { useMutation, useQueryClient } from 'react-query';
+
+import { useCallout, useOkapiKy } from '@folio/stripes/core';
+
 import View from '../../components/views/UrlCustomizerForm';
 import { urls } from '../../components/utilities';
+import { STRING_TEMPLATES_ENDPOINT } from '../../constants/endpoints';
 
-class UrlCustomizerCreateRoute extends React.Component {
-  static manifest = Object.freeze({
-    stringTemplate: {
-      type: 'okapi',
-      path: 'erm/sts',
-      fetch: false,
-    },
-  });
+const UrlCustomizerCreateRoute = ({
+  handlers,
+  history,
+  location,
+  match: { params: { platformId } }
+}) => {
+  const callout = useCallout();
+  const ky = useOkapiKy();
+  const queryClient = useQueryClient();
 
-  static propTypes = {
-    handlers: PropTypes.object,
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-      search: PropTypes.string.isRequired,
-    }).isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        agreementId: PropTypes.string.isRequired,
-        platformId: PropTypes.string.isRequired,
-      }).isRequired
-    }).isRequired,
-    mutator: PropTypes.shape({
-      stringTemplate: PropTypes.shape({
-        POST: PropTypes.func.isRequired,
-      }),
-    }),
+  const handleClose = () => {
+    history.push(`${urls.platformView(platformId)}${location.search}`);
   };
 
-  static contextType = CalloutContext;
+  const { mutateAsync: postUrlCustomizer } = useMutation(
+    ['ERM', 'URLCustomizer', 'POST', platformId, STRING_TEMPLATES_ENDPOINT],
+    (urlCustomization) => ky.post(
+      STRING_TEMPLATES_ENDPOINT,
+      { json: {
+        ...urlCustomization,
+        'idScopes': [platformId],
+        'context': 'urlCustomiser'
+      } }
+    ).json().then(({ id }) => {
+      callout.sendCallout({ message: <FormattedMessage id="ui-agreements.platform.urlCustomization.create.callout" /> });
+      history.push(`${urls.urlCustomizerView(platformId, id)}${location.search}`);
 
-  handleClose = () => {
-    const {
-      history,
-      location,
-      match: { params: { platformId } },
-    } = this.props;
-    history.push(`${urls.platformView(platformId)}${location.search}`);
-  }
+      queryClient.invalidateQueries('ERM', 'URLCustomizer');
+    })
+  );
 
-  /* istanbul ignore next */
-  handleSubmit = (urlCustomization) => {
-    const {
-      history,
-      match: { params: { platformId } },
-      mutator,
-      location
-    } = this.props;
+  return (
+    <View
+      handlers={{
+        ...handlers,
+        onClose: handleClose,
+      }}
+      onSubmit={postUrlCustomizer}
+    />
+  );
+};
 
-    return mutator.stringTemplate
-      .POST({ ...urlCustomization, 'idScopes': [platformId], 'context': 'urlCustomiser' })
-      .then(({ id }) => {
-        this.context.sendCallout({ message: <FormattedMessage id="ui-agreements.platform.urlCustomization.create.callout" /> });
-        history.push(`${urls.urlCustomizerView(platformId, id)}${location.search}`);
-      });
-  }
+UrlCustomizerCreateRoute.propTypes = {
+  handlers: PropTypes.object,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      platformId: PropTypes.string.isRequired,
+    }).isRequired
+  }).isRequired,
+};
 
-  render() {
-    return (
-      <View
-        handlers={{
-          ...this.props.handlers,
-          onClose: this.handleClose,
-        }}
-        onSubmit={this.handleSubmit}
-      />
-    );
-  }
-}
-
-export default stripesConnect(UrlCustomizerCreateRoute);
+export default UrlCustomizerCreateRoute;
