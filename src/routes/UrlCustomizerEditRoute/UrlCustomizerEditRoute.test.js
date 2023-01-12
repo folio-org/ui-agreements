@@ -1,13 +1,17 @@
 import PropTypes from 'prop-types';
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
+import { useQuery } from 'react-query';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
+
 import { Button } from '@folio/stripes/components';
+import { useStripes } from '@folio/stripes/core';
 import { Button as ButtonInteractor } from '@folio/stripes-testing';
-import { noop } from 'lodash';
+
 import translationsProperties from '../../../test/helpers';
 import UrlCustomizerEditRoute from './UrlCustomizerEditRoute';
-import { urlCustomization, loadingView } from './testResources';
+
 
 const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
@@ -21,7 +25,6 @@ CloseButton.propTypes = {
 
 const historyPushMock = jest.fn();
 const onSubmitMock = jest.fn();
-
 
 
 jest.mock('../../components/views/UrlCustomizerForm', () => {
@@ -42,41 +45,10 @@ const data = {
   },
   match: {
     params: {
-      platformId: '',
-      templateId: ''
-    }
-  },
-  mutator: {
-    urlCustomization: {
-      PUT: noop
-    },
-  },
-  resources: {
-    urlCustomization,
-  }
-};
-
-const isPendingData = {
-  history: {
-    push: () => jest.fn()
-  },
-  location: {
-    search: ''
-  },
-  match: {
-    params: {
       platformId: '082ef5fe-fac7-46ba-a37c-b636ae7aa266',
       templateId: '8c195c10-086a-4c51-a7cb-d3e5d66b4042'
     }
   },
-  mutator: {
-    urlCustomization: {
-      PUT: noop
-    },
-  },
-  resources: {
-    loadingView
-  }
 };
 
 describe('UrlCustomizerEditRoute', () => {
@@ -111,9 +83,15 @@ describe('UrlCustomizerEditRoute', () => {
   describe('rendering loading view', () => {
     let renderComponent;
     beforeEach(() => {
+      // EXAMPLE overriding react-query useQuery for a single test
+      // These work because our manual mocks have set up a jest.fn we can override here already
+      useQuery.mockImplementation(() => ({
+        isLoading: true
+      }));
+
       renderComponent = renderWithIntl(
         <MemoryRouter>
-          <UrlCustomizerEditRoute {...isPendingData} />
+          <UrlCustomizerEditRoute {...data} />
         </MemoryRouter>,
         translationsProperties
       );
@@ -128,6 +106,12 @@ describe('UrlCustomizerEditRoute', () => {
   describe('rendering with no permissions', () => {
     let renderComponent;
     beforeEach(() => {
+      // EXAMPLE overriding stripes-core hasPerm for a single test
+      // These work because our manual mocks have set up a jest.fn we can override here already
+      useStripes.mockImplementation(() => ({
+        hasPerm: () => false
+      }));
+
       renderComponent = renderWithIntl(
         <MemoryRouter>
           <UrlCustomizerEditRoute

@@ -76,16 +76,4 @@ UrlCustomizerEditRoute.propTypes = {
       templateId: PropTypes.string,
     }).isRequired,
   }).isRequired,
-  mutator: PropTypes.shape({
-    urlCustomization: PropTypes.shape({
-      PUT: PropTypes.func.isRequired,
-    }),
-  }).isRequired,
-  resources: PropTypes.shape({
-    platform: PropTypes.object,
-    urlCustomization: PropTypes.object
-  }).isRequired,
-  stripes: PropTypes.shape({
-    hasPerm: PropTypes.func.isRequired,
-  }).isRequired,
 };
