@@ -27,7 +27,11 @@ import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 import { urls } from '../../utilities';
 import css from '../Agreements.css';
 import RouteSwitcher from '../../RouteSwitcher';
-import { KB_TAB_FILTER_PANE, KB_TAB_PANESET, KB_TAB_PANE_ID } from '../../../constants';
+import {
+  KB_TAB_FILTER_PANE,
+  KB_TAB_PANESET,
+  KB_TAB_PANE_ID
+} from '../../../constants';
 
 const propTypes = {
   children: PropTypes.object,
