@@ -30,10 +30,16 @@ import EResourceProvider from '../../EResourceProvider';
 import PackageFilters from '../../PackageFilters';
 
 import { urls } from '../../utilities';
-import { resultCount } from '../../../constants';
+import {
+  KB_TAB_FILTER_PANE,
+  KB_TAB_PANESET,
+  KB_TAB_PANE_ID,
+  resultCount
+} from '../../../constants';
 
 import css from '../Agreements.css';
 import RouteSwitcher from '../../RouteSwitcher';
+
 
 const propTypes = {
   children: PropTypes.object,
@@ -106,11 +112,14 @@ const Packages = ({
             const filterCount = activeFilters.string ? activeFilters.string.split(',').length : 0;
 
             return (
-              <PersistedPaneset appId="@folio/agreements" id="packages-paneset">
+              <PersistedPaneset
+                appId="@folio/agreements"
+                id={KB_TAB_PANESET}
+              >
                 {filterPaneIsVisible &&
                   <Pane
                     defaultWidth="20%"
-                    id="pane-packages-search"
+                    id={KB_TAB_FILTER_PANE}
                     lastMenu={
                       <PaneMenu>
                         <CollapseFilterPaneButton onClick={toggleFilterPane} />
@@ -186,7 +195,7 @@ const Packages = ({
                       :
                       null
                   }
-                  id="pane-packages-list"
+                  id={KB_TAB_PANE_ID}
                   noOverflow
                   padContent={false}
                   paneSub={
