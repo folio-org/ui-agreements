@@ -1,5 +1,9 @@
 # Change history for ui-agreements
 
+## 8.3.3 2023-01-24
+* ERM-2547 On agreement and license user details do not display when more than one user linked to agreement/license as Internal contact
+* ERM-2538 On agreement and license view not all linked Org interfaces displaying
+
 ## 8.3.2 2022-12-01
 * ERM-2489 Reduce number of eresources retrieved to 25 rather than 100
 
