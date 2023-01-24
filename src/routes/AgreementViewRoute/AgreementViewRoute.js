@@ -7,7 +7,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { flatten } from 'lodash';
 
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
-import { useInfiniteFetch, useInterfaces, useUsers } from '@folio/stripes-erm-components';
+import { useAgreement, useInfiniteFetch, useInterfaces, useUsers } from '@folio/stripes-erm-components';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
@@ -46,7 +46,6 @@ const AgreementViewRoute = ({
   const agreementEresourcesPath = AGREEMENT_ERESOURCES_ENDPOINT(agreementId, eresourcesFilterPath);
 
   const { agreement, isAgreementLoading } = useAgreement({ agreementId });
-
 
   const interfaces = useInterfaces({
     interfaceIds: flatten((agreement?.orgs ?? []).map(o => o?.org?.orgsUuid_object?.interfaces ?? []))
