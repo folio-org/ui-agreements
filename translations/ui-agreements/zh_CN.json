@@ -744,7 +744,7 @@
     "agreementLines.newLine": "新建协议行",
     "agreementLines.viewInSearch": "在协议行搜索中查看",
     "agreements.exportingAgreement": "<strong>导出协议： </strong> JSON 文件将在完成后下载到您的浏览器。如果协议包含大量标题，可能需要一些时间。",
-    "packages": "Packages",
-    "permission.packages.view": "Agreements: Search & view packages",
-    "packages.source": "Source (external data source)"
+    "packages": "资源包",
+    "permission.packages.view": "协议：搜索和查看资源包",
+    "packages.source": "来源（外部数据源）"
 }
