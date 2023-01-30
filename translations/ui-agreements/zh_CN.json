@@ -173,7 +173,7 @@
     "eresource": "电子资源",
     "eresourcePluralizable": "{count} {count, plural, one { e-resource } other {e-resources}}",
     "poLines.acqMethod": "采购方式",
-    "poLines.noPOLinePlugin": "未安装\"查找PO行\"插件",
+    "poLines.noPOLinePlugin": "未安装\"查找订单行\"插件",
     "poLines.poLine": "订单行",
     "poLines.poLineWithNumber": "订单行： {poLineNumber}",
     "poLines.title": "订单行标题",
