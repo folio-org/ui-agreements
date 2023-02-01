@@ -24,7 +24,7 @@ const [
   SCOPE,
 ] = [
   'AvailabilityConstraint.Body',
-  'ContentType.ContentType',
+  'Pkg.ContentType',
   'Pkg.LifecycleStatus',
   'Pkg.AvailabilityScope',
 ];
