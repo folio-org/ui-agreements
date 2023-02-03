@@ -25,6 +25,7 @@ const FILTERS = [
   'reasonForClosure',
   'renewalPriority',
   'isPerpetual',
+  'agreementContentTypes',
 ];
 
 export default function AgreementFilters({ activeFilters, data, filterHandlers }) {
@@ -34,6 +35,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
     agreementStatus: [],
     renewalPriority: [],
     isPerpetual: [],
+    agreementContentTypes: [],
     tags: []
   });
 
@@ -294,6 +296,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       {renderMultiSelectFilter('reasonForClosure')}
       {renderCheckboxFilter('renewalPriority', { closedByDefault: true })}
       {renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
+      {renderCheckboxFilter('agreementContentTypes', { closedByDefault: true })}
       {renderStartDateFilter()}
       {renderEndDateFilter()}
       {renderCancellationDeadlineFilter()}

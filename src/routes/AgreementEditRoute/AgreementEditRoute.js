@@ -20,6 +20,7 @@ import { useAddFromBasket, useAgreementsRefdata, useBasket, useChunkedOrderLines
 const { AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT } = endpoints;
 
 const [
+  CONTENT_TYPE,
   AGREEMENT_STATUS,
   REASON_FOR_CLOSURE,
   AMENDMENT_STATUS,
@@ -31,6 +32,7 @@ const [
   RENEWAL_PRIORITY,
   RELATIONSHIP_TYPE
 ] = [
+  'SubscriptionAgreement.ContentType',
   'SubscriptionAgreement.AgreementStatus',
   'SubscriptionAgreement.ReasonForClosure',
   'LicenseAmendmentStatus.Status',
@@ -64,6 +66,7 @@ const AgreementEditRoute = ({
 
   const refdata = useAgreementsRefdata({
     desc: [
+      CONTENT_TYPE,
       AGREEMENT_STATUS,
       REASON_FOR_CLOSURE,
       AMENDMENT_STATUS,
@@ -242,6 +245,7 @@ const AgreementEditRoute = ({
       data={{
         agreementLines: getAgreementLines(),
         agreementLinesToAdd: getAgreementLinesToAdd(),
+        contentTypeValues: getRefdataValuesByDesc(refdata, CONTENT_TYPE),
         agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
         reasonForClosureValues: getRefdataValuesByDesc(refdata, REASON_FOR_CLOSURE),
         amendmentStatusValues: getRefdataValuesByDesc(refdata, AMENDMENT_STATUS),

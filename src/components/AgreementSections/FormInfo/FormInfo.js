@@ -6,6 +6,7 @@ import { FieldArray } from 'react-final-form-arrays';
 
 import {
   Col,
+  MultiSelection,
   Row,
   Select,
   TextArea,
@@ -25,6 +26,7 @@ import AgreementPeriodsFieldArray from '../../AgreementPeriodsFieldArray';
 const FormInfo = ({
   data: {
     agreementStatusValues = [],
+    contentTypeValues = [],
     isPerpetualValues = [],
     reasonForClosureValues = [],
     renewalPriorityValues = []
@@ -57,12 +59,22 @@ const FormInfo = ({
         </Col>
       </Row>
       <Row>
-        <Col xs={12}>
+        <Col md={8} xs={12}>
           <Field
             component={TextArea}
             id="edit-agreement-description"
             label={<FormattedMessage id="ui-agreements.agreements.agreementDescription" />}
             name="description"
+            parse={v => v} // Lets us send an empty string instead of `undefined`
+          />
+        </Col>
+        <Col xs={4}>
+          <Field
+            component={MultiSelection}
+            dataOptions={[{ value: '', label: '' }, ...contentTypeValues]}
+            id="edit-agreement-agreementContentTypes"
+            label={<FormattedMessage id="ui-agreements.agreements.agreementContentTypes" />}
+            name="agreementContentTypes"
             parse={v => v} // Lets us send an empty string instead of `undefined`
           />
         </Col>
@@ -143,6 +155,7 @@ const FormInfo = ({
 FormInfo.propTypes = {
   data: PropTypes.shape({
     agreementStatusValues: PropTypes.arrayOf(PropTypes.object),
+    contentTypeValues: PropTypes.arrayOf(PropTypes.object),
     reasonForClosureValues: PropTypes.arrayOf(PropTypes.object),
     renewalPriorityValues: PropTypes.arrayOf(PropTypes.object),
     isPerpetualValues: PropTypes.arrayOf(PropTypes.object),

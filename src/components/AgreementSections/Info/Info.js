@@ -15,6 +15,17 @@ import { statuses } from '../../../constants';
 import InfoPeriods from '../InfoPeriods';
 
 const Info = ({ agreement }) => {
+  const renderContentTypes = (agreementContentTypes) => (
+    agreementContentTypes.map(act => {
+      const { agreementContentTypes: { label, value } } = act;
+      return (
+        <li key={value}>
+          {label}
+        </li>
+      );
+    })
+  );
+
   return (
     <div data-test-agreement-info>
       <Row>
@@ -62,12 +73,18 @@ const Info = ({ agreement }) => {
         }
       </Row>
       <Row>
-        <Col xs={12}>
+        <Col xs={8}>
           <KeyValue label={<FormattedMessage id="ui-agreements.agreements.agreementDescription" />}>
             <div data-test-agreement-description style={{ whiteSpace: 'pre-wrap' }}>
               {agreement.description || <NoValue />}
             </div>
           </KeyValue>
+        </Col>
+        <Col xs={4}>
+          <KeyValue
+            label={<FormattedMessage id="ui-agreements.agreements.agreementContentTypes" />}
+            value={agreement?.agreementContentTypes?.length > 0 ? renderContentTypes(agreement.agreementContentTypes) : <NoValue />}
+          />
         </Col>
       </Row>
       {agreement?.licenseNote &&
@@ -102,6 +119,17 @@ Info.propTypes = {
       label: PropTypes.string,
       value: PropTypes.string,
     }),
+    // agreementContentTypes: PropTypes.shape({
+    //   label: PropTypes.string,
+    //   value: PropTypes.string
+    // }),
+    agreementContentTypes: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string,
+      contentType: PropTypes.shape({
+        label: PropTypes.string,
+        value: PropTypes.string
+      }),
+    })),
     alternateNames: PropTypes.arrayOf(PropTypes.object),
     cancellationDeadline: PropTypes.string,
     currentPeriod: PropTypes.shape({

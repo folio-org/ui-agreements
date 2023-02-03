@@ -182,6 +182,7 @@
   "agreementPeriods.periodNote": "Period note",
   "agreementPeriods.periodStart": "Period start",
   "agreementPeriods.periodTitle": "Agreement period {number}",
+  "agreements.agreementContentTypes": "Content type",
   "eresource.moveIdentifier": "Move identifier(s)",
   "eresource.moveIdentifier.noSourceTitle": "No source title selected",
   "eresource.moveIdentifier.noDestinationTitle": "No destination title selected",
