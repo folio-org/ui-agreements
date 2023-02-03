@@ -119,17 +119,10 @@ Info.propTypes = {
       label: PropTypes.string,
       value: PropTypes.string,
     }),
-    // agreementContentTypes: PropTypes.shape({
-    //   label: PropTypes.string,
-    //   value: PropTypes.string
-    // }),
-    agreementContentTypes: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.string,
-      contentType: PropTypes.shape({
-        label: PropTypes.string,
-        value: PropTypes.string
-      }),
-    })),
+    agreementContentTypes: PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.string
+    }),
     alternateNames: PropTypes.arrayOf(PropTypes.object),
     cancellationDeadline: PropTypes.string,
     currentPeriod: PropTypes.shape({

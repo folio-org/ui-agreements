@@ -296,7 +296,6 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       {renderMultiSelectFilter('reasonForClosure')}
       {renderCheckboxFilter('renewalPriority', { closedByDefault: true })}
       {renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
-      {renderCheckboxFilter('agreementContentTypes', { closedByDefault: true })}
       {renderStartDateFilter()}
       {renderEndDateFilter()}
       {renderCancellationDeadlineFilter()}
@@ -304,6 +303,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       {renderOrganizationRoleFilter()}
       {renderInternalContactFilter()}
       {renderInternalContactRoleFilter()}
+      {renderCheckboxFilter('agreementContentTypes', { closedByDefault: true })}
       {renderTagsFilter()}
       {renderCustomPropertyFilters()}
     </AccordionSet>
