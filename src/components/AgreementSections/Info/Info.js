@@ -15,9 +15,9 @@ import { statuses } from '../../../constants';
 import InfoPeriods from '../InfoPeriods';
 
 const Info = ({ agreement }) => {
-  const renderContentTypes = (agreementContentTypes) => (
+  const renderAgreementContentTypes = (agreementContentTypes) => (
     agreementContentTypes.map(act => {
-      const { agreementContentTypes: { label, value } } = act;
+      const { agreementContentType: { label, value } } = act;
       return (
         <li key={value}>
           {label}
@@ -83,7 +83,7 @@ const Info = ({ agreement }) => {
         <Col xs={4}>
           <KeyValue
             label={<FormattedMessage id="ui-agreements.agreements.agreementContentTypes" />}
-            value={agreement?.agreementContentTypes?.length > 0 ? renderContentTypes(agreement.agreementContentTypes) : <NoValue />}
+            value={agreement?.agreementContentTypes?.length > 0 ? renderAgreementContentTypes(agreement.agreementContentTypes) : <NoValue />}
           />
         </Col>
       </Row>
@@ -119,10 +119,13 @@ Info.propTypes = {
       label: PropTypes.string,
       value: PropTypes.string,
     }),
-    agreementContentTypes: PropTypes.shape({
-      label: PropTypes.string,
-      value: PropTypes.string
-    }),
+    agreementContentTypes: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string,
+      agreementContentType: PropTypes.shape({
+        label: PropTypes.string,
+        value: PropTypes.string
+      }),
+    })),
     alternateNames: PropTypes.arrayOf(PropTypes.object),
     cancellationDeadline: PropTypes.string,
     currentPeriod: PropTypes.shape({

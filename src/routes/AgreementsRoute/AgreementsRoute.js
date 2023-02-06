@@ -18,6 +18,7 @@ const {
 } = resultCount;
 
 const [
+  AGREEMENT_CONTENT_TYPE,
   AGREEMENT_STATUS,
   REASON_FOR_CLOSURE,
   RENEWAL_PRIORITY,
@@ -25,6 +26,7 @@ const [
   CONTACT_ROLE,
   ORG_ROLE
 ] = [
+  'SubscriptionAgreement.ContentType',
   'SubscriptionAgreement.AgreementStatus',
   'SubscriptionAgreement.ReasonForClosure',
   'SubscriptionAgreement.RenewalPriority',

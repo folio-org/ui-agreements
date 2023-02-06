@@ -20,7 +20,7 @@ import { useAddFromBasket, useAgreementsRefdata, useBasket, useChunkedOrderLines
 const { AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT } = endpoints;
 
 const [
-  CONTENT_TYPE,
+  AGREEMENT_CONTENT_TYPE,
   AGREEMENT_STATUS,
   REASON_FOR_CLOSURE,
   AMENDMENT_STATUS,
@@ -66,7 +66,7 @@ const AgreementEditRoute = ({
 
   const refdata = useAgreementsRefdata({
     desc: [
-      CONTENT_TYPE,
+      AGREEMENT_CONTENT_TYPE,
       AGREEMENT_STATUS,
       REASON_FOR_CLOSURE,
       AMENDMENT_STATUS,
@@ -150,6 +150,7 @@ const AgreementEditRoute = ({
       reasonForClosure = {},
       renewalPriority = {},
       supplementaryDocs = [],
+      agreementContentType = []
     } = initialValues;
 
     // Set the values of dropdown-controlled props as values rather than objects.
@@ -157,6 +158,7 @@ const AgreementEditRoute = ({
     initialValues.isPerpetual = isPerpetual.value;
     initialValues.reasonForClosure = reasonForClosure.value;
     initialValues.renewalPriority = renewalPriority.value;
+    initialValues.agreementContentType = agreementContentType.value;
     initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
     initialValues.orgs = orgs.map(o => ({ ...o, role: o.role && o.role.value }));
     initialValues.supplementaryDocs = supplementaryDocs.map(o => ({ ...o, atType: o.atType?.value }));
@@ -245,7 +247,7 @@ const AgreementEditRoute = ({
       data={{
         agreementLines: getAgreementLines(),
         agreementLinesToAdd: getAgreementLinesToAdd(),
-        contentTypeValues: getRefdataValuesByDesc(refdata, CONTENT_TYPE),
+        contentTypeValues: getRefdataValuesByDesc(refdata, AGREEMENT_CONTENT_TYPE),
         agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
         reasonForClosureValues: getRefdataValuesByDesc(refdata, REASON_FOR_CLOSURE),
         amendmentStatusValues: getRefdataValuesByDesc(refdata, AMENDMENT_STATUS),
