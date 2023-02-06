@@ -228,13 +228,26 @@
       },
       {
         "permissionName": "settings.agreements.enabled",
-        "displayName": "Settings (Agreements): Can view and edit settings",
+        "displayName": "Settings (Agreements): ui-agreements settings are enabled",
         "subPermissions": [
           "module.agreements.enabled",
-          "settings.enabled",
+          "settings.enabled"
+        ]
+      },
+      {
+        "permissionName": "settings.configuration.manage",
+        "displayName": "Settings (Agreements): Can view and edit settings",
+        "subPermissions": [
           "configuration.entries.collection.get",
           "configuration.entries.item.put",
           "configuration.entries.item.post"
+        ]
+      },
+      {
+        "permissionName": "settings.configuration.view",
+        "displayName": "Settings (Agreements): Can view settings",
+        "subPermissions": [
+          "configuration.entries.collection.get"
         ]
       },
       {
@@ -243,7 +256,18 @@
         "description": "Grants permission to view and edit the general Agreements settings",
         "visible": true,
         "subPermissions": [
-          "settings.agreements.enabled"
+          "settings.agreements.enabled",
+          "settings.configuration.manage"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.generalSettings.view",
+        "displayName": "Settings (Agreements): Can view general settings",
+        "description": "Grants permission to view the general Agreements settings",
+        "visible": true,
+        "subPermissions": [
+          "settings.agreements.enabled",
+          "settings.configuration.view"
         ]
       },
       {
@@ -253,7 +277,19 @@
         "visible": true,
         "subPermissions": [
           "settings.agreements.enabled",
+          "settings.configuration.manage",
           "erm.refdata.manage"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.picklists.view",
+        "displayName": "Settings (Agreements): View pick lists and values",
+        "description": "Grants all permissions included in 'Settings (Agreements): Can view general settings' plus the ability to view pick lists and pick list values",
+        "visible": true,
+        "subPermissions": [
+          "settings.agreements.enabled",
+          "settings.configuration.view",
+          "erm.refdata.view"
         ]
       },
       {
@@ -263,7 +299,19 @@
         "visible": true,
         "subPermissions": [
           "settings.agreements.enabled",
+          "settings.configuration.manage",
           "erm.custprops.manage"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.supplementaryProperties.view",
+        "displayName": "Settings (Agreements): Can view agreement supplementary properties",
+        "description": "Grants all permissions included in 'Settings (Agreements): Can view general settings' plus the ability to view the available supplementary properties",
+        "visible": true,
+        "subPermissions": [
+          "settings.agreements.enabled",
+          "settings.configuration.view",
+          "erm.custprops.view"
         ]
       },
       {
@@ -283,6 +331,7 @@
         "visible": true,
         "subPermissions": [
           "settings.agreements.enabled",
+          "settings.configuration.manage",
           "erm.settings.manage"
         ]
       }
