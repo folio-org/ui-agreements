@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
@@ -32,7 +31,8 @@ const FormInfo = ({
     renewalPriorityValues = []
   },
   form: {
-    mutators
+    mutators,
+    change
   },
   values
 }) => {
@@ -70,13 +70,28 @@ const FormInfo = ({
         </Col>
         <Col xs={4}>
           <Field
-            component={MultiSelection}
-            dataOptions={contentTypeValues}
-            id="edit-agreement-content-types"
-            label={<FormattedMessage id="ui-agreements.agreements.agreementContentType" />}
             name="agreementContentTypes"
-            // onChange ???
-            parse={v => v} // Lets us send an empty string instead of `undefined`
+            render={() => (
+              <MultiSelection
+                dataOptions={contentTypeValues}
+                id="edit-agreement-content-types"
+                label={<FormattedMessage id="ui-agreements.agreements.agreementContentType" />}
+                onChange={items => {
+                  console.log('change items: %o', items);
+                  change('agreementContentTypes', items?.map(i => {
+                    if (!i.contentType) {
+                      return ({ contentType: i });
+                    }
+                    return i;
+                  }));
+                }}
+                onRemove={item => {
+                  console.log('remove item: %o', item);
+                }}
+                parse={v => v} // Lets us send an empty string instead of `undefined`
+                value={values.agreementContentTypes?.filter(v => !v._delete).map(v => v.contentType)}
+              />
+            )}
           />
         </Col>
       </Row>
@@ -165,6 +180,7 @@ FormInfo.propTypes = {
     mutators: PropTypes.shape({
       setFieldData: PropTypes.func.isRequired,
     }).isRequired,
+    change: PropTypes.object,
   }),
   initialValues: PropTypes.object,
   values: PropTypes.object,

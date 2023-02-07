@@ -150,7 +150,6 @@ const AgreementEditRoute = ({
       reasonForClosure = {},
       renewalPriority = {},
       supplementaryDocs = [],
-      agreementContentTypes = []
     } = initialValues;
 
     // Set the values of dropdown-controlled props as values rather than objects.
@@ -158,7 +157,6 @@ const AgreementEditRoute = ({
     initialValues.isPerpetual = isPerpetual.value;
     initialValues.reasonForClosure = reasonForClosure.value;
     initialValues.renewalPriority = renewalPriority.value;
-    initialValues.agreementContentTypes = agreementContentTypes.value;
     initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
     initialValues.orgs = orgs.map(o => ({ ...o, role: o.role && o.role.value }));
     initialValues.supplementaryDocs = supplementaryDocs.map(o => ({ ...o, atType: o.atType?.value }));
@@ -178,12 +176,6 @@ const AgreementEditRoute = ({
             status: assignedAmendment.status ? assignedAmendment.status.value : undefined,
           };
         })
-    }));
-    // initialValues.agreementContentTypes = agreementContentTypes.map(act => act.contentType.value);
-    initialValues.agreementContentTypes = agreementContentTypes.map(act => ({
-      id: act.contentType.id,
-      label: act.contentType.label,
-      value: act.contentType.value
     }));
 
     joinRelatedAgreements(initialValues);
@@ -231,14 +223,6 @@ const AgreementEditRoute = ({
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
     splitRelatedAgreements(values, relationshipTypeValues);
 
-    // agreementContentTypes have to be in the right shape
-    // console.log(values.agreementContentTypes);
-    const payload = values.agreementContentTypes.map(act => ({
-      contentType: { value: act.value }
-    }));
-    // // console.log(payload);
-    values.agreementContentTypes = payload;
-    // console.log(values.agreementContentTypes);
     putAgreement(values);
   };
 

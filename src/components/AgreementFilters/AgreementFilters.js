@@ -83,8 +83,6 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       </Accordion>
     );
   };
-  console.log('AgreementFilters, data: %o', data);
-  console.log('AgreementFilters, agreementContentTypeValues: %o', data?.agreementContentTypeValues);
 
   const renderMultiSelectFilter = (name, prps) => {
     const groupFilters = activeFilters[name] || [];
