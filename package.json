@@ -231,7 +231,8 @@
         "displayName": "Settings (Agreements): ui-agreements settings are enabled",
         "subPermissions": [
           "module.agreements.enabled",
-          "settings.enabled"
+          "settings.enabled",
+          "configuration.entries.collection.get"
         ]
       },
       {
@@ -321,6 +322,7 @@
         "visible": true,
         "subPermissions": [
           "settings.agreements.enabled",
+          "settings.configuration.view",
           "erm.settings.read"
         ]
       },
