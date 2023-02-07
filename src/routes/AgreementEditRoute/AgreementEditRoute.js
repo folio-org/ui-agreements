@@ -20,7 +20,6 @@ import { useAddFromBasket, useAgreementsRefdata, useBasket, useChunkedOrderLines
 const { AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT } = endpoints;
 
 const [
-  AGREEMENT_CONTENT_TYPE,
   AGREEMENT_STATUS,
   REASON_FOR_CLOSURE,
   AMENDMENT_STATUS,
@@ -30,9 +29,9 @@ const [
   REMOTE_LICENSE_LINK_STATUS,
   ORG_ROLE,
   RENEWAL_PRIORITY,
+  AGREEMENT_CONTENT_TYPE,
   RELATIONSHIP_TYPE
 ] = [
-  'SubscriptionAgreement.ContentType',
   'SubscriptionAgreement.AgreementStatus',
   'SubscriptionAgreement.ReasonForClosure',
   'LicenseAmendmentStatus.Status',
@@ -42,6 +41,7 @@ const [
   'RemoteLicenseLink.Status',
   'SubscriptionAgreementOrg.Role',
   'SubscriptionAgreement.RenewalPriority',
+  'SubscriptionAgreement.ContentType',
   'AgreementRelationship.Type'
 ];
 

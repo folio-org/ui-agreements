@@ -20,11 +20,11 @@ const propTypes = {
 };
 
 const FILTERS = [
+  'agreementContentTypes',
   'agreementStatus',
   'reasonForClosure',
   'renewalPriority',
   'isPerpetual',
-  'agreementContentType',
 ];
 
 export default function AgreementFilters({ activeFilters, data, filterHandlers }) {
@@ -32,10 +32,11 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
 
   const [filterState, setFilterState] = useState({
     agreementStatus: [],
+    agreementContentTypes: [],
+    reasonForClosure: [],
     renewalPriority: [],
     isPerpetual: [],
-    agreementContentType: [],
-    tags: []
+    tags: [],
   });
 
   useEffect(() => {
@@ -83,6 +84,10 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       </Accordion>
     );
   };
+  console.log("AgreementFilters, data: %o", data);
+  console.log("AgreementFilters, contentType: %o", data?.agreementContentTypeValues);
+  console.log("AgreementFilters, agreementStatus: %o", data?.agreementStatusValues
+);
 
   const renderMultiSelectFilter = (name, prps) => {
     const groupFilters = activeFilters[name] || [];
