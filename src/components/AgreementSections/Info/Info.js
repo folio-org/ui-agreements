@@ -82,7 +82,7 @@ const Info = ({ agreement }) => {
         </Col>
         <Col xs={4}>
           <KeyValue
-            label={<FormattedMessage id="ui-agreements.agreements.agreementContentTypes" />}
+            label={<FormattedMessage id="ui-agreements.agreements.agreementContentType" />}
             value={agreement?.agreementContentTypes?.length > 0 ? renderAgreementContentTypes(agreement.agreementContentTypes) : <NoValue />}
           />
         </Col>

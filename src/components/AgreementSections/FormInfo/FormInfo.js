@@ -73,7 +73,7 @@ const FormInfo = ({
             component={MultiSelection}
             dataOptions={contentTypeValues}
             id="edit-agreement-content-types"
-            label={<FormattedMessage id="ui-agreements.agreements.agreementContentTypes" />}
+            label={<FormattedMessage id="ui-agreements.agreements.agreementContentType" />}
             name="agreementContentTypes"
             // onChange ???
             parse={v => v} // Lets us send an empty string instead of `undefined`
