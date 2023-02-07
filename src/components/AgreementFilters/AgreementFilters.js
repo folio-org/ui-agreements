@@ -11,7 +11,6 @@ import { DateFilter, InternalContactSelection, OrganizationSelection } from '@fo
 
 import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
-
 import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
 
 const propTypes = {
@@ -33,6 +32,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
 
   const [filterState, setFilterState] = useState({
     agreementStatus: [],
+    reasonForClosure: [],
     renewalPriority: [],
     isPerpetual: [],
     agreementContentType: [],
@@ -83,6 +83,8 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       </Accordion>
     );
   };
+  console.log('AgreementFilters, data: %o', data);
+  console.log('AgreementFilters, agreementContentTypeValues: %o', data?.agreementContentTypeValues);
 
   const renderMultiSelectFilter = (name, prps) => {
     const groupFilters = activeFilters[name] || [];
@@ -295,7 +297,6 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       {renderMultiSelectFilter('reasonForClosure')}
       {renderCheckboxFilter('renewalPriority', { closedByDefault: true })}
       {renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
-      {renderCheckboxFilter('agreementContentType', { closedByDefault: true })}
       {renderStartDateFilter()}
       {renderEndDateFilter()}
       {renderCancellationDeadlineFilter()}
@@ -303,6 +304,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       {renderOrganizationRoleFilter()}
       {renderInternalContactFilter()}
       {renderInternalContactRoleFilter()}
+      {renderCheckboxFilter('agreementContentType', { closedByDefault: true })}
       {renderTagsFilter()}
       {renderCustomPropertyFilters()}
     </AccordionSet>

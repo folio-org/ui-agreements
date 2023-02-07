@@ -20,7 +20,6 @@ import { useAddFromBasket, useAgreementsRefdata, useBasket, useChunkedOrderLines
 const { AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT } = endpoints;
 
 const [
-  CONTENT_TYPE,
   AGREEMENT_STATUS,
   REASON_FOR_CLOSURE,
   AMENDMENT_STATUS,
@@ -30,9 +29,9 @@ const [
   REMOTE_LICENSE_LINK_STATUS,
   ORG_ROLE,
   RENEWAL_PRIORITY,
+  AGREEMENT_CONTENT_TYPE,
   RELATIONSHIP_TYPE
 ] = [
-  'SubscriptionAgreement.ContentType',
   'SubscriptionAgreement.AgreementStatus',
   'SubscriptionAgreement.ReasonForClosure',
   'LicenseAmendmentStatus.Status',
@@ -42,6 +41,7 @@ const [
   'RemoteLicenseLink.Status',
   'SubscriptionAgreementOrg.Role',
   'SubscriptionAgreement.RenewalPriority',
+  'SubscriptionAgreement.ContentType',
   'AgreementRelationship.Type'
 ];
 
@@ -66,7 +66,7 @@ const AgreementEditRoute = ({
 
   const refdata = useAgreementsRefdata({
     desc: [
-      CONTENT_TYPE,
+      AGREEMENT_CONTENT_TYPE,
       AGREEMENT_STATUS,
       REASON_FOR_CLOSURE,
       AMENDMENT_STATUS,
@@ -158,6 +158,7 @@ const AgreementEditRoute = ({
     initialValues.isPerpetual = isPerpetual.value;
     initialValues.reasonForClosure = reasonForClosure.value;
     initialValues.renewalPriority = renewalPriority.value;
+    initialValues.agreementContentTypes = agreementContentTypes.value;
     initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
     initialValues.orgs = orgs.map(o => ({ ...o, role: o.role && o.role.value }));
     initialValues.supplementaryDocs = supplementaryDocs.map(o => ({ ...o, atType: o.atType?.value }));
@@ -260,7 +261,7 @@ const AgreementEditRoute = ({
       data={{
         agreementLines: getAgreementLines(),
         agreementLinesToAdd: getAgreementLinesToAdd(),
-        contentTypeValues: getRefdataValuesByDesc(refdata, CONTENT_TYPE),
+        contentTypeValues: getRefdataValuesByDesc(refdata, AGREEMENT_CONTENT_TYPE),
         agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
         reasonForClosureValues: getRefdataValuesByDesc(refdata, REASON_FOR_CLOSURE),
         amendmentStatusValues: getRefdataValuesByDesc(refdata, AMENDMENT_STATUS),
