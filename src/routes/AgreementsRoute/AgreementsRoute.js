@@ -74,6 +74,7 @@ const AgreementsRoute = ({
       /* There were problems with using truthiness ?? on an empty string '' */
       searchKey: (!!qIndex && qIndex !== '') ? qIndex : defaultQIndex,
       filterKeys: {
+        agreementContentType: 'agreementContentTypes.contentType.value',
         agreementStatus: 'agreementStatus.value',
         contacts: 'contacts.user',
         contactRole: 'contacts.role',
