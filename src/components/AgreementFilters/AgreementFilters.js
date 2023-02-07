@@ -85,8 +85,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
     );
   };
   console.log("AgreementFilters, data: %o", data);
-  console.log("AgreementFilters, contentType: %o", data?.agreementContentTypeValues);
-  console.log("AgreementFilters, agreementStatus: %o", data?.agreementStatusValues
+  console.log("AgreementFilters, agreementContentTypeValues: %o", data?.agreementContentTypeValues
 );
 
   const renderMultiSelectFilter = (name, prps) => {

@@ -150,7 +150,7 @@ const AgreementEditRoute = ({
       reasonForClosure = {},
       renewalPriority = {},
       supplementaryDocs = [],
-      agreementContentType = []
+      agreementContentTypes = []
     } = initialValues;
 
     // Set the values of dropdown-controlled props as values rather than objects.
@@ -158,7 +158,7 @@ const AgreementEditRoute = ({
     initialValues.isPerpetual = isPerpetual.value;
     initialValues.reasonForClosure = reasonForClosure.value;
     initialValues.renewalPriority = renewalPriority.value;
-    initialValues.agreementContentType = agreementContentType.value;
+    initialValues.agreementContentTypes = agreementContentTypes.value;
     initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
     initialValues.orgs = orgs.map(o => ({ ...o, role: o.role && o.role.value }));
     initialValues.supplementaryDocs = supplementaryDocs.map(o => ({ ...o, atType: o.atType?.value }));
