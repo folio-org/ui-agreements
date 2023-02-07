@@ -23,7 +23,8 @@ const [
   RENEWAL_PRIORITY,
   IS_PERPETUAL,
   CONTACT_ROLE,
-  ORG_ROLE
+  ORG_ROLE,
+  AGREEMENT_CONTENT_TYPE
 ] = [
   'SubscriptionAgreement.AgreementStatus',
   'SubscriptionAgreement.ReasonForClosure',
@@ -31,6 +32,7 @@ const [
   'Global.Yes_No',
   'InternalContact.Role',
   'SubscriptionAgreementOrg.Role',
+  'SubscriptionAgreement.ContentType'
 ];
 
 const AgreementsRoute = ({
@@ -51,7 +53,8 @@ const AgreementsRoute = ({
       RENEWAL_PRIORITY,
       IS_PERPETUAL,
       CONTACT_ROLE,
-      ORG_ROLE
+      ORG_ROLE,
+      AGREEMENT_CONTENT_TYPE
     ]
   });
 
@@ -123,6 +126,7 @@ const AgreementsRoute = ({
         isPerpetualValues: getRefdataValuesByDesc(refdata, IS_PERPETUAL),
         contactRoleValues: getRefdataValuesByDesc(refdata, CONTACT_ROLE),
         orgRoleValues: getRefdataValuesByDesc(refdata, ORG_ROLE),
+        agreementContentTypeValues: getRefdataValuesByDesc(refdata, AGREEMENT_CONTENT_TYPE),
         tagsValues: tags,
       }}
       history={history}

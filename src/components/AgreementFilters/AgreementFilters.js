@@ -25,7 +25,7 @@ const FILTERS = [
   'reasonForClosure',
   'renewalPriority',
   'isPerpetual',
-  'agreementContentTypes',
+  'agreementContentType',
 ];
 
 export default function AgreementFilters({ activeFilters, data, filterHandlers }) {
@@ -35,7 +35,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
     agreementStatus: [],
     renewalPriority: [],
     isPerpetual: [],
-    agreementContentTypes: [],
+    agreementContentType: [],
     tags: []
   });
 
@@ -59,7 +59,6 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
 
   const renderCheckboxFilter = (name, prps) => {
     const groupFilters = activeFilters[name] || [];
-
     return (
       <Accordion
         displayClearButton={groupFilters.length > 0}
@@ -296,7 +295,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       {renderMultiSelectFilter('reasonForClosure')}
       {renderCheckboxFilter('renewalPriority', { closedByDefault: true })}
       {renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
-      {renderCheckboxFilter('agreementContentTypes', { closedByDefault: true })}
+      {renderCheckboxFilter('agreementContentType', { closedByDefault: true })}
       {renderStartDateFilter()}
       {renderEndDateFilter()}
       {renderCancellationDeadlineFilter()}
