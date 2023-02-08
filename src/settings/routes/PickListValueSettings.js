@@ -22,7 +22,6 @@ const PickListValues = () => {
     delete: perm,
     edit: perm
   };
-  console.log('displayConditions value settings, %o', displayConditions);
 
   return (
     <Pane

@@ -17,8 +17,6 @@ const PickListSettings = () => {
     delete: perm,
     edit: perm
   };
-  console.log('displayConditions, %o', displayConditions);
-  console.log('user, %o', stripes.user.user.username);
 
   return (
     <Pane
