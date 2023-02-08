@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-
+import { useStripes } from '@folio/stripes/core';
 import { useSettings } from '@k-int/stripes-kint-components';
 
 import GeneralSettings from './GeneralSettings';
@@ -18,7 +18,10 @@ import {
 import { AgreementsCustomProperties } from './components';
 
 const ErmSettings = (props) => {
+  const stripes = useStripes();
+  const allowGlobalEdit = stripes.hasPerm('ui-agreements.appSettings.manage');
   const { isLoading, pageList, SettingsComponent } = useSettings({
+    allowGlobalEdit,
     dynamicPageExclusions: ['registry'], // Registry AppSettings hold StringTemplating details etc -- not for user editing
     persistentPages: [],
     refdataEndpoint: REFDATA_ENDPOINT,
@@ -31,14 +34,12 @@ const ErmSettings = (props) => {
         {
           route: 'general',
           label: <FormattedMessage id="ui-agreements.settings.displaySettings" />,
-          // perm: 'ui-agreements.generalSettings.manage' || 'ui-agreements.generalSettings.view',
           perm: 'ui-agreements.generalSettings.view',
           component: GeneralSettings,
         },
         {
           component: AgreementsCustomProperties,
           label: <FormattedMessage id="ui-agreements.settings.supplementaryProperties" />,
-          // perm: 'ui-agreements.supplementaryProperties.manage' || 'ui-agreements.supplementaryProperties.view',
           perm: 'ui-agreements.supplementaryProperties.view',
           route: 'supplementaryProperties',
         },
@@ -50,14 +51,12 @@ const ErmSettings = (props) => {
         {
           component: PickListSettings,
           label: <FormattedMessage id="ui-agreements.settings.pickLists" />,
-          // perm: 'ui-agreements.picklists.manage' || 'ui-agreements.picklists.view',
           perm: 'ui-agreements.picklists.view',
           route: 'pick-lists',
         },
         {
           component: PickListValueSettings,
           label: <FormattedMessage id="ui-agreements.settings.pickListValues" />,
-          // perm: 'ui-agreements.picklists.manage' || 'ui-agreements.picklists.view',
           perm: 'ui-agreements.picklists.view',
           route: 'pick-list-values',
         },

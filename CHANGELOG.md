@@ -4,6 +4,7 @@
 * ERM-2416 Separate title search and package search in local KB e-resource searching
 * ERM-2452 Remove eresources search
 * ERM-2613 Remove unneeded `react-redux`. Upgrade `stripes-acq-components` to `v4`
+* ERM-2624 Add view only permissions for Agreement settings
 
 ## 8.3.0 2022-10-27
 * ERM-2382 Unchecking all search field boxes in Agreements carries out search with no fields
