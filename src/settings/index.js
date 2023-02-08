@@ -24,7 +24,6 @@ const ErmSettings = (props) => {
     refdataEndpoint: REFDATA_ENDPOINT,
     settingEndpoint: SETTINGS_ENDPOINT
   });
-
   const sections = [
     {
       label: <FormattedMessage id="ui-agreements.settings.general" />,
@@ -32,12 +31,14 @@ const ErmSettings = (props) => {
         {
           route: 'general',
           label: <FormattedMessage id="ui-agreements.settings.displaySettings" />,
-          perm: 'ui-agreements.generalSettings.manage' || 'ui-agreements.generalSettings.view',
+          // perm: 'ui-agreements.generalSettings.manage' || 'ui-agreements.generalSettings.view',
+          perm: 'ui-agreements.generalSettings.view',
           component: GeneralSettings,
         },
         {
           component: AgreementsCustomProperties,
           label: <FormattedMessage id="ui-agreements.settings.supplementaryProperties" />,
+          // perm: 'ui-agreements.supplementaryProperties.manage' || 'ui-agreements.supplementaryProperties.view',
           perm: 'ui-agreements.supplementaryProperties.view',
           route: 'supplementaryProperties',
         },
@@ -49,12 +50,14 @@ const ErmSettings = (props) => {
         {
           component: PickListSettings,
           label: <FormattedMessage id="ui-agreements.settings.pickLists" />,
+          // perm: 'ui-agreements.picklists.manage' || 'ui-agreements.picklists.view',
           perm: 'ui-agreements.picklists.view',
           route: 'pick-lists',
         },
         {
           component: PickListValueSettings,
           label: <FormattedMessage id="ui-agreements.settings.pickListValues" />,
+          // perm: 'ui-agreements.picklists.manage' || 'ui-agreements.picklists.view',
           perm: 'ui-agreements.picklists.view',
           route: 'pick-list-values',
         },
@@ -62,7 +65,7 @@ const ErmSettings = (props) => {
     },
     {
       label: <FormattedMessage id="ui-agreements.settings.appSettings" />,
-      pages: pageList
+      pages: pageList,
     }
   ];
 

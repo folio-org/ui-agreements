@@ -25,6 +25,9 @@ class GeneralSettingsForm extends React.Component {
       PropTypes.node,
       PropTypes.element
     ]),
+    stripes: PropTypes.shape({
+      hasPerm: PropTypes.func
+    }),
   };
 
   getLastMenu = () => {
@@ -47,6 +50,7 @@ class GeneralSettingsForm extends React.Component {
       handleSubmit,
       label,
     } = this.props;
+    const disabled = !this.props.stripes.hasPerm('ui-agreements.generalSettings.manage');
 
     return (
       <form id="agreement-general-settings-form" onSubmit={handleSubmit}>
@@ -59,6 +63,7 @@ class GeneralSettingsForm extends React.Component {
         >
           <Field
             component={Checkbox}
+            disabled={disabled}
             id="hideEResourcesFunctionality"
             label={<FormattedMessage id="ui-agreements.settings.general.hideEResourcesFunctionality.title" />}
             name="hideEResourcesFunctionality"

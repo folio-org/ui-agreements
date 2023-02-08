@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import { Field } from 'react-final-form';
+import { useStripes } from '@folio/stripes/core';
 
 import {
   Checkbox,
@@ -15,6 +16,9 @@ import { hiddenAccordions } from '../../../constants';
 const hiddenAccordionsNames = Object.keys(hiddenAccordions);
 
 const HideAccordions = ({ name }) => {
+  const stripes = useStripes();
+  const disabled = !stripes.hasPerm('ui-agreements.generalSettings.manage');
+
   return (
     <>
       <Layout className="padding-bottom-gutter padding-top-gutter" data-test-hide-accordions-description>
@@ -30,6 +34,7 @@ const HideAccordions = ({ name }) => {
             <Field
               component={Checkbox}
               data-testid={`hide-accordions-${toLower}`}
+              disabled={disabled}
               id={`hideAccordions${upperAccordion}`}
               label={<FormattedMessage id={`ui-agreements.settings.hideAccordions.${accordion}`} />}
               name={`${name}.${accordion}`}

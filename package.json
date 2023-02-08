@@ -74,7 +74,7 @@
   },
   "dependencies": {
     "@folio/stripes-acq-components": "^4.0.0",
-    "@k-int/stripes-kint-components": "^4.0.0",
+    "@k-int/stripes-kint-components": "^4.4.0",
     "@rehooks/local-storage": "2.4.4",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
@@ -239,26 +239,8 @@
         "permissionName": "settings.configuration.manage",
         "displayName": "Settings (Agreements): Can view and edit settings",
         "subPermissions": [
-          "configuration.entries.collection.get",
           "configuration.entries.item.put",
           "configuration.entries.item.post"
-        ]
-      },
-      {
-        "permissionName": "settings.configuration.view",
-        "displayName": "Settings (Agreements): Can view settings",
-        "subPermissions": [
-          "configuration.entries.collection.get"
-        ]
-      },
-      {
-        "permissionName": "ui-agreements.generalSettings.manage",
-        "displayName": "Settings (Agreements): Can view and edit general settings",
-        "description": "Grants permission to view and edit the general Agreements settings",
-        "visible": true,
-        "subPermissions": [
-          "settings.agreements.enabled",
-          "settings.configuration.manage"
         ]
       },
       {
@@ -267,19 +249,17 @@
         "description": "Grants permission to view the general Agreements settings",
         "visible": true,
         "subPermissions": [
-          "settings.agreements.enabled",
-          "settings.configuration.view"
+          "settings.agreements.enabled"
         ]
       },
       {
-        "permissionName": "ui-agreements.picklists.manage",
-        "displayName": "Settings (Agreements): Manage pick lists and values",
-        "description": "Grants all permissions included in 'Settings (Agreements): Can view and edit general settings' plus the ability to manage pick lists and pick list values",
+        "permissionName": "ui-agreements.generalSettings.manage",
+        "displayName": "Settings (Agreements): Can view and edit general settings",
+        "description": "Grants permission to view and edit the general Agreements settings",
         "visible": true,
         "subPermissions": [
-          "settings.agreements.enabled",
-          "settings.configuration.manage",
-          "erm.refdata.manage"
+          "ui-agreements.generalSettings.view",
+          "settings.configuration.manage"
         ]
       },
       {
@@ -289,19 +269,18 @@
         "visible": true,
         "subPermissions": [
           "settings.agreements.enabled",
-          "settings.configuration.view",
           "erm.refdata.view"
         ]
       },
       {
-        "permissionName": "ui-agreements.supplementaryProperties.manage",
-        "displayName": "Settings (Agreements): Manage agreement supplementary properties",
-        "description": "Grants all permissions included in 'Settings (Agreements): Can view and edit general settings' plus the ability to manage the available supplementary properties",
+        "permissionName": "ui-agreements.picklists.manage",
+        "displayName": "Settings (Agreements): Manage pick lists and values",
+        "description": "Grants all permissions included in 'Settings (Agreements): Can view and edit general settings' plus the ability to manage pick lists and pick list values",
         "visible": true,
         "subPermissions": [
-          "settings.agreements.enabled",
+          "ui-agreements.picklists.view",
           "settings.configuration.manage",
-          "erm.custprops.manage"
+          "erm.refdata.manage"
         ]
       },
       {
@@ -311,8 +290,18 @@
         "visible": true,
         "subPermissions": [
           "settings.agreements.enabled",
-          "settings.configuration.view",
           "erm.custprops.view"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.supplementaryProperties.manage",
+        "displayName": "Settings (Agreements): Manage agreement supplementary properties",
+        "description": "Grants all permissions included in 'Settings (Agreements): Can view and edit general settings' plus the ability to manage the available supplementary properties",
+        "visible": true,
+        "subPermissions": [
+          "ui-agreements.supplementaryProperties.view",
+          "settings.configuration.manage",
+          "erm.custprops.manage"
         ]
       },
       {
@@ -322,7 +311,6 @@
         "visible": true,
         "subPermissions": [
           "settings.agreements.enabled",
-          "settings.configuration.view",
           "erm.settings.read"
         ]
       },
@@ -332,7 +320,7 @@
         "description": "Grants permission to view and edit the Agreements application settings",
         "visible": true,
         "subPermissions": [
-          "settings.agreements.enabled",
+          "ui-agreements.appSettings.view",
           "settings.configuration.manage",
           "erm.settings.manage"
         ]
