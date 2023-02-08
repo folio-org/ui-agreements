@@ -11,7 +11,6 @@ jest.mock('./components/SuppressFromDiscoveryFields', () => () => <div>SuppressF
 jest.mock('./components/HideAccordions', () => () => <div>HideAccordions</div>);
 
 const onSubmitMock = jest.fn();
-// const hasPermMock = jest.fn();
 
 const stripes = {
   hasPerm: () => true,
