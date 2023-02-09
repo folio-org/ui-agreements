@@ -5,6 +5,10 @@ const activeFilters = {
     'in_negotiation',
     'requested'
   ],
+  'agreementContentType': [
+    'books',
+    'database'
+  ],
   'orgs': [
     '9032ae7d-ca16-4399-abae-e6186628c669'
   ],
@@ -107,6 +111,33 @@ const data = {
     'label': 'Content provider'
   }],
   'supplementaryProperties': [],
+  'agreementContentTypeValues': [
+    {
+      'id': '2c9180a68633e0bc018633e6896a0014',
+      'value': 'audio',
+      'label': 'Audio'
+    },
+    {
+      'id': '2c9180a68633e0bc018633e6893e0011',
+      'value': 'books',
+      'label': 'Books'
+    },
+    {
+      'id': '2c9180a68633e0bc018633e689630013',
+      'value': 'database',
+      'label': 'Database'
+    },
+    {
+      'id': '2c9180a68633e0bc018633e6895e0012',
+      'value': 'journals',
+      'label': 'Journals'
+    },
+    {
+      'id': '2c9180a68633e0bc018633e689700015',
+      'value': 'video',
+      'label': 'Video'
+    }
+  ],
   'tagsValues': [{
     'id': 'aeb85be7-7440-474f-94de-066fd69c7604',
     'label': 'catalogingrecords',
