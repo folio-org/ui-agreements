@@ -19,6 +19,7 @@ import { AgreementsCustomProperties } from './components';
 
 const ErmSettings = (props) => {
   const { isLoading, pageList, SettingsComponent } = useSettings({
+    allowGlobalEdit: true,
     dynamicPageExclusions: ['registry'], // Registry AppSettings hold StringTemplating details etc -- not for user editing
     persistentPages: [],
     refdataEndpoint: REFDATA_ENDPOINT,

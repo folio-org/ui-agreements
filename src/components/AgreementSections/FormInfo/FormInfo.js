@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
@@ -22,6 +22,7 @@ import {
 import { validationEndPoint, statuses } from '../../../constants';
 
 import AgreementPeriodsFieldArray from '../../AgreementPeriodsFieldArray';
+import { isEqual } from 'lodash';
 
 const FormInfo = ({
   data: {
@@ -39,14 +40,15 @@ const FormInfo = ({
   values,
   id
 }) => {
+  console.log("VALUES: %o", values?.agreementContentTypes)
   // deal with this in a second
   const validateAsyncBackend = useAsyncValidation('ui-agreements', validationEndPoint.AGREEMENTPATH);
-  const [item, setItem] = useState(contentTypeValues);
+  /* const [item, setItem] = useState(contentTypeValues);
 
   const removeItem = (id) => {
     const newItemList = item.filter((i) => i.id !==id);
     setItem(newItemList);
-  }
+  } */
 
   return (
     <div data-test-edit-agreement-info>
@@ -80,27 +82,45 @@ const FormInfo = ({
         <Col xs={4}>
           <Field
             name="agreementContentTypes"
-            render={() => (
+            render={({ input: { onChange, value } }) => (
               <MultiSelection
-                dataOptions={contentTypeValues}
                 key={id}
+                dataOptions={contentTypeValues}
                 id="edit-agreement-content-types"
                 label={<FormattedMessage id="ui-agreements.agreements.agreementContentType" />}
-                onChange={items => {
-                  console.log('change items: %o', items);
-                  change('agreementContentTypes', items?.map(i => {
-                    if (!i.contentType) {
-                      return ({ contentType: i });
-                    }
-                    return i;
-                  }));
+                onChange={(items) => {
+                  console.log("current value: %o", value)
+                  console.log("onchange items: %o", items)
+                  onChange([
+                    ...items?.map(i => {
+                      if (i._delete || i.contentType) {
+                        return i;
+                      }
+
+                      return ({ contentType: i.value });
+                    }),
+                  ]);
                 }}
-                onRemove={item => {
-                  console.log('remove item: %o', item);
+                onRemove={async item => {
+                  console.log("onremove item: %o", item)
+                  const currentValues = values?.agreementContentTypes;
+                  if (item?.id) {
+                    const removedItemIndex = currentValues?.findIndex(val => val?.id === item.id);
+                    currentValues[removedItemIndex] = { id: item.id, _delete: true };
+                    // This will trigger the onChange handler
+                    onChange(currentValues);
+                  }
                 }}
-                onClick={() => removeItem(item.id)}
                 parse={v => v} // Lets us send an empty string instead of `undefined`
-                value={values.agreementContentTypes?.filter(v => !v._delete).map(v => v.contentType)}
+                value={values?.agreementContentTypes?.filter(v => !v._delete)}
+                /*
+                 * ValueFormatter passes the item inside a property called `option`
+                 */
+                valueFormatter={({ option: item }) => {
+                  const contentTypeValue = item?.contentType?.value ?? item?.contentType;
+                  const relevantRefdata = contentTypeValues?.find(val => val?.value === contentTypeValue);
+                  return relevantRefdata?.label ?? relevantRefdata?.value;
+                }}
               />
             )}
           />

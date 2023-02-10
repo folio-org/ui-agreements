@@ -45,6 +45,10 @@ const AgreementsCustomProperties = () => {
       }}
       contextFilterOptions={contexts}
       customPropertiesEndpoint={CUSTPROP_ENDPOINT}
+      displayConditions={{
+        create: false,
+        delete: false
+      }}
       helpPopovers={helpPopovers}
       intlKey="ui-agreements"
       refdataEndpoint={REFDATA_ENDPOINT}
