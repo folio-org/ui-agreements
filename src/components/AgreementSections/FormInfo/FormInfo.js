@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
@@ -32,12 +33,20 @@ const FormInfo = ({
   },
   form: {
     mutators,
-    change
+    change,
+    remove
   },
-  values
+  values,
+  id
 }) => {
   // deal with this in a second
   const validateAsyncBackend = useAsyncValidation('ui-agreements', validationEndPoint.AGREEMENTPATH);
+  const [item, setItem] = useState(contentTypeValues);
+
+  const removeItem = (id) => {
+    const newItemList = item.filter((i) => i.id !==id);
+    setItem(newItemList);
+  }
 
   return (
     <div data-test-edit-agreement-info>
@@ -74,6 +83,7 @@ const FormInfo = ({
             render={() => (
               <MultiSelection
                 dataOptions={contentTypeValues}
+                key={id}
                 id="edit-agreement-content-types"
                 label={<FormattedMessage id="ui-agreements.agreements.agreementContentType" />}
                 onChange={items => {
@@ -88,6 +98,7 @@ const FormInfo = ({
                 onRemove={item => {
                   console.log('remove item: %o', item);
                 }}
+                onClick={() => removeItem(item.id)}
                 parse={v => v} // Lets us send an empty string instead of `undefined`
                 value={values.agreementContentTypes?.filter(v => !v._delete).map(v => v.contentType)}
               />
@@ -181,6 +192,7 @@ FormInfo.propTypes = {
       setFieldData: PropTypes.func.isRequired,
     }).isRequired,
     change: PropTypes.object,
+    remove: PropTypes.object,
   }),
   initialValues: PropTypes.object,
   values: PropTypes.object,
