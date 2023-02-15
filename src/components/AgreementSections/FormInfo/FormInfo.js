@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
@@ -35,20 +35,21 @@ const FormInfo = ({
   form: {
     mutators,
     change,
-    remove
   },
   values,
   id
 }) => {
   console.log("VALUES: %o", values?.agreementContentTypes)
-  // deal with this in a second
   const validateAsyncBackend = useAsyncValidation('ui-agreements', validationEndPoint.AGREEMENTPATH);
-  /* const [item, setItem] = useState(contentTypeValues);
 
-  const removeItem = (id) => {
-    const newItemList = item.filter((i) => i.id !==id);
-    setItem(newItemList);
-  } */
+  const [ctv, setCtv] = useState(values?.agreementContentTypes);
+  useEffect(() => {
+    if (!isEqual(ctv, values?.agreementContentTypes)) {
+      change('agreementContentTypes', ctv);
+    }
+  }, [change, ctv, values]);
+
+  console.log("CTV: %o", ctv)
 
   return (
     <div data-test-edit-agreement-info>
@@ -80,42 +81,43 @@ const FormInfo = ({
           />
         </Col>
         <Col xs={4}>
+          {
+            /* FIXME This is a spearate componet rather than
+             * being inside the "render" of the field because weird crap
+             * was happening
+             */
+          }
           <Field
             name="agreementContentTypes"
-            render={({ input: { onChange, value } }) => (
+            render={() => (
               <MultiSelection
                 key={id}
                 dataOptions={contentTypeValues}
                 id="edit-agreement-content-types"
                 label={<FormattedMessage id="ui-agreements.agreements.agreementContentType" />}
-                onChange={(items) => {
-                  console.log("current value: %o", value)
-                  console.log("onchange items: %o", items)
-                  onChange([
-                    ...items?.map(i => {
-                      if (i._delete || i.contentType) {
-                        return i;
-                      }
-
-                      return ({ contentType: i.value });
-                    }),
-                  ]);
+                onAdd={(item) => {
+                  console.log("onAdd item: %o", item)
+                  setCtv([...values?.agreementContentTypes, { contentType: item }]);
                 }}
-                onRemove={async item => {
+                onRemove={item => {
                   console.log("onremove item: %o", item)
                   const currentValues = values?.agreementContentTypes;
+                  const removedItemIndex = currentValues?.findIndex(val => val?.id === item.id);
                   if (item?.id) {
-                    const removedItemIndex = currentValues?.findIndex(val => val?.id === item.id);
                     currentValues[removedItemIndex] = { id: item.id, _delete: true };
                     // This will trigger the onChange handler
-                    onChange(currentValues);
+                    console.log("CVs: %o", currentValues)
+                    setCtv(currentValues);
+                  } else {
+                    currentValues.splice(removedItemIndex, 1);
+                    setCtv(currentValues);
                   }
                 }}
                 parse={v => v} // Lets us send an empty string instead of `undefined`
-                value={values?.agreementContentTypes?.filter(v => !v._delete)}
+                value={ctv?.filter(v => !v._delete)}
                 /*
-                 * ValueFormatter passes the item inside a property called `option`
-                 */
+                  * ValueFormatter passes the item inside a property called `option`
+                  */
                 valueFormatter={({ option: item }) => {
                   const contentTypeValue = item?.contentType?.value ?? item?.contentType;
                   const relevantRefdata = contentTypeValues?.find(val => val?.value === contentTypeValue);
@@ -211,7 +213,7 @@ FormInfo.propTypes = {
     mutators: PropTypes.shape({
       setFieldData: PropTypes.func.isRequired,
     }).isRequired,
-    change: PropTypes.object,
+    change: PropTypes.func,
     remove: PropTypes.object,
   }),
   initialValues: PropTypes.object,
