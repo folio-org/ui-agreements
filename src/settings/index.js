@@ -34,13 +34,13 @@ const ErmSettings = (props) => {
         {
           route: 'general',
           label: <FormattedMessage id="ui-agreements.settings.displaySettings" />,
-          perm: 'ui-agreements.generalSettings.view',
+          perm: 'settings.agreements.enabled',
           component: GeneralSettings,
         },
         {
           component: AgreementsCustomProperties,
           label: <FormattedMessage id="ui-agreements.settings.supplementaryProperties" />,
-          perm: 'ui-agreements.supplementaryProperties.view',
+          perm: 'settings.agreements.enabled',
           route: 'supplementaryProperties',
         },
       ]
@@ -51,13 +51,13 @@ const ErmSettings = (props) => {
         {
           component: PickListSettings,
           label: <FormattedMessage id="ui-agreements.settings.pickLists" />,
-          perm: 'ui-agreements.picklists.view',
+          perm: 'settings.agreements.enabled',
           route: 'pick-lists',
         },
         {
           component: PickListValueSettings,
           label: <FormattedMessage id="ui-agreements.settings.pickListValues" />,
-          perm: 'ui-agreements.picklists.view',
+          perm: 'settings.agreements.enabled',
           route: 'pick-list-values',
         },
       ]
