@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
@@ -42,14 +42,52 @@ const FormInfo = ({
   console.log("VALUES: %o", values?.agreementContentTypes)
   const validateAsyncBackend = useAsyncValidation('ui-agreements', validationEndPoint.AGREEMENTPATH);
 
-  const [ctv, setCtv] = useState(values?.agreementContentTypes);
-  useEffect(() => {
-    if (!isEqual(ctv, values?.agreementContentTypes)) {
-      change('agreementContentTypes', ctv);
-    }
-  }, [change, ctv, values]);
+  const reducer = (state, action) => {
+    const curClone = state?.options;
+    const index = curClone.findIndex(o => action?.payload.value === o.value);
 
-  console.log("CTV: %o", ctv)
+    switch (action?.type) {
+      case 'removed':
+        curClone[index]._delete = true;
+        delete curClone[index]._added;
+        return {
+          options: curClone,
+          value: curClone.filter((v) => v._added)
+        };
+      case 'added':
+        curClone[index]._added = true;
+        delete curClone[index]._delete;
+
+        return {
+          options: curClone,
+          value: curClone.filter((v) => v._added)
+        };
+      default:
+        throw new Error();
+    }
+  };
+
+  const [contentTypeValueState, contentTypeValueDispatch] = useReducer(
+    reducer,
+    {
+      options: contentTypeValues?.map(act => ({
+        value: act.value,
+        label: act.label,
+        contentType: act,
+        // Make sure we have "added" any that come in from the database
+        _added: !!values?.agreementContentTypes?.find(vact => vact?.contentType?.value === act?.value)
+      })),
+      value: values?.agreementContentTypes?.map(act => ({
+        ...act,
+        // Introduce value/label here so we know what's already selected
+        value: act?.contentType?.value,
+        label: act?.contentType?.label,
+      }))
+    }
+  );
+
+  console.log("contentTypeValueState: %o", contentTypeValueState?.value)
+  console.log("contentTypeValueState options: %o", contentTypeValueState?.options)
 
   return (
     <div data-test-edit-agreement-info>
@@ -89,37 +127,54 @@ const FormInfo = ({
           }
           <Field
             name="agreementContentTypes"
-            render={() => (
+            render={({ input: { onChange } }) => (
               <MultiSelection
                 key={id}
-                dataOptions={contentTypeValues}
+                dataOptions={contentTypeValueState.options}
                 id="edit-agreement-content-types"
                 label={<FormattedMessage id="ui-agreements.agreements.agreementContentType" />}
-                onAdd={(item) => {
-                  console.log("onAdd item: %o", item)
-                  setCtv([...values?.agreementContentTypes, { contentType: item }]);
+                onAdd={item => {
+                  const currentValues = values?.agreementContentTypes;
+                  console.log("Current values: %o", currentValues)
+
+                  // Does item.value exist in currentValues?
+                  const relevantValueIndex = currentValues?.findIndex(cv => (
+                    cv?.contentType?.value === item?.value ||
+                    cv?.contentType === item?.value
+                  ));
+
+                  if (relevantValueIndex === -1) {
+                    onChange([...currentValues, { contentType: item?.value }]);
+                  } else if (currentValues[relevantValueIndex]?._delete) {
+                    // If it was deleted by mistake, simply "undo" delete by passing id
+                    onChange([...currentValues?.splice(relevantValueIndex, 1), { id: currentValues[relevantValueIndex].id }]);
+                  }
+
+                  contentTypeValueDispatch({ type: 'added', payload: item });
                 }}
                 onRemove={item => {
-                  console.log("onremove item: %o", item)
                   const currentValues = values?.agreementContentTypes;
-                  const removedItemIndex = currentValues?.findIndex(val => val?.id === item.id);
-                  if (item?.id) {
-                    currentValues[removedItemIndex] = { id: item.id, _delete: true };
-                    // This will trigger the onChange handler
-                    console.log("CVs: %o", currentValues)
-                    setCtv(currentValues);
-                  } else {
-                    currentValues.splice(removedItemIndex, 1);
-                    setCtv(currentValues);
+                  console.log("Current values: %o", currentValues)
+
+                  // Does item.value exist in currentValues?
+                  const relevantValueIndex = currentValues?.findIndex(cv => (
+                    cv?.contentType?.value === item?.value ||
+                    cv?.contentType === item?.value
+                  ));
+
+                  // Find and remove from values.
+                  if (relevantValueIndex !== -1) {
+                    onChange([...currentValues?.splice(relevantValueIndex, 1), { id: currentValues[relevantValueIndex].id, _delete: true }]);
                   }
+                  contentTypeValueDispatch({ type: 'removed', payload: item });
                 }}
                 parse={v => v} // Lets us send an empty string instead of `undefined`
-                value={ctv?.filter(v => !v._delete)}
+                value={contentTypeValueState.value}
                 /*
                   * ValueFormatter passes the item inside a property called `option`
                   */
                 valueFormatter={({ option: item }) => {
-                  const contentTypeValue = item?.contentType?.value ?? item?.contentType;
+                  const contentTypeValue = item?.contentType?.value ?? item?.value;
                   const relevantRefdata = contentTypeValues?.find(val => val?.value === contentTypeValue);
                   return relevantRefdata?.label ?? relevantRefdata?.value;
                 }}
