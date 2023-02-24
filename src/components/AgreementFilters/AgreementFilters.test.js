@@ -11,10 +11,10 @@ const stateMock = jest.fn();
 
 const filterHandlers = {
   state: stateMock,
-  checkbox: () => { },
-  clear: () => { },
-  clearGroup: () => { },
-  reset: () => { },
+  checkbox: () => {},
+  clear: () => {},
+  clearGroup: () => {},
+  reset: () => {},
 };
 
 describe('AgreementFilters', () => {
