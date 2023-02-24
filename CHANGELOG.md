@@ -1,9 +1,41 @@
 # Change history for ui-agreements
 
-## 8.4.0 In progress
-* ERM-2416 Separate title search and package search in local KB e-resource searching
-* ERM-2452 Remove eresources search
+## 9.1.0 In progress
+
+## 9.0.0 2023-02-22
 * ERM-2613 Remove unneeded `react-redux`. Upgrade `stripes-acq-components` to `v4`
+* ERM-2596 Increment ui-agreements to Stripes v8
+* ERM-2574 fix deprecated default export from 'zustand' in ui-agreements
+* ERM-2572 fix deprecated default export from 'zustand'
+* ERM-2562 Increment ui-agreements to Stripes v8
+* ERM-2533 Refactor interfaces code to react-query
+* ERM-2511 Make use of titles/electronic endpoint in ui-agreements
+* ERM-2510 Titles Endpoint does not have functionality of eresources "electronic" endpoint
+* ERM-2489 Reduce number eresource retrieved to 25 rather than 100
+* ERM-2486 Refactor agreement routes
+* ERM-2481 Add "Reason for closure" filter to Agreements search
+* ERM-2468 Give titles, packages and PCIs separate icons
+* ERM-2467 Change export file name and file extension in Agreements and Local KB admin
+* ERM-2465 Is Perpetual dropdown not populated in Agreement create/edit form
+* ERM-2463 Implement FormattedDateTime Interactor Pattern
+* ERM-2454 Bump ui-agreements erm-components dep
+* ERM-2452 Remove eresources search
+* ERM-2449 Add Cancellation date filter to Agreements search and sort
+* ERM-2445 Display a callout when exporting an Agreement
+* ERM-2434 "customProperties.ctx.title": "" in en.json
+* ERM-2423 Performance issues on displaying external agreement lines
+* ERM-2417 Do not show results on local KB e-resource search until a search or filter applied
+* ERM-2416 Separate title search and package search in local KB e-resource searching
+* ERM-2399 Missing Translations
+* ERM-2397 AgreementFilters should not be rendered within <form> intended for search field
+* ERM-2356 Add an option to "create another" agreement line
+* ERM-2339 Return no results on first display of Agreement Line search
+* ERM-2330 Add new tab group for switching between Agreements and Local KB searches
+* ERM-2309 Filter package resources by availabilityConstraints
+* ERM-2308 Display list of availabilityConstraints in package display
+* ERM-2289 Agreement line search and filter screen initial implementation
+* ERM-2183 Basket functionality still uses stripes-connect
+* ERM-1242 Frontend tests for URL customisation in RTL
 
 ## 8.3.0 2022-10-27
 * ERM-2382 Unchecking all search field boxes in Agreements carries out search with no fields
