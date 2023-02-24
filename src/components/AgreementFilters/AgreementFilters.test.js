@@ -11,10 +11,10 @@ const stateMock = jest.fn();
 
 const filterHandlers = {
   state: stateMock,
-  checkbox: () => {},
-  clear: () => {},
-  clearGroup: () => {},
-  reset: () => {},
+  checkbox: () => { },
+  clear: () => { },
+  clearGroup: () => { },
+  reset: () => { },
 };
 
 describe('AgreementFilters', () => {
@@ -36,7 +36,7 @@ describe('AgreementFilters', () => {
     await Accordion('Status').exists();
   });
 
-  test('renders the Status Accordion', async () => {
+  test('renders the Reason for closure Accordion', async () => {
     await Accordion('Reason for closure').exists();
   });
 
@@ -67,6 +67,10 @@ describe('AgreementFilters', () => {
 
   test('renders the Internal contact role Accordion', async () => {
     await Accordion('Internal contact role').exists();
+  });
+
+  test('renders the Content type Accordion', async () => {
+    await Accordion('Content type').exists();
   });
 
   test('renders the Tags Accordion', async () => {
@@ -107,6 +111,12 @@ describe('AgreementFilters', () => {
   testAgreementFilterCheckbox('renewalPriority', 'for-review');
   testAgreementFilterCheckbox('renewalPriority', 'definitely-renew');
   testAgreementFilterCheckbox('renewalPriority', 'definitely-cancel');
+
+  testAgreementFilterCheckbox('agreementContentType', 'audio');
+  testAgreementFilterCheckbox('agreementContentType', 'books');
+  testAgreementFilterCheckbox('agreementContentType', 'database');
+  testAgreementFilterCheckbox('agreementContentType', 'journals');
+  testAgreementFilterCheckbox('agreementContentType', 'video');
 
   testAgreementFilterCheckbox('isPerpetual', 'yes');
   testAgreementFilterCheckbox('isPerpetual', 'no');

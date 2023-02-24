@@ -11,7 +11,6 @@ import { DateFilter, InternalContactSelection, OrganizationSelection } from '@fo
 
 import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
-
 import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
 
 const propTypes = {
@@ -25,6 +24,7 @@ const FILTERS = [
   'reasonForClosure',
   'renewalPriority',
   'isPerpetual',
+  'agreementContentType',
 ];
 
 export default function AgreementFilters({ activeFilters, data, filterHandlers }) {
@@ -32,8 +32,10 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
 
   const [filterState, setFilterState] = useState({
     agreementStatus: [],
+    reasonForClosure: [],
     renewalPriority: [],
     isPerpetual: [],
+    agreementContentType: [],
     tags: []
   });
 
@@ -57,7 +59,6 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
 
   const renderCheckboxFilter = (name, prps) => {
     const groupFilters = activeFilters[name] || [];
-
     return (
       <Accordion
         displayClearButton={groupFilters.length > 0}
@@ -301,6 +302,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       {renderOrganizationRoleFilter()}
       {renderInternalContactFilter()}
       {renderInternalContactRoleFilter()}
+      {renderCheckboxFilter('agreementContentType', { closedByDefault: true })}
       {renderTagsFilter()}
       {renderCustomPropertyFilters()}
     </AccordionSet>

@@ -18,8 +18,9 @@ import {
   requiredValidator,
   useAsyncValidation,
 } from '@folio/stripes-erm-components';
-import { validationEndPoint, statuses } from '../../../constants';
 
+import { validationEndPoint, statuses } from '../../../constants';
+import ContentTypesFieldArray from '../ContentTypesFieldArray';
 import AgreementPeriodsFieldArray from '../../AgreementPeriodsFieldArray';
 
 const FormInfo = ({
@@ -27,12 +28,12 @@ const FormInfo = ({
     agreementStatusValues = [],
     isPerpetualValues = [],
     reasonForClosureValues = [],
-    renewalPriorityValues = []
+    renewalPriorityValues = [],
   },
   form: {
     mutators
   },
-  values
+  values,
 }) => {
   // deal with this in a second
   const validateAsyncBackend = useAsyncValidation('ui-agreements', validationEndPoint.AGREEMENTPATH);
@@ -57,13 +58,19 @@ const FormInfo = ({
         </Col>
       </Row>
       <Row>
-        <Col xs={12}>
+        <Col md={8} xs={12}>
           <Field
             component={TextArea}
             id="edit-agreement-description"
             label={<FormattedMessage id="ui-agreements.agreements.agreementDescription" />}
             name="description"
             parse={v => v} // Lets us send an empty string instead of `undefined`
+          />
+        </Col>
+        <Col xs={4}>
+          <FieldArray
+            component={ContentTypesFieldArray}
+            name="agreementContentTypes"
           />
         </Col>
       </Row>
