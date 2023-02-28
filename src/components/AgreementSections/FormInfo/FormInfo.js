@@ -129,10 +129,10 @@ const FormInfo = ({
           />
         </Col>
       </Row>
-        <FieldArray
-          component={ContentTypesFieldArray}
-          name="agreementContentTypes"
-        />
+      <FieldArray
+        component={ContentTypesFieldArray}
+        name="agreementContentTypes"
+      />
       <FieldArray
         component={AlternativeNamesFieldArray}
         name="alternateNames"

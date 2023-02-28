@@ -29,7 +29,6 @@ const [
   REMOTE_LICENSE_LINK_STATUS,
   ORG_ROLE,
   RENEWAL_PRIORITY,
-  AGREEMENT_CONTENT_TYPE,
   RELATIONSHIP_TYPE
 ] = [
   'SubscriptionAgreement.AgreementStatus',
@@ -41,7 +40,6 @@ const [
   'RemoteLicenseLink.Status',
   'SubscriptionAgreementOrg.Role',
   'SubscriptionAgreement.RenewalPriority',
-  'SubscriptionAgreement.ContentType',
   'AgreementRelationship.Type'
 ];
 
@@ -66,7 +64,6 @@ const AgreementEditRoute = ({
 
   const refdata = useAgreementsRefdata({
     desc: [
-      AGREEMENT_CONTENT_TYPE,
       AGREEMENT_STATUS,
       REASON_FOR_CLOSURE,
       AMENDMENT_STATUS,
@@ -150,12 +147,10 @@ const AgreementEditRoute = ({
       reasonForClosure = {},
       renewalPriority = {},
       supplementaryDocs = [],
-      agreementContentTypes = []
     } = initialValues;
 
     // Set the values of dropdown-controlled props as values rather than objects.
     initialValues.agreementStatus = agreementStatus.value;
-    initialValues.agreementContentTypes = agreementContentTypes.value;
     initialValues.isPerpetual = isPerpetual.value;
     initialValues.reasonForClosure = reasonForClosure.value;
     initialValues.renewalPriority = renewalPriority.value;
@@ -178,11 +173,6 @@ const AgreementEditRoute = ({
             status: assignedAmendment.status ? assignedAmendment.status.value : undefined,
           };
         })
-    }));
-    initialValues.agreementContentTypes = agreementContentTypes.map(act => ({
-      id: act.contentType.id,
-      label: act.contentType.label,
-      value: act.contentType.value
     }));
 
     joinRelatedAgreements(initialValues);
@@ -229,7 +219,6 @@ const AgreementEditRoute = ({
   const handleSubmit = (values) => {
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
     splitRelatedAgreements(values, relationshipTypeValues);
-    console.log("values: %o",values);
     putAgreement(values);
   };
 
@@ -252,7 +241,6 @@ const AgreementEditRoute = ({
       data={{
         agreementLines: getAgreementLines(),
         agreementLinesToAdd: getAgreementLinesToAdd(),
-        contentTypeValues: getRefdataValuesByDesc(refdata, AGREEMENT_CONTENT_TYPE),
         agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
         reasonForClosureValues: getRefdataValuesByDesc(refdata, REASON_FOR_CLOSURE),
         amendmentStatusValues: getRefdataValuesByDesc(refdata, AMENDMENT_STATUS),

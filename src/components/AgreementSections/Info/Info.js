@@ -21,9 +21,8 @@ const Info = ({ agreement }) => {
       return (
         <span key={value}>
           {label}
-          {index < label.length -1 && '; '}
+          {index < label.length && '; '}
         </span>
-        
       );
     })
   );

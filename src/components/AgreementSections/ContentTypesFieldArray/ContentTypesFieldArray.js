@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
-import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, requiredValidator } from '@folio/stripes-erm-components';
 import {
   Button,
   Col,
@@ -10,16 +10,15 @@ import {
   Row,
   Headline,
 } from '@folio/stripes/components';
-import { requiredValidator } from '@folio/stripes-erm-components';
+import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 import { useAgreementsRefdata } from '../../../hooks';
 
-import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
 const [
   AGREEMENT_CONTENT_TYPE
 ] = [
-    'SubscriptionAgreement.ContentType',
-]
+  'SubscriptionAgreement.ContentType',
+];
 
 const ContentTypesFieldArray = ({
   fields: { name }
@@ -36,18 +35,18 @@ const ContentTypesFieldArray = ({
     return items.map((act, index) => (
       <div
         key={act + index}
-      data-testid={`contentTypesFieldArray[${index}]`}
+        data-testid={`contentTypesFieldArray[${index}]`}
       >
         <Row>
           <Col xs={11}>
             <Field
               component={Select}
-              id="content-type-field-array"
-              name={`${name}[${index}].name`}
               dataOptions={contentTypeValues}
-              validate={requiredValidator}
+              id="content-type-field-array"
+              name={`${name}[${index}].contentType.value`}
               placeholder=" "
-              />
+              validate={requiredValidator}
+            />
           </Col>
           <Col xs={1}>
             <IconButton
@@ -86,8 +85,7 @@ const ContentTypesFieldArray = ({
 ContentTypesFieldArray.propTypes = {
   fields: PropTypes.shape({
     name: PropTypes.string,
-  }),
-  contentTypeValues: PropTypes.arrayOf(PropTypes.object),
+  })
 };
 
 export default ContentTypesFieldArray;
