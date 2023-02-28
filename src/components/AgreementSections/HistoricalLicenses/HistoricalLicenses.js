@@ -4,6 +4,7 @@ import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Accordion, Badge, Layout } from '@folio/stripes/components';
 
+import orderBy from 'lodash/orderBy';
 import LinkedLicenseCard from '../../LinkedLicenseCard';
 import { statuses } from '../../../constants';
 
@@ -44,6 +45,8 @@ export default class HistoricalLicenses extends React.Component {
     const licenses = get(this.props, 'agreement.linkedLicenses', [])
       .filter(l => get(l, 'status.value') === statuses.HISTORICAL);
 
+    const sortedLicenses = orderBy(licenses, ['remoteId_object.startDate', 'remoteId_object.endDate', 'remoteId_object.name'], ['desc', 'desc', 'asc']);
+
     return (
       <Accordion
         displayWhenClosed={<Badge>{licenses.length}</Badge>}
@@ -51,7 +54,7 @@ export default class HistoricalLicenses extends React.Component {
         id={id}
         label={<FormattedMessage id="ui-agreements.license.historicalLicenses" />}
       >
-        {licenses.length ? licenses.map(this.renderLicense) : this.renderEmpty()}
+        {licenses.length ? sortedLicenses.map(this.renderLicense) : this.renderEmpty()}
       </Accordion>
     );
   }

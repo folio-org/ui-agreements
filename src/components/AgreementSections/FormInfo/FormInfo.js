@@ -67,12 +67,6 @@ const FormInfo = ({
             parse={v => v} // Lets us send an empty string instead of `undefined`
           />
         </Col>
-        <Col xs={4}>
-          <FieldArray
-            component={ContentTypesFieldArray}
-            name="agreementContentTypes"
-          />
-        </Col>
       </Row>
       <Row>
         <Col md={6} xs={12}>
@@ -135,6 +129,10 @@ const FormInfo = ({
           />
         </Col>
       </Row>
+        <FieldArray
+          component={ContentTypesFieldArray}
+          name="agreementContentTypes"
+        />
       <FieldArray
         component={AlternativeNamesFieldArray}
         name="alternateNames"

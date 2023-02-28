@@ -179,6 +179,11 @@ const AgreementEditRoute = ({
           };
         })
     }));
+    initialValues.agreementContentTypes = agreementContentTypes.map(act => ({
+      id: act.contentType.id,
+      label: act.contentType.label,
+      value: act.contentType.value
+    }));
 
     joinRelatedAgreements(initialValues);
 
@@ -224,12 +229,7 @@ const AgreementEditRoute = ({
   const handleSubmit = (values) => {
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
     splitRelatedAgreements(values, relationshipTypeValues);
-
-    const payload = values.agreementContentTypes.map(act => ({
-      contentType: { value: act.value }
-    }));
-    values.agreementContentTypes = payload;
-
+    console.log("values: %o",values);
     putAgreement(values);
   };
 

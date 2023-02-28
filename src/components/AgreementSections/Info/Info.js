@@ -16,12 +16,14 @@ import InfoPeriods from '../InfoPeriods';
 
 const Info = ({ agreement }) => {
   const renderContentTypes = (agreementContentTypes) => (
-    agreementContentTypes.map(act => {
+    agreementContentTypes.map((act, index) => {
       const { contentType: { label, value } } = act;
       return (
-        <li key={value}>
+        <span key={value}>
           {label}
-        </li>
+          {index < label.length -1 && '; '}
+        </span>
+        
       );
     })
   );
@@ -80,7 +82,9 @@ const Info = ({ agreement }) => {
             </div>
           </KeyValue>
         </Col>
-        <Col xs={4}>
+      </Row>
+      <Row>
+        <Col xs={8}>
           <KeyValue
             label={<FormattedMessage id="ui-agreements.agreements.agreementContentType" />}
             value={agreement?.agreementContentTypes?.length > 0 ? renderContentTypes(agreement.agreementContentTypes) : <NoValue />}
