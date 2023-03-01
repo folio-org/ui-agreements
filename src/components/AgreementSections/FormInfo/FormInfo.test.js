@@ -7,6 +7,7 @@ import translationsProperties from '../../../../test/helpers';
 import { data, initialValues } from './testResources';
 
 jest.mock('../../AgreementPeriodsFieldArray', () => () => <div>AgreementPeriodsFieldArray</div>);
+jest.mock('../ContentTypesFieldArray', () => () => <div>ContentTypesFieldArray</div>);
 
 const onSubmit = jest.fn();
 const onAsyncValidate = jest.fn();
@@ -108,6 +109,11 @@ describe('FormInfo', () => {
       await Select('Is perpetual').choose('No');
     });
 
+    test('renders the ContentTypes FieldArray', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('ContentTypesFieldArray')).toBeInTheDocument();
+    });
+
     test('renders the AlternativeNames FieldArray', () => {
       const { getByText } = renderComponent;
       expect(getByText('AlternativeNamesFieldArray')).toBeInTheDocument();
@@ -155,6 +161,11 @@ describe('FormInfo', () => {
 
     test('renders the expected value in the Is perpetual dropdown', async () => {
       await Select('Is perpetual').has({ value: 'yes' });
+    });
+
+    test('renders the ContentTypes FieldArray', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('ContentTypesFieldArray')).toBeInTheDocument();
     });
 
     test('renders the AlternativeNames FieldArray', () => {
