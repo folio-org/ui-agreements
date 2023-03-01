@@ -183,7 +183,7 @@ const agreement = {
           'deliveryMethod': 'Online',
           'statisticsFormat': 'COUNTER',
           'locallyStored': 'https://www.lib.sample.edu/staff/collectiondevelopment/',
-          'onlineLocation': 'http://www.acs.org/content/acs/en.html',
+          'onlineLocation': 'https://www.acs.org/content/acs/en.html',
           'type': [
             'End user',
             'Invoices'
