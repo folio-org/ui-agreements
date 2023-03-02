@@ -466,7 +466,7 @@ const refdata = [
   },
   {
     id: '2c9180a6869d971801869d9cee040049',
-    des: "SubscriptionAgreement.ContentType",
+    des: 'SubscriptionAgreement.ContentType',
     internal: false,
     values: [
       {
@@ -480,7 +480,7 @@ const refdata = [
         label: 'Books'
       },
       {
-        id: '2c9180a6869d971801869d9cee0f004c"',
+        id: '2c9180a6869d971801869d9cee0f004c',
         value: 'database',
         label: 'Database'
       },
