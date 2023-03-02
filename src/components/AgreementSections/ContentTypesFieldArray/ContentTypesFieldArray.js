@@ -84,7 +84,7 @@ const ContentTypesFieldArray = ({
       const dataOptions = agreementContentType.filter(ct => !contentTypeInUse.includes(ct.value) || ct.value === act.contentType?.value);
       return (
         <div
-          key={act + index}
+          key={`${act}${index}`}
           data-testid={`contentTypesFieldArray[${index}]`}
         >
           <Row>

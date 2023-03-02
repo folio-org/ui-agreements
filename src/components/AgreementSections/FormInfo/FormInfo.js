@@ -28,12 +28,12 @@ const FormInfo = ({
     agreementStatusValues = [],
     isPerpetualValues = [],
     reasonForClosureValues = [],
-    renewalPriorityValues = [],
+    renewalPriorityValues = []
   },
   form: {
     mutators
   },
-  values,
+  values
 }) => {
   // deal with this in a second
   const validateAsyncBackend = useAsyncValidation('ui-agreements', validationEndPoint.AGREEMENTPATH);
@@ -58,7 +58,7 @@ const FormInfo = ({
         </Col>
       </Row>
       <Row>
-        <Col md={8} xs={12}>
+        <Col xs={12}>
           <Field
             component={TextArea}
             id="edit-agreement-description"
