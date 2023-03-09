@@ -466,7 +466,7 @@ const refdata = [
   },
   {
     id: '2c9180a6869d971801869d9cee040049',
-    des: 'SubscriptionAgreement.ContentType',
+    desc: 'SubscriptionAgreement.ContentType',
     internal: false,
     values: [
       {
