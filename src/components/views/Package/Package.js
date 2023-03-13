@@ -86,7 +86,7 @@ export default class Package extends React.Component {
               </Col>
             </Row>
             <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-              {(description || alternateResourceNames?.length > 0 || packageDescriptionUrls?.length || identifiers?.length) &&
+              {(description || !!alternateResourceNames?.length || !!packageDescriptionUrls?.length || !!identifiers?.length) &&
                 <ExtendedPackageInformation {...this.getSectionProps('extendedPackageInformation')} />
               }
               <Agreements
