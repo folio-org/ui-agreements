@@ -1,6 +1,7 @@
 import { useHistory } from 'react-router';
 
 import { FormattedMessage } from 'react-intl';
+import { useStripes } from '@folio/stripes/core';
 
 import { Pane } from '@folio/stripes/components';
 
@@ -9,6 +10,13 @@ import { REFDATA_ENDPOINT } from '../../constants/endpoints';
 
 const PickListSettings = () => {
   const history = useHistory();
+  const stripes = useStripes();
+  const perm = stripes.hasPerm('ui-agreements.picklists.manage');
+  const displayConditions = {
+    create: perm,
+    delete: perm,
+    edit: perm
+  };
 
   return (
     <Pane
@@ -21,6 +29,7 @@ const PickListSettings = () => {
       }
     >
       <EditableRefdataCategoryList
+        displayConditions={displayConditions}
         label={
           <FormattedMessage id="ui-agreements.settings.pickLists" />
         }

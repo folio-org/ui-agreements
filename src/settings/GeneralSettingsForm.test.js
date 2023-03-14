@@ -12,6 +12,11 @@ jest.mock('./components/HideAccordions', () => () => <div>HideAccordions</div>);
 
 const onSubmitMock = jest.fn();
 
+const stripes = {
+  hasPerm: () => true,
+};
+
+
 describe('GeneralSettingsForm', () => {
   let renderComponent;
   beforeEach(() => {
@@ -20,6 +25,7 @@ describe('GeneralSettingsForm', () => {
         <GeneralSettingsForm
           label={<FormattedMessage id="ui-agreements.settings.displaySettings" />}
           onSubmit={onSubmitMock}
+          stripes={stripes}
         />
       </MemoryRouter>,
       translationsProperties

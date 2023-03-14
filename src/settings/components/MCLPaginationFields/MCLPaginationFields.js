@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { Field } from 'react-final-form';
-
+import { useStripes } from '@folio/stripes/core';
 import {
   Col,
   Layout,
@@ -23,6 +23,8 @@ const validate = (fieldValue, min, max) => {
 };
 
 const MCLPaginationFields = () => {
+  const stripes = useStripes();
+  const disabled = !stripes.hasPerm('ui-agreements.generalSettings.manage');
   return (
     <>
       <Layout className="padding-bottom-gutter padding-top-gutter" data-test-mcl-description>
@@ -47,6 +49,7 @@ const MCLPaginationFields = () => {
               ariaLabel={`${mcl}-page-size`}
               component={TextField}
               data-testid={`${mcl}-page-size-testId`}
+              disabled={disabled}
               id={`${mcl}-page-size-id`}
               name={`pageSize.${mcl}`}
               parse={v => parseInt(v, 10)}

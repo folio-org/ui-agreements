@@ -1,7 +1,7 @@
 # Change history for ui-agreements
 
 ## 9.1.0 In progress
-
+* ERM-2624 Add view only permissions for Agreement settings
 ## 9.0.0 2023-02-22
 * ERM-2613 Remove unneeded `react-redux`. Upgrade `stripes-acq-components` to `v4`
 * ERM-2596 Increment ui-agreements to Stripes v8
