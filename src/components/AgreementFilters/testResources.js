@@ -1,9 +1,17 @@
+import refdata from '../../../test/jest/refdata';
+
+const findRefdata = (desc) => (refdata.find(obj => obj.desc === desc)?.values);
+
 const activeFilters = {
   'agreementStatus': [
     'active',
     'draft',
     'in_negotiation',
     'requested'
+  ],
+  'agreementContentType': [
+    'books',
+    'database'
   ],
   'orgs': [
     '9032ae7d-ca16-4399-abae-e6186628c669'
@@ -27,86 +35,13 @@ const activeFilters = {
 
 const data = {
   'agreements': [],
-  'agreementStatusValues': [{
-    'id': 'c2852a2226d11e472d881fa19cb9d715',
-    'value': 'closed',
-    'label': 'Closed'
-  },
-  {
-    'id': '2c91809c7cd92b6b017cd932c66d0038',
-    'value': 'draft',
-    'label': 'Draft'
-  },
-  {
-    'id': '2c91809c7cd92b6b017cd932c6730039',
-    'value': 'requested',
-    'label': 'Requested'
-  },
-  {
-    'id': '2c91809c7cd92b6b017cd932c678003a',
-    'value': 'in_negotiation',
-    'label': 'In negotiation'
-  },
-  {
-    'id': '2c91809c7cd92b6b017cd932c67e003b',
-    'value': 'active',
-    'label': 'Active'
-  }
-  ],
-  'renewalPriorityValues': [{
-    'id': '2c91809c7cd92b6b017cd932c6350032',
-    'value': 'definitely_renew',
-    'label': 'Definitely renew'
-  },
-  {
-    'id': '2c91809c7cd92b6b017cd932c6390033',
-    'value': 'for_review',
-    'label': 'For review'
-  },
-  {
-    'id': '2c91809c7cd92b6b017cd932c63f0034',
-    'value': 'definitely_cancel',
-    'label': 'Definitely cancel'
-  }
-  ],
-  'isPerpetualValues': [{
-    'id': '2c91809c7cd92b6b017cd932c617002b',
-    'value': 'yes',
-    'label': 'Yes'
-  },
-  {
-    'id': '2c91809c7cd92b6b017cd932c61b002c',
-    'value': 'no',
-    'label': 'No'
-  }
-  ],
-  'contactRoleValues': [{
-    'id': '2c91809c7cd92b6b017cd932c5750006',
-    'value': 'agreement_owner',
-    'label': 'Agreement owner'
-  },
-  {
-    'id': '2c91809c7cd92b6b017cd932c57a0007',
-    'value': 'authorized_signatory',
-    'label': 'Authorized signatory'
-  },
-  {
-    'id': '2c91809c7cd92b6b017cd932c57f0008',
-    'value': 'erm_librarian',
-    'label': 'ERM librarian'
-  },
-  {
-    'id': '2c91809c7cd92b6b017cd932c5840009',
-    'value': 'subject_specialist',
-    'label': 'Subject specialist'
-  }
-  ],
-  'orgRoleValues': [{
-    'id': '2c91809c7cd92b6b017cd932c5a90012',
-    'value': 'content_provider',
-    'label': 'Content provider'
-  }],
+  'agreementStatusValues': findRefdata('SubscriptionAgreement.AgreementStatus'),
+  'renewalPriorityValues': findRefdata('SubscriptionAgreement.RenewalPriority'),
+  'isPerpetualValues': findRefdata('Global.Yes_No'),
+  'contactRoleValues': findRefdata('InternalContact.Role'),
+  'orgRoleValues': findRefdata('SubscriptionAgreementOrg.Role'),
   'supplementaryProperties': [],
+  'agreementContentTypeValues': findRefdata('SubscriptionAgreement.ContentType'),
   'tagsValues': [{
     'id': 'aeb85be7-7440-474f-94de-066fd69c7604',
     'label': 'catalogingrecords',

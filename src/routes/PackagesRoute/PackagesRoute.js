@@ -75,11 +75,6 @@ const PackagesRoute = ({
         status: 'lifecycleStatus.value',
         tags: 'tags.value',
       },
-      filters: [
-        {
-          value: 'electronic'
-        }
-      ],
       perPage: RESULT_COUNT_INCREMENT
     }, (query ?? {}))
   ), [query]);

@@ -18,8 +18,9 @@ import {
   requiredValidator,
   useAsyncValidation,
 } from '@folio/stripes-erm-components';
-import { validationEndPoint, statuses } from '../../../constants';
 
+import { validationEndPoint, statuses } from '../../../constants';
+import ContentTypesFieldArray from '../ContentTypesFieldArray';
 import AgreementPeriodsFieldArray from '../../AgreementPeriodsFieldArray';
 
 const FormInfo = ({
@@ -128,6 +129,10 @@ const FormInfo = ({
           />
         </Col>
       </Row>
+      <FieldArray
+        component={ContentTypesFieldArray}
+        name="agreementContentTypes"
+      />
       <FieldArray
         component={AlternativeNamesFieldArray}
         name="alternateNames"

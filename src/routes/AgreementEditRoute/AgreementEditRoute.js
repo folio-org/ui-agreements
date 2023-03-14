@@ -88,7 +88,7 @@ const AgreementEditRoute = ({
     total: agreementLineCount,
     isLoading: areLinesLoading
   } = useBatchedFetch({
-    batchParams:  {
+    batchParams: {
       filters: [
         {
           path: 'owner',
@@ -219,7 +219,6 @@ const AgreementEditRoute = ({
   const handleSubmit = (values) => {
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
     splitRelatedAgreements(values, relationshipTypeValues);
-
     putAgreement(values);
   };
 

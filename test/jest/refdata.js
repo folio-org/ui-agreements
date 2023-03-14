@@ -463,6 +463,38 @@ const refdata = [
         label: 'No'
       }
     ]
+  },
+  {
+    id: '2c9180a6869d971801869d9cee040049',
+    desc: 'SubscriptionAgreement.ContentType',
+    internal: false,
+    values: [
+      {
+        id: '2c9180a6869d971801869d9cee13004d',
+        value: 'audio',
+        label: 'Audio'
+      },
+      {
+        id: '2c9180a6869d971801869d9cee06004a',
+        value: 'books',
+        label: 'Books'
+      },
+      {
+        id: '2c9180a6869d971801869d9cee0f004c',
+        value: 'database',
+        label: 'Database'
+      },
+      {
+        id: '2c9180a6869d971801869d9cee0b004b',
+        value: 'journals',
+        label: 'Journals'
+      },
+      {
+        id: '2c9180a6869d971801869d9cee17004e',
+        value: 'video',
+        label: 'Video'
+      }
+    ]
   }
 ];
 
