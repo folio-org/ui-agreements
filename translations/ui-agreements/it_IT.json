@@ -746,5 +746,7 @@
     "agreements.exportingAgreement": "<strong>Esportazione dei contratti:</strong> Una volta completato, il file JSON verrà scaricato nel browser. Se il contratto contiene un numero elevato di titoli, l'operazione potrebbe richiedere del tempo.",
     "packages": "Pacchetti",
     "permission.packages.view": "Contratti: Cercare e visualizzare pacchetti",
-    "packages.source": "Fonte (origine dati esterna)"
+    "packages.source": "Fonte (origine dati esterna)",
+    "agreements.agreementContentType": "Content type",
+    "agreements.addAgreementContentType": "Add content type"
 }
