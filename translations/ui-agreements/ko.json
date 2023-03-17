@@ -746,5 +746,7 @@
     "agreements.exportingAgreement": "<strong> 계약(Agreements) 내보내기: </strong> 완료되면 JSON 파일이 브라우저에 다운로드됩니다. 계약(Agreements)에 항목이 많은 경우 시간이 다소 걸릴 수 있습니다.",
     "packages": "패키지",
     "permission.packages.view": "계약(Agreements): 패키지 검색 및 보기",
-    "packages.source": "소스(외부 데이터 소스)"
+    "packages.source": "소스(외부 데이터 소스)",
+    "agreements.agreementContentType": "콘텐츠 유형",
+    "agreements.addAgreementContentType": "콘텐츠 유형 추가"
 }

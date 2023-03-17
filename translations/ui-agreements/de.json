@@ -746,5 +746,7 @@
     "agreements.exportingAgreement": "<strong>Vereinbarung exportieren:</strong> Die JSON-Datei wird nach Fertigstellung heruntergeladen. Wenn die Vereinbarung eine große Anzahl von Titeln enthält, kann dies einige Zeit dauern.",
     "packages": "Pakete",
     "permission.packages.view": "Vereinbarungen: Pakete suchen und anzeigen",
-    "packages.source": "Quelle (externe Datenquelle)"
+    "packages.source": "Quelle (externe Datenquelle)",
+    "agreements.agreementContentType": "Content type",
+    "agreements.addAgreementContentType": "Add content type"
 }
