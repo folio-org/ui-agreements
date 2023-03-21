@@ -505,7 +505,7 @@
     "platform.platformProxySettings.used": "Použité",
     "platform.platformProxySettings.notUsed": "Nepoužívá se",
     "platform.platformProxySettings.useThisProxy": "Použijte tuto proxy",
-    "platform.platformProxySettings.doNotUseThisProxy": "Nepoužívejte tento proxy",
+    "platform.platformProxySettings.doNotUseThisProxy": "Nepoužívejte tuto proxy",
     "platform.platformProxyServerSettings": "Nastavení proxy serveru platformy",
     "platform.noplatformProxyServer": "Žádné nastavení proxy serveru platformy",
     "platform.platformProxySettings.doNotUseProxyTooltip": "Nepoužívejte proxy \"{proxyName}\" pro platformu \"{platformName}\"",

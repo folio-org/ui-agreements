@@ -136,7 +136,7 @@
     "identifier.isbn": "ISBN",
     "identifier.pissn": "ISSN (Druckausgabe)",
     "identifier.zdb": "ZDB",
-    "settings.general.hideEResourcesFunctionality.title": "Interne Vereinbarungs-Knowledgebase unterdrücken",
+    "settings.general.hideEResourcesFunctionality.title": "Interne eManagement-Knowledgebase ausblenden",
     "settings.general.hideEResourcesFunctionality.description": "Wenn Sie eine andere App (z. B. eHoldings) als Knowledgebase verwenden und die interne eManagement-Knowledgebase ausblenden möchten, können Sie diese Einstellung anhaken. Im Einzelnen wird dies:",
     "agreementLines.hasCustomCoverage": "Hat benutzerdefinierte Abdeckung",
     "eresources.provider": "Anbieter",
