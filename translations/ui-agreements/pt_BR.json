@@ -618,7 +618,7 @@
     "agreementLines.activeFrom": "Ativo desde",
     "agreementLines.activeTo": "Ativo até",
     "agreementLines.nameReference": "Nome/Referência",
-    "agreementLines.POLines": "Linha de pedido de compra",
+    "agreementLines.POLines": "Linha do pedido de compra",
     "agreementLines.selectAgreement": "Selecione o contrato",
     "agreementLines.noAgreementPlugin": "Nenhum plugin de contrato",
     "agreementLines.selectPOLine": "Selecione a linha PO",
