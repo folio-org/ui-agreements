@@ -26,14 +26,14 @@ const [
   ORG_ROLE,
   AGREEMENT_CONTENT_TYPE
 ] = [
-  'SubscriptionAgreement.AgreementStatus',
-  'SubscriptionAgreement.ReasonForClosure',
-  'SubscriptionAgreement.RenewalPriority',
-  'Global.Yes_No',
-  'InternalContact.Role',
-  'SubscriptionAgreementOrg.Role',
-  'SubscriptionAgreement.ContentType'
-];
+    'SubscriptionAgreement.AgreementStatus',
+    'SubscriptionAgreement.ReasonForClosure',
+    'SubscriptionAgreement.RenewalPriority',
+    'Global.Yes_No',
+    'InternalContact.Role',
+    'SubscriptionAgreementOrg.Role',
+    'SubscriptionAgreement.ContentType'
+  ];
 
 const AgreementsRoute = ({
   children,
@@ -88,7 +88,8 @@ const AgreementsRoute = ({
       sortKeys: {
         agreementStatus: 'agreementStatus.label',
       },
-      perPage: INITIAL_RESULT_COUNT
+      perPage: INITIAL_RESULT_COUNT,
+      fetchItems: false
     }, (query ?? {}))
   ), [qIndex, query]);
 
