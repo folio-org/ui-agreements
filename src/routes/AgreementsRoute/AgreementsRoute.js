@@ -88,8 +88,7 @@ const AgreementsRoute = ({
       sortKeys: {
         agreementStatus: 'agreementStatus.label',
       },
-      perPage: INITIAL_RESULT_COUNT,
-      // expandItems: false
+      perPage: INITIAL_RESULT_COUNT
     }, (query ?? {}))
   ), [qIndex, query]);
 
