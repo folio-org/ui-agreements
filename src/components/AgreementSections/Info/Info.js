@@ -15,17 +15,13 @@ import { statuses } from '../../../constants';
 import InfoPeriods from '../InfoPeriods';
 
 const Info = ({ agreement }) => {
-  const renderContentTypes = (agreementContentTypes) => (
-    agreementContentTypes.map((act, index) => {
-      const { contentType: { label, value } } = act;
-      return (
-        <span key={value}>
-          {label}
-          {index < label.length && '; '}
-        </span>
-      );
-    })
-  );
+  const renderContentTypes = (agreementContentTypes) => {
+    const labels = [];
+    agreementContentTypes.map(act => labels.push(act.contentType.label));
+    return (
+      labels.join('; ')
+    );
+  };
 
   return (
     <div data-test-agreement-info>
