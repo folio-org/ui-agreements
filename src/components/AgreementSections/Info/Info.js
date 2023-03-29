@@ -16,8 +16,7 @@ import InfoPeriods from '../InfoPeriods';
 
 const Info = ({ agreement }) => {
   const renderContentTypes = (agreementContentTypes) => {
-    const labels = [];
-    agreementContentTypes.map(act => labels.push(act.contentType.label));
+    const labels = agreementContentTypes.map(act => act.contentType.label);
     return (
       labels.join('; ')
     );
