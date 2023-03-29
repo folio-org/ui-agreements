@@ -45,7 +45,7 @@ const AgreementViewRoute = ({
   const agreementPath = AGREEMENT_ENDPOINT(agreementId);
   const agreementEresourcesPath = AGREEMENT_ERESOURCES_ENDPOINT(agreementId, eresourcesFilterPath);
 
-  const { agreement, isAgreementLoading } = useAgreement({ agreementId });
+  const { agreement, isAgreementLoading } = useAgreement({ agreementId, queryParams: ['expandItems=false'] });
 
 
   const interfaces = useInterfaces({
@@ -225,7 +225,7 @@ const AgreementViewRoute = ({
   const handleDelete = () => {
     const compositeAgreement = getCompositeAgreement();
 
-    if (compositeAgreement.items?.length) {
+    if (compositeAgreement.lines?.length) {
       callout.sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.errors.noDeleteHasAgreementLines" /> });
       return;
     }
