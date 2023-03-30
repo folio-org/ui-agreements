@@ -1,5 +1,10 @@
 # Change history for ui-agreements
 
+## 9.0.1 2023-03-30
+* ERM-2898 Change number of agreements loaded in Agreement search to 25
+* ERM-2897 Change number of agreement lines loaded in Agreement line search to 25
+* ERM-2888 Do not load Agreement lines as part of agreement when viewing the agreement
+
 ## 9.0.0 2023-02-22
 * ERM-2613 Remove unneeded `react-redux`. Upgrade `stripes-acq-components` to `v4`
 * ERM-2596 Increment ui-agreements to Stripes v8
