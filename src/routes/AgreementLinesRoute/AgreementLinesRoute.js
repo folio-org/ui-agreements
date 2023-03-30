@@ -14,7 +14,7 @@ import { useEresourcesEnabled } from '../../hooks';
 import { AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
 
 const {
-  INITIAL_RESULT_COUNT,
+  RESULT_COUNT_INCREMENT_MEDIUM,
 } = resultCount;
 
 const AgreementLinesRoute = ({
@@ -49,7 +49,7 @@ const AgreementLinesRoute = ({
         poLine: 'poLines.poLineId',
         tags: 'tags.value',
       },
-      perPage: INITIAL_RESULT_COUNT,
+      perPage: RESULT_COUNT_INCREMENT_MEDIUM,
       fetchExternalResources: false,
     }, (query ?? {}))
   ), [query, searchKey]);
