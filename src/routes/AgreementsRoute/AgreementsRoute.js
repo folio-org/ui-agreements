@@ -14,7 +14,7 @@ import { AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
 import { useAgreementsRefdata } from '../../hooks';
 
 const {
-  INITIAL_RESULT_COUNT,
+  RESULT_COUNT_INCREMENT_MEDIUM,
 } = resultCount;
 
 const [
@@ -84,7 +84,7 @@ const AgreementsRoute = ({
       sortKeys: {
         agreementStatus: 'agreementStatus.label',
       },
-      perPage: INITIAL_RESULT_COUNT
+      perPage: RESULT_COUNT_INCREMENT_MEDIUM
     }, (query ?? {}))
   ), [qIndex, query]);
 
