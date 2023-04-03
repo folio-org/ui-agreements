@@ -1,5 +1,7 @@
 # Change history for ui-agreements
 
+## 9.0.2 2023-04-03
+* ERM-2893 Update some Japanese translations
 ## 9.0.1 2023-03-30
 * ERM-2898 Change number of agreements loaded in Agreement search to 25
 * ERM-2897 Change number of agreement lines loaded in Agreement line search to 25
