@@ -552,7 +552,7 @@
     "duplicateAgreementModal.supplementaryProperties": "Supplementary properties",
     "settings.hideAccordions.description": "契約編集ビューでアコーディオンを非表示にする",
     "settings.hideAccordions.usageData": "Usage data",
-    "settings.appSettings": "App settings",
+    "settings.appSettings": "アプリの設定",
     "settings.settingsSection.fileStorage": "File storage",
     "settings.fileStorage.s3AccessKey": "S3 access key",
     "settings.fileStorage.s3BucketName": "S3 bucket name",
