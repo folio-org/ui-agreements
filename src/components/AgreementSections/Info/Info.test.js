@@ -34,7 +34,7 @@ describe('Info', () => {
   });
 
   test('renders the expected Content type', async () => {
-    await KeyValue('Content type').has({ value: 'Database; Books; ' });
+    await KeyValue('Content type').has({ value: 'Database; Books' });
   });
 
   test('renders the expected Description', async () => {
