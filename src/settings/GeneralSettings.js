@@ -5,7 +5,7 @@ import { SettingsFormContainer } from '@k-int/stripes-kint-components';
 import { defaultMclPageSize, hiddenAccordions } from '../constants';
 import GeneralSettingsForm from './GeneralSettingsForm';
 
-const GeneralSettings2 = () => {
+const GeneralSettings = () => {
   const defaultValues = {
     displaySuppressFromDiscovery: { pci: true, agreementLine: true, title: true },
     hideAccordions: hiddenAccordions,
@@ -31,4 +31,4 @@ const GeneralSettings2 = () => {
   );
 };
 
-export default GeneralSettings2;
+export default GeneralSettings;
