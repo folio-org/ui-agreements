@@ -1,7 +1,7 @@
 import useAgreementsSettings from './useAgreementsSettings';
 
-const useSuppressFromDiscovery = () => {
-  const { parsedSettings = {} } = useAgreementsSettings();
+const useSuppressFromDiscovery = ({ queryParams } = {}) => {
+  const { parsedSettings = {} } = useAgreementsSettings({ queryParams });
 
   return (resource) => {
     return parsedSettings.displaySuppressFromDiscovery?.[resource] ?? true;
