@@ -1,59 +1,34 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { stripesConnect, withStripes } from '@folio/stripes/core';
-import { ConfigManager } from '@folio/stripes/smart-components';
+import { SettingsFormContainer } from '@k-int/stripes-kint-components';
 
 import { defaultMclPageSize, hiddenAccordions } from '../constants';
 import GeneralSettingsForm from './GeneralSettingsForm';
 
-class GeneralSettings extends React.Component {
-  static propTypes = {
-    stripes: PropTypes.object,
-  };
-
-  constructor(props) {
-    super(props);
-    this.connectedConfigManager = stripesConnect(ConfigManager);
-  }
-
-  defaultValues = {
+const GeneralSettings2 = () => {
+  const defaultValues = {
     displaySuppressFromDiscovery: { pci: true, agreementLine: true, title: true },
     hideAccordions: hiddenAccordions,
     hideEResourcesFunctionality: false,
     pageSize: defaultMclPageSize.pageSize,
   };
 
-  beforeSave(data) {
-    return JSON.stringify(data);
-  }
-
-  getInitialValues = (settings) => {
-    let loadedValues = {};
-    try {
-      const value = settings.length === 0 ? '' : settings[0].value;
-      loadedValues = JSON.parse(value);
-    } catch (e) { } // eslint-disable-line no-empty
+  const getInitialValues = (settings) => {
     return {
-      ...this.defaultValues,
-      ...loadedValues,
+      ...defaultValues,
+      ...settings,
     };
-  }
+  };
 
-  render() {
-    return (
-      <this.connectedConfigManager
-        configFormComponent={GeneralSettingsForm}
-        configName="general"
-        getInitialValues={this.getInitialValues}
-        label={<FormattedMessage id="ui-agreements.settings.displaySettings" />}
-        moduleName="AGREEMENTS"
-        onBeforeSave={this.beforeSave}
-        stripes={this.props.stripes}
-      />
-    );
-  }
-}
+  return (
+    <SettingsFormContainer
+      ConfigFormComponent={GeneralSettingsForm}
+      configName="general"
+      getInitialValues={getInitialValues}
+      label={<FormattedMessage id="ui-agreements.settings.displaySettings" />}
+      moduleName="AGREEMENTS"
+    />
+  );
+};
 
-export default withStripes(GeneralSettings);
+export default GeneralSettings2;
