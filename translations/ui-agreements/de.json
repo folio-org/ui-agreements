@@ -440,7 +440,7 @@
     "eresources.accessStatusType": "Zugangsstatustyp",
     "identifier.pisbn": "ISBN (Druckausgabe)",
     "identifier.eisbn": "ISBN (Onlineausgabe)",
-    "eresources.publicationType": "Typ",
+    "eresources.publicationType": "Medientyp",
     "organizations.selectRole": "Eine Rolle auswählen",
     "settings.displaySettings": "Anzeigeeinstellungen",
     "settings.general.displaySuppressFromDiscovery.description": "Einstellung \"Nachweis unterdrückt\" anzeigen",
