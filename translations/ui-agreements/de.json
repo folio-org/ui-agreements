@@ -252,7 +252,7 @@
     "relatedAgreements.relationship.supersedes": "Ersetzt \"{agreement}\"",
     "relatedAgreements.relationship.tracks_demand-driven_acquisitions_for": "Zeichnet Demand-Driven Acquisition für \"{agreement}\" auf",
     "relatedAgreements.remove": "Zugehörige Vereinbarung {index} entfernen",
-    "identifier.issn": "ISSN (Druckausgabe)",
+    "identifier.issn": "ISSN",
     "relatedAgreements.relationshipSummary": "\"{source}\" {relationship} \"{target}\"",
     "relatedAgreements.relationshipSummaryForNewAgreement": "\"{source}\" {relationship} der Vereinbarung, die erstellt wird",
     "license.linkLicense": "Lizenzvertrag verknüpfen",
