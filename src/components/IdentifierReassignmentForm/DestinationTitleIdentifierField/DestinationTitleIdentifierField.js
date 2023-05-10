@@ -63,8 +63,8 @@ const DestinationTitleIdentifierField = ({ setTitleName }) => {
         <Pluggable
           dataKey="destinationIdentifierLookup"
           onEresourceSelected={ti => {
-            setDestinationTI(ti._object);
-            change('destinationTIObject', ti?._object);
+            setDestinationTI(ti);
+            change('destinationTIObject', ti);
             change('destinationTitle');
           }}
           renderTrigger={(pluggableRenderProps) => {
