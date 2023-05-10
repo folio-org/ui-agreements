@@ -58,8 +58,8 @@ const SourceTitleIdentifierField = ({ setTitleName }) => {
               }
             });
 
-            setSourceTI(ti._object);
-            change('sourceTIObject', ti._object);
+            setSourceTI(ti);
+            change('sourceTIObject', ti);
           }}
           renderTrigger={(pluggableRenderProps) => {
             triggerButton = pluggableRenderProps.buttonRef;
