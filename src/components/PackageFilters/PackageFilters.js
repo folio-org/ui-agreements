@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
+import { Accordion, AccordionSet, FilterAccordionHeader } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
 
 const propTypes = {
@@ -15,6 +15,7 @@ const FILTERS = [
   'availability',
   'contentType',
   'scope',
+  'source',
   'status',
   'tags'
 ];
@@ -24,6 +25,7 @@ export default function PackageFilters({ activeFilters, data, filterHandlers }) 
     availability: [],
     contentType: [],
     scope: [],
+    source: [],
     status: [],
     tags: [],
   });
@@ -75,29 +77,28 @@ export default function PackageFilters({ activeFilters, data, filterHandlers }) 
     );
   };
 
-  const renderRemoteKbFilter = () => {
-    const remoteKbValues = data.sourceValues;
-    const dataOptions = remoteKbValues.map(remoteKb => ({
-      label: remoteKb.name,
-      value: remoteKb.id,
+  const renderSourceFilter = () => {
+    const dataOptions = (filterState.source || []).map(source => ({
+      label: source,
+      value: source
     }));
-
-    const remoteKbFilters = activeFilters.remoteKb || [];
+    const sourceFilters = activeFilters.source || [];
 
     return (
       <Accordion
-        displayClearButton={remoteKbFilters.length > 0}
+        displayClearButton={sourceFilters.length > 0}
         header={FilterAccordionHeader}
-        id="filter-accordion-remoteKb"
+        id="filter-accordion-source"
         label={<FormattedMessage id="ui-agreements.eresources.sourceKb" />}
-        onClearFilter={() => { filterHandlers.clearGroup('remoteKb'); }}
+        onClearFilter={() => { filterHandlers.clearGroup('source'); }}
         separator={false}
       >
-        <Selection
-          dataOptions={dataOptions}
-          id="remoteKb-filter"
-          onChange={value => filterHandlers.state({ ...activeFilters, remoteKb: [value] })}
-          value={remoteKbFilters[0] || ''}
+        <MultiSelectionFilter
+          dataOptions={dataOptions || []}
+          id="source-filter"
+          name="source"
+          onChange={e => filterHandlers.state({ ...activeFilters, source: e.values })}
+          selectedValues={sourceFilters}
         />
       </Accordion>
     );
@@ -152,7 +153,7 @@ export default function PackageFilters({ activeFilters, data, filterHandlers }) 
 
   return (
     <AccordionSet>
-      {renderRemoteKbFilter()}
+      {renderSourceFilter()}
       {renderCheckboxFilter('status')}
       {renderCheckboxFilter('scope')}
       {renderAvailabilityFilter()}
