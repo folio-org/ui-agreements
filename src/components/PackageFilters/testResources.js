@@ -131,22 +131,6 @@ const data = {
     },
     'sourceDataUpdated': '2021-11-26T18:30:37Z',
     'source': 'GOKb',
-    'remoteKb': {
-      'id': '367cf585-7b8d-4ac7-a282-d6a2082ac8f8',
-      'cursor': '2022-11-26T08:51:48Z',
-      'active': true,
-      'trustedSourceTI': false,
-      'activationEnabled': false,
-      'readonly': false,
-      'syncStatus': 'idle',
-      'lastCheck': 1669625127293,
-      'name': 'GOKb_TEST',
-      'type': 'org.olf.kb.adapters.GOKbOAIAdapter',
-      'fullPrefix': 'gokb',
-      'uri': 'https://gokbt.gbv.de/gokb/oai/index',
-      'supportsHarvesting': true,
-      'rectype': 1
-    },
     'contentTypes': [{
       'id': 'e48d59df-2709-4321-9575-959ca637d5a7',
       'contentType': '{id: "2c91809c84b954b10184b95d2e420062", label: "Jo…}'
@@ -217,22 +201,6 @@ const data = {
     },
     'sourceDataUpdated': '2021-08-13T06:20:30Z',
     'source': 'GOKb',
-    'remoteKb': {
-      'id': '367cf585-7b8d-4ac7-a282-d6a2082ac8f8',
-      'cursor': '2022-11-26T08:51:48Z',
-      'active': true,
-      'trustedSourceTI': false,
-      'activationEnabled': false,
-      'readonly': false,
-      'syncStatus': 'idle',
-      'lastCheck': 1669625127293,
-      'name': 'GOKb_TEST',
-      'type': 'org.olf.kb.adapters.GOKbOAIAdapter',
-      'fullPrefix': 'gokb',
-      'uri': 'https://gokbt.gbv.de/gokb/oai/index',
-      'supportsHarvesting': true,
-      'rectype': 1
-    },
     'contentTypes': '[]',
     'alternateResourceNames': '[]',
     'name': 'ACS in Focus Test',
@@ -301,22 +269,7 @@ const data = {
     'label': 'Regional'
   }
   ],
-  'sourceValues': [{
-    'id': '367cf585-7b8d-4ac7-a282-d6a2082ac8f8',
-    'cursor': '2022-11-26T08:51:48Z',
-    'active': true,
-    'trustedSourceTI': false,
-    'activationEnabled': false,
-    'readonly': false,
-    'syncStatus': 'idle',
-    'lastCheck': 1669625127293,
-    'name': 'GOKb_TEST',
-    'type': 'org.olf.kb.adapters.GOKbOAIAdapter',
-    'fullPrefix': 'gokb',
-    'uri': 'https://gokbt.gbv.de/gokb/oai/index',
-    'supportsHarvesting': true,
-    'rectype': 1
-  }],
+  'sourceValues': ['GOKb', 'kbplus', 'k-int'],
   'statusValues': [{
     'id': '2c91809c84b954b10184b95c73c80041',
     'value': 'current',
