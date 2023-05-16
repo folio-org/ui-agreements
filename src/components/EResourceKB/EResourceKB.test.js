@@ -31,22 +31,6 @@ const PackageResource = {
 
     ],
     'source':'GOKb',
-    'remoteKb':{
-      'id':'a375f1a7-cbaf-486f-87ec-5939280a37c6',
-      'cursor':'2020-11-06T11:46:34Z',
-      'active':true,
-      'trustedSourceTI':false,
-      'activationEnabled':false,
-      'readonly':false,
-      'syncStatus':'idle',
-      'lastCheck':1609181451045,
-      'name':'GOKb_PACKAGE',
-      'type':'org.olf.kb.adapters.GOKbOAIAdapter',
-      'fullPrefix':'gokb',
-      'uri':'http://gokbt.gbv.de/gokb/oai/index',
-      'supportsHarvesting':true,
-      'rectype':1
-    },
     'name':'Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz',
     'suppressFromDiscovery':false,
     'reference':'Edward_Elgar:Edward_Elgar_E-Book_Archive_in_Business_&_Management,_Economics_and_Finance:Nationalliz',
@@ -188,22 +172,6 @@ const PCIresource = {
 
       ],
       'source':'GOKb',
-      'remoteKb':{
-        'id':'a375f1a7-cbaf-486f-87ec-5939280a37c6',
-        'cursor':'2020-11-06T11:46:34Z',
-        'active':true,
-        'trustedSourceTI':false,
-        'activationEnabled':false,
-        'readonly':false,
-        'syncStatus':'idle',
-        'lastCheck':1609181451045,
-        'name':'GOKb_TEST',
-        'type':'org.olf.kb.adapters.GOKbOAIAdapter',
-        'fullPrefix':'gokb',
-        'uri':'http://gokbt.gbv.de/gokb/oai/index',
-        'supportsHarvesting':true,
-        'rectype':1
-      },
       'name':'Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz',
       'suppressFromDiscovery':false,
       'reference':'Edward_Elgar:Edward_Elgar_E-Book_Archive_in_Business_&_Management,_Economics_and_Finance:Nationalliz',
@@ -228,7 +196,7 @@ describe('EResourceKB', () => {
       />
     );
 
-    expect(getByText('GOKb_TEST')).toBeInTheDocument();
+    expect(getByText('GOKb')).toBeInTheDocument();
   });
 
   test('renders expected eresource data source for a package', () => {
@@ -238,7 +206,7 @@ describe('EResourceKB', () => {
       />
     );
 
-    expect(getByText('GOKb_PACKAGE')).toBeInTheDocument();
+    expect(getByText('GOKb')).toBeInTheDocument();
   });
 
   test('renders no value for an empty resource', () => {

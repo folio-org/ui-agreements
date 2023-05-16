@@ -192,22 +192,6 @@ const data = {
             }
           },
           'source':'GOKb',
-          'remoteKb':{
-            'id':'a82ae5df-af36-4800-ae03-2798e9cea4e0',
-            'cursor':'2021-01-14T14:04:45Z',
-            'active':true,
-            'trustedSourceTI':false,
-            'activationEnabled':false,
-            'readonly':false,
-            'syncStatus':'idle',
-            'lastCheck':1611251312813,
-            'name':'GOKb_TEST',
-            'type':'org.olf.kb.adapters.GOKbOAIAdapter',
-            'fullPrefix':'gokb',
-            'uri':'http://gokbt.gbv.de/gokb/oai/index',
-            'supportsHarvesting':true,
-            'rectype':1
-          },
           'name':'Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz',
           'suppressFromDiscovery':false,
           'reference':'Edward_Elgar:Edward_Elgar_E-Book_Archive_in_Business_&_Management,_Economics_and_Finance:Nationalliz',
@@ -255,22 +239,6 @@ const data = {
 
         ],
         'source':'GOKb',
-        'remoteKb':{
-          'id':'a82ae5df-af36-4800-ae03-2798e9cea4e0',
-          'cursor':'2021-01-14T14:04:45Z',
-          'active':true,
-          'trustedSourceTI':false,
-          'activationEnabled':false,
-          'readonly':false,
-          'syncStatus':'idle',
-          'lastCheck':1611251312813,
-          'name':'GOKb',
-          'type':'org.olf.kb.adapters.GOKbOAIAdapter',
-          'fullPrefix':'gokb',
-          'uri':'http://gokbt.gbv.de/gokb/oai/index',
-          'supportsHarvesting':true,
-          'rectype':1
-        },
         'name':'Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz',
         'suppressFromDiscovery':false,
         'reference':'Edward_Elgar:Edward_Elgar_E-Book_Archive_in_Business_&_Management,_Economics_and_Finance:Nationalliz',
@@ -331,7 +299,7 @@ describe('AcquisitionOptions', () => {
 
   test('renders expected data source value in each row', async () => {
     Promise.all([
-      await MultiColumnListCell({ row: 0, columnIndex: 0 }).has({ content: 'GOKb_TEST' }),
+      await MultiColumnListCell({ row: 0, columnIndex: 0 }).has({ content: 'GOKb' }),
       await MultiColumnListCell({ row: 1, columnIndex: 0 }).has({ content: 'GOKb' })
     ]);
   });
