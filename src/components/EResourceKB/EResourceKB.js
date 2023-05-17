@@ -10,13 +10,9 @@ export default class EResourceKB extends React.Component {
       class: PropTypes.string,
       _object: PropTypes.shape({
         pkg: PropTypes.shape({
-          remoteKb: PropTypes.shape({
-            name: PropTypes.string,
-          })
+          source: PropTypes.string
         }),
-        remoteKb: PropTypes.shape({
-          name: PropTypes.string,
-        }),
+        source: PropTypes.string
       })
     })
   }
@@ -26,9 +22,9 @@ export default class EResourceKB extends React.Component {
     if (isEmpty(resource)) return <NoValue />;
 
     if (isPackage(resource)) {
-      return resource?._object?.remoteKb?.name ?? <NoValue />;
+      return resource?._object?.source ?? <NoValue />;
     }
 
-    return resource?._object?.pkg?.remoteKb?.name ?? <NoValue />;
+    return resource?._object?.pkg?.source ?? <NoValue />;
   }
 }

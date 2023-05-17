@@ -71,6 +71,7 @@ const PackagesRoute = ({
         availability: 'availabilityConstraints.body.value',
         contentType: 'contentTypes.contentType.value',
         remoteKb: 'remoteKb.id',
+        source: 'source',
         scope: 'availabilityScope.value',
         status: 'lifecycleStatus.value',
         tags: 'tags.value',
@@ -107,10 +108,10 @@ const PackagesRoute = ({
     }
   }, [packages, packagesCount, history, location.search]);
 
-  const kbsPath = 'erm/kbs';
-  const { data: kbs = [] } = useQuery(
-    ['ERM', 'KnowledgeBases', kbsPath],
-    () => ky.get(kbsPath).json()
+  const dataSourcesPath = 'erm/packages/sources';
+  const { data: dataSources = [] } = useQuery(
+    ['ERM', 'DataSources', dataSourcesPath],
+    () => ky.get(dataSourcesPath).json()
   );
 
   if (!hasPerms) return <NoPermissions />;
@@ -122,7 +123,7 @@ const PackagesRoute = ({
         contentTypeValues: getRefdataValuesByDesc(refdata, CONTENT_TYPE),
         packages,
         scopeValues: getRefdataValuesByDesc(refdata, SCOPE),
-        sourceValues: kbs,
+        sourceValues: dataSources,
         statusValues: getRefdataValuesByDesc(refdata, LIFECYCLE_STATUS),
         tagsValues: tags,
       }}
