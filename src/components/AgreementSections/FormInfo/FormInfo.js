@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+
+import orderBy from 'lodash/orderBy';
+
 import { FormattedMessage } from 'react-intl';
-import { Field } from 'react-final-form';
+import { Field, useFormState } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
 import {
   Col,
+  MultiSelection,
   Row,
   Select,
   TextArea,
@@ -15,6 +19,7 @@ import {
 import {
   AlternativeNamesFieldArray,
   composeValidators,
+  getRefdataValuesByDesc,
   requiredValidator,
   useAsyncValidation,
 } from '@folio/stripes-erm-components';
@@ -22,6 +27,13 @@ import {
 import { validationEndPoint, statuses } from '../../../constants';
 import ContentTypesFieldArray from '../ContentTypesFieldArray';
 import AgreementPeriodsFieldArray from '../../AgreementPeriodsFieldArray';
+import { useAgreementsRefdata } from '../../../hooks';
+
+const [
+  AGREEMENT_CONTENT_TYPE
+] = [
+  'SubscriptionAgreement.ContentType',
+];
 
 const FormInfo = ({
   data: {
@@ -31,12 +43,38 @@ const FormInfo = ({
     renewalPriorityValues = []
   },
   form: {
+    change,
     mutators
   },
+  initialValues,
   values
 }) => {
   // deal with this in a second
   const validateAsyncBackend = useAsyncValidation('ui-agreements', validationEndPoint.AGREEMENTPATH);
+  const refdata = useAgreementsRefdata({
+    desc: [
+      AGREEMENT_CONTENT_TYPE,
+    ]
+  });
+  const contentTypeValues = getRefdataValuesByDesc(refdata, AGREEMENT_CONTENT_TYPE);
+
+  const agreementContentTypes = orderBy([
+    ...(initialValues?.agreementContentTypes ?? []),
+    ...contentTypeValues
+      // Filter out options already in agreement
+      .filter(ct => !initialValues.agreementContentTypes.some(valAct => valAct.contentType.id === ct.id))
+      // Map the rest to the right shape
+      .map(ct => ({
+        contentType: {
+          id: ct.id,
+          value: ct.value,
+          label: ct.label
+        }
+      }))
+  ], 'contentType.label');
+
+  console.log("FORM VALUES: %o", values)
+  console.log("Content type VALUES: %o", agreementContentTypes)
 
   return (
     <div data-test-edit-agreement-info>
@@ -129,9 +167,63 @@ const FormInfo = ({
           />
         </Col>
       </Row>
-      <FieldArray
+{/*       <FieldArray
         component={ContentTypesFieldArray}
         name="agreementContentTypes"
+      /> */}
+      <Field
+        component={MultiSelection}
+        dataOptions={agreementContentTypes}
+        formatter={({ option }) => {
+          if (!option?._delete) {
+            return option?.contentType?.label;
+          }
+
+          return null;
+        }}
+        id="agreementContentTypes"
+        itemToString={item => {
+          if (!item?._delete) {
+            return item?.contentType?.label;
+          }
+
+          return null;
+        }}
+        name="agreementContentTypes"
+        onChange={(selectedItems) => {
+          // All items which were selected in initialValues but are not longer selected
+          const previouslySetContentTypes = [
+            // Those that have been deleted already
+            ...selectedItems?.filter(si => (
+              si?._delete &&
+              !selectedItems?.some(internalSI => internalSI.id === si.id && !internalSI._delete)
+            )),
+            // Those that were removed in this onChange
+            ...initialValues.agreementContentTypes?.filter(ivct => {
+              return !selectedItems?.some(sict => sict.contentType.value === ivct.contentType.value);
+            })
+          ];
+
+          change('agreementContentTypes', [
+            ...selectedItems?.filter(si => !si?._delete),
+            ...previouslySetContentTypes.map(psct => ({
+              ...psct,
+              _delete: true
+            }))
+          ]);
+        }}
+        // FIXME this is not called when clicking in options list OR when x is clicked on chip
+        /* onRemove={(removedItem) => {
+          if (removedItem?.id) {
+            change(
+              'agreementContentTypes',
+              [
+                ...values?.agreementContentTypes?.filter(item => item?.id !== removedItem.id),
+                { ...removedItem, _delete: true }
+              ]
+            );
+          }
+        }} */
       />
       <FieldArray
         component={AlternativeNamesFieldArray}
