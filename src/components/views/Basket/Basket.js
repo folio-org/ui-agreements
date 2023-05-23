@@ -17,12 +17,14 @@ import {
 } from '@folio/stripes/components';
 
 import BasketList from '../../BasketList';
+import AgreementModal from '../../AgreementModal';
 
 export default class Basket extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
       basket: PropTypes.arrayOf(PropTypes.object).isRequired,
       openAgreements: PropTypes.arrayOf(PropTypes.object).isRequired,
+      agreementStatusValues: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
     handlers: PropTypes.shape({
       onAddToNewAgreement: PropTypes.func.isRequired,
@@ -30,28 +32,36 @@ export default class Basket extends React.Component {
       onClose: PropTypes.func.isRequired,
       onRemoveBasketItem: PropTypes.func.isRequired,
     }),
-  }
+  };
 
   state = {
     openAgreements: [],
+    showModal: false,
     selectedAgreementId: undefined,
     selectedItems: {},
-  }
+  };
 
   static getDerivedStateFromProps(props, state) {
     const newState = {};
 
-    const { data: { basket, openAgreements } } = props;
+    const {
+      data: { basket, openAgreements },
+    } = props;
 
     // Add all the items in the basket as selected items.
     if (basket.length > Object.keys(state.selectedItems).length) {
       newState.selectedItems = {};
-      basket.forEach(item => { newState.selectedItems[item.id] = true; });
+      basket.forEach((item) => {
+        newState.selectedItems[item.id] = true;
+      });
     }
 
     // Make a `dataOptions`-able array of agreements with a `value` key.
     if (openAgreements.length !== state.openAgreements.length) {
-      newState.openAgreements = openAgreements.map(a => ({ ...a, value: a.id }));
+      newState.openAgreements = openAgreements.map((a) => ({
+        ...a,
+        value: a.id,
+      }));
     }
 
     return Object.keys(newState).length ? newState : null;
@@ -60,27 +70,31 @@ export default class Basket extends React.Component {
   handleToggleAll = () => {
     const selectedItems = {};
 
-    const someItemsUnselected = Object.values(this.state.selectedItems).includes(false);
-    Object.keys(this.state.selectedItems).forEach(key => { selectedItems[key] = someItemsUnselected; });
+    const someItemsUnselected = Object.values(
+      this.state.selectedItems
+    ).includes(false);
+    Object.keys(this.state.selectedItems).forEach((key) => {
+      selectedItems[key] = someItemsUnselected;
+    });
 
     this.setState({ selectedItems });
-  }
+  };
 
   handleToggleItem = (item) => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       selectedItems: {
         ...prevState.selectedItems,
-        [item.id]: !(prevState.selectedItems[item.id])
+        [item.id]: !prevState.selectedItems[item.id],
       },
     }));
-  }
+  };
 
   getSelectedItems = () => {
     return Object.entries(this.state.selectedItems)
       .filter(([_, selected]) => selected)
-      .map(([itemId]) => this.props.data.basket.findIndex(i => i.id === itemId))
+      .map(([itemId]) => this.props.data.basket.findIndex((i) => i.id === itemId))
       .join(',');
-  }
+  };
 
   renderPaneFirstMenu = () => {
     return (
@@ -97,10 +111,11 @@ export default class Basket extends React.Component {
         </FormattedMessage>
       </PaneMenu>
     );
-  }
+  };
 
   renderCreateAgreementButton = () => {
-    const disabled = Object.values(this.state.selectedItems).find(v => v) === undefined; // None of the `selectedItems` value's are `true`
+    const disabled =
+      Object.values(this.state.selectedItems).find((v) => v) === undefined; // None of the `selectedItems` value's are `true`
 
     return (
       <Layout className="marginTop1">
@@ -109,20 +124,20 @@ export default class Basket extends React.Component {
           data-test-basket-create-agreement
           disabled={disabled}
           onClick={() => {
-            this.props.handlers.onAddToNewAgreement(this.getSelectedItems());
+            this.setState({ showModal: true });
+            // this.props.handlers.onAddToNewAgreement(this.getSelectedItems());
           }}
         >
           <FormattedMessage id="ui-agreements.basket.createAgreement" />
         </Button>
       </Layout>
     );
-  }
+  };
 
   renderAddToAgreementButton = () => {
-    const disabled = (
+    const disabled =
       this.state.selectedAgreementId === undefined ||
-      Object.values(this.state.selectedItems).find(v => v) === undefined // None of the `selectedItems` value's are `true`;
-    );
+      Object.values(this.state.selectedItems).find((v) => v) === undefined; // None of the `selectedItems` value's are `true`;
 
     return (
       <div>
@@ -143,7 +158,7 @@ export default class Basket extends React.Component {
         </Layout>
       </div>
     );
-  }
+  };
 
   renderAddToAgreementSection = () => {
     if (!this.state.openAgreements.length) return null;
@@ -152,7 +167,10 @@ export default class Basket extends React.Component {
       <div>
         <Layout className="marginTop1">
           <Headline margin="small" tag="h4">
-            <FormattedMessage id="ui-agreements.basket.existingAgreements" tagName="div" />
+            <FormattedMessage
+              id="ui-agreements.basket.existingAgreements"
+              tagName="div"
+            />
           </Headline>
         </Layout>
         <Col md={8} xs={12}>
@@ -163,22 +181,39 @@ export default class Basket extends React.Component {
                 data-test-agreement-id={option.id}
                 style={{ textAlign: 'left' }}
               >
-                <Headline>{option.name}&nbsp;&#40;{option.agreementStatus.label}&#41;</Headline>{/* eslint-disable-line */}
+                <Headline>
+                  {option.name}&nbsp;&#40;{option.agreementStatus.label}&#41;
+                </Headline>
+                {/* eslint-disable-line */}
                 <div>
-                  <strong><FormattedMessage id="ui-agreements.agreements.startDate" />: </strong><FormattedUTCDate value={option.startDate} /> {/* eslint-disable-line */}
+                  <strong>
+                    <FormattedMessage id="ui-agreements.agreements.startDate" />
+                    :{' '}
+                  </strong>
+                  <FormattedUTCDate value={option.startDate} />{' '}
+                  {/* eslint-disable-line */}
                 </div>
               </div>
             )}
             id="select-agreement-for-basket"
-            onChange={(selectedAgreementId) => { this.setState({ selectedAgreementId }); }}
+            onChange={(selectedAgreementId) => {
+              this.setState({ selectedAgreementId });
+            }}
             onFilter={(searchString, agreements) => {
-              return agreements.filter(agreement => {
+              return agreements.filter((agreement) => {
                 const lowerCasedSearchString = searchString.toLowerCase();
 
                 return (
-                  agreement.name.toLowerCase().includes(lowerCasedSearchString) ||
-                  agreement.agreementStatus.label.toLowerCase().includes(lowerCasedSearchString) ||
-                  (agreement.startDate && agreement.startDate.toLowerCase().includes(lowerCasedSearchString))
+                  agreement.name
+                    .toLowerCase()
+                    .includes(lowerCasedSearchString) ||
+                  agreement.agreementStatus.label
+                    .toLowerCase()
+                    .includes(lowerCasedSearchString) ||
+                  (agreement.startDate &&
+                    agreement.startDate
+                      .toLowerCase()
+                      .includes(lowerCasedSearchString))
                 );
               });
             }}
@@ -189,7 +224,7 @@ export default class Basket extends React.Component {
         {this.renderAddToAgreementButton()}
       </div>
     );
-  }
+  };
 
   render() {
     const { data, handlers } = this.props;
@@ -200,7 +235,12 @@ export default class Basket extends React.Component {
           defaultWidth="100%"
           firstMenu={this.renderPaneFirstMenu()}
           id="basket-pane"
-          paneSub={<FormattedMessage id="ui-agreements.basket.recordCount" values={{ count: data.basket.length }} />}
+          paneSub={
+            <FormattedMessage
+              id="ui-agreements.basket.recordCount"
+              values={{ count: data.basket.length }}
+            />
+          }
           paneTitle={<FormattedMessage id="ui-agreements.basket.name" />}
         >
           <MessageBanner>
@@ -218,6 +258,13 @@ export default class Basket extends React.Component {
             {this.renderAddToAgreementSection()}
           </div>
         </Pane>
+        <AgreementModal
+          agreementStatusValues={data.agreementStatusValues}
+          handleAgreement={this.props.handlers.onAddToNewAgreement}
+          hideModal={() => this.setState({ showModal: false })}
+          selectedItems={this.getSelectedItems()}
+          showModal={this.state.showModal}
+        />
       </Paneset>
     );
   }

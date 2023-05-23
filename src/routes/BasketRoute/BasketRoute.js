@@ -2,10 +2,13 @@ import PropTypes from 'prop-types';
 import { useMutation } from 'react-query';
 import { useLocation } from 'react-router-dom';
 
-import { useBatchedFetch } from '@folio/stripes-erm-components';
+import {
+  useBatchedFetch,
+  getRefdataValuesByDesc,
+} from '@folio/stripes-erm-components';
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { useBasket } from '../../hooks';
+import { useBasket, useAgreementsRefdata } from '../../hooks';
 import {
   AGREEMENTS_ENDPOINT,
   AGREEMENT_ENDPOINT,
@@ -14,10 +17,16 @@ import {
 import View from '../../components/views/Basket';
 import { urls } from '../../components/utilities';
 
+const [AGREEMENT_STATUS] = ['SubscriptionAgreement.AgreementStatus'];
+
 const BasketRoute = ({ history }) => {
   const { basket, removeFromBasket } = useBasket();
   const location = useLocation();
   const ky = useOkapiKy();
+
+  const refdata = useAgreementsRefdata({
+    desc: [AGREEMENT_STATUS],
+  });
 
   // AGREEMENTS BATCHED FETCH
   const { results: openAgreements } = useBatchedFetch({
@@ -51,6 +60,21 @@ const BasketRoute = ({ history }) => {
       })
   );
 
+  const { mutateAsync: postAgreement } = useMutation(
+    [
+      AGREEMENTS_ENDPOINT,
+      'ui-agreements',
+      'AgreementCreateRoute',
+      'createAgreement',
+    ],
+    (payload) => ky
+      .post(AGREEMENTS_ENDPOINT, { json: payload })
+      .json()
+      .then(({ id }) => {
+        history.push(`${urls.agreementView(id)}${location.search}`);
+      })
+  );
+
   const handleAddToExistingAgreement = (addFromBasket, agreementId) => {
     const submitValues = {
       payload: {
@@ -64,8 +88,17 @@ const BasketRoute = ({ history }) => {
     putAgreement(submitValues);
   };
 
-  const handleAddToNewAgreement = (addFromBasket) => {
-    history.push(`${urls.agreementCreate()}?addFromBasket=${addFromBasket}`);
+  const handleAddToNewAgreement = (addFromBasket, values) => {
+    const submitValues = {
+      name: values?.name,
+      agreementStatus: values?.agreementStatus,
+      periods: [{ startDate: values?.startDate }],
+      items: addFromBasket
+        .split(',')
+        .map((index) => ({ resource: basket[parseInt(index, 10)] }))
+        .filter((line) => line.resource),
+    };
+    postAgreement(submitValues);
   };
 
   const handleClose = () => {
@@ -75,6 +108,10 @@ const BasketRoute = ({ history }) => {
   return (
     <View
       data={{
+        agreementStatusValues: getRefdataValuesByDesc(
+          refdata,
+          AGREEMENT_STATUS
+        ),
         openAgreements,
         basket,
       }}
