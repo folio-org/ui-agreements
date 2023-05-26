@@ -75,7 +75,6 @@ const EResourceViewRoute = ({
     results: relatedEntitlements,
     isLoading: areRelatedEntitlementsLoading
   } = useBatchedFetch({
-    batchLimit: entitlementsCount,
     batchSize: RECORDS_PER_REQUEST_MEDIUM,
     path: ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT(eresourceId),
     queryParams: {
