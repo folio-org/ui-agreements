@@ -5,6 +5,7 @@ import {
   Headline,
   KeyValue,
   Layout,
+  MetaSection,
   Row,
   NoValue,
   List,
@@ -63,6 +64,13 @@ const PackageInfo = ({
           </Layout>
         </Col>
       </Row>
+      <MetaSection
+        contentId="packageInfoRecordMetaContent"
+        createdDate={eresource.dateCreated}
+        hideSource
+        id="packageInfoRecordMeta"
+        lastUpdatedDate={eresource.lastUpdated}
+      />
       <Row>
         <Col xs={3}>
           <KeyValue
@@ -109,7 +117,7 @@ const PackageInfo = ({
               />
               :
               null
-}
+            }
             value={eresource?.availabilityScope?.label || <NoValue />}
           />
         </Col>
@@ -152,7 +160,7 @@ PackageInfo.propTypes = {
         id: PropTypes.string,
         name: PropTypes.string
       })),
-      availabilityConstraints:  PropTypes.arrayOf(PropTypes.shape({
+      availabilityConstraints: PropTypes.arrayOf(PropTypes.shape({
         body: PropTypes.shape({
           id: PropTypes.string,
           label: PropTypes.string,
@@ -172,8 +180,10 @@ PackageInfo.propTypes = {
           value: PropTypes.string
         }),
       })),
+      dateCreated: PropTypes.string,
       description: PropTypes.string,
       id: PropTypes.string,
+      lastUpdated: PropTypes.string,
       lifecycleStatus: PropTypes.shape({
         id: PropTypes.string,
         label: PropTypes.string,

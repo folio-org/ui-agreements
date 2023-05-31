@@ -9,6 +9,7 @@ import {
   ExpandAllButton,
   HasCommand,
   Headline,
+  MetaSection,
   Row,
   checkScope,
   collapseAllSections,
@@ -65,6 +66,13 @@ export default class Title extends React.Component {
       >
         {eresource.name}
       </Headline>
+      <MetaSection
+        contentId="titleRecordMetaContent"
+        createdDate={eresource.dateCreated}
+        hideSource
+        id="titleRecordMeta"
+        lastUpdatedDate={eresource.lastUpdated}
+      />
       <TitleCardInfo {...this.getSectionProps('info')} title={eresource} />
     </div>
   );
