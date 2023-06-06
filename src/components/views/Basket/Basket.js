@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useMutation } from 'react-query';
+import { useLocation, useHistory } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+
+import { useOkapiKy } from '@folio/stripes/core';
 
 import {
   Button,
@@ -15,6 +19,10 @@ import {
   Paneset,
   Selection,
 } from '@folio/stripes/components';
+
+import { AGREEMENT_ENDPOINT } from '../../../constants/endpoints';
+
+import { urls } from '../../utilities';
 
 import BasketList from '../../BasketList';
 import AgreementModal from '../../AgreementModal';
@@ -34,18 +42,45 @@ const propTypes = {
 };
 
 const Basket = ({
-  data: { basket, openAgreements, agreementStatusValues },
-  handlers: {
-    onAddToExistingAgreement,
-    onAddToNewAgreement,
-    onClose,
-    onRemoveBasketItem,
-  },
+  data: { basket, openAgreements },
+  handlers: { onClose, onRemoveBasketItem },
 }) => {
+  const history = useHistory();
+  const location = useLocation();
+  const ky = useOkapiKy();
   const [openAgreementsState, setOpenAgreementsState] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedAgreementId, setSelectedAgreementId] = useState(undefined);
   const [selectedItems, setSelectedItems] = useState({});
+
+  const { mutateAsync: putAgreement } = useMutation(
+    [
+      AGREEMENT_ENDPOINT(selectedAgreementId),
+      'ui-agreements',
+      'Basket',
+      'putAgreement',
+    ],
+    (data) => ky
+      .put(AGREEMENT_ENDPOINT(selectedAgreementId), {
+        json: data,
+      })
+      .json()
+      .then(() => {
+        history.push(
+          `${urls.agreementView(selectedAgreementId)}${location.search}`
+        );
+      })
+  );
+
+  const handleAddToExistingAgreement = (addFromBasket) => {
+    const submitValues = {
+      items: addFromBasket
+        .split(',')
+        .map((index) => ({ resource: basket[parseInt(index, 10)] }))
+        .filter((line) => line.resource),
+    };
+    putAgreement(submitValues);
+  };
 
   useEffect(() => {
     const newState = {};
@@ -121,7 +156,6 @@ const Basket = ({
           disabled={disabled}
           onClick={() => {
             setShowModal(true);
-            // this.props.handlers.onAddToNewAgreement(this.getSelectedItems());
           }}
         >
           <FormattedMessage id="ui-agreements.basket.createAgreement" />
@@ -143,7 +177,7 @@ const Basket = ({
             data-test-basket-add-to-agreement
             disabled={disabled}
             onClick={() => {
-              onAddToExistingAgreement(getSelectedItems(), selectedAgreementId);
+              handleAddToExistingAgreement(getSelectedItems());
             }}
           >
             <FormattedMessage id="ui-agreements.basket.addToSelectedAgreement" />
@@ -249,8 +283,6 @@ const Basket = ({
         </div>
       </Pane>
       <AgreementModal
-        agreementStatusValues={agreementStatusValues}
-        handleAgreement={onAddToNewAgreement}
         hideModal={() => setShowModal(false)}
         selectedItems={getSelectedItems()}
         showModal={showModal}
