@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -19,84 +19,81 @@ import {
 import BasketList from '../../BasketList';
 import AgreementModal from '../../AgreementModal';
 
-export default class Basket extends React.Component {
-  static propTypes = {
-    data: PropTypes.shape({
-      basket: PropTypes.arrayOf(PropTypes.object).isRequired,
-      openAgreements: PropTypes.arrayOf(PropTypes.object).isRequired,
-      agreementStatusValues: PropTypes.arrayOf(PropTypes.object),
-    }).isRequired,
-    handlers: PropTypes.shape({
-      onAddToNewAgreement: PropTypes.func.isRequired,
-      onAddToExistingAgreement: PropTypes.func.isRequired,
-      onClose: PropTypes.func.isRequired,
-      onRemoveBasketItem: PropTypes.func.isRequired,
-    }),
-  };
+const propTypes = {
+  data: PropTypes.shape({
+    basket: PropTypes.arrayOf(PropTypes.object).isRequired,
+    openAgreements: PropTypes.arrayOf(PropTypes.object).isRequired,
+    agreementStatusValues: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+  handlers: PropTypes.shape({
+    onAddToNewAgreement: PropTypes.func.isRequired,
+    onAddToExistingAgreement: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
+    onRemoveBasketItem: PropTypes.func.isRequired,
+  }),
+};
 
-  state = {
-    openAgreements: [],
-    showModal: false,
-    selectedAgreementId: undefined,
-    selectedItems: {},
-  };
+const Basket = ({
+  data: { basket, openAgreements, agreementStatusValues },
+  handlers: {
+    onAddToExistingAgreement,
+    onAddToNewAgreement,
+    onClose,
+    onRemoveBasketItem,
+  },
+}) => {
+  const [openAgreementsState, setOpenAgreementsState] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedAgreementId, setSelectedAgreementId] = useState(undefined);
+  const [selectedItems, setSelectedItems] = useState({});
 
-  static getDerivedStateFromProps(props, state) {
+  useEffect(() => {
     const newState = {};
-
-    const {
-      data: { basket, openAgreements },
-    } = props;
-
     // Add all the items in the basket as selected items.
-    if (basket.length > Object.keys(state.selectedItems).length) {
+    if (basket.length > Object.keys(selectedItems).length) {
       newState.selectedItems = {};
       basket.forEach((item) => {
         newState.selectedItems[item.id] = true;
       });
+      setSelectedItems(newState.selectedItems);
     }
 
     // Make a `dataOptions`-able array of agreements with a `value` key.
-    if (openAgreements.length !== state.openAgreements.length) {
+    if (openAgreements.length !== openAgreementsState.length) {
       newState.openAgreements = openAgreements.map((a) => ({
         ...a,
         value: a.id,
       }));
+      setOpenAgreementsState(newState.openAgreements);
     }
+  }, [basket, selectedItems, openAgreements, openAgreementsState.length]);
 
-    return Object.keys(newState).length ? newState : null;
-  }
+  const handleToggleAll = () => {
+    const selectedItemsObj = {};
 
-  handleToggleAll = () => {
-    const selectedItems = {};
-
-    const someItemsUnselected = Object.values(
-      this.state.selectedItems
-    ).includes(false);
-    Object.keys(this.state.selectedItems).forEach((key) => {
-      selectedItems[key] = someItemsUnselected;
+    const someItemsUnselected = Object.values(selectedItems).includes(false);
+    Object.keys(selectedItems).forEach((key) => {
+      selectedItemsObj[key] = someItemsUnselected;
     });
 
-    this.setState({ selectedItems });
+    setSelectedItems(selectedItemsObj);
   };
 
-  handleToggleItem = (item) => {
-    this.setState((prevState) => ({
-      selectedItems: {
-        ...prevState.selectedItems,
-        [item.id]: !prevState.selectedItems[item.id],
-      },
-    }));
+  const handleToggleItem = (item) => {
+    setSelectedItems({
+      ...selectedItems,
+      [item.id]: !selectedItems[item.id],
+    });
   };
 
-  getSelectedItems = () => {
-    return Object.entries(this.state.selectedItems)
+  const getSelectedItems = () => {
+    return Object.entries(selectedItems)
       .filter(([_, selected]) => selected)
-      .map(([itemId]) => this.props.data.basket.findIndex((i) => i.id === itemId))
+      .map(([itemId]) => basket.findIndex((i) => i.id === itemId))
       .join(',');
   };
 
-  renderPaneFirstMenu = () => {
+  const renderPaneFirstMenu = () => {
     return (
       <PaneMenu>
         <FormattedMessage id="ui-agreements.basket.close">
@@ -105,7 +102,7 @@ export default class Basket extends React.Component {
               aria-label={ariaLabel}
               icon="times"
               id="clickable-close-basket"
-              onClick={this.props.handlers.onClose}
+              onClick={onClose}
             />
           )}
         </FormattedMessage>
@@ -113,9 +110,8 @@ export default class Basket extends React.Component {
     );
   };
 
-  renderCreateAgreementButton = () => {
-    const disabled =
-      Object.values(this.state.selectedItems).find((v) => v) === undefined; // None of the `selectedItems` value's are `true`
+  const renderCreateAgreementButton = () => {
+    const disabled = Object.values(selectedItems).find((v) => v) === undefined; // None of the `selectedItems` value's are `true`
 
     return (
       <Layout className="marginTop1">
@@ -124,7 +120,7 @@ export default class Basket extends React.Component {
           data-test-basket-create-agreement
           disabled={disabled}
           onClick={() => {
-            this.setState({ showModal: true });
+            setShowModal(true);
             // this.props.handlers.onAddToNewAgreement(this.getSelectedItems());
           }}
         >
@@ -134,10 +130,10 @@ export default class Basket extends React.Component {
     );
   };
 
-  renderAddToAgreementButton = () => {
+  const renderAddToAgreementButton = () => {
     const disabled =
-      this.state.selectedAgreementId === undefined ||
-      Object.values(this.state.selectedItems).find((v) => v) === undefined; // None of the `selectedItems` value's are `true`;
+      selectedAgreementId === undefined ||
+      Object.values(selectedItems).find((v) => v) === undefined; // None of the `selectedItems` value's are `true`;
 
     return (
       <div>
@@ -147,10 +143,7 @@ export default class Basket extends React.Component {
             data-test-basket-add-to-agreement
             disabled={disabled}
             onClick={() => {
-              this.props.handlers.onAddToExistingAgreement(
-                this.getSelectedItems(),
-                this.state.selectedAgreementId
-              );
+              onAddToExistingAgreement(getSelectedItems(), selectedAgreementId);
             }}
           >
             <FormattedMessage id="ui-agreements.basket.addToSelectedAgreement" />
@@ -160,8 +153,8 @@ export default class Basket extends React.Component {
     );
   };
 
-  renderAddToAgreementSection = () => {
-    if (!this.state.openAgreements.length) return null;
+  const renderAddToAgreementSection = () => {
+    if (!openAgreementsState.length) return null;
 
     return (
       <div>
@@ -175,7 +168,7 @@ export default class Basket extends React.Component {
         </Layout>
         <Col md={8} xs={12}>
           <Selection
-            dataOptions={this.state.openAgreements}
+            dataOptions={openAgreementsState}
             formatter={({ option }) => (
               <div
                 data-test-agreement-id={option.id}
@@ -196,8 +189,8 @@ export default class Basket extends React.Component {
               </div>
             )}
             id="select-agreement-for-basket"
-            onChange={(selectedAgreementId) => {
-              this.setState({ selectedAgreementId });
+            onChange={(id) => {
+              setSelectedAgreementId(id);
             }}
             onFilter={(searchString, agreements) => {
               return agreements.filter((agreement) => {
@@ -221,51 +214,51 @@ export default class Basket extends React.Component {
             placeholder=" "
           />
         </Col>
-        {this.renderAddToAgreementButton()}
+        {renderAddToAgreementButton()}
       </div>
     );
   };
 
-  render() {
-    const { data, handlers } = this.props;
+  return (
+    <Paneset id="basket-paneset">
+      <Pane
+        defaultWidth="100%"
+        firstMenu={renderPaneFirstMenu()}
+        id="basket-pane"
+        paneSub={
+          <FormattedMessage
+            id="ui-agreements.basket.recordCount"
+            values={{ count: basket.length }}
+          />
+        }
+        paneTitle={<FormattedMessage id="ui-agreements.basket.name" />}
+      >
+        <MessageBanner>
+          <FormattedMessage id="ui-agreements.basket.messageBanner" />
+        </MessageBanner>
+        <div id="basket-contents">
+          <BasketList
+            basket={basket}
+            onRemoveItem={onRemoveBasketItem}
+            onToggleAll={handleToggleAll}
+            onToggleItem={handleToggleItem}
+            selectedItems={selectedItems}
+          />
+          {renderCreateAgreementButton()}
+          {renderAddToAgreementSection()}
+        </div>
+      </Pane>
+      <AgreementModal
+        agreementStatusValues={agreementStatusValues}
+        handleAgreement={onAddToNewAgreement}
+        hideModal={() => setShowModal(false)}
+        selectedItems={getSelectedItems()}
+        showModal={showModal}
+      />
+    </Paneset>
+  );
+};
 
-    return (
-      <Paneset id="basket-paneset">
-        <Pane
-          defaultWidth="100%"
-          firstMenu={this.renderPaneFirstMenu()}
-          id="basket-pane"
-          paneSub={
-            <FormattedMessage
-              id="ui-agreements.basket.recordCount"
-              values={{ count: data.basket.length }}
-            />
-          }
-          paneTitle={<FormattedMessage id="ui-agreements.basket.name" />}
-        >
-          <MessageBanner>
-            <FormattedMessage id="ui-agreements.basket.messageBanner" />
-          </MessageBanner>
-          <div id="basket-contents">
-            <BasketList
-              basket={data.basket}
-              onRemoveItem={handlers.onRemoveBasketItem}
-              onToggleAll={this.handleToggleAll}
-              onToggleItem={this.handleToggleItem}
-              selectedItems={this.state.selectedItems}
-            />
-            {this.renderCreateAgreementButton()}
-            {this.renderAddToAgreementSection()}
-          </div>
-        </Pane>
-        <AgreementModal
-          agreementStatusValues={data.agreementStatusValues}
-          handleAgreement={this.props.handlers.onAddToNewAgreement}
-          hideModal={() => this.setState({ showModal: false })}
-          selectedItems={this.getSelectedItems()}
-          showModal={this.state.showModal}
-        />
-      </Paneset>
-    );
-  }
-}
+Basket.propTypes = propTypes;
+
+export default Basket;
