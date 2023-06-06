@@ -31,11 +31,8 @@ const propTypes = {
   data: PropTypes.shape({
     basket: PropTypes.arrayOf(PropTypes.object).isRequired,
     openAgreements: PropTypes.arrayOf(PropTypes.object).isRequired,
-    agreementStatusValues: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
   handlers: PropTypes.shape({
-    onAddToNewAgreement: PropTypes.func.isRequired,
-    onAddToExistingAgreement: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     onRemoveBasketItem: PropTypes.func.isRequired,
   }),

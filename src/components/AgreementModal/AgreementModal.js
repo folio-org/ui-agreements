@@ -32,9 +32,7 @@ import { urls } from '../utilities';
 const propTypes = {
   showModal: PropTypes.bool,
   hideModal: PropTypes.func,
-  selectedItems: PropTypes.func,
-  agreementStatusValues: PropTypes.arrayOf(PropTypes.object),
-  handleAgreement: PropTypes.func,
+  selectedItems: PropTypes.string,
 };
 const [AGREEMENT_STATUS] = ['SubscriptionAgreement.AgreementStatus'];
 
