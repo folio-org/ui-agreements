@@ -224,10 +224,9 @@ describe('LicensesFieldArray', () => {
       expect(queryAllByTestId(/licensesFieldArray\[.*\]/).length).toEqual(linkedLicenses.length);
     });
 
-    it('renders the expected status in each field', () => {
-      const { getByTestId } = renderComponent;
-      expect(within(getByTestId('licensesFieldArray[0]')).getByRole('combobox', { name: 'Status (this agreement)' })).toHaveDisplayValue('Future');
-      expect(within(getByTestId('licensesFieldArray[1]')).getByRole('combobox', { name: 'Status (this agreement)' })).toHaveDisplayValue('Controlling');
+    it('renders the expected status in each field', async () => {
+      await Select({ id: 'linkedLicenses-status-0' }).has({ value: 'future' });
+      await Select({ id: 'linkedLicenses-status-1' }).has({ value: 'controlling' });
     });
 
     it('renders the expected note in each field', () => {
