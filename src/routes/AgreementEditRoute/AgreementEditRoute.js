@@ -112,18 +112,18 @@ const AgreementEditRoute = ({
   const { mutateAsync: putAgreement } = useMutation(
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
     (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: payload }).json()
-      .then(({ name, linkedLicenses }) => {
+      .then(async ({ name, linkedLicenses }) => {
         // Invalidate any linked license's linkedAgreements calls
         if (linkedLicenses?.length) {
-          linkedLicenses.forEach(linkLic => {
+          await Promise.all(linkedLicenses.map(linkLic => {
             // I'm still not 100% sure this is the "right" way to go about this.
-            queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
-          });
+            return queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
+          }));
         }
 
         /* Invalidate cached queries */
-        queryClient.invalidateQueries(['ERM', 'Agreements']);
-        queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
+        await queryClient.invalidateQueries(['ERM', 'Agreements']);
+        await queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
         history.push(`${urls.agreementView(agreementId)}${location.search}`);
@@ -155,7 +155,7 @@ const AgreementEditRoute = ({
     initialValues.reasonForClosure = reasonForClosure.value;
     initialValues.renewalPriority = renewalPriority.value;
     initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
-    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role && o.role.value }));
+    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role?.value }));
     initialValues.supplementaryDocs = supplementaryDocs.map(o => ({ ...o, atType: o.atType?.value }));
     initialValues.linkedLicenses = linkedLicenses.map(l => ({
       ...l,
@@ -206,7 +206,7 @@ const AgreementEditRoute = ({
    */
   const poLineIdsArray = useMemo(() => (
     agreementLines
-      .filter(line => line.poLines && line.poLines.length)
+      .filter(line => !!line.poLines?.length)
       .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat()
   ), [agreementLines]);
 
@@ -216,10 +216,10 @@ const AgreementEditRoute = ({
     history.push(`${urls.agreementView(agreementId)}${location.search}`);
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
     splitRelatedAgreements(values, relationshipTypeValues);
-    putAgreement(values);
+    await putAgreement(values);
   };
 
   const getAgreementLines = () => {
