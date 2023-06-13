@@ -69,14 +69,14 @@ const Basket = ({
       })
   );
 
-  const handleAddToExistingAgreement = (addFromBasket) => {
+  const handleAddToExistingAgreement = async (addFromBasket) => {
     const submitValues = {
       items: addFromBasket
         .split(',')
         .map((index) => ({ resource: basket[parseInt(index, 10)] }))
         .filter((line) => line.resource),
     };
-    putAgreement(submitValues);
+    await putAgreement(submitValues);
   };
 
   useEffect(() => {
@@ -173,8 +173,8 @@ const Basket = ({
             buttonStyle="primary"
             data-test-basket-add-to-agreement
             disabled={disabled}
-            onClick={() => {
-              handleAddToExistingAgreement(getSelectedItems());
+            onClick={async () => {
+              await handleAddToExistingAgreement(getSelectedItems());
             }}
           >
             <FormattedMessage id="ui-agreements.basket.addToSelectedAgreement" />
@@ -234,10 +234,9 @@ const Basket = ({
                   agreement.agreementStatus.label
                     .toLowerCase()
                     .includes(lowerCasedSearchString) ||
-                  (agreement.startDate &&
-                    agreement.startDate
-                      .toLowerCase()
-                      .includes(lowerCasedSearchString))
+                  !!agreement.startDate
+                    ?.toLowerCase()
+                    ?.includes(lowerCasedSearchString)
                 );
               });
             }}
