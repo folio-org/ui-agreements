@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useQuery } from 'react-query';
 import PropTypes from 'prop-types';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
@@ -19,9 +20,9 @@ const [
   PUB_TYPE,
   TYPE
 ] = [
-  'TitleInstance.PublicationType',
-  'TitleInstance.Type',
-];
+    'TitleInstance.PublicationType',
+    'TitleInstance.Type',
+  ];
 
 const TitlesRoute = ({
   children,
@@ -33,7 +34,6 @@ const TitlesRoute = ({
   const ky = useOkapiKy();
   const hasPerms = stripes.hasPerm('ui-agreements.agreements.view');
   const searchField = useRef();
-
 
   useEffect(() => {
     if (searchField.current) {
@@ -51,6 +51,21 @@ const TitlesRoute = ({
   const { data: { tags = [] } = {} } = useTags();
   const { query, querySetter, queryGetter } = useKiwtSASQuery();
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [page, setPage] = useState(1);
+
+  console.log('currentIndex %o', currentIndex);
+  console.log('page %o', page);
+
+  useEffect(() => {
+    // if (currentIndex >= RESULT_COUNT_INCREMENT) {
+    setPage((currentIndex / RESULT_COUNT_INCREMENT) + 1);
+    // history.push(`${urls.titles()}${location.search}&page=${page}`);
+    console.log('location.search %o', location.search);
+    console.log('useEffect page %o', page);
+    // }
+  }, [currentIndex]);
+
   const titlesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
       searchKey: 'name,identifiers.identifier.value,alternateResourceNames.name,description',
@@ -63,6 +78,33 @@ const TitlesRoute = ({
     }, (query ?? {}))
   ), [query]);
 
+  const {
+    data: queryResponse = { totalRecords: 0, results: [] },
+    // data: { totalRecords: titlesCount = 0, results: queryTitles = [] } = { totalRecords: 0, results: [] },
+    refetch: fetchNewPage,
+    // error: titlesError,
+    // isLoading: areTitlesLoading,
+    // isIdle: isTitlesIdle,
+    // isError: isTitlesError
+  } = useQuery(
+    ['ERMQuery', 'TitlesQuery', titlesQueryParams, page, TITLES_ELECTRONIC_ENDPOINT],
+    () => {
+      const params = [...titlesQueryParams, `page=${page}`];
+      return ky.get(`${TITLES_ELECTRONIC_ENDPOINT}?${params?.join('&')}`).json();
+    },
+    {
+      enabled: !!query?.filters || !!query?.query,
+      select: (data) => ({
+        results: data?.results || [],
+        totalRecords: data?.totalRecords || 0,
+      }),
+    }
+  );
+  // const { results: queryTitles = [] } = queryResponse;
+  const { results: queryTitles } = queryResponse;
+  console.log('queryTitles %o', queryTitles);
+  // console.log('titlesCount', titlesCount);
+  // const titles = queryTitles;
 
   const {
     infiniteQueryObject: {
@@ -70,14 +112,14 @@ const TitlesRoute = ({
       fetchNextPage: fetchNextTitlesPage,
       isLoading: areTitlesLoading,
       isIdle: isTitlesIdle,
-      isError: isTitlesError
+      isError: isTitlesError,
     },
     results: titles = [],
     total: titlesCount = 0
   } = useInfiniteFetch(
-    ['ERM', 'Titles', titlesQueryParams, TITLES_ELECTRONIC_ENDPOINT],
-    ({ pageParam = 0 }) => {
-      const params = [...titlesQueryParams, `offset=${pageParam}`];
+    ['ERM', 'Titles', titlesQueryParams, page, TITLES_ELECTRONIC_ENDPOINT],
+    () => {
+      const params = [...titlesQueryParams, `page=${page}`];
       return ky.get(`${TITLES_ELECTRONIC_ENDPOINT}?${params?.join('&')}`).json();
     },
     {
@@ -101,14 +143,21 @@ const TitlesRoute = ({
         typeValues: getRefdataValuesByDesc(refdata, TYPE),
         tagsValues: tags,
       }}
-      onNeedMoreData={(_askAmount, index) => fetchNextTitlesPage({ pageParam: index })}
+      onNeedMoreData={(_askAmount, index) => {
+        console.log('index %o', index);
+        setCurrentIndex(index);
+        console.log('_askAmount, index %o', _askAmount, index);
+        fetchNextTitlesPage({ pageParam: index })
+        // fetchNewPage();
+      }
+      }
       queryGetter={queryGetter}
       querySetter={querySetter}
       searchString={location.search}
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;
         totalCount: () => titlesCount,
-        loaded: () => !isTitlesIdle,
+        loaded: () => isTitlesIdle,
         pending: () => areTitlesLoading,
         failure: () => isTitlesError,
         failureMessage: () => titlesError.message
