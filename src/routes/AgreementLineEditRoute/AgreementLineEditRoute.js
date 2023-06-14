@@ -58,9 +58,9 @@ const AgreementLineEditRoute = ({
   const { mutateAsync: putAgreementLine } = useMutation(
     ['ERM', 'AgreementLine', lineId, 'PUT', agreementLinePath],
     (payload) => ky.put(agreementLinePath, { json: payload }).json()
-      .then(() => {
+      .then(async () => {
         /* Invalidate cached queries */
-        queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
+        await queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.update.callout" /> });
         if (!createAnother) {
@@ -91,7 +91,7 @@ const AgreementLineEditRoute = ({
   };
 
   /* istanbul ignore next */
-  const handleSubmit = (line) => {
+  const handleSubmit = async (line) => {
     let payload; // payload to be PUT to the endpoint
     const { linkedResource, type, ...rest } = line;
     if (linkedResource?.type === 'packages') { // On submitting a package selected from eholdings plugin
@@ -120,7 +120,7 @@ const AgreementLineEditRoute = ({
       payload = { resource: linkedResource, ...rest, type };
     }
 
-    putAgreementLine({
+    await putAgreementLine({
       id: lineId,
       ...payload
     });
