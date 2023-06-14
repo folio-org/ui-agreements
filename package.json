@@ -110,8 +110,8 @@
     "queryResource": "query",
     "okapiInterfaces": {
       "configuration": "2.0 3.0 4.0 5.0",
-      "erm": "2.0 3.0 4.0 5.0",
-      "licenses": "1.0 2.0 3.0 4.0"
+      "erm": "2.0 3.0 4.0 5.0 6.0",
+      "licenses": "1.0 2.0 3.0 4.0 5.0"
     },
     "optionalOkapiInterfaces": {
       "order-lines": "2.0 3.0",
