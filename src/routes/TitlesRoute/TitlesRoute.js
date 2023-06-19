@@ -1,15 +1,17 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import queryString from 'query-string';
+
 import { useQuery } from 'react-query';
 import PropTypes from 'prop-types';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, useTags } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Titles';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { resultCount } from '../../constants';
+import { pagination, resultCount } from '../../constants';
 
 import { TITLES_ELECTRONIC_ENDPOINT } from '../../constants/endpoints';
 import { useAgreementsRefdata } from '../../hooks';
@@ -51,20 +53,54 @@ const TitlesRoute = ({
   const { data: { tags = [] } = {} } = useTags();
   const { query, querySetter, queryGetter } = useKiwtSASQuery();
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [page, setPage] = useState(1);
+  // const query = queryString.parse(location.search);
+  console.log('query %o', query);
 
-  console.log('currentIndex %o', currentIndex);
-  console.log('page %o', page);
+  const [currentPage, setCurrentPage] = useState();
+
+  const handlePageChange = (direction) => {
+    let newPage;
+    if (direction === pagination.NEXT) {
+      newPage = Number(currentPage) + 1;
+    } else if (direction === pagination.PREV) {
+      newPage = Number(currentPage) - 1;
+    }
+    setCurrentPage(newPage);
+    if (newPage !== query?.page) {
+      const newQuery = {
+        ...query,
+        page: newPage
+      };
+      history.push({
+        pathname: location.pathname,
+        search: `?${queryString.stringify(newQuery)}`
+      });
+    }
+  };
 
   useEffect(() => {
-    // if (currentIndex >= RESULT_COUNT_INCREMENT) {
-    setPage((currentIndex / RESULT_COUNT_INCREMENT) + 1);
-    // history.push(`${urls.titles()}${location.search}&page=${page}`);
-    console.log('location.search %o', location.search);
-    console.log('useEffect page %o', page);
-    // }
-  }, [currentIndex]);
+    if (query?.page && currentPage !== query?.page) {
+      setCurrentPage(query?.page);
+    } else if (!query?.page && !currentPage && titles.length) {
+      setCurrentPage(1);
+    }
+  }, [
+    currentPage,
+    history,
+    location,
+    query
+  ]);
+
+  useEffect(() => {
+    // reset page param in query when filters or searchquery change
+    console.log('reset page');
+    setCurrentPage();
+    const { page, ...unsetPageQuery } = query;
+    history.push({
+      pathname: location.pathname,
+      search: `?${queryString.stringify(unsetPageQuery)}`
+    });
+  }, [query?.filters, query?.query])
 
   const titlesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
@@ -74,56 +110,24 @@ const TitlesRoute = ({
         publicationType: 'publicationType.value',
         type: 'type.value'
       },
+      page: currentPage,
       perPage: RESULT_COUNT_INCREMENT
     }, (query ?? {}))
-  ), [query]);
+  ), [query, currentPage]);
 
   const {
-    data: queryResponse = { totalRecords: 0, results: [] },
-    // data: { totalRecords: titlesCount = 0, results: queryTitles = [] } = { totalRecords: 0, results: [] },
-    refetch: fetchNewPage,
-    // error: titlesError,
-    // isLoading: areTitlesLoading,
-    // isIdle: isTitlesIdle,
-    // isError: isTitlesError
+    data: { results: titles = [], totalRecords: titlesCount = 0 } = {},
+    error: titlesError,
+    isLoading: areTitlesLoading,
+    isError: isTitlesError
   } = useQuery(
-    ['ERMQuery', 'TitlesQuery', titlesQueryParams, page, TITLES_ELECTRONIC_ENDPOINT],
+    ['ERM', 'Titles', titlesQueryParams, currentPage, TITLES_ELECTRONIC_ENDPOINT],
     () => {
-      const params = [...titlesQueryParams, `page=${page}`];
+      const params = [...titlesQueryParams];
       return ky.get(`${TITLES_ELECTRONIC_ENDPOINT}?${params?.join('&')}`).json();
     },
     {
       enabled: !!query?.filters || !!query?.query,
-      select: (data) => ({
-        results: data?.results || [],
-        totalRecords: data?.totalRecords || 0,
-      }),
-    }
-  );
-  // const { results: queryTitles = [] } = queryResponse;
-  const { results: queryTitles } = queryResponse;
-  console.log('queryTitles %o', queryTitles);
-  // console.log('titlesCount', titlesCount);
-  // const titles = queryTitles;
-
-  const {
-    infiniteQueryObject: {
-      error: titlesError,
-      fetchNextPage: fetchNextTitlesPage,
-      isLoading: areTitlesLoading,
-      isIdle: isTitlesIdle,
-      isError: isTitlesError,
-    },
-    results: titles = [],
-    total: titlesCount = 0
-  } = useInfiniteFetch(
-    ['ERM', 'Titles', titlesQueryParams, page, TITLES_ELECTRONIC_ENDPOINT],
-    () => {
-      const params = [...titlesQueryParams, `page=${page}`];
-      return ky.get(`${TITLES_ELECTRONIC_ENDPOINT}?${params?.join('&')}`).json();
-    },
-    {
-      enabled: !!query?.filters || !!query?.query
     }
   );
 
@@ -143,28 +147,26 @@ const TitlesRoute = ({
         typeValues: getRefdataValuesByDesc(refdata, TYPE),
         tagsValues: tags,
       }}
-      onNeedMoreData={(_askAmount, index) => {
-        console.log('index %o', index);
-        setCurrentIndex(index);
-        console.log('_askAmount, index %o', _askAmount, index);
-        fetchNextTitlesPage({ pageParam: index })
-        // fetchNewPage();
-      }
-      }
+      onNeedMoreData={(...args) => {
+        if (args[3]) {
+          handlePageChange(args[3]);
+        }
+      }}
+      page={currentPage}
       queryGetter={queryGetter}
       querySetter={querySetter}
       searchString={location.search}
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;
         totalCount: () => titlesCount,
-        loaded: () => isTitlesIdle,
+        loaded: () => !areTitlesLoading,
         pending: () => areTitlesLoading,
         failure: () => isTitlesError,
         failureMessage: () => titlesError.message
       }}
     >
       {children}
-    </View>
+    </View >
   );
 };
 

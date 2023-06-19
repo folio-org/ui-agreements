@@ -48,6 +48,7 @@ const propTypes = {
     titles: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
   onNeedMoreData: PropTypes.func.isRequired,
+  page: PropTypes.number,
   queryGetter: PropTypes.func.isRequired,
   querySetter: PropTypes.func.isRequired,
   searchString: PropTypes.string,
@@ -62,12 +63,14 @@ const propTypes = {
 };
 
 const filterPaneVisibilityKey = '@folio/agreements/eresourcesFilterPaneVisibility';
-const pageAmount = resultCount.RESULT_COUNT_INCREMENT;
+// const pageAmount = resultCount.RESULT_COUNT_INCREMENT;
+const pageAmount = resultCount.RESULT_COUNT_INCREMENT_MEDIUM;
 
 const Titles = ({
   children,
   data = {},
   onNeedMoreData,
+  page,
   queryGetter,
   querySetter,
   searchString,
@@ -84,46 +87,12 @@ const Titles = ({
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
   const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
   const [moveIdentifiersModal, setMoveIdentifiersModal] = useState(false);
-  // const [paginatedItems, setPaginatedItems] = useState([]);
 
   const stripes = useStripes();
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
   };
-
-  // const [slicedItems, setSlicedItems] = useState([]);
-  // const [currentIndex, setCurrentIndex] = useState(0);
-  // const [newData, setNewData] = useState([]);
-  // // const paginatedTitles = useLoadSubInstances(slicedItems, titleKey);
-
-  // useEffect(() => {
-  //   const sparseData = new Array(currentIndex);
-  //   sparseData.push(...slicedItems);
-  //   setNewData(sparseData);
-  // }, [currentIndex, slicedItems]);
-
-  // useEffect(() => {
-  //   if (data.titles?.length) {
-  //     setSlicedItems(data.titles.slice(0, pageAmount));
-  //   }
-  // }, [data.titles]);
-
-  // const onNeedMoreData = (amount, index) => {
-  //   setCurrentIndex(index);
-  //   const recordSlice = data.titles.slice(index, index + amount);
-  //   setSlicedItems(recordSlice);
-  // };
-
-  // const onNeedMoreData = (amount, index) => {
-  //   const slicedData = new Array(index);
-  //   // slice original records array to extract 'pageAmount' of records
-  //   const recordSlice = data.titles.slice(index, index + amount);
-  //   // push it at the end of the sparse array
-  //   slicedData.push(...recordSlice);
-
-  //   setPaginatedItems(slicedData);
-  // };
 
   return (
     <div data-test-titles data-testid="titles">
@@ -300,6 +269,7 @@ const Titles = ({
                       eissn: e => getResourceIdentifier(e, 'eissn') ?? getResourceIdentifier(e, 'issn'),
                       pissn: e => getResourceIdentifier(e, 'pissn') ?? getSiblingIdentifier(e, 'issn'),
                     }}
+                    hidePageIndices
                     id="list-titles"
                     isEmptyMessage={
                       source ? (
@@ -316,9 +286,9 @@ const Titles = ({
                     isSelected={({ item }) => item.id === selectedRecordId}
                     onHeaderClick={onSort}
                     onNeedMoreData={onNeedMoreData}
-                    pageAmount={pageAmount}
-                    // pagingCanGoNext
-                    // pagingCanGoPrevious
+                    // pageAmount={pageAmount}
+                    pagingCanGoNext={page && page < Number(count) / pageAmount}
+                    pagingCanGoPrevious={page && Number(page) > 1}
                     pagingType="prev-next"
                     rowProps={{
                       labelStrings: ({ rowData }) => [rowData.name],

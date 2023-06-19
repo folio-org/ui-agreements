@@ -13,3 +13,4 @@ export { default as hiddenAccordions } from './hiddenAccordions';
 export * as endpoints from './endpoints';
 export { default as defaultQIndex } from './defaultQIndex';
 export * from './panesetConfigs';
+export { default as pagination } from './pagination';
