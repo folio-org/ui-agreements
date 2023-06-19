@@ -53,54 +53,9 @@ const TitlesRoute = ({
   const { data: { tags = [] } = {} } = useTags();
   const { query, querySetter, queryGetter } = useKiwtSASQuery();
 
-  // const query = queryString.parse(location.search);
-  console.log('query %o', query);
-
-  const [currentPage, setCurrentPage] = useState();
-
-  const handlePageChange = (direction) => {
-    let newPage;
-    if (direction === pagination.NEXT) {
-      newPage = Number(currentPage) + 1;
-    } else if (direction === pagination.PREV) {
-      newPage = Number(currentPage) - 1;
-    }
-    setCurrentPage(newPage);
-    if (newPage !== query?.page) {
-      const newQuery = {
-        ...query,
-        page: newPage
-      };
-      history.push({
-        pathname: location.pathname,
-        search: `?${queryString.stringify(newQuery)}`
-      });
-    }
-  };
-
-  useEffect(() => {
-    if (query?.page && currentPage !== query?.page) {
-      setCurrentPage(query?.page);
-    } else if (!query?.page && !currentPage && titles.length) {
-      setCurrentPage(1);
-    }
-  }, [
-    currentPage,
-    history,
-    location,
-    query
-  ]);
-
-  useEffect(() => {
-    // reset page param in query when filters or searchquery change
-    console.log('reset page');
-    setCurrentPage();
-    const { page, ...unsetPageQuery } = query;
-    history.push({
-      pathname: location.pathname,
-      search: `?${queryString.stringify(unsetPageQuery)}`
-    });
-  }, [query?.filters, query?.query])
+  const urlQuery = queryString.parse(location.search);
+  console.log('urlQuery %o', urlQuery);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const titlesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
@@ -115,13 +70,33 @@ const TitlesRoute = ({
     }, (query ?? {}))
   ), [query, currentPage]);
 
+  const handlePageChange = (direction) => {
+    let newPage;
+    if (direction === pagination.NEXT) {
+      newPage = Number(currentPage) + 1;
+    } else if (direction === pagination.PREV) {
+      newPage = Number(currentPage) - 1;
+    }
+    // setCurrentPage(newPage); add useEffect
+    if (newPage !== urlQuery?.page) {
+      const newQuery = {
+        ...urlQuery,
+        page: newPage
+      };
+      history.push({
+        pathname: location.pathname,
+        search: `?${queryString.stringify(newQuery)}`
+      });
+    }
+  };
+
   const {
-    data: { results: titles = [], totalRecords: titlesCount = 0 } = {},
+    data: { page, results: titles = [], totalRecords: titlesCount = 0 } = {},
     error: titlesError,
     isLoading: areTitlesLoading,
     isError: isTitlesError
   } = useQuery(
-    ['ERM', 'Titles', titlesQueryParams, currentPage, TITLES_ELECTRONIC_ENDPOINT],
+    ['ERM', 'Titles', titlesQueryParams, TITLES_ELECTRONIC_ENDPOINT],
     () => {
       const params = [...titlesQueryParams];
       return ky.get(`${TITLES_ELECTRONIC_ENDPOINT}?${params?.join('&')}`).json();
@@ -130,6 +105,35 @@ const TitlesRoute = ({
       enabled: !!query?.filters || !!query?.query,
     }
   );
+  console.log('page from useQuery %o', page);
+
+  useEffect(() => {
+    if (urlQuery?.page && currentPage !== urlQuery?.page) {
+      console.log('urlQuery?.page', urlQuery?.page);
+      setCurrentPage(urlQuery?.page);
+      console.log('set currentPage %o', currentPage, 'to', urlQuery?.page);
+    } else if (!urlQuery?.page && titles.length) {
+      setCurrentPage(1);
+      console.log('set currentPage to 1');
+    }
+  }, [
+    currentPage,
+    // history,
+    // location,
+    titles.length,
+    urlQuery.page,
+  ]);
+
+  // useEffect(() => {
+  //   // reset page param in query when filters or searchquery change
+  //   console.log('reset page');
+  //   setCurrentPage();
+  //   const { page, ...unsetPageQuery } = query;
+  //   history.push({
+  //     pathname: location.pathname,
+  //     search: `?${queryString.stringify(unsetPageQuery)}`
+  //   });
+  // }, [query?.filters, query?.query]);
 
   useEffect(() => {
     if (titlesCount === 1) {
@@ -152,7 +156,7 @@ const TitlesRoute = ({
           handlePageChange(args[3]);
         }
       }}
-      page={currentPage}
+      page={page}
       queryGetter={queryGetter}
       querySetter={querySetter}
       searchString={location.search}
@@ -166,7 +170,7 @@ const TitlesRoute = ({
       }}
     >
       {children}
-    </View >
+    </View>
   );
 };
 

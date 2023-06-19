@@ -78,6 +78,8 @@ const Titles = ({
   source
 }) => {
   const count = source?.totalCount() ?? 0;
+  console.log('pagingCanGoNext %o', page && page < Number(count) / pageAmount);
+  console.log('pagingCanGoPrevious %o', page && Number(page) > 1);
   const query = queryGetter() ?? {};
   const sortOrder = query.sort ?? '';
 
@@ -287,8 +289,8 @@ const Titles = ({
                     onHeaderClick={onSort}
                     onNeedMoreData={onNeedMoreData}
                     // pageAmount={pageAmount}
-                    pagingCanGoNext={page && page < Number(count) / pageAmount}
-                    pagingCanGoPrevious={page && Number(page) > 1}
+                    // pagingCanGoNext={page && page < Number(count) / pageAmount}
+                    // pagingCanGoPrevious={page && Number(page) > 1}
                     pagingType="prev-next"
                     rowProps={{
                       labelStrings: ({ rowData }) => [rowData.name],
