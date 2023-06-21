@@ -33,7 +33,6 @@ import {
   FormInfo,
   FormInternalContacts,
   FormLicenses,
-  FormLines,
   FormOrganizations,
   FormRelatedAgreements,
   FormSupplementaryDocuments,
@@ -209,7 +208,6 @@ const AgreementForm = ({
                           :
                           null)}
                       </IfPermission>
-                      <FormLines {...getSectionProps('formLines')} />
                       <FormLicenses {...getSectionProps('formLicenses')} />
                       <FormOrganizations {...getSectionProps('formOrganizations')} />
                       <FormSupplementaryDocuments {...getSectionProps('formSupplementaryDocs')} />
