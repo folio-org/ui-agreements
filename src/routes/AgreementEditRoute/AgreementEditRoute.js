@@ -74,7 +74,7 @@ const AgreementEditRoute = ({
 
   const { data: agreement, isLoading: isAgreementLoading } = useQuery(
     ['ERM', 'Agreement', agreementId, AGREEMENT_ENDPOINT(agreementId)], // This pattern may need to be expanded to other fetches in Nolana
-    () => ky.get(AGREEMENT_ENDPOINT(agreementId)).json()
+    () => ky.get(AGREEMENT_ENDPOINT(`${agreementId}?expandItems=false`)).json()
   );
 
   // Users
