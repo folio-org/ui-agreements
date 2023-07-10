@@ -10,7 +10,10 @@ import {
   Layout,
   MetaSection,
   NoValue,
+  MultiColumnList,
 } from '@folio/stripes/components';
+
+import getSortedItems from '../../utilities/getSortedItems';
 
 import { resourceClasses } from '../../../constants';
 import AddToBasketButton from '../../AddToBasketButton';
@@ -25,11 +28,22 @@ const propTypes = {
     name: PropTypes.string,
     pti: PropTypes.shape({
       url: PropTypes.string,
+      templatedUrls: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string,
+          url: PropTypes.string,
+        })
+      ),
     }),
   }).isRequired,
 };
 
 const PCIInfo = ({ pci }) => {
+  const sortedTemplatedUrls = getSortedItems(pci?.pti?.templatedUrls, null, {
+    column: 'name',
+    direction: 'asc',
+  });
+
   const renderAddTitleToBasketButton = () => {
     const { name: packageName } = pci;
     const entitlementOption = {
@@ -38,6 +52,7 @@ const PCIInfo = ({ pci }) => {
       name: pci.name,
       _object: pci,
     };
+
     return (
       <AddToBasketButton
         addButtonTooltipText={
@@ -71,6 +86,25 @@ const PCIInfo = ({ pci }) => {
     );
   };
 
+  const renderTemplatedURLs = () => {
+    return (
+      <MultiColumnList
+        columnMapping={{
+          name: (
+            <FormattedMessage id="ui-agreements.eresources.proxiesCustomizers" />
+          ),
+          url: <FormattedMessage id="ui-agreements.eresources.url" />,
+        }}
+        contentData={sortedTemplatedUrls.filter(
+          (tu) => tu?.name !== 'defaultUrl'
+        )}
+        id="templated-urls"
+        interactive={false}
+        visibleColumns={['name', 'url']}
+      />
+    );
+  };
+
   return (
     <div id="pci-info">
       <Row>
@@ -91,7 +125,7 @@ const PCIInfo = ({ pci }) => {
         <Headline size="large" tag="h3">
           <FormattedMessage id="ui-agreements.eresources.titleAvailability" />
         </Headline>
-        <Layout>{renderAddTitleToBasketButton(pci)}</Layout>
+        <Layout>{renderAddTitleToBasketButton()}</Layout>
       </Layout>
       <Row>
         <Col xs={12}>
@@ -100,10 +134,23 @@ const PCIInfo = ({ pci }) => {
               <FormattedMessage id="ui-agreements.eresources.titleOnPlatformURL" />
             }
           >
-            {renderUrl(pci)}
+            {renderUrl()}
           </KeyValue>
         </Col>
       </Row>
+      {pci?.pti?.templatedUrls.length > 1 && (
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={
+                <FormattedMessage id="ui-agreements.eresources.proxiedAndCustomizedUrls" />
+              }
+            >
+              {renderTemplatedURLs()}
+            </KeyValue>
+          </Col>
+        </Row>
+      )}
       <Row>
         <Col xs={3}>
           <KeyValue
