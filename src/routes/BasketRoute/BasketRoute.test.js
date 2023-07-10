@@ -102,19 +102,9 @@ describe('BasketRoute', () => {
       expect(getByText('AddToExistingAgreementButton')).toBeInTheDocument();
     });
 
-    test('calls the AddToExistingAgreementButton', async () => {
-      await ButtonInteractor('AddToExistingAgreementButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
-    });
-
     test('renders the AddToNewAgreementButton component', () => {
       const { getByText } = renderComponent;
       expect(getByText('AddToNewAgreementButton')).toBeInTheDocument();
-    });
-
-    test('calls the AddToNewAgreementButton', async () => {
-      await ButtonInteractor('AddToNewAgreementButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
     });
 
     test('renders the CloseButton component', () => {

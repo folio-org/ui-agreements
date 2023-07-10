@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -8,16 +8,16 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useBatchedFetch, useUsers } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, useUsers } from '@folio/stripes-erm-components';
 
 import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/processRelatedAgreements';
 import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 import { endpoints } from '../../constants';
-import { useAddFromBasket, useAgreementsRefdata, useBasket, useChunkedOrderLines } from '../../hooks';
+import { useAgreementsRefdata, useBasket } from '../../hooks';
 
-const { AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT } = endpoints;
+const { AGREEMENT_ENDPOINT } = endpoints;
 
 const [
   AGREEMENT_STATUS,
@@ -57,11 +57,6 @@ const AgreementEditRoute = ({
 
   const { basket = [] } = useBasket();
 
-  const {
-    handleBasketLinesAdded,
-    getAgreementLinesToAdd
-  } = useAddFromBasket(basket);
-
   const refdata = useAgreementsRefdata({
     desc: [
       AGREEMENT_STATUS,
@@ -79,32 +74,8 @@ const AgreementEditRoute = ({
 
   const { data: agreement, isLoading: isAgreementLoading } = useQuery(
     ['ERM', 'Agreement', agreementId, AGREEMENT_ENDPOINT(agreementId)], // This pattern may need to be expanded to other fetches in Nolana
-    () => ky.get(AGREEMENT_ENDPOINT(agreementId)).json()
+    () => ky.get(AGREEMENT_ENDPOINT(`${agreementId}?expandItems=false`)).json()
   );
-
-  // AGREEMENT LINES BATCHED FETCH
-  const {
-    results: agreementLines,
-    total: agreementLineCount,
-    isLoading: areLinesLoading
-  } = useBatchedFetch({
-    batchParams: {
-      filters: [
-        {
-          path: 'owner',
-          value: agreementId
-        }
-      ],
-      sort: [
-        { path: 'type' },
-        { path: 'resource.name' },
-        { path: 'reference' },
-        { path: 'id' }
-      ],
-    },
-    nsArray: ['ERM', 'Agreement', agreementId, 'AgreementLines', AGREEMENT_LINES_ENDPOINT, 'AgreementEditRoute'],
-    path: AGREEMENT_LINES_ENDPOINT
-  });
 
   // Users
   const { data: { users = [] } = {} } = useUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user));
@@ -133,7 +104,7 @@ const AgreementEditRoute = ({
   const getInitialValues = useCallback(() => {
     let initialValues = {};
 
-    if (agreement.id === agreementId) { // Not sure what this protects against right now
+    if (agreement?.id === agreementId) { // Not sure what this protects against right now
       initialValues = cloneDeep(agreement);
     }
 
@@ -141,7 +112,6 @@ const AgreementEditRoute = ({
       agreementStatus = {},
       contacts = [],
       isPerpetual = {},
-      items = [],
       linkedLicenses = [],
       orgs = [],
       reasonForClosure = {},
@@ -177,40 +147,8 @@ const AgreementEditRoute = ({
 
     joinRelatedAgreements(initialValues);
 
-    // Check agreement lines correspond to this agreement
-    if (!areLinesLoading && items.length && agreementLineCount && (agreementLines[0].owner.id === agreementId)) {
-      initialValues.items = items.map(item => {
-        // We weed out any external entitlements, then map the internal ones to our form shape
-        if (item.resource) return item;
-
-        const line = agreementLines.find(l => l.id === item.id);
-        if (!line) return item;
-
-        return {
-          id: line.id,
-          coverage: line.customCoverage ? line.coverage : undefined,
-          poLines: line.poLines,
-          activeFrom: line.startDate,
-          activeTo: line.endDate,
-          note: line.note
-        };
-      });
-    }
-
     return initialValues;
-  }, [agreement, agreementId, agreementLineCount, agreementLines, areLinesLoading]);
-
-  /*
-   * Calculate poLineIdsArray outside of the useEffect hook,
-   * so we can accurately tell if it changes and avoid infinite loop
-   */
-  const poLineIdsArray = useMemo(() => (
-    agreementLines
-      .filter(line => !!line.poLines?.length)
-      .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat()
-  ), [agreementLines]);
-
-  const { orderLines, isLoading: areOrderLinesLoading } = useChunkedOrderLines(poLineIdsArray);
+  }, [agreement, agreementId]);
 
   const handleClose = () => {
     history.push(`${urls.agreementView(agreementId)}${location.search}`);
@@ -222,15 +160,8 @@ const AgreementEditRoute = ({
     await putAgreement(values);
   };
 
-  const getAgreementLines = () => {
-    return [
-      ...agreementLines,
-      ...getAgreementLinesToAdd(),
-    ];
-  };
-
   const fetchIsPending = () => {
-    return areOrderLinesLoading || isAgreementLoading;
+    return isAgreementLoading;
   };
 
   if (!stripes.hasPerm('ui-agreements.agreements.edit')) return <NoPermissions />;
@@ -239,8 +170,6 @@ const AgreementEditRoute = ({
   return (
     <View
       data={{
-        agreementLines: getAgreementLines(),
-        agreementLinesToAdd: getAgreementLinesToAdd(),
         agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
         reasonForClosureValues: getRefdataValuesByDesc(refdata, REASON_FOR_CLOSURE),
         amendmentStatusValues: getRefdataValuesByDesc(refdata, AMENDMENT_STATUS),
@@ -249,14 +178,12 @@ const AgreementEditRoute = ({
         documentCategories: getRefdataValuesByDesc(refdata, DOC_ATTACHMENT_TYPE),
         isPerpetualValues: getRefdataValuesByDesc(refdata, GLOBAL_YES_NO),
         licenseLinkStatusValues: getRefdataValuesByDesc(refdata, REMOTE_LICENSE_LINK_STATUS),
-        orderLines,
         orgRoleValues: getRefdataValuesByDesc(refdata, ORG_ROLE),
         renewalPriorityValues: getRefdataValuesByDesc(refdata, RENEWAL_PRIORITY),
         users,
       }}
       handlers={{
         ...handlers,
-        onBasketLinesAdded: handleBasketLinesAdded,
         onClose: handleClose,
       }}
       initialValues={getInitialValues()}

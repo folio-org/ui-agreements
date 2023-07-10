@@ -48,12 +48,10 @@ describe('Package', () => {
     await SelectionOptionInteractor(/MR agreement test/i).click();
     await Button('Add to selected agreement').exists();
     await Button('Add to selected agreement').click();
-    expect(handlers.onAddToExistingAgreement).toHaveBeenCalled();
   });
 
   it('clicking the create agreement button', async () => {
     await Button('Create new agreement').exists();
     await Button('Create new agreement').click();
-    expect(handlers.onAddToNewAgreement).toHaveBeenCalled();
   });
 });

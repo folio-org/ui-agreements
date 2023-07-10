@@ -8,6 +8,7 @@ import {
   KeyValue,
   Row,
   Layout,
+  MetaSection,
   NoValue,
 } from '@folio/stripes/components';
 
@@ -19,6 +20,8 @@ export default class PCIInfo extends React.Component {
     pci: PropTypes.shape({
       accessEnd: PropTypes.string,
       accessStart: PropTypes.string,
+      dateCreated: PropTypes.string,
+      lastUpdated: PropTypes.string,
       name: PropTypes.string,
     }).isRequired,
   }
@@ -68,6 +71,13 @@ export default class PCIInfo extends React.Component {
             </Headline>
           </Col>
         </Row>
+        <MetaSection
+          contentId="pciInfoRecordMetaContent"
+          createdDate={pci.dateCreated}
+          hideSource
+          id="pciInfoRecordMeta"
+          lastUpdatedDate={pci.lastUpdated}
+        />
         <Layout className="display-flex justified">
           <Headline size="large" tag="h3">
             <FormattedMessage id="ui-agreements.eresources.titleAvailability" />
