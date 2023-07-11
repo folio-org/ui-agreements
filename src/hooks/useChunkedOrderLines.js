@@ -1,4 +1,4 @@
-import useChunkedCQLFetch from '@folio/stripes-erm-components';
+import { useChunkedCQLFetch } from '@folio/stripes-erm-components';
 
 import { ORDER_LINES_ENDPOINT } from '../constants/endpoints';
 // When fetching from a potentially large list of order lines,
@@ -7,7 +7,7 @@ const useChunkedOrderLines = (poLineIdsArray, queryOptions = {}) => {
   const {
     itemQueries: orderLineQueries,
     isLoading,
-    items: users
+    items: orderLines
   } = useChunkedCQLFetch({
     ids: poLineIdsArray,
     endpoint: ORDER_LINES_ENDPOINT,
@@ -22,7 +22,7 @@ const useChunkedOrderLines = (poLineIdsArray, queryOptions = {}) => {
   return {
     orderLineQueries,
     isLoading,
-    users
+    orderLines
   };
 };
 
