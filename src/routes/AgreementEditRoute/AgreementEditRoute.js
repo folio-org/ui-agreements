@@ -177,7 +177,7 @@ const AgreementEditRoute = ({
     if (
       !areLinesLoading &&
       agreementLineCount === agreementLines.length &&
-      agreementLines[0].owner.id === agreementId
+      agreementLines[0]?.owner?.id === agreementId
     ) {
       initialValues.items = agreementLines.map(al => {
         if (al.resource) return al;
