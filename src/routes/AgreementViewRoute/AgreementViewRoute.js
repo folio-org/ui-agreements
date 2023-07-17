@@ -6,14 +6,14 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { flatten } from 'lodash';
 
-import { useAgreement, useInfiniteFetch, useInterfaces, useUsers, downloadBlob } from '@folio/stripes-erm-components';
+import { useAgreement, useInfiniteFetch, useInterfaces, downloadBlob, useChunkedUsers } from '@folio/stripes-erm-components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Agreement';
 import { parseMclPageSize, urls } from '../../components/utilities';
-import { errorTypes } from '../../constants';
+import { errorTypes, httpStatuses } from '../../constants';
 
 import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
 
@@ -60,8 +60,7 @@ const AgreementViewRoute = ({
   const settings = useAgreementsSettings();
 
   // Users
-  const { data: { users = [] } = {} } = useUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user));
-
+  const { users } = useChunkedUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user) ?? []);
   // AGREEMENT LINES INFINITE FETCH
   const agreementLineQueryParams = useMemo(() => (
     generateKiwtQueryParams(
@@ -130,7 +129,7 @@ const AgreementViewRoute = ({
    */
   const poLineIdsArray = useMemo(() => (
     agreementLines
-      .filter(line => line.poLines && line.poLines.length)
+      .filter(line => line.poLines?.length)
       .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat()
   ), [agreementLines]);
 
@@ -141,7 +140,7 @@ const AgreementViewRoute = ({
     (cloneableProperties) => ky.post(`${agreementPath}/clone`, { json: cloneableProperties }).then(response => {
       if (response.ok) {
         return response.text(); // Parse it as text
-      } else if (response.status === 422) { // handle 422 error specifically
+      } else if (response.status === httpStatuses.HTTP_422) { // handle 422 error specifically
         return response.json()
           .then(({ errors }) => {
             throw new Error(intl.formatMessage(
