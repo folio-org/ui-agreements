@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { orderBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
@@ -19,7 +20,7 @@ import PackageCard from '../../PackageCard';
 import PackageCardExternal from '../../PackageCardExternal';
 import TitleCard from '../../TitleCard';
 import TitleCardExternal from '../../TitleCardExternal';
-import { isDetached, isExternal, urls, getSortedItems } from '../../utilities';
+import { isDetached, isExternal, urls } from '../../utilities';
 
 const propTypes = {
   isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
@@ -44,14 +45,11 @@ const propTypes = {
 };
 
 const Info = ({ isSuppressFromDiscoveryEnabled, line, resource }) => {
-  const sortedTemplatedUrls = getSortedItems(
+  const sortedTemplatedUrls = orderBy(
     resource?.pti?.templatedUrls,
-    null,
-    {
-      column: 'name',
-      direction: 'asc',
-    }
-  );
+    'name',
+    'asc'
+  ).filter((tu) => tu?.name !== 'defaultUrl');
 
   return (
     <>
@@ -209,9 +207,7 @@ const Info = ({ isSuppressFromDiscoveryEnabled, line, resource }) => {
                         <FormattedMessage id="ui-agreements.eresources.url" />
                       ),
                     }}
-                    contentData={sortedTemplatedUrls.filter(
-                      (tu) => tu?.name !== 'defaultUrl'
-                    )}
+                    contentData={sortedTemplatedUrls}
                     id="templated-urls"
                     interactive={false}
                     visibleColumns={['name', 'url']}

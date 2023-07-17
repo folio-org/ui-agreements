@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import orderBy from 'lodash/orderBy';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -12,8 +13,6 @@ import {
   NoValue,
   MultiColumnList,
 } from '@folio/stripes/components';
-
-import getSortedItems from '../../utilities/getSortedItems';
 
 import { resourceClasses } from '../../../constants';
 import AddToBasketButton from '../../AddToBasketButton';
@@ -39,10 +38,11 @@ const propTypes = {
 };
 
 const PCIInfo = ({ pci }) => {
-  const sortedTemplatedUrls = getSortedItems(pci?.pti?.templatedUrls, null, {
-    column: 'name',
-    direction: 'asc',
-  });
+  const sortedTemplatedUrls = orderBy(
+    pci?.pti?.templatedUrls,
+    'name',
+    'asc'
+  ).filter((tu) => tu?.name !== 'defaultUrl');
 
   const renderAddTitleToBasketButton = () => {
     const { name: packageName } = pci;
@@ -95,9 +95,7 @@ const PCIInfo = ({ pci }) => {
           ),
           url: <FormattedMessage id="ui-agreements.eresources.url" />,
         }}
-        contentData={sortedTemplatedUrls.filter(
-          (tu) => tu?.name !== 'defaultUrl'
-        )}
+        contentData={sortedTemplatedUrls}
         id="templated-urls"
         interactive={false}
         visibleColumns={['name', 'url']}
