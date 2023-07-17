@@ -212,6 +212,7 @@ describe('AgreementLinesFieldArray', () => {
         >
           <FieldArray
             component={AgreementLinesFieldArray}
+            data={{}}
             name="agreementLines"
           />
         </TestForm>, translationsProperties

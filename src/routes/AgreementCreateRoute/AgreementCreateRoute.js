@@ -121,7 +121,7 @@ const AgreementCreateRoute = ({
   return (
     <View
       data={{
-        agreementLines: getAgreementLinesToAdd(),
+        agreementLines: [],
         agreementLinesToAdd: getAgreementLinesToAdd(),
         agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
         reasonForClosureValues: getRefdataValuesByDesc(refdata, REASON_FOR_CLOSURE),

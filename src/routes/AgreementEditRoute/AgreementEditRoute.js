@@ -4,11 +4,11 @@ import { FormattedMessage } from 'react-intl';
 
 import { cloneDeep } from 'lodash';
 
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useBatchedFetch, useUsers } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, useAgreement, useBatchedFetch, useUsers } from '@folio/stripes-erm-components';
 
 import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/processRelatedAgreements';
 import View from '../../components/views/AgreementForm';
@@ -77,17 +77,15 @@ const AgreementEditRoute = ({
     ]
   });
 
-  const { data: agreement, isLoading: isAgreementLoading } = useQuery(
-    ['ERM', 'Agreement', agreementId, AGREEMENT_ENDPOINT(agreementId)], // This pattern may need to be expanded to other fetches in Nolana
-    () => ky.get(AGREEMENT_ENDPOINT(agreementId)).json()
-  );
+  const { agreement, isAgreementLoading } = useAgreement({ agreementId, queryParams: ['expandItems=false'] });
 
   // AGREEMENT LINES BATCHED FETCH
   const {
     results: agreementLines,
     total: agreementLineCount,
-    isLoading: areLinesLoading
+    isFetching: areLinesLoading
   } = useBatchedFetch({
+    batchLimit: Infinity,
     batchParams:  {
       filters: [
         {
@@ -141,7 +139,6 @@ const AgreementEditRoute = ({
       agreementStatus = {},
       contacts = [],
       isPerpetual = {},
-      items = [],
       linkedLicenses = [],
       orgs = [],
       reasonForClosure = {},
@@ -155,7 +152,7 @@ const AgreementEditRoute = ({
     initialValues.reasonForClosure = reasonForClosure.value;
     initialValues.renewalPriority = renewalPriority.value;
     initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
-    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role && o.role.value }));
+    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role?.value }));
     initialValues.supplementaryDocs = supplementaryDocs.map(o => ({ ...o, atType: o.atType?.value }));
     initialValues.linkedLicenses = linkedLicenses.map(l => ({
       ...l,
@@ -177,22 +174,21 @@ const AgreementEditRoute = ({
 
     joinRelatedAgreements(initialValues);
 
-    // Check agreement lines correspond to this agreement
-    if (!areLinesLoading && items.length && agreementLineCount && (agreementLines[0].owner.id === agreementId)) {
-      initialValues.items = items.map(item => {
-        // We weed out any external entitlements, then map the internal ones to our form shape
-        if (item.resource) return item;
-
-        const line = agreementLines.find(l => l.id === item.id);
-        if (!line) return item;
+    if (
+      !areLinesLoading &&
+      agreementLineCount === agreementLines.length &&
+      agreementLines[0]?.owner?.id === agreementId
+    ) {
+      initialValues.items = agreementLines.map(al => {
+        if (al.resource) return al;
 
         return {
-          id: line.id,
-          coverage: line.customCoverage ? line.coverage : undefined,
-          poLines: line.poLines,
-          activeFrom: line.startDate,
-          activeTo: line.endDate,
-          note: line.note
+          id: al.id,
+          coverage: al.customCoverage ? al.coverage : undefined,
+          poLines: al.poLines,
+          activeFrom: al.startDate,
+          activeTo: al.endDate,
+          note: al.note
         };
       });
     }
@@ -206,7 +202,7 @@ const AgreementEditRoute = ({
    */
   const poLineIdsArray = useMemo(() => (
     agreementLines
-      .filter(line => line.poLines && line.poLines.length)
+      .filter(line => line.poLines?.length)
       .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat()
   ), [agreementLines]);
 
@@ -223,13 +219,6 @@ const AgreementEditRoute = ({
     putAgreement(values);
   };
 
-  const getAgreementLines = () => {
-    return [
-      ...agreementLines,
-      ...getAgreementLinesToAdd(),
-    ];
-  };
-
   const fetchIsPending = () => {
     return areOrderLinesLoading || isAgreementLoading;
   };
@@ -240,9 +229,10 @@ const AgreementEditRoute = ({
   return (
     <View
       data={{
-        agreementLines: getAgreementLines(),
+        agreementLines,
         agreementLinesToAdd: getAgreementLinesToAdd(),
         agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
+        areLinesLoading,
         reasonForClosureValues: getRefdataValuesByDesc(refdata, REASON_FOR_CLOSURE),
         amendmentStatusValues: getRefdataValuesByDesc(refdata, AMENDMENT_STATUS),
         basket,
