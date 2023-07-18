@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import {
-  useBatchedFetch,
+  useParallelBatchFetch,
 } from '@folio/stripes-erm-components';
 
 import { useBasket } from '../../hooks';
@@ -15,7 +15,7 @@ const BasketRoute = ({ history }) => {
   const { basket, removeFromBasket } = useBasket();
 
   // AGREEMENTS BATCHED FETCH
-  const { results: openAgreements } = useBatchedFetch({
+  const { itemQueries } = useParallelBatchFetch({
     batchParams: {
       filters: [
         {
@@ -25,9 +25,14 @@ const BasketRoute = ({ history }) => {
       ],
       sort: [{ path: 'name' }],
     },
-    nsArray: ['ERM', 'Agreements', AGREEMENTS_ENDPOINT, 'BasketRoute'],
-    path: AGREEMENTS_ENDPOINT,
+    generateQueryKey: ({ offset }) => ['ERM', 'Agreements', AGREEMENTS_ENDPOINT, offset, 'BasketRoute'],
+    endpoint: AGREEMENTS_ENDPOINT,
   });
+
+  // Get items as they come through
+  const openAgreements = itemQueries?.filter(q => !q.isFetching)?.reduce((acc, curr) => {
+    return [...acc, ...(curr?.data?.results ?? [])];
+  }, []);
 
 
   const handleClose = () => {
