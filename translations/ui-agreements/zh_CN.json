@@ -748,5 +748,8 @@
     "permission.packages.view": "协议：搜索和查看资源包",
     "packages.source": "来源（外部数据源）",
     "agreements.agreementContentType": "内容类型",
-    "agreements.addAgreementContentType": "添加内容类型"
+    "agreements.addAgreementContentType": "添加内容类型",
+    "eresources.proxiedAndCustomizedUrls": "Proxied and customized URLs",
+    "eresources.proxiesCustomizers": "Proxies/Customizers",
+    "eresources.url": "URL"
 }

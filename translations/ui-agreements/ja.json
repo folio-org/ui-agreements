@@ -748,5 +748,8 @@
     "permission.packages.view": "契約: パッケージの検索と表示",
     "packages.source": "ソース (外部データ ソース)",
     "agreements.agreementContentType": "コンテンツ タイプ",
-    "agreements.addAgreementContentType": "コンテンツ タイプを追加"
+    "agreements.addAgreementContentType": "コンテンツ タイプを追加",
+    "eresources.proxiedAndCustomizedUrls": "Proxied and customized URLs",
+    "eresources.proxiesCustomizers": "Proxies/Customizers",
+    "eresources.url": "URL"
 }

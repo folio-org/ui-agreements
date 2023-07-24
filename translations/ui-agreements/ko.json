@@ -748,5 +748,8 @@
     "permission.packages.view": "계약(Agreements): 패키지 검색 및 보기",
     "packages.source": "소스(외부 데이터 소스)",
     "agreements.agreementContentType": "콘텐츠 유형",
-    "agreements.addAgreementContentType": "콘텐츠 유형 추가"
+    "agreements.addAgreementContentType": "콘텐츠 유형 추가",
+    "eresources.proxiedAndCustomizedUrls": "Proxied and customized URLs",
+    "eresources.proxiesCustomizers": "Proxies/Customizers",
+    "eresources.url": "URL"
 }

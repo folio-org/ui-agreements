@@ -748,5 +748,8 @@
     "permission.packages.view": "Smlouvy: Vyhledávání a prohlížení balíčků",
     "packages.source": "Zdroj (externí zdroj dat)",
     "agreements.agreementContentType": "Typ obsahu",
-    "agreements.addAgreementContentType": "Přidat typ obsahu"
+    "agreements.addAgreementContentType": "Přidat typ obsahu",
+    "eresources.proxiedAndCustomizedUrls": "Proxied and customized URLs",
+    "eresources.proxiesCustomizers": "Proxies/Customizers",
+    "eresources.url": "URL"
 }
