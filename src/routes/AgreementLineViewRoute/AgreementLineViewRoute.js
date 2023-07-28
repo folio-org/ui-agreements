@@ -35,7 +35,7 @@ const AgreementLineViewRoute = ({
   const { mutateAsync: deleteAgreementLine } = useMutation(
     // As opposed to ['ERM', 'AgreementLine', lineId, 'DELETE', agreementLinePath] if we did this via a DELETE call to entitlements endpoint
     ['ERM', 'AgreementLine', lineId, 'DELETE', agreementPath],
-    () => ky.put(agreementPath, { json: {
+    () => ky.put(`${agreementPath}?expandItems=false`, { json: {
       id: agreementId,
       items: [{ id: lineId, _delete: true }]
     } }).then(() => {

@@ -74,7 +74,7 @@ const AgreementCreateRoute = ({
 
   const { mutateAsync: postAgreement } = useMutation(
     [AGREEMENTS_ENDPOINT, 'ui-agreements', 'AgreementCreateRoute', 'createAgreement'],
-    (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: payload }).json()
+    (payload) => ky.post(`${AGREEMENTS_ENDPOINT}?expandItems=false`, { json: payload }).json()
       .then(({ id, name, linkedLicenses }) => {
         // Invalidate any linked license's linkedAgreements calls
         if (linkedLicenses?.length) {

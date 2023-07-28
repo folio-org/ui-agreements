@@ -109,7 +109,7 @@ const AgreementEditRoute = ({
 
   const { mutateAsync: putAgreement } = useMutation(
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
-    (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: payload }).json()
+    (payload) => ky.put(`${AGREEMENT_ENDPOINT(agreementId)}?expandItems=false`, { json: payload }).json()
       .then(({ name, linkedLicenses }) => {
         // Invalidate any linked license's linkedAgreements calls
         if (linkedLicenses?.length) {
