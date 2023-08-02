@@ -1,6 +1,5 @@
 
-import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
-import { Accordion, Button, KeyValue } from '@folio/stripes-testing';
+import { TestForm, renderWithIntl, Accordion, Button, KeyValue } from '@folio/stripes-erm-testing';
 import FormUsageData from './FormUsageData';
 
 import translationsProperties from '../../../../test/helpers';

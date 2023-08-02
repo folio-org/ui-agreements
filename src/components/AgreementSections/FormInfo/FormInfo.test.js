@@ -1,5 +1,5 @@
-import { Select, TextArea, TextField } from '@folio/stripes-testing';
-import { TestForm, renderWithIntl, SelectInteractor } from '@folio/stripes-erm-testing';
+import { Select, TextArea, TextField, TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
+
 import { useAsyncValidation } from '@folio/stripes-erm-components';
 
 import FormInfo from './FormInfo';
@@ -85,15 +85,15 @@ describe('FormInfo', () => {
     /* EXAMPLE -- Testing warning set by setFieldData (using stripes-erm-testing Select Interactor) */
     test('Reason for closure warning shows up when set and status !== closed', async () => {
       // First set status to closed
-      await SelectInteractor('Status*').choose('Closed');
+      await Select('Status*').choose('Closed');
       // Next set the reason for closure dropdown USING CHOOSEANDBLUR to ensure 'touched' meta value is set
-      await SelectInteractor('Reason for closure').chooseAndBlur('Cancelled');
+      await Select('Reason for closure').chooseAndBlur('Cancelled');
 
       // Now set Status away from 'Closed'.
-      await SelectInteractor('Status*').choose('Active');
+      await Select('Status*').choose('Active');
 
       // Finally test the warning itself
-      await SelectInteractor('Reason for closure').has({ warning: 'This reason will be cleared as status is not closed' });
+      await Select('Reason for closure').has({ warning: 'This reason will be cleared as status is not closed' });
     });
 
     test('renders the Renewal priority dropdown  with correct options', async () => {

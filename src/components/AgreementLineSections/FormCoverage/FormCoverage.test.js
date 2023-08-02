@@ -1,6 +1,11 @@
 
-import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
-import { Accordion, KeyValue } from '@folio/stripes-testing';
+import {
+  Accordion,
+  KeyValue,
+  TestForm,
+  renderWithIntl
+} from '@folio/stripes-erm-testing';
+
 import FormCoverage from './FormCoverage';
 import { values, resource, handlers, initialValues, externalData } from './testResources';
 import translationsProperties from '../../../../test/helpers';

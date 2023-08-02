@@ -1,8 +1,7 @@
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl, Checkbox, Pane, PaneHeader, Button } from '@folio/stripes-erm-testing';
 import { FormattedMessage } from 'react-intl';
 import { MemoryRouter } from 'react-router-dom';
-import { Checkbox, Pane, PaneHeader, Button } from '@folio/stripes-testing';
 import translationsProperties from '../../test/helpers';
 import GeneralSettingsForm from './GeneralSettingsForm';
 

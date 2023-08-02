@@ -1,9 +1,8 @@
 import { useForm } from 'react-final-form';
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl, Button as ButtonInteractor } from '@folio/stripes-erm-testing';
 
 import { Button } from '@folio/stripes/components';
-import { Button as ButtonInteractor } from '@folio/stripes-testing';
 
 import translationsProperties from '../../../test/helpers';
 import IdentifierReassignmentForm from './IdentifierReassignmentForm';

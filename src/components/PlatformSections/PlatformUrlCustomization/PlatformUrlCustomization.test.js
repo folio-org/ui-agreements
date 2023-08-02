@@ -1,6 +1,5 @@
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { Accordion, MultiColumnList, MultiColumnListCell, Button } from '@folio/stripes-testing';
+import { renderWithIntl, Accordion, MultiColumnList, MultiColumnListCell, Button } from '@folio/stripes-erm-testing';
 import data from './testResources';
 import translationsProperties from '../../../../test/helpers';
 import PlatformUrlCustomization from './PlatformUrlCustomization';

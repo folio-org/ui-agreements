@@ -1,8 +1,10 @@
 
-import { Button } from '@folio/stripes-testing';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import { FieldArray } from 'react-final-form-arrays';
-import userEvent from '@testing-library/user-event';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { Button, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../test/helpers';
 import POLinesFieldArray from './POLinesFieldArray';
 
@@ -48,29 +50,36 @@ describe('POLinesFieldArray', () => {
     it('clicking the add button renders the po line field', async () => {
       const { getByText } = renderComponent;
       const addButton = Button('Add PO line');
-      await addButton.exists();
-      await addButton.click();
-      expect(getByText('POLineField')).toBeInTheDocument();
+
+      await waitFor(async () => {
+        await addButton.click();
+        await expect(getByText('POLineField')).toBeInTheDocument();
+      });
     });
 
     it('adding/removing fields using the add/remove works as expected', async () => {
       const { getByRole, queryAllByTestId } = renderComponent;
       const addButton = Button('Add PO line');
 
-      await addButton.exists();
+      await waitFor(async () => {
+        await addButton.click();
+        await expect(queryAllByTestId(/polinesFieldArray\[.*\]/i).length).toEqual(1);
+      });
 
-      await addButton.click();
-      expect(queryAllByTestId(/polinesFieldArray\[.*\]/i).length).toEqual(1);
-
-      await addButton.click();
-      expect(queryAllByTestId(/polinesFieldArray\[.*\]/i).length).toEqual(2);
+      await waitFor(async () => {
+        await addButton.click();
+        await expect(queryAllByTestId(/polinesFieldArray\[.*\]/i).length).toEqual(2);
+      });
 
       // IconButton calls don't seem to work as expected
       // const removeButton = IconButton('Remove PO line');
       const removeButton = getByRole('button', { name: /Remove PO line 1/i });
       // await removeButton.click();
-      await userEvent.click(removeButton);
-      expect(queryAllByTestId(/polinesFieldArray\[.*\]/i).length).toEqual(1);
+
+      await waitFor(async () => {
+        await userEvent.click(removeButton);
+        await expect(queryAllByTestId(/polinesFieldArray\[.*\]/i).length).toEqual(1);
+      });
     });
   });
 

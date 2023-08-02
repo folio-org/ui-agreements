@@ -1,8 +1,7 @@
-import { waitFor } from '@testing-library/react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
+import { renderWithIntl, TestForm, KeyValue, TextField } from '@folio/stripes-erm-testing';
 import { Field } from 'react-final-form';
-import { KeyValue, TextField } from '@folio/stripes-testing';
 import { detachedData, data } from './testResources';
 import AgreementLineField from './AgreementLineField';
 import translationsProperties from '../../../test/helpers';

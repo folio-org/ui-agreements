@@ -1,7 +1,7 @@
 
 
-import { Button, TextField } from '@folio/stripes-testing';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
+import { Button, TextField, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
+
 import MCLPaginationFields from './MCLPaginationFields';
 
 import { defaultMclPageSize } from '../../../constants';

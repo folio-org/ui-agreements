@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { MemoryRouter } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl, Button as ButtonInteractor } from '@folio/stripes-erm-testing';
 
 import { Button } from '@folio/stripes/components';
 import { useStripes } from '@folio/stripes/core';
-import { Button as ButtonInteractor } from '@folio/stripes-testing';
 
 import translationsProperties from '../../../test/helpers';
 import UrlCustomizerEditRoute from './UrlCustomizerEditRoute';

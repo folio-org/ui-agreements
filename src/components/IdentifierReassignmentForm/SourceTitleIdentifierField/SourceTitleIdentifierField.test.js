@@ -1,7 +1,6 @@
 
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
+import { renderWithIntl, TestForm, Button } from '@folio/stripes-erm-testing';
 import { StaticRouter as Router } from 'react-router-dom';
-import { Button } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import SourceTitleIdentifierField from './SourceTitleIdentifierField';
 

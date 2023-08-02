@@ -1,5 +1,4 @@
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { Accordion } from '@folio/stripes-testing';
+import { renderWithIntl, Accordion } from '@folio/stripes-erm-testing';
 import translationsProperties from '../../../../test/helpers';
 import InternalContacts from './InternalContacts';
 import agreement from './testResources';

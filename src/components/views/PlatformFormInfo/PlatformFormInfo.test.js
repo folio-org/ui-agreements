@@ -1,7 +1,6 @@
 
 
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
-import { Button, KeyValue, TextField } from '@folio/stripes-testing';
+import { renderWithIntl, TestForm, Button, KeyValue, TextField } from '@folio/stripes-erm-testing';
 import translationsProperties from '../../../../test/helpers';
 import PlatformFormInfo from './PlatformFormInfo';
 

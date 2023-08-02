@@ -1,7 +1,6 @@
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl, Pane, Button, TextField, MultiColumnList } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { Pane, Button, TextField, MultiColumnList } from '@folio/stripes-testing';
 
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 

@@ -1,7 +1,6 @@
 
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { KeyValue } from '@folio/stripes-testing';
+import { renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
 import translationsProperties from '../../../../test/helpers';
 import PCIInfo from './PCIInfo';
 

@@ -1,7 +1,6 @@
 
 
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
-import { Checkbox, TextField } from '@folio/stripes-testing';
+import { renderWithIntl, TestForm, Checkbox, TextField } from '@folio/stripes-erm-testing';
 import translationsProperties from '../../../../test/helpers';
 import PCIFormInfo from './PCIFormInfo';
 

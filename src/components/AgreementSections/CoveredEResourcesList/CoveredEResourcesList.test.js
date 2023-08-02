@@ -1,6 +1,5 @@
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { Button, Dropdown, MultiColumnList } from '@folio/stripes-testing';
+import { renderWithIntl, Button, Dropdown, MultiColumnList } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import CoveredEResourcesList from './CoveredEResourcesList';

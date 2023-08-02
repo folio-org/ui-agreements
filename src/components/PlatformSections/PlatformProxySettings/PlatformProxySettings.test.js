@@ -1,6 +1,5 @@
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { Accordion, MultiColumnList, MultiColumnListCell, Button } from '@folio/stripes-testing';
+import { renderWithIntl, Accordion, MultiColumnList, MultiColumnListCell, Button } from '@folio/stripes-erm-testing';
 import translationsProperties from '../../../../test/helpers';
 import PlatformProxySettings from './PlatformProxySettings';
 

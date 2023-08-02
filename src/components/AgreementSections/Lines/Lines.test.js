@@ -1,6 +1,5 @@
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { Accordion, Button, MultiColumnList } from '@folio/stripes-testing';
+import { renderWithIntl, Accordion, Button, MultiColumnList } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import Lines from './Lines';
 import translationsProperties from '../../../../test/helpers';

@@ -1,8 +1,6 @@
 
-import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
-import userEvent from '@testing-library/user-event';
-import { Button } from '@interactors/html';
-import { Selection } from '@folio/stripes-testing';
+import { Button, TestForm, renderWithIntl, Selection } from '@folio/stripes-erm-testing';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import BasketSelector from './BasketSelector';
 
 import translationsProperties from '../../../test/helpers';

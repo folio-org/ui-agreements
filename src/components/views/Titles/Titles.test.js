@@ -1,13 +1,13 @@
 import ReactRouterDom, { MemoryRouter } from 'react-router-dom';
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl, Pane, Button, TextField, MultiColumnList } from '@folio/stripes-erm-testing';
 
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
-import { Pane, Button, TextField, MultiColumnList } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import Titles from './Titles';
 import data from './testResources';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 
 jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
@@ -64,16 +64,24 @@ describe('Titles', () => {
   });
 
   test('renders the expected Search and Reset all Button', async () => {
-    await Button('Titles').click();
-    await TextField({ id: 'input-title-search' }).fillIn('test'); // enables the disabled buttons
+    await waitFor(async () => {
+      await Button('Titles').click();
+      await TextField({ id: 'input-title-search' }).fillIn('test'); // enables the disabled buttons
+    });
+
     await Button('Search').exists();
     await Button('Reset all').exists();
   });
 
   test('triggering the search should invoke the useHandleSubmitSearch hook', async () => {
-    await Button('Titles').click();
-    await TextField({ id: 'input-title-search' }).fillIn('test'); // enables the disabled buttons
-    await Button('Search').click();
+    await waitFor(async () => {
+      await Button('Titles').click();
+      await TextField({ id: 'input-title-search' }).fillIn('test'); // enables the disabled buttons
+    });
+
+    await waitFor(async () => {
+      await Button('Search').click();
+    });
     expect(mockSubmit).toHaveBeenCalled();
   });
 
@@ -88,7 +96,9 @@ describe('Titles', () => {
   });
 
   test('renders the expected Titles Pane', async () => {
-    await Button('Titles').click();
+    await waitFor(async () => {
+      await Button('Titles').click();
+    });
     await Pane('Titles').is({ visible: true });
   });
 
