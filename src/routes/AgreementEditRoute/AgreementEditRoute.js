@@ -8,7 +8,7 @@ import { useMutation, useQueryClient, useQuery } from 'react-query';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useAgreement, useBatchedFetch, useChunkedUsers, useInfiniteFetch } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, useAgreement, useChunkedUsers } from '@folio/stripes-erm-components';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
