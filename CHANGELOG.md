@@ -3,6 +3,8 @@
 ## 9.1.0 In progress
 * ERM-2624 Add view only permissions for Agreement settings
 * ERM-2920 Replace "External data source" search
+* ERM-2979 Add agreement line summary information and navigation link to Agreement edit view
+  * reuse FormLines component
 ## 9.0.0 2023-02-22
 * ERM-2613 Remove unneeded `react-redux`. Upgrade `stripes-acq-components` to `v4`
 * ERM-2596 Increment ui-agreements to Stripes v8
