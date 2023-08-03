@@ -10,7 +10,7 @@ import {
 
 import { FieldArray } from 'react-final-form-arrays';
 
-import { render, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import CoverageFieldArray from './CoverageFieldArray';
 
 import translationsProperties from '../../../test/helpers';

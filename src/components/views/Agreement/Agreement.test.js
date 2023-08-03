@@ -2,10 +2,10 @@
 
 import { renderWithIntl, Button, Modal } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import translationsProperties from '../../../../test/helpers';
 import { data, handlers } from './testResources';
 import Agreement from './Agreement';
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 jest.mock('../../../hooks', () => ({
   ...jest.requireActual('../../../hooks'),

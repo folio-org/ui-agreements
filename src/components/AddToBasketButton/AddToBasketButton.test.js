@@ -1,10 +1,10 @@
 import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { MemoryRouter } from 'react-router';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import AddToBasketButton from './AddToBasketButton';
 
 import translationsProperties from '../../../test/helpers/translationsProperties';
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 const mockAddToBasket = jest.fn();
 const mockRemoveFromBasket = jest.fn();

@@ -4,10 +4,10 @@ import { renderWithIntl, Pane, Button, TextField, MultiColumnList } from '@folio
 
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import translationsProperties from '../../../../test/helpers';
 import Titles from './Titles';
 import data from './testResources';
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 
 jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {

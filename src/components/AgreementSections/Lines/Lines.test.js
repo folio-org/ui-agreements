@@ -1,10 +1,10 @@
 
 import { renderWithIntl, Accordion, Button, MultiColumnList } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import Lines from './Lines';
 import translationsProperties from '../../../../test/helpers';
 import { agreement, handlers } from './testResources';
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 describe('Lines', () => {
   beforeEach(() => {
