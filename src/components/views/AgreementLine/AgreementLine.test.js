@@ -1,11 +1,11 @@
-
-import { renderWithIntl, Button, Modal } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { renderWithIntl, Button, Modal } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../../test/helpers';
 import { data, handlers } from './testResources';
 import AgreementLine from './AgreementLine';
-
-
 
 jest.mock('../../AgreementLineSections/Info', () => () => <div>Info</div>);
 jest.mock('../../AgreementLineSections/POLines', () => () => <div>POLines</div>);
@@ -78,20 +78,26 @@ describe('AgreementLine', () => {
     });
 
     it('renders the Confirmation modal and clicking the delete/cancel button triggers expected callbacks', async () => {
-      await Button('Actions').click();
-      await Button('Delete').click();
-      await Modal('Delete agreement line').exists();
-      await Button('Cancel').click(); // close the modal
-      await Button('Actions').click();
-      await Button('Delete').click();
-      await Modal('Delete agreement line').exists();
-      await Button('Delete').click(); // delete the line
+      await waitFor(async () => {
+        await Button('Actions').click();
+        await Button('Delete').click();
+        await Modal('Delete agreement line').exists();
+        await Button('Cancel').click(); // close the modal
+        await Button('Actions').click();
+        await Button('Delete').click();
+        await Modal('Delete agreement line').exists();
+        await Button('Delete').click(); // delete the line
+      });
+
       expect(handlers.onDelete).toHaveBeenCalled();
     });
 
     it('triggers the onEdit callback on clicking the edit button from the actions dropdown', async () => {
-      await Button('Actions').click();
-      await Button('Edit').click();
+      await waitFor(async () => {
+        await Button('Actions').click();
+        await Button('Edit').click();
+      });
+
       expect(handlers.onEdit).toHaveBeenCalled();
     });
   });

@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import Lines from './Lines';
 import translationsProperties from '../../../../test/helpers';
 import { agreement, handlers } from './testResources';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 describe('Lines', () => {
   beforeEach(() => {
@@ -27,9 +28,11 @@ describe('Lines', () => {
   });
 
   test('Action menu has two items', async () => {
-    await Button('Actions').click();
-    await Button('New agreement line').click();
-    await Button('View in agreement lines search').click();
+    await waitFor(async () => {
+      await Button('Actions').click();
+      await Button('New agreement line').click();
+      await Button('View in agreement lines search').click();
+    });
   });
 
   test('renders Lines list MCL', async () => {

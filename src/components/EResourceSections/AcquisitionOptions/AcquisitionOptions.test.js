@@ -1,6 +1,8 @@
-
-import { renderWithIntl, Accordion, MultiColumnList, MultiColumnListCell } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { renderWithIntl, Accordion, MultiColumnList, MultiColumnListCell } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../../test/helpers';
 import AcquisitionOptions from './AcquisitionOptions';
 
@@ -312,7 +314,9 @@ describe('AcquisitionOptions', () => {
 
   describe('clicking a row', () => {
     beforeEach(async () => {
-      await MultiColumnList().click({ row: 0, columnIndex: 1 });
+      await waitFor(async () => {
+        await MultiColumnList().click({ row: 0, columnIndex: 1 });
+      });
     });
     test('should invoke the onEResourceClick handler', () => {
       expect(onEResourceClick.mock.calls.length).toBe(1);

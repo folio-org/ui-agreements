@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import { data, handlers } from './testResources';
 import Agreement from './Agreement';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 jest.mock('../../../hooks', () => ({
   ...jest.requireActual('../../../hooks'),
@@ -158,22 +159,30 @@ describe('Agreement', () => {
     });
 
     it('renders the Duplicate modal on clicking the duplicate button from the actions dropdown', async () => {
-      await Button('Actions').click();
-      await Button('Duplicate').click();
+      await waitFor(async () => {
+        await Button('Actions').click();
+        await Button('Duplicate').click();
+      });
+
       const { getByText } = renderComponent;
       expect(getByText('DuplicateModal')).toBeInTheDocument();
     });
 
     it('renders the Confirmation modal on clicking the delete button from the actions dropdown', async () => {
-      await Button('Actions').click();
-      await Button('Delete').click();
-      await Modal('Delete agreement').exists();
-      await Button('Cancel').click(); // close the modal
+      await waitFor(async () => {
+        await Button('Actions').click();
+        await Button('Delete').click();
+        await Modal('Delete agreement').exists();
+        await Button('Cancel').click(); // close the modal
+      });
     });
 
     it('Clicking the Export agreement (JSON) button should trigger the callback', async () => {
-      await Button('Actions').click();
-      await Button('Export agreement (JSON)').click();
+      await waitFor(async () => {
+        await Button('Actions').click();
+        await Button('Export agreement (JSON)').click();
+      });
+
       expect(handlers.onExportAgreement).toHaveBeenCalled();
     });
   });

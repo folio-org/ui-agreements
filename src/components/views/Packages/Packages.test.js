@@ -1,7 +1,8 @@
 
-import { renderWithIntl, Pane, Button, TextField, MultiColumnList } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { renderWithIntl, Pane, Button, TextField, MultiColumnList } from '@folio/stripes-erm-testing';
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
 import translationsProperties from '../../../../test/helpers';
@@ -48,16 +49,22 @@ describe('Packages', () => {
   });
 
   test('renders the expected Search and Reset all Button', async () => {
-    await Button('Packages').click();
-    await TextField({ id: 'input-package-search' }).fillIn('test'); // enables the disabled buttons
+    await waitFor(async () => {
+      await Button('Packages').click();
+      await TextField({ id: 'input-package-search' }).fillIn('test'); // enables the disabled buttons
+    });
+
     await Button('Search').exists();
     await Button('Reset all').exists();
   });
 
   test('triggering the search should invoke the useHandleSubmitSearch hook', async () => {
-    await Button('Packages').click();
-    await TextField({ id: 'input-package-search' }).fillIn('test'); // enables the disabled buttons
-    await Button('Search').click();
+    await waitFor(async () => {
+      await Button('Packages').click();
+      await TextField({ id: 'input-package-search' }).fillIn('test'); // enables the disabled buttons
+      await Button('Search').click();
+    });
+
     expect(mockSubmit).toHaveBeenCalled();
   });
 
@@ -72,7 +79,9 @@ describe('Packages', () => {
   });
 
   test('renders the expected Packages Pane', async () => {
-    await Button('Packages').click();
+    await waitFor(async () => {
+      await Button('Packages').click();
+    });
     await Pane('Packages').is({ visible: true });
   });
 

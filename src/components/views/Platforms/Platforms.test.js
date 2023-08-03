@@ -1,7 +1,7 @@
 import ReactRouterDom, { MemoryRouter } from 'react-router-dom';
 
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { renderWithIntl, Pane, Button, TextField, MultiColumnList } from '@folio/stripes-erm-testing';
-
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
 import translationsProperties from '../../../../test/helpers';
@@ -57,21 +57,28 @@ describe('Platforms', () => {
   });
 
   test('renders the expected Search and Reset all Button', async () => {
-    await Button('Platforms').click();
-    await TextField({ id: 'input-platform-search' }).fillIn('test'); // enables the disabled buttons
+    await waitFor(async () => {
+      await Button('Platforms').click();
+      await TextField({ id: 'input-platform-search' }).fillIn('test'); // enables the disabled buttons
+    });
     await Button('Search').exists();
     await Button('Reset all').exists();
   });
 
   test('triggering the search should invoke the useHandleSubmitSearch hook', async () => {
-    await Button('Platforms').click();
-    await TextField({ id: 'input-platform-search' }).fillIn('test'); // enables the disabled buttons
-    await Button('Search').click();
+    await waitFor(async () => {
+      await Button('Platforms').click();
+      await TextField({ id: 'input-platform-search' }).fillIn('test'); // enables the disabled buttons
+      await Button('Search').click();
+    });
     expect(mockSubmit).toHaveBeenCalled();
   });
 
   test('renders the expected Platforms Pane', async () => {
-    await Button('Platforms').click();
+    await waitFor(async () => {
+      await Button('Platforms').click();
+    });
+
     await Pane('Platforms').is({ visible: true });
   });
 

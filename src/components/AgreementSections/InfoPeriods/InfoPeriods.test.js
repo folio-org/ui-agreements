@@ -1,6 +1,8 @@
-
-import { renderWithIntl, Button, KeyValue } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { renderWithIntl, Button, KeyValue } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../../test/helpers';
 import InfoPeriods from './InfoPeriods';
 
@@ -283,7 +285,11 @@ describe('InfoPeriods', () => {
     nextPeriodTests();
 
     describe('clicking on previous period tab', () => {
-      beforeEach(async () => { await Button('Previous').click(); });
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Previous').click();
+        });
+      });
       // Should now pass previous period tests
       prevPeriodTests();
     });
@@ -321,13 +327,21 @@ describe('InfoPeriods', () => {
     currentPeriodTests();
 
     describe('clicking on previous period tab', () => {
-      beforeEach(async () => { await Button('Previous').click(); });
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Previous').click();
+        });
+      });
       // Should now pass previous period tests
       prevPeriodTests();
     });
 
     describe('clicking on next period tab', () => {
-      beforeEach(async () => { await Button('Next').click(); });
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Next').click();
+        });
+      });
       // Should now pass previous period tests
       nextPeriodTests();
     });

@@ -1,6 +1,8 @@
-
-import { renderWithIntl, Accordion, Button, MultiColumnList, MultiColumnListCell } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { renderWithIntl, Accordion, Button, MultiColumnList, MultiColumnListCell } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../../test/helpers';
 import PackageContents from './PackageContents';
 
@@ -389,7 +391,11 @@ describe('PackageContents', () => {
   });
 
   describe('clicking a filter', () => {
-    beforeEach(async () => { await Button('Future').click(); });
+    beforeEach(async () => {
+      await waitFor(async () => {
+        await Button('Future').click();
+      });
+    });
 
     test('should invoke the onFilterPackageContents callback', () => {
       expect(onFilterPackageContents.mock.calls.length).toBe(1);

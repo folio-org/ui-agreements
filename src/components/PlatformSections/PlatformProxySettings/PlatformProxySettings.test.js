@@ -1,5 +1,6 @@
-
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { renderWithIntl, Accordion, MultiColumnList, MultiColumnListCell, Button } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../../test/helpers';
 import PlatformProxySettings from './PlatformProxySettings';
 
@@ -194,8 +195,10 @@ describe('PlatformProxySettings', () => {
 
     describe('Clicking the row', () => {
       beforeEach(async () => {
-        await MultiColumnList('url-customization').click({ row: 0, columnIndex: 0 });
-        await MultiColumnList('url-customization').click({ row: 1, columnIndex: 0 });
+        await waitFor(async () => {
+          await MultiColumnList('url-customization').click({ row: 0, columnIndex: 0 });
+          await MultiColumnList('url-customization').click({ row: 1, columnIndex: 0 });
+        });
       });
 
       test('should not call the onViewUrlCustomizer callback', () => {

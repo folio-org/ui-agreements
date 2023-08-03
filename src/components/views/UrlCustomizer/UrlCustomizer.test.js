@@ -1,11 +1,11 @@
-
-import { renderWithIntl, Button, PaneHeader } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { renderWithIntl, Button, PaneHeader } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../../test/helpers';
 import { data, handlers } from './testResources';
 import UrlCustomizer from './UrlCustomizer';
-
-
 
 describe('UrlCustomizer', () => {
   let renderComponent;
@@ -49,15 +49,14 @@ describe('UrlCustomizer', () => {
     });
 
     test('renders the expected action buttons and clicking them should work as expcted', async () => {
-      await Button('Actions').exists();
-      await Button('Actions').click();
-      await Button('Edit').exists();
-      await Button('Delete').exists();
-      await Button('Delete').click();
-      await Button('Cancel').exists();
-      await Button('Cancel').exists();
-      await Button('Delete').exists();
-      await Button('Delete').click();
+      await waitFor(async () => {
+        await Button('Actions').click();
+        await Button('Edit').click();
+        await Button('Delete').click();
+        await Button('Cancel').click();
+        await Button('Delete').click();
+      });
+
       expect(handlers.onDelete).toHaveBeenCalled();
     });
 

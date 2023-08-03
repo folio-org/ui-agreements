@@ -1,5 +1,6 @@
 import { useForm } from 'react-final-form';
 
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { renderWithIntl, Button as ButtonInteractor } from '@folio/stripes-erm-testing';
 
 import { Button } from '@folio/stripes/components';
@@ -93,12 +94,14 @@ describe('IdentifierReassignmentForm', () => {
 
   describe('Picking resources', () => {
     beforeEach(async () => {
-      // Set source/destination titles
-      await ButtonInteractor('setSourceTitle').click();
-      await ButtonInteractor('setDestinationTitle').click();
+      await waitFor(async () => {
+        // Set source/destination titles
+        await ButtonInteractor('setSourceTitle').click();
+        await ButtonInteractor('setDestinationTitle').click();
 
-      // Click preview
-      await ButtonInteractor('Preview').click();
+        // Click preview
+        await ButtonInteractor('Preview').click();
+      });
     });
 
     it('renders the SourceTitlePreview component', () => {
