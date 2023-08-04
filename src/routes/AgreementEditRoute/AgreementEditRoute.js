@@ -76,6 +76,11 @@ const AgreementEditRoute = ({
 
   const { agreement, isAgreementLoading } = useAgreement({ agreementId, queryParams: ['expandItems=false'] });
 
+  /* START agreementLineCount
+    the following is necessary to provide information of number of agreement lines in the edit form,
+    could be removed if we change the agreement API to include that information
+  */
+
   const agreementLineQueryParams = useMemo(() => (
     generateKiwtQueryParams({ filters: [{ path: 'owner', value: agreementId }], perPage: 1 }, {})), [agreementId]);
 
@@ -88,6 +93,7 @@ const AgreementEditRoute = ({
       return ky.get(`${AGREEMENT_LINES_ENDPOINT}?${params?.join('&')}`).json();
     }
   );
+  /* END agreementLineCount */
 
   // Users
   const { users } = useChunkedUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user) ?? []);
