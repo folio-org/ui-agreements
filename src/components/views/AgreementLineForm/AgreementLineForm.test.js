@@ -1,5 +1,4 @@
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { Checkbox } from '@folio/stripes-testing';
+import { renderWithIntl, Checkbox } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import AgreementLineForm from './AgreementLineForm';

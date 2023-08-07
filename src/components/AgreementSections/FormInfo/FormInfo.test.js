@@ -1,5 +1,6 @@
-import { Select, TextArea, TextField } from '@folio/stripes-testing';
-import { TestForm, renderWithIntl, SelectInteractor } from '@folio/stripes-erm-testing';
+import { Select, TextArea, TextField, TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
 import { useAsyncValidation } from '@folio/stripes-erm-components';
 
 import FormInfo from './FormInfo';
@@ -39,11 +40,13 @@ describe('FormInfo', () => {
 
     test('renders the Status dropdown with correct options', async () => {
       await Select('Status*').exists();
-      await Select('Status*').choose('Active');
-      await Select('Status*').choose('Closed');
-      await Select('Status*').choose('Draft');
-      await Select('Status*').choose('In negotiation');
-      await Select('Status*').choose('Requested');
+      await waitFor(async () => {
+        await Select('Status*').choose('Active');
+        await Select('Status*').choose('Closed');
+        await Select('Status*').choose('Draft');
+        await Select('Status*').choose('In negotiation');
+        await Select('Status*').choose('Requested');
+      });
     });
 
     test('renders a disabled Reason for closure dropdown', async () => {
@@ -51,17 +54,24 @@ describe('FormInfo', () => {
     });
 
     test('Reason for closure dropdown activates when correct status is selected and has correct options', async () => {
-      await Select('Status*').choose('Active');
+      await waitFor(async () => {
+        await Select('Status*').choose('Active');
+      });
       await Select('Reason for closure').has({ disabled: true });
 
-      await Select('Status*').choose('Closed');
-      await Select('Status*').blur();
+      await waitFor(async () => {
+        await Select('Status*').choose('Closed');
+        await Select('Status*').blur();
+      });
 
       await Select('Reason for closure').has({ disabled: false });
-      await Select('Reason for closure').choose('Cancelled');
-      await Select('Reason for closure').choose('Ceased');
-      await Select('Reason for closure').choose('Rejected');
-      await Select('Reason for closure').choose('Superseded');
+
+      await waitFor(async () => {
+        await Select('Reason for closure').choose('Cancelled');
+        await Select('Reason for closure').choose('Ceased');
+        await Select('Reason for closure').choose('Rejected');
+        await Select('Reason for closure').choose('Superseded');
+      });
     });
 
     /* EXAMPLE -- Testing warning set by setFieldData (When using stripes Select interactor as is) */
@@ -84,29 +94,36 @@ describe('FormInfo', () => {
 
     /* EXAMPLE -- Testing warning set by setFieldData (using stripes-erm-testing Select Interactor) */
     test('Reason for closure warning shows up when set and status !== closed', async () => {
-      // First set status to closed
-      await SelectInteractor('Status*').choose('Closed');
-      // Next set the reason for closure dropdown USING CHOOSEANDBLUR to ensure 'touched' meta value is set
-      await SelectInteractor('Reason for closure').chooseAndBlur('Cancelled');
+      await waitFor(async () => {
+        // First set status to closed
+        await Select('Status*').choose('Closed');
+        // Next set the reason for closure dropdown USING CHOOSEANDBLUR to ensure 'touched' meta value is set
+        await Select('Reason for closure').chooseAndBlur('Cancelled');
 
-      // Now set Status away from 'Closed'.
-      await SelectInteractor('Status*').choose('Active');
+        // Now set Status away from 'Closed'.
+        await Select('Status*').choose('Active');
+      });
+
 
       // Finally test the warning itself
-      await SelectInteractor('Reason for closure').has({ warning: 'This reason will be cleared as status is not closed' });
+      await Select('Reason for closure').has({ warning: 'This reason will be cleared as status is not closed' });
     });
 
     test('renders the Renewal priority dropdown  with correct options', async () => {
       await Select('Renewal priority').exists();
-      await Select('Renewal priority').choose('Definitely renew');
-      await Select('Renewal priority').choose('For review');
-      await Select('Renewal priority').choose('Definitely cancel');
+      await waitFor(async () => {
+        await Select('Renewal priority').choose('Definitely renew');
+        await Select('Renewal priority').choose('For review');
+        await Select('Renewal priority').choose('Definitely cancel');
+      });
     });
 
     test('renders the Is perpetual dropdown with correct options', async () => {
       await Select('Is perpetual').exists();
-      await Select('Is perpetual').choose('Yes');
-      await Select('Is perpetual').choose('No');
+      await waitFor(async () => {
+        await Select('Is perpetual').choose('Yes');
+        await Select('Is perpetual').choose('No');
+      });
     });
 
     test('renders the ContentTypes FieldArray', () => {
@@ -179,7 +196,10 @@ describe('FormInfo', () => {
     });
 
     test('typing in the name field should fire the onAsyncValidate callback', async () => {
-      await TextField('Name*').fillIn('a');
+      await waitFor(async () => {
+        await TextField('Name*').fillIn('a');
+      });
+
       expect(onAsyncValidate).toHaveBeenCalled();
     });
   });

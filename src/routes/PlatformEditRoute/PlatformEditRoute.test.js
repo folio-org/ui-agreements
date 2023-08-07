@@ -4,10 +4,9 @@ import PropTypes from 'prop-types';
 import { useQuery } from 'react-query';
 import { useStripes } from '@folio/stripes/core';
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl, Button as ButtonInteractor } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { Button } from '@folio/stripes/components';
-import { Button as ButtonInteractor } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
 import { platform } from './testResources';
 import PlatformEditRoute from './PlatformEditRoute';

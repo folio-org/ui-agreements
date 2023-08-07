@@ -1,7 +1,6 @@
 
 
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
-import { Checkbox } from '@folio/stripes-testing';
+import { renderWithIntl, TestForm, Checkbox } from '@folio/stripes-erm-testing';
 import translationsProperties from '../../../../test/helpers';
 import TitleFormInfo from './TitleFormInfo';
 

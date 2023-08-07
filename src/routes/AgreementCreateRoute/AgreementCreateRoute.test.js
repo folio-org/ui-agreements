@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 
 import { useStripes } from '@folio/stripes/core';
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl, Button as ButtonInteractor } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { Button } from '@folio/stripes/components';
-import { Button as ButtonInteractor } from '@folio/stripes-testing';
 
 import basket from './testResources';
 

@@ -1,6 +1,12 @@
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { Accordion, MultiColumnList, MultiColumnListCell, KeyValue } from '@folio/stripes-testing';
+import {
+  Accordion,
+  MultiColumnList,
+  MultiColumnListCell,
+  KeyValue,
+  renderWithIntl
+} from '@folio/stripes-erm-testing';
+
 import { line, resource, defaultLine, defaultResource } from './testResources';
 import translationsProperties from '../../../../test/helpers';
 import Coverage from './Coverage';

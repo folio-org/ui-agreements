@@ -1,9 +1,8 @@
-import { waitFor } from '@testing-library/react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
+import { renderWithIntl, TestForm, Datepicker, TextArea } from '@folio/stripes-erm-testing';
 import { Field } from 'react-final-form';
 import { MemoryRouter } from 'react-router-dom';
-import { Datepicker, TextArea } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
 import AgreementPeriodField from './AgreementPeriodField';
 
@@ -68,12 +67,18 @@ describe('AgreementPeriodField', () => {
     test('date validation fires for invalid end date', async () => {
       const { getAllByText, queryByText } = renderComponent;
       // set end date to invalid date
-      await Datepicker('End date').clear();
-      await Datepicker('End date').fillIn('02/06/1996');
+      await waitFor(async () => {
+        await Datepicker('End date').clear();
+        await Datepicker('End date').fillIn('02/06/1996');
+      });
+
       await waitFor(() => expect(getAllByText(/End date must be after the start date./i)?.[0]).toBeInTheDocument());
       // set back to valid date
-      await Datepicker('End date').clear();
-      await Datepicker('End date').fillIn('02/06/1999');
+      await waitFor(async () => {
+        await Datepicker('End date').clear();
+        await Datepicker('End date').fillIn('02/06/1999');
+      });
+
       await waitFor(() => expect(queryByText(/End date must be after the start date./i)).not.toBeInTheDocument());
     });
   });

@@ -1,8 +1,7 @@
 
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
+import { renderWithIntl, TestForm, KeyValue } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { Field } from 'react-final-form';
-import { KeyValue } from '@folio/stripes-testing';
 import RelatedAgreementField from '../RelatedAgreementField';
 
 import translationsProperties from '../../../../test/helpers';

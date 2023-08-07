@@ -1,6 +1,5 @@
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { KeyValue } from '@folio/stripes-testing';
+import { renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
 import Header from './Header';
 import translationsProperties from '../../../../test/helpers';
 
