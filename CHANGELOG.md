@@ -1,6 +1,6 @@
 # Change history for ui-agreements
 
-## 9.0.3 In progress
+## 9.0.3 2023-08-08
 * ERM-2969: Edit agreement pane crashes when slow (multi-line) query is canceled. Do not expand agreement lines on erm/sas call in:
     * Agreement edit GET and PUT
     * Agreement create POST
