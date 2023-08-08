@@ -1,9 +1,8 @@
-import { waitFor } from '@testing-library/dom';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl, Accordion, Checkbox } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { Accordion, Checkbox } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
 import { activeFilters, data } from './testResources';
 import PackageFilters from './PackageFilters';

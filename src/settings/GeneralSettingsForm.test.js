@@ -1,8 +1,9 @@
-
-import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { FormattedMessage } from 'react-intl';
 import { MemoryRouter } from 'react-router-dom';
-import { Checkbox, Pane, PaneHeader, Button } from '@folio/stripes-testing';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { renderWithIntl, Checkbox, Pane, PaneHeader, Button } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../test/helpers';
 import GeneralSettingsForm from './GeneralSettingsForm';
 
@@ -33,7 +34,9 @@ describe('GeneralSettingsForm', () => {
   });
 
   test('renders Save button', async () => {
-    await Checkbox({ id: 'hideEResourcesFunctionality' }).click();
+    await waitFor(async () => {
+      await Checkbox({ id: 'hideEResourcesFunctionality' }).click();
+    });
     await Button('Save').exists();
   });
 

@@ -1,7 +1,6 @@
 
-import { FormattedDateTimeInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
+import { FormattedDateTime, renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { KeyValue } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import PackageInfo from './PackageInfo';
 
@@ -783,8 +782,8 @@ describe('PackageInfo', () => {
     });
 
     test('renders the expected source created date and time', async () => {
-      await FormattedDateTimeInteractor({ id: 'source-data-created-datetime' }).has({ date: '3/21/2022' });
-      await FormattedDateTimeInteractor({ id: 'source-data-created-datetime' }).has({ time: '11:00 PM' });
+      await FormattedDateTime({ id: 'source-data-created-datetime' }).has({ date: '3/21/2022' });
+      await FormattedDateTime({ id: 'source-data-created-datetime' }).has({ time: '11:00 PM' });
     });
 
     test('renders the Source last updated field', async () => {
@@ -792,8 +791,8 @@ describe('PackageInfo', () => {
     });
 
     test('renders the expected source updated date and time', async () => {
-      await FormattedDateTimeInteractor({ id: 'source-data-updated-datetime' }).has({ date: '3/28/2022' });
-      await FormattedDateTimeInteractor({ id: 'source-data-updated-datetime' }).has({ time: '3:09 AM' });
+      await FormattedDateTime({ id: 'source-data-updated-datetime' }).has({ date: '3/28/2022' });
+      await FormattedDateTime({ id: 'source-data-updated-datetime' }).has({ time: '3:09 AM' });
     });
   });
 

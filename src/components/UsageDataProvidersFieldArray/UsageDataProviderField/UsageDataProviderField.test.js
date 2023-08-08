@@ -1,7 +1,6 @@
 
 import { MemoryRouter } from 'react-router-dom';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
-import { KeyValue } from '@folio/stripes-testing';
+import { renderWithIntl, TestForm, KeyValue } from '@folio/stripes-erm-testing';
 import { Field } from 'react-final-form';
 import translationsProperties from '../../../../test/helpers';
 import UsageDataProviderField from './UsageDataProviderField';

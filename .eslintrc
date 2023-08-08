@@ -12,9 +12,10 @@
     ]
   },
   "env": {
-    "jest/globals": true
+    "jest": true
   },
   "plugins": [
-    "jest"
+    "testing-library",
+    "jest-dom"
   ]
 }

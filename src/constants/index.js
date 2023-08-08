@@ -10,6 +10,7 @@ export { default as resourceTypes } from './resourceTypes';
 export { default as validationEndPoint } from './validationEndPoint';
 export { default as defaultMclPageSize } from './defaultMclPageSize';
 export { default as hiddenAccordions } from './hiddenAccordions';
+export { default as httpStatuses } from './httpStatuses';
 export * as endpoints from './endpoints';
 export { default as defaultQIndex } from './defaultQIndex';
 export * from './panesetConfigs';

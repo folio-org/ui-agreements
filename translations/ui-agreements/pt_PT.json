@@ -78,8 +78,8 @@
     "settings.general": "General",
     "eresources.sourceKb": "External data source",
     "eresources.coverage": "Coverage",
-    "coverage.volumeShort": "Vol:",
-    "coverage.issueShort": "Iss:",
+    "coverage.volumeShort": "Vol: {value}",
+    "coverage.issueShort": "Iss: {value}",
     "basket.clickToSelectAgreement": "Click to select agreement",
     "license.edit": "Edit license",
     "license.editLicenseOrganizations": "Edit license organizations",
@@ -311,7 +311,7 @@
     "eresources.volume": "Volume",
     "eresources.firstAuthor": "First author",
     "eresources.firstEditor": "First editor",
-    "coverage.editionShort": "Ed:",
+    "coverage.editionShort": "Ed: {value}",
     "agreements.currentPeriodNote": "Current period note",
     "supplementaryProperties": "Supplementary properties",
     "supplementaryProperties.count": "{count, number} saved {count, plural, one {supplementary property} other {supplementary properties}}",
@@ -748,5 +748,8 @@
     "permission.packages.view": "Agreements: Search & view packages",
     "packages.source": "Source (external data source)",
     "agreements.agreementContentType": "Content type",
-    "agreements.addAgreementContentType": "Add content type"
+    "agreements.addAgreementContentType": "Add content type",
+    "eresources.proxiedAndCustomizedUrls": "Proxied and customized URLs",
+    "eresources.proxiesCustomizers": "Proxies/Customizers",
+    "eresources.url": "URL"
 }

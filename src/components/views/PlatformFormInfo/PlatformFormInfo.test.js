@@ -1,7 +1,6 @@
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { renderWithIntl, TestForm, Button, KeyValue, TextField } from '@folio/stripes-erm-testing';
 
-
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
-import { Button, KeyValue, TextField } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import PlatformFormInfo from './PlatformFormInfo';
 
@@ -41,8 +40,11 @@ describe('PlatformFormInfo', () => {
     });
 
     test('trigger onSubmit with expected values on submitting the form', async () => {
-      await TextField({ 'id': 'edit-local-platform-code' }).fillIn('testCode'); // adding this test to cover the `parse={v => v}` condition
-      await Button('Submit').click();
+      await waitFor(async () => {
+        await TextField({ 'id': 'edit-local-platform-code' }).fillIn('testCode'); // adding this test to cover the `parse={v => v}` condition
+        await Button('Submit').click();
+      });
+
       expect(onSubmit.mock.calls[0][0]).toEqual({ 'localCode': 'testCode' });
     });
   });

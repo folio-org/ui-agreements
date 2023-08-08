@@ -748,5 +748,8 @@
     "permission.packages.view": "Acuerdos: Buscar y ver paquetes",
     "packages.source": "Fuente (fuente de datos externa)",
     "agreements.agreementContentType": "Datos de contenido",
-    "agreements.addAgreementContentType": "Añadir tipo de contenido"
+    "agreements.addAgreementContentType": "Añadir tipo de contenido",
+    "eresources.proxiedAndCustomizedUrls": "Proxied and customized URLs",
+    "eresources.proxiesCustomizers": "Proxies/Customizers",
+    "eresources.url": "URL"
 }

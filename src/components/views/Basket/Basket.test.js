@@ -1,7 +1,15 @@
-
-import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { PaneHeader, Button, Selection, SelectionList as SelectListInteractor, SelectionOption as SelectionOptionInteractor } from '@folio/stripes-testing';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  Button,
+  PaneHeader,
+  renderWithIntl,
+  Selection,
+  SelectionList,
+  SelectionOption,
+} from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../../test/helpers';
 import Basket from './Basket';
 import { data, handlers } from './testResources';
@@ -42,16 +50,26 @@ describe('Package', () => {
 
   it('choosing an option and clicking the add to selected agreement button', async () => {
     await Selection({ id: 'select-agreement-for-basket' }).exists();
-    await Selection().open();
-    await SelectListInteractor({ optionCount: 9 }).exists();
-    await Selection().filterOptions('MR agreement test');
-    await SelectionOptionInteractor(/MR agreement test/i).click();
-    await Button('Add to selected agreement').exists();
-    await Button('Add to selected agreement').click();
+    await waitFor(async () => {
+      await Selection().open();
+    });
+
+    await SelectionList({ optionCount: 9 }).exists();
+    await waitFor(async () => {
+      await Selection().filterOptions('MR agreement test');
+      await SelectionOption(/MR agreement test/i).click();
+    });
+
+    await waitFor(async () => {
+      await Button('Add to selected agreement').exists();
+      await Button('Add to selected agreement').click();
+    });
   });
 
   it('clicking the create agreement button', async () => {
-    await Button('Create new agreement').exists();
-    await Button('Create new agreement').click();
+    await waitFor(async () => {
+      await Button('Create new agreement').exists();
+      await Button('Create new agreement').click();
+    });
   });
 });

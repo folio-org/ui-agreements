@@ -78,8 +78,8 @@
     "settings.general": "常规",
     "eresources.sourceKb": "外部数据源",
     "eresources.coverage": "收录范围",
-    "coverage.volumeShort": "卷:",
-    "coverage.issueShort": "期：",
+    "coverage.volumeShort": "卷： {value}",
+    "coverage.issueShort": "期： {value}",
     "basket.clickToSelectAgreement": "单击以选中协议",
     "license.edit": "编辑许可证",
     "license.editLicenseOrganizations": "编辑许可证组织",
@@ -311,7 +311,7 @@
     "eresources.volume": "卷",
     "eresources.firstAuthor": "第一作者",
     "eresources.firstEditor": "第一编者",
-    "coverage.editionShort": "版本：",
+    "coverage.editionShort": "版本： {value}",
     "agreements.currentPeriodNote": "当前周期附注",
     "supplementaryProperties": "补充属性",
     "supplementaryProperties.count": "{count, number}已保存{count, number} {count, plural, one {补充属性} other {补充属性}}",
@@ -748,5 +748,8 @@
     "permission.packages.view": "协议：搜索和查看资源包",
     "packages.source": "来源（外部数据源）",
     "agreements.agreementContentType": "内容类型",
-    "agreements.addAgreementContentType": "添加内容类型"
+    "agreements.addAgreementContentType": "添加内容类型",
+    "eresources.proxiedAndCustomizedUrls": "代理和自定义URL",
+    "eresources.proxiesCustomizers": "代理/定制器",
+    "eresources.url": "URL"
 }

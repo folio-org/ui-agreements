@@ -748,5 +748,8 @@
     "permission.packages.view": "Contratti: Cercare e visualizzare pacchetti",
     "packages.source": "Fonte (origine dati esterna)",
     "agreements.agreementContentType": "Content type",
-    "agreements.addAgreementContentType": "Add content type"
+    "agreements.addAgreementContentType": "Add content type",
+    "eresources.proxiedAndCustomizedUrls": "Proxied and customized URLs",
+    "eresources.proxiesCustomizers": "Proxies/Customizers",
+    "eresources.url": "URL"
 }

@@ -1,7 +1,7 @@
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { Button, Dropdown, MultiColumnList } from '@folio/stripes-testing';
+import { renderWithIntl, Button, Dropdown, MultiColumnList } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import translationsProperties from '../../../../test/helpers';
 import CoveredEResourcesList from './CoveredEResourcesList';
 import agreement from './testResources';
@@ -39,11 +39,19 @@ describe('CoveredEResourcesList', () => {
   });
 
   test('clicking the filter buttons should call the onFilterEResources callback', async () => {
-    await Button('Future').click();
+    await waitFor(async () => {
+      await Button('Future').click();
+    });
     expect(handlers.onFilterEResources.mock.calls.length).toBe(1);
-    await Button('Dropped').click();
+
+    await waitFor(async () => {
+      await Button('Dropped').click();
+    });
     expect(handlers.onFilterEResources.mock.calls.length).toBe(2);
-    await Button('All').click();
+
+    await waitFor(async () => {
+      await Button('All').click();
+    });
     expect(handlers.onFilterEResources.mock.calls.length).toBe(3);
   });
 
@@ -52,9 +60,14 @@ describe('CoveredEResourcesList', () => {
   });
 
   test('choosing the dropdown options', async () => {
-    await Dropdown('Export as...').choose('JSON');
+    await waitFor(async () => {
+      await Dropdown('Export as...').choose('JSON');
+    });
     expect(handlers.onExportEResourcesAsJSON.mock.calls.length).toBe(1);
-    await Dropdown('Export as...').choose('KBART');
+
+    await waitFor(async () => {
+      await Dropdown('Export as...').choose('KBART');
+    });
     expect(handlers.onExportEResourcesAsKBART.mock.calls.length).toBe(1);
   });
 
