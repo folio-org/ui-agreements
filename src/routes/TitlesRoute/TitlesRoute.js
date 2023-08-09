@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import PropTypes from 'prop-types';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, usePagination, useTags } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, usePrevNextPagination, useTags } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Titles';
@@ -52,7 +52,7 @@ const TitlesRoute = ({
   const { data: { tags = [] } = {} } = useTags();
   const { query, querySetter, queryGetter } = useKiwtSASQuery();
 
-  const { handlePageChange, currentPage } = usePagination();
+  const { currentPage } = usePrevNextPagination();
 
   const titlesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
@@ -99,11 +99,6 @@ const TitlesRoute = ({
         publicationTypeValues: getRefdataValuesByDesc(refdata, PUB_TYPE),
         typeValues: getRefdataValuesByDesc(refdata, TYPE),
         tagsValues: tags,
-      }}
-      onNeedMoreData={(...args) => {
-        if (args[3]) {
-          handlePageChange(args[3]);
-        }
       }}
       queryGetter={queryGetter}
       querySetter={querySetter}

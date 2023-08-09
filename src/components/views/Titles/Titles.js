@@ -27,7 +27,7 @@ import {
   getSiblingIdentifier,
   EResourceType,
   useHandleSubmitSearch,
-  usePagination
+  usePrevNextPagination
 } from '@folio/stripes-erm-components';
 import TitleFilters from '../../TitleFilters';
 import IdentifierReassignmentForm from '../../IdentifierReassignmentForm';
@@ -48,7 +48,6 @@ const propTypes = {
   data: PropTypes.shape({
     titles: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
-  onNeedMoreData: PropTypes.func.isRequired,
   page: PropTypes.number,
   queryGetter: PropTypes.func.isRequired,
   querySetter: PropTypes.func.isRequired,
@@ -69,7 +68,6 @@ const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 const Titles = ({
   children,
   data = {},
-  onNeedMoreData,
   queryGetter,
   querySetter,
   searchString,
@@ -82,7 +80,7 @@ const Titles = ({
 
   const searchField = useRef(null);
 
-  const { paginationMCLProps } = usePagination({
+  const { paginationMCLProps } = usePrevNextPagination({
     count,
     pageSize: RESULT_COUNT_INCREMENT_MEDIUM
   });
@@ -288,7 +286,6 @@ const Titles = ({
                     }
                     isSelected={({ item }) => item.id === selectedRecordId}
                     onHeaderClick={onSort}
-                    onNeedMoreData={onNeedMoreData}
                     {...paginationMCLProps}
                     rowProps={{
                       labelStrings: ({ rowData }) => [rowData.name],
