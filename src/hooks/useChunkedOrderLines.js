@@ -1,4 +1,4 @@
-import { useChunkedCQLFetch } from '@folio/stripes-erm-components';
+import { useChunkedCQLFetch } from '@folio/stripes/core';
 
 import { ORDER_LINES_ENDPOINT } from '../constants/endpoints';
 // When fetching from a potentially large list of order lines,
