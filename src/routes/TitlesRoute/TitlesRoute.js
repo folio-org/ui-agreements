@@ -1,17 +1,16 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import queryString from 'query-string';
+import React, { useEffect, useMemo, useRef } from 'react';
 
 import { useQuery } from 'react-query';
 import PropTypes from 'prop-types';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useTags } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, usePagination, useTags } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Titles';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { pagination, resultCount } from '../../constants';
+import { resultCount } from '../../constants';
 
 import { TITLES_ELECTRONIC_ENDPOINT } from '../../constants/endpoints';
 import { useAgreementsRefdata } from '../../hooks';
@@ -22,9 +21,9 @@ const [
   PUB_TYPE,
   TYPE
 ] = [
-    'TitleInstance.PublicationType',
-    'TitleInstance.Type',
-  ];
+  'TitleInstance.PublicationType',
+  'TitleInstance.Type',
+];
 
 const TitlesRoute = ({
   children,
@@ -53,7 +52,7 @@ const TitlesRoute = ({
   const { data: { tags = [] } = {} } = useTags();
   const { query, querySetter, queryGetter } = useKiwtSASQuery();
 
-  const [currentPage, setCurrentPage] = useState(0);
+  const { handlePageChange, currentPage } = usePagination();
 
   const titlesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
@@ -68,31 +67,8 @@ const TitlesRoute = ({
     }, (query ?? {}))
   ), [query, currentPage]);
 
-  const handlePageChange = (direction) => {
-    const urlQuery = queryString.parse(location.search);
-
-    let newPage;
-    if (direction === pagination.NEXT) {
-      newPage = currentPage + 1;
-    } else if (direction === pagination.PREV) {
-      newPage = currentPage - 1;
-    }
-
-    // setCurrentPage(newPage); // add useEffect
-    if (newPage !== urlQuery?.page) {
-      const newQuery = {
-        ...urlQuery,
-        page: newPage
-      };
-      history.push({
-        pathname: location.pathname,
-        search: `?${queryString.stringify(newQuery)}`
-      });
-    }
-  };
-
   const {
-    data: { page, results: titles = [], totalRecords: titlesCount = 0 } = {},
+    data: { results: titles = [], totalRecords: titlesCount = 0 } = {},
     error: titlesError,
     isLoading: areTitlesLoading,
     isError: isTitlesError
@@ -103,39 +79,10 @@ const TitlesRoute = ({
       return ky.get(`${TITLES_ELECTRONIC_ENDPOINT}?${params?.join('&')}`).json();
     },
     {
-      enabled: !!query?.filters || !!query?.query,
+      enabled: (!!query?.filters || !!query?.query) && !!currentPage,
     }
   );
-  console.log('page from useQuery %o', page);
 
-  useEffect(() => {
-    const urlQuery = queryString.parse(location.search);
-
-    if (urlQuery?.page && currentPage !== urlQuery?.page) {
-      console.log('urlQuery?.page', urlQuery?.page);
-      setCurrentPage(Number(urlQuery?.page));
-      console.log('set currentPage %o', currentPage, 'to', urlQuery?.page);
-    } else if (!urlQuery?.page && titles.length) {
-      setCurrentPage(1);
-      console.log('set currentPage to 1');
-    }
-  }, [
-    currentPage,
-    // history,
-    location.search,
-    titles.length,
-  ]);
-
-  // useEffect(() => {
-  //   // reset page param in query when filters or searchquery change
-  //   console.log('reset page');
-  //   setCurrentPage();
-  //   const { page, ...unsetPageQuery } = query;
-  //   history.push({
-  //     pathname: location.pathname,
-  //     search: `?${queryString.stringify(unsetPageQuery)}`
-  //   });
-  // }, [query?.filters, query?.query]);
 
   useEffect(() => {
     if (titlesCount === 1) {
@@ -154,12 +101,10 @@ const TitlesRoute = ({
         tagsValues: tags,
       }}
       onNeedMoreData={(...args) => {
-        console.log("ARGS: %o", args)
         if (args[3]) {
           handlePageChange(args[3]);
         }
       }}
-      page={page}
       queryGetter={queryGetter}
       querySetter={querySetter}
       searchString={location.search}

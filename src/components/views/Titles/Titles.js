@@ -26,7 +26,8 @@ import {
   getResourceIdentifier,
   getSiblingIdentifier,
   EResourceType,
-  useHandleSubmitSearch
+  useHandleSubmitSearch,
+  usePagination
 } from '@folio/stripes-erm-components';
 import TitleFilters from '../../TitleFilters';
 import IdentifierReassignmentForm from '../../IdentifierReassignmentForm';
@@ -63,14 +64,12 @@ const propTypes = {
 };
 
 const filterPaneVisibilityKey = '@folio/agreements/eresourcesFilterPaneVisibility';
-// const pageAmount = resultCount.RESULT_COUNT_INCREMENT;
-const pageAmount = resultCount.RESULT_COUNT_INCREMENT_MEDIUM;
+const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
 const Titles = ({
   children,
   data = {},
   onNeedMoreData,
-  page,
   queryGetter,
   querySetter,
   searchString,
@@ -78,12 +77,15 @@ const Titles = ({
   source
 }) => {
   const count = source?.totalCount() ?? 0;
-  console.log('pagingCanGoNext %o', page && page < Number(count) / pageAmount);
-  console.log('pagingCanGoPrevious %o', page && Number(page) > 1);
   const query = queryGetter() ?? {};
   const sortOrder = query.sort ?? '';
 
   const searchField = useRef(null);
+
+  const { paginationMCLProps } = usePagination({
+    count,
+    pageSize: RESULT_COUNT_INCREMENT_MEDIUM
+  });
 
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
@@ -271,7 +273,6 @@ const Titles = ({
                       eissn: e => getResourceIdentifier(e, 'eissn') ?? getResourceIdentifier(e, 'issn'),
                       pissn: e => getResourceIdentifier(e, 'pissn') ?? getSiblingIdentifier(e, 'issn'),
                     }}
-                    //hidePageIndices
                     id="list-titles"
                     isEmptyMessage={
                       source ? (
@@ -288,11 +289,7 @@ const Titles = ({
                     isSelected={({ item }) => item.id === selectedRecordId}
                     onHeaderClick={onSort}
                     onNeedMoreData={onNeedMoreData}
-                    // pageAmount={pageAmount}
-                    pagingCanGoNext={page && page < Number(count) / pageAmount}
-                    pagingCanGoPrevious={page && Number(page) > 1}
-                    pagingOffset={(page - 1) * pageAmount}
-                    pagingType="prev-next"
+                    {...paginationMCLProps}
                     rowProps={{
                       labelStrings: ({ rowData }) => [rowData.name],
                       to: id => `${urls.titleView(id)}${searchString}`,

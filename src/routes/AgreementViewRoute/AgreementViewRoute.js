@@ -6,14 +6,14 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { flatten } from 'lodash';
 
-import { useAgreement, useInfiniteFetch, useInterfaces, downloadBlob, useChunkedUsers } from '@folio/stripes-erm-components';
+import { useAgreement, useInfiniteFetch, useInterfaces, downloadBlob, useChunkedUsers, errorTypes } from '@folio/stripes-erm-components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Agreement';
 import { parseMclPageSize, urls } from '../../components/utilities';
-import { errorTypes, httpStatuses } from '../../constants';
+import { httpStatuses } from '../../constants';
 
 import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
 
@@ -39,7 +39,6 @@ const AgreementViewRoute = ({
   const {
     handleToggleTags,
     HelperComponent,
-    TagButton,
   } = useAgreementsHelperApp();
 
   const agreementPath = AGREEMENT_ENDPOINT(agreementId);
