@@ -1,6 +1,5 @@
 
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
-import { Accordion, Button } from '@folio/stripes-testing';
+import { renderWithIntl, TestForm, Accordion, Button } from '@folio/stripes-erm-testing';
 import translationsProperties from '../../../../test/helpers';
 import PCIFormCoverage from './PCIFormCoverage';
 

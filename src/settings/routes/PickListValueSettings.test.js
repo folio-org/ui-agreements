@@ -1,8 +1,8 @@
-
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { Select } from '@folio/stripes-testing';
-
 import { MemoryRouter } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { renderWithIntl, Select } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../test/helpers';
 import PickListValueSettings from './PickListValueSettings';
 
@@ -31,7 +31,9 @@ describe('PickListValueSettings', () => {
 
     describe('select a pick list', () => {
       beforeEach(async () => {
-        await Select().choose('AuthIdent');
+        await waitFor(async () => {
+          await Select().choose('AuthIdent');
+        });
       });
 
       it('renders expected status of AuthIdent', async () => {

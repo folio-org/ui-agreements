@@ -1,7 +1,7 @@
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { Accordion, Button, MultiColumnList } from '@folio/stripes-testing';
+import { renderWithIntl, Accordion, Button, MultiColumnList } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import Lines from './Lines';
 import translationsProperties from '../../../../test/helpers';
 import { agreement, handlers } from './testResources';
@@ -28,9 +28,11 @@ describe('Lines', () => {
   });
 
   test('Action menu has two items', async () => {
-    await Button('Actions').click();
-    await Button('New agreement line').click();
-    await Button('View in agreement lines search').click();
+    await waitFor(async () => {
+      await Button('Actions').click();
+      await Button('New agreement line').click();
+      await Button('View in agreement lines search').click();
+    });
   });
 
   test('renders Lines list MCL', async () => {

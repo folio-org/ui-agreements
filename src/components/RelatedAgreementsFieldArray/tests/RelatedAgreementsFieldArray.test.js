@@ -1,9 +1,7 @@
-import { within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { Button } from '@folio/stripes-testing';
+import { waitFor, within } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { Button, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 
-
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import { FieldArray } from 'react-final-form-arrays';
 import RelatedAgreementsFieldArray from '../RelatedAgreementsFieldArray';
 
@@ -72,7 +70,9 @@ describe('RelatedAgreementsFieldArray', () => {
 
     it('clicking the add button renders the relatedAgreement field', async () => {
       const { getByText } = renderComponent;
-      await Button('Add related agreement').click();
+      await waitFor(async () => {
+        await Button('Add related agreement').click();
+      });
 
       await expect(getByText('RelatedAgreementField')).toBeInTheDocument();
     });
@@ -83,15 +83,22 @@ describe('RelatedAgreementsFieldArray', () => {
       const addButton = Button('Add related agreement');
 
       await addButton.exists();
-      await addButton.click();
-      expect(queryAllByTestId(/relatedAgreementsFieldArray\[.*\]/i).length).toEqual(1);
+      await waitFor(async () => {
+        await addButton.click();
+      });
+      expect(queryAllByTestId(/relatedAgreementsFieldArray\[\d+\]/i).length).toEqual(1);
 
-      await addButton.click();
-      expect(queryAllByTestId(/relatedAgreementsFieldArray\[.*\]/i).length).toEqual(2);
+      await waitFor(async () => {
+        await addButton.click();
+      });
+      expect(queryAllByTestId(/relatedAgreementsFieldArray\[\d+\]/i).length).toEqual(2);
 
       const trashButton = getByRole('button', { name: 'Remove related agreement 2' });
-      await userEvent.click(trashButton);
-      expect(queryAllByTestId(/relatedAgreementsFieldArray\[.*\]/i).length).toEqual(1);
+      await waitFor(async () => {
+        await userEvent.click(trashButton);
+      });
+
+      expect(queryAllByTestId(/relatedAgreementsFieldArray\[\d+\]/i).length).toEqual(1);
     });
   });
 

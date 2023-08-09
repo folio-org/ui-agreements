@@ -1,7 +1,7 @@
 
 import { StaticRouter as Router } from 'react-router-dom';
-import { Button } from '@folio/stripes-testing';
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../test/helpers';
 import OpenBasketButton from './OpenBasketButton';
 

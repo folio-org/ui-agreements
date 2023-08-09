@@ -1,6 +1,5 @@
 
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
-import { Button } from '@folio/stripes-testing';
+import { renderWithIntl, Button, TestForm } from '@folio/stripes-erm-testing';
 import translationsProperties from '../../../../test/helpers';
 import {
   initialValues,

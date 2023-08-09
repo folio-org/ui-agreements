@@ -1,9 +1,9 @@
-import { waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { waitFor, within } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
-import { Button, TextArea, TextField } from '@folio/stripes-testing';
+import { Button, TextArea, TextField, renderWithIntl, Datepicker, TestForm } from '@folio/stripes-erm-testing';
 
-import { renderWithIntl, DatepickerInteractor as Datepicker, TestForm } from '@folio/stripes-erm-testing';
+
 import { FieldArray } from 'react-final-form-arrays';
 
 import AgreementPeriodsFieldArray from './AgreementPeriodsFieldArray';
@@ -92,12 +92,16 @@ describe('AgreementPeriodsFieldArray', () => {
     // use length of queryAllBy to avoid relying on indexes which may give false positives
     expect(queryAllByTestId(/agreementPeriodsFieldArray\[.*\]/i).length).toEqual(2);
     // Remove second card from form
-    await waitFor(() => userEvent.click(getByRole('button', { name: /remove agreement period 2/i })));
+    await waitFor(async () => {
+      await userEvent.click(getByRole('button', { name: /remove agreement period 2/i }));
+    });
     expect(queryAllByTestId(/agreementPeriodsFieldArray\[.*\]/i).length).toEqual(1);
 
     // Expect add agreement period button
     await Button('Add agreement period').exists();
-    await Button('Add agreement period').click();
+    await waitFor(async () => {
+      await Button('Add agreement period').click();
+    });
     expect(queryAllByTestId(/agreementPeriodsFieldArray\[.*\]/i).length).toEqual(2);
   });
 
@@ -147,23 +151,16 @@ describe('AgreementPeriodsFieldArray', () => {
 
     await waitFor(async () => {
       await Datepicker({ id: 'period-end-date-0' }).clear();
-    });
-
-    await waitFor(async () => {
       await Datepicker({ id: 'period-start-date-0' }).focus();
     });
 
-    await waitFor(async () => {
-      await Datepicker({ id: 'period-end-date-0' }).has({ errorText: 'The following periods have overlapping dates: 2 & 1' });
-    });
+    await Datepicker({ id: 'period-end-date-0' }).has({ errorText: 'The following periods have overlapping dates: 2 & 1' });
 
     await waitFor(async () => {
       await Datepicker({ id: 'period-end-date-0' }).fillIn('01/25/2022');
     });
 
-    await waitFor(async () => {
-      await Datepicker({ id: 'period-end-date-0' }).has({ errorText: undefined });
-    });
+    await Datepicker({ id: 'period-end-date-0' }).has({ errorText: undefined });
   });
 
   test('expected values are submitted', async () => {
@@ -180,7 +177,9 @@ describe('AgreementPeriodsFieldArray', () => {
       </TestForm>, translationsProperties
     );
 
-    await Button('Submit').click();
+    await waitFor(async () => {
+      await Button('Submit').click();
+    });
 
     userEvent.click(getByTestId('submit'));
     expect(onSubmit.mock.calls.length).toBe(1);

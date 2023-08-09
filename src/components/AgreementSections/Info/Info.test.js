@@ -1,6 +1,5 @@
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { KeyValue, MultiColumnList, MultiColumnListCell } from '@folio/stripes-testing';
+import { renderWithIntl, KeyValue, MultiColumnList, MultiColumnListCell } from '@folio/stripes-erm-testing';
 import translationsProperties from '../../../../test/helpers';
 import agreement from './testResources';
 import Info from './Info';

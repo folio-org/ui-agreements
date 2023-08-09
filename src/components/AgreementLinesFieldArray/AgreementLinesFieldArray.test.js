@@ -1,6 +1,5 @@
 
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
-import { Button } from '@folio/stripes-testing';
+import { renderWithIntl, TestForm, Button } from '@folio/stripes-erm-testing';
 import { FieldArray } from 'react-final-form-arrays';
 import AgreementLinesFieldArray from './AgreementLinesFieldArray';
 
