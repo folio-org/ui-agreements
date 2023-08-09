@@ -53,8 +53,6 @@ const TitlesRoute = ({
   const { data: { tags = [] } = {} } = useTags();
   const { query, querySetter, queryGetter } = useKiwtSASQuery();
 
-  const urlQuery = queryString.parse(location.search);
-  console.log('urlQuery %o', urlQuery);
   const [currentPage, setCurrentPage] = useState(0);
 
   const titlesQueryParams = useMemo(() => (
@@ -71,13 +69,16 @@ const TitlesRoute = ({
   ), [query, currentPage]);
 
   const handlePageChange = (direction) => {
+    const urlQuery = queryString.parse(location.search);
+
     let newPage;
     if (direction === pagination.NEXT) {
-      newPage = Number(currentPage) + 1;
+      newPage = currentPage + 1;
     } else if (direction === pagination.PREV) {
-      newPage = Number(currentPage) - 1;
+      newPage = currentPage - 1;
     }
-    // setCurrentPage(newPage); add useEffect
+
+    // setCurrentPage(newPage); // add useEffect
     if (newPage !== urlQuery?.page) {
       const newQuery = {
         ...urlQuery,
@@ -108,9 +109,11 @@ const TitlesRoute = ({
   console.log('page from useQuery %o', page);
 
   useEffect(() => {
+    const urlQuery = queryString.parse(location.search);
+
     if (urlQuery?.page && currentPage !== urlQuery?.page) {
       console.log('urlQuery?.page', urlQuery?.page);
-      setCurrentPage(urlQuery?.page);
+      setCurrentPage(Number(urlQuery?.page));
       console.log('set currentPage %o', currentPage, 'to', urlQuery?.page);
     } else if (!urlQuery?.page && titles.length) {
       setCurrentPage(1);
@@ -119,9 +122,8 @@ const TitlesRoute = ({
   }, [
     currentPage,
     // history,
-    // location,
+    location.search,
     titles.length,
-    urlQuery.page,
   ]);
 
   // useEffect(() => {
@@ -152,6 +154,7 @@ const TitlesRoute = ({
         tagsValues: tags,
       }}
       onNeedMoreData={(...args) => {
+        console.log("ARGS: %o", args)
         if (args[3]) {
           handlePageChange(args[3]);
         }

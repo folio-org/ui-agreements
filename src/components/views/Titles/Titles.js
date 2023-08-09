@@ -271,7 +271,7 @@ const Titles = ({
                       eissn: e => getResourceIdentifier(e, 'eissn') ?? getResourceIdentifier(e, 'issn'),
                       pissn: e => getResourceIdentifier(e, 'pissn') ?? getSiblingIdentifier(e, 'issn'),
                     }}
-                    hidePageIndices
+                    //hidePageIndices
                     id="list-titles"
                     isEmptyMessage={
                       source ? (
@@ -291,6 +291,7 @@ const Titles = ({
                     // pageAmount={pageAmount}
                     pagingCanGoNext={page && page < Number(count) / pageAmount}
                     pagingCanGoPrevious={page && Number(page) > 1}
+                    pagingOffset={(page - 1) * pageAmount}
                     pagingType="prev-next"
                     rowProps={{
                       labelStrings: ({ rowData }) => [rowData.name],
