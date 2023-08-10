@@ -114,7 +114,7 @@ const Agreements = ({
           initialSortState={{ sort: 'name' }}
           queryGetter={queryGetter}
           querySetter={querySetter}
-          retainInternalQueryState
+          retainInternalSearchState
           /*
             Not entirely happy with the fact this boilerplate
             needs to be here for qIndex to work as expected.
