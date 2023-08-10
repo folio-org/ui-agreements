@@ -81,7 +81,6 @@ const Agreements = ({
   const [qIndex] = useQIndex();
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
-  const [searchFieldValue, setSearchFieldValue] = useState();
   const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
 
   const toggleFilterPane = () => {
@@ -171,14 +170,9 @@ const Agreements = ({
                                 inputRef={searchField}
                                 marginBottom0
                                 name="query"
-                                // onChange={getSearchHandlers().query}
-                                onChange={(e) => {
-                                  setSearchFieldValue(e.target.value);
-                                  getSearchHandlers().query(e);
-                                }}
+                                onChange={getSearchHandlers().query}
                                 onClear={getSearchHandlers().reset}
-                                // value={searchValue.query}
-                                value={searchFieldValue}
+                                value={searchValue.query}
                               />
                             )}
                           </FormattedMessage>
@@ -201,9 +195,7 @@ const Agreements = ({
                           />
                           <Button
                             buttonStyle="primary"
-                            // disabled={!searchValue.query || searchValue.query === ''}
-                            disabled={!searchFieldValue || searchFieldValue === ''}
-                            // disabled={(!searchValue.query || searchValue.query === '') && (!searchFieldValue || searchFieldValue === '')}
+                            disabled={!searchValue.query || searchValue.query === ''}
                             fullWidth
                             id="clickable-search-agreements"
                             marginBottom0
@@ -217,11 +209,7 @@ const Agreements = ({
                             buttonStyle="none"
                             disabled={disableReset()}
                             id="clickable-reset-all"
-                            // onClick={resetAll}
-                            onClick={(e) => {
-                              setSearchFieldValue();
-                              resetAll(e);
-                            }}
+                            onClick={resetAll}
                           >
                             <Icon icon="times-circle-solid">
                               <FormattedMessage id="stripes-smart-components.resetAll" />
