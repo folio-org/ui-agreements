@@ -33,6 +33,7 @@ import {
   FormInfo,
   FormInternalContacts,
   FormLicenses,
+  FormLines,
   FormOrganizations,
   FormRelatedAgreements,
   FormSupplementaryDocuments,
@@ -162,6 +163,7 @@ const AgreementForm = ({
               firstMenu={renderFirstMenu()}
               footer={renderPaneFooter()}
               id="pane-agreement-form"
+              paneSub={data.agreementLineCount >= 0 ? <FormattedMessage id="ui-agreements.agreementLineCountHeader" values={{ count: data.agreementLineCount }} /> : null}
               paneTitle={id ? <FormattedMessage id="ui-agreements.agreements.editAgreement.name" values={{ name }} /> : <FormattedMessage id="ui-agreements.agreements.createAgreement" />}
             >
               <TitleManager record={id ? name : create?.[0]}>
@@ -175,6 +177,7 @@ const AgreementForm = ({
                     </Row>
                     <AccordionSet initialStatus={initialAccordionsState}>
                       <FormInfo {...getSectionProps('formInfo')} />
+                      <FormLines agreementId={id} agreementLineCount={data.agreementLineCount} />
                       <CustomPropertiesEdit
                         contexts={contexts}
                         customPropertiesEndpoint={CUSTPROP_ENDPOINT}

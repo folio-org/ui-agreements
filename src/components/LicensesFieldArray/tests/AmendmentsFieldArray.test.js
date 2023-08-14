@@ -10,12 +10,15 @@ import translationsProperties from '../../../../test/helpers';
 
 /* For this test we would like to retain the actual stripes-erm-components version of LicenseEndDate */
 /* See LicenseAmendmentList.test.js for the full breakdown */
-jest.unmock('@folio/stripes-erm-components');
-const { LicenseEndDate: _mockLicenseEndDate, ...mockedERMComps } = mockErmComponents;
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockedERMComps
-}));
+jest.mock('@folio/stripes-erm-components', () => {
+  /* We can grab all the mocks except the one we don't want in use */
+  const { LicenseEndDate: _mockLicenseEndDate, ...mockedERMComps } = mockErmComponents;
+
+  return ({
+    ...jest.requireActual('@folio/stripes-erm-components'),
+    ...mockedERMComps
+  });
+});
 
 const onSubmit = jest.fn();
 

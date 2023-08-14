@@ -1,8 +1,10 @@
 # Change history for ui-agreements
 
 ## 10.0.0 In progress
-* ERM-2624 Add view only permissions for Agreement settings
+* ERM-2979 Add agreement line summary information and navigation link to Agreement edit view
+  * reuse FormLines component
 * ERM-2920 Replace "External data source" search
+* ERM-2624 Add view only permissions for Agreement settings
 * STRIPES-870 BREAKING upgrade react to v18
   * ERM-2991 Upgrade ui-agreements React to v18
 ## 9.0.0 2023-02-22

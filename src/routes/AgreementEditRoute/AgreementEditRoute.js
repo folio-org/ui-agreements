@@ -1,14 +1,16 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { cloneDeep } from 'lodash';
 
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient, useQuery } from 'react-query';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { getRefdataValuesByDesc, useAgreement, useChunkedUsers } from '@folio/stripes-erm-components';
+
+import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/processRelatedAgreements';
 import View from '../../components/views/AgreementForm';
@@ -17,7 +19,7 @@ import { urls } from '../../components/utilities';
 import { endpoints } from '../../constants';
 import { useAgreementsRefdata, useBasket } from '../../hooks';
 
-const { AGREEMENT_ENDPOINT } = endpoints;
+const { AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT } = endpoints;
 
 const [
   AGREEMENT_STATUS,
@@ -73,6 +75,25 @@ const AgreementEditRoute = ({
   });
 
   const { agreement, isAgreementLoading } = useAgreement({ agreementId, queryParams: ['expandItems=false'] });
+
+  /* START agreementLineCount
+    the following is necessary to provide information of number of agreement lines in the edit form,
+    could be removed if we change the agreement API to include that information
+  */
+
+  const agreementLineQueryParams = useMemo(() => (
+    generateKiwtQueryParams({ filters: [{ path: 'owner', value: agreementId }], perPage: 1 }, {})), [agreementId]);
+
+  const {
+    data: { totalRecords: agreementLineCount = 0 } = {},
+  } = useQuery(
+    ['ERM', 'Agreement', agreementId, 'AgreementLines', AGREEMENT_LINES_ENDPOINT, 'AgreementEditRoute'],
+    () => {
+      const params = [...agreementLineQueryParams];
+      return ky.get(`${AGREEMENT_LINES_ENDPOINT}?${params?.join('&')}`).json();
+    }
+  );
+  /* END agreementLineCount */
 
   // Users
   const { users } = useChunkedUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user) ?? []);
@@ -167,6 +188,7 @@ const AgreementEditRoute = ({
   return (
     <View
       data={{
+        agreementLineCount,
         agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
         reasonForClosureValues: getRefdataValuesByDesc(refdata, REASON_FOR_CLOSURE),
         amendmentStatusValues: getRefdataValuesByDesc(refdata, AMENDMENT_STATUS),
