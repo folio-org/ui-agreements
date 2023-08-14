@@ -9,16 +9,16 @@ import { currentAmendments, futureAmendments, historicalAmendments } from './tes
 /* EXAMPLE -- Overriding a particular jest mock */
 /* For this test we would like to retain the actual stripes-erm-components version of LicenseEndDate */
 
-/* First undo the manual mock in question */
-jest.unmock('@folio/stripes-erm-components');
-/* Then we can grab all the mocks except the one we don't want in use */
-const { LicenseEndDate: _mockLicenseEndDate, ...mockedERMComps } = mockErmComponents;
+/* Remock the module for this test */
+jest.mock('@folio/stripes-erm-components', () => {
+  /* We can grab all the mocks except the one we don't want in use */
+  const { LicenseEndDate: _mockLicenseEndDate, ...mockedERMComps } = mockErmComponents;
 
-/* Finally remock the module for this test */
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockedERMComps
-}));
+  return ({
+    ...jest.requireActual('@folio/stripes-erm-components'),
+    ...mockedERMComps
+  });
+});
 
 describe('LicenseAmendmentList', () => {
   describe('List of current amendments', () => {
