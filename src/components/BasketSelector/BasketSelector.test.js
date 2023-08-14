@@ -1,8 +1,7 @@
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
-import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
-import userEvent from '@testing-library/user-event';
-import { Button } from '@interactors/html';
-import { Selection } from '@folio/stripes-testing';
+import { Button, TestForm, renderWithIntl, Selection } from '@folio/stripes-erm-testing';
 import BasketSelector from './BasketSelector';
 
 import translationsProperties from '../../../test/helpers';
@@ -255,14 +254,16 @@ describe('BasketSelector', () => {
     const selector = Selection('basketSelector*');
     await selector.exists();
 
-    // Selection calls seem to not work as expected
-    // await selector.choose('Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz');
-    // await selector.choose("\"Institutions, industrial upgrading, and economic performance in Ja...' on Platform 'Elgaronline' in Package Edward Elgar:Edward Elgar E-Book Archive in Business & Management, ...");
+    await waitFor(async () => {
+      // Selection calls seem to not work as expected
+      // await selector.choose('Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz');
+      // await selector.choose('\'"Institutions, industrial upgrading, and economic performance in Ja...\' on Platform \'Elgaronline\' in Package Edward Elgar:Edward Elgar E-Book Archive in Business & Management, ...');
+      await userEvent.click(getByText(/industrial upgrading/i));
+      await userEvent.click(getByText(/Finance:Nationallizenz/i));
 
-    await userEvent.click(getByText(/industrial upgrading/i));
-    await userEvent.click(getByText(/Finance:Nationallizenz/i));
+      await Button('add button').click();
+    });
 
-    await Button('add button').click();
     expect(onAdd.mock.calls.length).toBe(1);
   });
 });

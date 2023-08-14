@@ -1,5 +1,4 @@
-import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
-import { Accordion, KeyValue } from '@folio/stripes-testing';
+import { TestForm, renderWithIntl, Accordion, KeyValue } from '@folio/stripes-erm-testing';
 import FormLicenses from './FormLicenses';
 import translationsProperties from '../../../../test/helpers';
 

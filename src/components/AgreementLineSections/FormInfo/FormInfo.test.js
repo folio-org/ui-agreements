@@ -1,6 +1,5 @@
 
-import { TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
-import { Datepicker, Checkbox } from '@folio/stripes-testing';
+import { Datepicker, Checkbox, TestForm, renderWithIntl } from '@folio/stripes-erm-testing';
 import translationsProperties from '../../../../test/helpers';
 import FormInfo from './FormInfo';
 import { data, handlers, initialValues, values } from './testResources';

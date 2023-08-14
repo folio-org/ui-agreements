@@ -1,8 +1,7 @@
-import { waitFor } from '@testing-library/react';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
+import { renderWithIntl, TestForm, KeyValue, TextField } from '@folio/stripes-erm-testing';
 import { Field } from 'react-final-form';
-import { KeyValue, TextField } from '@folio/stripes-testing';
 import { detachedData, data } from './testResources';
 import AgreementLineField from './AgreementLineField';
 import translationsProperties from '../../../test/helpers';
@@ -143,13 +142,18 @@ describe('AgreementLineField', () => {
         translationsProperties
       );
 
-      await TextField('Active from').fillIn('01/01/2021');
-      await TextField('Active to').fillIn('01/01/2002');
+      await waitFor(async () => {
+        await TextField('Active from').fillIn('01/01/2021');
+        await TextField('Active to').fillIn('01/01/2002');
+      });
 
       await waitFor(() => expect(getAllByText(/End date must be after the start date./i)?.[0]).toBeInTheDocument());
 
-      await TextField('Active to').clear();
-      await TextField('Active to').fillIn('01/01/2022');
+
+      await waitFor(async () => {
+        await TextField('Active to').clear();
+        await TextField('Active to').fillIn('01/01/2022');
+      });
 
       await waitFor(() => expect(queryByText(/End date must be after the start date./i)).not.toBeInTheDocument());
     });

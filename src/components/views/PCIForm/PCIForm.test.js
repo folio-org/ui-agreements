@@ -1,6 +1,5 @@
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl, PaneHeader, Button } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { PaneHeader, Button as ButtonInteractor } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 
 import PCIForm from './PCIForm';
@@ -36,7 +35,7 @@ describe('PCIForm', () => {
   });
 
   it('renders the expand/collapseAll Button', async () => {
-    await ButtonInteractor('Collapse all').exists();
+    await Button('Collapse all').exists();
   });
 
   it('renders the expected PCIFormIPCIFormCoveragenfo component', () => {

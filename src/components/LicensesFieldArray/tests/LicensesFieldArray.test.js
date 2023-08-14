@@ -1,9 +1,8 @@
-import { within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { waitFor, within } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
+import { Button, Select, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 
-import { Button, Select, TextArea } from '@folio/stripes-testing';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import { FieldArray } from 'react-final-form-arrays';
 import LicensesFieldArray from '..';
 
@@ -170,19 +169,24 @@ describe('LicensesFieldArray', () => {
 
     it('clicking the add button renders the licenseField field', async () => {
       const { getByText } = renderComponent;
-      await Button('Add license').click();
+      await waitFor(async () => {
+        await Button('Add license').click();
+      });
 
       await expect(getByText('LicenseField')).toBeInTheDocument();
     });
 
     it('clicking and blurring the Status select dropdown should render an error', async () => {
       const { getByText } = renderComponent;
-      await Button('Add license').click();
+      await waitFor(async () => {
+        await Button('Add license').click();
+      });
 
-      await Select('Status (this agreement)*').focus();
-      await TextArea('Note').focus();
-
-      expect(getByText('Please fill this in to continue')).toBeInTheDocument();
+      await waitFor(async () => {
+        await Select('Status (this agreement)*').focus();
+        await Select('Status (this agreement)*').blur();
+        await expect(getByText('Please fill this in to continue')).toBeInTheDocument();
+      });
     });
 
     it('adding/removing fields using the add/remove works as expected', async () => {
@@ -190,14 +194,21 @@ describe('LicensesFieldArray', () => {
       const addButton = Button('Add license');
 
       await addButton.exists();
-      await addButton.click();
+      await waitFor(async () => {
+        await addButton.click();
+      });
       expect(queryAllByTestId(/licensesFieldArray\[.*\]/i).length).toEqual(1);
 
-      await addButton.click();
+      await waitFor(async () => {
+        await addButton.click();
+      });
+
       expect(queryAllByTestId(/licensesFieldArray\[.*\]/i).length).toEqual(2);
 
       const trashButton = getByRole('button', { name: 'Remove license 2' });
-      await userEvent.click(trashButton);
+      await waitFor(async () => {
+        await userEvent.click(trashButton);
+      });
       expect(queryAllByTestId(/licensesFieldArray\[.*\]/i).length).toEqual(1);
     });
   });

@@ -1,7 +1,7 @@
 
 
-import { List } from '@folio/stripes-testing';
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { List, renderWithIntl } from '@folio/stripes-erm-testing';
+
 import EResourceIdentifier from './EResourceIdentifier';
 
 const titleInstanceWithIdentifier = {

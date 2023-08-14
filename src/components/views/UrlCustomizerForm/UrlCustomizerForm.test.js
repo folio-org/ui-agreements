@@ -1,6 +1,5 @@
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl, TextField, TextArea } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { TextField, TextArea } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import UrlCustomizerForm from './UrlCustomizerForm';
 

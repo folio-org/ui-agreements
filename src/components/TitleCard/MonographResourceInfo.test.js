@@ -1,7 +1,7 @@
 
 import { StaticRouter as Router } from 'react-router-dom';
-import { KeyValue } from '@folio/stripes-testing';
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { KeyValue, renderWithIntl } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../test/helpers';
 import MonographResourceInfo from './MonographResourceInfo';
 import { monographTitle } from './testResources';

@@ -1,7 +1,6 @@
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { KeyValue } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import PackageIdentifiers from './PackageIdentifiers';
 

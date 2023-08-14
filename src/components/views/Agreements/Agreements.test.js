@@ -1,10 +1,9 @@
 import ReactRouterDom, { MemoryRouter } from 'react-router-dom';
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { renderWithIntl, Pane, Button, TextField, MultiColumnList } from '@folio/stripes-erm-testing';
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 
-import { Pane, Button, TextField, MultiColumnList } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 
 import Agreements from './Agreements';
@@ -64,14 +63,20 @@ describe('Agreements', () => {
   });
 
   test('renders the expected Search and Reset all Button', async () => {
-    await TextField({ id: 'input-agreement-search' }).fillIn('test'); // enables the disabled buttons
+    await waitFor(async () => {
+      await TextField({ id: 'input-agreement-search' }).fillIn('test'); // enables the disabled buttons
+    });
+
     await Button('Search').exists();
     await Button('Reset all').exists();
   });
 
   test('triggering the search should invoke the useHandleSubmitSearch hook', async () => {
-    await TextField({ id: 'input-agreement-search' }).fillIn('test'); // enables the disabled buttons
-    await Button('Search').click();
+    await waitFor(async () => {
+      await TextField({ id: 'input-agreement-search' }).fillIn('test'); // enables the disabled buttons
+      await Button('Search').click();
+    });
+
     expect(mockSubmit).toHaveBeenCalled();
   });
 

@@ -1,6 +1,5 @@
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { Accordion } from '@folio/stripes-testing';
+import { renderWithIntl, Accordion } from '@folio/stripes-erm-testing';
 import line from './testResources';
 import translationsProperties from '../../../../test/helpers';
 import POLines from './POLines';
