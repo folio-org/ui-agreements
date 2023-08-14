@@ -80,7 +80,10 @@ const Titles = ({
 
   const searchField = useRef(null);
 
-  const { paginationMCLProps } = usePrevNextPagination({
+  const {
+    paginationMCLProps,
+    searchAndSortPaginationProps
+  } = usePrevNextPagination({
     count,
     pageSize: RESULT_COUNT_INCREMENT_MEDIUM
   });
@@ -105,6 +108,7 @@ const Titles = ({
         queryGetter={queryGetter}
         querySetter={querySetter}
         sortableColumns={['name', 'publicationType']}
+        {...searchAndSortPaginationProps}
       >
         {
           ({
