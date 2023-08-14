@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
+
+import { useQIndex } from '@k-int/stripes-kint-components';
 
 import {
   Button,
@@ -76,6 +78,7 @@ const Agreements = ({
   const query = queryGetter() ?? {};
   const sortOrder = query.sort ?? '';
 
+  const [qIndex] = useQIndex();
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
   const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
@@ -107,10 +110,11 @@ const Agreements = ({
           initialFilterState={{
             agreementStatus: ['active', 'draft', 'in_negotiation', 'requested']
           }}
-          initialSearchState={{ query: '' }}
+          initialSearchState={{ query: '', qindex: '' }}
           initialSortState={{ sort: 'name' }}
           queryGetter={queryGetter}
           querySetter={querySetter}
+          retainInternalSearchState
           /*
             Not entirely happy with the fact this boilerplate
             needs to be here for qIndex to work as expected.
@@ -134,7 +138,7 @@ const Agreements = ({
               searchChanged,
               resetAll,
             }) => {
-              const disableReset = () => (!filterChanged && !searchChanged);
+              const disableReset = () => (!filterChanged && !searchChanged && !qIndex);
               const filterCount = activeFilters.string ? activeFilters.string.split(',').length : 0;
               return (
                 <PersistedPaneset
