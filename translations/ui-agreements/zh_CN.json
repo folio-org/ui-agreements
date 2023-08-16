@@ -751,5 +751,8 @@
     "agreements.addAgreementContentType": "添加内容类型",
     "eresources.proxiedAndCustomizedUrls": "代理和自定义URL",
     "eresources.proxiesCustomizers": "代理/定制器",
-    "eresources.url": "URL"
+    "eresources.url": "URL",
+    "agreements.agreementLineCount": "Agreement has {count, number} agreement {count, plural, one {line} other {lines}}",
+    "open.linkInNewTab": "(opens in new tab)",
+    "agreementLineCountHeader": "{count, number} Agreement {count, plural, one {line} other {lines}}"
 }
