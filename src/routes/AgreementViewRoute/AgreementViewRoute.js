@@ -39,6 +39,7 @@ const AgreementViewRoute = ({
   const {
     handleToggleTags,
     HelperComponent,
+    TagButton,
   } = useAgreementsHelperApp();
 
   const agreementPath = AGREEMENT_ENDPOINT(agreementId);
