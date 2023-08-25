@@ -82,7 +82,6 @@ const Titles = ({
 
   const {
     paginationMCLProps,
-    resetPage,
     searchAndSortPaginationProps
   } = usePrevNextPagination({
     count,
@@ -108,25 +107,8 @@ const Titles = ({
         initialSortState={{ sort: 'name' }}
         queryGetter={queryGetter}
         querySetter={querySetter}
-        queryStateReducer={(currState, nextState) => {
-          console.log("QSR CURRSTATE: %o", currState)
-          console.log("QSR NEXTSTATE: %o", nextState)
-
-          switch (nextState.changeType) {
-            case 'reset.all':
-            case 'filter.state':
-            case 'filter.clearGroup':
-            case 'sort.change':
-              resetPage();
-              break;
-            default:
-              break;
-          }
-
-          return nextState;
-        }}
         sortableColumns={['name', 'publicationType']}
-        //{...searchAndSortPaginationProps}
+        {...searchAndSortPaginationProps}
       >
         {
           ({
