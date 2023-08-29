@@ -24,8 +24,10 @@ import {
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
 import { Info, POLines, Coverage } from '../../AgreementLineSections';
+
 import { isExternal, urls } from '../../utilities';
 import DiscoverySettings from '../../DiscoverySettings';
+import { AGREEMENT_LINE_ENTITY_TYPE } from '../../../constants';
 
 const propTypes = {
   components: PropTypes.object,
@@ -173,7 +175,7 @@ const AgreementLine = ({
                     domainName="agreements"
                     entityId={line.id ?? '-'}
                     entityName={title ?? '-'}
-                    entityType="agreementLine"
+                    entityType={AGREEMENT_LINE_ENTITY_TYPE}
                     id="agreement-line-notes"
                     pathToNoteCreate={urls.noteCreate()}
                     pathToNoteDetails={urls.notes()}

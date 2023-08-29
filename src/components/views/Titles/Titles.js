@@ -27,7 +27,9 @@ import {
   getSiblingIdentifier,
   EResourceType,
   useHandleSubmitSearch,
-  usePrevNextPagination
+  usePrevNextPagination,
+  SearchKeyControl,
+  useSASQQIndex
 } from '@folio/stripes-erm-components';
 import TitleFilters from '../../TitleFilters';
 import IdentifierReassignmentForm from '../../IdentifierReassignmentForm';
@@ -82,11 +84,16 @@ const Titles = ({
 
   const {
     paginationMCLProps,
-    searchAndSortPaginationProps
+    paginationSASQProps
   } = usePrevNextPagination({
     count,
     pageSize: RESULT_COUNT_INCREMENT_MEDIUM
   });
+
+  const {
+    qIndexChanged,
+    qIndexSASQProps
+  } = useSASQQIndex();
 
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
@@ -102,13 +109,13 @@ const Titles = ({
   return (
     <div data-test-titles data-testid="titles">
       <SearchAndSortQuery
+        {...qIndexSASQProps}
+        {...paginationSASQProps}
         initialFilterState={{}}
-        initialSearchState={{ query: '' }}
         initialSortState={{ sort: 'name' }}
         queryGetter={queryGetter}
         querySetter={querySetter}
         sortableColumns={['name', 'publicationType']}
-        {...searchAndSortPaginationProps}
       >
         {
           ({
@@ -122,7 +129,7 @@ const Titles = ({
             searchChanged,
             resetAll,
           }) => {
-            const disableReset = () => (!filterChanged && !searchChanged);
+            const disableReset = () => (!filterChanged && !searchChanged && !qIndexChanged);
             const filterCount = activeFilters.string ? activeFilters.string.split(',').length : 0;
 
             const getActionMenu = () => {
@@ -179,6 +186,27 @@ const Titles = ({
                             />
                           )}
                         </FormattedMessage>
+                        {/* The options here reflect the constant defaultQIndex */}
+                        <SearchKeyControl
+                          options={[
+                            {
+                              label: <FormattedMessage id="ui-agreements.titles.name" />,
+                              key: 'name'
+                            },
+                            {
+                              label: <FormattedMessage id="ui-agreements.titles.identifiers" />,
+                              key: 'identifiers.identifier.value',
+                            },
+                            {
+                              label: <FormattedMessage id="ui-agreements.titles.alternateResourceName" />,
+                              key: 'alternateResourceNames.name'
+                            },
+                            {
+                              label: <FormattedMessage id="ui-agreements.titles.description" />,
+                              key: 'description'
+                            },
+                          ]}
+                        />
                         <Button
                           buttonStyle="primary"
                           disabled={!searchValue.query || searchValue.query === ''}

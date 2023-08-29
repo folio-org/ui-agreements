@@ -3,16 +3,28 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import { useQuery } from 'react-query';
 import PropTypes from 'prop-types';
 
+import {
+  generateKiwtQueryParams,
+  useKiwtSASQuery
+} from '@k-int/stripes-kint-components';
+
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, usePrevNextPagination, useTags } from '@folio/stripes-erm-components';
-import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
+import {
+  getRefdataValuesByDesc,
+  usePrevNextPagination,
+  useSASQQIndex,
+  useTags
+} from '@folio/stripes-erm-components';
 
 import View from '../../components/views/Titles';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { resultCount } from '../../constants';
 
-import { TITLES_ELECTRONIC_ENDPOINT } from '../../constants/endpoints';
+import {
+  defaultTitlesQIndex as defaultQIndex,
+  resultCount,
+  TITLES_ELECTRONIC_ENDPOINT
+} from '../../constants';
 import { useAgreementsRefdata } from '../../hooks';
 
 const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT_MEDIUM;
@@ -53,10 +65,11 @@ const TitlesRoute = ({
   const { query, querySetter, queryGetter } = useKiwtSASQuery();
 
   const { currentPage } = usePrevNextPagination();
+  const { searchKey } = useSASQQIndex({ defaultQIndex });
 
   const titlesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
-      searchKey: 'name,identifiers.identifier.value,alternateResourceNames.name,description',
+      searchKey,
       filterKeys: {
         tags: 'tags.value',
         publicationType: 'publicationType.value',
@@ -65,7 +78,7 @@ const TitlesRoute = ({
       page: currentPage,
       perPage: RESULT_COUNT_INCREMENT
     }, (query ?? {}))
-  ), [query, currentPage]);
+  ), [currentPage, query, searchKey]);
 
   const {
     data: { results: titles = [], totalRecords: titlesCount = 0 } = {},

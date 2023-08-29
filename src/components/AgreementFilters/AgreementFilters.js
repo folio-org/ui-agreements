@@ -11,7 +11,7 @@ import { DateFilter, InternalContactSelection, OrganizationSelection } from '@fo
 
 import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
-import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
+import { CUSTPROP_ENDPOINT } from '../../constants';
 
 const propTypes = {
   activeFilters: PropTypes.object,

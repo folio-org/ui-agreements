@@ -1,16 +1,21 @@
 import { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useTags, useInfiniteFetch, useSASQQIndex } from '@folio/stripes-erm-components';
-
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
+
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
+import {
+  getRefdataValuesByDesc,
+  useTags,
+  useInfiniteFetch,
+  useSASQQIndex
+} from '@folio/stripes-erm-components';
 
 import View from '../../components/views/Agreements';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { defaultQIndex, resultCount } from '../../constants';
-import { AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
+
+import { AGREEMENTS_ENDPOINT, defaultAgreementsQIndex as defaultQIndex, resultCount } from '../../constants';
 import { useAgreementsRefdata } from '../../hooks';
 
 const {

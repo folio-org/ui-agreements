@@ -754,5 +754,9 @@
   "operator.is": "Is",
   "operator.isNot": "Is not",
   "operator.contains": "Contains",
-  "operator.doesNotContain": "Does not contain"
+  "operator.doesNotContain": "Does not contain",
+  "titles.name": "Name",
+  "titles.identifiers": "Identifiers",
+  "titles.alternateResourceName": "Alternative name",
+  "titles.description": "Description"
 }

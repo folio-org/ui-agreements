@@ -8,7 +8,8 @@ import { useCallout, useOkapiKy } from '@folio/stripes/core';
 
 import View from '../../components/views/UrlCustomizer';
 import { urls } from '../../components/utilities';
-import { STRING_TEMPLATE_ENDPOINT } from '../../constants/endpoints';
+
+import { STRING_TEMPLATE_ENDPOINT } from '../../constants';
 
 const UrlCustomizerViewRoute = ({
   handlers,
