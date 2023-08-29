@@ -6,7 +6,15 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { flatten } from 'lodash';
 
-import { useAgreement, useInfiniteFetch, useInterfaces, downloadBlob, useChunkedUsers, errorTypes } from '@folio/stripes-erm-components';
+import {
+  downloadBlob,
+  useAgreement,
+  useChunkedUsers,
+  useInfiniteFetch,
+  useInterfaces,
+  INVALID_JSON_ERROR,
+  JSON_ERROR
+} from '@folio/stripes-erm-components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
@@ -156,14 +164,14 @@ const AgreementViewRoute = ({
             ));
           });
       } else {
-        throw new Error(errorTypes.JSON_ERROR);
+        throw new Error(JSON_ERROR);
       }
     }).then(text => {
       const data = JSON.parse(text); // Try to parse it as json
       if (data.id) {
         return Promise.resolve(history.push(`${urls.agreementEdit(data.id)}${location.search}`));
       } else {
-        throw new Error(errorTypes.INVALID_JSON_ERROR); // when the json response body doesn't contain an id
+        throw new Error(INVALID_JSON_ERROR); // when the json response body doesn't contain an id
       }
     }).catch(error => {
       throw error;
