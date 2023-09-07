@@ -751,5 +751,8 @@
     "agreements.addAgreementContentType": "コンテンツ タイプを追加",
     "eresources.proxiedAndCustomizedUrls": "Proxied and customized URLs",
     "eresources.proxiesCustomizers": "Proxies/Customizers",
-    "eresources.url": "URL"
+    "eresources.url": "URL",
+    "agreements.agreementLineCount": "Agreement has {count, number} agreement {count, plural, one {line} other {lines}}",
+    "open.linkInNewTab": "(opens in new tab)",
+    "agreementLineCountHeader": "{count, number} Agreement {count, plural, one {line} other {lines}}"
 }
