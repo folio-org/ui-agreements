@@ -751,5 +751,8 @@
     "agreements.addAgreementContentType": "Adicionar tipo de conteúdo",
     "eresources.proxiedAndCustomizedUrls": "URLs personalizadas e com proxy",
     "eresources.proxiesCustomizers": "Proxies/Personalizadores",
-    "eresources.url": "URL"
+    "eresources.url": "URL",
+    "agreements.agreementLineCount": "Contrato tem {count, number} contrato {count, plural, one {linha} other {linhas}}",
+    "open.linkInNewTab": "(abrir em nova aba)",
+    "agreementLineCountHeader": "{count, number} Contrato {count, plural, one {linha} other {linhas}}"
 }
