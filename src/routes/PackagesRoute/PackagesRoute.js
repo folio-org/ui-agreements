@@ -129,6 +129,7 @@ const PackagesRoute = ({
       onNeedMoreData={(_askAmount, index) => fetchNextPackagesPage({ pageParam: index })}
       queryGetter={queryGetter}
       querySetter={querySetter}
+      searchField={searchField}
       searchString={location.search}
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;

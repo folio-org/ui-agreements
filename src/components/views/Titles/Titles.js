@@ -53,6 +53,7 @@ const propTypes = {
   page: PropTypes.number,
   queryGetter: PropTypes.func.isRequired,
   querySetter: PropTypes.func.isRequired,
+  searchField: PropTypes.object,
   searchString: PropTypes.string,
   selectedRecordId: PropTypes.string,
   source: PropTypes.shape({
@@ -72,6 +73,7 @@ const Titles = ({
   data = {},
   queryGetter,
   querySetter,
+  searchField,
   searchString,
   selectedRecordId,
   source
@@ -79,8 +81,6 @@ const Titles = ({
   const count = source?.totalCount() ?? 0;
   const query = queryGetter() ?? {};
   const sortOrder = query.sort ?? '';
-
-  const searchField = useRef(null);
 
   const {
     paginationMCLProps,

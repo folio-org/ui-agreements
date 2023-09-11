@@ -49,6 +49,7 @@ const propTypes = {
   onNeedMoreData: PropTypes.func.isRequired,
   queryGetter: PropTypes.func.isRequired,
   querySetter: PropTypes.func.isRequired,
+  searchField: PropTypes.object,
   searchString: PropTypes.string,
   selectedRecordId: PropTypes.string,
   source: PropTypes.shape({
@@ -68,6 +69,7 @@ const Packages = ({
   onNeedMoreData,
   queryGetter,
   querySetter,
+  searchField,
   searchString,
   selectedRecordId,
   source
@@ -75,8 +77,6 @@ const Packages = ({
   const count = source?.totalCount() ?? 0;
   const query = queryGetter() ?? {};
   const sortOrder = query.sort ?? '';
-
-  const searchField = useRef(null);
 
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);

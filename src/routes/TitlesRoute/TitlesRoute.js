@@ -115,6 +115,7 @@ const TitlesRoute = ({
       }}
       queryGetter={queryGetter}
       querySetter={querySetter}
+      searchField={searchField}
       searchString={location.search}
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;
