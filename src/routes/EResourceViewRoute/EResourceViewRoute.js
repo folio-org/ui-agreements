@@ -10,10 +10,15 @@ import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/EResource';
 import { parseMclPageSize, urls } from '../../components/utilities';
-import { resourceClasses } from '../../constants';
 
+import {
+  ERESOURCE_ENDPOINT,
+  ERESOURCE_ENTITLEMENTS_ENDPOINT,
+  ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT,
+  ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT,
+  resourceClasses
+} from '../../constants';
 import { useAgreementsHelperApp, useAgreementsSettings, useSuppressFromDiscovery } from '../../hooks';
-import { ERESOURCE_ENDPOINT, ERESOURCE_ENTITLEMENTS_ENDPOINT, ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT, ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT } from '../../constants/endpoints';
 
 const EResourceViewRoute = ({
   handlers = [],

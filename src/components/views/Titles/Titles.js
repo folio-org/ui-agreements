@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
@@ -26,7 +26,10 @@ import {
   getResourceIdentifier,
   getSiblingIdentifier,
   EResourceType,
-  useHandleSubmitSearch
+  useHandleSubmitSearch,
+  usePrevNextPagination,
+  SearchKeyControl,
+  useSASQQIndex
 } from '@folio/stripes-erm-components';
 import TitleFilters from '../../TitleFilters';
 import IdentifierReassignmentForm from '../../IdentifierReassignmentForm';
@@ -47,9 +50,10 @@ const propTypes = {
   data: PropTypes.shape({
     titles: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
-  onNeedMoreData: PropTypes.func.isRequired,
+  page: PropTypes.number,
   queryGetter: PropTypes.func.isRequired,
   querySetter: PropTypes.func.isRequired,
+  searchField: PropTypes.object,
   searchString: PropTypes.string,
   selectedRecordId: PropTypes.string,
   source: PropTypes.shape({
@@ -62,13 +66,14 @@ const propTypes = {
 };
 
 const filterPaneVisibilityKey = '@folio/agreements/eresourcesFilterPaneVisibility';
+const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
 const Titles = ({
   children,
   data = {},
-  onNeedMoreData,
   queryGetter,
   querySetter,
+  searchField,
   searchString,
   selectedRecordId,
   source
@@ -77,7 +82,18 @@ const Titles = ({
   const query = queryGetter() ?? {};
   const sortOrder = query.sort ?? '';
 
-  const searchField = useRef(null);
+  const {
+    paginationMCLProps,
+    paginationSASQProps
+  } = usePrevNextPagination({
+    count,
+    pageSize: RESULT_COUNT_INCREMENT_MEDIUM
+  });
+
+  const {
+    qIndexChanged,
+    qIndexSASQProps
+  } = useSASQQIndex();
 
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
@@ -93,8 +109,9 @@ const Titles = ({
   return (
     <div data-test-titles data-testid="titles">
       <SearchAndSortQuery
+        {...qIndexSASQProps}
+        {...paginationSASQProps}
         initialFilterState={{}}
-        initialSearchState={{ query: '' }}
         initialSortState={{ sort: 'name' }}
         queryGetter={queryGetter}
         querySetter={querySetter}
@@ -112,7 +129,7 @@ const Titles = ({
             searchChanged,
             resetAll,
           }) => {
-            const disableReset = () => (!filterChanged && !searchChanged);
+            const disableReset = () => (!filterChanged && !searchChanged && !qIndexChanged);
             const filterCount = activeFilters.string ? activeFilters.string.split(',').length : 0;
 
             const getActionMenu = () => {
@@ -169,6 +186,27 @@ const Titles = ({
                             />
                           )}
                         </FormattedMessage>
+                        {/* The options here reflect the constant defaultQIndex */}
+                        <SearchKeyControl
+                          options={[
+                            {
+                              label: <FormattedMessage id="ui-agreements.titles.name" />,
+                              key: 'name'
+                            },
+                            {
+                              label: <FormattedMessage id="ui-agreements.titles.identifiers" />,
+                              key: 'identifiers.identifier.value',
+                            },
+                            {
+                              label: <FormattedMessage id="ui-agreements.titles.alternateResourceName" />,
+                              key: 'alternateResourceNames.name'
+                            },
+                            {
+                              label: <FormattedMessage id="ui-agreements.titles.description" />,
+                              key: 'description'
+                            },
+                          ]}
+                        />
                         <Button
                           buttonStyle="primary"
                           disabled={!searchValue.query || searchValue.query === ''}
@@ -280,9 +318,7 @@ const Titles = ({
                     }
                     isSelected={({ item }) => item.id === selectedRecordId}
                     onHeaderClick={onSort}
-                    onNeedMoreData={onNeedMoreData}
-                    pageAmount={resultCount.RESULT_COUNT_INCREMENT}
-                    pagingType="click"
+                    {...paginationMCLProps}
                     rowProps={{
                       labelStrings: ({ rowData }) => [rowData.name],
                       to: id => `${urls.titleView(id)}${searchString}`,

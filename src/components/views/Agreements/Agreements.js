@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 
-import { useQIndex } from '@k-int/stripes-kint-components';
-
 import {
   Button,
   FormattedUTCDate,
@@ -27,7 +25,7 @@ import {
   SearchAndSortNoResultsMessage,
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
-import { SearchKeyControl, useHandleSubmitSearch } from '@folio/stripes-erm-components';
+import { SearchKeyControl, useHandleSubmitSearch, useSASQQIndex } from '@folio/stripes-erm-components';
 
 import { AGREEMENTS_TAB_FILTER_PANE, AGREEMENTS_TAB_PANESET, AGREEMENTS_TAB_PANE_ID, statuses } from '../../../constants';
 import AgreementFilters from '../../AgreementFilters';
@@ -78,7 +76,11 @@ const Agreements = ({
   const query = queryGetter() ?? {};
   const sortOrder = query.sort ?? '';
 
-  const [qIndex] = useQIndex();
+  const {
+    qIndexChanged,
+    qIndexSASQProps
+  } = useSASQQIndex();
+
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
   const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
@@ -107,23 +109,13 @@ const Agreements = ({
     >
       <div data-test-agreements data-testid="agreements">
         <SearchAndSortQuery
+          {...qIndexSASQProps}
           initialFilterState={{
             agreementStatus: ['active', 'draft', 'in_negotiation', 'requested']
           }}
-          initialSearchState={{ query: '', qindex: '' }}
           initialSortState={{ sort: 'name' }}
           queryGetter={queryGetter}
           querySetter={querySetter}
-          retainInternalSearchState
-          /*
-            Not entirely happy with the fact this boilerplate
-            needs to be here for qIndex to work as expected.
-            See https://folio-project.slack.com/archives/C210UCHQ9/p1659014709252189
-          */
-          searchParamsMapping={{
-            query: (v) => ({ query: v }),
-            qindex: (v) => ({ qindex: v })
-          }}
           syncToLocationSearch
         >
           {
@@ -138,7 +130,7 @@ const Agreements = ({
               searchChanged,
               resetAll,
             }) => {
-              const disableReset = () => (!filterChanged && !searchChanged && !qIndex);
+              const disableReset = () => (!filterChanged && !searchChanged && !qIndexChanged);
               const filterCount = activeFilters.string ? activeFilters.string.split(',').length : 0;
               return (
                 <PersistedPaneset

@@ -8,7 +8,8 @@ import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-co
 import View from '../../components/views/Platforms';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { PLATFORMS_ENDPOINT } from '../../constants/endpoints';
+
+import { PLATFORMS_ENDPOINT } from '../../constants';
 
 const INITIAL_RESULT_COUNT = 50;
 

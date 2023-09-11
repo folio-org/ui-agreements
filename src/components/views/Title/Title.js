@@ -24,7 +24,9 @@ import {
 } from '../../EResourceSections';
 
 import TitleCardInfo from '../../TitleCard/TitleCardInfo';
+
 import { urls } from '../../utilities';
+import { ERESOURCE_ENTITY_TYPE } from '../../../constants';
 
 export default class Title extends React.Component {
   static propTypes = {
@@ -122,7 +124,7 @@ export default class Title extends React.Component {
                 domainName="agreements"
                 entityId={data.eresource.id}
                 entityName={data.eresource.name}
-                entityType="eresource"
+                entityType={ERESOURCE_ENTITY_TYPE}
                 pathToNoteCreate={urls.noteCreate()}
                 pathToNoteDetails={urls.notes()}
               />

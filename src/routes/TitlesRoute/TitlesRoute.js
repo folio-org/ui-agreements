@@ -1,16 +1,30 @@
 import React, { useEffect, useMemo, useRef } from 'react';
+
+import { useQuery } from 'react-query';
 import PropTypes from 'prop-types';
 
+import {
+  generateKiwtQueryParams,
+  useKiwtSASQuery
+} from '@k-int/stripes-kint-components';
+
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
-import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
+import {
+  getRefdataValuesByDesc,
+  usePrevNextPagination,
+  useSASQQIndex,
+  useTags
+} from '@folio/stripes-erm-components';
 
 import View from '../../components/views/Titles';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { resultCount } from '../../constants';
 
-import { TITLES_ELECTRONIC_ENDPOINT } from '../../constants/endpoints';
+import {
+  defaultTitlesQIndex as defaultQIndex,
+  resultCount,
+  TITLES_ELECTRONIC_ENDPOINT
+} from '../../constants';
 import { useAgreementsRefdata } from '../../hooks';
 
 const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT_MEDIUM;
@@ -34,7 +48,6 @@ const TitlesRoute = ({
   const hasPerms = stripes.hasPerm('ui-agreements.agreements.view');
   const searchField = useRef();
 
-
   useEffect(() => {
     if (searchField.current) {
       searchField.current.focus();
@@ -51,39 +64,38 @@ const TitlesRoute = ({
   const { data: { tags = [] } = {} } = useTags();
   const { query, querySetter, queryGetter } = useKiwtSASQuery();
 
+  const { currentPage } = usePrevNextPagination();
+  const { searchKey } = useSASQQIndex({ defaultQIndex });
+
   const titlesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
-      searchKey: 'name,identifiers.identifier.value,alternateResourceNames.name,description',
+      searchKey,
       filterKeys: {
         tags: 'tags.value',
         publicationType: 'publicationType.value',
         type: 'type.value'
       },
+      page: currentPage,
       perPage: RESULT_COUNT_INCREMENT
     }, (query ?? {}))
-  ), [query]);
-
+  ), [currentPage, query, searchKey]);
 
   const {
-    infiniteQueryObject: {
-      error: titlesError,
-      fetchNextPage: fetchNextTitlesPage,
-      isLoading: areTitlesLoading,
-      isIdle: isTitlesIdle,
-      isError: isTitlesError
-    },
-    results: titles = [],
-    total: titlesCount = 0
-  } = useInfiniteFetch(
+    data: { results: titles = [], totalRecords: titlesCount = 0 } = {},
+    error: titlesError,
+    isLoading: areTitlesLoading,
+    isError: isTitlesError
+  } = useQuery(
     ['ERM', 'Titles', titlesQueryParams, TITLES_ELECTRONIC_ENDPOINT],
-    ({ pageParam = 0 }) => {
-      const params = [...titlesQueryParams, `offset=${pageParam}`];
+    () => {
+      const params = [...titlesQueryParams];
       return ky.get(`${TITLES_ELECTRONIC_ENDPOINT}?${params?.join('&')}`).json();
     },
     {
-      enabled: !!query?.filters || !!query?.query
+      enabled: (!!query?.filters || !!query?.query) && !!currentPage,
     }
   );
+
 
   useEffect(() => {
     if (titlesCount === 1) {
@@ -101,14 +113,14 @@ const TitlesRoute = ({
         typeValues: getRefdataValuesByDesc(refdata, TYPE),
         tagsValues: tags,
       }}
-      onNeedMoreData={(_askAmount, index) => fetchNextTitlesPage({ pageParam: index })}
       queryGetter={queryGetter}
       querySetter={querySetter}
+      searchField={searchField}
       searchString={location.search}
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;
         totalCount: () => titlesCount,
-        loaded: () => !isTitlesIdle,
+        loaded: () => !areTitlesLoading,
         pending: () => areTitlesLoading,
         failure: () => isTitlesError,
         failureMessage: () => titlesError.message

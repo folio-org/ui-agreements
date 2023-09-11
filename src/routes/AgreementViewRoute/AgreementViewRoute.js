@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -6,19 +6,34 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { flatten } from 'lodash';
 
-import { useAgreement, useInfiniteFetch, useInterfaces, downloadBlob, useChunkedUsers } from '@folio/stripes-erm-components';
+import {
+  downloadBlob,
+  useAgreement,
+  useChunkedUsers,
+  useInfiniteFetch,
+  useInterfaces,
+  INVALID_JSON_ERROR,
+  JSON_ERROR
+} from '@folio/stripes-erm-components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Agreement';
 import { parseMclPageSize, urls } from '../../components/utilities';
-import { errorTypes, httpStatuses } from '../../constants';
-
 import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
 
-import { useAgreementsHelperApp, useAgreementsSettings, useChunkedOrderLines } from '../../hooks';
-import { AGREEMENT_ENDPOINT, AGREEMENT_ERESOURCES_ENDPOINT, AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
+import {
+  AGREEMENT_ENDPOINT,
+  AGREEMENT_ERESOURCES_ENDPOINT,
+  AGREEMENT_LINES_ENDPOINT,
+  httpStatuses
+} from '../../constants';
+import {
+  useAgreementsHelperApp,
+  useAgreementsSettings,
+  useChunkedOrderLines
+} from '../../hooks';
 
 const AgreementViewRoute = ({
   handlers = {},
@@ -149,14 +164,14 @@ const AgreementViewRoute = ({
             ));
           });
       } else {
-        throw new Error(errorTypes.JSON_ERROR);
+        throw new Error(JSON_ERROR);
       }
     }).then(text => {
       const data = JSON.parse(text); // Try to parse it as json
       if (data.id) {
         return Promise.resolve(history.push(`${urls.agreementEdit(data.id)}${location.search}`));
       } else {
-        throw new Error(errorTypes.INVALID_JSON_ERROR); // when the json response body doesn't contain an id
+        throw new Error(INVALID_JSON_ERROR); // when the json response body doesn't contain an id
       }
     }).catch(error => {
       throw error;

@@ -5,8 +5,8 @@ import { useQueryClient } from 'react-query';
 import { useStripes } from '@folio/stripes/core';
 import { CustomPropertiesSettings } from '@k-int/stripes-kint-components';
 
-import { REFDATA_ENDPOINT, CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
-import useAgreementsContexts from '../../../hooks/useAgreementsContexts';
+import { REFDATA_ENDPOINT, CUSTPROP_ENDPOINT } from '../../../constants';
+import { useAgreementsContexts } from '../../../hooks';
 
 const AgreementsCustomProperties = () => {
   const intl = useIntl();

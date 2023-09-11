@@ -1,12 +1,12 @@
 import { useHistory } from 'react-router';
-
 import { FormattedMessage } from 'react-intl';
-import { useStripes } from '@folio/stripes/core';
-
-import { Pane } from '@folio/stripes/components';
 
 import { EditableRefdataCategoryList } from '@k-int/stripes-kint-components';
-import { REFDATA_ENDPOINT } from '../../constants/endpoints';
+
+import { useStripes } from '@folio/stripes/core';
+import { Pane } from '@folio/stripes/components';
+
+import { REFDATA_ENDPOINT } from '../../constants';
 
 const PickListSettings = () => {
   const history = useHistory();

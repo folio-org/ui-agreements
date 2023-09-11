@@ -24,8 +24,8 @@ import {
 
 import { FormModal } from '@k-int/stripes-kint-components';
 
-import { validationEndPoint } from '../../constants';
-import { AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
+import { AGREEMENTS_ENDPOINT, validationEndPoint } from '../../constants';
+
 import { useBasket, useAgreementsRefdata } from '../../hooks';
 import { urls } from '../utilities';
 
