@@ -12,7 +12,8 @@ import { splitRelatedAgreements } from '../utilities/processRelatedAgreements';
 import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
+
+import { AGREEMENTS_ENDPOINT } from '../../constants';
 import { useAddFromBasket, useAgreementsRefdata, useBasket } from '../../hooks';
 
 const [

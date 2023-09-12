@@ -1,16 +1,21 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
+import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
-import { generateKiwtQueryParams, useKiwtSASQuery, useQIndex } from '@k-int/stripes-kint-components';
+import { useOkapiKy, useStripes } from '@folio/stripes/core';
+import {
+  getRefdataValuesByDesc,
+  useTags,
+  useInfiniteFetch,
+  useSASQQIndex
+} from '@folio/stripes-erm-components';
 
 import View from '../../components/views/Agreements';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { defaultQIndex, resultCount } from '../../constants';
-import { AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
+
+import { AGREEMENTS_ENDPOINT, defaultAgreementsQIndex as defaultQIndex, resultCount } from '../../constants';
 import { useAgreementsRefdata } from '../../hooks';
 
 const {
@@ -67,12 +72,12 @@ const AgreementsRoute = ({
     }
   }, []); // This isn't particularly great, but in the interests of saving time migrating, it will have to do
 
-  const { 0: qIndex } = useQIndex(); // We don't need the setter here;
+  const { searchKey } = useSASQQIndex({ defaultQIndex });
 
   const agreementsQueryParams = useMemo(() => (
     generateKiwtQueryParams({
       /* There were problems with using truthiness ?? on an empty string '' */
-      searchKey: (!!qIndex && qIndex !== '') ? qIndex : defaultQIndex,
+      searchKey,
       filterKeys: {
         agreementContentType: 'agreementContentTypes.contentType.value',
         agreementStatus: 'agreementStatus.value',
@@ -90,7 +95,7 @@ const AgreementsRoute = ({
       },
       perPage: RESULT_COUNT_INCREMENT_MEDIUM
     }, (query ?? {}))
-  ), [qIndex, query]);
+  ), [query, searchKey]);
 
   const {
     infiniteQueryObject: {

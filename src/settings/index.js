@@ -13,7 +13,7 @@ import {
 import {
   REFDATA_ENDPOINT,
   SETTINGS_ENDPOINT
-} from '../constants/endpoints';
+} from '../constants';
 
 import { AgreementsCustomProperties } from './components';
 

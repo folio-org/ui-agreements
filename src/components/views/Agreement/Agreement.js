@@ -46,8 +46,12 @@ import {
 import { useAgreementsContexts } from '../../../hooks';
 
 import { urls } from '../../utilities';
-import { statuses } from '../../../constants';
-import { CUSTPROP_ENDPOINT, LICENSE_CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
+import {
+  AGREEMENT_ENTITY_TYPE,
+  CUSTPROP_ENDPOINT,
+  LICENSE_CUSTPROP_ENDPOINT,
+  statuses
+} from '../../../constants';
 
 const Agreement = ({
   components: {
@@ -282,7 +286,7 @@ const Agreement = ({
                   domainName="agreements"
                   entityId={data.agreement.id}
                   entityName={data.agreement.name}
-                  entityType="agreement"
+                  entityType={AGREEMENT_ENTITY_TYPE}
                   pathToNoteCreate={urls.noteCreate()}
                   pathToNoteDetails={urls.notes()}
                 />

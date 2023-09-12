@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { CUSTPROP_ENDPOINT } from '../constants/endpoints';
+import { CUSTPROP_ENDPOINT } from '../constants';
 
 const useAgreementsContexts = () => {
   const ky = useOkapiKy();

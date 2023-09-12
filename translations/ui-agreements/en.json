@@ -566,6 +566,16 @@
   "relatedAgreements.remove": "Remove related agreement {index}",
   "relatedAgreements.replaceAgreement": "Replace agreement",
   "relatedAgreements.replaceAgreementSpecific": "Replace agreement {agreementName}",
+  "relationship.inward.supersedes": "is superseded by",
+  "relationship.inward.provides_post-cancellation_access_for": "has post-cancellation access in",
+  "relationship.inward.tracks_demand-driven_acquisitions_for": "has demand-driven acquisitions in",
+  "relationship.inward.has_backfile_in": "has frontfile in",
+  "relationship.inward.related_to": "related to",
+  "relationship.outward.supersedes": "supersedes",
+  "relationship.outward.provides_post-cancellation_access_for": "provides post-cancellation access for",
+  "relationship.outward.tracks_demand-driven_acquisitions_for": "tracks demand-driven acquisitions for",
+  "relationship.outward.has_backfile_in": "has backfile in",
+  "relationship.outward.related_to": "related to",
   "openAccessProperties.optionalProperties": "Optional properties",
   "openAccessProperties.primaryProperties": "Primary properties",
   "section.supplementaryProperties": "Supplementary properties",
@@ -754,5 +764,9 @@
   "operator.is": "Is",
   "operator.isNot": "Is not",
   "operator.contains": "Contains",
-  "operator.doesNotContain": "Does not contain"
+  "operator.doesNotContain": "Does not contain",
+  "titles.name": "Name",
+  "titles.identifiers": "Identifiers",
+  "titles.alternateResourceName": "Alternative name",
+  "titles.description": "Description"
 }
