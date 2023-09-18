@@ -754,5 +754,19 @@
     "eresources.url": "URL",
     "agreements.agreementLineCount": "Smlouva má {count, number} smlouvyq {count, plural, one {řádek} other {řádky}}",
     "open.linkInNewTab": "(otevře se na nové kartě)",
-    "agreementLineCountHeader": "{count, number} Smlouva {count, plural, one {řádek} other {řádky}}"
+    "agreementLineCountHeader": "{count, number} Smlouva {count, plural, one {řádek} other {řádky}}",
+    "relationship.inward.supersedes": "je nahrazeno",
+    "relationship.inward.provides_post-cancellation_access_for": "má přístup po zrušení v",
+    "relationship.inward.tracks_demand-driven_acquisitions_for": "má poptávkou řízené akvizice v",
+    "relationship.inward.has_backfile_in": "má frontfile v",
+    "relationship.inward.related_to": "související s",
+    "relationship.outward.supersedes": "nahrazuje",
+    "relationship.outward.provides_post-cancellation_access_for": "poskytuje přístup po zrušení pro",
+    "relationship.outward.tracks_demand-driven_acquisitions_for": "sleduje poptávkou řízené akvizice pro",
+    "relationship.outward.has_backfile_in": "má v archivu",
+    "relationship.outward.related_to": "související s",
+    "titles.name": "Jméno",
+    "titles.identifiers": "Identifikátory",
+    "titles.alternateResourceName": "Alternativní název",
+    "titles.description": "Popis"
 }
