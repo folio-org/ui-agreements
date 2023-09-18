@@ -8,6 +8,7 @@ import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 
+import queryString from 'query-string';
 import { splitRelatedAgreements } from '../utilities/processRelatedAgreements';
 import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
@@ -15,6 +16,7 @@ import { urls } from '../../components/utilities';
 
 import { AGREEMENTS_ENDPOINT } from '../../constants';
 import { useAddFromBasket, useAgreementsRefdata, useBasket } from '../../hooks';
+
 
 const [
   AGREEMENT_STATUS,
@@ -45,6 +47,8 @@ const AgreementCreateRoute = ({
   history,
   location,
 }) => {
+  const { authority, referenceId } = queryString.parse(location?.search);
+
   const callout = useContext(CalloutContext);
   const stripes = useStripes();
   const ky = useOkapiKy();
@@ -88,12 +92,20 @@ const AgreementCreateRoute = ({
         queryClient.invalidateQueries(['ERM', 'Agreements']);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
-        history.push(`${urls.agreementView(id)}${location.search}`);
+        if (authority && referenceId) {
+          history.push(`${urls.agreementView(id)}`);
+        } else {
+          history.push(`${urls.agreementView(id)}${location.search}`);
+        }
       })
   );
 
   const handleClose = () => {
-    history.push(`${urls.agreements()}${location.search}`);
+    if (authority && referenceId) {
+      history.push(`${urls.agreements()}`);
+    } else {
+      history.push(`${urls.agreements()}${location.search}`);
+    }
   };
 
   const handleSubmit = (agreement) => {
@@ -101,6 +113,16 @@ const AgreementCreateRoute = ({
 
     splitRelatedAgreements(agreement, relationshipTypeValues);
 
+    // ERM-3038 : WORKAROUND
+    if (authority && referenceId) {
+      agreement.items = [
+        {
+          'type': 'external',
+          'authority': authority,
+          'reference': referenceId,
+        }
+      ];
+    }
     postAgreement(agreement);
   };
 
