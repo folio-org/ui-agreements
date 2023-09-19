@@ -92,6 +92,8 @@ const AgreementCreateRoute = ({
         queryClient.invalidateQueries(['ERM', 'Agreements']);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
+        // if authority && referenceId exist we can assume the call came from eholdings and no other URL params are there
+        // we can get rid of the whole location.search
         if (authority && referenceId) {
           history.push(`${urls.agreementView(id)}`);
         } else {
@@ -101,6 +103,8 @@ const AgreementCreateRoute = ({
   );
 
   const handleClose = () => {
+    // if authority && referenceId exist we can assume the call came from eholdings and no other URL params are there
+    // we can get rid of the whole location.search
     if (authority && referenceId) {
       history.push(`${urls.agreements()}`);
     } else {
@@ -114,6 +118,8 @@ const AgreementCreateRoute = ({
     splitRelatedAgreements(agreement, relationshipTypeValues);
 
     // ERM-3038 : WORKAROUND
+    // if authority && referenceId exist we can assume the call came from eholdings
+    // add an item to agreement
     if (authority && referenceId) {
       agreement.items = [
         {
