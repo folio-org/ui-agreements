@@ -77,6 +77,19 @@ const AgreementCreateRoute = ({
     ]
   });
 
+  // Single function to handle "close to agreement" and "close to agreement list"
+  const handleClose = (id) => {
+    const pushUrl = id ? urls.agreementView(id) : urls.agreements();
+
+    // if authority && referenceId exist we can assume the call came from eholdings and no other URL params are there
+    // we can get rid of the whole location.search
+    if (authority && referenceId) {
+      history.push(pushUrl);
+    } else {
+      history.push(`${pushUrl}${location.search}`);
+    }
+  };
+
   const { mutateAsync: postAgreement } = useMutation(
     [AGREEMENTS_ENDPOINT, 'ui-agreements', 'AgreementCreateRoute', 'createAgreement'],
     (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: payload }).json()
@@ -92,43 +105,15 @@ const AgreementCreateRoute = ({
         queryClient.invalidateQueries(['ERM', 'Agreements']);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
-        // if authority && referenceId exist we can assume the call came from eholdings and no other URL params are there
-        // we can get rid of the whole location.search
-        if (authority && referenceId) {
-          history.push(`${urls.agreementView(id)}`);
-        } else {
-          history.push(`${urls.agreementView(id)}${location.search}`);
-        }
+        handleClose(id);
       })
   );
 
-  const handleClose = () => {
-    // if authority && referenceId exist we can assume the call came from eholdings and no other URL params are there
-    // we can get rid of the whole location.search
-    if (authority && referenceId) {
-      history.push(`${urls.agreements()}`);
-    } else {
-      history.push(`${urls.agreements()}${location.search}`);
-    }
-  };
 
   const handleSubmit = (agreement) => {
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
-
     splitRelatedAgreements(agreement, relationshipTypeValues);
 
-    // ERM-3038 : WORKAROUND
-    // if authority && referenceId exist we can assume the call came from eholdings
-    // add an item to agreement
-    if (authority && referenceId) {
-      agreement.items = [
-        {
-          'type': 'external',
-          'authority': authority,
-          'reference': referenceId,
-        }
-      ];
-    }
     postAgreement(agreement);
   };
 
@@ -138,8 +123,22 @@ const AgreementCreateRoute = ({
 
   const getInitialValues = () => {
     const periods = [{}];
+    let items;
+
+    // if authority && referenceId exist we can assume the call came from eholdings
+    // add an item to agreement
+    if (authority && referenceId) {
+      items = [
+        {
+          'type': 'external',
+          'authority': authority,
+          'reference': referenceId,
+        }
+      ];
+    }
 
     return {
+      items,
       periods,
     };
   };
@@ -167,7 +166,7 @@ const AgreementCreateRoute = ({
       handlers={{
         ...handlers,
         onBasketLinesAdded: handleBasketLinesAdded,
-        onClose: handleClose,
+        onClose: () => handleClose(), // Ensure passed onClose is always to agreement list
       }}
       initialValues={getInitialValues()}
       isLoading={fetchIsPending()}
