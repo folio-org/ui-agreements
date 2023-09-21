@@ -37,11 +37,11 @@ const [
   LIFECYCLE_STATUS,
   SCOPE,
 ] = [
-    'AvailabilityConstraint.Body',
-    'Pkg.ContentType',
-    'Pkg.LifecycleStatus',
-    'Pkg.AvailabilityScope',
-  ];
+  'AvailabilityConstraint.Body',
+  'Pkg.ContentType',
+  'Pkg.LifecycleStatus',
+  'Pkg.AvailabilityScope',
+];
 
 const PackagesRoute = ({
   children,
