@@ -25,7 +25,6 @@ import {
 import {
   useHandleSubmitSearch,
   usePrevNextPagination,
-  SearchKeyControl,
   useSASQQIndex
 } from '@folio/stripes-erm-components';
 
@@ -165,26 +164,6 @@ const Packages = ({
                           )}
                         </FormattedMessage>
                         {/* The options here reflect the constant defaultQIndex */}
-                        <SearchKeyControl
-                          options={[
-                            {
-                              label: <FormattedMessage id="ui-agreements.packages.name" />,
-                              key: 'name'
-                            },
-                            {
-                              label: <FormattedMessage id="ui-agreements.packages.identifiers" />,
-                              key: 'identifiers.identifier.value',
-                            },
-                            {
-                              label: <FormattedMessage id="ui-agreements.packages.alternateResourceName" />,
-                              key: 'alternateResourceNames.name'
-                            },
-                            {
-                              label: <FormattedMessage id="ui-agreements.packages.description" />,
-                              key: 'description'
-                            },
-                          ]}
-                        />
                         <Button
                           buttonStyle="primary"
                           disabled={!searchValue.query || searchValue.query === ''}
