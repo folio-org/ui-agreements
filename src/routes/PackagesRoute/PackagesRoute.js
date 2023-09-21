@@ -1,17 +1,32 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { useQuery } from 'react-query';
 
+import {
+  generateKiwtQueryParams,
+  useKiwtSASQuery
+} from '@k-int/stripes-kint-components';
+
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
-import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
+import {
+  getRefdataValuesByDesc,
+  usePrevNextPagination,
+  useSASQQIndex,
+  useTags
+} from '@folio/stripes-erm-components';
 
 import View from '../../components/views/Packages';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 
-import { PACKAGES_ENDPOINT, resourceClasses, resultCount } from '../../constants';
+import {
+  defaultPackagesQIndex as defaultQIndex,
+  PACKAGES_ENDPOINT,
+  resourceClasses,
+  resultCount
+} from '../../constants';
+
 import { useAgreementsRefdata } from '../../hooks';
 
 const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT_MEDIUM;
@@ -22,11 +37,11 @@ const [
   LIFECYCLE_STATUS,
   SCOPE,
 ] = [
-  'AvailabilityConstraint.Body',
-  'Pkg.ContentType',
-  'Pkg.LifecycleStatus',
-  'Pkg.AvailabilityScope',
-];
+    'AvailabilityConstraint.Body',
+    'Pkg.ContentType',
+    'Pkg.LifecycleStatus',
+    'Pkg.AvailabilityScope',
+  ];
 
 const PackagesRoute = ({
   children,
@@ -57,9 +72,14 @@ const PackagesRoute = ({
   const { data: { tags = [] } = {} } = useTags();
   const { query, querySetter, queryGetter } = useKiwtSASQuery();
 
+
+  const { currentPage } = usePrevNextPagination();
+  const { searchKey } = useSASQQIndex({ defaultQIndex });
+
+
   const packagesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
-      searchKey: 'name,identifiers.identifier.value,alternateResourceNames.name,description',
+      searchKey,
       filterConfig: [{
         name: 'class',
         values: [
@@ -75,29 +95,25 @@ const PackagesRoute = ({
         status: 'lifecycleStatus.value',
         tags: 'tags.value',
       },
+      page: currentPage,
       perPage: RESULT_COUNT_INCREMENT
     }, (query ?? {}))
-  ), [query]);
+  ), [currentPage, query, searchKey]);
 
 
   const {
-    infiniteQueryObject: {
-      error: eresourcesError,
-      fetchNextPage: fetchNextPackagesPage,
-      isLoading: areEresourcesLoading,
-      isIdle: isPackagesIdle,
-      isError: isEresourcesError
-    },
-    results: packages = [],
-    total: packagesCount = 0
-  } = useInfiniteFetch(
+    data: { results: packages = [], totalRecords: packagesCount = 0 } = {},
+    error: eresourcesError,
+    isLoading: areEresourcesLoading,
+    isError: isEresourcesError
+  } = useQuery(
     ['ERM', 'Packages', packagesQueryParams, PACKAGES_ENDPOINT],
-    ({ pageParam = 0 }) => {
-      const params = [...packagesQueryParams, `offset=${pageParam}`];
+    () => {
+      const params = [...packagesQueryParams];
       return ky.get(`${PACKAGES_ENDPOINT}?${params?.join('&')}`).json();
     },
     {
-      enabled: !!query?.filters || !!query?.query
+      enabled: (!!query?.filters || !!query?.query) && !!currentPage,
     }
   );
 
@@ -126,7 +142,6 @@ const PackagesRoute = ({
         statusValues: getRefdataValuesByDesc(refdata, LIFECYCLE_STATUS),
         tagsValues: tags,
       }}
-      onNeedMoreData={(_askAmount, index) => fetchNextPackagesPage({ pageParam: index })}
       queryGetter={queryGetter}
       querySetter={querySetter}
       searchField={searchField}
@@ -134,7 +149,7 @@ const PackagesRoute = ({
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;
         totalCount: () => packagesCount,
-        loaded: () => !isPackagesIdle,
+        loaded: () => !areEresourcesLoading,
         pending: () => areEresourcesLoading,
         failure: () => isEresourcesError,
         failureMessage: () => eresourcesError.message

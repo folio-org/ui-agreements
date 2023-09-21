@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
@@ -23,7 +23,10 @@ import {
 } from '@folio/stripes/smart-components';
 
 import {
-  useHandleSubmitSearch
+  useHandleSubmitSearch,
+  usePrevNextPagination,
+  SearchKeyControl,
+  useSASQQIndex
 } from '@folio/stripes-erm-components';
 
 import EResourceProvider from '../../EResourceProvider';
@@ -46,7 +49,7 @@ const propTypes = {
   data: PropTypes.shape({
     packages: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
-  onNeedMoreData: PropTypes.func.isRequired,
+  page: PropTypes.number,
   queryGetter: PropTypes.func.isRequired,
   querySetter: PropTypes.func.isRequired,
   searchField: PropTypes.object,
@@ -62,11 +65,11 @@ const propTypes = {
 };
 
 const filterPaneVisibilityKey = '@folio/agreements/eresourcesFilterPaneVisibility';
+const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
 const Packages = ({
   children,
   data = {},
-  onNeedMoreData,
   queryGetter,
   querySetter,
   searchField,
@@ -77,6 +80,19 @@ const Packages = ({
   const count = source?.totalCount() ?? 0;
   const query = queryGetter() ?? {};
   const sortOrder = query.sort ?? '';
+
+  const {
+    paginationMCLProps,
+    paginationSASQProps
+  } = usePrevNextPagination({
+    count,
+    pageSize: RESULT_COUNT_INCREMENT_MEDIUM
+  });
+
+  const {
+    qIndexChanged,
+    qIndexSASQProps
+  } = useSASQQIndex();
 
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
@@ -90,8 +106,9 @@ const Packages = ({
   return (
     <div data-testid="packages">
       <SearchAndSortQuery
+        {...qIndexSASQProps}
+        {...paginationSASQProps}
         initialFilterState={{}}
-        initialSearchState={{ query: '' }}
         initialSortState={{ sort: 'name' }}
         queryGetter={queryGetter}
         querySetter={querySetter}
@@ -108,7 +125,7 @@ const Packages = ({
             searchChanged,
             resetAll,
           }) => {
-            const disableReset = () => (!filterChanged && !searchChanged);
+            const disableReset = () => (!filterChanged && !searchChanged && !qIndexChanged);
             const filterCount = activeFilters.string ? activeFilters.string.split(',').length : 0;
 
             return (
@@ -147,6 +164,27 @@ const Packages = ({
                             />
                           )}
                         </FormattedMessage>
+                        {/* The options here reflect the constant defaultQIndex */}
+                        <SearchKeyControl
+                          options={[
+                            {
+                              label: <FormattedMessage id="ui-agreements.packages.name" />,
+                              key: 'name'
+                            },
+                            {
+                              label: <FormattedMessage id="ui-agreements.packages.identifiers" />,
+                              key: 'identifiers.identifier.value',
+                            },
+                            {
+                              label: <FormattedMessage id="ui-agreements.packages.alternateResourceName" />,
+                              key: 'alternateResourceNames.name'
+                            },
+                            {
+                              label: <FormattedMessage id="ui-agreements.packages.description" />,
+                              key: 'description'
+                            },
+                          ]}
+                        />
                         <Button
                           buttonStyle="primary"
                           disabled={!searchValue.query || searchValue.query === ''}
@@ -254,9 +292,7 @@ const Packages = ({
                     }
                     isSelected={({ item }) => item.id === selectedRecordId}
                     onHeaderClick={onSort}
-                    onNeedMoreData={onNeedMoreData}
-                    pageAmount={resultCount.RESULT_COUNT_INCREMENT}
-                    pagingType="click"
+                    {...paginationMCLProps}
                     rowProps={{
                       labelStrings: ({ rowData }) => [rowData.name],
                       to: id => `${urls.packageView(id)}${searchString}`,
