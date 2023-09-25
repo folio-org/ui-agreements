@@ -7,11 +7,12 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import View from '../../components/views/Platform';
 import { urls } from '../../components/utilities';
+
 import {
   PLATFORM_ENDPOINT,
   STRING_TEMPLATES_ENDPOINT,
   STRING_TEMPLATES_PLATFORM_ENDPOINT
-} from '../../constants/endpoints';
+} from '../../constants';
 
 const PlatformViewRoute = ({
   history,

@@ -21,12 +21,9 @@ export default class MonographCoverage extends React.Component {
     if (!edition) return null;
 
     return (
-      <>
-        <FormattedMessage id="ui-agreements.coverage.editionShort" />
-        <div data-testid="editionDisplay">
-          {edition}
-        </div>
-      </>
+      <div data-testid="editionDisplay">
+        <FormattedMessage id="ui-agreements.coverage.editionShort" values={{ value: edition }} />
+      </div>
     );
   }
 
@@ -34,12 +31,9 @@ export default class MonographCoverage extends React.Component {
     if (!volume) return null;
 
     return (
-      <>
-        <FormattedMessage id="ui-agreements.coverage.volumeShort" />
-        <div data-testid="volumeDisplay">
-          {volume}
-        </div>
-      </>
+      <div data-testid="volumeDisplay">
+        <FormattedMessage id="ui-agreements.coverage.volumeShort" values={{ value: volume }} />
+      </div>
     );
   }
 
@@ -66,7 +60,6 @@ export default class MonographCoverage extends React.Component {
           data-test-volume={volume}
         >
           {this.renderEdition(edition)}
-          {volume && edition ? <>&nbsp;</> : null}
           {this.renderVolume(volume)}
         </div>
       </Layout>

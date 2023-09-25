@@ -1,19 +1,24 @@
-import { mockErmComponents, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import { FieldArray } from 'react-final-form-arrays';
 import { MemoryRouter } from 'react-router-dom';
-import { KeyValue, Select } from '@folio/stripes-testing';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { mockErmComponents, renderWithIntl, TestForm, KeyValue, Select } from '@folio/stripes-erm-testing';
+
 import AmendmentsFieldArray from '../AmendmentsFieldArray';
 
 import translationsProperties from '../../../../test/helpers';
 
 /* For this test we would like to retain the actual stripes-erm-components version of LicenseEndDate */
 /* See LicenseAmendmentList.test.js for the full breakdown */
-jest.unmock('@folio/stripes-erm-components');
-const { LicenseEndDate: _mockLicenseEndDate, ...mockedERMComps } = mockErmComponents;
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockedERMComps
-}));
+jest.mock('@folio/stripes-erm-components', () => {
+  /* We can grab all the mocks except the one we don't want in use */
+  const { LicenseEndDate: _mockLicenseEndDate, ...mockedERMComps } = mockErmComponents;
+
+  return ({
+    ...jest.requireActual('@folio/stripes-erm-components'),
+    ...mockedERMComps
+  });
+});
 
 const onSubmit = jest.fn();
 
@@ -292,7 +297,9 @@ describe('AmendmentsFieldArray', () => {
 
     describe('select a status of current', () => {
       beforeEach(async () => {
-        await Select().choose('Current');
+        await waitFor(async () => {
+          await Select().choose('Current');
+        });
       });
 
       it('renders expected status of current', async () => {
@@ -328,7 +335,9 @@ describe('AmendmentsFieldArray', () => {
 
     describe('selecting a status of current', () => {
       beforeEach(async () => {
-        await Select().choose('Current');
+        await waitFor(async () => {
+          await Select().choose('Current');
+        });
       });
 
       it('renders a conflict warning message', () => {

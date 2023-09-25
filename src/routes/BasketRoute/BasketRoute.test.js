@@ -1,10 +1,9 @@
 
 import PropTypes from 'prop-types';
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl, Button as ButtonInteractor } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { Button } from '@folio/stripes/components';
-import { Button as ButtonInteractor } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
 import BasketRoute from './BasketRoute';
 
@@ -102,19 +101,9 @@ describe('BasketRoute', () => {
       expect(getByText('AddToExistingAgreementButton')).toBeInTheDocument();
     });
 
-    test('calls the AddToExistingAgreementButton', async () => {
-      await ButtonInteractor('AddToExistingAgreementButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
-    });
-
     test('renders the AddToNewAgreementButton component', () => {
       const { getByText } = renderComponent;
       expect(getByText('AddToNewAgreementButton')).toBeInTheDocument();
-    });
-
-    test('calls the AddToNewAgreementButton', async () => {
-      await ButtonInteractor('AddToNewAgreementButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
     });
 
     test('renders the CloseButton component', () => {

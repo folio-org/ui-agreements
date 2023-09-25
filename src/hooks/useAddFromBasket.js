@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
-
+import { useQuery } from 'react-query';
 import { useLocation, useHistory } from 'react-router-dom';
+
 import isEqual from 'lodash/isEqual';
 import queryString from 'query-string';
 
-import { useQuery } from 'react-query';
-
 import { useOkapiKy } from '@folio/stripes/core';
-import { AGREEMENT_LINES_EXTERNAL_ENDPOINT } from '../constants/endpoints';
+import { AGREEMENT_LINES_EXTERNAL_ENDPOINT } from '../constants';
 
 const useAddFromBasket = (basket) => {
   const location = useLocation();

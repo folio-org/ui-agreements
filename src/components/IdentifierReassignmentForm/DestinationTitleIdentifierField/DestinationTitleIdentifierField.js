@@ -132,10 +132,10 @@ const DestinationTitleIdentifierField = ({ setTitleName }) => {
           </RadioButtonGroup>
         </Col>
         <Col md={6} xs={12}>
-          {validIdentifiers?.map((vi, index) => {
+          {validIdentifiers?.map(vi => {
             return (
               <KeyValue
-                key={`title-${title?.id}-identifier[${index}]`}
+                key={`title-${title?.id}-identifier-${vi?.identifier?.ns?.value}:${vi?.identifier?.value}`}
                 label={vi?.identifier?.ns?.value}
               >
                 {vi?.identifier?.value}

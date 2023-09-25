@@ -1,6 +1,7 @@
 
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import MonographCoverage from './MonographCoverage';
+import translationsProperties from '../../../test/helpers/translationsProperties';
 
 const monographResource = {
   'id': 'a36cee05-1af3-44b2-abb3-f8c15075b642',
@@ -419,7 +420,8 @@ describe('MonographCoverage', () => {
     const { getByTestId } = renderWithIntl(
       <MonographCoverage
         pci={monographResource}
-      />
+      />,
+      translationsProperties
     );
 
     // renders monograph coverage element
@@ -427,9 +429,9 @@ describe('MonographCoverage', () => {
     // renders correct date
     expect(getByTestId('dateDisplay')).toHaveTextContent('1850');
     // renders correct edition
-    expect(getByTestId('editionDisplay')).toHaveTextContent('1st');
+    expect(getByTestId('editionDisplay')).toHaveTextContent('Ed: 1st');
     // renders correct volume
-    expect(getByTestId('volumeDisplay')).toHaveTextContent('1');
+    expect(getByTestId('volumeDisplay')).toHaveTextContent('Vol: 1');
   });
 
   test('renders expected monograph coverage when passed without an edition', () => {

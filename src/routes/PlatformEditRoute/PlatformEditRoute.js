@@ -9,7 +9,8 @@ import { LoadingView } from '@folio/stripes/components';
 import View from '../../components/views/PlatformForm';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { PLATFORM_ENDPOINT } from '../../constants/endpoints';
+
+import { PLATFORM_ENDPOINT } from '../../constants';
 
 const PlatformEditRoute = ({
   history,

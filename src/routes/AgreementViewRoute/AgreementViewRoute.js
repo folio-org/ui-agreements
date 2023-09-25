@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -6,19 +6,34 @@ import { FormattedMessage, useIntl } from 'react-intl';
 
 import { flatten } from 'lodash';
 
-import { useAgreement, useInfiniteFetch, useInterfaces, useUsers, downloadBlob } from '@folio/stripes-erm-components';
+import {
+  downloadBlob,
+  useAgreement,
+  useChunkedUsers,
+  useInfiniteFetch,
+  useInterfaces,
+  INVALID_JSON_ERROR,
+  JSON_ERROR
+} from '@folio/stripes-erm-components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Agreement';
 import { parseMclPageSize, urls } from '../../components/utilities';
-import { errorTypes } from '../../constants';
-
 import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
 
-import { useAgreementsHelperApp, useAgreementsSettings, useChunkedOrderLines } from '../../hooks';
-import { AGREEMENT_ENDPOINT, AGREEMENT_ERESOURCES_ENDPOINT, AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
+import {
+  AGREEMENT_ENDPOINT,
+  AGREEMENT_ERESOURCES_ENDPOINT,
+  AGREEMENT_LINES_ENDPOINT,
+  httpStatuses
+} from '../../constants';
+import {
+  useAgreementsHelperApp,
+  useAgreementsSettings,
+  useChunkedOrderLines
+} from '../../hooks';
 
 const AgreementViewRoute = ({
   handlers = {},
@@ -45,7 +60,7 @@ const AgreementViewRoute = ({
   const agreementPath = AGREEMENT_ENDPOINT(agreementId);
   const agreementEresourcesPath = AGREEMENT_ERESOURCES_ENDPOINT(agreementId, eresourcesFilterPath);
 
-  const { agreement, isAgreementLoading } = useAgreement({ agreementId, queryParams: ['expandItems=false'] });
+  const { agreement, isAgreementLoading } = useAgreement({ agreementId });
 
 
   const interfaces = useInterfaces({
@@ -60,8 +75,7 @@ const AgreementViewRoute = ({
   const settings = useAgreementsSettings();
 
   // Users
-  const { data: { users = [] } = {} } = useUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user));
-
+  const { users } = useChunkedUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user) ?? []);
   // AGREEMENT LINES INFINITE FETCH
   const agreementLineQueryParams = useMemo(() => (
     generateKiwtQueryParams(
@@ -130,7 +144,7 @@ const AgreementViewRoute = ({
    */
   const poLineIdsArray = useMemo(() => (
     agreementLines
-      .filter(line => line.poLines && line.poLines.length)
+      .filter(line => line.poLines?.length)
       .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat()
   ), [agreementLines]);
 
@@ -141,7 +155,7 @@ const AgreementViewRoute = ({
     (cloneableProperties) => ky.post(`${agreementPath}/clone`, { json: cloneableProperties }).then(response => {
       if (response.ok) {
         return response.text(); // Parse it as text
-      } else if (response.status === 422) { // handle 422 error specifically
+      } else if (response.status === httpStatuses.HTTP_422) { // handle 422 error specifically
         return response.json()
           .then(({ errors }) => {
             throw new Error(intl.formatMessage(
@@ -150,14 +164,14 @@ const AgreementViewRoute = ({
             ));
           });
       } else {
-        throw new Error(errorTypes.JSON_ERROR);
+        throw new Error(JSON_ERROR);
       }
     }).then(text => {
       const data = JSON.parse(text); // Try to parse it as json
       if (data.id) {
         return Promise.resolve(history.push(`${urls.agreementEdit(data.id)}${location.search}`));
       } else {
-        throw new Error(errorTypes.INVALID_JSON_ERROR); // when the json response body doesn't contain an id
+        throw new Error(INVALID_JSON_ERROR); // when the json response body doesn't contain an id
       }
     }).catch(error => {
       throw error;

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState, useRef } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
-import { getRefdataValuesByDesc, requiredValidator } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, requiredValidator, usePrevious } from '@folio/stripes-erm-components';
 import {
   Button,
   Col,
@@ -12,16 +12,8 @@ import {
   Headline,
 } from '@folio/stripes/components';
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
-import { useAgreementsRefdata } from '../../../hooks';
 
-// custom hook that holds any required value (props/state) from  the previous render cycle via a ref.
-function usePrevious(value) {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-  return ref.current;
-}
+import { useAgreementsRefdata } from '../../../hooks';
 
 // Utility function to check if two arrays of scalars contain the same items (Order does not count)
 const arraysAreEqual = (a, b) => {

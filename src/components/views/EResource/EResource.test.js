@@ -1,7 +1,6 @@
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { renderWithIntl, Button } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { Button } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import { titleData, packageData, PCIdata, helperApp, handlers } from './testResources';
 import EResource from './EResource';

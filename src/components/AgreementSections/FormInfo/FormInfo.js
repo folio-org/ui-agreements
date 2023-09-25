@@ -107,7 +107,7 @@ const FormInfo = ({
         </Col>
       </Row>
       <Row>
-        <Col md={6} xs={12}>
+        <Col md={3} xs={12}>
           <Field name="agreementStatus" validate={requiredValidator}>
             {({ input, meta }) => {
               return (
@@ -133,7 +133,7 @@ const FormInfo = ({
             }}
           </Field>
         </Col>
-        <Col md={6} xs={12}>
+        <Col md={3} xs={12}>
           <Field
             component={Select}
             dataOptions={[{ value: '', label: '' }, ...reasonForClosureValues]}
@@ -144,9 +144,7 @@ const FormInfo = ({
             parse={v => v} // Lets us send an empty string instead of `undefined`
           />
         </Col>
-      </Row>
-      <Row>
-        <Col md={6} xs={12}>
+        <Col md={3} xs={12}>
           <Field
             component={Select}
             dataOptions={[{ value: '', label: '' }, ...renewalPriorityValues]}
@@ -156,7 +154,7 @@ const FormInfo = ({
             parse={v => v} // Lets us pass an empty string instead of `undefined`
           />
         </Col>
-        <Col md={6} xs={12}>
+        <Col md={3} xs={12}>
           <Field
             component={Select}
             dataOptions={[{ value: '', label: '' }, ...isPerpetualValues]}

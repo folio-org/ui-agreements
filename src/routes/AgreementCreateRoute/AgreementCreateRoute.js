@@ -8,12 +8,15 @@ import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 
+import queryString from 'query-string';
 import { splitRelatedAgreements } from '../utilities/processRelatedAgreements';
 import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
+
+import { AGREEMENTS_ENDPOINT } from '../../constants';
 import { useAddFromBasket, useAgreementsRefdata, useBasket } from '../../hooks';
+
 
 const [
   AGREEMENT_STATUS,
@@ -44,6 +47,8 @@ const AgreementCreateRoute = ({
   history,
   location,
 }) => {
+  const { authority, referenceId } = queryString.parse(location?.search);
+
   const callout = useContext(CalloutContext);
   const stripes = useStripes();
   const ky = useOkapiKy();
@@ -72,6 +77,19 @@ const AgreementCreateRoute = ({
     ]
   });
 
+  // Single function to handle "close to agreement" and "close to agreement list"
+  const handleClose = (id) => {
+    const pushUrl = id ? urls.agreementView(id) : urls.agreements();
+
+    // if authority && referenceId exist we can assume the call came from eholdings and no other URL params are there
+    // we can get rid of the whole location.search
+    if (authority && referenceId) {
+      history.push(pushUrl);
+    } else {
+      history.push(`${pushUrl}${location.search}`);
+    }
+  };
+
   const { mutateAsync: postAgreement } = useMutation(
     [AGREEMENTS_ENDPOINT, 'ui-agreements', 'AgreementCreateRoute', 'createAgreement'],
     (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: payload }).json()
@@ -87,17 +105,13 @@ const AgreementCreateRoute = ({
         queryClient.invalidateQueries(['ERM', 'Agreements']);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
-        history.push(`${urls.agreementView(id)}${location.search}`);
+        handleClose(id);
       })
   );
 
-  const handleClose = () => {
-    history.push(`${urls.agreements()}${location.search}`);
-  };
 
   const handleSubmit = (agreement) => {
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
-
     splitRelatedAgreements(agreement, relationshipTypeValues);
 
     postAgreement(agreement);
@@ -109,8 +123,22 @@ const AgreementCreateRoute = ({
 
   const getInitialValues = () => {
     const periods = [{}];
+    let items;
+
+    // if authority && referenceId exist we can assume the call came from eholdings
+    // add an item to agreement
+    if (authority && referenceId) {
+      items = [
+        {
+          'type': 'external',
+          'authority': authority,
+          'reference': referenceId,
+        }
+      ];
+    }
 
     return {
+      items,
       periods,
     };
   };
@@ -138,7 +166,7 @@ const AgreementCreateRoute = ({
       handlers={{
         ...handlers,
         onBasketLinesAdded: handleBasketLinesAdded,
-        onClose: handleClose,
+        onClose: () => handleClose(), // Ensure passed onClose is always to agreement list
       }}
       initialValues={getInitialValues()}
       isLoading={fetchIsPending()}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -41,7 +41,8 @@ import {
 } from '../../AgreementSections';
 
 import IfAccordionIsVisible from '../../IfAccordionIsVisible';
-import { CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
+
+import { CUSTPROP_ENDPOINT } from '../../../constants';
 import { useAgreementsContexts } from '../../../hooks';
 
 const AgreementForm = ({
@@ -55,31 +56,9 @@ const AgreementForm = ({
   values = {},
 }) => {
   const accordionStatusRef = useRef();
-  const [addedLinesToAdd, setAddedLinesToAdd] = useState(false);
   const { data: custpropContexts = [] } = useAgreementsContexts();
   // Ensure the custprops with no contexts get rendered
   const contexts = ['isNull', ...custpropContexts];
-
-  // The `agreementLinesToAdd` must be added here rather than in the parent route
-  // handler because we don't want them to be part of the initialValues.
-  // After all, they're being _added_, so their presence must dirty the form.
-  useEffect(() => {
-    const formState = form.getState();
-
-    if (
-      data.agreementLinesToAdd?.length &&
-      addedLinesToAdd === false &&
-      form.getRegisteredFields().includes('items')
-    ) {
-      form.change('items', [
-        ...(formState?.initialValues?.items ?? []),
-        ...data.agreementLinesToAdd,
-      ]);
-
-      handlers.onBasketLinesAdded();
-      setAddedLinesToAdd(true);
-    }
-  }, [addedLinesToAdd, data, form, handlers]);
 
   const initialAccordionsState = {
     formInternalContacts: true,
@@ -185,6 +164,7 @@ const AgreementForm = ({
               firstMenu={renderFirstMenu()}
               footer={renderPaneFooter()}
               id="pane-agreement-form"
+              paneSub={data.agreementLineCount >= 0 ? <FormattedMessage id="ui-agreements.agreementLineCountHeader" values={{ count: data.agreementLineCount }} /> : null}
               paneTitle={id ? <FormattedMessage id="ui-agreements.agreements.editAgreement.name" values={{ name }} /> : <FormattedMessage id="ui-agreements.agreements.createAgreement" />}
             >
               <TitleManager record={id ? name : create?.[0]}>
@@ -198,6 +178,7 @@ const AgreementForm = ({
                     </Row>
                     <AccordionSet initialStatus={initialAccordionsState}>
                       <FormInfo {...getSectionProps('formInfo')} />
+                      <FormLines agreementId={id} agreementLineCount={data.agreementLineCount} />
                       <CustomPropertiesEdit
                         contexts={contexts}
                         customPropertiesEndpoint={CUSTPROP_ENDPOINT}
@@ -209,7 +190,6 @@ const AgreementForm = ({
                           :
                           null)}
                       </IfPermission>
-                      <FormLines {...getSectionProps('formLines')} />
                       <FormLicenses {...getSectionProps('formLicenses')} />
                       <FormOrganizations {...getSectionProps('formOrganizations')} />
                       <FormSupplementaryDocuments {...getSectionProps('formSupplementaryDocs')} />

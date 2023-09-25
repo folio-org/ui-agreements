@@ -1,23 +1,25 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
+
 import { FormattedMessage } from 'react-intl';
+import { useMutation, useQueryClient, useQuery } from 'react-query';
 
 import { cloneDeep } from 'lodash';
 
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useBatchedFetch, useUsers } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, useAgreement, useChunkedUsers } from '@folio/stripes-erm-components';
 
-import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/processRelatedAgreements';
+
 import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { endpoints } from '../../constants';
-import { useAddFromBasket, useAgreementsRefdata, useBasket, useChunkedOrderLines } from '../../hooks';
 
-const { AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT } = endpoints;
+import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/processRelatedAgreements';
+import { AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT } from '../../constants';
+import { useAgreementsRefdata, useBasket } from '../../hooks';
 
 const [
   AGREEMENT_STATUS,
@@ -57,11 +59,6 @@ const AgreementEditRoute = ({
 
   const { basket = [] } = useBasket();
 
-  const {
-    handleBasketLinesAdded,
-    getAgreementLinesToAdd
-  } = useAddFromBasket(basket);
-
   const refdata = useAgreementsRefdata({
     desc: [
       AGREEMENT_STATUS,
@@ -77,53 +74,45 @@ const AgreementEditRoute = ({
     ]
   });
 
-  const { data: agreement, isLoading: isAgreementLoading } = useQuery(
-    ['ERM', 'Agreement', agreementId, AGREEMENT_ENDPOINT(agreementId)], // This pattern may need to be expanded to other fetches in Nolana
-    () => ky.get(AGREEMENT_ENDPOINT(agreementId)).json()
-  );
+  const { agreement, isAgreementLoading } = useAgreement({ agreementId });
 
-  // AGREEMENT LINES BATCHED FETCH
+  /* START agreementLineCount
+    the following is necessary to provide information of number of agreement lines in the edit form,
+    could be removed if we change the agreement API to include that information
+  */
+
+  const agreementLineQueryParams = useMemo(() => (
+    generateKiwtQueryParams({ filters: [{ path: 'owner', value: agreementId }], perPage: 1 }, {})), [agreementId]);
+
   const {
-    results: agreementLines,
-    total: agreementLineCount,
-    isLoading: areLinesLoading
-  } = useBatchedFetch({
-    batchParams: {
-      filters: [
-        {
-          path: 'owner',
-          value: agreementId
-        }
-      ],
-      sort: [
-        { path: 'type' },
-        { path: 'resource.name' },
-        { path: 'reference' },
-        { path: 'id' }
-      ],
-    },
-    nsArray: ['ERM', 'Agreement', agreementId, 'AgreementLines', AGREEMENT_LINES_ENDPOINT, 'AgreementEditRoute'],
-    path: AGREEMENT_LINES_ENDPOINT
-  });
+    data: { totalRecords: agreementLineCount = 0 } = {},
+  } = useQuery(
+    ['ERM', 'Agreement', agreementId, 'AgreementLines', AGREEMENT_LINES_ENDPOINT, 'AgreementEditRoute'],
+    () => {
+      const params = [...agreementLineQueryParams];
+      return ky.get(`${AGREEMENT_LINES_ENDPOINT}?${params?.join('&')}`).json();
+    }
+  );
+  /* END agreementLineCount */
 
   // Users
-  const { data: { users = [] } = {} } = useUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user));
+  const { users } = useChunkedUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user) ?? []);
 
   const { mutateAsync: putAgreement } = useMutation(
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
     (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: payload }).json()
-      .then(({ name, linkedLicenses }) => {
+      .then(async ({ name, linkedLicenses }) => {
         // Invalidate any linked license's linkedAgreements calls
         if (linkedLicenses?.length) {
-          linkedLicenses.forEach(linkLic => {
+          await Promise.all(linkedLicenses.map(linkLic => {
             // I'm still not 100% sure this is the "right" way to go about this.
-            queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
-          });
+            return queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
+          }));
         }
 
         /* Invalidate cached queries */
-        queryClient.invalidateQueries(['ERM', 'Agreements']);
-        queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
+        await queryClient.invalidateQueries(['ERM', 'Agreements']);
+        await queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
         history.push(`${urls.agreementView(agreementId)}${location.search}`);
@@ -133,7 +122,7 @@ const AgreementEditRoute = ({
   const getInitialValues = useCallback(() => {
     let initialValues = {};
 
-    if (agreement.id === agreementId) { // Not sure what this protects against right now
+    if (agreement?.id === agreementId) { // Not sure what this protects against right now
       initialValues = cloneDeep(agreement);
     }
 
@@ -141,7 +130,6 @@ const AgreementEditRoute = ({
       agreementStatus = {},
       contacts = [],
       isPerpetual = {},
-      items = [],
       linkedLicenses = [],
       orgs = [],
       reasonForClosure = {},
@@ -155,7 +143,7 @@ const AgreementEditRoute = ({
     initialValues.reasonForClosure = reasonForClosure.value;
     initialValues.renewalPriority = renewalPriority.value;
     initialValues.contacts = contacts.map(c => ({ ...c, role: c.role.value }));
-    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role && o.role.value }));
+    initialValues.orgs = orgs.map(o => ({ ...o, role: o.role?.value }));
     initialValues.supplementaryDocs = supplementaryDocs.map(o => ({ ...o, atType: o.atType?.value }));
     initialValues.linkedLicenses = linkedLicenses.map(l => ({
       ...l,
@@ -177,60 +165,21 @@ const AgreementEditRoute = ({
 
     joinRelatedAgreements(initialValues);
 
-    // Check agreement lines correspond to this agreement
-    if (!areLinesLoading && items.length && agreementLineCount && (agreementLines[0].owner.id === agreementId)) {
-      initialValues.items = items.map(item => {
-        // We weed out any external entitlements, then map the internal ones to our form shape
-        if (item.resource) return item;
-
-        const line = agreementLines.find(l => l.id === item.id);
-        if (!line) return item;
-
-        return {
-          id: line.id,
-          coverage: line.customCoverage ? line.coverage : undefined,
-          poLines: line.poLines,
-          activeFrom: line.startDate,
-          activeTo: line.endDate,
-          note: line.note
-        };
-      });
-    }
-
     return initialValues;
-  }, [agreement, agreementId, agreementLineCount, agreementLines, areLinesLoading]);
-
-  /*
-   * Calculate poLineIdsArray outside of the useEffect hook,
-   * so we can accurately tell if it changes and avoid infinite loop
-   */
-  const poLineIdsArray = useMemo(() => (
-    agreementLines
-      .filter(line => line.poLines && line.poLines.length)
-      .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat()
-  ), [agreementLines]);
-
-  const { orderLines, isLoading: areOrderLinesLoading } = useChunkedOrderLines(poLineIdsArray);
+  }, [agreement, agreementId]);
 
   const handleClose = () => {
     history.push(`${urls.agreementView(agreementId)}${location.search}`);
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
     splitRelatedAgreements(values, relationshipTypeValues);
-    putAgreement(values);
-  };
-
-  const getAgreementLines = () => {
-    return [
-      ...agreementLines,
-      ...getAgreementLinesToAdd(),
-    ];
+    await putAgreement(values);
   };
 
   const fetchIsPending = () => {
-    return areOrderLinesLoading || isAgreementLoading;
+    return isAgreementLoading;
   };
 
   if (!stripes.hasPerm('ui-agreements.agreements.edit')) return <NoPermissions />;
@@ -239,8 +188,7 @@ const AgreementEditRoute = ({
   return (
     <View
       data={{
-        agreementLines: getAgreementLines(),
-        agreementLinesToAdd: getAgreementLinesToAdd(),
+        agreementLineCount,
         agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
         reasonForClosureValues: getRefdataValuesByDesc(refdata, REASON_FOR_CLOSURE),
         amendmentStatusValues: getRefdataValuesByDesc(refdata, AMENDMENT_STATUS),
@@ -249,14 +197,12 @@ const AgreementEditRoute = ({
         documentCategories: getRefdataValuesByDesc(refdata, DOC_ATTACHMENT_TYPE),
         isPerpetualValues: getRefdataValuesByDesc(refdata, GLOBAL_YES_NO),
         licenseLinkStatusValues: getRefdataValuesByDesc(refdata, REMOTE_LICENSE_LINK_STATUS),
-        orderLines,
         orgRoleValues: getRefdataValuesByDesc(refdata, ORG_ROLE),
         renewalPriorityValues: getRefdataValuesByDesc(refdata, RENEWAL_PRIORITY),
         users,
       }}
       handlers={{
         ...handlers,
-        onBasketLinesAdded: handleBasketLinesAdded,
         onClose: handleClose,
       }}
       initialValues={getInitialValues()}

@@ -11,7 +11,8 @@ import { isPackage } from '@folio/stripes-erm-components';
 
 import View from '../../components/views/AgreementLineForm';
 import { urls } from '../../components/utilities';
-import { AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
+
+import { AGREEMENT_LINES_ENDPOINT } from '../../constants';
 import { useBasket, useSuppressFromDiscovery } from '../../hooks';
 
 const AgreementLineCreateRoute = ({

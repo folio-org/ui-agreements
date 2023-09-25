@@ -9,6 +9,7 @@ import {
   ExpandAllButton,
   HasCommand,
   Headline,
+  MetaSection,
   Row,
   checkScope,
   collapseAllSections,
@@ -23,7 +24,9 @@ import {
 } from '../../EResourceSections';
 
 import TitleCardInfo from '../../TitleCard/TitleCardInfo';
+
 import { urls } from '../../utilities';
+import { ERESOURCE_ENTITY_TYPE } from '../../../constants';
 
 export default class Title extends React.Component {
   static propTypes = {
@@ -65,6 +68,13 @@ export default class Title extends React.Component {
       >
         {eresource.name}
       </Headline>
+      <MetaSection
+        contentId="titleRecordMetaContent"
+        createdDate={eresource.dateCreated}
+        hideSource
+        id="titleRecordMeta"
+        lastUpdatedDate={eresource.lastUpdated}
+      />
       <TitleCardInfo {...this.getSectionProps('info')} title={eresource} />
     </div>
   );
@@ -114,7 +124,7 @@ export default class Title extends React.Component {
                 domainName="agreements"
                 entityId={data.eresource.id}
                 entityName={data.eresource.name}
-                entityType="eresource"
+                entityType={ERESOURCE_ENTITY_TYPE}
                 pathToNoteCreate={urls.noteCreate()}
                 pathToNoteDetails={urls.notes()}
               />

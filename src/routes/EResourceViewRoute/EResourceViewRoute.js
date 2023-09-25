@@ -5,17 +5,20 @@ import { useQuery } from 'react-query';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { useInfiniteFetch, useBatchedFetch } from '@folio/stripes-erm-components';
+import { useInfiniteFetch, useParallelBatchFetch } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/EResource';
 import { parseMclPageSize, urls } from '../../components/utilities';
-import { resultCount, resourceClasses } from '../../constants';
 
+import {
+  ERESOURCE_ENDPOINT,
+  ERESOURCE_ENTITLEMENTS_ENDPOINT,
+  ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT,
+  ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT,
+  resourceClasses
+} from '../../constants';
 import { useAgreementsHelperApp, useAgreementsSettings, useSuppressFromDiscovery } from '../../hooks';
-import { ERESOURCE_ENDPOINT, ERESOURCE_ENTITLEMENTS_ENDPOINT, ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT, ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT } from '../../constants/endpoints';
-
-const { RECORDS_PER_REQUEST_MEDIUM } = resultCount;
 
 const EResourceViewRoute = ({
   handlers = [],
@@ -71,13 +74,9 @@ const EResourceViewRoute = ({
   );
 
   // RELATED ENTITLEMENTS FOR ERESOURCE BATCH FETCH
-  const {
-    results: relatedEntitlements,
-    isLoading: areRelatedEntitlementsLoading
-  } = useBatchedFetch({
-    batchLimit: entitlementsCount,
-    batchSize: RECORDS_PER_REQUEST_MEDIUM,
-    path: ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT(eresourceId),
+  const { items: relatedEntitlements, isLoading: areRelatedEntitlementsLoading } = useParallelBatchFetch({
+    generateQueryKey: ({ offset }) => ['ERM', 'Entitlements', ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT(eresourceId), offset, 'EresourceViewRoute'],
+    endpoint: ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT(eresourceId),
     queryParams: {
       enabled: (!!eresource?.id && eresource?.class !== resourceClasses?.PACKAGE)
     }

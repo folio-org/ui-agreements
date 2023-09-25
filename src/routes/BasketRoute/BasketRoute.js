@@ -1,45 +1,37 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useBatchedFetch } from '@folio/stripes-erm-components';
+import {
+  useParallelBatchFetch,
+} from '@folio/stripes-erm-components';
 
 import { useBasket } from '../../hooks';
-import { AGREEMENTS_ENDPOINT } from '../../constants/endpoints';
+import { AGREEMENTS_ENDPOINT } from '../../constants';
 
 import View from '../../components/views/Basket';
-import { urls } from '../../components/utilities';
 
-const BasketRoute = ({
-  history,
-}) => {
+const BasketRoute = ({ history }) => {
   const { basket, removeFromBasket } = useBasket();
 
   // AGREEMENTS BATCHED FETCH
-  const {
-    results: openAgreements,
-  } = useBatchedFetch({
-    batchParams:  {
+  const { itemQueries } = useParallelBatchFetch({
+    batchParams: {
       filters: [
         {
           path: 'agreementStatus.value',
-          values: ['active', 'draft', 'in_negotiation', 'requested']
-        }
+          values: ['active', 'draft', 'in_negotiation', 'requested'],
+        },
       ],
-      sort: [
-        { path: 'name' },
-      ],
+      sort: [{ path: 'name' }],
     },
-    nsArray: ['ERM', 'Agreements', AGREEMENTS_ENDPOINT, 'BasketRoute'],
-    path: AGREEMENTS_ENDPOINT
+    generateQueryKey: ({ offset }) => ['ERM', 'Agreements', AGREEMENTS_ENDPOINT, offset, 'BasketRoute'],
+    endpoint: AGREEMENTS_ENDPOINT,
   });
 
-  const handleAddToExistingAgreement = (addFromBasket, agreementId) => {
-    history.push(`${urls.agreementEdit(agreementId)}?addFromBasket=${addFromBasket}`);
-  };
+  // Get items as they come through
+  const openAgreements = itemQueries?.filter(q => !q.isFetching)?.reduce((acc, curr) => {
+    return [...acc, ...(curr?.data?.results ?? [])];
+  }, []);
 
-  const handleAddToNewAgreement = (addFromBasket) => {
-    history.push(`${urls.agreementCreate()}?addFromBasket=${addFromBasket}`);
-  };
 
   const handleClose = () => {
     history.goBack();
@@ -52,8 +44,6 @@ const BasketRoute = ({
         basket,
       }}
       handlers={{
-        onAddToExistingAgreement: handleAddToExistingAgreement,
-        onAddToNewAgreement: handleAddToNewAgreement,
         onClose: handleClose,
         onRemoveBasketItem: removeFromBasket,
       }}

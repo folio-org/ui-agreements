@@ -1,5 +1,4 @@
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { KeyValue } from '@folio/stripes-testing';
+import { renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../test/helpers';
 import LinkedLicenseCard from './LinkedLicenseCard';
