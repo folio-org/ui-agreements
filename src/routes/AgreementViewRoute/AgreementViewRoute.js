@@ -60,7 +60,7 @@ const AgreementViewRoute = ({
   const agreementPath = AGREEMENT_ENDPOINT(agreementId);
   const agreementEresourcesPath = AGREEMENT_ERESOURCES_ENDPOINT(agreementId, eresourcesFilterPath);
 
-  const { agreement, isAgreementLoading } = useAgreement({ agreementId, queryParams: ['expandItems=false'] });
+  const { agreement, isAgreementLoading } = useAgreement({ agreementId });
 
 
   const interfaces = useInterfaces({

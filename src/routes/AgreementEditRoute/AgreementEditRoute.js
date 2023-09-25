@@ -74,7 +74,7 @@ const AgreementEditRoute = ({
     ]
   });
 
-  const { agreement, isAgreementLoading } = useAgreement({ agreementId, queryParams: ['expandItems=false'] });
+  const { agreement, isAgreementLoading } = useAgreement({ agreementId });
 
   /* START agreementLineCount
     the following is necessary to provide information of number of agreement lines in the edit form,
