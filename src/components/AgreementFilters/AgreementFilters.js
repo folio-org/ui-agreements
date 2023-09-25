@@ -4,13 +4,26 @@ import isEqual from 'lodash/isEqual';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { Accordion, AccordionSet, FilterAccordionHeader, Selection } from '@folio/stripes/components';
+import {
+  Accordion,
+  AccordionSet,
+  FilterAccordionHeader,
+  Selection,
+} from '@folio/stripes/components';
 import { IfPermission } from '@folio/stripes/core';
-import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { DateFilter, InternalContactSelection, OrganizationSelection } from '@folio/stripes-erm-components';
+import {
+  CheckboxFilter,
+  MultiSelectionFilter,
+} from '@folio/stripes/smart-components';
+import {
+  DateFilter,
+  InternalContactSelection,
+  OrganizationSelection,
+} from '@folio/stripes-erm-components';
 
 import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
+import AgreementContentFilter from '../AgreementContentFilter';
 import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
 
 const propTypes = {
@@ -27,7 +40,11 @@ const FILTERS = [
   'agreementContentType',
 ];
 
-export default function AgreementFilters({ activeFilters, data, filterHandlers }) {
+export default function AgreementFilters({
+  activeFilters,
+  data,
+  filterHandlers,
+}) {
   const intl = useIntl();
 
   const [filterState, setFilterState] = useState({
@@ -36,12 +53,12 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
     renewalPriority: [],
     isPerpetual: [],
     agreementContentType: [],
-    tags: []
+    tags: [],
   });
 
   useEffect(() => {
     const newState = {};
-    FILTERS.forEach(filter => {
+    FILTERS.forEach((filter) => {
       const values = data[`${filter}Values`];
       if (!isEqual(values, filterState[filter])) {
         newState[filter] = values;
@@ -49,11 +66,14 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
     });
 
     if ((data?.tagsValues?.length ?? 0) !== filterState.tags?.length) {
-      newState.tags = data.tagsValues.map(({ label }) => ({ value: label, label }));
+      newState.tags = data.tagsValues.map(({ label }) => ({
+        value: label,
+        label,
+      }));
     }
 
     if (Object.keys(newState).length) {
-      setFilterState(prevState => ({ ...prevState, ...newState }));
+      setFilterState((prevState) => ({ ...prevState, ...newState }));
     }
   }, [data, filterState]);
 
@@ -65,7 +85,9 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
         header={FilterAccordionHeader}
         id={`filter-accordion-${name}`}
         label={<FormattedMessage id={`ui-agreements.agreements.${name}`} />}
-        onClearFilter={() => { filterHandlers.clearGroup(name); }}
+        onClearFilter={() => {
+          filterHandlers.clearGroup(name);
+        }}
         separator={false}
         {...prps}
       >
@@ -75,7 +97,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
           onChange={(group) => {
             filterHandlers.state({
               ...activeFilters,
-              [group.name]: group.values
+              [group.name]: group.values,
             });
           }}
           selectedValues={groupFilters}
@@ -94,7 +116,9 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
         // ID differs from the checkbox above just to avoid any clashes
         id={`filter-ms-accordion-${name}`}
         label={<FormattedMessage id={`ui-agreements.agreements.${name}`} />}
-        onClearFilter={() => { filterHandlers.clearGroup(name); }}
+        onClearFilter={() => {
+          filterHandlers.clearGroup(name);
+        }}
         separator={false}
         {...prps}
       >
@@ -104,7 +128,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
           onChange={(group) => {
             filterHandlers.state({
               ...activeFilters,
-              [group.name]: group.values
+              [group.name]: group.values,
             });
           }}
           selectedValues={groupFilters}
@@ -133,7 +157,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
         <OrganizationSelection
           input={{
             name: 'agreement-orgs-filter',
-            onChange: value => filterHandlers.state({ ...activeFilters, orgs: [value] }),
+            onChange: (value) => filterHandlers.state({ ...activeFilters, orgs: [value] }),
             value: orgFilters[0] || '',
           }}
         />
@@ -143,7 +167,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
 
   const renderOrganizationRoleFilter = () => {
     const roles = data.orgRoleValues;
-    const dataOptions = roles.map(role => ({
+    const dataOptions = roles.map((role) => ({
       value: role.id,
       label: role.label,
     }));
@@ -155,16 +179,23 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
         closedByDefault
         displayClearButton={roleFilters.length > 0}
         header={FilterAccordionHeader}
-        label={<FormattedMessage id="ui-agreements.settings.orgRoles.orgRole" />}
-        onClearFilter={() => { filterHandlers.clearGroup('role'); }}
+        label={
+          <FormattedMessage id="ui-agreements.settings.orgRoles.orgRole" />
+        }
+        onClearFilter={() => {
+          filterHandlers.clearGroup('role');
+        }}
         separator={false}
       >
         <FormattedMessage id="ui-agreements.organizations.selectRole">
-          {placeholder => (
+          {(placeholder) => (
             <Selection
               dataOptions={dataOptions}
-              onChange={value => filterHandlers.state({ ...activeFilters, role: [value] })}
-              placeholder={typeof placeholder === 'string' ? placeholder : placeholder[0]}
+              onChange={(value) => filterHandlers.state({ ...activeFilters, role: [value] })
+              }
+              placeholder={
+                typeof placeholder === 'string' ? placeholder : placeholder[0]
+              }
               value={roleFilters[0] || ''}
             />
           )}
@@ -183,7 +214,9 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
           displayClearButton={contactFilters.length > 0}
           header={FilterAccordionHeader}
           id="internal-contacts-filter"
-          label={<FormattedMessage id="ui-agreements.agreements.internalContacts" />}
+          label={
+            <FormattedMessage id="ui-agreements.agreements.internalContacts" />
+          }
           onClearFilter={() => filterHandlers.clearGroup('contacts')}
           separator={false}
         >
@@ -191,7 +224,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
             id="agreement-internal-contacts-filter"
             input={{
               name: 'agreement-contacts-filter',
-              onChange: value => filterHandlers.state({ ...activeFilters, contacts: [value] }),
+              onChange: (value) => filterHandlers.state({ ...activeFilters, contacts: [value] }),
               value: contactFilters[0] || '',
             }}
             path="erm/contacts"
@@ -203,7 +236,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
 
   const renderInternalContactRoleFilter = () => {
     const contactRoles = data.contactRoleValues;
-    const dataOptions = contactRoles.map(contactRole => ({
+    const dataOptions = contactRoles.map((contactRole) => ({
       value: contactRole.id,
       label: contactRole.label,
     }));
@@ -216,14 +249,19 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
         displayClearButton={contactRoleFilters.length > 0}
         header={FilterAccordionHeader}
         id="internal-contacts-role-filter"
-        label={<FormattedMessage id="ui-agreements.agreements.internalContactsRole" />}
-        onClearFilter={() => { filterHandlers.clearGroup('contactRole'); }}
+        label={
+          <FormattedMessage id="ui-agreements.agreements.internalContactsRole" />
+        }
+        onClearFilter={() => {
+          filterHandlers.clearGroup('contactRole');
+        }}
         separator={false}
       >
         <Selection
           dataOptions={dataOptions}
           id="agreement-internal-contacts-role-filter"
-          onChange={value => filterHandlers.state({ ...activeFilters, contactRole: [value] })}
+          onChange={(value) => filterHandlers.state({ ...activeFilters, contactRole: [value] })
+          }
           value={contactRoleFilters[0] || ''}
         />
       </Accordion>
@@ -240,14 +278,17 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
         header={FilterAccordionHeader}
         id="clickable-tags-filter"
         label={<FormattedMessage id="ui-agreements.agreements.tags" />}
-        onClearFilter={() => { filterHandlers.clearGroup('tags'); }}
+        onClearFilter={() => {
+          filterHandlers.clearGroup('tags');
+        }}
         separator={false}
       >
         <MultiSelectionFilter
           dataOptions={filterState.tags || []}
           id="tags-filter"
           name="tags"
-          onChange={e => filterHandlers.state({ ...activeFilters, tags: e.values })}
+          onChange={(e) => filterHandlers.state({ ...activeFilters, tags: e.values })
+          }
           selectedValues={tagFilters}
         />
       </Accordion>
@@ -255,38 +296,75 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
   };
 
   const renderCustomPropertyFilters = () => {
-    return <CustomPropertiesFilter
-      activeFilters={activeFilters}
-      customPropertiesEndpoint={CUSTPROP_ENDPOINT}
-      filterHandlers={filterHandlers}
-    />;
+    return (
+      <CustomPropertiesFilter
+        activeFilters={activeFilters}
+        customPropertiesEndpoint={CUSTPROP_ENDPOINT}
+        filterHandlers={filterHandlers}
+      />
+    );
   };
 
   const renderStartDateFilter = () => {
-    return <DateFilter
-      activeFilters={activeFilters}
-      filterHandlers={filterHandlers}
-      hideNoDateSetCheckbox
-      name="startDate"
-    />;
+    return (
+      <DateFilter
+        activeFilters={activeFilters}
+        filterHandlers={filterHandlers}
+        hideNoDateSetCheckbox
+        name="startDate"
+      />
+    );
   };
 
   const renderEndDateFilter = () => {
-    return <DateFilter
-      activeFilters={activeFilters}
-      filterHandlers={filterHandlers}
-      name="endDate"
-      resourceName={intl.formatMessage({ id: 'ui-agreements.agreements' }).toLowerCase()}
-    />;
+    return (
+      <DateFilter
+        activeFilters={activeFilters}
+        filterHandlers={filterHandlers}
+        name="endDate"
+        resourceName={intl
+          .formatMessage({ id: 'ui-agreements.agreements' })
+          .toLowerCase()}
+      />
+    );
   };
 
   const renderCancellationDeadlineFilter = () => {
-    return <DateFilter
-      activeFilters={activeFilters}
-      filterHandlers={filterHandlers}
-      name="cancellationDeadline"
-      resourceName={intl.formatMessage({ id: 'ui-agreements.agreements' }).toLowerCase()}
-    />;
+    return (
+      <DateFilter
+        activeFilters={activeFilters}
+        filterHandlers={filterHandlers}
+        name="cancellationDeadline"
+        resourceName={intl
+          .formatMessage({ id: 'ui-agreements.agreements' })
+          .toLowerCase()}
+      />
+    );
+  };
+
+  const renderAgreementContentFilter = () => {
+    const agreementContentFilters = activeFilters.agreementContent || [];
+
+    return (
+      <Accordion
+        closedByDefault
+        displayClearButton={agreementContentFilters.length > 0}
+        header={FilterAccordionHeader}
+        id="clickable-agreement-content-filter"
+        label={<FormattedMessage id="ui-agreements.agreementContent" />}
+        onClearFilter={() => {
+          filterHandlers.clearGroup('agreementContent');
+        }}
+        separator={false}
+      >
+        <AgreementContentFilter
+          activeFilters={activeFilters}
+          agreementContentFilters={agreementContentFilters}
+          filterHandlers={filterHandlers}
+          name="agreementContent"
+        />
+      </Accordion>
+    );
   };
 
   return (
@@ -305,11 +383,12 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       {renderCheckboxFilter('agreementContentType', { closedByDefault: true })}
       {renderTagsFilter()}
       {renderCustomPropertyFilters()}
+      {renderAgreementContentFilter()}
     </AccordionSet>
   );
 }
 
 AgreementFilters.propTypes = propTypes;
 AgreementFilters.defaultProps = {
-  activeFilters: {}
+  activeFilters: {},
 };
