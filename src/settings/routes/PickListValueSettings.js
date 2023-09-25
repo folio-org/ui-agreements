@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
+
+import { EditableRefdataList } from '@k-int/stripes-kint-components';
+
 import { useStripes } from '@folio/stripes/core';
 import { Pane, Select } from '@folio/stripes/components';
-import { EditableRefdataList } from '@k-int/stripes-kint-components';
-import { REFDATA_ENDPOINT } from '../../constants/endpoints';
+
+import { REFDATA_ENDPOINT } from '../../constants';
 import { useAgreementsRefdata } from '../../hooks';
 
 const PickListValues = () => {

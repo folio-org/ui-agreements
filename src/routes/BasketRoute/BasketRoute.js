@@ -5,9 +5,7 @@ import {
 } from '@folio/stripes-erm-components';
 
 import { useBasket } from '../../hooks';
-import {
-  AGREEMENTS_ENDPOINT,
-} from '../../constants/endpoints';
+import { AGREEMENTS_ENDPOINT } from '../../constants';
 
 import View from '../../components/views/Basket';
 

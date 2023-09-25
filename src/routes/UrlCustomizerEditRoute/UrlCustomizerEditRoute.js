@@ -11,7 +11,8 @@ import { LoadingView } from '@folio/stripes/components';
 import View from '../../components/views/UrlCustomizerForm';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { STRING_TEMPLATE_ENDPOINT } from '../../constants/endpoints';
+
+import { STRING_TEMPLATE_ENDPOINT } from '../../constants';
 
 const UrlCustomizerEditRoute = ({
   history,

@@ -1,25 +1,25 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
+
 import { FormattedMessage } from 'react-intl';
+import { useMutation, useQueryClient, useQuery } from 'react-query';
 
 import { cloneDeep } from 'lodash';
 
-import { useMutation, useQueryClient, useQuery } from 'react-query';
+import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { getRefdataValuesByDesc, useAgreement, useChunkedUsers } from '@folio/stripes-erm-components';
 
-import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
-import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/processRelatedAgreements';
 import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { endpoints } from '../../constants';
-import { useAgreementsRefdata, useBasket } from '../../hooks';
 
-const { AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT } = endpoints;
+import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/processRelatedAgreements';
+import { AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT } from '../../constants';
+import { useAgreementsRefdata, useBasket } from '../../hooks';
 
 const [
   AGREEMENT_STATUS,
@@ -74,7 +74,7 @@ const AgreementEditRoute = ({
     ]
   });
 
-  const { agreement, isAgreementLoading } = useAgreement({ agreementId, queryParams: ['expandItems=false'] });
+  const { agreement, isAgreementLoading } = useAgreement({ agreementId });
 
   /* START agreementLineCount
     the following is necessary to provide information of number of agreement lines in the edit form,

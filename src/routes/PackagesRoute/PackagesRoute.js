@@ -10,9 +10,8 @@ import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-co
 import View from '../../components/views/Packages';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { resourceClasses, resultCount } from '../../constants';
 
-import { PACKAGES_ENDPOINT } from '../../constants/endpoints';
+import { PACKAGES_ENDPOINT, resourceClasses, resultCount } from '../../constants';
 import { useAgreementsRefdata } from '../../hooks';
 
 const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT_MEDIUM;
@@ -130,6 +129,7 @@ const PackagesRoute = ({
       onNeedMoreData={(_askAmount, index) => fetchNextPackagesPage({ pageParam: index })}
       queryGetter={queryGetter}
       querySetter={querySetter}
+      searchField={searchField}
       searchString={location.search}
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;
