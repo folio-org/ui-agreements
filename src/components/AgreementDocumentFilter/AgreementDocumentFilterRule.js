@@ -179,7 +179,7 @@ const AgreementDocumentFilterRule = ({
             id={`delete-rule-btn-${index}`}
             text={
               <FormattedMessage
-                id="ui-oa.checklistFilter.removeRule"
+                id="ui-agreements.documentFilter.removeRule"
                 values={{ number: index + 1 }}
               />
             }

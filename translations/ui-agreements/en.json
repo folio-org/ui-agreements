@@ -764,5 +764,6 @@
   "documentFilter.addFilter": "Add filter",
   "documentFilter.attribute": "Attribute",
   "documentFilter.comparator": "Comparator",
-  "documentFilter.addRule": "Add rule"
+  "documentFilter.addRule": "Add rule",
+  "documentFilter.removeRule": "Remove rule {number}"
 }
