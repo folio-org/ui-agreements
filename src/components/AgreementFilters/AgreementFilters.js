@@ -13,6 +13,8 @@ import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
 import { CUSTPROP_ENDPOINT } from '../../constants/endpoints';
 
+import AgreementDocumentFilter from '../AgreementDocumentFilter';
+
 const propTypes = {
   activeFilters: PropTypes.object,
   data: PropTypes.object.isRequired,
@@ -289,9 +291,16 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
     />;
   };
 
+  const renderAgreementDocumentFilter = () => {
+    return <AgreementDocumentFilter
+      activeFilters={activeFilters}
+      filterHandlers={filterHandlers}
+    />;
+  };
+  // TODO Uncomment filters
   return (
     <AccordionSet>
-      {renderCheckboxFilter('agreementStatus')}
+      {/* {renderCheckboxFilter('agreementStatus')}
       {renderMultiSelectFilter('reasonForClosure')}
       {renderCheckboxFilter('renewalPriority', { closedByDefault: true })}
       {renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
@@ -304,7 +313,8 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       {renderInternalContactRoleFilter()}
       {renderCheckboxFilter('agreementContentType', { closedByDefault: true })}
       {renderTagsFilter()}
-      {renderCustomPropertyFilters()}
+      {renderCustomPropertyFilters()} */}
+      {renderAgreementDocumentFilter()}
     </AccordionSet>
   );
 }

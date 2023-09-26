@@ -754,5 +754,15 @@
   "operator.is": "Is",
   "operator.isNot": "Is not",
   "operator.contains": "Contains",
-  "operator.doesNotContain": "Does not contain"
+  "operator.doesNotContain": "Does not contain",
+  "documentFilter.documents": "Documents",
+  "documentFilter.filtersApplied": "{filtersLength} document filters applied",
+  "documentFilter.editDocumentFilters": "Edit document filters",
+  "documentFilter.documentFilterBuilder": "Document filter builder",
+  "documentFilter.deleteFilterIndex": "Delete filter {number}",
+  "documentFilter.documentFilterIndex": "Document filter {number}",
+  "documentFilter.addFilter": "Add filter",
+  "documentFilter.attribute": "Attribute",
+  "documentFilter.comparator": "Comparator",
+  "documentFilter.addRule": "Add rule"
 }
