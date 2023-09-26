@@ -123,6 +123,7 @@ const AgreementContentFilter = ({
   filterHandlers,
   activeFilters,
 }) => {
+  // TODO make this a constant and map ids to intl.formatMessage in component
   const agreementContentOptions = useAgreementContentOptions();
 
   // Used to map labels to content values for use within the multiselection
