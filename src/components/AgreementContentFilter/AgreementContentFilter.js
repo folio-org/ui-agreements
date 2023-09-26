@@ -15,7 +15,10 @@ import {
   Col,
 } from '@folio/stripes/components';
 
-import { deparseKiwtQueryFilters, parseKiwtQueryFilters } from '@k-int/stripes-kint-components';
+import {
+  deparseKiwtQueryFilters,
+  parseKiwtQueryFilters,
+} from '@k-int/stripes-kint-components';
 
 import { useAgreementContentOptions } from '../../hooks';
 
@@ -145,18 +148,29 @@ const AgreementContentFilter = ({
     const filters = parsedFilters.reduce((acc, curr, index) => {
       if (index === 0) {
         // Special case for the first one
-        return [...acc, {
-          // All filters in each group should have the same comparator by design
-          attribute: curr[0]?.comparator,
-          content: mapContentLabels(curr.filter(c => typeof c !== 'string')?.map(c => c.path))
-        }];
-      } else if (index % 2 === 0) { // Even indices are the groups
-        return [...acc, {
-          grouping: parsedFilters[index - 1],
-          // All filters in each group should have the same comparator by design
-          attribute: curr[0]?.comparator,
-          content: mapContentLabels(curr.filter(c => typeof c !== 'string')?.map(c => c.path))
-        }];
+        return [
+          ...acc,
+          {
+            // All filters in each group should have the same comparator by design
+            attribute: curr[0]?.comparator,
+            content: mapContentLabels(
+              curr.filter((c) => typeof c !== 'string')?.map((c) => c.path)
+            ),
+          },
+        ];
+      } else if (index % 2 === 0) {
+        // Even indices are the groups
+        return [
+          ...acc,
+          {
+            grouping: parsedFilters[index - 1],
+            // All filters in each group should have the same comparator by design
+            attribute: curr[0]?.comparator,
+            content: mapContentLabels(
+              curr.filter((c) => typeof c !== 'string')?.map((c) => c.path)
+            ),
+          },
+        ];
       }
 
       // For odd indicies, keep acc as it is
@@ -167,41 +181,52 @@ const AgreementContentFilter = ({
   };
 
   const updateFilters = (values) => {
-    const kiwtQueryFilterShape = values?.agreementContent?.reduce((acc, curr) => {
-      let newAcc = [];
-      // Rebuild to shape expected by deparseKiwtQueryFilters
-      if (!curr.content || !curr.attribute) {
-        return acc;
-      }
+    const kiwtQueryFilterShape = values?.agreementContent?.reduce(
+      (acc, curr) => {
+        let newAcc = [];
+        // Rebuild to shape expected by deparseKiwtQueryFilters
+        if (!curr.content || !curr.attribute) {
+          return acc;
+        }
 
-      // First glue in any boolean logic
-      if (curr.grouping) {
-        newAcc = [...acc, curr.grouping];
-      }
+        // First glue in any boolean logic
+        if (curr.grouping) {
+          newAcc = [...acc, curr.grouping];
+        }
 
-      // Then translate group into filters
-      newAcc = [
-        ...newAcc,
-        curr.content.reduce((a, c, i) => {
-          return [
-            ...a,
-            i !== 0 ? '||' : null, // Don't group on first entry
-            {
-              path: c.value,
-              comparator: curr.attribute
-            }
-          ].filter(Boolean);
-        }, [])
-      ];
+        // Then translate group into filters
+        newAcc = [
+          ...newAcc,
+          curr.content.reduce((a, c, i) => {
+            return [
+              ...a,
+              i !== 0 ? '||' : null, // Don't group on first entry
+              {
+                path: c.value,
+                comparator: curr.attribute,
+              },
+            ].filter(Boolean);
+          }, []),
+        ];
 
-      return newAcc;
-    }, []);
+        return newAcc;
+      },
+      []
+    );
 
-    if (kiwtQueryFilterShape.length > 0) {
+    const validateFilter = (filter) => {
+      return filter?.attribute && filter?.content?.length;
+    };
+
+    if (values?.agreementContent?.every(validateFilter)) {
       filterHandlers.state({
         ...activeFilters,
         // FIXME this isn't ideal, KIWT should accept spaces in query -- Ask Steve
-        agreementContent: [deparseKiwtQueryFilters(kiwtQueryFilterShape).replaceAll(' || ', '||').replaceAll(' && ', '&&')],
+        agreementContent: [
+          deparseKiwtQueryFilters(kiwtQueryFilterShape)
+            .replaceAll(' || ', '||')
+            .replaceAll(' && ', '&&'),
+        ],
       });
     }
   };
