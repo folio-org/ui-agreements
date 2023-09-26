@@ -197,11 +197,13 @@ const AgreementContentFilter = ({
       return newAcc;
     }, []);
 
-    filterHandlers.state({
-      ...activeFilters,
-      // FIXME this isn't ideal, KIWT should accept spaces in query -- Ask Steve
-      agreementContent: [deparseKiwtQueryFilters(kiwtQueryFilterShape).replaceAll(' || ', '||').replaceAll(' && ', '&&')],
-    });
+    if (kiwtQueryFilterShape.length > 0) {
+      filterHandlers.state({
+        ...activeFilters,
+        // FIXME this isn't ideal, KIWT should accept spaces in query -- Ask Steve
+        agreementContent: [deparseKiwtQueryFilters(kiwtQueryFilterShape).replaceAll(' || ', '||').replaceAll(' && ', '&&')],
+      });
+    }
   };
 
   return (
