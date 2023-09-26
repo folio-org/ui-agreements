@@ -15,7 +15,7 @@ import {
   Col,
 } from '@folio/stripes/components';
 
-import { parseKiwtQueryFilters } from '@k-int/stripes-kint-components';
+import { deparseKiwtQueryFilters, parseKiwtQueryFilters } from '@k-int/stripes-kint-components';
 
 import { useAgreementContentOptions } from '../../hooks';
 
@@ -165,23 +165,41 @@ const AgreementContentFilter = ({
     return filters;
   };
 
-  const validateFilter = (filter) => {
-    return filter?.attribute && filter?.content?.length;
-  };
-
   const updateFilters = (values) => {
-    if (values?.agreementContent?.every(validateFilter)) {
-      const filterStrings = values?.agreementContent.map((filter) => {
-        const contentStrings = filter?.content?.map((content) => {
-          return `${content?.value} ${filter?.attribute}`;
-        });
-        return `${filter?.grouping || ''}(` + contentStrings?.join('||') + ')';
-      });
-      filterHandlers.state({
-        ...activeFilters,
-        agreementContent: [filterStrings.join('')],
-      });
-    }
+    const kiwtQueryFilterShape = values?.agreementContent?.reduce((acc, curr) => {
+      let newAcc = [];
+      // Rebuild to shape expected by deparseKiwtQueryFilters
+      if (!curr.content || !curr.attribute) {
+        return acc;
+      }
+
+      // First glue in any boolean logic
+      if (curr.grouping) {
+        newAcc = [...acc, curr.grouping];
+      }
+
+      // Then translate group into filters
+      newAcc = [
+        ...newAcc,
+        curr.content.reduce((a, c, i) => {
+          return [
+            ...a,
+            i !== 0 ? '||' : null, // Don't group on first entry
+            {
+              path: c.value,
+              comparator: curr.attribute
+            }
+          ].filter(Boolean);
+        }, [])
+      ];
+
+      return newAcc;
+    }, []);
+
+    filterHandlers.state({
+      ...activeFilters,
+      agreementContent: [deparseKiwtQueryFilters(kiwtQueryFilterShape)],
+    });
   };
 
   return (
