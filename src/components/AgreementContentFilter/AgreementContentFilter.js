@@ -15,6 +15,8 @@ import {
   Col,
 } from '@folio/stripes/components';
 
+import { parseKiwtQueryFilters } from '@k-int/stripes-kint-components';
+
 import { useAgreementContentOptions } from '../../hooks';
 
 const AgreementContentFieldArray = ({ handleSubmit }) => {
@@ -135,54 +137,31 @@ const AgreementContentFilter = ({
   };
 
   // Used to parse filters back from query string
-  // FIXME This can almost certainly do with some tidying up
   const parseQueryString = (filterArray) => {
-    const filters = [];
-    const isNotEmptyRegexp = /(?: isNotEmpty\|\|)|(?: isNotEmpty)/g;
-    const isEmptyRegexp = /(?: isEmpty\|\|)|(?: isEmpty)/g;
+    // Returns structured filter groups
+    const parsedFilters = parseKiwtQueryFilters(filterArray[0]);
 
-    // Split in subsequent groups based on closing parentheses
-    // (orgs isEmpty)&&(items isNotEmpty) => [(orgs isEmpty), &&(items isNotEmpty)]
-    const filterGroups = filterArray[0]?.match(/.+?([)])/g);
-    filterGroups?.forEach((filter) => {
-      // Split each of the previous array elements into values contained within brackets
-      // &&(items isNotEmpty) => [&&, items isNotEmpty]
-      const splitFilter = filter?.split(/[()]+/).filter((e) => e !== '');
-      // If the array of filters is > 1 then a grouping value must be present
-      if (splitFilter?.length > 1) {
-        filters.push({
-          grouping: splitFilter[0],
-          attribute: splitFilter[1].includes('isEmpty')
-            ? 'isEmpty'
-            : 'isNotEmpty',
-          content: mapContentLabels(
-            splitFilter[1]
-              .split(
-                splitFilter[1].includes('isEmpty')
-                  ? isEmptyRegexp
-                  : isNotEmptyRegexp
-              )
-              .filter((e) => e !== '')
-          ),
-        });
-      // Otherwise its the first filter with no grouping element
-      } else {
-        filters.push({
-          attribute: splitFilter[0].includes('isEmpty')
-            ? 'isEmpty'
-            : 'isNotEmpty',
-          content: mapContentLabels(
-            splitFilter[0]
-              .split(
-                splitFilter[0].includes('isEmpty')
-                  ? isEmptyRegexp
-                  : isNotEmptyRegexp
-              )
-              .filter((e) => e !== '')
-          ),
-        });
+    const filters = parsedFilters.reduce((acc, curr, index) => {
+      if (index === 0) {
+        // Special case for the first one
+        return [...acc, {
+          // All filters in each group should have the same comparator by design
+          attribute: curr[0]?.comparator,
+          content: mapContentLabels(curr.filter(c => typeof c !== 'string')?.map(c => c.path))
+        }];
+      } else if (index % 2 === 0) { // Even indices are the groups
+        return [...acc, {
+          grouping: parsedFilters[index - 1],
+          // All filters in each group should have the same comparator by design
+          attribute: curr[0]?.comparator,
+          content: mapContentLabels(curr.filter(c => typeof c !== 'string')?.map(c => c.path))
+        }];
       }
-    });
+
+      // For odd indicies, keep acc as it is
+      return acc;
+    }, []);
+
     return filters;
   };
 
