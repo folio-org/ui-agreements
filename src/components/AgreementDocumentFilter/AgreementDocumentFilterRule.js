@@ -57,43 +57,43 @@ const AgreementDocumentFilterRule = ({
       label: intl.formatMessage({
         id: 'stripes-erm-components.doc.name',
       }),
-      value: 'name',
+      value: 'supplementaryDocs.name',
     },
     {
       label: intl.formatMessage({
         id: 'stripes-erm-components.doc.note',
       }),
-      value: 'note',
+      value: 'supplementaryDocs.note',
     },
     {
       label: intl.formatMessage({
         id: 'stripes-erm-components.doc.type',
       }),
-      value: 'type',
+      value: 'supplementaryDocs.atType.value',
     },
     {
       label: intl.formatMessage({
         id: 'stripes-erm-components.doc.location',
       }),
-      value: 'location',
+      value: 'supplementaryDocs.location',
     },
     {
       label: intl.formatMessage({
         id: 'stripes-erm-components.doc.url',
       }),
-      value: 'url',
+      value: 'supplementaryDocs.url',
     },
     {
       label: intl.formatMessage({
         id: 'ui-agreements.eresources.contentType',
       }),
-      value: 'contentType',
+      value: 'supplementaryDocs.fileUpload.contentType',
     },
     {
       label: intl.formatMessage({
         id: 'stripes-erm-components.fuf.filename',
       }),
-      value: 'fileName',
+      value: 'supplementaryDocs.fileUpload.name',
     },
   ];
 
@@ -105,7 +105,7 @@ const AgreementDocumentFilterRule = ({
         </Layout>
       </Col>
       <Col xs={3}>
-        <Field name={`${name}.attribute`} validate={requiredValidator}>
+        <Field name={`${name}.path`} validate={requiredValidator}>
           {({ input, meta }) => (
             <Select
               {...input}
@@ -118,13 +118,13 @@ const AgreementDocumentFilterRule = ({
         </Field>
       </Col>
       <Col xs={3}>
-        <Field name={`${name}.operator`} validate={requiredValidator}>
+        <Field name={`${name}.comparator`} validate={requiredValidator}>
           {({ input, meta }) => (
             <Select
               {...input}
               aria-labelledby={`${ariaLabelledby}-rule-column-header-comparator`}
               dataOptions={
-                value?.attribute === 'type'
+                value?.path === 'type'
                   ? [
                     { labe: '', value: '' },
                     {
@@ -152,12 +152,12 @@ const AgreementDocumentFilterRule = ({
         <Field name={`${name}.value`} validate={requiredValidator}>
           {({ input, meta }) => (
             <>
-              {value?.attribute === 'type' ? (
+              {value?.path === 'supplementaryDocs.atType.value' ? (
                 <Select
                   {...input}
                   aria-labelledby={`${ariaLabelledby}-rule-column-header-value`}
                   dataOptions={[{ label: '', value: '' }, ...atTypeValues]}
-                  disabled={!value?.attribute}
+                  disabled={!value?.path}
                   error={meta?.touched && meta?.error}
                   required
                 />
@@ -165,7 +165,7 @@ const AgreementDocumentFilterRule = ({
                 <TextField
                   {...input}
                   aria-labelledby={`${ariaLabelledby}-rule-column-header-value`}
-                  disabled={!value?.attribute}
+                  disabled={!value?.path}
                   required
                 />
               )}

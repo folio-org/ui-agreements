@@ -5,7 +5,7 @@ import { FieldArray } from 'react-final-form-arrays';
 import { FormattedMessage } from 'react-intl';
 import AgreementDocumentFilterRule from './AgreementDocumentFilterRule';
 
-const AgreementDocumentFilterField = ({ index, name, fields }) => {
+const AgreementDocumentFilterField = ({ index, name }) => {
   const {
     mutators: { push },
   } = useForm();
@@ -57,7 +57,6 @@ const AgreementDocumentFilterField = ({ index, name, fields }) => {
 };
 
 AgreementDocumentFilterField.propTypes = {
-  fields: PropTypes.arrayOf(PropTypes.object),
   index: PropTypes.string,
   name: PropTypes.string,
 };
