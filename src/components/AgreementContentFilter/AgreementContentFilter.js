@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { Form, Field, useForm, useFormState } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { FieldArray } from 'react-final-form-arrays';
@@ -25,8 +26,11 @@ import { useAgreementContentOptions } from '../../hooks';
 const AgreementContentFieldArray = ({ handleSubmit }) => {
   const intl = useIntl();
   const agreementContentOptions = useAgreementContentOptions();
+
   const { values } = useFormState();
   const { change } = useForm();
+
+  const [open, setOpen] = useState(false);
 
   return (
     <FieldArray name="agreementContent">
@@ -84,7 +88,8 @@ const AgreementContentFieldArray = ({ handleSubmit }) => {
                     <Col>
                       <IconButton
                         icon="times-circle-solid"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           fields.remove(index);
                           handleSubmit();
                         }}
@@ -99,17 +104,25 @@ const AgreementContentFieldArray = ({ handleSubmit }) => {
             label={
               <FormattedMessage id="ui-agreements.agreementContent.filter.addFilter" />
             }
+            onToggle={() => setOpen(!open)}
+            open={open}
           >
             <DropdownMenu>
               <Button
                 buttonStyle="dropdownItem"
-                onClick={() => fields.push({ grouping: '&&' })}
+                onClick={() => {
+                  fields.push({ grouping: '&&' });
+                  setOpen(false);
+                }}
               >
                 <FormattedMessage id="ui-agreements.AND" />
               </Button>
               <Button
                 buttonStyle="dropdownItem"
-                onClick={() => fields.push({ grouping: '||' })}
+                onClick={() => {
+                  fields.push({ grouping: '||' });
+                  setOpen(false);
+                }}
               >
                 <FormattedMessage id="ui-agreements.OR" />
               </Button>
@@ -144,7 +157,6 @@ const AgreementContentFilter = ({
   const parseQueryString = (filterArray) => {
     // Returns structured filter groups
     const parsedFilters = parseKiwtQueryFilters(filterArray[0]);
-
     const filters = parsedFilters.reduce((acc, curr, index) => {
       if (index === 0) {
         // Special case for the first one
