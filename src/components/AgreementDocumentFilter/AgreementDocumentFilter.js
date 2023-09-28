@@ -25,7 +25,7 @@ const AgreementDocumentFilter = ({ activeFilters, filterHandlers }) => {
       const parsedFilters = parseKiwtQueryFilters(filterArray?.[0]);
       const filters = parsedFilters.reduce((acc, curr) => {
         if (typeof curr === 'string') {
-          return [{ rules: acc }];
+          return [...acc];
         }
         return [...acc, { rules: curr.filter((e) => typeof e !== 'string') }];
       }, []);

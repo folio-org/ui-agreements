@@ -32,21 +32,15 @@ const AgreementDocumentFilterRule = ({
   const operators = [
     { label: '', value: '' },
     {
-      label: intl.formatMessage({
-        id: 'ui-agreements.operator.is',
-      }),
+      label: intl.formatMessage({ id: 'ui-agreements.operator.is' }),
       value: '==',
     },
     {
-      label: intl.formatMessage({
-        id: 'ui-agreements.operator.contains',
-      }),
+      label: intl.formatMessage({ id: 'ui-agreements.operator.contains' }),
       value: '=~',
     },
     {
-      label: intl.formatMessage({
-        id: 'ui-agreements.operator.doesNotContain',
-      }),
+      label: intl.formatMessage({ id: 'ui-agreements.operator.doesNotContain' }),
       value: '!~',
     },
   ];
@@ -54,45 +48,31 @@ const AgreementDocumentFilterRule = ({
   const attributes = [
     { label: '', value: '' },
     {
-      label: intl.formatMessage({
-        id: 'stripes-erm-components.doc.name',
-      }),
+      label: intl.formatMessage({ id: 'stripes-erm-components.doc.name' }),
       value: 'supplementaryDocs.name',
     },
     {
-      label: intl.formatMessage({
-        id: 'stripes-erm-components.doc.note',
-      }),
+      label: intl.formatMessage({ id: 'stripes-erm-components.doc.note' }),
       value: 'supplementaryDocs.note',
     },
     {
-      label: intl.formatMessage({
-        id: 'stripes-erm-components.doc.type',
-      }),
+      label: intl.formatMessage({ id: 'stripes-erm-components.doc.type' }),
       value: 'supplementaryDocs.atType.value',
     },
     {
-      label: intl.formatMessage({
-        id: 'stripes-erm-components.doc.location',
-      }),
+      label: intl.formatMessage({ id: 'stripes-erm-components.doc.location' }),
       value: 'supplementaryDocs.location',
     },
     {
-      label: intl.formatMessage({
-        id: 'stripes-erm-components.doc.url',
-      }),
+      label: intl.formatMessage({ id: 'stripes-erm-components.doc.url' }),
       value: 'supplementaryDocs.url',
     },
     {
-      label: intl.formatMessage({
-        id: 'ui-agreements.eresources.contentType',
-      }),
+      label: intl.formatMessage({ id: 'ui-agreements.eresources.contentType' }),
       value: 'supplementaryDocs.fileUpload.contentType',
     },
     {
-      label: intl.formatMessage({
-        id: 'stripes-erm-components.fuf.filename',
-      }),
+      label: intl.formatMessage({ id: 'stripes-erm-components.fuf.filename' }),
       value: 'supplementaryDocs.fileUpload.name',
     },
   ];
@@ -124,7 +104,7 @@ const AgreementDocumentFilterRule = ({
               {...input}
               aria-labelledby={`${ariaLabelledby}-rule-column-header-comparator`}
               dataOptions={
-                value?.path === 'type'
+                value?.path === 'supplementaryDocs.atType.value'
                   ? [
                     { labe: '', value: '' },
                     {
