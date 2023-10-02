@@ -41,7 +41,8 @@ import {
 } from '../../AgreementSections';
 
 import IfAccordionIsVisible from '../../IfAccordionIsVisible';
-import { CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
+
+import { CUSTPROP_ENDPOINT } from '../../../constants';
 import { useAgreementsContexts } from '../../../hooks';
 
 const AgreementForm = ({

@@ -10,9 +10,14 @@ import PCIForm from '../../components/views/PCIForm';
 import TitleForm from '../../components/views/TitleForm';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { resourceClasses } from '../../constants';
+
+import {
+  ERESOURCE_ENDPOINT,
+  PCI_ENDPOINT,
+  TITLE_ENDPOINT,
+  resourceClasses
+} from '../../constants';
 import { useSuppressFromDiscovery } from '../../hooks';
-import { ERESOURCE_ENDPOINT, PCI_ENDPOINT, TITLE_ENDPOINT } from '../../constants/endpoints';
 
 const EResourceEditRoute = ({
   handlers,
