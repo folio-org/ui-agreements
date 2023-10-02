@@ -300,7 +300,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
   // TODO Uncomment filters
   return (
     <AccordionSet>
-      {/* {renderCheckboxFilter('agreementStatus')}
+      {renderCheckboxFilter('agreementStatus')}
       {renderMultiSelectFilter('reasonForClosure')}
       {renderCheckboxFilter('renewalPriority', { closedByDefault: true })}
       {renderCheckboxFilter('isPerpetual', { closedByDefault: true })}
@@ -313,7 +313,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       {renderInternalContactRoleFilter()}
       {renderCheckboxFilter('agreementContentType', { closedByDefault: true })}
       {renderTagsFilter()}
-      {renderCustomPropertyFilters()} */}
+      {renderCustomPropertyFilters()}
       {renderAgreementDocumentFilter()}
     </AccordionSet>
   );
