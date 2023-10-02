@@ -20,7 +20,7 @@ import {
   Selection,
 } from '@folio/stripes/components';
 
-import { AGREEMENT_ENDPOINT } from '../../../constants/endpoints';
+import { AGREEMENT_ENDPOINT } from '../../../constants';
 
 import { urls } from '../../utilities';
 

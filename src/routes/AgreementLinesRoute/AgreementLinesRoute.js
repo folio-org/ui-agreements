@@ -9,9 +9,9 @@ import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-co
 import View from '../../components/views/AgreementLines';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { resultCount } from '../../constants';
+
+import { AGREEMENT_LINES_ENDPOINT, resultCount } from '../../constants';
 import { useEresourcesEnabled } from '../../hooks';
-import { AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
 
 const {
   RESULT_COUNT_INCREMENT_MEDIUM,

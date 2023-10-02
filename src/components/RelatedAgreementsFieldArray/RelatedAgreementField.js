@@ -18,13 +18,15 @@ import {
 import { AppIcon, Pluggable } from '@folio/stripes/core';
 import useLinkedWarning from './useLinkedWarning';
 
+import { statuses } from '../../constants';
 import { urls } from '../utilities';
 import css from '../styles.css';
 
 const propTypes = {
   agreement: PropTypes.shape({
     agreementStatus: PropTypes.shape({
-      label: PropTypes.string
+      label: PropTypes.string,
+      value: PropTypes.string,
     }),
     endDate: PropTypes.string,
     id: PropTypes.string,
@@ -172,12 +174,13 @@ const RelatedAgreementField = ({
     </Layout>
   );
 
+  const iconKey = agreement?.agreementStatus?.value === statuses.CLOSED ? 'closedAgreement' : 'app';
   return (
     <Card
       cardStyle={input.value ? 'positive' : 'negative'}
       headerEnd={renderLinkAgreementButton(input.value)}
       headerStart={(
-        <AppIcon app="agreements" size="small">
+        <AppIcon app="agreements" iconKey={iconKey} size="small">
           <strong>
             <FormattedMessage id="ui-agreements.agreement" />
           </strong>

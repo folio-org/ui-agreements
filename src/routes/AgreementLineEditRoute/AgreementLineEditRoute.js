@@ -11,11 +11,9 @@ import { LoadingView } from '@folio/stripes/components';
 
 import { useSuppressFromDiscovery, useChunkedOrderLines, useBasket } from '../../hooks';
 import { urls } from '../../components/utilities';
-import { endpoints } from '../../constants';
+import { AGREEMENT_LINE_ENDPOINT } from '../../constants';
 
 import View from '../../components/views/AgreementLineForm';
-
-const { AGREEMENT_LINE_ENDPOINT } = endpoints;
 
 const AgreementLineEditRoute = ({
   handlers,

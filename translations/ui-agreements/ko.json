@@ -751,5 +751,22 @@
     "agreements.addAgreementContentType": "콘텐츠 유형 추가",
     "eresources.proxiedAndCustomizedUrls": "Proxied and customized URLs",
     "eresources.proxiesCustomizers": "Proxies/Customizers",
-    "eresources.url": "URL"
+    "eresources.url": "URL",
+    "agreements.agreementLineCount": "Agreement has {count, number} agreement {count, plural, one {line} other {lines}}",
+    "open.linkInNewTab": "(opens in new tab)",
+    "agreementLineCountHeader": "{count, number} Agreement {count, plural, one {line} other {lines}}",
+    "relationship.inward.supersedes": "is superseded by",
+    "relationship.inward.provides_post-cancellation_access_for": "has post-cancellation access in",
+    "relationship.inward.tracks_demand-driven_acquisitions_for": "has demand-driven acquisitions in",
+    "relationship.inward.has_backfile_in": "has frontfile in",
+    "relationship.inward.related_to": "related to",
+    "relationship.outward.supersedes": "supersedes",
+    "relationship.outward.provides_post-cancellation_access_for": "provides post-cancellation access for",
+    "relationship.outward.tracks_demand-driven_acquisitions_for": "tracks demand-driven acquisitions for",
+    "relationship.outward.has_backfile_in": "has backfile in",
+    "relationship.outward.related_to": "related to",
+    "titles.name": "Name",
+    "titles.identifiers": "Identifiers",
+    "titles.alternateResourceName": "Alternative name",
+    "titles.description": "Description"
 }
