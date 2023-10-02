@@ -12,7 +12,6 @@ import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
   getRefdataValuesByDesc,
   usePrevNextPagination,
-  useSASQQIndex,
   useTags
 } from '@folio/stripes-erm-components';
 
@@ -21,7 +20,6 @@ import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 
 import {
-  defaultPackagesQIndex as defaultQIndex,
   PACKAGES_ENDPOINT,
   resourceClasses,
   resultCount
@@ -74,12 +72,11 @@ const PackagesRoute = ({
 
 
   const { currentPage } = usePrevNextPagination();
-  const { searchKey } = useSASQQIndex({ defaultQIndex });
 
 
   const packagesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
-      searchKey,
+      searchKey: 'name,identifiers.identifier.value,alternateResourceNames.name,description',
       filterConfig: [{
         name: 'class',
         values: [
@@ -98,7 +95,7 @@ const PackagesRoute = ({
       page: currentPage,
       perPage: RESULT_COUNT_INCREMENT
     }, (query ?? {}))
-  ), [currentPage, query, searchKey]);
+  ), [currentPage, query]);
 
 
   const {

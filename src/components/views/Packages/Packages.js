@@ -25,7 +25,6 @@ import {
 import {
   useHandleSubmitSearch,
   usePrevNextPagination,
-  useSASQQIndex
 } from '@folio/stripes-erm-components';
 
 import EResourceProvider from '../../EResourceProvider';
@@ -88,11 +87,6 @@ const Packages = ({
     pageSize: RESULT_COUNT_INCREMENT_MEDIUM
   });
 
-  const {
-    qIndexChanged,
-    qIndexSASQProps
-  } = useSASQQIndex();
-
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
   const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
@@ -105,9 +99,9 @@ const Packages = ({
   return (
     <div data-testid="packages">
       <SearchAndSortQuery
-        {...qIndexSASQProps}
         {...paginationSASQProps}
         initialFilterState={{}}
+        initialSearchState={{ query: '' }}
         initialSortState={{ sort: 'name' }}
         queryGetter={queryGetter}
         querySetter={querySetter}
