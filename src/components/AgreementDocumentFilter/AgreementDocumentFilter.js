@@ -21,8 +21,27 @@ const AgreementDocumentFilter = ({ activeFilters, filterHandlers }) => {
 
   // Due to how filters are handled within SearchAndSortQuery the filter string needs to be parsed back into a usual object
   const parseQueryString = (filterArray) => {
-    if (filterArray) {
+    if (filterArray?.length) {
+      // Since the filters are grouped, the docuements filterstring will be within the first array element
       const parsedFilters = parseKiwtQueryFilters(filterArray?.[0]);
+
+      // This reduce function removes all array elements that contain solely comparators so the initial value shape is returned
+      // ---
+      // Before parsing:
+      // [
+      //   [{ path, comparator, value }],
+      //   '||',
+      //   [{ path, comparator, value }, '||', { path, comparator, value }],
+      // ];
+      // ---
+      // After: parsing
+      // [
+      //   [{ path, comparator, value }],
+      //   [
+      //     { path, comparator, value },
+      //     { path, comparator, value },
+      //   ],
+      // ];
       const filters = parsedFilters.reduce((acc, curr) => {
         if (typeof curr === 'string') {
           return [...acc];
@@ -34,9 +53,12 @@ const AgreementDocumentFilter = ({ activeFilters, filterHandlers }) => {
     return [];
   };
 
-  const parsedFilterData = parseQueryString(activeFilters?.documents || null);
+  const parsedFilterData = parseQueryString(activeFilters?.documents || []);
 
   const handleSubmit = (values) => {
+    // In order to convert the form values into the shape for them to be deparsed we do the inverse of the above
+    // Adding a || operator between all elements of the filters array and a && operator between all elements of the nested arrays
+    // With special logic to ensure that operators are not added infront of the first elements of any arrays, to ensure no grouping errors
     const kiwtQueryShape = values?.filters?.reduce((acc, curr, index) => {
       let newAcc = [...acc];
 
@@ -61,6 +83,8 @@ const AgreementDocumentFilter = ({ activeFilters, filterHandlers }) => {
     filterHandlers.state({
       ...activeFilters,
       documents: [
+        // Currently the deparse function returns a query string containing whitespace which leads to grouping errors
+        // This regex removes all whitespace from the querystring
         deparseKiwtQueryFilters(kiwtQueryShape).replaceAll(/\s/g, ''),
       ],
     });
@@ -69,7 +93,7 @@ const AgreementDocumentFilter = ({ activeFilters, filterHandlers }) => {
 
   return (
     <Accordion
-      displayClearButton={parsedFilterData?.length}
+      displayClearButton={!!parsedFilterData?.length}
       header={FilterAccordionHeader}
       id="clickable-agreement-document-filter"
       label={<FormattedMessage id="ui-agreements.documentFilter.documents" />}
@@ -80,7 +104,7 @@ const AgreementDocumentFilter = ({ activeFilters, filterHandlers }) => {
       {!!parsedFilterData?.length && (
         <Layout className="padding-bottom-gutter">
           <FormattedMessage
-            id="ui-agreements.documentFilter.documents"
+            id="ui-agreements.documentFilter.filtersApplied"
             values={{ filtersLength: parsedFilterData?.length }}
           />
         </Layout>
