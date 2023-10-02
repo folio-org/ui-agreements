@@ -157,7 +157,6 @@ const Packages = ({
                             />
                           )}
                         </FormattedMessage>
-                        {/* The options here reflect the constant defaultQIndex */}
                         <Button
                           buttonStyle="primary"
                           disabled={!searchValue.query || searchValue.query === ''}
