@@ -13,7 +13,6 @@ export * from './endpoints';
 
 export {
   defaultAgreementsQIndex,
-  defaultPackagesQIndex,
   defaultTitlesQIndex
 } from './defaultQIndex';
 

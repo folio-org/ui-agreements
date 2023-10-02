@@ -118,7 +118,7 @@ const Packages = ({
             searchChanged,
             resetAll,
           }) => {
-            const disableReset = () => (!filterChanged && !searchChanged && !qIndexChanged);
+            const disableReset = () => (!filterChanged && !searchChanged);
             const filterCount = activeFilters.string ? activeFilters.string.split(',').length : 0;
 
             return (
