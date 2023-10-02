@@ -7,6 +7,7 @@
 * ERM-2624 Add view only permissions for Agreement settings
 * STRIPES-870 BREAKING upgrade react to v18
   * ERM-2991 Upgrade ui-agreements React to v18
+* ERM-2983 Added documents filter to Agreements search and sort
 ## 9.0.0 2023-02-22
 * ERM-2613 Remove unneeded `react-redux`. Upgrade `stripes-acq-components` to `v4`
 * ERM-2596 Increment ui-agreements to Stripes v8
