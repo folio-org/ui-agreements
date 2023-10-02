@@ -69,11 +69,11 @@ const AgreementDocumentFilterRule = ({
     },
     {
       label: intl.formatMessage({ id: 'ui-agreements.eresources.contentType' }),
-      value: 'supplementaryDocs.fileUpload.contentType',
+      value: 'supplementaryDocs.fileUpload.fileContentType',
     },
     {
       label: intl.formatMessage({ id: 'stripes-erm-components.fuf.filename' }),
-      value: 'supplementaryDocs.fileUpload.name',
+      value: 'supplementaryDocs.fileUpload.fileName',
     },
   ];
 
@@ -106,7 +106,7 @@ const AgreementDocumentFilterRule = ({
               dataOptions={
                 value?.path === 'supplementaryDocs.atType.value'
                   ? [
-                    { labe: '', value: '' },
+                    { label: '', value: '' },
                     {
                       label: intl.formatMessage({
                         id: 'ui-agreements.operator.is',
