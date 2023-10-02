@@ -38,7 +38,7 @@ const AgreementContentFieldArray = ({ handleSubmit }) => {
         <>
           {fields?.map((filter, index) => {
             return (
-              <>
+              <div key={index}>
                 {values?.agreementContent[index]?.grouping === '&&' && (
                   <Label>
                     <FormattedMessage id="ui-agreements.AND" />
@@ -97,7 +97,7 @@ const AgreementContentFieldArray = ({ handleSubmit }) => {
                     </Col>
                   )}
                 </Row>
-              </>
+              </div>
             );
           })}
           <Dropdown
@@ -271,8 +271,8 @@ AgreementContentFieldArray.propTypes = {
 
 AgreementContentFilter.propTypes = {
   agreementContentFilters: PropTypes.arrayOf(PropTypes.object),
-  filterHandlers: PropTypes.arrayOf(PropTypes.object),
-  activeFilters: PropTypes.arrayOf(PropTypes.object),
+  filterHandlers: PropTypes.object,
+  activeFilters: PropTypes.object,
 };
 
 export default AgreementContentFilter;
