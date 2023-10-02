@@ -768,5 +768,9 @@
   "titles.name": "Name",
   "titles.identifiers": "Identifiers",
   "titles.alternateResourceName": "Alternative name",
-  "titles.description": "Description"
+  "titles.description": "Description",
+  "packages.name": "Name",
+  "packages.identifiers": "Identifiers",
+  "packages.alternateResourceName": "Alternative name",
+  "packages.description": "Description"
 }
