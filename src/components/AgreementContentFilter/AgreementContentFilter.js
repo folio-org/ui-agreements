@@ -68,6 +68,7 @@ const AgreementContentFieldArray = ({ handleSubmit }) => {
                           }),
                         },
                       ]}
+                      id={`${filter}-attribute-select`}
                       name={`${filter}.attribute`}
                       onChange={(e) => {
                         change(`${filter}.attribute`, e?.target?.value);
@@ -77,6 +78,7 @@ const AgreementContentFieldArray = ({ handleSubmit }) => {
                     <Field
                       component={MultiSelection}
                       dataOptions={agreementContentOptions}
+                      id={`${filter}-content-multi-select`}
                       name={`${filter}.content`}
                       onChange={(e) => {
                         change(`${filter}.content`, e);
