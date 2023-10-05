@@ -8,6 +8,7 @@ export { default as validationEndPoint } from './validationEndPoint';
 export { default as defaultMclPageSize } from './defaultMclPageSize';
 export { default as hiddenAccordions } from './hiddenAccordions';
 export { default as httpStatuses } from './httpStatuses';
+export { default as agreementContentOptions } from './agreementContentOptions';
 
 export * from './endpoints';
 

@@ -21,11 +21,13 @@ import {
   parseKiwtQueryFilters,
 } from '@k-int/stripes-kint-components';
 
-import { useAgreementContentOptions } from '../../hooks';
+import { agreementContentOptions } from '../../constants';
 
 const AgreementContentFieldArray = ({ handleSubmit }) => {
   const intl = useIntl();
-  const agreementContentOptions = useAgreementContentOptions();
+  const translatedContentOptions = agreementContentOptions.map((e) => {
+    return { value: e?.value, label: intl.formatMessage({ id: e?.id }) };
+  });
 
   const { values } = useFormState();
   const { change } = useForm();
@@ -77,7 +79,7 @@ const AgreementContentFieldArray = ({ handleSubmit }) => {
                     />
                     <Field
                       component={MultiSelection}
-                      dataOptions={agreementContentOptions}
+                      dataOptions={translatedContentOptions}
                       id={`${filter}-content-multi-select`}
                       name={`${filter}.content`}
                       onChange={(e) => {
@@ -141,14 +143,16 @@ const AgreementContentFilter = ({
   filterHandlers,
   activeFilters,
 }) => {
-  const agreementContentOptions = useAgreementContentOptions();
-
+  const intl = useIntl();
+  const translatedContentOptions = agreementContentOptions.map((e) => {
+    return { value: e?.value, label: intl.formatMessage({ id: e?.id }) };
+  });
   // Used to map labels to content values for use within the multiselection
   const mapContentLabels = (contentArray) => {
     return contentArray.map((content) => {
       return {
         value: content,
-        label: agreementContentOptions?.find((e) => e?.value === content)
+        label: translatedContentOptions?.find((e) => e?.value === content)
           ?.label,
       };
     });
