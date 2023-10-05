@@ -12,9 +12,8 @@ import {
 } from '@folio/stripes/components';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
-import { requiredValidator } from '@folio/stripes-erm-components';
+import { requiredValidator, selectifyRefdata } from '@folio/stripes-erm-components';
 import { useAgreementsRefdata } from '../../hooks';
-import { selectifyRefdata } from '../utilities';
 
 const AgreementDocumentFilterRule = ({
   ariaLabelledby,
