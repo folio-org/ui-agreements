@@ -76,6 +76,14 @@ describe('AgreementFilters', () => {
     await Accordion('Tags').exists();
   });
 
+  test('renders the Agreement content Accordion', async () => {
+    await Accordion('Agreement content').exists();
+  });
+
+  test('renders the Documents Accordion', async () => {
+    await Accordion('Documents').exists();
+  });
+
   test('renders the CustomPropertiesFilter component', () => {
     const { getByText } = renderComponent;
     expect(getByText('CustomPropertiesFilter')).toBeInTheDocument();
