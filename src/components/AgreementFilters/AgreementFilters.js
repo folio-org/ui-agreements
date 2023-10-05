@@ -297,7 +297,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       filterHandlers={filterHandlers}
     />;
   };
-  // TODO Uncomment filters
+
   return (
     <AccordionSet>
       {renderCheckboxFilter('agreementStatus')}
