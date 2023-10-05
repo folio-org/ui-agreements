@@ -118,7 +118,7 @@ const AgreementsRoute = ({ children, history, location, match }) => {
       return ky.get(`${AGREEMENTS_ENDPOINT}?${params?.join('&')}`).json();
     },
     {
-      enabled: (!!query?.filters || !!query?.query) && !!currentPage,
+      enabled: !!currentPage,
     }
   );
 
