@@ -55,7 +55,6 @@ const propTypes = {
     tagsValues: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
   history: PropTypes.object,
-  page: PropTypes.func.number,
   queryGetter: PropTypes.func.isRequired,
   querySetter: PropTypes.func.isRequired,
   searchField: PropTypes.object,
