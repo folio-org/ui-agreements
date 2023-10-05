@@ -1,26 +1,33 @@
 import { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
+import {
+  generateKiwtQueryParams,
+  useKiwtSASQuery,
+} from '@k-int/stripes-kint-components';
+
+import { useQuery } from 'react-query';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
   getRefdataValuesByDesc,
   useTags,
-  useInfiniteFetch,
-  useSASQQIndex
+  useSASQQIndex,
+  usePrevNextPagination,
 } from '@folio/stripes-erm-components';
 
 import View from '../../components/views/Agreements';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 
-import { AGREEMENTS_ENDPOINT, defaultAgreementsQIndex as defaultQIndex, resultCount } from '../../constants';
+import {
+  AGREEMENTS_ENDPOINT,
+  defaultAgreementsQIndex as defaultQIndex,
+  resultCount,
+} from '../../constants';
 import { useAgreementsRefdata } from '../../hooks';
 
-const {
-  RESULT_COUNT_INCREMENT_MEDIUM,
-} = resultCount;
+const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
 const [
   AGREEMENT_STATUS,
@@ -29,7 +36,7 @@ const [
   IS_PERPETUAL,
   CONTACT_ROLE,
   ORG_ROLE,
-  AGREEMENT_CONTENT_TYPE
+  AGREEMENT_CONTENT_TYPE,
 ] = [
   'SubscriptionAgreement.AgreementStatus',
   'SubscriptionAgreement.ReasonForClosure',
@@ -37,15 +44,10 @@ const [
   'Global.Yes_No',
   'InternalContact.Role',
   'SubscriptionAgreementOrg.Role',
-  'SubscriptionAgreement.ContentType'
+  'SubscriptionAgreement.ContentType',
 ];
 
-const AgreementsRoute = ({
-  children,
-  history,
-  location,
-  match,
-}) => {
+const AgreementsRoute = ({ children, history, location, match }) => {
   const ky = useOkapiKy();
   const stripes = useStripes();
   const hasPerms = stripes.hasPerm('ui-agreements.agreements.view');
@@ -59,12 +61,14 @@ const AgreementsRoute = ({
       IS_PERPETUAL,
       CONTACT_ROLE,
       ORG_ROLE,
-      AGREEMENT_CONTENT_TYPE
-    ]
+      AGREEMENT_CONTENT_TYPE,
+    ],
   });
 
   const { data: { tags = [] } = {} } = useTags();
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
+
+  const { currentPage } = usePrevNextPagination();
 
   useEffect(() => {
     if (searchField.current) {
@@ -74,43 +78,47 @@ const AgreementsRoute = ({
 
   const { searchKey } = useSASQQIndex({ defaultQIndex });
 
-  const agreementsQueryParams = useMemo(() => (
-    generateKiwtQueryParams({
-      /* There were problems with using truthiness ?? on an empty string '' */
-      searchKey,
-      filterKeys: {
-        agreementContentType: 'agreementContentTypes.contentType.value',
-        agreementStatus: 'agreementStatus.value',
-        contacts: 'contacts.user',
-        contactRole: 'contacts.role',
-        isPerpetual: 'isPerpetual.value',
-        orgs: 'orgs.org',
-        reasonForClosure: 'reasonForClosure.value',
-        renewalPriority: 'renewalPriority.value',
-        role: 'orgs.roles.role',
-        tags: 'tags.value',
+  const agreementsQueryParams = useMemo(
+    () => generateKiwtQueryParams(
+      {
+        /* There were problems with using truthiness ?? on an empty string '' */
+        searchKey,
+        filterKeys: {
+          agreementContentType: 'agreementContentTypes.contentType.value',
+          agreementStatus: 'agreementStatus.value',
+          contacts: 'contacts.user',
+          contactRole: 'contacts.role',
+          isPerpetual: 'isPerpetual.value',
+          orgs: 'orgs.org',
+          reasonForClosure: 'reasonForClosure.value',
+          renewalPriority: 'renewalPriority.value',
+          role: 'orgs.roles.role',
+          tags: 'tags.value',
+        },
+        sortKeys: {
+          agreementStatus: 'agreementStatus.label',
+        },
+        page: currentPage,
+        perPage: RESULT_COUNT_INCREMENT_MEDIUM,
       },
-      sortKeys: {
-        agreementStatus: 'agreementStatus.label',
-      },
-      perPage: RESULT_COUNT_INCREMENT_MEDIUM
-    }, (query ?? {}))
-  ), [query, searchKey]);
+      query ?? {}
+    ),
+    [query, searchKey, currentPage]
+  );
 
   const {
-    infiniteQueryObject: {
-      error: agreementsError,
-      fetchNextPage: fetchNextAgreementPage,
-      isLoading: areAgreementsLoading,
-      isError: isAgreementsError
-    },
-    results: agreements = [],
-    total: agreementsCount = 0
-  } = useInfiniteFetch(
+    data: { results: agreements = [], totalRecords: agreementsCount = 0 } = {},
+    error: agreementsError,
+    isLoading: areAgreementsLoading,
+    isError: isAgreementsError,
+  } = useQuery(
     ['ERM', 'Agreements', agreementsQueryParams, AGREEMENTS_ENDPOINT],
-    ({ pageParam = 0 }) => {
-      const params = [...agreementsQueryParams, `offset=${pageParam}`];
+    () => {
+      const params = [...agreementsQueryParams];
       return ky.get(`${AGREEMENTS_ENDPOINT}?${params?.join('&')}`).json();
+    },
+    {
+      enabled: !!currentPage,
     }
   );
 
@@ -126,28 +134,40 @@ const AgreementsRoute = ({
     <View
       data={{
         agreements,
-        agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
-        reasonForClosureValues: getRefdataValuesByDesc(refdata, REASON_FOR_CLOSURE),
-        renewalPriorityValues: getRefdataValuesByDesc(refdata, RENEWAL_PRIORITY),
+        agreementStatusValues: getRefdataValuesByDesc(
+          refdata,
+          AGREEMENT_STATUS
+        ),
+        reasonForClosureValues: getRefdataValuesByDesc(
+          refdata,
+          REASON_FOR_CLOSURE
+        ),
+        renewalPriorityValues: getRefdataValuesByDesc(
+          refdata,
+          RENEWAL_PRIORITY
+        ),
         isPerpetualValues: getRefdataValuesByDesc(refdata, IS_PERPETUAL),
         contactRoleValues: getRefdataValuesByDesc(refdata, CONTACT_ROLE),
         orgRoleValues: getRefdataValuesByDesc(refdata, ORG_ROLE),
-        agreementContentTypeValues: getRefdataValuesByDesc(refdata, AGREEMENT_CONTENT_TYPE),
+        agreementContentTypeValues: getRefdataValuesByDesc(
+          refdata,
+          AGREEMENT_CONTENT_TYPE
+        ),
         tagsValues: tags,
       }}
       history={history}
-      onNeedMoreData={(_askAmount, index) => fetchNextAgreementPage({ pageParam: index })}
       queryGetter={queryGetter}
       querySetter={querySetter}
       searchField={searchField}
       searchString={location.search}
       selectedRecordId={match.params.id}
-      source={{ // Fake source from useQuery return values;
+      source={{
+        // Fake source from useQuery return values;
         totalCount: () => agreementsCount,
         loaded: () => !areAgreementsLoading,
         pending: () => areAgreementsLoading,
         failure: () => isAgreementsError,
-        failureMessage: () => agreementsError.message
+        failureMessage: () => agreementsError.message,
       }}
     >
       {children}
