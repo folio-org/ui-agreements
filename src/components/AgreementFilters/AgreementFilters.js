@@ -13,6 +13,8 @@ import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
 import { CUSTPROP_ENDPOINT } from '../../constants';
 
+import AgreementDocumentFilter from '../AgreementDocumentFilter';
+
 const propTypes = {
   activeFilters: PropTypes.object,
   data: PropTypes.object.isRequired,
@@ -289,6 +291,13 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
     />;
   };
 
+  const renderAgreementDocumentFilter = () => {
+    return <AgreementDocumentFilter
+      activeFilters={activeFilters}
+      filterHandlers={filterHandlers}
+    />;
+  };
+
   return (
     <AccordionSet>
       {renderCheckboxFilter('agreementStatus')}
@@ -305,6 +314,7 @@ export default function AgreementFilters({ activeFilters, data, filterHandlers }
       {renderCheckboxFilter('agreementContentType', { closedByDefault: true })}
       {renderTagsFilter()}
       {renderCustomPropertyFilters()}
+      {renderAgreementDocumentFilter()}
     </AccordionSet>
   );
 }

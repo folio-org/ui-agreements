@@ -7,6 +7,7 @@
 * ERM-2624 Add view only permissions for Agreement settings
 * STRIPES-870 BREAKING upgrade react to v18
   * ERM-2991 Upgrade ui-agreements React to v18
+* ERM-2983 Added documents filter to Agreements search and sort
 * ERM-3012 Agreement relationship type translations don't show in Agreements UI
 * ERM-3027 *BREAKING* bump `react-intl` to `v6.4.4`
 
