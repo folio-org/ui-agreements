@@ -23,7 +23,7 @@ import {
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
 
-import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
+import { useHandleSubmitSearch, usePrevNextPagination } from '@folio/stripes-erm-components';
 
 import AgreementLineFilters from '../../AgreementLineFilters';
 import { AGREEMENTS_TAB_FILTER_PANE, AGREEMENTS_TAB_PANESET, AGREEMENTS_TAB_PANE_ID, resultCount } from '../../../constants';
@@ -38,7 +38,6 @@ const propTypes = {
     tagsValues: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
   history: PropTypes.object,
-  onNeedMoreData: PropTypes.func.isRequired,
   queryGetter: PropTypes.func.isRequired,
   querySetter: PropTypes.func.isRequired,
   searchField: PropTypes.object,
@@ -52,12 +51,12 @@ const propTypes = {
 };
 
 const filterPaneVisibilityKey = '@folio/agreements/agreementLinesFilterPaneVisibility';
+const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
 const AgreementLines = ({
   children,
   data = {},
   history,
-  onNeedMoreData,
   searchField,
   queryGetter,
   querySetter,
@@ -68,6 +67,11 @@ const AgreementLines = ({
   const count = source?.totalCount() ?? 0;
   const query = queryGetter() ?? {};
   const sortOrder = query.sort ?? '';
+
+  const { paginationMCLProps, paginationSASQProps } = usePrevNextPagination({
+    count,
+    pageSize: RESULT_COUNT_INCREMENT_MEDIUM,
+  });
 
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
@@ -81,6 +85,7 @@ const AgreementLines = ({
   return (
     <div data-testid="agreementLines">
       <SearchAndSortQuery
+        {...paginationSASQProps}
         initialFilterState={{}}
         initialSearchState={{ query: '' }}
         initialSortState={{ sort: 'name' }}
@@ -255,12 +260,12 @@ const AgreementLines = ({
                       }
                       isSelected={({ item }) => item.id === selectedRecordId}
                       onHeaderClick={onSort}
-                      onNeedMoreData={onNeedMoreData}
                       onRowClick={(_e, row) => {
                         history.push(`${urls.agreementLineNativeView(row.owner.id, row.id)}${searchString}`);
                       }}
                       pageAmount={resultCount.RESULT_COUNT_INCREMENT}
                       pagingType="click"
+                      {...paginationMCLProps}
                       rowProps={{
                         labelStrings: ({ rowData }) => ([rowData.name]),
                       }}
