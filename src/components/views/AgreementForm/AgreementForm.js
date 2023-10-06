@@ -211,8 +211,7 @@ const AgreementForm = ({
 
 AgreementForm.propTypes = {
   data: PropTypes.shape({
-    agreementLines: PropTypes.arrayOf(PropTypes.object).isRequired,
-    agreementLinesToAdd: PropTypes.arrayOf(PropTypes.object).isRequired,
+    agreementLineCount: PropTypes.number
   }).isRequired,
   form: PropTypes.shape({
     change: PropTypes.func.isRequired,
