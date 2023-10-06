@@ -219,7 +219,7 @@ AgreementForm.propTypes = {
     getState: PropTypes.func.isRequired,
   }).isRequired,
   handlers: PropTypes.PropTypes.shape({
-    onBasketLinesAdded: PropTypes.func.isRequired,
+    onBasketLinesAdded: PropTypes.func,
     onClose: PropTypes.func.isRequired,
   }),
   initialValues: PropTypes.object,
