@@ -19,9 +19,8 @@ const filterHandlers = {
   reset: () => {},
 };
 describe('AgreementContentFilter', () => {
-  let renderComponent;
   beforeEach(() => {
-    renderComponent = renderWithIntl(
+    renderWithIntl(
       <MemoryRouter>
         <AgreementContentFilter
           activeFilters={activeFilters}
