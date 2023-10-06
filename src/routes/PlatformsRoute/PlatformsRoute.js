@@ -1,17 +1,20 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useQuery } from 'react-query';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useInfiniteFetch } from '@folio/stripes-erm-components';
+import {
+  usePrevNextPagination,
+} from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Platforms';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 
-import { PLATFORMS_ENDPOINT } from '../../constants';
+import { PLATFORMS_ENDPOINT, resultCount } from '../../constants';
 
-const INITIAL_RESULT_COUNT = 50;
+const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
 const PlatformsRoute = ({
   children,
@@ -31,28 +34,25 @@ const PlatformsRoute = ({
   }, []); // This isn't particularly great, but in the interests of saving time migrating, it will have to do
 
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
+  const { currentPage } = usePrevNextPagination();
 
   const platformsQueryParams = useMemo(() => (
     generateKiwtQueryParams({
       searchKey: 'name',
-      perPage: INITIAL_RESULT_COUNT
+      page: currentPage,
+      perPage: RESULT_COUNT_INCREMENT_MEDIUM
     }, (query ?? {}))
-  ), [query]);
+  ), [query, currentPage]);
 
   const {
-    infiniteQueryObject: {
-      error: platformsError,
-      fetchNextPage: fetchNextPlatformPage,
-      isLoading: arePlatformsLoading,
-      isIdle: isPlatformsIdle,
-      isError: isPlatformError
-    },
-    results: platforms = [],
-    total: platformsCount = 0
-  } = useInfiniteFetch(
+    data: { results: platforms = [], totalRecords: platformsCount = 0 } = {},
+    error: platformsError,
+    isLoading: arePlatformsLoading,
+    isError: isPlatformError
+  } = useQuery(
     [PLATFORMS_ENDPOINT, platformsQueryParams, 'ui-agreements', 'PlatformsRoute', 'getPlatforms'],
-    ({ pageParam = 0 }) => {
-      const params = [...platformsQueryParams, `offset=${pageParam}`];
+    () => {
+      const params = [...platformsQueryParams];
       return ky.get(`${PLATFORMS_ENDPOINT}?${params?.join('&')}`).json();
     },
     {
@@ -73,14 +73,13 @@ const PlatformsRoute = ({
       data={{
         platforms,
       }}
-      onNeedMoreData={(_askAmount, index) => fetchNextPlatformPage({ pageParam: index })}
       queryGetter={queryGetter}
       querySetter={querySetter}
       searchString={location.search}
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;
         totalCount: () => platformsCount,
-        loaded: () => !isPlatformsIdle,
+        loaded: () => !arePlatformsLoading,
         pending: () => arePlatformsLoading,
         failure: () => isPlatformError,
         failureMessage: () => platformsError.message
