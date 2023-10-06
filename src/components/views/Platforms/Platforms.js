@@ -22,7 +22,7 @@ import {
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
 
-import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
+import { useHandleSubmitSearch, usePrevNextPagination } from '@folio/stripes-erm-components';
 
 import { urls } from '../../utilities';
 import css from '../Agreements.css';
@@ -30,7 +30,8 @@ import RouteSwitcher from '../../RouteSwitcher';
 import {
   KB_TAB_FILTER_PANE,
   KB_TAB_PANESET,
-  KB_TAB_PANE_ID
+  KB_TAB_PANE_ID,
+  resultCount
 } from '../../../constants';
 
 const propTypes = {
@@ -38,7 +39,7 @@ const propTypes = {
   data: PropTypes.shape({
     platforms: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
-  onNeedMoreData: PropTypes.func.isRequired,
+  page: PropTypes.number,
   queryGetter: PropTypes.func.isRequired,
   querySetter: PropTypes.func.isRequired,
   searchString: PropTypes.string,
@@ -50,11 +51,11 @@ const propTypes = {
 };
 
 const filterPaneVisibilityKey = '@folio/platforms/platformsFilterPaneVisibility';
+const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
 const Platforms = ({
   children,
   data = {},
-  onNeedMoreData,
   queryGetter,
   querySetter,
   searchString = '',
@@ -64,6 +65,14 @@ const Platforms = ({
   const count = source?.totalCount() ?? 0;
   const query = queryGetter() ?? {};
   const sortOrder = query.sort ?? '';
+
+  const {
+    paginationMCLProps,
+    paginationSASQProps
+  } = usePrevNextPagination({
+    count,
+    pageSize: RESULT_COUNT_INCREMENT_MEDIUM
+  });
 
   const searchField = useRef(null);
 
@@ -80,6 +89,7 @@ const Platforms = ({
   return (
     <div data-test-platforms data-testid="platforms">
       <SearchAndSortQuery
+        {...paginationSASQProps}
         initialSearchState={{ query: '' }}
         initialSortState={{ sort: 'name' }}
         queryGetter={queryGetter}
@@ -229,7 +239,7 @@ const Platforms = ({
                     }
                     isSelected={({ item }) => item.id === selectedRecordId}
                     onHeaderClick={onSort}
-                    onNeedMoreData={onNeedMoreData}
+                    {...paginationMCLProps}
                     rowProps={{
                       to: id => `${urls.platformView(id)}${searchString}`,
                       labelStrings: ({ rowData }) => ([rowData.name, rowData.agreementStatus?.label]),
