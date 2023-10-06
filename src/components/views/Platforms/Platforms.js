@@ -39,7 +39,6 @@ const propTypes = {
   data: PropTypes.shape({
     platforms: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
-  page: PropTypes.number,
   queryGetter: PropTypes.func.isRequired,
   querySetter: PropTypes.func.isRequired,
   searchString: PropTypes.string,
