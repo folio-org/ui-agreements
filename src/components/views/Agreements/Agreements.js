@@ -389,7 +389,6 @@ const Agreements = ({
                     }
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     totalCount={count}
-                    virtualize
                     visibleColumns={[
                       'name',
                       'agreementStatus',

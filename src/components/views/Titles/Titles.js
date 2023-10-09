@@ -325,7 +325,6 @@ const Titles = ({
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     totalCount={count}
-                    virtualize
                     visibleColumns={['name', 'publicationType', 'isbn', 'eissn', 'pissn']}
                   />
                 </Pane>
