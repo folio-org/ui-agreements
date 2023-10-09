@@ -80,7 +80,7 @@ const AgreementDocumentFilterRule = ({
     <Row key={name}>
       <Col xs={2}>
         <Layout className="textCentered">
-          {index === 0 ? null : <FormattedMessage id="ui-agreements.OR" />}
+          {index === 0 ? null : <FormattedMessage id="ui-agreements.AND" />}
         </Layout>
       </Col>
       <Col xs={3}>
