@@ -149,7 +149,27 @@ const AgreementContentFilter = ({
   });
   // Used to map labels to content values for use within the multiselection
   const mapContentLabels = (contentArray) => {
-    return contentArray.map((content) => {
+    // Track whether 'relatedAgreements' has been added to the result
+    let relatedAgreementsAdded = false;
+    // Format content array so that inward/outwardRelationship values are replace with a single relatedAgreements value
+    const formattedArray = contentArray
+      .map((value) => {
+        if (
+          (value === 'inwardRelationships' ||
+            value === 'outwardRelationships') &&
+          !relatedAgreementsAdded
+        ) {
+          relatedAgreementsAdded = true;
+          return 'relatedAgreements';
+        }
+        return value !== 'inwardRelationships' &&
+          value !== 'outwardRelationships'
+          ? value
+          : undefined;
+      })
+      .filter((value) => value !== undefined);
+
+    return formattedArray.map((content) => {
       return {
         value: content,
         label: translatedContentOptions?.find((e) => e?.value === content)
@@ -215,6 +235,24 @@ const AgreementContentFilter = ({
         newAcc = [
           ...newAcc,
           curr.content.reduce((a, c, i) => {
+            // Special case for if relatedAgreements is selected
+            // It is then seperated out into its inward and outward relationship components
+            // If the attribute is "Has not" then both inward and outward relationships are expected to be empty
+            if (c?.value === 'relatedAgreements') {
+              return [
+                ...a,
+                i !== 0 ? '||' : null, // Don't group on first entry
+                {
+                  path: 'inwardRelationships',
+                  comparator: curr.attribute,
+                },
+                curr.attribute === 'isEmpty' ? '&&' : '||',
+                {
+                  path: 'outwardRelationships',
+                  comparator: curr.attribute,
+                },
+              ].filter(Boolean);
+            }
             return [
               ...a,
               i !== 0 ? '||' : null, // Don't group on first entry
