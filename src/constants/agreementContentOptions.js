@@ -35,6 +35,7 @@ export default [
     value: 'usageDataProviders',
     id: 'ui-agreements.duplicateAgreementModal.usageData',
   },
+  { value: 'relatedAgreements', id: 'ui-agreements.relatedAgreements' },
   {
     value: 'tags',
     id: 'ui-agreements.agreements.tags',
