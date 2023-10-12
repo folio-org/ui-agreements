@@ -45,8 +45,8 @@
     "typescript": "^2.8.0"
   },
   "dependencies": {
-    "@folio/stripes-acq-components": "^4.0.0",
-    "@k-int/stripes-kint-components": "^5.1.0",
+    "@folio/stripes-acq-components": "^5.0.0",
+    "@k-int/stripes-kint-components": "^5.1.1",
     "@rehooks/local-storage": "^2.4.4",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
