@@ -1,5 +1,7 @@
 # Change history for ui-agreements
 
+## 10.1.0 In progress
+
 ## 10.0.0 2023-10-12
 * ERM-3052 In Document filter builder OR displays on screen instead of AND
 * ERM-3046 Agreement lines search MCL - Implement MCL Next/Previous pagination
