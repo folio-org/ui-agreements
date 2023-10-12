@@ -55,7 +55,7 @@ const AgreementDocumentFilterRule = ({
       value: 'supplementaryDocs.note',
     },
     {
-      label: intl.formatMessage({ id: 'stripes-erm-components.doc.type' }),
+      label: intl.formatMessage({ id: 'stripes-erm-components.doc.category' }),
       value: 'supplementaryDocs.atType.value',
     },
     {
