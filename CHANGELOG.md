@@ -1,15 +1,42 @@
 # Change history for ui-agreements
 
-## 10.0.0 In progress
+## 10.0.0 2023-10-12
+* ERM-3052 In Document filter builder OR displays on screen instead of AND
+* ERM-3046 Agreement lines search MCL - Implement MCL Next/Previous pagination
+* ERM-3038 Creating adding an eHolding resource to a new agreement fails
+* ERM-3036 unlock @rehooks/local-storage from 2.4.4
+* ERM-3026 *BREAKING* bump `react-intl` to `v6.4.4`
+* ERM-3016 QIndex control for Titles SASQ
+* ERM-3013 Icon of the associated agreements should change if it is a closed agreement
+* ERM-3012 Agreement relationship type translations don't show in Agreements UI
+* ERM-3010 Add has/has not filter in Agreements
+* ERM-3001 Update Node.js to v18 in GitHub Actions
+* ERM-2992 Switch default behaviour for Agreements to not expand items
+* ERM-2983 Added documents filter to Agreements search and sort
 * ERM-2979 Add agreement line summary information and navigation link to Agreement edit view
   * reuse FormLines component
+* ERM-2978 Edition, volume, issue render on new line
+* ERM-2973 Replace naive fetch hooks with parallelised ones (and deprecate)
+* ERM-2967 Use useChunkedCQLFetch consistently across ERM
+* ERM-2937 Titles Tab - Implement MCL Next/Previous pagination
+* ERM-2934 Agreement lines simple search widget definition
+* ERM-2923 Add created/updated metadata for Resources in local KB
+* ERM-2922 On changing the fields to be searched, the text string is cleared from the search box
 * ERM-2920 Replace "External data source" search
+* ERM-2641 Upgrade to Grails 5 (including Hibernate 5.6.x) for Poppy
+  * Added okapi interface dependency on new erm interface 6.0
+  * Added okapi interface dependency on new licenses interface 5.0
+* ERM-2630 Add new endpoint for external KB "push" process
 * ERM-2624 Add view only permissions for Agreement settings
-* STRIPES-870 BREAKING upgrade react to v18
+* ERM-2612 Add support for content type property on Agreement
+* ERM-2506 Display licenses sorted in predictable order in Agreements
+* ERM-2421 Remove Agreement lines from Agreement Edit view
+* ERM-2054 Platforms Tab - Implement MCL Next/Previous pagination
+* ERM-2053 Packages Tab - Implement MCL Next/Previous pagination
+* ERM-2052 Agreements Tab - Implement MCL Next/Previous pagination
+* ERM-1110 Add templated URLs to PCI display
+* STRIPES-870 *BREAKING* upgrade react to v18
   * ERM-2991 Upgrade ui-agreements React to v18
-* ERM-2983 Added documents filter to Agreements search and sort
-* ERM-3012 Agreement relationship type translations don't show in Agreements UI
-* ERM-3027 *BREAKING* bump `react-intl` to `v6.4.4`
 
 ## 9.0.0 2023-02-22
 * ERM-2613 Remove unneeded `react-redux`. Upgrade `stripes-acq-components` to `v4`
