@@ -93,6 +93,7 @@ const AgreementDocumentFilter = ({ activeFilters, filterHandlers }) => {
 
   return (
     <Accordion
+      closedByDefault
       displayClearButton={!!parsedFilterData?.length}
       header={FilterAccordionHeader}
       id="clickable-agreement-document-filter"
