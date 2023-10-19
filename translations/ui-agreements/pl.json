@@ -777,7 +777,7 @@
     "documentFilter.filtersApplied": "{filtersLength} document filters applied",
     "documentFilter.editDocumentFilters": "Edytuj filtry dokumentów",
     "documentFilter.documentFilterBuilder": "Document filter builder",
-    "documentFilter.deleteFilterIndex": "Usuń filtr",
+    "documentFilter.deleteFilterIndex": "Usuń filtr {number}",
     "documentFilter.documentFilterIndex": "Document filter {number}",
     "documentFilter.addFilter": "Dodaj filtr",
     "documentFilter.attribute": "Antrybut",
