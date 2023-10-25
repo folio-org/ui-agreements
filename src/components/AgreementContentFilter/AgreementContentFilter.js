@@ -279,8 +279,6 @@ const AgreementContentFilter = ({
         // FIXME this isn't ideal, KIWT should accept spaces in query -- Ask Steve
         agreementContent: [
           deparseKiwtQueryFilters(kiwtQueryFilterShape)
-            .replaceAll(' || ', '||')
-            .replaceAll(' && ', '&&'),
         ],
       });
     }

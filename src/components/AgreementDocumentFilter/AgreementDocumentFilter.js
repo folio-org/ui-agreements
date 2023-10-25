@@ -85,7 +85,7 @@ const AgreementDocumentFilter = ({ activeFilters, filterHandlers }) => {
       documents: [
         // Currently the deparse function returns a query string containing whitespace which leads to grouping errors
         // This regex removes all whitespace from the querystring
-        deparseKiwtQueryFilters(kiwtQueryShape).replaceAll(/\s/g, ''),
+        deparseKiwtQueryFilters(kiwtQueryShape),
       ],
     });
     setEditingFilters(false);
