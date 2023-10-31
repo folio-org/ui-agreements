@@ -58,13 +58,13 @@ const AgreementContentFieldArray = ({ handleSubmit }) => {
                       dataOptions={[
                         { value: '', label: '' },
                         {
-                          value: 'isNotEmpty',
+                          value: ' isNotEmpty', // The space is part of the comparator
                           label: intl.formatMessage({
                             id: 'ui-agreements.agreementContent.filter.has',
                           }),
                         },
                         {
-                          value: 'isEmpty',
+                          value: ' isEmpty', // The space is part of the comparator
                           label: intl.formatMessage({
                             id: 'ui-agreements.agreementContent.filter.hasNot',
                           }),
@@ -246,7 +246,7 @@ const AgreementContentFilter = ({
                   path: 'inwardRelationships',
                   comparator: curr.attribute,
                 },
-                curr.attribute === 'isEmpty' ? '&&' : '||',
+                curr.attribute === ' isEmpty' ? '&&' : '||',
                 {
                   path: 'outwardRelationships',
                   comparator: curr.attribute,
