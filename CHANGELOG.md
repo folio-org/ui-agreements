@@ -1,5 +1,8 @@
 # Change history for ui-agreements
 
+## 9.0.4 2023-10-26
+* ERM-3076 Agreements with internal (local KB) agreement lines do not save correctly
+
 ## 9.0.3 2023-08-08
 * ERM-2969: Edit agreement pane crashes when slow (multi-line) query is canceled. Do not expand agreement lines on erm/sas call in:
     * Agreement edit GET and PUT
