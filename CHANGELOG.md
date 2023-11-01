@@ -1,6 +1,6 @@
 # Change history for ui-agreements
 
-## 9.0.4 2023-10-26
+## 9.0.4 2023-11-01
 * ERM-3076 Agreements with internal (local KB) agreement lines do not save correctly
 
 ## 9.0.3 2023-08-08
