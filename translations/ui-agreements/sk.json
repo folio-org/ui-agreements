@@ -785,8 +785,8 @@
     "documentFilter.addRule": "Add rule",
     "documentFilter.removeRule": "Remove rule {number}",
     "agreements.contentTypes": "Content types",
-    "agreementContent": "Agreement content",
+    "agreementContent": "Obsah zmluvy",
     "agreementContent.filter.addFilter": "Add filter",
-    "agreementContent.filter.has": "Has",
-    "agreementContent.filter.hasNot": "Has not"
+    "agreementContent.filter.has": "Má",
+    "agreementContent.filter.hasNot": "Nemá"
 }
