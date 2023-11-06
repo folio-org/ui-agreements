@@ -1,6 +1,7 @@
 # Change history for ui-agreements
 
 ## 10.1.0 In progress
+* ERM-3085 Use document filter from stripes-erm-components, remove changes from ERM-2983
 
 ## 10.0.0 2023-10-12
 * ERM-3052 In Document filter builder OR displays on screen instead of AND

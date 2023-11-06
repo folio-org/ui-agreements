@@ -17,6 +17,7 @@ import {
 } from '@folio/stripes/smart-components';
 import {
   DateFilter,
+  DocumentFilter,
   InternalContactSelection,
   OrganizationSelection,
 } from '@folio/stripes-erm-components';
@@ -25,8 +26,6 @@ import { CustomPropertiesFilter } from '@k-int/stripes-kint-components';
 
 import AgreementContentFilter from '../AgreementContentFilter';
 import { CUSTPROP_ENDPOINT } from '../../constants';
-
-import AgreementDocumentFilter from '../AgreementDocumentFilter';
 
 const propTypes = {
   activeFilters: PropTypes.object,
@@ -57,6 +56,8 @@ export default function AgreementFilters({
     agreementContentType: [],
     tags: [],
   });
+
+  const atTypeValues = data.documentAtTypeValues;
 
   useEffect(() => {
     const newState = {};
@@ -369,9 +370,11 @@ export default function AgreementFilters({
     );
   };
 
-  const renderAgreementDocumentFilter = () => {
-    return <AgreementDocumentFilter
+  // for supplementary documents pass the atTypeValues
+  const renderSupplementaryDocumentFilter = () => {
+    return <DocumentFilter
       activeFilters={activeFilters}
+      atTypeValues={atTypeValues}
       filterHandlers={filterHandlers}
     />;
   };
@@ -393,7 +396,7 @@ export default function AgreementFilters({
       {renderTagsFilter()}
       {renderCustomPropertyFilters()}
       {renderAgreementContentFilter()}
-      {renderAgreementDocumentFilter()}
+      {renderSupplementaryDocumentFilter()}
     </AccordionSet>
   );
 }
