@@ -78,7 +78,6 @@ const Lines = ({
   return (
     <Accordion
       displayWhenClosed={renderBadge()}
-      
       displayWhenOpen={getActionMenu()}
       id={id}
       label={<FormattedMessage id="ui-agreements.agreementLines" />}
