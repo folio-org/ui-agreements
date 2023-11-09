@@ -3,6 +3,11 @@
 ## 10.1.0 In progress
 * ERM-3085 Use document filter from stripes-erm-components, remove changes from ERM-2983
 
+## 10.0.1 2023-11-09
+* ERM-3082 Backport grouping and spaces fix for Poppy
+* ERM-3065 Agreement lines are displayed by default on the "Agreement lines" pane.
+* ERM-3061 On setting document filter spaces are stripped from filter value
+
 ## 10.0.0 2023-10-12
 * ERM-3052 In Document filter builder OR displays on screen instead of AND
 * ERM-3046 Agreement lines search MCL - Implement MCL Next/Previous pagination
