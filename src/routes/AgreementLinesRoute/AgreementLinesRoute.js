@@ -71,7 +71,7 @@ const AgreementLinesRoute = ({
       return ky.get(`${AGREEMENT_LINES_ENDPOINT}?${params?.join('&')}`).json();
     },
     {
-      enabled: !!currentPage
+      enabled: (!!query?.filters || !!query?.query) && !!currentPage
     }
   );
 
