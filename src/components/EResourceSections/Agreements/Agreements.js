@@ -47,6 +47,7 @@ const Agreements = ({
     areRelatedEntitlementsLoading,
     entitlementsCount
   },
+  renderRelatedEntitlements,
   handlers: {
     onNeedMoreEntitlements
   },
@@ -73,7 +74,7 @@ const Agreements = ({
     );
   };
 
-  const renderRelatedEntitlementAgreements = (renderRelatedEntitlements) => {
+  const renderRelatedEntitlementAgreements = () => {
     if (!renderRelatedEntitlements) {
       return null;
     }

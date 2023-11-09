@@ -34,8 +34,13 @@ const propTypes = {
 };
 
 const PackageContents = ({
-  data: { areContentsLoading, packageContents, packageContentsCount },
-  data,
+  data: {
+    areContentsLoading,
+    packageContents,
+    packageContentsCount,
+    packageContentsFilter,
+    searchString
+  },
   id,
   isLoading,
   onNeedMorePackageContents,
@@ -72,7 +77,7 @@ const PackageContents = ({
                 iconKey="pci"
                 size="small"
               >
-                <EResourceLink eresource={pci.pti.titleInstance} searchString={data?.searchString} />
+                <EResourceLink eresource={pci.pti.titleInstance} searchString={searchString} />
               </AppIcon>
             );
           },
@@ -107,7 +112,7 @@ const PackageContents = ({
   const renderFilterButton = (filter) => (
     <Button
       buttonStyle={
-        data.packageContentsFilter === filter ? 'primary' : 'default'
+        packageContentsFilter === filter ? 'primary' : 'default'
       }
       id={`clickable-pci-${filter}`}
       onClick={() => onFilterPackageContents(filter)}
