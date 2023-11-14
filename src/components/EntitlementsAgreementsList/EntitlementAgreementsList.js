@@ -13,12 +13,14 @@ import {
 
 import { AppIcon } from '@folio/stripes/core';
 
-import { EResourceType } from '@folio/stripes-erm-components';
+import { EResourceType, usePrevNextPagination } from '@folio/stripes-erm-components';
 import Coverage from '../Coverage';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import { getResourceFromEntitlement, urls } from '../utilities';
-import { statuses } from '../../constants';
+import { statuses, resultCount } from '../../constants';
+
+const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
 const EntitlementAgreementsList = (
   { entitlements,
@@ -29,6 +31,12 @@ const EntitlementAgreementsList = (
     totalCount,
     visibleColumns }
 ) => {
+  const {
+    paginationMCLProps
+  } = usePrevNextPagination({
+    pageSize: RESULT_COUNT_INCREMENT_MEDIUM
+  });
+
   const columnMapping = {
     name: <FormattedMessage id="ui-agreements.agreements.name" />,
     type: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
@@ -98,6 +106,7 @@ const EntitlementAgreementsList = (
         pagingType="click"
         totalCount={totalCount}
         visibleColumns={visibleColumns}
+        {...paginationMCLProps}
       />
     </div>
   );

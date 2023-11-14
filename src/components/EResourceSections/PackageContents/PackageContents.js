@@ -14,10 +14,12 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
-import { TitleOnPlatformLink } from '@folio/stripes-erm-components';
+import { TitleOnPlatformLink, usePrevNextPagination } from '@folio/stripes-erm-components';
 import Coverage from '../../Coverage';
 import EResourceLink from '../../EResourceLink';
 import { resultCount } from '../../../constants';
+
+const { RESULT_COUNT_INCREMENT } = resultCount;
 
 const propTypes = {
   data: PropTypes.shape({
@@ -52,6 +54,12 @@ const PackageContents = ({
     const count = packageContentsCount ?? 0;
     return (count !== undefined && !isLoading) ? <Badge>{count}</Badge> : <Spinner />;
   };
+
+  const {
+    paginationMCLProps,
+  } = usePrevNextPagination({
+    pageSize: RESULT_COUNT_INCREMENT
+  });
 
   const renderList = () => {
     return (
@@ -101,10 +109,11 @@ const PackageContents = ({
         id="package-contents-list"
         interactive={false}
         onNeedMoreData={onNeedMorePackageContents}
-        pageAmount={resultCount.RESULT_COUNT_INCREMENT}
+        pageAmount={RESULT_COUNT_INCREMENT}
         pagingType="click"
         totalCount={packageContentsCount}
         visibleColumns={['name', 'platform', 'coverage', 'accessStart', 'accessEnd']}
+        {...paginationMCLProps}
       />
     );
   };
