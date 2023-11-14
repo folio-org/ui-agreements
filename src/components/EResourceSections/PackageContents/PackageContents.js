@@ -18,6 +18,7 @@ import { TitleOnPlatformLink, usePrevNextPagination } from '@folio/stripes-erm-c
 import Coverage from '../../Coverage';
 import EResourceLink from '../../EResourceLink';
 import { resultCount } from '../../../constants';
+import { parseMclPageSize } from '../../utilities';
 
 const { RESULT_COUNT_INCREMENT } = resultCount;
 
@@ -58,7 +59,7 @@ const PackageContents = ({
   const {
     paginationMCLProps,
   } = usePrevNextPagination({
-    pageSize: RESULT_COUNT_INCREMENT
+    pageSize: parseMclPageSize()
   });
 
   const renderList = () => {

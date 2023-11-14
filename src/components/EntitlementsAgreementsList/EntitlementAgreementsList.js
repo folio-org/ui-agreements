@@ -17,10 +17,8 @@ import { EResourceType, usePrevNextPagination } from '@folio/stripes-erm-compone
 import Coverage from '../Coverage';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
-import { getResourceFromEntitlement, urls } from '../utilities';
-import { statuses, resultCount } from '../../constants';
-
-const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
+import { getResourceFromEntitlement, urls, parseMclPageSize } from '../utilities';
+import { statuses } from '../../constants';
 
 const EntitlementAgreementsList = (
   { entitlements,
@@ -32,9 +30,9 @@ const EntitlementAgreementsList = (
     visibleColumns }
 ) => {
   const {
-    paginationMCLProps
+    paginationMCLProps,
   } = usePrevNextPagination({
-    pageSize: RESULT_COUNT_INCREMENT_MEDIUM
+    pageSize: parseMclPageSize()
   });
 
   const columnMapping = {
