@@ -119,7 +119,7 @@ const Agreements = ({
       id={id}
       label={label}
     >
-      {renderEntitlementAgreements(entitlements)}
+      {renderEntitlementAgreements()}
       {renderRelatedEntitlementAgreements()}
     </Accordion>
   );

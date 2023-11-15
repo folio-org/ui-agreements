@@ -160,7 +160,7 @@ const PackageContents = ({
     >
       {renderFilterButtons()}
       {(packageContents && !areContentsLoading) ? (
-        renderList(packageContents, packageContentsCount)
+        renderList()
       ) : (
         <Spinner />
       )}
