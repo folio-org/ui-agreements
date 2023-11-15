@@ -16,6 +16,7 @@ import {
   ERESOURCE_ENTITLEMENTS_ENDPOINT,
   ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT,
   ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT,
+  PACKAGE_CONTENT_PAGINATION_ID,
   resourceClasses
 } from '../../constants';
 import { useAgreementsHelperApp, useAgreementsSettings, useSuppressFromDiscovery } from '../../hooks';
@@ -33,7 +34,15 @@ const EResourceViewRoute = ({
     TagButton,
   } = useAgreementsHelperApp();
 
-  const { currentPage } = usePrevNextPagination();
+  const { settings } = useAgreementsSettings();
+  const packageContentsPageSize = parseMclPageSize(settings, 'packageContents');
+
+  const { currentPage: packageContentsPage } = usePrevNextPagination({
+    pageSize: packageContentsPageSize, // Only needed for reading back MCL props
+    id: PACKAGE_CONTENT_PAGINATION_ID,
+    syncToLocation: false
+  });
+
   const isSuppressFromDiscoveryEnabled = useSuppressFromDiscovery();
 
   const eresourcePath = ERESOURCE_ENDPOINT(eresourceId);
@@ -44,7 +53,6 @@ const EResourceViewRoute = ({
     () => ky.get(eresourcePath).json()
   );
 
-  const { settings } = useAgreementsSettings();
 
   const entitlementsPath = ERESOURCE_ENTITLEMENTS_ENDPOINT(eresourceId);
   const entitlementOptionsPath = ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT(eresourceId);
@@ -53,12 +61,15 @@ const EResourceViewRoute = ({
   const eresourceAgreementParams = useMemo(() => (
     generateKiwtQueryParams(
       {
-        page: currentPage,
-        perPage: parseMclPageSize(settings, 'entitlements')
+        /* page: entitlementsPage,
+        perPage: entitlementsPageSize */
+        // FIXME fix this
+        page: 1,
+        pageSize: 25,
       },
       {}
     )
-  ), [settings, currentPage]);
+  ), []);
 
   const {
     data: { results: entitlements = [], totalRecords: entitlementsCount = 0 } = {},
@@ -71,6 +82,7 @@ const EResourceViewRoute = ({
     },
   );
 
+
   // RELATED ENTITLEMENTS FOR ERESOURCE BATCH FETCH
   const { items: relatedEntitlements, isLoading: areRelatedEntitlementsLoading } = useParallelBatchFetch({
     generateQueryKey: ({ offset }) => ['ERM', 'Entitlements', ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT(eresourceId), offset, 'EresourceViewRoute'],
@@ -79,6 +91,7 @@ const EResourceViewRoute = ({
       enabled: (!!eresource?.id && eresource?.class !== resourceClasses?.PACKAGE)
     }
   });
+
 
   // ENTITLEMENT OPTIONS FOR ERESOURCE INFINITE FETCH
   const eresourceEntitlementOptionsParams = useMemo(() => (
@@ -115,11 +128,13 @@ const EResourceViewRoute = ({
         sort: [{
           path: 'pti.titleInstance.name'
         }],
-        perPage: parseMclPageSize(settings, 'packageContents')
+        page: packageContentsPage,
+        perPage: packageContentsPageSize
       },
       {}
     )
-  ), [eresourceId, settings]);
+  ), [eresourceId, packageContentsPage, packageContentsPageSize]);
+
 
   const {
     data: { results: packageContents = [], totalRecords: packageContentsCount = 0 } = {},

@@ -17,8 +17,9 @@ import { AppIcon } from '@folio/stripes/core';
 import { TitleOnPlatformLink, usePrevNextPagination } from '@folio/stripes-erm-components';
 import Coverage from '../../Coverage';
 import EResourceLink from '../../EResourceLink';
-import { resultCount } from '../../../constants';
+import { PACKAGE_CONTENT_PAGINATION_ID, resultCount } from '../../../constants';
 import { parseMclPageSize } from '../../utilities';
+import { useAgreementsSettings } from '../../../hooks';
 
 const { RESULT_COUNT_INCREMENT } = resultCount;
 
@@ -49,6 +50,9 @@ const PackageContents = ({
   onNeedMorePackageContents,
   onFilterPackageContents
 }) => {
+  const { settings } = useAgreementsSettings();
+  const packageContentsPageSize = parseMclPageSize(settings, 'packageContents');
+
   const renderDate = date => (date ? <FormattedUTCDate value={date} /> : '');
 
   const renderBadge = () => {
@@ -59,7 +63,10 @@ const PackageContents = ({
   const {
     paginationMCLProps,
   } = usePrevNextPagination({
-    pageSize: parseMclPageSize()
+    count: packageContentsCount,
+    pageSize: packageContentsPageSize,
+    id: PACKAGE_CONTENT_PAGINATION_ID,
+    syncToLocation: false
   });
 
   const renderList = () => {
