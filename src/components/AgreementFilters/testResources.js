@@ -42,6 +42,7 @@ const data = {
   'orgRoleValues': findRefdata('SubscriptionAgreementOrg.Role'),
   'supplementaryProperties': [],
   'agreementContentTypeValues': findRefdata('SubscriptionAgreement.ContentType'),
+  'documentAtTypeValues': findRefdata('DocumentAttachment.AtType'),
   'tagsValues': [{
     'id': 'aeb85be7-7440-474f-94de-066fd69c7604',
     'label': 'catalogingrecords',

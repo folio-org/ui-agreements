@@ -26,14 +26,16 @@ import { AppIcon, useCallout } from '@folio/stripes/core';
 
 import {
   getResourceIdentifier,
-  TitleOnPlatformLink
+  TitleOnPlatformLink,
+  usePrevNextPagination
 } from '@folio/stripes-erm-components';
 
+import { useAgreementsSettings } from '../../../hooks';
 import Coverage from '../../Coverage';
 import CustomCoverageIcon from '../../CustomCoverageIcon';
 import IfEResourcesEnabled from '../../IfEResourcesEnabled';
-import { resultCount } from '../../../constants';
-import { urls } from '../../utilities';
+import { resultCount, COVERED_ERESOURCES_PAGINATION_ID } from '../../../constants';
+import { urls, parseMclPageSize } from '../../utilities';
 
 
 const propTypes = {
@@ -57,6 +59,18 @@ const CoveredEResourcesList = ({
   onExportEResourcesAsJSON,
   onExportEResourcesAsKBART,
 }) => {
+  const { settings } = useAgreementsSettings();
+  const coveredEresourcePageSize = parseMclPageSize(settings, 'agreementEresources');
+
+  const {
+    paginationMCLProps,
+  } = usePrevNextPagination({
+    count: eresourcesCount,
+    pageSize: coveredEresourcePageSize,
+    id: COVERED_ERESOURCES_PAGINATION_ID,
+    syncToLocation: false
+  });
+
   const callout = useCallout();
   const exportDisabled = eresourcesFilterPath === 'dropped' || eresourcesFilterPath === 'future';
 
@@ -219,6 +233,7 @@ const CoveredEResourcesList = ({
           'accessStart',
           'accessEnd',
         ]}
+        {...paginationMCLProps}
       />
     );
   };

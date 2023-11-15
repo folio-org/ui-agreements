@@ -10,10 +10,10 @@ const stateMock = jest.fn();
 
 const filterHandlers = {
   state: stateMock,
-  checkbox: () => {},
-  clear: () => {},
-  clearGroup: () => {},
-  reset: () => {},
+  checkbox: () => { },
+  clear: () => { },
+  clearGroup: () => { },
+  reset: () => { },
 };
 
 describe('AgreementFilters', () => {
@@ -80,8 +80,8 @@ describe('AgreementFilters', () => {
     await Accordion('Agreement content').exists();
   });
 
-  test('renders the Documents Accordion', async () => {
-    await Accordion('Documents').exists();
+  test('renders the Supplementary documents Accordion', async () => {
+    await Accordion('Supplementary documents').exists();
   });
 
   test('renders the CustomPropertiesFilter component', () => {

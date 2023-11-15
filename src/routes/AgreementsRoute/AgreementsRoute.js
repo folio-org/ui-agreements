@@ -37,6 +37,7 @@ const [
   CONTACT_ROLE,
   ORG_ROLE,
   AGREEMENT_CONTENT_TYPE,
+  DOCUMENT_AT_TYPE,
 ] = [
   'SubscriptionAgreement.AgreementStatus',
   'SubscriptionAgreement.ReasonForClosure',
@@ -45,6 +46,7 @@ const [
   'InternalContact.Role',
   'SubscriptionAgreementOrg.Role',
   'SubscriptionAgreement.ContentType',
+  'DocumentAttachment.AtType',
 ];
 
 const AgreementsRoute = ({ children, history, location, match }) => {
@@ -62,6 +64,7 @@ const AgreementsRoute = ({ children, history, location, match }) => {
       CONTACT_ROLE,
       ORG_ROLE,
       AGREEMENT_CONTENT_TYPE,
+      DOCUMENT_AT_TYPE
     ],
   });
 
@@ -153,6 +156,7 @@ const AgreementsRoute = ({ children, history, location, match }) => {
           refdata,
           AGREEMENT_CONTENT_TYPE
         ),
+        documentAtTypeValues: getRefdataValuesByDesc(refdata, DOCUMENT_AT_TYPE),
         tagsValues: tags,
       }}
       history={history}

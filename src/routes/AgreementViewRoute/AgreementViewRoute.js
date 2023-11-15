@@ -10,10 +10,10 @@ import {
   downloadBlob,
   useAgreement,
   useChunkedUsers,
-  useInfiniteFetch,
   useInterfaces,
   INVALID_JSON_ERROR,
-  JSON_ERROR
+  JSON_ERROR,
+  usePrevNextPagination
 } from '@folio/stripes-erm-components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 
@@ -27,6 +27,8 @@ import {
   AGREEMENT_ENDPOINT,
   AGREEMENT_ERESOURCES_ENDPOINT,
   AGREEMENT_LINES_ENDPOINT,
+  AGREEMENT_LINES_PAGINATION_ID,
+  COVERED_ERESOURCES_PAGINATION_ID,
   httpStatuses
 } from '../../constants';
 import {
@@ -42,6 +44,23 @@ const AgreementViewRoute = ({
   match: { params: { id: agreementId } },
 }) => {
   const queryClient = useQueryClient();
+
+  const { settings } = useAgreementsSettings();
+  const agreementLinesPageSize = parseMclPageSize(settings, 'agreementLines');
+  const coveredEresourcePageSize = parseMclPageSize(settings, 'agreementEresources');
+
+
+  const { currentPage: agreementLinesPage } = usePrevNextPagination({
+    pageSize: agreementLinesPageSize, // Only needed for reading back MCL props
+    id: AGREEMENT_LINES_PAGINATION_ID,
+    syncToLocation: false
+  });
+
+  const { currentPage: coveredEresourcePage } = usePrevNextPagination({
+    pageSize: coveredEresourcePageSize, // Only needed for reading back MCL props
+    id: COVERED_ERESOURCES_PAGINATION_ID,
+    syncToLocation: false
+  });
 
   const [eresourcesFilterPath, setEresourcesFilterPath] = useState('current');
 
@@ -72,8 +91,6 @@ const AgreementViewRoute = ({
     () => ky.delete(agreementPath).then(() => queryClient.invalidateQueries(['ERM', 'Agreements']))
   );
 
-  const settings = useAgreementsSettings();
-
   // Users
   const { users } = useChunkedUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user) ?? []);
   // AGREEMENT LINES INFINITE FETCH
@@ -92,23 +109,20 @@ const AgreementViewRoute = ({
           { path: 'reference' },
           { path: 'id' }
         ],
-        perPage: parseMclPageSize(settings, 'agreementLines')
+        page: agreementLinesPage,
+        perPage: agreementLinesPageSize
       },
       {}
     )
-  ), [agreementId, settings]);
+  ), [agreementId, agreementLinesPageSize, agreementLinesPage]);
 
   const {
-    infiniteQueryObject: {
-      fetchNextPage: fetchNextLinesPage,
-      isLoading: areLinesLoading
-    },
-    results: agreementLines = [],
-    total: agreementLineCount = 0
-  } = useInfiniteFetch(
+    data: { results: agreementLines = [], totalRecords: agreementLineCount = 0 } = {},
+    isLoading: areLinesLoading
+  } = useQuery(
     ['ERM', 'Agreement', agreementId, 'AgreementLines', AGREEMENT_LINES_ENDPOINT, agreementLineQueryParams],
-    ({ pageParam = 0 }) => {
-      const params = [...agreementLineQueryParams, `offset=${pageParam}`];
+    () => {
+      const params = [...agreementLineQueryParams];
       return ky.get(`${AGREEMENT_LINES_ENDPOINT}?${params?.join('&')}`).json();
     }
   );
@@ -119,21 +133,18 @@ const AgreementViewRoute = ({
       sort: [
         { path: 'pti.titleInstance.name' }
       ],
-      perPage: parseMclPageSize(settings, 'agreementEresources')
+      page: coveredEresourcePage,
+      perPage: coveredEresourcePageSize
     }, {})
-  ), [settings]);
+  ), [coveredEresourcePageSize, coveredEresourcePage]);
 
   const {
-    infiniteQueryObject: {
-      fetchNextPage: fetchNextEresourcePage,
-      isLoading: areEresourcesLoading
-    },
-    results: agreementEresources = [],
-    total: agreementEresourcesCount = 0
-  } = useInfiniteFetch(
+    data: { results: agreementEresources = [], totalRecords: agreementEresourcesCount = 0 } = {},
+    isLoading: areEresourcesLoading
+  } = useQuery(
     [agreementEresourcesPath, agreementEresourcesQueryParams, 'ui-agreements', 'AgreementViewRoute', 'getEresources'],
-    ({ pageParam = 0 }) => {
-      const params = [...agreementEresourcesQueryParams, `offset=${pageParam}`];
+    () => {
+      const params = [...agreementEresourcesQueryParams];
       return ky.get(`${agreementEresourcesPath}?${params?.join('&')}`).json();
     }
   );
@@ -305,8 +316,6 @@ const AgreementViewRoute = ({
         onExportEResourcesAsJSON: exportEresourcesAsJson,
         onExportEResourcesAsKBART: exportEresourcesAsKBART,
         onFilterEResources: handleFilterEResources,
-        onNeedMoreEResources: (_askAmount, index) => fetchNextEresourcePage({ pageParam: index }),
-        onNeedMoreLines: (_askAmount, index) => fetchNextLinesPage({ pageParam: index }),
         onToggleTags: handleToggleTags,
         onViewAgreementLine: handleViewAgreementLine,
       }}

@@ -11,14 +11,21 @@ import {
   Tooltip
 } from '@folio/stripes/components';
 
-import { EResourceType } from '@folio/stripes-erm-components';
+import { EResourceType, usePrevNextPagination } from '@folio/stripes-erm-components';
 
 import Coverage from '../../Coverage';
 import CustomCoverageIcon from '../../CustomCoverageIcon';
 import EResourceLink from '../../EResourceLink';
 import EResourceCount from '../../EResourceCount';
 import EResourceProvider from '../../EResourceProvider';
-import { getResourceFromEntitlement, isDetached, urls } from '../../utilities';
+import { useAgreementsSettings } from '../../../hooks';
+import { AGREEMENT_LINES_PAGINATION_ID } from '../../../constants';
+import {
+  getResourceFromEntitlement,
+  isDetached,
+  urls,
+  parseMclPageSize
+} from '../../utilities';
 
 const propTypes = {
   agreement: PropTypes.shape({
@@ -35,6 +42,18 @@ const LinesList = ({
   onViewAgreementLine,
   onNeedMoreLines,
 }) => {
+  const { settings } = useAgreementsSettings();
+  const agreementLinesPageSize = parseMclPageSize(settings, 'agreementLines');
+
+  const {
+    paginationMCLProps,
+  } = usePrevNextPagination({
+    count: agreementLinesCount,
+    pageSize: agreementLinesPageSize,
+    id: AGREEMENT_LINES_PAGINATION_ID,
+    syncToLocation: false
+  });
+
   const renderDate = date => (
     date ? <FormattedUTCDate value={date} /> : ''
   );
@@ -166,6 +185,7 @@ const LinesList = ({
         'activeTo',
         'poLines',
       ]}
+      {...paginationMCLProps}
     />
   ) : <Spinner />;
 };
