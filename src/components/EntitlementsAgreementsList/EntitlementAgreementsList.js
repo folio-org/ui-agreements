@@ -18,7 +18,8 @@ import Coverage from '../Coverage';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import { getResourceFromEntitlement, urls, parseMclPageSize } from '../utilities';
-import { statuses } from '../../constants';
+import { statuses, ENTITLEMENT_AGREEMENTS_LIST_PAGINATION_ID } from '../../constants';
+import { useAgreementsSettings } from '../../hooks';
 
 const EntitlementAgreementsList = (
   { entitlements,
@@ -29,10 +30,16 @@ const EntitlementAgreementsList = (
     totalCount,
     visibleColumns }
 ) => {
+  const { settings } = useAgreementsSettings();
+  const entitlementAgreementsPageSize = parseMclPageSize(settings, 'entitlementOptions');
+
   const {
     paginationMCLProps,
   } = usePrevNextPagination({
-    pageSize: parseMclPageSize()
+    count: totalCount,
+    pageSize: entitlementAgreementsPageSize,
+    id: ENTITLEMENT_AGREEMENTS_LIST_PAGINATION_ID,
+    syncToLocation: false
   });
 
   const columnMapping = {

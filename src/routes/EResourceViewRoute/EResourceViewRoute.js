@@ -16,6 +16,8 @@ import {
   ERESOURCE_ENTITLEMENTS_ENDPOINT,
   ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT,
   ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT,
+  ENTITLEMENT_AGREEMENTS_LIST_PAGINATION_ID,
+  ENTITLEMENT_OPTIONS_PAGINATION_ID,
   PACKAGE_CONTENT_PAGINATION_ID,
   resourceClasses
 } from '../../constants';
@@ -35,7 +37,21 @@ const EResourceViewRoute = ({
   } = useAgreementsHelperApp();
 
   const { settings } = useAgreementsSettings();
+  const entitlementAgreementsPageSize = parseMclPageSize(settings, 'entitlementOptions');
+  const entitlementOptionsPageSize = parseMclPageSize(settings, 'entitlementOptions');
   const packageContentsPageSize = parseMclPageSize(settings, 'packageContents');
+
+  const { currentPage: entitlementAgreementsPage } = usePrevNextPagination({
+    pageSize: entitlementAgreementsPageSize, // Only needed for reading back MCL props
+    id: ENTITLEMENT_AGREEMENTS_LIST_PAGINATION_ID,
+    syncToLocation: false
+  });
+
+  const { currentPage: entitlementOptionsPage } = usePrevNextPagination({
+    pageSize: entitlementOptionsPageSize, // Only needed for reading back MCL props
+    id: ENTITLEMENT_OPTIONS_PAGINATION_ID,
+    syncToLocation: false
+  });
 
   const { currentPage: packageContentsPage } = usePrevNextPagination({
     pageSize: packageContentsPageSize, // Only needed for reading back MCL props
@@ -61,15 +77,12 @@ const EResourceViewRoute = ({
   const eresourceAgreementParams = useMemo(() => (
     generateKiwtQueryParams(
       {
-        /* page: entitlementsPage,
-        perPage: entitlementsPageSize */
-        // FIXME fix this
-        page: 1,
-        pageSize: 25,
+        page: entitlementAgreementsPage,
+        perPage: entitlementAgreementsPageSize
       },
       {}
     )
-  ), []);
+  ), [entitlementAgreementsPageSize, entitlementAgreementsPage]);
 
   const {
     data: { results: entitlements = [], totalRecords: entitlementsCount = 0 } = {},
@@ -97,11 +110,12 @@ const EResourceViewRoute = ({
   const eresourceEntitlementOptionsParams = useMemo(() => (
     generateKiwtQueryParams(
       {
-        perPage: parseMclPageSize(settings, 'entitlementOptions')
+        page: entitlementOptionsPage,
+        perPage: entitlementOptionsPageSize
       },
       {}
     )
-  ), [settings]);
+  ), [entitlementOptionsPageSize, entitlementOptionsPage]);
 
   const {
     data: { results: entitlementOptions = [], totalRecords: entitlementOptionsCount = 0 } = {},
