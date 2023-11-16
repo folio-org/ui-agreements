@@ -14,12 +14,12 @@ const onSubmit = jest.fn();
 
 const poLines = [
   {
-    '_delete': false,
-    'poLineId': 'baec48dd-1594-2712-be8f-de336bc83fcc'
+    _delete: false,
+    poLineId: 'baec48dd-1594-2712-be8f-de336bc83fcc'
   },
   {
-    '_delete': false,
-    'poLineId': '647c1dca-b9bf-47af-8456-bfb6dfef9eee'
+    _delete: false,
+    poLineId: '647c1dca-b9bf-47af-8456-bfb6dfef9eee'
   }
 ];
 

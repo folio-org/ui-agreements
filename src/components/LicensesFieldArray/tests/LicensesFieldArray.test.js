@@ -15,133 +15,133 @@ jest.mock('../AmendmentsFieldArray', () => () => <div>AmendmentsFieldArray</div>
 
 const licenseStatusValues = [
   {
-    'id': '2c9180c27c0668c1017c06695692000a',
-    'value': 'controlling',
-    'label': 'Controlling'
+    id: '2c9180c27c0668c1017c06695692000a',
+    value: 'controlling',
+    label: 'Controlling'
   },
   {
-    'id': '2c9180c27c0668c1017c0669569a000b',
-    'value': 'future',
-    'label': 'Future'
+    id: '2c9180c27c0668c1017c0669569a000b',
+    value: 'future',
+    label: 'Future'
   },
   {
-    'id': '2c9180c27c0668c1017c066956a4000c',
-    'value': 'historical',
-    'label': 'Historical'
+    id: '2c9180c27c0668c1017c066956a4000c',
+    value: 'historical',
+    label: 'Historical'
   }
 ];
 
 const linkedLicenses = [
   {
-    'id': '2c9180c27c0668c1017c090f371f004a',
-    'remoteId': '6223a9a1-38d5-4c74-9848-04804d139ea6',
-    'remoteId_object': {
-      'id': '6223a9a1-38d5-4c74-9848-04804d139ea6',
-      'endDateSemantics': {
-        'id': '2c9180c07c0668a3017c066970cc0014',
-        'value': 'implicit',
-        'label': 'Implicit',
-        'owner': {
-          'id': '2c9180c07c0668a3017c066970ba0011',
-          'desc': 'License.EndDateSemantics',
-          'internal': true
+    id: '2c9180c27c0668c1017c090f371f004a',
+    remoteId: '6223a9a1-38d5-4c74-9848-04804d139ea6',
+    remoteId_object: {
+      id: '6223a9a1-38d5-4c74-9848-04804d139ea6',
+      endDateSemantics: {
+        id: '2c9180c07c0668a3017c066970cc0014',
+        value: 'implicit',
+        label: 'Implicit',
+        owner: {
+          id: '2c9180c07c0668a3017c066970ba0011',
+          desc: 'License.EndDateSemantics',
+          internal: true
         }
       },
-      'dateCreated': '2021-09-21T15:52:06Z',
-      'customProperties': {},
-      'contacts': [],
-      'tags': [],
-      'lastUpdated': '2021-09-21T15:52:06Z',
-      'docs': [],
-      'name': 'AM license 2',
-      'status': {
-        'id': '2c9180c07c0668a3017c066970e20018',
-        'value': 'active',
-        'label': 'Active',
-        'owner': {
-          'id': '2c9180c07c0668a3017c066970d20015',
-          'desc': 'License.Status',
-          'internal': true
+      dateCreated: '2021-09-21T15:52:06Z',
+      customProperties: {},
+      contacts: [],
+      tags: [],
+      lastUpdated: '2021-09-21T15:52:06Z',
+      docs: [],
+      name: 'AM license 2',
+      status: {
+        id: '2c9180c07c0668a3017c066970e20018',
+        value: 'active',
+        label: 'Active',
+        owner: {
+          id: '2c9180c07c0668a3017c066970d20015',
+          desc: 'License.Status',
+          internal: true
         }
       },
-      'supplementaryDocs': [],
-      'openEnded': false,
-      'amendments': [],
-      'orgs': [],
-      'type': {
-        'id': '2c9180c07c0668a3017c066970550001',
-        'value': 'local',
-        'label': 'Local',
-        'owner': {
-          'id': '2c9180c07c0668a3017c06696ffb0000',
-          'desc': 'License.Type',
-          'internal': false
+      supplementaryDocs: [],
+      openEnded: false,
+      amendments: [],
+      orgs: [],
+      type: {
+        id: '2c9180c07c0668a3017c066970550001',
+        value: 'local',
+        label: 'Local',
+        owner: {
+          id: '2c9180c07c0668a3017c06696ffb0000',
+          desc: 'License.Type',
+          internal: false
         }
       },
-      'alternateNames': []
+      alternateNames: []
     },
-    'owner': {
-      'id': '87ad00f4-520e-4400-a980-cb10c3b64171'
+    owner: {
+      id: '87ad00f4-520e-4400-a980-cb10c3b64171'
     },
-    'amendments': [],
-    'status': 'future',
-    'note': 'test note 1'
+    amendments: [],
+    status: 'future',
+    note: 'test note 1'
   },
   {
-    'id': '2c9180c27c0668c1017c090f371f004b',
-    'remoteId': 'f3c7e090-c4de-401d-8f51-e7fbdbbba2e8',
-    'remoteId_object': {
-      'id': 'f3c7e090-c4de-401d-8f51-e7fbdbbba2e8',
-      'endDateSemantics': {
-        'id': '2c9180c07c0668a3017c066970cc0014',
-        'value': 'implicit',
-        'label': 'Implicit',
-        'owner': {
-          'id': '2c9180c07c0668a3017c066970ba0011',
-          'desc': 'License.EndDateSemantics',
-          'internal': true
+    id: '2c9180c27c0668c1017c090f371f004b',
+    remoteId: 'f3c7e090-c4de-401d-8f51-e7fbdbbba2e8',
+    remoteId_object: {
+      id: 'f3c7e090-c4de-401d-8f51-e7fbdbbba2e8',
+      endDateSemantics: {
+        id: '2c9180c07c0668a3017c066970cc0014',
+        value: 'implicit',
+        label: 'Implicit',
+        owner: {
+          id: '2c9180c07c0668a3017c066970ba0011',
+          desc: 'License.EndDateSemantics',
+          internal: true
         }
       },
-      'dateCreated': '2021-09-21T15:51:51Z',
-      'customProperties': {},
-      'contacts': [],
-      'tags': [],
-      'lastUpdated': '2021-09-21T15:51:51Z',
-      'docs': [],
-      'name': 'am license 1',
-      'status': {
-        'id': '2c9180c07c0668a3017c066970e20018',
-        'value': 'active',
-        'label': 'Active',
-        'owner': {
-          'id': '2c9180c07c0668a3017c066970d20015',
-          'desc': 'License.Status',
-          'internal': true
+      dateCreated: '2021-09-21T15:51:51Z',
+      customProperties: {},
+      contacts: [],
+      tags: [],
+      lastUpdated: '2021-09-21T15:51:51Z',
+      docs: [],
+      name: 'am license 1',
+      status: {
+        id: '2c9180c07c0668a3017c066970e20018',
+        value: 'active',
+        label: 'Active',
+        owner: {
+          id: '2c9180c07c0668a3017c066970d20015',
+          desc: 'License.Status',
+          internal: true
         }
       },
-      'supplementaryDocs': [],
-      'startDate': '2021-09-21',
-      'openEnded': false,
-      'amendments': [],
-      'orgs': [],
-      'type': {
-        'id': '2c9180c07c0668a3017c066970550001',
-        'value': 'local',
-        'label': 'Local',
-        'owner': {
-          'id': '2c9180c07c0668a3017c06696ffb0000',
-          'desc': 'License.Type',
-          'internal': false
+      supplementaryDocs: [],
+      startDate: '2021-09-21',
+      openEnded: false,
+      amendments: [],
+      orgs: [],
+      type: {
+        id: '2c9180c07c0668a3017c066970550001',
+        value: 'local',
+        label: 'Local',
+        owner: {
+          id: '2c9180c07c0668a3017c06696ffb0000',
+          desc: 'License.Type',
+          internal: false
         }
       },
-      'alternateNames': []
+      alternateNames: []
     },
-    'owner': {
-      'id': '87ad00f4-520e-4400-a980-cb10c3b64171'
+    owner: {
+      id: '87ad00f4-520e-4400-a980-cb10c3b64171'
     },
-    'amendments': [],
-    'status': 'controlling',
-    'note': 'test note 2'
+    amendments: [],
+    status: 'controlling',
+    note: 'test note 2'
   }
 ];
 

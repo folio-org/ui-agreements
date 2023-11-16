@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { useInfiniteFetch, useParallelBatchFetch } from '@folio/stripes-erm-components';
+import { useParallelBatchFetch, usePrevNextPagination } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/EResource';
@@ -16,6 +16,9 @@ import {
   ERESOURCE_ENTITLEMENTS_ENDPOINT,
   ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT,
   ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT,
+  ENTITLEMENT_AGREEMENTS_LIST_PAGINATION_ID,
+  ENTITLEMENT_OPTIONS_PAGINATION_ID,
+  PACKAGE_CONTENT_PAGINATION_ID,
   resourceClasses
 } from '../../constants';
 import { useAgreementsHelperApp, useAgreementsSettings, useSuppressFromDiscovery } from '../../hooks';
@@ -33,6 +36,29 @@ const EResourceViewRoute = ({
     TagButton,
   } = useAgreementsHelperApp();
 
+  const settings = useAgreementsSettings();
+  const entitlementAgreementsPageSize = parseMclPageSize(settings, 'entitlements');
+  const entitlementOptionsPageSize = parseMclPageSize(settings, 'entitlementOptions');
+  const packageContentsPageSize = parseMclPageSize(settings, 'packageContents');
+
+  const { currentPage: entitlementAgreementsPage } = usePrevNextPagination({
+    pageSize: entitlementAgreementsPageSize, // Only needed for reading back MCL props
+    id: `${ENTITLEMENT_AGREEMENTS_LIST_PAGINATION_ID}-${eresourceId}`,
+    syncToLocation: false
+  });
+
+  const { currentPage: entitlementOptionsPage } = usePrevNextPagination({
+    pageSize: entitlementOptionsPageSize, // Only needed for reading back MCL props
+    id: `${ENTITLEMENT_OPTIONS_PAGINATION_ID}-${eresourceId}`,
+    syncToLocation: false
+  });
+
+  const { currentPage: packageContentsPage } = usePrevNextPagination({
+    pageSize: packageContentsPageSize, // Only needed for reading back MCL props
+    id: `${PACKAGE_CONTENT_PAGINATION_ID}-${eresourceId}`,
+    syncToLocation: false
+  });
+
   const isSuppressFromDiscoveryEnabled = useSuppressFromDiscovery();
 
   const eresourcePath = ERESOURCE_ENDPOINT(eresourceId);
@@ -43,7 +69,6 @@ const EResourceViewRoute = ({
     () => ky.get(eresourcePath).json()
   );
 
-  const settings = useAgreementsSettings();
 
   const entitlementsPath = ERESOURCE_ENTITLEMENTS_ENDPOINT(eresourceId);
   const entitlementOptionsPath = ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT(eresourceId);
@@ -52,26 +77,24 @@ const EResourceViewRoute = ({
   const eresourceAgreementParams = useMemo(() => (
     generateKiwtQueryParams(
       {
-        perPage: parseMclPageSize(settings, 'entitlements')
+        page: entitlementAgreementsPage,
+        perPage: entitlementAgreementsPageSize
       },
       {}
     )
-  ), [settings]);
+  ), [entitlementAgreementsPageSize, entitlementAgreementsPage]);
 
   const {
-    infiniteQueryObject: {
-      fetchNextPage: fetchNextEntitlementsPage,
-      isLoading: areEntitlementsLoading
-    },
-    results: entitlements = [],
-    total: entitlementsCount = 0
-  } = useInfiniteFetch(
+    data: { results: entitlements = [], totalRecords: entitlementsCount = 0 } = {},
+    isLoading: areEntitlementsLoading
+  } = useQuery(
     [entitlementsPath, eresourceAgreementParams, 'ui-agreements', 'EresourceViewRoute', 'getEntitlements'],
-    ({ pageParam = 0 }) => {
-      const params = [...eresourceAgreementParams, `offset=${pageParam}`];
+    () => {
+      const params = [...eresourceAgreementParams];
       return ky.get(`${entitlementsPath}?${params?.join('&')}`).json();
-    }
+    },
   );
+
 
   // RELATED ENTITLEMENTS FOR ERESOURCE BATCH FETCH
   const { items: relatedEntitlements, isLoading: areRelatedEntitlementsLoading } = useParallelBatchFetch({
@@ -82,27 +105,25 @@ const EResourceViewRoute = ({
     }
   });
 
+
   // ENTITLEMENT OPTIONS FOR ERESOURCE INFINITE FETCH
   const eresourceEntitlementOptionsParams = useMemo(() => (
     generateKiwtQueryParams(
       {
-        perPage: parseMclPageSize(settings, 'entitlementOptions')
+        page: entitlementOptionsPage,
+        perPage: entitlementOptionsPageSize
       },
       {}
     )
-  ), [settings]);
+  ), [entitlementOptionsPageSize, entitlementOptionsPage]);
 
   const {
-    infiniteQueryObject: {
-      fetchNextPage: fetchNextEntitlementOptionsPage,
-      isLoading: areEntitlementOptionsLoading
-    },
-    results: entitlementOptions = [],
-    total: entitlementOptionsCount = 0
-  } = useInfiniteFetch(
+    data: { results: entitlementOptions = [], totalRecords: entitlementOptionsCount = 0 } = {},
+    isLoading: areEntitlementOptionsLoading
+  } = useQuery(
     [entitlementOptionsPath, eresourceEntitlementOptionsParams, 'ui-agreements', 'EresourceViewRoute', 'getEntitlementOptions'],
-    ({ pageParam = 0 }) => {
-      const params = [...eresourceEntitlementOptionsParams, `offset=${pageParam}`];
+    () => {
+      const params = [...eresourceEntitlementOptionsParams];
       return ky.get(`${entitlementOptionsPath}?${params?.join('&')}`).json();
     }
   );
@@ -121,23 +142,21 @@ const EResourceViewRoute = ({
         sort: [{
           path: 'pti.titleInstance.name'
         }],
-        perPage: parseMclPageSize(settings, 'packageContents')
+        page: packageContentsPage,
+        perPage: packageContentsPageSize
       },
       {}
     )
-  ), [eresourceId, settings]);
+  ), [eresourceId, packageContentsPage, packageContentsPageSize]);
+
 
   const {
-    infiniteQueryObject: {
-      fetchNextPage: fetchNextContentsPage,
-      isLoading: areContentsLoading
-    },
-    results: packageContents = [],
-    total: packageContentsCount = 0
-  } = useInfiniteFetch(
+    data: { results: packageContents = [], totalRecords: packageContentsCount = 0 } = {},
+    isLoading: areContentsLoading
+  } = useQuery(
     [packageContentPath, packageContentsParams, 'ui-agreements', 'EresourceViewRoute', 'getPackageContents'],
-    ({ pageParam = 0 }) => {
-      const params = [...packageContentsParams, `offset=${pageParam}`];
+    () => {
+      const params = [...packageContentsParams];
       return ky.get(`${packageContentPath}?${params?.join('&')}`).json();
     }
   );
@@ -215,9 +234,6 @@ const EResourceViewRoute = ({
         ...handlers,
         isSuppressFromDiscoveryEnabled,
         onFilterPackageContents: (path) => setContentFilter(path),
-        onNeedMoreEntitlements: (_askAmount, index) => fetchNextEntitlementsPage({ pageParam: index }),
-        onNeedMoreEntitlementOptions: (_askAmount, index) => fetchNextEntitlementOptionsPage({ pageParam: index }),
-        onNeedMorePackageContents: (_askAmount, index) => fetchNextContentsPage({ pageParam: index }),
         onClose: handleClose,
         onEdit: handleEdit,
         onEResourceClick: handleEResourceClick,

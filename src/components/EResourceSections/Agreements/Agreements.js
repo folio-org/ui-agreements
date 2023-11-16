@@ -11,38 +11,47 @@ import {
 import { resourceClasses } from '../../../constants';
 import EntitlementAgreementsList from '../../EntitlementsAgreementsList';
 
-export default class Agreements extends React.Component {
-  static propTypes = {
-    data: PropTypes.shape({
-      areEntitlementsLoading: PropTypes.bool,
-      areRelatedEntitlementsLoading: PropTypes.bool,
-      entitlements: PropTypes.arrayOf(PropTypes.object),
-      entitlementsCount: PropTypes.number,
-      eresource: PropTypes.shape({
-        class: PropTypes.string,
-        pti: PropTypes.shape({
-          titleInstance: PropTypes.shape({
-            name: PropTypes.string,
-          })
-        }),
-        type: PropTypes.object,
+const propTypes = {
+  data: PropTypes.shape({
+    areEntitlementsLoading: PropTypes.bool,
+    areRelatedEntitlementsLoading: PropTypes.bool,
+    entitlements: PropTypes.arrayOf(PropTypes.object),
+    entitlementsCount: PropTypes.number,
+    eresource: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      class: PropTypes.string,
+      pti: PropTypes.shape({
+        titleInstance: PropTypes.shape({
+          name: PropTypes.string,
+        })
       }),
-      relatedEntitlements: PropTypes.arrayOf(PropTypes.object),
+      type: PropTypes.object,
     }),
-    handlers: PropTypes.shape({
-      onNeedMoreEntitlements: PropTypes.func,
-    }),
-    headline: PropTypes.node,
-    id: PropTypes.string,
-    isEmptyMessage: PropTypes.node,
-    renderRelatedEntitlements: PropTypes.bool,
-    visibleColumns: PropTypes.arrayOf(PropTypes.string),
-  };
+    relatedEntitlements: PropTypes.arrayOf(PropTypes.object),
+  }),
+  headline: PropTypes.node,
+  id: PropTypes.string,
+  isEmptyMessage: PropTypes.node,
+  renderRelatedEntitlements: PropTypes.bool,
+  visibleColumns: PropTypes.arrayOf(PropTypes.string),
+};
 
-  renderEntitlementAgreements = () => {
-    const { areEntitlementsLoading, entitlements, entitlementsCount } = this.props.data;
-    const { handlers: { onNeedMoreEntitlements }, headline, isEmptyMessage, visibleColumns } = this.props;
-
+const Agreements = ({
+  data: {
+    entitlements,
+    eresource,
+    relatedEntitlements,
+    areEntitlementsLoading,
+    areRelatedEntitlementsLoading,
+    entitlementsCount
+  },
+  renderRelatedEntitlements,
+  id,
+  headline,
+  isEmptyMessage,
+  visibleColumns
+}) => {
+  const renderEntitlementAgreements = () => {
     if (areEntitlementsLoading || !entitlements) {
       return <Spinner />;
     }
@@ -50,20 +59,17 @@ export default class Agreements extends React.Component {
     return (
       <EntitlementAgreementsList
         entitlements={entitlements ?? []}
+        eresourceId={eresource.id}
         headline={headline}
         id="pci-agreements-list"
         isEmptyMessage={isEmptyMessage}
-        onNeedMoreEntitlements={onNeedMoreEntitlements}
         totalCount={entitlementsCount}
         visibleColumns={visibleColumns}
       />
     );
-  }
+  };
 
-  renderRelatedEntitlementAgreements = () => {
-    const { areRelatedEntitlementsLoading, eresource, relatedEntitlements = [] } = this.props.data;
-    const { renderRelatedEntitlements } = this.props;
-
+  const renderRelatedEntitlementAgreements = () => {
     if (!renderRelatedEntitlements) {
       return null;
     }
@@ -84,11 +90,9 @@ export default class Agreements extends React.Component {
         visibleColumns={['name', 'type', 'package', 'startDate', 'endDate']}
       />
     );
-  }
+  };
 
-  renderBadge = () => {
-    const { areEntitlementsLoading, areRelatedEntitlementsLoading, entitlements, entitlementsCount, relatedEntitlements } = this.props.data;
-
+  const renderBadge = () => {
     return (
       entitlements &&
       relatedEntitlements &&
@@ -97,31 +101,25 @@ export default class Agreements extends React.Component {
     ) ?
       <Badge>{entitlementsCount + relatedEntitlements?.length}</Badge> :
       <Spinner />;
-  }
+  };
 
-  render() {
-    const {
-      data: {
-        entitlements,
-        eresource,
-      },
-      id,
-    } = this.props;
+  const label = (eresource.class === resourceClasses.PACKAGE) ?
+    <FormattedMessage id="ui-agreements.eresources.packageAgreements" /> :
+    <FormattedMessage id="ui-agreements.eresources.erAgreements" />;
 
-    const label = (eresource.class === resourceClasses.PACKAGE) ?
-      <FormattedMessage id="ui-agreements.eresources.packageAgreements" /> :
-      <FormattedMessage id="ui-agreements.eresources.erAgreements" />;
+  return (
+    <Accordion
+      displayWhenClosed={renderBadge()}
+      displayWhenOpen={renderBadge()}
+      id={id}
+      label={label}
+    >
+      {renderEntitlementAgreements()}
+      {renderRelatedEntitlementAgreements()}
+    </Accordion>
+  );
+};
 
-    return (
-      <Accordion
-        displayWhenClosed={this.renderBadge()}
-        displayWhenOpen={this.renderBadge()}
-        id={id}
-        label={label}
-      >
-        {this.renderEntitlementAgreements(entitlements)}
-        {this.renderRelatedEntitlementAgreements()}
-      </Accordion>
-    );
-  }
-}
+Agreements.propTypes = propTypes;
+export default Agreements;
+

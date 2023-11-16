@@ -18,3 +18,4 @@ export {
 } from './defaultQIndex';
 
 export * from './panesetConfigs';
+export * from './paginationIds';
