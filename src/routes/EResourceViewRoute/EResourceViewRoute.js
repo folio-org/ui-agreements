@@ -37,7 +37,7 @@ const EResourceViewRoute = ({
   } = useAgreementsHelperApp();
 
   const { settings } = useAgreementsSettings();
-  const entitlementAgreementsPageSize = parseMclPageSize(settings, 'entitlementOptions');
+  const entitlementAgreementsPageSize = parseMclPageSize(settings, 'entitlements');
   const entitlementOptionsPageSize = parseMclPageSize(settings, 'entitlementOptions');
   const packageContentsPageSize = parseMclPageSize(settings, 'packageContents');
 
