@@ -1772,8 +1772,6 @@ const handlers = {
   onExportEResourcesAsJSON: () => { },
   onExportEResourcesAsKBART: () => { },
   onFilterEResources: () => { },
-  onNeedMoreEResources: () => { },
-  onNeedMoreLines: () => { },
   onViewAgreementLine: () => { },
 };
 

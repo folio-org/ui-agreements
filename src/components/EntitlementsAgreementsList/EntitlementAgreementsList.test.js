@@ -416,6 +416,7 @@ describe('EntitlementAgreementsList', () => {
       <MemoryRouter>
         <EntitlementAgreementsList
           entitlements={entitlements}
+          eresourceId="testId" // Not 100% sure we don't need a proper one here *shrug* if it's a problem regrab the data
           id="pci-agreements-list"
           visibleColumns={['name', 'type', 'package', 'startDate', 'eresource', 'coverage', 'isCustomCoverage', 'acqMethod', 'endDate']}
         />

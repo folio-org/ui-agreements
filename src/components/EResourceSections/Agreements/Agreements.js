@@ -81,6 +81,7 @@ const Agreements = ({
     return (
       <EntitlementAgreementsList
         entitlements={relatedEntitlements}
+        eresourceId={eresource.id}
         headline={<FormattedMessage
           id="ui-agreements.eresources.otherPlatformPackages"
           values={{ name: eresource?.pti?.titleInstance?.name }}

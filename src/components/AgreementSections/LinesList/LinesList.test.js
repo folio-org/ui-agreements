@@ -6,7 +6,6 @@ import LinesList from './LinesList';
 import agreement from './testResources';
 
 const onViewAgreementLine = jest.fn();
-const onNeedMoreLines = jest.fn();
 
 describe('LinesList', () => {
   beforeEach(() => {
@@ -14,7 +13,6 @@ describe('LinesList', () => {
       <MemoryRouter>
         <LinesList
           agreement={agreement}
-          onNeedMoreLines={onNeedMoreLines}
           onViewAgreementLine={onViewAgreementLine}
         />
       </MemoryRouter>,

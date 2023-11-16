@@ -8,29 +8,36 @@ import CoveredEResourcesList from '../CoveredEResourcesList';
 import LinesList from '../LinesList';
 import { urls } from '../../utilities';
 
-
-export default class Lines extends React.Component {
-  static propTypes = {
-    agreement: PropTypes.shape({
-      agreementLinesCount: PropTypes.number,
-      eresources: PropTypes.arrayOf(PropTypes.object),
-      id: PropTypes.string,
-      lines: PropTypes.arrayOf(PropTypes.object),
-      orderLines: PropTypes.arrayOf(PropTypes.object),
-    }).isRequired,
-    eresourcesFilterPath: PropTypes.string,
-    handlers: PropTypes.shape({
-      onExportEResourcesAsJSON: PropTypes.func.isRequired,
-      onExportEResourcesAsKBART: PropTypes.func.isRequired,
-      onFilterEResources: PropTypes.func.isRequired,
-      onNeedMoreEResources: PropTypes.func.isRequired,
-      onNeedMoreLines: PropTypes.func.isRequired,
-      onViewAgreementLine: PropTypes.func.isRequired,
-    }).isRequired,
+const propTypes = {
+  agreement: PropTypes.shape({
+    agreementLinesCount: PropTypes.number,
+    eresources: PropTypes.arrayOf(PropTypes.object),
     id: PropTypes.string,
-  }
+    lines: PropTypes.arrayOf(PropTypes.object),
+    orderLines: PropTypes.arrayOf(PropTypes.object),
+  }).isRequired,
+  eresourcesFilterPath: PropTypes.string,
+  handlers: PropTypes.shape({
+    onExportEResourcesAsJSON: PropTypes.func.isRequired,
+    onExportEResourcesAsKBART: PropTypes.func.isRequired,
+    onFilterEResources: PropTypes.func.isRequired,
+    onViewAgreementLine: PropTypes.func.isRequired,
+  }).isRequired,
+  id: PropTypes.string,
+};
 
-  getActionMenu = () => {
+const Lines = ({
+  agreement,
+  eresourcesFilterPath,
+  handlers,
+  id,
+}) => {
+  const renderBadge = () => {
+    const count = agreement?.agreementLinesCount;
+    return count !== undefined ? <Badge data-test-agreement-lines-count={count}>{count}</Badge> : <Spinner />;
+  };
+
+  const getActionMenu = () => {
     return (
       <>
         <Dropdown
@@ -43,7 +50,7 @@ export default class Lines extends React.Component {
               <Button
                 buttonStyle="dropdownItem"
                 id="add-agreement-line-button"
-                to={urls.agreementLineCreate(this.props.agreement.id)}
+                to={urls.agreementLineCreate(agreement.id)}
               >
                 <Icon icon="plus-sign">
                   <FormattedMessage id="ui-agreements.agreementLines.newLine" />
@@ -53,7 +60,7 @@ export default class Lines extends React.Component {
             <Button
               buttonStyle="dropdownItem"
               id="agreement-line-search"
-              to={`${urls.agreementLines()}?filters=agreement.${this.props.agreement.id}`}
+              to={`${urls.agreementLines()}?filters=agreement.${agreement.id}`}
             >
               <Icon icon="search">
                 <FormattedMessage id="ui-agreements.agreementLines.viewInSearch" />
@@ -61,45 +68,33 @@ export default class Lines extends React.Component {
             </Button>
           </DropdownMenu>
         </Dropdown>
-        {this.renderBadge()}
+        {renderBadge()}
       </>
     );
-  }
+  };
 
-  renderBadge = () => {
-    const count = this.props.agreement?.agreementLinesCount;
-    return count !== undefined ? <Badge data-test-agreement-lines-count={count}>{count}</Badge> : <Spinner />;
-  }
+  return (
+    <Accordion
+      displayWhenClosed={renderBadge()}
+      displayWhenOpen={getActionMenu()}
+      id={id}
+      label={<FormattedMessage id="ui-agreements.agreementLines" />}
+    >
+      <LinesList
+        agreement={agreement}
+        onViewAgreementLine={handlers.onViewAgreementLine}
+      />
+      <CoveredEResourcesList
+        agreement={agreement}
+        eresourcesFilterPath={eresourcesFilterPath}
+        onExportEResourcesAsJSON={handlers.onExportEResourcesAsJSON}
+        onExportEResourcesAsKBART={handlers.onExportEResourcesAsKBART}
+        onFilterEResources={handlers.onFilterEResources}
+        onNeedMoreEResources={handlers.onNeedMoreEResources}
+      />
+    </Accordion>
+  );
+};
 
-  render() {
-    const {
-      agreement,
-      eresourcesFilterPath,
-      handlers,
-      id,
-    } = this.props;
-
-    return (
-      <Accordion
-        displayWhenClosed={this.renderBadge()}
-        displayWhenOpen={this.getActionMenu()}
-        id={id}
-        label={<FormattedMessage id="ui-agreements.agreementLines" />}
-      >
-        <LinesList
-          agreement={agreement}
-          onNeedMoreLines={handlers.onNeedMoreLines}
-          onViewAgreementLine={handlers.onViewAgreementLine}
-        />
-        <CoveredEResourcesList
-          agreement={agreement}
-          eresourcesFilterPath={eresourcesFilterPath}
-          onExportEResourcesAsJSON={handlers.onExportEResourcesAsJSON}
-          onExportEResourcesAsKBART={handlers.onExportEResourcesAsKBART}
-          onFilterEResources={handlers.onFilterEResources}
-          onNeedMoreEResources={handlers.onNeedMoreEResources}
-        />
-      </Accordion>
-    );
-  }
-}
+Lines.propTypes = propTypes;
+export default Lines;
