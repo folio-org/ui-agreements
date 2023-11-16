@@ -26,14 +26,14 @@ const { RESULT_COUNT_INCREMENT } = resultCount;
 const propTypes = {
   data: PropTypes.shape({
     areContentsLoading: PropTypes.bool,
+    eresource: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
     packageContents: PropTypes.arrayOf(PropTypes.object),
     packageContentsCount: PropTypes.number,
     packageContentsFilter: PropTypes.string,
     searchString: PropTypes.string
   }),
-  eresource: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-  }).isRequired,
   id: PropTypes.string,
   onFilterPackageContents: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
@@ -41,13 +41,13 @@ const propTypes = {
 
 const PackageContents = ({
   data: {
+    eresource: { id: eresourceId },
     areContentsLoading,
     packageContents,
     packageContentsCount,
     packageContentsFilter,
     searchString
   },
-  eresource: { id: eresourceId },
   id,
   isLoading,
   onFilterPackageContents

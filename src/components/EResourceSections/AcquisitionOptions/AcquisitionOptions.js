@@ -23,12 +23,10 @@ const propTypes = {
     entitlementOptions: PropTypes.arrayOf(PropTypes.object),
     entitlementOptionsCount: PropTypes.number,
     eresource: PropTypes.shape({
+      id: PropTypes.string.isRequired,
       name: PropTypes.string,
     }),
   }),
-  eresource: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-  }).isRequired,
   handlers: PropTypes.shape({
     onEResourceClick: PropTypes.func,
   }),
@@ -37,8 +35,12 @@ const propTypes = {
 };
 
 const AcquisitionOptions = ({
-  data: { areEntitlementOptionsLoading, entitlementOptions, entitlementOptionsCount },
-  eresource: { id: eresourceId },
+  data: {
+    areEntitlementOptionsLoading,
+    entitlementOptions,
+    entitlementOptionsCount,
+    eresource: { id: eresourceId },
+  },
   handlers: { onEResourceClick },
   id,
   isLoading
@@ -64,10 +66,10 @@ const AcquisitionOptions = ({
   };
 
   const onRowClick = (_, row) => {
-    const { class: clazz } = row;
+    const { id: rowId, class: clazz } = row;
 
     // Redirect to Package view if package, title view otherwise
-    onEResourceClick(id, clazz === resourceClasses?.PACKAGE ? 'PKG' : 'TITLE');
+    onEResourceClick(rowId, clazz === resourceClasses?.PACKAGE ? 'PKG' : 'TITLE');
   };
 
   const renderBadge = () => {
