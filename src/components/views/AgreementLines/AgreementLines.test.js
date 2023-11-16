@@ -7,7 +7,7 @@ import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
 import translationsProperties from '../../../../test/helpers';
 
 import AgreementLines from './AgreementLines';
-import { data, history, searchField } from './testResources';
+import { data, history } from './testResources';
 
 
 jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
@@ -36,10 +36,8 @@ describe('Agreement lines', () => {
         <AgreementLines
           data={data}
           history={history}
-          onNeedMoreData={jest.fn()}
           queryGetter={jest.fn()}
           querySetter={jest.fn()}
-          searchField={searchField}
           source={{
             totalCount: jest.fn(() => data.agreementLines.length),
             loaded: jest.fn(() => true),

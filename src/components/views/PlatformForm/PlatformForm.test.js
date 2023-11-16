@@ -7,15 +7,15 @@ import PlatformForm from './PlatformForm';
 const onSubmitMock = jest.fn();
 const onCloseMock = jest.fn();
 const initialValues = {
-  'id': 'fc990353-7148-4cc7-9bc4-731c2db995b3',
-  'dateCreated': '2021-09-30T02:13:32Z',
-  'lastUpdated': '2021-09-30T15:26:35Z',
-  'name': 'ACS Publications',
-  'localCode': 'test code',
-  'locators': [
+  id: 'fc990353-7148-4cc7-9bc4-731c2db995b3',
+  dateCreated: '2021-09-30T02:13:32Z',
+  lastUpdated: '2021-09-30T15:26:35Z',
+  name: 'ACS Publications',
+  localCode: 'test code',
+  locators: [
     {
-      'id': '7ac48264-24a5-41ca-9c13-2abd92ab207a',
-      'domainName': 'pubs.acs.org'
+      id: '7ac48264-24a5-41ca-9c13-2abd92ab207a',
+      domainName: 'pubs.acs.org'
     }
   ]
 };

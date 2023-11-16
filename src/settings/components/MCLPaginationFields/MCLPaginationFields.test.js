@@ -18,7 +18,7 @@ describe('MCLPaginationFields', () => {
     );
 
     for (const mcl of mclList) {
-      await TextField({ 'id': `${mcl}-page-size-id` }).exists();
+      await TextField({ id: `${mcl}-page-size-id` }).exists();
     }
   });
 
@@ -31,7 +31,7 @@ describe('MCLPaginationFields', () => {
 
     await waitFor(async () => {
       for (const mcl of mclList) {
-        await TextField({ 'id': `${mcl}-page-size-id` }).fillIn('15');
+        await TextField({ id: `${mcl}-page-size-id` }).fillIn('15');
       }
     });
 
@@ -43,12 +43,12 @@ describe('MCLPaginationFields', () => {
     expect(onSubmit.mock.calls.length).toBe(1);
 
     const expectedPayload = {
-      'pageSize':{
-        'agreementEresources':15,
-        'agreementLines':15,
-        'entitlementOptions':15,
-        'entitlements':15,
-        'packageContents':15
+      pageSize: {
+        agreementEresources: 15,
+        agreementLines: 15,
+        entitlementOptions: 15,
+        entitlements: 15,
+        packageContents: 15
       }
     };
 

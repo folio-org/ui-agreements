@@ -8,260 +8,259 @@ import AcquisitionOptions from './AcquisitionOptions';
 
 jest.mock('../../AddToBasketButton', () => () => <div>AddToBasketButton</div>);
 
-const onNeedMoreEntitlementOptions = jest.fn();
 const onEResourceClick = jest.fn();
 
 const data = {
-  'eresource':{
-    'id':'825331c3-c137-44e4-bd6d-75245969ffdc',
-    'subType':{
-      'id':'2c91809a7722d6c7017722d956450015',
-      'value':'electronic',
-      'label':'Electronic'
+  eresource:{
+    id: '825331c3-c137-44e4-bd6d-75245969ffdc',
+    subType: {
+      id: '2c91809a7722d6c7017722d956450015',
+      value: 'electronic',
+      label: 'Electronic'
     },
-    'dateCreated':'2021-01-21T03:09:56Z',
-    'tags':[
+    dateCreated: '2021-01-21T03:09:56Z',
+    tags: [
 
     ],
-    'lastUpdated':'2021-01-21T03:09:56Z',
-    'publicationType':{
-      'id':'2c91809a7722d6c7017722e57fbe0049',
-      'value':'book',
-      'label':'Book'
+    lastUpdated: '2021-01-21T03:09:56Z',
+    publicationType: {
+      id: '2c91809a7722d6c7017722e57fbe0049',
+      value: 'book',
+      label: 'Book'
     },
-    'identifiers':[
+    identifiers: [
       {
-        'title':{
-          'id':'825331c3-c137-44e4-bd6d-75245969ffdc'
+        title: {
+          id: '825331c3-c137-44e4-bd6d-75245969ffdc'
         },
-        'status':{
-          'id':'2c91809a7722d6c7017722d96af70047',
-          'value':'approved',
-          'label':'approved'
+        status: {
+          id: '2c91809a7722d6c7017722d96af70047',
+          value: 'approved',
+          label: 'approved'
         },
-        'identifier':{
-          'value':'9781845425678',
-          'ns':{
-            'value':'isbn'
+        identifier: {
+          value: '9781845425678',
+          ns: {
+            value: 'isbn'
           }
         }
       }
     ],
-    'coverage':[
+    coverage: [
 
     ],
-    'name':'"Institutions, industrial upgrading, and economic performance in Japan: the ""flying-geese"" paradigm of catch-up growth"',
-    'type':{
-      'id':'2c91809a7722d6c7017722d9564b0017',
-      'value':'monograph',
-      'label':'Monograph'
+    name: '"Institutions, industrial upgrading, and economic performance in Japan: the ""flying-geese"" paradigm of catch-up growth"',
+    type: {
+      id: '2c91809a7722d6c7017722d9564b0017',
+      value: 'monograph',
+      label: 'Monograph'
     },
-    'suppressFromDiscovery':false,
-    'work':{
-      'id':'2b2e0e64-d88a-4463-bb2f-342a09c6cf5d'
+    suppressFromDiscovery: false,
+    work: {
+      id: '2b2e0e64-d88a-4463-bb2f-342a09c6cf5d'
     },
-    'class':'org.olf.kb.TitleInstance',
-    'longName':'"Institutions, industrial upgrading, and economic performance in Japan: the ""flying-geese"" paradigm of catch-up growth"',
-    'relatedTitles':[
+    class: 'org.olf.kb.TitleInstance',
+    longName: '"Institutions, industrial upgrading, and economic performance in Japan: the ""flying-geese"" paradigm of catch-up growth"',
+    relatedTitles: [
 
     ]
   },
-  'entitlementOptions':[
+  entitlementOptions: [
     {
-      'id':'6b8ac896-324c-4642-b724-2915c65dd953',
-      'class':'org.olf.kb.PackageContentItem',
-      'name':"'\"Institutions, industrial upgrading, and economic performance in Ja...' on Platform 'Elgaronline' in Package Edward Elgar:Edward Elgar E-Book Archive in Business & Management, ...",
-      'suppressFromDiscovery':false,
-      'tags':[
+      id: '6b8ac896-324c-4642-b724-2915c65dd953',
+      class: 'org.olf.kb.PackageContentItem',
+      name: "'\"Institutions, industrial upgrading, and economic performance in Ja...' on Platform 'Elgaronline' in Package Edward Elgar:Edward Elgar E-Book Archive in Business & Management, ...",
+      suppressFromDiscovery: false,
+      tags: [
 
       ],
-      'customCoverage':false,
-      '_object':{
-        'id':'6b8ac896-324c-4642-b724-2915c65dd953',
-        'accessStart':'2008-01-01',
-        'dateCreated':'2021-01-21T03:09:56Z',
-        'tags':[
+      customCoverage: false,
+      _object: {
+        id: '6b8ac896-324c-4642-b724-2915c65dd953',
+        accessStart: '2008-01-01',
+        dateCreated: '2021-01-21T03:09:56Z',
+        tags: [
 
         ],
-        'lastUpdated':'2021-01-21T03:10:38Z',
-        'depth':'Fulltext',
-        'coverage':[
+        lastUpdated: '2021-01-21T03:10:38Z',
+        depth: 'Fulltext',
+        coverage: [
 
         ],
-        'pti':{
-          'id':'48be9c5f-f97a-4e1c-83f5-e7b80a58c231',
-          'dateCreated':'2021-01-21T03:09:56Z',
-          'tags':[
+        pti: {
+          id: '48be9c5f-f97a-4e1c-83f5-e7b80a58c231',
+          dateCreated: '2021-01-21T03:09:56Z',
+          tags: [
 
           ],
-          'lastUpdated':'2021-01-21T03:09:56Z',
-          'platform':{
-            'id':'cada9bdc-9930-45a3-a54f-293a35f0de78',
-            'dateCreated':'2021-01-21T03:09:13Z',
-            'lastUpdated':'2021-01-21T03:09:13Z',
-            'name':'Elgaronline',
-            'locators':[
+          lastUpdated: '2021-01-21T03:09:56Z',
+          platform: {
+            id: 'cada9bdc-9930-45a3-a54f-293a35f0de78',
+            dateCreated: '2021-01-21T03:09:13Z',
+            lastUpdated: '2021-01-21T03:09:13Z',
+            name: 'Elgaronline',
+            locators: [
               {
-                'id':'ac20a97a-a5ef-44eb-86eb-f425ef91cbc8',
-                'domainName':'www.elgaronline.com'
+                id: 'ac20a97a-a5ef-44eb-86eb-f425ef91cbc8',
+                domainName: 'www.elgaronline.com'
               }
             ]
           },
-          'templatedUrls':[
+          templatedUrls: [
             {
-              'id':'caac3447-cef5-4d86-8b91-30edca766da3',
-              'url':'https://www.elgaronline.com/view/9781843769590.xml',
-              'name':'defaultUrl',
-              'resource':{
-                'id':'48be9c5f-f97a-4e1c-83f5-e7b80a58c231'
+              id: 'caac3447-cef5-4d86-8b91-30edca766da3',
+              url: 'https://www.elgaronline.com/view/9781843769590.xml',
+              name: 'defaultUrl',
+              resource: {
+                id: '48be9c5f-f97a-4e1c-83f5-e7b80a58c231'
               }
             }
           ],
-          'coverage':[
+          coverage: [
 
           ],
-          'titleInstance':{
-            'id':'825331c3-c137-44e4-bd6d-75245969ffdc',
-            'subType':{
-              'id':'2c91809a7722d6c7017722d956450015',
-              'value':'electronic',
-              'label':'Electronic'
+          titleInstance: {
+            id: '825331c3-c137-44e4-bd6d-75245969ffdc',
+            subType: {
+              id: '2c91809a7722d6c7017722d956450015',
+              value: 'electronic',
+              label: 'Electronic'
             },
-            'dateCreated':'2021-01-21T03:09:56Z',
-            'tags':[
+            dateCreated: '2021-01-21T03:09:56Z',
+            tags: [
 
             ],
-            'lastUpdated':'2021-01-21T03:09:56Z',
-            'publicationType':{
-              'id':'2c91809a7722d6c7017722e57fbe0049',
-              'value':'book',
-              'label':'Book'
+            lastUpdated: '2021-01-21T03:09:56Z',
+            publicationType: {
+              id: '2c91809a7722d6c7017722e57fbe0049',
+              value: 'book',
+              label: 'Book'
             },
-            'identifiers':[
+            identifiers: [
               {
-                'title':{
-                  'id':'825331c3-c137-44e4-bd6d-75245969ffdc'
+                title: {
+                  id: '825331c3-c137-44e4-bd6d-75245969ffdc'
                 },
-                'status':{
-                  'id':'2c91809a7722d6c7017722d96af70047',
-                  'value':'approved',
-                  'label':'approved'
+                status: {
+                  id: '2c91809a7722d6c7017722d96af70047',
+                  value: 'approved',
+                  label: 'approved'
                 },
-                'identifier':{
-                  'value':'9781845425678',
-                  'ns':{
-                    'value':'isbn'
+                identifier: {
+                  value: '9781845425678',
+                  ns: {
+                    value: 'isbn'
                   }
                 }
               }
             ],
-            'coverage':[
+            coverage: [
 
             ],
-            'name':'"Institutions, industrial upgrading, and economic performance in Japan: the ""flying-geese"" paradigm of catch-up growth"',
-            'type':{
-              'id':'2c91809a7722d6c7017722d9564b0017',
-              'value':'monograph',
-              'label':'Monograph'
+            name: '"Institutions, industrial upgrading, and economic performance in Japan: the ""flying-geese"" paradigm of catch-up growth"',
+            type: {
+              id: '2c91809a7722d6c7017722d9564b0017',
+              value: 'monograph',
+              label: 'Monograph'
             },
-            'suppressFromDiscovery':false,
-            'work':{
-              'id':'2b2e0e64-d88a-4463-bb2f-342a09c6cf5d'
+            suppressFromDiscovery: false,
+            work: {
+              id: '2b2e0e64-d88a-4463-bb2f-342a09c6cf5d'
             },
-            'class':'org.olf.kb.TitleInstance',
-            'longName':'"Institutions, industrial upgrading, and economic performance in Japan: the ""flying-geese"" paradigm of catch-up growth"',
-            'relatedTitles':[
+            class: 'org.olf.kb.TitleInstance',
+            longName: '"Institutions, industrial upgrading, and economic performance in Japan: the ""flying-geese"" paradigm of catch-up growth"',
+            relatedTitles: [
 
             ]
           },
-          'url':'https://www.elgaronline.com/view/9781843769590.xml',
-          'name':"'\"Institutions, industrial upgrading, and economic performance in Japan: the \"\"flying-geese\"\" paradigm of ca...' on Platform 'Elgaronline'",
-          'suppressFromDiscovery':false,
-          'class':'org.olf.kb.PlatformTitleInstance',
-          'longName':"'\"Institutions, industrial upgrading, and economic performance in Japan: the \"\"flying-geese\"\" paradigm of catch-up growth\"' on Platform 'Elgaronline'"
+          url: 'https://www.elgaronline.com/view/9781843769590.xml',
+          name: "'\"Institutions, industrial upgrading, and economic performance in Japan: the \"\"flying-geese\"\" paradigm of ca...' on Platform 'Elgaronline'",
+          suppressFromDiscovery: false,
+          class: 'org.olf.kb.PlatformTitleInstance',
+          longName: "'\"Institutions, industrial upgrading, and economic performance in Japan: the \"\"flying-geese\"\" paradigm of catch-up growth\"' on Platform 'Elgaronline'"
         },
-        'pkg':{
-          'id':'bc72234d-8a0a-4747-a89b-2e246ffa614f',
-          'dateCreated':'2021-01-21T03:09:13Z',
-          'lastUpdated':'2021-01-21T03:09:13Z',
-          'vendor':{
-            'id':'f130b745-1824-4e3c-bcfa-31335f43f9a6',
-            'name':'Edward Elgar',
-            'orgsUuid_object':{
-              'error':400,
-              'message':'Bad Request'
+        pkg: {
+          id: 'bc72234d-8a0a-4747-a89b-2e246ffa614f',
+          dateCreated: '2021-01-21T03:09:13Z',
+          lastUpdated: '2021-01-21T03:09:13Z',
+          vendor: {
+            id: 'f130b745-1824-4e3c-bcfa-31335f43f9a6',
+            name: 'Edward Elgar',
+            orgsUuid_object: {
+              error: 400,
+              message: 'Bad Request'
             }
           },
-          'source':'GOKb',
-          'name':'Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz',
-          'suppressFromDiscovery':false,
-          'reference':'Edward_Elgar:Edward_Elgar_E-Book_Archive_in_Business_&_Management,_Economics_and_Finance:Nationalliz',
-          'resourceCount':2540,
-          'class':'org.olf.kb.Pkg'
+          source: 'GOKb',
+          name: 'Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz',
+          suppressFromDiscovery: false,
+          reference: 'Edward_Elgar:Edward_Elgar_E-Book_Archive_in_Business_&_Management,_Economics_and_Finance:Nationalliz',
+          resourceCount: 2540,
+          class: 'org.olf.kb.Pkg'
         },
-        'addedTimestamp':1611198553495,
-        'name':"'\"Institutions, industrial upgrading, and economic performance in Ja...' on Platform 'Elgaronline' in Package Edward Elgar:Edward Elgar E-Book Archive in Business & Management, ...",
-        'lastSeenTimestamp':1611198553495,
-        'suppressFromDiscovery':false,
-        'longName':"'\"Institutions, industrial upgrading, and economic performance in Japan: the \"\"flying-geese\"\" paradigm of catch-up growth\"' on Platform 'Elgaronline' in Package Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz",
-        'class':'org.olf.kb.PackageContentItem'
+        addedTimestamp: 1611198553495,
+        name: "'\"Institutions, industrial upgrading, and economic performance in Ja...' on Platform 'Elgaronline' in Package Edward Elgar:Edward Elgar E-Book Archive in Business & Management, ...",
+        lastSeenTimestamp: 1611198553495,
+        suppressFromDiscovery: false,
+        longName: "'\"Institutions, industrial upgrading, and economic performance in Japan: the \"\"flying-geese\"\" paradigm of catch-up growth\"' on Platform 'Elgaronline' in Package Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz",
+        class: 'org.olf.kb.PackageContentItem'
       }
     },
     {
-      'id':'bc72234d-8a0a-4747-a89b-2e246ffa614f',
-      'class':'org.olf.kb.Pkg',
-      'name':'Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz',
-      'suppressFromDiscovery':false,
-      'publicationType':{
-        'id':'2c91809a7722d6c7017722e57fde0049',
-        'value':'package',
-        'label':'Package'
+      id: 'bc72234d-8a0a-4747-a89b-2e246ffa614f',
+      class: 'org.olf.kb.Pkg',
+      name: 'Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz',
+      suppressFromDiscovery: false,
+      publicationType: {
+        id: '2c91809a7722d6c7017722e57fde0049',
+        value: 'package',
+        label: 'Package'
       },
-      'tags':[
+      tags: [
 
       ],
-      'customCoverage':false,
-      '_object':{
-        'id':'bc72234d-8a0a-4747-a89b-2e246ffa614f',
-        'dateCreated':'2021-01-21T03:09:13Z',
-        'tags':[
+      customCoverage: false,
+      _object: {
+        id: 'bc72234d-8a0a-4747-a89b-2e246ffa614f',
+        dateCreated: '2021-01-21T03:09:13Z',
+        tags: [
 
         ],
-        'lastUpdated':'2021-01-21T03:09:13Z',
-        'vendor':{
-          'id':'f130b745-1824-4e3c-bcfa-31335f43f9a6',
-          'name':'Edward Elgar',
-          'orgsUuid_object':{
-            'error':400,
-            'message':'Bad Request'
+        lastUpdated: '2021-01-21T03:09:13Z',
+        vendor: {
+          id: 'f130b745-1824-4e3c-bcfa-31335f43f9a6',
+          name: 'Edward Elgar',
+          orgsUuid_object: {
+            error: 400,
+            message: 'Bad Request'
           }
         },
-        'coverage':[
+        coverage: [
 
         ],
-        'source':'GOKb',
-        'name':'Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz',
-        'suppressFromDiscovery':false,
-        'reference':'Edward_Elgar:Edward_Elgar_E-Book_Archive_in_Business_&_Management,_Economics_and_Finance:Nationalliz',
-        'resourceCount':2540,
-        'class':'org.olf.kb.Pkg'
+        source: 'GOKb',
+        name: 'Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz',
+        suppressFromDiscovery: false,
+        reference: 'Edward_Elgar:Edward_Elgar_E-Book_Archive_in_Business_&_Management,_Economics_and_Finance:Nationalliz',
+        resourceCount: 2540,
+        class: 'org.olf.kb.Pkg'
       }
     }
   ],
-  'entitlementOptionsCount':2,
-  'entitlements':[
+  entitlementOptionsCount: 2,
+  entitlements: [
 
   ],
-  'entitlementsCount':0,
-  'packageContentsFilter':'current',
-  'packageContents':[
+  entitlementsCount: 0,
+  packageContentsFilter: 'current',
+  packageContents: [
 
   ],
-  'packageContentsCount':0,
-  'relatedEntitlements':[
+  packageContentsCount: 0,
+  relatedEntitlements: [
 
   ],
-  'searchString':'?sort=name'
+  searchString: '?sort=name'
 };
 
 describe('AcquisitionOptions', () => {
@@ -270,8 +269,9 @@ describe('AcquisitionOptions', () => {
       <MemoryRouter>
         <AcquisitionOptions
           data={data}
-          handlers={{ onNeedMoreEntitlementOptions, onEResourceClick }}
+          handlers={{ onEResourceClick }}
           id="acqOptions"
+          isLoading={false}
         />
       </MemoryRouter>,
       translationsProperties
