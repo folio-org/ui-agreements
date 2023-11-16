@@ -17,9 +17,6 @@ const AgreementLineButton = (props) => {
   return <Button onClick={props.handlers.onViewAgreementLine}>AgreementLineButton</Button>;
 };
 
-const NeedMoreLinesButton = (props) => {
-  return <Button onClick={props.handlers.onNeedMoreLines}>NeedMoreLinesButton</Button>;
-};
 
 const FilterEResourceButton = (props) => {
   return <Button onClick={props.handlers.onFilterEResources}>FilterEResourceButton</Button>;
@@ -27,10 +24,6 @@ const FilterEResourceButton = (props) => {
 
 const EditButton = (props) => {
   return <Button onClick={props.handlers.onEdit}>EditButton</Button>;
-};
-
-const NeedMoreEResourcesButton = (props) => {
-  return <Button onClick={props.handlers.onNeedMoreEResources}>NeedMoreEResourcesButton</Button>;
 };
 
 const ToggleTagsButton = (props) => {
@@ -59,12 +52,6 @@ AgreementLineButton.propTypes = {
   }),
 };
 
-NeedMoreLinesButton.propTypes = {
-  handlers: PropTypes.shape({
-    onNeedMoreLines: PropTypes.func,
-  }),
-};
-
 FilterEResourceButton.propTypes = {
   handlers: PropTypes.shape({
     onFilterEResources: PropTypes.func,
@@ -74,12 +61,6 @@ FilterEResourceButton.propTypes = {
 EditButton.propTypes = {
   handlers: PropTypes.shape({
     onEdit: PropTypes.func,
-  }),
-};
-
-NeedMoreEResourcesButton.propTypes = {
-  handlers: PropTypes.shape({
-    onNeedMoreEResources: PropTypes.func,
   }),
 };
 
@@ -120,10 +101,8 @@ jest.mock('../../components/views/Agreement', () => {
     <div>
       <div>Agreement</div>
       <AgreementLineButton {...props} />
-      <NeedMoreLinesButton {...props} />
       <FilterEResourceButton {...props} />
       <EditButton {...props} />
-      <NeedMoreEResourcesButton {...props} />
       <ToggleTagsButton {...props} />
       <CloseButton {...props} />
       <ExportEResourcesAsKBARTButton {...props} />
@@ -163,11 +142,6 @@ describe('AgreementViewRoute', () => {
     test('renders the AgreementLineButton', () => {
       const { getByText } = renderComponent;
       expect(getByText('AgreementLineButton')).toBeInTheDocument();
-    });
-
-    test('renders the NeedMoreLinesButton', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('NeedMoreLinesButton')).toBeInTheDocument();
     });
 
     test('triggers the AgreementLineButton callback', async () => {

@@ -21,8 +21,6 @@ const propTypes = {
     onExportEResourcesAsJSON: PropTypes.func.isRequired,
     onExportEResourcesAsKBART: PropTypes.func.isRequired,
     onFilterEResources: PropTypes.func.isRequired,
-    onNeedMoreEResources: PropTypes.func.isRequired,
-    onNeedMoreLines: PropTypes.func.isRequired,
     onViewAgreementLine: PropTypes.func.isRequired,
   }).isRequired,
   id: PropTypes.string,
@@ -84,7 +82,6 @@ const Lines = ({
     >
       <LinesList
         agreement={agreement}
-        onNeedMoreLines={handlers.onNeedMoreLines}
         onViewAgreementLine={handlers.onViewAgreementLine}
       />
       <CoveredEResourcesList

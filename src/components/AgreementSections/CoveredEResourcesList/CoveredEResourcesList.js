@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import {
   Button,
   ButtonGroup,
-  Callout,
   Col,
   Dropdown,
   DropdownMenu,
@@ -48,18 +47,16 @@ const propTypes = {
   onFilterEResources: PropTypes.func.isRequired,
   onExportEResourcesAsJSON: PropTypes.func.isRequired,
   onExportEResourcesAsKBART: PropTypes.func.isRequired,
-  onNeedMoreEResources: PropTypes.func.isRequired,
 };
 
 const CoveredEResourcesList = ({
   agreement: { eresources, eresourcesCount, lines },
   eresourcesFilterPath,
-  onNeedMoreEResources,
   onFilterEResources,
   onExportEResourcesAsJSON,
   onExportEResourcesAsKBART,
 }) => {
-  const { settings } = useAgreementsSettings();
+  const settings = useAgreementsSettings();
   const coveredEresourcePageSize = parseMclPageSize(settings, 'agreementEresources');
 
   const {
@@ -75,12 +72,12 @@ const CoveredEResourcesList = ({
   const exportDisabled = eresourcesFilterPath === 'dropped' || eresourcesFilterPath === 'future';
 
   const exports = (exportCallback) => {
-    const calloutId = callout.current.sendCallout({
+    const calloutId = callout.sendCallout({
       message: <FormattedMessage id="ui-agreements.eresourcesCovered.preparingExport" />,
       timeout: 0,
     });
 
-    exportCallback().then(() => callout.current.removeCallout(calloutId));
+    exportCallback().then(() => callout.removeCallout(calloutId));
   };
 
   const renderDate = date => (
@@ -219,7 +216,6 @@ const CoveredEResourcesList = ({
         }}
         id="eresources-covered"
         interactive={false}
-        onNeedMoreData={onNeedMoreEResources}
         pageAmount={resultCount.RESULT_COUNT_INCREMENT}
         pagingType="click"
         totalCount={eresourcesCount}
@@ -271,7 +267,6 @@ const CoveredEResourcesList = ({
         </Col>
       </Row>
       {eresources ? renderList() : <Spinner />}
-      <Callout ref={callout} />
     </IfEResourcesEnabled>
   ) : null;
 };

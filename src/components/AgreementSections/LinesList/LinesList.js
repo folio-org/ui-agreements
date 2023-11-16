@@ -34,15 +34,13 @@ const propTypes = {
     orderLines: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
   onViewAgreementLine: PropTypes.func.isRequired,
-  onNeedMoreLines: PropTypes.func.isRequired,
 };
 
 const LinesList = ({
   agreement: { agreementLinesCount, lines, orderLines },
   onViewAgreementLine,
-  onNeedMoreLines,
 }) => {
-  const { settings } = useAgreementsSettings();
+  const settings = useAgreementsSettings();
   const agreementLinesPageSize = parseMclPageSize(settings, 'agreementLines');
 
   const {
@@ -164,7 +162,6 @@ const LinesList = ({
       }}
       id="agreement-lines"
       isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.agreementLines" />}
-      onNeedMoreData={onNeedMoreLines}
       onRowClick={(e, row) => {
         if (e.target.tagName !== 'A') {
           onViewAgreementLine(row.id);

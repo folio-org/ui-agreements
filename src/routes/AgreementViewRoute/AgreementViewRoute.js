@@ -45,7 +45,7 @@ const AgreementViewRoute = ({
 }) => {
   const queryClient = useQueryClient();
 
-  const { settings } = useAgreementsSettings();
+  const settings = useAgreementsSettings();
   const agreementLinesPageSize = parseMclPageSize(settings, 'agreementLines');
   const coveredEresourcePageSize = parseMclPageSize(settings, 'agreementEresources');
 

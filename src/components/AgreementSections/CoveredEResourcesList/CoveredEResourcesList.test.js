@@ -10,11 +10,13 @@ jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
   return typeof children === 'function' ? children({ isEnabled: true }) : children;
 });
 
+// Use manual mocks set up in hooks/__mocks__ folder
+jest.mock('../../../hooks');
+
 const handlers = {
   onFilterEResources: jest.fn(),
   onExportEResourcesAsJSON: jest.fn().mockImplementation(() => Promise.resolve()),
   onExportEResourcesAsKBART: jest.fn().mockImplementation(() => Promise.resolve()),
-  onNeedMoreEResources: jest.fn()
 };
 
 describe('CoveredEResourcesList', () => {
