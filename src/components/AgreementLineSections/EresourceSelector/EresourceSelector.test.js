@@ -5,11 +5,11 @@ import translationsProperties from '../../../../test/helpers';
 import EresourceSelector from './EresourceSelector';
 
 const line = {
-  'component': () => {},
-  'error': '<Memo />',
-  'name': 'linkedResource',
-  'onAdd': () => {},
-  'value': ''
+  component: () => {},
+  error: '<Memo />',
+  name: 'linkedResource',
+  onAdd: () => {},
+  value: ''
 };
 
 describe('EresourceSelector', () => {

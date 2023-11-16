@@ -13,7 +13,6 @@ jest.mock('../../EResourceProvider', () => () => <div>EResourceProvider</div>);
 jest.mock('../../PackageFilters', () => () => <div>PackageFilters</div>);
 
 const mockSubmit = jest.fn(e => e.preventDefault());
-const onNeedMoreData = jest.fn();
 const queryGetter = jest.fn();
 const querySetter = jest.fn();
 
@@ -29,7 +28,6 @@ describe('Packages', () => {
       <MemoryRouter>
         <Packages
           data={data}
-          onNeedMoreData={onNeedMoreData}
           queryGetter={queryGetter}
           querySetter={querySetter}
           source={source}

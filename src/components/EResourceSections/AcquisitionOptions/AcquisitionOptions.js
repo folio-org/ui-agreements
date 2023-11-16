@@ -6,55 +6,79 @@ import { Accordion, Badge, MultiColumnList, NoValue, Spinner } from '@folio/stri
 import {
   EResourceType,
   isPackage,
-  TitleOnPlatformLink
+  TitleOnPlatformLink,
+  usePrevNextPagination
 } from '@folio/stripes-erm-components';
 import AddToBasketButton from '../../AddToBasketButton';
 import Coverage from '../../Coverage';
 import EResourceKB from '../../EResourceKB';
 
-import { isExternal } from '../../utilities';
-import { resourceClasses } from '../../../constants';
+import { isExternal, parseMclPageSize } from '../../utilities';
+import { resourceClasses, ENTITLEMENT_OPTIONS_PAGINATION_ID } from '../../../constants';
+import { useAgreementsSettings } from '../../../hooks';
 
-class AcquisitionOptions extends React.Component {
-  static propTypes = {
-    data: PropTypes.shape({
-      areEntitlementOptionsLoading: PropTypes.bool,
-      entitlementOptions: PropTypes.arrayOf(PropTypes.object),
-      entitlementOptionsCount: PropTypes.number,
-      eresource: PropTypes.shape({
-        name: PropTypes.string,
-      }),
+const propTypes = {
+  data: PropTypes.shape({
+    areEntitlementOptionsLoading: PropTypes.bool,
+    entitlementOptions: PropTypes.arrayOf(PropTypes.object),
+    entitlementOptionsCount: PropTypes.number,
+    eresource: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string,
     }),
-    handlers: PropTypes.shape({
-      onEResourceClick: PropTypes.func,
-      onNeedMoreEntitlementOptions: PropTypes.func,
-    }),
-    id: PropTypes.string,
-  };
+  }),
+  handlers: PropTypes.shape({
+    onEResourceClick: PropTypes.func,
+  }),
+  id: PropTypes.string,
+  isLoading: PropTypes.bool.isRequired,
+};
 
-  getName = (eresource = {}) => {
+const AcquisitionOptions = ({
+  data: {
+    areEntitlementOptionsLoading,
+    entitlementOptions,
+    entitlementOptionsCount,
+    eresource: { id: eresourceId },
+  },
+  handlers: { onEResourceClick },
+  id,
+  isLoading
+}) => {
+  const settings = useAgreementsSettings();
+  const entitlementOptionsPageSize = parseMclPageSize(settings, 'entitlementOptions');
+
+  const {
+    paginationMCLProps,
+  } = usePrevNextPagination({
+    count: entitlementOptionsCount,
+    pageSize: entitlementOptionsPageSize,
+    id: `${ENTITLEMENT_OPTIONS_PAGINATION_ID}-${eresourceId}`,
+    syncToLocation: false
+  });
+
+  const getName = (eresource = {}) => {
     if (isExternal(eresource)) {
       return eresource.reference_object?.label;
     }
 
     return eresource.name;
-  }
+  };
 
-  onRowClick = (_, row) => {
-    const { id, class: clazz } = row;
-    const { handlers: { onEResourceClick } } = this.props;
+  const onRowClick = (_, row) => {
+    const { id: rowId, class: clazz } = row;
 
     // Redirect to Package view if package, title view otherwise
-    onEResourceClick(id, clazz === resourceClasses?.PACKAGE ? 'PKG' : 'TITLE');
-  }
+    onEResourceClick(rowId, clazz === resourceClasses?.PACKAGE ? 'PKG' : 'TITLE');
+  };
 
-  renderBadge = () => {
-    const { entitlementOptionsCount: count, areEntitlementOptionsLoading: isLoading } = this.props?.data;
+  const renderBadge = () => {
+    const count = entitlementOptionsCount ?? 0;
     return (count !== undefined && !isLoading) ? <Badge>{count}</Badge> : <Spinner />;
-  }
+  };
 
-  renderParentPackage = (eresource) => {
-    const name = this.getName(eresource);
+  const renderParentPackage = (eresource) => {
+    const name = getName(eresource);
 
     return (
       <div data-test-eresource-name style={{ overflowWrap: 'break-word', width: 180 }}>
@@ -63,7 +87,7 @@ class AcquisitionOptions extends React.Component {
     );
   };
 
-  renderOptions = () => (
+  const renderOptions = () => (
     <MultiColumnList
       columnMapping={{
         sourceKb: <FormattedMessage id="ui-agreements.eresources.dataSource" />,
@@ -80,10 +104,10 @@ class AcquisitionOptions extends React.Component {
         platform: 200,
         acqMethod: 100
       }}
-      contentData={this.props.data.entitlementOptions}
+      contentData={entitlementOptions}
       formatter={{
         sourceKb: option => <EResourceKB resource={option} />,
-        package: option => this.renderParentPackage(option),
+        package: option => renderParentPackage(option),
         coverage: option => <Coverage eResource={option} />,
         platform: option => {
           const pti = option?._object?.pti ?? {};
@@ -136,32 +160,25 @@ class AcquisitionOptions extends React.Component {
           );
         },
       }}
-      id={`${this.props.id}-mcl`}
-      onNeedMoreData={this.props.handlers.onNeedMoreEntitlementOptions}
-      onRowClick={this.onRowClick}
+      id={`${id}-mcl`}
+      onRowClick={onRowClick}
       pagingType="click"
-      totalCount={this.props.data.entitlementOptionsCount}
+      totalCount={entitlementOptionsCount}
       visibleColumns={['sourceKb', 'package', 'coverage', 'platform', 'acqMethod', 'add']}
+      {...paginationMCLProps}
     />
-  )
+  );
+  return (
+    <Accordion
+      displayWhenClosed={renderBadge()}
+      displayWhenOpen={renderBadge()}
+      id={id}
+      label={<FormattedMessage id="ui-agreements.eresources.acqOptions" />}
+    >
+      {(entitlementOptions && !areEntitlementOptionsLoading) ? renderOptions() : <Spinner />}
+    </Accordion>
+  );
+};
 
-  render() {
-    const {
-      data: { areEntitlementOptionsLoading, entitlementOptions },
-      id,
-    } = this.props;
-
-    return (
-      <Accordion
-        displayWhenClosed={this.renderBadge()}
-        displayWhenOpen={this.renderBadge()}
-        id={id}
-        label={<FormattedMessage id="ui-agreements.eresources.acqOptions" />}
-      >
-        {(entitlementOptions && !areEntitlementOptionsLoading) ? this.renderOptions() : <Spinner />}
-      </Accordion>
-    );
-  }
-}
-
+AcquisitionOptions.propTypes = propTypes;
 export default AcquisitionOptions;

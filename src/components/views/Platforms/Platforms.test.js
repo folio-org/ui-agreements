@@ -31,7 +31,6 @@ describe('Platforms', () => {
       >
         <Platforms
           data={data}
-          onNeedMoreData={jest.fn()}
           queryGetter={jest.fn()}
           querySetter={jest.fn()}
           source={{

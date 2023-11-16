@@ -44,7 +44,6 @@ export default class PCI extends React.Component {
     handlers: PropTypes.shape({
       isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
       onEdit: PropTypes.func.isRequired,
-      onNeedMoreEntitlements: PropTypes.func.isRequired,
     }),
   }
 

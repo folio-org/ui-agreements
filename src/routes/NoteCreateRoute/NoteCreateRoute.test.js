@@ -5,41 +5,41 @@ import translationsProperties from '../../../test/helpers';
 import NoteCreateRoute from './NoteCreateRoute';
 
 const history = {
-  'length': 42,
-  'action': 'POP',
-  'location': {
-    'pathname': '/erm/notes/create',
-    'search': '',
-    'hash': '',
-    'state': {
-      'entityName': 'MR agreement',
-      'entityType': 'agreement',
-      'entityId': 'c4ed2be0-380a-421a-9364-0f411e9c897b',
-      'referredRecordData': '{}'
+  length: 42,
+  action: 'POP',
+  location: {
+    pathname: '/erm/notes/create',
+    search: '',
+    hash: '',
+    state: {
+      entityName: 'MR agreement',
+      entityType: 'agreement',
+      entityId: 'c4ed2be0-380a-421a-9364-0f411e9c897b',
+      referredRecordData: '{}'
     },
-    'key': '64w68l'
+    key: '64w68l'
   },
-  'createHref': () => {},
-  'push': () => {},
-  'replace': () => {},
-  'go': () => {},
-  'goBack': () => {},
-  'goForward': () => {},
-  'block': () => {},
-  'listen': () => {},
+  createHref: () => {},
+  push: () => {},
+  replace: () => {},
+  go: () => {},
+  goBack: () => {},
+  goForward: () => {},
+  block: () => {},
+  listen: () => {},
 };
 
 const location = {
-  'pathname': '/erm/notes/create',
-  'search': '',
-  'hash': '',
-  'state': {
-    'entityName': 'MR agreement',
-    'entityType': 'agreement',
-    'entityId': 'c4ed2be0-380a-421a-9364-0f411e9c897b',
-    'referredRecordData': {}
+  pathname: '/erm/notes/create',
+  search: '',
+  hash: '',
+  state: {
+    entityName: 'MR agreement',
+    entityType: 'agreement',
+    entityId: 'c4ed2be0-380a-421a-9364-0f411e9c897b',
+    referredRecordData: {}
   },
-  'key': '64w68l'
+  key: '64w68l'
 };
 
 describe('NoteCreateRoute', () => {

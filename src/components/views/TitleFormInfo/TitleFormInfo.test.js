@@ -9,11 +9,11 @@ const isSuppressFromDiscoveryEnabled = jest.fn(_title => true);
 const isSuppressFromDiscoveryDisabled = jest.fn(_title => false);
 
 const suppressFromDiscoveryTrue = {
-  'suppressFromDiscovery': true,
+  suppressFromDiscovery: true,
 };
 
 const suppressFromDiscoveryFalse = {
-  'suppressFromDiscovery': false,
+  suppressFromDiscovery: false,
 };
 
 

@@ -35,7 +35,6 @@ describe('Agreements', () => {
       >
         <Agreements
           data={data}
-          onNeedMoreData={jest.fn()}
           queryGetter={jest.fn()}
           querySetter={jest.fn()}
           source={{
