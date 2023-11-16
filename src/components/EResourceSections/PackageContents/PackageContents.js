@@ -31,9 +31,11 @@ const propTypes = {
     packageContentsFilter: PropTypes.string,
     searchString: PropTypes.string
   }),
+  eresource: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }).isRequired,
   id: PropTypes.string,
   onFilterPackageContents: PropTypes.func.isRequired,
-  onNeedMorePackageContents: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
 };
 
@@ -45,12 +47,12 @@ const PackageContents = ({
     packageContentsFilter,
     searchString
   },
+  eresource: { id: eresourceId },
   id,
   isLoading,
-  onNeedMorePackageContents,
   onFilterPackageContents
 }) => {
-  const { settings } = useAgreementsSettings();
+  const settings = useAgreementsSettings();
   const packageContentsPageSize = parseMclPageSize(settings, 'packageContents');
 
   const renderDate = date => (date ? <FormattedUTCDate value={date} /> : '');
@@ -65,7 +67,7 @@ const PackageContents = ({
   } = usePrevNextPagination({
     count: packageContentsCount,
     pageSize: packageContentsPageSize,
-    id: PACKAGE_CONTENT_PAGINATION_ID,
+    id: `${PACKAGE_CONTENT_PAGINATION_ID}-${eresourceId}`,
     syncToLocation: false
   });
 
@@ -116,7 +118,6 @@ const PackageContents = ({
         }}
         id="package-contents-list"
         interactive={false}
-        onNeedMoreData={onNeedMorePackageContents}
         pageAmount={RESULT_COUNT_INCREMENT}
         pagingType="click"
         totalCount={packageContentsCount}

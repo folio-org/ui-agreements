@@ -36,26 +36,26 @@ const EResourceViewRoute = ({
     TagButton,
   } = useAgreementsHelperApp();
 
-  const { settings } = useAgreementsSettings();
+  const settings = useAgreementsSettings();
   const entitlementAgreementsPageSize = parseMclPageSize(settings, 'entitlements');
   const entitlementOptionsPageSize = parseMclPageSize(settings, 'entitlementOptions');
   const packageContentsPageSize = parseMclPageSize(settings, 'packageContents');
 
   const { currentPage: entitlementAgreementsPage } = usePrevNextPagination({
     pageSize: entitlementAgreementsPageSize, // Only needed for reading back MCL props
-    id: ENTITLEMENT_AGREEMENTS_LIST_PAGINATION_ID,
+    id: `${ENTITLEMENT_AGREEMENTS_LIST_PAGINATION_ID}-${eresourceId}`,
     syncToLocation: false
   });
 
   const { currentPage: entitlementOptionsPage } = usePrevNextPagination({
     pageSize: entitlementOptionsPageSize, // Only needed for reading back MCL props
-    id: ENTITLEMENT_OPTIONS_PAGINATION_ID,
+    id: `${ENTITLEMENT_OPTIONS_PAGINATION_ID}-${eresourceId}`,
     syncToLocation: false
   });
 
   const { currentPage: packageContentsPage } = usePrevNextPagination({
     pageSize: packageContentsPageSize, // Only needed for reading back MCL props
-    id: PACKAGE_CONTENT_PAGINATION_ID,
+    id: `${PACKAGE_CONTENT_PAGINATION_ID}-${eresourceId}`,
     syncToLocation: false
   });
 

@@ -98,7 +98,6 @@ export default class Package extends React.Component {
               <PackageContents
                 {...this.getSectionProps('packageContents')}
                 onFilterPackageContents={handlers.onFilterPackageContents}
-                onNeedMorePackageContents={handlers.onNeedMorePackageContents}
               />
               <NotesSmartAccordion
                 {...this.getSectionProps('notes')}

@@ -23,22 +23,21 @@ import { useAgreementsSettings } from '../../hooks';
 
 const EntitlementAgreementsList = (
   { entitlements,
+    eresourceId,
     headline,
     id,
     isEmptyMessage,
-    onNeedMoreEntitlements,
     totalCount,
     visibleColumns }
 ) => {
-  const { settings } = useAgreementsSettings();
-  const entitlementAgreementsPageSize = parseMclPageSize(settings, 'entitlementOptions');
-
+  const settings = useAgreementsSettings();
+  const entitlementAgreementsPageSize = parseMclPageSize(settings, 'entitlements');
   const {
     paginationMCLProps,
   } = usePrevNextPagination({
     count: totalCount,
     pageSize: entitlementAgreementsPageSize,
-    id: ENTITLEMENT_AGREEMENTS_LIST_PAGINATION_ID,
+    id: `${ENTITLEMENT_AGREEMENTS_LIST_PAGINATION_ID}-${eresourceId}`,
     syncToLocation: false
   });
 
@@ -107,7 +106,6 @@ const EntitlementAgreementsList = (
         id={id}
         interactive={false}
         isEmptyMessage={isEmptyMessage}
-        onNeedMoreData={onNeedMoreEntitlements}
         pagingType="click"
         totalCount={totalCount}
         visibleColumns={visibleColumns}
@@ -124,10 +122,10 @@ EntitlementAgreementsList.defaultProps = {
 
 EntitlementAgreementsList.propTypes = {
   entitlements: PropTypes.arrayOf(PropTypes.object),
+  eresourceId: PropTypes.string.isRequired,
   headline: PropTypes.node,
   id: PropTypes.string,
   isEmptyMessage: PropTypes.node,
-  onNeedMoreEntitlements: PropTypes.func,
   totalCount: PropTypes.number,
   visibleColumns: PropTypes.arrayOf(PropTypes.string),
 };

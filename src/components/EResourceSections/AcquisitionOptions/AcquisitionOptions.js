@@ -26,9 +26,11 @@ const propTypes = {
       name: PropTypes.string,
     }),
   }),
+  eresource: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }).isRequired,
   handlers: PropTypes.shape({
     onEResourceClick: PropTypes.func,
-    onNeedMoreEntitlementOptions: PropTypes.func,
   }),
   id: PropTypes.string,
   isLoading: PropTypes.bool.isRequired,
@@ -36,19 +38,20 @@ const propTypes = {
 
 const AcquisitionOptions = ({
   data: { areEntitlementOptionsLoading, entitlementOptions, entitlementOptionsCount },
-  handlers: { onEResourceClick, onNeedMoreEntitlementOptions },
+  eresource: { id: eresourceId },
+  handlers: { onEResourceClick },
   id,
   isLoading
 }) => {
-  const { settings } = useAgreementsSettings();
-  const entitlementOptionsPageSize = parseMclPageSize(settings, 'entitlements');
+  const settings = useAgreementsSettings();
+  const entitlementOptionsPageSize = parseMclPageSize(settings, 'entitlementOptions');
 
   const {
     paginationMCLProps,
   } = usePrevNextPagination({
     count: entitlementOptionsCount,
     pageSize: entitlementOptionsPageSize,
-    id: ENTITLEMENT_OPTIONS_PAGINATION_ID,
+    id: `${ENTITLEMENT_OPTIONS_PAGINATION_ID}-${eresourceId}`,
     syncToLocation: false
   });
 
@@ -156,7 +159,6 @@ const AcquisitionOptions = ({
         },
       }}
       id={`${id}-mcl`}
-      onNeedMoreData={onNeedMoreEntitlementOptions}
       onRowClick={onRowClick}
       pagingType="click"
       totalCount={entitlementOptionsCount}

@@ -18,6 +18,7 @@ const propTypes = {
     entitlements: PropTypes.arrayOf(PropTypes.object),
     entitlementsCount: PropTypes.number,
     eresource: PropTypes.shape({
+      id: PropTypes.string.isRequired,
       class: PropTypes.string,
       pti: PropTypes.shape({
         titleInstance: PropTypes.shape({
@@ -27,9 +28,6 @@ const propTypes = {
       type: PropTypes.object,
     }),
     relatedEntitlements: PropTypes.arrayOf(PropTypes.object),
-  }),
-  handlers: PropTypes.shape({
-    onNeedMoreEntitlements: PropTypes.func,
   }),
   headline: PropTypes.node,
   id: PropTypes.string,
@@ -48,9 +46,6 @@ const Agreements = ({
     entitlementsCount
   },
   renderRelatedEntitlements,
-  handlers: {
-    onNeedMoreEntitlements
-  },
   id,
   headline,
   isEmptyMessage,
@@ -64,10 +59,10 @@ const Agreements = ({
     return (
       <EntitlementAgreementsList
         entitlements={entitlements ?? []}
+        eresourceId={eresource.id}
         headline={headline}
         id="pci-agreements-list"
         isEmptyMessage={isEmptyMessage}
-        onNeedMoreEntitlements={onNeedMoreEntitlements}
         totalCount={entitlementsCount}
         visibleColumns={visibleColumns}
       />

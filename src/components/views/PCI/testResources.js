@@ -333,7 +333,6 @@ const data = {
 const handlers = {
   isSuppressFromDiscoveryEnabled: (_value) => true,
   onEdit: () => { },
-  onNeedMoreEntitlements: () => { },
 };
 
 export { data, handlers };
