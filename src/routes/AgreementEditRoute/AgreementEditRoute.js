@@ -220,7 +220,7 @@ const AgreementEditRoute = ({
       ...values,
       // For OrchidCSP only concern ourselves with removing owner feedback loops.
       // Performance changes are in place from Poppy
-      items: values.items.map(i => ({ ...i, owner: i.owner ? { id: i.owner.id } : null }))
+      items: values.items?.map(i => ({ ...i, owner: i.owner ? { id: i.owner.id } : null }))
     });
   };
 
