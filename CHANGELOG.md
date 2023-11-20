@@ -1,5 +1,8 @@
 # Change history for ui-agreements
 
+## 9.0.5 2023-11-20
+* ERM-3113 Cannot save an edited an agreement with no agreement lines following ERM-3076 fix in Orchid
+
 ## 9.0.4 2023-11-01
 * ERM-3076 Agreements with internal (local KB) agreement lines do not save correctly
 
