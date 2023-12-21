@@ -41,8 +41,7 @@
     "redux": "^4.0.0",
     "redux-observable": "^1.2.0",
     "regenerator-runtime": "^0.13.3",
-    "rxjs": "^6.6.3",
-    "typescript": "^2.8.0"
+    "rxjs": "^6.6.3"
   },
   "dependencies": {
     "@folio/stripes-acq-components": "^5.0.0",
