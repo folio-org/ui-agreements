@@ -204,6 +204,8 @@ describe('CoverageFieldArray', () => {
     test('overlapping coverages warning works as expected', async () => {
       await waitFor(async () => {
         await Datepicker({ id: 'cc-end-date-1' }).clear();
+        await Datepicker({ id: 'cc-end-date-0' }).focus();
+        await Datepicker({ id: 'cc-end-date-0' }).blur();
         await Datepicker({ id: 'cc-start-date-1' }).focus();
       });
 
