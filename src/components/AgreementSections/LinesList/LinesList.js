@@ -19,7 +19,7 @@ import EResourceLink from '../../EResourceLink';
 import EResourceCount from '../../EResourceCount';
 import EResourceProvider from '../../EResourceProvider';
 import { useAgreementsSettings } from '../../../hooks';
-import { AGREEMENT_LINES_PAGINATION_ID } from '../../../constants';
+import { AGREEMENT_LINES_PAGINATION_ID, LINE_LISTING_COLUMN_MAPPING } from '../../../constants';
 import {
   getResourceFromEntitlement,
   isDetached,
@@ -34,11 +34,18 @@ const propTypes = {
     orderLines: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
   onViewAgreementLine: PropTypes.func.isRequired,
+  visibleColumns: PropTypes.arrayOf(PropTypes.string)
+};
+
+const columnMapping = {
+  ...LINE_LISTING_COLUMN_MAPPING,
+  isCustomCoverage: ' ',
 };
 
 const LinesList = ({
   agreement: { agreementLinesCount, lines, orderLines },
   onViewAgreementLine,
+  visibleColumns
 }) => {
   const settings = useAgreementsSettings();
   const agreementLinesPageSize = parseMclPageSize(settings, 'agreementLines');
@@ -96,18 +103,7 @@ const LinesList = ({
   const rowUpdater = () => orderLines.map(orderLine => orderLine.id);
   return lines ? (
     <MultiColumnList
-      columnMapping={{
-        name: <FormattedMessage id="ui-agreements.eresources.nameDescription" />,
-        provider: <FormattedMessage id="ui-agreements.eresources.provider" />,
-        publicationType: <FormattedMessage id="ui-agreements.eresources.publicationType" />,
-        count: <FormattedMessage id="ui-agreements.agreementLines.count" />,
-        note: <FormattedMessage id="ui-agreements.note" />,
-        coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
-        isCustomCoverage: ' ',
-        activeFrom: <FormattedMessage id="ui-agreements.eresources.activeFrom" />,
-        activeTo: <FormattedMessage id="ui-agreements.eresources.activeTo" />,
-        poLines: <FormattedMessage id="ui-agreements.agreementLines.polines" />,
-      }}
+      columnMapping={columnMapping}
       columnWidths={{
         name: 250,
         provider: 150,
@@ -170,18 +166,7 @@ const LinesList = ({
       pagingType="click"
       rowUpdater={rowUpdater}
       totalCount={agreementLinesCount}
-      visibleColumns={[
-        'name',
-        'provider',
-        'publicationType',
-        'count',
-        'note',
-        'coverage',
-        'isCustomCoverage',
-        'activeFrom',
-        'activeTo',
-        'poLines',
-      ]}
+      visibleColumns={visibleColumns}
       {...paginationMCLProps}
     />
   ) : <Spinner />;
