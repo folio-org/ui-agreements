@@ -69,16 +69,12 @@ const Lines = ({
                 <FormattedMessage id="ui-agreements.agreementLines.viewInSearch" />
               </Icon>
             </Button>
-            {agreement.agreementLinesCount > 0 ?
-              <ColumnManagerMenu
-                columnMapping={LINE_LISTING_COLUMN_MAPPING}
-                prefix="line-listing"
-                toggleColumn={toggleColumn}
-                visibleColumns={visibleColumns}
-              />
-              :
-              null
-            }
+            <ColumnManagerMenu
+              columnMapping={LINE_LISTING_COLUMN_MAPPING}
+              prefix="line-listing"
+              toggleColumn={toggleColumn}
+              visibleColumns={visibleColumns}
+            />
           </DropdownMenu>
         </Dropdown>
         {renderBadge()}
