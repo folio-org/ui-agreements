@@ -740,7 +740,7 @@
     "settings.supplementaryProperties": "Doplňkové vlastnosti",
     "settings.supplementaryPropertyPickList": "Nastavení doplňkových vlastností výběrového seznamu",
     "settings.pickListSelect": "Vybrat výběrový seznam",
-    "settings.fileStorage.s3BucketRegion": "Region segmentu S3",
+    "settings.fileStorage.s3BucketRegion": "Oblast segmentu S3",
     "agreementLines.newLine": "Nový řádek smlouvy",
     "agreementLines.viewInSearch": "Zobrazit v hledání řádků smlouvy",
     "agreements.exportingAgreement": "<strong>Smlouva o exportu:</strong> Po dokončení se soubor JSON stáhne do vašeho prohlížeče. Pokud má smlouva velký počet titulů, může to nějakou dobu trvat.",
