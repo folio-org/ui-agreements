@@ -6,6 +6,18 @@ import LinesList from './LinesList';
 import agreement from './testResources';
 
 const onViewAgreementLine = jest.fn();
+const visibleColumns = [
+  'name',
+  'provider',
+  'publicationType',
+  'count',
+  'note',
+  'coverage',
+  'isCustomCoverage',
+  'activeFrom',
+  'activeTo',
+  'poLines',
+];
 
 describe('LinesList', () => {
   beforeEach(() => {
@@ -14,6 +26,7 @@ describe('LinesList', () => {
         <LinesList
           agreement={agreement}
           onViewAgreementLine={onViewAgreementLine}
+          visibleColumns={visibleColumns}
         />
       </MemoryRouter>,
       translationsProperties

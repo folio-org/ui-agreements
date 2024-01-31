@@ -150,6 +150,7 @@
   "agreementLines.costType": "Cost type",
   "agreementLines.count": "Count",
   "agreementLines.contentUpdated": "Content updated",
+  "agreementLines.customCoverageIndicator": "Custom coverage indicator",
   "agreementLines.deleteAgreementLine": "Delete agreement line",
   "agreementLines.deleteConfirmMessage": "Agreement line for the e-resource <strong>{name}</strong> will be <strong>deleted</strong>.",
   "agreementLines.gross": "YTD Gross",

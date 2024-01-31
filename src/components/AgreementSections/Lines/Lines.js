@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { IfPermission } from '@folio/stripes/core';
 import { Button, Accordion, Badge, Spinner, Icon, Dropdown, DropdownMenu } from '@folio/stripes/components';
+import { ColumnManagerMenu, useColumnManager } from '@folio/stripes/smart-components';
 
 import CoveredEResourcesList from '../CoveredEResourcesList';
 import LinesList from '../LinesList';
 import { urls } from '../../utilities';
+import { LINE_LISTING_COLUMN_MAPPING } from '../../../constants';
 
 const propTypes = {
   agreement: PropTypes.shape({
@@ -32,6 +34,7 @@ const Lines = ({
   handlers,
   id,
 }) => {
+  const { visibleColumns, toggleColumn } = useColumnManager('line-listing-column-manager', LINE_LISTING_COLUMN_MAPPING);
   const renderBadge = () => {
     const count = agreement?.agreementLinesCount;
     return count !== undefined ? <Badge data-test-agreement-lines-count={count}>{count}</Badge> : <Spinner />;
@@ -66,6 +69,12 @@ const Lines = ({
                 <FormattedMessage id="ui-agreements.agreementLines.viewInSearch" />
               </Icon>
             </Button>
+            <ColumnManagerMenu
+              columnMapping={LINE_LISTING_COLUMN_MAPPING}
+              prefix="line-listing"
+              toggleColumn={toggleColumn}
+              visibleColumns={visibleColumns}
+            />
           </DropdownMenu>
         </Dropdown>
         {renderBadge()}
@@ -83,6 +92,7 @@ const Lines = ({
       <LinesList
         agreement={agreement}
         onViewAgreementLine={handlers.onViewAgreementLine}
+        visibleColumns={visibleColumns}
       />
       <CoveredEResourcesList
         agreement={agreement}
@@ -90,7 +100,6 @@ const Lines = ({
         onExportEResourcesAsJSON={handlers.onExportEResourcesAsJSON}
         onExportEResourcesAsKBART={handlers.onExportEResourcesAsKBART}
         onFilterEResources={handlers.onFilterEResources}
-        onNeedMoreEResources={handlers.onNeedMoreEResources}
       />
     </Accordion>
   );
