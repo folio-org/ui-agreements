@@ -777,5 +777,6 @@
     "agreementContent": "Obsah zmluvy",
     "agreementContent.filter.addFilter": "Add filter",
     "agreementContent.filter.has": "Má",
-    "agreementContent.filter.hasNot": "Nemá"
+    "agreementContent.filter.hasNot": "Nemá",
+    "agreementLines.customCoverageIndicator": "Custom coverage indicator"
 }

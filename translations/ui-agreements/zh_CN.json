@@ -777,5 +777,6 @@
     "agreementContent": "协议内容",
     "agreementContent.filter.addFilter": "添加筛选",
     "agreementContent.filter.has": "有",
-    "agreementContent.filter.hasNot": "没有"
+    "agreementContent.filter.hasNot": "没有",
+    "agreementLines.customCoverageIndicator": "自定义收录范围指标"
 }
