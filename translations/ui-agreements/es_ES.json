@@ -777,5 +777,6 @@
     "agreementContent": "Contenido del acuerdo",
     "agreementContent.filter.addFilter": "Añadir filtro",
     "agreementContent.filter.has": "Tiene",
-    "agreementContent.filter.hasNot": "Has not"
+    "agreementContent.filter.hasNot": "Has not",
+    "agreementLines.customCoverageIndicator": "Custom coverage indicator"
 }

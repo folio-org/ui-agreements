@@ -777,5 +777,6 @@
     "agreementContent": "계약 컨텐츠",
     "agreementContent.filter.addFilter": "필터 추가",
     "agreementContent.filter.has": "포함하는",
-    "agreementContent.filter.hasNot": "포함하지 않는"
+    "agreementContent.filter.hasNot": "포함하지 않는",
+    "agreementLines.customCoverageIndicator": "Custom coverage indicator"
 }
