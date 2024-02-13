@@ -78,7 +78,7 @@
     "settings.general": "General",
     "eresources.sourceKb": "External data source",
     "eresources.coverage": "Покрытие",
-    "coverage.volumeShort": "Том:",
+    "coverage.volumeShort": "Том: {value}",
     "coverage.issueShort": "Номер:",
     "basket.clickToSelectAgreement": "Click to select agreement",
     "license.edit": "Edit license",

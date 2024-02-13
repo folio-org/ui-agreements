@@ -311,7 +311,7 @@
     "eresources.volume": "Volume",
     "eresources.firstAuthor": "First author",
     "eresources.firstEditor": "Primær ophavshaver",
-    "coverage.editionShort": "Udg.",
+    "coverage.editionShort": "Udg.: {value}",
     "agreements.currentPeriodNote": "Current period note",
     "supplementaryProperties": "Supplementary properties",
     "supplementaryProperties.count": "{count, number} gemt {count, plural, one { supplementary property } other { supplementary properties}}",
