@@ -650,7 +650,7 @@
     "customProperties.primary": "Primary",
     "customProperties.retired": "Deprecated",
     "customProperties.ctx": "Category",
-    "customProperties.ctx.addContext": "Add category {value}",
+    "customProperties.ctx.addContext": "新增類別{value}",
     "customProperties.noCtxFound": "No matching category found",
     "customProperties.weight": "Order weight",
     "customProperties.type": "Type",
@@ -777,6 +777,6 @@
     "agreementContent": "Agreement content",
     "agreementContent.filter.addFilter": "Add filter",
     "agreementContent.filter.has": "Has",
-    "agreementContent.filter.hasNot": "Has not",
-    "agreementLines.customCoverageIndicator": "Custom coverage indicator"
+    "agreementContent.filter.hasNot": "還沒有",
+    "agreementLines.customCoverageIndicator": "自訂的收錄範圍指標"
 }
