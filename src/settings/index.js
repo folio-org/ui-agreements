@@ -5,10 +5,7 @@ import { useSettings } from '@k-int/stripes-kint-components';
 
 import GeneralSettings from './GeneralSettings';
 
-import {
-  PickListSettings,
-  PickListValueSettings
-} from './routes';
+import { PickListSettings } from './routes';
 
 import {
   REFDATA_ENDPOINT,
@@ -53,12 +50,6 @@ const ErmSettings = (props) => {
           label: <FormattedMessage id="ui-agreements.settings.pickLists" />,
           perm: 'ui-agreements.picklists.view',
           route: 'pick-lists',
-        },
-        {
-          component: PickListValueSettings,
-          label: <FormattedMessage id="ui-agreements.settings.pickListValues" />,
-          perm: 'ui-agreements.picklists.view',
-          route: 'pick-list-values',
         },
       ]
     },
