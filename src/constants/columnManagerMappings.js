@@ -13,3 +13,12 @@ export const LINE_LISTING_COLUMN_MAPPING = {
   activeTo: <FormattedMessage id="ui-agreements.eresources.activeTo" />,
   poLines: <FormattedMessage id="ui-agreements.agreementLines.polines" />,
 };
+
+export const AGREEMENTS_COLUMN_MAPPING = {
+  name: <FormattedMessage id="ui-agreements.agreements.name" />,
+  agreementStatus: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
+  startDate: <FormattedMessage id="ui-agreements.agreements.startDate" />,
+  endDate: <FormattedMessage id="ui-agreements.agreements.endDate" />,
+  cancellationDeadline: <FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />,
+  description: <FormattedMessage id="ui-agreements.agreements.agreementDescription" />,
+};
