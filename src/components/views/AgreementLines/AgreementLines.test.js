@@ -106,10 +106,10 @@ describe('Agreement lines', () => {
       columns: [
         'Name/Reference',
         'Description',
+        'Parent agreement',
         'Note',
         'Active from',
         'Active to',
-        'Parent agreement'
       ],
     }).exists();
   });
