@@ -22,3 +22,12 @@ export const AGREEMENT_LINES_COLUMN_MAPPING = {
   activeFrom: <FormattedMessage id="ui-agreements.agreementLines.activeFrom" />,
   activeTo: <FormattedMessage id="ui-agreements.agreementLines.activeTo" />,
 };
+
+export const AGREEMENTS_COLUMN_MAPPING = {
+  name: <FormattedMessage id="ui-agreements.agreements.name" />,
+  agreementStatus: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
+  startDate: <FormattedMessage id="ui-agreements.agreements.startDate" />,
+  endDate: <FormattedMessage id="ui-agreements.agreements.endDate" />,
+  cancellationDeadline: <FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />,
+  description: <FormattedMessage id="ui-agreements.agreements.agreementDescription" />,
+};

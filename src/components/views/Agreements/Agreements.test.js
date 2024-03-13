@@ -92,13 +92,12 @@ describe('Agreements', () => {
     await Pane('Agreements').has({ subtitle: '"3 records found"' });
   });
 
-  test('renders the New agreement button', async () => {
-    await Button('New').exists();
+  test('renders the Actions button', async () => {
+    await Button('Actions').exists();
   });
 
-
   test('renders the expcted number of MCL columns', async () => {
-    await MultiColumnList({ columnCount: 5 }).exists();
+    await MultiColumnList({ columnCount: 6 }).exists();
   });
 
   test('renders the expcted number of MCL rows', async () => {
@@ -112,7 +111,8 @@ describe('Agreements', () => {
         'Status',
         'Start date',
         'End date',
-        'Cancellation deadline'
+        'Cancellation deadline',
+        'Description'
       ],
     }).exists();
   });

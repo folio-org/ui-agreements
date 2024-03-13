@@ -19,11 +19,14 @@ import { AppIcon, IfPermission } from '@folio/stripes/core';
 
 import {
   CollapseFilterPaneButton,
+  ColumnManagerMenu,
   ExpandFilterPaneButton,
   PersistedPaneset,
   SearchAndSortNoResultsMessage,
   SearchAndSortQuery,
+  useColumnManager
 } from '@folio/stripes/smart-components';
+
 import {
   SearchKeyControl,
   useHandleSubmitSearch,
@@ -32,6 +35,7 @@ import {
 } from '@folio/stripes-erm-components';
 
 import {
+  AGREEMENTS_COLUMN_MAPPING,
   AGREEMENTS_TAB_FILTER_PANE,
   AGREEMENTS_TAB_PANESET,
   AGREEMENTS_TAB_PANE_ID,
@@ -120,6 +124,31 @@ const Agreements = ({
     },
   ];
 
+  const { visibleColumns, toggleColumn } = useColumnManager('agreements-list-column-manager', AGREEMENTS_COLUMN_MAPPING);
+
+  const getActionMenu = () => {
+    return (
+      <>
+        <IfPermission perm="ui-agreements.agreements.edit">
+          <Button
+            buttonStyle="dropdownItem"
+            id="clickable-new-agreement"
+            onClick={goToNew}
+          >
+            <Icon icon="plus-sign">
+              <FormattedMessage id="stripes-smart-components.new" />
+            </Icon>
+          </Button>
+        </IfPermission>
+        <ColumnManagerMenu
+          columnMapping={AGREEMENTS_COLUMN_MAPPING}
+          prefix="agreements-list"
+          toggleColumn={toggleColumn}
+          visibleColumns={visibleColumns}
+        />
+      </>
+    );
+  };
   return (
     <HasCommand
       commands={shortcuts}
@@ -250,6 +279,7 @@ const Agreements = ({
                   </Pane>
                 )}
                 <Pane
+                  actionMenu={getActionMenu}
                   appIcon={<AppIcon app="agreements" />}
                   defaultWidth="fill"
                   firstMenu={
@@ -263,25 +293,6 @@ const Agreements = ({
                     ) : null
                   }
                   id={AGREEMENTS_TAB_PANE_ID}
-                  lastMenu={
-                    <IfPermission perm="ui-agreements.agreements.edit">
-                      <PaneMenu>
-                        <FormattedMessage id="ui-agreements.agreements.createAgreement">
-                          {(ariaLabel) => (
-                            <Button
-                              aria-label={ariaLabel}
-                              buttonStyle="primary"
-                              id="clickable-new-agreement"
-                              marginBottom0
-                              to={`${urls.agreementCreate()}${searchString}`}
-                            >
-                              <FormattedMessage id="stripes-smart-components.new" />
-                            </Button>
-                          )}
-                        </FormattedMessage>
-                      </PaneMenu>
-                    </IfPermission>
-                  }
                   noOverflow
                   padContent={false}
                   paneSub={
@@ -299,29 +310,14 @@ const Agreements = ({
                 >
                   <MultiColumnList
                     autosize
-                    columnMapping={{
-                      name: (
-                        <FormattedMessage id="ui-agreements.agreements.name" />
-                      ),
-                      agreementStatus: (
-                        <FormattedMessage id="ui-agreements.agreements.agreementStatus" />
-                      ),
-                      startDate: (
-                        <FormattedMessage id="ui-agreements.agreements.startDate" />
-                      ),
-                      endDate: (
-                        <FormattedMessage id="ui-agreements.agreements.endDate" />
-                      ),
-                      cancellationDeadline: (
-                        <FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />
-                      ),
-                    }}
+                    columnMapping={AGREEMENTS_COLUMN_MAPPING}
                     columnWidths={{
                       name: 500,
                       agreementStatus: 150,
                       startDate: 120,
                       endDate: 120,
                       cancellationDeadline: 120,
+                      description: 500,
                     }}
                     contentData={data.agreements}
                     formatter={{
@@ -389,13 +385,7 @@ const Agreements = ({
                     }
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     totalCount={count}
-                    visibleColumns={[
-                      'name',
-                      'agreementStatus',
-                      'startDate',
-                      'endDate',
-                      'cancellationDeadline',
-                    ]}
+                    visibleColumns={visibleColumns}
                   />
                 </Pane>
                 {children}
