@@ -17,16 +17,18 @@ import { AppIcon } from '@folio/stripes/core';
 
 import {
   CollapseFilterPaneButton,
+  ColumnManagerMenu,
   ExpandFilterPaneButton,
   PersistedPaneset,
   SearchAndSortNoResultsMessage,
   SearchAndSortQuery,
+  useColumnManager
 } from '@folio/stripes/smart-components';
 
 import { useHandleSubmitSearch, usePrevNextPagination } from '@folio/stripes-erm-components';
 
 import AgreementLineFilters from '../../AgreementLineFilters';
-import { AGREEMENTS_TAB_FILTER_PANE, AGREEMENTS_TAB_PANESET, AGREEMENTS_TAB_PANE_ID, resultCount } from '../../../constants';
+import { AGREEMENT_LINES_COLUMN_MAPPING, AGREEMENTS_TAB_FILTER_PANE, AGREEMENTS_TAB_PANESET, AGREEMENTS_TAB_PANE_ID, resultCount } from '../../../constants';
 import { urls } from '../../utilities';
 import css from '../Agreements.css';
 import RouteSwitcher from '../../RouteSwitcher';
@@ -80,6 +82,19 @@ const AgreementLines = ({
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
+  };
+
+  const { visibleColumns, toggleColumn } = useColumnManager('agreement-lines-column-manager', AGREEMENT_LINES_COLUMN_MAPPING);
+
+  const getActionMenu = () => {
+    return (
+      <ColumnManagerMenu
+        columnMapping={AGREEMENT_LINES_COLUMN_MAPPING}
+        prefix="agreement-lines"
+        toggleColumn={toggleColumn}
+        visibleColumns={visibleColumns}
+      />
+    );
   };
 
   return (
@@ -175,6 +190,7 @@ const AgreementLines = ({
                   </Pane>
                 }
                 <Pane
+                  actionMenu={getActionMenu}
                   appIcon={<AppIcon app="agreements" iconKey="agreementLine" size="small" />}
                   defaultWidth="fill"
                   firstMenu={
@@ -204,14 +220,7 @@ const AgreementLines = ({
                 >
                   <MultiColumnList
                     autosize
-                    columnMapping={{
-                      name: <FormattedMessage id="ui-agreements.agreementLines.nameReference" />,
-                      activeFrom: <FormattedMessage id="ui-agreements.agreementLines.activeFrom" />,
-                      note: <FormattedMessage id="ui-agreements.agreementLines.note" />,
-                      description: <FormattedMessage id="ui-agreements.agreementLines.description" />,
-                      activeTo: <FormattedMessage id="ui-agreements.agreementLines.activeTo" />,
-                      owner: <FormattedMessage id="ui-agreements.line.parentAgreement" />,
-                    }}
+                    columnMapping={AGREEMENT_LINES_COLUMN_MAPPING}
                     columnWidths={{
                       name: 300,
                       description: 200,
@@ -272,14 +281,7 @@ const AgreementLines = ({
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     totalCount={count}
-                    visibleColumns={[
-                      'name',
-                      'description',
-                      'note',
-                      'activeFrom',
-                      'activeTo',
-                      'owner'
-                    ]}
+                    visibleColumns={visibleColumns}
                   />
                 </Pane>
                 {children}
