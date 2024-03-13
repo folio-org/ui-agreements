@@ -752,7 +752,7 @@
     "eresources.proxiedAndCustomizedUrls": "Proxované a přizpůsobené adresy URL",
     "eresources.proxiesCustomizers": "Proxovitelé/Přizpůsobitelé",
     "eresources.url": "URL",
-    "agreements.agreementLineCount": "Smlouva má {count, number} smlouvyq {count, plural, one {řádek} other {řádky}}",
+    "agreements.agreementLineCount": "Smlouva má {count, number} smlouvy {count, plural, one {řádek} other {řádky}}",
     "open.linkInNewTab": "(otevře se na nové kartě)",
     "agreementLineCountHeader": "{count, number} Smlouva {count, plural, one {řádek} other {řádky}}",
     "relationship.inward.supersedes": "je nahrazeno",
