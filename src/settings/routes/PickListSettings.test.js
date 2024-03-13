@@ -4,6 +4,11 @@ import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../test/helpers';
 import PickListSettings from './PickListSettings';
 
+jest.mock('@k-int/stripes-kint-components', () => ({
+  ...jest.requireActual('@k-int/stripes-kint-components'),
+  RefdataCategoriesSettings: () => <div>RefdataCategoriesSettings</div>,
+}));
+
 describe('PickListSettings', () => {
   describe('rendering the PickListSettings', () => {
     let renderComponent;
@@ -16,9 +21,9 @@ describe('PickListSettings', () => {
       );
     });
 
-    test('renders the EditableRefdataCategoryList component', () => {
+    test('renders the RefdataCategoriesSettings component', () => {
       const { getByText } = renderComponent;
-      expect(getByText('EditableRefdataCategoryList')).toBeInTheDocument();
+      expect(getByText('RefdataCategoriesSettings')).toBeInTheDocument();
     });
   });
 });
