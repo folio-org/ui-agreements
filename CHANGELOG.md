@@ -1,5 +1,7 @@
 # Change history for ui-agreements
 
+## 11.1.0 In progress
+
 ## 11.0.0 2024-03-22
 * ERM-3168 Add option to control which columns display in the Agreement search and sort results
 * ERM-3167 Add option to control which columns display in the Agreement Line search and sort results
