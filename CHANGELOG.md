@@ -1,19 +1,20 @@
 # Change history for ui-agreements
 
-## 10.1.0 In progress
-* ERM-1908 Swap Agreements Pick lists settings screen to single 4 pane based layout
-* ERM-3062 Add has/has not filter in Licenses and amendments
-* ERM-3081 Do not add a space after search operator when doing groupings
-* ERM-3085 Use document filter from stripes-erm-components, remove changes from ERM-2983
-* ERM-3091 Switch to pagination (from 'load more') controls in Agreements view
-* ERM-3092 Switch to pagination (from 'load more') controls in Package view
-* ERM-3093 Switch to pagination (from 'load more') controls in Title view
-* ERM-3119 Add Organisation status to organisation card display
-* ERM-3128 Focus "Start date" on "Add custom coverage"
-* ERM-3129 Remove explicit typescript version
-* ERM-3133 Add option to control which columns display in the Agreement->Agreement Lines MCL
-* ERM-3167 Add option to control which columns display in the Agreement Line search and sort results
+## 11.0.0 2024-03-22
 * ERM-3168 Add option to control which columns display in the Agreement search and sort results
+* ERM-3167 Add option to control which columns display in the Agreement Line search and sort results
+* ERM-3133 Add option to control which columns display in the Agreement->Agreement Lines MCL
+* ERM-3129 Remove explicit typescript version
+* ERM-3128 Focus "Start date" on "Add custom coverage"
+* ERM-3119 Add Organisation status to organisation card display
+* ERM-3093 Switch to pagination (from 'load more') controls in Title view
+* ERM-3092 Switch to pagination (from 'load more') controls in Package view
+* ERM-3091 Switch to pagination (from 'load more') controls in Agreements view
+* ERM-3085 Use document filter from stripes-erm-components, remove changes from ERM-2983
+* ERM-3081 Do not add a space after search operator when doing groupings
+* ERM-3062 Add has/has not filter in Licenses and amendments
+* ERM-1908 Swap Agreements Pick lists settings screen to single 4 pane based layout
+* *BREAKING* Switched to erm interface 7, licenses interface 6
 
 ## 10.0.1 2023-11-09
 * ERM-3082 Backport grouping and spaces fix for Poppy
