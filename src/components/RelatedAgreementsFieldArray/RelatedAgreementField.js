@@ -156,7 +156,7 @@ const RelatedAgreementField = ({
       {selfLinkedWarning &&
         <Layout className="padding-top-gutter">
           <MessageBanner
-            dismissable
+            dismissible
             onExited={() => setSelfLinkedWarning(false)}
             type="error"
           >
