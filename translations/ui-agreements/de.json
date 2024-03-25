@@ -79,7 +79,7 @@
     "eresources.sourceKb": "Externe Datenquelle",
     "eresources.coverage": "Abdeckung",
     "coverage.volumeShort": "Band: {value}",
-    "coverage.issueShort": "Ausg.",
+    "coverage.issueShort": "Ausg.: {value}",
     "basket.clickToSelectAgreement": "Zum Auswählen der Vereinbarung klicken",
     "license.edit": "Lizenzvertrag bearbeiten",
     "license.editLicenseOrganizations": "Lizenzvertragsorganisationen bearbeiten",
