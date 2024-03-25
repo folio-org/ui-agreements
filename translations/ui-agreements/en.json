@@ -88,6 +88,8 @@
   "agreementLines.createAnother": "Create another",
   "agreementLines.newLine": "New agreement line",
   "agreementLines.viewInSearch": "View in agreement lines search",
+  "agreementLines.resourceError": "Error",
+  "agreementLines.resourceError.message": "Message",
   "open.linkInNewTab": "(opens in new tab)",
   "agreements.agreementDescription": "Description",
   "agreements.startDate": "Start date",

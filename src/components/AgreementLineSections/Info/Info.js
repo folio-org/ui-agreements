@@ -18,6 +18,7 @@ import {
 import { isPackage } from '@folio/stripes-erm-components';
 import PackageCard from '../../PackageCard';
 import PackageCardExternal from '../../PackageCardExternal';
+import ErrorCard from '../../ErrorCard';
 import TitleCard from '../../TitleCard';
 import TitleCardExternal from '../../TitleCardExternal';
 import { isDetached, isExternal, urls } from '../../utilities';
@@ -36,6 +37,7 @@ const propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     }),
+    reference_object: PropTypes.object,
     resource: PropTypes.shape({
       _object: PropTypes.object,
     }),
@@ -117,9 +119,7 @@ const Info = ({ isSuppressFromDiscoveryEnabled, line, resource }) => {
               >
                 <div data-test-agreement-line-suppress-from-discovery>
                   <FormattedMessage
-                    id={`ui-agreements.${
-                      line.suppressFromDiscovery ? 'yes' : 'no'
-                    }`}
+                    id={`ui-agreements.${line.suppressFromDiscovery ? 'yes' : 'no'}`}
                   />
                 </div>
               </KeyValue>
@@ -145,91 +145,95 @@ const Info = ({ isSuppressFromDiscoveryEnabled, line, resource }) => {
           </Col>
         </Row>
         {!isDetached(line) ? (
-          isPackage(resource) ? (
-            <>
-              <Headline size="large" tag="h3">
-                <FormattedMessage id="ui-agreements.eresources.packageDetails" />
-              </Headline>
-              {isExternal(line) ? (
-                <PackageCardExternal pkg={resource} />
-              ) : (
-                <PackageCard pkg={resource} />
-              )}
-            </>
-          ) : (
-            <>
-              <Headline size="large" tag="h3">
-                <FormattedMessage id="ui-agreements.eresources.titleDetails" />
-              </Headline>
-              <KeyValue
-                label={
-                  <FormattedMessage id="ui-agreements.eresources.titleOnPlatformURL" />
-                }
-              >
-                <div data-test-agreement-line-url>
-                  {isExternal(line) ? (
-                    resource.reference_object?.url ? (
+          !resource.reference_object?.error ? (
+            isPackage(resource) ? (
+              <>
+                <Headline size="large" tag="h3">
+                  <FormattedMessage id="ui-agreements.eresources.packageDetails" />
+                </Headline>
+                {isExternal(line) ? (
+                  <PackageCardExternal pkg={resource} />
+                ) : (
+                  <PackageCard pkg={resource} />
+                )}
+              </>
+            ) : (
+              <>
+                <Headline size="large" tag="h3">
+                  <FormattedMessage id="ui-agreements.eresources.titleDetails" />
+                </Headline>
+                <KeyValue
+                  label={
+                    <FormattedMessage id="ui-agreements.eresources.titleOnPlatformURL" />
+                  }
+                >
+                  <div data-test-agreement-line-url>
+                    {isExternal(line) ? (
+                      resource.reference_object?.url ? (
+                        <a
+                          href={resource.reference_object.url}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          {resource.reference_object?.url}
+                        </a>
+                      ) : (
+                        <NoValue />
+                      )
+                    ) : resource.pti?.url ? (
                       <a
-                        href={resource.reference_object.url}
+                        href={resource.pti.url}
                         rel="noopener noreferrer"
                         target="_blank"
                       >
-                        {resource.reference_object?.url}
+                        {resource.pti?.url}
                       </a>
                     ) : (
                       <NoValue />
-                    )
-                  ) : resource.pti?.url ? (
-                    <a
-                      href={resource.pti.url}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      {resource.pti?.url}
-                    </a>
-                  ) : (
-                    <NoValue />
-                  )}
-                </div>
-              </KeyValue>
-              {resource?.pti?.templatedUrls.length > 1 && (
-                <KeyValue
-                  label={
-                    <FormattedMessage id="ui-agreements.eresources.proxiedAndCustomizedUrls" />
-                  }
-                >
-                  <MultiColumnList
-                    columnMapping={{
-                      name: (
-                        <FormattedMessage id="ui-agreements.eresources.proxiesCustomizers" />
-                      ),
-                      url: (
-                        <FormattedMessage id="ui-agreements.eresources.url" />
-                      ),
-                    }}
-                    contentData={sortedTemplatedUrls}
-                    id="templated-urls"
-                    interactive={false}
-                    visibleColumns={['name', 'url']}
-                  />
+                    )}
+                  </div>
                 </KeyValue>
-              )}
-              {isExternal(line) ? (
-                <TitleCardExternal title={resource} />
-              ) : (
-                <TitleCard title={resource} />
-              )}
-              <Headline size="large" tag="h3">
-                <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
-              </Headline>
-              {isExternal(line) ? (
-                <PackageCardExternal
-                  packageData={resource.reference_object?.packageData ?? {}}
-                />
-              ) : (
-                <PackageCard pkg={resource.pkg ?? {}} />
-              )}
-            </>
+                {resource?.pti?.templatedUrls.length > 1 && (
+                  <KeyValue
+                    label={
+                      <FormattedMessage id="ui-agreements.eresources.proxiedAndCustomizedUrls" />
+                    }
+                  >
+                    <MultiColumnList
+                      columnMapping={{
+                        name: (
+                          <FormattedMessage id="ui-agreements.eresources.proxiesCustomizers" />
+                        ),
+                        url: (
+                          <FormattedMessage id="ui-agreements.eresources.url" />
+                        ),
+                      }}
+                      contentData={sortedTemplatedUrls}
+                      id="templated-urls"
+                      interactive={false}
+                      visibleColumns={['name', 'url']}
+                    />
+                  </KeyValue>
+                )}
+                {isExternal(line) ? (
+                  <TitleCardExternal title={resource} />
+                ) : (
+                  <TitleCard title={resource} />
+                )}
+                <Headline size="large" tag="h3">
+                  <FormattedMessage id="ui-agreements.eresources.parentPackageDetails" />
+                </Headline>
+                {isExternal(line) ? (
+                  <PackageCardExternal
+                    packageData={resource.reference_object?.packageData ?? {}}
+                  />
+                ) : (
+                  <PackageCard pkg={resource.pkg ?? {}} />
+                )}
+              </>
+            )
+          ) : (
+            <ErrorCard resource={resource} />
           )
         ) : null}
       </div>
