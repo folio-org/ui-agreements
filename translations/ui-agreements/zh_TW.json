@@ -79,7 +79,7 @@
     "eresources.sourceKb": "外部資料來源",
     "eresources.coverage": "收錄範圍",
     "coverage.volumeShort": "卷: {value}",
-    "coverage.issueShort": "期：",
+    "coverage.issueShort": "期: {value}",
     "basket.clickToSelectAgreement": "點一下來選擇協議",
     "license.edit": "編輯授權",
     "license.editLicenseOrganizations": "編輯授權的組織機構",

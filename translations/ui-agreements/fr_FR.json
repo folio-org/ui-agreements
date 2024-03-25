@@ -79,7 +79,7 @@
     "eresources.sourceKb": "Source de données externes",
     "eresources.coverage": "Couverture",
     "coverage.volumeShort": "Vol: {value}",
-    "coverage.issueShort": "Iss:",
+    "coverage.issueShort": "Iss: {value}",
     "basket.clickToSelectAgreement": "Cliquer pour sélectionner l'accord",
     "license.edit": "Modifier la licence",
     "license.editLicenseOrganizations": "Éditer les organisations de la licence",
