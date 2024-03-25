@@ -79,7 +79,7 @@
     "eresources.sourceKb": "외부 데이터 소스",
     "eresources.coverage": "커버리지",
     "coverage.volumeShort": "권(Vol): {value}",
-    "coverage.issueShort": "호(Iss):",
+    "coverage.issueShort": "호(Iss): {value}",
     "basket.clickToSelectAgreement": "계약을 선택하려면 클릭하십시오",
     "license.edit": "라이선스 편집",
     "license.editLicenseOrganizations": "라이선스 공급사 편집",
