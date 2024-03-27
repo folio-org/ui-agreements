@@ -23,6 +23,7 @@ import { AGREEMENT_LINES_PAGINATION_ID, LINE_LISTING_COLUMN_MAPPING } from '../.
 import {
   getResourceFromEntitlement,
   isDetached,
+  isExternal,
   urls,
   parseMclPageSize
 } from '../../utilities';
@@ -115,7 +116,7 @@ const LinesList = ({
           const resource = getResourceFromEntitlement(line);
           if (!resource) return line.label;
           if (isDetached(resource)) return resource.description;
-
+          if (isExternal(resource) && !resource.reference_object?.label) return resource.reference;
           return (
             <EResourceLink
               data-test-external-reference={line.reference}
