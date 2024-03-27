@@ -18,6 +18,12 @@ const propTypes = {
   ]),
 };
 
+const defaultHeaderStart = (
+  <strong>
+    <FormattedMessage id="ui-agreements.error" />
+  </strong>
+);
+
 const ErrorCard = ({
   error,
   headerEnd,
@@ -30,7 +36,7 @@ const ErrorCard = ({
       data-testid="errorCard"
       headerEnd={headerEnd}
       headerProps={{ 'data-test-error-card-header': true }}
-      headerStart={headerStart}
+      headerStart={headerStart ?? defaultHeaderStart}
       roundedBorder
     >
       <Row>
