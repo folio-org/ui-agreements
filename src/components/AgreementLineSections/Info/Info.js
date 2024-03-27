@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { orderBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
-
+import { AppIcon } from '@folio/stripes/core';
 import {
   Col,
   FormattedUTCDate,
@@ -233,7 +233,16 @@ const Info = ({ isSuppressFromDiscoveryEnabled, line, resource }) => {
               </>
             )
           ) : (
-            <ErrorCard resource={resource} />
+            <ErrorCard
+              error={{ number: resource.reference_object?.error, message: resource.reference_object?.message }}
+              headerStart={(
+                <AppIcon app="e-holdings" size="small">
+                  <strong>
+                    {(resource.reference && resource.authority) ? `${resource.reference} - ${resource.authority}` : (resource.authority ? resource.authority : resource.reference)}
+                  </strong>
+                </AppIcon>
+              )}
+            />
           )
         ) : null}
       </div>

@@ -3,48 +3,46 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Card, Col, KeyValue, NoValue, Row } from '@folio/stripes/components';
 
-import { AppIcon } from '@folio/stripes/core';
-
 const propTypes = {
+  error: PropTypes.shape({
+    number: PropTypes.number,
+    message: PropTypes.string,
+  }).isRequired,
   headerEnd: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
-  resource: PropTypes.object,
+  headerStart: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
 };
 
 const ErrorCard = ({
+  error,
   headerEnd,
-  resource,
+  headerStart
 }) => {
-  const error = resource.reference_object;
-  const cardHeader = (resource.reference && resource.authority) ? `${resource.reference} - ${resource.authority}` : (resource.authority ? resource.authority : resource.reference);
-
   return (
     <Card
       cardStyle="positive"
       data-test-error-card
       data-testid="errorCard"
       headerEnd={headerEnd}
-      headerStart={(
-        <AppIcon app="e-holdings" size="small">
-          <strong data-test-error-card-header>
-            {cardHeader}
-          </strong>
-        </AppIcon>
-      )}
+      headerProps={{ 'data-test-error-card-header': true }}
+      headerStart={headerStart}
       roundedBorder
     >
       <Row>
         <Col xs={3}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.agreementLines.resourceError" />}>
-            <div data-test-error>
-              {error?.error ?? <NoValue />}
+          <KeyValue label={<FormattedMessage id="ui-agreements.errorNumber" />}>
+            <div data-test-error-number>
+              {error?.number ?? <NoValue />}
             </div>
           </KeyValue>
         </Col>
         <Col xs={9}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.agreementLines.resourceError.message" />}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.errorMessage" />}>
             <div data-test-error-message>
               {error?.message ?? <NoValue />}
             </div>
