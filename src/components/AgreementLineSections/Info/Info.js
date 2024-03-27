@@ -15,10 +15,9 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { isPackage } from '@folio/stripes-erm-components';
+import { ErrorCard, isPackage } from '@folio/stripes-erm-components';
 import PackageCard from '../../PackageCard';
 import PackageCardExternal from '../../PackageCardExternal';
-import ErrorCard from '../../ErrorCard';
 import TitleCard from '../../TitleCard';
 import TitleCardExternal from '../../TitleCardExternal';
 import { isDetached, isExternal, urls } from '../../utilities';
@@ -234,6 +233,7 @@ const Info = ({ isSuppressFromDiscoveryEnabled, line, resource }) => {
             )
           ) : (
             <ErrorCard
+              cardStyle="positive"
               error={{ number: resource.reference_object?.error, message: resource.reference_object?.message }}
               headerStart={(
                 <AppIcon app="e-holdings" size="small">

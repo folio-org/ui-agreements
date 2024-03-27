@@ -44,7 +44,7 @@ const onlyCurrentPeriod = [
   {
     endDate: '2049-01-01',
     startDate: '2008-01-01',
-    cancellationDeadline: '2047/11/30',
+    cancellationDeadline: '2047-11-30',
     note: 'Current period note',
     periodStatus: 'current'
   }
@@ -99,7 +99,7 @@ const allPeriods = [
   {
     endDate: '2049-01-01',
     startDate: '2008-01-01',
-    cancellationDeadline: '2047/11/30',
+    cancellationDeadline: '2047-11-30',
     note: 'Current period note',
     periodStatus: 'current'
   },

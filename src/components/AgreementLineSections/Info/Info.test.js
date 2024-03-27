@@ -5,11 +5,15 @@ import { externalLine, externalResource, externalResourceWithError, packageLine,
 import translationsProperties from '../../../../test/helpers';
 import Info from './Info';
 
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  ErrorCard: () => <div>ErrorCard</div>,
+}));
+
 jest.mock('../../PackageCardExternal', () => () => (<div>PackageCardExternal</div>));
 jest.mock('../../PackageCard', () => () => (<div>PackageCard</div>));
 jest.mock('../../TitleCardExternal', () => () => (<div>TitleCardExternal</div>));
 jest.mock('../../TitleCard', () => () => (<div>TitleCard</div>));
-jest.mock('../../ErrorCard', () => () => (<div>ErrorCard</div>));
 
 const isSuppressFromDiscoveryEnabled = jest.fn().mockImplementation((res) => res);
 
