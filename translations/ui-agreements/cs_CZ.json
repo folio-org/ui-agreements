@@ -778,5 +778,5 @@
     "agreementContent.filter.addFilter": "Přidat filtr",
     "agreementContent.filter.has": "Má",
     "agreementContent.filter.hasNot": "Nemá",
-    "agreementLines.customCoverageIndicator": "Custom coverage indicator"
+    "agreementLines.customCoverageIndicator": "Vlastní indikátor pokrytí"
 }
