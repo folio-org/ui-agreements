@@ -238,7 +238,7 @@ const Info = ({ isSuppressFromDiscoveryEnabled, line, resource }) => {
               headerStart={(
                 <AppIcon app="e-holdings" size="small">
                   <strong>
-                    {(resource.reference && resource.authority) ? `${resource.reference} - ${resource.authority}` : (resource.authority ? resource.authority : resource.reference)}
+                    {(resource.reference && resource.authority) ? `${resource.authority}: ${resource.reference}` : (resource.authority ? resource.authority : resource.reference)}
                   </strong>
                 </AppIcon>
               )}
