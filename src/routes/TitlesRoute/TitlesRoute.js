@@ -65,7 +65,13 @@ const TitlesRoute = ({
   const { query, querySetter, queryGetter } = useKiwtSASQuery();
 
   const { currentPage } = usePrevNextPagination();
-  const { searchKey } = useSASQQIndex({ defaultQIndex });
+
+  /*
+   * Have the default searchKey (When no qIndex is present, meaning no checkboxes are checked) include identifier values
+   * This usage of useSASQQIndex is _not_ setting the qindex in the url,
+   * that is handled in the view via SASQ and the props handed to it.
+   */
+  const { searchKey } = useSASQQIndex({ defaultQIndex: `${defaultQIndex},identifiers.identifier.value` });
 
   const titlesQueryParams = useMemo(() => (
     generateKiwtQueryParams({

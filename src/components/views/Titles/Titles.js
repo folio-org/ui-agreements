@@ -36,6 +36,7 @@ import IdentifierReassignmentForm from '../../IdentifierReassignmentForm';
 
 import { urls } from '../../utilities';
 import {
+  defaultTitlesQIndex as defaultQIndex,
   KB_TAB_FILTER_PANE,
   KB_TAB_PANESET,
   KB_TAB_PANE_ID,
@@ -89,10 +90,16 @@ const Titles = ({
     pageSize: RESULT_COUNT_INCREMENT_MEDIUM
   });
 
+  /*
+   * NOTE: This is not directly defaulting the qIndex,
+   * rather setting up the "default" for inclusion in qIndexSASQProps,
+   * which are passed to SASQ below. Then SASQ will be responsible for setting
+   * initial qIndex values in the url on mount.
+   */
   const {
     qIndexChanged,
     qIndexSASQProps
-  } = useSASQQIndex();
+  } = useSASQQIndex({ defaultQIndex });
 
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
