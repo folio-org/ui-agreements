@@ -52,7 +52,8 @@ describe('LinesList', () => {
   test('renders expected agreement line name in each row', async () => {
     Promise.all([
       await MultiColumnListCell({ row: 0, columnIndex: 0 }).has({ content: 'ACS in Focus Test' }),
-      await MultiColumnListCell({ row: 1, columnIndex: 0 }).has({ content: 'American Society of Civil Engineers : Journals' })
+      await MultiColumnListCell({ row: 1, columnIndex: 0 }).has({ content: 'American Society of Civil Engineers : Journals' }),
+      await MultiColumnListCell({ row: 2, columnIndex: 0 }).has({ content: '22-1887786-11234147a' })
     ]);
   });
 
@@ -66,7 +67,8 @@ describe('LinesList', () => {
   test('renders expected Publication type date in each row', async () => {
     Promise.all([
       await MultiColumnListCell({ row: 0, columnIndex: 2 }).has({ content: 'Package' }),
-      await MultiColumnListCell({ row: 1, columnIndex: 2 }).has({ content: 'Package' })
+      await MultiColumnListCell({ row: 1, columnIndex: 2 }).has({ content: 'Package' }),
+      await MultiColumnListCell({ row: 2, columnIndex: 2 }).has({ content: 'Title' })
     ]);
   });
 
