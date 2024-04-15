@@ -9,7 +9,7 @@
   /* AccordionHeaders and other elements that use a
      `interactionStyles` class have a z-index of 2 which
      would render them above this floaty. */
-  z-index: 6;
+  z-index: 1000;
 
   /* As content scrolls behind this div and then /above/ it, it
      will be visible due to the padding in ContentPane.
