@@ -79,7 +79,7 @@
     "eresources.sourceKb": "Zewnętrzne źródło danych",
     "eresources.coverage": "Pokrycie",
     "coverage.volumeShort": "Wol.: {value}",
-    "coverage.issueShort": "Zesz.:",
+    "coverage.issueShort": "Zesz.: {value}",
     "basket.clickToSelectAgreement": "Kliknij, aby wybrać umowę",
     "license.edit": "Edytuj licencję",
     "license.editLicenseOrganizations": "Edytuj organizacje licencji",

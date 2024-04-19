@@ -79,7 +79,7 @@
     "eresources.sourceKb": "Fonte",
     "eresources.coverage": "Copertura",
     "coverage.volumeShort": "vol: {value}",
-    "coverage.issueShort": "ISS:",
+    "coverage.issueShort": "ISS: {value}",
     "basket.clickToSelectAgreement": "Clicca selezionare il contratto",
     "license.edit": "Modifica licenza",
     "license.editLicenseOrganizations": "Modifica licenza organizzazioni",
