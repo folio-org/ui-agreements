@@ -2,6 +2,12 @@
 
 ## 11.1.0 In progress
 
+## 11.0.1 2024-04-19
+  * Change default search options for Local KB titles to exclude identifiers
+  * ERM-3182 Scrolling content in license view pane can overlap header (Also impacted agreements)
+  * ERM-3172 The failure of reference object when displaying agreement line should be handled elegantly
+  * Translations
+
 ## 11.0.0 2024-03-22
 * ERM-3168 Add option to control which columns display in the Agreement search and sort results
 * ERM-3167 Add option to control which columns display in the Agreement Line search and sort results
