@@ -40,7 +40,6 @@ import { urls, parseMclPageSize } from '../../utilities';
 const propTypes = {
   agreement: PropTypes.shape({
     eresources: PropTypes.arrayOf(PropTypes.object),
-    eresourcesCount: PropTypes.number,
     lines: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
   eresourcesFilterPath: PropTypes.string,
@@ -50,7 +49,7 @@ const propTypes = {
 };
 
 const CoveredEResourcesList = ({
-  agreement: { eresources, eresourcesCount, lines },
+  agreement: { eresources, lines },
   eresourcesFilterPath,
   onFilterEResources,
   onExportEResourcesAsJSON,
@@ -62,7 +61,7 @@ const CoveredEResourcesList = ({
   const {
     paginationMCLProps,
   } = usePrevNextPagination({
-    count: eresourcesCount,
+    pageCount: eresources?.length,
     pageSize: coveredEresourcePageSize,
     id: COVERED_ERESOURCES_PAGINATION_ID,
     syncToLocation: false
@@ -218,7 +217,6 @@ const CoveredEResourcesList = ({
         interactive={false}
         pageAmount={resultCount.RESULT_COUNT_INCREMENT}
         pagingType="click"
-        totalCount={eresourcesCount}
         visibleColumns={[
           'name',
           'issn',

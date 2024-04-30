@@ -134,12 +134,13 @@ const AgreementViewRoute = ({
         { path: 'pti.titleInstance.name' }
       ],
       page: coveredEresourcePage,
-      perPage: coveredEresourcePageSize
+      perPage: coveredEresourcePageSize,
+      stats: false
     }, {})
   ), [coveredEresourcePageSize, coveredEresourcePage]);
 
   const {
-    data: { results: agreementEresources = [], totalRecords: agreementEresourcesCount = 0 } = {},
+    data: agreementEresources = [],
     isLoading: areEresourcesLoading
   } = useQuery(
     [agreementEresourcesPath, agreementEresourcesQueryParams, 'ui-agreements', 'AgreementViewRoute', 'getEresources'],
@@ -237,7 +238,6 @@ const AgreementViewRoute = ({
       lines: !areLinesLoading ? agreementLines : undefined,
       agreementLinesCount: agreementLineCount,
       eresources: !areEresourcesLoading ? agreementEresources : undefined,
-      eresourcesCount: agreementEresourcesCount,
       orderLines,
       orgs,
     };
