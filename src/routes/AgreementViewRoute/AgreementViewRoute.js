@@ -1,7 +1,7 @@
 import { useContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { useMutation, useQuery, useQueryClient, useQueries } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { flatten } from 'lodash';
@@ -13,7 +13,7 @@ import {
   useInterfaces,
   INVALID_JSON_ERROR,
   JSON_ERROR,
-  usePrevNextPagination,
+  usePrevNextPagination
 } from '@folio/stripes-erm-components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 
@@ -29,41 +29,37 @@ import {
   AGREEMENT_LINES_ENDPOINT,
   AGREEMENT_LINES_PAGINATION_ID,
   COVERED_ERESOURCES_PAGINATION_ID,
-  httpStatuses,
+  httpStatuses
 } from '../../constants';
 import {
   useAgreementsHelperApp,
   useAgreementsSettings,
-  useChunkedOrderLines,
+  useChunkedOrderLines
 } from '../../hooks';
 
 const AgreementViewRoute = ({
   handlers = {},
   history,
   location,
-  match: {
-    params: { id: agreementId },
-  },
+  match: { params: { id: agreementId } },
 }) => {
   const queryClient = useQueryClient();
 
   const settings = useAgreementsSettings();
   const agreementLinesPageSize = parseMclPageSize(settings, 'agreementLines');
-  const coveredEresourcePageSize = parseMclPageSize(
-    settings,
-    'agreementEresources'
-  );
+  const coveredEresourcePageSize = parseMclPageSize(settings, 'agreementEresources');
+
 
   const { currentPage: agreementLinesPage } = usePrevNextPagination({
     pageSize: agreementLinesPageSize, // Only needed for reading back MCL props
     id: AGREEMENT_LINES_PAGINATION_ID,
-    syncToLocation: false,
+    syncToLocation: false
   });
 
   const { currentPage: coveredEresourcePage } = usePrevNextPagination({
     pageSize: coveredEresourcePageSize, // Only needed for reading back MCL props
     id: COVERED_ERESOURCES_PAGINATION_ID,
-    syncToLocation: false,
+    syncToLocation: false
   });
 
   const [eresourcesFilterPath, setEresourcesFilterPath] = useState('current');
@@ -74,76 +70,57 @@ const AgreementViewRoute = ({
 
   const ky = useOkapiKy();
 
-  const { handleToggleTags, HelperComponent, TagButton } =
-    useAgreementsHelperApp();
+  const {
+    handleToggleTags,
+    HelperComponent,
+    TagButton,
+  } = useAgreementsHelperApp();
 
   const agreementPath = AGREEMENT_ENDPOINT(agreementId);
-  const agreementEresourcesPath = AGREEMENT_ERESOURCES_ENDPOINT(
-    agreementId,
-    eresourcesFilterPath
-  );
+  const agreementEresourcesPath = AGREEMENT_ERESOURCES_ENDPOINT(agreementId, eresourcesFilterPath);
 
   const { agreement, isAgreementLoading } = useAgreement({ agreementId });
 
-  const interfaces =
-    useInterfaces({
-      interfaceIds: flatten(
-        (agreement?.orgs ?? []).map(
-          (o) => o?.org?.orgsUuid_object?.interfaces ?? []
-        )
-      ),
-    }) ?? [];
+
+  const interfaces = useInterfaces({
+    interfaceIds: flatten((agreement?.orgs ?? []).map(o => o?.org?.orgsUuid_object?.interfaces ?? []))
+  }) ?? [];
 
   const { mutateAsync: deleteAgreement } = useMutation(
     [agreementPath, 'ui-agreements', 'AgreementViewRoute', 'deleteAgreement'],
-    () => ky
-      .delete(agreementPath)
-      .then(() => queryClient.invalidateQueries(['ERM', 'Agreements']))
+    () => ky.delete(agreementPath).then(() => queryClient.invalidateQueries(['ERM', 'Agreements']))
   );
 
   // Users
-  const { users } = useChunkedUsers(
-    agreement?.contacts?.filter((c) => c.user)?.map((c) => c.user) ?? []
-  );
+  const { users } = useChunkedUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user) ?? []);
   // AGREEMENT LINES INFINITE FETCH
-  const agreementLineQueryParams = useMemo(
-    () => generateKiwtQueryParams(
+  const agreementLineQueryParams = useMemo(() => (
+    generateKiwtQueryParams(
       {
         filters: [
           {
             path: 'owner',
-            value: agreementId,
-          },
+            value: agreementId
+          }
         ],
         sort: [
           { path: 'type' },
           { path: 'resource.name' },
           { path: 'reference' },
-          { path: 'id' },
+          { path: 'id' }
         ],
         page: agreementLinesPage,
-        perPage: agreementLinesPageSize,
+        perPage: agreementLinesPageSize
       },
       {}
-    ),
-    [agreementId, agreementLinesPageSize, agreementLinesPage]
-  );
+    )
+  ), [agreementId, agreementLinesPageSize, agreementLinesPage]);
 
   const {
-    data: {
-      results: agreementLines = [],
-      totalRecords: agreementLineCount = 0,
-    } = {},
-    isLoading: areLinesLoading,
+    data: { results: agreementLines = [], totalRecords: agreementLineCount = 0 } = {},
+    isLoading: areLinesLoading
   } = useQuery(
-    [
-      'ERM',
-      'Agreement',
-      agreementId,
-      'AgreementLines',
-      AGREEMENT_LINES_ENDPOINT,
-      agreementLineQueryParams,
-    ],
+    ['ERM', 'Agreement', agreementId, 'AgreementLines', AGREEMENT_LINES_ENDPOINT, agreementLineQueryParams],
     () => {
       const params = [...agreementLineQueryParams];
       return ky.get(`${AGREEMENT_LINES_ENDPOINT}?${params?.join('&')}`).json();
@@ -151,202 +128,106 @@ const AgreementViewRoute = ({
   );
 
   // AGREEMENT ERESOURCES INFINITE FETCH
-  const agreementEresourcesQueryParams = useMemo(
-    () => generateKiwtQueryParams(
-      {
-        sort: [{ path: 'pti.titleInstance.name' }],
-        page: coveredEresourcePage,
-        perPage: coveredEresourcePageSize,
-        stats: false,
-      },
-      {}
-    ),
-    [coveredEresourcePageSize, coveredEresourcePage]
+  const agreementEresourcesQueryParams = useMemo(() => (
+    generateKiwtQueryParams({
+      sort: [
+        { path: 'pti.titleInstance.name' }
+      ],
+      page: coveredEresourcePage,
+      perPage: coveredEresourcePageSize,
+      stats: false
+    }, {})
+  ), [coveredEresourcePageSize, coveredEresourcePage]);
+
+  const {
+    data: agreementEresources = [],
+    isLoading: areEresourcesLoading
+  } = useQuery(
+    [agreementEresourcesPath, agreementEresourcesQueryParams, 'ui-agreements', 'AgreementViewRoute', 'getEresources'],
+    () => {
+      const params = [...agreementEresourcesQueryParams];
+      return ky.get(`${agreementEresourcesPath}?${params?.join('&')}`).json();
+    }
   );
-
-  const { data: agreementEresources = [], isLoading: areEresourcesLoading } =
-    useQuery(
-      [
-        agreementEresourcesPath,
-        agreementEresourcesQueryParams,
-        'ui-agreements',
-        'AgreementViewRoute',
-        'getEresources',
-      ],
-      () => {
-        const params = [...agreementEresourcesQueryParams];
-        return ky.get(`${agreementEresourcesPath}?${params?.join('&')}`).json();
-      }
-    );
-
-  const getEresourcesQueryArray = () => {
-    const queryArray = [];
-    const currentPageParams = generateKiwtQueryParams(
-      {
-        sort: [{ path: 'pti.titleInstance.name' }],
-        page: coveredEresourcePage,
-        perPage: coveredEresourcePageSize,
-        stats: false,
-      },
-      {}
-    );
-    const currentPageParamsSpread = [...currentPageParams];
-    queryArray.push({
-      queryKey: [
-        agreementEresourcesPath,
-        currentPageParams,
-        'ui-agreements',
-        'AgreementViewRoute',
-        'getEresources',
-      ],
-      queryFn: () => ky.get(`${agreementEresourcesPath}?${currentPageParamsSpread?.join('&')}`).json(),
-    });
-    const nextPageParams = generateKiwtQueryParams(
-      {
-        sort: [{ path: 'pti.titleInstance.name' }],
-        page: coveredEresourcePage + 1,
-        perPage: coveredEresourcePageSize,
-        stats: false,
-      },
-      {}
-    );
-    const nextPageParamsSpread = [...nextPageParams];
-    queryArray.push({
-      queryKey: [
-        agreementEresourcesPath,
-        nextPageParams,
-        'ui-agreements',
-        'AgreementViewRoute',
-        'getEresources',
-      ],
-      queryFn: () => ky.get(`${agreementEresourcesPath}?${nextPageParamsSpread?.join('&')}`).json(),
-    });
-    return queryArray;
-  };
-
-  const eresourcesQueries = useQueries(getEresourcesQueryArray());
 
   /*
    * Calculate poLineIdsArray outside of the useEffect hook,
    * so we can accurately tell if it changes and avoid infinite loop
    */
-  const poLineIdsArray = useMemo(
-    () => agreementLines
-      .filter((line) => line.poLines?.length)
-      .map((line) => line.poLines.map((poLine) => poLine.poLineId))
-      .flat(),
-    [agreementLines]
-  );
+  const poLineIdsArray = useMemo(() => (
+    agreementLines
+      .filter(line => line.poLines?.length)
+      .map(line => (line.poLines.map(poLine => poLine.poLineId))).flat()
+  ), [agreementLines]);
 
-  const { orderLines, isLoading: areOrderLinesLoading } =
-    useChunkedOrderLines(poLineIdsArray);
+  const { orderLines, isLoading: areOrderLinesLoading } = useChunkedOrderLines(poLineIdsArray);
 
   const { mutateAsync: cloneAgreement } = useMutation(
     [agreementPath, 'ui-agreements', 'AgreementViewRoute', 'cloneAgreement'],
-    (cloneableProperties) => ky
-      .post(`${agreementPath}/clone`, { json: cloneableProperties })
-      .then((response) => {
-        if (response.ok) {
-          return response.text(); // Parse it as text
-        } else if (response.status === httpStatuses.HTTP_422) {
-          // handle 422 error specifically
-          return response.json().then(({ errors }) => {
-            throw new Error(
-              intl.formatMessage(
-                {
-                  id: `ui-agreements.duplicateAgreementModal.${errors[0].i18n_code}`,
-                }, // use the i18n_code to find the corresponding translation
-                { name: agreement?.name }
-              )
-            );
+    (cloneableProperties) => ky.post(`${agreementPath}/clone`, { json: cloneableProperties }).then(response => {
+      if (response.ok) {
+        return response.text(); // Parse it as text
+      } else if (response.status === httpStatuses.HTTP_422) { // handle 422 error specifically
+        return response.json()
+          .then(({ errors }) => {
+            throw new Error(intl.formatMessage(
+              { id: `ui-agreements.duplicateAgreementModal.${errors[0].i18n_code}` }, // use the i18n_code to find the corresponding translation
+              { name: agreement?.name },
+            ));
           });
-        } else {
-          throw new Error(JSON_ERROR);
-        }
-      })
-      .then((text) => {
-        const data = JSON.parse(text); // Try to parse it as json
-        if (data.id) {
-          return Promise.resolve(
-            history.push(`${urls.agreementEdit(data.id)}${location.search}`)
-          );
-        } else {
-          throw new Error(INVALID_JSON_ERROR); // when the json response body doesn't contain an id
-        }
-      })
-      .catch((error) => {
-        throw error;
-      })
+      } else {
+        throw new Error(JSON_ERROR);
+      }
+    }).then(text => {
+      const data = JSON.parse(text); // Try to parse it as json
+      if (data.id) {
+        return Promise.resolve(history.push(`${urls.agreementEdit(data.id)}${location.search}`));
+      } else {
+        throw new Error(INVALID_JSON_ERROR); // when the json response body doesn't contain an id
+      }
+    }).catch(error => {
+      throw error;
+    })
   );
 
   const { refetch: exportAgreement } = useQuery(
-    [
-      `${agreementPath}/export/current`,
-      'ui-agreements',
-      'AgreementViewRoute',
-      'exportAgreement',
-    ],
-    () => ky
-      .get(`${agreementPath}/export/current`)
-      .blob()
-      .then(downloadBlob(agreement.name, { fileExt: 'json' }))
-      .then(
-        callout.sendCallout({
-          type: 'success',
-          message: (
-            <FormattedMessage id="ui-agreements.agreements.exportingAgreement" />
-          ),
-        })
-      ),
+    [`${agreementPath}/export/current`, 'ui-agreements', 'AgreementViewRoute', 'exportAgreement'],
+    () => ky.get(`${agreementPath}/export/current`).blob().then(downloadBlob(agreement.name, { fileExt: 'json' }))
+      .then(callout.sendCallout({ type: 'success', message: <FormattedMessage id="ui-agreements.agreements.exportingAgreement" /> })),
     {
-      enabled: false,
+      enabled: false
     }
   );
 
   const { refetch: exportEresourcesAsJson } = useQuery(
-    [
-      `${agreementPath}/resources/export/${eresourcesFilterPath}`,
-      'ui-agreements',
-      'AgreementViewRoute',
-      'exportEresourcesJson',
-    ],
-    () => ky
-      .get(`${agreementPath}/resources/export/${eresourcesFilterPath}`)
-      .blob()
-      .then(downloadBlob(agreement.name, { fileExt: 'json' })),
+    [`${agreementPath}/resources/export/${eresourcesFilterPath}`, 'ui-agreements', 'AgreementViewRoute', 'exportEresourcesJson'],
+    () => ky.get(`${agreementPath}/resources/export/${eresourcesFilterPath}`).blob().then(downloadBlob(agreement.name, { fileExt: 'json' })),
     {
-      enabled: false,
+      enabled: false
     }
   );
 
   const { refetch: exportEresourcesAsKBART } = useQuery(
-    [
-      `${agreementPath}/resources/export/${eresourcesFilterPath}/kbart`,
-      'ui-agreements',
-      'AgreementViewRoute',
-      'exportEresourcesKbart',
-    ],
-    () => ky
-      .get(`${agreementPath}/resources/export/${eresourcesFilterPath}/kbart`)
-      .blob()
-      .then(downloadBlob(agreement.name, { fileExt: 'txt' })),
+    [`${agreementPath}/resources/export/${eresourcesFilterPath}/kbart`, 'ui-agreements', 'AgreementViewRoute', 'exportEresourcesKbart'],
+    () => ky.get(`${agreementPath}/resources/export/${eresourcesFilterPath}/kbart`).blob().then(downloadBlob(agreement.name, { fileExt: 'txt' })),
     {
-      enabled: false,
+      enabled: false
     }
   );
 
   const getCompositeAgreement = () => {
-    const contacts = agreement.contacts.map((c) => ({
+    const contacts = agreement.contacts.map(c => ({
       ...c,
-      user: users?.find((user) => user?.id === c.user) || c.user,
+      user: users?.find(user => user?.id === c.user) || c.user,
     }));
 
-    const orgs = agreement.orgs.map((o) => ({
+    const orgs = agreement.orgs.map(o => ({
       ...o,
-      interfaces: (o?.org?.orgsUuid_object?.interfaces ?? []).map((id) => ({
-        ...(interfaces?.find((int) => int?.id === id) ?? {}),
-        /* Credentials are now handled by ViewOrganizationCard directly */
-      })),
+      interfaces: (o?.org?.orgsUuid_object?.interfaces ?? [])
+        .map(id => ({
+          ...(interfaces?.find(int => int?.id === id) ?? {}),
+          /* Credentials are now handled by ViewOrganizationCard directly */
+        })),
     }));
 
     joinRelatedAgreements(agreement);
@@ -370,62 +251,26 @@ const AgreementViewRoute = ({
     const compositeAgreement = getCompositeAgreement();
 
     if (compositeAgreement.lines?.length) {
-      callout.sendCallout({
-        type: 'error',
-        timeout: 0,
-        message: (
-          <FormattedMessage id="ui-agreements.errors.noDeleteHasAgreementLines" />
-        ),
-      });
+      callout.sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.errors.noDeleteHasAgreementLines" /> });
       return;
     }
 
     if (compositeAgreement.linkedLicenses?.length) {
-      callout.sendCallout({
-        type: 'error',
-        timeout: 0,
-        message: (
-          <FormattedMessage id="ui-agreements.errors.noDeleteHasLicenses" />
-        ),
-      });
+      callout.sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.errors.noDeleteHasLicenses" /> });
       return;
     }
 
     if (compositeAgreement.relatedAgreements?.length) {
-      callout.sendCallout({
-        type: 'error',
-        timeout: 0,
-        message: (
-          <FormattedMessage id="ui-agreements.errors.noDeleteHasRelatedAgreements" />
-        ),
-      });
+      callout.sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.errors.noDeleteHasRelatedAgreements" /> });
       return;
     }
 
-    deleteAgreement()
-      .then(() => {
-        history.push(`${urls.agreements()}${location.search}`);
-        callout.sendCallout({
-          message: (
-            <FormattedMessage
-              id="ui-agreements.agreements.deletedAgreement"
-              values={{ name: compositeAgreement.name }}
-            />
-          ),
-        });
-      })
-      .catch((error) => {
-        callout.sendCallout({
-          type: 'error',
-          timeout: 0,
-          message: (
-            <FormattedMessage
-              id="ui-agreements.errors.noDeleteAgreementBackendError"
-              values={{ message: error.message }}
-            />
-          ),
-        });
-      });
+    deleteAgreement().then(() => {
+      history.push(`${urls.agreements()}${location.search}`);
+      callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.deletedAgreement" values={{ name: compositeAgreement.name }} /> });
+    }).catch(error => {
+      callout.sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.errors.noDeleteAgreementBackendError" values={{ message: error.message }} /> });
+    });
   };
 
   const handleFilterEResources = (path) => {
@@ -437,13 +282,14 @@ const AgreementViewRoute = ({
   };
 
   const handleViewAgreementLine = (lineId) => {
-    history.push(
-      `${urls.agreementLineView(agreementId, lineId)}${location.search}`
-    );
+    history.push(`${urls.agreementLineView(agreementId, lineId)}${location.search}`);
   };
 
   const isPaneLoading = () => {
-    return agreementId !== agreement?.id && isAgreementLoading;
+    return (
+      agreementId !== agreement?.id &&
+      isAgreementLoading
+    );
   };
 
   return (
@@ -451,7 +297,7 @@ const AgreementViewRoute = ({
       key={`agreement-view-pane-${agreementId}`}
       components={{
         HelperComponent,
-        TagButton,
+        TagButton
       }}
       data={{
         agreement: getCompositeAgreement(),
@@ -489,7 +335,7 @@ AgreementViewRoute.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
-    }).isRequired,
+    }).isRequired
   }).isRequired,
 };
 
