@@ -13,7 +13,8 @@ import {
   useInterfaces,
   INVALID_JSON_ERROR,
   JSON_ERROR,
-  usePrevNextPagination
+  usePrevNextPagination,
+  useFetchWithNoStats
 } from '@folio/stripes-erm-components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 
@@ -127,33 +128,34 @@ const AgreementViewRoute = ({
     }
   );
 
-  // AGREEMENT ERESOURCES INFINITE FETCH
-  const agreementEresourcesQueryParams = useMemo(() => (
-    generateKiwtQueryParams({
-      sort: [
-        { path: 'pti.titleInstance.name' }
-      ],
+  // AGREEMENT ERESOURCES PER PAGE FETCH WITHOUT STATS / FETCH CURRENT AND NEXT PAGE
+  const eresourcesQueryConfig = {
+    id: COVERED_ERESOURCES_PAGINATION_ID,
+    params: {
+      sort: [{ path: 'pti.titleInstance.name' }],
       page: coveredEresourcePage,
       perPage: coveredEresourcePageSize,
-      stats: false
-    }, {})
-  ), [coveredEresourcePageSize, coveredEresourcePage]);
+    },
+    path: agreementEresourcesPath,
+    keyArray: ['ui-agreements', 'AgreementViewRoute', 'getEresources'],
+  };
 
   const {
-    data: agreementEresources = [],
-    isLoading: areEresourcesLoading
-  } = useQuery(
-    [agreementEresourcesPath, agreementEresourcesQueryParams, 'ui-agreements', 'AgreementViewRoute', 'getEresources'],
-    () => {
-      const params = [...agreementEresourcesQueryParams];
-      return ky.get(`${agreementEresourcesPath}?${params?.join('&')}`).json();
-    }
-  );
+    currentPage: { data: agreementEresources = [], isLoading: areEresourcesLoading = true } = {},
+    nextPage = {},
+  } = useFetchWithNoStats(eresourcesQueryConfig);
+
+  console.log('nextPage', nextPage);
+  // console.log('nextPage', nextPage);
+
+  const hasNextEresourcesPage = nextPage?.data?.length > 0;
+
+  console.log('hasNextEresourcesPage', hasNextEresourcesPage);
 
   /*
-   * Calculate poLineIdsArray outside of the useEffect hook,
-   * so we can accurately tell if it changes and avoid infinite loop
-   */
+ * Calculate poLineIdsArray outside of the useEffect hook,
+ * so we can accurately tell if it changes and avoid infinite loop
+ */
   const poLineIdsArray = useMemo(() => (
     agreementLines
       .filter(line => line.poLines?.length)
@@ -238,6 +240,7 @@ const AgreementViewRoute = ({
       lines: !areLinesLoading ? agreementLines : undefined,
       agreementLinesCount: agreementLineCount,
       eresources: !areEresourcesLoading ? agreementEresources : undefined,
+      hasNextEresourcesPage,
       orderLines,
       orgs,
     };
