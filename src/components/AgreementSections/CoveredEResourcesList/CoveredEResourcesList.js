@@ -27,7 +27,7 @@ import {
   getResourceIdentifier,
   TitleOnPlatformLink,
   usePrevNextPagination,
-  useFetchWithNoStats,
+  useFetchCurrentAndNext,
 } from '@folio/stripes-erm-components';
 
 import { useAgreementsSettings } from '../../../hooks';
@@ -69,35 +69,38 @@ const CoveredEResourcesList = ({
     eresourcesFilterPath
   );
 
+  const coveredEresourcesPaginationId = `${COVERED_ERESOURCES_PAGINATION_ID}.${eresourcesFilterPath}`;
+
   const { currentPage } = usePrevNextPagination({
     pageSize: coveredEresourcePageSize, // Only needed for reading back MCL props
-    id: COVERED_ERESOURCES_PAGINATION_ID,
+    id: coveredEresourcesPaginationId,
     syncToLocation: false,
   });
 
   // AGREEMENT ERESOURCES PER PAGE FETCH WITHOUT STATS / FETCH CURRENT AND NEXT PAGE
   const eresourcesQueryConfig = {
-    id: COVERED_ERESOURCES_PAGINATION_ID,
+    id: coveredEresourcesPaginationId,
     params: {
       sort: [{ path: 'pti.titleInstance.name' }],
       page: currentPage,
       perPage: coveredEresourcePageSize,
+      stats: false,
     },
     path: agreementEresourcesPath,
     keyArray: ['ui-agreements', 'AgreementViewRoute', 'getEresources'],
   };
 
   const {
-    currentPage: { data: agreementEresources = [] } = {},
+    currentPage: { data: agreementEresources = [], isLoading: areEresourcesLoading } = {},
     nextPage = {},
-  } = useFetchWithNoStats(eresourcesQueryConfig);
+  } = useFetchCurrentAndNext(eresourcesQueryConfig);
 
   const hasNextEresourcesPage = nextPage?.data?.length > 0;
 
   const { paginationMCLProps } = usePrevNextPagination({
     hasNextPage: hasNextEresourcesPage,
     pageSize: coveredEresourcePageSize,
-    id: COVERED_ERESOURCES_PAGINATION_ID,
+    id: coveredEresourcesPaginationId,
     syncToLocation: false,
   });
 
@@ -316,7 +319,8 @@ const CoveredEResourcesList = ({
           )}
         </Col>
       </Row>
-      {agreementEresources ? renderList() : <Spinner />}
+      {/* {agreementEresources && !areEresourcesLoading ? renderList() : <Spinner />} */}
+      {!areEresourcesLoading ? renderList() : <Spinner />}
     </IfEResourcesEnabled>
   ) : null;
 };
