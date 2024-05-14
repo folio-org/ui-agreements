@@ -79,7 +79,6 @@ const CoveredEResourcesList = ({
 
   // AGREEMENT ERESOURCES PER PAGE FETCH WITHOUT STATS / FETCH CURRENT AND NEXT PAGE
   const eresourcesQueryConfig = {
-    id: coveredEresourcesPaginationId,
     params: {
       sort: [{ path: 'pti.titleInstance.name' }],
       page: currentPage,
@@ -92,10 +91,10 @@ const CoveredEResourcesList = ({
 
   const {
     currentPage: { data: agreementEresources = [], isLoading: areEresourcesLoading } = {},
-    nextPage = {},
+    nextPage: { data: nextPageEresources = [] } = {},
   } = useFetchCurrentAndNext(eresourcesQueryConfig);
 
-  const hasNextEresourcesPage = nextPage?.data?.length > 0;
+  const hasNextEresourcesPage = nextPageEresources?.length > 0;
 
   const { paginationMCLProps } = usePrevNextPagination({
     hasNextPage: hasNextEresourcesPage,
@@ -319,7 +318,6 @@ const CoveredEResourcesList = ({
           )}
         </Col>
       </Row>
-      {/* {agreementEresources && !areEresourcesLoading ? renderList() : <Spinner />} */}
       {!areEresourcesLoading ? renderList() : <Spinner />}
     </IfEResourcesEnabled>
   ) : null;
