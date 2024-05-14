@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -32,6 +32,7 @@ import {
 import {
   useAgreementsHelperApp,
   useAgreementsSettings,
+  useAgreementStore,
   useChunkedOrderLines,
 } from '../../hooks';
 
@@ -43,6 +44,14 @@ const AgreementViewRoute = ({
     params: { id: agreementId },
   },
 }) => {
+  const { checkAndSetAgreementId } = useAgreementStore();
+
+  // React useEffect to check and set the current agreement id
+  // in this function the local page store is reset if agreement id has changed
+  useEffect(() => {
+    checkAndSetAgreementId(agreementId);
+  }, [agreementId, checkAndSetAgreementId]);
+
   const queryClient = useQueryClient();
 
   const settings = useAgreementsSettings();

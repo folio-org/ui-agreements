@@ -9,3 +9,4 @@ export { default as useAgreementsRefdata } from './useAgreementsRefdata';
 export { default as useEresourcesEnabled } from './useEresourcesEnabled';
 export { default as useBasket } from './useBasket';
 export { default as useBasketStore } from './useBasketStore';
+export { default as useAgreementStore } from './useAgreementStore';
