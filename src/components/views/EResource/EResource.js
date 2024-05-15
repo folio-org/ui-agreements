@@ -81,7 +81,7 @@ const EResource = ({
                       entity={eresource}
                     />
                   }
-                  {eresource.subType.value !== 'print' &&
+                  {eresource.subType?.value !== 'print' &&
                     <Button
                       buttonStyle="primary"
                       id="clickable-edit-eresource"
