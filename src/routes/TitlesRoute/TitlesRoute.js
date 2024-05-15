@@ -23,7 +23,7 @@ import { urls } from '../../components/utilities';
 import {
   defaultTitlesQIndex as defaultQIndex,
   resultCount,
-  TITLES_ELECTRONIC_ENDPOINT
+  TITLES_ENDPOINT,
 } from '../../constants';
 import { useAgreementsRefdata } from '../../hooks';
 
@@ -92,10 +92,10 @@ const TitlesRoute = ({
     isLoading: areTitlesLoading,
     isError: isTitlesError
   } = useQuery(
-    ['ERM', 'Titles', titlesQueryParams, TITLES_ELECTRONIC_ENDPOINT],
+    ['ERM', 'Titles', titlesQueryParams, TITLES_ENDPOINT],
     () => {
       const params = [...titlesQueryParams];
-      return ky.get(`${TITLES_ELECTRONIC_ENDPOINT}?${params?.join('&')}`).json();
+      return ky.get(`${TITLES_ENDPOINT}?${params?.join('&')}`).json();
     },
     {
       enabled: (!!query?.filters || !!query?.query) && !!currentPage,

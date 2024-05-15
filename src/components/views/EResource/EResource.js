@@ -58,6 +58,9 @@ const EResource = ({
   if (eresource.class === resourceClasses.TITLEINSTANCE) {
     EResourceViewComponent = Title;
     icon = 'title';
+    if (eresource.subType?.value === 'print') {
+      icon = 'printTitle';
+    }
   } else if (eresource.class === resourceClasses.PCI) {
     EResourceViewComponent = PCI;
     icon = 'pci';
@@ -78,14 +81,16 @@ const EResource = ({
                       entity={eresource}
                     />
                   }
-                  <Button
-                    buttonStyle="primary"
-                    id="clickable-edit-eresource"
-                    marginBottom0
-                    onClick={handlers.onEdit}
-                  >
-                    <FormattedMessage id="stripes-components.button.edit" />
-                  </Button>
+                  {eresource.subType.value !== 'print' &&
+                    <Button
+                      buttonStyle="primary"
+                      id="clickable-edit-eresource"
+                      marginBottom0
+                      onClick={handlers.onEdit}
+                    >
+                      <FormattedMessage id="stripes-components.button.edit" />
+                    </Button>
+                  }
                 </PaneMenu>
               </IfPermission>
             ) : null
