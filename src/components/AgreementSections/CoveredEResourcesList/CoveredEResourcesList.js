@@ -69,7 +69,7 @@ const CoveredEResourcesList = ({
     eresourcesFilterPath
   );
 
-  const coveredEresourcesPaginationId = `${COVERED_ERESOURCES_PAGINATION_ID}.${eresourcesFilterPath}`;
+  const coveredEresourcesPaginationId = `${COVERED_ERESOURCES_PAGINATION_ID}.${eresourcesFilterPath}-${id}`;
 
   const { currentPage } = usePrevNextPagination({
     pageSize: coveredEresourcePageSize, // Only needed for reading back MCL props

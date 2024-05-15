@@ -47,10 +47,11 @@ const AgreementViewRoute = ({
 
   const settings = useAgreementsSettings();
   const agreementLinesPageSize = parseMclPageSize(settings, 'agreementLines');
+  const agreementLinesPaginationId = `${AGREEMENT_LINES_PAGINATION_ID}-${agreementId}`;
 
   const { currentPage: agreementLinesPage } = usePrevNextPagination({
     pageSize: agreementLinesPageSize, // Only needed for reading back MCL props
-    id: AGREEMENT_LINES_PAGINATION_ID,
+    id: agreementLinesPaginationId,
     syncToLocation: false,
   });
 
