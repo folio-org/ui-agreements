@@ -338,6 +338,11 @@
         "name": "platform",
         "alt": " ",
         "title": "platform"
+      },
+      {
+        "name": "printTitle",
+        "alt": " ",
+        "title": "Print title"
       }
     ]
   }

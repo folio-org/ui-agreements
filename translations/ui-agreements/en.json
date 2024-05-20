@@ -397,6 +397,8 @@
   "eresources.titleDetails": "Title details",
   "eresources.accessTitleOnPlatform": "Access {name}",
   "eresources.relatedTitle": "Related title \"{name}\"",
+  "eresources.relatedTitle.infoPopover": "Open the electronic title to view: options for acquiring the title, any linked agreements and further title details.",
+  "eresources.electronicTitle": "Electronic title \"{name}\"",
   "eresources.holdingStatus": "Holding status",
   "eresources.selected": "Selected",
   "eresources.notSelected": "Not selected",

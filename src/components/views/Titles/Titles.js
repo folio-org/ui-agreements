@@ -24,7 +24,6 @@ import {
 
 import {
   getResourceIdentifier,
-  getSiblingIdentifier,
   EResourceType,
   useHandleSubmitSearch,
   usePrevNextPagination,
@@ -279,25 +278,26 @@ const Titles = ({
                     columnMapping={{
                       name: <FormattedMessage id="ui-agreements.eresources.name" />,
                       publicationType: <FormattedMessage id="ui-agreements.eresources.publicationType" />,
+                      materialType: <FormattedMessage id="ui-agreements.eresources.materialType" />,
                       isbn: <FormattedMessage id="ui-agreements.identifier.isbn" />,
-                      eissn: <FormattedMessage id="ui-agreements.identifier.eissn" />,
-                      pissn: <FormattedMessage id="ui-agreements.identifier.pissn" />,
+                      issn: <FormattedMessage id="ui-agreements.identifier.issn" />,
                     }}
                     columnWidths={{
                       name: 300,
-                      publicationType: 100,
+                      publicationType: 150,
+                      materialType: 150,
                       isbn: 150,
-                      eissn: 150,
-                      pissn: 150,
+                      issn: 150,
                     }}
                     contentData={data.titles}
                     formatter={{
                       name: e => {
+                        const iconKey = e.subType?.value === 'print' ? 'printTitle' : 'title';
                         return (
                           <AppIcon
                             app="agreements"
                             iconAlignment="baseline"
-                            iconKey="title"
+                            iconKey={iconKey}
                             size="small"
                           >
                             {e?.longName ?? e.name}
@@ -305,9 +305,9 @@ const Titles = ({
                         );
                       },
                       publicationType: e => <EResourceType resource={e} />,
+                      materialType: e => e?.subType?.label,
                       isbn: e => getResourceIdentifier(e, 'isbn'),
-                      eissn: e => getResourceIdentifier(e, 'eissn') ?? getResourceIdentifier(e, 'issn'),
-                      pissn: e => getResourceIdentifier(e, 'pissn') ?? getSiblingIdentifier(e, 'issn'),
+                      issn: e => (getResourceIdentifier(e, 'issn') ?? getResourceIdentifier(e, 'eissn')) ?? getResourceIdentifier(e, 'pissn'),
                     }}
                     id="list-titles"
                     isEmptyMessage={
@@ -332,7 +332,7 @@ const Titles = ({
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     totalCount={count}
-                    visibleColumns={['name', 'publicationType', 'isbn', 'eissn', 'pissn']}
+                    visibleColumns={['name', 'publicationType', 'materialType', 'isbn', 'issn']}
                   />
                 </Pane>
                 {children}
