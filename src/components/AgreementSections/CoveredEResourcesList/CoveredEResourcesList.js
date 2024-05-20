@@ -26,21 +26,24 @@ import { AppIcon, useCallout } from '@folio/stripes/core';
 import {
   getResourceIdentifier,
   TitleOnPlatformLink,
-  usePrevNextPagination
+  usePrevNextPagination,
+  useFetchMultiplePages,
 } from '@folio/stripes-erm-components';
 
 import { useAgreementsSettings } from '../../../hooks';
 import Coverage from '../../Coverage';
 import CustomCoverageIcon from '../../CustomCoverageIcon';
 import IfEResourcesEnabled from '../../IfEResourcesEnabled';
-import { resultCount, COVERED_ERESOURCES_PAGINATION_ID } from '../../../constants';
+import {
+  resultCount,
+  COVERED_ERESOURCES_PAGINATION_ID,
+  AGREEMENT_ERESOURCES_ENDPOINT_STATIC,
+} from '../../../constants';
 import { urls, parseMclPageSize } from '../../utilities';
-
 
 const propTypes = {
   agreement: PropTypes.shape({
-    eresources: PropTypes.arrayOf(PropTypes.object),
-    eresourcesCount: PropTypes.number,
+    id: PropTypes.string,
     lines: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
   eresourcesFilterPath: PropTypes.string,
@@ -50,52 +53,79 @@ const propTypes = {
 };
 
 const CoveredEResourcesList = ({
-  agreement: { eresources, eresourcesCount, lines },
+  agreement: { id, lines },
   eresourcesFilterPath,
   onFilterEResources,
   onExportEResourcesAsJSON,
   onExportEResourcesAsKBART,
 }) => {
   const settings = useAgreementsSettings();
-  const coveredEresourcePageSize = parseMclPageSize(settings, 'agreementEresources');
+  const coveredEresourcePageSize = parseMclPageSize(
+    settings,
+    'agreementEresources'
+  );
 
+  const coveredEresourcesPaginationId = `${COVERED_ERESOURCES_PAGINATION_ID}.${eresourcesFilterPath}-${id}`;
+
+  const { currentPage } = usePrevNextPagination({
+    pageSize: coveredEresourcePageSize, // Only needed for reading back MCL props
+    id: coveredEresourcesPaginationId,
+    syncToLocation: false,
+  });
+
+  // AGREEMENT ERESOURCES PER PAGE FETCH WITHOUT STATS / FETCH CURRENT AND NEXT PAGE
   const {
-    paginationMCLProps,
-  } = usePrevNextPagination({
-    count: eresourcesCount,
+    [currentPage]: { data: agreementEresources = [], isLoading: areEresourcesLoading } = {},
+    [currentPage + 1]: { data: nextPageEresources = [], isLoading: isNextPageLoading } = {},
+  } = useFetchMultiplePages({
+    getQueryKey: ({ params, pageNum, pathStr }) => ['ERM', 'Agremeent', id, 'getEresources', pageNum, params, pathStr],
+    params: {
+      sort: [{ path: 'pti.titleInstance.name' }],
+      page: currentPage,
+      perPage: coveredEresourcePageSize,
+      stats: false,
+    },
+    path: AGREEMENT_ERESOURCES_ENDPOINT_STATIC(id, eresourcesFilterPath),
+  });
+
+  const hasNextEresourcesPage = nextPageEresources?.length > 0;
+
+  const { paginationMCLProps } = usePrevNextPagination({
+    hasNextPage: hasNextEresourcesPage,
     pageSize: coveredEresourcePageSize,
-    id: COVERED_ERESOURCES_PAGINATION_ID,
-    syncToLocation: false
+    id: coveredEresourcesPaginationId,
+    syncToLocation: false,
   });
 
   const callout = useCallout();
-  const exportDisabled = eresourcesFilterPath === 'dropped' || eresourcesFilterPath === 'future';
+  const exportDisabled =
+    eresourcesFilterPath === 'dropped' || eresourcesFilterPath === 'future';
 
   const exports = (exportCallback) => {
     const calloutId = callout.sendCallout({
-      message: <FormattedMessage id="ui-agreements.eresourcesCovered.preparingExport" />,
+      message: (
+        <FormattedMessage id="ui-agreements.eresourcesCovered.preparingExport" />
+      ),
       timeout: 0,
     });
 
     exportCallback().then(() => callout.removeCallout(calloutId));
   };
 
-  const renderDate = date => (
-    date ? <FormattedUTCDate value={date} /> : ''
-  );
+  const renderDate = (date) => (date ? <FormattedUTCDate value={date} /> : '');
 
   const renderExportDropdown = (disabled) => (
     <Dropdown
       buttonProps={{
         'data-test-export-button': true,
-        'disabled': disabled,
-        'marginBottom0': true,
+        disabled,
+        marginBottom0: true,
       }}
       label={<FormattedMessage id="ui-agreements.eresourcesCovered.exportAs" />}
     >
       <DropdownMenu role="menu">
         <FormattedMessage id="ui-agreements.eresourcesCovered.exportAsJSON">
-          {exportAsJson => (
+          {(exportAsJson) => (
             <Button
               aria-label={exportAsJson}
               buttonStyle="dropdownItem"
@@ -108,7 +138,7 @@ const CoveredEResourcesList = ({
           )}
         </FormattedMessage>
         <FormattedMessage id="ui-agreements.eresourcesCovered.exportAsJSON">
-          {exportAsKbart => (
+          {(exportAsKbart) => (
             <Button
               aria-label={exportAsKbart}
               buttonStyle="dropdownItem"
@@ -156,8 +186,12 @@ const CoveredEResourcesList = ({
           package: <FormattedMessage id="ui-agreements.eresources.package" />,
           coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
           isCustomCoverage: ' ',
-          accessStart: <FormattedMessage id="ui-agreements.eresources.accessStart" />,
-          accessEnd: <FormattedMessage id="ui-agreements.eresources.accessEnd" />,
+          accessStart: (
+            <FormattedMessage id="ui-agreements.eresources.accessStart" />
+          ),
+          accessEnd: (
+            <FormattedMessage id="ui-agreements.eresources.accessEnd" />
+          ),
         }}
         columnWidths={{
           name: 250,
@@ -165,9 +199,9 @@ const CoveredEResourcesList = ({
           package: 150,
           coverage: { min: 250, max: 320 },
         }}
-        contentData={eresources}
+        contentData={agreementEresources}
         formatter={{
-          name: e => {
+          name: (e) => {
             const titleInstanceName = e?._object?.pti?.titleInstance?.name;
             return (
               <AppIcon
@@ -180,11 +214,15 @@ const CoveredEResourcesList = ({
               </AppIcon>
             );
           },
-          issn: e => {
+          issn: (e) => {
             const titleInstance = get(e._object, 'pti.titleInstance', {});
-            return getResourceIdentifier(titleInstance, 'issn') || getResourceIdentifier(titleInstance, 'eissn') || getResourceIdentifier(titleInstance, 'pissn');
+            return (
+              getResourceIdentifier(titleInstance, 'issn') ||
+              getResourceIdentifier(titleInstance, 'eissn') ||
+              getResourceIdentifier(titleInstance, 'pissn')
+            );
           },
-          platform: e => {
+          platform: (e) => {
             const pti = e?._object?.pti ?? {};
             const { name, platform, url } = pti;
 
@@ -197,19 +235,25 @@ const CoveredEResourcesList = ({
               />
             );
           },
-          package: e => e?._object?.pkg?.name ?? <NoValue />,
-          coverage: e => <Coverage eResource={e} />,
-          accessStart: e => renderDate(e._object?.accessStart),
-          accessEnd: e => renderDate(e._object?.accessEnd),
-          isCustomCoverage: line => {
+          package: (e) => e?._object?.pkg?.name ?? <NoValue />,
+          coverage: (e) => <Coverage eResource={e} />,
+          accessStart: (e) => renderDate(e._object?.accessStart),
+          accessEnd: (e) => renderDate(e._object?.accessEnd),
+          isCustomCoverage: (line) => {
             if (!line.customCoverage) return '';
             return (
               <Tooltip
                 id={`covered-eresources-cc-tooltip-${line.rowIndex}`}
-                text={<FormattedMessage id="ui-agreements.customcoverages.tooltip" />}
-              >
-                {({ ref, ariaIds }) => <CustomCoverageIcon ref={ref} aria-labelledby={ariaIds.text} />
+                text={
+                  <FormattedMessage id="ui-agreements.customcoverages.tooltip" />
                 }
+              >
+                {({ ref, ariaIds }) => (
+                  <CustomCoverageIcon
+                    ref={ref}
+                    aria-labelledby={ariaIds.text}
+                  />
+                )}
               </Tooltip>
             );
           },
@@ -217,8 +261,6 @@ const CoveredEResourcesList = ({
         id="eresources-covered"
         interactive={false}
         pageAmount={resultCount.RESULT_COUNT_INCREMENT}
-        pagingType="click"
-        totalCount={eresourcesCount}
         visibleColumns={[
           'name',
           'issn',
@@ -247,11 +289,13 @@ const CoveredEResourcesList = ({
         </Col>
         <Col md={3} xs={12}>
           {renderExportDropdown(exportDisabled)}
-          {exportDisabled ?
+          {exportDisabled ? (
             <Tooltip
               id="covered-eresources-export-tooltip"
               placement="top"
-              text={<FormattedMessage id="ui-agreements.eresourcesCovered.exportButton.tooltip" />}
+              text={
+                <FormattedMessage id="ui-agreements.eresourcesCovered.exportButton.tooltip" />
+              }
             >
               {({ ref, ariaIds }) => (
                 <Icon
@@ -261,12 +305,13 @@ const CoveredEResourcesList = ({
                   tabIndex="0"
                 />
               )}
-            </Tooltip> :
+            </Tooltip>
+          ) : (
             ''
-          }
+          )}
         </Col>
       </Row>
-      {eresources ? renderList() : <Spinner />}
+      {!areEresourcesLoading ? renderList() : <Spinner />}
     </IfEResourcesEnabled>
   ) : null;
 };

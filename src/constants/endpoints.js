@@ -7,6 +7,7 @@ export const AGREEMENTS_ENDPOINT = 'erm/sas';
 export const AGREEMENT_ENDPOINT = (agreementId) => `${AGREEMENTS_ENDPOINT}/${agreementId}`;
 
 export const AGREEMENT_ERESOURCES_ENDPOINT = (agreementId, filterPath) => `${AGREEMENT_ENDPOINT(agreementId)}/resources/${filterPath}`;
+export const AGREEMENT_ERESOURCES_ENDPOINT_STATIC = (agreementId, filterPath) => `${AGREEMENT_ENDPOINT(agreementId)}/resources/static/${filterPath}`;
 
 export const AGREEMENT_LINES_ENDPOINT = 'erm/entitlements';
 export const AGREEMENT_LINES_EXTERNAL_ENDPOINT = 'erm/entitlements/external';
