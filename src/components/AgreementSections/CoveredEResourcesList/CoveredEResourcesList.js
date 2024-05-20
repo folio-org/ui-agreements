@@ -27,7 +27,7 @@ import {
   getResourceIdentifier,
   TitleOnPlatformLink,
   usePrevNextPagination,
-  useFetchCurrentAndNext,
+  useFetchMultiplePages,
 } from '@folio/stripes-erm-components';
 
 import { useAgreementsSettings } from '../../../hooks';
@@ -37,7 +37,7 @@ import IfEResourcesEnabled from '../../IfEResourcesEnabled';
 import {
   resultCount,
   COVERED_ERESOURCES_PAGINATION_ID,
-  AGREEMENT_ERESOURCES_ENDPOINT,
+  AGREEMENT_ERESOURCES_ENDPOINT_STATIC,
 } from '../../../constants';
 import { urls, parseMclPageSize } from '../../utilities';
 
@@ -64,10 +64,6 @@ const CoveredEResourcesList = ({
     settings,
     'agreementEresources'
   );
-  const agreementEresourcesPath = AGREEMENT_ERESOURCES_ENDPOINT(
-    id,
-    eresourcesFilterPath
-  );
 
   const coveredEresourcesPaginationId = `${COVERED_ERESOURCES_PAGINATION_ID}.${eresourcesFilterPath}-${id}`;
 
@@ -78,21 +74,19 @@ const CoveredEResourcesList = ({
   });
 
   // AGREEMENT ERESOURCES PER PAGE FETCH WITHOUT STATS / FETCH CURRENT AND NEXT PAGE
-  const eresourcesQueryConfig = {
+  const {
+    [currentPage]: { data: agreementEresources = [], isLoading: areEresourcesLoading } = {},
+    [currentPage + 1]: { data: nextPageEresources = [], isLoading: isNextPageLoading } = {},
+  } = useFetchMultiplePages({
+    getQueryKey: ({ params, pageNum, pathStr }) => ['ERM', 'Agremeent', id, 'getEresources', pageNum, params, pathStr],
     params: {
       sort: [{ path: 'pti.titleInstance.name' }],
       page: currentPage,
       perPage: coveredEresourcePageSize,
       stats: false,
     },
-    path: agreementEresourcesPath,
-    keyArray: ['ui-agreements', 'AgreementViewRoute', 'getEresources'],
-  };
-
-  const {
-    currentPage: { data: agreementEresources = [], isLoading: areEresourcesLoading } = {},
-    nextPage: { data: nextPageEresources = [] } = {},
-  } = useFetchCurrentAndNext(eresourcesQueryConfig);
+    path: AGREEMENT_ERESOURCES_ENDPOINT_STATIC(id, eresourcesFilterPath),
+  });
 
   const hasNextEresourcesPage = nextPageEresources?.length > 0;
 
@@ -267,7 +261,6 @@ const CoveredEResourcesList = ({
         id="eresources-covered"
         interactive={false}
         pageAmount={resultCount.RESULT_COUNT_INCREMENT}
-        pagingType="click"
         visibleColumns={[
           'name',
           'issn',
