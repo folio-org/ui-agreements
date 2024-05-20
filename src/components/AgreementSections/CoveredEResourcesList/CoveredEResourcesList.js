@@ -17,7 +17,6 @@ import {
   MultiColumnList,
   NoValue,
   Row,
-  Spinner,
   Tooltip,
 } from '@folio/stripes/components';
 
@@ -260,7 +259,9 @@ const CoveredEResourcesList = ({
         }}
         id="eresources-covered"
         interactive={false}
+        loading={areEresourcesLoading}
         pageAmount={resultCount.RESULT_COUNT_INCREMENT}
+        pagingCanGoNextLoading={isNextPageLoading} // Special case for loading next page
         visibleColumns={[
           'name',
           'issn',
@@ -311,7 +312,7 @@ const CoveredEResourcesList = ({
           )}
         </Col>
       </Row>
-      {!areEresourcesLoading ? renderList() : <Spinner />}
+      {renderList()}
     </IfEResourcesEnabled>
   ) : null;
 };
