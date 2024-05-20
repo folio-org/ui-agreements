@@ -6,6 +6,15 @@ import translationsProperties from '../../../test/helpers';
 import RelatedTitleInfo from './RelatedTitleInfo';
 import { relatedMonographTitle, relatedSerialTitle } from './testResources';
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    location: {
+      search: ''
+    }
+  }),
+}));
+
 let renderComponent;
 describe('RelatedTitleInfo', () => {
   describe('with monograph resource', () => {

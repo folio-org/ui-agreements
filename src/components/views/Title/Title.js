@@ -113,12 +113,16 @@ export default class Title extends React.Component {
               </Col>
             </Row>
             <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-              <Agreements
-                {...this.getSectionProps('eresourceAgreements')}
-                isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsEresource" />}
-                visibleColumns={['name', 'type', 'startDate', 'endDate', 'eresource', 'acqMethod', 'coverage', 'isCustomCoverage']}
-              />
-              <AcquisitionOptions {...this.getSectionProps('acquisitionOptions')} />
+              {data.eresource.subType.value !== 'print' &&
+                <>
+                  <Agreements
+                    {...this.getSectionProps('eresourceAgreements')}
+                    isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsEresource" />}
+                    visibleColumns={['name', 'type', 'startDate', 'endDate', 'eresource', 'acqMethod', 'coverage', 'isCustomCoverage']}
+                  />
+                  <AcquisitionOptions {...this.getSectionProps('acquisitionOptions')} />
+                </>
+              }
               <NotesSmartAccordion
                 {...this.getSectionProps('notes')}
                 domainName="agreements"
@@ -129,7 +133,7 @@ export default class Title extends React.Component {
                 pathToNoteDetails={urls.notes()}
               />
               {
-                handlers.isSuppressFromDiscoveryEnabled('title') &&
+                handlers.isSuppressFromDiscoveryEnabled('title') && data.eresource.subType?.value !== 'print' &&
                 <DiscoverySettings
                   handlers={handlers}
                   id="discoverySettings"
