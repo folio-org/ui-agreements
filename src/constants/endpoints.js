@@ -19,7 +19,7 @@ export const ERESOURCE_ENDPOINT = (eresourceId) => `${ERESOURCES_ENDPOINT}/${ere
 
 export const ERESOURCE_ENTITLEMENTS_ENDPOINT = (eresourceId) => `${ERESOURCE_ENDPOINT(eresourceId)}/entitlements`;
 export const ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT = (eresourceId) => `${ERESOURCE_ENDPOINT(eresourceId)}/entitlements/related`;
-export const ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT = (eresourceId) => `${ERESOURCE_ENDPOINT(eresourceId)}/entitlementOptions`;
+export const ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT = (eresourceId) => `${ERESOURCE_ENDPOINT(eresourceId)}/static/entitlementOptions`; // Do a straight swap for static here and use stats as before
 
 export const PCIS_ENDPOINT = 'erm/pci';
 export const PCI_ENDPOINT = (pciId) => `erm/pci/${pciId}`;
