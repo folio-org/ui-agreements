@@ -25,7 +25,7 @@ import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
 
 import {
   AGREEMENT_ENDPOINT,
-  AGREEMENT_ERESOURCES_ENDPOINT,
+  AGREEMENT_ERESOURCES_ENDPOINT_STATIC,
   AGREEMENT_LINES_ENDPOINT,
   httpStatuses
 } from '../../constants';
@@ -58,7 +58,7 @@ const AgreementViewRoute = ({
   } = useAgreementsHelperApp();
 
   const agreementPath = AGREEMENT_ENDPOINT(agreementId);
-  const agreementEresourcesPath = AGREEMENT_ERESOURCES_ENDPOINT(agreementId, eresourcesFilterPath);
+  const agreementEresourcesPath = AGREEMENT_ERESOURCES_ENDPOINT_STATIC(agreementId, eresourcesFilterPath);
 
   const { agreement, isAgreementLoading } = useAgreement({ agreementId });
 
@@ -114,14 +114,15 @@ const AgreementViewRoute = ({
   );
 
   // AGREEMENT ERESOURCES INFINITE FETCH
+  const agreementEresourcesPerPage = useMemo(() => parseMclPageSize(settings, 'agreementEresources'), [settings]);
   const agreementEresourcesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
       sort: [
         { path: 'pti.titleInstance.name' }
       ],
-      perPage: parseMclPageSize(settings, 'agreementEresources')
+      perPage: agreementEresourcesPerPage
     }, {})
-  ), [settings]);
+  ), [agreementEresourcesPerPage]);
 
   const {
     infiniteQueryObject: {
@@ -133,7 +134,7 @@ const AgreementViewRoute = ({
   } = useInfiniteFetch(
     [agreementEresourcesPath, agreementEresourcesQueryParams, 'ui-agreements', 'AgreementViewRoute', 'getEresources'],
     ({ pageParam = 0 }) => {
-      const params = [...agreementEresourcesQueryParams, `offset=${pageParam}`];
+      const params = [...agreementEresourcesQueryParams, `page=${(pageParam / agreementEresourcesPerPage) + 1}`];
       return ky.get(`${agreementEresourcesPath}?${params?.join('&')}`).json();
     }
   );
