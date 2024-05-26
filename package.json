@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "10.0.1",
+  "version": "10.1.0",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -338,6 +338,11 @@
         "name": "platform",
         "alt": " ",
         "title": "platform"
+      },
+      {
+        "name": "printTitle",
+        "alt": " ",
+        "title": "Print title"
       }
     ]
   }

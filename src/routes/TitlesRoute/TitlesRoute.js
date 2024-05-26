@@ -23,7 +23,7 @@ import { urls } from '../../components/utilities';
 import {
   defaultTitlesQIndex as defaultQIndex,
   resultCount,
-  TITLES_ELECTRONIC_ENDPOINT
+  TITLES_ENDPOINT,
 } from '../../constants';
 import { useAgreementsRefdata } from '../../hooks';
 
@@ -65,7 +65,13 @@ const TitlesRoute = ({
   const { query, querySetter, queryGetter } = useKiwtSASQuery();
 
   const { currentPage } = usePrevNextPagination();
-  const { searchKey } = useSASQQIndex({ defaultQIndex });
+
+  /*
+   * Have the default searchKey (When no qIndex is present, meaning no checkboxes are checked) include identifier values
+   * This usage of useSASQQIndex is _not_ setting the qindex in the url,
+   * that is handled in the view via SASQ and the props handed to it.
+   */
+  const { searchKey } = useSASQQIndex({ defaultQIndex: `${defaultQIndex},identifiers.identifier.value` });
 
   const titlesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
@@ -86,10 +92,10 @@ const TitlesRoute = ({
     isLoading: areTitlesLoading,
     isError: isTitlesError
   } = useQuery(
-    ['ERM', 'Titles', titlesQueryParams, TITLES_ELECTRONIC_ENDPOINT],
+    ['ERM', 'Titles', titlesQueryParams, TITLES_ENDPOINT],
     () => {
       const params = [...titlesQueryParams];
-      return ky.get(`${TITLES_ELECTRONIC_ENDPOINT}?${params?.join('&')}`).json();
+      return ky.get(`${TITLES_ENDPOINT}?${params?.join('&')}`).json();
     },
     {
       enabled: (!!query?.filters || !!query?.query) && !!currentPage,

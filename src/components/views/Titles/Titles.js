@@ -24,7 +24,6 @@ import {
 
 import {
   getResourceIdentifier,
-  getSiblingIdentifier,
   EResourceType,
   useHandleSubmitSearch,
   usePrevNextPagination,
@@ -36,6 +35,7 @@ import IdentifierReassignmentForm from '../../IdentifierReassignmentForm';
 
 import { urls } from '../../utilities';
 import {
+  defaultTitlesQIndex as defaultQIndex,
   KB_TAB_FILTER_PANE,
   KB_TAB_PANESET,
   KB_TAB_PANE_ID,
@@ -89,10 +89,16 @@ const Titles = ({
     pageSize: RESULT_COUNT_INCREMENT_MEDIUM
   });
 
+  /*
+   * NOTE: This is not directly defaulting the qIndex,
+   * rather setting up the "default" for inclusion in qIndexSASQProps,
+   * which are passed to SASQ below. Then SASQ will be responsible for setting
+   * initial qIndex values in the url on mount.
+   */
   const {
     qIndexChanged,
     qIndexSASQProps
-  } = useSASQQIndex();
+  } = useSASQQIndex({ defaultQIndex });
 
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
@@ -272,25 +278,26 @@ const Titles = ({
                     columnMapping={{
                       name: <FormattedMessage id="ui-agreements.eresources.name" />,
                       publicationType: <FormattedMessage id="ui-agreements.eresources.publicationType" />,
+                      materialType: <FormattedMessage id="ui-agreements.eresources.materialType" />,
                       isbn: <FormattedMessage id="ui-agreements.identifier.isbn" />,
-                      eissn: <FormattedMessage id="ui-agreements.identifier.eissn" />,
-                      pissn: <FormattedMessage id="ui-agreements.identifier.pissn" />,
+                      issn: <FormattedMessage id="ui-agreements.identifier.issn" />,
                     }}
                     columnWidths={{
                       name: 300,
-                      publicationType: 100,
+                      publicationType: 150,
+                      materialType: 150,
                       isbn: 150,
-                      eissn: 150,
-                      pissn: 150,
+                      issn: 150,
                     }}
                     contentData={data.titles}
                     formatter={{
                       name: e => {
+                        const iconKey = e.subType?.value === 'print' ? 'printTitle' : 'title';
                         return (
                           <AppIcon
                             app="agreements"
                             iconAlignment="baseline"
-                            iconKey="title"
+                            iconKey={iconKey}
                             size="small"
                           >
                             {e?.longName ?? e.name}
@@ -298,9 +305,9 @@ const Titles = ({
                         );
                       },
                       publicationType: e => <EResourceType resource={e} />,
+                      materialType: e => e?.subType?.label,
                       isbn: e => getResourceIdentifier(e, 'isbn'),
-                      eissn: e => getResourceIdentifier(e, 'eissn') ?? getResourceIdentifier(e, 'issn'),
-                      pissn: e => getResourceIdentifier(e, 'pissn') ?? getSiblingIdentifier(e, 'issn'),
+                      issn: e => (getResourceIdentifier(e, 'issn') ?? getResourceIdentifier(e, 'eissn')) ?? getResourceIdentifier(e, 'pissn'),
                     }}
                     id="list-titles"
                     isEmptyMessage={
@@ -325,7 +332,7 @@ const Titles = ({
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     totalCount={count}
-                    visibleColumns={['name', 'publicationType', 'isbn', 'eissn', 'pissn']}
+                    visibleColumns={['name', 'publicationType', 'materialType', 'isbn', 'issn']}
                   />
                 </Pane>
                 {children}

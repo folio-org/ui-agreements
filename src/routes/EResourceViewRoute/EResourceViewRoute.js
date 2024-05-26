@@ -49,14 +49,15 @@ const EResourceViewRoute = ({
   const entitlementOptionsPath = ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT(eresourceId);
 
   // AGREEMENTS FOR ERESOURCE INFINITE FETCH
+  const eresourceAgreementPerPage = useMemo(() => parseMclPageSize(settings, 'entitlements'), [settings]);
   const eresourceAgreementParams = useMemo(() => (
     generateKiwtQueryParams(
       {
-        perPage: parseMclPageSize(settings, 'entitlements')
+        perPage: eresourceAgreementPerPage
       },
       {}
     )
-  ), [settings]);
+  ), [eresourceAgreementPerPage]);
 
   const {
     infiniteQueryObject: {
@@ -68,7 +69,7 @@ const EResourceViewRoute = ({
   } = useInfiniteFetch(
     [entitlementsPath, eresourceAgreementParams, 'ui-agreements', 'EresourceViewRoute', 'getEntitlements'],
     ({ pageParam = 0 }) => {
-      const params = [...eresourceAgreementParams, `offset=${pageParam}`];
+      const params = [...eresourceAgreementParams, `page=${(pageParam / eresourceAgreementPerPage) + 1}`];
       return ky.get(`${entitlementsPath}?${params?.join('&')}`).json();
     }
   );
