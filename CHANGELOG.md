@@ -1,5 +1,12 @@
 # Change history for ui-agreements
 
+## 10.1.0 2024-05-26
+* ERM-3248 Use static endpoints for /resources and /entitlementOptions in Poppy Compatible release 
+* ERM-3246 Improve performance of entitlementOptions endpoint
+* ERM-3239 Query all titles rather than just /electronic in local KB title search
+* ERM-3200 Backport ERM-3186 to Poppy compatible release
+  * ERM-3186 Change default search options for Local KB titles to exclude identifiers
+
 ## 10.0.1 2023-11-09
 * ERM-3082 Backport grouping and spaces fix for Poppy
 * ERM-3065 Agreement lines are displayed by default on the "Agreement lines" pane.
