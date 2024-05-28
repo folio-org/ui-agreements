@@ -1,5 +1,7 @@
 name: stuckLicenseCLA
-on: [pull_request]
+on:
+  pull_request:
+    types: [opened]
 
 ## Adapted from github discussion comment https://github.com/orgs/community/discussions/69944#discussioncomment-7281028
 jobs:
