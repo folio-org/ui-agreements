@@ -10,7 +10,7 @@ jobs:
         run: |
           # Use GitHub API to create a comment on the PR
           PR_NUMBER=${{ github.event.pull_request.number }}
-          COMMENT="License CLA Stuck? (Developer should make sure that it is really stuck before clicking) https://cla-assistant.io/check/${{ github.repository }}?pullRequest=${PR_NUMBER}"
+          COMMENT="[License CLA Stuck?](https://cla-assistant.io/check/${{ github.repository }}?pullRequest=${PR_NUMBER}") (Developer should make sure that it is really stuck before clicking)
           GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
           COMMENT_URL="https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
 
