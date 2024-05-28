@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "11.0.1",
+  "version": "11.0.2",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
