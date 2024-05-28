@@ -32,7 +32,6 @@ import {
 import {
   useAgreementsHelperApp,
   useAgreementsSettings,
-  useChunkedOrderLines,
 } from '../../hooks';
 
 const AgreementViewRoute = ({
@@ -134,21 +133,6 @@ const AgreementViewRoute = ({
       return ky.get(`${AGREEMENT_LINES_ENDPOINT}?${params?.join('&')}`).json();
     }
   );
-
-  /*
-   * Calculate poLineIdsArray outside of the useEffect hook,
-   * so we can accurately tell if it changes and avoid infinite loop
-   */
-  const poLineIdsArray = useMemo(
-    () => agreementLines
-      .filter((line) => line.poLines?.length)
-      .map((line) => line.poLines.map((poLine) => poLine.poLineId))
-      .flat(),
-    [agreementLines]
-  );
-
-  const { orderLines, isLoading: areOrderLinesLoading } =
-    useChunkedOrderLines(poLineIdsArray);
 
   const { mutateAsync: cloneAgreement } = useMutation(
     [agreementPath, 'ui-agreements', 'AgreementViewRoute', 'cloneAgreement'],
@@ -265,7 +249,6 @@ const AgreementViewRoute = ({
       contacts,
       lines: !areLinesLoading ? agreementLines : undefined,
       agreementLinesCount: agreementLineCount,
-      orderLines,
       orgs,
     };
   };
@@ -381,7 +364,7 @@ const AgreementViewRoute = ({
         onToggleTags: handleToggleTags,
         onViewAgreementLine: handleViewAgreementLine,
       }}
-      isLoading={isPaneLoading() || areOrderLinesLoading}
+      isLoading={isPaneLoading()}
     />
   );
 };

@@ -34,6 +34,7 @@ const propTypes = {
     agreementLinesCount: PropTypes.number,
     lines: PropTypes.arrayOf(PropTypes.object),
     orderLines: PropTypes.arrayOf(PropTypes.object),
+    areOrderLinesLoading: PropTypes.bool,
   }).isRequired,
   onViewAgreementLine: PropTypes.func.isRequired,
   visibleColumns: PropTypes.arrayOf(PropTypes.string)
@@ -45,7 +46,7 @@ const columnMapping = {
 };
 
 const LinesList = ({
-  agreement: { id: agreementId, agreementLinesCount, lines, orderLines },
+  agreement: { id: agreementId, agreementLinesCount, lines, orderLines, areOrderLinesLoading },
   onViewAgreementLine,
   visibleColumns
 }) => {
@@ -68,7 +69,7 @@ const LinesList = ({
 
   const renderPOLines = (line) => {
     if (!line.poLines || !line.poLines.length) return '';
-    if (!orderLines || !orderLines.length) return <Spinner />;
+    if (!orderLines || !orderLines.length || areOrderLinesLoading) return <Spinner />;
 
     const poLines = line.poLines.map(linePOL => orderLines.find(orderLine => orderLine.id === linePOL.poLineId));
     if (!poLines.length) return <Spinner />;
