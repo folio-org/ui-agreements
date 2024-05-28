@@ -30,6 +30,7 @@ import {
 
 const propTypes = {
   agreement: PropTypes.shape({
+    id: PropTypes.string,
     agreementLinesCount: PropTypes.number,
     lines: PropTypes.arrayOf(PropTypes.object),
     orderLines: PropTypes.arrayOf(PropTypes.object),
@@ -44,19 +45,20 @@ const columnMapping = {
 };
 
 const LinesList = ({
-  agreement: { agreementLinesCount, lines, orderLines },
+  agreement: { id: agreementId, agreementLinesCount, lines, orderLines },
   onViewAgreementLine,
   visibleColumns
 }) => {
   const settings = useAgreementsSettings();
   const agreementLinesPageSize = parseMclPageSize(settings, 'agreementLines');
+  const agreementLinesPaginationId = `${AGREEMENT_LINES_PAGINATION_ID}-${agreementId}`;
 
   const {
     paginationMCLProps,
   } = usePrevNextPagination({
     count: agreementLinesCount,
     pageSize: agreementLinesPageSize,
-    id: AGREEMENT_LINES_PAGINATION_ID,
+    id: agreementLinesPaginationId,
     syncToLocation: false
   });
 

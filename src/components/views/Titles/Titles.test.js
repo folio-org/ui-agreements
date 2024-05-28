@@ -119,9 +119,9 @@ describe('Titles', () => {
       columns: [
         'Name',
         'Publication type',
+        'Material type',
         'ISBN',
-        'ISSN (Online)',
-        'ISSN (Print)'
+        'ISSN',
       ],
     }).exists();
   });
