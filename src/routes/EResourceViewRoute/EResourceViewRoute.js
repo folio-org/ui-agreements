@@ -125,6 +125,9 @@ const EResourceViewRoute = ({
     () => {
       const params = [...eresourceEntitlementOptionsParams];
       return ky.get(`${entitlementOptionsPath}?${params?.join('&')}`).json();
+    },
+    {
+      enabled: !!entitlementOptionsPage && !!entitlementOptionsPageSize
     }
   );
 
