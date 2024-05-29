@@ -2,6 +2,13 @@
 
 ## 11.1.0 In progress
 
+## 11.0.2 2024-05-28
+  * ERM-3248 Use static endpoints for /resources and /entitlementOptions in Poppy Compatible release 
+  * ERM-3246 Improve performance of entitlementOptions endpoint
+  * ERM-3239 Query all titles rather than just /electronic in local KB title search
+  * ERM-3220 Update pagination mechanisms for MCLs to work without stats
+  * ERM-3186 Change default search options for Local KB titles to exclude identifiers
+
 ## 11.0.1 2024-04-19
   * Change default search options for Local KB titles to exclude identifiers
   * ERM-3182 Scrolling content in license view pane can overlap header (Also impacted agreements)
