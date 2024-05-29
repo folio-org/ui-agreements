@@ -11,6 +11,7 @@ import {
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
   getRefdataValuesByDesc,
+  useFetchMultiplePages,
   usePrevNextPagination,
   useSASQQIndex,
   useTags
@@ -73,7 +74,7 @@ const TitlesRoute = ({
    */
   const { searchKey } = useSASQQIndex({ defaultQIndex: `${defaultQIndex},identifiers.identifier.value` });
 
-  const titlesQueryParams = useMemo(() => (
+/*   const titlesQueryParams = useMemo(() => (
     generateKiwtQueryParams({
       searchKey,
       filterKeys: {
@@ -84,9 +85,9 @@ const TitlesRoute = ({
       page: currentPage,
       perPage: RESULT_COUNT_INCREMENT
     }, (query ?? {}))
-  ), [currentPage, query, searchKey]);
+  ), [currentPage, query, searchKey]); */
 
-  const {
+/*   const {
     data: { results: titles = [], totalRecords: titlesCount = 0 } = {},
     error: titlesError,
     isLoading: areTitlesLoading,
@@ -100,14 +101,46 @@ const TitlesRoute = ({
     {
       enabled: (!!query?.filters || !!query?.query) && !!currentPage,
     }
-  );
+  ); */
 
+  const {
+    [currentPage]: {
+      data: titles = [],
+      error: titlesError,
+      isLoading: areTitlesLoading,
+      isError: isTitlesError
+    } = {},
+    [currentPage + 1]: { data: titlesNextPage = [], isLoading: isTitlesNextPageLoading } = {},
+  } = useFetchMultiplePages({
+    getQueryKey: ({ params, pageNum, pathStr }) => ['ERM', 'Titles', params, pathStr, pageNum],
+    getQueryOptions: ({ pageNum }) => ({ enabled: (!!query?.filters || !!query?.query) && !!pageNum }),
+    nsValues: query,
+    pages: [currentPage, currentPage + 1, currentPage + 2, currentPage + 3, currentPage + 4],
+    params: {
+      searchKey,
+      filterKeys: {
+        tags: 'tags.value',
+        publicationType: 'publicationType.value',
+        type: 'type.value'
+      },
+      //page: currentPage,
+      perPage: RESULT_COUNT_INCREMENT,
+      stats: false
+    },
+    path: TITLES_ENDPOINT,
+  });
 
-  useEffect(() => {
+/*   useEffect(() => {
     if (titlesCount === 1) {
       history.push(`${urls.titleView(titles[0].id)}${location.search}`);
     }
-  }, [titles, titlesCount, history, location.search]);
+  }, [titles, titlesCount, history, location.search]); */
+
+  useEffect(() => {
+    if (titles.length === 1) {
+      history.push(`${urls.titleView(titles[0].id)}${location.search}`);
+    }
+  }, [titles, history, location.search]);
 
   if (!hasPerms) return <NoPermissions />;
 
@@ -125,11 +158,12 @@ const TitlesRoute = ({
       searchString={location.search}
       selectedRecordId={match.params.id}
       source={{ // Fake source from useQuery return values;
-        totalCount: () => titlesCount,
+        totalCount: () => 0, // No total count for stats-less queries
         loaded: () => !areTitlesLoading,
         pending: () => areTitlesLoading,
         failure: () => isTitlesError,
-        failureMessage: () => titlesError.message
+        failureMessage: () => titlesError.message,
+        hasNextPage: () => titlesNextPage.length > 0
       }}
     >
       {children}

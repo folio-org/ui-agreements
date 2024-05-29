@@ -56,6 +56,7 @@ const propTypes = {
   searchString: PropTypes.string,
   selectedRecordId: PropTypes.string,
   source: PropTypes.shape({
+    hasNextPage: PropTypes.func,
     loaded: PropTypes.func,
     totalCount: PropTypes.func,
   }),
@@ -77,7 +78,7 @@ const Titles = ({
   selectedRecordId,
   source
 }) => {
-  const count = source?.totalCount() ?? 0;
+  //const count = source?.totalCount() ?? 0;
   const query = queryGetter() ?? {};
   const sortOrder = query.sort ?? '';
 
@@ -85,9 +86,12 @@ const Titles = ({
     paginationMCLProps,
     paginationSASQProps
   } = usePrevNextPagination({
-    count,
+    //count,
+    hasNextPage: source?.hasNextPage(),
     pageSize: RESULT_COUNT_INCREMENT_MEDIUM
   });
+
+  // FIXME we really ought to get the MCL "next loading" work in place before we attempt this
 
   /*
    * NOTE: This is not directly defaulting the qIndex,
@@ -266,7 +270,7 @@ const Titles = ({
                   padContent={false}
                   paneSub={
                     source?.loaded() ?
-                      <FormattedMessage id="stripes-smart-components.searchResultsCountHeader" values={{ count: source.totalCount() }} />
+                      <FormattedMessage id="stripes-smart-components.searchResultsCountHeader" values={{ count: source.totalCount ? source.totalCount() : 0 }} />
                       :
                       <FormattedMessage id="stripes-smart-components.searchCriteria" />
                   }
@@ -331,7 +335,7 @@ const Titles = ({
                     }}
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
-                    totalCount={count}
+                    //totalCount={count}
                     visibleColumns={['name', 'publicationType', 'materialType', 'isbn', 'issn']}
                   />
                 </Pane>
