@@ -778,5 +778,7 @@
     "agreementContent.filter.addFilter": "Añadir filtro",
     "agreementContent.filter.has": "Tiene",
     "agreementContent.filter.hasNot": "Has not",
-    "agreementLines.customCoverageIndicator": "Custom coverage indicator"
+    "agreementLines.customCoverageIndicator": "Custom coverage indicator",
+    "eresources.relatedTitle.infoPopover": "Open the electronic title to view: options for acquiring the title, any linked agreements and further title details.",
+    "eresources.electronicTitle": "Electronic title \"{name}\""
 }

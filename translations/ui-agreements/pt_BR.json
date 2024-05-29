@@ -426,10 +426,10 @@
     "emptyAccordion.lineCoverage": "Nenhuma cobertura para esta linha de contrato",
     "emptyAccordion.linePOLines": "Nenhuma linha do pedido de compra para esta linha de contrato",
     "line.edit": "Editar linha de contrato",
-    "agreementLines.suppressFromDiscovery": "Ocultar na ferramenta de descoberta",
+    "agreementLines.suppressFromDiscovery": "Ocultar da descoberta",
     "agreementLines.deleteAgreementLine": "Excluir linha de contrato",
     "agreementLines.deleteConfirmMessage": "A linha de contrato do recurso eletrônico <strong>{name}</strong> será <strong>excluída</strong>.",
-    "eresources.suppressFromDiscovery": "Ocultar na ferramenta de descoberta",
+    "eresources.suppressFromDiscovery": "Ocultar da descoberta",
     "default": "Padrão",
     "eresources.relatedTitle": "Título relacionado \"{name}\"",
     "identifier.eissn.issn": "eISSN/ISSN",
@@ -778,5 +778,7 @@
     "agreementContent.filter.addFilter": "Adicionar filtro",
     "agreementContent.filter.has": "Tem",
     "agreementContent.filter.hasNot": "Não tem",
-    "agreementLines.customCoverageIndicator": "Indicador de cobertura personalizada"
+    "agreementLines.customCoverageIndicator": "Indicador de cobertura personalizada",
+    "eresources.relatedTitle.infoPopover": "Abra o título eletrônico para visualizar: opções para aquisição do título, quaisquer contratos vinculados e mais detalhes do título.",
+    "eresources.electronicTitle": "Título eletrônico \"{name}\""
 }

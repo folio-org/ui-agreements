@@ -778,5 +778,7 @@
     "agreementContent.filter.addFilter": "필터 추가",
     "agreementContent.filter.has": "포함하는",
     "agreementContent.filter.hasNot": "포함하지 않는",
-    "agreementLines.customCoverageIndicator": "Custom coverage indicator"
+    "agreementLines.customCoverageIndicator": "Custom coverage indicator",
+    "eresources.relatedTitle.infoPopover": "Open the electronic title to view: options for acquiring the title, any linked agreements and further title details.",
+    "eresources.electronicTitle": "Electronic title \"{name}\""
 }
