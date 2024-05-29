@@ -103,6 +103,15 @@ const TitlesRoute = ({
     }
   ); */
 
+  const getTitlesPages = () => {
+    if (currentPage === 1) {
+      return [currentPage, currentPage + 1, currentPage + 2, currentPage + 3, currentPage + 4];
+    } else if (currentPage === 2) {
+      return [currentPage, currentPage + 1, currentPage - 1, currentPage + 2, currentPage + 3, currentPage + 4];
+    }
+    return [currentPage, currentPage + 1, currentPage - 1, currentPage + 2, currentPage - 2, currentPage + 3, currentPage + 4];
+  };
+
   const {
     [currentPage]: {
       data: titles = [],
@@ -115,7 +124,7 @@ const TitlesRoute = ({
     getQueryKey: ({ params, pageNum, pathStr }) => ['ERM', 'Titles', params, pathStr, pageNum],
     getQueryOptions: ({ pageNum }) => ({ enabled: (!!query?.filters || !!query?.query) && !!pageNum }),
     nsValues: query,
-    pages: [currentPage, currentPage + 1, currentPage + 2, currentPage + 3, currentPage + 4],
+    pages: getTitlesPages(),
     params: {
       searchKey,
       filterKeys: {
