@@ -20,7 +20,7 @@ const FILTERS = [
   'tags'
 ];
 
-export default function PackageFilters({ activeFilters, data, filterHandlers }) {
+const PackageFilters = ({ activeFilters = {}, data, filterHandlers }) => {
   const [filterState, setFilterState] = useState({
     availability: [],
     contentType: [],
@@ -161,9 +161,8 @@ export default function PackageFilters({ activeFilters, data, filterHandlers }) 
       {renderTagsFilter()}
     </AccordionSet>
   );
-}
+};
 
 PackageFilters.propTypes = propTypes;
-PackageFilters.defaultProps = {
-  activeFilters: {}
-};
+
+export default PackageFilters;

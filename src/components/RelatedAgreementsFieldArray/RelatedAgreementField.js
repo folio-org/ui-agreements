@@ -48,7 +48,7 @@ const propTypes = {
   parentAgreementName: PropTypes.string,
 };
 const RelatedAgreementField = ({
-  agreement,
+  agreement = {},
   id,
   input,
   meta,
@@ -196,8 +196,6 @@ const RelatedAgreementField = ({
 };
 
 RelatedAgreementField.propTypes = propTypes;
-RelatedAgreementField.defaultProps = {
-  agreement: {},
-};
+
 export default RelatedAgreementField;
 
