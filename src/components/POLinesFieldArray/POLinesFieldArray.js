@@ -12,7 +12,7 @@ import POLineField from './POLineField';
 const POLinesFieldArray = ({
   agreementLineIndex,
   fields: { name },
-  poLines: propPoLines,
+  poLines: propPoLines = [],
 }) => {
   const { items, onAddField, onDeleteField, onUpdateField } = useKiwtFieldArray(name, true);
   const [poLines, setPoLines] = useState([]);
@@ -88,10 +88,6 @@ POLinesFieldArray.propTypes = {
     id: PropTypes.string,
     poLineNumber: PropTypes.string,
   }))
-};
-
-POLinesFieldArray.defaultProps = {
-  poLines: []
 };
 
 export default POLinesFieldArray;

@@ -17,7 +17,7 @@ const CoverageFieldArray = ({
   headerId,
   id,
   fields: { name },
-  isEmptyCoverageId,
+  isEmptyCoverageId = 'ui-agreements.emptyAccordion.lineCustomCoverage',
 }) => {
   const { items, onAddField, onDeleteField } = useKiwtFieldArray(name);
   const renderCoverages = () => {
@@ -94,10 +94,6 @@ CoverageFieldArray.propTypes = {
     name: PropTypes.string,
   }),
   isEmptyCoverageId: PropTypes.string,
-};
-
-CoverageFieldArray.defaultProps = {
-  isEmptyCoverageId: 'ui-agreements.emptyAccordion.lineCustomCoverage',
 };
 
 export default CoverageFieldArray;
