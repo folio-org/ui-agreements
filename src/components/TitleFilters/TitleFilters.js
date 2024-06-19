@@ -17,7 +17,7 @@ const FILTERS = [
   'tags'
 ];
 
-export default function TitleFilters({ activeFilters, data, filterHandlers }) {
+export default function TitleFilters({ activeFilters = {}, data, filterHandlers }) {
   const [filterState, setFilterState] = useState({
     publicationType: [],
     type: [],
@@ -112,6 +112,3 @@ export default function TitleFilters({ activeFilters, data, filterHandlers }) {
 }
 
 TitleFilters.propTypes = propTypes;
-TitleFilters.defaultProps = {
-  activeFilters: {}
-};

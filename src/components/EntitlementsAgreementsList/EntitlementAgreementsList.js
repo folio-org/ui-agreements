@@ -26,9 +26,9 @@ const EntitlementAgreementsList = (
     eresourceId,
     headline,
     id,
-    isEmptyMessage,
+    isEmptyMessage = <FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsEresource" />,
     totalCount,
-    visibleColumns }
+    visibleColumns = ['name', 'type', 'startDate', 'endDate'] }
 ) => {
   const settings = useAgreementsSettings();
   const entitlementAgreementsPageSize = parseMclPageSize(settings, 'entitlements');
@@ -113,11 +113,6 @@ const EntitlementAgreementsList = (
       />
     </div>
   );
-};
-
-EntitlementAgreementsList.defaultProps = {
-  isEmptyMessage: <FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsEresource" />,
-  visibleColumns: ['name', 'type', 'startDate', 'endDate']
 };
 
 EntitlementAgreementsList.propTypes = {
