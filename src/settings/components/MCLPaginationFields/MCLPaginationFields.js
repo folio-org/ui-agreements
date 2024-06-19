@@ -18,7 +18,7 @@ const MAX_RANGE = 100;
 
 const validate = (fieldValue, min, max) => {
   const fieldValueInt = (typeof fieldValue !== 'number' ? parseInt(fieldValue, 10) : fieldValue);
-  return (!fieldValue || fieldValueInt >= max || fieldValueInt < min) ?
+  return (!fieldValue || fieldValueInt > max || fieldValueInt < min) ?
     <FormattedMessage id="ui-agreements.settings.error.valueNotInRange" values={{ min, max }} /> : undefined;
 };
 
