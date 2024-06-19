@@ -41,11 +41,11 @@ const FILTERS = [
   'agreementContentType',
 ];
 
-export default function AgreementFilters({
-  activeFilters,
+const AgreementFilters = ({
+  activeFilters = {},
   data,
   filterHandlers,
-}) {
+}) => {
   const intl = useIntl();
 
   const [filterState, setFilterState] = useState({
@@ -399,9 +399,8 @@ export default function AgreementFilters({
       {renderSupplementaryDocumentFilter()}
     </AccordionSet>
   );
-}
+};
 
 AgreementFilters.propTypes = propTypes;
-AgreementFilters.defaultProps = {
-  activeFilters: {},
-};
+
+export default AgreementFilters;
