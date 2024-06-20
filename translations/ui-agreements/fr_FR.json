@@ -241,7 +241,7 @@
     "relatedAgreements": "Accords connexes",
     "relatedAgreements.addRelatedAgreement": "Ajouter un accord connexe",
     "relatedAgreements.agreementHasNone": "L'accord n'a pas d'accords connexes.",
-    "relatedAgreements.noPlugin": "Aucun plugin \"trouver-accord\" n'est installé",
+    "relatedAgreements.noPlugin": "Aucun plugin \"rechercher-accord\" n'est installé",
     "relatedAgreements.relatedAgreementIndex": "Accord connexe {index}.",
     "relatedAgreements.relationship": "Relation",
     "relatedAgreements.relationshipToThisAgreement": "Lien entre l'accord lié et l'accord en cours d'édition",
