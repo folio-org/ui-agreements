@@ -76,6 +76,7 @@ const CoveredEResourcesList = ({
   // AGREEMENT ERESOURCES PER PAGE FETCH WITHOUT STATS / FETCH CURRENT AND NEXT PAGE
   const {
     [currentPage]: { data: agreementEresources = [], isLoading: areEresourcesLoading } = {},
+    // eslint-disable-next-line no-unused-vars
     [currentPage + 1]: { data: nextPageEresources = [], isLoading: isNextPageLoading } = {},
   } = useFetchMultiplePages({
     getQueryKey: ({ params, pageNum, pathStr }) => ['ERM', 'Agremeent', id, 'getEresources', pageNum, params, pathStr],
