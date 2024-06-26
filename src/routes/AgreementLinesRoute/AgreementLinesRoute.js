@@ -55,7 +55,7 @@ const AgreementLinesRoute = ({
       page: currentPage,
       perPage: RESULT_COUNT_INCREMENT_MEDIUM,
       sortKeys: {
-        name: 'resource.name',
+        name: 'resource.name,reference',
       },
       fetchExternalResources: false,
     }, (query ?? {}))
