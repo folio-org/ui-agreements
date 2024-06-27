@@ -109,7 +109,7 @@ describe('Basket', () => {
         describe('Selecting an agreement', () => {
           beforeEach(async () => {
             const { getByText } = renderComponent;
-            //await SelectionOption(/MR agreement test/i).click();
+            // await SelectionOption(/MR agreement test/i).click();
             await userEvent.click(getByText(/MR agreement test/i));
           });
 

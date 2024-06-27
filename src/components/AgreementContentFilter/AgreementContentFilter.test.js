@@ -1,6 +1,6 @@
 import { MemoryRouter } from 'react-router-dom';
 
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import {
   Select,
@@ -42,6 +42,8 @@ describe('AgreementContentFilter', () => {
   });
 
   test('renders the Content field', async () => {
+    screen.debug();
+
     await waitFor(async () => {
       await MultiSelect({
         id: 'agreementContent[0]-content-multi-select',

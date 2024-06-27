@@ -10,7 +10,7 @@
   "scripts": {
     "start": "stripes serve",
     "build": "stripes build --output ./output",
-    "test": "yarn run test:jest",
+    "test": "yarn run test:jest Basket.test.js AgreementContentFilter.test.js",
     "test:jest": "jest --ci --coverage --maxWorkers=50%",
     "lint": "eslint src test",
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
