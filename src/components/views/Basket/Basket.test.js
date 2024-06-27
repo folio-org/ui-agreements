@@ -63,6 +63,8 @@ describe('Package', () => {
     await waitFor(async () => {
       await Button('Add to selected agreement').exists();
       await Button('Add to selected agreement').click();
+    }, {
+      timeout: 2000 // repeatedly breaks on CI, attempting to extend timeout
     });
   });
 

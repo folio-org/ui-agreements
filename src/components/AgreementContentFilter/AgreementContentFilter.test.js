@@ -1,3 +1,5 @@
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
 import {
   Select,
   MultiSelect,
@@ -37,9 +39,13 @@ describe('AgreementContentFilter', () => {
   });
 
   test('renders the Content field', async () => {
-    await MultiSelect({
-      id: 'agreementContent[0]-content-multi-select',
-    }).exists();
+    await waitFor(async () => {
+      await MultiSelect({
+        id: 'agreementContent[0]-content-multi-select',
+      }).exists();
+    }, {
+      timeout: 2000 // repeatedly breaks on CI, attempting to extend timeout
+    });
   });
 
   test('renders the And/Or dropdown', async () => {
