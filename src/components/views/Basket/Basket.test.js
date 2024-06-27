@@ -2,7 +2,6 @@ import { MemoryRouter } from 'react-router-dom';
 
 import { useMutation } from 'react-query';
 
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import {
@@ -11,7 +10,7 @@ import {
   renderWithIntl,
   Selection,
   SelectionList,
-  // SelectionOption
+  SelectionOption
 } from '@folio/stripes-erm-testing';
 
 import Basket from './Basket';
@@ -108,9 +107,7 @@ describe('Basket', () => {
 
         describe('Selecting an agreement', () => {
           beforeEach(async () => {
-            const { getByText } = renderComponent;
-            // await SelectionOption(/MR agreement test/i).click();
-            await userEvent.click(getByText(/MR agreement test/i));
+            await SelectionOption(/MR agreement test/i).click();
           });
 
           test('The selected agreement button is now active', async () => {
@@ -121,8 +118,6 @@ describe('Basket', () => {
             beforeEach(async () => {
               await waitFor(async () => {
                 await Button('Add to selected agreement').click();
-              }, {
-                timeout: 2000 // repeatedly breaks on CI, attempting to extend timeout
               });
             });
 
