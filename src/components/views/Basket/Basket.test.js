@@ -2,14 +2,16 @@ import { MemoryRouter } from 'react-router-dom';
 
 import { useMutation } from 'react-query';
 
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
 import {
   Button,
   PaneHeader,
   renderWithIntl,
   Selection,
   SelectionList,
-  SelectionOption,
+  // SelectionOption
 } from '@folio/stripes-erm-testing';
 
 import Basket from './Basket';
@@ -44,7 +46,7 @@ jest.mock('react-query', () => {
   };
 });
 
-describe('Package', () => {
+describe('Basket', () => {
   let renderComponent;
   beforeEach(() => {
     renderComponent = renderWithIntl(
@@ -106,7 +108,9 @@ describe('Package', () => {
 
         describe('Selecting an agreement', () => {
           beforeEach(async () => {
-            await SelectionOption(/MR agreement test/i).click();
+            const { getByText } = renderComponent;
+            //await SelectionOption(/MR agreement test/i).click();
+            await userEvent.click(getByText(/MR agreement test/i));
           });
 
           test('The selected agreement button is now active', async () => {
