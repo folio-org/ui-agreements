@@ -10,9 +10,10 @@ import {
   SelectionOption,
 } from '@folio/stripes-erm-testing';
 
-import translationsProperties from '../../../../test/helpers';
 import Basket from './Basket';
+
 import { data, handlers } from './testResources';
+import translationsProperties from '../../../../test/helpers';
 
 jest.mock('../../BasketList', () => () => <div>BasketList</div>);
 

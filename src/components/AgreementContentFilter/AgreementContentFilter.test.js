@@ -1,3 +1,5 @@
+import { MemoryRouter } from 'react-router-dom';
+
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import {
@@ -6,10 +8,11 @@ import {
   Dropdown,
   renderWithIntl,
 } from '@folio/stripes-erm-testing';
-import { MemoryRouter } from 'react-router-dom';
+
+import AgreementContentFilter from './AgreementContentFilter';
+
 import translationsProperties from '../../../test/helpers';
 import { activeFilters } from './testResources';
-import AgreementContentFilter from './AgreementContentFilter';
 
 const stateMock = jest.fn();
 
