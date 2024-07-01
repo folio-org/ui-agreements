@@ -1,22 +1,51 @@
 import { MemoryRouter } from 'react-router-dom';
 
+import { useMutation } from 'react-query';
+
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
 import {
   Button,
   PaneHeader,
   renderWithIntl,
   Selection,
   SelectionList,
-  SelectionOption,
+  SelectionOption
 } from '@folio/stripes-erm-testing';
 
-import translationsProperties from '../../../../test/helpers';
 import Basket from './Basket';
+
 import { data, handlers } from './testResources';
+import translationsProperties from '../../../../test/helpers';
 
 jest.mock('../../BasketList', () => () => <div>BasketList</div>);
 
-describe('Package', () => {
+/* EXAMPLE Mocking useMutation to allow us to test the .then clause */
+// Setting up jest fn here to test paramters passed in by component
+const mockMutateAsync = jest.fn(() => Promise.resolve(true));
+jest.mock('react-query', () => {
+  const { mockReactQuery } = jest.requireActual('@folio/stripes-erm-testing');
+
+  return {
+    ...jest.requireActual('react-query'),
+    ...mockReactQuery,
+    useMutation: jest.fn((_key, func) => ({
+      mutateAsync: (...incomingParams) => {
+        // Actually call function coming from component
+        // This assumes that ky has been mocked, which it should have been by __mocks__ stripes-core.
+
+        // If this function was async, we might need to do something different.
+        // As it is, it's a synchronous call to ky which returns a promise we then chain on.
+        func();
+
+        // Ensure we return the promise resolve from above, so that any _subsequent_ .then calls can flow
+        return mockMutateAsync(...incomingParams);
+      }
+    })),
+  };
+});
+
+describe('Basket', () => {
   let renderComponent;
   beforeEach(() => {
     renderComponent = renderWithIntl(
@@ -28,6 +57,10 @@ describe('Package', () => {
       </MemoryRouter>,
       translationsProperties
     );
+  });
+
+  test('useMutation has been called', () => {
+    expect(useMutation).toHaveBeenCalled();
   });
 
   it('renders the expected Pane title', async () => {
@@ -48,21 +81,57 @@ describe('Package', () => {
     await Button('Create new agreement').exists();
   });
 
-  it('choosing an option and clicking the add to selected agreement button', async () => {
-    await Selection({ id: 'select-agreement-for-basket' }).exists();
-    await waitFor(async () => {
-      await Selection().open();
-    });
+  describe('Choosing an option and clicking the add to selected agreement button', () => {
+    describe('Opening agreement selection', () => {
+      beforeEach(async () => {
+        await Selection({ id: 'select-agreement-for-basket' }).exists();
+        await waitFor(async () => {
+          await Selection().open();
+        });
+      });
 
-    await SelectionList({ optionCount: 9 }).exists();
-    await waitFor(async () => {
-      await Selection().filterOptions('MR agreement test');
-      await SelectionOption(/MR agreement test/i).click();
-    });
+      test('The right number of options show', async () => {
+        await SelectionList({ optionCount: 9 }).exists();
+      });
 
-    await waitFor(async () => {
-      await Button('Add to selected agreement').exists();
-      await Button('Add to selected agreement').click();
+      describe('Filtering the selection list', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Selection().filterOptions('MR agreement test');
+          });
+        });
+
+        test('There is now only one option', async () => {
+          await SelectionList({ optionCount: 1 }).exists();
+        });
+
+        describe('Selecting an agreement', () => {
+          beforeEach(async () => {
+            await SelectionOption(/MR agreement test/i).click();
+          });
+
+          test('The selected agreement button is now active', async () => {
+            await Button('Add to selected agreement').exists();
+          });
+
+          describe('Adding to selected agreement', () => {
+            beforeEach(async () => {
+              await waitFor(async () => {
+                await Button('Add to selected agreement').click();
+              });
+            });
+
+            test('mutate async called as expected', () => {
+              expect(mockMutateAsync.mock.calls[0][0]).toBeInstanceOf(Object);
+              expect(mockMutateAsync.mock.calls[0][0].items).toBeInstanceOf(Array);
+
+              expect(mockMutateAsync.mock.calls[0][0].items[0]).toStrictEqual({
+                resource: data.basket[0]
+              });
+            });
+          });
+        });
+      });
     });
   });
 
