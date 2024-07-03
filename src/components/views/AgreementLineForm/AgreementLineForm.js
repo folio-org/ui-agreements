@@ -46,6 +46,7 @@ const propTypes = {
       setFieldData: PropTypes.func,
     }),
     getRegisteredFields: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
   }).isRequired,
   handlers: PropTypes.PropTypes.shape({
     isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
@@ -85,7 +86,7 @@ const AgreementLineForm = ({
   const shortcuts = [
     {
       name: 'save',
-      handler: (e) => handleSaveKeyCommand(e, { handleSubmit, pristine, submitting }),
+      handler: (e) => { handleSaveKeyCommand(e, { handleSubmit, pristine, submitting }); if (createAnother) { form.reset(); } },
     },
     {
       name: 'expandAllSections',
@@ -183,14 +184,12 @@ const AgreementLineForm = ({
                 <>
                   <span className={css.createAnotherCheckbox}>
                     <Checkbox
-                      // checked={createAnother}
                       component={Checkbox}
                       id="agreement-line-create-another"
                       inline
                       label={<FormattedMessage id="ui-agreements.agreementLines.createAnother" />}
                       onChange={e => toggleCreateAnother(e.target.checked)}
                       type="checkbox"
-                      // value={createAnother}
                       vertical
                     />
                   </span>
@@ -199,7 +198,10 @@ const AgreementLineForm = ({
                     disabled={pristine || submitting}
                     id="clickable-update-agreement-line"
                     marginBottom0
-                    onClick={handleSubmit}
+                    onClick={() => {
+                      handleSubmit(values);
+                      if (createAnother) { form.reset(); }
+                    }}
                     type="submit"
                   >
                     <FormattedMessage id={createAnother ? 'stripes-core.button.save' : 'stripes-components.saveAndClose'} />
@@ -252,7 +254,7 @@ AgreementLineForm.propTypes = propTypes;
 
 export default stripesFinalForm({
   initialValuesEqual: (a, b) => isEqual(a, b),
-  keepDirtyOnReinitialize: true,
+  keepDirtyOnReinitialize: false,
   subscription: {
     values: true,
   },
