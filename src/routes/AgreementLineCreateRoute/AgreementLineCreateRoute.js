@@ -48,12 +48,8 @@ const AgreementLineCreateRoute = ({
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.create.callout" /> });
         if (createAnother) {
-          // Very briefly redirect to view so form rerenders
-          history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
-          // Then, set a timeout with a minimal delay to push back to the create page
-          setTimeout(() => {
-            history.push(`${urls.agreementLineCreate(agreementId)}${location.search}`);
-          }, 1);
+          setCreateAnother(false);
+          history.push(`${urls.agreementLineCreate(agreementId)}${location.search}`);
         } else {
           history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
         }
@@ -93,7 +89,6 @@ const AgreementLineCreateRoute = ({
     postAgreementLine(items);
   };
 
-
   return (
     <View
       key="agreement-line-create-form"
@@ -109,6 +104,7 @@ const AgreementLineCreateRoute = ({
       isEholdingsEnabled={stripes.hasPerm('module.eholdings.enabled')}
       onSubmit={handleSubmit}
       toggleCreateAnother={() => setCreateAnother(!createAnother)}
+      setCreateAnother={setCreateAnother}
     />
   );
 };
