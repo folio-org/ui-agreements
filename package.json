@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "11.0.2",
+  "version": "11.0.3",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -172,7 +172,8 @@
         "description": "A user with this permission is able to download and view the content of Agreement document files",
         "visible": true,
         "subPermissions": [
-          "erm.files.item.download"
+          "erm.files.item.download",
+          "erm.files.view"
         ]
       },
       {
