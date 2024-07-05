@@ -2,6 +2,9 @@
 
 ## 11.1.0 In progress
 
+## 11.0.3 2024-07-05
+  * ERM-3288 Fix permission on /erm/files/{id}/raw in mod-agreements
+
 ## 11.0.2 2024-05-28
   * ERM-3248 Use static endpoints for /resources and /entitlementOptions in Poppy Compatible release 
   * ERM-3246 Improve performance of entitlementOptions endpoint
