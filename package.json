@@ -170,8 +170,7 @@
         "description": "A user with this permission is able to download and view the content of Agreement document files",
         "visible": true,
         "subPermissions": [
-          "erm.files.item.download",
-          "erm.files.view"
+          "erm.files.item.download"
         ]
       },
       {
