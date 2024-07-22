@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { isEmpty, isEqual, set } from 'lodash';
+import { isEmpty, isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import setFieldData from 'final-form-set-field-data';
 import { handleSaveKeyCommand } from '@folio/stripes-erm-components';
@@ -60,7 +60,6 @@ const propTypes = {
   values: PropTypes.object,
   createAnother: PropTypes.bool,
   toggleCreateAnother: PropTypes.func.isRequired,
-  setCreateAnother: PropTypes.func.isRequired,
 };
 
 const AgreementLineForm = ({
@@ -75,7 +74,6 @@ const AgreementLineForm = ({
   values,
   createAnother = false,
   toggleCreateAnother,
-  setCreateAnother
 }) => {
   const hasLoaded = form.getRegisteredFields().length > 0;
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
@@ -83,20 +81,12 @@ const AgreementLineForm = ({
 
   const isEresourcesEnabled = useEresourcesEnabled();
 
-  const resetForm = () => {
-    if (createAnother) {
-      form.reset();
-      // toggleCreateAnother();
-      setCreateAnother(false);
-    }
-  };
-
   const accordionStatusRef = useRef();
   /* istanbul ignore next */
   const shortcuts = [
     {
       name: 'save',
-      handler: (e) => { handleSaveKeyCommand(e, { handleSubmit, pristine, submitting }); resetForm(); },
+      handler: (e) => { handleSaveKeyCommand(e, { handleSubmit, pristine, submitting }); if (createAnother) { form.reset(); } },
     },
     {
       name: 'expandAllSections',
@@ -200,7 +190,6 @@ const AgreementLineForm = ({
                       label={<FormattedMessage id="ui-agreements.agreementLines.createAnother" />}
                       onChange={e => toggleCreateAnother(e.target.checked)}
                       type="checkbox"
-                      value={createAnother}
                       vertical
                     />
                   </span>
@@ -211,7 +200,7 @@ const AgreementLineForm = ({
                     marginBottom0
                     onClick={() => {
                       handleSubmit(values);
-                      resetForm();
+                      if (createAnother) { form.reset(); }
                     }}
                     type="submit"
                   >
