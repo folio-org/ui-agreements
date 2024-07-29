@@ -749,7 +749,7 @@
     "packages.source": "Zdroj (externí zdroj dat)",
     "agreements.agreementContentType": "Typ obsahu",
     "agreements.addAgreementContentType": "Přidat typ obsahu",
-    "eresources.proxiedAndCustomizedUrls": "Proxované a přizpůsobené adresy URL",
+    "eresources.proxiedAndCustomizedUrls": "Přizpůsobené a proxy URL",
     "eresources.proxiesCustomizers": "Proxovitelé/Přizpůsobitelé",
     "eresources.url": "URL",
     "agreements.agreementLineCount": "Smlouva má {count, number} smlouvy {count, plural, one {řádek} other {řádky}}",
