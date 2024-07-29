@@ -50,7 +50,10 @@ const AgreementLineCreateRoute = ({
         if (createAnother) {
           // Very briefly redirect to view so form rerenders
           history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
-          history.push(`${urls.agreementLineCreate(agreementId)}${location.search}`);
+          // Then, set a timeout with a minimal delay to push back to the create page
+          setTimeout(() => {
+            history.push(`${urls.agreementLineCreate(agreementId)}${location.search}`);
+          }, 1);
         } else {
           history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
         }
