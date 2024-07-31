@@ -76,6 +76,7 @@ const AgreementPeriodField = ({ index, input: { name } }) => {
                 inputRef={startDateInputRef}
                 label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
                 onChange={event => handleDateChange(event, input)}
+                required
                 timeZone="UTC"
                 usePortal
               />
