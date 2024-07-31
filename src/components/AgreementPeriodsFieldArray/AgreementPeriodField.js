@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { get, isEmpty } from 'lodash';
+import { get } from 'lodash';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
 import dayjs from 'dayjs';
@@ -28,7 +28,7 @@ const AgreementPeriodField = ({ index, input: { name } }) => {
   const startDateInputRef = useRef(null);
   const intl = useIntl();
   const dateFormat = getLocaleDateFormat({ intl });
-  const backendDateStandard = "YYYY-MM-DD";
+  const backendDateStandard = 'YYYY-MM-DD';
 
   useEffect(() => {
     const value = get(startDateInputRef, 'current.value');
@@ -71,13 +71,13 @@ const AgreementPeriodField = ({ index, input: { name } }) => {
                 {...input}
                 backendDateStandard={backendDateStandard}
                 dateFormat={dateFormat}
+                error={meta.touched && meta.error ? meta.error : ''}
                 id={`period-start-date-${index}`}
                 inputRef={startDateInputRef}
                 label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
+                onChange={event => handleDateChange(event, input)}
                 timeZone="UTC"
                 usePortal
-                onChange={event => handleDateChange(event, input)}
-                error={meta.touched && meta.error ? meta.error : ''}
               />
             )}
           </Field>
@@ -98,12 +98,12 @@ const AgreementPeriodField = ({ index, input: { name } }) => {
                 {...input}
                 backendDateStandard={backendDateStandard}
                 dateFormat={dateFormat}
+                error={meta.touched && meta.error ? meta.error : ''}
                 id={`period-end-date-${index}`}
                 label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
+                onChange={event => handleDateChange(event, input)}
                 timeZone="UTC"
                 usePortal
-                onChange={event => handleDateChange(event, input)}
-                error={meta.touched && meta.error ? meta.error : ''}
               />
             )}
           </Field>
@@ -119,12 +119,12 @@ const AgreementPeriodField = ({ index, input: { name } }) => {
                 {...input}
                 backendDateStandard={backendDateStandard}
                 dateFormat={dateFormat}
+                error={meta.touched && meta.error ? meta.error : ''}
                 id={`period-cancellation-deadline-${index}`}
                 label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}
+                onChange={event => handleDateChange(event, input)}
                 timeZone="UTC"
                 usePortal
-                onChange={event => handleDateChange(event, input)}
-                error={meta.touched && meta.error ? meta.error : ''}
               />
             )}
           </Field>
