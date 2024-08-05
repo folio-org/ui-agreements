@@ -30,9 +30,11 @@ import { useAgreementsRefdata } from '../../hooks';
 const RESULT_COUNT_INCREMENT = resultCount.RESULT_COUNT_INCREMENT_MEDIUM;
 
 const [
+  SUB_TYPE,
   PUB_TYPE,
   TYPE
 ] = [
+  'TitleInstance.SubType',
   'TitleInstance.PublicationType',
   'TitleInstance.Type',
 ];
@@ -56,6 +58,7 @@ const TitlesRoute = ({
 
   const refdata = useAgreementsRefdata({
     desc: [
+      SUB_TYPE,
       PUB_TYPE,
       TYPE
     ]
@@ -79,7 +82,8 @@ const TitlesRoute = ({
       filterKeys: {
         tags: 'tags.value',
         publicationType: 'publicationType.value',
-        type: 'type.value'
+        type: 'type.value',
+        materialType: 'subType.value',
       },
       page: currentPage,
       perPage: RESULT_COUNT_INCREMENT
@@ -115,6 +119,7 @@ const TitlesRoute = ({
     <View
       data={{
         titles,
+        materialTypeValues: getRefdataValuesByDesc(refdata, SUB_TYPE),
         publicationTypeValues: getRefdataValuesByDesc(refdata, PUB_TYPE),
         typeValues: getRefdataValuesByDesc(refdata, TYPE),
         tagsValues: tags,
