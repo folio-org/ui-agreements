@@ -1320,6 +1320,18 @@ const data = {
       label: 'HBZ'
     }
   ],
+  materialTypeValues: [
+    {
+      'id': '2c9180a1912035d20191203ecfda0017',
+      'value': 'electronic',
+      'label': 'Electronic'
+    },
+    {
+      'id': '2c9180a1912035d20191203ecfd60016',
+      'value': 'print',
+      'label': 'Print'
+    }
+  ]
 };
 
 export {

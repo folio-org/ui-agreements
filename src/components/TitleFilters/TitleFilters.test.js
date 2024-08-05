@@ -13,10 +13,10 @@ const stateMock = jest.fn();
 
 const filterHandlers = {
   state: stateMock,
-  checkbox: () => {},
-  clear: () => {},
-  clearGroup: () => {},
-  reset: () => {},
+  checkbox: () => { },
+  clear: () => { },
+  clearGroup: () => { },
+  reset: () => { },
 };
 
 describe('TitleFilters', () => {
@@ -67,5 +67,8 @@ describe('TitleFilters', () => {
     testTitleFilterCheckbox('publicationType', 'journal');
     testTitleFilterCheckbox('publicationType', 'book');
     testTitleFilterCheckbox('publicationType', 'database');
+
+    testTitleFilterCheckbox('materialType', 'electronic');
+    testTitleFilterCheckbox('materialType', 'print');
   });
 });
