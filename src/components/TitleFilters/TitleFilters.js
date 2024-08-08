@@ -12,7 +12,7 @@ const propTypes = {
 };
 
 const FILTERS = [
-  'materialType',
+  'subType',
   'publicationType',
   'type',
   'tags'
@@ -20,7 +20,7 @@ const FILTERS = [
 
 export default function TitleFilters({ activeFilters = {}, data, filterHandlers }) {
   const [filterState, setFilterState] = useState({
-    materialType: [],
+    subType: [],
     publicationType: [],
     type: [],
     tags: [],
@@ -109,7 +109,7 @@ export default function TitleFilters({ activeFilters = {}, data, filterHandlers 
       </Headline>
       {renderCheckboxFilter('type')}
       {renderCheckboxFilter('publicationType')}
-      {renderCheckboxFilter('materialType')}
+      {renderCheckboxFilter('subType')}
     </AccordionSet>
   );
 }

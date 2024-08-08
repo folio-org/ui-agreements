@@ -83,7 +83,7 @@ const TitlesRoute = ({
         tags: 'tags.value',
         publicationType: 'publicationType.value',
         type: 'type.value',
-        materialType: 'subType.value',
+        subType: 'subType.value',
       },
       page: currentPage,
       perPage: RESULT_COUNT_INCREMENT
@@ -119,7 +119,7 @@ const TitlesRoute = ({
     <View
       data={{
         titles,
-        materialTypeValues: getRefdataValuesByDesc(refdata, SUB_TYPE),
+        subTypeValues: getRefdataValuesByDesc(refdata, SUB_TYPE),
         publicationTypeValues: getRefdataValuesByDesc(refdata, PUB_TYPE),
         typeValues: getRefdataValuesByDesc(refdata, TYPE),
         tagsValues: tags,

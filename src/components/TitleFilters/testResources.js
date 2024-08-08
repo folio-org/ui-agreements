@@ -1320,7 +1320,7 @@ const data = {
       label: 'HBZ'
     }
   ],
-  materialTypeValues: [
+  subTypeValues: [
     {
       'id': '2c9180a1912035d20191203ecfda0017',
       'value': 'electronic',

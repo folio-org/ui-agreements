@@ -68,7 +68,7 @@ describe('TitleFilters', () => {
     testTitleFilterCheckbox('publicationType', 'book');
     testTitleFilterCheckbox('publicationType', 'database');
 
-    testTitleFilterCheckbox('materialType', 'electronic');
-    testTitleFilterCheckbox('materialType', 'print');
+    testTitleFilterCheckbox('subType', 'electronic');
+    testTitleFilterCheckbox('subType', 'print');
   });
 });
