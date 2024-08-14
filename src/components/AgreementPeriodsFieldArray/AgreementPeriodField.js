@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
-import dayjs from 'dayjs';
 
 import {
   Col,
   Datepicker,
   Row,
   TextArea,
+  datePickerAppValidationProps,
   getLocaleDateFormat
 } from '@folio/stripes/components';
 
@@ -37,98 +37,63 @@ const AgreementPeriodField = ({ index, input: { name } }) => {
     }
   }, [startDateInputRef]);
 
-  const handleDateChange = (event, input) => {
-    const dateValue = event.target.value;
-    input.onChange(dateValue);
-  };
-
-  const parseDate = (value) => {
-    // If value is not a valid date according to the locale format, return it as-is
-    // (important for letting the user type a date)
-    if (!dayjs(value, dateFormat, true).isValid()) {
-      return value;
-    }
-    // Otherwise, return the value formatted in the backend standard (important for submitting)
-    return dayjs(value, dateFormat).format(backendDateStandard);
-  };
-
   return (
-    <div data-testid="agreementPeriodField">
+    <div
+      data-testid="agreementPeriodField"
+    >
       <Row>
         <Col xs={4}>
           <Field
+            backendDateStandard={backendDateStandard}
+            component={Datepicker}
+            id={`period-start-date-${index}`}
+            inputRef={startDateInputRef}
+            label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
             name={`${name}.startDate`}
-            parse={parseDate}
+            required
+            timeZone="UTC"
+            usePortal
             validate={composeValidators(
               (value) => validators.datePlausibilityCheck(value, dateFormat, backendDateStandard),
               validators.requiredStartDate,
               validators.dateOrder,
               overlappingPeriods,
             )}
-          >
-            {({ input, meta }) => (
-              <Datepicker
-                {...input}
-                backendDateStandard={backendDateStandard}
-                dateFormat={dateFormat}
-                error={meta.touched && meta.error ? meta.error : ''}
-                id={`period-start-date-${index}`}
-                inputRef={startDateInputRef}
-                label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
-                onChange={event => handleDateChange(event, input)}
-                required
-                timeZone="UTC"
-                usePortal
-              />
-            )}
-          </Field>
+            {...datePickerAppValidationProps}
+          />
         </Col>
         <Col xs={4}>
           <Field
+            backendDateStandard={backendDateStandard}
+            component={Datepicker}
+            id={`period-end-date-${index}`}
+            label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
             name={`${name}.endDate`}
-            parse={parseDate}
+            parse={v => v}
+            timeZone="UTC"
+            usePortal
             validate={composeValidators(
               (value) => validators.datePlausibilityCheck(value, dateFormat, backendDateStandard),
               validators.dateOrder,
               multipleOpenEndedPeriods,
               overlappingPeriods,
             )}
-          >
-            {({ input, meta }) => (
-              <Datepicker
-                {...input}
-                backendDateStandard={backendDateStandard}
-                dateFormat={dateFormat}
-                error={meta.touched && meta.error ? meta.error : ''}
-                id={`period-end-date-${index}`}
-                label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
-                onChange={event => handleDateChange(event, input)}
-                timeZone="UTC"
-                usePortal
-              />
-            )}
-          </Field>
+            {...datePickerAppValidationProps}
+          />
         </Col>
         <Col xs={4}>
           <Field
+            backendDateStandard={backendDateStandard}
+            component={Datepicker}
+            id={`period-cancellation-deadline-${index}`}
+            label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}
             name={`${name}.cancellationDeadline`}
-            parse={parseDate}
+            parse={v => v} // Lets us send an empty string instead of `undefined`
+            timeZone="UTC"
+            usePortal
             validate={(value) => validators.datePlausibilityCheck(value, dateFormat, backendDateStandard)}
-          >
-            {({ input, meta }) => (
-              <Datepicker
-                {...input}
-                backendDateStandard={backendDateStandard}
-                dateFormat={dateFormat}
-                error={meta.touched && meta.error ? meta.error : ''}
-                id={`period-cancellation-deadline-${index}`}
-                label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}
-                onChange={event => handleDateChange(event, input)}
-                timeZone="UTC"
-                usePortal
-              />
-            )}
-          </Field>
+            {...datePickerAppValidationProps}
+          />
         </Col>
       </Row>
       <Field
