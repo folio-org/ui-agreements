@@ -649,10 +649,10 @@
     "customProperties.label": "Etykieta",
     "customProperties.primary": "Główny",
     "customProperties.retired": "Deprecated",
-    "customProperties.ctx": "Category",
+    "customProperties.ctx": "Kategoria",
     "customProperties.ctx.addContext": "Add category {value}",
     "customProperties.noCtxFound": "No matching category found",
-    "customProperties.weight": "Order weight",
+    "customProperties.weight": "Waga zamówienia",
     "customProperties.type": "Rodzaj",
     "customProperties.internalFalse": "Public",
     "customProperties.internalNote": "Uwaga wewnętrzna",
@@ -780,5 +780,6 @@
     "agreementContent.filter.hasNot": "Nie posiada",
     "agreementLines.customCoverageIndicator": "Custom coverage indicator",
     "eresources.relatedTitle.infoPopover": "Open the electronic title to view: options for acquiring the title, any linked agreements and further title details.",
-    "eresources.electronicTitle": "Electronic title \"{name}\""
+    "eresources.electronicTitle": "Electronic title \"{name}\"",
+    "eresources.subType": "Material type"
 }

@@ -780,5 +780,6 @@
     "agreementContent.filter.hasNot": "Has not",
     "agreementLines.customCoverageIndicator": "Custom coverage indicator",
     "eresources.relatedTitle.infoPopover": "Abra el título electrónico para ver: opciones para adquirir el título, cualquier acuerdo vinculado y más detalles del título.",
-    "eresources.electronicTitle": "Título electrónico \"{name}\""
+    "eresources.electronicTitle": "Título electrónico \"{name}\"",
+    "eresources.subType": "Material type"
 }
