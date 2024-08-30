@@ -110,7 +110,7 @@
     "license.allLicenses": "すべてのライセンス",
     "license.controllingLicense": "コントロール・ライセンス",
     "license.error.multipleControllingLicenses": "契約ごとに許可されるコントロール・ライセンスは1つだけです。",
-    "license.inactiveLicenses": "非アクティブなライセンス",
+    "license.inactiveLicenses": "無効なライセンス",
     "license.noFindLicensePlugin": "「ライセンス検索」プラグインがインストールされていません。",
     "license.prop.endDate": "終了日",
     "license.prop.name": "名称",
@@ -557,7 +557,7 @@
     "settings.fileStorage.s3AccessKey": "S3 access key",
     "settings.fileStorage.s3BucketName": "S3 bucket name",
     "settings.fileStorage.s3Endpoint": "S3 endpoint",
-    "settings.fileStorage.s3ObjectPrefix": "S3オブジェクトのプリフィクス",
+    "settings.fileStorage.s3ObjectPrefix": "S3オブジェクトの接頭語",
     "settings.fileStorage.s3SecretKey": "S3 シークレットキー",
     "settings.fileStorage.storageEngine": "ストレージエンジン",
     "emptyAccordion.openAccessProperties": "この契約にはオープンアクセスプロパティがありません",
@@ -778,8 +778,8 @@
     "agreementContent.filter.addFilter": "Add filter",
     "agreementContent.filter.has": "Has",
     "agreementContent.filter.hasNot": "Has not",
-    "agreementLines.customCoverageIndicator": "Custom coverage indicator",
+    "agreementLines.customCoverageIndicator": "カスタム収録範囲 ID",
     "eresources.relatedTitle.infoPopover": "Open the electronic title to view: options for acquiring the title, any linked agreements and further title details.",
-    "eresources.electronicTitle": "Electronic title \"{name}\"",
-    "eresources.subType": "Material type"
+    "eresources.electronicTitle": "電子タイトル \"{name}\"",
+    "eresources.subType": "資料種別"
 }

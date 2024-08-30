@@ -162,7 +162,7 @@
     "agreementPluralizable": "{count} {count, plural, one { umowa } other { umowy }}",
     "agreements.searchInputLabel": "Szukaj umów",
     "eresources.searchInputLabel": "Szukaj E-zasobów",
-    "agreements.vendor": "Sprzedawca",
+    "agreements.vendor": "Dostawca",
     "agreements.visitPlatform": "Odwiedź platformę",
     "agreements.selectRenewalPriority": "Wybierz priorytet prolongaty",
     "agreements.selectIsPerpetual": "Wybierz czy jest wieczysta",
