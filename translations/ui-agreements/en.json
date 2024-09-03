@@ -388,6 +388,7 @@
   "eresources.packageDetails": "Package details",
   "eresources.parentPackageDetails": "Parent package details",
   "eresources.materialType": "Material type",
+  "eresources.subType": "Material type",
   "eresources.suppressFromDiscovery": "Suppress from discovery",
   "eresources.titleAvailability": "Title availability in package",
   "eresources.titleOnPlatform": "Title on platform",

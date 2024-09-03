@@ -780,5 +780,6 @@
     "agreementContent.filter.hasNot": "没有",
     "agreementLines.customCoverageIndicator": "自定义收录范围指标",
     "eresources.relatedTitle.infoPopover": "打开电子标题查看：获取标题的选项、任何链接协议和进一步的标题详细信息。",
-    "eresources.electronicTitle": "电子标题“ {name} ”"
+    "eresources.electronicTitle": "电子标题“ {name} ”",
+    "eresources.subType": "Material type"
 }

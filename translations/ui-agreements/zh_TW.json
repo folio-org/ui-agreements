@@ -780,5 +780,6 @@
     "agreementContent.filter.hasNot": "還沒有",
     "agreementLines.customCoverageIndicator": "自訂的收錄範圍指標",
     "eresources.relatedTitle.infoPopover": "Open the electronic title to view: options for acquiring the title, any linked agreements and further title details.",
-    "eresources.electronicTitle": "Electronic title \"{name}\""
+    "eresources.electronicTitle": "Electronic title \"{name}\"",
+    "eresources.subType": "Material type"
 }
