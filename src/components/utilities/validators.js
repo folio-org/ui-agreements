@@ -1,23 +1,6 @@
 import React from 'react';
 import { get } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-
-dayjs.extend(customParseFormat);
-
-const datePlausibilityCheck = (value, dateFormat, backendDateStandard) => {
-  if (value) {
-    const formats = [dateFormat, backendDateStandard];
-    const isValid = formats.some(format => dayjs(value, format, true).isValid());
-
-    if (!isValid) {
-      return <FormattedMessage id="ui-agreements.errors.invalidDate" />;
-    }
-  }
-
-  return undefined;
-};
 
 const requiredStartDate = (value, allValues, meta) => {
   if (!value && meta) {
@@ -123,7 +106,6 @@ const overlappingDates = (value, allValues, meta, errorMessageKey) => {
 
 export default {
   dateOrder,
-  datePlausibilityCheck,
   multipleOpenEnded,
   overlappingDates,
   requiredStartDate,

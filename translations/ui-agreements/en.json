@@ -677,7 +677,6 @@
   "packageIdentifiers.eBookPool": "E-Book Pool",
   "packageIdentifiers.gokbId": "GOKb ID",
   "packageIdentifiers.gokbUUID": "GOKb UUID",
-  "errors.invalidDate": "Please enter a valid date to continue",
   "errors.invalidNumber": "Please enter a valid number to continue",
   "errors.hasNonAlphaName": "The name can only contain Latin alphabetical characters (a-z) and non-leading numeric characters.",
   "errors.valueNotInRange": "Please enter a whole number in the range {min} to {max} to continue",

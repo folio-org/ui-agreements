@@ -5,15 +5,14 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import {
+  AppValidatedDatepicker,
   Col,
-  Datepicker,
   Row,
   TextArea,
-  datePickerAppValidationProps,
   getLocaleDateFormat
 } from '@folio/stripes/components';
 
-import { composeValidators } from '@folio/stripes-erm-components';
+import { composeValidators, datePlausibilityCheck } from '@folio/stripes-erm-components';
 import { validators } from '../utilities';
 
 const multipleOpenEndedPeriods = (...rest) => (
@@ -45,7 +44,7 @@ const AgreementPeriodField = ({ index, input: { name } }) => {
         <Col xs={4}>
           <Field
             backendDateStandard={backendDateStandard}
-            component={Datepicker}
+            component={AppValidatedDatepicker}
             id={`period-start-date-${index}`}
             inputRef={startDateInputRef}
             label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
@@ -54,18 +53,17 @@ const AgreementPeriodField = ({ index, input: { name } }) => {
             timeZone="UTC"
             usePortal
             validate={composeValidators(
-              (value) => validators.datePlausibilityCheck(value, dateFormat, backendDateStandard),
+              (value) => datePlausibilityCheck(value, dateFormat, backendDateStandard),
               validators.requiredStartDate,
               validators.dateOrder,
               overlappingPeriods,
             )}
-            {...datePickerAppValidationProps}
           />
         </Col>
         <Col xs={4}>
           <Field
             backendDateStandard={backendDateStandard}
-            component={Datepicker}
+            component={AppValidatedDatepicker}
             id={`period-end-date-${index}`}
             label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
             name={`${name}.endDate`}
@@ -73,26 +71,24 @@ const AgreementPeriodField = ({ index, input: { name } }) => {
             timeZone="UTC"
             usePortal
             validate={composeValidators(
-              (value) => validators.datePlausibilityCheck(value, dateFormat, backendDateStandard),
+              (value) => datePlausibilityCheck(value, dateFormat, backendDateStandard),
               validators.dateOrder,
               multipleOpenEndedPeriods,
               overlappingPeriods,
             )}
-            {...datePickerAppValidationProps}
           />
         </Col>
         <Col xs={4}>
           <Field
             backendDateStandard={backendDateStandard}
-            component={Datepicker}
+            component={AppValidatedDatepicker}
             id={`period-cancellation-deadline-${index}`}
             label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}
             name={`${name}.cancellationDeadline`}
             parse={v => v} // Lets us send an empty string instead of `undefined`
             timeZone="UTC"
             usePortal
-            validate={(value) => validators.datePlausibilityCheck(value, dateFormat, backendDateStandard)}
-            {...datePickerAppValidationProps}
+            validate={(value) => datePlausibilityCheck(value, dateFormat, backendDateStandard)}
           />
         </Col>
       </Row>
