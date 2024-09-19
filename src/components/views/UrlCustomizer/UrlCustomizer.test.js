@@ -1,7 +1,7 @@
 import { MemoryRouter } from 'react-router-dom';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { renderWithIntl, Button, PaneHeader } from '@folio/stripes-erm-testing';
+import { Button, PaneHeader, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../../test/helpers';
 import { data, handlers } from './testResources';
@@ -57,7 +57,9 @@ describe('UrlCustomizer', () => {
         await Button('Delete').click();
       });
 
-      expect(handlers.onDelete).toHaveBeenCalled();
+      await waitFor(async () => {
+        expect(handlers.onDelete).toHaveBeenCalled();
+      });
     });
 
     it('renders the expected URL customization name', () => {

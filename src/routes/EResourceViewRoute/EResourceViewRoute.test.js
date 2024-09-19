@@ -1,23 +1,26 @@
 import PropTypes from 'prop-types';
 
-import { renderWithIntl, Button as ButtonInteractor } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
+
+import translationsProperties from '../../../test/helpers';
+import EResourceViewRoute from './EResourceViewRoute';
 import {
+  entitlementOptions,
   entitlements,
   entitlementsCount,
-  entitlementOptions,
   eresource,
+  handlers,
+  match,
   packageContents,
   packageContentsFilter,
   query,
   settings,
-  handlers,
-  match,
   tagsEnabled
 } from './testResources';
-import translationsProperties from '../../../test/helpers';
-import EResourceViewRoute from './EResourceViewRoute';
 
 const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
@@ -159,8 +162,13 @@ describe('EResourceViewRoute', () => {
     });
 
     test('triggers the CloseButton callback', async () => {
-      await ButtonInteractor('CloseButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('CloseButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
 
     test('renders the CloseButton button', () => {
@@ -169,8 +177,13 @@ describe('EResourceViewRoute', () => {
     });
 
     test('triggers the EditButton callback', async () => {
-      await ButtonInteractor('EditButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('EditButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
 
     test('renders the EditButton button', () => {
@@ -179,8 +192,13 @@ describe('EResourceViewRoute', () => {
     });
 
     test('triggers the EResourceClickButton callback', async () => {
-      await ButtonInteractor('EResourceClickButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('EResourceClickButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
 
     test('calls the EResourceClickButton callback', () => {
