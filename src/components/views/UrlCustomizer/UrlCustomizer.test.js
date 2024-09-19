@@ -48,17 +48,87 @@ describe('UrlCustomizer', () => {
       await PaneHeader('test customization URL customization').is({ visible: true });
     });
 
-    test('renders the expected action buttons and clicking them should work as expcted', async () => {
-      await waitFor(async () => {
-        await Button('Actions').click();
-        await Button('Edit').click();
-        await Button('Delete').click();
-        await Button('Cancel').click();
-        await Button('Delete').click();
+    describe('clicking actions button', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Actions').click();
+        });
       });
 
-      await waitFor(async () => {
-        expect(handlers.onDelete).toHaveBeenCalled();
+      test('renders expected buttons', async () => {
+        await waitFor(async () => {
+          await Button('Edit').exists();
+          await Button('Delete').exists();
+        });
+      });
+
+      describe('clicking edit button', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('Edit').click();
+          });
+        });
+
+        test('edit callback called as expected', async () => {
+          await waitFor(async () => {
+            expect(handlers.onEdit).toHaveBeenCalled();
+          });
+        });
+      });
+
+      describe('clicking delete button', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('Delete').click();
+          });
+        });
+
+        test('renders cancel button', async () => {
+          await waitFor(async () => {
+            await Button('Cancel').exists();
+          });
+        });
+
+        test('renders delete button within modal', async () => {
+          await waitFor(async () => {
+            // Button above is also labelled "Delete", so use id for now
+            await Button({ id: 'clickable-delete-agreement-confirmation-confirm' }).exists();
+          });
+        });
+
+        describe('clicking cancel button', () => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Button('Cancel').click();
+            });
+          });
+
+          test('no longer renders cancel button', async () => {
+            await waitFor(async () => {
+              await Button('Cancel').absent();
+            });
+          });
+        });
+
+        describe('clicking delete button within modal', () => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Button({ id: 'clickable-delete-agreement-confirmation-confirm' }).click();
+            });
+          });
+
+          test('no longer renders cancel button (there is still a button labelled \'Delete\')', async () => {
+            await waitFor(async () => {
+              await Button('Cancel').absent();
+            });
+          });
+
+          test('delete callback called as expected', async () => {
+            await waitFor(async () => {
+              expect(handlers.onDelete).toHaveBeenCalled();
+            });
+          });
+        });
       });
     });
 
