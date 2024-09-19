@@ -1,5 +1,5 @@
 
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Accordion, Button, MultiColumnList, renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
@@ -25,8 +25,10 @@ describe('Lines', () => {
 
   describe('Actions menu', () => {
     beforeEach(async () => {
-      await Button('Actions').exists();
-      await Button('Actions').click();
+      await waitFor(async () => {
+        await Button('Actions').exists();
+        await Button('Actions').click();
+      });
     });
 
     test('New agreement line button exists', async () => {
@@ -36,6 +38,7 @@ describe('Lines', () => {
     });
 
     test('View in agreement lines search button exists', async () => {
+      screen.debug();
       await waitFor(async () => {
         await Button('View in agreement lines search').exists();
       });
