@@ -166,7 +166,7 @@ describe('AgreementPeriodsFieldArray', () => {
   });
 
   test('expected values are submitted', async () => {
-    const { getByTestId } = renderWithIntl(
+    /* const { getByTestId } =  */renderWithIntl(
       <TestForm
         initialValues={{ agreementPeriodsFieldArrayTest:multiplePeriods }}
         onSubmit={onSubmit}
@@ -181,7 +181,7 @@ describe('AgreementPeriodsFieldArray', () => {
 
     await waitFor(async () => {
       await Button('Submit').click();
-      //userEvent.click(getByTestId('submit'));
+      // userEvent.click(getByTestId('submit'));
     });
 
     await waitFor(async () => {

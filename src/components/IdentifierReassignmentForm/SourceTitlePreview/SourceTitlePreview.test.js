@@ -1,7 +1,7 @@
 import { StaticRouter as Router } from 'react-router-dom';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { renderWithIntl, TestForm, KeyValue, Button } from '@folio/stripes-erm-testing';
+import { Button, KeyValue, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import translationsProperties from '../../../../test/helpers';
 import SourceTitlePreview from './SourceTitlePreview';
 
@@ -175,7 +175,9 @@ describe('SourceTitlePreview', () => {
       await Button('Submit').click();
     });
 
-    expect(onSubmitMock.mock.calls.length).toBe(1);
+    await waitFor(async () => {
+      expect(onSubmitMock.mock.calls.length).toBe(1);
+    });
   });
 
   test('renders a link with the title name', () => {

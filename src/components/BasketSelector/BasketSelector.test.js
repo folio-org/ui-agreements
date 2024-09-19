@@ -257,8 +257,8 @@ describe('BasketSelector', () => {
       // Selection calls seem to not work as expected
       await selector.choose('Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz');
       await selector.choose('\'"Institutions, industrial upgrading, and economic performance in Ja...\' on Platform \'Elgaronline\' in Package Edward Elgar:Edward Elgar E-Book Archive in Business & Management, ...');
-      //await userEvent.click(getByText(/industrial upgrading/i));
-      //await userEvent.click(getByText(/Finance:Nationallizenz/i));
+      // await userEvent.click(getByText(/industrial upgrading/i));
+      // await userEvent.click(getByText(/Finance:Nationallizenz/i));
 
       await Button('add button').click();
     });

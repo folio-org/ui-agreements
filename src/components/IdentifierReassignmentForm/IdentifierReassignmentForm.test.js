@@ -1,15 +1,15 @@
 import { useForm } from 'react-final-form';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { renderWithIntl, Button as ButtonInteractor } from '@folio/stripes-erm-testing';
+import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import { Button } from '@folio/stripes/components';
 
 import translationsProperties from '../../../test/helpers';
 import IdentifierReassignmentForm from './IdentifierReassignmentForm';
 
-import SourceTitleIdentifierField from './SourceTitleIdentifierField';
 import DestinationTitleIdentifierField from './DestinationTitleIdentifierField';
+import SourceTitleIdentifierField from './SourceTitleIdentifierField';
 
 const onCloseMock = jest.fn();
 
@@ -104,14 +104,18 @@ describe('IdentifierReassignmentForm', () => {
       });
     });
 
-    it('renders the SourceTitlePreview component', () => {
+    it('renders the SourceTitlePreview component', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('SourceTitlePreview')).toBeInTheDocument();
+      await waitFor(async () => {
+        expect(getByText('SourceTitlePreview')).toBeInTheDocument();
+      });
     });
 
-    it('renders the DestinationTitlePreview component', () => {
+    it('renders the DestinationTitlePreview component', async () => {
       const { getByText } = renderComponent;
-      expect(getByText('DestinationTitlePreview')).toBeInTheDocument();
+      await waitFor(async () => {
+        expect(getByText('DestinationTitlePreview')).toBeInTheDocument();
+      });
     });
   });
 });

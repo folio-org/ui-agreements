@@ -1,7 +1,7 @@
 import { StaticRouter as Router } from 'react-router-dom';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { renderWithIntl, TestForm, Button } from '@folio/stripes-erm-testing';
+import { Button, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import translationsProperties from '../../../../test/helpers';
 import DestinationTitleIdentifierField from './DestinationTitleIdentifierField';
 
@@ -110,6 +110,8 @@ describe('DestinationTitleIdentifierField', () => {
       await Button('Submit').click();
     });
 
-    expect(onSubmitMock.mock.calls.length).toBe(1);
+    await waitFor(async () => {
+      expect(onSubmitMock.mock.calls.length).toBe(1);
+    });
   });
 });

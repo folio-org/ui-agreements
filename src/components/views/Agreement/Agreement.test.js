@@ -1,11 +1,11 @@
 
 
-import { renderWithIntl, Button, Modal } from '@folio/stripes-erm-testing';
-import { MemoryRouter } from 'react-router-dom';
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button, Modal, renderWithIntl } from '@folio/stripes-erm-testing';
+import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
-import { data, handlers } from './testResources';
 import Agreement from './Agreement';
+import { data, handlers } from './testResources';
 
 jest.mock('../../../hooks', () => ({
   ...jest.requireActual('../../../hooks'),
@@ -165,7 +165,9 @@ describe('Agreement', () => {
       });
 
       const { getByText } = renderComponent;
-      expect(getByText('DuplicateModal')).toBeInTheDocument();
+      await waitFor(async () => {
+        expect(getByText('DuplicateModal')).toBeInTheDocument();
+      });
     });
 
     it('renders the Confirmation modal on clicking the delete button from the actions dropdown', async () => {
@@ -182,8 +184,9 @@ describe('Agreement', () => {
         await Button('Actions').click();
         await Button('Export agreement (JSON)').click();
       });
-
-      expect(handlers.onExportAgreement).toHaveBeenCalled();
+      await waitFor(async () => {
+        expect(handlers.onExportAgreement).toHaveBeenCalled();
+      });
     });
   });
 });
