@@ -1,7 +1,7 @@
 import { MemoryRouter } from 'react-router-dom';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { Button, PaneHeader, renderWithIntl } from '@folio/stripes-erm-testing';
+import { Button, Modal, PaneHeader, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../../test/helpers';
 import { data, handlers } from './testResources';
@@ -49,6 +49,7 @@ describe('UrlCustomizer', () => {
     });
 
     describe('clicking actions button', () => {
+      let deleteActionButton;
       beforeEach(async () => {
         await waitFor(async () => {
           await Button('Actions').click();
@@ -57,8 +58,9 @@ describe('UrlCustomizer', () => {
 
       test('renders expected buttons', async () => {
         await waitFor(async () => {
+          deleteActionButton = Button({ id: 'clickable-dropdown-delete-url-customizer' });
           await Button('Edit').exists();
-          await Button('Delete').exists();
+          await deleteActionButton.exists();
         });
       });
 
@@ -77,9 +79,17 @@ describe('UrlCustomizer', () => {
       });
 
       describe('clicking delete button', () => {
+        let deleteConfirmButton;
         beforeEach(async () => {
           await waitFor(async () => {
-            await Button('Delete').click();
+            await deleteActionButton.click();
+
+            // Button above is also labelled "Delete", so use ids for now
+            deleteConfirmButton = Button({ id: 'clickable-delete-agreement-confirmation-confirm' });
+          });
+
+          await waitFor(async () => {
+            await Modal('Delete URL customization').exists();
           });
         });
 
@@ -91,8 +101,7 @@ describe('UrlCustomizer', () => {
 
         test('renders delete button within modal', async () => {
           await waitFor(async () => {
-            // Button above is also labelled "Delete", so use id for now
-            await Button({ id: 'clickable-delete-agreement-confirmation-confirm' }).exists();
+            await deleteConfirmButton.exists();
           });
         });
 
@@ -113,7 +122,7 @@ describe('UrlCustomizer', () => {
         describe('clicking delete button within modal', () => {
           beforeEach(async () => {
             await waitFor(async () => {
-              await Button({ id: 'clickable-delete-agreement-confirmation-confirm' }).click();
+              await deleteConfirmButton.click();
             });
           });
 
