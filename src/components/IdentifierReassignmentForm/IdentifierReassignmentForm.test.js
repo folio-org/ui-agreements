@@ -98,23 +98,34 @@ describe('IdentifierReassignmentForm', () => {
         // Set source/destination titles
         await ButtonInteractor('setSourceTitle').click();
         await ButtonInteractor('setDestinationTitle').click();
-
-        // Click preview
-        await ButtonInteractor('Preview').click();
       });
     });
 
-    it('renders the SourceTitlePreview component', async () => {
-      const { getByText } = renderComponent;
+    test('preview button becomes enabled', async () => {
       await waitFor(async () => {
-        expect(getByText('SourceTitlePreview')).toBeInTheDocument();
+        await ButtonInteractor('Preview').exists();
       });
     });
 
-    it('renders the DestinationTitlePreview component', async () => {
-      const { getByText } = renderComponent;
-      await waitFor(async () => {
-        expect(getByText('DestinationTitlePreview')).toBeInTheDocument();
+    describe('clicking preview button', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await ButtonInteractor('Preview').click();
+        });
+      });
+
+      it('renders the SourceTitlePreview component', async () => {
+        const { getByText } = renderComponent;
+        await waitFor(async () => {
+          expect(getByText('SourceTitlePreview')).toBeInTheDocument();
+        });
+      });
+
+      it('renders the DestinationTitlePreview component', async () => {
+        const { getByText } = renderComponent;
+        await waitFor(async () => {
+          expect(getByText('DestinationTitlePreview')).toBeInTheDocument();
+        });
       });
     });
   });
