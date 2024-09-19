@@ -158,34 +158,68 @@ describe('Agreement', () => {
       expect(getByText('UsageData')).toBeInTheDocument();
     });
 
-    it('renders the Duplicate modal on clicking the duplicate button from the actions dropdown', async () => {
-      await waitFor(async () => {
-        await Button('Actions').click();
-        await Button('Duplicate').click();
+    describe('opening actions menu', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Actions').click();
+        });
       });
 
-      const { getByText } = renderComponent;
-      await waitFor(async () => {
-        expect(getByText('DuplicateModal')).toBeInTheDocument();
-      });
-    });
+      describe('clicking duplicate modal', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('Duplicate').click();
+          });
+        });
 
-    it('renders the Confirmation modal on clicking the delete button from the actions dropdown', async () => {
-      await waitFor(async () => {
-        await Button('Actions').click();
-        await Button('Delete').click();
-        await Modal('Delete agreement').exists();
-        await Button('Cancel').click(); // close the modal
+        test('renders the Duplicate modal', async () => {
+          const { getByText } = renderComponent;
+          await waitFor(async () => {
+            expect(getByText('DuplicateModal')).toBeInTheDocument();
+          });
+        });
       });
-    });
 
-    it('Clicking the Export agreement (JSON) button should trigger the callback', async () => {
-      await waitFor(async () => {
-        await Button('Actions').click();
-        await Button('Export agreement (JSON)').click();
+      describe('clicking delete', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('Delete').click();
+          });
+        });
+
+        test('renders the confirmation modal', async () => {
+          await waitFor(async () => {
+            await Modal('Delete agreement').exists();
+          });
+        });
+
+        describe('cancelling confirmation modal', () => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Button('Cancel').click(); // close the modal
+            });
+          });
+
+          test('confirmation modal no longer renders', async () => {
+            await waitFor(async () => {
+              await Modal('Delete agreement').absent();
+            });
+          });
+        });
       });
-      await waitFor(async () => {
-        expect(handlers.onExportAgreement).toHaveBeenCalled();
+
+      describe('clicking export agreement (JSON)', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('Export agreement (JSON)').click();
+          });
+        });
+
+        test('correct callback is triggered', async () => {
+          await waitFor(async () => {
+            expect(handlers.onExportAgreement).toHaveBeenCalled();
+          });
+        });
       });
     });
   });
