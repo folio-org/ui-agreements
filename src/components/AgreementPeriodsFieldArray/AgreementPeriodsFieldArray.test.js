@@ -1,7 +1,7 @@
 import { waitFor, within } from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
-import { Button, TextArea, TextField, renderWithIntl, Datepicker, TestForm } from '@folio/stripes-erm-testing';
+import { Button, Datepicker, TestForm, TextArea, TextField, renderWithIntl } from '@folio/stripes-erm-testing';
 
 
 import { FieldArray } from 'react-final-form-arrays';
@@ -102,7 +102,9 @@ describe('AgreementPeriodsFieldArray', () => {
     await waitFor(async () => {
       await Button('Add agreement period').click();
     });
-    expect(queryAllByTestId(/agreementPeriodsFieldArray\[.*\]/i).length).toEqual(2);
+    await waitFor(async () => {
+      expect(queryAllByTestId(/agreementPeriodsFieldArray\[.*\]/i).length).toEqual(2);
+    });
   });
 
   test('multiple agreement periods render as expected', async () => {
@@ -179,10 +181,12 @@ describe('AgreementPeriodsFieldArray', () => {
 
     await waitFor(async () => {
       await Button('Submit').click();
+      //userEvent.click(getByTestId('submit'));
     });
 
-    userEvent.click(getByTestId('submit'));
-    expect(onSubmit.mock.calls.length).toBe(1);
+    await waitFor(async () => {
+      expect(onSubmit.mock.calls.length).toBe(1);
+    });
     const submittedValues = onSubmit.mock.calls[0][0];
     const expectedPayload = {
       agreementPeriodsFieldArrayTest: [

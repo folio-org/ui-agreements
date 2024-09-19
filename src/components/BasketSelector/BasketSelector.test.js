@@ -1,7 +1,6 @@
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
-import { Button, TestForm, renderWithIntl, Selection } from '@folio/stripes-erm-testing';
+import { Button, renderWithIntl, Selection, TestForm } from '@folio/stripes-erm-testing';
 import BasketSelector from './BasketSelector';
 
 import translationsProperties from '../../../test/helpers';
@@ -242,7 +241,7 @@ describe('BasketSelector', () => {
   });
 
   test('clicking add To Basket button', async () => {
-    const { getByText } = renderWithIntl(
+    /* const { getByText } =  */renderWithIntl(
       <TestForm onSubmit={onSubmit}>
         <BasketSelector
           {...basketSelectorProps}
@@ -256,14 +255,16 @@ describe('BasketSelector', () => {
 
     await waitFor(async () => {
       // Selection calls seem to not work as expected
-      // await selector.choose('Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz');
-      // await selector.choose('\'"Institutions, industrial upgrading, and economic performance in Ja...\' on Platform \'Elgaronline\' in Package Edward Elgar:Edward Elgar E-Book Archive in Business & Management, ...');
-      await userEvent.click(getByText(/industrial upgrading/i));
-      await userEvent.click(getByText(/Finance:Nationallizenz/i));
+      await selector.choose('Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz');
+      await selector.choose('\'"Institutions, industrial upgrading, and economic performance in Ja...\' on Platform \'Elgaronline\' in Package Edward Elgar:Edward Elgar E-Book Archive in Business & Management, ...');
+      //await userEvent.click(getByText(/industrial upgrading/i));
+      //await userEvent.click(getByText(/Finance:Nationallizenz/i));
 
       await Button('add button').click();
     });
 
-    expect(onAdd.mock.calls.length).toBe(1);
+    await waitFor(async () => {
+      expect(onAdd.mock.calls.length).toBe(1);
+    });
   });
 });
