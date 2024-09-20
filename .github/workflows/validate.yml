@@ -5,14 +5,14 @@ on:
 jobs:
   version-number:
     # used for module descriptor and publishing to NPM
-    uses: ./.github/workflows/ui-version-number.yml
+    uses: folio-org/.github/.github/workflows/ui-version-number.yml
     with:
       is-release: "False"
   generate-module-descriptor:
     name: Generate module descriptor
     needs: [version-number]
     if: ${{ inputs.generate-module-descriptor }}
-    uses: ./.github/workflows/ui-module-descriptor-generate.yml
+    uses: folio-org/.github/.github/workflows/ui-module-descriptor-generate.yml
     with:
       node-version: 20.x ## Doing these directly for now
       folio-npm-registry: https://repository.folio.org/repository/npm-folioci/
