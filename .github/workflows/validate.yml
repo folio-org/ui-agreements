@@ -3,15 +3,20 @@ on:
   - push
 
 jobs:
-  create-module-descriptor:
-      uses: folio-org/.github/.github/workflows/ui.yml@v1
-      with:
-        ## Turn off EVERYTHING except generate module descriptor
-        jest-enabled: false
-        bigtest-enabled: false
-        sonar-enabled: false
-        compile-translations: false
-        publish-module-descriptor: false
+  version-number:
+    # used for module descriptor and publishing to NPM
+    uses: ./.github/workflows/ui-version-number.yml
+    with:
+      is-release: "False"
+  generate-module-descriptor:
+    name: Generate module descriptor
+    needs: [version-number]
+    if: ${{ inputs.generate-module-descriptor }}
+    uses: ./.github/workflows/ui-module-descriptor-generate.yml
+    with:
+      node-version: 20.x ## Doing these directly for now
+      folio-npm-registry: https://repository.folio.org/repository/npm-folioci/
+      package-version: ${{ needs.version-number.outputs.version-number }}
   validate_module_descriptor:
     name: Validate module descriptor
     runs-on: ubuntu-latest
