@@ -3,21 +3,20 @@ on:
   - push
 
 jobs:
+  create-module-descriptor:
+      uses: folio-org/.github/.github/workflows/ui.yml@v1
+      with:
+        ## Turn off EVERYTHING except generate module descriptor
+        jest-enabled: false
+        bigtest-enabled: false
+        sonar-enabled: false
+        compile-translations: false
+        publish-module-descriptor: false
   validate_module_descriptor:
     name: Validate module descriptor
     runs-on: ubuntu-latest
+    needs: create-module-descriptor
     steps:
-      - id: mod-desc-gen
-        name: Run module descriptor generate
-        # Use the shared workflow from https://github.com/folio-org/.github
-        uses: folio-org/.github/.github/workflows/ui.yml@v1
-        with:
-          ## Turn off EVERYTHING except generate module descriptor
-          jest-enabled: false
-          bigtest-enabled: false
-          sonar-enabled: false
-          compile-translations: false
-          publish-module-descriptor: false
       - name: 'download module descriptor'
         uses: actions/download-artifact@v4
         with:
