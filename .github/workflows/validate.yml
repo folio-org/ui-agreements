@@ -76,7 +76,7 @@ jobs:
           retention-days: 1
       - name: Setup validate_module_descriptor_errors file
         if: failure()
-        run: echo "$(cat validate_module_descriptor_output.txt)" | egrep "\[ERROR\]\s*(\"key\"|\"value\")" | sed 's/\[ERROR\]//;s/\"value\"\(.*\)/\"value\"\0\n/' | tee validate_module_descriptor_errors.txt
+        run: echo "$(cat validate_module_descriptor_output.txt)" | egrep "\[ERROR\]\s*(\"key\"|\"value\")" | sed 's/\[ERROR\]\(\s*\)//;s/\"value\"\(\s*\):\(\s*\)\(.*\)/\3\n/;s/"key\"\(\s*\):\(\s*\)\(.*\)/\3/' | tee validate_module_descriptor_errors.txt
       - name: Comment failures on PR
         if: failure()
         run: |
