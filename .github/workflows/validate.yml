@@ -21,6 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: generate-module-descriptor
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: 'download module descriptor'
         uses: actions/download-artifact@v4
         with:
