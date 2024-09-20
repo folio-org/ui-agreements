@@ -20,7 +20,7 @@ jobs:
   validate_module_descriptor:
     name: Validate module descriptor
     runs-on: ubuntu-latest
-    needs: create-module-descriptor
+    needs: generate-module-descriptor
     steps:
       - name: 'download module descriptor'
         uses: actions/download-artifact@v4
