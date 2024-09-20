@@ -10,7 +10,7 @@ jobs:
       is-release: "False"
   generate-module-descriptor:
     name: Generate module descriptor
-    needs: [version-number]
+    needs: version-number
     if: ${{ inputs.generate-module-descriptor }}
     uses: folio-org/.github/.github/workflows/ui-module-descriptor-generate.yml@v1
     with:
