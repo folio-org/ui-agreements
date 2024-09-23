@@ -26,7 +26,7 @@ import {
 import { AppIcon } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
 import css from './AgreementLineForm.css';
-import { FormInfo, FormPOLines, FormCoverage, FormEresource } from '../../AgreementLineSections';
+import { FormInfo, FormPOLines, FormCoverage, FormEresource, FormDocuments } from '../../AgreementLineSections';
 
 import { isDetached, isExternal } from '../../utilities';
 import { useEresourcesEnabled } from '../../../hooks';
@@ -239,6 +239,7 @@ const AgreementLineForm = ({
             </Row>
             <AccordionSet>
               <FormPOLines {...getSectionProps()} />
+              <FormDocuments {...getSectionProps()} />
               {agreementLineSource === 'basket' && <FormCoverage {...getSectionProps()} />}
             </AccordionSet>
           </AccordionStatus>
