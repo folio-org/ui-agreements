@@ -1,12 +1,12 @@
 import ReactRouterDom, { MemoryRouter } from 'react-router-dom';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { renderWithIntl, Pane, Button, TextField, MultiColumnList } from '@folio/stripes-erm-testing';
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
+import { Button, MultiColumnList, Pane, renderWithIntl, TextField } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../../test/helpers';
-import data from './testResources';
 import Platforms from './Platforms';
+import data from './testResources';
 
 
 jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
@@ -70,7 +70,10 @@ describe('Platforms', () => {
       await TextField({ id: 'input-platform-search' }).fillIn('test'); // enables the disabled buttons
       await Button('Search').click();
     });
-    expect(mockSubmit).toHaveBeenCalled();
+
+    await waitFor(async () => {
+      expect(mockSubmit).toHaveBeenCalled();
+    });
   });
 
   test('renders the expected Platforms Pane', async () => {

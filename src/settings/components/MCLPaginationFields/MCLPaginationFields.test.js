@@ -1,5 +1,5 @@
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { Button, TextField, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
+import { Button, renderWithIntl, TestForm, TextField } from '@folio/stripes-erm-testing';
 
 import MCLPaginationFields from './MCLPaginationFields';
 
@@ -40,7 +40,9 @@ describe('MCLPaginationFields', () => {
       await Button('Submit').click();
     });
 
-    expect(onSubmit.mock.calls.length).toBe(1);
+    await waitFor(async () => {
+      expect(onSubmit.mock.calls.length).toBe(1);
+    });
 
     const expectedPayload = {
       pageSize: {

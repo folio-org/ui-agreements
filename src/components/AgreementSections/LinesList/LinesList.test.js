@@ -1,5 +1,6 @@
 
-import { renderWithIntl, MultiColumnList, MultiColumnListCell } from '@folio/stripes-erm-testing';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { MultiColumnList, MultiColumnListCell, renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import LinesList from './LinesList';
@@ -79,8 +80,10 @@ describe('LinesList', () => {
       await MultiColumnList('agreement-lines').click({ row: 0, columnIndex: 1 });
     });
 
-    test('should call the onViewAgreementLine callback', () => {
-      expect(onViewAgreementLine).toHaveBeenCalled();
+    test('should call the onViewAgreementLine callback', async () => {
+      await waitFor(async () => {
+        expect(onViewAgreementLine).toHaveBeenCalled();
+      });
     });
   });
 });

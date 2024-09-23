@@ -1,7 +1,7 @@
 import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
 
-import { MemoryRouter } from 'react-router';
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { MemoryRouter } from 'react-router';
 import AddToBasketButton from './AddToBasketButton';
 
 import translationsProperties from '../../../test/helpers/translationsProperties';
@@ -84,7 +84,9 @@ describe('AddToBasketButton', () => {
     });
 
     it('invokes the callback with expected value', async () => {
-      expect(mockAddToBasket.mock.calls.length).toBe(1);
+      await waitFor(async () => {
+        expect(mockAddToBasket.mock.calls.length).toBe(1);
+      });
     });
 
     test('renders remove button label', async () => {
@@ -95,7 +97,10 @@ describe('AddToBasketButton', () => {
       await waitFor(async () => {
         await Button('Remove button').click();
       });
-      expect(mockRemoveFromBasket.mock.calls.length).toBe(1);
+
+      await waitFor(async () => {
+        expect(mockRemoveFromBasket.mock.calls.length).toBe(1);
+      });
     });
   });
 });

@@ -1,15 +1,16 @@
 import PropTypes from 'prop-types';
 
-
 import { useQuery } from 'react-query';
+import { MemoryRouter } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
+import { Button } from '@folio/stripes/components';
 import { useStripes } from '@folio/stripes/core';
 
-import { renderWithIntl, Button as ButtonInteractor } from '@folio/stripes-erm-testing';
-import { MemoryRouter } from 'react-router-dom';
-import { Button } from '@folio/stripes/components';
 import translationsProperties from '../../../test/helpers';
-import { platform } from './testResources';
 import PlatformEditRoute from './PlatformEditRoute';
+import { platform } from './testResources';
 
 const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
@@ -76,8 +77,13 @@ describe('PlatformEditRoute', () => {
     });
 
     test('triggers the CloseButton callback', async () => {
-      await ButtonInteractor('CloseButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('CloseButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
   });
 
