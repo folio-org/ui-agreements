@@ -1,9 +1,12 @@
 
 import PropTypes from 'prop-types';
 
-import { renderWithIntl, Button as ButtonInteractor } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
+
 import translationsProperties from '../../../test/helpers';
 import BasketRoute from './BasketRoute';
 
@@ -112,8 +115,13 @@ describe('BasketRoute', () => {
     });
 
     test('calls the CloseButton', async () => {
-      await ButtonInteractor('CloseButton').click();
-      expect(historyGoBackMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('CloseButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyGoBackMock).toHaveBeenCalled();
+      });
     });
 
     test('renders the RemoveBasketItemButton component', () => {
@@ -122,8 +130,13 @@ describe('BasketRoute', () => {
     });
 
     test('calls the RemoveBasketItemButton', async () => {
-      await ButtonInteractor('RemoveBasketItemButton').click();
-      expect(mockRemoveFromBasket).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('RemoveBasketItemButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(mockRemoveFromBasket).toHaveBeenCalled();
+      });
     });
   });
 });

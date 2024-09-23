@@ -1,20 +1,20 @@
 import PropTypes from 'prop-types';
 
-import { renderWithIntl, Button as ButtonInteractor } from '@folio/stripes-erm-testing';
+import { useQuery } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
 
-import { useQuery } from 'react-query';
-import { useStripes } from '@folio/stripes/core';
-
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
+import { useStripes } from '@folio/stripes/core';
 
 import translationsProperties from '../../../test/helpers';
 import AgreementEditRoute from './AgreementEditRoute';
 import {
-  match,
-  location,
   agreement,
   basket,
+  location,
+  match,
 } from './testResources';
 
 import mockRefdata from '../../../test/jest/refdata';
@@ -78,8 +78,12 @@ describe('AgreementEditRoute', () => {
     });
 
     test('calls the CloseButton', async () => {
-      await ButtonInteractor('CloseButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('CloseButton').click();
+      });
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
   });
 

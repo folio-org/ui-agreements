@@ -15,8 +15,8 @@ import {
 
 import Basket from './Basket';
 
-import { data, handlers } from './testResources';
 import translationsProperties from '../../../../test/helpers';
+import { data, handlers } from './testResources';
 
 jest.mock('../../BasketList', () => () => <div>BasketList</div>);
 
@@ -121,12 +121,14 @@ describe('Basket', () => {
               });
             });
 
-            test('mutate async called as expected', () => {
-              expect(mockMutateAsync.mock.calls[0][0]).toBeInstanceOf(Object);
-              expect(mockMutateAsync.mock.calls[0][0].items).toBeInstanceOf(Array);
+            test('mutate async called as expected', async () => {
+              await waitFor(async () => {
+                expect(mockMutateAsync.mock.calls[0][0]).toBeInstanceOf(Object);
+                expect(mockMutateAsync.mock.calls[0][0].items).toBeInstanceOf(Array);
 
-              expect(mockMutateAsync.mock.calls[0][0].items[0]).toStrictEqual({
-                resource: data.basket[0]
+                expect(mockMutateAsync.mock.calls[0][0].items[0]).toStrictEqual({
+                  resource: data.basket[0]
+                });
               });
             });
           });

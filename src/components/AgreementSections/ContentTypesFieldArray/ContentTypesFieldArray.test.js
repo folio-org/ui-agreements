@@ -2,7 +2,7 @@ import React from 'react';
 import { FieldArray } from 'react-final-form-arrays';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { Button, renderWithIntl, TestForm, IconButton } from '@folio/stripes-erm-testing';
+import { Button, IconButton, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../../test/helpers';
 import ContentTypesFieldArray from './ContentTypesFieldArray';
@@ -42,11 +42,16 @@ describe('ContentTypesFieldArray', () => {
       await addButton.click();
     });
 
-    expect(queryAllByTestId(/contentTypesFieldArray\[.*\]/i).length).toEqual(1);
+    await waitFor(async () => {
+      expect(queryAllByTestId(/contentTypesFieldArray\[.*\]/i).length).toEqual(1);
+    });
+
     await waitFor(async () => {
       await IconButton('remove-content-types[0]-undefined').click();
     });
 
-    expect(queryAllByTestId(/contentTypesFieldArray\[.*\]/i).length).toEqual(0);
+    await waitFor(async () => {
+      expect(queryAllByTestId(/contentTypesFieldArray\[.*\]/i).length).toEqual(0);
+    });
   });
 });

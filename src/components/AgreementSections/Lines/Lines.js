@@ -1,14 +1,14 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+
+import { Accordion, Badge, Button, Dropdown, DropdownMenu, Icon, Spinner } from '@folio/stripes/components';
 import { IfPermission } from '@folio/stripes/core';
-import { Button, Accordion, Badge, Spinner, Icon, Dropdown, DropdownMenu } from '@folio/stripes/components';
 import { ColumnManagerMenu, useColumnManager } from '@folio/stripes/smart-components';
 
+import { LINE_LISTING_COLUMN_MAPPING } from '../../../constants';
+import { urls } from '../../utilities';
 import CoveredEResourcesList from '../CoveredEResourcesList';
 import LinesList from '../LinesList';
-import { urls } from '../../utilities';
-import { LINE_LISTING_COLUMN_MAPPING } from '../../../constants';
 
 const propTypes = {
   agreement: PropTypes.shape({

@@ -1,8 +1,8 @@
 import ReactRouterDom, { MemoryRouter } from 'react-router-dom';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { renderWithIntl, Pane, Button, TextField, MultiColumnList } from '@folio/stripes-erm-testing';
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
+import { Button, MultiColumnList, Pane, renderWithIntl, TextField } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../../test/helpers';
 
@@ -77,7 +77,9 @@ describe('Agreement lines', () => {
       await Button('Search').click();
     });
 
-    expect(mockSubmit).toHaveBeenCalled();
+    await waitFor(async () => {
+      expect(mockSubmit).toHaveBeenCalled();
+    });
   });
 
   test('renders the AgreementLine Filters', () => {

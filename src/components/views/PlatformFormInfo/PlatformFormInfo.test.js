@@ -1,5 +1,5 @@
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { renderWithIntl, TestForm, Button, KeyValue, TextField } from '@folio/stripes-erm-testing';
+import { Button, KeyValue, renderWithIntl, TestForm, TextField } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../../test/helpers';
 import PlatformFormInfo from './PlatformFormInfo';
@@ -45,7 +45,9 @@ describe('PlatformFormInfo', () => {
         await Button('Submit').click();
       });
 
-      expect(onSubmit.mock.calls[0][0]).toEqual({ localCode: 'testCode' });
+      await waitFor(async () => {
+        expect(onSubmit.mock.calls[0][0]).toEqual({ localCode: 'testCode' });
+      });
     });
   });
 

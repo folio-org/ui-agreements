@@ -1,6 +1,6 @@
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
-import { Button, Datepicker, TextField, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
+import { Button, Datepicker, renderWithIntl, TestForm, TextField } from '@folio/stripes-erm-testing';
 
 import CoverageField from './CoverageField';
 
@@ -91,7 +91,10 @@ describe('CoverageField', () => {
       await Button('Submit').click();
     });
 
-    expect(onSubmit.mock.calls.length).toBe(1);
+    await waitFor(async () => {
+      expect(onSubmit.mock.calls.length).toBe(1);
+    });
+
     const submittedValues = onSubmit.mock.calls[0][0];
     const expectedPayload = {
       coverageTest: {

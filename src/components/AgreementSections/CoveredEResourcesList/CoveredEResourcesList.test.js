@@ -1,7 +1,7 @@
 
-import { renderWithIntl, Button, Dropdown, MultiColumnList } from '@folio/stripes-erm-testing';
-import { MemoryRouter } from 'react-router-dom';
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button, Dropdown, MultiColumnList, renderWithIntl } from '@folio/stripes-erm-testing';
+import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import CoveredEResourcesList from './CoveredEResourcesList';
 import agreement from './testResources';
@@ -44,17 +44,26 @@ describe('CoveredEResourcesList', () => {
     await waitFor(async () => {
       await Button('Future').click();
     });
-    expect(handlers.onFilterEResources.mock.calls.length).toBe(1);
+
+    await waitFor(async () => {
+      expect(handlers.onFilterEResources.mock.calls.length).toBe(1);
+    });
 
     await waitFor(async () => {
       await Button('Dropped').click();
     });
-    expect(handlers.onFilterEResources.mock.calls.length).toBe(2);
+
+    await waitFor(async () => {
+      expect(handlers.onFilterEResources.mock.calls.length).toBe(2);
+    });
 
     await waitFor(async () => {
       await Button('All').click();
     });
-    expect(handlers.onFilterEResources.mock.calls.length).toBe(3);
+
+    await waitFor(async () => {
+      expect(handlers.onFilterEResources.mock.calls.length).toBe(3);
+    });
   });
 
   test('renders the Export dropdown', async () => {
@@ -65,12 +74,18 @@ describe('CoveredEResourcesList', () => {
     await waitFor(async () => {
       await Dropdown('Export as...').choose('JSON');
     });
-    expect(handlers.onExportEResourcesAsJSON.mock.calls.length).toBe(1);
+
+    await waitFor(async () => {
+      expect(handlers.onExportEResourcesAsJSON.mock.calls.length).toBe(1);
+    });
 
     await waitFor(async () => {
       await Dropdown('Export as...').choose('KBART');
     });
-    expect(handlers.onExportEResourcesAsKBART.mock.calls.length).toBe(1);
+
+    await waitFor(async () => {
+      expect(handlers.onExportEResourcesAsKBART.mock.calls.length).toBe(1);
+    });
   });
 
   test('renders the CoveredEResourcesList MCL', async () => {

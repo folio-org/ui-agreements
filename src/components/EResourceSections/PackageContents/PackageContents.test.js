@@ -1,7 +1,7 @@
 import { MemoryRouter } from 'react-router-dom';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { renderWithIntl, Accordion, Button, MultiColumnList, MultiColumnListCell } from '@folio/stripes-erm-testing';
+import { Accordion, Button, MultiColumnList, MultiColumnListCell, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../../test/helpers';
 import PackageContents from './PackageContents';
@@ -396,8 +396,10 @@ describe('PackageContents', () => {
       });
     });
 
-    test('should invoke the onFilterPackageContents callback', () => {
-      expect(onFilterPackageContents.mock.calls.length).toBe(1);
+    test('should invoke the onFilterPackageContents callback', async () => {
+      await waitFor(async () => {
+        expect(onFilterPackageContents.mock.calls.length).toBe(1);
+      });
     });
   });
 });
