@@ -40,6 +40,7 @@ const propTypes = {
       }),
     }),
     settings: PropTypes.object,
+    documentCategories: PropTypes.arrayOf(PropTypes.object),
   }),
   form: PropTypes.shape({
     mutators: PropTypes.shape({
@@ -62,7 +63,7 @@ const propTypes = {
 };
 
 const AgreementLineForm = ({
-  data: { basket = [], line = {} },
+  data: { basket = [], line = {}, documentCategories = [] },
   form,
   handlers,
   handleSubmit,
@@ -108,6 +109,7 @@ const AgreementLineForm = ({
       resource,
       setFieldData: form.mutators.setFieldData,
       values,
+      documentCategories,
     };
   };
 

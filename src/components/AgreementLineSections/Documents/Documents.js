@@ -6,12 +6,12 @@ import { Accordion, Badge } from '@folio/stripes/components';
 import { DocumentCard, useFileHandlers } from '@folio/stripes-erm-components';
 import { useStripes } from '@folio/stripes/core';
 
-const Documents = ({ line: { docs = {} } = {}, id }) => {
+const Documents = ({ line: { docs = [] } = {}, id }) => {
   const stripes = useStripes();
   const { handleDownloadFile } = useFileHandlers('erm/files');
-  console.log('docs %O:', docs);
-  const renderDocs = (docs) => {
-    return docs.map((doc) => (
+
+  const renderDocs = (documents) => {
+    return documents.map((doc) => (
       <DocumentCard
         key={doc.id}
         hasDownloadPerm={stripes.hasPerm('ui-agreements.agreements.file.download')}
@@ -46,8 +46,6 @@ Documents.propTypes = {
   line: PropTypes.shape({
     docs: PropTypes.arrayOf(
       PropTypes.shape({
-        dateCreated: PropTypes.string,
-        lastUpdated: PropTypes.string,
         location: PropTypes.string,
         name: PropTypes.string.isRequired,
         note: PropTypes.string,

@@ -13,6 +13,7 @@ jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
 
 jest.mock('../../AgreementLineSections/FormInfo', () => () => <div>FormInfo</div>);
 jest.mock('../../AgreementLineSections/FormPOLines', () => () => <div>FormPOLines</div>);
+jest.mock('../../AgreementLineSections/FormDocuments', () => () => <div>FormDocuments</div>);
 jest.mock('../../AgreementLineSections/FormCoverage', () => () => <div>FormCoverage</div>);
 jest.mock('../../AgreementLineSections/FormEresource', () => () => <div>FormEresource</div>);
 
@@ -45,6 +46,11 @@ describe('AgreementLineForm', () => {
   it('renders the FormPOLines component', () => {
     const { getByText } = renderComponent;
     expect(getByText('FormPOLines')).toBeInTheDocument();
+  });
+
+  it('renders the FormDocuments component', () => {
+    const { getByText } = renderComponent;
+    expect(getByText('FormDocuments')).toBeInTheDocument();
   });
 
   it('renders the FormCoverage component', () => {

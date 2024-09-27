@@ -9,6 +9,7 @@ import AgreementLine from './AgreementLine';
 
 jest.mock('../../AgreementLineSections/Info', () => () => <div>Info</div>);
 jest.mock('../../AgreementLineSections/POLines', () => () => <div>POLines</div>);
+jest.mock('../../AgreementLineSections/Documents', () => () => <div>Documents</div>);
 jest.mock('../../AgreementLineSections/Coverage', () => () => <div>Coverage</div>);
 jest.mock('../../DiscoverySettings', () => () => <div>DiscoverySettings</div>);
 
@@ -65,6 +66,11 @@ describe('AgreementLine', () => {
     it('renders the POLines component', () => {
       const { getByText } = renderComponent;
       expect(getByText('POLines')).toBeInTheDocument();
+    });
+
+    it('renders the Documents component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('Documents')).toBeInTheDocument();
     });
 
     it('renders the Coverage component', () => {

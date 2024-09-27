@@ -7,10 +7,10 @@ import { Accordion } from '@folio/stripes/components';
 import { DocumentsFieldArray, useFileHandlers } from '@folio/stripes-erm-components';
 import { useStripes } from '@folio/stripes/core';
 
-const FormDocuments = ({ line, id, onToggle, open }) => {
+const FormDocuments = ({ documentCategories, id, onToggle, open }) => {
   const stripes = useStripes();
   const { handleDownloadFile, handleUploadFile } = useFileHandlers('erm/files');
-  console.log('line %O:', line);
+
   return (
     <Accordion
       id={id}
@@ -22,7 +22,7 @@ const FormDocuments = ({ line, id, onToggle, open }) => {
         addDocBtnLabel={<FormattedMessage id="ui-agreements.documents.addDocs" />}
         component={DocumentsFieldArray}
         deleteBtnTooltipMsgId="ui-agreements.doc.removeDocsInformation"
-        documentCategories={line}
+        documentCategories={documentCategories}
         hasDownloadPerm={stripes.hasPerm('ui-agreements.agreements.file.download')}
         isEmptyMessage={
           <FormattedMessage id="ui-agreements.emptyAccordion.documents" />
@@ -36,9 +36,7 @@ const FormDocuments = ({ line, id, onToggle, open }) => {
 };
 
 FormDocuments.propTypes = {
-  line: PropTypes.shape({
-    documentCategories: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
+  documentCategories: PropTypes.arrayOf(PropTypes.object),
   id: PropTypes.string,
   onToggle: PropTypes.func,
   open: PropTypes.bool,

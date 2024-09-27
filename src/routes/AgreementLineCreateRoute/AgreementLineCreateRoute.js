@@ -7,13 +7,19 @@ import { useMutation, useQueryClient } from 'react-query';
 import { isEmpty } from 'lodash';
 
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { isPackage } from '@folio/stripes-erm-components';
+import { isPackage, getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 
 import View from '../../components/views/AgreementLineForm';
 import { urls } from '../../components/utilities';
 
 import { AGREEMENT_LINES_ENDPOINT } from '../../constants';
-import { useBasket, useSuppressFromDiscovery } from '../../hooks';
+import {
+  useBasket,
+  useSuppressFromDiscovery,
+  useAgreementsRefdata,
+} from '../../hooks';
+
+const [DOC_ATTACHMENT_TYPE] = ['DocumentAttachment.AtType'];
 
 const AgreementLineCreateRoute = ({
   handlers,
@@ -27,7 +33,9 @@ const AgreementLineCreateRoute = ({
   const queryClient = useQueryClient();
 
   const { basket = [] } = useBasket();
-
+  const refdata = useAgreementsRefdata({
+    desc: [DOC_ATTACHMENT_TYPE],
+  });
   /*
  * This state tracks a checkbox on the form marked "Create another",
  * which allows the user to redirect back to this form on submit
@@ -99,6 +107,7 @@ const AgreementLineCreateRoute = ({
       key="agreement-line-create-form"
       createAnother={createAnother}
       data={{
+        documentCategories: getRefdataValuesByDesc(refdata, DOC_ATTACHMENT_TYPE),
         basket,
       }}
       handlers={{
