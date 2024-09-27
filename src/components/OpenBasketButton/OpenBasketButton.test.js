@@ -1,5 +1,7 @@
 
 import { StaticRouter as Router } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../test/helpers';
@@ -48,8 +50,13 @@ describe('OpenBasketButton', () => {
 
     // we check if the button is clicked it calls the queryUpdateMock(update) function to invoke the child callback (handleClick) defined in OpenBasketButton
     test('calls the open basket button', async () => {
-      await Button('View 1 item').click();
-      expect(mockHistoryPush).toHaveBeenCalled();
+      await waitFor(async () => {
+        await Button('View 1 item').click();
+      });
+
+      await waitFor(async () => {
+        expect(mockHistoryPush).toHaveBeenCalled();
+      });
     });
   });
 

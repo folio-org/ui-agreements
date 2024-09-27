@@ -18,7 +18,8 @@ const data = {
 
 const handlers = {
   onDelete: jest.fn(),
-  onClose: jest.fn()
+  onClose: jest.fn(),
+  onEdit: jest.fn()
 };
 
 export { data, handlers };

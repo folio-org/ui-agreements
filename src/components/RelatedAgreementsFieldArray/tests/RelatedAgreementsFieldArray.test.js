@@ -73,8 +73,9 @@ describe('RelatedAgreementsFieldArray', () => {
       await waitFor(async () => {
         await Button('Add related agreement').click();
       });
-
-      await expect(getByText('RelatedAgreementField')).toBeInTheDocument();
+      await waitFor(async () => {
+        expect(getByText('RelatedAgreementField')).toBeInTheDocument();
+      });
     });
 
 
@@ -86,19 +87,25 @@ describe('RelatedAgreementsFieldArray', () => {
       await waitFor(async () => {
         await addButton.click();
       });
-      expect(queryAllByTestId(/relatedAgreementsFieldArray\[\d+\]/i).length).toEqual(1);
+      await waitFor(async () => {
+        expect(queryAllByTestId(/relatedAgreementsFieldArray\[\d+\]/i).length).toEqual(1);
+      });
 
       await waitFor(async () => {
         await addButton.click();
       });
-      expect(queryAllByTestId(/relatedAgreementsFieldArray\[\d+\]/i).length).toEqual(2);
+      await waitFor(async () => {
+        expect(queryAllByTestId(/relatedAgreementsFieldArray\[\d+\]/i).length).toEqual(2);
+      });
 
       const trashButton = getByRole('button', { name: 'Remove related agreement 2' });
       await waitFor(async () => {
         await userEvent.click(trashButton);
       });
 
-      expect(queryAllByTestId(/relatedAgreementsFieldArray\[\d+\]/i).length).toEqual(1);
+      await waitFor(async () => {
+        expect(queryAllByTestId(/relatedAgreementsFieldArray\[\d+\]/i).length).toEqual(1);
+      });
     });
   });
 

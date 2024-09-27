@@ -1,19 +1,20 @@
 import PropTypes from 'prop-types';
 
 
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { useStripes } from '@folio/stripes/core';
 
-import { renderWithIntl, Button as ButtonInteractor } from '@folio/stripes-erm-testing';
-import { MemoryRouter } from 'react-router-dom';
+import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
+import { MemoryRouter } from 'react-router-dom';
 
 import basket from './testResources';
 
 import { useAddFromBasket } from '../../hooks';
 
 import translationsProperties from '../../../test/helpers';
-import AgreementCreateRoute from './AgreementCreateRoute';
 import mockRefdata from '../../../test/jest/refdata';
+import AgreementCreateRoute from './AgreementCreateRoute';
 
 
 
@@ -97,14 +98,23 @@ describe('AgreementCreateRoute', () => {
     });
 
     test('calls the BasketLineButton', async () => {
-      await ButtonInteractor('BasketLineButton').click();
-      expect(mockBasketLinesAdded).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('BasketLineButton').click();
+      });
+      await waitFor(async () => {
+        expect(mockBasketLinesAdded).toHaveBeenCalled();
+      });
     });
 
     // we check if the button is clicked it calls the historyPushMock(push) function to invoke the child callback (handleClose) defined in Route
     test('calls the CloseButton', async () => {
-      await ButtonInteractor('CloseButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('CloseButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
   });
 

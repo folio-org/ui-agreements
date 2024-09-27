@@ -1,17 +1,19 @@
 import PropTypes from 'prop-types';
 
-import { renderWithIntl, Button as ButtonInteractor } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 
 import { useQuery } from 'react-query';
 
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
+
+import translationsProperties from '../../../test/helpers';
+import AgreementLineEditRoute from './AgreementLineEditRoute';
 import {
   basket,
   match
 } from './testResources';
-import translationsProperties from '../../../test/helpers';
-import AgreementLineEditRoute from './AgreementLineEditRoute';
 
 const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
@@ -80,8 +82,12 @@ describe('AgreementLineEditRoute', () => {
     });
 
     test('triggers the CloseButton callback', async () => {
-      await ButtonInteractor('CloseButton').click();
-      expect(historyPushMock).toHaveBeenCalledWith(`/erm/agreements/${match.params?.agreementId}/line/${match.params?.lineId}`);
+      await waitFor(async () => {
+        await ButtonInteractor('CloseButton').click();
+      });
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalledWith(`/erm/agreements/${match.params?.agreementId}/line/${match.params?.lineId}`);
+      });
     });
   });
 
@@ -116,8 +122,12 @@ describe('AgreementLineEditRoute', () => {
     });
 
     test('triggers the CloseButton callback', async () => {
-      await ButtonInteractor('CloseButton').click();
-      expect(historyPushMock).toHaveBeenCalledWith(`/erm/agreementLines/${match.params?.lineId}/agreement/${match.params?.agreementId}`);
+      await waitFor(async () => {
+        await ButtonInteractor('CloseButton').click();
+      });
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalledWith(`/erm/agreementLines/${match.params?.lineId}/agreement/${match.params?.agreementId}`);
+      });
     });
   });
 

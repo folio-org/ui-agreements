@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -12,8 +12,8 @@ import {
   KeyValue,
   LoadingPane,
   NoValue,
-  Row,
   Pane,
+  Row,
   checkScope
 } from '@folio/stripes/components';
 import { TitleManager, useStripes } from '@folio/stripes/core';
@@ -29,7 +29,7 @@ const UrlCustomizer = ({
     defaultWidth: '55%',
     dismissible: true,
     id: 'pane-view-urlcustomizer',
-    onClose: handlers.onClose,
+    onClose: handlers.onClose, // This never gets called right now
   };
 
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);

@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 
-import { renderWithIntl, Button as ButtonInteractor } from '@folio/stripes-erm-testing';
-
-import { useFileHandlers } from '@folio/stripes-erm-components';
-
 import { MemoryRouter } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { useFileHandlers } from '@folio/stripes-erm-components';
+import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../test/helpers';
 import withFileHandlers from './withFileHandlers';
 
@@ -46,13 +47,23 @@ describe('withFileHandlers', () => {
     });
 
     test('calls the Download button', async () => {
-      await ButtonInteractor('Download').click();
-      expect(mockDownload).toHaveBeenCalledTimes(1);
+      await waitFor(async () => {
+        await ButtonInteractor('Download').click();
+      });
+
+      await waitFor(async () => {
+        expect(mockDownload).toHaveBeenCalledTimes(1);
+      });
     });
 
     test('calls the Upload button', async () => {
-      await ButtonInteractor('Upload').click();
-      expect(mockUpload).toHaveBeenCalledTimes(1);
+      await waitFor(async () => {
+        await ButtonInteractor('Upload').click();
+      });
+
+      await waitFor(async () => {
+        expect(mockUpload).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });

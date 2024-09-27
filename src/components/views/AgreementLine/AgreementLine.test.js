@@ -1,11 +1,11 @@
 import { MemoryRouter } from 'react-router-dom';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { renderWithIntl, Button, Modal } from '@folio/stripes-erm-testing';
+import { Button, Modal, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../../test/helpers';
-import { data, handlers } from './testResources';
 import AgreementLine from './AgreementLine';
+import { data, handlers } from './testResources';
 
 jest.mock('../../AgreementLineSections/Info', () => () => <div>Info</div>);
 jest.mock('../../AgreementLineSections/POLines', () => () => <div>POLines</div>);
@@ -95,7 +95,9 @@ describe('AgreementLine', () => {
         await Button('Delete').click(); // delete the line
       });
 
-      expect(handlers.onDelete).toHaveBeenCalled();
+      await waitFor(async () => {
+        expect(handlers.onDelete).toHaveBeenCalled();
+      });
     });
 
     it('triggers the onEdit callback on clicking the edit button from the actions dropdown', async () => {
@@ -104,7 +106,9 @@ describe('AgreementLine', () => {
         await Button('Edit').click();
       });
 
-      expect(handlers.onEdit).toHaveBeenCalled();
+      await waitFor(async () => {
+        expect(handlers.onEdit).toHaveBeenCalled();
+      });
     });
   });
 });

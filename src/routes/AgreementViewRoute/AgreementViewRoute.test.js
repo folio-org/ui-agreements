@@ -1,17 +1,19 @@
 import PropTypes from 'prop-types';
 
 import { useQuery } from 'react-query';
-
-import { renderWithIntl, Button as ButtonInteractor } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
+
+import translationsProperties from '../../../test/helpers';
+import AgreementViewRoute from './AgreementViewRoute';
 import {
   agreement,
   location,
   match,
 } from './testResources';
-import translationsProperties from '../../../test/helpers';
-import AgreementViewRoute from './AgreementViewRoute';
 
 const AgreementLineButton = (props) => {
   return <Button onClick={props.handlers.onViewAgreementLine}>AgreementLineButton</Button>;
@@ -145,23 +147,43 @@ describe('AgreementViewRoute', () => {
     });
 
     test('triggers the AgreementLineButton callback', async () => {
-      await ButtonInteractor('AgreementLineButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('AgreementLineButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
 
     test('triggers the EditButton callback', async () => {
-      await ButtonInteractor('EditButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('EditButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
 
     test('triggers the CloseButton callback', async () => {
-      await ButtonInteractor('CloseButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('CloseButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
 
     test('triggers the CloneButton callback', async () => {
-      await ButtonInteractor('CloneButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('CloneButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
 
     describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block

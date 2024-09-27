@@ -136,9 +136,11 @@ describe('CoverageFieldArray', () => {
           });
         });
 
-        test('expect a single rendered edit card again', () => {
+        test('expect a single rendered edit card again', async () => {
           const { queryAllByTestId } = renderComponent;
-          expect(queryAllByTestId(/coverageFieldArray\[\d+\]/i).length).toEqual(1);
+          await waitFor(async () => {
+            expect(queryAllByTestId(/coverageFieldArray\[\d+\]/i).length).toEqual(1);
+          });
         });
       });
     });
@@ -227,7 +229,9 @@ describe('CoverageFieldArray', () => {
       });
 
       test('expected values are submitted', async () => {
-        expect(onSubmit.mock.calls.length).toBe(1);
+        await waitFor(async () => {
+          expect(onSubmit.mock.calls.length).toBe(1);
+        });
         const submittedValues = onSubmit.mock.calls[0][0];
         const expectedPayload = {
           coverageFieldArrayTest: [

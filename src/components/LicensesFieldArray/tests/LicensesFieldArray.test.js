@@ -1,7 +1,7 @@
 import { waitFor, within } from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
-import { Button, Select, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
+import { Button, renderWithIntl, Select, TestForm } from '@folio/stripes-erm-testing';
 
 import { FieldArray } from 'react-final-form-arrays';
 import LicensesFieldArray from '..';
@@ -173,7 +173,9 @@ describe('LicensesFieldArray', () => {
         await Button('Add license').click();
       });
 
-      await expect(getByText('LicenseField')).toBeInTheDocument();
+      await waitFor(async () => {
+        expect(getByText('LicenseField')).toBeInTheDocument();
+      });
     });
 
     it('clicking and blurring the Status select dropdown should render an error', async () => {
@@ -197,19 +199,26 @@ describe('LicensesFieldArray', () => {
       await waitFor(async () => {
         await addButton.click();
       });
-      expect(queryAllByTestId(/licensesFieldArray\[.*\]/i).length).toEqual(1);
+
+      await waitFor(async () => {
+        expect(queryAllByTestId(/licensesFieldArray\[.*\]/i).length).toEqual(1);
+      });
 
       await waitFor(async () => {
         await addButton.click();
       });
 
-      expect(queryAllByTestId(/licensesFieldArray\[.*\]/i).length).toEqual(2);
+      await waitFor(async () => {
+        expect(queryAllByTestId(/licensesFieldArray\[.*\]/i).length).toEqual(2);
+      });
 
       const trashButton = getByRole('button', { name: 'Remove license 2' });
       await waitFor(async () => {
         await userEvent.click(trashButton);
       });
-      expect(queryAllByTestId(/licensesFieldArray\[.*\]/i).length).toEqual(1);
+      await waitFor(async () => {
+        expect(queryAllByTestId(/licensesFieldArray\[.*\]/i).length).toEqual(1);
+      });
     });
   });
 
