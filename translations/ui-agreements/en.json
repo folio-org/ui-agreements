@@ -499,7 +499,7 @@
   "line.edit": "Edit agreement line",
   "line.new": "New agreement line",
   "line.create.callout": "Agreement line created",
-  "line.update.callout": "Agreement line updated",
+  "line.update.callout": "Agreement line updated: {name}",
   "line.delete.callout": "Agreement line deleted",
   "line.deleteFailed.callout": "Agreement line failed to delete: {message}",
   "line.lineInformation": "Agreement line information",

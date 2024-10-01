@@ -13,11 +13,7 @@ import View from '../../components/views/AgreementLineForm';
 import { urls } from '../../components/utilities';
 
 import { AGREEMENT_LINES_ENDPOINT } from '../../constants';
-import {
-  useBasket,
-  useSuppressFromDiscovery,
-  useAgreementsRefdata,
-} from '../../hooks';
+import { useBasket, useSuppressFromDiscovery, useAgreementsRefdata } from '../../hooks';
 
 const [DOC_ATTACHMENT_TYPE] = ['DocumentAttachment.AtType'];
 
@@ -101,14 +97,13 @@ const AgreementLineCreateRoute = ({
     postAgreementLine(items);
   };
 
-
   return (
     <View
       key="agreement-line-create-form"
       createAnother={createAnother}
       data={{
-        documentCategories: getRefdataValuesByDesc(refdata, DOC_ATTACHMENT_TYPE),
         basket,
+        documentCategories: getRefdataValuesByDesc(refdata, DOC_ATTACHMENT_TYPE),
       }}
       handlers={{
         ...handlers,
