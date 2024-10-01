@@ -1,0 +1,88 @@
+name: Validate module
+on:
+  - push
+
+jobs:
+  version-number:
+    # used for module descriptor and publishing to NPM
+    uses: folio-org/.github/.github/workflows/ui-version-number.yml@v1
+    with:
+      is-release: "False"
+  generate-module-descriptor:
+    name: Generate module descriptor
+    needs: version-number
+    uses: folio-org/.github/.github/workflows/ui-module-descriptor-generate.yml@v1
+    with:
+      node-version: 20.x ## Doing these directly for now
+      folio-npm-registry: https://repository.folio.org/repository/npm-folioci/
+      package-version: ${{ needs.version-number.outputs.version-number }}
+  validate_module_descriptor:
+    name: Validate module descriptor
+    runs-on: ubuntu-latest
+    needs: generate-module-descriptor
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: 'download module descriptor'
+        uses: actions/download-artifact@v4
+        with:
+          name: module-descriptor.json
+      - name: Get Pull Request Number
+        id: pr_number
+        run: echo "pull_request_number=$(gh pr view --json number -q .number || echo "")" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '17'
+      - name: Set up Maven
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: 3.8.2
+      - name: Set up settings file
+        uses: 1arp/create-a-file-action@0.4.5
+        with:
+          path: 'service'
+          file: 'settings.xml'
+          content:
+            <settings>
+              <profiles>
+                <profile>
+                  <id>folioMavenProfile</id>
+                  <pluginRepositories>
+                    <pluginRepository>
+                      <id>folio-nexus</id>
+                      <name>FOLIO Maven repository</name>
+                      <url>https://repository.folio.org/repository/maven-folio</url>
+                    </pluginRepository>
+                  </pluginRepositories>
+                </profile>
+              </profiles>
+              <activeProfiles>
+                <activeProfile>folioMavenProfile</activeProfile>
+              </activeProfiles>
+            </settings>
+      - name: Run validator
+        run: mvn org.folio:folio-module-descriptor-validator:1.0.0:validate -DmoduleDescriptorFile=module-descriptor.json -s service/settings.xml -l validate_module_descriptor_output.txt
+      - name: Upload validator result
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: validate_module_descriptor_output
+          path: |
+            validate_module_descriptor_output.txt
+          retention-days: 1
+      - name: Setup validate_module_descriptor_errors file
+        if: failure()
+        run: echo "$(cat validate_module_descriptor_output.txt)" | egrep "\[ERROR\]\s*(\"key\"|\"value\")" | sed 's/\[ERROR\]\(\s*\)//;s/\"value\"\(\s*\):\(\s*\)\(.*\)/\3\n/;s/"key\"\(\s*\):\(\s*\)\(.*\)/\3/' | tee validate_module_descriptor_errors.txt
+      - name: Comment failures on PR
+        if: failure()
+        run: |
+          # Use GitHub API to create a comment on the PR
+          PR_NUMBER=${{ steps.pr_number.outputs.pull_request_number }}
+          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+          COMMENT_URL="https://api.github.com/repos/${{ github.repository }}/issues/${PR_NUMBER}/comments"
+          echo "SENDING TO: $COMMENT_URL"
+          curl -s -H "Authorization: token ${GITHUB_TOKEN}" -X POST $COMMENT_URL --data "{ \"body\": $(cat validate_module_descriptor_errors.txt | jq -Rs) }"
