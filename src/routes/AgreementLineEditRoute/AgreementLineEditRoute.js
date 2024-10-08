@@ -96,7 +96,7 @@ const AgreementLineEditRoute = ({
       ...agreementLine,
       linkedResource: agreementLine.type !== 'detached' ? agreementLine : undefined,
       coverage: agreementLine.customCoverage ? agreementLine.coverage : undefined,
-      docs: agreementLine.docs.map(o => ({ ...o, atType: o.atType?.value })) ?? []
+      docs: agreementLine.docs?.map(o => ({ ...o, atType: o.atType?.value })) ?? []
     };
   };
 
