@@ -200,25 +200,30 @@ const Basket = ({
         <Col md={8} xs={12}>
           <Selection
             dataOptions={openAgreementsState}
-            formatter={({ option }) => (
-              <div
-                data-test-agreement-id={option.id}
-                style={{ textAlign: 'left' }}
-              >
-                <Headline>
-                  {option.name}&nbsp;&#40;{option.agreementStatus.label}&#41;
-                </Headline>
-                {/* eslint-disable-line */}
-                <div>
-                  <strong>
-                    <FormattedMessage id="ui-agreements.agreements.startDate" />
-                    :{' '}
-                  </strong>
-                  <FormattedUTCDate value={option.startDate} />{' '}
+            formatter={({ option }) => {
+              if (!option) {
+                return null;
+              }
+              return (
+                <div
+                  data-test-agreement-id={option.id}
+                  style={{ textAlign: 'left' }}
+                >
+                  <Headline>
+                    {option.name}&nbsp;&#40;{option.agreementStatus.label}&#41;
+                  </Headline>
                   {/* eslint-disable-line */}
+                  <div>
+                    <strong>
+                      <FormattedMessage id="ui-agreements.agreements.startDate" />
+                      :{' '}
+                    </strong>
+                    <FormattedUTCDate value={option.startDate} />{' '}
+                    {/* eslint-disable-line */}
+                  </div>
                 </div>
-              </div>
-            )}
+              );
+            }}
             id="select-agreement-for-basket"
             onChange={(id) => {
               setSelectedAgreementId(id);
