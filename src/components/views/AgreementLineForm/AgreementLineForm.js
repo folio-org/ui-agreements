@@ -60,6 +60,7 @@ const propTypes = {
   values: PropTypes.object,
   createAnother: PropTypes.bool,
   toggleCreateAnother: PropTypes.func.isRequired,
+  initialValues: PropTypes.object,
 };
 
 const AgreementLineForm = ({
@@ -74,6 +75,7 @@ const AgreementLineForm = ({
   values,
   createAnother = false,
   toggleCreateAnother,
+  initialValues = {},
 }) => {
   const hasLoaded = form.getRegisteredFields().length > 0;
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
@@ -110,6 +112,7 @@ const AgreementLineForm = ({
       setFieldData: form.mutators.setFieldData,
       values,
       documentCategories,
+      initialValues
     };
   };
 
