@@ -11,10 +11,9 @@ import {
   deparseKiwtQueryFilters,
   parseKiwtQueryFilters,
 } from '@k-int/stripes-kint-components';
+import DocumentFilterForm from '../DocumentFilterForm';
 
-import DocFilterForm from '../DocFilterForm';
-
-const DocFilter = ({ activeFilters, atTypeValues = [], filterHandlers }) => {
+const DocumentFilter = ({ activeFilters, atTypeValues = [], filterHandlers }) => {
   const filterType = atTypeValues.length > 0 ? 'documents' : '';
   const [editingFilters, setEditingFilters] = useState(false);
   const openEditModal = () => setEditingFilters(true);
@@ -94,7 +93,7 @@ const DocFilter = ({ activeFilters, atTypeValues = [], filterHandlers }) => {
           />
         </Layout>
       )}
-      <DocFilterForm
+      <DocumentFilterForm
         atTypeValues={atTypeValues}
         editingFilters={editingFilters}
         filters={parsedFilterData}
@@ -108,10 +107,10 @@ const DocFilter = ({ activeFilters, atTypeValues = [], filterHandlers }) => {
   );
 };
 
-DocFilter.propTypes = {
+DocumentFilter.propTypes = {
   activeFilters: PropTypes.object,
   atTypeValues: PropTypes.arrayOf(PropTypes.object),
   filterHandlers: PropTypes.object,
 };
 
-export default DocFilter;
+export default DocumentFilter;

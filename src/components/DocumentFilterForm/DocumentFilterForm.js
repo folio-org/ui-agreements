@@ -3,9 +3,9 @@ import { Button } from '@folio/stripes/components';
 import arrayMutators from 'final-form-arrays';
 import { FormModal } from '@k-int/stripes-kint-components';
 import { FormattedMessage } from 'react-intl';
-import DocFilterFieldArray from '../DocFilterFieldArray';
+import { DocumentFilterFieldArray } from '@folio/stripes-erm-components';
 
-const DocFilterForm = ({
+const DocumentFilterForm = ({
   atTypeValues,
   editingFilters,
   filters,
@@ -25,7 +25,9 @@ const DocFilterForm = ({
         modalProps={{
           dismissible: true,
           enforceFocus: false,
-          label: <FormattedMessage id={`ui-agreements.documentFilter.${filterBuilder}`} />,
+          label: (
+            <FormattedMessage id={`ui-agreements.documentFilter.${filterBuilder}`} />
+          ),
           onClose: closeEditModal,
           open: editingFilters,
           size: 'medium',
@@ -33,13 +35,13 @@ const DocFilterForm = ({
         mutators={{ ...arrayMutators }}
         onSubmit={onSubmit}
       >
-        <DocFilterFieldArray atTypeValues={atTypeValues} />
+        <DocumentFilterFieldArray atTypeValues={atTypeValues} />
       </FormModal>
     </>
   );
 };
 
-DocFilterForm.propTypes = {
+DocumentFilterForm.propTypes = {
   atTypeValues: PropTypes.arrayOf(PropTypes.object),
   editingFilters: PropTypes.bool,
   filters: PropTypes.arrayOf(PropTypes.object),
@@ -49,4 +51,4 @@ DocFilterForm.propTypes = {
   }),
   onSubmit: PropTypes.func,
 };
-export default DocFilterForm;
+export default DocumentFilterForm;

@@ -1,11 +1,27 @@
 import { MemoryRouter } from 'react-router-dom';
 
-import { renderWithIntl, Button, TestForm } from '@folio/stripes-erm-testing';
+import {
+  Accordion,
+  renderWithIntl,
+  TestForm,
+} from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../test/helpers';
-import DocFilterField from './DocFilterField';
+import DocumentFilter from './DocumentFilter';
 
+
+jest.mock('../DocumentFilterForm', () => () => <div>DocumentFilterForm</div>);
 const onSubmit = jest.fn();
+
+const stateMock = jest.fn();
+const activeFilters = {};
+const filterHandlers = {
+  state: stateMock,
+  checkbox: () => {},
+  clear: () => {},
+  clearGroup: () => {},
+  reset: () => { },
+};
 
 const atTypeValues = [
   {
@@ -26,15 +42,15 @@ const atTypeValues = [
 ];
 
 let renderComponent;
-describe('DocFilterField', () => {
+describe('DocumentFilter', () => {
   beforeEach(() => {
     renderComponent = renderWithIntl(
       <MemoryRouter>
         <TestForm onSubmit={onSubmit}>
-          <DocFilterField
+          <DocumentFilter
+            activeFilters={activeFilters}
             atTypeValues={atTypeValues}
-            index={0}
-            name="filters[0]"
+            filterHandlers={filterHandlers}
           />
         </TestForm>,
       </MemoryRouter>,
@@ -42,22 +58,12 @@ describe('DocFilterField', () => {
     );
   });
 
-  it('display attibute label', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('Attribute')).toBeInTheDocument();
+  test('renders the document filters accordion', async () => {
+    await Accordion('Documents').exists();
   });
 
-  it('display operator label', () => {
+  it('renders DocumentFilterForm component', () => {
     const { getByText } = renderComponent;
-    expect(getByText('Operator')).toBeInTheDocument();
-  });
-
-  it('display value label', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('Value')).toBeInTheDocument();
-  });
-
-  test('renders the add rule button', async () => {
-    await Button('Add rule').exists();
+    expect(getByText('DocumentFilterForm')).toBeInTheDocument();
   });
 });

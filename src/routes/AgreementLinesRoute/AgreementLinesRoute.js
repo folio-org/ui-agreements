@@ -20,7 +20,7 @@ import { useEresourcesEnabled, useAgreementsRefdata } from '../../hooks';
 
 const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
-const [DOC_ATTACHMENT_TYPE] = ['DocumentAttachment.AtType'];
+const [DOCUMENT_AT_TYPE] = ['DocumentAttachment.AtType'];
 
 const AgreementLinesRoute = ({
   children,
@@ -34,7 +34,7 @@ const AgreementLinesRoute = ({
   const searchField = useRef();
 
   const refdata = useAgreementsRefdata({
-    desc: [DOC_ATTACHMENT_TYPE],
+    desc: [DOCUMENT_AT_TYPE],
   });
   useEffect(() => {
     if (searchField.current) {
@@ -97,7 +97,7 @@ const AgreementLinesRoute = ({
       data={{
         agreementLines,
         tagsValues: tags,
-        documentCategories: getRefdataValuesByDesc(refdata, DOC_ATTACHMENT_TYPE),
+        documentAtTypeValues: getRefdataValuesByDesc(refdata, DOCUMENT_AT_TYPE),
       }}
       history={history}
       queryGetter={queryGetter}
@@ -105,12 +105,13 @@ const AgreementLinesRoute = ({
       searchField={searchField}
       searchString={location.search}
       selectedRecordId={match.params.lineId}
-      source={{ // Fake source from useQuery return values;
+      source={{
+        // Fake source from useQuery return values;
         totalCount: () => agreementLinesCount,
         loaded: () => !isAgreementLinesIdle,
         pending: () => areAgreementLinesLoading,
         failure: () => isAgreementLinesError,
-        failureMessage: () => agreementLinesError.message
+        failureMessage: () => agreementLinesError.message,
       }}
     >
       {children}

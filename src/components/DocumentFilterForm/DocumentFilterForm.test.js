@@ -1,9 +1,14 @@
 import { MemoryRouter } from 'react-router-dom';
-
-import { renderWithIntl, Button, TestForm } from '@folio/stripes-erm-testing';
+import { renderWithIntl, mockErmComponents, Button, TestForm } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../test/helpers';
-import DocFilterForm from './DocFilterForm';
+import DocumentFilterForm from './DocumentFilterForm';
+
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  ...mockErmComponents,
+  DocumentFilterFieldArray: () => <div>DocumentFilterFieldArray</div>,
+}));
 
 const onSubmit = jest.fn();
 const handlers = {
@@ -14,13 +19,14 @@ const handlers = {
 const atTypeValues = [];
 const filters = [];
 
-describe('DocFilterForm', () => {
-  describe('DocFilterForm on editing', () => {
+let renderComponent;
+describe('DocumentFilterForm', () => {
+  describe('DocumentFilterForm on editing', () => {
     beforeEach(() => {
-      renderWithIntl(
+      renderComponent = renderWithIntl(
         <MemoryRouter>
           <TestForm onSubmit={onSubmit}>
-            <DocFilterForm
+            <DocumentFilterForm
               atTypeValues={atTypeValues}
               editingFilters
               filters={filters}
@@ -35,16 +41,21 @@ describe('DocFilterForm', () => {
     });
 
     test('renders the document filters button', async () => {
-      await Button('ui-agreements.documentFilter.addDocumentFilter').exists();
+      await Button('Edit document filters').exists();
+    });
+
+    test('renders the DocumentFilterFieldArray component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('DocumentFilterFieldArray')).toBeInTheDocument();
     });
   });
 
-  describe('DocFilterForm on adding', () => {
+  describe('DocumentFilterForm on adding', () => {
     beforeEach(() => {
       renderWithIntl(
         <MemoryRouter>
           <TestForm onSubmit={onSubmit}>
-            <DocFilterForm
+            <DocumentFilterForm
               atTypeValues={atTypeValues}
               editingFilters={false}
               filters={filters}
@@ -59,7 +70,7 @@ describe('DocFilterForm', () => {
     });
 
     test('renders the document filters button', async () => {
-      await Button('ui-agreements.documentFilter.editDocumentFilters').exists();
+      await Button('Edit document filters').exists();
     });
   });
 });
