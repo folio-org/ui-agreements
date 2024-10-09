@@ -4,6 +4,7 @@
 
 ## 11.0.3 2024-07-05
   * ERM-3288 Fix permission on /erm/files/{id}/raw in mod-agreements
+  * FOLIO-4086 Fix GitHub Actions workflow not running for tags
 
 ## 11.0.2 2024-05-28
   * ERM-3248 Use static endpoints for /resources and /entitlementOptions in Poppy Compatible release 
