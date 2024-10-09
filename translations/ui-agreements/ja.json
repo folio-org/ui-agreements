@@ -742,7 +742,7 @@
     "settings.pickListSelect": "選択リストの選択",
     "settings.fileStorage.s3BucketRegion": "S3 バケットリージョン",
     "agreementLines.newLine": "新しい契約明細",
-    "agreementLines.viewInSearch": "View in agreement lines search",
+    "agreementLines.viewInSearch": "契約明細を表示",
     "agreements.exportingAgreement": "<strong>契約をエクスポートします。</strong>JSON ファイルは、完了するとブラウザにダウンロードされます。タイトル数が多い場合、時間がかかることがあります。",
     "packages": "パッケージ",
     "permission.packages.view": "契約: パッケージの検索と表示",
