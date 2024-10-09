@@ -1,6 +1,6 @@
 import { MemoryRouter } from 'react-router-dom';
-
 import {
+  Button,
   Accordion,
   renderWithIntl,
   TestForm,
@@ -65,5 +65,9 @@ describe('DocumentFilter', () => {
   it('renders DocumentFilterForm component', () => {
     const { getByText } = renderComponent;
     expect(getByText('DocumentFilterForm')).toBeInTheDocument();
+  });
+
+  test('renders the submit button', async () => {
+    await Button('Submit').exists();
   });
 });

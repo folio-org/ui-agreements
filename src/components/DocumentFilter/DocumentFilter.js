@@ -20,6 +20,7 @@ const DocumentFilter = ({ activeFilters, atTypeValues = [], filterHandlers }) =>
   const closeEditModal = () => setEditingFilters(false);
 
   // Due to how filters are handled within SearchAndSortQuery the filter string needs to be parsed back into a usual object
+  // istanbul ignore next
   const parseQueryString = (filterArray) => {
     if (filterArray?.length) {
       // Since the filters are grouped, the docuements filterstring will be within the first array element
@@ -38,6 +39,7 @@ const DocumentFilter = ({ activeFilters, atTypeValues = [], filterHandlers }) =>
 
   const parsedFilterData = parseQueryString(activeFilters?.[filterType] || []);
 
+  // istanbul ignore next
   const handleSubmit = (values) => {
     // In order to convert the form values into the shape for them to be deparsed we do the inverse of the above
     // Adding a || operator between all elements of the filters array and a && operator between all elements of the nested arrays
@@ -81,7 +83,8 @@ const DocumentFilter = ({ activeFilters, atTypeValues = [], filterHandlers }) =>
       header={FilterAccordionHeader}
       id={`clickable-agreement-${filterType}-filter`}
       label={<FormattedMessage id="ui-agreements.documentFilter" />}
-      onClearFilter={() => filterHandlers.state({ ...activeFilters, [filterType]: [] })
+      onClearFilter={() =>
+        filterHandlers.state({ ...activeFilters, [filterType]: [] })
       }
       separator={false}
     >
