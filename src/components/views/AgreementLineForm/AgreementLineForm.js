@@ -26,7 +26,7 @@ import {
 import { AppIcon } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
 import css from './AgreementLineForm.css';
-import { FormInfo, FormPOLines, FormCoverage, FormEresource } from '../../AgreementLineSections';
+import { FormInfo, FormPOLines, FormCoverage, FormEresource, FormDocuments } from '../../AgreementLineSections';
 
 import { isDetached, isExternal } from '../../utilities';
 import { useEresourcesEnabled } from '../../../hooks';
@@ -40,6 +40,7 @@ const propTypes = {
       }),
     }),
     settings: PropTypes.object,
+    documentCategories: PropTypes.arrayOf(PropTypes.object),
   }),
   form: PropTypes.shape({
     mutators: PropTypes.shape({
@@ -59,10 +60,11 @@ const propTypes = {
   values: PropTypes.object,
   createAnother: PropTypes.bool,
   toggleCreateAnother: PropTypes.func.isRequired,
+  initialValues: PropTypes.object,
 };
 
 const AgreementLineForm = ({
-  data: { basket = [], line = {} },
+  data: { basket = [], line = {}, documentCategories = [] },
   form,
   handlers,
   handleSubmit,
@@ -73,6 +75,7 @@ const AgreementLineForm = ({
   values,
   createAnother = false,
   toggleCreateAnother,
+  initialValues = {},
 }) => {
   const hasLoaded = form.getRegisteredFields().length > 0;
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
@@ -108,6 +111,8 @@ const AgreementLineForm = ({
       resource,
       setFieldData: form.mutators.setFieldData,
       values,
+      documentCategories,
+      initialValues
     };
   };
 
@@ -239,6 +244,7 @@ const AgreementLineForm = ({
             </Row>
             <AccordionSet>
               <FormPOLines {...getSectionProps()} />
+              <FormDocuments {...getSectionProps()} />
               {agreementLineSource === 'basket' && <FormCoverage {...getSectionProps()} />}
             </AccordionSet>
           </AccordionStatus>

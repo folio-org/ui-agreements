@@ -8,12 +8,20 @@ import { isEmpty } from 'lodash';
 
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
+import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 
-import { useSuppressFromDiscovery, useChunkedOrderLines, useBasket } from '../../hooks';
+import {
+  useSuppressFromDiscovery,
+  useChunkedOrderLines,
+  useBasket,
+  useAgreementsRefdata,
+} from '../../hooks';
 import { urls } from '../../components/utilities';
 import { AGREEMENT_LINE_ENDPOINT } from '../../constants';
 
 import View from '../../components/views/AgreementLineForm';
+
+const [DOC_ATTACHMENT_TYPE] = ['DocumentAttachment.AtType'];
 
 const AgreementLineEditRoute = ({
   handlers,
@@ -28,6 +36,9 @@ const AgreementLineEditRoute = ({
 
   const { basket = [] } = useBasket();
 
+  const refdata = useAgreementsRefdata({
+    desc: [DOC_ATTACHMENT_TYPE],
+  });
   /*
  * This state tracks a checkbox on the form marked "Create another",
  * which allows the user to redirect back to this form on submit
@@ -85,6 +96,7 @@ const AgreementLineEditRoute = ({
       ...agreementLine,
       linkedResource: agreementLine.type !== 'detached' ? agreementLine : undefined,
       coverage: agreementLine.customCoverage ? agreementLine.coverage : undefined,
+      docs: agreementLine.docs?.map(o => ({ ...o, atType: o.atType?.value })) ?? []
     };
   };
 
@@ -133,6 +145,7 @@ const AgreementLineEditRoute = ({
       data={{
         basket,
         line: getCompositeLine(),
+        documentCategories: getRefdataValuesByDesc(refdata, DOC_ATTACHMENT_TYPE),
       }}
       handlers={{
         ...handlers,
