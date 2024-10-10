@@ -7,13 +7,13 @@ import { Accordion } from '@folio/stripes/components';
 import { DocumentsFieldArray, useFileHandlers } from '@folio/stripes-erm-components';
 import { useStripes } from '@folio/stripes/core';
 
-const FormDocuments = ({ documentCategories, id, onToggle, open }) => {
+const FormDocuments = ({ documentCategories, lineId, onToggle, open }) => {
   const stripes = useStripes();
   const { handleDownloadFile, handleUploadFile } = useFileHandlers('erm/files');
 
   return (
     <Accordion
-      id={id}
+      id={lineId}
       label={<FormattedMessage id="ui-agreements.line.documents" />}
       onToggle={onToggle}
       open={open}
@@ -37,7 +37,7 @@ const FormDocuments = ({ documentCategories, id, onToggle, open }) => {
 
 FormDocuments.propTypes = {
   documentCategories: PropTypes.arrayOf(PropTypes.object),
-  id: PropTypes.string,
+  lineId: PropTypes.string,
   onToggle: PropTypes.func,
   open: PropTypes.bool,
 };
