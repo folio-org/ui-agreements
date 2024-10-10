@@ -23,7 +23,7 @@ import {
 
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
-import { Info, POLines, Coverage } from '../../AgreementLineSections';
+import { Info, POLines, Coverage, Documents } from '../../AgreementLineSections';
 
 import { isExternal, urls } from '../../utilities';
 import DiscoverySettings from '../../DiscoverySettings';
@@ -146,9 +146,7 @@ const AgreementLine = ({
           lastMenu={
             <IfPermission perm="ui-agreements.agreements.edit">
               <PaneMenu>
-                <TagButton
-                  entity={line}
-                />
+                <TagButton entity={line} />
               </PaneMenu>
             </IfPermission>
           }
@@ -168,9 +166,13 @@ const AgreementLine = ({
             </Row>
             <AccordionSet>
               <POLines line={line} resource={resource} />
+              <Documents line={line} resource={resource} />
               <Coverage line={line} resource={resource} />
-              <FormattedMessage id="ui-agreements.line.lineForAgreement" values={{ agreementName: line.owner?.name }}>
-                {title => (
+              <FormattedMessage
+                id="ui-agreements.line.lineForAgreement"
+                values={{ agreementName: line.owner?.name }}
+              >
+                {(title) => (
                   <NotesSmartAccordion
                     domainName="agreements"
                     entityId={line.id ?? '-'}
@@ -182,16 +184,15 @@ const AgreementLine = ({
                   />
                 )}
               </FormattedMessage>
-              {
-                (handlers.isSuppressFromDiscoveryEnabled('pci') ||
-                  handlers.isSuppressFromDiscoveryEnabled('title') ||
-                  handlers.isSuppressFromDiscoveryEnabled('agreementLine'))
-                && <DiscoverySettings
+              {(handlers.isSuppressFromDiscoveryEnabled('pci') ||
+                handlers.isSuppressFromDiscoveryEnabled('title') ||
+                handlers.isSuppressFromDiscoveryEnabled('agreementLine')) && (
+                <DiscoverySettings
                   handlers={handlers}
                   id="discoverySettings"
                   line={line}
                 />
-              }
+              )}
             </AccordionSet>
           </AccordionStatus>
         </Pane>
@@ -204,9 +205,16 @@ const AgreementLine = ({
           buttonStyle="danger"
           confirmLabel={<FormattedMessage id="ui-agreements.delete" />}
           data-test-delete-confirmation-modal
-          heading={<FormattedMessage id="ui-agreements.agreementLines.deleteAgreementLine" />}
+          heading={
+            <FormattedMessage id="ui-agreements.agreementLines.deleteAgreementLine" />
+          }
           id="delete-agreement-line-confirmation"
-          message={<FormattedMessage id="ui-agreements.agreementLines.deleteConfirmMessage" values={{ name: resourceName }} />}
+          message={
+            <FormattedMessage
+              id="ui-agreements.agreementLines.deleteConfirmMessage"
+              values={{ name: resourceName }}
+            />
+          }
           onCancel={() => setShowDeleteConfirmationModal(false)}
           onConfirm={() => {
             handlers.onDelete();
