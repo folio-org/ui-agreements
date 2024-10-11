@@ -118,6 +118,7 @@ const AgreementLineViewRoute = ({
         onEdit: handleEdit,
         onToggleTags: handleToggleTags
       }}
+      id={lineId}
       isLoading={isLineLoading() || areOrderLinesLoading}
     />
   );
