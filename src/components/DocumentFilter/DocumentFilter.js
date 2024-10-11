@@ -1,10 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import {
-  Accordion,
-  FilterAccordionHeader,
-  Layout,
-} from '@folio/stripes/components';
+import { Accordion, FilterAccordionHeader, Layout } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -14,7 +10,7 @@ import {
 import DocumentFilterForm from '../DocumentFilterForm';
 
 const DocumentFilter = ({ activeFilters, atTypeValues = [], filterHandlers }) => {
-  const filterType = atTypeValues.length > 0 ? 'documents' : '';
+  const filterType = atTypeValues.length > 0 ? 'docs' : '';
   const [editingFilters, setEditingFilters] = useState(false);
   const openEditModal = () => setEditingFilters(true);
   const closeEditModal = () => setEditingFilters(false);
@@ -83,9 +79,7 @@ const DocumentFilter = ({ activeFilters, atTypeValues = [], filterHandlers }) =>
       header={FilterAccordionHeader}
       id={`clickable-agreement-${filterType}-filter`}
       label={<FormattedMessage id="ui-agreements.documentFilter" />}
-      onClearFilter={() =>
-        filterHandlers.state({ ...activeFilters, [filterType]: [] })
-      }
+      onClearFilter={() => filterHandlers.state({ ...activeFilters, [filterType]: [] })}
       separator={false}
     >
       {!!parsedFilterData?.length && (

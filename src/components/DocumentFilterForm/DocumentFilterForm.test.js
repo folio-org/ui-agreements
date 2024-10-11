@@ -1,15 +1,12 @@
 import { MemoryRouter } from 'react-router-dom';
-import { renderWithIntl, mockErmComponents, Button, TestForm } from '@folio/stripes-erm-testing';
+import { renderWithIntl, Button, TestForm } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../test/helpers';
 import DocumentFilterForm from './DocumentFilterForm';
 
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents,
-  DocumentFilterFieldArray: () => <div>DocumentFilterFieldArray</div>,
-}));
-
+jest.mock('../DocumentFilterFieldArray', () => () => (
+  <div>DocumentFilterFieldArray</div>
+));
 const onSubmit = jest.fn();
 const handlers = {
   closeEditModal: jest.fn(),

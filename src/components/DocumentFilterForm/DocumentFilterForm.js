@@ -3,7 +3,7 @@ import { Button } from '@folio/stripes/components';
 import arrayMutators from 'final-form-arrays';
 import { FormModal } from '@k-int/stripes-kint-components';
 import { FormattedMessage } from 'react-intl';
-import { DocumentFilterFieldArray } from '@folio/stripes-erm-components';
+import DocumentFilterFieldArray from '../DocumentFilterFieldArray';
 
 const DocumentFilterForm = ({
   atTypeValues,
