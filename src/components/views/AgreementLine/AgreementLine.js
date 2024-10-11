@@ -41,18 +41,22 @@ const propTypes = {
       owner: PropTypes.shape({
         name: PropTypes.string.isRequired,
       }),
-      poLines: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
-        titleOrPackage: PropTypes.string,
-        poLineNumber: PropTypes.string,
-      })),
+      poLines: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string,
+          titleOrPackage: PropTypes.string,
+          poLineNumber: PropTypes.string,
+        })
+      ),
       resource: PropTypes.shape({
         _object: PropTypes.object,
       }),
       startDate: PropTypes.string,
-      tags: PropTypes.arrayOf(PropTypes.shape({
-        length: PropTypes.number,
-      })),
+      tags: PropTypes.arrayOf(
+        PropTypes.shape({
+          length: PropTypes.number,
+        })
+      ),
     }).isRequired,
     tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
     tagsLink: PropTypes.string,
@@ -67,6 +71,7 @@ const propTypes = {
   }).isRequired,
   helperApp: PropTypes.node,
   isLoading: PropTypes.bool,
+  id: PropTypes.string,
 };
 
 const AgreementLine = ({
@@ -77,6 +82,7 @@ const AgreementLine = ({
   data: { line, tagsLink, tagsInvalidateLinks },
   handlers,
   isLoading,
+  id
 }) => {
   const stripes = useStripes();
 
@@ -166,7 +172,7 @@ const AgreementLine = ({
             </Row>
             <AccordionSet>
               <POLines line={line} resource={resource} />
-              <Documents line={line} resource={resource} />
+              <Documents id={id} line={line} resource={resource} />
               <Coverage line={line} resource={resource} />
               <FormattedMessage
                 id="ui-agreements.line.lineForAgreement"
