@@ -9,10 +9,14 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Layout, Spinner } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { DateFilter, useAgreement } from '@folio/stripes-erm-components';
+import {
+  DateFilter,
+  useAgreement,
+} from '@folio/stripes-erm-components';
 
 import AgreementFilterButton from '../AgreementFilterButton';
 import POLineFilterButton from '../POLineFilterButton';
+import DocumentFilter from '../DocumentFilter';
 import { urls } from '../utilities';
 
 const propTypes = {
@@ -62,7 +66,6 @@ const AgreementLineFilters = ({
     queryParams: ['excludes=items', 'excludes=linkedLicenses']
   });
 
-
   const { isLoading: isPOLineLoading } = useQuery(
     ['Orders', 'POLine', poLineId, poLinePath],
     () => ky.get(poLinePath).json().then(res => {
@@ -70,6 +73,8 @@ const AgreementLineFilters = ({
     }),
     { enabled: !!poLineId && !poLineFilterNumber }
   );
+
+  const atTypeValues = data.documentAtTypeValues;
 
   useEffect(() => {
     const newState = {};
@@ -257,6 +262,16 @@ const AgreementLineFilters = ({
     );
   };
 
+  const renderDocumentFilter = () => {
+    return (
+      <DocumentFilter
+        activeFilters={activeFilters}
+        atTypeValues={atTypeValues}
+        filterHandlers={filterHandlers}
+      />
+    );
+  };
+
   return (
     <AccordionSet>
       {renderAgreementFilter('agreement')}
@@ -265,6 +280,7 @@ const AgreementLineFilters = ({
       {renderDateFilter('activeTo')}
       {renderPOLineFilter('poLine')}
       {renderTagsFilter()}
+      {renderDocumentFilter()}
     </AccordionSet>
   );
 };
