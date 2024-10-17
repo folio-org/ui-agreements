@@ -7,7 +7,12 @@ import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
 import { CycleButton } from '@k-int/stripes-kint-components';
 
 // FIXME DO NOT MERGE THIS
-import { NumberGeneratorModalButton, NumberGeneratorButton, NumberGeneratorModal, useGenerateNumber } from '@folio/service-interaction';
+import {
+  NumberGeneratorModalButton,
+  NumberGeneratorButton,
+  NumberGeneratorModal,
+  useGenerateNumber
+} from '@folio/service-interaction';
 
 import {
   Button,
