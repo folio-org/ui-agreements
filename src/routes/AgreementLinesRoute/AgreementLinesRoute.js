@@ -2,20 +2,22 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
-import { useTags, useInfiniteFetch } from '@folio/stripes-erm-components';
+import {
+  useTags,
+  usePrevNextPagination
+} from '@folio/stripes-erm-components';
 
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
+import { useQuery } from 'react-query';
 
 import View from '../../components/views/AgreementLines';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { resultCount } from '../../constants';
-import { useEresourcesEnabled } from '../../hooks';
-import { AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
 
-const {
-  INITIAL_RESULT_COUNT,
-} = resultCount;
+import { AGREEMENT_LINES_ENDPOINT, resultCount } from '../../constants';
+import { useEresourcesEnabled } from '../../hooks';
+
+const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
 
 const AgreementLinesRoute = ({
   children,
@@ -37,6 +39,7 @@ const AgreementLinesRoute = ({
   const { data: { tags = [] } = {} } = useTags();
   const { query, queryGetter, querySetter } = useKiwtSASQuery();
   const eresourcesEnabled = useEresourcesEnabled();
+  const { currentPage } = usePrevNextPagination();
 
   const searchKey = eresourcesEnabled ? 'resource.name,reference,description,note' : 'reference,description,note';
 
@@ -49,31 +52,31 @@ const AgreementLinesRoute = ({
         poLine: 'poLines.poLineId',
         tags: 'tags.value',
       },
-      perPage: INITIAL_RESULT_COUNT
+      page: currentPage,
+      perPage: RESULT_COUNT_INCREMENT_MEDIUM,
+      sortKeys: {
+        name: 'resource.name,reference',
+      },
+      fetchExternalResources: false,
     }, (query ?? {}))
-  ), [query, searchKey]);
+  ), [query, searchKey, currentPage]);
 
   const {
-    infiniteQueryObject: {
-      error: agreementLinesError,
-      fetchNextPage: fetchNextAgreementLinePage,
-      isError: isAgreementLinesError,
-      isIdle: isAgreementLinesIdle,
-      isLoading: areAgreementLinesLoading
-    },
-    results: agreementLines = [],
-    total: agreementLinesCount = 0
-  } = useInfiniteFetch(
+    data: { results: agreementLines = [], totalRecords: agreementLinesCount = 0 } = {},
+    error: agreementLinesError,
+    isError: isAgreementLinesError,
+    isIdle: isAgreementLinesIdle,
+    isLoading: areAgreementLinesLoading
+  } = useQuery(
     ['ERM', 'AgreementLines', agreementLinesQueryParams, AGREEMENT_LINES_ENDPOINT],
-    ({ pageParam = 0 }) => {
-      const params = [...agreementLinesQueryParams, `offset=${pageParam}`];
-      return ky.get(encodeURI(`${AGREEMENT_LINES_ENDPOINT}?${params?.join('&')}`)).json();
+    () => {
+      const params = [...agreementLinesQueryParams];
+      return ky.get(`${AGREEMENT_LINES_ENDPOINT}?${params?.join('&')}`).json();
     },
     {
-      enabled: !!query?.filters || !!query?.query
+      enabled: (!!query?.filters || !!query?.query) && !!currentPage
     }
   );
-
 
   useEffect(() => {
     if (agreementLinesCount === 1) {
@@ -90,7 +93,6 @@ const AgreementLinesRoute = ({
         tagsValues: tags,
       }}
       history={history}
-      onNeedMoreData={(_askAmount, index) => fetchNextAgreementLinePage({ pageParam: index })}
       queryGetter={queryGetter}
       querySetter={querySetter}
       searchField={searchField}

@@ -1,29 +1,21 @@
-import React from 'react';
-import { waitFor } from '@testing-library/dom';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { Accordion, Checkbox, renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { Accordion, Checkbox } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
 import { activeFilters, data } from './testResources';
 import AgreementFilters from './AgreementFilters';
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents,
-  OrganizationSelection: () => <div>OrganizationSelection</div>,
-}));
 
 const stateMock = jest.fn();
 
 const filterHandlers = {
   state: stateMock,
-  checkbox: () => {},
-  clear: () => {},
-  clearGroup: () => {},
-  reset: () => {},
+  checkbox: () => { },
+  clear: () => { },
+  clearGroup: () => { },
+  reset: () => { },
 };
+
 describe('AgreementFilters', () => {
   let renderComponent;
   beforeEach(() => {
@@ -43,6 +35,10 @@ describe('AgreementFilters', () => {
     await Accordion('Status').exists();
   });
 
+  test('renders the Reason for closure Accordion', async () => {
+    await Accordion('Reason for closure').exists();
+  });
+
   test('renders the Renewal priority Accordion', async () => {
     await Accordion('Renewal priority').exists();
   });
@@ -51,12 +47,9 @@ describe('AgreementFilters', () => {
     await Accordion('Is perpetual').exists();
   });
 
-  test('renders the Start date Accordion', async () => {
-    await Accordion('Start date').exists();
-  });
-
-  test('renders the End date Accordion', async () => {
-    await Accordion('End date').exists();
+  test('renders three DateFilter components', () => {
+    const { getAllByText } = renderComponent;
+    expect(getAllByText('DateFilter').length).toEqual(3);
   });
 
   test('renders the Organizations Accordion', async () => {
@@ -75,8 +68,20 @@ describe('AgreementFilters', () => {
     await Accordion('Internal contact role').exists();
   });
 
+  test('renders the Content type Accordion', async () => {
+    await Accordion('Content type').exists();
+  });
+
   test('renders the Tags Accordion', async () => {
     await Accordion('Tags').exists();
+  });
+
+  test('renders the Agreement content Accordion', async () => {
+    await Accordion('Agreement content').exists();
+  });
+
+  test('renders the Supplementary documents Accordion', async () => {
+    await Accordion('Supplementary documents').exists();
   });
 
   test('renders the CustomPropertiesFilter component', () => {
@@ -113,6 +118,12 @@ describe('AgreementFilters', () => {
   testAgreementFilterCheckbox('renewalPriority', 'for-review');
   testAgreementFilterCheckbox('renewalPriority', 'definitely-renew');
   testAgreementFilterCheckbox('renewalPriority', 'definitely-cancel');
+
+  testAgreementFilterCheckbox('agreementContentType', 'audio');
+  testAgreementFilterCheckbox('agreementContentType', 'books');
+  testAgreementFilterCheckbox('agreementContentType', 'database');
+  testAgreementFilterCheckbox('agreementContentType', 'journals');
+  testAgreementFilterCheckbox('agreementContentType', 'video');
 
   testAgreementFilterCheckbox('isPerpetual', 'yes');
   testAgreementFilterCheckbox('isPerpetual', 'no');

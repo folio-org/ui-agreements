@@ -1,8 +1,6 @@
 
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
-import { Checkbox } from '@folio/stripes-testing';
+
+import { renderWithIntl, TestForm, Checkbox } from '@folio/stripes-erm-testing';
 import translationsProperties from '../../../../test/helpers';
 import TitleFormInfo from './TitleFormInfo';
 
@@ -11,11 +9,11 @@ const isSuppressFromDiscoveryEnabled = jest.fn(_title => true);
 const isSuppressFromDiscoveryDisabled = jest.fn(_title => false);
 
 const suppressFromDiscoveryTrue = {
-  'suppressFromDiscovery': true,
+  suppressFromDiscovery: true,
 };
 
 const suppressFromDiscoveryFalse = {
-  'suppressFromDiscovery': false,
+  suppressFromDiscovery: false,
 };
 
 
@@ -55,17 +53,15 @@ describe('TitleFormInfo', () => {
   });
 
   describe('with isSuppressFromDiscovery not true for title', () => {
-    let renderedComponent;
     beforeEach(() => {
-      renderedComponent = renderWithIntl(
+      renderWithIntl(
         <TitleFormInfo isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryDisabled} />,
         translationsProperties
       );
     });
 
-    test('Does not render the component', () => {
-      const { container } = renderedComponent;
-      expect(container.firstChild).toBeNull();
+    test('does not render the Suppress from discovery Checkbox', async () => {
+      await Checkbox({ id: 'title-suppress-from-discovery' }).absent();
     });
   });
 });

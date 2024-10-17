@@ -1,35 +1,34 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+
 import { StaticRouter as Router } from 'react-router-dom';
-import { KeyValue } from '@folio/stripes-testing';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { KeyValue, renderWithIntl } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../test/helpers';
 import PackageCardExternal from './PackageCardExternal';
 
 const packageData = {
-  'accessStatusType': 'access status type 1',
-  'authority': 'EKB-PACKAGE',
-  'reference': '150088-1147872',
-  'name': 'Access to Research for Development and Innovation (ARDI)',
-  'titleCount': 61214,
-  'selectedCount': 0,
-  'contentType': 'Aggregated Full Text',
-  'providerName': 'Research4Life'
+  accessStatusType: 'access status type 1',
+  authority: 'EKB-PACKAGE',
+  reference: '150088-1147872',
+  name: 'Access to Research for Development and Innovation (ARDI)',
+  titleCount: 61214,
+  selectedCount: 0,
+  contentType: 'Aggregated Full Text',
+  providerName: 'Research4Life'
 };
 
 const pkg = {
-  'id': 'e240e51d-567d-4597-868c-69aede89b2ff',
-  'type': 'external',
-  'reference_object': {
-    'accessStatusType': 'access status type 2',
-    'label': 'Science Database',
-    'type': 'Package',
-    'provider': 'Proquest Info & Learning Co',
-    'titleCount': 1417,
-    'selectedCount': 1416,
-    'contentType': 'Aggregated Full Text',
-    'providerName': 'Proquest Info & Learning Co',
-    'isSelected': true
+  id: 'e240e51d-567d-4597-868c-69aede89b2ff',
+  type: 'external',
+  reference_object: {
+    accessStatusType: 'access status type 2',
+    label: 'Science Database',
+    type: 'Package',
+    provider: 'Proquest Info & Learning Co',
+    titleCount: 1417,
+    selectedCount: 1416,
+    contentType: 'Aggregated Full Text',
+    providerName: 'Proquest Info & Learning Co',
+    isSelected: true
   },
 };
 

@@ -23,6 +23,7 @@ import {
 } from '../../EResourceSections';
 
 import { urls } from '../../utilities';
+import { ERESOURCE_ENTITY_TYPE } from '../../../constants';
 
 export default class Package extends React.Component {
   static propTypes = {
@@ -86,7 +87,7 @@ export default class Package extends React.Component {
               </Col>
             </Row>
             <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-              {(description || alternateResourceNames?.length > 0 || packageDescriptionUrls?.length || identifiers?.length) &&
+              {(description || !!alternateResourceNames?.length || !!packageDescriptionUrls?.length || !!identifiers?.length) &&
                 <ExtendedPackageInformation {...this.getSectionProps('extendedPackageInformation')} />
               }
               <Agreements
@@ -97,14 +98,13 @@ export default class Package extends React.Component {
               <PackageContents
                 {...this.getSectionProps('packageContents')}
                 onFilterPackageContents={handlers.onFilterPackageContents}
-                onNeedMorePackageContents={handlers.onNeedMorePackageContents}
               />
               <NotesSmartAccordion
                 {...this.getSectionProps('notes')}
                 domainName="agreements"
                 entityId={data.eresource.id}
                 entityName={data.eresource.name}
-                entityType="eresource"
+                entityType={ERESOURCE_ENTITY_TYPE}
                 pathToNoteCreate={urls.noteCreate()}
                 pathToNoteDetails={urls.notes()}
               />

@@ -1,9 +1,9 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { FormattedMessage } from 'react-intl';
 import { MemoryRouter } from 'react-router-dom';
-import { Checkbox, Pane, PaneHeader, Button } from '@folio/stripes-testing';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { renderWithIntl, Checkbox, Pane, PaneHeader, Button } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../test/helpers';
 import GeneralSettingsForm from './GeneralSettingsForm';
 
@@ -13,6 +13,11 @@ jest.mock('./components/HideAccordions', () => () => <div>HideAccordions</div>);
 
 const onSubmitMock = jest.fn();
 
+const stripes = {
+  hasPerm: () => true,
+};
+
+
 describe('GeneralSettingsForm', () => {
   let renderComponent;
   beforeEach(() => {
@@ -21,6 +26,7 @@ describe('GeneralSettingsForm', () => {
         <GeneralSettingsForm
           label={<FormattedMessage id="ui-agreements.settings.displaySettings" />}
           onSubmit={onSubmitMock}
+          stripes={stripes}
         />
       </MemoryRouter>,
       translationsProperties
@@ -28,7 +34,9 @@ describe('GeneralSettingsForm', () => {
   });
 
   test('renders Save button', async () => {
-    await Checkbox({ id: 'hideEResourcesFunctionality' }).click();
+    await waitFor(async () => {
+      await Checkbox({ id: 'hideEResourcesFunctionality' }).click();
+    });
     await Button('Save').exists();
   });
 

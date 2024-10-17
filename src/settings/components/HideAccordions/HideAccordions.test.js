@@ -1,8 +1,6 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl, TestForm, Checkbox } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { Checkbox } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import HideAccordions from './HideAccordions';
 

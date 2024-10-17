@@ -1,18 +1,11 @@
-import React from 'react';
-import { waitFor } from '@testing-library/dom';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { Accordion, Checkbox, renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { Accordion, Checkbox } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
 import { activeFilters, data } from './testResources';
 import AgreementLineFilters from './AgreementLineFilters';
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents,
-}));
 
 const stateMock = jest.fn();
 
@@ -23,9 +16,10 @@ const filterHandlers = {
   clearGroup: () => {},
   reset: () => {},
 };
-describe('AgreementFilters', () => {
+describe('AgreementLineFilters', () => {
+  let renderComponent;
   beforeEach(() => {
-    renderWithIntl(
+    renderComponent = renderWithIntl(
       <MemoryRouter>
         <AgreementLineFilters
           activeFilters={activeFilters}
@@ -45,12 +39,9 @@ describe('AgreementFilters', () => {
     await Accordion('Agreement line type').exists();
   });
 
-  test('renders the Active from date Accordion', async () => {
-    await Accordion('Active from').exists();
-  });
-
-  test('renders the Active to date Accordion', async () => {
-    await Accordion('Active to').exists();
+  test('renders two DateFilter components', () => {
+    const { getAllByText } = renderComponent;
+    expect(getAllByText('DateFilter').length).toEqual(2);
   });
 
   test('renders the PoLine Accordion', async () => {

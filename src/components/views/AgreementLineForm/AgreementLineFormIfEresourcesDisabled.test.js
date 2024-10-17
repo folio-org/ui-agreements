@@ -1,7 +1,5 @@
 // adding a second test file here to test the ifEresourcesDisabled branch
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import AgreementLineForm from './AgreementLineForm';
@@ -9,12 +7,6 @@ import AgreementLineForm from './AgreementLineForm';
 const onSubmitMock = jest.fn();
 const onCloseMock = jest.fn();
 const isSuppressFromDiscoveryEnabledMock = jest.fn();
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  handleSaveKeyCommand: () => jest.fn()
-}));
-
 jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
   return typeof children === 'function' ? children({ isEnabled: false }) : children;
 });
@@ -32,16 +24,12 @@ describe('AgreementLineForm', () => {
         <MemoryRouter>
           <AgreementLineForm
             data={{}}
-            form={{
-              change: () => jest.fn(),
-              getRegisteredFields: () => jest.fn(),
-              getState: () => jest.fn()
-            }}
             handlers={{
               onClose: onCloseMock,
               isSuppressFromDiscoveryEnabled: isSuppressFromDiscoveryEnabledMock
             }}
             onSubmit={onSubmitMock}
+            toggleCreateAnother={jest.fn()}
           />
         </MemoryRouter>,
         translationsProperties

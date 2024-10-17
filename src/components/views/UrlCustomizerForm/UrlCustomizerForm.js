@@ -134,7 +134,7 @@ class UrlCustomizerForm extends React.Component {
                 id="pane-url-customizer-form"
                 paneTitle={id ? name : <FormattedMessage id="ui-agreements.platform.newUrlCustomization" />}
               >
-                <TitleManager record={id ? name : create}>
+                <TitleManager record={id ? name : create?.[0]}>
                   <form id="form-url-customization">
                     {hasLoaded ? <div id="form-loaded" /> : null}
                     <Row>

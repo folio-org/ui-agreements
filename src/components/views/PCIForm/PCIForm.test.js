@@ -1,19 +1,11 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { renderWithIntl, PaneHeader, Button } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { PaneHeader, Button as ButtonInteractor } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 
 import PCIForm from './PCIForm';
-import { handlers, initialValues, form } from './testResources';
+import { handlers, initialValues } from './testResources';
 
 const onSubmitMock = jest.fn();
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  handleSaveKeyCommand: () => jest.fn()
-}));
 
 jest.mock('../../EResourceSections/PCIFormInfo', () => () => <div>PCIFormInfo</div>);
 jest.mock('../../EResourceSections/PCIFormCoverage', () => () => <div>PCIFormCoverage</div>);
@@ -24,7 +16,6 @@ describe('PCIForm', () => {
     renderComponent = renderWithIntl(
       <MemoryRouter>
         <PCIForm
-          form={form}
           handlers={handlers}
           initialValues={initialValues}
           onSubmit={onSubmitMock}
@@ -44,7 +35,7 @@ describe('PCIForm', () => {
   });
 
   it('renders the expand/collapseAll Button', async () => {
-    await ButtonInteractor('Collapse all').exists();
+    await Button('Collapse all').exists();
   });
 
   it('renders the expected PCIFormIPCIFormCoveragenfo component', () => {

@@ -1,16 +1,15 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { FormattedMessage } from 'react-intl';
 import translationsProperties from '../../../../test/helpers';
 import EresourceSelector from './EresourceSelector';
 
 const line = {
-  'component': () => {},
-  'error': '<Memo />',
-  'name': 'linkedResource',
-  'onAdd': () => {},
-  'value': ''
+  component: () => {},
+  error: '<Memo />',
+  name: 'linkedResource',
+  onAdd: () => {},
+  value: ''
 };
 
 describe('EresourceSelector', () => {

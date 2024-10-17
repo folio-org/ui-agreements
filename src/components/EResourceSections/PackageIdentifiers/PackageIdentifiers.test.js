@@ -1,59 +1,57 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { KeyValue } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import PackageIdentifiers from './PackageIdentifiers';
 
 const pkg = {
-  'id': '98a7b8fe-cd85-41b4-8eea-11eb80c0290f',
-  'identifiers': [
+  id: '98a7b8fe-cd85-41b4-8eea-11eb80c0290f',
+  identifiers: [
     {
-      'identifier': {
-        'value': 'isil-1',
-        'ns': {
-          'value': 'isil'
+      identifier: {
+        value: 'isil-1',
+        ns: {
+          value: 'isil'
         }
       },
     },
     {
-      'identifier': {
-        'value': 'zdb-1',
-        'ns': {
-          'value': 'zdb-pkg'
+      identifier: {
+        value: 'zdb-1',
+        ns: {
+          value: 'zdb-pkg'
         }
       },
     },
     {
-      'identifier': {
-        'value': 'ezb-1',
-        'ns': {
-          'value': 'ezb-collection-id'
+      identifier: {
+        value: 'ezb-1',
+        ns: {
+          value: 'ezb-collection-id'
         }
       },
     },
     {
-      'identifier': {
-        'value': 'e-book-pool-1',
-        'ns': {
-          'value': 'ebp-id-pkg'
+      identifier: {
+        value: 'e-book-pool-1',
+        ns: {
+          value: 'ebp-id-pkg'
         }
       },
     },
     {
-      'identifier': {
-        'value': 'gokb-id-1',
-        'ns': {
-          'value': 'gokb_id'
+      identifier: {
+        value: 'gokb-id-1',
+        ns: {
+          value: 'gokb_id'
         }
       },
     },
     {
-      'identifier': {
-        'value': 'gokb-uuid-1',
-        'ns': {
-          'value': 'gokb_uuid'
+      identifier: {
+        value: 'gokb-uuid-1',
+        ns: {
+          value: 'gokb_uuid'
         }
       },
     }

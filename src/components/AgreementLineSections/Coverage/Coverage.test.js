@@ -1,7 +1,12 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { Accordion, MultiColumnList, MultiColumnListCell, KeyValue } from '@folio/stripes-testing';
+
+import {
+  Accordion,
+  MultiColumnList,
+  MultiColumnListCell,
+  KeyValue,
+  renderWithIntl
+} from '@folio/stripes-erm-testing';
+
 import { line, resource, defaultLine, defaultResource } from './testResources';
 import translationsProperties from '../../../../test/helpers';
 import Coverage from './Coverage';

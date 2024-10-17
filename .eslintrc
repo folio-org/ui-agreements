@@ -2,12 +2,20 @@
   "extends": "@folio/eslint-config-stripes",
   "parser": "@babel/eslint-parser",
   "rules": {
-    "react/jsx-sort-props": "error"
+    "react/jsx-sort-props": "error",
+    "no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "(React|^_)"
+      }
+    ]
   },
   "env": {
-    "jest/globals": true
+    "jest": true
   },
   "plugins": [
-    "jest"
+    "testing-library",
+    "jest-dom"
   ]
 }

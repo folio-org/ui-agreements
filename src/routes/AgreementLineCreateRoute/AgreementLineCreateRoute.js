@@ -6,26 +6,32 @@ import { useMutation, useQueryClient } from 'react-query';
 
 import { isEmpty } from 'lodash';
 
-import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { isPackage } from '@folio/stripes-erm-components';
+import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { isPackage, getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 
 import View from '../../components/views/AgreementLineForm';
 import { urls } from '../../components/utilities';
-import { AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
-import { useSuppressFromDiscovery } from '../../hooks';
+
+import { AGREEMENT_LINES_ENDPOINT } from '../../constants';
+import { useBasket, useSuppressFromDiscovery, useAgreementsRefdata } from '../../hooks';
+
+const [DOC_ATTACHMENT_TYPE] = ['DocumentAttachment.AtType'];
 
 const AgreementLineCreateRoute = ({
   handlers,
   history,
   location,
   match: { params: { agreementId } },
-  resources
 }) => {
   const callout = useContext(CalloutContext);
   const ky = useOkapiKy();
   const stripes = useStripes();
   const queryClient = useQueryClient();
 
+  const { basket = [] } = useBasket();
+  const refdata = useAgreementsRefdata({
+    desc: [DOC_ATTACHMENT_TYPE],
+  });
   /*
  * This state tracks a checkbox on the form marked "Create another",
  * which allows the user to redirect back to this form on submit
@@ -46,7 +52,12 @@ const AgreementLineCreateRoute = ({
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.create.callout" /> });
         if (createAnother) {
-          history.push(`${urls.agreementLineCreate(agreementId)}${location.search}`);
+          // Very briefly redirect to view so form rerenders
+          history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
+          // Then, set a timeout with a minimal delay to push back to the create page
+          setTimeout(() => {
+            history.push(`${urls.agreementLineCreate(agreementId)}${location.search}`);
+          }, 1);
         } else {
           history.push(`${urls.agreementLineView(agreementId, id)}${location.search}`);
         }
@@ -86,12 +97,13 @@ const AgreementLineCreateRoute = ({
     postAgreementLine(items);
   };
 
-
   return (
     <View
+      key="agreement-line-create-form"
       createAnother={createAnother}
       data={{
-        basket: (resources?.basket ?? []),
+        basket,
+        documentCategories: getRefdataValuesByDesc(refdata, DOC_ATTACHMENT_TYPE),
       }}
       handlers={{
         ...handlers,
@@ -104,10 +116,6 @@ const AgreementLineCreateRoute = ({
     />
   );
 };
-
-AgreementLineCreateRoute.manifest = Object.freeze({
-  basket: { initialValue: [] },
-});
 
 AgreementLineCreateRoute.propTypes = {
   handlers: PropTypes.object,
@@ -122,13 +130,6 @@ AgreementLineCreateRoute.propTypes = {
       agreementId: PropTypes.string.isRequired,
     }).isRequired
   }).isRequired,
-  resources: PropTypes.shape({
-    basket: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
-  stripes: PropTypes.shape({
-    hasInterface: PropTypes.func.isRequired,
-    hasPerm: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
-export default stripesConnect(AgreementLineCreateRoute);
+export default AgreementLineCreateRoute;

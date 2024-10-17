@@ -35,9 +35,6 @@ export default class Organizations extends React.Component {
         }),
       ),
     }).isRequired,
-    handlers: PropTypes.shape({
-      onFetchCredentials: PropTypes.func,
-    }),
     id: PropTypes.string,
   };
 
@@ -52,20 +49,22 @@ export default class Organizations extends React.Component {
         <ViewOrganizationCard
           key={`${org.orgsUuid}`}
           data-test-organizations-org
-          fetchCredentials={this.props.handlers.onFetchCredentials}
           headerStart={
             <span>
               <AppIcon app="organizations" size="small">
                 <Link to={urls.orgView(org.orgsUuid)}>
                   <strong>{org.name}</strong>
                 </Link>
-                {primaryOrg ? ' . ' : null}
+                {primaryOrg ? ' · ' : null}
                 {primaryOrg ? <FormattedMessage id="ui-agreements.organizations.primary" /> : null}
+                {org.orgsUuid_object.status ? ' · ' : null}
+                {org.orgsUuid_object.status ? <FormattedMessage id={`ui-organizations.organizationStatus.${org.orgsUuid_object.status.toLowerCase()}`} /> : null}
               </AppIcon>
             </span>
           }
           interfaces={interfaces}
           note={note}
+          org={org}
           roles={roles}
         />
       );

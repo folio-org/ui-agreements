@@ -1,7 +1,6 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { Button, Dropdown, MultiColumnList } from '@folio/stripes-testing';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button, Dropdown, MultiColumnList, renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import CoveredEResourcesList from './CoveredEResourcesList';
@@ -11,11 +10,13 @@ jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
   return typeof children === 'function' ? children({ isEnabled: true }) : children;
 });
 
+// Use manual mocks set up in hooks/__mocks__ folder
+jest.mock('../../../hooks');
+
 const handlers = {
   onFilterEResources: jest.fn(),
   onExportEResourcesAsJSON: jest.fn().mockImplementation(() => Promise.resolve()),
   onExportEResourcesAsKBART: jest.fn().mockImplementation(() => Promise.resolve()),
-  onNeedMoreEResources: jest.fn()
 };
 
 describe('CoveredEResourcesList', () => {
@@ -40,12 +41,29 @@ describe('CoveredEResourcesList', () => {
   });
 
   test('clicking the filter buttons should call the onFilterEResources callback', async () => {
-    await Button('Future').click();
-    expect(handlers.onFilterEResources.mock.calls.length).toBe(1);
-    await Button('Dropped').click();
-    expect(handlers.onFilterEResources.mock.calls.length).toBe(2);
-    await Button('All').click();
-    expect(handlers.onFilterEResources.mock.calls.length).toBe(3);
+    await waitFor(async () => {
+      await Button('Future').click();
+    });
+
+    await waitFor(async () => {
+      expect(handlers.onFilterEResources.mock.calls.length).toBe(1);
+    });
+
+    await waitFor(async () => {
+      await Button('Dropped').click();
+    });
+
+    await waitFor(async () => {
+      expect(handlers.onFilterEResources.mock.calls.length).toBe(2);
+    });
+
+    await waitFor(async () => {
+      await Button('All').click();
+    });
+
+    await waitFor(async () => {
+      expect(handlers.onFilterEResources.mock.calls.length).toBe(3);
+    });
   });
 
   test('renders the Export dropdown', async () => {
@@ -53,10 +71,21 @@ describe('CoveredEResourcesList', () => {
   });
 
   test('choosing the dropdown options', async () => {
-    await Dropdown('Export as...').choose('JSON');
-    expect(handlers.onExportEResourcesAsJSON.mock.calls.length).toBe(1);
-    await Dropdown('Export as...').choose('KBART');
-    expect(handlers.onExportEResourcesAsKBART.mock.calls.length).toBe(1);
+    await waitFor(async () => {
+      await Dropdown('Export as...').choose('JSON');
+    });
+
+    await waitFor(async () => {
+      expect(handlers.onExportEResourcesAsJSON.mock.calls.length).toBe(1);
+    });
+
+    await waitFor(async () => {
+      await Dropdown('Export as...').choose('KBART');
+    });
+
+    await waitFor(async () => {
+      expect(handlers.onExportEResourcesAsKBART.mock.calls.length).toBe(1);
+    });
   });
 
   test('renders the CoveredEResourcesList MCL', async () => {

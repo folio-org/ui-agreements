@@ -7,7 +7,12 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import View from '../../components/views/Platform';
 import { urls } from '../../components/utilities';
-import { PLATFORM_ENDPOINT } from '../../constants/endpoints';
+
+import {
+  PLATFORM_ENDPOINT,
+  STRING_TEMPLATES_ENDPOINT,
+  STRING_TEMPLATES_PLATFORM_ENDPOINT
+} from '../../constants';
 
 const PlatformViewRoute = ({
   history,
@@ -21,21 +26,20 @@ const PlatformViewRoute = ({
     () => ky.get(PLATFORM_ENDPOINT(platformId)).json()
   );
 
-  const stringTemplatesPath = `erm/sts/template/${platformId}`;
+  const stringTemplatesPath = STRING_TEMPLATES_PLATFORM_ENDPOINT(platformId);
   const { data: stringTemplates } = useQuery(
     [stringTemplatesPath, 'ui-agreements', 'PlatformViewRoute', 'getStringTemplates'],
     () => ky.get(stringTemplatesPath).json()
   );
 
-  const proxyServersPath = 'erm/sts';
   const { data: proxyServers } = useQuery(
-    [proxyServersPath, 'ui-agreements', 'PlatformViewRoute', 'getProxyServers'],
-    () => ky.get(`${proxyServersPath}?filters=context.value=urlproxier`).json()
+    [STRING_TEMPLATES_ENDPOINT, 'ui-agreements', 'PlatformViewRoute', 'getProxyServers'],
+    () => ky.get(`${STRING_TEMPLATES_ENDPOINT}?filters=context.value=urlproxier`).json()
   );
 
   const { mutateAsync: putProxyServer } = useMutation(
-    [proxyServersPath, 'ui-agreements', 'PlatformViewRoute', 'putProxyServer'],
-    (payload) => ky.put(proxyServersPath, { json: payload })
+    [STRING_TEMPLATES_ENDPOINT, 'ui-agreements', 'PlatformViewRoute', 'putProxyServer'],
+    (payload) => ky.put(STRING_TEMPLATES_ENDPOINT, { json: payload })
   );
 
 

@@ -1,6 +1,5 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+import { render } from '@folio/jest-config-stripes/testing-library/react';
+
 import CustomCoverageIcon from './CustomCoverageIcon';
 
 describe('CustomCoverageIcon', () => {

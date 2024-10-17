@@ -1,7 +1,5 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { KeyValue } from '@folio/stripes-testing';
+
+import { renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
 import data from './testResources';
 import translationsProperties from '../../../../test/helpers';
 import PlatformInfo from './PlatformInfo';

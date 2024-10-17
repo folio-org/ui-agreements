@@ -13,6 +13,7 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
+import { statuses } from '../../../constants';
 import { urls } from '../../utilities';
 
 export default class RelatedAgreements extends React.Component {
@@ -40,37 +41,40 @@ export default class RelatedAgreements extends React.Component {
   }
 
   renderRelatedAgreements = () => (
-    this.props.agreement.relatedAgreements.map((ra, index) => (
-      <Card
-        key={index}
-        cardStyle="positive"
-        data-testid="relatedAgreements"
-        headerStart={(
-          <AppIcon app="agreements" size="small">
-            <Link
-              data-test-agreement-link
-              to={`${urls.agreementView(ra.agreement.id)}${this.props.searchString}`}
-            >
-              <strong>{ra.agreement.name}</strong>
-            </Link>
-          </AppIcon>
-        )}
-        id={`ra-card-${ra.agreement.id}`}
-        roundedBorder
-      >
-        <KeyValue
-          data-props-ra-relationship
-          label={<FormattedMessage id="ui-agreements.relatedAgreements.relationship" />}
-          value={<FormattedMessage id={`ui-agreements.relatedAgreements.relationship.${ra.type}`} values={{ agreement: this.props.agreement.name }} />}
-        />
-        <KeyValue
-          data-props-ra-note
-          label={<FormattedMessage id="ui-agreements.note" />}
+    this.props.agreement.relatedAgreements.map((ra) => {
+      const iconKey = ra?.agreement?.agreementStatus?.value === statuses.CLOSED ? 'closedAgreement' : 'app';
+      return (
+        <Card
+          key={`${ra.agreement.id}`}
+          cardStyle="positive"
+          data-testid="relatedAgreements"
+          headerStart={(
+            <AppIcon app="agreements" iconKey={iconKey} size="small">
+              <Link
+                data-test-agreement-link
+                to={`${urls.agreementView(ra.agreement.id)}${this.props.searchString}`}
+              >
+                <strong>{ra.agreement.name}</strong>
+              </Link>
+            </AppIcon>
+          )}
+          id={`ra-card-${ra.agreement.id}`}
+          roundedBorder
         >
-          {ra.note || <NoValue />}
-        </KeyValue>
-      </Card>
-    ))
+          <KeyValue
+            data-props-ra-relationship
+            label={<FormattedMessage id="ui-agreements.relatedAgreements.relationship" />}
+            value={<FormattedMessage id={`ui-agreements.relatedAgreements.relationship.${ra.type}`} values={{ agreement: this.props.agreement.name }} />}
+          />
+          <KeyValue
+            data-props-ra-note
+            label={<FormattedMessage id="ui-agreements.note" />}
+          >
+            {ra.note || <NoValue />}
+          </KeyValue>
+        </Card>
+      );
+    })
   )
 
   renderEmpty = () => (

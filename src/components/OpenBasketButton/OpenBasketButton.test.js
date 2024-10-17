@@ -1,45 +1,44 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+
 import { StaticRouter as Router } from 'react-router-dom';
-import { Button } from '@folio/stripes-testing';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../test/helpers';
 import OpenBasketButton from './OpenBasketButton';
-import resources from './testResources';
 
-const queryUpdateMock = jest.fn();
+import basket from './testResources';
 
-const mutator = {
-  basket: {},
-  query: {
-    update: queryUpdateMock
-  },
-};
+import { useBasket } from '../../hooks';
 
-const basketProps = {
-  mutator,
-  resources
-};
+const mockHistoryPush = jest.fn();
 
-const emptyBasketProps = {
-  mutator,
-  'resources': {
-    'basket': [],
-    'query': {
-      'query': '',
-      'sort': 'name'
-    }
-  }
-};
+jest.unmock('react-router');
+jest.mock('react-router-dom', () => {
+  const { mockReactRouterDom } = jest.requireActual('@folio/stripes-erm-testing');
+  return ({
+    ...jest.requireActual('react-router-dom'),
+    ...mockReactRouterDom,
+    useHistory: () => ({ push: mockHistoryPush })
+  });
+});
+
+// EXAMPLE -- mocking hook return differently in different tests
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useBasket: jest.fn()
+}));
 
 describe('OpenBasketButton', () => {
   describe('with item in basket', () => {
     beforeEach(() => {
+      useBasket.mockImplementation(() => ({
+        basket
+      }));
+
       renderWithIntl(
         <Router>
-          <OpenBasketButton
-            {...basketProps}
-          />
+          <OpenBasketButton />
         </Router>,
         translationsProperties
       );
@@ -51,18 +50,25 @@ describe('OpenBasketButton', () => {
 
     // we check if the button is clicked it calls the queryUpdateMock(update) function to invoke the child callback (handleClick) defined in OpenBasketButton
     test('calls the open basket button', async () => {
-      await Button('View 1 item').click();
-      expect(queryUpdateMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await Button('View 1 item').click();
+      });
+
+      await waitFor(async () => {
+        expect(mockHistoryPush).toHaveBeenCalled();
+      });
     });
   });
 
   describe('with empty basket', () => {
     beforeEach(() => {
+      useBasket.mockImplementation(() => ({
+        basket: []
+      }));
+
       renderWithIntl(
         <Router>
-          <OpenBasketButton
-            {...emptyBasketProps}
-          />
+          <OpenBasketButton />
         </Router>,
         translationsProperties
       );

@@ -8,6 +8,9 @@ import RelatedTitleInfo from '../RelatedTitleInfo';
 
 const propTypes = {
   title: PropTypes.shape({
+    subType: PropTypes.shape({
+      value: PropTypes.string,
+    }),
     type: PropTypes.oneOfType([
       PropTypes.shape({ label: PropTypes.string }),
       PropTypes.string,
@@ -24,16 +27,16 @@ const propTypes = {
 
 const TitleCardInfo = ({ title }) => {
   const titleInstance = title?.pti?.titleInstance ?? title;
-  const type = (titleInstance?.type?.label ?? titleInstance?.type ?? '').toLowerCase();
+  const type = (titleInstance?.type?.value ?? titleInstance?.type ?? '').toLowerCase();
   return (
     <>
-      { type === resourceTypes.MONOGRAPH || type === resourceTypes.BOOK ?
+      {type === resourceTypes.MONOGRAPH || type === resourceTypes.BOOK ?
         <MonographResourceInfo titleInstance={titleInstance} />
         :
         <SerialResourceInfo titleInstance={titleInstance} />
       }
-      { titleInstance?.relatedTitles?.map((relatedTitle, i) => (
-        <RelatedTitleInfo key={i} relatedTitle={relatedTitle} />
+      {titleInstance?.relatedTitles?.map((relatedTitle, i) => (
+        <RelatedTitleInfo key={i} relatedTitle={relatedTitle} showLink={title.subType?.value === 'print' && relatedTitle.subType?.value === 'electronic'} />
       ))
       }
     </>

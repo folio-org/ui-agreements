@@ -1,8 +1,8 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { Button, KeyValue } from '@folio/stripes-testing';
 import { MemoryRouter } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { renderWithIntl, Button, KeyValue } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../../test/helpers';
 import InfoPeriods from './InfoPeriods';
 
@@ -44,7 +44,7 @@ const onlyCurrentPeriod = [
   {
     endDate: '2049-01-01',
     startDate: '2008-01-01',
-    cancellationDeadline: '2047/11/30',
+    cancellationDeadline: '2047-11-30',
     note: 'Current period note',
     periodStatus: 'current'
   }
@@ -99,7 +99,7 @@ const allPeriods = [
   {
     endDate: '2049-01-01',
     startDate: '2008-01-01',
-    cancellationDeadline: '2047/11/30',
+    cancellationDeadline: '2047-11-30',
     note: 'Current period note',
     periodStatus: 'current'
   },
@@ -285,7 +285,11 @@ describe('InfoPeriods', () => {
     nextPeriodTests();
 
     describe('clicking on previous period tab', () => {
-      beforeEach(async () => { await Button('Previous').click(); });
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Previous').click();
+        });
+      });
       // Should now pass previous period tests
       prevPeriodTests();
     });
@@ -323,13 +327,21 @@ describe('InfoPeriods', () => {
     currentPeriodTests();
 
     describe('clicking on previous period tab', () => {
-      beforeEach(async () => { await Button('Previous').click(); });
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Previous').click();
+        });
+      });
       // Should now pass previous period tests
       prevPeriodTests();
     });
 
     describe('clicking on next period tab', () => {
-      beforeEach(async () => { await Button('Next').click(); });
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Next').click();
+        });
+      });
       // Should now pass previous period tests
       nextPeriodTests();
     });

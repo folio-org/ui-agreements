@@ -1,54 +1,53 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../test/helpers';
 import NoteViewRoute from './NoteViewRoute';
 
 const history = {
-  'length': 10,
-  'action': 'REPLACE',
-  'location': {
-    'pathname': '/erm/notes/5ef485ce-83ce-4930-b9e9-af8a7cc629eb',
-    'state': {
-      'entityName': 'MR agreement',
-      'entityType': 'agreement',
-      'entityId': '88de2bd2-110e-460d-9076-7a0ccf44631f',
-      'referredRecordData': '{}'
+  length: 10,
+  action: 'REPLACE',
+  location: {
+    pathname: '/erm/notes/5ef485ce-83ce-4930-b9e9-af8a7cc629eb',
+    state: {
+      entityName: 'MR agreement',
+      entityType: 'agreement',
+      entityId: '88de2bd2-110e-460d-9076-7a0ccf44631f',
+      referredRecordData: '{}'
     },
-    'search': '',
-    'hash': '',
-    'key': '2u7wlc'
+    search: '',
+    hash: '',
+    key: '2u7wlc'
   },
-  'createHref': () => {},
-  'push': () => {},
-  'replace': () => {},
-  'go': () => {},
-  'goBack': () => {},
-  'goForward': () => {},
-  'block': () => {},
-  'listen': () => {}
+  createHref: () => {},
+  push: () => {},
+  replace: () => {},
+  go: () => {},
+  goBack: () => {},
+  goForward: () => {},
+  block: () => {},
+  listen: () => {}
 };
 
 const location = {
-  'pathname': '/erm/notes/5ef485ce-83ce-4930-b9e9-af8a7cc629eb',
-  'state': {
-    'entityName': 'MR agreement',
-    'entityType': 'agreement',
-    'entityId': '88de2bd2-110e-460d-9076-7a0ccf44631f',
-    'referredRecordData': {}
+  pathname: '/erm/notes/5ef485ce-83ce-4930-b9e9-af8a7cc629eb',
+  state: {
+    entityName: 'MR agreement',
+    entityType: 'agreement',
+    entityId: '88de2bd2-110e-460d-9076-7a0ccf44631f',
+    referredRecordData: {}
   },
-  'search': '',
-  'hash': '',
-  'key': '2u7wlc'
+  search: '',
+  hash: '',
+  key: '2u7wlc'
 };
 
 const match = {
-  'path': '/erm/notes/:id',
-  'url': '/erm/notes/5ef485ce-83ce-4930-b9e9-af8a7cc629eb',
-  'isExact': true,
-  'params': {
-    'id': '5ef485ce-83ce-4930-b9e9-af8a7cc629eb'
+  path: '/erm/notes/:id',
+  url: '/erm/notes/5ef485ce-83ce-4930-b9e9-af8a7cc629eb',
+  isExact: true,
+  params: {
+    id: '5ef485ce-83ce-4930-b9e9-af8a7cc629eb'
   }
 };
 

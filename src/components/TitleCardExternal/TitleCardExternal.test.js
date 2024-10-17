@@ -1,8 +1,7 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+
 import { StaticRouter as Router } from 'react-router-dom';
-import { KeyValue } from '@folio/stripes-testing';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { KeyValue, renderWithIntl } from '@folio/stripes-erm-testing';
+
 import translationsProperties from '../../../test/helpers';
 import TitleCardExternal from './TitleCardExternal';
 import { title, titleWithReferenceObject } from './testResources';

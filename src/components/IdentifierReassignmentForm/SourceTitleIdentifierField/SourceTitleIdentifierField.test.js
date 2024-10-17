@@ -1,8 +1,8 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { StaticRouter as Router } from 'react-router-dom';
-import { Button } from '@folio/stripes-testing';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
+import { Button, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 import translationsProperties from '../../../../test/helpers';
 import SourceTitleIdentifierField from './SourceTitleIdentifierField';
 
@@ -56,7 +56,12 @@ describe('SourceTitleIdentifierField', () => {
   });
 
   test('clicking the submit button ', async () => {
-    await Button('Submit').click();
-    expect(onSubmitMock.mock.calls.length).toBe(1);
+    await waitFor(async () => {
+      await Button('Submit').click();
+    });
+
+    await waitFor(async () => {
+      expect(onSubmitMock.mock.calls.length).toBe(1);
+    });
   });
 });

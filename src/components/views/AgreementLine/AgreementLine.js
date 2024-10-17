@@ -23,9 +23,11 @@ import {
 
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
-import { Info, POLines, Coverage } from '../../AgreementLineSections';
+import { Info, POLines, Coverage, Documents } from '../../AgreementLineSections';
+
 import { isExternal, urls } from '../../utilities';
 import DiscoverySettings from '../../DiscoverySettings';
+import { AGREEMENT_LINE_ENTITY_TYPE } from '../../../constants';
 
 const propTypes = {
   components: PropTypes.object,
@@ -39,18 +41,22 @@ const propTypes = {
       owner: PropTypes.shape({
         name: PropTypes.string.isRequired,
       }),
-      poLines: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string,
-        titleOrPackage: PropTypes.string,
-        poLineNumber: PropTypes.string,
-      })),
+      poLines: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string,
+          titleOrPackage: PropTypes.string,
+          poLineNumber: PropTypes.string,
+        })
+      ),
       resource: PropTypes.shape({
         _object: PropTypes.object,
       }),
       startDate: PropTypes.string,
-      tags: PropTypes.arrayOf(PropTypes.shape({
-        length: PropTypes.number,
-      })),
+      tags: PropTypes.arrayOf(
+        PropTypes.shape({
+          length: PropTypes.number,
+        })
+      ),
     }).isRequired,
     tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
     tagsLink: PropTypes.string,
@@ -65,6 +71,7 @@ const propTypes = {
   }).isRequired,
   helperApp: PropTypes.node,
   isLoading: PropTypes.bool,
+  id: PropTypes.string,
 };
 
 const AgreementLine = ({
@@ -75,6 +82,7 @@ const AgreementLine = ({
   data: { line, tagsLink, tagsInvalidateLinks },
   handlers,
   isLoading,
+  id
 }) => {
   const stripes = useStripes();
 
@@ -144,9 +152,7 @@ const AgreementLine = ({
           lastMenu={
             <IfPermission perm="ui-agreements.agreements.edit">
               <PaneMenu>
-                <TagButton
-                  entity={line}
-                />
+                <TagButton entity={line} />
               </PaneMenu>
             </IfPermission>
           }
@@ -166,30 +172,33 @@ const AgreementLine = ({
             </Row>
             <AccordionSet>
               <POLines line={line} resource={resource} />
+              <Documents id={id} line={line} resource={resource} />
               <Coverage line={line} resource={resource} />
-              <FormattedMessage id="ui-agreements.line.lineForAgreement" values={{ agreementName: line.owner?.name }}>
-                {title => (
+              <FormattedMessage
+                id="ui-agreements.line.lineForAgreement"
+                values={{ agreementName: line.owner?.name }}
+              >
+                {(title) => (
                   <NotesSmartAccordion
                     domainName="agreements"
                     entityId={line.id ?? '-'}
-                    entityName={title ?? '-'}
-                    entityType="agreementLine"
+                    entityName={title[0] ?? '-'}
+                    entityType={AGREEMENT_LINE_ENTITY_TYPE}
                     id="agreement-line-notes"
                     pathToNoteCreate={urls.noteCreate()}
                     pathToNoteDetails={urls.notes()}
                   />
                 )}
               </FormattedMessage>
-              {
-                (handlers.isSuppressFromDiscoveryEnabled('pci') ||
-                  handlers.isSuppressFromDiscoveryEnabled('title') ||
-                  handlers.isSuppressFromDiscoveryEnabled('agreementLine'))
-                && <DiscoverySettings
+              {(handlers.isSuppressFromDiscoveryEnabled('pci') ||
+                handlers.isSuppressFromDiscoveryEnabled('title') ||
+                handlers.isSuppressFromDiscoveryEnabled('agreementLine')) && (
+                <DiscoverySettings
                   handlers={handlers}
                   id="discoverySettings"
                   line={line}
                 />
-              }
+              )}
             </AccordionSet>
           </AccordionStatus>
         </Pane>
@@ -202,9 +211,16 @@ const AgreementLine = ({
           buttonStyle="danger"
           confirmLabel={<FormattedMessage id="ui-agreements.delete" />}
           data-test-delete-confirmation-modal
-          heading={<FormattedMessage id="ui-agreements.agreementLines.deleteAgreementLine" />}
+          heading={
+            <FormattedMessage id="ui-agreements.agreementLines.deleteAgreementLine" />
+          }
           id="delete-agreement-line-confirmation"
-          message={<FormattedMessage id="ui-agreements.agreementLines.deleteConfirmMessage" values={{ name: resourceName }} />}
+          message={
+            <FormattedMessage
+              id="ui-agreements.agreementLines.deleteConfirmMessage"
+              values={{ name: resourceName }}
+            />
+          }
           onCancel={() => setShowDeleteConfirmationModal(false)}
           onConfirm={() => {
             handlers.onDelete();

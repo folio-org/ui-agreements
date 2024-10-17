@@ -56,7 +56,7 @@ const TitleForm = ({
     >
       <Paneset>
         <Pane
-          appIcon={<AppIcon app="agreements" iconKey="eresource" />}
+          appIcon={<AppIcon app="agreements" iconKey="title" />}
           defaultWidth="100%"
           firstMenu={
             <PaneMenu>

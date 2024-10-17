@@ -1,38 +1,26 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { MemoryRouter } from 'react-router-dom';
 
 import { useQuery } from 'react-query';
+import { MemoryRouter } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
+import { Button } from '@folio/stripes/components';
 import { useStripes } from '@folio/stripes/core';
 
-import { Button } from '@folio/stripes/components';
-
-import { Button as ButtonInteractor } from '@folio/stripes-testing';
 import translationsProperties from '../../../test/helpers';
 import AgreementEditRoute from './AgreementEditRoute';
 import {
-  match,
-  location,
   agreement,
   basket,
+  location,
+  match,
 } from './testResources';
 
 import mockRefdata from '../../../test/jest/refdata';
 
-const BasketLineButton = (props) => {
-  return <Button onClick={props.handlers.onBasketLinesAdded}>BasketLineButton</Button>;
-};
-
 const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
-};
-
-BasketLineButton.propTypes = {
-  handlers: PropTypes.shape({
-    onBasketLinesAdded: PropTypes.func,
-  }),
 };
 
 CloseButton.propTypes = {
@@ -44,24 +32,8 @@ CloseButton.propTypes = {
 const historyPushMock = jest.fn();
 const onSubmitMock = jest.fn();
 
-const mockBasketLinesAdded = jest.fn();
-
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  LoadingView: () => <div>LoadingView</div>,
-}));
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents
-}));
-
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
-  useAddFromBasket: () => ({
-    getAgreementLinesToAdd: () => [],
-    handleBasketLinesAdded: mockBasketLinesAdded
-  }),
   useAgreementsRefdata: () => mockRefdata,
 }));
 
@@ -69,7 +41,6 @@ jest.mock('../../components/views/AgreementForm', () => {
   return (props) => (
     <div>
       <div>AgreementForm</div>
-      <BasketLineButton {...props} />
       <CloseButton {...props} />
     </div>
   );
@@ -106,14 +77,13 @@ describe('AgreementEditRoute', () => {
       expect(getByText('AgreementForm')).toBeInTheDocument();
     });
 
-    test('calls the BasketLineButton', async () => {
-      await ButtonInteractor('BasketLineButton').click();
-      expect(mockBasketLinesAdded).toHaveBeenCalled();
-    });
-
     test('calls the CloseButton', async () => {
-      await ButtonInteractor('CloseButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('CloseButton').click();
+      });
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
   });
 

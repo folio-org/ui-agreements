@@ -1,19 +1,15 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
-import { Button, Modal } from '@folio/stripes-testing';
-import translationsProperties from '../../../../test/helpers';
-import { data, handlers } from './testResources';
-import AgreementLine from './AgreementLine';
 
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  LoadingPane: () => <div>LoadingPane</div>,
-}));
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button, Modal, renderWithIntl } from '@folio/stripes-erm-testing';
+
+import translationsProperties from '../../../../test/helpers';
+import AgreementLine from './AgreementLine';
+import { data, handlers } from './testResources';
 
 jest.mock('../../AgreementLineSections/Info', () => () => <div>Info</div>);
 jest.mock('../../AgreementLineSections/POLines', () => () => <div>POLines</div>);
+jest.mock('../../AgreementLineSections/Documents', () => () => <div>Documents</div>);
 jest.mock('../../AgreementLineSections/Coverage', () => () => <div>Coverage</div>);
 jest.mock('../../DiscoverySettings', () => () => <div>DiscoverySettings</div>);
 
@@ -72,6 +68,11 @@ describe('AgreementLine', () => {
       expect(getByText('POLines')).toBeInTheDocument();
     });
 
+    it('renders the Documents component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('Documents')).toBeInTheDocument();
+    });
+
     it('renders the Coverage component', () => {
       const { getByText } = renderComponent;
       expect(getByText('Coverage')).toBeInTheDocument();
@@ -83,21 +84,31 @@ describe('AgreementLine', () => {
     });
 
     it('renders the Confirmation modal and clicking the delete/cancel button triggers expected callbacks', async () => {
-      await Button('Actions').click();
-      await Button('Delete').click();
-      await Modal('Delete agreement line').exists();
-      await Button('Cancel').click(); // close the modal
-      await Button('Actions').click();
-      await Button('Delete').click();
-      await Modal('Delete agreement line').exists();
-      await Button('Delete').click(); // delete the line
-      expect(handlers.onDelete).toHaveBeenCalled();
+      await waitFor(async () => {
+        await Button('Actions').click();
+        await Button('Delete').click();
+        await Modal('Delete agreement line').exists();
+        await Button('Cancel').click(); // close the modal
+        await Button('Actions').click();
+        await Button('Delete').click();
+        await Modal('Delete agreement line').exists();
+        await Button('Delete').click(); // delete the line
+      });
+
+      await waitFor(async () => {
+        expect(handlers.onDelete).toHaveBeenCalled();
+      });
     });
 
     it('triggers the onEdit callback on clicking the edit button from the actions dropdown', async () => {
-      await Button('Actions').click();
-      await Button('Edit').click();
-      expect(handlers.onEdit).toHaveBeenCalled();
+      await waitFor(async () => {
+        await Button('Actions').click();
+        await Button('Edit').click();
+      });
+
+      await waitFor(async () => {
+        expect(handlers.onEdit).toHaveBeenCalled();
+      });
     });
   });
 });

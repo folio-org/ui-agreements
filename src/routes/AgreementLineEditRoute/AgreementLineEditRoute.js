@@ -1,32 +1,44 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 
+import { FormattedMessage } from 'react-intl';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import { isEmpty } from 'lodash';
-import { LoadingView } from '@folio/stripes/components';
-import { CalloutContext, stripesConnect, useOkapiKy, useStripes } from '@folio/stripes/core';
-import View from '../../components/views/AgreementLineForm';
-import { AGREEMENT_LINES_ENDPOINT } from '../../constants/endpoints';
-import { useSuppressFromDiscovery, useChunkedOrderLines } from '../../hooks';
-import { urls } from '../../components/utilities';
-import { endpoints } from '../../constants';
 
-const { AGREEMENT_LINE_ENDPOINT } = endpoints;
+import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
+import { LoadingView } from '@folio/stripes/components';
+import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
+
+import {
+  useSuppressFromDiscovery,
+  useChunkedOrderLines,
+  useBasket,
+  useAgreementsRefdata,
+} from '../../hooks';
+import { urls } from '../../components/utilities';
+import { AGREEMENT_LINE_ENDPOINT } from '../../constants';
+
+import View from '../../components/views/AgreementLineForm';
+
+const [DOC_ATTACHMENT_TYPE] = ['DocumentAttachment.AtType'];
 
 const AgreementLineEditRoute = ({
   handlers,
   history,
   location,
   match: { params: { agreementId, lineId } },
-  resources
 }) => {
   const ky = useOkapiKy();
   const callout = useContext(CalloutContext);
   const stripes = useStripes();
   const queryClient = useQueryClient();
 
+  const { basket = [] } = useBasket();
+
+  const refdata = useAgreementsRefdata({
+    desc: [DOC_ATTACHMENT_TYPE],
+  });
   /*
  * This state tracks a checkbox on the form marked "Create another",
  * which allows the user to redirect back to this form on submit
@@ -52,28 +64,18 @@ const AgreementLineEditRoute = ({
     }
   };
 
-  const { mutateAsync: postAgreementLine } = useMutation(
-    ['ERM', 'Agreement', agreementId, 'AgreementLines', 'POST', AGREEMENT_LINES_ENDPOINT],
-    (payload) => ky.post(AGREEMENT_LINES_ENDPOINT, { json: { ...payload, owner: agreementId } }).json()
-      .then(() => {
-        /* Invalidate cached queries */
-        queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
-
-        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.update.callout" /> });
-        history.push(`${urls.agreementLineCreate(agreementId)}${location.search}`);
-      })
-  );
-
   const { mutateAsync: putAgreementLine } = useMutation(
     ['ERM', 'AgreementLine', lineId, 'PUT', agreementLinePath],
     (payload) => ky.put(agreementLinePath, { json: payload }).json()
-      .then(() => {
+      .then(async () => {
         /* Invalidate cached queries */
-        queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
+        await queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.update.callout" /> });
         if (!createAnother) {
           handleClose();
+        } else {
+          history.push(`${urls.agreementLineCreate(agreementId)}${location.search}`);
         }
       })
   );
@@ -94,11 +96,12 @@ const AgreementLineEditRoute = ({
       ...agreementLine,
       linkedResource: agreementLine.type !== 'detached' ? agreementLine : undefined,
       coverage: agreementLine.customCoverage ? agreementLine.coverage : undefined,
+      docs: agreementLine.docs?.map(o => ({ ...o, atType: o.atType?.value })) ?? []
     };
   };
 
   /* istanbul ignore next */
-  const handleSubmit = (line) => {
+  const handleSubmit = async (line) => {
     let payload; // payload to be PUT to the endpoint
     const { linkedResource, type, ...rest } = line;
     if (linkedResource?.type === 'packages') { // On submitting a package selected from eholdings plugin
@@ -127,14 +130,10 @@ const AgreementLineEditRoute = ({
       payload = { resource: linkedResource, ...rest, type };
     }
 
-    if (createAnother) {
-      postAgreementLine(line);
-    } else {
-      putAgreementLine({
-        id: lineId,
-        ...payload
-      });
-    }
+    await putAgreementLine({
+      id: lineId,
+      ...payload
+    });
   };
 
   if (isLineLoading || areOrderLinesLoading) return <LoadingView dismissible onClose={handleClose} />;
@@ -144,8 +143,9 @@ const AgreementLineEditRoute = ({
       key={`agreement-line-edit-pane-${lineId}`}
       createAnother={createAnother}
       data={{
-        basket: (resources?.basket ?? []),
+        basket,
         line: getCompositeLine(),
+        documentCategories: getRefdataValuesByDesc(refdata, DOC_ATTACHMENT_TYPE),
       }}
       handlers={{
         ...handlers,
@@ -162,10 +162,6 @@ const AgreementLineEditRoute = ({
   );
 };
 
-AgreementLineEditRoute.manifest = Object.freeze({
-  basket: { initialValue: [] },
-});
-
 AgreementLineEditRoute.propTypes = {
   handlers: PropTypes.object,
   history: PropTypes.shape({
@@ -181,13 +177,6 @@ AgreementLineEditRoute.propTypes = {
       lineId: PropTypes.string.isRequired,
     }).isRequired
   }).isRequired,
-  resources: PropTypes.shape({
-    basket: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
-  stripes: PropTypes.shape({
-    hasInterface: PropTypes.func.isRequired,
-    hasPerm: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
-export default stripesConnect(AgreementLineEditRoute);
+export default AgreementLineEditRoute;

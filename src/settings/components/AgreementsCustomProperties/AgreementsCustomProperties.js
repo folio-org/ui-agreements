@@ -2,11 +2,11 @@
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useQueryClient } from 'react-query';
-
+import { useStripes } from '@folio/stripes/core';
 import { CustomPropertiesSettings } from '@k-int/stripes-kint-components';
 
-import { REFDATA_ENDPOINT, CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
-import useAgreementsContexts from '../../../hooks/useAgreementsContexts';
+import { REFDATA_ENDPOINT, CUSTPROP_ENDPOINT } from '../../../constants';
+import { useAgreementsContexts } from '../../../hooks';
 
 const AgreementsCustomProperties = () => {
   const intl = useIntl();
@@ -30,6 +30,14 @@ const AgreementsCustomProperties = () => {
     }
   ];
 
+  const stripes = useStripes();
+  const perm = stripes.hasPerm('ui-agreements.supplementaryProperties.manage');
+  const displayConditions = {
+    create: perm,
+    delete: perm,
+    edit: perm
+  };
+
   const helpPopovers = {
     name: <FormattedMessage id="ui-agreements.supplementaryProperty.help.name" />,
     label: <FormattedMessage id="ui-agreements.supplementaryProperty.help.label" />,
@@ -45,6 +53,7 @@ const AgreementsCustomProperties = () => {
       }}
       contextFilterOptions={contexts}
       customPropertiesEndpoint={CUSTPROP_ENDPOINT}
+      displayConditions={displayConditions}
       helpPopovers={helpPopovers}
       intlKey="ui-agreements"
       refdataEndpoint={REFDATA_ENDPOINT}

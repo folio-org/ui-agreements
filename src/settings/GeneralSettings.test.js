@@ -1,9 +1,10 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+
 import { MemoryRouter } from 'react-router-dom';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import translationsProperties from '../../test/helpers';
 import GeneralSettings from './GeneralSettings';
+
+jest.mock('./GeneralSettingsForm', () => () => <div>GeneralSettingsForm</div>);
 
 describe('GeneralSettings', () => {
   describe('rendering the GeneralSettings component', () => {
@@ -17,9 +18,9 @@ describe('GeneralSettings', () => {
       );
     });
 
-    test('renders ConfigManager component ', () => {
+    test('renders GeneralSettingsForm component ', () => {
       const { getByText } = renderComponent;
-      expect(getByText('ConfigManager')).toBeInTheDocument();
+      expect(getByText('GeneralSettingsForm')).toBeInTheDocument();
     });
   });
 });

@@ -1,10 +1,10 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
-import userEvent from '@testing-library/user-event';
-import { Button } from '@folio/stripes-testing';
-import { within } from '@testing-library/react';
 import { FieldArray } from 'react-final-form-arrays';
+
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { waitFor, within } from '@folio/jest-config-stripes/testing-library/react';
+
+import { renderWithIntl, TestForm, Button } from '@folio/stripes-erm-testing';
+
 import usageDataProviders from './testResources';
 import translationsProperties from '../../../../test/helpers';
 import UsageDataProvidersFieldArray from './UsageDataProvidersFieldArray';
@@ -40,24 +40,33 @@ describe('UsageDataProvidersFieldArray', () => {
 
     it('clicking the add button renders the usage data provider field', async () => {
       const { getByText } = renderComponent;
-      await Button('Add usage data provider').click();
-      expect(getByText('UsageDataProviderField')).toBeInTheDocument();
+      await waitFor(async () => {
+        await Button('Add usage data provider').click();
+        await expect(getByText('UsageDataProviderField')).toBeInTheDocument();
+      });
     });
 
     it('adding/removing fields using the add/remove works as expected', async () => {
       const { getByRole, queryAllByTestId } = renderComponent;
       await Button('Add usage data provider').exists();
-      await Button('Add usage data provider').click();
-      expect(queryAllByTestId(/usageDataProvidersFieldArray\[.*\]/i).length).toEqual(1);
+
+      await waitFor(async () => {
+        await Button('Add usage data provider').click();
+        await expect(queryAllByTestId(/usageDataProvidersFieldArray\[.*\]/i).length).toEqual(1);
+      });
 
       await Button('Add usage data provider').exists();
-      await Button('Add usage data provider').click();
-      expect(queryAllByTestId(/usageDataProvidersFieldArray\[.*\]/i).length).toEqual(2);
+      await waitFor(async () => {
+        await Button('Add usage data provider').click();
+        await expect(queryAllByTestId(/usageDataProvidersFieldArray\[.*\]/i).length).toEqual(2);
+      });
 
       // IconButton calls seem not to work as expected
       // await IconButton('Remove usage data provider 1').click();
-      await userEvent.click(getByRole('button', { name: /Remove usage data provider 1/i }));
-      expect(queryAllByTestId(/usageDataProvidersFieldArray\[.*\]/i).length).toEqual(1);
+      await waitFor(async () => {
+        await userEvent.click(getByRole('button', { name: /Remove usage data provider 1/i }));
+        await expect(queryAllByTestId(/usageDataProvidersFieldArray\[.*\]/i).length).toEqual(1);
+      });
     });
   });
 

@@ -11,113 +11,65 @@ import {
   Tooltip
 } from '@folio/stripes/components';
 
-import { EResourceType } from '@folio/stripes-erm-components';
+import { EResourceType, usePrevNextPagination } from '@folio/stripes-erm-components';
 
 import Coverage from '../../Coverage';
 import CustomCoverageIcon from '../../CustomCoverageIcon';
 import EResourceLink from '../../EResourceLink';
 import EResourceCount from '../../EResourceCount';
 import EResourceProvider from '../../EResourceProvider';
-import { getResourceFromEntitlement, isDetached, urls } from '../../utilities';
+import { useAgreementsSettings } from '../../../hooks';
+import { AGREEMENT_LINES_PAGINATION_ID, LINE_LISTING_COLUMN_MAPPING } from '../../../constants';
+import {
+  getResourceFromEntitlement,
+  isDetached,
+  isExternal,
+  urls,
+  parseMclPageSize
+} from '../../utilities';
 
-export default class LinesList extends React.Component {
-  static propTypes = {
-    agreement: PropTypes.shape({
-      agreementLinesCount: PropTypes.number,
-      lines: PropTypes.arrayOf(PropTypes.object),
-      orderLines: PropTypes.arrayOf(PropTypes.object),
-    }).isRequired,
-    onViewAgreementLine: PropTypes.func.isRequired,
-    onNeedMoreLines: PropTypes.func.isRequired,
-  }
+const propTypes = {
+  agreement: PropTypes.shape({
+    id: PropTypes.string,
+    agreementLinesCount: PropTypes.number,
+    lines: PropTypes.arrayOf(PropTypes.object),
+    orderLines: PropTypes.arrayOf(PropTypes.object),
+    areOrderLinesLoading: PropTypes.bool,
+  }).isRequired,
+  onViewAgreementLine: PropTypes.func.isRequired,
+  visibleColumns: PropTypes.arrayOf(PropTypes.string)
+};
 
-  columnWidths = {
-    name: 250,
-    provider: 150,
-    coverage: { min: 250, max: 320 },
-  }
+const columnMapping = {
+  ...LINE_LISTING_COLUMN_MAPPING,
+  isCustomCoverage: ' ',
+};
 
-  columnMapping = {
-    name: <FormattedMessage id="ui-agreements.eresources.nameDescription" />,
-    provider: <FormattedMessage id="ui-agreements.eresources.provider" />,
-    publicationType: <FormattedMessage id="ui-agreements.eresources.publicationType" />,
-    count: <FormattedMessage id="ui-agreements.agreementLines.count" />,
-    note: <FormattedMessage id="ui-agreements.note" />,
-    coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
-    isCustomCoverage: ' ',
-    activeFrom: <FormattedMessage id="ui-agreements.eresources.activeFrom" />,
-    activeTo: <FormattedMessage id="ui-agreements.eresources.activeTo" />,
-    poLines: <FormattedMessage id="ui-agreements.agreementLines.polines" />,
-  }
+const LinesList = ({
+  agreement: { id: agreementId, agreementLinesCount, lines, orderLines, areOrderLinesLoading },
+  onViewAgreementLine,
+  visibleColumns
+}) => {
+  const settings = useAgreementsSettings();
+  const agreementLinesPageSize = parseMclPageSize(settings, 'agreementLines');
+  const agreementLinesPaginationId = `${AGREEMENT_LINES_PAGINATION_ID}-${agreementId}`;
 
-  formatter = {
-    name: line => {
-      const resource = getResourceFromEntitlement(line);
-      if (!resource) return line.label;
-      if (isDetached(resource)) return resource.description;
+  const {
+    paginationMCLProps,
+  } = usePrevNextPagination({
+    count: agreementLinesCount,
+    pageSize: agreementLinesPageSize,
+    id: agreementLinesPaginationId,
+    syncToLocation: false
+  });
 
-      return (
-        <EResourceLink
-          data-test-external-reference={line.reference}
-          data-test-resource-id={line?.resource?.id}
-          eresource={resource}
-        />
-      );
-    },
-    provider: line => <EResourceProvider resource={line.resource || line} />,
-    publicationType: line => {
-      const resource = getResourceFromEntitlement(line);
-      return isDetached(resource) ? <NoValue /> : <EResourceType resource={resource} />;
-    },
-    activeFrom: line => <div data-test-active-from>{this.renderDate(line.startDate)}</div>,
-    activeTo: line => <div data-test-active-to>{this.renderDate(line.endDate)}</div>,
-    count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
-    note: line => <div style={{ overflowWrap: 'break-word', maxWidth: 250, whiteSpace: 'pre-wrap' }}>{line.note}</div>,
-    coverage: line => <Coverage line={line} />,
-    isCustomCoverage: line => {
-      if (!line.customCoverage) return '';
-      return (
-        <Tooltip
-          id={`agreement-line-cc-tooltip-${line.rowIndex}`}
-          text={<FormattedMessage id="ui-agreements.customcoverages.tooltip" />}
-        >
-          {({ ref, ariaIds }) => <CustomCoverageIcon ref={ref} aria-labelledby={ariaIds.text} />
-          }
-        </Tooltip>
-      );
-    },
-    poLines: line => (
-      <IfPermission perm="orders.po-lines.collection.get">
-        {({ hasPermission }) => (hasPermission ?
-          this.renderPOLines(line)
-          :
-          line?.poLines?.length ? <FormattedMessage id="ui-agreements.agreementLines.noPoLinePerm" /> : null
-        )}
-      </IfPermission>
-    )
-  }
-
-  visibleColumns = [
-    'name',
-    'provider',
-    'publicationType',
-    'count',
-    'note',
-    'coverage',
-    'isCustomCoverage',
-    'activeFrom',
-    'activeTo',
-    'poLines',
-  ]
-
-  renderDate = date => (
+  const renderDate = date => (
     date ? <FormattedUTCDate value={date} /> : ''
-  )
+  );
 
-  renderPOLines = (line) => {
-    const { orderLines } = this.props.agreement;
+  const renderPOLines = (line) => {
     if (!line.poLines || !line.poLines.length) return '';
-    if (!orderLines || !orderLines.length) return <Spinner />;
+    if (!orderLines || !orderLines.length || areOrderLinesLoading) return <Spinner />;
 
     const poLines = line.poLines.map(linePOL => orderLines.find(orderLine => orderLine.id === linePOL.poLineId));
     if (!poLines.length) return <Spinner />;
@@ -150,35 +102,79 @@ export default class LinesList extends React.Component {
         ))}
       </div>
     );
-  }
+  };
 
-  render() {
-    const {
-      agreement: { agreementLinesCount, lines, orderLines },
-      onViewAgreementLine,
-      onNeedMoreLines,
-    } = this.props;
+  const rowUpdater = () => orderLines.map(orderLine => orderLine.id);
+  return lines ? (
+    <MultiColumnList
+      columnMapping={columnMapping}
+      columnWidths={{
+        name: 250,
+        provider: 150,
+        coverage: { min: 250, max: 320 },
+      }}
+      contentData={lines}
+      formatter={{
+        name: line => {
+          const resource = getResourceFromEntitlement(line);
+          if (!resource) return line.label;
+          if (isDetached(resource)) return resource.description;
+          if (isExternal(resource) && !resource.reference_object?.label) return resource.reference;
+          return (
+            <EResourceLink
+              data-test-external-reference={line.reference}
+              data-test-resource-id={line?.resource?.id}
+              eresource={resource}
+            />
+          );
+        },
+        provider: line => <EResourceProvider resource={line.resource || line} />,
+        publicationType: line => {
+          const resource = getResourceFromEntitlement(line);
+          return isDetached(resource) ? <NoValue /> : <EResourceType resource={resource} />;
+        },
+        activeFrom: line => <div data-test-active-from>{renderDate(line.startDate)}</div>,
+        activeTo: line => <div data-test-active-to>{renderDate(line.endDate)}</div>,
+        count: line => <EResourceCount resource={getResourceFromEntitlement(line)} />,
+        note: line => <div style={{ overflowWrap: 'break-word', maxWidth: 250, whiteSpace: 'pre-wrap' }}>{line.note}</div>,
+        coverage: line => <Coverage line={line} />,
+        isCustomCoverage: line => {
+          if (!line.customCoverage) return '';
+          return (
+            <Tooltip
+              id={`agreement-line-cc-tooltip-${line.rowIndex}`}
+              text={<FormattedMessage id="ui-agreements.customcoverages.tooltip" />}
+            >
+              {({ ref, ariaIds }) => <CustomCoverageIcon ref={ref} aria-labelledby={ariaIds.text} />
+              }
+            </Tooltip>
+          );
+        },
+        poLines: line => (
+          <IfPermission perm="orders.po-lines.collection.get">
+            {({ hasPermission }) => (hasPermission ?
+              renderPOLines(line)
+              :
+              line?.poLines?.length ? <FormattedMessage id="ui-agreements.agreementLines.noPoLinePerm" /> : null
+            )}
+          </IfPermission>
+        )
+      }}
+      id="agreement-lines"
+      isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.agreementLines" />}
+      onRowClick={(e, row) => {
+        if (e.target.tagName !== 'A') {
+          onViewAgreementLine(row.id);
+        }
+      }}
+      pagingType="click"
+      rowUpdater={rowUpdater}
+      totalCount={agreementLinesCount}
+      visibleColumns={visibleColumns}
+      {...paginationMCLProps}
+    />
+  ) : <Spinner />;
+};
 
-    const rowUpdater = () => orderLines.map(orderLine => orderLine.id);
-    return lines ? (
-      <MultiColumnList
-        columnMapping={this.columnMapping}
-        columnWidths={this.columnWidths}
-        contentData={lines}
-        formatter={this.formatter}
-        id="agreement-lines"
-        isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.agreementLines" />}
-        onNeedMoreData={onNeedMoreLines}
-        onRowClick={(e, row) => {
-          if (e.target.tagName !== 'A') {
-            onViewAgreementLine(row.id);
-          }
-        }}
-        pagingType="click"
-        rowUpdater={rowUpdater}
-        totalCount={agreementLinesCount}
-        visibleColumns={this.visibleColumns}
-      />
-    ) : <Spinner />;
-  }
-}
+LinesList.propTypes = propTypes;
+export default LinesList;

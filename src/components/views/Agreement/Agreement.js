@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -43,11 +43,15 @@ import {
   UsageData,
 } from '../../AgreementSections';
 
-import { useAgreementsContexts } from '../../../hooks';
+import { useAgreementsContexts, useChunkedOrderLines } from '../../../hooks';
 
 import { urls } from '../../utilities';
-import { statuses } from '../../../constants';
-import { CUSTPROP_ENDPOINT, LICENSE_CUSTPROP_ENDPOINT } from '../../../constants/endpoints';
+import {
+  AGREEMENT_ENTITY_TYPE,
+  CUSTPROP_ENDPOINT,
+  LICENSE_CUSTPROP_ENDPOINT,
+  statuses
+} from '../../../constants';
 
 const Agreement = ({
   components: {
@@ -58,6 +62,16 @@ const Agreement = ({
   isLoading,
   handlers,
 }) => {
+  const poLineIdsArray = useMemo(
+    () => data.agreement?.lines?.filter((line) => line.poLines?.length)
+      .map((line) => line.poLines.map((poLine) => poLine.poLineId))
+      .flat() || [],
+    [data.agreement.lines]
+  );
+
+  const { orderLines, isLoading: areOrderLinesLoading } =
+    useChunkedOrderLines(poLineIdsArray);
+
   const accordionStatusRef = useRef();
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
   const [showDuplicateAgreementModal, setShowDuplicateAgreementModal] = useState(false);
@@ -90,7 +104,11 @@ const Agreement = ({
 
   const getSectionProps = (id) => {
     return {
-      agreement: data.agreement,
+      agreement: {
+        ...data.agreement,
+        orderLines: orderLines || [],
+        areOrderLinesLoading
+      },
       data,
       eresourcesFilterPath: data.eresourcesFilterPath,
       id,
@@ -282,7 +300,7 @@ const Agreement = ({
                   domainName="agreements"
                   entityId={data.agreement.id}
                   entityName={data.agreement.name}
-                  entityType="agreement"
+                  entityType={AGREEMENT_ENTITY_TYPE}
                   pathToNoteCreate={urls.noteCreate()}
                   pathToNoteDetails={urls.notes()}
                 />

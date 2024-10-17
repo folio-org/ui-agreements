@@ -1,13 +1,14 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
 import { MemoryRouter } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
-import { Button as ButtonInteractor } from '@folio/stripes-testing';
-import { proxyServers, platform, stringTemplates } from './testResources';
+
 import translationsProperties from '../../../test/helpers';
 import PlatformViewRoute from './PlatformViewRoute';
+import { platform, proxyServers, stringTemplates } from './testResources';
 
 const CloseButton = (props) => {
   return <Button onClick={props.handlers.onClose}>CloseButton</Button>;
@@ -99,8 +100,13 @@ describe('PlatformViewRoute', () => {
     });
 
     test('triggers the CloseButton callback', async () => {
-      await ButtonInteractor('CloseButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('CloseButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
 
     test('renders the CloseButton button', () => {
@@ -109,8 +115,13 @@ describe('PlatformViewRoute', () => {
     });
 
     test('triggers the EditButton callback', async () => {
-      await ButtonInteractor('EditButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('EditButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
 
     test('renders the EditButton button', () => {
@@ -119,8 +130,13 @@ describe('PlatformViewRoute', () => {
     });
 
     test('triggers the ViewUrlCustomizerButton callback', async () => {
-      await ButtonInteractor('ViewUrlCustomizerButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('ViewUrlCustomizerButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
 
     test('calls the ViewUrlCustomizerButton callback', () => {

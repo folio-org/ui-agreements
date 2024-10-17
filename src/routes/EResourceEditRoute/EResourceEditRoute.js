@@ -10,9 +10,14 @@ import PCIForm from '../../components/views/PCIForm';
 import TitleForm from '../../components/views/TitleForm';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
-import { resourceClasses } from '../../constants';
+
+import {
+  ERESOURCE_ENDPOINT,
+  PCI_ENDPOINT,
+  TITLE_ENDPOINT,
+  resourceClasses
+} from '../../constants';
 import { useSuppressFromDiscovery } from '../../hooks';
-import { ERESOURCE_ENDPOINT, PCI_ENDPOINT, TITLE_ENDPOINT } from '../../constants/endpoints';
 
 const EResourceEditRoute = ({
   handlers,
@@ -32,6 +37,9 @@ const EResourceEditRoute = ({
   );
   const eresourceClass = eresource?.class;
 
+  // We currently only have edit for non-package eresources
+  const historyUrl = `${urls.titleView(eresourceId)}${location.search}`;
+
   const { mutateAsync: putPCI } = useMutation(
     [PCI_ENDPOINT(eresourceId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
     (payload) => ky.put(PCI_ENDPOINT(eresourceId), { json: payload }).json()
@@ -43,7 +51,7 @@ const EResourceEditRoute = ({
   );
 
   const handleClose = () => {
-    history.push(`${urls.eresourceView(eresourceId)}${location.search}`);
+    history.push(historyUrl);
   };
 
   const handleSubmit = (values) => {
@@ -68,7 +76,7 @@ const EResourceEditRoute = ({
       /* Invalidate cached queries */
       queryClient.invalidateQueries(ERESOURCE_ENDPOINT(eresourceId));
 
-      history.push(`${urls.eresourceView(eresourceId)}${location.search}`);
+      history.push(historyUrl);
     });
   };
 

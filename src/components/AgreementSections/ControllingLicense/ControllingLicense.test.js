@@ -1,17 +1,10 @@
 
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { Accordion, KeyValue } from '@folio/stripes-testing';
+
+import { renderWithIntl, Accordion, KeyValue } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import ControllingLicense from './ControllingLicense';
 import agreement from './testResources';
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  LicenseCard: () => <div>LicenseCard</div>,
-}));
 
 jest.mock('../../LicenseAmendmentList', () => () => <div>LicenseAmendmentList</div>);
 let renderComponent;

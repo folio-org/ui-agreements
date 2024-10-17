@@ -1,54 +1,31 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import '@folio/stripes-erm-components/test/jest/__mock__';
 
 import { useQuery } from 'react-query';
-
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
 import { MemoryRouter } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
-import { Button as ButtonInteractor } from '@folio/stripes-testing';
-import {
-  agreement,
-  agreementLines,
-  agreementEresources,
-  eresourcesFilterPath,
-  interfaces,
-  orderLines,
-  query,
-  settings,
-  users,
-  tagsEnabled,
-  location,
-  handlers,
-  match,
-  intl
-} from './testResources';
+
 import translationsProperties from '../../../test/helpers';
 import AgreementViewRoute from './AgreementViewRoute';
+import {
+  agreement,
+  location,
+  match,
+} from './testResources';
 
 const AgreementLineButton = (props) => {
   return <Button onClick={props.handlers.onViewAgreementLine}>AgreementLineButton</Button>;
 };
 
-const NeedMoreLinesButton = (props) => {
-  return <Button onClick={props.handlers.onNeedMoreLines}>NeedMoreLinesButton</Button>;
-};
 
 const FilterEResourceButton = (props) => {
   return <Button onClick={props.handlers.onFilterEResources}>FilterEResourceButton</Button>;
 };
 
-const FetchCredentialsButton = (props) => {
-  return <Button onClick={props.handlers.onFetchCredentials}>FetchCredentialsButton</Button>;
-};
-
 const EditButton = (props) => {
   return <Button onClick={props.handlers.onEdit}>EditButton</Button>;
-};
-
-const NeedMoreEResourcesButton = (props) => {
-  return <Button onClick={props.handlers.onNeedMoreEResources}>NeedMoreEResourcesButton</Button>;
 };
 
 const ToggleTagsButton = (props) => {
@@ -77,33 +54,15 @@ AgreementLineButton.propTypes = {
   }),
 };
 
-NeedMoreLinesButton.propTypes = {
-  handlers: PropTypes.shape({
-    onNeedMoreLines: PropTypes.func,
-  }),
-};
-
 FilterEResourceButton.propTypes = {
   handlers: PropTypes.shape({
     onFilterEResources: PropTypes.func,
   }),
 };
 
-FetchCredentialsButton.propTypes = {
-  handlers: PropTypes.shape({
-    onFetchCredentials: PropTypes.func,
-  }),
-};
-
 EditButton.propTypes = {
   handlers: PropTypes.shape({
     onEdit: PropTypes.func,
-  }),
-};
-
-NeedMoreEResourcesButton.propTypes = {
-  handlers: PropTypes.shape({
-    onNeedMoreEResources: PropTypes.func,
   }),
 };
 
@@ -138,23 +97,14 @@ CloneButton.propTypes = {
 };
 
 const historyPushMock = jest.fn();
-const mutatorFetchReplaceMock = jest.fn();
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents
-}));
 
 jest.mock('../../components/views/Agreement', () => {
   return (props) => (
     <div>
       <div>Agreement</div>
       <AgreementLineButton {...props} />
-      <NeedMoreLinesButton {...props} />
       <FilterEResourceButton {...props} />
-      <FetchCredentialsButton {...props} />
       <EditButton {...props} />
-      <NeedMoreEResourcesButton {...props} />
       <ToggleTagsButton {...props} />
       <CloseButton {...props} />
       <ExportEResourcesAsKBARTButton {...props} />
@@ -165,30 +115,11 @@ jest.mock('../../components/views/Agreement', () => {
 });
 
 const data = {
-  handlers,
   history:{
     push: historyPushMock,
   },
-  intl,
   location,
   match,
-  mutator:{
-    interfaceRecord:{
-      replace: mutatorFetchReplaceMock,
-    },
-  },
-  resources: {
-    agreement,
-    agreementLines,
-    agreementEresources,
-    eresourcesFilterPath,
-    interfaces,
-    orderLines,
-    query,
-    settings,
-    users,
-  },
-  tagsEnabled
 };
 
 useQuery.mockImplementation(() => ({ data: agreement, isLoading: false }));
@@ -215,34 +146,44 @@ describe('AgreementViewRoute', () => {
       expect(getByText('AgreementLineButton')).toBeInTheDocument();
     });
 
-    test('renders the NeedMoreLinesButton', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('NeedMoreLinesButton')).toBeInTheDocument();
-    });
-
     test('triggers the AgreementLineButton callback', async () => {
-      await ButtonInteractor('AgreementLineButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('AgreementLineButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
 
     test('triggers the EditButton callback', async () => {
-      await ButtonInteractor('EditButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
-    });
+      await waitFor(async () => {
+        await ButtonInteractor('EditButton').click();
+      });
 
-    test('triggers the FetchCredentialsButton callback', async () => {
-      await ButtonInteractor('FetchCredentialsButton').click();
-      expect(mutatorFetchReplaceMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
 
     test('triggers the CloseButton callback', async () => {
-      await ButtonInteractor('CloseButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('CloseButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
 
     test('triggers the CloneButton callback', async () => {
-      await ButtonInteractor('CloneButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('CloneButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
 
     describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block

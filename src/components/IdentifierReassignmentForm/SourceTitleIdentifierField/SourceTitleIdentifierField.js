@@ -58,8 +58,8 @@ const SourceTitleIdentifierField = ({ setTitleName }) => {
               }
             });
 
-            setSourceTI(ti._object);
-            change('sourceTIObject', ti._object);
+            setSourceTI(ti);
+            change('sourceTIObject', ti);
           }}
           renderTrigger={(pluggableRenderProps) => {
             triggerButton = pluggableRenderProps.buttonRef;
@@ -210,11 +210,11 @@ const SourceTitleIdentifierField = ({ setTitleName }) => {
       data-testid="sourceTitleCard"
       headerEnd={renderSourceTitleLinkButton(sourceTI?.id)}
       headerStart={(
-        <AppIcon app="agreements" iconKey="eresource" size="small">
+        <AppIcon app="agreements" iconKey="title" size="small">
           <strong>
             {sourceTI?.id ?
               <>
-                <Link target="_blank" to={urls.eresourceView(sourceTI?.id)}>
+                <Link target="_blank" to={urls.titleView(sourceTI?.id)}>
                   {sourceTI.name}
                 </Link>
                 <> · {sourceTI.publicationType?.label}</>

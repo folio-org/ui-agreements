@@ -1,9 +1,7 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl, TestForm, KeyValue } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { Field } from 'react-final-form';
-import { KeyValue } from '@folio/stripes-testing';
 import RelatedAgreementField from '../RelatedAgreementField';
 
 import translationsProperties from '../../../../test/helpers';
@@ -12,15 +10,15 @@ const onAgreementSelected = jest.fn();
 const onSubmit = jest.fn();
 
 const agreement = {
-  'id': 'd1947d28-5008-4d07-8712-23a9f909bf39',
-  'name': 'AM ag 2',
-  'agreementStatus': {
-    'id': '2c91809c7ba954b5017ba95c58560032',
-    'value': 'draft',
-    'label': 'Draft'
+  id: 'd1947d28-5008-4d07-8712-23a9f909bf39',
+  name: 'AM ag 2',
+  agreementStatus: {
+    id: '2c91809c7ba954b5017ba95c58560032',
+    value: 'draft',
+    label: 'Draft'
   },
-  'startDate': '2021-09-17',
-  'endDate': '2021-09-19',
+  startDate: '2021-09-17',
+  endDate: '2021-09-19',
 };
 
 describe('RelatedAgreementField', () => {

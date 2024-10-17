@@ -35,9 +35,10 @@ import AgreementLineViewRoute from './routes/AgreementLineViewRoute';
 
 import BasketRoute from './routes/BasketRoute';
 
-import EResourcesRoute from './routes/EResourcesRoute';
 import EResourceViewRoute from './routes/EResourceViewRoute';
 import EResourceEditRoute from './routes/EResourceEditRoute';
+
+import PackagesRoute from './routes/PackagesRoute';
 
 import NoteCreateRoute from './routes/NoteCreateRoute';
 import NoteEditRoute from './routes/NoteEditRoute';
@@ -46,6 +47,8 @@ import NoteViewRoute from './routes/NoteViewRoute';
 import PlatformsRoute from './routes/PlatformsRoute';
 import PlatformViewRoute from './routes/PlatformViewRoute';
 import PlatformEditRoute from './routes/PlatformEditRoute';
+
+import TitlesRoute from './routes/TitlesRoute';
 
 import UrlCustomizerEditRoute from './routes/UrlCustomizerEditRoute';
 import UrlCustomizerViewRoute from './routes/UrlCustomizerViewRoute';
@@ -80,13 +83,15 @@ const App = (props) => {
   };
 
   const searchInput = () => {
-    if (pathname.search('/erm/agreements') === 0) {
+    if (pathname?.startsWith('/erm/agreements')) {
       return 'input-agreement-search';
-    } else if (pathname.search('/erm/eresources') === 0) {
-      return 'input-eresource-search';
-    } else if (pathname.search('/erm/platforms') === 0) {
+    } else if (pathname?.startsWith('/erm/packages')) {
+      return 'input-package-search';
+    } else if (pathname?.startsWith('/erm/platforms')) {
       return 'input-platform-search';
-    } else if (pathname.search('/erm/agreementLines') === 0) {
+    } else if (pathname?.startsWith('/erm/titles')) {
+      return 'input-title-search';
+    } else if (pathname?.startsWith('/erm/agreementLines')) {
       return 'input-agreementLine-search';
     } else {
       return undefined;
@@ -135,12 +140,13 @@ const App = (props) => {
           </Button>
           <Button
             buttonStyle={
-              (pathname?.startsWith('/erm/eresources') ||
+              (pathname?.startsWith('/erm/titles') ||
+              pathname?.startsWith('/erm/packages') ||
               pathname?.startsWith('/erm/platforms')) ?
                 'primary' :
                 'default'
             }
-            to="/erm/eresources"
+            to="/erm/packages"
           >
             <FormattedMessage id="ui-agreements.localKBSearch" />
           </Button>
@@ -206,9 +212,13 @@ const App = (props) => {
                   <Route component={AgreementLineViewRoute} path={`${path}/agreementLines/:lineId/agreement/:agreementId`} />
                 </Route>
 
-                <Route component={EResourceEditRoute} path={`${path}/eresources/:id/edit`} />
-                <Route component={EResourcesRoute} path={`${path}/eresources/:id?`}>
-                  <Route component={EResourceViewRoute} path={`${path}/eresources/:id`} />
+                <Route component={EResourceEditRoute} path={`${path}/titles/:id/edit`} />
+                <Route component={TitlesRoute} path={`${path}/titles/:id?`}>
+                  <Route component={EResourceViewRoute} path={`${path}/titles/:id`} />
+                </Route>
+
+                <Route component={PackagesRoute} path={`${path}/packages/:id?`}>
+                  <Route component={EResourceViewRoute} path={`${path}/packages/:id`} />
                 </Route>
 
                 <Route component={NoteCreateRoute} path={`${path}/notes/create`} />

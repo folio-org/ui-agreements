@@ -1,10 +1,10 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+
 import {
+  Accordion,
   TestForm,
   renderWithIntl,
-} from '@folio/stripes-erm-components/test/jest/helpers';
-import { Accordion } from '@folio/stripes-testing';
+} from '@folio/stripes-erm-testing';
+
 import { line, initialValues } from './testResources';
 import FormPOLines from './FormPOLines';
 import translationsProperties from '../../../../test/helpers';

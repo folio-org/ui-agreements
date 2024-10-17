@@ -63,8 +63,8 @@ const DestinationTitleIdentifierField = ({ setTitleName }) => {
         <Pluggable
           dataKey="destinationIdentifierLookup"
           onEresourceSelected={ti => {
-            setDestinationTI(ti._object);
-            change('destinationTIObject', ti?._object);
+            setDestinationTI(ti);
+            change('destinationTIObject', ti);
             change('destinationTitle');
           }}
           renderTrigger={(pluggableRenderProps) => {
@@ -132,10 +132,10 @@ const DestinationTitleIdentifierField = ({ setTitleName }) => {
           </RadioButtonGroup>
         </Col>
         <Col md={6} xs={12}>
-          {validIdentifiers?.map((vi, index) => {
+          {validIdentifiers?.map(vi => {
             return (
               <KeyValue
-                key={`title-${title?.id}-identifier[${index}]`}
+                key={`title-${title?.id}-identifier-${vi?.identifier?.ns?.value}:${vi?.identifier?.value}`}
                 label={vi?.identifier?.ns?.value}
               >
                 {vi?.identifier?.value}
@@ -170,11 +170,11 @@ const DestinationTitleIdentifierField = ({ setTitleName }) => {
       data-testid="destinationTitleCard"
       headerEnd={renderDestinationTitleLinkButton(destinationTI?.id)}
       headerStart={(
-        <AppIcon app="agreements" iconKey="eresource" size="small">
+        <AppIcon app="agreements" iconKey="title" size="small">
           <strong>
             {destinationTI?.id ?
               <>
-                <Link to={urls.eresourceView(destinationTI?.id)}>
+                <Link to={urls.titleView(destinationTI?.id)}>
                   {destinationTI?.name}
                 </Link>
                 <> · {destinationTI?.publicationType?.label}</>

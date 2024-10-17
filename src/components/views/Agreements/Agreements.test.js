@@ -1,11 +1,9 @@
-import '@folio/stripes-erm-components/test/jest/__mock__';
 import ReactRouterDom, { MemoryRouter } from 'react-router-dom';
 
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
+import { Button, MultiColumnList, Pane, renderWithIntl, TextField } from '@folio/stripes-erm-testing';
 
-import { Pane, Button, TextField, MultiColumnList } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 
 import Agreements from './Agreements';
@@ -18,16 +16,11 @@ jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
 
 jest.mock('../../AgreementFilters', () => () => <div>AgreementFilters</div>);
 
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents
-}));
-
 // This is seemingly the only method to override imported __mock__ functions.
 // (This probably means this setup SUCKS and needs changing)
 ReactRouterDom.useLocation = jest.requireActual('react-router-dom').useLocation;
 
-const mockSubmit = jest.fn();
+const mockSubmit = jest.fn(e => e.preventDefault());
 describe('Agreements', () => {
   useHandleSubmitSearch.mockImplementation(() => ({
     handleSubmitSearch: mockSubmit,
@@ -42,7 +35,6 @@ describe('Agreements', () => {
       >
         <Agreements
           data={data}
-          onNeedMoreData={jest.fn()}
           queryGetter={jest.fn()}
           querySetter={jest.fn()}
           source={{
@@ -70,15 +62,22 @@ describe('Agreements', () => {
   });
 
   test('renders the expected Search and Reset all Button', async () => {
-    await TextField({ id: 'input-agreement-search' }).fillIn('test'); // enables the disabled buttons
+    await waitFor(async () => {
+      await TextField({ id: 'input-agreement-search' }).fillIn('test'); // enables the disabled buttons
+    });
+
     await Button('Search').exists();
     await Button('Reset all').exists();
   });
 
   test('triggering the search should invoke the useHandleSubmitSearch hook', async () => {
-    await TextField({ id: 'input-agreement-search' }).fillIn('test'); // enables the disabled buttons
-    await Button('Search').click();
-    expect(mockSubmit).toHaveBeenCalled();
+    await waitFor(async () => {
+      await TextField({ id: 'input-agreement-search' }).fillIn('test'); // enables the disabled buttons
+      await Button('Search').click();
+    });
+    await waitFor(async () => {
+      expect(mockSubmit).toHaveBeenCalled();
+    });
   });
 
   test('renders the Agreement Filters', () => {
@@ -94,13 +93,12 @@ describe('Agreements', () => {
     await Pane('Agreements').has({ subtitle: '"3 records found"' });
   });
 
-  test('renders the New agreement button', async () => {
-    await Button('New').exists();
+  test('renders the Actions button', async () => {
+    await Button('Actions').exists();
   });
 
-
   test('renders the expcted number of MCL columns', async () => {
-    await MultiColumnList({ columnCount: 5 }).exists();
+    await MultiColumnList({ columnCount: 6 }).exists();
   });
 
   test('renders the expcted number of MCL rows', async () => {
@@ -114,7 +112,8 @@ describe('Agreements', () => {
         'Status',
         'Start date',
         'End date',
-        'Cancellation deadline'
+        'Cancellation deadline',
+        'Description'
       ],
     }).exists();
   });

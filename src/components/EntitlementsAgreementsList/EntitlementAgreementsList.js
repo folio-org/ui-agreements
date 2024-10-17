@@ -13,22 +13,34 @@ import {
 
 import { AppIcon } from '@folio/stripes/core';
 
-import { EResourceType } from '@folio/stripes-erm-components';
+import { EResourceType, usePrevNextPagination } from '@folio/stripes-erm-components';
 import Coverage from '../Coverage';
 import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
-import { getResourceFromEntitlement, urls } from '../utilities';
-import { statuses } from '../../constants';
+import { getResourceFromEntitlement, urls, parseMclPageSize } from '../utilities';
+import { statuses, ENTITLEMENT_AGREEMENTS_LIST_PAGINATION_ID } from '../../constants';
+import { useAgreementsSettings } from '../../hooks';
 
 const EntitlementAgreementsList = (
   { entitlements,
+    eresourceId,
     headline,
     id,
-    isEmptyMessage,
-    onNeedMoreEntitlements,
+    isEmptyMessage = <FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsEresource" />,
     totalCount,
-    visibleColumns }
+    visibleColumns = ['name', 'type', 'startDate', 'endDate'] }
 ) => {
+  const settings = useAgreementsSettings();
+  const entitlementAgreementsPageSize = parseMclPageSize(settings, 'entitlements');
+  const {
+    paginationMCLProps,
+  } = usePrevNextPagination({
+    count: totalCount,
+    pageSize: entitlementAgreementsPageSize,
+    id: `${ENTITLEMENT_AGREEMENTS_LIST_PAGINATION_ID}-${eresourceId}`,
+    syncToLocation: false
+  });
+
   const columnMapping = {
     name: <FormattedMessage id="ui-agreements.agreements.name" />,
     type: <FormattedMessage id="ui-agreements.agreements.agreementStatus" />,
@@ -94,26 +106,21 @@ const EntitlementAgreementsList = (
         id={id}
         interactive={false}
         isEmptyMessage={isEmptyMessage}
-        onNeedMoreData={onNeedMoreEntitlements}
         pagingType="click"
         totalCount={totalCount}
         visibleColumns={visibleColumns}
+        {...paginationMCLProps}
       />
     </div>
   );
 };
 
-EntitlementAgreementsList.defaultProps = {
-  isEmptyMessage: <FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsEresource" />,
-  visibleColumns: ['name', 'type', 'startDate', 'endDate']
-};
-
 EntitlementAgreementsList.propTypes = {
   entitlements: PropTypes.arrayOf(PropTypes.object),
+  eresourceId: PropTypes.string.isRequired,
   headline: PropTypes.node,
   id: PropTypes.string,
   isEmptyMessage: PropTypes.node,
-  onNeedMoreEntitlements: PropTypes.func,
   totalCount: PropTypes.number,
   visibleColumns: PropTypes.arrayOf(PropTypes.string),
 };

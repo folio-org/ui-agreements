@@ -1,7 +1,7 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { Accordion, MultiColumnList, MultiColumnListCell, Button } from '@folio/stripes-testing';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { renderWithIntl, Accordion, MultiColumnList, MultiColumnListCell, Button } from '@folio/stripes-erm-testing';
+
 import data from './testResources';
 import translationsProperties from '../../../../test/helpers';
 import PlatformUrlCustomization from './PlatformUrlCustomization';
@@ -54,7 +54,9 @@ describe('PlatformUrlCustomization', () => {
 
   describe('Clicking the row', () => {
     beforeEach(async () => {
-      await MultiColumnList('url-customization').click({ row: 0, columnIndex: 0 });
+      await waitFor(async () => {
+        await MultiColumnList('url-customization').click({ row: 0, columnIndex: 0 });
+      });
     });
 
     test('should not call the onViewUrlCustomizer callback', () => {

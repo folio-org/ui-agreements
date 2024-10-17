@@ -1,22 +1,11 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
 
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button, Modal, renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { Button, Modal } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
-import { data, handlers } from './testResources';
 import Agreement from './Agreement';
-
-jest.mock('@folio/stripes/components', () => ({
-  ...jest.requireActual('@folio/stripes/components'),
-  LoadingPane: () => <div>LoadingPane</div>,
-}));
-
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents
-}));
+import { data, handlers } from './testResources';
 
 jest.mock('../../../hooks', () => ({
   ...jest.requireActual('../../../hooks'),
@@ -169,24 +158,69 @@ describe('Agreement', () => {
       expect(getByText('UsageData')).toBeInTheDocument();
     });
 
-    it('renders the Duplicate modal on clicking the duplicate button from the actions dropdown', async () => {
-      await Button('Actions').click();
-      await Button('Duplicate').click();
-      await Modal('Duplicate agreement').exists();
-      await Button('Cancel').click(); // close the modal
-    });
+    describe('opening actions menu', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Actions').click();
+        });
+      });
 
-    it('renders the Confirmation modal on clicking the delete button from the actions dropdown', async () => {
-      await Button('Actions').click();
-      await Button('Delete').click();
-      await Modal('Delete agreement').exists();
-      await Button('Cancel').click(); // close the modal
-    });
+      describe('clicking duplicate modal', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('Duplicate').click();
+          });
+        });
 
-    it('Clicking the export button should trigger the callback', async () => {
-      await Button('Actions').click();
-      await Button('Export').click();
-      expect(handlers.onExportAgreement).toHaveBeenCalled();
+        test('renders the Duplicate modal', async () => {
+          const { getByText } = renderComponent;
+          await waitFor(async () => {
+            expect(getByText('DuplicateModal')).toBeInTheDocument();
+          });
+        });
+      });
+
+      describe('clicking delete', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('Delete').click();
+          });
+        });
+
+        test('renders the confirmation modal', async () => {
+          await waitFor(async () => {
+            await Modal('Delete agreement').exists();
+          });
+        });
+
+        describe('cancelling confirmation modal', () => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Button('Cancel').click(); // close the modal
+            });
+          });
+
+          test('confirmation modal no longer renders', async () => {
+            await waitFor(async () => {
+              await Modal('Delete agreement').absent();
+            });
+          });
+        });
+      });
+
+      describe('clicking export agreement (JSON)', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('Export agreement (JSON)').click();
+          });
+        });
+
+        test('correct callback is triggered', async () => {
+          await waitFor(async () => {
+            expect(handlers.onExportAgreement).toHaveBeenCalled();
+          });
+        });
+      });
     });
   });
 });

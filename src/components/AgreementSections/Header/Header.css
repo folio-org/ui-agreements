@@ -9,7 +9,7 @@
   /* AccordionHeaders and other elements that use a
      `interactionStyles` class have a z-index of 2 which
      would render them above this floaty. */
-  z-index: 3;
+  z-index: 1000;
 
   /* As content scrolls behind this div and then /above/ it, it
      will be visible due to the padding in ContentPane.
@@ -17,6 +17,6 @@
      with the same size as said ContentPane padding to hide it.
      Additionally, add a margin-bottom on this div to prevent
      hiding any content below it. */
-  box-shadow: 0 0 0 var(--gutter) var(--bg);
-  margin-bottom: var(--gutter);
+  box-shadow: 0 0 0 calc(var(--gutter) * 2) var(--bg);
+  margin-bottom: calc(var(--gutter) * 2);
 }

@@ -1,11 +1,14 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl, KeyValue } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { KeyValue } from '@folio/stripes-testing';
-import { externalLine, externalResource, packageLine, packageResource } from './testResources';
+import { externalLine, externalResource, externalResourceWithError, packageLine, packageResource } from './testResources';
 import translationsProperties from '../../../../test/helpers';
 import Info from './Info';
+
+jest.mock('@folio/stripes-erm-components', () => ({
+  ...jest.requireActual('@folio/stripes-erm-components'),
+  ErrorCard: () => <div>ErrorCard</div>,
+}));
 
 jest.mock('../../PackageCardExternal', () => () => (<div>PackageCardExternal</div>));
 jest.mock('../../PackageCard', () => () => (<div>PackageCard</div>));
@@ -138,6 +141,40 @@ describe('Info', () => {
     test('renders the PackageCard component', () => {
       const { getByText } = renderComponent;
       expect(getByText('PackageCard')).toBeInTheDocument();
+    });
+  });
+
+  describe('Info with external resource error', () => {
+    beforeEach(() => {
+      renderComponent = renderWithIntl(
+        <MemoryRouter>
+          <Info
+            isSuppressFromDiscoveryEnabled={isSuppressFromDiscoveryEnabled}
+            line={externalResourceWithError}
+            resource={externalResourceWithError}
+          />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    test('renders Info component', async () => {
+      const { getByTestId } = renderComponent;
+      expect(getByTestId('lineInfo')).toBeInTheDocument();
+    });
+
+    test('displays parent agreements name', async () => {
+      await KeyValue('Parent agreement').has({ value: 'Test CM' });
+    });
+
+    test('renders a link with the parent agreements name', () => {
+      const { getByRole } = renderComponent;
+      expect(getByRole('link', { name: 'Test CM' })).toBeInTheDocument();
+    });
+
+    test('renders the ErrorCard component', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('ErrorCard')).toBeInTheDocument();
     });
   });
 });

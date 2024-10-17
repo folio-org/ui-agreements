@@ -1,14 +1,12 @@
-import '@folio/stripes-erm-components/test/jest/__mock__';
 import ReactRouterDom, { MemoryRouter } from 'react-router-dom';
 
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
+import { Button, MultiColumnList, Pane, renderWithIntl, TextField } from '@folio/stripes-erm-testing';
 
-import { Pane, Button, TextField, MultiColumnList } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
-import data from './testResources';
 import Platforms from './Platforms';
+import data from './testResources';
 
 
 jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
@@ -19,12 +17,7 @@ jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
 // (This probably means this setup SUCKS and needs changing)
 ReactRouterDom.useLocation = jest.requireActual('react-router-dom').useLocation;
 
-const mockSubmit = jest.fn();
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents
-}));
-
+const mockSubmit = jest.fn(e => e.preventDefault());
 describe('Platforms', () => {
   useHandleSubmitSearch.mockImplementation(() => ({
     handleSubmitSearch: mockSubmit,
@@ -38,7 +31,6 @@ describe('Platforms', () => {
       >
         <Platforms
           data={data}
-          onNeedMoreData={jest.fn()}
           queryGetter={jest.fn()}
           querySetter={jest.fn()}
           source={{
@@ -57,27 +49,38 @@ describe('Platforms', () => {
     await Pane('Search and filter').is({ visible: true });
   });
 
-  test('renders the expected Agreements/Agreement lines buttons', async () => {
-    await Button('E-resources').exists();
+  test('renders the expected local kb buttons', async () => {
+    await Button('Packages').exists();
+    await Button('Titles').exists();
     await Button('Platforms').exists();
   });
 
   test('renders the expected Search and Reset all Button', async () => {
-    await Button('Platforms').click();
-    await TextField({ id: 'input-platform-search' }).fillIn('test'); // enables the disabled buttons
+    await waitFor(async () => {
+      await Button('Platforms').click();
+      await TextField({ id: 'input-platform-search' }).fillIn('test'); // enables the disabled buttons
+    });
     await Button('Search').exists();
     await Button('Reset all').exists();
   });
 
   test('triggering the search should invoke the useHandleSubmitSearch hook', async () => {
-    await Button('Platforms').click();
-    await TextField({ id: 'input-platform-search' }).fillIn('test'); // enables the disabled buttons
-    await Button('Search').click();
-    expect(mockSubmit).toHaveBeenCalled();
+    await waitFor(async () => {
+      await Button('Platforms').click();
+      await TextField({ id: 'input-platform-search' }).fillIn('test'); // enables the disabled buttons
+      await Button('Search').click();
+    });
+
+    await waitFor(async () => {
+      expect(mockSubmit).toHaveBeenCalled();
+    });
   });
 
   test('renders the expected Platforms Pane', async () => {
-    await Button('Platforms').click();
+    await waitFor(async () => {
+      await Button('Platforms').click();
+    });
+
     await Pane('Platforms').is({ visible: true });
   });
 

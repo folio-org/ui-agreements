@@ -1,7 +1,4 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { Checkbox } from '@folio/stripes-testing';
+import { renderWithIntl, Checkbox } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import AgreementLineForm from './AgreementLineForm';
@@ -10,17 +7,13 @@ const onSubmitMock = jest.fn();
 const onCloseMock = jest.fn();
 const isSuppressFromDiscoveryEnabledMock = jest.fn();
 
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  handleSaveKeyCommand: () => jest.fn()
-}));
-
 jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
   return typeof children === 'function' ? children({ isEnabled: true }) : children;
 });
 
 jest.mock('../../AgreementLineSections/FormInfo', () => () => <div>FormInfo</div>);
 jest.mock('../../AgreementLineSections/FormPOLines', () => () => <div>FormPOLines</div>);
+jest.mock('../../AgreementLineSections/FormDocuments', () => () => <div>FormDocuments</div>);
 jest.mock('../../AgreementLineSections/FormCoverage', () => () => <div>FormCoverage</div>);
 jest.mock('../../AgreementLineSections/FormEresource', () => () => <div>FormEresource</div>);
 
@@ -32,17 +25,13 @@ describe('AgreementLineForm', () => {
         <AgreementLineForm
           createAnother
           data={{}}
-          form={{
-            change: () => jest.fn(),
-            getRegisteredFields: () => jest.fn(),
-            getState: () => jest.fn()
-          }}
           handlers={{
             onClose: onCloseMock,
             isSuppressFromDiscoveryEnabled: isSuppressFromDiscoveryEnabledMock
           }}
           isEholdingsEnabled
           onSubmit={onSubmitMock}
+          toggleCreateAnother={jest.fn()}
         />
       </MemoryRouter>,
       translationsProperties
@@ -57,6 +46,11 @@ describe('AgreementLineForm', () => {
   it('renders the FormPOLines component', () => {
     const { getByText } = renderComponent;
     expect(getByText('FormPOLines')).toBeInTheDocument();
+  });
+
+  it('renders the FormDocuments component', () => {
+    const { getByText } = renderComponent;
+    expect(getByText('FormDocuments')).toBeInTheDocument();
   });
 
   it('renders the FormCoverage component', () => {

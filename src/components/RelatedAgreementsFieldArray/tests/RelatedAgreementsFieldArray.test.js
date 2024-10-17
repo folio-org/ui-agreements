@@ -1,10 +1,7 @@
-import React from 'react';
-import { within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { Button } from '@folio/stripes-testing';
+import { waitFor, within } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { Button, renderWithIntl, TestForm } from '@folio/stripes-erm-testing';
 
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import { FieldArray } from 'react-final-form-arrays';
 import RelatedAgreementsFieldArray from '../RelatedAgreementsFieldArray';
 
@@ -16,36 +13,36 @@ jest.mock('../RelatedAgreementField', () => () => <div>RelatedAgreementField</di
 
 const relatedAgreements = [
   {
-    'id': '6bcca40d-138c-4c51-b7f5-235fb02552a6',
-    'note': 'test note 1',
-    'agreement': {
-      'id': 'f591806e-fe8c-4b16-a3cb-8cccc180d82b',
-      'name': 'AM ag 1',
-      'agreementStatus': {
-        'id': '2c91809c7ba954b5017ba95c586a0035',
-        'value': 'active',
-        'label': 'Active'
+    id: '6bcca40d-138c-4c51-b7f5-235fb02552a6',
+    note: 'test note 1',
+    agreement: {
+      id: 'f591806e-fe8c-4b16-a3cb-8cccc180d82b',
+      name: 'AM ag 1',
+      agreementStatus: {
+        id: '2c91809c7ba954b5017ba95c586a0035',
+        value: 'active',
+        label: 'Active'
       },
-      'startDate': '2021-09-02',
-      'endDate': null
+      startDate: '2021-09-02',
+      endDate: null
     },
-    'type': 'supersedes'
+    type: 'supersedes'
   },
   {
-    'id': 'ac2fde6e-a6a2-4df5-b244-8d803382d2d5',
-    'note': 'test note 2',
-    'agreement': {
-      'id': 'b958c1be-54f5-4f3d-9131-4255cd21b109',
-      'name': 'AM ag 3',
-      'agreementStatus': {
-        'id': '2c91809c7ba954b5017ba95c58630034',
-        'value': 'in_negotiation',
-        'label': 'In negotiation'
+    id: 'ac2fde6e-a6a2-4df5-b244-8d803382d2d5',
+    note: 'test note 2',
+    agreement: {
+      id: 'b958c1be-54f5-4f3d-9131-4255cd21b109',
+      name: 'AM ag 3',
+      agreementStatus: {
+        id: '2c91809c7ba954b5017ba95c58630034',
+        value: 'in_negotiation',
+        label: 'In negotiation'
       },
-      'startDate': '2021-09-18',
-      'endDate': null
+      startDate: '2021-09-18',
+      endDate: null
     },
-    'type': 'provides_post-cancellation_access_for'
+    type: 'provides_post-cancellation_access_for'
   }
 ];
 
@@ -73,9 +70,12 @@ describe('RelatedAgreementsFieldArray', () => {
 
     it('clicking the add button renders the relatedAgreement field', async () => {
       const { getByText } = renderComponent;
-      await Button('Add related agreement').click();
-
-      await expect(getByText('RelatedAgreementField')).toBeInTheDocument();
+      await waitFor(async () => {
+        await Button('Add related agreement').click();
+      });
+      await waitFor(async () => {
+        expect(getByText('RelatedAgreementField')).toBeInTheDocument();
+      });
     });
 
 
@@ -84,15 +84,28 @@ describe('RelatedAgreementsFieldArray', () => {
       const addButton = Button('Add related agreement');
 
       await addButton.exists();
-      await addButton.click();
-      expect(queryAllByTestId(/relatedAgreementsFieldArray\[.*\]/i).length).toEqual(1);
+      await waitFor(async () => {
+        await addButton.click();
+      });
+      await waitFor(async () => {
+        expect(queryAllByTestId(/relatedAgreementsFieldArray\[\d+\]/i).length).toEqual(1);
+      });
 
-      await addButton.click();
-      expect(queryAllByTestId(/relatedAgreementsFieldArray\[.*\]/i).length).toEqual(2);
+      await waitFor(async () => {
+        await addButton.click();
+      });
+      await waitFor(async () => {
+        expect(queryAllByTestId(/relatedAgreementsFieldArray\[\d+\]/i).length).toEqual(2);
+      });
 
       const trashButton = getByRole('button', { name: 'Remove related agreement 2' });
-      await userEvent.click(trashButton);
-      expect(queryAllByTestId(/relatedAgreementsFieldArray\[.*\]/i).length).toEqual(1);
+      await waitFor(async () => {
+        await userEvent.click(trashButton);
+      });
+
+      await waitFor(async () => {
+        expect(queryAllByTestId(/relatedAgreementsFieldArray\[\d+\]/i).length).toEqual(1);
+      });
     });
   });
 

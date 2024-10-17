@@ -1,16 +1,16 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { TestForm, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { Accordion, KeyValue } from '@folio/stripes-testing';
+
+import {
+  Accordion,
+  KeyValue,
+  TestForm,
+  renderWithIntl
+} from '@folio/stripes-erm-testing';
+
 import FormCoverage from './FormCoverage';
 import { values, resource, handlers, initialValues, externalData } from './testResources';
 import translationsProperties from '../../../../test/helpers';
 
 jest.mock('../../CoverageFieldArray', () => () => <div>CoverageFieldArray</div>);
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  SerialCoverage: () => <div>SerialCoverage</div>,
-}));
 
 const onSubmit = jest.fn();
 

@@ -1,6 +1,154 @@
 # Change history for ui-agreements
 
-## 8.3.0 In progress
+## 11.1.0 In progress
+
+## 11.0.3 2024-07-05
+  * ERM-3288 Fix permission on /erm/files/{id}/raw in mod-agreements
+  * FOLIO-4086 Fix GitHub Actions workflow not running for tags
+
+## 11.0.2 2024-05-28
+  * ERM-3248 Use static endpoints for /resources and /entitlementOptions in Poppy Compatible release 
+  * ERM-3246 Improve performance of entitlementOptions endpoint
+  * ERM-3239 Query all titles rather than just /electronic in local KB title search
+  * ERM-3220 Update pagination mechanisms for MCLs to work without stats
+  * ERM-3186 Change default search options for Local KB titles to exclude identifiers
+
+## 11.0.1 2024-04-19
+  * Change default search options for Local KB titles to exclude identifiers
+  * ERM-3182 Scrolling content in license view pane can overlap header (Also impacted agreements)
+  * ERM-3172 The failure of reference object when displaying agreement line should be handled elegantly
+  * Translations
+
+## 11.0.0 2024-03-22
+* ERM-3168 Add option to control which columns display in the Agreement search and sort results
+* ERM-3167 Add option to control which columns display in the Agreement Line search and sort results
+* ERM-3133 Add option to control which columns display in the Agreement->Agreement Lines MCL
+* ERM-3129 Remove explicit typescript version
+* ERM-3128 Focus "Start date" on "Add custom coverage"
+* ERM-3119 Add Organisation status to organisation card display
+* ERM-3093 Switch to pagination (from 'load more') controls in Title view
+* ERM-3092 Switch to pagination (from 'load more') controls in Package view
+* ERM-3091 Switch to pagination (from 'load more') controls in Agreements view
+* ERM-3085 Use document filter from stripes-erm-components, remove changes from ERM-2983
+* ERM-3081 Do not add a space after search operator when doing groupings
+* ERM-3062 Add has/has not filter in Licenses and amendments
+* ERM-1908 Swap Agreements Pick lists settings screen to single 4 pane based layout
+* *BREAKING* Switched to erm interface 7, licenses interface 6
+
+## 10.0.1 2023-11-09
+* ERM-3082 Backport grouping and spaces fix for Poppy
+* ERM-3065 Agreement lines are displayed by default on the "Agreement lines" pane.
+* ERM-3061 On setting document filter spaces are stripped from filter value
+
+## 10.0.0 2023-10-12
+* ERM-3052 In Document filter builder OR displays on screen instead of AND
+* ERM-3046 Agreement lines search MCL - Implement MCL Next/Previous pagination
+* ERM-3038 Creating adding an eHolding resource to a new agreement fails
+* ERM-3036 unlock @rehooks/local-storage from 2.4.4
+* ERM-3026 *BREAKING* bump `react-intl` to `v6.4.4`
+* ERM-3016 QIndex control for Titles SASQ
+* ERM-3013 Icon of the associated agreements should change if it is a closed agreement
+* ERM-3012 Agreement relationship type translations don't show in Agreements UI
+* ERM-3010 Add has/has not filter in Agreements
+* ERM-3001 Update Node.js to v18 in GitHub Actions
+* ERM-2992 Switch default behaviour for Agreements to not expand items
+* ERM-2983 Added documents filter to Agreements search and sort
+* ERM-2979 Add agreement line summary information and navigation link to Agreement edit view
+  * reuse FormLines component
+* ERM-2978 Edition, volume, issue render on new line
+* ERM-2973 Replace naive fetch hooks with parallelised ones (and deprecate)
+* ERM-2967 Use useChunkedCQLFetch consistently across ERM
+* ERM-2937 Titles Tab - Implement MCL Next/Previous pagination
+* ERM-2934 Agreement lines simple search widget definition
+* ERM-2923 Add created/updated metadata for Resources in local KB
+* ERM-2922 On changing the fields to be searched, the text string is cleared from the search box
+* ERM-2920 Replace "External data source" search
+* ERM-2641 Upgrade to Grails 5 (including Hibernate 5.6.x) for Poppy
+  * Added okapi interface dependency on new erm interface 6.0
+  * Added okapi interface dependency on new licenses interface 5.0
+* ERM-2630 Add new endpoint for external KB "push" process
+* ERM-2624 Add view only permissions for Agreement settings
+* ERM-2612 Add support for content type property on Agreement
+* ERM-2506 Display licenses sorted in predictable order in Agreements
+* ERM-2421 Remove Agreement lines from Agreement Edit view
+* ERM-2054 Platforms Tab - Implement MCL Next/Previous pagination
+* ERM-2053 Packages Tab - Implement MCL Next/Previous pagination
+* ERM-2052 Agreements Tab - Implement MCL Next/Previous pagination
+* ERM-1110 Add templated URLs to PCI display
+* STRIPES-870 *BREAKING* upgrade react to v18
+  * ERM-2991 Upgrade ui-agreements React to v18
+
+## 9.0.0 2023-02-22
+* ERM-2613 Remove unneeded `react-redux`. Upgrade `stripes-acq-components` to `v4`
+* ERM-2596 Increment ui-agreements to Stripes v8
+* ERM-2574 fix deprecated default export from 'zustand' in ui-agreements
+* ERM-2572 fix deprecated default export from 'zustand'
+* ERM-2562 Increment ui-agreements to Stripes v8
+* ERM-2533 Refactor interfaces code to react-query
+* ERM-2511 Make use of titles/electronic endpoint in ui-agreements
+* ERM-2510 Titles Endpoint does not have functionality of eresources "electronic" endpoint
+* ERM-2489 Reduce number eresource retrieved to 25 rather than 100
+* ERM-2486 Refactor agreement routes
+* ERM-2481 Add "Reason for closure" filter to Agreements search
+* ERM-2468 Give titles, packages and PCIs separate icons
+* ERM-2467 Change export file name and file extension in Agreements and Local KB admin
+* ERM-2465 Is Perpetual dropdown not populated in Agreement create/edit form
+* ERM-2463 Implement FormattedDateTime Interactor Pattern
+* ERM-2454 Bump ui-agreements erm-components dep
+* ERM-2452 Remove eresources search
+* ERM-2449 Add Cancellation date filter to Agreements search and sort
+* ERM-2445 Display a callout when exporting an Agreement
+* ERM-2434 "customProperties.ctx.title": "" in en.json
+* ERM-2423 Performance issues on displaying external agreement lines
+* ERM-2417 Do not show results on local KB e-resource search until a search or filter applied
+* ERM-2416 Separate title search and package search in local KB e-resource searching
+* ERM-2399 Missing Translations
+* ERM-2397 AgreementFilters should not be rendered within <form> intended for search field
+* ERM-2356 Add an option to "create another" agreement line
+* ERM-2339 Return no results on first display of Agreement Line search
+* ERM-2330 Add new tab group for switching between Agreements and Local KB searches
+* ERM-2309 Filter package resources by availabilityConstraints
+* ERM-2308 Display list of availabilityConstraints in package display
+* ERM-2289 Agreement line search and filter screen initial implementation
+* ERM-2183 Basket functionality still uses stripes-connect
+* ERM-1242 Frontend tests for URL customisation in RTL
+
+## 8.3.0 2022-10-27
+* ERM-2382 Unchecking all search field boxes in Agreements carries out search with no fields
+* ERM-2377 Show a user-friendly message when deleting a pick list with 0 values which is assigned to a Supplementary Property
+* ERM-2371 In custom property Type dropdown Refdata and Refdata (multi-select) should be labelled "Pick list" and "Pick list (multi-select)"
+* ERM-2369 Agreements: Open Access properties accordion name is incorrect
+* ERM-2368 Add links from the Agreement lines search to the parent Agreements
+* ERM-2359 Values entered into decimal and integer supp prop fields display as "NaN"
+* ERM-2355 Aria label for agreement line search incorrect
+* ERM-2353 Replace "Detached" with "Unlinked" in Agreement Line filter
+* ERM-2352 Navigation to switch between Agreements / Local KB does not display correctly if basket button not present
+* ERM-2351 Show error on Agreement line view if user does not have permission for orders.po-lines.collection.get
+* ERM-2347 Add all available package identifiers to extended package information in the package view
+* ERM-2346 Related Entitlement endpoint unnecessarily hit on package view
+* ERM-2344 Add link from an Agreement to an Agreement lines search filtered by the agreementAdd link from an Agreement to an Agreement lines search filtered by the agreement
+* ERM-2343 Default selection of Agreement text search fields
+* ERM-2340 "Reset all" in Agreement Line search does not correctly reset Agreement or Order filters
+* ERM-2338 Selecting "Agreement line type" boxes in filter should use OR (||) not AND
+* ERM-2335 Agreement lines search and filter updates
+* ERM-2318 stripes-erm-components should be a peer
+* ERM-2316 Update for stripes-kint-components translation handling changes
+* ERM-2315 Display all identifiers in a namespace for a resource
+* ERM-2293 Remove BigTest/Nightmare dependencies and tests (ui-agreements)
+* ERM-2290 Add property options to Agreements text search
+* ERM-2283 Upgrade Users interface to 16.0
+* ERM-2278 Refactor ui-plugin-find-agreement to react-query
+* ERM-2234 Replace withKiwtFieldArray with useKiwtFieldArray
+* ERM-2233 Remove redundant duplicate utility functions in ui-agreements
+* ERM-2220 ERM Comparisons: e-resources plugin is not filtering by Package when used for first time
+* ERM-2214 Migrate ERM Picklist Settings to new EditableRefdataList component
+  * ERM-2215 Migrate ui-agreements Picklist Settings
+* ERM-2173 New / Edit supplementary property and Term modals: UX improvements (Settings app)
+* ERM-2157 Add multi-select support for custom properties
+* ERM-2120 Display package identifiers in Agreements UI
+* ERM-1986 Move identifiers between title instances
+* ERM-1906 Re-work Supplementary Properties settings screen to use list that can be filtered and fourth pane display
+* Bump to stripes-erm-components ^7.0.0
 
 ## 8.2.2 2022-08-02
 * ERM-2297 Number of tags doesn't update on adding tags to agreement or agreement line

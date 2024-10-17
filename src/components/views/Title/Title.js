@@ -9,6 +9,7 @@ import {
   ExpandAllButton,
   HasCommand,
   Headline,
+  MetaSection,
   Row,
   checkScope,
   collapseAllSections,
@@ -23,7 +24,9 @@ import {
 } from '../../EResourceSections';
 
 import TitleCardInfo from '../../TitleCard/TitleCardInfo';
+
 import { urls } from '../../utilities';
+import { ERESOURCE_ENTITY_TYPE } from '../../../constants';
 
 export default class Title extends React.Component {
   static propTypes = {
@@ -65,6 +68,13 @@ export default class Title extends React.Component {
       >
         {eresource.name}
       </Headline>
+      <MetaSection
+        contentId="titleRecordMetaContent"
+        createdDate={eresource.dateCreated}
+        hideSource
+        id="titleRecordMeta"
+        lastUpdatedDate={eresource.lastUpdated}
+      />
       <TitleCardInfo {...this.getSectionProps('info')} title={eresource} />
     </div>
   );
@@ -103,23 +113,27 @@ export default class Title extends React.Component {
               </Col>
             </Row>
             <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-              <Agreements
-                {...this.getSectionProps('eresourceAgreements')}
-                isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsEresource" />}
-                visibleColumns={['name', 'type', 'startDate', 'endDate', 'eresource', 'acqMethod', 'coverage', 'isCustomCoverage']}
-              />
-              <AcquisitionOptions {...this.getSectionProps('acquisitionOptions')} />
+              {data.eresource.subType.value !== 'print' &&
+                <>
+                  <Agreements
+                    {...this.getSectionProps('eresourceAgreements')}
+                    isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsEresource" />}
+                    visibleColumns={['name', 'type', 'startDate', 'endDate', 'eresource', 'acqMethod', 'coverage', 'isCustomCoverage']}
+                  />
+                  <AcquisitionOptions {...this.getSectionProps('acquisitionOptions')} />
+                </>
+              }
               <NotesSmartAccordion
                 {...this.getSectionProps('notes')}
                 domainName="agreements"
                 entityId={data.eresource.id}
                 entityName={data.eresource.name}
-                entityType="eresource"
+                entityType={ERESOURCE_ENTITY_TYPE}
                 pathToNoteCreate={urls.noteCreate()}
                 pathToNoteDetails={urls.notes()}
               />
               {
-                handlers.isSuppressFromDiscoveryEnabled('title') &&
+                handlers.isSuppressFromDiscoveryEnabled('title') && data.eresource.subType?.value !== 'print' &&
                 <DiscoverySettings
                   handlers={handlers}
                   id="discoverySettings"

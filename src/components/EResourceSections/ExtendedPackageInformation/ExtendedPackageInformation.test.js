@@ -1,9 +1,7 @@
 
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
+import { renderWithIntl, KeyValue, MultiColumnList } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
-import { KeyValue, MultiColumnList } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 import ExtendedPackageInformation from './ExtendedPackageInformation';
 

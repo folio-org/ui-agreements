@@ -1,7 +1,4 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 
@@ -12,11 +9,6 @@ const onSubmitMock = jest.fn();
 const onCloseMock = jest.fn();
 const onBasketLinesAddedMock = jest.fn();
 
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  handleSaveKeyCommand: () => jest.fn()
-}));
-
 jest.mock('../../../hooks', () => ({
   ...jest.requireActual('../../../hooks'),
   useAgreementsContexts: jest.fn(() => ({ data: [] }))
@@ -25,7 +17,6 @@ jest.mock('../../../hooks', () => ({
 jest.mock('../../AgreementSections/FormInfo', () => () => <div>FormInfo</div>);
 jest.mock('../../AgreementSections/FormInternalContacts', () => () => <div>FormInternalContacts</div>);
 jest.mock('../../AgreementSections/FormLicenses', () => () => <div>FormLicenses</div>);
-jest.mock('../../AgreementSections/FormLines', () => () => <div>FormLines</div>);
 jest.mock('../../AgreementSections/FormOrganizations', () => () => <div>FormOrganizations</div>);
 jest.mock('../../AgreementSections/FormRelatedAgreements', () => () => <div>FormRelatedAgreements</div>);
 jest.mock('../../AgreementSections/FormSupplementaryDocuments', () => () => <div>FormSupplementaryDocuments</div>);
@@ -73,11 +64,6 @@ describe('AgreementForm', () => {
     it('renders the FormLicenses component', () => {
       const { getByText } = renderComponent;
       expect(getByText('FormLicenses')).toBeInTheDocument();
-    });
-
-    it('renders the FormLines component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('FormLines')).toBeInTheDocument();
     });
 
     it('renders the FormOrganizations component', () => {
@@ -138,11 +124,6 @@ describe('AgreementForm', () => {
     it('renders the FormLicenses component', () => {
       const { getByText } = renderComponent;
       expect(getByText('FormLicenses')).toBeInTheDocument();
-    });
-
-    it('renders the FormLines component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('FormLines')).toBeInTheDocument();
     });
 
     it('renders the FormOrganizations component', () => {

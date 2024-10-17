@@ -1,100 +1,106 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { Button } from '@folio/stripes-testing';
+import { Button, renderWithIntl } from '@folio/stripes-erm-testing';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { MemoryRouter } from 'react-router';
 import AddToBasketButton from './AddToBasketButton';
 
-const handleReplace = jest.fn(val => val); // Mock function that tests the addToBasket and removeFromBasket callbacks
+import translationsProperties from '../../../test/helpers/translationsProperties';
+
+const mockAddToBasket = jest.fn();
+const mockRemoveFromBasket = jest.fn();
+
+
+// EXAMPLE -- using an import as part of the inline mocking
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useBasket: () => {
+    const { useState } = jest.requireActual('react');
+    const [basketStore, setBasketStore] = useState({});
+    mockAddToBasket.mockImplementation((item) => {
+      setBasketStore({
+        ...basketStore,
+        [item.id]: item
+      });
+    });
+
+    mockRemoveFromBasket.mockImplementation((item) => {
+      const { [item.id]: _removeItem, ...newBasketStore } = basketStore;
+      setBasketStore(newBasketStore);
+    });
+
+    return {
+      basketStore,
+      addToBasket: mockAddToBasket,
+      removeFromBasket: mockRemoveFromBasket
+    };
+  }
+}));
 
 const item = {
-  'id':'a3316b0f-ddb1-47e1-bb0a-7b386639660b',
-  'class':'org.olf.kb.Pkg',
-  'name':'Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz',
-  'suppressFromDiscovery':false,
-  'tags':'[]',
-  'customCoverage':false,
-  '_object':'{class: "org.olf.kb.Pkg", coverage: Array(0), dateC…}',
-  'rowIndex':0,
+  id:'a3316b0f-ddb1-47e1-bb0a-7b386639660b',
+  class:'org.olf.kb.Pkg',
+  name:'Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz',
+  suppressFromDiscovery:false,
+  tags:'[]',
+  customCoverage:false,
+  _object:'{class: "org.olf.kb.Pkg", coverage: Array(0), dateC…}',
+  rowIndex:0,
 };
 
 const AddToBasketButtonProps = {
-  'addButtonTooltipText':'Add button tooltip',
-  'addLabel':'Add button',
-  'buttonProps':{
+  addButtonTooltipText:'Add button tooltip',
+  addLabel:'Add button',
+  buttonProps:{
     'data-test-add-package-to-basket':true,
     'data-testid': 'addtobasketbutton',
   },
   item,
-  'mutator': {
-    basket: {
-      replace: (val) => handleReplace(val)
-    }
-  },
-  'removeButtonTooltipText':'Remove button tooltip',
-  'removeLabel':'Remove button',
-  'resources': { basket: [] },
+  removeButtonTooltipText:'Remove button tooltip',
+  removeLabel:'Remove button',
 };
 
-const AddToBasketButtonPropsWithItem = {
-  'addButtonTooltipText':'Add button tooltip',
-  'addLabel':'Add button',
-  'buttonProps':{
-    'data-test-add-package-to-basket':true,
-    'data-testid': 'addtobasketbutton',
-  },
-  item,
-  'mutator': {
-    basket: {
-      replace: (val) => handleReplace(val)
-    }
-  },
-  'removeButtonTooltipText':'Remove button tooltip',
-  'removeLabel':'Remove button',
-  'resources': { basket: [item] },
-};
-
+let renderComponent;
 describe('AddToBasketButton', () => {
-  test('renders add To Basket button', () => {
-    const { getByTestId } = render(
-      <AddToBasketButton
-        {...AddToBasketButtonProps}
-      />
+  beforeEach(() => {
+    renderComponent = renderWithIntl(
+      <MemoryRouter>
+        <AddToBasketButton
+          {...AddToBasketButtonProps}
+        />
+      </MemoryRouter>, translationsProperties
     );
+  });
+
+  test('renders add To Basket button', () => {
+    const { getByTestId } = renderComponent;
     expect(getByTestId('addtobasketbutton')).toBeInTheDocument();
   });
 
-  test('renders remove button label', () => {
-    const { getByText } = render(
-      <AddToBasketButton
-        {...AddToBasketButtonPropsWithItem}
-      />
-    );
-    expect(getByText('Remove button'));
-  });
+  describe('clicking the add button', () => {
+    beforeEach(async () => {
+      await waitFor(async () => {
+        await Button('Add button').click();
+      });
+    });
 
+    it('invokes the callback with expected value', async () => {
+      await waitFor(async () => {
+        expect(mockAddToBasket.mock.calls.length).toBe(1);
+      });
+    });
 
-  it('clicking the add button invokes the callback with expected value', async () => {
-    render(
-      <AddToBasketButton
-        {...AddToBasketButtonProps}
-      />
-    );
+    test('renders remove button label', async () => {
+      await Button('Remove button').exists();
+    });
 
-    await Button('Add button').click();
+    test('clicking the remove button invokes the callback with expected value', async () => {
+      await waitFor(async () => {
+        await Button('Remove button').click();
+      });
 
-    expect(handleReplace.mock.calls.length).toBe(1);
-    handleReplace.mockClear();
-  });
-
-  test('clicking the remove button invokes the callback with expected value', async () => {
-    render(
-      <AddToBasketButton
-        {...AddToBasketButtonPropsWithItem}
-      />
-    );
-
-    await Button('Remove button').click();
-    expect(handleReplace.mock.calls.length).toBe(1);
-    handleReplace.mockClear();
+      await waitFor(async () => {
+        expect(mockRemoveFromBasket.mock.calls.length).toBe(1);
+      });
+    });
   });
 });

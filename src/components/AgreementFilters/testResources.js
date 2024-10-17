@@ -1,23 +1,31 @@
+import refdata from '../../../test/jest/refdata';
+
+const findRefdata = (desc) => (refdata.find(obj => obj.desc === desc)?.values);
+
 const activeFilters = {
-  'agreementStatus': [
+  agreementStatus: [
     'active',
     'draft',
     'in_negotiation',
     'requested'
   ],
-  'orgs': [
+  agreementContentType: [
+    'books',
+    'database'
+  ],
+  orgs: [
     '9032ae7d-ca16-4399-abae-e6186628c669'
   ],
-  'role': [
+  role: [
     '2c91809c7cd92b6b017cd932c5a90012'
   ],
-  'contacts': [
+  contacts: [
     ''
   ],
-  'contactRole': [
+  contactRole: [
     '2c91809c7cd92b6b017cd932c57f0008'
   ],
-  'tags': [
+  tags: [
     'urgent',
     'test',
     'important',
@@ -26,108 +34,36 @@ const activeFilters = {
 };
 
 const data = {
-  'agreements': [],
-  'agreementStatusValues': [{
-    'id': 'c2852a2226d11e472d881fa19cb9d715',
-    'value': 'closed',
-    'label': 'Closed'
+  agreements: [],
+  agreementStatusValues: findRefdata('SubscriptionAgreement.AgreementStatus'),
+  renewalPriorityValues: findRefdata('SubscriptionAgreement.RenewalPriority'),
+  isPerpetualValues: findRefdata('Global.Yes_No'),
+  contactRoleValues: findRefdata('InternalContact.Role'),
+  orgRoleValues: findRefdata('SubscriptionAgreementOrg.Role'),
+  supplementaryProperties: [],
+  agreementContentTypeValues: findRefdata('SubscriptionAgreement.ContentType'),
+  documentAtTypeValues: findRefdata('DocumentAttachment.AtType'),
+  tagsValues: [{
+    id: 'aeb85be7-7440-474f-94de-066fd69c7604',
+    label: 'catalogingrecords',
+    metadata: '{createdByUserId: "6409c3c0-cbb9-5d53-b174-393deb63…}'
   },
   {
-    'id': '2c91809c7cd92b6b017cd932c66d0038',
-    'value': 'draft',
-    'label': 'Draft'
+    id: '621e53a7-038a-4b6c-892f-169c3fbf655c',
+    label: 'important',
+    metadata: '{createdDate: "2021-11-01T01:52:24.475558Z"}'
   },
   {
-    'id': '2c91809c7cd92b6b017cd932c6730039',
-    'value': 'requested',
-    'label': 'Requested'
+    id: '68e1bb44-0b36-453d-b336-1127990d02e2',
+    label: 'test',
+    description: 'test',
+    metadata: '{createdByUserId: "6409c3c0-cbb9-5d53-b174-393deb63…}'
   },
   {
-    'id': '2c91809c7cd92b6b017cd932c678003a',
-    'value': 'in_negotiation',
-    'label': 'In negotiation'
-  },
-  {
-    'id': '2c91809c7cd92b6b017cd932c67e003b',
-    'value': 'active',
-    'label': 'Active'
-  }
-  ],
-  'renewalPriorityValues': [{
-    'id': '2c91809c7cd92b6b017cd932c6350032',
-    'value': 'definitely_renew',
-    'label': 'Definitely renew'
-  },
-  {
-    'id': '2c91809c7cd92b6b017cd932c6390033',
-    'value': 'for_review',
-    'label': 'For review'
-  },
-  {
-    'id': '2c91809c7cd92b6b017cd932c63f0034',
-    'value': 'definitely_cancel',
-    'label': 'Definitely cancel'
-  }
-  ],
-  'isPerpetualValues': [{
-    'id': '2c91809c7cd92b6b017cd932c617002b',
-    'value': 'yes',
-    'label': 'Yes'
-  },
-  {
-    'id': '2c91809c7cd92b6b017cd932c61b002c',
-    'value': 'no',
-    'label': 'No'
-  }
-  ],
-  'contactRoleValues': [{
-    'id': '2c91809c7cd92b6b017cd932c5750006',
-    'value': 'agreement_owner',
-    'label': 'Agreement owner'
-  },
-  {
-    'id': '2c91809c7cd92b6b017cd932c57a0007',
-    'value': 'authorized_signatory',
-    'label': 'Authorized signatory'
-  },
-  {
-    'id': '2c91809c7cd92b6b017cd932c57f0008',
-    'value': 'erm_librarian',
-    'label': 'ERM librarian'
-  },
-  {
-    'id': '2c91809c7cd92b6b017cd932c5840009',
-    'value': 'subject_specialist',
-    'label': 'Subject specialist'
-  }
-  ],
-  'orgRoleValues': [{
-    'id': '2c91809c7cd92b6b017cd932c5a90012',
-    'value': 'content_provider',
-    'label': 'Content provider'
-  }],
-  'supplementaryProperties': [],
-  'tagsValues': [{
-    'id': 'aeb85be7-7440-474f-94de-066fd69c7604',
-    'label': 'catalogingrecords',
-    'metadata': '{createdByUserId: "6409c3c0-cbb9-5d53-b174-393deb63…}'
-  },
-  {
-    'id': '621e53a7-038a-4b6c-892f-169c3fbf655c',
-    'label': 'important',
-    'metadata': '{createdDate: "2021-11-01T01:52:24.475558Z"}'
-  },
-  {
-    'id': '68e1bb44-0b36-453d-b336-1127990d02e2',
-    'label': 'test',
-    'description': 'test',
-    'metadata': '{createdByUserId: "6409c3c0-cbb9-5d53-b174-393deb63…}'
-  },
-  {
-    'id': '1d75d6c3-18e7-40b5-a5b6-08ac0acf4d54',
-    'label': 'urgent',
-    'description': 'Requires urgent attention',
-    'metadata': '{createdDate: "2021-11-01T01:52:24.475558Z"}'
+    id: '1d75d6c3-18e7-40b5-a5b6-08ac0acf4d54',
+    label: 'urgent',
+    description: 'Requires urgent attention',
+    metadata: '{createdDate: "2021-11-01T01:52:24.475558Z"}'
   }
   ]
 };

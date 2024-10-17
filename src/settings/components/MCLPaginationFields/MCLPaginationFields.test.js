@@ -1,8 +1,6 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button, renderWithIntl, TestForm, TextField } from '@folio/stripes-erm-testing';
 
-import { Button, TextField } from '@folio/stripes-testing';
-import { renderWithIntl, TestForm } from '@folio/stripes-erm-components/test/jest/helpers';
 import MCLPaginationFields from './MCLPaginationFields';
 
 import { defaultMclPageSize } from '../../../constants';
@@ -20,7 +18,7 @@ describe('MCLPaginationFields', () => {
     );
 
     for (const mcl of mclList) {
-      await TextField({ 'id': `${mcl}-page-size-id` }).exists();
+      await TextField({ id: `${mcl}-page-size-id` }).exists();
     }
   });
 
@@ -31,22 +29,28 @@ describe('MCLPaginationFields', () => {
       </TestForm>
     );
 
-    for (const mcl of mclList) {
-      await TextField({ 'id': `${mcl}-page-size-id` }).fillIn('15');
-    }
+    await waitFor(async () => {
+      for (const mcl of mclList) {
+        await TextField({ id: `${mcl}-page-size-id` }).fillIn('15');
+      }
+    });
 
     await Button('Submit').exists();
-    await Button('Submit').click();
+    await waitFor(async () => {
+      await Button('Submit').click();
+    });
 
-    await expect(onSubmit.mock.calls.length).toBe(1);
+    await waitFor(async () => {
+      expect(onSubmit.mock.calls.length).toBe(1);
+    });
 
     const expectedPayload = {
-      'pageSize':{
-        'agreementEresources':15,
-        'agreementLines':15,
-        'entitlementOptions':15,
-        'entitlements':15,
-        'packageContents':15
+      pageSize: {
+        agreementEresources: 15,
+        agreementLines: 15,
+        entitlementOptions: 15,
+        entitlements: 15,
+        packageContents: 15
       }
     };
 

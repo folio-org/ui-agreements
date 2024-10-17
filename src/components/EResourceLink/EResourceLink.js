@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { NoValue } from '@folio/stripes/components';
 import { isExternal, urls } from '../utilities';
+import { resourceClasses } from '../../constants';
 
 class EResourceLink extends React.Component {
   static propTypes = {
@@ -36,7 +37,13 @@ class EResourceLink extends React.Component {
     const pti = eresource?._object?.pti ?? eresource?.pti;
     const id = pti?.titleInstance?.id ?? eresource.id;
 
-    return id ? urls.eresourceView(id) : undefined;
+    if (id) {
+      // Only redirect to package lookup for a package, all other resources go to title lookup
+      return eresource.class === resourceClasses.PACKAGE ?
+        urls.packageView(id) :
+        urls.titleView(id);
+    }
+    return undefined;
   }
 
   render() {

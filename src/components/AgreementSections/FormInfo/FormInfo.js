@@ -21,8 +21,9 @@ import {
   requiredValidator,
   useAsyncValidation,
 } from '@folio/stripes-erm-components';
-import { validationEndPoint, statuses } from '../../../constants';
 
+import { validationEndPoint, statuses } from '../../../constants';
+import ContentTypesFieldArray from '../ContentTypesFieldArray';
 import AgreementPeriodsFieldArray from '../../AgreementPeriodsFieldArray';
 
 import css from './FormInfo.css';
@@ -151,37 +152,33 @@ const FormInfo = ({
         </Col>
       </Row>
       <Row>
-        <Col md={6} xs={12}>
+        <Col md={3} xs={12}>
           <Field name="agreementStatus" validate={requiredValidator}>
             {({ input, meta }) => {
-              return (<Select
-                {...input}
-                dataOptions={agreementStatusValues}
-                error={meta && meta.touched && meta.error}
-                id="edit-agreement-status"
-                label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
-                onChange={(e) => {
-                  input.onChange(e);
+              return (
+                <Select
+                  {...input}
+                  dataOptions={agreementStatusValues}
+                  error={meta && meta.touched && meta.error}
+                  id="edit-agreement-status"
+                  label={<FormattedMessage id="ui-agreements.agreements.agreementStatus" />}
+                  onChange={(e) => {
+                    input.onChange(e);
+                    let warning;
 
-                  let warning;
-
-                  if (values.reasonForClosure && e.target.value !== statuses.CLOSED) {
-                    warning = (
-                      <div data-test-warn-clear-reason-for-closure>
-                        <FormattedMessage id="ui-agreements.warn.clearReasonForClosure" />
-                      </div>
-                    );
-                  }
-
-                  mutators.setFieldData('reasonForClosure', { warning });
-                }}
-                placeholder=" "
-                required
-              />);
+                    if (values.reasonForClosure && e.target.value !== statuses.CLOSED) {
+                      warning = <FormattedMessage id="ui-agreements.warn.clearReasonForClosure" />;
+                    }
+                    mutators.setFieldData('reasonForClosure', { warning });
+                  }}
+                  placeholder=" "
+                  required
+                />
+              );
             }}
           </Field>
         </Col>
-        <Col md={6} xs={12}>
+        <Col md={3} xs={12}>
           <Field
             component={Select}
             dataOptions={[{ value: '', label: '' }, ...reasonForClosureValues]}
@@ -192,9 +189,7 @@ const FormInfo = ({
             parse={v => v} // Lets us send an empty string instead of `undefined`
           />
         </Col>
-      </Row>
-      <Row>
-        <Col md={6} xs={12}>
+        <Col md={3} xs={12}>
           <Field
             component={Select}
             dataOptions={[{ value: '', label: '' }, ...renewalPriorityValues]}
@@ -204,7 +199,7 @@ const FormInfo = ({
             parse={v => v} // Lets us pass an empty string instead of `undefined`
           />
         </Col>
-        <Col md={6} xs={12}>
+        <Col md={3} xs={12}>
           <Field
             component={Select}
             dataOptions={[{ value: '', label: '' }, ...isPerpetualValues]}
@@ -215,6 +210,10 @@ const FormInfo = ({
           />
         </Col>
       </Row>
+      <FieldArray
+        component={ContentTypesFieldArray}
+        name="agreementContentTypes"
+      />
       <FieldArray
         component={AlternativeNamesFieldArray}
         name="alternateNames"

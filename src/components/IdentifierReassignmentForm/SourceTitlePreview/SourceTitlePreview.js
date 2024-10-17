@@ -83,10 +83,10 @@ const SourceTitlePreview = () => {
       cardStyle="positive"
       data-testid="source-title-identifier-preview"
       headerStart={(
-        <AppIcon app="agreements" iconKey="eresource" size="small">
+        <AppIcon app="agreements" iconKey="title" size="small">
           <strong>
             <>
-              <Link to={urls.eresourceView(sourceTI?.id)}>
+              <Link to={urls.titleView(sourceTI?.id)}>
                 {sourceTI?.name}
               </Link>
               <> · {sourceTI?.publicationType?.label}</>

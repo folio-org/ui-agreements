@@ -60,7 +60,7 @@ const DestinationTitlePreview = () => {
     }
 
     return (
-      <Row>
+      <Row key={`title-${title?.id}-identifiers-row`}>
         <Col md={6} xs={12}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.materialType" />}>{title?.subType?.label}</KeyValue>
         </Col>
@@ -73,7 +73,7 @@ const DestinationTitlePreview = () => {
               >
                 {vi?.identifier?.value}
                 {vi?.identifier?.isNew ?
-                  <NewBox /> :
+                  <NewBox key={`newBox-title-${title?.id}-identifier[${index}]`} /> :
                   null
                 }
               </KeyValue>
@@ -87,15 +87,15 @@ const DestinationTitlePreview = () => {
   const renderPreviewTitle = () => {
     return (
       <>
-        <Headline size="large" tag="h3">
+        <Headline key="preview-title-headline" size="large" tag="h3">
           <FormattedMessage id="ui-agreements.identifiers.identifierDestination" />
         </Headline>
         {renderTitleIds(destinationTI)}
-        {destinationTI?.relatedTitles?.map(rt => (
-          <>
+        {destinationTI?.relatedTitles?.map((rt, index) => (
+          <div key={`styling-div[${index}]`}>
             <div className={css.separator} />
             {renderTitleIds(rt)}
-          </>
+          </div>
         ))}
       </>
     );
@@ -106,10 +106,10 @@ const DestinationTitlePreview = () => {
       cardStyle="positive"
       data-testid="destination-title-identifier-preview"
       headerStart={(
-        <AppIcon app="agreements" iconKey="eresource" size="small">
+        <AppIcon app="agreements" iconKey="title" size="small">
           <strong>
             <>
-              <Link to={urls.eresourceView(destinationTI?.id)}>
+              <Link to={urls.titleView(destinationTI?.id)}>
                 {destinationTI?.name}
               </Link>
               <> · {destinationTI?.publicationType?.label}</>

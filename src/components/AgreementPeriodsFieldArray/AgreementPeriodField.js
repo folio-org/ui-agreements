@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { get, isEmpty } from 'lodash';
-import { FormattedMessage } from 'react-intl';
+import { get } from 'lodash';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import {
+  AppValidatedDatepicker,
   Col,
-  Datepicker,
   Row,
   TextArea,
+  getLocaleDateFormat
 } from '@folio/stripes/components';
 
-import { composeValidators } from '@folio/stripes-erm-components';
+import { composeValidators, datePlausibilityCheck } from '@folio/stripes-erm-components';
 import { validators } from '../utilities';
 
 const multipleOpenEndedPeriods = (...rest) => (
@@ -22,95 +23,91 @@ const overlappingPeriods = (...rest) => (
   validators.overlappingDates(...rest, 'ui-agreements.errors.overlappingPeriod')
 );
 
-export default class AgreementPeriodField extends React.Component {
-  static propTypes = {
-    index: PropTypes.number.isRequired,
-    input: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
-  }
+const AgreementPeriodField = ({ index, input: { name } }) => {
+  const startDateInputRef = useRef(null);
+  const intl = useIntl();
+  const dateFormat = getLocaleDateFormat({ intl });
+  const backendDateStandard = 'YYYY-MM-DD';
 
-  constructor(props) {
-    super(props);
-    this.inputRef = React.createRef();
-  }
-
-  componentDidMount() {
-    const value = get(this.props, 'input.value');
-
-    /* Focus only when add agreement period button is clicked in which case the value object
-    would look like value:{ _delete: false }. Prevent focus on initial mount (value === {}) or
-    when value.id is defined */
-
-    if (!isEmpty(value) && !value.id && get(this.inputRef, 'current')) {
-      this.inputRef.current.focus();
+  useEffect(() => {
+    const value = get(startDateInputRef, 'current.value');
+    if ((value === '' || value === undefined) && get(startDateInputRef, 'current')) {
+      startDateInputRef.current.focus();
     }
-  }
+  }, [startDateInputRef]);
 
-  render = () => {
-    const { index, input: { name } } = this.props;
+  return (
+    <div
+      data-testid="agreementPeriodField"
+    >
+      <Row>
+        <Col xs={4}>
+          <Field
+            backendDateStandard={backendDateStandard}
+            component={AppValidatedDatepicker}
+            id={`period-start-date-${index}`}
+            inputRef={startDateInputRef}
+            label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
+            name={`${name}.startDate`}
+            required
+            timeZone="UTC"
+            usePortal
+            validate={composeValidators(
+              (value) => datePlausibilityCheck(value, dateFormat, backendDateStandard),
+              validators.requiredStartDate,
+              validators.dateOrder,
+              overlappingPeriods,
+            )}
+          />
+        </Col>
+        <Col xs={4}>
+          <Field
+            backendDateStandard={backendDateStandard}
+            component={AppValidatedDatepicker}
+            id={`period-end-date-${index}`}
+            label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
+            name={`${name}.endDate`}
+            parse={v => v}
+            timeZone="UTC"
+            usePortal
+            validate={composeValidators(
+              (value) => datePlausibilityCheck(value, dateFormat, backendDateStandard),
+              validators.dateOrder,
+              multipleOpenEndedPeriods,
+              overlappingPeriods,
+            )}
+          />
+        </Col>
+        <Col xs={4}>
+          <Field
+            backendDateStandard={backendDateStandard}
+            component={AppValidatedDatepicker}
+            id={`period-cancellation-deadline-${index}`}
+            label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}
+            name={`${name}.cancellationDeadline`}
+            parse={v => v} // Lets us send an empty string instead of `undefined`
+            timeZone="UTC"
+            usePortal
+            validate={(value) => datePlausibilityCheck(value, dateFormat, backendDateStandard)}
+          />
+        </Col>
+      </Row>
+      <Field
+        component={TextArea}
+        id={`period-note-${index}`}
+        label={<FormattedMessage id="ui-agreements.agreementPeriods.periodNote" />}
+        name={`${name}.note`}
+        parse={v => v} // Lets us send an empty string instead of `undefined`
+      />
+    </div>
+  );
+};
 
-    return (
-      <div
-        data-testid="agreementPeriodField"
-      >
-        <Row>
-          <Col xs={4}>
-            <Field
-              backendDateStandard="YYYY-MM-DD"
-              component={Datepicker}
-              id={`period-start-date-${index}`}
-              inputRef={this.inputRef}
-              label={<FormattedMessage id="ui-agreements.agreements.startDate" />}
-              name={`${name}.startDate`}
-              required
-              timeZone="UTC"
-              usePortal
-              validate={composeValidators(
-                validators.requiredStartDate,
-                validators.dateOrder,
-                overlappingPeriods,
-              )}
-            />
-          </Col>
-          <Col xs={4}>
-            <Field
-              backendDateStandard="YYYY-MM-DD"
-              component={Datepicker}
-              id={`period-end-date-${index}`}
-              label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
-              name={`${name}.endDate`}
-              parse={v => v} // Lets us send an empty string instead of `undefined`
-              timeZone="UTC"
-              usePortal
-              validate={composeValidators(
-                validators.dateOrder,
-                multipleOpenEndedPeriods,
-                overlappingPeriods,
-              )}
-            />
-          </Col>
-          <Col xs={4}>
-            <Field
-              backendDateStandard="YYYY-MM-DD"
-              component={Datepicker}
-              id={`period-cancellation-deadline-${index}`}
-              label={<FormattedMessage id="ui-agreements.agreements.cancellationDeadline" />}
-              name={`${name}.cancellationDeadline`}
-              parse={v => v} // Lets us send an empty string instead of `undefined`
-              timeZone="UTC"
-              usePortal
-            />
-          </Col>
-        </Row>
-        <Field
-          component={TextArea}
-          id={`period-note-${index}`}
-          label={<FormattedMessage id="ui-agreements.agreementPeriods.periodNote" />}
-          name={`${name}.note`}
-          parse={v => v} // Lets us send an empty string instead of `undefined`
-        />
-      </div>
-    );
-  }
-}
+AgreementPeriodField.propTypes = {
+  index: PropTypes.number.isRequired,
+  input: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+export default AgreementPeriodField;

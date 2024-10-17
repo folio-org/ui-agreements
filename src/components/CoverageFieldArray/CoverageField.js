@@ -133,7 +133,6 @@ export default class CoverageField extends React.Component {
                     error={!meta?.data?.warning && meta.touched ? meta.error : undefined}
                     id={`cc-end-date-${index}`}
                     input={input}
-                    inputRef={this.inputRef}
                     label={<FormattedMessage id="ui-agreements.agreements.endDate" />}
                     timeZone="UTC"
                     usePortal

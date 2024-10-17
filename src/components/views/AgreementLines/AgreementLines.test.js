@@ -1,14 +1,13 @@
-import '@folio/stripes-erm-components/test/jest/__mock__';
 import ReactRouterDom, { MemoryRouter } from 'react-router-dom';
 
-import { mockErmComponents, renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
+import { Button, MultiColumnList, Pane, renderWithIntl, TextField } from '@folio/stripes-erm-testing';
 
-import { Pane, Button, TextField, MultiColumnList } from '@folio/stripes-testing';
 import translationsProperties from '../../../../test/helpers';
 
 import AgreementLines from './AgreementLines';
-import { data, history, searchField } from './testResources';
+import { data, history } from './testResources';
 
 
 jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
@@ -17,16 +16,11 @@ jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
 
 jest.mock('../../AgreementLineFilters', () => () => <div>AgreementLineFilters</div>);
 
-jest.mock('@folio/stripes-erm-components', () => ({
-  ...jest.requireActual('@folio/stripes-erm-components'),
-  ...mockErmComponents
-}));
-
 // This is seemingly the only method to override imported __mock__ functions.
 // (This probably means this setup SUCKS and needs changing)
 ReactRouterDom.useLocation = jest.requireActual('react-router-dom').useLocation;
 
-const mockSubmit = jest.fn();
+const mockSubmit = jest.fn(e => e.preventDefault());
 describe('Agreement lines', () => {
   useHandleSubmitSearch.mockImplementation(() => ({
     handleSubmitSearch: mockSubmit,
@@ -42,10 +36,8 @@ describe('Agreement lines', () => {
         <AgreementLines
           data={data}
           history={history}
-          onNeedMoreData={jest.fn()}
           queryGetter={jest.fn()}
           querySetter={jest.fn()}
-          searchField={searchField}
           source={{
             totalCount: jest.fn(() => data.agreementLines.length),
             loaded: jest.fn(() => true),
@@ -71,15 +63,23 @@ describe('Agreement lines', () => {
   });
 
   test('renders the expected Search and Reset all Button', async () => {
-    await TextField({ id: 'input-agreementLine-search' }).fillIn('test'); // enables the disabled buttons
+    await waitFor(async () => {
+      await TextField({ id: 'input-agreementLine-search' }).fillIn('test'); // enables the disabled buttons
+    });
+
     await Button('Search').exists();
     await Button('Reset all').exists();
   });
 
   test('triggering the search should invoke the useHandleSubmitSearch hook', async () => {
-    await TextField({ id: 'input-agreementLine-search' }).fillIn('test'); // enables the disabled buttons
-    await Button('Search').click();
-    expect(mockSubmit).toHaveBeenCalled();
+    await waitFor(async () => {
+      await TextField({ id: 'input-agreementLine-search' }).fillIn('test'); // enables the disabled buttons
+      await Button('Search').click();
+    });
+
+    await waitFor(async () => {
+      expect(mockSubmit).toHaveBeenCalled();
+    });
   });
 
   test('renders the AgreementLine Filters', () => {
@@ -108,10 +108,10 @@ describe('Agreement lines', () => {
       columns: [
         'Name/Reference',
         'Description',
+        'Parent agreement',
         'Note',
         'Active from',
         'Active to',
-        'Parent agreement'
       ],
     }).exists();
   });

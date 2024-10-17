@@ -3,11 +3,13 @@ import { FormattedMessage } from 'react-intl';
 
 import { Field } from 'react-final-form';
 
+import { NumberField } from '@k-int/stripes-kint-components';
+
+import { useStripes } from '@folio/stripes/core';
 import {
   Col,
   Layout,
   Row,
-  TextField,
 } from '@folio/stripes/components';
 
 import { defaultMclPageSize } from '../../../constants';
@@ -18,11 +20,13 @@ const MAX_RANGE = 100;
 
 const validate = (fieldValue, min, max) => {
   const fieldValueInt = (typeof fieldValue !== 'number' ? parseInt(fieldValue, 10) : fieldValue);
-  return (!fieldValue || fieldValueInt >= max || fieldValueInt < min) ?
+  return (!fieldValue || fieldValueInt > max || fieldValueInt < min) ?
     <FormattedMessage id="ui-agreements.settings.error.valueNotInRange" values={{ min, max }} /> : undefined;
 };
 
 const MCLPaginationFields = () => {
+  const stripes = useStripes();
+  const disabled = !stripes.hasPerm('ui-agreements.generalSettings.manage');
   return (
     <>
       <Layout className="padding-bottom-gutter padding-top-gutter" data-test-mcl-description>
@@ -45,12 +49,12 @@ const MCLPaginationFields = () => {
           <Col xs={4}>
             <Field
               ariaLabel={`${mcl}-page-size`}
-              component={TextField}
+              component={NumberField}
               data-testid={`${mcl}-page-size-testId`}
+              disabled={disabled}
               id={`${mcl}-page-size-id`}
               name={`pageSize.${mcl}`}
               parse={v => parseInt(v, 10)}
-              type="number"
               validate={v => validate(v, MIN_RANGE, MAX_RANGE)}
             />
           </Col>

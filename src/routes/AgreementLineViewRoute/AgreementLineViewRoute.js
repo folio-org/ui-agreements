@@ -10,7 +10,7 @@ import View from '../../components/views/AgreementLine';
 import { urls } from '../../components/utilities';
 
 import { useAgreementsHelperApp, useChunkedOrderLines, useSuppressFromDiscovery } from '../../hooks';
-import { AGREEMENT_ENDPOINT, AGREEMENT_LINE_ENDPOINT } from '../../constants/endpoints';
+import { AGREEMENT_ENDPOINT, AGREEMENT_LINE_ENDPOINT } from '../../constants';
 
 const AgreementLineViewRoute = ({
   handlers,
@@ -35,12 +35,19 @@ const AgreementLineViewRoute = ({
   const { mutateAsync: deleteAgreementLine } = useMutation(
     // As opposed to ['ERM', 'AgreementLine', lineId, 'DELETE', agreementLinePath] if we did this via a DELETE call to entitlements endpoint
     ['ERM', 'AgreementLine', lineId, 'DELETE', agreementPath],
-    () => ky.put(agreementPath, { json: {
-      id: agreementId,
-      items: [{ id: lineId, _delete: true }]
-    } }).then(() => {
+    () => ky.put(agreementPath, {
+      json: {
+        id: agreementId,
+        items: [{ id: lineId, _delete: true }]
+      }
+    }).then(() => {
       queryClient.invalidateQueries('ERM', 'Agreement', agreementId); // Invalidate relevant Agreement
-      history.push(`${urls.agreementView(agreementId)}${location.search}`);
+      // If we're coming from agreements, go back to agreements, else go back to line view
+      if (location.pathname.startsWith('/erm/agreements')) {
+        history.push(`${urls.agreementView(agreementId)}${location.search}`);
+      } else {
+        history.push(`${urls.agreementLines()}${location.search}`);
+      }
       callout.sendCallout({ message: <FormattedMessage id="ui-agreements.line.delete.callout" /> });
     }).catch(error => {
       callout.sendCallout({ type: 'error', timeout: 0, message: <FormattedMessage id="ui-agreements.line.deleteFailed.callout" values={{ message: error.message }} /> });
@@ -111,6 +118,7 @@ const AgreementLineViewRoute = ({
         onEdit: handleEdit,
         onToggleTags: handleToggleTags
       }}
+      id={lineId}
       isLoading={isLineLoading() || areOrderLinesLoading}
     />
   );

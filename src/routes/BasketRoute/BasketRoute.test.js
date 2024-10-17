@@ -1,14 +1,23 @@
 
-import React from 'react';
 import PropTypes from 'prop-types';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
+
 import { MemoryRouter } from 'react-router-dom';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
-import { Button as ButtonInteractor } from '@folio/stripes-testing';
+
 import translationsProperties from '../../../test/helpers';
 import BasketRoute from './BasketRoute';
-import resources from './testResources';
+
+const mockRemoveFromBasket = jest.fn();
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useBasket: () => ({
+    basket: [],
+    removeFromBasket: mockRemoveFromBasket
+  })
+}));
 
 const AddToExistingAgreementButton = (props) => {
   return <Button onClick={props.handlers.onAddToExistingAgreement}>AddToExistingAgreementButton</Button>;
@@ -65,20 +74,12 @@ jest.mock('../../components/views/Basket', () => {
 // mock callbacks
 const historyPushMock = jest.fn();
 const historyGoBackMock = jest.fn();
-const mutatorBasketReplace = jest.fn();
 
 const basketRouteProps = {
   history: {
     push: historyPushMock,
     goBack: historyGoBackMock,
   },
-  mutator: {
-    basket: {
-      replace: mutatorBasketReplace,
-    },
-    openAgreements: {},
-  },
-  resources: { resources }
 };
 
 describe('BasketRoute', () => {
@@ -103,19 +104,9 @@ describe('BasketRoute', () => {
       expect(getByText('AddToExistingAgreementButton')).toBeInTheDocument();
     });
 
-    test('calls the AddToExistingAgreementButton', async () => {
-      await ButtonInteractor('AddToExistingAgreementButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
-    });
-
     test('renders the AddToNewAgreementButton component', () => {
       const { getByText } = renderComponent;
       expect(getByText('AddToNewAgreementButton')).toBeInTheDocument();
-    });
-
-    test('calls the AddToNewAgreementButton', async () => {
-      await ButtonInteractor('AddToNewAgreementButton').click();
-      expect(historyPushMock).toHaveBeenCalled();
     });
 
     test('renders the CloseButton component', () => {
@@ -124,8 +115,13 @@ describe('BasketRoute', () => {
     });
 
     test('calls the CloseButton', async () => {
-      await ButtonInteractor('CloseButton').click();
-      expect(historyGoBackMock).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('CloseButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyGoBackMock).toHaveBeenCalled();
+      });
     });
 
     test('renders the RemoveBasketItemButton component', () => {
@@ -134,8 +130,13 @@ describe('BasketRoute', () => {
     });
 
     test('calls the RemoveBasketItemButton', async () => {
-      await ButtonInteractor('RemoveBasketItemButton').click();
-      expect(mutatorBasketReplace).toHaveBeenCalled();
+      await waitFor(async () => {
+        await ButtonInteractor('RemoveBasketItemButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(mockRemoveFromBasket).toHaveBeenCalled();
+      });
     });
   });
 });

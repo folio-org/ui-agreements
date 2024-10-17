@@ -1,14 +1,24 @@
-import React from 'react';
-import '@folio/stripes-erm-components/test/jest/__mock__';
-import { renderWithIntl } from '@folio/stripes-erm-components/test/jest/helpers';
-import { MultiColumnList, MultiColumnListCell } from '@folio/stripes-testing';
+
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { MultiColumnList, MultiColumnListCell, renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import LinesList from './LinesList';
 import agreement from './testResources';
 
 const onViewAgreementLine = jest.fn();
-const onNeedMoreLines = jest.fn();
+const visibleColumns = [
+  'name',
+  'provider',
+  'publicationType',
+  'count',
+  'note',
+  'coverage',
+  'isCustomCoverage',
+  'activeFrom',
+  'activeTo',
+  'poLines',
+];
 
 describe('LinesList', () => {
   beforeEach(() => {
@@ -16,8 +26,8 @@ describe('LinesList', () => {
       <MemoryRouter>
         <LinesList
           agreement={agreement}
-          onNeedMoreLines={onNeedMoreLines}
           onViewAgreementLine={onViewAgreementLine}
+          visibleColumns={visibleColumns}
         />
       </MemoryRouter>,
       translationsProperties
@@ -43,7 +53,8 @@ describe('LinesList', () => {
   test('renders expected agreement line name in each row', async () => {
     Promise.all([
       await MultiColumnListCell({ row: 0, columnIndex: 0 }).has({ content: 'ACS in Focus Test' }),
-      await MultiColumnListCell({ row: 1, columnIndex: 0 }).has({ content: 'American Society of Civil Engineers : Journals' })
+      await MultiColumnListCell({ row: 1, columnIndex: 0 }).has({ content: 'American Society of Civil Engineers : Journals' }),
+      await MultiColumnListCell({ row: 2, columnIndex: 0 }).has({ content: '22-1887786-11234147a' })
     ]);
   });
 
@@ -57,7 +68,8 @@ describe('LinesList', () => {
   test('renders expected Publication type date in each row', async () => {
     Promise.all([
       await MultiColumnListCell({ row: 0, columnIndex: 2 }).has({ content: 'Package' }),
-      await MultiColumnListCell({ row: 1, columnIndex: 2 }).has({ content: 'Package' })
+      await MultiColumnListCell({ row: 1, columnIndex: 2 }).has({ content: 'Package' }),
+      await MultiColumnListCell({ row: 2, columnIndex: 2 }).has({ content: 'Title' })
     ]);
   });
 
@@ -68,8 +80,10 @@ describe('LinesList', () => {
       await MultiColumnList('agreement-lines').click({ row: 0, columnIndex: 1 });
     });
 
-    test('should call the onViewAgreementLine callback', () => {
-      expect(onViewAgreementLine).toHaveBeenCalled();
+    test('should call the onViewAgreementLine callback', async () => {
+      await waitFor(async () => {
+        expect(onViewAgreementLine).toHaveBeenCalled();
+      });
     });
   });
 });
