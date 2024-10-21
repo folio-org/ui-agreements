@@ -52,7 +52,7 @@ const AgreementLineFilters = ({
   const poLineId = activeFilters?.poLine?.[0];
   const poLinePath = `orders/order-lines/${poLineId}`;
   const [poLineFilterNumber, setPOLineFilterNumber] = useState();
-    const atTypeValues = data.documentAtTypeValues;
+  const categoryValues = data.documentAtTypeValues;
 
   const { isAgreementLoading } = useAgreement({
     agreementId,
@@ -262,7 +262,7 @@ const AgreementLineFilters = ({
     return (
       <DocumentFilter
         activeFilters={activeFilters}
-        atTypeValues={atTypeValues}
+        categoryValues={categoryValues}
         filterHandlers={filterHandlers}
       />
     );
