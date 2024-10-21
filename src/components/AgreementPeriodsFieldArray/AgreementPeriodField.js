@@ -1,8 +1,10 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { get } from 'lodash';
+
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Field } from 'react-final-form';
+import { Field, useFormState } from 'react-final-form';
+
+import get from 'lodash/get';
 
 import {
   AppValidatedDatepicker,
@@ -29,12 +31,14 @@ const AgreementPeriodField = ({ index, input: { name } }) => {
   const dateFormat = getLocaleDateFormat({ intl });
   const backendDateStandard = 'YYYY-MM-DD';
 
+  const { values } = useFormState();
+
   useEffect(() => {
-    const value = get(startDateInputRef, 'current.value');
-    if ((value === '' || value === undefined) && get(startDateInputRef, 'current')) {
+    const startDateValue = get(values, `${name}.startDate`);
+    if (startDateValue === undefined && startDateInputRef?.current) {
       startDateInputRef.current.focus();
     }
-  }, [startDateInputRef]);
+  }, [name, startDateInputRef, values]);
 
   return (
     <div
