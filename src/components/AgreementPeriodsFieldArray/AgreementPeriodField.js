@@ -31,7 +31,7 @@ const AgreementPeriodField = ({ index, input: { name } }) => {
 
   useEffect(() => {
     const value = get(startDateInputRef, 'current.value');
-    if ((value === '' || value === undefined) && get(startDateInputRef, 'current')) {
+    if ((value === undefined) && get(startDateInputRef, 'current')) {
       startDateInputRef.current.focus();
     }
   }, [startDateInputRef]);
