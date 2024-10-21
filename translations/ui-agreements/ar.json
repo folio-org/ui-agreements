@@ -781,5 +781,8 @@
     "agreementLines.customCoverageIndicator": "Custom coverage indicator",
     "eresources.relatedTitle.infoPopover": "Open the electronic title to view: options for acquiring the title, any linked agreements and further title details.",
     "eresources.electronicTitle": "Electronic title \"{name}\"",
-    "eresources.subType": "Material type"
+    "eresources.subType": "Material type",
+    "documents.addDocs": "Add document",
+    "emptyAccordion.documents": "No documents for this agreement line ",
+    "line.documents": "Documents"
 }

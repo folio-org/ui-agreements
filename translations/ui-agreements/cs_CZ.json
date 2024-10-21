@@ -781,5 +781,8 @@
     "agreementLines.customCoverageIndicator": "Vlastní indikátor pokrytí",
     "eresources.relatedTitle.infoPopover": "Otevřete elektronický název a zobrazte: možnosti pro získání názvu, všechny propojené smlouvy a další podrobnosti o názvu.",
     "eresources.electronicTitle": "Elektronický název \"{name}\"",
-    "eresources.subType": "Typ materiálu"
+    "eresources.subType": "Typ materiálu",
+    "documents.addDocs": "Add document",
+    "emptyAccordion.documents": "No documents for this agreement line ",
+    "line.documents": "Documents"
 }
