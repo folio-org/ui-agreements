@@ -37,3 +37,9 @@
   background-color: #1d9e03;
   margin-left: var(--gutter-static-one-third);
 }
+
+.buttonStyle3 {
+  color: white;
+  background-color: #6f2bab;
+  margin-left: var(--gutter-static-one-third);
+}

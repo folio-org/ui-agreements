@@ -169,6 +169,11 @@ const Agreements = ({
                 icon: "trash",
                 onClick: () => console.log("CLICKED OTHER BUTTON"),
                 className: css.buttonStyle2
+              },
+              {
+                icon: "number-generator",
+                onClick: () => console.log("CLICKED BUTTON 3"),
+                className: css.buttonStyle3
               }
             ]}
           />
