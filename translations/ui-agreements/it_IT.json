@@ -431,7 +431,7 @@
     "agreementLines.deleteConfirmMessage": "La riga del contratto per la risorsa elettronica <strong> {name} </strong> verrà <strong> eliminata </strong> .",
     "eresources.suppressFromDiscovery": "Non mostrare nel discovery",
     "default": "Predefinito",
-    "eresources.relatedTitle": "Titolo correlato \"{nome}\"",
+    "eresources.relatedTitle": "Titolo correlato \"{name}\"",
     "identifier.eissn.issn": "eISSN/ISSN",
     "eresources.contentType": "Tipo di contenuto del pacchetto",
     "eresources.holdingStatus": "Stato del posseduto",
@@ -478,7 +478,7 @@
     "permission.platforms.view": "Contratti: cerca e visualizza piattaforme",
     "permission.platforms.edit": "Contratti: modificare piattaforme",
     "platform.closeEdit": "Chiudi la modifica della piattaforma",
-    "platform.editPlatform": "Modifica {nome}",
+    "platform.editPlatform": "Modifica {name}",
     "platform.edit": "Modifica",
     "platform.localPlatformCode": "Codice della piattaforma locale",
     "platform.locators": "Localizzatori",
@@ -781,5 +781,8 @@
     "agreementLines.customCoverageIndicator": "Custom coverage indicator",
     "eresources.relatedTitle.infoPopover": "Open the electronic title to view: options for acquiring the title, any linked agreements and further title details.",
     "eresources.electronicTitle": "Electronic title \"{name}\"",
-    "eresources.subType": "Material type"
+    "eresources.subType": "Material type",
+    "documents.addDocs": "Add document",
+    "emptyAccordion.documents": "No documents for this agreement line ",
+    "line.documents": "Documents"
 }

@@ -408,7 +408,7 @@
     "agreementLines.custom": "Personalizado",
     "agreementLines.customCoverage.coverageType": "Tipo de cobertura",
     "eresources.packageDetails": "Detalhes do pacote",
-    "line.update.callout": "Linha do contrato atualizada",
+    "line.update.callout": "Linha de contrato atualizada: {name}",
     "line.delete.callout": "Linha do contrato excluída",
     "line.deleteFailed.callout": "Falha ao excluir a linha do contrato: {message}",
     "line.lineInformation": "Informações da linha do contrato",
@@ -781,5 +781,8 @@
     "agreementLines.customCoverageIndicator": "Indicador de cobertura personalizada",
     "eresources.relatedTitle.infoPopover": "Abra o título eletrônico para visualizar: opções para aquisição do título, quaisquer contratos vinculados e mais detalhes do título.",
     "eresources.electronicTitle": "Título eletrônico \"{name}\"",
-    "eresources.subType": "Tipo de material"
+    "eresources.subType": "Tipo de material",
+    "documents.addDocs": "Adicionar documento",
+    "emptyAccordion.documents": "Não há documentos para esta linha de contrato",
+    "line.documents": "Documentos"
 }

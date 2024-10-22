@@ -47,6 +47,7 @@ const AgreementPeriodsFieldArray = ({
       >
         {renderPeriods()}
       </div>
+      {/* Initial startDate is '', but all subsequent should be undefined to ensure we can grab focus */}
       <Button id="add-period-button" onClick={() => onAddField()}>
         <FormattedMessage id="ui-agreements.agreementPeriods.addPeriod" />
       </Button>

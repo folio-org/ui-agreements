@@ -122,7 +122,13 @@ const AgreementCreateRoute = ({
   };
 
   const getInitialValues = () => {
-    const periods = [{}];
+    /*
+     * We initialise startDate to an empty string
+     * so that we can differentiate the always
+     * present period from those added by the user.
+     * This allows us to focus them as we please.
+     */
+    const periods = [{ startDate: '' }];
     let items;
 
     // if authority && referenceId exist we can assume the call came from eholdings
