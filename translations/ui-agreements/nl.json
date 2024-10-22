@@ -781,5 +781,8 @@
     "agreementLines.customCoverageIndicator": "Maatwerkdekkingsindicator",
     "eresources.relatedTitle.infoPopover": "Open de elektronische titel om het volgende te bekijken: opties voor het aanschaffen van de titel, eventuele gekoppelde overeenkomsten en verdere details over de titel.",
     "eresources.electronicTitle": "Digitale titel \"{name}\".",
-    "eresources.subType": "Materiaalsoort"
+    "eresources.subType": "Materiaalsoort",
+    "documents.addDocs": "Add document",
+    "emptyAccordion.documents": "No documents for this agreement line ",
+    "line.documents": "Documents"
 }

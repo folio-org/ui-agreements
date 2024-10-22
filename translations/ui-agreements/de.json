@@ -781,5 +781,8 @@
     "agreementLines.customCoverageIndicator": "Custom coverage indicator",
     "eresources.relatedTitle.infoPopover": "Den elektronischen Titel öffnen, um Folgendes anzuzeigen: Optionen für den Erwerb des Titels, alle damit verbundenen Vereinbarungen und weitere Details zum Titel.",
     "eresources.electronicTitle": "Electronic title \"{name}\"",
-    "eresources.subType": "Material type"
+    "eresources.subType": "Material type",
+    "documents.addDocs": "Add document",
+    "emptyAccordion.documents": "No documents for this agreement line ",
+    "line.documents": "Documents"
 }

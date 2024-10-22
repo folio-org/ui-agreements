@@ -350,7 +350,7 @@
     "agreements.deleteAgreement": "Delete agreement",
     "agreements.deleteConfirmMessage": "Agreement <strong>{name}</strong> will be <strong>deleted</strong>.",
     "errors.noDeleteHasAgreementLines": "<strong>Agreement was not deleted</strong> because it has one or more agreement lines.",
-    "errors.noDeleteHasLicenses": "El acuerdi <strong> {name} </strong> no se eliminó porque está en uso en una o más licencias.",
+    "errors.noDeleteHasLicenses": "<strong>Agreement was not deleted</strong> because it has one or more licenses attached.",
     "errors.noDeleteHasRelatedAgreements": "<strong>Agreement was not deleted</strong> because it has one or more related agreements.",
     "errors.noDeleteAgreementBackendError": "<strong>Agreement was not deleted:</strong> {message}",
     "settings.label": "Label",
@@ -472,7 +472,7 @@
     "action": "Acción",
     "basket.existingAgreements": "Acuerdos existentes",
     "basket.messageBanner": "Seleccione uno o más recursos electrónicos y agréguelos a un acuerdo nuevo o existente. Se creará una línea de acuerdo para cada recurso electrónico que seleccione.",
-    "basket.removeFromBasket": "Eliminar { publicationType } \"{ nombre }\" de la cesta",
+    "basket.removeFromBasket": "Eliminar { publicationType } \"{ name }\" de la cesta",
     "duplicateAgreementModal.org.olf.erm.SubscriptionAgreement.name.unique": "No se puede duplicar el acuerdo. No se guardó el acuerdo. El nombre debe ser único. Ya existe un acuerdo con el nombre \"Copia de: {name} \".",
     "platforms": "Plataformas",
     "permission.platforms.view": "Acuerdos: Buscar y ver plataformas",
@@ -781,5 +781,8 @@
     "agreementLines.customCoverageIndicator": "Custom coverage indicator",
     "eresources.relatedTitle.infoPopover": "Abra el título electrónico para ver: opciones para adquirir el título, cualquier acuerdo vinculado y más detalles del título.",
     "eresources.electronicTitle": "Título electrónico \"{name}\"",
-    "eresources.subType": "Material type"
+    "eresources.subType": "Material type",
+    "documents.addDocs": "Add document",
+    "emptyAccordion.documents": "No documents for this agreement line ",
+    "line.documents": "Documents"
 }

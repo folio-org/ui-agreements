@@ -752,7 +752,7 @@
     "eresources.proxiedAndCustomizedUrls": "Proxied and customized URLs",
     "eresources.proxiesCustomizers": "Proxies/Customizers",
     "eresources.url": "URL",
-    "agreements.agreementLineCount": "契約には{count, number}件の契約書があります{count, plural, one { line } other { line }}",
+    "agreements.agreementLineCount": "契約には{count, number}件の契約明細があります{count, plural, one { line } other { line }}",
     "open.linkInNewTab": "(新しいタブで開く)",
     "agreementLineCountHeader": "{count, number} Agreement {count, plural, one {line} other {lines}}",
     "relationship.inward.supersedes": "is superseded by",
@@ -781,5 +781,8 @@
     "agreementLines.customCoverageIndicator": "カスタム収録範囲 ID",
     "eresources.relatedTitle.infoPopover": "Open the electronic title to view: options for acquiring the title, any linked agreements and further title details.",
     "eresources.electronicTitle": "電子タイトル \"{name}\"",
-    "eresources.subType": "資料種別"
+    "eresources.subType": "資料種別",
+    "documents.addDocs": "Add document",
+    "emptyAccordion.documents": "No documents for this agreement line ",
+    "line.documents": "Documents"
 }

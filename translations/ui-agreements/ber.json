@@ -408,7 +408,7 @@
     "agreementLines.custom": "Custom",
     "agreementLines.customCoverage.coverageType": "Coverage type",
     "eresources.packageDetails": "Package details",
-    "line.update.callout": "Agreement line updated",
+    "line.update.callout": "Agreement line updated: {name}",
     "line.delete.callout": "Agreement line deleted",
     "line.deleteFailed.callout": "Agreement line failed to delete: {message}",
     "line.lineInformation": "Agreement line information",
@@ -781,5 +781,8 @@
     "agreementLines.customCoverageIndicator": "Custom coverage indicator",
     "eresources.relatedTitle.infoPopover": "Open the electronic title to view: options for acquiring the title, any linked agreements and further title details.",
     "eresources.electronicTitle": "Electronic title \"{name}\"",
-    "eresources.subType": "Material type"
+    "eresources.subType": "Material type",
+    "documents.addDocs": "Add document",
+    "emptyAccordion.documents": "No documents for this agreement line ",
+    "line.documents": "Documents"
 }
