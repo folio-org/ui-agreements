@@ -52,6 +52,10 @@ describe('AgreementLineFilters', () => {
     await Accordion('Tags').exists();
   });
 
+  test('renders the Documents Accordion', async () => {
+    await Accordion('Documents').exists();
+  });
+
   let index = 1;
   const testAgreementLineFilterCheckbox = (field, value, label = null) => (
     test(`clicking the ${label ?? value} checkbox`, async () => {

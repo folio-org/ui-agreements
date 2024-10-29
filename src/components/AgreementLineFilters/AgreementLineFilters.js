@@ -9,7 +9,7 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import { Accordion, AccordionSet, FilterAccordionHeader, Layout, Spinner } from '@folio/stripes/components';
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
-import { DateFilter, useAgreement } from '@folio/stripes-erm-components';
+import { DateFilter, DocumentFilter, useAgreement } from '@folio/stripes-erm-components';
 
 import AgreementFilterButton from '../AgreementFilterButton';
 import POLineFilterButton from '../POLineFilterButton';
@@ -52,6 +52,7 @@ const AgreementLineFilters = ({
   const poLineId = activeFilters?.poLine?.[0];
   const poLinePath = `orders/order-lines/${poLineId}`;
   const [poLineFilterNumber, setPOLineFilterNumber] = useState();
+  const categoryValues = data.documentAtTypeValues;
 
   const { isAgreementLoading } = useAgreement({
     agreementId,
@@ -257,6 +258,17 @@ const AgreementLineFilters = ({
     );
   };
 
+  const renderDocumentFilter = () => {
+    return (
+      <DocumentFilter
+        activeFilters={activeFilters}
+        categoryValues={categoryValues}
+        filterHandlers={filterHandlers}
+      />
+    );
+  };
+
+
   return (
     <AccordionSet>
       {renderAgreementFilter('agreement')}
@@ -265,6 +277,7 @@ const AgreementLineFilters = ({
       {renderDateFilter('activeTo')}
       {renderPOLineFilter('poLine')}
       {renderTagsFilter()}
+      {renderDocumentFilter()}
     </AccordionSet>
   );
 };

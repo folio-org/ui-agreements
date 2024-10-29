@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
   useTags,
-  usePrevNextPagination
+  usePrevNextPagination,
+  getRefdataValuesByDesc
 } from '@folio/stripes-erm-components';
 
 import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
@@ -15,9 +16,11 @@ import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 
 import { AGREEMENT_LINES_ENDPOINT, resultCount } from '../../constants';
-import { useEresourcesEnabled } from '../../hooks';
+import { useEresourcesEnabled, useAgreementsRefdata } from '../../hooks';
 
 const { RESULT_COUNT_INCREMENT_MEDIUM } = resultCount;
+
+const [DOCUMENT_AT_TYPE] = ['DocumentAttachment.AtType'];
 
 const AgreementLinesRoute = ({
   children,
@@ -30,6 +33,10 @@ const AgreementLinesRoute = ({
   const hasPerms = stripes.hasPerm('ui-agreements.agreements.view');
   const searchField = useRef();
 
+
+  const refdata = useAgreementsRefdata({
+    desc: [DOCUMENT_AT_TYPE],
+  });
   useEffect(() => {
     if (searchField.current) {
       searchField.current.focus();
@@ -91,6 +98,7 @@ const AgreementLinesRoute = ({
       data={{
         agreementLines,
         tagsValues: tags,
+        documentAtTypeValues: getRefdataValuesByDesc(refdata, DOCUMENT_AT_TYPE),
       }}
       history={history}
       queryGetter={queryGetter}
@@ -98,12 +106,13 @@ const AgreementLinesRoute = ({
       searchField={searchField}
       searchString={location.search}
       selectedRecordId={match.params.lineId}
-      source={{ // Fake source from useQuery return values;
+      source={{
+        // Fake source from useQuery return values;
         totalCount: () => agreementLinesCount,
         loaded: () => !isAgreementLinesIdle,
         pending: () => areAgreementLinesLoading,
         failure: () => isAgreementLinesError,
-        failureMessage: () => agreementLinesError.message
+        failureMessage: () => agreementLinesError.message,
       }}
     >
       {children}
