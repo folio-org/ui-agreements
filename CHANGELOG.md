@@ -1,5 +1,7 @@
 # Change history for ui-agreements
 
+## 11.2.0 IN PROGRESS
+
 ## 11.1.0 2024-10-31
   * ERM-3375 Update module license and guidance for ui-agreements
   * ERM-3365 UI Agreements does not display monograph information if TitleInstance.Type.label is changed
