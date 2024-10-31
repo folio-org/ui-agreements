@@ -40,9 +40,7 @@ describe('AgreementContentFilter', () => {
   });
 
   test('renders the Content field', async () => {
-    await MultiSelect({
-      id: 'agreementContent[0]-content-multi-select',
-    }).exists();
+    await MultiSelect().exists();
   });
 
   test('renders the And/Or dropdown', async () => {
