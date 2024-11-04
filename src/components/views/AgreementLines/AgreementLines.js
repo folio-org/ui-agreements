@@ -90,6 +90,7 @@ const AgreementLines = ({
     return (
       <ColumnManagerMenu
         columnMapping={AGREEMENT_LINES_COLUMN_MAPPING}
+        excludeColumns={['name']}
         prefix="agreement-lines"
         toggleColumn={toggleColumn}
         visibleColumns={visibleColumns}
