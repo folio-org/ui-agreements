@@ -1,6 +1,22 @@
 # Change history for ui-agreements
 
-## 11.1.0 In progress
+## 11.2.0 IN PROGRESS
+
+## 11.1.0 2024-10-31
+  * ERM-3375 Update module license and guidance for ui-agreements
+  * ERM-3365 UI Agreements does not display monograph information if TitleInstance.Type.label is changed
+  * ERM-3362 Error on viewing ERM basket
+  * ERM-3350 Review and cleanup Module Descriptor for ui-agreements
+  * ERM-3332 Add documents filter to agreement line search
+  * ERM-3331 Add documents to agreement lines
+  * ERM-3297 Block save on invalid date in agreement edit
+  * ERM-3277 Add Material Type filter (Print/Electronic) to Title search
+  * ERM-3276 Agreements: Can't save page size = 100 in display settings
+  * ERM-3240 Inline MCL Prev/Next pagination can try to access non-existant pages when syncToLocation != true
+  * ERM-3231 React v19: refactor ui-agreements away from default props for functional components
+  * ERM-3183 Create agreement line form does not clear on "Save and create another"
+  * ERM-3165 Replace moment with dayjs across app suite
+  * ERM-3135 Sort by Name column does not work in Agreement line search and sort
 
 ## 11.0.3 2024-07-05
   * ERM-3288 Fix permission on /erm/files/{id}/raw in mod-agreements

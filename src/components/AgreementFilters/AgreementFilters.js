@@ -57,7 +57,7 @@ const AgreementFilters = ({
     tags: [],
   });
 
-  const atTypeValues = data.documentAtTypeValues;
+  const categoryValues = data.documentAtTypeValues;
 
   useEffect(() => {
     const newState = {};
@@ -374,8 +374,13 @@ const AgreementFilters = ({
   const renderSupplementaryDocumentFilter = () => {
     return <DocumentFilter
       activeFilters={activeFilters}
-      atTypeValues={atTypeValues}
+      categoryValues={categoryValues}
       filterHandlers={filterHandlers}
+      filterLabel={<FormattedMessage id="stripes-erm-components.documentFilter.filterName.supplementaryDocuments" />}
+      filterModalProps={{
+        label: <FormattedMessage id="stripes-erm-components.documentFilter.filterBuilder.supplementaryDocuments" />
+      }}
+      filterName="supplementaryDocs"
     />;
   };
 
