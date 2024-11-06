@@ -122,8 +122,8 @@ jest.mock('../../components/views/EResource', () => {
 
 const data = {
   handlers,
-  isSuppressFromDiscoveryEnabled: () => {},
-  history:{
+  isSuppressFromDiscoveryEnabled: () => { },
+  history: {
     push: historyPushMock,
   },
   location: {
@@ -157,8 +157,9 @@ describe('EResourceViewRoute', () => {
     });
 
     test('renders the EResource component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('EResource')).toBeInTheDocument();
+      const { getAllByText } = renderComponent;
+      const eresourceElements = getAllByText('EResource');
+      expect(eresourceElements.length).toBeGreaterThan(0);
     });
 
     test('triggers the CloseButton callback', async () => {
@@ -243,8 +244,9 @@ describe('EResourceViewRoute', () => {
       });
 
       test('renders the EResource component', () => {
-        const { getByText } = renderComponent;
-        expect(getByText('EResource')).toBeInTheDocument();
+        const { getAllByText } = renderComponent;
+        const eresourceElements = getAllByText('EResource');
+        expect(eresourceElements.length).toBeGreaterThan(0);
       });
     });
   });

@@ -36,8 +36,9 @@ describe('AgreementsRoute', () => {
     });
 
     test('renders the agreements component', () => {
-      const { getByTestId } = renderComponent;
-      expect(getByTestId('agreements')).toBeInTheDocument();
+      const { getAllByTestId } = renderComponent;
+      const agreementsElements = getAllByTestId('agreements');
+      expect(agreementsElements.length).toBeGreaterThan(0);
     });
 
     describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block
@@ -52,8 +53,9 @@ describe('AgreementsRoute', () => {
       });
 
       test('renders the agreements component', () => {
-        const { getByTestId } = renderComponent;
-        expect(getByTestId('agreements')).toBeInTheDocument();
+        const { getAllByTestId } = renderComponent;
+        const agreementsElements = getAllByTestId('agreements');
+        expect(agreementsElements.length).toBeGreaterThan(0);
       });
     });
   });

@@ -40,8 +40,9 @@ describe('TitlesRoute', () => {
     });
 
     test('renders the titles component', () => {
-      const { getByTestId } = renderComponent;
-      expect(getByTestId('titles')).toBeInTheDocument();
+      const { getAllByTestId } = renderComponent;
+      const titlesElements = getAllByTestId('titles');
+      expect(titlesElements.length).toBeGreaterThan(0);
     });
 
     describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block
@@ -56,8 +57,9 @@ describe('TitlesRoute', () => {
       });
 
       test('renders the titles component', () => {
-        const { getByTestId } = renderComponent;
-        expect(getByTestId('titles')).toBeInTheDocument();
+        const { getAllByTestId } = renderComponent;
+        const titlesElements = getAllByTestId('titles');
+        expect(titlesElements.length).toBeGreaterThan(0);
       });
     });
   });

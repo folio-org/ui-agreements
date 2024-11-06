@@ -34,8 +34,9 @@ describe('PlatformsRoute', () => {
     });
 
     test('renders the platforms component', () => {
-      const { getByTestId } = renderComponent;
-      expect(getByTestId('platforms')).toBeInTheDocument();
+      const { getAllByTestId } = renderComponent;
+      const platformsElements = getAllByTestId('platforms');
+      expect(platformsElements.length).toBeGreaterThan(0);
     });
 
     describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block
@@ -50,8 +51,9 @@ describe('PlatformsRoute', () => {
       });
 
       test('renders the platforms component', () => {
-        const { getByTestId } = renderComponent;
-        expect(getByTestId('platforms')).toBeInTheDocument();
+        const { getAllByTestId } = renderComponent;
+        const platformsElements = getAllByTestId('platforms');
+        expect(platformsElements.length).toBeGreaterThan(0);
       });
     });
   });

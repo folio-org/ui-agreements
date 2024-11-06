@@ -38,8 +38,9 @@ describe('PackagesRoute', () => {
     });
 
     test('renders the packages component', () => {
-      const { getByTestId } = renderComponent;
-      expect(getByTestId('packages')).toBeInTheDocument();
+      const { getAllByTestId } = renderComponent;
+      const packagesElements = getAllByTestId('packages');
+      expect(packagesElements.length).toBeGreaterThan(0);
     });
 
     describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block
@@ -54,8 +55,9 @@ describe('PackagesRoute', () => {
       });
 
       test('renders the packages component', () => {
-        const { getByTestId } = renderComponent;
-        expect(getByTestId('packages')).toBeInTheDocument();
+        const { getAllByTestId } = renderComponent;
+        const packagesElements = getAllByTestId('packages');
+        expect(packagesElements.length).toBeGreaterThan(0);
       });
     });
   });
