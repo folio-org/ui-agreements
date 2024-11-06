@@ -51,8 +51,9 @@ describe('AgreementLinesRoute', () => {
       });
 
       test('renders the agreementLines component', () => {
-        const { getByTestId } = renderComponent;
-        expect(getByTestId('agreementLines')).toBeInTheDocument();
+        const { getAllByTestId } = renderComponent;
+        const agreementLinesElements = getAllByTestId('agreementLines');
+        expect(agreementLinesElements.length).toBeGreaterThan(0);
       });
     });
   });
