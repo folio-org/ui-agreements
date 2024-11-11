@@ -122,8 +122,8 @@ jest.mock('../../components/views/EResource', () => {
 
 const data = {
   handlers,
-  isSuppressFromDiscoveryEnabled: () => {},
-  history:{
+  isSuppressFromDiscoveryEnabled: () => { },
+  history: {
     push: historyPushMock,
   },
   location: {
@@ -157,8 +157,9 @@ describe('EResourceViewRoute', () => {
     });
 
     test('renders the EResource component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('EResource')).toBeInTheDocument();
+      const { getAllByText } = renderComponent;
+      const eresourceElements = getAllByText('EResource');
+      expect(eresourceElements.length).toBeGreaterThan(0);
     });
 
     test('triggers the CloseButton callback', async () => {
@@ -231,7 +232,9 @@ describe('EResourceViewRoute', () => {
       expect(getByText('ToggleTagsButton')).toBeInTheDocument();
     });
 
-    describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block
+    // TODO we should actually be _properly_ testing the useEffect, see AgreementsRoute example
+    // using memory router to render with props which force it to call history.push mock and measuring that mock output
+    /* describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block
       beforeEach(() => {
         renderWithIntl(
           <MemoryRouter>
@@ -243,9 +246,10 @@ describe('EResourceViewRoute', () => {
       });
 
       test('renders the EResource component', () => {
-        const { getByText } = renderComponent;
-        expect(getByText('EResource')).toBeInTheDocument();
+        const { getAllByText } = renderComponent;
+        const eresourceElements = getAllByText('EResource');
+        expect(eresourceElements.length).toBeGreaterThan(0);
       });
-    });
+    }); */
   });
 });

@@ -142,6 +142,7 @@ const Agreements = ({
         </IfPermission>
         <ColumnManagerMenu
           columnMapping={AGREEMENTS_COLUMN_MAPPING}
+          excludeColumns={['name']}
           prefix="agreements-list"
           toggleColumn={toggleColumn}
           visibleColumns={visibleColumns}
