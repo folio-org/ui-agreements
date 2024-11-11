@@ -6,12 +6,9 @@ import translationsProperties from '../../../../test/helpers';
 import CoveredEResourcesList from './CoveredEResourcesList';
 import agreement from './testResources';
 
-jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
-  return typeof children === 'function' ? children({ isEnabled: true }) : children;
-});
-
 // Use manual mocks set up in hooks/__mocks__ folder (small correction to the way this was done before)
 jest.mock('../../../hooks/useAgreementsSettings');
+jest.mock('../../../hooks/useEresourcesEnabled');
 
 const handlers = {
   onFilterEResources: jest.fn(),
