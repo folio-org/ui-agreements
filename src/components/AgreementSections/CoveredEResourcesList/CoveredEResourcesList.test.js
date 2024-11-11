@@ -10,10 +10,8 @@ jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
   return typeof children === 'function' ? children({ isEnabled: true }) : children;
 });
 
-// Use manual mocks set up in hooks/__mocks__ folder
-jest.mock('../../../hooks', () => ({
-  useAgreementsSettings: () => ({ parsedSettings: {} }),
-}));
+// Use manual mocks set up in hooks/__mocks__ folder (small correction to the way this was done before)
+jest.mock('../../../hooks/useAgreementsSettings');
 
 const handlers = {
   onFilterEResources: jest.fn(),
