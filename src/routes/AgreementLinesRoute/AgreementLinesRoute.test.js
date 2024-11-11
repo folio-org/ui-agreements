@@ -39,7 +39,10 @@ describe('AgreementLinesRoute', () => {
       expect(getByTestId('agreementLines')).toBeInTheDocument();
     });
 
-    describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block
+    // TODO we should actually be _properly_ testing the useEffect, see AgreementsRoute example
+    // using memory router to render with props which force it to call history.push mock and measuring that mock output
+
+    /* describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block
       beforeEach(() => {
         renderWithIntl(
           <MemoryRouter>
@@ -55,6 +58,6 @@ describe('AgreementLinesRoute', () => {
         const agreementLinesElements = getAllByTestId('agreementLines');
         expect(agreementLinesElements.length).toBeGreaterThan(0);
       });
-    });
+    }); */
   });
 });

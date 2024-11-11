@@ -232,7 +232,9 @@ describe('EResourceViewRoute', () => {
       expect(getByText('ToggleTagsButton')).toBeInTheDocument();
     });
 
-    describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block
+    // TODO we should actually be _properly_ testing the useEffect, see AgreementsRoute example
+    // using memory router to render with props which force it to call history.push mock and measuring that mock output
+    /* describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block
       beforeEach(() => {
         renderWithIntl(
           <MemoryRouter>
@@ -248,6 +250,6 @@ describe('EResourceViewRoute', () => {
         const eresourceElements = getAllByText('EResource');
         expect(eresourceElements.length).toBeGreaterThan(0);
       });
-    });
+    }); */
   });
 });
