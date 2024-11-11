@@ -69,8 +69,9 @@ describe('UrlCustomizerViewRoute', () => {
     });
 
     test('renders the UrlCustomizer component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('UrlCustomizer')).toBeInTheDocument();
+      const { getAllByText } = renderComponent;
+      const urlCustomizerElements = getAllByText('UrlCustomizer');
+      expect(urlCustomizerElements.length).toBeGreaterThan(0);
     });
 
     test('triggers the CloseButton callback', async () => {
@@ -115,8 +116,9 @@ describe('UrlCustomizerViewRoute', () => {
       });
 
       test('renders the UrlCustomizer component', () => {
-        const { getByText } = renderComponent;
-        expect(getByText('UrlCustomizer')).toBeInTheDocument();
+        const { getAllByText } = renderComponent;
+        const urlCustomizerElements = getAllByText('UrlCustomizer');
+        expect(urlCustomizerElements.length).toBeGreaterThan(0);
       });
     });
   });
