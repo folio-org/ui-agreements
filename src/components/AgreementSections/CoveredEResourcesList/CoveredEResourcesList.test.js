@@ -1,17 +1,14 @@
-
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
 import { Button, Dropdown, MultiColumnList, renderWithIntl } from '@folio/stripes-erm-testing';
-import { MemoryRouter } from 'react-router-dom';
+
 import translationsProperties from '../../../../test/helpers';
 import CoveredEResourcesList from './CoveredEResourcesList';
 import agreement from './testResources';
 
-jest.mock('../../IfEResourcesEnabled', () => ({ children }) => {
-  return typeof children === 'function' ? children({ isEnabled: true }) : children;
-});
-
-// Use manual mocks set up in hooks/__mocks__ folder
-jest.mock('../../../hooks');
+// Use manual mocks set up in hooks/__mocks__ folder (small correction to the way this was done before)
+jest.mock('../../../hooks/useAgreementsSettings');
+jest.mock('../../../hooks/useEresourcesEnabled');
 
 const handlers = {
   onFilterEResources: jest.fn(),
@@ -19,72 +16,70 @@ const handlers = {
   onExportEResourcesAsKBART: jest.fn().mockImplementation(() => Promise.resolve()),
 };
 
+// TODO there are 2 warnings when running this test... contentData ends up as a boolean not an array --
+// maybe needs mocking fetchMultiplePages
+// received NaN for the children attribute within PrevNextPagination, better mocking needed there too?
 describe('CoveredEResourcesList', () => {
-  beforeEach(() => {
-    renderWithIntl(
-      <MemoryRouter>
+  beforeEach(async () => {
+    // This is blowing my mind... I do not understand why this needs to be wrapped in a waitFor
+    await waitFor(() => {
+      renderWithIntl(
         <CoveredEResourcesList
           agreement={agreement}
           eresourcesFilterPath="current"
           {...handlers}
-        />
-      </MemoryRouter>,
-      translationsProperties
-    );
+        />,
+        translationsProperties
+      );
+    });
   });
 
-  test('renders the expected filter buttons', async () => {
-    await Button('Current').exists();
-    await Button('Future').exists();
-    await Button('Dropped').exists();
-    await Button('All').exists();
-  });
-
-  test('clicking the filter buttons should call the onFilterEResources callback', async () => {
-    await waitFor(async () => {
-      await Button('Future').click();
+  describe.each(['Future', 'Current', 'Dropped', 'All'])('%s filter button', (filterLabel) => {
+    test(`renders the ${filterLabel} button`, async () => {
+      await waitFor(async () => {
+        await Button(filterLabel).exists();
+      });
     });
 
-    await waitFor(async () => {
-      expect(handlers.onFilterEResources.mock.calls.length).toBe(1);
-    });
+    describe(`clicking the ${filterLabel} button`, () => {
+      beforeEach(async () => {
+        handlers.onFilterEResources.mockClear();
 
-    await waitFor(async () => {
-      await Button('Dropped').click();
-    });
+        expect(handlers.onFilterEResources.mock.calls.length).toBe(0);
 
-    await waitFor(async () => {
-      expect(handlers.onFilterEResources.mock.calls.length).toBe(2);
-    });
+        await waitFor(async () => {
+          await Button(filterLabel).click();
+        });
+      });
 
-    await waitFor(async () => {
-      await Button('All').click();
-    });
-
-    await waitFor(async () => {
-      expect(handlers.onFilterEResources.mock.calls.length).toBe(3);
+      test('onFilterEResources callback called', async () => {
+        await waitFor(async () => {
+          expect(handlers.onFilterEResources.mock.calls.length).toBe(1);
+        });
+      });
     });
   });
 
   test('renders the Export dropdown', async () => {
-    await Dropdown('Export as...').exists();
+    await waitFor(async () => {
+      await Dropdown('Export as...').exists();
+    });
   });
 
-  test('choosing the dropdown options', async () => {
-    await waitFor(async () => {
-      await Dropdown('Export as...').choose('JSON');
+  describe.each([
+    { dropdownChoice: 'JSON', mockHandler: handlers.onExportEResourcesAsJSON },
+    { dropdownChoice: 'KBART', mockHandler: handlers.onExportEResourcesAsKBART }
+  ])('choosing export as $dropdownChoice', ({ dropdownChoice, mockHandler }) => {
+    beforeEach(async () => {
+      await waitFor(async () => {
+        await Dropdown('Export as...').choose(dropdownChoice);
+      });
     });
 
-    await waitFor(async () => {
-      expect(handlers.onExportEResourcesAsJSON.mock.calls.length).toBe(1);
-    });
-
-    await waitFor(async () => {
-      await Dropdown('Export as...').choose('KBART');
-    });
-
-    await waitFor(async () => {
-      expect(handlers.onExportEResourcesAsKBART.mock.calls.length).toBe(1);
+    test('correct onExportResources handler called', async () => {
+      await waitFor(async () => {
+        expect(mockHandler.mock.calls.length).toBe(1);
+      });
     });
   });
 
@@ -100,4 +95,3 @@ describe('CoveredEResourcesList', () => {
     await MultiColumnList({ columns: ['Name', 'eISSN/ISSN', 'Platform', 'Package', 'Coverage', ' ', 'Access start', 'Access end'] }).exists();
   });
 });
-

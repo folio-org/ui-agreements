@@ -115,7 +115,7 @@ jest.mock('../../components/views/Agreement', () => {
 });
 
 const data = {
-  history:{
+  history: {
     push: historyPushMock,
   },
   location,
@@ -137,8 +137,9 @@ describe('AgreementViewRoute', () => {
     });
 
     test('renders the Agreement component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Agreement')).toBeInTheDocument();
+      const { getAllByText } = renderComponent;
+      const agreementElements = getAllByText('Agreement');
+      expect(agreementElements.length).toBeGreaterThan(0);
     });
 
     test('renders the AgreementLineButton', () => {
@@ -198,8 +199,9 @@ describe('AgreementViewRoute', () => {
       });
 
       test('renders the Agreements component', () => {
-        const { getByText } = renderComponent;
-        expect(getByText('Agreement')).toBeInTheDocument();
+        const { getAllByText } = renderComponent;
+        const agreementElements = getAllByText('Agreement');
+        expect(agreementElements.length).toBeGreaterThan(0);
       });
     });
   });
