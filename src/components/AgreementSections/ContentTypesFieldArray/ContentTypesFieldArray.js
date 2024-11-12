@@ -42,6 +42,7 @@ const ContentTypesFieldArray = ({
   });
   const contentTypeValues = getRefdataValuesByDesc(refdata, AGREEMENT_CONTENT_TYPE);
   const agreementContentType = contentTypeValues.map(ct => ({ value: ct.value, label: ct.label }));
+
   const { items, onAddField, onDeleteField } = useKiwtFieldArray(name);
   const [contentTypeInUse, setContentTypeInUse] = useState([]);
   const contentTypeRefs = useRef([]);
@@ -74,6 +75,7 @@ const ContentTypesFieldArray = ({
   const renderContentTypes = () => (
     items.map((act, index) => {
       const dataOptions = agreementContentType.filter(ct => !contentTypeInUse.includes(ct.value) || ct.value === act.contentType?.value);
+
       return (
         <div
           key={`${act?.contentType?.id}`}
@@ -84,10 +86,12 @@ const ContentTypesFieldArray = ({
               <Field
                 component={Select}
                 dataOptions={dataOptions}
+                format={v => v?.value || ''}
                 id="content-type-field-array"
                 index={index}
                 inputRef={addToRefs}
-                name={`${name}[${index}].contentType.value`}
+                name={`${name}[${index}].contentType`}
+                parse={v => ({ value: v })}
                 placeholder=" "
                 validate={requiredValidator}
               />
@@ -119,6 +123,7 @@ const ContentTypesFieldArray = ({
       </div>
       <Button
         data-test-content-types-field-array-add-button
+        disabled={contentTypeInUse?.length === agreementContentType?.length}
         id="add-content-type-button"
         onClick={() => onAddField()}
       >

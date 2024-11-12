@@ -175,15 +175,7 @@ const AgreementEditRoute = ({
   const handleSubmit = async (values) => {
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
     splitRelatedAgreements(values, relationshipTypeValues);
-    const valuesToSubmit = {
-      ...values,
-      agreementContentTypes: values.agreementContentTypes?.map(item => ({
-        id: item.id,
-        contentType: item.contentType?.value
-      })),
-    };
-
-    await putAgreement(valuesToSubmit);
+    await putAgreement(values);
   };
 
   const fetchIsPending = () => {
