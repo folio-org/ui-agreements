@@ -123,7 +123,6 @@ const ContentTypesFieldArray = ({
       </div>
       <Button
         data-test-content-types-field-array-add-button
-        disabled={contentTypeInUse?.length === agreementContentType?.length}
         id="add-content-type-button"
         onClick={() => onAddField()}
       >
