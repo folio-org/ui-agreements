@@ -1,8 +1,11 @@
-import PropTypes from 'prop-types';
 import { useEffect, useState, useRef } from 'react';
+import PropTypes from 'prop-types';
+
+import isEqual from 'lodash/isEqual';
+
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
-import { getRefdataValuesByDesc, requiredValidator, usePrevious } from '@folio/stripes-erm-components';
+
 import {
   Button,
   Col,
@@ -13,18 +16,9 @@ import {
 } from '@folio/stripes/components';
 import { useKiwtFieldArray } from '@k-int/stripes-kint-components';
 
+import { getRefdataValuesByDesc, requiredValidator, usePrevious } from '@folio/stripes-erm-components';
+
 import { useAgreementsRefdata } from '../../../hooks';
-
-// Utility function to check if two arrays of scalars contain the same items (Order does not count)
-const arraysAreEqual = (a, b) => {
-  if (a.length !== b.length) {
-    return false;
-  }
-
-  return a.every(element => {
-    return b.includes(element);
-  });
-};
 
 const [
   AGREEMENT_CONTENT_TYPE
@@ -40,8 +34,12 @@ const ContentTypesFieldArray = ({
       AGREEMENT_CONTENT_TYPE,
     ]
   });
-  const contentTypeValues = getRefdataValuesByDesc(refdata, AGREEMENT_CONTENT_TYPE);
-  const agreementContentType = contentTypeValues.map(ct => ({ value: ct.value, label: ct.label }));
+  const contentTypeSelectOptions = getRefdataValuesByDesc(refdata, AGREEMENT_CONTENT_TYPE)
+    .map(ct => ({
+      value: ct.id, // Map to id for submittal purposes
+      label: ct.label
+    }));
+
   const { items, onAddField, onDeleteField } = useKiwtFieldArray(name);
   const [contentTypeInUse, setContentTypeInUse] = useState([]);
   const contentTypeRefs = useRef([]);
@@ -51,11 +49,12 @@ const ContentTypesFieldArray = ({
   const previousCount = usePrevious(itemsLength);
 
   useEffect(() => {
-    const newContentTypeInUse = items.map(i => i?.contentType?.value).filter(x => !!x);
-    if (!arraysAreEqual(contentTypeInUse, newContentTypeInUse)) {
+    const newContentTypeInUse = items.map(i => i?.contentType?.id).filter(x => !!x);
+    if (!isEqual(contentTypeInUse, newContentTypeInUse)) {
       setContentTypeInUse(newContentTypeInUse);
     }
   }, [items, contentTypeInUse]);
+
 
   useEffect(() => {
     // the second conditional is checking if the current field to be focused is the default content type field.
@@ -73,7 +72,8 @@ const ContentTypesFieldArray = ({
 
   const renderContentTypes = () => (
     items.map((act, index) => {
-      const dataOptions = agreementContentType.filter(ct => !contentTypeInUse.includes(ct.value) || ct.value === act.contentType?.value);
+      const dataOptions = contentTypeSelectOptions.filter(ct => !contentTypeInUse.includes(ct.value) || ct.value === act.contentType?.id);
+
       return (
         <div
           key={`${act?.contentType?.id}`}
@@ -81,13 +81,20 @@ const ContentTypesFieldArray = ({
         >
           <Row>
             <Col xs={11}>
+              {/*
+                * This select will ONLY change the id of the refdata,
+                * and the bind will happen from that. That will make
+                * the PUT look a little funky as it will have the old
+                * label/value information, but prevents us from having
+                * to do loads of eaxtra tweaking at the field level
+                */}
               <Field
                 component={Select}
                 dataOptions={dataOptions}
                 id="content-type-field-array"
                 index={index}
                 inputRef={addToRefs}
-                name={`${name}[${index}].contentType.value`}
+                name={`${name}[${index}].contentType.id`}
                 placeholder=" "
                 validate={requiredValidator}
               />
