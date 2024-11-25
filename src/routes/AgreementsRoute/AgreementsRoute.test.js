@@ -1,11 +1,15 @@
 
-import { renderWithIntl } from '@folio/stripes-erm-testing';
+import { useQuery } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
 
+import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { useStripes } from '@folio/stripes/core';
+
+
 import translationsProperties from '../../../test/helpers';
 import AgreementsRoute from './AgreementsRoute';
 import mockRefdata from '../../../test/jest/refdata';
+
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
@@ -13,11 +17,17 @@ jest.mock('../../hooks', () => ({
   useAgreementsRefdata: () => mockRefdata,
 }));
 
+jest.mock('../../components/views/Agreements', () => () => <div>Agreements view component</div>);
+
+
+const mockPush = jest.fn();
 const routeProps = {
   history: {
-    push: () => jest.fn()
+    push: mockPush
   },
-  location: {},
+  location: {
+    search: '?thisIsAFakeSearch'
+  },
   match: {
     params: {},
   },
@@ -36,25 +46,35 @@ describe('AgreementsRoute', () => {
     });
 
     test('renders the agreements component', () => {
-      const { getByTestId } = renderComponent;
-      expect(getByTestId('agreements')).toBeInTheDocument();
+      const { getByText } = renderComponent;
+      expect(getByText('Agreements view component')).toBeInTheDocument();
     });
 
-    describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block
-      beforeEach(() => {
-        renderWithIntl(
-          <MemoryRouter>
-            <AgreementsRoute {...routeProps} />
-          </MemoryRouter>,
-          translationsProperties,
-          renderComponent.rerender
-        );
-      });
 
-      test('renders the agreements component', () => {
-        const { getByTestId } = renderComponent;
-        expect(getByTestId('agreements')).toBeInTheDocument();
-      });
+    // TODO also test with multiple agreements
+    test('did not redirect to view pane', () => {
+      expect(mockPush.mock.calls.length).toBe(0);
+    });
+  });
+
+  // EXAMPLE testing redirect in a route Test
+  describe('rendering the route with single agreement', () => {
+    beforeEach(() => {
+      mockPush.mockClear();
+      useQuery.mockImplementation(() => ({
+        data: { results: [{ title: 'fakeAgreement', id: 'fakeId' }], totalRecords: 1 }
+      }));
+
+      renderWithIntl(
+        <MemoryRouter>
+          <AgreementsRoute {...routeProps} />
+        </MemoryRouter>,
+        translationsProperties
+      );
+    });
+
+    test('redirected to view pane', () => {
+      expect(mockPush.mock.calls[0][0]).toEqual('/erm/agreements/fakeId?thisIsAFakeSearch');
     });
   });
 

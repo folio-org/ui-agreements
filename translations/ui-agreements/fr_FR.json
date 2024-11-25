@@ -5,7 +5,7 @@
     "agreements.startDate": "Date de début",
     "agreements.endDate": "Date de fin",
     "agreements.cancellationDeadline": "Date limite d'annulation",
-    "agreements.renewalPriority": "Priorité de renouvellement",
+    "agreements.renewalPriority": "Priorité de prolongation",
     "agreements.isPerpetual": "Pérenne ?",
     "agreements.eresourceAgreementLines": "Ressources électroniques - lignes d'accord",
     "agreements.eresourcesCovered": "Ressources électroniques couvertes par cet accord",
