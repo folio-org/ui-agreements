@@ -78,6 +78,7 @@ const AgreementContentFieldArray = ({ handleSubmit }) => {
                       }}
                     />
                     <Field
+                      key={values?.agreementContent[index]?.content}
                       component={MultiSelection}
                       dataOptions={translatedContentOptions}
                       id={`${filter}-content-multi-select`}
