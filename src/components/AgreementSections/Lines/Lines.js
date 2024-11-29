@@ -71,6 +71,7 @@ const Lines = ({
             </Button>
             <ColumnManagerMenu
               columnMapping={LINE_LISTING_COLUMN_MAPPING}
+              excludeColumns={['name']}
               prefix="line-listing"
               toggleColumn={toggleColumn}
               visibleColumns={visibleColumns}

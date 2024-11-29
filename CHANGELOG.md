@@ -1,5 +1,10 @@
 # Change history for ui-agreements
 
+## 11.1.1 2024-11-29
+  * ERM-3449 The Agreement content filter is not set back to original empty selection state
+  * ERM-3392 Agreements: Changes to the field content type are not saved, but a success message is displayed
+  * ERM 3390 Agreements > Show columns: Name column should not be in the list of unselectable columns
+
 ## 11.1.0 2024-10-31
   * ERM-3375 Update module license and guidance for ui-agreements
   * ERM-3365 UI Agreements does not display monograph information if TitleInstance.Type.label is changed
