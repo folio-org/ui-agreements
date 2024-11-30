@@ -783,6 +783,6 @@
     "eresources.electronicTitle": "Elektronický název \"{name}\"",
     "eresources.subType": "Typ materiálu",
     "documents.addDocs": "Přidat dokument",
-    "emptyAccordion.documents": "No documents for this agreement line ",
+    "emptyAccordion.documents": "Žádné dokumenty pro tento řádek smlouvy",
     "line.documents": "Dokumenty"
 }
