@@ -344,8 +344,5 @@
         "title": "Print title"
       }
     ]
-  },
-  "resolutions": {
-    "nwsapi" : "2.2.13"
   }
 }
