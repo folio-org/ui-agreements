@@ -8,9 +8,9 @@ import AmendmentsFieldArray from '../AmendmentsFieldArray';
 
 import translationsProperties from '../../../../test/helpers';
 
-/* it create a copy of mockErmComponents,
-remove the LicenseEndDate property from the copy,
-and then use the copy to mock @folio/stripes-erm-components.
+/* it creates a copy of mockErmComponents,
+removes the LicenseEndDate property from the copy,
+and then uses the copy to mock @folio/stripes-erm-components.
 */
 jest.mock('@folio/stripes-erm-components', () => {
   const mockedERMComps = { ...mockErmComponents };
