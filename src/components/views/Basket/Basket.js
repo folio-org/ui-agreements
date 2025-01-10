@@ -77,12 +77,9 @@ const Basket = ({
       .put(AGREEMENT_ENDPOINT(agreementId), {
         json: submitValues,
       })
-      .json()
-      .then(() => {
-        history.push(
-          `${urls.agreementView(agreementId)}${location.search}`
-        );
-      });
+      .json();
+
+    await putAgreement(agreementId, submitValues);
   };
 
   useEffect(() => {
@@ -166,6 +163,24 @@ const Basket = ({
       </Layout>
     );
   };
+
+  // const renderAddToSelectedAgreementButton = () => {
+  //   const disabled = Object.values(selectedItems).find((v) => v) === undefined;
+
+  //   return (
+  //     <Layout className="marginTop1">
+  //       <AgreementFilterButton
+  //         buttonStyle="primary"
+  //         disabled={disabled}
+  //         name="agreement"
+  //         onAgreementSelected={(agreement) => {
+  //           setSelectedAgreementId(agreement.id);
+  //           handleAddToExistingAgreement(agreement.id, getSelectedItems());
+  //         }}
+  //       />
+  //     </Layout>
+  //   );
+  // };
 
   const renderAddToSelectedAgreementButton = () => {
     const disabled = Object.values(selectedItems).find((v) => v) === undefined;
