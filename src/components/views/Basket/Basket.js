@@ -164,24 +164,6 @@ const Basket = ({
     );
   };
 
-  // const renderAddToSelectedAgreementButton = () => {
-  //   const disabled = Object.values(selectedItems).find((v) => v) === undefined;
-
-  //   return (
-  //     <Layout className="marginTop1">
-  //       <AgreementFilterButton
-  //         buttonStyle="primary"
-  //         disabled={disabled}
-  //         name="agreement"
-  //         onAgreementSelected={(agreement) => {
-  //           setSelectedAgreementId(agreement.id);
-  //           handleAddToExistingAgreement(agreement.id, getSelectedItems());
-  //         }}
-  //       />
-  //     </Layout>
-  //   );
-  // };
-
   const renderAddToSelectedAgreementButton = () => {
     const disabled = Object.values(selectedItems).find((v) => v) === undefined;
 
