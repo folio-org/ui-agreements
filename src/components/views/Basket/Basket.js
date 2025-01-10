@@ -8,16 +8,12 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import {
   Button,
-  Col,
-  FormattedUTCDate,
-  Headline,
   IconButton,
   Layout,
   MessageBanner,
   Pane,
   PaneMenu,
   Paneset,
-  Selection,
 } from '@folio/stripes/components';
 
 import { AGREEMENT_ENDPOINT } from '../../../constants';
@@ -26,6 +22,7 @@ import { urls } from '../../utilities';
 
 import BasketList from '../../BasketList';
 import AgreementModal from '../../AgreementModal';
+import AgreementFilterButton from '../../AgreementFilterButton';
 
 const propTypes = {
   data: PropTypes.shape({
@@ -57,26 +54,35 @@ const Basket = ({
       'Basket',
       'putAgreement',
     ],
-    (data) => ky
+    (agreementId, data) => ky
       .put(AGREEMENT_ENDPOINT(selectedAgreementId), {
         json: data,
       })
       .json()
       .then(() => {
         history.push(
-          `${urls.agreementView(selectedAgreementId)}${location.search}`
+          `${urls.agreementView(agreementId)}${location.search}`
         );
       })
   );
 
-  const handleAddToExistingAgreement = async (addFromBasket) => {
+  const handleAddToExistingAgreement = async (agreementId, addFromBasket) => {
     const submitValues = {
       items: addFromBasket
         .split(',')
         .map((index) => ({ resource: basket[parseInt(index, 10)] }))
         .filter((line) => line.resource),
     };
-    await putAgreement(submitValues);
+    await ky
+      .put(AGREEMENT_ENDPOINT(agreementId), {
+        json: submitValues,
+      })
+      .json()
+      .then(() => {
+        history.push(
+          `${urls.agreementView(agreementId)}${location.search}`
+        );
+      });
   };
 
   useEffect(() => {
@@ -161,96 +167,21 @@ const Basket = ({
     );
   };
 
-  const renderAddToAgreementButton = () => {
-    const disabled =
-      selectedAgreementId === undefined ||
-      Object.values(selectedItems).find((v) => v) === undefined; // None of the `selectedItems` value's are `true`;
+  const renderAddToSelectedAgreementButton = () => {
+    const disabled = Object.values(selectedItems).find((v) => v) === undefined;
 
     return (
-      <div>
-        <Layout className="marginTop1">
-          <Button
-            buttonStyle="primary"
-            data-test-basket-add-to-agreement
-            disabled={disabled}
-            onClick={async () => {
-              await handleAddToExistingAgreement(getSelectedItems());
-            }}
-          >
-            <FormattedMessage id="ui-agreements.basket.addToSelectedAgreement" />
-          </Button>
-        </Layout>
-      </div>
-    );
-  };
-
-  const renderAddToAgreementSection = () => {
-    if (!openAgreementsState.length) return null;
-
-    return (
-      <div>
-        <Layout className="marginTop1">
-          <Headline margin="small" tag="h4">
-            <FormattedMessage
-              id="ui-agreements.basket.existingAgreements"
-              tagName="div"
-            />
-          </Headline>
-        </Layout>
-        <Col md={8} xs={12}>
-          <Selection
-            dataOptions={openAgreementsState}
-            formatter={({ option }) => {
-              if (!option) {
-                return null;
-              }
-              return (
-                <div
-                  data-test-agreement-id={option.id}
-                  style={{ textAlign: 'left' }}
-                >
-                  <Headline>
-                    {option.name}&nbsp;&#40;{option.agreementStatus.label}&#41;
-                  </Headline>
-                  {/* eslint-disable-line */}
-                  <div>
-                    <strong>
-                      <FormattedMessage id="ui-agreements.agreements.startDate" />
-                      :{' '}
-                    </strong>
-                    <FormattedUTCDate value={option.startDate} />{' '}
-                    {/* eslint-disable-line */}
-                  </div>
-                </div>
-              );
-            }}
-            id="select-agreement-for-basket"
-            onChange={(id) => {
-              setSelectedAgreementId(id);
-            }}
-            onFilter={(searchString, agreements) => {
-              return agreements.filter((agreement) => {
-                const lowerCasedSearchString = searchString.toLowerCase();
-
-                return (
-                  agreement.name
-                    .toLowerCase()
-                    .includes(lowerCasedSearchString) ||
-                  agreement.agreementStatus.label
-                    .toLowerCase()
-                    .includes(lowerCasedSearchString) ||
-                  !!agreement.startDate
-                    ?.toLowerCase()
-                    ?.includes(lowerCasedSearchString)
-                );
-              });
-            }}
-            optionAlignment="start"
-            placeholder=" "
-          />
-        </Col>
-        {renderAddToAgreementButton()}
-      </div>
+      <Layout className="marginTop1">
+        <AgreementFilterButton
+          buttonStyle="primary"
+          disabled={disabled}
+          name="agreement"
+          onAgreementSelected={(agreement) => {
+            setSelectedAgreementId(agreement.id);
+            handleAddToExistingAgreement(agreement.id, getSelectedItems());
+          }}
+        />
+      </Layout>
     );
   };
 
@@ -280,7 +211,7 @@ const Basket = ({
             selectedItems={selectedItems}
           />
           {renderCreateAgreementButton()}
-          {renderAddToAgreementSection()}
+          {renderAddToSelectedAgreementButton()}
         </div>
       </Pane>
       <AgreementModal
