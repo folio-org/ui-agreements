@@ -1,25 +1,13 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
-import { Form, Field, useForm, useFormState } from 'react-final-form';
+import { Form } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
-import { FieldArray } from 'react-final-form-arrays';
-import { FormattedMessage, useIntl } from 'react-intl';
-import {
-  Dropdown,
-  DropdownMenu,
-  MultiSelection,
-  Select,
-  Button,
-  Label,
-  IconButton,
-  Row,
-  Col,
-} from '@folio/stripes/components';
+import { useIntl } from 'react-intl';
 
 import {
   deparseKiwtQueryFilters,
   parseKiwtQueryFilters,
 } from '@k-int/stripes-kint-components';
+import { DocumentFilterArray } from '@folio/stripes-erm-components';
 
 import { agreementContentOptions } from '../../constants';
 
@@ -29,113 +17,12 @@ const AgreementContentFieldArray = ({ handleSubmit }) => {
     return { value: e?.value, label: intl.formatMessage({ id: e?.id }) };
   });
 
-  const { values } = useFormState();
-  const { change } = useForm();
-
-  const [open, setOpen] = useState(false);
-
   return (
-    <FieldArray name="agreementContent">
-      {({ fields }) => (
-        <>
-          {fields?.map((filter, index) => {
-            return (
-              <div key={index}>
-                {values?.agreementContent[index]?.grouping === '&&' && (
-                  <Label>
-                    <FormattedMessage id="ui-agreements.AND" />
-                  </Label>
-                )}
-                {values?.agreementContent[index]?.grouping === '||' && (
-                  <Label>
-                    <FormattedMessage id="ui-agreements.OR" />
-                  </Label>
-                )}
-                <Row xs="end">
-                  <Col xs={10}>
-                    <Field
-                      component={Select}
-                      dataOptions={[
-                        { value: '', label: '' },
-                        {
-                          value: ' isNotEmpty', // The space is part of the comparator
-                          label: intl.formatMessage({
-                            id: 'ui-agreements.agreementContent.filter.has',
-                          }),
-                        },
-                        {
-                          value: ' isEmpty', // The space is part of the comparator
-                          label: intl.formatMessage({
-                            id: 'ui-agreements.agreementContent.filter.hasNot',
-                          }),
-                        },
-                      ]}
-                      id={`${filter}-attribute-select`}
-                      name={`${filter}.attribute`}
-                      onChange={(e) => {
-                        change(`${filter}.attribute`, e?.target?.value);
-                        handleSubmit();
-                      }}
-                    />
-                    <Field
-                      key={values?.agreementContent[index]?.content}
-                      component={MultiSelection}
-                      dataOptions={translatedContentOptions}
-                      id={`${filter}-content-multi-select`}
-                      name={`${filter}.content`}
-                      onChange={(e) => {
-                        change(`${filter}.content`, e);
-                        handleSubmit();
-                      }}
-                    />
-                  </Col>
-                  {index !== 0 && (
-                    <Col>
-                      <IconButton
-                        icon="times-circle-solid"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          fields.remove(index);
-                          handleSubmit();
-                        }}
-                      />
-                    </Col>
-                  )}
-                </Row>
-              </div>
-            );
-          })}
-          <Dropdown
-            label={
-              <FormattedMessage id="ui-agreements.agreementContent.filter.addFilter" />
-            }
-            onToggle={() => setOpen(!open)}
-            open={open}
-          >
-            <DropdownMenu>
-              <Button
-                buttonStyle="dropdownItem"
-                onClick={() => {
-                  fields.push({ grouping: '&&' });
-                  setOpen(false);
-                }}
-              >
-                <FormattedMessage id="ui-agreements.AND" />
-              </Button>
-              <Button
-                buttonStyle="dropdownItem"
-                onClick={() => {
-                  fields.push({ grouping: '||' });
-                  setOpen(false);
-                }}
-              >
-                <FormattedMessage id="ui-agreements.OR" />
-              </Button>
-            </DropdownMenu>
-          </Dropdown>
-        </>
-      )}
-    </FieldArray>
+    <DocumentFilterArray
+      handleSubmit={handleSubmit}
+      name="agreementContent"
+      translatedContentOptions={translatedContentOptions}
+    />
   );
 };
 
