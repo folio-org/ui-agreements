@@ -408,7 +408,7 @@
     "agreementLines.custom": "自定义",
     "agreementLines.customCoverage.coverageType": "收录范围类型",
     "eresources.packageDetails": "资源包详情",
-    "line.update.callout": "协议行已更新",
+    "line.update.callout": "协议行已更新： {name}",
     "line.delete.callout": "协议行已删除",
     "line.deleteFailed.callout": "协议行无法删除： {message}",
     "line.lineInformation": "协议行信息",
@@ -697,7 +697,7 @@
     "customProperty.removeFilter": "移除补充属性筛选{index}",
     "customProperty.addFilter": "添加补充属性筛选",
     "customProperty.editCustomPropertyFilters": "编辑补充属性筛选",
-    "customProperty.filterBuilder": "补充属性筛选构建器",
+    "customProperty.filterBuilder": "补充属性筛选生成器",
     "customProperty.removeRule": "移除规则",
     "comparator": "布尔算符",
     "value": "值",
@@ -782,7 +782,7 @@
     "eresources.relatedTitle.infoPopover": "打开电子标题查看：获取标题的选项、任何链接协议和进一步的标题详细信息。",
     "eresources.electronicTitle": "电子标题“ {name} ”",
     "eresources.subType": "资料类型",
-    "documents.addDocs": "Add document",
-    "emptyAccordion.documents": "No documents for this agreement line ",
-    "line.documents": "Documents"
+    "documents.addDocs": "添加文档",
+    "emptyAccordion.documents": "本协议行无文档",
+    "line.documents": "文档"
 }
