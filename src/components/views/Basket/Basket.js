@@ -43,7 +43,7 @@ const Basket = ({
   const location = useLocation();
   const ky = useOkapiKy();
   const [openAgreementsState, setOpenAgreementsState] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [showCreateAgreementModal, setShowCreateAgreementModal] = useState(false);
   const [selectedAgreementId, setSelectedAgreementId] = useState(undefined);
   const [selectedItems, setSelectedItems] = useState({});
 
@@ -153,7 +153,7 @@ const Basket = ({
           data-test-basket-create-agreement
           disabled={disabled}
           onClick={() => {
-            setShowModal(true);
+            setShowCreateAgreementModal(true);
           }}
         >
           <FormattedMessage id="ui-agreements.basket.createAgreement" />
@@ -209,9 +209,9 @@ const Basket = ({
         </div>
       </Pane>
       <AgreementModal
-        hideModal={() => setShowModal(false)}
+        hideModal={() => setShowCreateAgreementModal(false)}
         selectedItems={getSelectedItems()}
-        showModal={showModal}
+        showModal={showCreateAgreementModal}
       />
     </Paneset>
   );
