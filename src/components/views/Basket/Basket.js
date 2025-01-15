@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from 'react-query';
 import { useLocation, useHistory } from 'react-router-dom';
@@ -45,35 +45,43 @@ const Basket = ({
   const [selectedItems, setSelectedItems] = useState({});
   // State to hide/display agreement create modal
   const [showCreateAgreementModal, setShowCreateAgreementModal] = useState(false);
-  const [selectedAgreementId, setSelectedAgreementId] = useState(undefined);
+
+  // As things stand, if this gets filled, we IMMEDIATELY trigger a PUT and redirect etc
+  const [selectedAgreement, setSelectedAgreement] = useState();
 
   const { mutateAsync: putAgreement } = useMutation(
-    ['ERM', 'Basket', 'addToExistingAgreement', AGREEMENT_ENDPOINT(selectedAgreementId), 'PUT'],
-    (data) => ky
-      .put(AGREEMENT_ENDPOINT(selectedAgreementId), {
-        json: data,
-      })
-      .json()
-      .then(() => {
-        history.push(
-          `${urls.agreementView(selectedAgreementId)}${location.search}`
-        );
-      })
+    ['ERM', 'Basket', 'addToExistingAgreement', AGREEMENT_ENDPOINT(selectedAgreement?.id), 'PUT'],
+    (data) => {
+      return ky
+        .put(AGREEMENT_ENDPOINT(selectedAgreement?.id), {
+          json: data,
+        })
+        .json()
+        .then(() => {
+          history.push(
+            `${urls.agreementView(selectedAgreement?.id)}${location.search}`
+          );
+        });
+    }
   );
 
-  const handleAddToExistingAgreement = async (agreementId, addFromBasket) => {
+  const handleAddToExistingAgreement = useCallback(async (addFromBasket) => {
     const submitValues = {
       items: addFromBasket
         .split(',')
         .map((index) => ({ resource: basket[parseInt(index, 10)] }))
         .filter((line) => line.resource),
     };
-    await ky
-      .put(AGREEMENT_ENDPOINT(agreementId), {
-        json: submitValues,
-      });
-    await putAgreement(agreementId, submitValues);
-  };
+
+    await putAgreement(submitValues);
+  }, [basket, putAgreement]);
+
+  const getSelectedItems = useCallback(() => {
+    return Object.entries(selectedItems)
+      .filter(([_, selected]) => selected)
+      .map(([itemId]) => basket.findIndex((i) => i.id === itemId))
+      .join(',');
+  }, [basket, selectedItems]);
 
   useEffect(() => {
     const newState = {};
@@ -85,7 +93,19 @@ const Basket = ({
       });
       setSelectedItems(newState.selectedItems);
     }
-  }, [basket, selectedItems]);
+
+
+    /* If an agreement gets selected, fire a PUT
+      (triggering close/view agreement etc etc)
+      If we wish to add confirmation at some point
+      this will need changing
+     */
+    if (selectedAgreement) {
+      handleAddToExistingAgreement(getSelectedItems());
+      // Unset while we wait for push... what if PUT fails?
+      setSelectedAgreement();
+    }
+  }, [basket, getSelectedItems, handleAddToExistingAgreement, putAgreement, selectedAgreement, selectedItems]);
 
   const handleToggleAll = () => {
     const selectedItemsObj = {};
@@ -103,13 +123,6 @@ const Basket = ({
       ...selectedItems,
       [item.id]: !selectedItems[item.id],
     });
-  };
-
-  const getSelectedItems = () => {
-    return Object.entries(selectedItems)
-      .filter(([_, selected]) => selected)
-      .map(([itemId]) => basket.findIndex((i) => i.id === itemId))
-      .join(',');
   };
 
   const renderPaneFirstMenu = () => {
@@ -157,8 +170,7 @@ const Basket = ({
           disabled={disabled}
           name="agreement"
           onAgreementSelected={(agreement) => {
-            setSelectedAgreementId(agreement.id);
-            handleAddToExistingAgreement(agreement.id, getSelectedItems());
+            setSelectedAgreement(agreement);
           }}
         />
       </Layout>
