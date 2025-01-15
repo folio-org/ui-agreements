@@ -1,16 +1,24 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import PropTypes from 'prop-types';
+
 import { FormattedMessage } from 'react-intl';
-import { Button } from '@folio/stripes/components';
+
 import { Pluggable } from '@folio/stripes/core';
+import { Button } from '@folio/stripes/components';
 
 const propTypes = {
+  buttonProps: PropTypes.object,
   disabled: PropTypes.bool,
   name: PropTypes.string,
   onAgreementSelected: PropTypes.func.isRequired,
 };
 
-const AgreementSearchButton = ({ disabled, name, onAgreementSelected }) => {
+const AgreementSearchButton = ({
+  buttonProps: passedButtonProps = {},
+  disabled,
+  name,
+  onAgreementSelected
+}) => {
   let triggerButton = useRef(null);
   return (
     <Pluggable
@@ -19,9 +27,10 @@ const AgreementSearchButton = ({ disabled, name, onAgreementSelected }) => {
       renderTrigger={(pluggableRenderProps) => {
         triggerButton = pluggableRenderProps.buttonRef;
         const buttonProps = {
+          ...passedButtonProps,
           'aria-haspopup': 'true',
           'buttonRef': triggerButton,
-          'id': `${name}-agreement-search-button`,
+          'id': passedButtonProps.id ?? `${name}-agreement-search-button`,
           'onClick': pluggableRenderProps.onClick,
         };
         return (
