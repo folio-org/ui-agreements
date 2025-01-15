@@ -10,7 +10,7 @@ const propTypes = {
   onAgreementSelected: PropTypes.func.isRequired,
 };
 
-const AgreementFilterButton = ({ disabled, name, onAgreementSelected }) => {
+const AgreementSearchButton = ({ disabled, name, onAgreementSelected }) => {
   let triggerButton = useRef(null);
   return (
     <Pluggable
@@ -43,6 +43,6 @@ const AgreementFilterButton = ({ disabled, name, onAgreementSelected }) => {
   );
 };
 
-AgreementFilterButton.propTypes = propTypes;
+AgreementSearchButton.propTypes = propTypes;
 
-export default AgreementFilterButton;
+export default AgreementSearchButton;

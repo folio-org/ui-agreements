@@ -22,7 +22,7 @@ import { urls } from '../../utilities';
 
 import BasketList from '../../BasketList';
 import AgreementModal from '../../AgreementModal';
-import AgreementFilterButton from '../../AgreementFilterButton';
+import AgreementSearchButton from '../../AgreementSearchButton';
 
 const propTypes = {
   data: PropTypes.shape({
@@ -166,7 +166,7 @@ const Basket = ({
     const disabled = Object.values(selectedItems).find((v) => v) === undefined; // None of the `selectedItems` value's ;
     return (
       <Layout className="marginTop1">
-        <AgreementFilterButton
+        <AgreementSearchButton
           buttonStyle="primary"
           disabled={disabled}
           name="agreement"
