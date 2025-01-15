@@ -54,14 +54,14 @@ const Basket = ({
       'Basket',
       'putAgreement',
     ],
-    (agreementId, data) => ky
+    (data) => ky
       .put(AGREEMENT_ENDPOINT(selectedAgreementId), {
         json: data,
       })
       .json()
       .then(() => {
         history.push(
-          `${urls.agreementView(agreementId)}${location.search}`
+          `${urls.agreementView(selectedAgreementId)}${location.search}`
         );
       })
   );
@@ -76,9 +76,7 @@ const Basket = ({
     await ky
       .put(AGREEMENT_ENDPOINT(agreementId), {
         json: submitValues,
-      })
-      .json();
-
+      });
     await putAgreement(agreementId, submitValues);
   };
 
@@ -164,9 +162,8 @@ const Basket = ({
     );
   };
 
-  const renderAddToSelectedAgreementButton = () => {
-    const disabled = Object.values(selectedItems).find((v) => v) === undefined;
-
+  const renderAddToAgreementButton = () => {
+    const disabled = Object.values(selectedItems).find((v) => v) === undefined; // None of the `selectedItems` value's ;
     return (
       <Layout className="marginTop1">
         <AgreementFilterButton
@@ -208,7 +205,7 @@ const Basket = ({
             selectedItems={selectedItems}
           />
           {renderCreateAgreementButton()}
-          {renderAddToSelectedAgreementButton()}
+          {renderAddToAgreementButton()}
         </div>
       </Pane>
       <AgreementModal
