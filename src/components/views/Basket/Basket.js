@@ -27,7 +27,6 @@ import AgreementSearchButton from '../../AgreementSearchButton';
 const propTypes = {
   data: PropTypes.shape({
     basket: PropTypes.arrayOf(PropTypes.object).isRequired,
-    openAgreements: PropTypes.arrayOf(PropTypes.object).isRequired,
   }).isRequired,
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
@@ -36,24 +35,20 @@ const propTypes = {
 };
 
 const Basket = ({
-  data: { basket, openAgreements },
+  data: { basket },
   handlers: { onClose, onRemoveBasketItem },
 }) => {
   const history = useHistory();
   const location = useLocation();
   const ky = useOkapiKy();
-  const [openAgreementsState, setOpenAgreementsState] = useState([]);
+  // State to hold basket items
+  const [selectedItems, setSelectedItems] = useState({});
+  // State to hide/display agreement create modal
   const [showCreateAgreementModal, setShowCreateAgreementModal] = useState(false);
   const [selectedAgreementId, setSelectedAgreementId] = useState(undefined);
-  const [selectedItems, setSelectedItems] = useState({});
 
   const { mutateAsync: putAgreement } = useMutation(
-    [
-      AGREEMENT_ENDPOINT(selectedAgreementId),
-      'ui-agreements',
-      'Basket',
-      'putAgreement',
-    ],
+    ['ERM', 'Basket', 'addToExistingAgreement', AGREEMENT_ENDPOINT(selectedAgreementId), 'PUT'],
     (data) => ky
       .put(AGREEMENT_ENDPOINT(selectedAgreementId), {
         json: data,
@@ -90,16 +85,7 @@ const Basket = ({
       });
       setSelectedItems(newState.selectedItems);
     }
-
-    // Make a `dataOptions`-able array of agreements with a `value` key.
-    if (openAgreements.length !== openAgreementsState.length) {
-      newState.openAgreements = openAgreements.map((a) => ({
-        ...a,
-        value: a.id,
-      }));
-      setOpenAgreementsState(newState.openAgreements);
-    }
-  }, [basket, selectedItems, openAgreements, openAgreementsState.length]);
+  }, [basket, selectedItems]);
 
   const handleToggleAll = () => {
     const selectedItemsObj = {};
