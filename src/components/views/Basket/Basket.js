@@ -8,12 +8,14 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import {
   Button,
+  Col,
   IconButton,
   Layout,
   MessageBanner,
   Pane,
   PaneMenu,
   Paneset,
+  Row,
 } from '@folio/stripes/components';
 
 import { AGREEMENT_ENDPOINT } from '../../../constants';
@@ -146,34 +148,31 @@ const Basket = ({
     const disabled = Object.values(selectedItems).find((v) => v) === undefined; // None of the `selectedItems` value's are `true`
 
     return (
-      <Layout className="marginTop1">
-        <Button
-          buttonStyle="primary"
-          data-test-basket-create-agreement
-          disabled={disabled}
-          onClick={() => {
-            setShowCreateAgreementModal(true);
-          }}
-        >
-          <FormattedMessage id="ui-agreements.basket.createAgreement" />
-        </Button>
-      </Layout>
+      <Button
+        buttonStyle="primary"
+        data-test-basket-create-agreement
+        disabled={disabled}
+        marginBottom0
+        onClick={() => {
+          setShowCreateAgreementModal(true);
+        }}
+      >
+        <FormattedMessage id="ui-agreements.basket.createAgreement" />
+      </Button>
     );
   };
 
   const renderAddToAgreementButton = () => {
     const disabled = Object.values(selectedItems).find((v) => v) === undefined; // None of the `selectedItems` value's ;
     return (
-      <Layout className="marginTop1">
-        <AgreementSearchButton
-          buttonStyle="primary"
-          disabled={disabled}
-          name="agreement"
-          onAgreementSelected={(agreement) => {
-            setSelectedAgreement(agreement);
-          }}
-        />
-      </Layout>
+      <AgreementSearchButton
+        buttonProps={{ buttonStyle: 'primary' }}
+        disabled={disabled}
+        name="agreement"
+        onAgreementSelected={(agreement) => {
+          setSelectedAgreement(agreement);
+        }}
+      />
     );
   };
 
@@ -202,8 +201,16 @@ const Basket = ({
             onToggleItem={handleToggleItem}
             selectedItems={selectedItems}
           />
-          {renderCreateAgreementButton()}
-          {renderAddToAgreementButton()}
+          <Layout className="marginTop1">
+            <Row>
+              <Col xs={3}>
+                {renderAddToAgreementButton()}
+              </Col>
+              <Col xs={3}>
+                {renderCreateAgreementButton()}
+              </Col>
+            </Row>
+          </Layout>
         </div>
       </Pane>
       <AgreementModal
