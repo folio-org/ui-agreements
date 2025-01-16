@@ -8,14 +8,12 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import {
   Button,
-  Col,
   IconButton,
   Layout,
   MessageBanner,
   Pane,
   PaneMenu,
   Paneset,
-  Row,
 } from '@folio/stripes/components';
 
 import { AGREEMENT_ENDPOINT } from '../../../constants';
@@ -202,14 +200,8 @@ const Basket = ({
             selectedItems={selectedItems}
           />
           <Layout className="marginTop1">
-            <Row>
-              <Col xs={3}>
-                {renderAddToAgreementButton()}
-              </Col>
-              <Col xs={3}>
-                {renderCreateAgreementButton()}
-              </Col>
-            </Row>
+            {renderCreateAgreementButton()}
+            {renderAddToAgreementButton()}
           </Layout>
         </div>
       </Pane>

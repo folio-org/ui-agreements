@@ -1,5 +1,4 @@
 import { MemoryRouter } from 'react-router-dom';
-
 import { useMutation } from 'react-query';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
@@ -17,6 +16,7 @@ import translationsProperties from '../../../../test/helpers';
 import { data, handlers } from './testResources';
 
 jest.mock('../../BasketList', () => () => <div>BasketList</div>);
+jest.mock('../../AgreementSearchButton', () => () => <div>AgreementSearchButton</div>);
 
 /* EXAMPLE Mocking useMutation to allow us to test the .then clause */
 // Setting up jest fn here to test paramters passed in by component
@@ -84,5 +84,10 @@ describe('Basket', () => {
       await Button('Create new agreement').exists();
       await Button('Create new agreement').click();
     });
+  });
+
+  it('renders the AgreementSearchButton component', () => {
+    const { getByText } = renderComponent;
+    expect(getByText('AgreementSearchButton')).toBeInTheDocument();
   });
 });
