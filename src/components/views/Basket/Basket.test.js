@@ -86,6 +86,11 @@ describe('Basket', () => {
     });
   });
 
+  it('renders the record count in the pane sub', () => {
+    const { getByText } = renderComponent;
+    expect(getByText('Showing 1 record')).toBeInTheDocument();
+  });
+
   it('renders the AgreementSearchButton component', () => {
     const { getByText } = renderComponent;
     expect(getByText('AgreementSearchButton')).toBeInTheDocument();

@@ -1,52 +1,75 @@
 const data = {
-  basket: [
-    {
-      id: '267b8ab6-5ea6-45bb-8884-6f9cf460a0d0',
-      class: 'org.olf.kb.Pkg',
-      name: 'Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz',
+  basket: [{
+    class: 'org.olf.kb.Pkg',
+    id: '1ac840f8-1d61-4762-8f04-d9f9002a38e2',
+    name: 'ACS in Focus Test',
+    _object: {
+      id: '1ac840f8-1d61-4762-8f04-d9f9002a38e2',
+      availabilityScope: {
+        id: '2c91809e9471ef2c019471f85da90042',
+        value: 'global',
+        label: 'Global'
+      },
+      dateCreated: '2025-01-17T02:10:16Z',
+      availabilityConstraints: [],
+      packageDescriptionUrls: [
+        {
+          id: '67141d4a-8adc-4635-8549-11c936decf09',
+          url: 'http://gokbt.gbv.de/package/c6c02a7f-4581-487e-86da-73249df9316e'
+        }
+      ],
+      lastUpdated: '2025-01-17T02:10:16Z',
+      normalizedName: 'acs in focus test',
+      vendor: {
+        id: '25353090-4fc2-499a-9ca7-3c6276ee3aef',
+        name: 'American Chemical Society',
+        orgsUuid_object: {
+          error: 400,
+          message: 'Bad Request'
+        }
+      },
+      sourceDataUpdated: '2021-08-13T06:20:30Z',
+      source: 'GOKb',
+      contentTypes: [],
+      sourceTitleCount: 0,
+      alternateResourceNames: [],
+      name: 'ACS in Focus Test',
+      lifecycleStatus: {
+        id: '2c91809e9471ef2c019471f85daf0044',
+        value: 'current',
+        label: 'Current'
+      },
       suppressFromDiscovery: false,
-      tags: [],
-      customCoverage: false,
-      _object: {
-        id: '267b8ab6-5ea6-45bb-8884-6f9cf460a0d0',
-        dateCreated: '2021-11-19T01:58:42Z',
-        tags: [],
-        lastUpdated: '2021-11-19T01:58:42Z',
-        normalizedName: 'edward elgar:edward elgar e-book archive in business & management, economics and finance:nationallizenz',
-        vendor: {
-          id: 'ce30e434-f897-4037-a07b-e656bfe5559d',
-          name: 'Edward Elgar',
-          orgsUuid_object: {
-            error: 400,
-            message: 'Bad Request'
+      sourceDataCreated: '2020-10-30T14:30:16Z',
+      reference: 'c6c02a7f-4581-487e-86da-73249df9316e',
+      resourceCount: 0,
+      class: 'org.olf.kb.Pkg',
+      identifiers: [
+        {
+          identifier: {
+            value: '5126637',
+            ns: { value: 'gokb_id' }
+          },
+          status: {
+            id: '2c91809e9471ef2c019471f896d1005e',
+            value: 'approved',
+            label: 'approved'
           }
         },
-        coverage: [],
-        source: 'GOKb',
-        remoteKb: {
-          id: 'ebaf4815-a4bc-49f6-b929-03a216a4e206',
-          cursor: '2021-11-17T15:58:18Z',
-          active: true,
-          trustedSourceTI: false,
-          activationEnabled: false,
-          readonly: false,
-          syncStatus: 'idle',
-          lastCheck: 1637347576976,
-          name: 'GOKb_TEST',
-          type: 'org.olf.kb.adapters.GOKbOAIAdapter',
-          fullPrefix: 'gokb',
-          uri: 'https://gokbt.gbv.de/gokb/oai/index',
-          supportsHarvesting: true,
-          rectype: 1
-        },
-        name: 'Edward Elgar:Edward Elgar E-Book Archive in Business & Management, Economics and Finance:Nationallizenz',
-        suppressFromDiscovery: false,
-        reference: 'Edward_Elgar:Edward_Elgar_E-Book_Archive_in_Business_&_Management,_Economics_and_Finance:Nationalliz',
-        resourceCount: 2540,
-        class: 'org.olf.kb.Pkg'
-      },
-      rowIndex: 0
+        {
+          identifier: {
+            value: 'c6c02a7f-4581-487e-86da-73249df9316e',
+            ns: { value: 'gokb_uuid' }
+          },
+          status: {
+            id: '2c91809e9471ef2c019471f896d1005e',
+            value: 'approved',
+            label: 'approved'
+          }
+        }
+      ]
     }
+  }
   ]
 };
 
