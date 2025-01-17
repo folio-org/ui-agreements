@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from 'react-query';
 import { useLocation, useHistory } from 'react-router-dom';
@@ -8,16 +8,12 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import {
   Button,
-  Col,
-  FormattedUTCDate,
-  Headline,
   IconButton,
   Layout,
   MessageBanner,
   Pane,
   PaneMenu,
   Paneset,
-  Selection,
 } from '@folio/stripes/components';
 
 import { AGREEMENT_ENDPOINT } from '../../../constants';
@@ -26,11 +22,11 @@ import { urls } from '../../utilities';
 
 import BasketList from '../../BasketList';
 import AgreementModal from '../../AgreementModal';
+import AgreementSearchButton from '../../AgreementSearchButton';
 
 const propTypes = {
   data: PropTypes.shape({
     basket: PropTypes.arrayOf(PropTypes.object).isRequired,
-    openAgreements: PropTypes.arrayOf(PropTypes.object).isRequired,
   }).isRequired,
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
@@ -39,45 +35,53 @@ const propTypes = {
 };
 
 const Basket = ({
-  data: { basket, openAgreements },
+  data: { basket },
   handlers: { onClose, onRemoveBasketItem },
 }) => {
   const history = useHistory();
   const location = useLocation();
   const ky = useOkapiKy();
-  const [openAgreementsState, setOpenAgreementsState] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedAgreementId, setSelectedAgreementId] = useState(undefined);
+  // State to hold basket items
   const [selectedItems, setSelectedItems] = useState({});
+  // State to hide/display agreement create modal
+  const [showCreateAgreementModal, setShowCreateAgreementModal] = useState(false);
+
+  // As things stand, if this gets filled, we IMMEDIATELY trigger a PUT and redirect etc
+  const [selectedAgreement, setSelectedAgreement] = useState();
 
   const { mutateAsync: putAgreement } = useMutation(
-    [
-      AGREEMENT_ENDPOINT(selectedAgreementId),
-      'ui-agreements',
-      'Basket',
-      'putAgreement',
-    ],
-    (data) => ky
-      .put(AGREEMENT_ENDPOINT(selectedAgreementId), {
-        json: data,
-      })
-      .json()
-      .then(() => {
-        history.push(
-          `${urls.agreementView(selectedAgreementId)}${location.search}`
-        );
-      })
+    ['ERM', 'Basket', 'addToExistingAgreement', AGREEMENT_ENDPOINT(selectedAgreement?.id), 'PUT'],
+    (data) => {
+      return ky
+        .put(AGREEMENT_ENDPOINT(selectedAgreement?.id), {
+          json: data,
+        })
+        .json()
+        .then(() => {
+          history.push(
+            `${urls.agreementView(selectedAgreement?.id)}${location.search}`
+          );
+        });
+    }
   );
 
-  const handleAddToExistingAgreement = async (addFromBasket) => {
+  const handleAddToExistingAgreement = useCallback(async (addFromBasket) => {
     const submitValues = {
       items: addFromBasket
         .split(',')
         .map((index) => ({ resource: basket[parseInt(index, 10)] }))
         .filter((line) => line.resource),
     };
+
     await putAgreement(submitValues);
-  };
+  }, [basket, putAgreement]);
+
+  const getSelectedItems = useCallback(() => {
+    return Object.entries(selectedItems)
+      .filter(([_, selected]) => selected)
+      .map(([itemId]) => basket.findIndex((i) => i.id === itemId))
+      .join(',');
+  }, [basket, selectedItems]);
 
   useEffect(() => {
     const newState = {};
@@ -90,15 +94,18 @@ const Basket = ({
       setSelectedItems(newState.selectedItems);
     }
 
-    // Make a `dataOptions`-able array of agreements with a `value` key.
-    if (openAgreements.length !== openAgreementsState.length) {
-      newState.openAgreements = openAgreements.map((a) => ({
-        ...a,
-        value: a.id,
-      }));
-      setOpenAgreementsState(newState.openAgreements);
+
+    /* If an agreement gets selected, fire a PUT
+      (triggering close/view agreement etc etc)
+      If we wish to add confirmation at some point
+      this will need changing
+     */
+    if (selectedAgreement) {
+      handleAddToExistingAgreement(getSelectedItems());
+      // Unset while we wait for push... what if PUT fails?
+      setSelectedAgreement();
     }
-  }, [basket, selectedItems, openAgreements, openAgreementsState.length]);
+  }, [basket, getSelectedItems, handleAddToExistingAgreement, putAgreement, selectedAgreement, selectedItems]);
 
   const handleToggleAll = () => {
     const selectedItemsObj = {};
@@ -116,13 +123,6 @@ const Basket = ({
       ...selectedItems,
       [item.id]: !selectedItems[item.id],
     });
-  };
-
-  const getSelectedItems = () => {
-    return Object.entries(selectedItems)
-      .filter(([_, selected]) => selected)
-      .map(([itemId]) => basket.findIndex((i) => i.id === itemId))
-      .join(',');
   };
 
   const renderPaneFirstMenu = () => {
@@ -146,111 +146,31 @@ const Basket = ({
     const disabled = Object.values(selectedItems).find((v) => v) === undefined; // None of the `selectedItems` value's are `true`
 
     return (
-      <Layout className="marginTop1">
-        <Button
-          buttonStyle="primary"
-          data-test-basket-create-agreement
-          disabled={disabled}
-          onClick={() => {
-            setShowModal(true);
-          }}
-        >
-          <FormattedMessage id="ui-agreements.basket.createAgreement" />
-        </Button>
-      </Layout>
+      <Button
+        buttonStyle="primary"
+        data-test-basket-create-agreement
+        disabled={disabled}
+        marginBottom0
+        onClick={() => {
+          setShowCreateAgreementModal(true);
+        }}
+      >
+        <FormattedMessage id="ui-agreements.basket.createAgreement" />
+      </Button>
     );
   };
 
   const renderAddToAgreementButton = () => {
-    const disabled =
-      selectedAgreementId === undefined ||
-      Object.values(selectedItems).find((v) => v) === undefined; // None of the `selectedItems` value's are `true`;
-
+    const disabled = Object.values(selectedItems).find((v) => v) === undefined; // None of the `selectedItems` value's ;
     return (
-      <div>
-        <Layout className="marginTop1">
-          <Button
-            buttonStyle="primary"
-            data-test-basket-add-to-agreement
-            disabled={disabled}
-            onClick={async () => {
-              await handleAddToExistingAgreement(getSelectedItems());
-            }}
-          >
-            <FormattedMessage id="ui-agreements.basket.addToSelectedAgreement" />
-          </Button>
-        </Layout>
-      </div>
-    );
-  };
-
-  const renderAddToAgreementSection = () => {
-    if (!openAgreementsState.length) return null;
-
-    return (
-      <div>
-        <Layout className="marginTop1">
-          <Headline margin="small" tag="h4">
-            <FormattedMessage
-              id="ui-agreements.basket.existingAgreements"
-              tagName="div"
-            />
-          </Headline>
-        </Layout>
-        <Col md={8} xs={12}>
-          <Selection
-            dataOptions={openAgreementsState}
-            formatter={({ option }) => {
-              if (!option) {
-                return null;
-              }
-              return (
-                <div
-                  data-test-agreement-id={option.id}
-                  style={{ textAlign: 'left' }}
-                >
-                  <Headline>
-                    {option.name}&nbsp;&#40;{option.agreementStatus.label}&#41;
-                  </Headline>
-                  {/* eslint-disable-line */}
-                  <div>
-                    <strong>
-                      <FormattedMessage id="ui-agreements.agreements.startDate" />
-                      :{' '}
-                    </strong>
-                    <FormattedUTCDate value={option.startDate} />{' '}
-                    {/* eslint-disable-line */}
-                  </div>
-                </div>
-              );
-            }}
-            id="select-agreement-for-basket"
-            onChange={(id) => {
-              setSelectedAgreementId(id);
-            }}
-            onFilter={(searchString, agreements) => {
-              return agreements.filter((agreement) => {
-                const lowerCasedSearchString = searchString.toLowerCase();
-
-                return (
-                  agreement.name
-                    .toLowerCase()
-                    .includes(lowerCasedSearchString) ||
-                  agreement.agreementStatus.label
-                    .toLowerCase()
-                    .includes(lowerCasedSearchString) ||
-                  !!agreement.startDate
-                    ?.toLowerCase()
-                    ?.includes(lowerCasedSearchString)
-                );
-              });
-            }}
-            optionAlignment="start"
-            placeholder=" "
-          />
-        </Col>
-        {renderAddToAgreementButton()}
-      </div>
+      <AgreementSearchButton
+        buttonProps={{ buttonStyle: 'primary' }}
+        disabled={disabled}
+        name="agreement"
+        onAgreementSelected={(agreement) => {
+          setSelectedAgreement(agreement);
+        }}
+      />
     );
   };
 
@@ -279,14 +199,16 @@ const Basket = ({
             onToggleItem={handleToggleItem}
             selectedItems={selectedItems}
           />
-          {renderCreateAgreementButton()}
-          {renderAddToAgreementSection()}
+          <Layout className="marginTop1">
+            {renderCreateAgreementButton()}
+            {renderAddToAgreementButton()}
+          </Layout>
         </div>
       </Pane>
       <AgreementModal
-        hideModal={() => setShowModal(false)}
+        hideModal={() => setShowCreateAgreementModal(false)}
         selectedItems={getSelectedItems()}
-        showModal={showModal}
+        showModal={showCreateAgreementModal}
       />
     </Paneset>
   );

@@ -1,5 +1,4 @@
 import { MemoryRouter } from 'react-router-dom';
-
 import { useMutation } from 'react-query';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
@@ -8,9 +7,7 @@ import {
   Button,
   PaneHeader,
   renderWithIntl,
-  Selection,
-  SelectionList,
-  SelectionOption
+
 } from '@folio/stripes-erm-testing';
 
 import Basket from './Basket';
@@ -19,6 +16,7 @@ import translationsProperties from '../../../../test/helpers';
 import { data, handlers } from './testResources';
 
 jest.mock('../../BasketList', () => () => <div>BasketList</div>);
+jest.mock('../../AgreementSearchButton', () => () => <div>AgreementSearchButton</div>);
 
 /* EXAMPLE Mocking useMutation to allow us to test the .then clause */
 // Setting up jest fn here to test paramters passed in by component
@@ -81,66 +79,20 @@ describe('Basket', () => {
     await Button('Create new agreement').exists();
   });
 
-  describe('Choosing an option and clicking the add to selected agreement button', () => {
-    describe('Opening agreement selection', () => {
-      beforeEach(async () => {
-        await Selection({ id: 'select-agreement-for-basket' }).exists();
-        await waitFor(async () => {
-          await Selection().open();
-        });
-      });
-
-      test('The right number of options show', async () => {
-        await SelectionList({ optionCount: 9 }).exists();
-      });
-
-      describe('Filtering the selection list', () => {
-        beforeEach(async () => {
-          await waitFor(async () => {
-            await Selection().filterOptions('MR agreement test');
-          });
-        });
-
-        test('There is now only one option', async () => {
-          await SelectionList({ optionCount: 1 }).exists();
-        });
-
-        describe('Selecting an agreement', () => {
-          beforeEach(async () => {
-            await SelectionOption(/MR agreement test/i).click();
-          });
-
-          test('The selected agreement button is now active', async () => {
-            await Button('Add to selected agreement').exists();
-          });
-
-          describe('Adding to selected agreement', () => {
-            beforeEach(async () => {
-              await waitFor(async () => {
-                await Button('Add to selected agreement').click();
-              });
-            });
-
-            test('mutate async called as expected', async () => {
-              await waitFor(async () => {
-                expect(mockMutateAsync.mock.calls[0][0]).toBeInstanceOf(Object);
-                expect(mockMutateAsync.mock.calls[0][0].items).toBeInstanceOf(Array);
-
-                expect(mockMutateAsync.mock.calls[0][0].items[0]).toStrictEqual({
-                  resource: data.basket[0]
-                });
-              });
-            });
-          });
-        });
-      });
-    });
-  });
-
   it('clicking the create agreement button', async () => {
     await waitFor(async () => {
       await Button('Create new agreement').exists();
       await Button('Create new agreement').click();
     });
+  });
+
+  it('renders the record count in the pane sub', () => {
+    const { getByText } = renderComponent;
+    expect(getByText('Showing 1 record')).toBeInTheDocument();
+  });
+
+  it('renders the AgreementSearchButton component', () => {
+    const { getByText } = renderComponent;
+    expect(getByText('AgreementSearchButton')).toBeInTheDocument();
   });
 });
