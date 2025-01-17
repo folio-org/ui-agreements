@@ -15,7 +15,7 @@ const data = {
       packageDescriptionUrls: [
         {
           id: '67141d4a-8adc-4635-8549-11c936decf09',
-          url: 'http://gokbt.gbv.de/package/c6c02a7f-4581-487e-86da-73249df9316e'
+          url: 'https://gokbt.gbv.de/package/c6c02a7f-4581-487e-86da-73249df9316e'
         }
       ],
       lastUpdated: '2025-01-17T02:10:16Z',
