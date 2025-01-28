@@ -1,6 +1,6 @@
 import { MemoryRouter } from 'react-router-dom';
 import { useMutation } from 'react-query';
-import { waitFor, fireEvent, screen } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import {
   Button,
@@ -13,7 +13,13 @@ import Basket from './Basket';
 import translationsProperties from '../../../../test/helpers';
 import { data, handlers } from './testResources';
 
-jest.mock('../../BasketList', () => () => <div>BasketList</div>);
+jest.mock('../../BasketList', () => (props) => (
+  <div>
+    <input type="checkbox" />
+    <button icon="trash" onClick={() => props.handlers.onRemoveBasketItem()} type="button">Remove</button>
+    BasketList
+  </div>
+));
 jest.mock('../../AgreementSearchButton', () => () => <div>AgreementSearchButton</div>);
 jest.mock('../../AgreementModal', () => () => <div>AgreementModal</div>);
 
@@ -70,6 +76,12 @@ describe('Basket', () => {
         expect(getByText('BasketList')).toBeInTheDocument();
       });
 
+      if (isButtonDisabled) {
+        test('the Create New Agreement button is disabled', async () => {
+          await Button('Create new agreement').is({ disabled: true });
+        });
+      }
+
       describe(' clicking on the create agreement button', () => {
         if (!isButtonDisabled) {
           it('triggers create agreement logic on button click', async () => {
@@ -87,6 +99,20 @@ describe('Basket', () => {
             expect(getByText('AgreementModal')).toBeInTheDocument();
           });
         }
+      });
+
+      it('toggles item selection', async () => {
+        const { getByText } = renderComponent;
+        const basketList = getByText('BasketList');
+
+        const checkbox = basketList.querySelector('input[type="checkbox"]');
+        expect(checkbox).toBeInTheDocument();
+
+        fireEvent.click(checkbox);
+        expect(checkbox.checked).toBe(true);
+
+        fireEvent.click(checkbox);
+        expect(checkbox.checked).toBe(false);
       });
 
       it('renders the close basket button', async () => {
