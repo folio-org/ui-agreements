@@ -1,13 +1,11 @@
 import { MemoryRouter } from 'react-router-dom';
 import { useMutation } from 'react-query';
-
-import { waitFor, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor, fireEvent, screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import {
   Button,
   PaneHeader,
   renderWithIntl,
-
 } from '@folio/stripes-erm-testing';
 
 import Basket from './Basket';
@@ -17,6 +15,7 @@ import { data, handlers } from './testResources';
 
 jest.mock('../../BasketList', () => () => <div>BasketList</div>);
 jest.mock('../../AgreementSearchButton', () => () => <div>AgreementSearchButton</div>);
+jest.mock('../../AgreementModal', () => () => <div>AgreementModal</div>);
 
 /* EXAMPLE Mocking useMutation to allow us to test the .then clause */
 // Setting up jest fn here to test paramters passed in by component
@@ -43,110 +42,88 @@ jest.mock('react-query', () => {
 });
 
 describe('Basket', () => {
-  describe('Basket with data', () => {
-    let renderComponent;
-    beforeEach(() => {
-      renderComponent = renderWithIntl(
-        <MemoryRouter>
-          <Basket
-            data={data}
-            handlers={handlers}
-          />
-        </MemoryRouter>,
-        translationsProperties
-      );
-    });
-
-    test('useMutation has been called', () => {
-      expect(useMutation).toHaveBeenCalled();
-    });
-
-    it('triggers create agreement logic on button click', async () => {
-      await waitFor(async () => {
-        await Button('Create new agreement').click();
+  describe.each([
+    ['with e-resource', data, 'Showing 1 record', false],
+    ['without e-resource', { basket: [] }, 'Showing 0 records', true]
+  ])('testing', (description, basketData, expectedRecordText, isButtonDisabled) => {
+    describe(description, () => {
+      let renderComponent;
+      beforeEach(() => {
+        renderComponent = renderWithIntl(
+          <MemoryRouter>
+            <Basket data={basketData} handlers={handlers} />
+          </MemoryRouter>,
+          translationsProperties
+        );
       });
-      expect(useMutation).toHaveBeenCalled();
-    });
 
-    it('renders the expected Pane title', async () => {
-      await PaneHeader('ERM basket').is({ visible: true });
-    });
-
-    it('renders the expected message banner text', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Select one or more e-resources and add them to a new or existing agreement. An agreement line will be created for each e-resource that you select.')).toBeInTheDocument();
-    });
-
-    it('renders the BasketList component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('BasketList')).toBeInTheDocument();
-    });
-
-    it('renders the create new agreement button', async () => {
-      await Button('Create new agreement').exists();
-    });
-
-    it('clicking the create agreement button', async () => {
-      await waitFor(async () => {
-        await Button('Create new agreement').exists();
-        await Button('Create new agreement').click();
+      test('useMutation has been called', () => {
+        expect(useMutation).toHaveBeenCalled();
       });
-    });
 
-    it('renders the record count in the pane sub', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Showing 1 record')).toBeInTheDocument();
-    });
+      it('renders the expected Pane title', async () => {
+        await PaneHeader('ERM basket').is({ visible: true });
+      });
 
-    it('renders the AgreementSearchButton component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('AgreementSearchButton')).toBeInTheDocument();
-    });
-  });
+      it('renders the BasketList component', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('BasketList')).toBeInTheDocument();
+      });
 
-  describe('Basket without data', () => {
-    let renderComponent;
-    beforeEach(() => {
-      renderComponent = renderWithIntl(
-        <MemoryRouter>
-          <Basket
-            data={{ basket: [] }}
-            handlers={handlers}
-          />
-        </MemoryRouter>,
-        translationsProperties
-      );
-    });
+      describe(' clicking on the create agreement button', () => {
+        if (!isButtonDisabled) {
+          it('triggers create agreement logic on button click', async () => {
+            await waitFor(async () => {
+              await Button('Create new agreement').click();
+            });
+            expect(useMutation).toHaveBeenCalled();
+          });
 
-    it('renders the close basket button', async () => {
-      const { getByRole } = renderComponent;
-      expect(getByRole('button', { name: 'Close basket' })).toBeInTheDocument();
-    });
+          it('clicking the create new agreement button opens the agreementModal', async () => {
+            const { getByText } = renderComponent;
+            await waitFor(async () => {
+              await Button('Create new agreement').click();
+            });
+            expect(getByText('AgreementModal')).toBeInTheDocument();
+          });
+        }
+      });
 
-    it('calls the onClose handler when the close button is clicked', async () => {
-      const { getByRole } = renderComponent;
-      const closeButton = getByRole('button', { name: 'Close basket' });
-      fireEvent.click(closeButton);
-      expect(handlers.onClose).toHaveBeenCalledTimes(1);
-    });
+      it('renders the close basket button', async () => {
+        const { getByRole } = renderComponent;
+        expect(getByRole('button', { name: 'Close basket' })).toBeInTheDocument();
+      });
 
-    it('it renders the AgreementSearchButton component', () => {
-      const { queryByText } = renderComponent;
-      expect(queryByText('AgreementSearchButton')).toBeInTheDocument();
-    });
+      describe('calling the onClose handler', () => {
+        if (!isButtonDisabled) {
+          it('calls the onClose handler when the close button is clicked', async () => {
+            const { getByRole } = renderComponent;
+            const closeButton = getByRole('button', { name: 'Close basket' });
+            fireEvent.click(closeButton);
+            expect(handlers.onClose).toHaveBeenCalledTimes(1);
+          });
+        }
+      });
 
-    it('renders the record count in the pane sub', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Showing 0 records')).toBeInTheDocument();
-    });
+      it('renders the AgreementSearchButton component', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('AgreementSearchButton')).toBeInTheDocument();
+      });
 
-    it('renders the create new agreement button', async () => {
-      await Button('Create new agreement').is({ disabled: true });
-    });
+      it('renders the AgreementModal component', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('AgreementModal')).toBeInTheDocument();
+      });
 
-    it('renders the message banner text', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('Select one or more e-resources and add them to a new or existing agreement. An agreement line will be created for each e-resource that you select.')).toBeInTheDocument();
+      it('renders the expected message banner text', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('Select one or more e-resources and add them to a new or existing agreement. An agreement line will be created for each e-resource that you select.')).toBeInTheDocument();
+      });
+
+      it('renders the record count in the pane sub', () => {
+        const { getByText } = renderComponent;
+        expect(getByText(expectedRecordText)).toBeInTheDocument();
+      });
     });
   });
 });
