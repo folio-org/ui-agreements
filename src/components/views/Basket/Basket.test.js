@@ -13,10 +13,9 @@ import Basket from './Basket';
 import translationsProperties from '../../../../test/helpers';
 import { data, handlers } from './testResources';
 
-jest.mock('../../BasketList', () => (props) => (
+jest.mock('../../BasketList', () => () => (
   <div>
     <input type="checkbox" />
-    <button icon="trash" onClick={() => props.handlers.onRemoveBasketItem()} type="button">Remove</button>
     BasketList
   </div>
 ));
