@@ -70,7 +70,19 @@ const data = {
       ]
     }
   }
-  ]
+  ],
+  'agreement':
+    {
+      'id': 'c526ab10-0c0b-4e8d-9b52-66a289413ce7',
+      'dateCreated': '2025-02-03T10:24:54Z',
+      'name': 'test',
+      'startDate': '2025-02-12',
+      'agreementStatus': {
+        'id': '2c91809e94c97a950194c983b119004b',
+        'value': 'active',
+        'label': 'Active'
+      },
+    }
 };
 
 const handlers = {
