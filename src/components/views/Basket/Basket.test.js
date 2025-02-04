@@ -144,6 +144,9 @@ describe('Basket', () => {
         expect(getByText('AgreementModal')).toBeInTheDocument();
       });
 
+      // FIXME: The test should check whether or not putAgreement is called, but it is currently fiddly due to mutateAsync.
+      // This test currently does not verify whether the AgreementModal is opened or not
+      // as the AgreementModal mock is always being rendered.
       describe('Selecting agreement', () => {
         beforeEach(async () => {
           await waitFor(async () => {
@@ -151,7 +154,7 @@ describe('Basket', () => {
           });
         });
 
-        test('onClose handler is called again', async () => {
+        test('should open the modal', async () => {
           const { getByText } = renderComponent;
           await waitFor(() => {
             expect(getByText('AgreementModal')).toBeInTheDocument();
