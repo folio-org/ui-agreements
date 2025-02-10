@@ -87,6 +87,11 @@ const PackageCard = ({
           </KeyValue>
         </Col>
         <Col xs={3}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.eresources.SynchronisationStatus" />}>
+            <div data-test-package-reference>{pkgObject.syncContentsFromSource?.label ?? <NoValue />}</div>
+          </KeyValue>
+        </Col>
+        <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.reference" />}>
             <div data-test-package-reference>{pkgObject?.reference ?? <NoValue />}</div>
           </KeyValue>

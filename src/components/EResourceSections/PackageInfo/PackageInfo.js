@@ -92,8 +92,16 @@ const PackageInfo = ({
         </Col>
         <Col xs={3}>
           <KeyValue
-            label={<FormattedMessage id="ui-agreements.eresources.reference" />}
-            value={eresource.reference || <NoValue />}
+            label={<FormattedMessage id="ui-agreements.eresources.SynchronisationStatus" />}
+            value={eresource?.syncContentsFromSource !== null ? (
+              eresource?.syncContentsFromSource ? (
+                <FormattedMessage id="ui-agreements.eresources.synchronising" />
+              ) : (
+                <FormattedMessage id="ui-agreements.eresources.paused" />
+              )
+            ) : (
+              <NoValue />
+            )}
           />
         </Col>
       </Row>
@@ -148,7 +156,17 @@ const PackageInfo = ({
           />
         </Col>
       </Row>
-      <PackageIdentifiers pkg={eresource} />
+      <Row>
+        <Col xs={6}>
+          <PackageIdentifiers pkg={eresource} />
+        </Col>
+        <Col xs={3}>
+          <KeyValue
+            label={<FormattedMessage id="ui-agreements.eresources.reference" />}
+            value={eresource.reference || <NoValue />}
+          />
+        </Col>
+      </Row>
     </div>
   );
 };
@@ -194,10 +212,13 @@ PackageInfo.propTypes = {
         id: PropTypes.string,
         url: PropTypes.string
       })),
+      syncStatus: PropTypes.string,
       reference: PropTypes.string,
       source: PropTypes.string,
       sourceDataCreated: PropTypes.string,
       sourceDataUpdated: PropTypes.string,
+      syncContentsFromSource: PropTypes.bool,
+
       vendor: PropTypes.shape({
         name: PropTypes.string,
       })
