@@ -88,12 +88,16 @@ const PackageCard = ({
         </Col>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.SynchronisationStatus" />}>
-            <div data-test-package-reference>{pkgObject.syncContentsFromSource?.label ?? <NoValue />}</div>
-          </KeyValue>
-        </Col>
-        <Col xs={3}>
-          <KeyValue label={<FormattedMessage id="ui-agreements.eresources.reference" />}>
-            <div data-test-package-reference>{pkgObject?.reference ?? <NoValue />}</div>
+            <div data-test-package-reference>{pkgObject?.syncContentsFromSource !== null ? (
+              pkgObject?.syncContentsFromSource ? (
+                <FormattedMessage id="ui-agreements.eresources.synchronising" />
+              ) : (
+                <FormattedMessage id="ui-agreements.eresources.paused" />
+              )
+            ) : (
+              <NoValue />
+            )}
+            </div>
           </KeyValue>
         </Col>
         <Col xs={3}>
@@ -102,7 +106,16 @@ const PackageCard = ({
           </KeyValue>
         </Col>
       </Row>
-      <PackageIdentifiers pkg={pkgObject} />
+      <Row>
+        <Col xs={6}>
+          <PackageIdentifiers pkg={pkgObject} />
+        </Col>
+        <Col xs={3}>
+          <KeyValue label={<FormattedMessage id="ui-agreements.eresources.reference" />}>
+            <div data-test-package-reference>{pkgObject?.reference ?? <NoValue />}</div>
+          </KeyValue>
+        </Col>
+      </Row>
     </Card>
   );
 };

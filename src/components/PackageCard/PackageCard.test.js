@@ -26,6 +26,7 @@ const pkg = {
     value: 'current',
     label: 'Current'
   },
+  syncContentsFromSource: true,
 };
 
 const pkgWithObject = {
@@ -278,6 +279,14 @@ describe('PackageCard', () => {
 
     test('renders the expected availability scope', async () => {
       await KeyValue('Availability').has({ value: 'Global' });
+    });
+
+    test('renders the Synchronisation status field', async () => {
+      await KeyValue('Synchronisation status').exists();
+    });
+
+    test('renders the expcected Synchronisation status field', async () => {
+      await KeyValue('Synchronisation status').has({ value:  'Synchronising' });
     });
   });
 
