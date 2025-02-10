@@ -41,6 +41,12 @@ const PackageInfo = ({
     _object: eresource,
   };
 
+  const synchronisationStatus = eresource?.syncContentsFromSource !== null
+    ? eresource?.syncContentsFromSource
+      ? <FormattedMessage id="ui-agreements.eresources.synchronising" />
+      : <FormattedMessage id="ui-agreements.eresources.paused" />
+    : <NoValue />;
+
   return (
     <div id="package-info">
       <Row between="md">
@@ -93,15 +99,7 @@ const PackageInfo = ({
         <Col xs={3}>
           <KeyValue
             label={<FormattedMessage id="ui-agreements.eresources.SynchronisationStatus" />}
-            value={eresource?.syncContentsFromSource !== null ? (
-              eresource?.syncContentsFromSource ? (
-                <FormattedMessage id="ui-agreements.eresources.synchronising" />
-              ) : (
-                <FormattedMessage id="ui-agreements.eresources.paused" />
-              )
-            ) : (
-              <NoValue />
-            )}
+            value={synchronisationStatus}
           />
         </Col>
       </Row>

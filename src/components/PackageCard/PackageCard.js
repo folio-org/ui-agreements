@@ -39,6 +39,12 @@ const PackageCard = ({
 }) => {
   const pkgObject = pkg._object ?? pkg;
 
+  const synchronisationStatus = pkgObject?.syncContentsFromSource !== null
+    ? pkgObject?.syncContentsFromSource
+      ? <FormattedMessage id="ui-agreements.eresources.synchronising" />
+      : <FormattedMessage id="ui-agreements.eresources.paused" />
+    : <NoValue />;
+
   return (
     <Card
       cardStyle="positive"
@@ -88,16 +94,7 @@ const PackageCard = ({
         </Col>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.SynchronisationStatus" />}>
-            <div data-test-package-reference>{pkgObject?.syncContentsFromSource !== null ? (
-              pkgObject?.syncContentsFromSource ? (
-                <FormattedMessage id="ui-agreements.eresources.synchronising" />
-              ) : (
-                <FormattedMessage id="ui-agreements.eresources.paused" />
-              )
-            ) : (
-              <NoValue />
-            )}
-            </div>
+            <div data-test-package-reference>{synchronisationStatus}</div>
           </KeyValue>
         </Col>
         <Col xs={3}>
