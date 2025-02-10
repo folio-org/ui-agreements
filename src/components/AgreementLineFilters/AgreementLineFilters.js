@@ -11,7 +11,7 @@ import { Accordion, AccordionSet, FilterAccordionHeader, Layout, Spinner } from 
 import { CheckboxFilter, MultiSelectionFilter } from '@folio/stripes/smart-components';
 import { DateFilter, DocumentFilter, useAgreement } from '@folio/stripes-erm-components';
 
-import AgreementFilterButton from '../AgreementFilterButton';
+import AgreementSearchButton from '../AgreementSearchButton';
 import POLineFilterButton from '../POLineFilterButton';
 import { urls } from '../utilities';
 
@@ -212,7 +212,7 @@ const AgreementLineFilters = ({
         {...props}
       >
         {displayAgreementName()}
-        <AgreementFilterButton
+        <AgreementSearchButton
           disabled={!!agreementFilterName || isAgreementLoading}
           name={name}
           onAgreementSelected={(agreement) => {
