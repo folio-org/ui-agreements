@@ -8,12 +8,13 @@ import AmendmentsFieldArray from '../AmendmentsFieldArray';
 
 import translationsProperties from '../../../../test/helpers';
 
-/* For this test we would like to retain the actual stripes-erm-components version of LicenseEndDate */
-/* See LicenseAmendmentList.test.js for the full breakdown */
+/* it creates a copy of mockErmComponents,
+removes the LicenseEndDate property from the copy,
+and then uses the copy to mock @folio/stripes-erm-components.
+*/
 jest.mock('@folio/stripes-erm-components', () => {
-  /* We can grab all the mocks except the one we don't want in use */
-  const { LicenseEndDate: _mockLicenseEndDate, ...mockedERMComps } = mockErmComponents;
-
+  const mockedERMComps = { ...mockErmComponents };
+  delete mockedERMComps.LicenseEndDate;
   return ({
     ...jest.requireActual('@folio/stripes-erm-components'),
     ...mockedERMComps
