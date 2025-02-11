@@ -41,11 +41,16 @@ const PackageInfo = ({
     _object: eresource,
   };
 
-  const synchronisationStatus = eresource?.syncContentsFromSource !== null
-    ? eresource?.syncContentsFromSource
-      ? <FormattedMessage id="ui-agreements.eresources.synchronising" />
-      : <FormattedMessage id="ui-agreements.eresources.paused" />
-    : <NoValue />;
+  let synchronisationStatus;
+  if (eresource?.syncContentsFromSource !== null) {
+    if (eresource?.syncContentsFromSource) {
+      synchronisationStatus = <FormattedMessage id="ui-agreements.eresources.synchronising" />;
+    } else {
+      synchronisationStatus = <FormattedMessage id="ui-agreements.eresources.paused" />;
+    }
+  } else {
+    synchronisationStatus = <NoValue />;
+  }
 
   return (
     <div id="package-info">

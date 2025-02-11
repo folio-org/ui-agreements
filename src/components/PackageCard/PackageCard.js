@@ -39,11 +39,16 @@ const PackageCard = ({
 }) => {
   const pkgObject = pkg._object ?? pkg;
 
-  const synchronisationStatus = pkgObject?.syncContentsFromSource !== null
-    ? pkgObject?.syncContentsFromSource
-      ? <FormattedMessage id="ui-agreements.eresources.synchronising" />
-      : <FormattedMessage id="ui-agreements.eresources.paused" />
-    : <NoValue />;
+  let synchronisationStatus;
+  if (pkgObject?.syncContentsFromSource !== null) {
+    if (pkgObject?.syncContentsFromSource) {
+      synchronisationStatus = <FormattedMessage id="ui-agreements.eresources.synchronising" />;
+    } else {
+      synchronisationStatus = <FormattedMessage id="ui-agreements.eresources.paused" />;
+    }
+  } else {
+    synchronisationStatus = <NoValue />;
+  }
 
   return (
     <Card
