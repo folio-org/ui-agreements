@@ -14,6 +14,7 @@ import EResourceCount from '../EResourceCount';
 import EResourceLink from '../EResourceLink';
 import EResourceProvider from '../EResourceProvider';
 import PackageIdentifiers from '../EResourceSections/PackageIdentifiers';
+import PackageSyncronisingValue from '../EResourceSections/PackageSyncronisingValue';
 
 const propTypes = {
   headerEnd: PropTypes.oneOfType([
@@ -38,17 +39,6 @@ const PackageCard = ({
   searchString = '',
 }) => {
   const pkgObject = pkg._object ?? pkg;
-
-  let synchronisationStatus;
-  if (pkgObject?.syncContentsFromSource !== null) {
-    if (pkgObject?.syncContentsFromSource) {
-      synchronisationStatus = <FormattedMessage id="ui-agreements.eresources.synchronising" />;
-    } else {
-      synchronisationStatus = <FormattedMessage id="ui-agreements.eresources.paused" />;
-    }
-  } else {
-    synchronisationStatus = <NoValue />;
-  }
 
   return (
     <Card
@@ -99,7 +89,9 @@ const PackageCard = ({
         </Col>
         <Col xs={3}>
           <KeyValue label={<FormattedMessage id="ui-agreements.eresources.SynchronisationStatus" />}>
-            <div data-test-package-reference>{synchronisationStatus}</div>
+            <div data-test-package-reference>
+              <PackageSyncronisingValue syncContentsFromSource={pkgObject?.syncContentsFromSource} />
+            </div>
           </KeyValue>
         </Col>
         <Col xs={3}>

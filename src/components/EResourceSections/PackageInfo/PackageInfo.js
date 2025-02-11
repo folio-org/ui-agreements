@@ -16,6 +16,7 @@ import { resourceClasses } from '../../../constants';
 
 import AddToBasketButton from '../../AddToBasketButton';
 import PackageIdentifiers from '../PackageIdentifiers';
+import PackageSyncronisingValue from '../PackageSyncronisingValue';
 import css from '../../styles.css';
 
 const PackageInfo = ({
@@ -40,17 +41,6 @@ const PackageInfo = ({
     name: eresource.name,
     _object: eresource,
   };
-
-  let synchronisationStatus;
-  if (eresource?.syncContentsFromSource !== null) {
-    if (eresource?.syncContentsFromSource) {
-      synchronisationStatus = <FormattedMessage id="ui-agreements.eresources.synchronising" />;
-    } else {
-      synchronisationStatus = <FormattedMessage id="ui-agreements.eresources.paused" />;
-    }
-  } else {
-    synchronisationStatus = <NoValue />;
-  }
 
   return (
     <div id="package-info">
@@ -104,7 +94,7 @@ const PackageInfo = ({
         <Col xs={3}>
           <KeyValue
             label={<FormattedMessage id="ui-agreements.eresources.SynchronisationStatus" />}
-            value={synchronisationStatus}
+            value={<PackageSyncronisingValue syncContentsFromSource={eresource?.syncContentsFromSource} />}
           />
         </Col>
       </Row>
@@ -215,7 +205,6 @@ PackageInfo.propTypes = {
         id: PropTypes.string,
         url: PropTypes.string
       })),
-      syncStatus: PropTypes.string,
       reference: PropTypes.string,
       source: PropTypes.string,
       sourceDataCreated: PropTypes.string,
