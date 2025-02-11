@@ -226,7 +226,8 @@ const pkgWithObject = {
     lastSeenTimestamp: 1634523397622,
     suppressFromDiscovery: false,
     longName: "'14th century English mystics newsletter' on Platform 'JSTOR' in Package JSTOR : Arts & Sciences V Collection : NK",
-    class: 'org.olf.kb.PackageContentItem'
+    class: 'org.olf.kb.PackageContentItem',
+    syncContentsFromSource: null,
   }
 };
 
@@ -337,6 +338,10 @@ describe('PackageCard', () => {
 
     test('renders the expcected availability', async () => {
       await KeyValue('Availability').has({ value: 'No value set-' });
+    });
+
+    test('renders the expcected Synchronisation status field', async () => {
+      await KeyValue('Synchronisation status').has({ value: 'No value set-' });
     });
   });
 });
