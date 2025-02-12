@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import { useQuery } from 'react-query';
 
@@ -91,12 +92,12 @@ const PackagesRoute = ({
         scope: 'availabilityScope.value',
         status: 'lifecycleStatus.value',
         tags: 'tags.value',
+        synchronisationStatus: 'syncContentsFromSource',
       },
       page: currentPage,
       perPage: RESULT_COUNT_INCREMENT
     }, (query ?? {}))
   ), [currentPage, query]);
-
 
   const {
     data: { results: packages = [], totalRecords: packagesCount = 0 } = {},
@@ -138,6 +139,11 @@ const PackagesRoute = ({
         sourceValues: dataSources,
         statusValues: getRefdataValuesByDesc(refdata, LIFECYCLE_STATUS),
         tagsValues: tags,
+        synchronisationStatusValues: [
+          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.true" />, value: 'true' },
+          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.false" />, value: 'false' },
+          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.notSet" />, value: 'notSet' }
+        ]
       }}
       queryGetter={queryGetter}
       querySetter={querySetter}

@@ -223,12 +223,14 @@ const Packages = ({
                       provider: <FormattedMessage id="ui-agreements.eresources.provider" />,
                       source: <FormattedMessage id="ui-agreements.packages.source" />,
                       status: <FormattedMessage id="ui-agreements.eresources.status" />,
+                      syncContentsFromSource: <FormattedMessage id="ui-agreements.eresources.synchronisationStatus" />,
                     }}
                     columnWidths={{
                       name: 300,
                       provider: 200,
                       source: 250,
                       status: 150,
+                      syncContentsFromSource: 150,
                     }}
                     contentData={data.packages}
                     formatter={{
@@ -247,6 +249,12 @@ const Packages = ({
                       provider: line => <EResourceProvider resource={line.resource || line} />,
                       source: e => (e.source),
                       status: e => (e.lifecycleStatus?.label),
+                      syncContentsFromSource: e => {
+                        if (e.syncContentsFromSource === true || e.syncContentsFromSource === false) {
+                          return <FormattedMessage id={`ui-agreements.eresources.syncStatus.${e.syncContentsFromSource}`} />;
+                        }
+                        return null;
+                      },
                     }}
                     id="list-packages"
                     isEmptyMessage={
@@ -271,7 +279,7 @@ const Packages = ({
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     totalCount={count}
-                    visibleColumns={['name', 'provider', 'source', 'status']}
+                    visibleColumns={['name', 'provider', 'source', 'status', 'syncContentsFromSource']}
                   />
                 </Pane>
                 {children}

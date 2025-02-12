@@ -17,7 +17,8 @@ const FILTERS = [
   'scope',
   'source',
   'status',
-  'tags'
+  'tags',
+  'synchronisationStatus'
 ];
 
 const PackageFilters = ({ activeFilters = {}, data, filterHandlers }) => {
@@ -28,6 +29,7 @@ const PackageFilters = ({ activeFilters = {}, data, filterHandlers }) => {
     source: [],
     status: [],
     tags: [],
+    synchronisationStatus: [],
   });
 
   useEffect(() => {
@@ -51,6 +53,9 @@ const PackageFilters = ({ activeFilters = {}, data, filterHandlers }) => {
   const renderCheckboxFilter = (name, prps) => {
     const fieldName = name;
     const groupFilters = activeFilters[fieldName] || [];
+
+    console.log('activeFilters', activeFilters);
+    console.log('groupFilters', groupFilters);
 
     return (
       <Accordion
@@ -76,6 +81,7 @@ const PackageFilters = ({ activeFilters = {}, data, filterHandlers }) => {
       </Accordion>
     );
   };
+
 
   const renderSourceFilter = () => {
     const dataOptions = (filterState.source || []).map(source => ({
@@ -155,6 +161,7 @@ const PackageFilters = ({ activeFilters = {}, data, filterHandlers }) => {
     <AccordionSet>
       {renderSourceFilter()}
       {renderCheckboxFilter('status')}
+      {renderCheckboxFilter('synchronisationStatus')}
       {renderCheckboxFilter('scope')}
       {renderAvailabilityFilter()}
       {renderCheckboxFilter('contentType')}
