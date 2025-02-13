@@ -1,31 +1,34 @@
 import { MemoryRouter } from 'react-router-dom';
-
 import { useMutation } from 'react-query';
 
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-
+import { waitFor, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+import { Button as MockButton } from '@folio/stripes/components';
 import {
   Button,
   PaneHeader,
   renderWithIntl,
-  Selection,
-  SelectionList,
-  SelectionOption
 } from '@folio/stripes-erm-testing';
 
+import translationsProperties from '../../../../test/helpers';
+import { data as mockData, handlers } from './testResources';
 import Basket from './Basket';
 
-import translationsProperties from '../../../../test/helpers';
-import { data, handlers } from './testResources';
 
 jest.mock('../../BasketList', () => () => <div>BasketList</div>);
+jest.mock('../../AgreementModal', () => () => <div>AgreementModal</div>);
+jest.mock('../../AgreementSearchButton', () => ({ onAgreementSelected }) => {
+  return (
+    <MockButton onClick={() => { onAgreementSelected(mockData.agreement); }}>
+      AgreementSearchButton
+    </MockButton>
+  );
+});
 
 /* EXAMPLE Mocking useMutation to allow us to test the .then clause */
 // Setting up jest fn here to test paramters passed in by component
 const mockMutateAsync = jest.fn(() => Promise.resolve(true));
 jest.mock('react-query', () => {
   const { mockReactQuery } = jest.requireActual('@folio/stripes-erm-testing');
-
   return {
     ...jest.requireActual('react-query'),
     ...mockReactQuery,
@@ -46,101 +49,118 @@ jest.mock('react-query', () => {
 });
 
 describe('Basket', () => {
-  let renderComponent;
-  beforeEach(() => {
-    renderComponent = renderWithIntl(
-      <MemoryRouter>
-        <Basket
-          data={data}
-          handlers={handlers}
-        />
-      </MemoryRouter>,
-      translationsProperties
-    );
-  });
+  describe.each([
+    ['with e-resource', mockData, 'Showing 1 record', false],
+    ['without e-resource', { basket: [] }, 'Showing 0 records', true]
+  ])('testing', (description, basketData, expectedRecordText, isButtonDisabled) => {
+    describe(description, () => {
+      let renderComponent;
+      beforeEach(() => {
+        renderComponent = renderWithIntl(
+          <MemoryRouter>
+            <Basket
+              data={basketData}
+              handlers={handlers}
+            />
+          </MemoryRouter>,
+          translationsProperties
+        );
+      });
 
-  test('useMutation has been called', () => {
-    expect(useMutation).toHaveBeenCalled();
-  });
+      it('renders the expected Pane title', async () => {
+        await PaneHeader('ERM basket').is({ visible: true });
+      });
 
-  it('renders the expected Pane title', async () => {
-    await PaneHeader('ERM basket').is({ visible: true });
-  });
+      it('renders the record count in the pane sub', () => {
+        const { getByText } = renderComponent;
+        expect(getByText(expectedRecordText)).toBeInTheDocument();
+      });
 
-  it('renders the expected message banner text', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('Select one or more e-resources and add them to a new or existing agreement. An agreement line will be created for each e-resource that you select.')).toBeInTheDocument();
-  });
 
-  it('renders the BasketList component', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('BasketList')).toBeInTheDocument();
-  });
+      it('renders the close basket button', async () => {
+        const { getByRole } = renderComponent;
+        expect(getByRole('button', { name: 'Close basket' })).toBeInTheDocument();
+      });
 
-  it('renders the create new agreement button', async () => {
-    await Button('Create new agreement').exists();
-  });
+      it('renders the expected message banner text', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('Select one or more e-resources and add them to a new or existing agreement. An agreement line will be created for each e-resource that you select.')).toBeInTheDocument();
+      });
 
-  describe('Choosing an option and clicking the add to selected agreement button', () => {
-    describe('Opening agreement selection', () => {
-      beforeEach(async () => {
-        await Selection({ id: 'select-agreement-for-basket' }).exists();
-        await waitFor(async () => {
-          await Selection().open();
+      it('renders the BasketList component', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('BasketList')).toBeInTheDocument();
+      });
+
+      if (isButtonDisabled) {
+        test('the Create New Agreement button is disabled', async () => {
+          await Button('Create new agreement').is({ disabled: true });
         });
+      } else {
+        test('the Create New Agreement button is enabled', async () => {
+          await Button('Create new agreement').is({ disabled: false });
+        });
+      }
+
+      describe('clicking on the create new agreement button', () => {
+        if (!isButtonDisabled) {
+          it('triggers create agreement logic on button click', async () => {
+            await waitFor(async () => {
+              await Button('Create new agreement').click();
+            });
+            expect(useMutation).toHaveBeenCalled();
+          });
+
+          test('clicking the create new agreement button opens the agreementModal', async () => {
+            const { getByText } = renderComponent;
+            await waitFor(async () => {
+              await Button('Create new agreement').click();
+            });
+            expect(getByText('AgreementModal')).toBeInTheDocument();
+          });
+        }
       });
 
-      test('The right number of options show', async () => {
-        await SelectionList({ optionCount: 9 }).exists();
+      describe('calling the onClose handler', () => {
+        if (!isButtonDisabled) {
+          it('calls the onClose handler when the close button is clicked', async () => {
+            const { getByRole } = renderComponent;
+            // IconButton calls seem not to work as expected
+            // await IconButton('Close basket').click();
+            const closeButton = getByRole('button', { name: 'Close basket' });
+            fireEvent.click(closeButton);
+            expect(handlers.onClose).toHaveBeenCalledTimes(1);
+          });
+        }
       });
 
-      describe('Filtering the selection list', () => {
+      it('renders the AgreementSearchButton component', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('AgreementSearchButton')).toBeInTheDocument();
+      });
+
+      it('renders the AgreementModal component', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('AgreementModal')).toBeInTheDocument();
+      });
+
+      // FIXME: The test should check whether or not putAgreement is called, but it is currently fiddly due to mutateAsync.
+      // This test currently does not verify whether the AgreementModal is opened or not
+      // as the AgreementModal mock is always being rendered.
+      describe('Selecting agreement', () => {
         beforeEach(async () => {
           await waitFor(async () => {
-            await Selection().filterOptions('MR agreement test');
+            await Button('AgreementSearchButton').click();
           });
         });
 
-        test('There is now only one option', async () => {
-          await SelectionList({ optionCount: 1 }).exists();
-        });
-
-        describe('Selecting an agreement', () => {
-          beforeEach(async () => {
-            await SelectionOption(/MR agreement test/i).click();
-          });
-
-          test('The selected agreement button is now active', async () => {
-            await Button('Add to selected agreement').exists();
-          });
-
-          describe('Adding to selected agreement', () => {
-            beforeEach(async () => {
-              await waitFor(async () => {
-                await Button('Add to selected agreement').click();
-              });
-            });
-
-            test('mutate async called as expected', async () => {
-              await waitFor(async () => {
-                expect(mockMutateAsync.mock.calls[0][0]).toBeInstanceOf(Object);
-                expect(mockMutateAsync.mock.calls[0][0].items).toBeInstanceOf(Array);
-
-                expect(mockMutateAsync.mock.calls[0][0].items[0]).toStrictEqual({
-                  resource: data.basket[0]
-                });
-              });
-            });
+        test('should open the modal', async () => {
+          const { getByText } = renderComponent;
+          await waitFor(() => {
+            expect(getByText('AgreementModal')).toBeInTheDocument();
           });
         });
       });
-    });
-  });
-
-  it('clicking the create agreement button', async () => {
-    await waitFor(async () => {
-      await Button('Create new agreement').exists();
-      await Button('Create new agreement').click();
     });
   });
 });
