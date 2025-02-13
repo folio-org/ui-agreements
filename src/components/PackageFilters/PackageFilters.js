@@ -54,9 +54,6 @@ const PackageFilters = ({ activeFilters = {}, data, filterHandlers }) => {
     const fieldName = name;
     const groupFilters = activeFilters[fieldName] || [];
 
-    console.log('activeFilters', activeFilters);
-    console.log('groupFilters', groupFilters);
-
     return (
       <Accordion
         displayClearButton={groupFilters.length > 0}
@@ -81,7 +78,6 @@ const PackageFilters = ({ activeFilters = {}, data, filterHandlers }) => {
       </Accordion>
     );
   };
-
 
   const renderSourceFilter = () => {
     const dataOptions = (filterState.source || []).map(source => ({

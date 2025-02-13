@@ -71,12 +71,10 @@ const PackagesRoute = ({
   const { data: { tags = [] } = {} } = useTags();
   const { query, querySetter, queryGetter } = useKiwtSASQuery();
 
-
   const { currentPage } = usePrevNextPagination();
 
-
-  const packagesQueryParams = useMemo(() => (
-    generateKiwtQueryParams({
+  const packagesQueryParams = useMemo(() => {
+    const params = generateKiwtQueryParams({
       searchKey: 'name,identifiers.identifier.value,alternateResourceNames.name,description',
       filterConfig: [{
         name: 'class',
@@ -96,8 +94,10 @@ const PackagesRoute = ({
       },
       page: currentPage,
       perPage: RESULT_COUNT_INCREMENT
-    }, (query ?? {}))
-  ), [currentPage, query]);
+    }, query ?? {});
+
+    return params.map(param => param.replace('syncContentsFromSource%3D%3DisNotSet', 'syncContentsFromSource isNotSet'));
+  }, [currentPage, query]);
 
   const {
     data: { results: packages = [], totalRecords: packagesCount = 0 } = {},
@@ -142,7 +142,7 @@ const PackagesRoute = ({
         synchronisationStatusValues: [
           { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.true" />, value: 'true' },
           { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.false" />, value: 'false' },
-          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.notSet" />, value: 'notSet' }
+          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.notSet" />, value: 'isNotSet' }
         ]
       }}
       queryGetter={queryGetter}
