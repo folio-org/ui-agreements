@@ -230,7 +230,7 @@ const Packages = ({
                       provider: 200,
                       source: 250,
                       status: 150,
-                      syncContentsFromSource: 150,
+                      syncContentsFromSource: 200,
                     }}
                     contentData={data.packages}
                     formatter={{
@@ -249,12 +249,7 @@ const Packages = ({
                       provider: line => <EResourceProvider resource={line.resource || line} />,
                       source: e => (e.source),
                       status: e => (e.lifecycleStatus?.label),
-                      syncContentsFromSource: e => {
-                        if (e.syncContentsFromSource === true || e.syncContentsFromSource === false) {
-                          return <FormattedMessage id={`ui-agreements.eresources.syncStatus.${e.syncContentsFromSource}`} />;
-                        }
-                        return null;
-                      },
+                      syncContentsFromSource: e => { return (e.syncContentsFromSource === true || e.syncContentsFromSource === false) ? <FormattedMessage id={`ui-agreements.eresources.syncStatus.${e.syncContentsFromSource}`} /> : null; },
                     }}
                     id="list-packages"
                     isEmptyMessage={

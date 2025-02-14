@@ -13,10 +13,10 @@ const stateMock = jest.fn();
 
 const filterHandlers = {
   state: stateMock,
-  checkbox: () => {},
-  clear: () => {},
-  clearGroup: () => {},
-  reset: () => {},
+  checkbox: () => { },
+  clear: () => { },
+  clearGroup: () => { },
+  reset: () => { },
 };
 
 describe('PackageFilters', () => {
@@ -40,6 +40,10 @@ describe('PackageFilters', () => {
 
     test('renders the Status Accordion', async () => {
       await Accordion('Status').exists();
+    });
+
+    test('renders the Synchronisation status Accordion', async () => {
+      await Accordion('Synchronisation status').exists();
     });
 
     test('renders the Scope Accordion', async () => {
@@ -78,6 +82,11 @@ describe('PackageFilters', () => {
     testPackageFilterCheckbox('status', 'deleted');
     testPackageFilterCheckbox('status', 'expected');
     testPackageFilterCheckbox('status', 'retired');
+
+    // // Dummy data to check synchronisation status checkbox filters
+    // testPackageFilterCheckbox('synchronisationStatus', 'true');
+    // testPackageFilterCheckbox('synchronisationStatus', 'false');
+    // testPackageFilterCheckbox('synchronisationStatus', 'is-not-set');
 
     // // Dummy data to check scope checkbox filters
     testPackageFilterCheckbox('scope', 'consortium');
