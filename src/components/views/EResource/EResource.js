@@ -8,12 +8,12 @@ import {
   Pane,
   PaneMenu,
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
+import { AppIcon, IfPermission, TitleManager, useStripes } from '@folio/stripes/core';
 
 import Package from '../Package';
 import Title from '../Title';
 import PCI from '../PCI';
-import { resourceClasses } from '../../../constants';
+import { resourceClasses, syncStates } from '../../../constants';
 
 const propTypes = {
   components: PropTypes.object,
@@ -28,7 +28,8 @@ const propTypes = {
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
     onEdit: PropTypes.func.isRequired,
-    onToggleTags: PropTypes.func.isRequired
+    onToggleTags: PropTypes.func.isRequired,
+    onSynchronize: PropTypes.func.isRequired,
   }).isRequired,
   helperApp: PropTypes.func,
   isLoading: PropTypes.bool,
@@ -44,6 +45,8 @@ const EResource = ({
   handlers,
   isLoading,
 }) => {
+  const stripes = useStripes();
+
   const paneProps = {
     defaultWidth: '55%',
     dismissible: true,
@@ -66,9 +69,46 @@ const EResource = ({
     icon = 'pci';
   }
 
+  const getActionMenu = () => {
+    const buttons = [];
+
+    // if (stripes.hasPerm('ui-agreements.packages.controlSync')) {
+    buttons.push(
+      <Button
+        key="clickable-dropdown-sync-package"
+        buttonStyle="dropdownItem"
+        disabled={data.eresource.syncContentsFromSource === true}
+        id="clickable-dropdown-sync-package"
+        // onClick={() => console.log('Button clickable-dropdown-sync-package clicked')}
+        onClick={() => handlers.onSynchronize(syncStates.SYNCHRONIZING)}
+      // onClick={() => handlers.onSynchronize('SYNCHRONIZE')}
+      >
+        <FormattedMessage id="ui-agreements.eresources.startSync" />
+      </Button>
+    );
+
+    buttons.push(
+      <Button
+        key="clickable-dropdown-pause-package"
+        buttonStyle="dropdownItem"
+        disabled={data.eresource.syncContentsFromSource === false}
+        id="clickable-dropdown-pause-package"
+        // onClick={() => console.log('Button clickable-dropdown-pause-package clicked')}
+        onClick={() => handlers.onSynchronize(syncStates.PAUSED)}
+      // onClick={() => handlers.onSynchronize('PAUSE')}
+      >
+        <FormattedMessage id="ui-agreements.eresources.pauseSync" />
+      </Button>
+    );
+    // }
+
+    return buttons.length ? buttons : null;
+  };
+
   return (
     <>
       <Pane
+        {...(eresource.class === resourceClasses.PACKAGE ? { actionMenu: getActionMenu } : {})}
         appIcon={<AppIcon app="agreements" iconKey={icon} size="small" />}
         id="pane-view-eresource"
         lastMenu={

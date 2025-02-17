@@ -9,6 +9,7 @@ export { default as defaultMclPageSize } from './defaultMclPageSize';
 export { default as hiddenAccordions } from './hiddenAccordions';
 export { default as httpStatuses } from './httpStatuses';
 export { default as agreementContentOptions } from './agreementContentOptions';
+export { default as syncStates } from './syncStates';
 
 export * from './columnManagerMappings';
 export * from './endpoints';
