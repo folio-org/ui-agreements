@@ -83,11 +83,6 @@ describe('PackageFilters', () => {
     testPackageFilterCheckbox('status', 'expected');
     testPackageFilterCheckbox('status', 'retired');
 
-    // // Dummy data to check synchronisation status checkbox filters
-    // testPackageFilterCheckbox('synchronisationStatus', 'true');
-    // testPackageFilterCheckbox('synchronisationStatus', 'false');
-    // testPackageFilterCheckbox('synchronisationStatus', 'is-not-set');
-
     // // Dummy data to check scope checkbox filters
     testPackageFilterCheckbox('scope', 'consortium');
     testPackageFilterCheckbox('scope', 'global');

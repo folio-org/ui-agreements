@@ -116,7 +116,7 @@ const PackagesRoute = ({
   );
 
   useEffect(() => {
-    if (packagesCount === 1) {
+    if (packagesCount === 1 && packages.length > 0) {
       history.push(`${urls.packageView(packages[0].id)}${location.search}`);
     }
   }, [packages, packagesCount, history, location.search]);
