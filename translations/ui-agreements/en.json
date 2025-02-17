@@ -333,6 +333,8 @@
   "eresources.erType": "E-resource type",
   "eresources.publisher": "Publisher",
   "eresources.package": "Package",
+  "eresources.startSync": "Start synchronisation",
+  "eresources.pauseSync": "Pause synchronisation",
   "eresources.title": "Title",
   "eresources.coverageStart": "Coverage start",
   "eresources.coverageEnd": "Coverage end",

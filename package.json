@@ -295,6 +295,15 @@
           "settings.configuration.manage",
           "erm.settings.manage"
         ]
+      },
+      {
+        "permissionName": "ui-agreements.packages.controlSync",
+        "displayName": "Local KB: change package synchronisation status",
+        "description": "A user with this permission can change the synchronisation status of package (i.e. whether the content of a package should be updated by data synchronising with the local KB)",
+        "visible": true,
+        "subPermissions": [
+          "erm.packages.collection.controlSync.execute"
+        ]
       }
     ],
     "icons": [
