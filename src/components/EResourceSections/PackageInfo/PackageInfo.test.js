@@ -85,6 +85,7 @@ const data = {
     },
     sourceDataCreated: '2022-03-21T23:00:04Z',
     sourceDataUpdated: '2022-03-28T03:09:04Z',
+    syncContentsFromSource: true,
   },
   entitlementOptions: [
 
@@ -793,6 +794,14 @@ describe('PackageInfo', () => {
     test('renders the expected source updated date and time', async () => {
       await FormattedDateTime({ id: 'source-data-updated-datetime' }).has({ date: '3/28/2022' });
       await FormattedDateTime({ id: 'source-data-updated-datetime' }).has({ time: '3:09 AM' });
+    });
+
+    test('renders the Synchronisation status field', async () => {
+      await KeyValue('Synchronisation status').exists();
+    });
+
+    test('renders the expcected Synchronisation status field', async () => {
+      await KeyValue('Synchronisation status').has({ value:  'Synchronising' });
     });
   });
 
