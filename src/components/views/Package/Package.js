@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -25,93 +25,82 @@ import {
 import { urls } from '../../utilities';
 import { ERESOURCE_ENTITY_TYPE } from '../../../constants';
 
-export default class Package extends React.Component {
-  static propTypes = {
-    data: PropTypes.object,
-    handlers: PropTypes.object,
-  }
+const Package = ({ data, handlers }) => {
+  const accordionStatusRef = useRef();
 
-  constructor(props) {
-    super(props);
-    this.accordionStatusRef = React.createRef();
-  }
+  const getSectionProps = (id) => ({
+    eresource: data.eresource,
+    data,
+    id,
+    handlers,
+  });
 
-  getSectionProps = (id) => {
-    const { data, handlers } = this.props;
+  const initialAccordionsState = {
+    eresourceAgreements: false,
+    extendedPackageInformation: false,
+    notes: false,
+    packageContents: false,
+  };
 
-    return {
-      eresource: data.eresource,
-      data,
-      id,
-      handlers,
-    };
-  }
+  const shortcuts = [
+    {
+      name: 'expandAllSections',
+      handler: (e) => expandAllSections(e, accordionStatusRef),
+    },
+    {
+      name: 'collapseAllSections',
+      handler: (e) => collapseAllSections(e, accordionStatusRef),
+    },
+  ];
 
-  getInitialAccordionsState = () => {
-    return {
-      eresourceAgreements: false,
-      extendedPackageInformation: false,
-      notes: false,
-      packageContents: false,
-    };
-  }
+  const { eresource: { alternateResourceNames, description, identifiers, packageDescriptionUrls } } = data;
 
-  render() {
-    const { data, handlers } = this.props;
-    const { data: { eresource: { alternateResourceNames, description, identifiers, packageDescriptionUrls } } } = this.props;
+  return (
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
+    >
+      <div id="eresource-package">
+        <PackageInfo {...getSectionProps('info')} />
+        <AccordionStatus ref={accordionStatusRef}>
+          <Row end="xs">
+            <Col xs>
+              <ExpandAllButton />
+            </Col>
+          </Row>
+          <AccordionSet initialStatus={initialAccordionsState}>
+            {(description || alternateResourceNames?.length || packageDescriptionUrls?.length || identifiers?.length) &&
+              <ExtendedPackageInformation {...getSectionProps('extendedPackageInformation')} />
+            }
+            <Agreements
+              {...getSectionProps('eresourceAgreements')}
+              isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsPackage" />}
+              visibleColumns={['name', 'type', 'startDate', 'endDate']}
+            />
+            <PackageContents
+              {...getSectionProps('packageContents')}
+              onFilterPackageContents={handlers.onFilterPackageContents}
+            />
+            <NotesSmartAccordion
+              {...getSectionProps('notes')}
+              domainName="agreements"
+              entityId={data.eresource.id}
+              entityName={data.eresource.name}
+              entityType={ERESOURCE_ENTITY_TYPE}
+              pathToNoteCreate={urls.noteCreate()}
+              pathToNoteDetails={urls.notes()}
+            />
+          </AccordionSet>
+        </AccordionStatus>
+      </div>
+    </HasCommand>
+  );
+};
 
-    /* istanbul ignore next */
-    const shortcuts = [
-      {
-        name: 'expandAllSections',
-        handler: (e) => expandAllSections(e, this.accordionStatusRef),
-      },
-      {
-        name: 'collapseAllSections',
-        handler: (e) => collapseAllSections(e, this.accordionStatusRef)
-      }
-    ];
+Package.propTypes = {
+  data: PropTypes.object.isRequired,
+  handlers: PropTypes.object.isRequired,
+};
 
-    return (
-      <HasCommand
-        commands={shortcuts}
-        isWithinScope={checkScope}
-        scope={document.body}
-      >
-        <div id="eresource-package">
-          <PackageInfo {...this.getSectionProps('info')} />
-          <AccordionStatus ref={this.accordionStatusRef}>
-            <Row end="xs">
-              <Col xs>
-                <ExpandAllButton />
-              </Col>
-            </Row>
-            <AccordionSet initialStatus={this.getInitialAccordionsState()}>
-              {(description || !!alternateResourceNames?.length || !!packageDescriptionUrls?.length || !!identifiers?.length) &&
-                <ExtendedPackageInformation {...this.getSectionProps('extendedPackageInformation')} />
-              }
-              <Agreements
-                {...this.getSectionProps('eresourceAgreements')}
-                isEmptyMessage={<FormattedMessage id="ui-agreements.emptyAccordion.noAgreementsPackage" />}
-                visibleColumns={['name', 'type', 'startDate', 'endDate']}
-              />
-              <PackageContents
-                {...this.getSectionProps('packageContents')}
-                onFilterPackageContents={handlers.onFilterPackageContents}
-              />
-              <NotesSmartAccordion
-                {...this.getSectionProps('notes')}
-                domainName="agreements"
-                entityId={data.eresource.id}
-                entityName={data.eresource.name}
-                entityType={ERESOURCE_ENTITY_TYPE}
-                pathToNoteCreate={urls.noteCreate()}
-                pathToNoteDetails={urls.notes()}
-              />
-            </AccordionSet>
-          </AccordionStatus>
-        </div>
-      </HasCommand>
-    );
-  }
-}
+export default Package;
