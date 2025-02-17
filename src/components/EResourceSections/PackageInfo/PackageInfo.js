@@ -16,6 +16,7 @@ import { resourceClasses } from '../../../constants';
 
 import AddToBasketButton from '../../AddToBasketButton';
 import PackageIdentifiers from '../PackageIdentifiers';
+import PackageSyncronisingValue from '../PackageSyncronisingValue';
 import css from '../../styles.css';
 
 const PackageInfo = ({
@@ -92,8 +93,8 @@ const PackageInfo = ({
         </Col>
         <Col xs={3}>
           <KeyValue
-            label={<FormattedMessage id="ui-agreements.eresources.reference" />}
-            value={eresource.reference || <NoValue />}
+            label={<FormattedMessage id="ui-agreements.eresources.SynchronisationStatus" />}
+            value={<PackageSyncronisingValue syncContentsFromSource={eresource?.syncContentsFromSource} />}
           />
         </Col>
       </Row>
@@ -148,7 +149,17 @@ const PackageInfo = ({
           />
         </Col>
       </Row>
-      <PackageIdentifiers pkg={eresource} />
+      <Row>
+        <Col xs={6}>
+          <PackageIdentifiers pkg={eresource} />
+        </Col>
+        <Col xs={3}>
+          <KeyValue
+            label={<FormattedMessage id="ui-agreements.eresources.reference" />}
+            value={eresource.reference || <NoValue />}
+          />
+        </Col>
+      </Row>
     </div>
   );
 };
@@ -198,6 +209,8 @@ PackageInfo.propTypes = {
       source: PropTypes.string,
       sourceDataCreated: PropTypes.string,
       sourceDataUpdated: PropTypes.string,
+      syncContentsFromSource: PropTypes.bool,
+
       vendor: PropTypes.shape({
         name: PropTypes.string,
       })
