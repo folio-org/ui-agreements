@@ -10,6 +10,7 @@ import {
   Icon,
   Button,
   PaneMenu,
+  Checkbox
 } from '@folio/stripes/components';
 
 import { AppIcon } from '@folio/stripes/core';
@@ -88,11 +89,31 @@ const Packages = ({
 
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
+  const [selectedPackageIds, setSelectedPackageIds] = useState([]);
   const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
 
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
+  };
+
+  const handleToggleSelectAll = () => {
+    if (selectedPackageIds.length === (data.packages ? data.packages.length : 0)) {
+      setSelectedPackageIds([]);
+    } else {
+      setSelectedPackageIds(data.packages ? data.packages.map(pkg => pkg.id) : []);
+    }
+  };
+
+  const handleCheckboxClick = (e, packageId) => {
+    e.stopPropagation();
+    setSelectedPackageIds(prevSelected => {
+      if (prevSelected.includes(packageId)) {
+        return prevSelected.filter(id => id !== packageId);
+      } else {
+        return [...prevSelected, packageId];
+      }
+    });
   };
 
   return (
@@ -219,12 +240,20 @@ const Packages = ({
                   <MultiColumnList
                     autosize
                     columnMapping={{
+                      select: (
+                        <Checkbox
+                          checked={selectedPackageIds.length === (data.packages ? data.packages.length : 0)}
+                          name="select-all"
+                          onChange={handleToggleSelectAll}
+                        />
+                      ),
                       name: <FormattedMessage id="ui-agreements.eresources.name" />,
                       provider: <FormattedMessage id="ui-agreements.eresources.provider" />,
                       source: <FormattedMessage id="ui-agreements.packages.source" />,
                       status: <FormattedMessage id="ui-agreements.eresources.status" />,
                     }}
                     columnWidths={{
+                      select: 40,
                       name: 300,
                       provider: 200,
                       source: 250,
@@ -232,6 +261,13 @@ const Packages = ({
                     }}
                     contentData={data.packages}
                     formatter={{
+                      select: item => (
+                        <Checkbox
+                          checked={selectedPackageIds.includes(item.id)}
+                          name={`select-${item.id}`}
+                          onChange={(e) => handleCheckboxClick(e, item.id)}
+                        />
+                      ),
                       name: e => {
                         return (
                           <AppIcon
@@ -271,7 +307,7 @@ const Packages = ({
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     totalCount={count}
-                    visibleColumns={['name', 'provider', 'source', 'status']}
+                    visibleColumns={['select', 'name', 'provider', 'source', 'status']}
                   />
                 </Pane>
                 {children}
