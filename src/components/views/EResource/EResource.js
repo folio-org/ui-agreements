@@ -72,35 +72,31 @@ const EResource = ({
   const getActionMenu = () => {
     const buttons = [];
 
-    // if (stripes.hasPerm('ui-agreements.packages.controlSync')) {
-    buttons.push(
-      <Button
-        key="clickable-dropdown-sync-package"
-        buttonStyle="dropdownItem"
-        disabled={data.eresource.syncContentsFromSource === true}
-        id="clickable-dropdown-sync-package"
-        // onClick={() => console.log('Button clickable-dropdown-sync-package clicked')}
-        onClick={() => handlers.onSynchronize(syncStates.SYNCHRONIZING)}
-      // onClick={() => handlers.onSynchronize('SYNCHRONIZE')}
-      >
-        <FormattedMessage id="ui-agreements.eresources.startSync" />
-      </Button>
-    );
+    if (stripes.hasPerm('ui-agreements.packages.controlSync.execute')) {
+      buttons.push(
+        <Button
+          key="clickable-dropdown-sync-package"
+          buttonStyle="dropdownItem"
+          disabled={data.eresource.syncContentsFromSource === true}
+          id="clickable-dropdown-sync-package"
+          onClick={() => handlers.onSynchronize(syncStates.SYNCHRONIZING)}
+        >
+          <FormattedMessage id="ui-agreements.eresources.startSync" />
+        </Button>
+      );
 
-    buttons.push(
-      <Button
-        key="clickable-dropdown-pause-package"
-        buttonStyle="dropdownItem"
-        disabled={data.eresource.syncContentsFromSource === false}
-        id="clickable-dropdown-pause-package"
-        // onClick={() => console.log('Button clickable-dropdown-pause-package clicked')}
-        onClick={() => handlers.onSynchronize(syncStates.PAUSED)}
-      // onClick={() => handlers.onSynchronize('PAUSE')}
-      >
-        <FormattedMessage id="ui-agreements.eresources.pauseSync" />
-      </Button>
-    );
-    // }
+      buttons.push(
+        <Button
+          key="clickable-dropdown-pause-package"
+          buttonStyle="dropdownItem"
+          disabled={data.eresource.syncContentsFromSource === false}
+          id="clickable-dropdown-pause-package"
+          onClick={() => handlers.onSynchronize(syncStates.PAUSED)}
+        >
+          <FormattedMessage id="ui-agreements.eresources.pauseSync" />
+        </Button>
+      );
+    }
 
     return buttons.length ? buttons : null;
   };
