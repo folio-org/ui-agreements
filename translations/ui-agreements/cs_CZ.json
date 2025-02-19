@@ -784,5 +784,8 @@
     "eresources.subType": "Typ materiálu",
     "documents.addDocs": "Přidat dokument",
     "emptyAccordion.documents": "Žádné dokumenty pro tento řádek smlouvy",
-    "line.documents": "Dokumenty"
+    "line.documents": "Dokumenty",
+    "eresources.SynchronisationStatus": "Synchronisation status",
+    "eresources.syncContentsFromSource.true": "Synchronising",
+    "eresources.syncContentsFromSource.false": "Paused"
 }
