@@ -73,31 +73,26 @@ const PackagesRoute = ({
 
   const { currentPage } = usePrevNextPagination();
 
-  const packagesQueryParams = useMemo(() => {
-    const params = generateKiwtQueryParams({
-      searchKey: 'name,identifiers.identifier.value,alternateResourceNames.name,description',
-      filterConfig: [{
-        name: 'class',
-        values: [
-          { name: 'package', value: resourceClasses?.PACKAGE },
-        ]
-      }],
-      filterKeys: {
-        availability: 'availabilityConstraints.body.value',
-        contentType: 'contentTypes.contentType.value',
-        remoteKb: 'remoteKb.id',
-        source: 'source',
-        scope: 'availabilityScope.value',
-        status: 'lifecycleStatus.value',
-        tags: 'tags.value',
-        synchronisationStatus: 'syncContentsFromSource',
-      },
-      page: currentPage,
-      perPage: RESULT_COUNT_INCREMENT
-    }, query ?? {});
-
-    return params.map(param => param.replace('syncContentsFromSource%3D%3DisNotSet', 'syncContentsFromSource isNotSet'));
-  }, [currentPage, query]);
+  const packagesQueryParams = useMemo(() => generateKiwtQueryParams({
+    searchKey: 'name,identifiers.identifier.value,alternateResourceNames.name,description',
+    filterConfig: [{
+      name: 'class',
+      values: [
+        { name: 'package', value: resourceClasses?.PACKAGE },
+      ]
+    }],
+    filterKeys: {
+      availability: 'availabilityConstraints.body.value',
+      contentType: 'contentTypes.contentType.value',
+      remoteKb: 'remoteKb.id',
+      source: 'source',
+      scope: 'availabilityScope.value',
+      status: 'lifecycleStatus.value',
+      tags: 'tags.value',
+    },
+    page: currentPage,
+    perPage: RESULT_COUNT_INCREMENT
+  }, query ?? {}), [currentPage, query]);
 
   const {
     data: { results: packages = [], totalRecords: packagesCount = 0 } = {},
@@ -139,10 +134,11 @@ const PackagesRoute = ({
         sourceValues: dataSources,
         statusValues: getRefdataValuesByDesc(refdata, LIFECYCLE_STATUS),
         tagsValues: tags,
+        // EXAMPLE -- when we wish to handle one case with special comparator, we need to REMOVE from filterKeys and pass the values directly
         synchronisationStatusValues: [
-          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.true" />, value: 'true' },
-          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.false" />, value: 'false' },
-          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.notSet" />, value: 'isNotSet' }
+          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.true" />, value: 'syncContentsFromSource==true' },
+          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.false" />, value: 'syncContentsFromSource==false' },
+          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.notSet" />, value: 'syncContentsFromSource isNotSet' }
         ]
       }}
       queryGetter={queryGetter}
