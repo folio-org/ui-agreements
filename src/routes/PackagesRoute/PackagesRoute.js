@@ -75,12 +75,19 @@ const PackagesRoute = ({
 
   const packagesQueryParams = useMemo(() => generateKiwtQueryParams({
     searchKey: 'name,identifiers.identifier.value,alternateResourceNames.name,description',
-    filterConfig: [{
-      name: 'class',
-      values: [
-        { name: 'package', value: resourceClasses?.PACKAGE },
-      ]
-    }],
+    // EXAMPLE -- when we wish to handle one case with special comparator,
+    // we can add a special case for that value to filterConfig.
+    // This does NOT neccesitate the filterKey inclusion here,
+    // that is personal developer choice, it could just as easily be called
+    // syncContentsFromSource in the url and not need the filterKey as well.
+    filterConfig: [
+      {
+        name: 'synchronisationStatus',
+        values: [
+          { name: 'isNotSet', comparator: ' isNotSet', value: '' }
+        ]
+      }
+    ],
     filterKeys: {
       availability: 'availabilityConstraints.body.value',
       contentType: 'contentTypes.contentType.value',
@@ -89,6 +96,7 @@ const PackagesRoute = ({
       scope: 'availabilityScope.value',
       status: 'lifecycleStatus.value',
       tags: 'tags.value',
+      synchronisationStatus: 'syncContentsFromSource',
     },
     page: currentPage,
     perPage: RESULT_COUNT_INCREMENT
@@ -134,11 +142,10 @@ const PackagesRoute = ({
         sourceValues: dataSources,
         statusValues: getRefdataValuesByDesc(refdata, LIFECYCLE_STATUS),
         tagsValues: tags,
-        // EXAMPLE -- when we wish to handle one case with special comparator, we need to REMOVE from filterKeys and pass the values directly
         synchronisationStatusValues: [
-          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.true" />, value: 'syncContentsFromSource==true' },
-          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.false" />, value: 'syncContentsFromSource==false' },
-          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.notSet" />, value: 'syncContentsFromSource isNotSet' }
+          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.true" />, value: 'true' },
+          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.false" />, value: 'false' },
+          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.notSet" />, value: 'isNotSet' }
         ]
       }}
       queryGetter={queryGetter}
