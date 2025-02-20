@@ -13,10 +13,10 @@ const stateMock = jest.fn();
 
 const filterHandlers = {
   state: stateMock,
-  checkbox: () => {},
-  clear: () => {},
-  clearGroup: () => {},
-  reset: () => {},
+  checkbox: () => { },
+  clear: () => { },
+  clearGroup: () => { },
+  reset: () => { },
 };
 
 describe('PackageFilters', () => {
@@ -40,6 +40,10 @@ describe('PackageFilters', () => {
 
     test('renders the Status Accordion', async () => {
       await Accordion('Status').exists();
+    });
+
+    test('renders the Synchronisation status Accordion', async () => {
+      await Accordion('Synchronisation status').exists();
     });
 
     test('renders the Scope Accordion', async () => {

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import { useQuery } from 'react-query';
 
@@ -70,33 +71,36 @@ const PackagesRoute = ({
   const { data: { tags = [] } = {} } = useTags();
   const { query, querySetter, queryGetter } = useKiwtSASQuery();
 
-
   const { currentPage } = usePrevNextPagination();
 
-
-  const packagesQueryParams = useMemo(() => (
-    generateKiwtQueryParams({
-      searchKey: 'name,identifiers.identifier.value,alternateResourceNames.name,description',
-      filterConfig: [{
-        name: 'class',
+  const packagesQueryParams = useMemo(() => generateKiwtQueryParams({
+    searchKey: 'name,identifiers.identifier.value,alternateResourceNames.name,description',
+    // EXAMPLE -- when we wish to handle one case with special comparator,
+    // we can add a special case for that value to filterConfig.
+    // This does NOT neccesitate the filterKey inclusion here,
+    // that is personal developer choice, it could just as easily be called
+    // syncContentsFromSource in the url and not need the filterKey as well.
+    filterConfig: [
+      {
+        name: 'synchronisationStatus',
         values: [
-          { name: 'package', value: resourceClasses?.PACKAGE },
+          { name: 'isNotSet', comparator: ' isNotSet', value: '' }
         ]
-      }],
-      filterKeys: {
-        availability: 'availabilityConstraints.body.value',
-        contentType: 'contentTypes.contentType.value',
-        remoteKb: 'remoteKb.id',
-        source: 'source',
-        scope: 'availabilityScope.value',
-        status: 'lifecycleStatus.value',
-        tags: 'tags.value',
-      },
-      page: currentPage,
-      perPage: RESULT_COUNT_INCREMENT
-    }, (query ?? {}))
-  ), [currentPage, query]);
-
+      }
+    ],
+    filterKeys: {
+      availability: 'availabilityConstraints.body.value',
+      contentType: 'contentTypes.contentType.value',
+      remoteKb: 'remoteKb.id',
+      source: 'source',
+      scope: 'availabilityScope.value',
+      status: 'lifecycleStatus.value',
+      tags: 'tags.value',
+      synchronisationStatus: 'syncContentsFromSource',
+    },
+    page: currentPage,
+    perPage: RESULT_COUNT_INCREMENT
+  }, query ?? {}), [currentPage, query]);
 
   const {
     data: { results: packages = [], totalRecords: packagesCount = 0 } = {},
@@ -115,7 +119,7 @@ const PackagesRoute = ({
   );
 
   useEffect(() => {
-    if (packagesCount === 1) {
+    if (packagesCount === 1 && packages.length > 0) {
       history.push(`${urls.packageView(packages[0].id)}${location.search}`);
     }
   }, [packages, packagesCount, history, location.search]);
@@ -138,6 +142,11 @@ const PackagesRoute = ({
         sourceValues: dataSources,
         statusValues: getRefdataValuesByDesc(refdata, LIFECYCLE_STATUS),
         tagsValues: tags,
+        synchronisationStatusValues: [
+          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.true" />, value: 'true' },
+          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.false" />, value: 'false' },
+          { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.notSet" />, value: 'isNotSet' }
+        ]
       }}
       queryGetter={queryGetter}
       querySetter={querySetter}
