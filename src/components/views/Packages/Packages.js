@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
@@ -10,6 +10,7 @@ import {
   Icon,
   Button,
   PaneMenu,
+  Checkbox
 } from '@folio/stripes/components';
 
 import { AppIcon } from '@folio/stripes/core';
@@ -88,11 +89,39 @@ const Packages = ({
 
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
+  const [checkboxState, setCheckboxState] = useState({});
+  const [selectedPackageIds, setSelectedPackageIds] = useState([]);
   const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
+
+  useEffect(() => {
+    const selectedIds = Object.keys(checkboxState).filter(id => checkboxState[id]);
+    setSelectedPackageIds(selectedIds);
+  }, [checkboxState]);
+
+  const handleCheckboxClick = (e, packageId) => {
+    e.stopPropagation();
+    setCheckboxState(prevState => {
+      if (prevState[packageId]) {
+        return { ...prevState, [packageId]: false };
+      } else {
+        return { ...prevState, [packageId]: true };
+      }
+    });
+  };
 
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
+  };
+
+  const handleToggleSelectAll = () => {
+    if (selectedPackageIds.length === (data.packages ? data.packages.length : 0)) {
+      setSelectedPackageIds([]);
+      setCheckboxState({});
+    } else {
+      setSelectedPackageIds(data.packages ? data.packages.map(pkg => pkg.id) : []);
+      setCheckboxState(data.packages ? data.packages.reduce((acc, pkg) => ({ ...acc, [pkg.id]: true }), {}) : {});
+    }
   };
 
   return (
@@ -219,12 +248,20 @@ const Packages = ({
                   <MultiColumnList
                     autosize
                     columnMapping={{
+                      select: (
+                        <Checkbox
+                          checked={selectedPackageIds.length === (data.packages ? data.packages.length : 0)}
+                          name="select-all"
+                          onChange={handleToggleSelectAll}
+                        />
+                      ),
                       name: <FormattedMessage id="ui-agreements.eresources.name" />,
                       provider: <FormattedMessage id="ui-agreements.eresources.provider" />,
                       source: <FormattedMessage id="ui-agreements.packages.source" />,
                       status: <FormattedMessage id="ui-agreements.eresources.status" />,
                     }}
                     columnWidths={{
+                      select: 40,
                       name: 300,
                       provider: 200,
                       source: 250,
@@ -232,6 +269,13 @@ const Packages = ({
                     }}
                     contentData={data.packages}
                     formatter={{
+                      select: item => (
+                        <Checkbox
+                          checked={checkboxState[item.id] || false}
+                          name={`select-${item.id}`}
+                          onChange={(e) => handleCheckboxClick(e, item.id)}
+                        />
+                      ),
                       name: e => {
                         return (
                           <AppIcon
@@ -271,7 +315,7 @@ const Packages = ({
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     totalCount={count}
-                    visibleColumns={['name', 'provider', 'source', 'status']}
+                    visibleColumns={['select', 'name', 'provider', 'source', 'status']}
                   />
                 </Pane>
                 {children}
