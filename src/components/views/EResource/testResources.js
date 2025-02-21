@@ -1421,7 +1421,8 @@ const helperApp = jest.fn();
 const handlers = {
   onClose: jest.fn(),
   onEdit: jest.fn(),
-  onToggleTags: jest.fn()
+  onToggleTags: jest.fn(),
+  onSynchronize: jest.fn(),
 };
 
 export { titleData, packageData, PCIdata, helperApp, handlers };

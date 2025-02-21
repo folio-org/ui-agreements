@@ -54,6 +54,10 @@ const ToggleTagsButton = (props) => {
   return <Button onClick={props.handlers.onToggleTags}>ToggleTagsButton</Button>;
 };
 
+const ActionsButton = () => {
+  return <Button onClick={() => jest.fn()}>Actions</Button>;
+};
+
 CloseButton.propTypes = {
   handlers: PropTypes.shape({
     onClose: PropTypes.func,
@@ -116,6 +120,7 @@ jest.mock('../../components/views/EResource', () => {
       <NeedMorePackageContentsButton {...props} />
       <FilterPackageContentsButton {...props} />
       <ToggleTagsButton {...props} />
+      <ActionsButton {...props} />
     </div>
   );
 });
@@ -230,6 +235,11 @@ describe('EResourceViewRoute', () => {
     test('renders the ToggleTagsButton button', () => {
       const { getByText } = renderComponent;
       expect(getByText('ToggleTagsButton')).toBeInTheDocument();
+    });
+
+    test('renders the Actions button', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('Actions')).toBeInTheDocument();
     });
 
     // TODO we should actually be _properly_ testing the useEffect, see AgreementsRoute example
