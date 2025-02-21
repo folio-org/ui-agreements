@@ -576,7 +576,7 @@
     "eresources.status": "Status",
     "supplementaryProperty": "Propriedade suplementar",
     "new": "Novo",
-    "preview": "Pré-visualizar",
+    "preview": "Prévia",
     "back": "Voltar",
     "titleUpdated-callout": "<strong>título atualizado:</strong> {eresourceName}",
     "eresource.moveIdentifier": "Mover identificador(es)",
@@ -784,5 +784,8 @@
     "eresources.subType": "Tipo de material",
     "documents.addDocs": "Adicionar documento",
     "emptyAccordion.documents": "Não há documentos para esta linha de contrato",
-    "line.documents": "Documentos"
+    "line.documents": "Documentos",
+    "eresources.SynchronisationStatus": "Status de sincronização",
+    "eresources.syncContentsFromSource.true": "Sincronizando",
+    "eresources.syncContentsFromSource.false": "Pausado"
 }

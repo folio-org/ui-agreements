@@ -784,5 +784,8 @@
     "eresources.subType": "Materialart",
     "documents.addDocs": "Dokument hinzufügen",
     "emptyAccordion.documents": "Keine Dokumente für diese Vereinbarungskomponente ",
-    "line.documents": "Dokumente"
+    "line.documents": "Dokumente",
+    "eresources.SynchronisationStatus": "Synchronisation status",
+    "eresources.syncContentsFromSource.true": "Synchronising",
+    "eresources.syncContentsFromSource.false": "Paused"
 }
