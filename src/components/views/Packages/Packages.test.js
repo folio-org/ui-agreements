@@ -86,7 +86,7 @@ describe('Packages', () => {
   });
 
   test('renders the expcted number of MCL columns', async () => {
-    await MultiColumnList({ columnCount: 4 }).exists();
+    await MultiColumnList({ columnCount: 5 }).exists();
   });
 
   test('renders the expcted number of MCL rows', async () => {
@@ -100,6 +100,7 @@ describe('Packages', () => {
         'Provider',
         'Source (external data source)',
         'Status',
+        'Synchronisation status',
       ],
     }).exists();
   });

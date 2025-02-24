@@ -17,7 +17,8 @@ const FILTERS = [
   'scope',
   'source',
   'status',
-  'tags'
+  'tags',
+  'synchronisationStatus'
 ];
 
 const PackageFilters = ({ activeFilters = {}, data, filterHandlers }) => {
@@ -28,6 +29,7 @@ const PackageFilters = ({ activeFilters = {}, data, filterHandlers }) => {
     source: [],
     status: [],
     tags: [],
+    synchronisationStatus: [],
   });
 
   useEffect(() => {
@@ -155,6 +157,7 @@ const PackageFilters = ({ activeFilters = {}, data, filterHandlers }) => {
     <AccordionSet>
       {renderSourceFilter()}
       {renderCheckboxFilter('status')}
+      {renderCheckboxFilter('synchronisationStatus')}
       {renderCheckboxFilter('scope')}
       {renderAvailabilityFilter()}
       {renderCheckboxFilter('contentType')}

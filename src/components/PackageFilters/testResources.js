@@ -306,6 +306,11 @@ const data = {
       createdDate: '2022-11-27T13:52:25.687+00:00'
     }
   }
+  ],
+  synchronisationStatusValues: [
+    { label: 'Synchronising', value: 'true' },
+    { label: 'Paused', value: 'false' },
+    { label: 'Not set', value: 'isNotSet' }
   ]
 };
 
