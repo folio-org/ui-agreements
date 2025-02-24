@@ -311,7 +311,6 @@ const Agreement = ({
         <HelperComponent
           invalidateLinks={data.tagsInvalidateLinks}
           link={data.tagsLink}
-          onToggle={handlers.onToggleTags}
         />
         {showDuplicateAgreementModal &&
           <DuplicateAgreementModal
