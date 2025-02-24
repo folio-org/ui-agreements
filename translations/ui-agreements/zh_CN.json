@@ -520,11 +520,11 @@
     "poLines.viewInInventory": "在典藏中查看",
     "emptyAccordion.lineCoverageEresource": "此电子资源无收录范围",
     "settings.mcl.pageSize": "<strong>页面大小</strong>",
-    "settings.mcl.entitlementOptions": "电子资源视图窗格>用于获取电子资源的选项",
-    "settings.mcl.agreementLines": "协议视图窗格>协议行",
-    "settings.mcl.agreementEresources": "协议视图窗格>本协议涵盖的电子资源",
-    "settings.mcl.entitlements": "电子资源视图窗格>此电子资源的协议",
-    "settings.mcl.packageContents": "资源包视图窗格>资源包中的电子资源",
+    "settings.mcl.entitlementOptions": "电子资源视图面板 > 用于获取电子资源的选项",
+    "settings.mcl.agreementLines": "协议视图面板 > 协议行",
+    "settings.mcl.agreementEresources": "协议视图面板 > 本协议涵盖的电子资源",
+    "settings.mcl.entitlements": "电子资源视图面板 > 此电子资源的协议",
+    "settings.mcl.packageContents": "资源包视图面板 > 资源包中的电子资源",
     "settings.error.valueNotInRange": "请输入{min}至{max}范围内的整数以继续",
     "eresources.discoverySettings": "发现设置",
     "eresources.discoverySettings.suppressFromDiscoveryAgreementLine": "在发现中隐藏{breakingLine} （协议行）",
@@ -784,5 +784,8 @@
     "eresources.subType": "资料类型",
     "documents.addDocs": "添加文档",
     "emptyAccordion.documents": "本协议行无文档",
-    "line.documents": "文档"
+    "line.documents": "文档",
+    "eresources.SynchronisationStatus": "Synchronisation status",
+    "eresources.syncContentsFromSource.true": "Synchronising",
+    "eresources.syncContentsFromSource.false": "Paused"
 }

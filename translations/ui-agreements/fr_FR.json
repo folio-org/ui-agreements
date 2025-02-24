@@ -784,5 +784,8 @@
     "eresources.subType": "Material type",
     "documents.addDocs": "Add document",
     "emptyAccordion.documents": "Aucun document pour cette ligne d'accord",
-    "line.documents": "Documents"
+    "line.documents": "Documents",
+    "eresources.SynchronisationStatus": "Synchronisation status",
+    "eresources.syncContentsFromSource.true": "Synchronising",
+    "eresources.syncContentsFromSource.false": "Paused"
 }
