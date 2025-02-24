@@ -784,5 +784,8 @@
     "eresources.subType": "Rodzaj materiału",
     "documents.addDocs": "Dodaj dokument",
     "emptyAccordion.documents": "Brak dokumentów dla tej pozycji umowy",
-    "line.documents": "Dokumenty"
+    "line.documents": "Dokumenty",
+    "eresources.SynchronisationStatus": "Status synchronizacji",
+    "eresources.syncContentsFromSource.true": "Synchronizacja",
+    "eresources.syncContentsFromSource.false": "Wstrzymano"
 }

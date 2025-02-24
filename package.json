@@ -44,7 +44,7 @@
     "rxjs": "^6.6.3"
   },
   "dependencies": {
-    "@k-int/stripes-kint-components": "^5.11.0",
+    "@k-int/stripes-kint-components": "^5.15.0",
     "@rehooks/local-storage": "^2.4.4",
     "compose-function": "^3.0.3",
     "final-form": "^4.18.4",
@@ -294,6 +294,15 @@
           "ui-agreements.appSettings.view",
           "settings.configuration.manage",
           "erm.settings.manage"
+        ]
+      },
+      {
+        "permissionName": "ui-agreements.packages.controlSync.execute",
+        "displayName": "Local KB: change package synchronisation status",
+        "description": "A user with this permission can change the synchronisation status of package (i.e. whether the content of a package should be updated by data synchronising with the local KB)",
+        "visible": true,
+        "subPermissions": [
+          "erm.packages.collection.controlSync.execute"
         ]
       }
     ],
