@@ -1,10 +1,11 @@
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { useHelperApp } from '@k-int/stripes-kint-components';
+import { useHelperApp, useTagsEnabled } from '@k-int/stripes-kint-components';
 
 import { IconButton } from '@folio/stripes/components';
-import { Tags, useTagsEnabled } from '@folio/stripes-erm-components';
+import { Tags } from '@folio/stripes-erm-components';
 
 const useAgreementsHelperApp = () => {
   const tagsEnabled = useTagsEnabled();
@@ -12,11 +13,11 @@ const useAgreementsHelperApp = () => {
     tags: Tags,
   });
 
-  const handleToggleTags = () => {
+  const handleToggleTags = useCallback(() => {
     if (tagsEnabled) {
       helperToggleFunctions.tags();
     }
-  };
+  }, [helperToggleFunctions, tagsEnabled]);
 
   const TagButton = tagsEnabled ? ({ entity, onClick = () => null }) => (
     <FormattedMessage id="ui-agreements.agreements.showTags">
