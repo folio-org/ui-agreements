@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { MemoryRouter } from 'react-router-dom';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
+import { Button as ButtonInteractor, Callout, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
 
 import translationsProperties from '../../../test/helpers';
@@ -54,8 +54,12 @@ const ToggleTagsButton = (props) => {
   return <Button onClick={props.handlers.onToggleTags}>ToggleTagsButton</Button>;
 };
 
-const ActionsButton = () => {
-  return <Button onClick={() => jest.fn()}>Actions</Button>;
+const SynchronizeButton = (props) => {
+  return <Button onClick={() => props.handlers.onSynchronize('SYNCHRONIZING')}>SynchronizeButton</Button>;
+};
+
+const PauseButton = (props) => {
+  return <Button onClick={() => props.handlers.onSynchronize('PAUSED')}>PauseButton</Button>;
 };
 
 CloseButton.propTypes = {
@@ -106,6 +110,18 @@ ToggleTagsButton.propTypes = {
   }),
 };
 
+SynchronizeButton.propTypes = {
+  handlers: PropTypes.shape({
+    onSynchronize: PropTypes.func,
+  }),
+};
+
+PauseButton.propTypes = {
+  handlers: PropTypes.shape({
+    onSynchronize: PropTypes.func,
+  }),
+};
+
 const historyPushMock = jest.fn();
 
 jest.mock('../../components/views/EResource', () => {
@@ -120,7 +136,8 @@ jest.mock('../../components/views/EResource', () => {
       <NeedMorePackageContentsButton {...props} />
       <FilterPackageContentsButton {...props} />
       <ToggleTagsButton {...props} />
-      <ActionsButton {...props} />
+      <SynchronizeButton {...props} />
+      <PauseButton {...props} />
     </div>
   );
 });
@@ -237,9 +254,42 @@ describe('EResourceViewRoute', () => {
       expect(getByText('ToggleTagsButton')).toBeInTheDocument();
     });
 
-    test('renders the Actions button', () => {
+    test('renders the SynchronizeButton button', () => {
       const { getByText } = renderComponent;
-      expect(getByText('Actions')).toBeInTheDocument();
+      expect(getByText('SynchronizeButton')).toBeInTheDocument();
+    });
+
+    test('renders the PauseButton button', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('PauseButton')).toBeInTheDocument();
+    });
+
+    describe('clicking start synchronisation', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await ButtonInteractor('SynchronizeButton').click();
+        });
+      });
+
+      test('synchronise callout fires', async () => {
+        await waitFor(async () => {
+          await Callout(/Package: .* will synchronise/i).exists();
+        });
+      });
+    });
+
+    describe('clicking pause synchronisation', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await ButtonInteractor('PauseButton').click();
+        });
+      });
+
+      test('pause callout fires', async () => {
+        await waitFor(async () => {
+          await Callout(/Package: .* has been paused/i).exists();
+        });
+      });
     });
 
     // TODO we should actually be _properly_ testing the useEffect, see AgreementsRoute example
