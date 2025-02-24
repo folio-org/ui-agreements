@@ -1,10 +1,10 @@
-import { useContext, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { FormattedMessage } from 'react-intl';
 
-import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
+import { useCallout, useOkapiKy } from '@folio/stripes/core';
 
 import { useParallelBatchFetch, usePrevNextPagination } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
@@ -33,7 +33,7 @@ const EResourceViewRoute = ({
 }) => {
   const queryClient = useQueryClient();
   const ky = useOkapiKy();
-  const callout = useContext(CalloutContext);
+  const callout = useCallout();
 
   const {
     handleToggleTags,
@@ -83,6 +83,7 @@ const EResourceViewRoute = ({
       }
     }).json()
       .then(() => queryClient.invalidateQueries([eresourcePath]))
+      .then(() => queryClient.invalidateQueries(['ERM', 'Packages']))
   );
 
   const handleSynchronize = (syncState) => {
@@ -218,10 +219,10 @@ const EResourceViewRoute = ({
   };
 
   /*
- * This method is currently only used in "Options for acquiring e-resource",
- * which is found on a Title view. This link could need to redirect to either
- * the packages OR the titles route, depending on context.
- */
+  * This method is currently only used in "Options for acquiring e-resource",
+  * which is found on a Title view. This link could need to redirect to either
+  * the packages OR the titles route, depending on context.
+  */
   const handleEResourceClick = (id, destination = 'TITLE') => {
     if (destination === 'TITLE') {
       history.push(`${urls.titleView(id)}${location.search}`);
