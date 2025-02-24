@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { FormattedMessage } from 'react-intl';
 
-import { useOkapiKy } from '@folio/stripes/core';
+import { useCallout, useOkapiKy } from '@folio/stripes/core';
 
 import { useParallelBatchFetch, usePrevNextPagination } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
@@ -19,7 +20,8 @@ import {
   ENTITLEMENT_AGREEMENTS_LIST_PAGINATION_ID,
   ENTITLEMENT_OPTIONS_PAGINATION_ID,
   PACKAGE_CONTENT_PAGINATION_ID,
-  resourceClasses
+  PACKAGES_SYNC_ENDPOINT,
+  resourceClasses,
 } from '../../constants';
 import { useAgreementsHelperApp, useAgreementsSettings, useSuppressFromDiscovery } from '../../hooks';
 
@@ -29,7 +31,10 @@ const EResourceViewRoute = ({
   location,
   match: { params: { id: eresourceId } },
 }) => {
+  const queryClient = useQueryClient();
   const ky = useOkapiKy();
+  const callout = useCallout();
+
   const {
     handleToggleTags,
     HelperComponent,
@@ -69,6 +74,42 @@ const EResourceViewRoute = ({
     () => ky.get(eresourcePath).json()
   );
 
+  const { mutateAsync: synchronizePackage } = useMutation(
+    [PACKAGES_SYNC_ENDPOINT, eresourceId, 'synchronize'],
+    ({ syncState }) => ky.post(PACKAGES_SYNC_ENDPOINT, {
+      json: {
+        packageIds: [eresourceId],
+        syncState
+      }
+    }).json()
+      .then(() => queryClient.invalidateQueries([eresourcePath]))
+      .then(() => queryClient.invalidateQueries(['ERM', 'Packages']))
+  );
+
+  const handleSynchronize = (syncState) => {
+    synchronizePackage({ syncState })
+      .then(() => {
+        callout.sendCallout({
+          message: (
+            <FormattedMessage
+              id={`ui-agreements.eresources.syncPackageSuccess.${syncState}`}
+              values={{ packageName: eresource.name }}
+            />
+          ),
+        });
+      })
+      .catch(() => {
+        callout.sendCallout({
+          type: 'error',
+          timeout: 0,
+          message: (
+            <FormattedMessage
+              id="ui-agreements.eresources.syncPackageError"
+            />
+          ),
+        });
+      });
+  };
 
   const entitlementsPath = ERESOURCE_ENTITLEMENTS_ENDPOINT(eresourceId);
   const entitlementOptionsPath = ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT(eresourceId);
@@ -178,10 +219,10 @@ const EResourceViewRoute = ({
   };
 
   /*
-   * This method is currently only used in "Options for acquiring e-resource",
-   * which is found on a Title view. This link could need to redirect to either
-   * the packages OR the titles route, depending on context.
-   */
+  * This method is currently only used in "Options for acquiring e-resource",
+  * which is found on a Title view. This link could need to redirect to either
+  * the packages OR the titles route, depending on context.
+  */
   const handleEResourceClick = (id, destination = 'TITLE') => {
     if (destination === 'TITLE') {
       history.push(`${urls.titleView(id)}${location.search}`);
@@ -241,6 +282,7 @@ const EResourceViewRoute = ({
         onEdit: handleEdit,
         onEResourceClick: handleEResourceClick,
         onToggleTags: handleToggleTags,
+        onSynchronize: handleSynchronize,
       }}
       isLoading={isLoading()}
     />
