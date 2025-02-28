@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
@@ -10,9 +10,10 @@ import {
   Icon,
   Button,
   PaneMenu,
+  Checkbox
 } from '@folio/stripes/components';
 
-import { AppIcon } from '@folio/stripes/core';
+import { AppIcon, useStripes } from '@folio/stripes/core';
 
 import {
   CollapseFilterPaneButton,
@@ -88,12 +89,73 @@ const Packages = ({
 
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
+  const [checkboxState, setCheckboxState] = useState({});
+  const [selectedPackageIds, setSelectedPackageIds] = useState([]);
   const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
+
+  useEffect(() => {
+    const selectedIds = Object.keys(checkboxState).filter(id => checkboxState[id]);
+    setSelectedPackageIds(selectedIds);
+  }, [checkboxState]);
+
+  const handleCheckboxClick = (e, packageId) => {
+    e.stopPropagation();
+    setCheckboxState(prevState => {
+      if (prevState[packageId]) {
+        return { ...prevState, [packageId]: false };
+      } else {
+        return { ...prevState, [packageId]: true };
+      }
+    });
+  };
 
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
   };
+
+  const handleToggleSelectAll = () => {
+    if (selectedPackageIds.length === (data.packages ? data.packages.length : 0)) {
+      setSelectedPackageIds([]);
+      setCheckboxState({});
+    } else {
+      setSelectedPackageIds(data.packages ? data.packages.map(pkg => pkg.id) : []);
+      setCheckboxState(data.packages ? data.packages.reduce((acc, pkg) => ({ ...acc, [pkg.id]: true }), {}) : {});
+    }
+  };
+  const stripes = useStripes();
+
+  const getActionMenu = () => {
+    const buttons = [];
+
+    if (stripes.hasPerm('ui-agreements.packages.controlSync.execute')) {
+    buttons.push(
+      <Button
+        key="clickable-dropdown-sync-package"
+        buttonStyle="dropdownItem"
+        disabled={selectedPackageIds.length === 0}
+        id="clickable-dropdown-sync-package"
+      >
+        <FormattedMessage id="ui-agreements.eresources.startSync" />
+      </Button>
+    );
+
+    buttons.push(
+      <Button
+        key="clickable-dropdown-pause-package"
+        buttonStyle="dropdownItem"
+        disabled={selectedPackageIds.length === 0}
+        id="clickable-dropdown-pause-package"
+      >
+        <FormattedMessage id="ui-agreements.eresources.pauseSync" />
+      </Button>
+    );
+    }
+
+    return buttons.length ? buttons : null;
+  };
+
+
 
   return (
     <div data-testid="packages">
@@ -189,6 +251,7 @@ const Packages = ({
                 }
 
                 <Pane
+                  actionMenu={getActionMenu()}
                   appIcon={<AppIcon app="agreements" iconKey="package" size="small" />}
                   defaultWidth="fill"
                   firstMenu={
@@ -219,6 +282,13 @@ const Packages = ({
                   <MultiColumnList
                     autosize
                     columnMapping={{
+                      select: (
+                        <Checkbox
+                          checked={selectedPackageIds.length === (data.packages ? data.packages.length : 0)}
+                          name="select-all"
+                          onChange={handleToggleSelectAll}
+                        />
+                      ),
                       name: <FormattedMessage id="ui-agreements.eresources.name" />,
                       provider: <FormattedMessage id="ui-agreements.eresources.provider" />,
                       source: <FormattedMessage id="ui-agreements.packages.source" />,
@@ -226,6 +296,7 @@ const Packages = ({
                       syncContentsFromSource: <FormattedMessage id="ui-agreements.eresources.synchronisationStatus" />,
                     }}
                     columnWidths={{
+                      select: 40,
                       name: 300,
                       provider: 200,
                       source: 250,
@@ -234,6 +305,13 @@ const Packages = ({
                     }}
                     contentData={data.packages}
                     formatter={{
+                      select: item => (
+                        <Checkbox
+                          checked={checkboxState[item.id] || false}
+                          name={`select-${item.id}`}
+                          onChange={(e) => handleCheckboxClick(e, item.id)}
+                        />
+                      ),
                       name: e => {
                         return (
                           <AppIcon
@@ -274,7 +352,7 @@ const Packages = ({
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     totalCount={count}
-                    visibleColumns={['name', 'provider', 'source', 'status', 'syncContentsFromSource']}
+                    visibleColumns={['select', 'name', 'provider', 'source', 'status', 'syncContentsFromSource']}
                   />
                 </Pane>
                 {children}
@@ -289,3 +367,4 @@ const Packages = ({
 
 Packages.propTypes = propTypes;
 export default Packages;
+
