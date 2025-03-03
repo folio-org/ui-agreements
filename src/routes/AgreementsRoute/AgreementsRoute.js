@@ -129,7 +129,7 @@ const AgreementsRoute = ({ children, history, location, match }) => {
     if (agreementsCount === 1) {
       const newUrl = `${urls.agreementView(agreements[0].id)}${location.search}`;
 
-      if (history.location.pathname + history.location.search !== newUrl) {
+      if (`${history.location.pathname}${history.location.search}` !== newUrl) {
         history.push(newUrl);
       }
     }
