@@ -127,7 +127,11 @@ const AgreementsRoute = ({ children, history, location, match }) => {
 
   useEffect(() => {
     if (agreementsCount === 1) {
-      history.push(`${urls.agreementView(agreements[0].id)}${location.search}`);
+      const newUrl = `${urls.agreementView(agreements[0].id)}${location.search}`;
+
+      if (history.location.pathname + history.location.search !== newUrl) {
+        history.push(newUrl);
+      }
     }
   }, [agreements, agreementsCount, history, location.search]);
 
