@@ -63,6 +63,7 @@ const propTypes = {
   }),
   handleSyncPackages: PropTypes.func,
   handlePauseSyncPackages: PropTypes.func,
+  onSelectPackageIds: PropTypes.func,
 };
 
 const filterPaneVisibilityKey = '@folio/agreements/eresourcesFilterPaneVisibility';
@@ -78,7 +79,8 @@ const Packages = ({
   selectedRecordId,
   source,
   handleSyncPackages,
-  handlePauseSyncPackages
+  handlePauseSyncPackages,
+  onSelectPackageIds
 }) => {
   const count = source?.totalCount() ?? 0;
   const query = queryGetter() ?? {};
@@ -103,7 +105,10 @@ const Packages = ({
   useEffect(() => {
     const selectedIds = Object.keys(checkboxState).filter(id => checkboxState[id]);
     setSelectedPackageIds(selectedIds);
-  }, [checkboxState]);
+    if (onSelectPackageIds) {
+      onSelectPackageIds(selectedIds);
+    }
+  }, [checkboxState, onSelectPackageIds]);
 
   const handleCheckboxClick = (e, packageId) => {
     e.stopPropagation();
@@ -128,7 +133,7 @@ const Packages = ({
     }
   };
 
-  const getActionMenu = () => {
+  const getActionMenu = ({ onToggle }) => {
     const buttons = [];
 
     if (stripes.hasPerm('ui-agreements.packages.controlSync.execute')) {
@@ -138,7 +143,10 @@ const Packages = ({
           buttonStyle="dropdownItem"
           disabled={selectedPackageIds.length === 0}
           id="clickable-dropdown-sync-package"
-          onClick={() => handleSyncPackages(syncStates.SYNCHRONIZED)}
+          onClick={() => {
+            handleSyncPackages(syncStates.SYNCHRONIZING);
+            onToggle();
+          }}
         >
           <FormattedMessage id="ui-agreements.eresources.startSync" />
         </Button>
@@ -150,7 +158,10 @@ const Packages = ({
           buttonStyle="dropdownItem"
           disabled={selectedPackageIds.length === 0}
           id="clickable-dropdown-pause-package"
-          onClick={() => handlePauseSyncPackages(syncStates.PAUSED)}
+          onClick={() => {
+            handleSyncPackages(syncStates.PAUSED);
+            onToggle();
+          }}
         >
           <FormattedMessage id="ui-agreements.eresources.pauseSync" />
         </Button>
@@ -256,7 +267,7 @@ const Packages = ({
                 }
 
                 <Pane
-                  {...(filterPaneIsVisible ? { actionMenu: getActionMenu } : {})}
+                  actionMenu={getActionMenu}
                   appIcon={<AppIcon app="agreements" iconKey="package" size="small" />}
                   defaultWidth="fill"
                   firstMenu={

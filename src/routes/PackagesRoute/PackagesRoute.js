@@ -54,6 +54,10 @@ const PackagesRoute = ({
   const hasPerms = stripes.hasPerm('ui-agreements.agreements.view');
   const searchField = useRef();
   const [selectedPackageIds, setSelectedPackageIds] = useState([]);
+
+  const handleSelectPackageIds = (ids) => {
+    setSelectedPackageIds(ids);
+  };
   const queryClient = useQueryClient();
   const callout = useCallout();
   useEffect(() => {
@@ -133,25 +137,46 @@ const PackagesRoute = ({
     () => ky.get(dataSourcesPath).json()
   );
 
-  const handleSyncPackages = () => {
-    ky.post(PACKAGES_SYNC_ENDPOINT, { json: { packages: selectedPackageIds } })
+  const { mutateAsync: synchronizePackages } = useMutation(
+    [PACKAGES_SYNC_ENDPOINT, 'synchronize'],
+    ({ packageIds, syncState }) => ky.post(PACKAGES_SYNC_ENDPOINT, {
+      json: {
+        packageIds,
+        syncState
+      }
+    }).json()
       .then(() => {
-        queryClient.invalidateQueries([PACKAGES_ENDPOINT]);
-        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.eresources.syncSuccess" /> });
+        return queryClient.invalidateQueries(['ERM', 'Packages', packagesQueryParams, PACKAGES_ENDPOINT]);
       })
-      .catch(() => {
-        callout.sendCallout({ type: 'error', message: <FormattedMessage id="ui-agreements.eresources.syncError" /> });
-      });
-  };
+  );
 
-  const handlePauseSyncPackages = () => {
-    ky.put(PACKAGES_SYNC_ENDPOINT, { json: { packages: selectedPackageIds } })
+  const handleSynchronize = (syncState) => {
+    const packageIds = selectedPackageIds;
+    synchronizePackages({ packageIds, syncState })
       .then(() => {
-        queryClient.invalidateQueries([PACKAGES_ENDPOINT]);
-        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.eresources.pauseSyncSuccess" /> });
+        const messageId = syncState === true
+          ? 'ui-agreements.eresources.syncPackagesSuccess'
+          : 'ui-agreements.eresources.pauseSyncPackagesSuccess';
+
+        callout.sendCallout({
+          message: (
+            <FormattedMessage
+              id={messageId}
+              values={{ packageCount: packageIds.length }}
+            />
+          ),
+        });
       })
       .catch(() => {
-        callout.sendCallout({ type: 'error', message: <FormattedMessage id="ui-agreements.eresources.pauseSyncError" /> });
+        callout.sendCallout({
+          type: 'error',
+          timeout: 0,
+          message: (
+            <FormattedMessage
+              id="ui-agreements.eresources.syncPackagesError"
+            />
+          ),
+        });
       });
   };
 
@@ -173,8 +198,8 @@ const PackagesRoute = ({
           { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.notSet" />, value: 'isNotSet' }
         ]
       }}
-      handlePauseSyncPackages={handlePauseSyncPackages}
-      handleSyncPackages={handleSyncPackages}
+      handleSyncPackages={handleSynchronize}
+      onSelectPackageIds={handleSelectPackageIds}
       queryGetter={queryGetter}
       querySetter={querySetter}
       searchField={searchField}
