@@ -1,15 +1,15 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient, useMutation } from 'react-query';
 
 import {
   generateKiwtQueryParams,
   useKiwtSASQuery
 } from '@k-int/stripes-kint-components';
 
-import { useOkapiKy, useStripes } from '@folio/stripes/core';
+import { useOkapiKy, useStripes, useCallout } from '@folio/stripes/core';
 import {
   getRefdataValuesByDesc,
   usePrevNextPagination,
@@ -22,6 +22,7 @@ import { urls } from '../../components/utilities';
 
 import {
   PACKAGES_ENDPOINT,
+  PACKAGES_SYNC_ENDPOINT,
   resourceClasses,
   resultCount
 } from '../../constants';
@@ -52,7 +53,9 @@ const PackagesRoute = ({
   const ky = useOkapiKy();
   const hasPerms = stripes.hasPerm('ui-agreements.agreements.view');
   const searchField = useRef();
-
+  const [selectedPackageIds, setSelectedPackageIds] = useState([]);
+  const queryClient = useQueryClient();
+  const callout = useCallout();
   useEffect(() => {
     if (searchField.current) {
       searchField.current.focus();
@@ -130,6 +133,28 @@ const PackagesRoute = ({
     () => ky.get(dataSourcesPath).json()
   );
 
+  const handleSyncPackages = () => {
+    ky.post(PACKAGES_SYNC_ENDPOINT, { json: { packages: selectedPackageIds } })
+      .then(() => {
+        queryClient.invalidateQueries([PACKAGES_ENDPOINT]);
+        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.eresources.syncSuccess" /> });
+      })
+      .catch(() => {
+        callout.sendCallout({ type: 'error', message: <FormattedMessage id="ui-agreements.eresources.syncError" /> });
+      });
+  };
+
+  const handlePauseSyncPackages = () => {
+    ky.put(PACKAGES_SYNC_ENDPOINT, { json: { packages: selectedPackageIds } })
+      .then(() => {
+        queryClient.invalidateQueries([PACKAGES_ENDPOINT]);
+        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.eresources.pauseSyncSuccess" /> });
+      })
+      .catch(() => {
+        callout.sendCallout({ type: 'error', message: <FormattedMessage id="ui-agreements.eresources.pauseSyncError" /> });
+      });
+  };
+
   if (!hasPerms) return <NoPermissions />;
 
   return (
@@ -148,6 +173,8 @@ const PackagesRoute = ({
           { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.notSet" />, value: 'isNotSet' }
         ]
       }}
+      handlePauseSyncPackages={handlePauseSyncPackages}
+      handleSyncPackages={handleSyncPackages}
       queryGetter={queryGetter}
       querySetter={querySetter}
       searchField={searchField}
@@ -160,6 +187,7 @@ const PackagesRoute = ({
         failure: () => isEresourcesError,
         failureMessage: () => eresourcesError.message
       }}
+      stripes={stripes}
     >
       {children}
     </View>

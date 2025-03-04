@@ -36,7 +36,8 @@ import {
   KB_TAB_FILTER_PANE,
   KB_TAB_PANESET,
   KB_TAB_PANE_ID,
-  resultCount
+  resultCount,
+  syncStates
 } from '../../../constants';
 
 import css from '../Agreements.css';
@@ -60,6 +61,8 @@ const propTypes = {
   stripes: PropTypes.shape({
     hasPerm: PropTypes.func
   }),
+  handleSyncPackages: PropTypes.func,
+  handlePauseSyncPackages: PropTypes.func,
 };
 
 const filterPaneVisibilityKey = '@folio/agreements/eresourcesFilterPaneVisibility';
@@ -73,7 +76,9 @@ const Packages = ({
   searchField,
   searchString,
   selectedRecordId,
-  source
+  source,
+  handleSyncPackages,
+  handlePauseSyncPackages
 }) => {
   const count = source?.totalCount() ?? 0;
   const query = queryGetter() ?? {};
@@ -93,6 +98,8 @@ const Packages = ({
   const [selectedPackageIds, setSelectedPackageIds] = useState([]);
   const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
 
+  const stripes = useStripes();
+
   useEffect(() => {
     const selectedIds = Object.keys(checkboxState).filter(id => checkboxState[id]);
     setSelectedPackageIds(selectedIds);
@@ -100,13 +107,10 @@ const Packages = ({
 
   const handleCheckboxClick = (e, packageId) => {
     e.stopPropagation();
-    setCheckboxState(prevState => {
-      if (prevState[packageId]) {
-        return { ...prevState, [packageId]: false };
-      } else {
-        return { ...prevState, [packageId]: true };
-      }
-    });
+    setCheckboxState(prevState => ({
+      ...prevState,
+      [packageId]: !prevState[packageId]
+    }));
   };
 
   const toggleFilterPane = () => {
@@ -123,33 +127,34 @@ const Packages = ({
       setCheckboxState(data.packages ? data.packages.reduce((acc, pkg) => ({ ...acc, [pkg.id]: true }), {}) : {});
     }
   };
-  const stripes = useStripes();
 
   const getActionMenu = () => {
     const buttons = [];
 
     if (stripes.hasPerm('ui-agreements.packages.controlSync.execute')) {
-    buttons.push(
-      <Button
-        key="clickable-dropdown-sync-package"
-        buttonStyle="dropdownItem"
-        disabled={selectedPackageIds.length === 0}
-        id="clickable-dropdown-sync-package"
-      >
-        <FormattedMessage id="ui-agreements.eresources.startSync" />
-      </Button>
-    );
+      buttons.push(
+        <Button
+          key="clickable-dropdown-sync-package"
+          buttonStyle="dropdownItem"
+          disabled={selectedPackageIds.length === 0}
+          id="clickable-dropdown-sync-package"
+          onClick={() => handleSyncPackages(syncStates.SYNCHRONIZED)}
+        >
+          <FormattedMessage id="ui-agreements.eresources.startSync" />
+        </Button>
+      );
 
-    buttons.push(
-      <Button
-        key="clickable-dropdown-pause-package"
-        buttonStyle="dropdownItem"
-        disabled={selectedPackageIds.length === 0}
-        id="clickable-dropdown-pause-package"
-      >
-        <FormattedMessage id="ui-agreements.eresources.pauseSync" />
-      </Button>
-    );
+      buttons.push(
+        <Button
+          key="clickable-dropdown-pause-package"
+          buttonStyle="dropdownItem"
+          disabled={selectedPackageIds.length === 0}
+          id="clickable-dropdown-pause-package"
+          onClick={() => handlePauseSyncPackages(syncStates.PAUSED)}
+        >
+          <FormattedMessage id="ui-agreements.eresources.pauseSync" />
+        </Button>
+      );
     }
 
     return buttons.length ? buttons : null;
@@ -251,7 +256,7 @@ const Packages = ({
                 }
 
                 <Pane
-                  actionMenu={getActionMenu()}
+                  {...(filterPaneIsVisible ? { actionMenu: getActionMenu } : {})}
                   appIcon={<AppIcon app="agreements" iconKey="package" size="small" />}
                   defaultWidth="fill"
                   firstMenu={
@@ -306,11 +311,13 @@ const Packages = ({
                     contentData={data.packages}
                     formatter={{
                       select: item => (
-                        <Checkbox
-                          checked={checkboxState[item.id] || false}
-                          name={`select-${item.id}`}
-                          onChange={(e) => handleCheckboxClick(e, item.id)}
-                        />
+                        <div onClick={(e) => e.stopPropagation()}>
+                          <Checkbox
+                            checked={checkboxState[item.id] || false}
+                            name={`select-${item.id}`}
+                            onChange={(e) => handleCheckboxClick(e, item.id)}
+                          />
+                        </div>
                       ),
                       name: e => {
                         return (
