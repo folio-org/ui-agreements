@@ -54,9 +54,9 @@ const PackagesRoute = ({
   const searchField = useRef();
   const [selectedPackageIds, setSelectedPackageIds] = useState([]);
 
-  const handleSelectPackageIds = (ids) => {
+  const handleSelectPackageIds = useMemo(() => (ids) => {
     setSelectedPackageIds(ids);
-  };
+  }, []);
   const queryClient = useQueryClient();
   const callout = useCallout();
   useEffect(() => {

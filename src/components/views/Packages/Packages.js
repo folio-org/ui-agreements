@@ -103,10 +103,14 @@ const Packages = ({
   useEffect(() => {
     const selectedIds = Object.keys(checkboxState).filter(id => checkboxState[id]);
     setSelectedPackageIds(selectedIds);
+  }, [checkboxState]);
+
+  // Separate effect to call the parent function only when selectedPackageIds changes
+  useEffect(() => {
     if (onSelectPackageIds) {
-      onSelectPackageIds(selectedIds);
+      onSelectPackageIds(selectedPackageIds);
     }
-  }, [checkboxState, onSelectPackageIds]);
+  }, [selectedPackageIds, onSelectPackageIds]);
 
   const handleCheckboxClick = (e, packageId) => {
     e.stopPropagation();
