@@ -23,7 +23,6 @@ import { urls } from '../../components/utilities';
 import {
   PACKAGES_ENDPOINT,
   PACKAGES_SYNC_ENDPOINT,
-  resourceClasses,
   resultCount
 } from '../../constants';
 
@@ -152,32 +151,59 @@ const PackagesRoute = ({
 
   const handleSynchronize = (syncState) => {
     const packageIds = selectedPackageIds;
-    synchronizePackages({ packageIds, syncState })
-      .then(() => {
-        const messageId = syncState === true
-          ? 'ui-agreements.eresources.syncPackagesSuccess'
-          : 'ui-agreements.eresources.pauseSyncPackagesSuccess';
+    // Find the package name if only one package is selected
+    let packageName = '';
+    if (packageIds.length === 1) {
+      const selectedPackage = packages.find(pkg => pkg.id === packageIds[0]);
+      packageName = selectedPackage?.name || '';
 
-        callout.sendCallout({
-          message: (
-            <FormattedMessage
-              id={messageId}
-              values={{ packageCount: packageIds.length }}
-            />
-          ),
+      synchronizePackages({ packageIds, syncState })
+        .then(() => {
+          callout.sendCallout({
+            message: (
+              <FormattedMessage
+                id={`ui-agreements.eresources.syncPackageSuccess.${syncState}`}
+                values={{ packageName }}
+              />
+            ),
+          });
+        })
+        .catch(() => {
+          callout.sendCallout({
+            type: 'error',
+            timeout: 0,
+            message: (
+              <FormattedMessage
+                id="ui-agreements.eresources.syncPackageError"
+              />
+            ),
+          });
         });
-      })
-      .catch(() => {
-        callout.sendCallout({
-          type: 'error',
-          timeout: 0,
-          message: (
-            <FormattedMessage
-              id="ui-agreements.eresources.syncPackagesError"
-            />
-          ),
+    } else {
+      // If multiple packages are selected
+      synchronizePackages({ packageIds, syncState })
+        .then(() => {
+          callout.sendCallout({
+            message: (
+              <FormattedMessage
+                id={`ui-agreements.eresources.syncMultiplePackagesSuccess.${syncState}`}
+                values={{ packageName }}
+              />
+            ),
+          });
+        })
+        .catch(() => {
+          callout.sendCallout({
+            type: 'error',
+            timeout: 0,
+            message: (
+              <FormattedMessage
+                id="ui-agreements.eresources.syncMultiplePackagesError"
+              />
+            ),
+          });
         });
-      });
+    }
   };
 
   if (!hasPerms) return <NoPermissions />;

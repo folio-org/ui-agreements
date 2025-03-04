@@ -62,7 +62,6 @@ const propTypes = {
     hasPerm: PropTypes.func
   }),
   handleSyncPackages: PropTypes.func,
-  handlePauseSyncPackages: PropTypes.func,
   onSelectPackageIds: PropTypes.func,
 };
 
@@ -79,7 +78,6 @@ const Packages = ({
   selectedRecordId,
   source,
   handleSyncPackages,
-  handlePauseSyncPackages,
   onSelectPackageIds
 }) => {
   const count = source?.totalCount() ?? 0;
@@ -170,8 +168,6 @@ const Packages = ({
 
     return buttons.length ? buttons : null;
   };
-
-
 
   return (
     <div data-testid="packages">
