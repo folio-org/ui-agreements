@@ -361,6 +361,7 @@ const Packages = ({
                       ) : '...'
                     }
                     isSelected={({ item }) => item.id === selectedRecordId}
+                    nonInteractiveHeaders={['select']}
                     onHeaderClick={onSort}
                     {...paginationMCLProps}
                     rowProps={{
