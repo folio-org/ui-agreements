@@ -83,31 +83,67 @@ describe('AgreementLine', () => {
       expect(getByText('DiscoverySettings')).toBeInTheDocument();
     });
 
-    it('renders the Confirmation modal and clicking the delete/cancel button triggers expected callbacks', async () => {
-      await waitFor(async () => {
-        await Button('Actions').click();
-        await Button('Delete').click();
-        await Modal('Delete agreement line').exists();
-        await Button('Cancel').click(); // close the modal
-        await Button('Actions').click();
-        await Button('Delete').click();
-        await Modal('Delete agreement line').exists();
-        await Button('Delete').click(); // delete the line
+    describe('opening the actions menu', () => {
+      beforeEach(async () => {
+        await waitFor(async () => {
+          await Button('Actions').click();
+        });
       });
 
-      await waitFor(async () => {
-        expect(handlers.onDelete).toHaveBeenCalled();
-      });
-    });
+      describe('clicking the delete action button', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('Delete').click();
+          });
+        });
 
-    it('triggers the onEdit callback on clicking the edit button from the actions dropdown', async () => {
-      await waitFor(async () => {
-        await Button('Actions').click();
-        await Button('Edit').click();
+        it('renders the agreement line delete modal', async () => {
+          await waitFor(async () => {
+            await Modal('Delete agreement line').exists();
+          });
+        });
+
+        describe('clicking the cancel button', () => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Button('Cancel').click();
+            });
+          });
+
+          it('closes the agreement line delete modal', async () => {
+            await waitFor(async () => {
+              await Modal('Delete agreement line').absent();
+            });
+          });
+        });
+
+        describe('clicking the delete button', () => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Button('Delete').click();
+            });
+          });
+
+          it('calls the expected delete handler', async () => {
+            await waitFor(() => {
+              expect(handlers.onDelete).toHaveBeenCalled();
+            });
+          });
+        });
       });
 
-      await waitFor(async () => {
-        expect(handlers.onEdit).toHaveBeenCalled();
+      describe('clicking the edit action button', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await Button('Edit').click();
+          });
+        });
+
+        it('calls the expected edit handler', async () => {
+          await waitFor(() => {
+            expect(handlers.onEdit).toHaveBeenCalled();
+          });
+        });
       });
     });
   });
