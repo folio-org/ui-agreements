@@ -153,12 +153,12 @@ const PackagesRoute = ({
     const packageIds = selectedPackageIds;
     // Find the package name if only one package is selected
     let packageName = '';
-    let actionType = 'Package'; // We'll use this to swap between translations
+    let actionType = 'MultiplePackages'; // We'll use this to swap between translations
     if (packageIds.length === 1) {
       const selectedPackage = packages.find(pkg => pkg.id === packageIds[0]);
       packageName = selectedPackage?.name || '';
 
-      actionType = 'MultiplePackages';
+      actionType = 'Package';
     }
 
     synchronizePackages({ packageIds, syncState })
