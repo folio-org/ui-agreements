@@ -145,7 +145,7 @@ const PackagesRoute = ({
       }
     }).json()
       .then(() => {
-        return queryClient.invalidateQueries(['ERM', 'Packages', packagesQueryParams, PACKAGES_ENDPOINT]);
+        return queryClient.invalidateQueries(['ERM', 'Packages']);
       })
   );
 
