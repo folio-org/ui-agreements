@@ -94,16 +94,10 @@ const Packages = ({
 
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
-  const [checkboxState, setCheckboxState] = useState({});
   const [selectedPackageIds, setSelectedPackageIds] = useState([]);
   const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
 
   const stripes = useStripes();
-
-  useEffect(() => {
-    const selectedIds = Object.keys(checkboxState).filter(id => checkboxState[id]);
-    setSelectedPackageIds(selectedIds);
-  }, [checkboxState]);
 
   // Separate effect to call the parent function only when selectedPackageIds changes
   useEffect(() => {
@@ -114,10 +108,13 @@ const Packages = ({
 
   const handleCheckboxClick = (e, packageId) => {
     e.stopPropagation();
-    setCheckboxState(prevState => ({
-      ...prevState,
-      [packageId]: !prevState[packageId]
-    }));
+
+    const selectedPackageIdIndex = selectedPackageIds.indexOf(packageId);
+    if (selectedPackageIdIndex > -1) { // only remove from array when item is found
+      setSelectedPackageIds(selectedPackageIds.filter(pid => pid !== packageId)); // 2nd parameter means remove one item only
+    } else {
+      setSelectedPackageIds([...selectedPackageIds, packageId]);
+    }
   };
 
   const toggleFilterPane = () => {
@@ -128,10 +125,8 @@ const Packages = ({
   const handleToggleSelectAll = () => {
     if (selectedPackageIds.length === (data.packages ? data.packages.length : 0)) {
       setSelectedPackageIds([]);
-      setCheckboxState({});
     } else {
       setSelectedPackageIds(data.packages ? data.packages.map(pkg => pkg.id) : []);
-      setCheckboxState(data.packages ? data.packages.reduce((acc, pkg) => ({ ...acc, [pkg.id]: true }), {}) : {});
     }
   };
 
@@ -300,6 +295,7 @@ const Packages = ({
                     columnMapping={{
                       select: (
                         <Checkbox
+                          /* This assumes that the MCL page includes everything from the fetch, which is the case right now */
                           checked={selectedPackageIds.length === (data.packages ? data.packages.length : 0)}
                           name="select-all"
                           onChange={handleToggleSelectAll}
@@ -324,7 +320,7 @@ const Packages = ({
                       select: item => (
                         <div onClick={(e) => e.stopPropagation()}>
                           <Checkbox
-                            checked={checkboxState[item.id] || false}
+                            checked={selectedPackageIds.includes(item.id)}
                             name={`select-${item.id}`}
                             onChange={(e) => handleCheckboxClick(e, item.id)}
                           />
