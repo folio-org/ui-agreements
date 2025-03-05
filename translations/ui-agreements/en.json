@@ -336,6 +336,8 @@
   "eresources.title": "Title",
   "eresources.startSync": "Start synchronisation",
   "eresources.pauseSync": "Pause synchronisation",
+  "eresources.startSyncSelectedPackages": "Start synchronisation of selected packages",
+  "eresources.pauseSyncSelectedPackages": "Pause synchronisation of selected packages",
   "eresources.syncPackageSuccess.PAUSED": "Package: <strong>{packageName}</strong> has been paused",
   "eresources.syncPackageSuccess.SYNCHRONIZING": "Package: <strong>{packageName}</strong> will synchronise",
   "eresources.syncPackageError": "Error. Unable to update the synchronisation status of the package.",

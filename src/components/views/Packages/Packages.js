@@ -150,7 +150,7 @@ const Packages = ({
             onToggle();
           }}
         >
-          <FormattedMessage id="ui-agreements.eresources.startSync" />
+          <FormattedMessage id="ui-agreements.eresources.startSyncSelectedPackages" />
         </Button>
       );
 
@@ -165,7 +165,7 @@ const Packages = ({
             onToggle();
           }}
         >
-          <FormattedMessage id="ui-agreements.eresources.pauseSync" />
+          <FormattedMessage id="ui-agreements.eresources.pauseSyncSelectedPackages" />
         </Button>
       );
     }
