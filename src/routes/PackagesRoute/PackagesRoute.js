@@ -1,15 +1,15 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient, useMutation } from 'react-query';
 
 import {
   generateKiwtQueryParams,
   useKiwtSASQuery
 } from '@k-int/stripes-kint-components';
 
-import { useOkapiKy, useStripes } from '@folio/stripes/core';
+import { useOkapiKy, useStripes, useCallout } from '@folio/stripes/core';
 import {
   getRefdataValuesByDesc,
   usePrevNextPagination,
@@ -22,7 +22,7 @@ import { urls } from '../../components/utilities';
 
 import {
   PACKAGES_ENDPOINT,
-  resourceClasses,
+  PACKAGES_SYNC_ENDPOINT,
   resultCount
 } from '../../constants';
 
@@ -52,7 +52,13 @@ const PackagesRoute = ({
   const ky = useOkapiKy();
   const hasPerms = stripes.hasPerm('ui-agreements.agreements.view');
   const searchField = useRef();
+  const [selectedPackageIds, setSelectedPackageIds] = useState([]);
 
+  const handleSelectPackageIds = useMemo(() => (ids) => {
+    setSelectedPackageIds(ids);
+  }, []);
+  const queryClient = useQueryClient();
+  const callout = useCallout();
   useEffect(() => {
     if (searchField.current) {
       searchField.current.focus();
@@ -130,6 +136,55 @@ const PackagesRoute = ({
     () => ky.get(dataSourcesPath).json()
   );
 
+  const { mutateAsync: synchronizePackages } = useMutation(
+    [PACKAGES_SYNC_ENDPOINT, 'synchronize'],
+    ({ packageIds, syncState }) => ky.post(PACKAGES_SYNC_ENDPOINT, {
+      json: {
+        packageIds,
+        syncState
+      }
+    }).json()
+      .then(() => {
+        return queryClient.invalidateQueries(['ERM', 'Packages']);
+      })
+  );
+
+  const handleSynchronize = (syncState) => {
+    const packageIds = selectedPackageIds;
+    // Find the package name if only one package is selected
+    let packageName = '';
+    let actionType = 'MultiplePackages'; // We'll use this to swap between translations
+    if (packageIds.length === 1) {
+      const selectedPackage = packages.find(pkg => pkg.id === packageIds[0]);
+      packageName = selectedPackage?.name || '';
+
+      actionType = 'Package';
+    }
+
+    synchronizePackages({ packageIds, syncState })
+      .then(() => {
+        callout.sendCallout({
+          message: (
+            <FormattedMessage
+              id={`ui-agreements.eresources.sync${actionType}Success.${syncState}`}
+              values={{ packageName }}
+            />
+          ),
+        });
+      })
+      .catch(() => {
+        callout.sendCallout({
+          type: 'error',
+          timeout: 0,
+          message: (
+            <FormattedMessage
+              id={`ui-agreements.eresources.sync${actionType}Error`}
+            />
+          ),
+        });
+      });
+  };
+
   if (!hasPerms) return <NoPermissions />;
 
   return (
@@ -148,6 +203,8 @@ const PackagesRoute = ({
           { label: <FormattedMessage id="ui-agreements.eresources.syncStatus.notSet" />, value: 'isNotSet' }
         ]
       }}
+      handleSyncPackages={handleSynchronize}
+      onSelectPackageIds={handleSelectPackageIds}
       queryGetter={queryGetter}
       querySetter={querySetter}
       searchField={searchField}
@@ -160,6 +217,7 @@ const PackagesRoute = ({
         failure: () => isEresourcesError,
         failureMessage: () => eresourcesError.message
       }}
+      stripes={stripes}
     >
       {children}
     </View>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useLocalStorage, writeStorage } from '@rehooks/local-storage';
@@ -10,9 +10,10 @@ import {
   Icon,
   Button,
   PaneMenu,
+  Checkbox
 } from '@folio/stripes/components';
 
-import { AppIcon } from '@folio/stripes/core';
+import { AppIcon, useStripes } from '@folio/stripes/core';
 
 import {
   CollapseFilterPaneButton,
@@ -35,7 +36,8 @@ import {
   KB_TAB_FILTER_PANE,
   KB_TAB_PANESET,
   KB_TAB_PANE_ID,
-  resultCount
+  resultCount,
+  syncStates
 } from '../../../constants';
 
 import css from '../Agreements.css';
@@ -59,6 +61,8 @@ const propTypes = {
   stripes: PropTypes.shape({
     hasPerm: PropTypes.func
   }),
+  handleSyncPackages: PropTypes.func,
+  onSelectPackageIds: PropTypes.func,
 };
 
 const filterPaneVisibilityKey = '@folio/agreements/eresourcesFilterPaneVisibility';
@@ -72,7 +76,9 @@ const Packages = ({
   searchField,
   searchString,
   selectedRecordId,
-  source
+  source,
+  handleSyncPackages,
+  onSelectPackageIds
 }) => {
   const count = source?.totalCount() ?? 0;
   const query = queryGetter() ?? {};
@@ -88,11 +94,78 @@ const Packages = ({
 
   const [storedFilterPaneVisibility] = useLocalStorage(filterPaneVisibilityKey, true);
   const [filterPaneIsVisible, setFilterPaneIsVisible] = useState(storedFilterPaneVisibility);
+  const [selectedPackageIds, setSelectedPackageIds] = useState([]);
   const { handleSubmitSearch, resultsPaneTitleRef } = useHandleSubmitSearch(source);
+
+  const stripes = useStripes();
+
+  // Separate effect to call the parent function only when selectedPackageIds changes
+  useEffect(() => {
+    if (onSelectPackageIds) {
+      onSelectPackageIds(selectedPackageIds);
+    }
+  }, [selectedPackageIds, onSelectPackageIds]);
+
+  const handleCheckboxClick = (e, packageId) => {
+    e.stopPropagation();
+
+    const selectedPackageIdIndex = selectedPackageIds.indexOf(packageId);
+    if (selectedPackageIdIndex > -1) { // only remove from array when item is found
+      setSelectedPackageIds(selectedPackageIds.filter(pid => pid !== packageId)); // 2nd parameter means remove one item only
+    } else {
+      setSelectedPackageIds([...selectedPackageIds, packageId]);
+    }
+  };
 
   const toggleFilterPane = () => {
     setFilterPaneIsVisible(!filterPaneIsVisible);
     writeStorage(filterPaneVisibilityKey, !filterPaneIsVisible);
+  };
+
+  const handleToggleSelectAll = () => {
+    if (selectedPackageIds.length === (data.packages ? data.packages.length : 0)) {
+      setSelectedPackageIds([]);
+    } else {
+      setSelectedPackageIds(data.packages ? data.packages.map(pkg => pkg.id) : []);
+    }
+  };
+
+  const getActionMenu = ({ onToggle }) => {
+    const buttons = [];
+
+    if (stripes.hasPerm('ui-agreements.packages.controlSync.execute')) {
+      buttons.push(
+        <Button
+          key="clickable-dropdown-sync-package"
+          buttonStyle="dropdownItem"
+          disabled={selectedPackageIds.length === 0}
+          id="clickable-dropdown-sync-package"
+          onClick={() => {
+            handleSyncPackages(syncStates.SYNCHRONIZING);
+            onToggle();
+          }}
+        >
+          <FormattedMessage id="ui-agreements.eresources.startSyncSelectedPackages" />
+        </Button>
+      );
+
+      buttons.push(
+        <Button
+          key="clickable-dropdown-pause-package"
+          buttonStyle="dropdownItem"
+          disabled={selectedPackageIds.length === 0}
+          id="clickable-dropdown-pause-package"
+          onClick={() => {
+            handleSyncPackages(syncStates.PAUSED);
+            onToggle();
+          }}
+        >
+          <FormattedMessage id="ui-agreements.eresources.pauseSyncSelectedPackages" />
+        </Button>
+      );
+    }
+
+    return buttons.length ? buttons : null;
   };
 
   return (
@@ -189,6 +262,7 @@ const Packages = ({
                 }
 
                 <Pane
+                  actionMenu={getActionMenu}
                   appIcon={<AppIcon app="agreements" iconKey="package" size="small" />}
                   defaultWidth="fill"
                   firstMenu={
@@ -219,6 +293,14 @@ const Packages = ({
                   <MultiColumnList
                     autosize
                     columnMapping={{
+                      select: (
+                        <Checkbox
+                          /* This assumes that the MCL page includes everything from the fetch, which is the case right now */
+                          checked={selectedPackageIds.length === (data.packages ? data.packages.length : 0)}
+                          name="select-all"
+                          onChange={handleToggleSelectAll}
+                        />
+                      ),
                       name: <FormattedMessage id="ui-agreements.eresources.name" />,
                       provider: <FormattedMessage id="ui-agreements.eresources.provider" />,
                       source: <FormattedMessage id="ui-agreements.packages.source" />,
@@ -226,6 +308,7 @@ const Packages = ({
                       syncContentsFromSource: <FormattedMessage id="ui-agreements.eresources.synchronisationStatus" />,
                     }}
                     columnWidths={{
+                      select: 40,
                       name: 300,
                       provider: 200,
                       source: 250,
@@ -234,6 +317,15 @@ const Packages = ({
                     }}
                     contentData={data.packages}
                     formatter={{
+                      select: item => (
+                        <div onClick={(e) => e.stopPropagation()}>
+                          <Checkbox
+                            checked={selectedPackageIds.includes(item.id)}
+                            name={`select-${item.id}`}
+                            onChange={(e) => handleCheckboxClick(e, item.id)}
+                          />
+                        </div>
+                      ),
                       name: e => {
                         return (
                           <AppIcon
@@ -265,6 +357,7 @@ const Packages = ({
                       ) : '...'
                     }
                     isSelected={({ item }) => item.id === selectedRecordId}
+                    nonInteractiveHeaders={['select']}
                     onHeaderClick={onSort}
                     {...paginationMCLProps}
                     rowProps={{
@@ -274,7 +367,7 @@ const Packages = ({
                     sortDirection={sortOrder.startsWith('-') ? 'descending' : 'ascending'}
                     sortOrder={sortOrder.replace(/^-/, '').replace(/,.*/, '')}
                     totalCount={count}
-                    visibleColumns={['name', 'provider', 'source', 'status', 'syncContentsFromSource']}
+                    visibleColumns={['select', 'name', 'provider', 'source', 'status', 'syncContentsFromSource']}
                   />
                 </Pane>
                 {children}
@@ -289,3 +382,4 @@ const Packages = ({
 
 Packages.propTypes = propTypes;
 export default Packages;
+
