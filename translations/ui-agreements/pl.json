@@ -787,5 +787,19 @@
     "line.documents": "Dokumenty",
     "eresources.SynchronisationStatus": "Status synchronizacji",
     "eresources.syncContentsFromSource.true": "Synchronizacja",
-    "eresources.syncContentsFromSource.false": "Wstrzymano"
+    "eresources.syncContentsFromSource.false": "Wstrzymano",
+    "eresources.synchronisationStatus": "Status synchronizacji",
+    "eresources.syncStatus.false": "Wstrzymano",
+    "eresources.syncStatus.true": "Synchronizacja",
+    "eresources.syncStatus.notSet": "Nie ustawiono",
+    "eresources.startSync": "Rozpocznij synchronizację",
+    "eresources.pauseSync": "Wstrzymaj synchronizację",
+    "eresources.syncPackageSuccess.PAUSED": "Pakiet: <strong>{packageName}</strong> został wstrzymany",
+    "eresources.syncPackageSuccess.SYNCHRONIZING": "Pakiet: <strong>{packageName}</strong> zostanie zsynchronizowany",
+    "eresources.syncPackageError": "Błąd. Nie można zaktualizować statusu synchronizacji pakietu.",
+    "eresources.startSyncSelectedPackages": "Rozpocznij synchronizację wybranych pakietów",
+    "eresources.pauseSyncSelectedPackages": "Wstrzymaj synchronizację wybranych pakietów",
+    "eresources.syncMultiplePackagesSuccess.PAUSED": "Pakiety zostały wstrzymane",
+    "eresources.syncMultiplePackagesSuccess.SYNCHRONIZING": "Pakiety zostaną zsynchronizowane",
+    "eresources.syncMultiplePackagesError": "Błąd. Nie można zaktualizować statusu synchronizacji pakietów."
 }
