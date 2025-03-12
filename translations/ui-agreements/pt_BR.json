@@ -787,5 +787,19 @@
     "line.documents": "Documentos",
     "eresources.SynchronisationStatus": "Status de sincronização",
     "eresources.syncContentsFromSource.true": "Sincronizando",
-    "eresources.syncContentsFromSource.false": "Pausado"
+    "eresources.syncContentsFromSource.false": "Pausado",
+    "eresources.synchronisationStatus": "Status de sincronização",
+    "eresources.syncStatus.false": "Pausado",
+    "eresources.syncStatus.true": "Sincronizando",
+    "eresources.syncStatus.notSet": "Não definido",
+    "eresources.startSync": "Iniciar sincronização",
+    "eresources.pauseSync": "Pausar sincronização",
+    "eresources.syncPackageSuccess.PAUSED": "Pacote: <strong>{packageName}</strong> foi pausado",
+    "eresources.syncPackageSuccess.SYNCHRONIZING": "Pacote: <strong>{packageName}</strong> será sincronizado",
+    "eresources.syncPackageError": "Erro. Não é possível atualizar o status de sincronização do pacote.",
+    "eresources.startSyncSelectedPackages": "Iniciar sincronização dos pacotes selecionados",
+    "eresources.pauseSyncSelectedPackages": "Pausar a sincronização dos pacotes selecionados",
+    "eresources.syncMultiplePackagesSuccess.PAUSED": "Os pacotes foram pausados",
+    "eresources.syncMultiplePackagesSuccess.SYNCHRONIZING": "Os pacotes serão sincronizados",
+    "eresources.syncMultiplePackagesError": "Erro. Não é possível atualizar o status de sincronização dos pacotes."
 }
