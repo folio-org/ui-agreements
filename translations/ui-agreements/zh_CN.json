@@ -787,5 +787,19 @@
     "line.documents": "文档",
     "eresources.SynchronisationStatus": "Synchronisation status",
     "eresources.syncContentsFromSource.true": "Synchronising",
-    "eresources.syncContentsFromSource.false": "Paused"
+    "eresources.syncContentsFromSource.false": "Paused",
+    "eresources.synchronisationStatus": "Synchronisation status",
+    "eresources.syncStatus.false": "Paused",
+    "eresources.syncStatus.true": "Synchronising",
+    "eresources.syncStatus.notSet": "Not set",
+    "eresources.startSync": "Start synchronisation",
+    "eresources.pauseSync": "Pause synchronisation",
+    "eresources.syncPackageSuccess.PAUSED": "Package: <strong>{packageName}</strong> has been paused",
+    "eresources.syncPackageSuccess.SYNCHRONIZING": "Package: <strong>{packageName}</strong> will synchronise",
+    "eresources.syncPackageError": "Error. Unable to update the synchronisation status of the package.",
+    "eresources.startSyncSelectedPackages": "Start synchronisation of selected packages",
+    "eresources.pauseSyncSelectedPackages": "Pause synchronisation of selected packages",
+    "eresources.syncMultiplePackagesSuccess.PAUSED": "Packages have been paused",
+    "eresources.syncMultiplePackagesSuccess.SYNCHRONIZING": "Packages will synchronise",
+    "eresources.syncMultiplePackagesError": "Error. Unable to update the synchronisation status of the packages."
 }
