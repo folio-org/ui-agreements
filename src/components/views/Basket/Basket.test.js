@@ -25,8 +25,9 @@ jest.mock('../../AgreementSearchButton', () => ({ onAgreementSelected }) => {
 });
 
 /* EXAMPLE Mocking useMutation to allow us to test the .then clause */
+// THIS IS NOW DONE FOR US IN CENTRAL MOCKS
 // Setting up jest fn here to test paramters passed in by component
-const mockMutateAsync = jest.fn(() => Promise.resolve(true));
+/* const mockMutateAsync = jest.fn(() => Promise.resolve(true));
 jest.mock('react-query', () => {
   const { mockReactQuery } = jest.requireActual('@folio/stripes-erm-testing');
   return {
@@ -47,6 +48,7 @@ jest.mock('react-query', () => {
     })),
   };
 });
+*/
 
 describe('Basket', () => {
   describe.each([
