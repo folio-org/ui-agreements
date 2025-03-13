@@ -1,6 +1,14 @@
 # Change history for ui-agreements
 
-## 11.2.0 IN PROGRESS
+## 12.0.0 2025-03-13
+  * ERM-3608 *BREAKING* Stripes v10 dependencies update
+    * Updated all stripes-* dependencies for the stripes v10 upgrade along with react-intl and formatjs/cli
+  * ERM-3581 Support changing the sync status of a single package in the local KB
+  * ERM-3580 feat: Add checkbox functionality to package list
+  * ERM-3569 Add search and filter options by package synchronise property
+  * ERM-3568 Add package synchronise property in UI
+  * ERM-3452 Centralise content filter array used in Licenses and Agreements
+  * ERM-3446 Agreements: Basket should use the agreements look-up component instead of single select search
 
 ## 11.1.1 2024-11-29
   * ERM-3449 The Agreement content filter is not set back to original empty selection state
