@@ -12,7 +12,7 @@ const data = {
       packageDescriptionUrls: [
         {
           id: '9de23c8c-82f4-4c06-9784-da31910729ad',
-          url: 'http://gokbt.gbv.de/package/4a963b47-f292-43c8-829e-b289f7c23924',
+          url: 'https://gokbt.gbv.de/package/4a963b47-f292-43c8-829e-b289f7c23924',
         },
       ],
       lastUpdated: '2025-03-17T13:50:46Z',
