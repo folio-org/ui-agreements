@@ -1,19 +1,38 @@
 import { useQuery } from 'react-query';
 import { useStripes } from '@folio/stripes/core';
-
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import { noop } from 'lodash';
 import translationsProperties from '../../../test/helpers';
+import mockRefdata from '../../../test/jest/refdata';
 import PackagesRoute from './PackagesRoute';
 
+
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useAgreementsSettings: jest.fn(() => ({ data: { configs: [{}] } })),
+  useAgreementsRefdata: () => mockRefdata,
+}));
+
+const mockPush = jest.fn();
 const routeProps = {
   history: {
-    push: () => jest.fn()
+    push: mockPush,
+    location: {
+      pathname: '/erm/packages/8a7a5564-16b7-428f-bb59-afa68fe4e24d',
+      search: '?filters=synchronisationStatus.true%2CsynchronisationStatus.false&page=1&query=test&sort=name',
+    },
   },
-  location: {},
+  location: {
+    pathname: '/erm/packages/8a7a5564-16b7-428f-bb59-afa68fe4e24d',
+    search: '?filters=synchronisationStatus.true%2CsynchronisationStatus.false&page=1&query=test&sort=name',
+  },
   match: {
-    params: {},
+    path: '/erm/packages/:id',
+    url: '/erm/packages/8a7a5564-16b7-428f-bb59-afa68fe4e24d',
+    params: {
+      id: '8a7a5564-16b7-428f-bb59-afa68fe4e24d'
+    },
   },
   mutator: {
     query: { update: noop },
@@ -43,26 +62,30 @@ describe('PackagesRoute', () => {
       expect(packagesElements.length).toBeGreaterThan(0);
     });
 
+    test('did not redirect to view pane', () => {
+      expect(mockPush.mock.calls.length).toBe(0);
+    });
+
     // TODO we should actually be _properly_ testing the useEffect, see AgreementsRoute example
     // using memory router to render with props which force it to call history.push mock and measuring that mock output
 
-    /* describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block
-      beforeEach(() => {
-        renderWithIntl(
-          <MemoryRouter>
-            <PackagesRoute {...routeProps} />
-          </MemoryRouter>,
-          translationsProperties,
-          renderComponent.rerender
-        );
-      });
+    // describe('re-rendering the route', () => { // makes sure that we hit the componentDidUpdate block
+    //   beforeEach(() => {
+    //     renderWithIntl(
+    //       <MemoryRouter>
+    //         <PackagesRoute {...routeProps} />
+    //       </MemoryRouter>,
+    //       translationsProperties,
+    //       renderComponent.rerender
+    //     );
+    //   });
 
-      test('renders the packages component', () => {
-        const { getAllByTestId } = renderComponent;
-        const packagesElements = getAllByTestId('packages');
-        expect(packagesElements.length).toBeGreaterThan(0);
-      });
-    }); */
+    //   test('renders the packages component', () => {
+    //     const { getAllByTestId } = renderComponent;
+    //     const packagesElements = getAllByTestId('packages');
+    //     expect(packagesElements.length).toBeGreaterThan(0);
+    //   });
+    // });
   });
 
   describe('rendering with no permissions', () => {
