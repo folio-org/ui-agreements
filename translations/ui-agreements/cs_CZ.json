@@ -307,7 +307,7 @@
     "eresources.addTitleButtonTooltip": "Přidat do košíku: název v balíčku \"{packageName}\"",
     "eresources.removeTitleButtonTooltip": "Odstranit z košíku: název v balíčku \"{packageName}\"",
     "eresources.datePublished": "Datum publikace",
-    "eresources.edition": "Edice",
+    "eresources.edition": "Vydání",
     "eresources.volume": "Svazek",
     "eresources.firstAuthor": "První autor",
     "eresources.firstEditor": "První redaktor",
