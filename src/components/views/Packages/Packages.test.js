@@ -3,11 +3,11 @@ import { MemoryRouter } from 'react-router-dom';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
-import { Button, MultiColumnList, Pane, renderWithIntl, TextField } from '@folio/stripes-erm-testing';
+import { Button, MultiColumnList, Pane, renderWithIntl, TextField, Checkbox } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../../test/helpers';
 import Packages from './Packages';
-import { data, source } from './testResources';
+import { data, source, searchString, selectedRecordId } from './testResources';
 
 jest.mock('../../EResourceProvider', () => () => <div>EResourceProvider</div>);
 jest.mock('../../PackageFilters', () => () => <div>PackageFilters</div>);
@@ -15,6 +15,8 @@ jest.mock('../../PackageFilters', () => () => <div>PackageFilters</div>);
 const mockSubmit = jest.fn(e => e.preventDefault());
 const queryGetter = jest.fn();
 const querySetter = jest.fn();
+const onSelectPackageIds = jest.fn();
+const handleSyncPackages = jest.fn();
 
 describe('Packages', () => {
   useHandleSubmitSearch.mockImplementation(() => ({
@@ -28,8 +30,13 @@ describe('Packages', () => {
       <MemoryRouter>
         <Packages
           data={data}
+          handleSyncPackages={handleSyncPackages}
+          history={{ push: jest.fn() }}
+          onSelectPackageIds={onSelectPackageIds}
           queryGetter={queryGetter}
           querySetter={querySetter}
+          searchString={searchString}
+          selectedRecordId={selectedRecordId}
           source={source}
         />
       </MemoryRouter>,
@@ -69,8 +76,8 @@ describe('Packages', () => {
   });
 
   it('renders the EResourceProvider component', () => {
-    const { getByText } = renderComponent;
-    expect(getByText('EResourceProvider')).toBeInTheDocument();
+    const { queryAllByText } = renderComponent;
+    expect(queryAllByText('EResourceProvider')).toHaveLength(2);
   });
 
   it('renders the PackageFilters component', () => {
@@ -85,12 +92,58 @@ describe('Packages', () => {
     await Pane('Packages').is({ visible: true });
   });
 
+  test('renders the expected Actions button', async () => {
+    await waitFor(async () => {
+      await Button('Packages').click();
+    });
+    await Button('Actions').exists();
+  });
+
+  test('selects a package and calls onSelectPackageIds', async () => {
+    await waitFor(async () => {
+      await Button('Packages').click();
+    });
+    await Checkbox({ name: `select-${data.packages[0].id}` }).exists();
+    await Checkbox({ name: `select-${data.packages[0].id}` }).click();
+    expect(onSelectPackageIds).toHaveBeenCalled();
+  });
+
+  test('selects multiple packages', async () => {
+    await waitFor(async () => {
+      await Button('Packages').click();
+    });
+    await Checkbox({ name: `select-${data.packages[0].id}` }).exists();
+    await Checkbox({ name: `select-${data.packages[1].id}` }).exists();
+    await Checkbox({ name: `select-${data.packages[0].id}` }).click();
+    await Checkbox({ name: `select-${data.packages[1].id}` }).click();
+    expect(onSelectPackageIds).toHaveBeenCalled();
+  });
+
+  test('selects all packages', async () => {
+    await waitFor(async () => {
+      await Button('Packages').click();
+    });
+    await Checkbox({ name: 'select-all' }).exists();
+    await Checkbox({ name: 'select-all' }).click();
+    expect(onSelectPackageIds).toHaveBeenCalled();
+  });
+
+  test('deselects all packages', async () => {
+    await waitFor(async () => {
+      await Button('Packages').click();
+    });
+    await Checkbox({ name: 'select-all' }).exists();
+    await Checkbox({ name: 'select-all' }).click();
+    await Checkbox({ name: 'select-all' }).click();
+    expect(onSelectPackageIds).toHaveBeenCalled();
+  });
+
   test('renders the expcted number of MCL columns', async () => {
     await MultiColumnList({ columnCount: 6 }).exists();
   });
 
   test('renders the expcted number of MCL rows', async () => {
-    await MultiColumnList({ rowCount: 1 }).exists();
+    await MultiColumnList({ rowCount: 2 }).exists();
   });
 
   test('renders expected packages columns', async () => {
