@@ -12,6 +12,7 @@ import {
 } from '../constants';
 
 import { AgreementsCustomProperties } from './components';
+import { Pane } from '@folio/stripes/components';
 
 const ErmSettings = (props) => {
   const stripes = useStripes();
@@ -62,10 +63,15 @@ const ErmSettings = (props) => {
   }
 
   return (
-    <SettingsComponent
+    <Pane
+      fullwidth
+    >
+      I did a thing
+    </Pane>
+    /*<SettingsComponent
       paneTitle={<FormattedMessage id="ui-agreements.meta.title" />}
       {...props}
-    />
+    />*/
   );
 };
 

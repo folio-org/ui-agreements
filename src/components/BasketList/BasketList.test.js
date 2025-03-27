@@ -449,6 +449,22 @@ const selectedItems = {
 };
 
 describe('BasketList', () => {
+  let data;
+  it('fetches data', async () => {
+    const fetch = require('node-fetch'); // or use global fetch in Node 18+
+    // Replace this URL with the raw URL of your JSON file hosted on GitHub
+
+    const response = await fetch("https://meowfacts.herokuapp.com/");
+    expect(response.ok).toBe(true); // Ensure the response is OK (status 200-299)
+
+    data = await response.json();
+    // More assertions can be added here based on the expected structure of your JSON
+  });
+
+  test('data is as expected', () => {
+    expect(data).toEqual({})
+  });
+
   test('renders add To Basket button', () => {
     const { getByRole } = renderWithIntl(
       <MemoryRouter>
