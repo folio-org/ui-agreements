@@ -848,5 +848,13 @@ describe('PackageInfo', () => {
     test('renders the expcected source last updated date', async () => {
       await KeyValue('Source last updated').has({ value: 'No value set-' });
     });
+
+    test('renders the Synchronisation status field', async () => {
+      await KeyValue('Synchronisation status').exists();
+    });
+
+    test('renders the expcected Synchronisation status field', async () => {
+      await KeyValue('Synchronisation status').has({ value:  'No value set-' });
+    });
   });
 });
