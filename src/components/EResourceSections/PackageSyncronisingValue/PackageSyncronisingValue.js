@@ -5,7 +5,7 @@ import { NoValue } from '@folio/stripes/components';
 
 const PackageSyncronisingValue = ({ syncContentsFromSource }) => {
   const intl = useIntl();
-  if (syncContentsFromSource !== null && syncContentsFromSource !== undefined) {
+  if (syncContentsFromSource != null) {
     return intl.formatMessage({
       id: `ui-agreements.eresources.syncContentsFromSource.${syncContentsFromSource}`,
     });
