@@ -2,6 +2,9 @@
 
 ## 12.1.0 IN PROGRESS
 
+## 12.0.1 2025-04-01
+  * ERM-3670 When package `syncContentsFromSource` is not set, display with a `-`
+
 ## 12.0.0 2025-03-13
   * ERM-3608 *BREAKING* Stripes v10 dependencies update
     * Updated all stripes-* dependencies for the stripes v10 upgrade along with react-intl and formatjs/cli
