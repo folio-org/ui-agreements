@@ -68,7 +68,6 @@ const RouteSwitcher = () => {
     return selectedTabGroup.findIndex(tab => pathname.startsWith(tab.urlRoot));
   }, [pathname, selectedTabGroup]);
 
-
   const renderedTabs = useMemo(() => {
     return selectedTabGroup.map(tab => {
       if (!tab.perm || stripes.hasPerm(tab.perm)) {
