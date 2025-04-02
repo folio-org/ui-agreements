@@ -210,7 +210,7 @@ const Packages = ({
                     paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                   >
                     <form onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}>
-                      <RouteSwitcher primary="packages" />
+                      <RouteSwitcher />
                       <div className={css.searchGroupWrap}>
                         <FormattedMessage id="ui-agreements.agreements.searchInputLabel">
                           {([ariaLabel]) => (
