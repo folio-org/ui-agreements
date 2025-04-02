@@ -111,10 +111,6 @@ describe('Packages', () => {
         await Pane('Packages').is({ visible: true });
       });
 
-      test('renders the expected Actions button', async () => {
-        await Button('Actions').exists();
-      });
-
       test('renders the expected number of MCL columns', async () => {
         await MultiColumnList({ columnCount: 6 }).exists();
       });
@@ -141,7 +137,39 @@ describe('Packages', () => {
         expect(queryAllByText('EResourceProvider')).toHaveLength(2);
       });
 
+      const actionsMenuTestSuite = (hasSelectedPackages = false) => {
+        return describe('Actions Menu', () => {
+          test('renders the expected Actions button', async () => {
+            await Button('Actions').exists();
+          });
+
+          describe('clicking the actions menu', () => {
+            beforeEach(async () => {
+              await waitFor(async () => {
+                await Button('Actions').click();
+              });
+            });
+
+            test.each([
+              'Start synchronisation of selected packages',
+              'Pause synchronisation of selected packages'
+            ])(`'%s' button ${hasSelectedPackages ? 'exists' : 'is disabled'}`, async (buttonLabel) => {
+              if (hasSelectedPackages) {
+                await waitFor(async () => {
+                  await Button(buttonLabel).exists();
+                });
+              } else {
+                await waitFor(async () => {
+                  await Button(buttonLabel).has({ disabled: true });
+                });
+              }
+            });
+          });
+        });
+      };
+
       describe('Selecting Packages', () => {
+        actionsMenuTestSuite();
         describe('Selecting a single package', () => {
           beforeEach(async () => {
             onSelectPackageIds.mockClear();
@@ -150,6 +178,8 @@ describe('Packages', () => {
               await Checkbox({ name: `select-${data.packages[0].id}` }).click();
             });
           });
+
+          actionsMenuTestSuite(true);
 
           test('selected package checkbox is selected', async () => {
             await waitFor(async () => {
@@ -179,6 +209,8 @@ describe('Packages', () => {
               await Checkbox({ name: 'select-all' }).click();
             });
           });
+          actionsMenuTestSuite(true);
+
           // Use test.each, not test with a forEach
           test.each(data.packages)('Package ($id) is selected', async ({ id }) => {
             await waitFor(async () => {
@@ -201,6 +233,8 @@ describe('Packages', () => {
                 await Checkbox({ name: 'select-all' }).click();
               });
             });
+
+            actionsMenuTestSuite();
 
             test.each(data.packages)('Package ($id) is not selected', async ({ id }) => {
               await waitFor(async () => {
