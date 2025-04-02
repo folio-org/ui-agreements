@@ -12,6 +12,8 @@ import { data, source, searchString, selectedRecordId } from './testResources';
 jest.mock('../../EResourceProvider', () => () => <div>EResourceProvider</div>);
 jest.mock('../../PackageFilters', () => () => <div>PackageFilters</div>);
 
+jest.mock('../../RouteSwitcher', () => () => <div>RouteSwitcher</div>);
+
 const mockSubmit = jest.fn(e => e.preventDefault());
 const queryGetter = jest.fn();
 const querySetter = jest.fn();
@@ -26,8 +28,9 @@ describe('Packages', () => {
 
   let renderComponent;
   beforeEach(() => {
+    // Start in `/erm/titles` to allow for testing of routeSwitcher
     renderComponent = renderWithIntl(
-      <MemoryRouter>
+      <MemoryRouter initialEntries={['/erm/titles']}>
         <Packages
           data={data}
           handleSyncPackages={handleSyncPackages}
@@ -45,116 +48,175 @@ describe('Packages', () => {
   });
 
   describe('Rendering the component', () => {
-    test('renders the expected Search and Filter Pane', async () => {
-      await Pane('Search and filter').is({ visible: true });
-    });
-
-    test('renders the expected Titles/Platforms buttons', async () => {
-      await Button('Titles').exists();
-      await Button('Platforms').exists();
-    });
-
-    test('renders the expected Search and Reset all Button', async () => {
-      await waitFor(async () => {
-        await Button('Packages').click();
-        await TextField({ id: 'input-package-search' }).fillIn('test'); // enables the disabled buttons
+    describe('Search and Filter Pane', () => {
+      test('renders the expected Search and Filter Pane', async () => {
+        await Pane('Search and filter').is({ visible: true });
       });
 
-      await Button('Search').exists();
-      await Button('Reset all').exists();
-    });
-
-    test('renders the expected Packages Pane', async () => {
-      await waitFor(async () => {
-        await Button('Packages').click();
-      });
-      await Pane('Packages').is({ visible: true });
-    });
-
-    test('renders the expected Actions button', async () => {
-      await waitFor(async () => {
-        await Button('Packages').click();
-      });
-      await Button('Actions').exists();
-    });
-
-    test('renders the expected number of MCL columns', async () => {
-      await MultiColumnList({ columnCount: 6 }).exists();
-    });
-
-    test('renders the expected number of MCL rows', async () => {
-      await MultiColumnList({ rowCount: 2 }).exists();
-    });
-
-    test('renders expected packages columns', async () => {
-      await MultiColumnList({
-        columns: [
-          '',
-          'Name',
-          'Provider',
-          'Source (external data source)',
-          'Status',
-          'Synchronisation status',
-        ],
-      }).exists();
-    });
-
-    it('renders the EResourceProvider component', () => {
-      const { queryAllByText } = renderComponent;
-      expect(queryAllByText('EResourceProvider')).toHaveLength(2);
-    });
-
-    it('renders the PackageFilters component', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('PackageFilters')).toBeInTheDocument();
-    });
-  });
-
-  describe('Interacting with the search functionality', () => {
-    test('triggering the search should invoke the useHandleSubmitSearch hook', async () => {
-      await waitFor(async () => {
-        await Button('Packages').click();
-        await TextField({ id: 'input-package-search' }).fillIn('test'); // enables the disabled buttons
-        await Button('Search').click();
+      test('renders the RouteSwitcher', () => {
+        const { getByText } = renderComponent;
+        expect(getByText('RouteSwitcher')).toBeInTheDocument();
       });
 
-      await waitFor(async () => {
-        expect(mockSubmit).toHaveBeenCalled();
-      });
-    });
-  });
-
-  describe('Selecting Packages', () => {
-    beforeEach(async () => {
-      await Button('Packages').click();
-    });
-
-    describe('Selecting a single package', () => {
-      test('clicking a package checkbox only selects that package', async () => {
-        await Checkbox({ name: `select-${data.packages[0].id}` }).click();
-        expect(onSelectPackageIds).toHaveBeenCalledWith([data.packages[0].id]);
-        await Checkbox({ name: `select-${data.packages[1].id}` }).is({ checked: false });
-      });
-    });
-
-    describe('Selecting all packages', () => {
-      beforeEach(async () => {
-        await Checkbox({ name: 'select-all' }).click();
+      test('renders the Search button (disabled)', async () => {
+        await Button('Search').has({ disabled: true });
       });
 
-      test('clicking select-all selects all rows', async () => {
-        data.packages.forEach(async (pkg) => {
-          await Checkbox({ name: `select-${pkg.id}` }).is({ checked: true });
+      test('renders the reset all button (disabled)', async () => {
+        await Button('Reset all').has({ disabled: true });
+      });
+
+      describe('filling in the search field', () => {
+        beforeEach(async () => {
+          await waitFor(async () => {
+            await TextField({ id: 'input-package-search' }).fillIn('test'); // enables the disabled buttons
+          });
         });
-        expect(onSelectPackageIds).toHaveBeenCalled();
+
+        test('renders the Search button', async () => {
+          await waitFor(async () => {
+            await Button('Search').exists();
+          });
+        });
+
+        test('renders the reset all button', async () => {
+          await waitFor(async () => {
+            await Button('Reset all').exists();
+          });
+        });
+
+        describe('Interacting with the search functionality', () => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Button('Search').click();
+            });
+          });
+
+          test('triggering the search should invoke the useHandleSubmitSearch hook', async () => {
+            await waitFor(async () => {
+              expect(mockSubmit).toHaveBeenCalled();
+            });
+          });
+        });
+
+        it('renders the PackageFilters component', () => {
+          const { getByText } = renderComponent;
+          expect(getByText('PackageFilters')).toBeInTheDocument();
+        });
+      });
+    });
+
+    describe('Packages Pane', () => {
+      test('renders the expected Packages Pane', async () => {
+        await Pane('Packages').is({ visible: true });
       });
 
-      test('clicking select-all again deselects all rows', async () => {
-        await Checkbox({ name: 'select-all' }).click();
-        data.packages.forEach(async (pkg) => {
-          await Checkbox({ name: `select-${pkg.id}` }).is({ checked: false });
+      test('renders the expected Actions button', async () => {
+        await Button('Actions').exists();
+      });
+
+      test('renders the expected number of MCL columns', async () => {
+        await MultiColumnList({ columnCount: 6 }).exists();
+      });
+
+      test('renders the expected number of MCL rows', async () => {
+        await MultiColumnList({ rowCount: 2 }).exists();
+      });
+
+      test('renders expected packages columns', async () => {
+        await MultiColumnList({
+          columns: [
+            '',
+            'Name',
+            'Provider',
+            'Source (external data source)',
+            'Status',
+            'Synchronisation status',
+          ],
+        }).exists();
+      });
+
+      it('renders the EResourceProvider component', () => {
+        const { queryAllByText } = renderComponent;
+        expect(queryAllByText('EResourceProvider')).toHaveLength(2);
+      });
+
+      describe('Selecting Packages', () => {
+        describe('Selecting a single package', () => {
+          beforeEach(async () => {
+            onSelectPackageIds.mockClear();
+
+            await waitFor(async () => {
+              await Checkbox({ name: `select-${data.packages[0].id}` }).click();
+            });
+          });
+
+          test('selected package checkbox is selected', async () => {
+            await waitFor(async () => {
+              await Checkbox({ name: `select-${data.packages[0].id}` }).is({ checked: true });
+            });
+          });
+
+          test('other package checkbox is not selected', async () => {
+            await waitFor(async () => {
+              await Checkbox({ name: `select-${data.packages[1].id}` }).is({ checked: false });
+            });
+          });
+
+          test('onSelectPackageIds has been called once', () => {
+            expect(onSelectPackageIds.mock.calls.length).toBe(1);
+          });
+
+          test('onSelectPackageIds has been called with expected id', () => {
+            expect(onSelectPackageIds).toHaveBeenCalledWith([data.packages[0].id]);
+          });
         });
-        expect(onSelectPackageIds).toHaveBeenCalled();
+
+        describe('Selecting all packages', () => {
+          beforeEach(async () => {
+            onSelectPackageIds.mockClear();
+            await waitFor(async () => {
+              await Checkbox({ name: 'select-all' }).click();
+            });
+          });
+          // Use test.each, not test with a forEach
+          test.each(data.packages)('Package ($id) is selected', async ({ id }) => {
+            await waitFor(async () => {
+              await Checkbox({ name: `select-${id}` }).is({ checked: true });
+            });
+          });
+
+          test('onSelectPackageIds has been called once', () => {
+            expect(onSelectPackageIds.mock.calls.length).toBe(1);
+          });
+
+          test('onSelectPackageIds has been called with expected ids', () => {
+            expect(onSelectPackageIds).toHaveBeenCalledWith(data.packages.map(p => p.id));
+          });
+
+          describe('deselecting all packages', () => {
+            beforeEach(async () => {
+              onSelectPackageIds.mockClear();
+              await waitFor(async () => {
+                await Checkbox({ name: 'select-all' }).click();
+              });
+            });
+
+            test.each(data.packages)('Package ($id) is not selected', async ({ id }) => {
+              await waitFor(async () => {
+                await Checkbox({ name: `select-${id}` }).is({ checked: false });
+              });
+            });
+
+            test('onSelectPackageIds has been called once', () => {
+              expect(onSelectPackageIds.mock.calls.length).toBe(1);
+            });
+
+            test('onSelectPackageIds has been called with expected ids', () => {
+              expect(onSelectPackageIds).toHaveBeenCalledWith([]);
+            });
+          });
+        });
       });
     });
   });

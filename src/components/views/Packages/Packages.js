@@ -23,9 +23,10 @@ import {
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
 
+import { usePrevNextPagination } from '@k-int/stripes-kint-components';
+
 import {
   useHandleSubmitSearch,
-  usePrevNextPagination,
 } from '@folio/stripes-erm-components';
 
 import EResourceProvider from '../../EResourceProvider';
@@ -42,7 +43,6 @@ import {
 
 import css from '../Agreements.css';
 import RouteSwitcher from '../../RouteSwitcher';
-
 
 const propTypes = {
   children: PropTypes.object,
