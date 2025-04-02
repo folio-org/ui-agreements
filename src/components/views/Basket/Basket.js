@@ -26,7 +26,10 @@ import AgreementSearchButton from '../../AgreementSearchButton';
 
 const propTypes = {
   data: PropTypes.shape({
-    basket: PropTypes.arrayOf(PropTypes.object).isRequired,
+    basket: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+    })).isRequired,
   }).isRequired,
   handlers: PropTypes.shape({
     onClose: PropTypes.func.isRequired,
@@ -58,8 +61,11 @@ const Basket = ({
         })
         .json()
         .then(() => {
+          /* Quick FIX for ERM-3673; only add location.search when coming from agreements */
           history.push(
-            `${urls.agreementView(selectedAgreement?.id)}${location.search}`
+            `${urls.agreementView(selectedAgreement?.id)}${
+              location.state?.from?.startsWith('/erm/agreements') ? location.search : ''
+            }`
           );
         });
     }
