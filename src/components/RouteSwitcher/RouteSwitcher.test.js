@@ -11,8 +11,6 @@ import { KeyValue as MockKeyValue } from '@folio/stripes/components';
 import RouteSwitcher from './RouteSwitcher';
 import translationsProperties from '../../../test/helpers';
 
-let renderedComponent;
-
 const TestComponent = () => {
   const { pathname } = useLocation();
   return (
@@ -95,7 +93,7 @@ describe('RouteSwitcher', () => {
   ])('rendering RouteSwitcher for $name', ({ config, expectedButtons }) => {
     describe.each(config)('rendering RouteSwitcher component at url: $url', ({ url, primary }) => {
       beforeEach(() => {
-        renderedComponent = renderWithIntl(
+        renderWithIntl(
           <MemoryRouter
             initialEntries={[url]}
             initialIndex={0}
