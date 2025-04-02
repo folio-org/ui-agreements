@@ -27,7 +27,7 @@ describe('Platforms', () => {
   beforeEach(() => {
     renderComponent = renderWithIntl(
       <MemoryRouter
-        initialEntries={['/erm/eresources']}
+        initialEntries={['/erm/platforms']}
       >
         <Platforms
           data={data}

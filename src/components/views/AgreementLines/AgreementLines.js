@@ -141,7 +141,7 @@ const AgreementLines = ({
                     paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                   >
                     <form onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}>
-                      <RouteSwitcher primary="agreementLines" />
+                      <RouteSwitcher />
                       {/* TODO: Use forthcoming <SearchGroup> or similar component */}
                       <div className={css.searchGroupWrap}>
                         <FormattedMessage id="ui-agreements.agreements.agreementLines.searchInputLabel">

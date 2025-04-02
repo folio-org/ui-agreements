@@ -23,9 +23,10 @@ import {
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
 
+import { usePrevNextPagination } from '@k-int/stripes-kint-components';
+
 import {
   useHandleSubmitSearch,
-  usePrevNextPagination,
 } from '@folio/stripes-erm-components';
 
 import EResourceProvider from '../../EResourceProvider';
@@ -42,7 +43,6 @@ import {
 
 import css from '../Agreements.css';
 import RouteSwitcher from '../../RouteSwitcher';
-
 
 const propTypes = {
   children: PropTypes.object,
@@ -210,7 +210,7 @@ const Packages = ({
                     paneTitle={<FormattedMessage id="stripes-smart-components.searchAndFilter" />}
                   >
                     <form onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}>
-                      <RouteSwitcher primary="packages" />
+                      <RouteSwitcher />
                       <div className={css.searchGroupWrap}>
                         <FormattedMessage id="ui-agreements.agreements.searchInputLabel">
                           {([ariaLabel]) => (

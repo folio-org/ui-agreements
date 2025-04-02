@@ -204,7 +204,7 @@ const Agreements = ({
                     <form
                       onSubmit={(e) => handleSubmitSearch(e, onSubmitSearch)}
                     >
-                      <RouteSwitcher primary="agreements" />
+                      <RouteSwitcher />
                       {/* TODO: Use forthcoming <SearchGroup> or similar component */}
                       <div className={css.searchGroupWrap}>
                         <FormattedMessage id="ui-agreements.agreements.searchInputLabel">
