@@ -6,6 +6,8 @@ import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../test/helpers';
 import PlatformsRoute from './PlatformsRoute';
 
+jest.mock('../../components/RouteSwitcher', () => () => <div>RouteSwitcher</div>);
+
 const props = {
   history: {
     push: () => jest.fn()
