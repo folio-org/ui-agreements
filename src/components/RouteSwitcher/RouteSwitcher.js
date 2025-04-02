@@ -8,6 +8,9 @@ import { useStripes } from '@folio/stripes/core';
 import { urls } from '../utilities';
 
 // A consistent component designed to allow switching between the ui-agreements top level routes
+// TODO we can probably centralise the core idea here in kint-components or otherwise,
+// and then either have a memoised set of options for each group, or have a component which renders the central one.
+// Either way, this needs copying over to the Licenses implementation
 const RouteSwitcher = () => {
   const { pathname } = useLocation();
   const stripes = useStripes();
