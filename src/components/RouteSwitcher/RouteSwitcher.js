@@ -1,110 +1,100 @@
-import PropTypes from 'prop-types';
+import { useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
+
 import { Button } from '@folio/stripes/components';
 import { ResponsiveButtonGroup } from '@k-int/stripes-kint-components';
 import { useStripes } from '@folio/stripes/core';
-import { FormattedMessage } from 'react-intl';
-import { useLocation } from 'react-router-dom';
 import { urls } from '../utilities';
 
 // A consistent component designed to allow switching between the ui-agreements top level routes
-const RouteSwitcher = ({ primary }) => {
+const RouteSwitcher = () => {
   const { pathname } = useLocation();
   const stripes = useStripes();
-  let selectedIndex;
 
-  switch (primary) {
-    case 'agreements':
-      selectedIndex = 0;
-      break;
-    case 'agreementLines':
-      selectedIndex = 1;
-      break;
-    case 'packages':
-      selectedIndex = 0;
-      break;
-    case 'titles':
-      selectedIndex = 1;
-      break;
-    case 'platforms':
-      selectedIndex = 2;
-      break;
-    default:
-      break;
+  const agreementTabOptions = useMemo(() => [
+    {
+      name: 'agreements',
+      label: <FormattedMessage id="ui-agreements.agreements" />,
+      urlRoot: '/erm/agreements',
+      redirect: urls.agreements(),
+    },
+    {
+      name: 'agreementLines',
+      label: <FormattedMessage id="ui-agreements.agreementLines" />,
+      urlRoot: '/erm/agreementLines',
+      redirect: urls.agreementLines(),
+    },
+  ], []);
+
+  const kbTabOptions = useMemo(() => [
+    {
+      name: 'packages',
+      label: <FormattedMessage id="ui-agreements.packages" />,
+      urlRoot: '/erm/packages',
+      redirect: urls.packages(),
+      perm: 'ui-agreements.resources.view'
+    },
+    {
+      name: 'titles',
+      label: <FormattedMessage id="ui-agreements.eresources.titles" />,
+      urlRoot: '/erm/titles',
+      redirect: urls.titles(),
+      perm: 'ui-agreements.resources.view'
+    },
+    {
+      name: 'platforms',
+      label: <FormattedMessage id="ui-agreements.platforms" />,
+      urlRoot: '/erm/platforms',
+      redirect: urls.platforms(),
+      perm: 'ui-agreements.platforms.view'
+    }
+  ], []);
+
+  const selectedTabGroup = useMemo(() => {
+    for (const tabGroup of [agreementTabOptions, kbTabOptions]) {
+      if (tabGroup.some(tab => pathname.startsWith(tab.urlRoot))) {
+        return tabGroup;
+      }
+    }
+
+    return [];
+  }, [agreementTabOptions, kbTabOptions, pathname]);
+
+  const selectedIndex = useMemo(() => {
+    return selectedTabGroup.findIndex(tab => pathname.startsWith(tab.urlRoot));
+  }, [pathname, selectedTabGroup]);
+
+
+  const renderedTabs = useMemo(() => {
+    return selectedTabGroup.map(tab => {
+      if (!tab.perm || stripes.hasPerm(tab.perm)) {
+        return tab;
+      }
+      return null;
+    }).filter(Boolean);
+  }, [selectedTabGroup, stripes]);
+
+  if (renderedTabs.length === 0) {
+    return null;
   }
 
-  // Render agreement search options
-  if (pathname?.startsWith('/erm/agreements') || pathname?.startsWith('/erm/agreementLines')) {
-    return (
-      <ResponsiveButtonGroup
-        fullWidth
-        selectedIndex={selectedIndex}
-      >
-        <Button
-          key="clickable-nav-agreements"
-          id="clickable-nav-agreements"
-          to={pathname?.startsWith('/erm/agreements') ? null : urls.agreements()}
-        >
-          <FormattedMessage id="ui-agreements.agreements" />
-        </Button>
-        <Button
-          key="clickable-nav-agreementLines"
-          id="clickable-nav-agreementLines"
-          to={pathname?.startsWith('/erm/agreementLines') ? null : urls.agreementLines()}
-        >
-          <FormattedMessage id="ui-agreements.agreementLines" />
-        </Button>
-      </ResponsiveButtonGroup>
-    );
-  }
-
-  // Render internal KB search options
-  const button = [];
-  if (stripes.hasPerm('ui-agreements.resources.view')) {
-    button.push(
-      <Button
-        key="clickable-nav-packages"
-        id="clickable-nav-packages"
-        to={pathname?.startsWith('/erm/packages') ? null : urls.packages()}
-      >
-        <FormattedMessage id="ui-agreements.packages" />
-      </Button>
-    );
-
-    button.push(
-      <Button
-        key="clickable-nav-titles"
-        id="clickable-nav-titles"
-        to={pathname?.startsWith('/erm/titles') ? null : urls.titles()}
-      >
-        <FormattedMessage id="ui-agreements.eresources.titles" />
-      </Button>
-    );
-  }
-
-  if (stripes.hasPerm('ui-agreements.platforms.view')) {
-    button.push(
-      <Button
-        key="clickable-nav-platforms"
-        id="clickable-nav-platforms"
-        to={pathname?.startsWith('/erm/platforms') ? null : urls.platforms()}
-      >
-        <FormattedMessage id="ui-agreements.platforms" />
-      </Button>
-    );
-  }
-
-  return button.length ?
+  return (
     <ResponsiveButtonGroup
       fullWidth
       selectedIndex={selectedIndex}
     >
-      {button}
+      {renderedTabs.map((tab) => (
+        <Button
+          key={`clickable-nav-${tab.name}`}
+          id={`clickable-nav-${tab.name}`}
+          to={pathname.startsWith(tab.urlRoot) ? null : tab.redirect}
+        >
+          {tab.label}
+        </Button>
+      ))}
     </ResponsiveButtonGroup>
-    : null;
-};
-
-RouteSwitcher.propTypes = {
-  primary: PropTypes.string
+  );
 };
 
 export default RouteSwitcher;
