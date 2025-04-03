@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Switch } from 'react-router-dom';
@@ -20,7 +20,6 @@ import {
 
 import { useIntlKeyStore } from '@k-int/stripes-kint-components';
 
-import css from './index.css';
 import setUpRegistry from './setUpRegistry';
 
 import AgreementsRoute from './routes/AgreementsRoute';
@@ -60,8 +59,13 @@ import OpenBasketButton from './components/OpenBasketButton';
 import Settings from './settings';
 import { useEresourcesEnabled } from './hooks';
 
+import css from './index.css';
+import VueWrapper from './VueWrapper';
+
 const App = (props) => {
-  // Destructure important props
+
+  return <VueWrapper />;
+
   const {
     actAs,
     history,
