@@ -62,7 +62,12 @@ const AgreementModal = ({ showModal, hideModal, selectedItems }) => {
       .post(AGREEMENTS_ENDPOINT, { json: payload })
       .json()
       .then(({ id }) => {
-        history.push(`${urls.agreementView(id)}${location.search}`);
+        /* Quick FIX for ERM-3673; only add location.search when coming from agreements */
+        history.push(
+          `${urls.agreementView(id)}${
+            location.state?.from?.startsWith('/erm/agreements') ? location.search : ''
+          }`
+        );
       })
   );
 
