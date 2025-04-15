@@ -1,6 +1,6 @@
 
 import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, useLocation } from 'react-router-dom';
 
 import translationsProperties from '../../../test/helpers';
 import AgreementLinesRoute from './AgreementLinesRoute';
@@ -12,6 +12,12 @@ jest.mock('../../hooks', () => ({
   useAgreementsRefdata: () => mockRefdata,
 }));
 
+// TODO really? Why are we having to pass these in again. This is kinda gross.
+// Maybe we need a TestRouteWrapper which uses MemoryRouter and PROPERLY hands down this stuff for testing
+useLocation.mockImplementation(() => {
+  const { useLocation: actualUseLocation } = jest.requireActual('react-router-dom');
+  return actualUseLocation();
+});
 const routeProps = {
   history: {
     push: () => jest.fn()
@@ -22,12 +28,13 @@ const routeProps = {
   },
 };
 
+// TODO we really should be mocking the rendered view component to avoid having to do anything special for child components
 describe('AgreementLinesRoute', () => {
   describe('rendering the route with permissions', () => {
     let renderComponent;
     beforeEach(() => {
       renderComponent = renderWithIntl(
-        <MemoryRouter>
+        <MemoryRouter initialEntries={['/erm/agreementLines']}>
           <AgreementLinesRoute {...routeProps} />
         </MemoryRouter>,
         translationsProperties
