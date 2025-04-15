@@ -1,5 +1,12 @@
 # Change history for ui-agreements
 
+## 12.0.2 2024-04-15
+  * ERM-3673 Agreements: query mixup in Agreements and Local KB package search box
+  * ERM-3652 Extend tests for Package multi-select/synchronise switch
+
+## 12.0.1 2025-04-01
+  * ERM-3670 When package `syncContentsFromSource` is not set, display with a `-`
+
 ## 12.0.1 2025-04-01
   * ERM-3670 When package `syncContentsFromSource` is not set, display with a `-`
 

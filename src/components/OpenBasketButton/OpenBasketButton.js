@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import { useHistory, useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
@@ -13,7 +11,8 @@ const OpenBasketButton = () => {
   const history = useHistory();
   const location = useLocation();
   const handleClick = () => {
-    history.push(`${urls.basket()}${location.search}`);
+    /* Quick FIX for ERM-3673; add from state to history */
+    history.push(`${urls.basket()}${location.search}`, { from: location.pathname });
   };
 
   const { basket } = useBasket();
@@ -34,16 +33,6 @@ const OpenBasketButton = () => {
       />
     </Button>
   );
-};
-
-OpenBasketButton.propTypes = {
-  mutator: PropTypes.shape({
-    basket: PropTypes.object,
-    query: PropTypes.object,
-  }),
-  resources: PropTypes.shape({
-    basket: PropTypes.arrayOf(PropTypes.object),
-  }),
 };
 
 export default OpenBasketButton;
