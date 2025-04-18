@@ -16,7 +16,6 @@ const data = {
   checkinItems: false,
   agreementId: '09c6ed1b-3984-4d9a-8f9b-e1200b68b61c',
   acquisitionMethod: 'Purchase',
-  alerts: [],
   cancellationRestriction: false,
   cancellationRestrictionNote: '',
   claims: [
@@ -85,7 +84,6 @@ const data = {
   publisher: 'American Bar Association',
   purchaseOrderId: '733867b9-40fb-4df4-bc82-ccb98c2d5846',
   receiptStatus: 'Ongoing',
-  reportingCodes: [],
   requester: '',
   rush: false,
   selector: '',

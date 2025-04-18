@@ -2854,7 +2854,6 @@ const agreement = {
       edition: '',
       checkinItems: false,
       acquisitionMethod: 'Approval Plan',
-      alerts: [],
       claims: [],
       collection: false,
       contributors: [
@@ -2917,7 +2916,6 @@ const agreement = {
       publisher: 'Palgrave Macmillan',
       purchaseOrderId: '0082b22e-d0dd-48b3-b9d4-785f8a21a3a4',
       receiptStatus: 'Awaiting Receipt',
-      reportingCodes: [],
       rush: false,
       source: 'User',
       titleOrPackage: 'Futures, biometrics and neuroscience research Luiz Moutinho, Mladen Sokele, editors',
