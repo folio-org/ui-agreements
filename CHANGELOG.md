@@ -1,6 +1,7 @@
 # Change history for ui-agreements
 
 ## 12.1.0 IN PROGRESS
+  * ERM-3705 Update UI to reflect BE changes: `userLimit` type (`number` → `string`) and schema cleanup
 
 ## 12.0.2 2024-04-15
   * ERM-3673 Agreements: query mixup in Agreements and Local KB package search box
