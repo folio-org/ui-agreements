@@ -50,7 +50,7 @@ const ErmSettings = (props) => {
       },
       {
         label: <FormattedMessage id="ui-agreements.settings.appSettings" />,
-        dynamicPageExclusions: ['registry'], // Registry AppSettings hold StringTemplating details etc -- not for user editing
+        dynamicPageExclusions: ['registry', 'agreements_display_settings'], // Registry AppSettings hold StringTemplating details etc -- not for user editing
       }
     ],
     refdataEndpoint: REFDATA_ENDPOINT,

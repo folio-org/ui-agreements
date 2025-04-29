@@ -1,30 +1,33 @@
-import { useModConfigEntries } from '@k-int/stripes-kint-components';
+import { useQuery } from 'react-query';
+import { useOkapiKy } from '@folio/stripes/core';
+import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
+import { parseAgreementSettings } from '../components/utilities';
+import { SETTINGS_ENDPOINT } from '../constants';
 
-const useAgreementsSettings = ({ queryParams, namespaceAppend } = {}) => {
-  /*
-   * This is important because useAgreementsSettings is
-   * rendered (via useEresourcesEnabled) on the main App component.
-   * This means that in settings (Which is rendered inside App itself, stripes behaviour)
-   * the same query namespace would apply to the query in the config form, and also to
-   * the App level hook call, resulting in an infinite loop.
-   *
-   * We avoid this by ensuring all calls using *this* hook have (at least) an extra namespace key item
-   */
-  const namespace = ['useAgreementsSettings'];
-  if (Array.isArray(namespaceAppend)) {
-    namespaceAppend.forEach(appendItem => {
-      namespace.push(appendItem);
-    });
-  } else if (namespaceAppend) {
-    namespace.push(namespaceAppend);
-  }
+const useAgreementsSettings = () => {
+  const ky = useOkapiKy();
+  const queryParams = generateKiwtQueryParams({
+    filters: [{ path: 'section', value: 'agreements_display_settings' }],
+    sort: [{ path: 'key' }],
+    perPage: 100,
+    stats: false,
+  }, {});
 
-  return useModConfigEntries({
-    configName: 'general',
-    moduleName: 'AGREEMENTS',
-    namespaceAppend: namespace,
-    queryParams
-  });
+  const { data: rawSettings = [], refetch } = useQuery(
+    ['agreements_display_settings'],
+    async () => {
+      const response = await ky(`${SETTINGS_ENDPOINT}?${queryParams.join('&')}`).json();
+      return response;
+    }
+  );
+
+  const parsedSettings = parseAgreementSettings(rawSettings) ?? {};
+
+  return {
+    parsedSettings,
+    rawSettings,
+    refetchSettings: refetch,
+  };
 };
 
 export default useAgreementsSettings;
