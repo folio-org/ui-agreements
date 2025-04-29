@@ -610,7 +610,7 @@
     "packageIdentifiers.ezb": "EZB",
     "packageIdentifiers.eBookPool": "Fond e-knih",
     "packageIdentifiers.gokbId": "ID GOKb",
-    "packageIdentifiers.gokbUUID": "UUID GOKb",
+    "packageIdentifiers.gokbUUID": "GOKb (UUID)",
     "alternativeName": "Alternativní název",
     "agreementLines": "Řádky smlouvy",
     "agreementLines.note": "Poznámka",
