@@ -1,6 +1,6 @@
 import { camelCase } from 'lodash';
 
-export default function parseAgreementSettings(settingsArray = []) {
+export default function parseAgreementDisplaySettings(settingsArray = []) {
   const parsedSettings = {
     displaySuppressFromDiscovery: {},
     hideAccordions: {},
