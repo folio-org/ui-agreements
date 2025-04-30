@@ -10,11 +10,14 @@ export default function parseAgreementDisplaySettings(settingsArray = []) {
 
   settingsArray.forEach(setting => {
     const { key, value, settingType } = setting;
-    const parsedValue = settingType === 'Boolean'
-      ? value === 'true'
-      : settingType === 'Integer'
-        ? Number(value)
-        : value;
+    let parsedValue;
+    if (settingType === 'Boolean') {
+      parsedValue = value === 'true';
+    } else if (settingType === 'Integer') {
+      parsedValue = Number(value);
+    } else {
+      parsedValue = value;
+    }
 
     if (key.startsWith('displaysuppressfromdiscovery_')) {
       const subKey = camelCase(key.replace('displaysuppressfromdiscovery_', ''));
