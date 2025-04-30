@@ -12,7 +12,6 @@ const useAgreementsDisplaySettings = ({
     'ERM',
     'Settings',
     'displaySettings',
-    SETTINGS_ENDPOINT,
     queryParams,
     ...namespaceAppend
   ];
