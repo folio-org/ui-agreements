@@ -10,7 +10,7 @@ import parseAgreementDisplaySettings from '../components/utilities/parseAgreemen
 
 import translationsProperties from '../../test/helpers';
 
-// Only mock the function we need to control
+// Only mock what's not already mocked globally
 jest.mock('../components/utilities/parseAgreementDisplaySettings');
 
 describe('useAgreementsDisplaySettings', () => {
@@ -65,13 +65,20 @@ describe('useAgreementsDisplaySettings', () => {
       pageSize: { resources: 25 }
     });
 
-    await act(async () => {
-      await hookResult.submitDisplaySettings({
-        hideAccordions: { notes: false },
-        pageSize: { resources: 25 }
+    let resultPromise;
+
+    await act(() => {
+      resultPromise = hookResult.submitDisplaySettings({
+        hideAccordions: { notes: false }, // this is the change
+        pageSize: { resources: 25 }       // this is unchanged
       });
+
+      return resultPromise;
     });
 
+    await resultPromise;
+
+    expect(mockHandleSubmit).toHaveBeenCalledTimes(1);
     expect(mockHandleSubmit).toHaveBeenCalledWith({
       key: 'hideaccordions_notes',
       value: 'false',
