@@ -19,7 +19,7 @@ import CustomCoverageIcon from '../CustomCoverageIcon';
 import EResourceLink from '../EResourceLink';
 import { getResourceFromEntitlement, urls, parseMclPageSize } from '../utilities';
 import { statuses, ENTITLEMENT_AGREEMENTS_LIST_PAGINATION_ID } from '../../constants';
-import { useAgreementsSettings } from '../../hooks';
+import { useAgreementsDisplaySettings } from '../../hooks';
 
 const EntitlementAgreementsList = (
   { entitlements,
@@ -30,7 +30,7 @@ const EntitlementAgreementsList = (
     totalCount,
     visibleColumns = ['name', 'type', 'startDate', 'endDate'] }
 ) => {
-  const settings = useAgreementsSettings();
+  const settings = useAgreementsDisplaySettings();
   const entitlementAgreementsPageSize = parseMclPageSize(settings, 'entitlements');
   const {
     paginationMCLProps,

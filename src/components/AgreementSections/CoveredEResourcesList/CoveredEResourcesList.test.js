@@ -7,7 +7,7 @@ import CoveredEResourcesList from './CoveredEResourcesList';
 import agreement from './testResources';
 
 // Use manual mocks set up in hooks/__mocks__ folder (small correction to the way this was done before)
-jest.mock('../../../hooks/useAgreementsSettings');
+jest.mock('../../../hooks/useAgreementsDisplaySettings');
 jest.mock('../../../hooks/useEresourcesEnabled');
 
 const handlers = {

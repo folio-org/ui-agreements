@@ -19,7 +19,7 @@ import Coverage from '../../Coverage';
 import EResourceLink from '../../EResourceLink';
 import { PACKAGE_CONTENT_PAGINATION_ID, resultCount } from '../../../constants';
 import { parseMclPageSize } from '../../utilities';
-import { useAgreementsSettings } from '../../../hooks';
+import { useAgreementsDisplaySettings } from '../../../hooks';
 
 const { RESULT_COUNT_INCREMENT } = resultCount;
 
@@ -52,7 +52,7 @@ const PackageContents = ({
   isLoading,
   onFilterPackageContents
 }) => {
-  const settings = useAgreementsSettings();
+  const settings = useAgreementsDisplaySettings();
   const packageContentsPageSize = parseMclPageSize(settings, 'packageContents');
 
   const renderDate = date => (date ? <FormattedUTCDate value={date} /> : '');

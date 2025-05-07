@@ -15,7 +15,7 @@ import EResourceKB from '../../EResourceKB';
 
 import { isExternal, parseMclPageSize } from '../../utilities';
 import { resourceClasses, ENTITLEMENT_OPTIONS_PAGINATION_ID } from '../../../constants';
-import { useAgreementsSettings } from '../../../hooks';
+import { useAgreementsDisplaySettings } from '../../../hooks';
 
 const propTypes = {
   data: PropTypes.shape({
@@ -45,7 +45,7 @@ const AcquisitionOptions = ({
   id,
   isLoading
 }) => {
-  const settings = useAgreementsSettings();
+  const settings = useAgreementsDisplaySettings();
   const entitlementOptionsPageSize = parseMclPageSize(settings, 'entitlementOptions');
 
   const {

@@ -5,7 +5,7 @@ import IfAccordionIsVisible from './IfAccordionIsVisible';
 const name = 'usageData';
 
 jest.mock('../../hooks', () => ({
-  useAgreementsSettings: jest.fn()
+  useAgreementsDisplaySettings: jest.fn()
     .mockReturnValueOnce({ parsedSettings: { hideAccordions: { usageData: true } } })
     .mockReturnValueOnce({ parsedSettings: { hideAccordions: { usageData: false } } })
     .mockReturnValueOnce({ parsedSettings: { hideAccordions: { usageData: true } } })

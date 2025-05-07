@@ -10,7 +10,7 @@ import PackagesRoute from './PackagesRoute';
 
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
-  useAgreementsSettings: jest.fn(() => ({ data: { configs: [{}] } })),
+  useAgreementsDisplaySettings: jest.fn(() => ({ data: { configs: [{}] } })),
   useAgreementsRefdata: () => mockRefdata,
 }));
 

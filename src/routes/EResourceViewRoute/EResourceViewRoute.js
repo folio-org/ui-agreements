@@ -23,7 +23,7 @@ import {
   PACKAGES_SYNC_ENDPOINT,
   resourceClasses,
 } from '../../constants';
-import { useAgreementsHelperApp, useAgreementsSettings, useSuppressFromDiscovery } from '../../hooks';
+import { useAgreementsHelperApp, useAgreementsDisplaySettings, useSuppressFromDiscovery } from '../../hooks';
 
 const EResourceViewRoute = ({
   handlers = [],
@@ -41,7 +41,7 @@ const EResourceViewRoute = ({
     TagButton,
   } = useAgreementsHelperApp();
 
-  const settings = useAgreementsSettings();
+  const settings = useAgreementsDisplaySettings();
   const entitlementAgreementsPageSize = parseMclPageSize(settings, 'entitlements');
   const entitlementOptionsPageSize = parseMclPageSize(settings, 'entitlementOptions');
   const packageContentsPageSize = parseMclPageSize(settings, 'packageContents');

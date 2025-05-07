@@ -18,7 +18,7 @@ import CustomCoverageIcon from '../../CustomCoverageIcon';
 import EResourceLink from '../../EResourceLink';
 import EResourceCount from '../../EResourceCount';
 import EResourceProvider from '../../EResourceProvider';
-import { useAgreementsSettings } from '../../../hooks';
+import { useAgreementsDisplaySettings } from '../../../hooks';
 import { AGREEMENT_LINES_PAGINATION_ID, LINE_LISTING_COLUMN_MAPPING } from '../../../constants';
 import {
   getResourceFromEntitlement,
@@ -50,7 +50,7 @@ const LinesList = ({
   onViewAgreementLine,
   visibleColumns
 }) => {
-  const settings = useAgreementsSettings();
+  const settings = useAgreementsDisplaySettings();
   const agreementLinesPageSize = parseMclPageSize(settings, 'agreementLines');
   const agreementLinesPaginationId = `${AGREEMENT_LINES_PAGINATION_ID}-${agreementId}`;
 

@@ -31,7 +31,7 @@ import {
 } from '../../constants';
 import {
   useAgreementsHelperApp,
-  useAgreementsSettings,
+  useAgreementsDisplaySettings,
 } from '../../hooks';
 
 const AgreementViewRoute = ({
@@ -44,7 +44,7 @@ const AgreementViewRoute = ({
 }) => {
   const queryClient = useQueryClient();
 
-  const settings = useAgreementsSettings();
+  const settings = useAgreementsDisplaySettings();
   const agreementLinesPageSize = parseMclPageSize(settings, 'agreementLines');
   const agreementLinesPaginationId = `${AGREEMENT_LINES_PAGINATION_ID}-${agreementId}`;
 
