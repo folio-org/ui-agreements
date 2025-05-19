@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { useCallout, useOkapiKy } from '@folio/stripes/core';
 
-import { useParallelBatchFetch, usePrevNextPagination } from '@folio/stripes-erm-components';
+import { useParallelBatchFetch, usePrevNextPagination, useErmHelperApp } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/EResource';
@@ -23,7 +23,7 @@ import {
   PACKAGES_SYNC_ENDPOINT,
   resourceClasses,
 } from '../../constants';
-import { useAgreementsHelperApp, useAgreementsDisplaySettings, useSuppressFromDiscovery } from '../../hooks';
+import { useAgreementsDisplaySettings, useSuppressFromDiscovery } from '../../hooks';
 
 const EResourceViewRoute = ({
   handlers = [],
@@ -39,7 +39,7 @@ const EResourceViewRoute = ({
     handleToggleTags,
     HelperComponent,
     TagButton,
-  } = useAgreementsHelperApp();
+  } = useErmHelperApp();
 
   const settings = useAgreementsDisplaySettings();
   const entitlementAgreementsPageSize = parseMclPageSize(settings, 'entitlements');
@@ -290,7 +290,13 @@ const EResourceViewRoute = ({
 };
 
 EResourceViewRoute.propTypes = {
-  handlers: PropTypes.object,
+  handlers: PropTypes.shape({
+    onFilterPackageContents: PropTypes.func,
+    onClose: PropTypes.func,
+    onEdit: PropTypes.func,
+    onEResourceClick: PropTypes.func,
+    onSynchronize: PropTypes.func,
+  }),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,

@@ -14,6 +14,7 @@ import {
   INVALID_JSON_ERROR,
   JSON_ERROR,
   usePrevNextPagination,
+  useErmHelperApp
 } from '@folio/stripes-erm-components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 
@@ -30,7 +31,6 @@ import {
   httpStatuses,
 } from '../../constants';
 import {
-  useAgreementsHelperApp,
   useAgreementsDisplaySettings,
 } from '../../hooks';
 
@@ -63,7 +63,7 @@ const AgreementViewRoute = ({
   const ky = useOkapiKy();
 
   const { handleToggleTags, HelperComponent, TagButton } =
-    useAgreementsHelperApp();
+  useErmHelperApp();
 
   const agreementPath = AGREEMENT_ENDPOINT(agreementId);
 
@@ -232,7 +232,7 @@ const AgreementViewRoute = ({
     const contacts = agreement.contacts.map((c) => ({
       ...c,
       user: users?.find((user) => user?.id === c.user) || c.user,
-    }));
+    })) || [];
 
     const orgs = agreement.orgs.map((o) => ({
       ...o,
@@ -370,7 +370,18 @@ const AgreementViewRoute = ({
 };
 
 AgreementViewRoute.propTypes = {
-  handlers: PropTypes.object,
+  handlers: PropTypes.shape({
+    onClone: PropTypes.func,
+    onClose: PropTypes.func,
+    onDelete: PropTypes.func,
+    onEdit: PropTypes.func,
+    onExportAgreement: PropTypes.func,
+    onExportEResourcesAsJSON: PropTypes.func,
+    onExportEResourcesAsKBART: PropTypes.func,
+    onFilterEResources: PropTypes.func,
+    onToggleTags: PropTypes.func,
+    onViewAgreementLine: PropTypes.func,
+  }),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,

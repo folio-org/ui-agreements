@@ -5,11 +5,11 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { FormattedMessage } from 'react-intl';
 
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
-
+import { useErmHelperApp } from '@folio/stripes-erm-components';
 import View from '../../components/views/AgreementLine';
 import { urls } from '../../components/utilities';
 
-import { useAgreementsHelperApp, useChunkedOrderLines, useSuppressFromDiscovery } from '../../hooks';
+import { useChunkedOrderLines, useSuppressFromDiscovery } from '../../hooks';
 import { AGREEMENT_ENDPOINT, AGREEMENT_LINE_ENDPOINT } from '../../constants';
 
 const AgreementLineViewRoute = ({
@@ -58,7 +58,7 @@ const AgreementLineViewRoute = ({
     handleToggleTags,
     HelperComponent,
     TagButton,
-  } = useAgreementsHelperApp();
+  } = useErmHelperApp();
 
   const poLineIdsArray = (agreementLine.poLines ?? []).map(poLine => poLine.poLineId).flat();
   const { orderLines, isLoading: areOrderLinesLoading } = useChunkedOrderLines(poLineIdsArray);
