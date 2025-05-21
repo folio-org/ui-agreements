@@ -1,6 +1,6 @@
 {
   "name": "@folio/agreements",
-  "version": "12.0.0",
+  "version": "12.1.0",
   "description": "ERM agreement functionality for Stripes",
   "main": "src/index.js",
   "publishConfig": {
@@ -22,7 +22,7 @@
     "@folio/eslint-config-stripes": "^8.0.0",
     "@folio/jest-config-stripes": "^3.0.0",
     "@folio/stripes": "^10.0.0",
-    "@folio/stripes-acq-components": "^6.0.0",
+    "@folio/stripes-acq-components": "^7.0.0",
     "@folio/stripes-cli": "^4.0.0",
     "@folio/stripes-erm-components": "^10.0.0",
     "@folio/stripes-erm-testing": "^3.0.0",
@@ -60,7 +60,7 @@
   },
   "peerDependencies": {
     "@folio/stripes": "^10.0.0",
-    "@folio/stripes-acq-components": "^6.0.0",
+    "@folio/stripes-acq-components": "^7.0.0",
     "@folio/stripes-erm-components": "^10.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -84,7 +84,7 @@
       "licenses": "6.0"
     },
     "optionalOkapiInterfaces": {
-      "order-lines": "2.0 3.0",
+      "order-lines": "2.0 3.0 4.0",
       "organizations-storage.interfaces": "2.0",
       "users": "13.0 14.0 15.0 16.0"
     },

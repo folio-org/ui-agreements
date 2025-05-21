@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { useCallout, useOkapiKy } from '@folio/stripes/core';
 
-import { useParallelBatchFetch, usePrevNextPagination } from '@folio/stripes-erm-components';
+import { useParallelBatchFetch, usePrevNextPagination, useErmHelperApp } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/EResource';
@@ -23,7 +23,7 @@ import {
   PACKAGES_SYNC_ENDPOINT,
   resourceClasses,
 } from '../../constants';
-import { useAgreementsHelperApp, useAgreementsSettings, useSuppressFromDiscovery } from '../../hooks';
+import { useAgreementsSettings, useSuppressFromDiscovery } from '../../hooks';
 
 const EResourceViewRoute = ({
   handlers = [],
@@ -39,7 +39,7 @@ const EResourceViewRoute = ({
     handleToggleTags,
     HelperComponent,
     TagButton,
-  } = useAgreementsHelperApp();
+  } = useErmHelperApp();
 
   const settings = useAgreementsSettings();
   const entitlementAgreementsPageSize = parseMclPageSize(settings, 'entitlements');

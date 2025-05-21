@@ -2,17 +2,24 @@ import { useQuery } from 'react-query';
 import { useStripes } from '@folio/stripes/core';
 
 import { renderWithIntl } from '@folio/stripes-erm-testing';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, useLocation } from 'react-router-dom';
 import { noop } from 'lodash';
 import titles from './testResources';
 import translationsProperties from '../../../test/helpers';
 import TitlesRoute from './TitlesRoute';
 
+// TODO really? Why are we having to pass these in again. This is kinda gross.
+// Maybe we need a TestRouteWrapper which uses MemoryRouter and PROPERLY hands down this stuff for testing
+useLocation.mockImplementation(() => {
+  const { useLocation: actualUseLocation } = jest.requireActual('react-router-dom');
+  return actualUseLocation();
+});
+
 const routeProps = {
   history: {
     push: () => jest.fn()
   },
-  location: {},
+  location: { pathname: '/erm/titles' },
   match: {
     params: {},
   },
@@ -27,12 +34,13 @@ useQuery.mockImplementation(() => ({
   isLoading: false
 }));
 
+// TODO we really should be mocking the rendered view component to avoid having to do anything special for child components
 describe('TitlesRoute', () => {
   describe('rendering the route with permissions', () => {
     let renderComponent;
     beforeEach(() => {
       renderComponent = renderWithIntl(
-        <MemoryRouter>
+        <MemoryRouter initialEntries={['/erm/titles']}>
           <TitlesRoute {...routeProps} />
         </MemoryRouter>,
         translationsProperties
@@ -74,7 +82,7 @@ describe('TitlesRoute', () => {
       hasPerm.mockImplementation(() => false);
 
       renderComponent = renderWithIntl(
-        <MemoryRouter>
+        <MemoryRouter initialEntries={['/erm/titles']}>
           <TitlesRoute
             {...routeProps}
             stripes={{ hasPerm: () => false }}

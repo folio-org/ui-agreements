@@ -36,7 +36,6 @@ const poLine = {
   checkinItems: false,
   agreementId: '09c6ed1b-3984-4d9a-8f9b-e1200b68b61c',
   acquisitionMethod: 'Purchase',
-  alerts: '[]',
   cancellationRestriction: false,
   cancellationRestrictionNote: '',
   claims: [{
@@ -95,7 +94,6 @@ const poLine = {
   publisher: 'American Bar Association',
   purchaseOrderId: 'c27e60f9-6361-44c1-976e-0c4821a33a7d',
   receiptStatus: 'Pending',
-  reportingCodes: '[]',
   requester: '',
   rush: false,
   selector: '',

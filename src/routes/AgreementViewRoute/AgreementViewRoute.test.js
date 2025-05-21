@@ -6,6 +6,8 @@ import { MemoryRouter } from 'react-router-dom';
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { Button as ButtonInteractor, renderWithIntl } from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
+// EXAMPLE not used now, but able to override the mockKy.text() output mock
+// import { mockKyText } from '@folio/stripes/core';
 
 import translationsProperties from '../../../test/helpers';
 import AgreementViewRoute from './AgreementViewRoute';
@@ -123,6 +125,9 @@ const data = {
 };
 
 useQuery.mockImplementation(() => ({ data: agreement, isLoading: false }));
+
+// EXAMPLE special work to adapt the KY mock in this test
+// mockKyText.mockImplementation(() => Promise.resolve('{ "id": "someId" }'));
 
 describe('AgreementViewRoute', () => {
   describe('rendering the AgreementViewRoute', () => {
