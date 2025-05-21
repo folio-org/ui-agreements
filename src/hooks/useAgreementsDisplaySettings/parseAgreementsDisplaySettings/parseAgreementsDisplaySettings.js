@@ -19,8 +19,10 @@ export default function parseAgreementsDisplaySettings(settingsArray = []) {
     } else {
       parsedValue = value;
     }
-
-    set(parsedSettings, getAgreementsSettingsField(key), parsedValue);
+    const field = getAgreementsSettingsField(key);
+    if (field) {
+      set(parsedSettings, getAgreementsSettingsField(key), parsedValue);
+    }
   });
 
   return parsedSettings;
