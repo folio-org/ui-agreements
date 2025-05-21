@@ -23,7 +23,7 @@ import {
   PACKAGES_SYNC_ENDPOINT,
   resourceClasses,
 } from '../../constants';
-import { useAgreementsSettings, useSuppressFromDiscovery } from '../../hooks';
+import { useAgreementsDisplaySettings, useSuppressFromDiscovery } from '../../hooks';
 
 const EResourceViewRoute = ({
   handlers = [],
@@ -41,7 +41,7 @@ const EResourceViewRoute = ({
     TagButton,
   } = useErmHelperApp();
 
-  const settings = useAgreementsSettings();
+  const settings = useAgreementsDisplaySettings();
   const entitlementAgreementsPageSize = parseMclPageSize(settings, 'entitlements');
   const entitlementOptionsPageSize = parseMclPageSize(settings, 'entitlementOptions');
   const packageContentsPageSize = parseMclPageSize(settings, 'packageContents');
@@ -290,7 +290,13 @@ const EResourceViewRoute = ({
 };
 
 EResourceViewRoute.propTypes = {
-  handlers: PropTypes.object,
+  handlers: PropTypes.shape({
+    onFilterPackageContents: PropTypes.func,
+    onClose: PropTypes.func,
+    onEdit: PropTypes.func,
+    onEResourceClick: PropTypes.func,
+    onSynchronize: PropTypes.func,
+  }),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,

@@ -31,7 +31,7 @@ import {
   httpStatuses,
 } from '../../constants';
 import {
-  useAgreementsSettings,
+  useAgreementsDisplaySettings,
 } from '../../hooks';
 
 const AgreementViewRoute = ({
@@ -44,7 +44,7 @@ const AgreementViewRoute = ({
 }) => {
   const queryClient = useQueryClient();
 
-  const settings = useAgreementsSettings();
+  const settings = useAgreementsDisplaySettings();
   const agreementLinesPageSize = parseMclPageSize(settings, 'agreementLines');
   const agreementLinesPaginationId = `${AGREEMENT_LINES_PAGINATION_ID}-${agreementId}`;
 
@@ -370,7 +370,18 @@ const AgreementViewRoute = ({
 };
 
 AgreementViewRoute.propTypes = {
-  handlers: PropTypes.object,
+  handlers: PropTypes.shape({
+    onClone: PropTypes.func,
+    onClose: PropTypes.func,
+    onDelete: PropTypes.func,
+    onEdit: PropTypes.func,
+    onExportAgreement: PropTypes.func,
+    onExportEResourcesAsJSON: PropTypes.func,
+    onExportEResourcesAsKBART: PropTypes.func,
+    onFilterEResources: PropTypes.func,
+    onToggleTags: PropTypes.func,
+    onViewAgreementLine: PropTypes.func,
+  }),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,

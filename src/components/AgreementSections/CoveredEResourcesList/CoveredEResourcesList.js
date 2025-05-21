@@ -30,7 +30,7 @@ import {
   useFetchMultiplePages,
 } from '@folio/stripes-erm-components';
 
-import { useAgreementsSettings } from '../../../hooks';
+import { useAgreementsDisplaySettings } from '../../../hooks';
 import Coverage from '../../Coverage';
 import CustomCoverageIcon from '../../CustomCoverageIcon';
 import IfEResourcesEnabled from '../../IfEResourcesEnabled';
@@ -59,7 +59,7 @@ const CoveredEResourcesList = ({
   onExportEResourcesAsJSON,
   onExportEResourcesAsKBART,
 }) => {
-  const settings = useAgreementsSettings();
+  const settings = useAgreementsDisplaySettings();
   const coveredEresourcePageSize = parseMclPageSize(
     settings,
     'agreementEresources'

@@ -1,7 +1,7 @@
-import useAgreementsSettings from './useAgreementsSettings';
+import useAgreementsDisplaySettings from './useAgreementsDisplaySettings';
 
 const useEresourcesEnabled = ({ queryParams } = {}) => {
-  const settings = useAgreementsSettings({ queryParams });
+  const settings = useAgreementsDisplaySettings({ queryParams });
   return !settings?.parsedSettings?.hideEResourcesFunctionality;
 };
 

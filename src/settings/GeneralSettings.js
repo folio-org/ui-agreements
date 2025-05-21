@@ -1,32 +1,15 @@
 import { FormattedMessage } from 'react-intl';
-
-import { SettingsFormContainer } from '@k-int/stripes-kint-components';
-
-import { defaultMclPageSize, hiddenAccordions } from '../constants';
 import GeneralSettingsForm from './GeneralSettingsForm';
+import { useAgreementsDisplaySettings } from '../hooks';
 
 const GeneralSettings = () => {
-  const defaultValues = {
-    displaySuppressFromDiscovery: { pci: true, agreementLine: true, title: true },
-    hideAccordions: hiddenAccordions,
-    hideEResourcesFunctionality: false,
-    pageSize: defaultMclPageSize.pageSize,
-  };
-
-  const getInitialValues = (settings) => {
-    return {
-      ...defaultValues,
-      ...settings,
-    };
-  };
+  const { parsedSettings, submitDisplaySettings } = useAgreementsDisplaySettings({ namespaceAppend: ['GeneralSettings'] });
 
   return (
-    <SettingsFormContainer
-      ConfigFormComponent={GeneralSettingsForm}
-      configName="general"
-      getInitialValues={getInitialValues}
+    <GeneralSettingsForm
+      initialValues={parsedSettings}
       label={<FormattedMessage id="ui-agreements.settings.displaySettings" />}
-      moduleName="AGREEMENTS"
+      onSubmit={submitDisplaySettings}
     />
   );
 };
