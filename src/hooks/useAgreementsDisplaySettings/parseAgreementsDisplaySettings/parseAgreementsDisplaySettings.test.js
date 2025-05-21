@@ -1,4 +1,4 @@
-import parseAgreementDisplaySettings from './parseAgreementDisplaySettings';
+import parseAgreementDisplaySettings from './parseAgreementsDisplaySettings';
 
 describe('parseAgreementDisplaySettings', () => {
   test('returns default values when input is undefined', () => {

@@ -1,20 +1,29 @@
+import { useCallback, useMemo } from 'react';
 import { useQueryClient } from 'react-query';
-import { camelCase } from 'lodash';
+import get from 'lodash/get';
+
 import { useSettingSection } from '@k-int/stripes-kint-components';
-import { parseAgreementDisplaySettings } from '../components/utilities';
-import { SETTINGS_ENDPOINT } from '../constants';
+
+import { SETTINGS_ENDPOINT } from '../../constants';
+
+import parseAgreementDisplaySettings from './parseAgreementsDisplaySettings';
+import getAgreementsSettingsField from './getAgreementsSettingsField';
 
 const useAgreementsDisplaySettings = ({
   namespaceAppend = []
 } = {}) => {
   const queryClient = useQueryClient();
-  const displaySettingsQueryKey = ({ queryParams }) => [
+  const baseQueryKey = useMemo(() => [
     'ERM',
     'Settings',
-    'displaySettings',
+    'displaySettings'
+  ], []);
+
+  const displaySettingsQueryKey = useCallback(({ queryParams }) => [
+    ...baseQueryKey,
     queryParams,
     ...namespaceAppend
-  ];
+  ], [baseQueryKey, namespaceAppend]);
 
   const { handleSubmit, settings: rawSettings } = useSettingSection({
     sectionName: 'agreements_display_settings',
@@ -23,21 +32,11 @@ const useAgreementsDisplaySettings = ({
   });
 
   const findFormValue = (values, key) => {
-    if (key.startsWith('displaysuppressfromdiscovery_')) {
-      const field = camelCase(key.replace('displaysuppressfromdiscovery_', ''));
-      return values.displaySuppressFromDiscovery?.[field];
+    const formField = getAgreementsSettingsField(key);
+    if (formField) {
+      return get(values, formField);
     }
-    if (key.startsWith('hideaccordions_')) {
-      const field = camelCase(key.replace('hideaccordions_', ''));
-      return values.hideAccordions?.[field];
-    }
-    if (key.startsWith('pagesize_')) {
-      const field = camelCase(key.replace('pagesize_', ''));
-      return values.pageSize?.[field];
-    }
-    if (key === 'hideeresourcesfunctionality') {
-      return values.hideEResourcesFunctionality;
-    }
+
     return undefined;
   };
 

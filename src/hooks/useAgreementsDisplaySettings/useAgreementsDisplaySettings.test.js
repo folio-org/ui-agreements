@@ -1,17 +1,18 @@
 import { act } from 'react';
 import { MemoryRouter } from 'react-router-dom';
+import * as ReactQuery from 'react-query';
+
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 
-import * as ReactQuery from 'react-query';
 import { useSettingSection } from '@k-int/stripes-kint-components';
+
 import useAgreementsDisplaySettings from './useAgreementsDisplaySettings';
-import parseAgreementDisplaySettings from '../components/utilities/parseAgreementDisplaySettings';
+import parseAgreementsDisplaySettings from './parseAgreementsDisplaySettings';
 
-
-import translationsProperties from '../../test/helpers';
+import translationsProperties from '../../../test/helpers';
 
 // Only mock what's not already mocked globally
-jest.mock('../components/utilities/parseAgreementDisplaySettings');
+jest.mock('./parseAgreementsDisplaySettings');
 
 describe('useAgreementsDisplaySettings', () => {
   const mockInvalidateQueries = jest.fn();
@@ -22,7 +23,7 @@ describe('useAgreementsDisplaySettings', () => {
       invalidateQueries: mockInvalidateQueries
     });
 
-    parseAgreementDisplaySettings.mockReturnValue({
+    parseAgreementsDisplaySettings.mockReturnValue({
       hideAccordions: { notes: true },
       pageSize: { resources: 25 }
     });
