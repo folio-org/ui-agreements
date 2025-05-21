@@ -41,9 +41,8 @@ const useAgreementsDisplaySettings = ({
     return undefined;
   };
 
-  const parsedSettings = parseAgreementDisplaySettings(rawSettings) ?? {};
-
-  const onSubmit = async (values) => {
+  const parsedSettings = useMemo(() => parseAgreementDisplaySettings(rawSettings) ?? {}, [rawSettings]);
+  const onSubmit = useCallback((values) => {
     const updates = [];
 
     rawSettings.forEach(setting => {
@@ -69,10 +68,29 @@ const useAgreementsDisplaySettings = ({
     });
 
     if (updates.length > 0) {
-      await Promise.all(updates.map(update => handleSubmit(update)));
-      queryClient.invalidateQueries(['ERM', 'Settings', 'displaySettings']);
+      return Promise.all(updates.map(update => handleSubmit(update)))
+        .then(() => {
+          // Optimistically update the cache
+          queryClient.setQueriesData(baseQueryKey, oldSettings => {
+            // Create a new array to avoid direct mutation
+            const newSettings = [...(oldSettings || [])];
+            updates.forEach(update => {
+              const index = newSettings.findIndex(s => s.id === update.id);
+              if (index > -1) {
+                newSettings[index] = update;
+              }
+            });
+
+            return newSettings;
+          });
+        })
+        .then(() => {
+          queryClient.invalidateQueries(baseQueryKey);
+        });
     }
-  };
+
+    return Promise.resolve(true);
+  }, [baseQueryKey, handleSubmit, queryClient, rawSettings]);
 
   return {
     parsedSettings,
