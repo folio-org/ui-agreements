@@ -648,7 +648,7 @@
     "customProperties": "Dodatkowe właściwości",
     "customProperties.label": "Etykieta",
     "customProperties.primary": "Główny",
-    "customProperties.retired": "Nieaktualny",
+    "customProperties.retired": "Wycofany",
     "customProperties.ctx": "Kategoria",
     "customProperties.ctx.addContext": "Add category {value}",
     "customProperties.noCtxFound": "No matching category found",
