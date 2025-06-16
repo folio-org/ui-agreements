@@ -6,8 +6,8 @@ import { FormattedMessage } from 'react-intl';
 
 import { useCallout, useOkapiKy } from '@folio/stripes/core';
 
-import { useParallelBatchFetch, usePrevNextPagination, useErmHelperApp } from '@folio/stripes-erm-components';
-import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
+import { useParallelBatchFetch, useErmHelperApp } from '@folio/stripes-erm-components';
+import { generateKiwtQueryParams, usePrevNextPagination } from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/EResource';
 import { parseMclPageSize, urls } from '../../components/utilities';

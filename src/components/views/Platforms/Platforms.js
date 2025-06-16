@@ -22,7 +22,8 @@ import {
   SearchAndSortQuery,
 } from '@folio/stripes/smart-components';
 
-import { useHandleSubmitSearch, usePrevNextPagination } from '@folio/stripes-erm-components';
+import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
+import { usePrevNextPagination } from '@k-int/stripes-kint-components';
 
 import { urls } from '../../utilities';
 import css from '../Agreements.css';

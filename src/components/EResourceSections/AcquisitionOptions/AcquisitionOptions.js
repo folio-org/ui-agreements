@@ -6,9 +6,10 @@ import { Accordion, Badge, MultiColumnList, NoValue, Spinner } from '@folio/stri
 import {
   EResourceType,
   isPackage,
-  TitleOnPlatformLink,
-  usePrevNextPagination
+  TitleOnPlatformLink
 } from '@folio/stripes-erm-components';
+import { usePrevNextPagination } from '@k-int/stripes-kint-components';
+
 import AddToBasketButton from '../../AddToBasketButton';
 import Coverage from '../../Coverage';
 import EResourceKB from '../../EResourceKB';

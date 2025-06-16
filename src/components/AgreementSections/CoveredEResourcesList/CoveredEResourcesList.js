@@ -26,9 +26,10 @@ import { AppIcon, useCallout } from '@folio/stripes/core';
 import {
   getResourceIdentifier,
   TitleOnPlatformLink,
-  usePrevNextPagination,
   useFetchMultiplePages,
 } from '@folio/stripes-erm-components';
+
+import { usePrevNextPagination } from '@k-int/stripes-kint-components';
 
 import { useAgreementsDisplaySettings } from '../../../hooks';
 import Coverage from '../../Coverage';

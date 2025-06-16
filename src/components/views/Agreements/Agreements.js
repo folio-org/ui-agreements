@@ -28,11 +28,10 @@ import {
 } from '@folio/stripes/smart-components';
 
 import {
-  SearchKeyControl,
   useHandleSubmitSearch,
   useSASQQIndex,
-  usePrevNextPagination,
 } from '@folio/stripes-erm-components';
+import { usePrevNextPagination, SearchKeyControl } from '@k-int/stripes-kint-components';
 
 import {
   AGREEMENTS_COLUMN_MAPPING,

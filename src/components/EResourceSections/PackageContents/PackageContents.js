@@ -14,7 +14,9 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes/core';
 
-import { TitleOnPlatformLink, usePrevNextPagination } from '@folio/stripes-erm-components';
+import { TitleOnPlatformLink } from '@folio/stripes-erm-components';
+import { usePrevNextPagination } from '@k-int/stripes-kint-components';
+
 import Coverage from '../../Coverage';
 import EResourceLink from '../../EResourceLink';
 import { PACKAGE_CONTENT_PAGINATION_ID, resultCount } from '../../../constants';
