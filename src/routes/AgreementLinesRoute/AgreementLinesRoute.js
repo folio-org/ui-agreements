@@ -1,15 +1,18 @@
 import React, { useEffect, useMemo, useRef } from 'react';
+import { useQuery } from 'react-query';
 import PropTypes from 'prop-types';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
 import {
   useTags,
-  usePrevNextPagination,
   getRefdataValuesByDesc
 } from '@folio/stripes-erm-components';
 
-import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
-import { useQuery } from 'react-query';
+import {
+  generateKiwtQueryParams,
+  useKiwtSASQuery,
+  usePrevNextPagination
+} from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/AgreementLines';
 import NoPermissions from '../../components/NoPermissions';
