@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
   Button,
+  ConfirmationModal,
+  Icon,
   LoadingPane,
   Pane,
   PaneMenu,
@@ -16,13 +18,14 @@ import PCI from '../PCI';
 import { resourceClasses, syncStates } from '../../../constants';
 
 const propTypes = {
-  components: PropTypes.object,
+  // components: PropTypes.object,
+  components: PropTypes.objectOf(PropTypes.elementType),
   data: PropTypes.shape({
     eresource: PropTypes.shape({
       class: PropTypes.string,
       name: PropTypes.string,
       tags: PropTypes.arrayOf(PropTypes.string),
-      type: PropTypes.object,
+      // type: PropTypes.object,
     }),
   }),
   handlers: PropTypes.shape({
@@ -46,6 +49,16 @@ const EResource = ({
   isLoading,
 }) => {
   const stripes = useStripes();
+
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
+  const [showOkayConfirmationModal, setShowOkayConfirmationModal] = useState(false);
+
+  const totalCount = data.packageContentsCount;
+
+  // const numberDeleted = totalCount; // for test
+  // const numberDeleted = totalCount - 3;
+  const numberDeleted = 0;
+  const numberNotDeleted = totalCount - numberDeleted;
 
   const paneProps = {
     defaultWidth: '55%',
@@ -98,7 +111,48 @@ const EResource = ({
       );
     }
 
+    if (stripes.hasPerm('ui-agreements.resources.delete')) {
+      buttons.push(
+        <Button
+          key="clickable-dropdown-delete-pkg-contents"
+          buttonStyle="dropdownItem"
+          disabled={data.packageContentsCount === 0}
+          id="clickable-dropdown-delete-pkg-contents"
+          // onClick={() => console.log('Delete package action not implemented yet')}
+          onClick={() => numberDeleted > 0 ? setShowDeleteConfirmationModal(true) :
+                                                setShowOkayConfirmationModal(true)
+          }
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="ui-agreements.eresources.deletePackageContents" />
+          </Icon>
+        </Button>
+      );
+    }
+
     return buttons.length ? buttons : null;
+  };
+
+  const getDeleteConfirmationMessage = () => {
+    return (
+      <>
+        <p>
+          <FormattedMessage
+            id="ui-agreements.eresources.deleteConfirmationMessage.default"
+            values={{ numberDeleted, totalCount, pkgName: eresource.name }}
+          />
+        </p>
+        <p>
+          <FormattedMessage id="ui-agreements.eresources.deleteConfirmationMessage.information" />
+        </p>
+        {numberNotDeleted > 0 && (
+        <FormattedMessage
+          id="ui-agreements.eresources.deleteConfirmationMessage.pciNotDeleted"
+          values={{ numberNotDeleted }}
+        />
+        )}
+      </>
+    );
   };
 
   return (
@@ -144,6 +198,47 @@ const EResource = ({
         link={tagsLink}
         onToggle={handlers.onToggleTags}
       />
+      {eresource.class === resourceClasses.PACKAGE && (
+        <ConfirmationModal
+          buttonStyle="danger"
+          confirmLabel={<FormattedMessage id="ui-agreements.delete" />}
+          data-test-delete-confirmation-modal
+          heading={<FormattedMessage id="ui-agreements.eresources.deleteJob" />}
+          id="delete-pkg-contents-confirmation"
+          message={getDeleteConfirmationMessage()}
+          onCancel={() => setShowDeleteConfirmationModal(false)}
+          onConfirm={() => {
+            // handlers.onDelete();
+            console.log('Delete action not implemented yet');
+            setShowDeleteConfirmationModal(false);
+          }}
+          open={showDeleteConfirmationModal}
+        />
+      )}
+      {numberDeleted === 0 && (
+        <ConfirmationModal
+          heading={<FormattedMessage id="ui-agreements.eresources.deleteJob" />}
+          id="delete-pkg-contents-confirmation-ok"
+          message={
+            <FormattedMessage
+              id="ui-agreements.eresources.deleteConfirmationMessage.noDeletion"
+              values={{ pkgName: eresource.name }}
+            />
+          }
+          open={showOkayConfirmationModal}
+          footer={() => (
+            <ModalFooter>
+              <Button
+                buttonStyle="primary"
+                onClick={() => setShowOkayConfirmationModal(false)}
+                data-test-confirmation-modal-ok-button
+              >
+                <FormattedMessage id="ui-agreements.okay" />
+              </Button>
+            </ModalFooter>
+          )}
+        />
+      )}
     </>
   );
 };
