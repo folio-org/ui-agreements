@@ -7,10 +7,17 @@ import {
   ConfirmationModal,
   Icon,
   LoadingPane,
+  Modal,
+  ModalFooter,
   Pane,
   PaneMenu,
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission, TitleManager, useStripes } from '@folio/stripes/core';
+import {
+  AppIcon,
+  IfPermission,
+  TitleManager,
+  useStripes,
+} from '@folio/stripes/core';
 
 import Package from '../Package';
 import Title from '../Title';
@@ -39,10 +46,7 @@ const propTypes = {
 };
 
 const EResource = ({
-  components: {
-    HelperComponent,
-    TagButton
-  },
+  components: { HelperComponent, TagButton },
   data = {},
   data: { eresource, tagsInvalidateLinks, tagsLink } = {},
   handlers,
@@ -119,8 +123,9 @@ const EResource = ({
           disabled={data.packageContentsCount === 0}
           id="clickable-dropdown-delete-pkg-contents"
           // onClick={() => console.log('Delete package action not implemented yet')}
-          onClick={() => numberDeleted > 0 ? setShowDeleteConfirmationModal(true) :
-                                                setShowOkayConfirmationModal(true)
+          onClick={() => (numberDeleted > 0
+            ? setShowDeleteConfirmationModal(true)
+            : setShowOkayConfirmationModal(true))
           }
         >
           <Icon icon="trash">
@@ -146,11 +151,16 @@ const EResource = ({
           <FormattedMessage id="ui-agreements.eresources.deleteConfirmationMessage.information" />
         </p>
         {numberNotDeleted > 0 && (
-        <FormattedMessage
-          id="ui-agreements.eresources.deleteConfirmationMessage.pciNotDeleted"
-          values={{ numberNotDeleted }}
-        />
+          <p>
+            <FormattedMessage
+              id="ui-agreements.eresources.deleteConfirmationMessage.pciNotDeleted"
+              values={{ numberNotDeleted }}
+            />
+          </p>
         )}
+        <p>
+          <FormattedMessage id="ui-agreements.eresources.deleteConfirmationMessage.selectDelete" />
+        </p>
       </>
     );
   };
@@ -158,32 +168,30 @@ const EResource = ({
   return (
     <>
       <Pane
-        {...(eresource.class === resourceClasses.PACKAGE ? { actionMenu: getActionMenu } : {})}
+        {...(eresource.class === resourceClasses.PACKAGE
+          ? { actionMenu: getActionMenu }
+          : {})}
         appIcon={<AppIcon app="agreements" iconKey={icon} size="small" />}
         id="pane-view-eresource"
         lastMenu={
-          (eresource.class === resourceClasses.PCI || eresource.class === resourceClasses.TITLEINSTANCE) ?
-            (
-              <IfPermission perm="ui-agreements.resources.edit">
-                <PaneMenu>
-                  {handlers.onToggleTags &&
-                    <TagButton
-                      entity={eresource}
-                    />
-                  }
-                  {eresource.subType?.value !== 'print' &&
-                    <Button
-                      buttonStyle="primary"
-                      id="clickable-edit-eresource"
-                      marginBottom0
-                      onClick={handlers.onEdit}
-                    >
-                      <FormattedMessage id="stripes-components.button.edit" />
-                    </Button>
-                  }
-                </PaneMenu>
-              </IfPermission>
-            ) : null
+          eresource.class === resourceClasses.PCI ||
+            eresource.class === resourceClasses.TITLEINSTANCE ? (
+            <IfPermission perm="ui-agreements.resources.edit">
+              <PaneMenu>
+                {handlers.onToggleTags && <TagButton entity={eresource} />}
+                {eresource.subType?.value !== 'print' && (
+                  <Button
+                    buttonStyle="primary"
+                    id="clickable-edit-eresource"
+                    marginBottom0
+                    onClick={handlers.onEdit}
+                  >
+                    <FormattedMessage id="stripes-components.button.edit" />
+                  </Button>
+                )}
+              </PaneMenu>
+            </IfPermission>
+          ) : null
         }
         onClose={handlers.onClose}
         paneTitle={eresource.name}
@@ -216,28 +224,30 @@ const EResource = ({
         />
       )}
       {numberDeleted === 0 && (
-        <ConfirmationModal
-          heading={<FormattedMessage id="ui-agreements.eresources.deleteJob" />}
-          id="delete-pkg-contents-confirmation-ok"
-          message={
-            <FormattedMessage
-              id="ui-agreements.eresources.deleteConfirmationMessage.noDeletion"
-              values={{ pkgName: eresource.name }}
-            />
-          }
-          open={showOkayConfirmationModal}
-          footer={() => (
+        <Modal
+          footer={
             <ModalFooter>
               <Button
                 buttonStyle="primary"
-                onClick={() => setShowOkayConfirmationModal(false)}
                 data-test-confirmation-modal-ok-button
+                onClick={() => setShowOkayConfirmationModal(false)}
               >
                 <FormattedMessage id="ui-agreements.okay" />
               </Button>
             </ModalFooter>
-          )}
-        />
+          }
+          id="delete-pkg-contents-modal-ok"
+          label={<FormattedMessage id="ui-agreements.eresources.deleteJob" />}
+          onClose={() => setShowOkayConfirmationModal(false)}
+          open={showOkayConfirmationModal}
+        >
+          <p>
+            <FormattedMessage
+              id="ui-agreements.eresources.deleteConfirmationMessage.noDeletion"
+              values={{ pkgName: eresource.name }}
+            />
+          </p>
+        </Modal>
       )}
     </>
   );
