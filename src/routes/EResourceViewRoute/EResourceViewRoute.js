@@ -135,7 +135,7 @@ const EResourceViewRoute = ({
             />
           </p>
           <p>
-            <Link ref={linkRef} to="/local-kb-admin/ea17def2-e2fe-4386-ad25-bf9bfbca7047">
+            <Link ref={linkRef} to="/local-kb-admin/">
               <FormattedMessage id="ui-agreements.eresources.viewJobLink" />
             </Link>
           </p>
