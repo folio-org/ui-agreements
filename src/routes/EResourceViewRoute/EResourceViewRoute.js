@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 import { useCallout, useOkapiKy } from '@folio/stripes/core';
 
@@ -34,6 +35,8 @@ const EResourceViewRoute = ({
   const queryClient = useQueryClient();
   const ky = useOkapiKy();
   const callout = useCallout();
+
+  const linkRef = useRef(null);
 
   const {
     handleToggleTags,
@@ -110,6 +113,41 @@ const EResourceViewRoute = ({
         });
       });
   };
+
+  const handleDeleteDryRun = async () => {
+    return {
+      numberDeleted: 170,
+      // numberNotDeleted: 0,
+    };
+  };
+
+  const handleDelete = () => {
+    const pkgName = eresource.name;
+    console.log('Delete action not implemented yet');
+
+    callout.sendCallout({
+      message: (
+        <>
+          <p>
+            <FormattedMessage
+              id="ui-agreements.eresources.deleteJob.success"
+              values={{ pkgName }}
+            />
+          </p>
+          <p>
+            <Link ref={linkRef} to="/local-kb-admin/ea17def2-e2fe-4386-ad25-bf9bfbca7047">
+              <FormattedMessage id="ui-agreements.eresources.viewJobLink" />
+            </Link>
+          </p>
+        </>
+      ),
+    });
+
+    setTimeout(() => {
+      linkRef.current?.focus();
+    }, 50);
+  };
+
 
   const entitlementsPath = ERESOURCE_ENTITLEMENTS_ENDPOINT(eresourceId);
   const entitlementOptionsPath = ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT(eresourceId);
@@ -283,6 +321,8 @@ const EResourceViewRoute = ({
         onEResourceClick: handleEResourceClick,
         onToggleTags: handleToggleTags,
         onSynchronize: handleSynchronize,
+        onDeleteDryRun: handleDeleteDryRun,
+        onDelete: handleDelete,
       }}
       isLoading={isLoading()}
     />

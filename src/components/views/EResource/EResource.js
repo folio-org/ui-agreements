@@ -40,6 +40,8 @@ const propTypes = {
     onEdit: PropTypes.func.isRequired,
     onToggleTags: PropTypes.func.isRequired,
     onSynchronize: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onDeleteDryRun: PropTypes.func.isRequired,
   }).isRequired,
   helperApp: PropTypes.func,
   isLoading: PropTypes.bool,
@@ -57,12 +59,18 @@ const EResource = ({
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
   const [showOkayConfirmationModal, setShowOkayConfirmationModal] = useState(false);
 
-  const totalCount = data.packageContentsCount;
+  const [modalData, setModalData] = useState({
+    numberDeleted: 0,
+    // numberNotDeleted: 0,
+  });
+
+
+  // const totalCount = data.packageContentsCount;
 
   // const numberDeleted = totalCount; // for test
   // const numberDeleted = totalCount - 3;
-  const numberDeleted = 0;
-  const numberNotDeleted = totalCount - numberDeleted;
+  // const numberDeleted = 0;
+  // const numberNotDeleted = totalCount - numberDeleted;
 
   const paneProps = {
     defaultWidth: '55%',
@@ -122,11 +130,20 @@ const EResource = ({
           buttonStyle="dropdownItem"
           disabled={data.packageContentsCount === 0}
           id="clickable-dropdown-delete-pkg-contents"
-          // onClick={() => console.log('Delete package action not implemented yet')}
-          onClick={() => (numberDeleted > 0
-            ? setShowDeleteConfirmationModal(true)
-            : setShowOkayConfirmationModal(true))
-          }
+          // onClick={() => (numberDeleted > 0
+          //   ? setShowDeleteConfirmationModal(true)
+          //   : setShowOkayConfirmationModal(true))
+          // }
+          onClick={async () => {
+            const result = await handlers.onDeleteDryRun();
+            setModalData(result);
+
+            if (result.numberDeleted > 0) {
+              setShowDeleteConfirmationModal(true);
+            } else {
+              setShowOkayConfirmationModal(true);
+            }
+          }}
         >
           <Icon icon="trash">
             <FormattedMessage id="ui-agreements.eresources.deletePackageContents" />
@@ -139,6 +156,10 @@ const EResource = ({
   };
 
   const getDeleteConfirmationMessage = () => {
+    const totalCount = data.packageContentsCount;
+    const { numberDeleted } = modalData;
+    const numberNotDeleted = totalCount - numberDeleted;
+
     return (
       <>
         <p>
@@ -176,10 +197,10 @@ const EResource = ({
         lastMenu={
           eresource.class === resourceClasses.PCI ||
             eresource.class === resourceClasses.TITLEINSTANCE ? (
-            <IfPermission perm="ui-agreements.resources.edit">
-              <PaneMenu>
-                {handlers.onToggleTags && <TagButton entity={eresource} />}
-                {eresource.subType?.value !== 'print' && (
+              <IfPermission perm="ui-agreements.resources.edit">
+                <PaneMenu>
+                  {handlers.onToggleTags && <TagButton entity={eresource} />}
+                  {eresource.subType?.value !== 'print' && (
                   <Button
                     buttonStyle="primary"
                     id="clickable-edit-eresource"
@@ -188,10 +209,10 @@ const EResource = ({
                   >
                     <FormattedMessage id="stripes-components.button.edit" />
                   </Button>
-                )}
-              </PaneMenu>
-            </IfPermission>
-          ) : null
+                  )}
+                </PaneMenu>
+              </IfPermission>
+            ) : null
         }
         onClose={handlers.onClose}
         paneTitle={eresource.name}
@@ -216,14 +237,13 @@ const EResource = ({
           message={getDeleteConfirmationMessage()}
           onCancel={() => setShowDeleteConfirmationModal(false)}
           onConfirm={() => {
-            // handlers.onDelete();
-            console.log('Delete action not implemented yet');
+            handlers.onDelete();
             setShowDeleteConfirmationModal(false);
           }}
           open={showDeleteConfirmationModal}
         />
       )}
-      {numberDeleted === 0 && (
+      {modalData?.numberDeleted === 0 && (
         <Modal
           footer={
             <ModalFooter>

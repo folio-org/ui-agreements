@@ -433,6 +433,8 @@
   "eresources.deleteConfirmationMessage.pciNotDeleted": "<strong>{numberNotDeleted}</strong> e-resources can not be deleted, most likely because they are linked directly to one or more Agreement Lines.",
   "eresources.deleteConfirmationMessage.selectDelete": "Select \"Delete\" to create the deletion job.",
   "eresources.deleteConfirmationMessage.noDeletion": "No e-resources can be deleted from the package <strong>{pkgName}</strong>, most likely because they are linked directly to one or more Agreement Lines.",
+  "eresources.deleteJob.success": "<strong>Package contents deletion job created:</strong> for {pkgName}. Updates will be displayed in the Local KB Admin app.",
+  "eresources.viewJobLink": "View Local KB Admin job",
   "customCoverage.warn.startDate": "Start date will be cleared as no e-resource is linked",
   "customCoverage.warn.endDate": "End date will be cleared as no e-resource is linked",
   "customCoverage.warn.startVolume": "Start volume will be cleared as no e-resource is linked",
