@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { useQuery } from 'react-query';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
+
 import {
-  usePrevNextPagination,
-} from '@folio/stripes-erm-components';
-import { generateKiwtQueryParams, useKiwtSASQuery } from '@k-int/stripes-kint-components';
+  generateKiwtQueryParams,
+  useKiwtSASQuery,
+  usePrevNextPagination
+} from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Platforms';
 import NoPermissions from '../../components/NoPermissions';
