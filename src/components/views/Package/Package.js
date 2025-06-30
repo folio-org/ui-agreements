@@ -54,7 +54,6 @@ const Package = ({ data, handlers }) => {
   ];
 
   const { eresource: { alternateResourceNames, description, identifiers, packageDescriptionUrls } } = data;
-
   return (
     <HasCommand
       commands={shortcuts}
@@ -70,7 +69,7 @@ const Package = ({ data, handlers }) => {
             </Col>
           </Row>
           <AccordionSet initialStatus={initialAccordionsState}>
-            {(description || alternateResourceNames?.length || packageDescriptionUrls?.length || identifiers?.length) &&
+            {(!!description || !!alternateResourceNames?.length || !!packageDescriptionUrls?.length || !!identifiers?.length) &&
               <ExtendedPackageInformation {...getSectionProps('extendedPackageInformation')} />
             }
             <Agreements
