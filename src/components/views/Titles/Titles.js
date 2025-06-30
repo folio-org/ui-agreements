@@ -26,10 +26,10 @@ import {
   getResourceIdentifier,
   EResourceType,
   useHandleSubmitSearch,
-  usePrevNextPagination,
-  SearchKeyControl,
   useSASQQIndex
 } from '@folio/stripes-erm-components';
+import { usePrevNextPagination, SearchKeyControl } from '@k-int/stripes-kint-components';
+
 import TitleFilters from '../../TitleFilters';
 import IdentifierReassignmentForm from '../../IdentifierReassignmentForm';
 
