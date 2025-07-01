@@ -23,7 +23,7 @@ const HookConsumer = ({ children }) => {
 
 let hookResult;
 describe('useAgreementsDisplaySettings', () => {
-  const mockHandleSubmit = jest.fn();
+  const mockHandleSubmit = jest.fn().mockImplementation(async update => update);
 
   beforeEach(() => {
     jest.clearAllMocks();

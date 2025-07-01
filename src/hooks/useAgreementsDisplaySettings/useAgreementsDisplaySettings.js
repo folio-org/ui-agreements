@@ -118,7 +118,7 @@ const useAgreementsDisplaySettings = ({
                     });
 
                     return (
-                      <li key={update.id}>
+                      <li key={update.id || update.key}>
                         {intl.formatMessage(
                           { id: 'ui-agreements.settings.update.success' },
                           { settingLabel, newValue: update.value }
@@ -144,7 +144,7 @@ const useAgreementsDisplaySettings = ({
                     });
 
                     return (
-                      <li key={update.id}>
+                      <li key={update.id || update.key}>
                         {intl.formatMessage(
                           { id: 'ui-agreements.settings.update.error' },
                           { settingLabel }
