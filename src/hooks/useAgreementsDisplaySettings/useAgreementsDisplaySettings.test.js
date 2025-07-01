@@ -1,6 +1,6 @@
 import { MemoryRouter } from 'react-router-dom';
 import { invalidateQueries, setQueriesData } from 'react-query';
-import { waitFor, screen, act } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor, act } from '@folio/jest-config-stripes/testing-library/react';
 import { renderWithIntl, Callout } from '@folio/stripes-erm-testing';
 import { useSettingSection } from '@k-int/stripes-kint-components';
 
