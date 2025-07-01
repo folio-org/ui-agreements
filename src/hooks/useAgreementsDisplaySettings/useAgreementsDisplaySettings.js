@@ -108,6 +108,7 @@ const useAgreementsDisplaySettings = ({
 
             callout.sendCallout({
               type: 'success',
+              timeout: 6000,
               message: (
                 <ul>
                   {successful.map(update => {
@@ -134,6 +135,7 @@ const useAgreementsDisplaySettings = ({
           if (failed.length > 0) {
             callout.sendCallout({
               type: 'error',
+              timeout: 6000,
               message: (
                 <ul>
                   {failed.map(({ update }) => {
