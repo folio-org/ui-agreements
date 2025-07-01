@@ -141,6 +141,7 @@ const EResourceViewRoute = ({
           </p>
         </>
       ),
+      timeout: 10000
     });
 
     setTimeout(() => {
