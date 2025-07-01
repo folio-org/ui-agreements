@@ -1,6 +1,8 @@
 import { useCallback, useMemo } from 'react';
 import { useQueryClient } from 'react-query';
+import { useIntl } from 'react-intl';
 import get from 'lodash/get';
+import { useCallout } from '@folio/stripes/core';
 
 import { useSettingSection } from '@k-int/stripes-kint-components';
 
@@ -12,6 +14,8 @@ import getAgreementsSettingsField from './getAgreementsSettingsField';
 const useAgreementsDisplaySettings = ({
   namespaceAppend = []
 } = {}) => {
+  const callout = useCallout();
+  const intl = useIntl();
   const queryClient = useQueryClient();
   const baseQueryKey = useMemo(() => [
     'ERM',
@@ -84,26 +88,89 @@ const useAgreementsDisplaySettings = ({
     });
 
     if (updates.length > 0) {
-      return Promise.all(updates.map(update => handleSubmit(update)))
+      const successful = [];
+      const failed = [];
+
+      const updatePromises = updates.map(update => handleSubmit(update)
         .then(() => {
-          // Optimistically update the cache
-          queryClient.setQueriesData(baseQueryKey, oldSettings => optimisticUpdateNewSettings(updates, oldSettings));
+          successful.push(update);
         })
+        .catch((error) => {
+          failed.push({ update, error });
+        }));
+
+      return Promise.all(updatePromises)
         .then(() => {
-          queryClient.invalidateQueries(baseQueryKey);
+          if (successful.length > 0) {
+            // Optimistically update the cache
+            queryClient.setQueriesData(baseQueryKey, oldSettings => optimisticUpdateNewSettings(successful, oldSettings));
+            queryClient.invalidateQueries(baseQueryKey);
+
+            callout.sendCallout({
+              type: 'success',
+              message: (
+                <ul>
+                  {successful.map(update => {
+                    const translationId = getAgreementsSettingsField(update.key);
+                    const settingLabel = intl.formatMessage({
+                      id: `ui-agreements.settings.${translationId}`,
+                      fallbackMessage: update.key
+                    });
+
+                    return (
+                      <li key={update.id}>
+                        {intl.formatMessage(
+                          { id: 'ui-agreements.settings.update.success' },
+                          { settingLabel, newValue: update.value }
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )
+            });
+          }
+
+          if (failed.length > 0) {
+            callout.sendCallout({
+              type: 'error',
+              message: (
+                <ul>
+                  {failed.map(({ update }) => {
+                    const translationId = getAgreementsSettingsField(update.key);
+                    const settingLabel = intl.formatMessage({
+                      id: `ui-agreements.settings.${translationId}`,
+                      fallbackMessage: update.key
+                    });
+
+                    return (
+                      <li key={update.id}>
+                        {intl.formatMessage(
+                          { id: 'ui-agreements.settings.update.error' },
+                          { settingLabel }
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )
+            });
+          }
+          return true;
         });
     }
-
     // In case we somehow called this with no updates
     // (Shouldn't be possible because of the disabled save button),
     // return an empty promise
     return Promise.resolve(true);
   }, [
     baseQueryKey,
+    callout,
     handleSubmit,
+    intl,
     optimisticUpdateNewSettings,
     queryClient,
-    rawSettings
+    rawSettings,
   ]);
 
   return {
