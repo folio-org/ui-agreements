@@ -22,6 +22,8 @@ import {
   ENTITLEMENT_OPTIONS_PAGINATION_ID,
   PACKAGE_CONTENT_PAGINATION_ID,
   PACKAGES_SYNC_ENDPOINT,
+  ERESOURCES_DRY_RUN_ENDPOINT,
+  ERESOURCES_DELETE_ENDPOINT,
   resourceClasses,
 } from '../../constants';
 import { useAgreementsDisplaySettings, useSuppressFromDiscovery } from '../../hooks';
@@ -114,41 +116,54 @@ const EResourceViewRoute = ({
       });
   };
 
-  const handleDeleteDryRun = async () => {
-    return {
-      numberDeleted: 170,
-      // numberNotDeleted: 0,
-    };
-  };
+  const { mutateAsync: handleDeleteDryRun } = useMutation(
+    [ERESOURCES_DRY_RUN_ENDPOINT, eresourceId, 'deleteDryRun'],
+    () => ky.post(ERESOURCES_DRY_RUN_ENDPOINT('pkg'), {
+      json: {
+        resources: [eresourceId]
+      }
+    }).json()
+      .then(response => {
+        const numberDeleted = response?.statistics?.pci ?? 0;
+        return { numberDeleted };
+      })
+  );
 
-  const handleDelete = () => {
-    const pkgName = eresource.name;
-    console.log('Delete action not implemented yet');
+  const { mutateAsync: handleDelete } = useMutation(
+    [ERESOURCES_DELETE_ENDPOINT, eresourceId, 'delete'],
+    () => ky.post(ERESOURCES_DELETE_ENDPOINT('pkg'), {
+      json: {
+        resources: [eresourceId]
+      }
+    }).json()
+      .then(response => {
+        const jobId = response?.id;
+        const pkgName = eresource.name;
 
-    callout.sendCallout({
-      message: (
-        <>
-          <p>
-            <FormattedMessage
-              id="ui-agreements.eresources.deleteJob.success"
-              values={{ pkgName }}
-            />
-          </p>
-          <p>
-            <Link ref={linkRef} to="/local-kb-admin/">
-              <FormattedMessage id="ui-agreements.eresources.viewJobLink" />
-            </Link>
-          </p>
-        </>
-      ),
-      timeout: 10000
-    });
+        callout.sendCallout({
+          message: (
+            <>
+              <p>
+                <FormattedMessage
+                  id="ui-agreements.eresources.deleteJob.success"
+                  values={{ pkgName }}
+                />
+              </p>
+              <p>
+                <Link ref={linkRef} to={`/local-kb-admin/${jobId}`}>
+                  <FormattedMessage id="ui-agreements.eresources.viewJobLink" />
+                </Link>
+              </p>
+            </>
+          ),
+          timeout: 10000
+        });
 
-    setTimeout(() => {
-      linkRef.current?.focus();
-    }, 50);
-  };
-
+        setTimeout(() => {
+          linkRef.current?.focus();
+        }, 50);
+      })
+  );
 
   const entitlementsPath = ERESOURCE_ENTITLEMENTS_ENDPOINT(eresourceId);
   const entitlementOptionsPath = ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT(eresourceId);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -32,7 +32,6 @@ const propTypes = {
       class: PropTypes.string,
       name: PropTypes.string,
       tags: PropTypes.arrayOf(PropTypes.string),
-      // type: PropTypes.object,
     }),
   }),
   handlers: PropTypes.shape({
@@ -59,18 +58,7 @@ const EResource = ({
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
   const [showOkayConfirmationModal, setShowOkayConfirmationModal] = useState(false);
 
-  const [modalData, setModalData] = useState({
-    numberDeleted: 0,
-    // numberNotDeleted: 0,
-  });
-
-
-  // const totalCount = data.packageContentsCount;
-
-  // const numberDeleted = totalCount; // for test
-  // const numberDeleted = totalCount - 3;
-  // const numberDeleted = 0;
-  // const numberNotDeleted = totalCount - numberDeleted;
+  const [numberDeleted, setNumberDeleted] = useState(0);
 
   const paneProps = {
     defaultWidth: '55%',
@@ -130,13 +118,9 @@ const EResource = ({
           buttonStyle="dropdownItem"
           disabled={data.packageContentsCount === 0}
           id="clickable-dropdown-delete-pkg-contents"
-          // onClick={() => (numberDeleted > 0
-          //   ? setShowDeleteConfirmationModal(true)
-          //   : setShowOkayConfirmationModal(true))
-          // }
           onClick={async () => {
             const result = await handlers.onDeleteDryRun();
-            setModalData(result);
+            setNumberDeleted(result.numberDeleted);
 
             if (result.numberDeleted > 0) {
               setShowDeleteConfirmationModal(true);
@@ -157,7 +141,6 @@ const EResource = ({
 
   const getDeleteConfirmationMessage = () => {
     const totalCount = data.packageContentsCount;
-    const { numberDeleted } = modalData;
     const numberNotDeleted = totalCount - numberDeleted;
 
     return (
@@ -243,7 +226,7 @@ const EResource = ({
           open={showDeleteConfirmationModal}
         />
       )}
-      {modalData?.numberDeleted === 0 && (
+      {numberDeleted === 0 && (
         <Modal
           footer={
             <ModalFooter>
