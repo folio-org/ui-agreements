@@ -28,6 +28,7 @@ const GokbRoute = ({ location }) => {
     },
   ];
 
+  // EXAMPLE: Using JSONPath to format the results
   const formatter = {
     name: (resource) => {
       const name = jsonpath.query(resource, '$.name');
