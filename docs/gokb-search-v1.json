@@ -1,0 +1,294 @@
+{
+  "name": "GOKb Search",
+  "version": "1.0",
+  "type": {
+    "name": "SASQRouteConfig",
+    "version": "1.0"
+  },
+  "configuration": {
+    "results": {
+      "display": {
+        "columns": [
+          {
+            "name": "name",
+            "type": "String",
+            "value": {
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "$.name"
+            }
+          },
+          {
+            "name": "publicationType",
+            "type": "String",
+            "value": {
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "$.type"
+            }
+          },
+          {
+            "name": "isbns",
+            "type": "Array",
+            "arrayType": "String",
+            "joinStrategy": "Comma",
+            "value": {
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "$._embedded.ids[?(@.namespace.value == 'isbn')].value"
+            }
+          },
+          {
+            "name": "issns",
+            "type": "Array",
+            "arrayType": "String",
+            "joinStrategy": "Comma",
+            "value": {
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "$._embedded.ids[?(@.namespace.value == 'issn')].value"
+            }
+          },
+          {
+            "name": "zdbids",
+            "type": "Array",
+            "arrayType": "String",
+            "joinStrategy": "Comma",
+            "value": {
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "$._embedded.ids[?(@.namespace.value == 'zdb')].value"
+            }
+          },
+          {
+            "name": "ezbids",
+            "type": "Array",
+            "arrayType": "String",
+            "joinStrategy": "Comma",
+            "value": {
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "$._embedded.ids[?(@.namespace.value == 'ezb')].value"
+            }
+          },
+          {
+            "name": "publisher",
+            "type": "String",
+            "value": {
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "$.publisherName"
+            }
+          },
+          {
+            "name": "firstAuthor",
+            "type": "String",
+            "value": {
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "$.firstAuthor"
+            }
+          },
+          {
+            "name": "firstEditor",
+            "type": "String",
+            "value": {
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "$.firstEditor"
+            }
+          },
+          {
+            "name": "editionStatement",
+            "type": "String",
+            "value": {
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "$.editionStatement"
+            }
+          },
+          {
+            "name": "volume",
+            "type": "String",
+            "value": {
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "$.volumeNumber"
+            }
+          },
+          {
+            "name": "subjects",
+            "type": "String",
+            "value": {
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "$.subjects"
+            }
+          },
+          {
+            "name": "gokbid",
+            "type": "String",
+            "value": {
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "$.id"
+            }
+          },
+          {
+            "name": "gokbuuid",
+            "type": "String",
+            "value": {
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "$.uuid"
+            }
+          }
+        ]
+      },
+      "fetch": {
+        "baseUrl": "https://gokb.org/gokb/rest/titles",
+        "mapping": {
+          "results": "data",
+          "totalRecords": "_pagination.total"
+        },
+        "search": {
+          "type": "queryDropdown",
+          "options": [
+            {
+              "name": "keyword",
+              "type": "Handlebars",
+              "parameter": "q=$string"
+            },
+            {
+              "name": "nameAndAltNames",
+              "type": "Handlebars",
+              "parameter": "label=$string"
+            },
+            {
+              "name": "altName",
+              "type": "Handlebars",
+              "parameter": "altName=$string"
+            },
+            {
+              "name": "altName",
+              "type": "Handlebars",
+              "parameter": "altName=$string"
+            },
+            {
+              "name": "identifiers",
+              "type": "Handlebars",
+              "parameter": "identifier=$string"
+            },
+            {
+              "name": "identifiers",
+              "type": "Handlebars",
+              "parameter": "identifier=$string"
+            },
+            {
+              "name": "eisbn",
+              "type": "Handlebars",
+              "parameter": "identifier=eisbn,$string"
+            },
+            {
+              "name": "isbn",
+              "type": "Handlebars",
+              "parameter": "identifier=isbn,$string"
+            },
+            {
+              "name": "eissn",
+              "type": "Handlebars",
+              "parameter": "identifier=eissn,$string"
+            },
+            {
+              "name": "issn",
+              "type": "Handlebars",
+              "parameter": "identifier=issn,$string"
+            },
+            {
+              "name": "ezb",
+              "type": "Handlebars",
+              "parameter": "identifier=ezb,$string"
+            },
+            {
+              "name": "zdb",
+              "type": "Handlebars",
+              "parameter": "identifier=zdb,$string"
+            },
+            {
+              "name": "gokbUuid",
+              "type": "Handlebars",
+              "parameter": "uuid=$string"
+            },
+            {
+              "name": "gokbId",
+              "type": "Handlebars",
+              "parameter": "id=$string"
+            }
+          ]
+        },
+        "filters": [
+          {
+            "name": "type",
+            "filterPath": "contentType",
+            "type": "Enum",
+            "enumValues": [
+              {
+                "value": "book",
+                "default": true
+              },
+              {
+                "value": "database",
+                "default": false
+              },
+              {
+                "value": "journal",
+                "default": false
+              },
+              {
+                "value": "other",
+                "default": false
+              },
+              {
+                "value": "requested",
+                "default": false
+              }
+            ]
+          }
+        ],
+        "actions": {},
+        "pagination": {
+          "type": "offset"
+        }
+      }
+    },
+    "view": {
+      "display": {
+        "type": "FlexboxGrid",
+        "rows": [
+          {
+            "columns": [
+              {
+                "name": "name",
+                "type": "String",
+                "value": {
+                  "type": "access",
+                  "accessType": "JSONPath",
+                  "expression": "$.name"
+                }
+              },
+              {
+                "name": "publicationType",
+                "type": "String",
+                "value": {
+                  "type": "access",
+                  "accessType": "JSONPath",
+                  "expression": "$.type"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
