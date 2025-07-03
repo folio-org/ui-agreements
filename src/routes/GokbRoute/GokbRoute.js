@@ -25,10 +25,6 @@ const GokbRoute = ({ location }) => {
     },
   ];
 
-  const formatter = {
-    title: (title) => title.name,
-  };
-
   return (
     <SASQRoute
       fetchParameters={fetchParameters}
@@ -50,7 +46,6 @@ const GokbRoute = ({ location }) => {
       mainPaneProps={{
         id: 'gokb-search-main-pane',
       }}
-      mclProps={{ formatter }}
       path={location.pathname}
       persistedPanesetProps={{
         id: 'gokb-search-main-paneset',
