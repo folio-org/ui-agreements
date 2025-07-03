@@ -71,7 +71,6 @@ const App = (props) => {
     match: { path },
     stripes
   } = props;
-  console.log(path)
   const [showKeyboardShortcutsModal, setShowKeyboardShortcutsModal] = useState(false);
 
   const addKey = useIntlKeyStore(state => state.addKey);
