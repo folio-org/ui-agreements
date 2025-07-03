@@ -38,6 +38,8 @@ import BasketRoute from './routes/BasketRoute';
 import EResourceViewRoute from './routes/EResourceViewRoute';
 import EResourceEditRoute from './routes/EResourceEditRoute';
 
+import GokbRoute from './routes/GokbRoute';
+
 import PackagesRoute from './routes/PackagesRoute';
 
 import NoteCreateRoute from './routes/NoteCreateRoute';
@@ -69,7 +71,7 @@ const App = (props) => {
     match: { path },
     stripes
   } = props;
-
+  console.log(path)
   const [showKeyboardShortcutsModal, setShowKeyboardShortcutsModal] = useState(false);
 
   const addKey = useIntlKeyStore(state => state.addKey);
@@ -93,6 +95,8 @@ const App = (props) => {
       return 'input-title-search';
     } else if (pathname?.startsWith('/erm/agreementLines')) {
       return 'input-agreementLine-search';
+    } else if (pathname?.startsWith('/erm/gokb')) {
+      return 'input-gokb-search';
     } else {
       return undefined;
     }
@@ -149,6 +153,16 @@ const App = (props) => {
             to="/erm/packages"
           >
             <FormattedMessage id="ui-agreements.localKBSearch" />
+          </Button>
+          <Button
+            buttonStyle={
+              pathname?.startsWith('/erm/gokb') ?
+                'primary' :
+                'default'
+            }
+            to="/erm/gokb"
+          >
+            <FormattedMessage id="ui-agreements.gokbSearch" />
           </Button>
         </ButtonGroup>
       );
@@ -211,6 +225,8 @@ const App = (props) => {
                 <Route component={AgreementLinesRoute} path={`${path}/agreementLines/:id?`}>
                   <Route component={AgreementLineViewRoute} path={`${path}/agreementLines/:lineId/agreement/:agreementId`} />
                 </Route>
+
+                <Route component={GokbRoute} path={`${path}/gokb/:id?`} />
 
                 <Route component={EResourceEditRoute} path={`${path}/titles/:id/edit`} />
                 <Route component={TitlesRoute} path={`${path}/titles/:id?`}>
