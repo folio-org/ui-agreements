@@ -19,6 +19,8 @@ const GokbRoute = ({ location }) => {
     return `?max=${params.perPage}&offset=${offset}&es=true`;
   };
 
+  // When building the SASQ from the config file, using the results.display values
+  // should construct a formatter and resultColumns object
   const resultColumns = [
     {
       propertyPath: 'name',
@@ -40,8 +42,7 @@ const GokbRoute = ({ location }) => {
         id: 'gokb-search-main-filter-pane',
       }}
       id="gokb-search"
-      lookupQueryPromise={({ _ky, queryParams, endpoint }) =>
-        kyImport.get(`${endpoint}${queryParams}`).json()
+      lookupQueryPromise={({ _ky, queryParams, endpoint }) => kyImport.get(`${endpoint}${queryParams}`).json()
       }
       lookupResponseTransform={(data) => {
         const transformedData = {
@@ -69,7 +70,9 @@ const GokbRoute = ({ location }) => {
 };
 
 GokbRoute.propTypes = {
-  location: PropTypes.object.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default GokbRoute;
