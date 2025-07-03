@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 
 import kyImport from 'ky';
+import jsonpath from 'jsonpath';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
@@ -20,10 +21,17 @@ const GokbRoute = ({ location }) => {
 
   const resultColumns = [
     {
-      propertyPath: 'uuid',
-      label: 'UUID',
+      propertyPath: 'name',
+      label: 'Name',
     },
   ];
+
+  const formatter = {
+    name: (resource) => {
+      const name = jsonpath.query(resource, '$.name');
+      return name;
+    },
+  };
 
   return (
     <SASQRoute
@@ -46,6 +54,9 @@ const GokbRoute = ({ location }) => {
       mainPaneProps={{
         id: 'gokb-search-main-pane',
       }}
+      mclProps={{
+        formatter,
+      }}
       path={location.pathname}
       persistedPanesetProps={{
         id: 'gokb-search-main-paneset',
@@ -58,7 +69,7 @@ const GokbRoute = ({ location }) => {
 };
 
 GokbRoute.propTypes = {
-  path: PropTypes.string.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 export default GokbRoute;
