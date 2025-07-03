@@ -28,6 +28,7 @@
   "search": "Search",
   "agreementsSearch": "Agreements search",
   "localKBSearch": "Local KB search",
+  "gokbSearch": "GOKb search",
   "titleUpdated-callout": "<strong>title updated:</strong> {eresourceName}",
   "appMenu.keyboardShortcuts": "Keyboard shortcuts",
   "agreement": "Agreement",
