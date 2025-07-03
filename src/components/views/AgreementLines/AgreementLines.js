@@ -25,7 +25,8 @@ import {
   useColumnManager
 } from '@folio/stripes/smart-components';
 
-import { useHandleSubmitSearch, usePrevNextPagination } from '@folio/stripes-erm-components';
+import { useHandleSubmitSearch } from '@folio/stripes-erm-components';
+import { usePrevNextPagination } from '@k-int/stripes-kint-components';
 
 import AgreementLineFilters from '../../AgreementLineFilters';
 import { AGREEMENT_LINES_COLUMN_MAPPING, AGREEMENTS_TAB_FILTER_PANE, AGREEMENTS_TAB_PANESET, AGREEMENTS_TAB_PANE_ID, resultCount } from '../../../constants';

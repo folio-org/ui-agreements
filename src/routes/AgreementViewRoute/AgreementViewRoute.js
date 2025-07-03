@@ -13,12 +13,14 @@ import {
   useInterfaces,
   INVALID_JSON_ERROR,
   JSON_ERROR,
-  usePrevNextPagination,
   useErmHelperApp
 } from '@folio/stripes-erm-components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 
-import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
+import {
+  generateKiwtQueryParams,
+  usePrevNextPagination
+} from '@k-int/stripes-kint-components';
 
 import View from '../../components/views/Agreement';
 import { parseMclPageSize, urls } from '../../components/utilities';
