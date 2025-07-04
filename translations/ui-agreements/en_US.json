@@ -551,7 +551,7 @@
     "duplicateAgreementModal.supplementaryDocuments": "Supplementary documents",
     "duplicateAgreementModal.supplementaryProperties": "Supplementary properties",
     "settings.hideAccordions.description": "Hide accordions in agreement edit view",
-    "settings.hideAccordions.usageData": "Usage data",
+    "settings.hideAccordions.usageData": "Hide accordions in agreement edit view for Usage data",
     "settings.appSettings": "App settings",
     "settings.settingsSection.fileStorage": "File storage",
     "settings.fileStorage.s3AccessKey": "S3 access key",
