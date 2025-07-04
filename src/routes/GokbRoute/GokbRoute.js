@@ -10,7 +10,7 @@ import { SASQRoute } from '@k-int/stripes-kint-components';
 
 const GokbRoute = ({ location }) => {
   const fetchParameters = {
-    endpoint: 'https://gokb.org/gokb/rest/titles',
+    endpoint: 'https://gokbt.gbv.de/gokb/rest/titles',
     SASQ_MAP: {
       searchKey: 'uuid',
     },
