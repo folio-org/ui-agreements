@@ -62,6 +62,14 @@ const PauseButton = (props) => {
   return <Button onClick={() => props.handlers.onSynchronize('PAUSED')}>PauseButton</Button>;
 };
 
+const DeleteDryRunButton = (props) => (
+  <Button onClick={props.handlers.onDeleteDryRun}>DeleteDryRunButton</Button>
+);
+
+const DeleteButton = (props) => (
+  <Button onClick={props.handlers.onDelete}>DeleteButton</Button>
+);
+
 CloseButton.propTypes = {
   handlers: PropTypes.shape({
     onClose: PropTypes.func,
@@ -122,6 +130,19 @@ PauseButton.propTypes = {
   }),
 };
 
+DeleteDryRunButton.propTypes = {
+  handlers: PropTypes.shape({
+    onDeleteDryRun: PropTypes.func,
+  }),
+};
+
+DeleteButton.propTypes = {
+  handlers: PropTypes.shape({
+    onDelete: PropTypes.func,
+  }),
+};
+
+
 const historyPushMock = jest.fn();
 
 jest.mock('../../components/views/EResource', () => {
@@ -138,12 +159,19 @@ jest.mock('../../components/views/EResource', () => {
       <ToggleTagsButton {...props} />
       <SynchronizeButton {...props} />
       <PauseButton {...props} />
+      <DeleteDryRunButton {...props} />
+      <DeleteButton {...props} />
     </div>
   );
 });
 
 const data = {
-  handlers,
+  handlers: {
+    ...handlers,
+    onDelete: () => {
+      historyPushMock('/local-kb-admin/mock-id');
+    }
+  },
   isSuppressFromDiscoveryEnabled: () => { },
   history: {
     push: historyPushMock,
@@ -262,6 +290,36 @@ describe('EResourceViewRoute', () => {
     test('renders the PauseButton button', () => {
       const { getByText } = renderComponent;
       expect(getByText('PauseButton')).toBeInTheDocument();
+    });
+
+    test('triggers the DeleteDryRunButton callback', async () => {
+      await waitFor(async () => {
+        await ButtonInteractor('DeleteDryRunButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
+    });
+
+    test('renders the DeleteDryRunButton button', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('DeleteDryRunButton')).toBeInTheDocument();
+    });
+
+    // test('triggers the DeleteButton callback', async () => {
+    //   await waitFor(async () => {
+    //     await ButtonInteractor('DeleteButton').click();
+    //   });
+
+    //   await waitFor(async () => {
+    //     expect(historyPushMock).toHaveBeenCalled();
+    //   });
+    // });
+
+    test('renders the DeleteButton button', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('DeleteButton')).toBeInTheDocument();
     });
 
     describe('clicking start synchronisation', () => {

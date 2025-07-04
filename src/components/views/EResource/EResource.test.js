@@ -10,6 +10,11 @@ jest.mock('../Package', () => () => <div>Package</div>);
 jest.mock('../Title', () => () => <div>Title</div>);
 jest.mock('../PCI', () => () => <div>PCI</div>);
 
+const packageDataWithContents = {
+  ...packageData,
+  packageContentsCount: 3
+};
+
 describe('EResource', () => {
   let renderComponent;
 
@@ -76,7 +81,7 @@ describe('EResource', () => {
               HelperComponent: () => <div>HelperComponent</div>,
               TagButton: () => <div>TagButton</div>
             }}
-            data={packageData}
+            data={packageDataWithContents}
             handlers={handlers}
             helperApp={helperApp}
             isLoading={false}
@@ -115,6 +120,12 @@ describe('EResource', () => {
       test('Pause synchronisation button exists', async () => {
         await waitFor(async () => {
           await Button('Pause synchronisation').exists();
+        });
+      });
+
+      test('Delete package contents button exists', async () => {
+        await waitFor(async () => {
+          await Button({ id: 'clickable-dropdown-delete-pkg-contents' }).exists();
         });
       });
     });

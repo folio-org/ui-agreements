@@ -1,14 +1,23 @@
-import React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
   Button,
+  ConfirmationModal,
+  Icon,
   LoadingPane,
+  Modal,
+  ModalFooter,
   Pane,
   PaneMenu,
 } from '@folio/stripes/components';
-import { AppIcon, IfPermission, TitleManager, useStripes } from '@folio/stripes/core';
+import {
+  AppIcon,
+  IfPermission,
+  TitleManager,
+  useStripes,
+} from '@folio/stripes/core';
 
 import Package from '../Package';
 import Title from '../Title';
@@ -16,13 +25,13 @@ import PCI from '../PCI';
 import { resourceClasses, syncStates } from '../../../constants';
 
 const propTypes = {
-  components: PropTypes.object,
+  // components: PropTypes.object,
+  components: PropTypes.objectOf(PropTypes.elementType),
   data: PropTypes.shape({
     eresource: PropTypes.shape({
       class: PropTypes.string,
       name: PropTypes.string,
       tags: PropTypes.arrayOf(PropTypes.string),
-      type: PropTypes.object,
     }),
   }),
   handlers: PropTypes.shape({
@@ -30,22 +39,26 @@ const propTypes = {
     onEdit: PropTypes.func.isRequired,
     onToggleTags: PropTypes.func.isRequired,
     onSynchronize: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onDeleteDryRun: PropTypes.func.isRequired,
   }).isRequired,
   helperApp: PropTypes.func,
   isLoading: PropTypes.bool,
 };
 
 const EResource = ({
-  components: {
-    HelperComponent,
-    TagButton
-  },
+  components: { HelperComponent, TagButton },
   data = {},
   data: { eresource, tagsInvalidateLinks, tagsLink } = {},
   handlers,
   isLoading,
 }) => {
   const stripes = useStripes();
+
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
+  const [showOkayConfirmationModal, setShowOkayConfirmationModal] = useState(false);
+
+  const [numberDeleted, setNumberDeleted] = useState(0);
 
   const paneProps = {
     defaultWidth: '55%',
@@ -98,35 +111,88 @@ const EResource = ({
       );
     }
 
+    if (stripes.hasPerm('ui-agreements.resources.delete')) {
+      buttons.push(
+        <Button
+          key="clickable-dropdown-delete-pkg-contents"
+          buttonStyle="dropdownItem"
+          disabled={data.packageContentsCount === 0}
+          id="clickable-dropdown-delete-pkg-contents"
+          onClick={async () => {
+            const result = await handlers.onDeleteDryRun();
+            setNumberDeleted(result.numberDeleted);
+
+            if (result.numberDeleted > 0) {
+              setShowDeleteConfirmationModal(true);
+            } else {
+              setShowOkayConfirmationModal(true);
+            }
+          }}
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="ui-agreements.eresources.deletePackageContents" />
+          </Icon>
+        </Button>
+      );
+    }
+
     return buttons.length ? buttons : null;
+  };
+
+  const getDeleteConfirmationMessage = () => {
+    const totalCount = data.packageContentsCount;
+    const numberNotDeleted = totalCount - numberDeleted;
+
+    return (
+      <>
+        <p>
+          <FormattedMessage
+            id="ui-agreements.eresources.deleteConfirmationMessage.default"
+            values={{ numberDeleted, totalCount, pkgName: eresource.name }}
+          />
+        </p>
+        <p>
+          <FormattedMessage id="ui-agreements.eresources.deleteConfirmationMessage.information" />
+        </p>
+        {numberNotDeleted > 0 && (
+          <p>
+            <FormattedMessage
+              id="ui-agreements.eresources.deleteConfirmationMessage.pciNotDeleted"
+              values={{ numberNotDeleted }}
+            />
+          </p>
+        )}
+        <p>
+          <FormattedMessage id="ui-agreements.eresources.deleteConfirmationMessage.selectDelete" />
+        </p>
+      </>
+    );
   };
 
   return (
     <>
       <Pane
-        {...(eresource.class === resourceClasses.PACKAGE ? { actionMenu: getActionMenu } : {})}
+        {...(eresource.class === resourceClasses.PACKAGE
+          ? { actionMenu: getActionMenu }
+          : {})}
         appIcon={<AppIcon app="agreements" iconKey={icon} size="small" />}
         id="pane-view-eresource"
         lastMenu={
-          (eresource.class === resourceClasses.PCI || eresource.class === resourceClasses.TITLEINSTANCE) ?
-            (
+          eresource.class === resourceClasses.PCI ||
+            eresource.class === resourceClasses.TITLEINSTANCE ? (
               <IfPermission perm="ui-agreements.resources.edit">
                 <PaneMenu>
-                  {handlers.onToggleTags &&
-                    <TagButton
-                      entity={eresource}
-                    />
-                  }
-                  {eresource.subType?.value !== 'print' &&
-                    <Button
-                      buttonStyle="primary"
-                      id="clickable-edit-eresource"
-                      marginBottom0
-                      onClick={handlers.onEdit}
-                    >
-                      <FormattedMessage id="stripes-components.button.edit" />
-                    </Button>
-                  }
+                  {handlers.onToggleTags && <TagButton entity={eresource} />}
+                  {eresource.subType?.value !== 'print' && (
+                  <Button
+                    buttonStyle="primary"
+                    id="clickable-edit-eresource"
+                    marginBottom0
+                    onClick={handlers.onEdit}
+                  >
+                    <FormattedMessage id="stripes-components.button.edit" />
+                  </Button>
+                  )}
                 </PaneMenu>
               </IfPermission>
             ) : null
@@ -144,6 +210,48 @@ const EResource = ({
         link={tagsLink}
         onToggle={handlers.onToggleTags}
       />
+      {eresource.class === resourceClasses.PACKAGE && (
+        <ConfirmationModal
+          buttonStyle="danger"
+          confirmLabel={<FormattedMessage id="ui-agreements.delete" />}
+          data-test-delete-confirmation-modal
+          heading={<FormattedMessage id="ui-agreements.eresources.deleteJob" />}
+          id="delete-pkg-contents-confirmation"
+          message={getDeleteConfirmationMessage()}
+          onCancel={() => setShowDeleteConfirmationModal(false)}
+          onConfirm={() => {
+            handlers.onDelete();
+            setShowDeleteConfirmationModal(false);
+          }}
+          open={showDeleteConfirmationModal}
+        />
+      )}
+      {numberDeleted === 0 && (
+        <Modal
+          footer={
+            <ModalFooter>
+              <Button
+                buttonStyle="primary"
+                data-test-confirmation-modal-ok-button
+                onClick={() => setShowOkayConfirmationModal(false)}
+              >
+                <FormattedMessage id="ui-agreements.okay" />
+              </Button>
+            </ModalFooter>
+          }
+          id="delete-pkg-contents-modal-ok"
+          label={<FormattedMessage id="ui-agreements.eresources.deleteJob" />}
+          onClose={() => setShowOkayConfirmationModal(false)}
+          open={showOkayConfirmationModal}
+        >
+          <p>
+            <FormattedMessage
+              id="ui-agreements.eresources.deleteConfirmationMessage.noDeletion"
+              values={{ pkgName: eresource.name }}
+            />
+          </p>
+        </Modal>
+      )}
     </>
   );
 };

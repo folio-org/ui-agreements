@@ -1423,6 +1423,8 @@ const handlers = {
   onEdit: jest.fn(),
   onToggleTags: jest.fn(),
   onSynchronize: jest.fn(),
+  onDelete: jest.fn(),
+  onDeleteDryRun: jest.fn()
 };
 
 export { titleData, packageData, PCIdata, helperApp, handlers };
