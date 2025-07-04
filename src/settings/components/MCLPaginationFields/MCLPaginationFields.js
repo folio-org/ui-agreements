@@ -35,7 +35,7 @@ const MCLPaginationFields = () => {
       <Layout className="padding-bottom-gutter">
         <Row>
           <Col xs={8}> <FormattedMessage id="ui-agreements.settings.tabularList" /> </Col>
-          <Col xs={4}> <FormattedMessage id="ui-agreements.settings.mcl.pageSize" /> </Col>
+          <Col xs={4}> <FormattedMessage id="ui-agreements.settings.pageSize" /> </Col>
         </Row>
       </Layout>
       {mclList.map((mcl, index) => (
@@ -44,7 +44,7 @@ const MCLPaginationFields = () => {
             id={`pageSize-${mcl}-col`}
             xs={8}
           >
-            <FormattedMessage id={`ui-agreements.settings.mcl.${mcl}`} />
+            <FormattedMessage id={`ui-agreements.settings.pageSize.${mcl}`} />
           </Col>
           <Col xs={4}>
             <Field
