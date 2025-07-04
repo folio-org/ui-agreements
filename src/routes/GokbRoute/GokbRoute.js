@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import kyImport from 'ky';
-import jsonpath from 'jsonpath';
+import { JSONPath } from 'jsonpath-plus';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
@@ -30,10 +30,7 @@ const GokbRoute = ({ location }) => {
 
   // EXAMPLE: Using JSONPath to format the results
   const formatter = {
-    name: (resource) => {
-      const name = jsonpath.query(resource, '$.name');
-      return name;
-    },
+    name: (resource) => JSONPath({ path: '$.name', json: resource }),
   };
 
   return (
