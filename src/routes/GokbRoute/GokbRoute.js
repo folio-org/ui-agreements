@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types';
 
 import kyImport from 'ky';
+
 import { JSONPath } from 'jsonpath-plus';
+
+import handlebars from 'handlebars';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
@@ -13,10 +16,21 @@ const GokbRoute = ({ location }) => {
     },
   };
 
-  const generateQuery = (params, _query) => {
+  const generateQuery = (params, query) => {
     const offset = (params.page - 1) * params.perPage;
 
-    return `?max=${params.perPage}&offset=${offset}&es=true`;
+    // EXAMPLE: Using handlebars to generate the query string
+    // Namely name will be the field configured by the results.fetch.search key and its "handlebars template type"
+    // max & offset are configured by the pagination parameters
+    const template = handlebars.compile(
+      '?name={{input}}&max={{perPage}}&offset={{offset}}&es=true'
+    );
+
+    return template({
+      input: query?.query || '',
+      perPage: params?.perPage,
+      offset,
+    });
   };
 
   // When building the SASQ from the config file, using the results.display values
