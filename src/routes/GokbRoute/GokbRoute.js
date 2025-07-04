@@ -1,13 +1,16 @@
 import PropTypes from 'prop-types';
 
 import kyImport from 'ky';
+
+import { JSONPath } from 'jsonpath-plus';
+
 import handlebars from 'handlebars';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
 const GokbRoute = ({ location }) => {
   const fetchParameters = {
-    endpoint: 'https://gokb.org/gokb/rest/titles',
+    endpoint: 'https://gokbt.gbv.de/gokb/rest/titles',
     SASQ_MAP: {
       searchKey: 'uuid',
     },
@@ -30,12 +33,19 @@ const GokbRoute = ({ location }) => {
     });
   };
 
+  // When building the SASQ from the config file, using the results.display values
+  // should construct a formatter and resultColumns object
   const resultColumns = [
     {
-      propertyPath: 'uuid',
-      label: 'UUID',
+      propertyPath: 'name',
+      label: 'Name',
     },
   ];
+
+  // EXAMPLE: Using JSONPath to format the results
+  const formatter = {
+    name: (resource) => JSONPath({ path: '$.name', json: resource }),
+  };
 
   return (
     <SASQRoute
@@ -44,8 +54,7 @@ const GokbRoute = ({ location }) => {
         id: 'gokb-search-main-filter-pane',
       }}
       id="gokb-search"
-      lookupQueryPromise={({ _ky, queryParams, endpoint }) =>
-        kyImport.get(`${endpoint}${queryParams}`).json()
+      lookupQueryPromise={({ _ky, queryParams, endpoint }) => kyImport.get(`${endpoint}${queryParams}`).json()
       }
       lookupResponseTransform={(data) => {
         const transformedData = {
@@ -57,6 +66,9 @@ const GokbRoute = ({ location }) => {
       }}
       mainPaneProps={{
         id: 'gokb-search-main-pane',
+      }}
+      mclProps={{
+        formatter,
       }}
       path={location.pathname}
       persistedPanesetProps={{
@@ -70,7 +82,9 @@ const GokbRoute = ({ location }) => {
 };
 
 GokbRoute.propTypes = {
-  path: PropTypes.string.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default GokbRoute;
