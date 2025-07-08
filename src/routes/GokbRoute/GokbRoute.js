@@ -54,23 +54,20 @@ const GokbRoute = ({ location }) => {
     // EXAMPLE: Using handlebars to generate the query string
     // Namely name will be the field configured by the results.fetch.search key and its "handlebars template type"
     // max & offset are configured by the pagination parameters
-    // const template = handlebars.compile(
-    //   '?name={{input}}&max={{perPage}}&offset={{offset}}&es=true'
-    // );
-
-    // return template({
-    //   input: query?.query || '',
-    //   perPage: params?.perPage,
-    //   offset,
-    // });
     const searchString = query?.query || '';
 
     const searchOption = config.configuration.results.fetch.search.options.find(option => option.name === query?.searchOption);
     const searchParameter = searchOption ? handlebars.compile(searchOption.parameter)({ string: searchString }) : '';
-    const componentType = query?.componentType ? `componentType=${query.componentType}` : 'componentType=Title';
-    const queryString = `?${searchParameter}&${componentType}&max=${params?.perPage}&offset=${offset}&es=true`;
 
-    return queryString;
+    const template = handlebars.compile(
+      `?${searchParameter}&componentType={{componentType}}&max={{perPage}}&offset={{offset}}&es=true`
+    );
+
+    return template({
+      componentType: query?.componentType || 'Title',
+      perPage: params?.perPage,
+      offset,
+    });
   };
 
   // When building the SASQ from the config file, using the results.display values
