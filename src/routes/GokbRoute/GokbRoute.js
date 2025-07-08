@@ -60,11 +60,11 @@ const GokbRoute = ({ location }) => {
     const searchParameter = searchOption ? handlebars.compile(searchOption.parameter)({ string: searchString }) : '';
 
     const template = handlebars.compile(
-      `?${searchParameter}&componentType={{componentType}}&max={{perPage}}&offset={{offset}}&es=true`
+      `?${searchParameter}&componentType={{input}}&max={{perPage}}&offset={{offset}}&es=true`
     );
 
     return template({
-      componentType: query?.componentType || 'Title',
+      input: query?.input || 'Title',
       perPage: params?.perPage,
       offset,
     });
