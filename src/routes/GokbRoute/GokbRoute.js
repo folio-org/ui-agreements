@@ -8,6 +8,38 @@ import handlebars from 'handlebars';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
+// Configuration for search options
+const config = {
+  name: 'GOKb Search',
+  version: '1.0',
+  type: {
+    name: 'SASQRouteConfig',
+    version: '1.0'
+  },
+  configuration: {
+    results: {
+      fetch: {
+        search: {
+          options: [
+            { name: 'keyword', type: 'Handlebars', parameter: 'q={{string}}' },
+            { name: 'nameAndAltNames', type: 'Handlebars', parameter: 'label={{string}}' },
+            { name: 'altName', type: 'Handlebars', parameter: 'altName={{string}}' },
+            { name: 'identifiers', type: 'Handlebars', parameter: 'identifier={{string}}' },
+            { name: 'eisbn', type: 'Handlebars', parameter: 'identifier=eisbn,{{string}}' },
+            { name: 'isbn', type: 'Handlebars', parameter: 'identifier=isbn,{{string}}' },
+            { name: 'eissn', type: 'Handlebars', parameter: 'identifier=eissn,{{string}}' },
+            { name: 'issn', type: 'Handlebars', parameter: 'identifier=issn,{{string}}' },
+            { name: 'ezb', type: 'Handlebars', parameter: 'identifier=ezb,{{string}}' },
+            { name: 'zdb', type: 'Handlebars', parameter: 'identifier=zdb,{{string}}' },
+            { name: 'gokbUuid', type: 'Handlebars', parameter: 'uuid={{string}}' },
+            { name: 'gokbId', type: 'Handlebars', parameter: 'id={{string}}' }
+          ]
+        }
+      }
+    }
+  }
+};
+
 const GokbRoute = ({ location }) => {
   const fetchParameters = {
     endpoint: 'https://gokbt.gbv.de/gokb/rest/titles',
@@ -22,15 +54,23 @@ const GokbRoute = ({ location }) => {
     // EXAMPLE: Using handlebars to generate the query string
     // Namely name will be the field configured by the results.fetch.search key and its "handlebars template type"
     // max & offset are configured by the pagination parameters
-    const template = handlebars.compile(
-      '?name={{input}}&max={{perPage}}&offset={{offset}}&es=true'
-    );
+    // const template = handlebars.compile(
+    //   '?name={{input}}&max={{perPage}}&offset={{offset}}&es=true'
+    // );
 
-    return template({
-      input: query?.query || '',
-      perPage: params?.perPage,
-      offset,
-    });
+    // return template({
+    //   input: query?.query || '',
+    //   perPage: params?.perPage,
+    //   offset,
+    // });
+    const searchString = query?.query || '';
+
+    const searchOption = config.configuration.results.fetch.search.options.find(option => option.name === query?.searchOption);
+    const searchParameter = searchOption ? handlebars.compile(searchOption.parameter)({ string: searchString }) : '';
+    const componentType = query?.componentType ? `componentType=${query.componentType}` : 'componentType=Title';
+    const queryString = `?${searchParameter}&${componentType}&max=${params?.perPage}&offset=${offset}&es=true`;
+
+    return queryString;
   };
 
   // When building the SASQ from the config file, using the results.display values
