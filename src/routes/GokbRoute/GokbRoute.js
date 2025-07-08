@@ -64,7 +64,7 @@ const GokbRoute = ({ location }) => {
     );
 
     return template({
-      input: query?.input || 'Title',
+      input: query?.input || '',
       perPage: params?.perPage,
       offset,
     });
