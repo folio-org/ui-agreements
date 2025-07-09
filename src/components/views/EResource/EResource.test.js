@@ -1,6 +1,6 @@
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { renderWithIntl, Button } from '@folio/stripes-erm-testing';
+import { renderWithIntl, Button, Modal } from '@folio/stripes-erm-testing';
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../../test/helpers';
 import { titleData, packageData, PCIdata, helperApp, handlers } from './testResources';
@@ -126,6 +126,36 @@ describe('EResource', () => {
       test('Delete package contents button exists', async () => {
         await waitFor(async () => {
           await Button({ id: 'clickable-dropdown-delete-pkg-contents' }).exists();
+        });
+      });
+
+      describe('clicking delete package contents', () => {
+        beforeEach(async () => {
+          handlers.onDeleteDryRun.mockResolvedValue({ numberDeleted: 2 });
+
+          await waitFor(async () => {
+            await Button({ id: 'clickable-dropdown-delete-pkg-contents' }).click();
+          });
+        });
+
+        test('renders the confirmation modal', async () => {
+          await waitFor(async () => {
+            await Modal('Create job to delete package contents').exists();
+          });
+        });
+
+        describe('cancelling confirmation modal', () => {
+          beforeEach(async () => {
+            await waitFor(async () => {
+              await Button('Cancel').click();
+            });
+          });
+
+          test('confirmation modal no longer renders', async () => {
+            await waitFor(async () => {
+              await Modal('Create job to delete package contents').absent();
+            });
+          });
         });
       });
     });

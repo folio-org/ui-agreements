@@ -32,8 +32,7 @@ const GokbRoute = ({ location }) => {
         id: 'gokb-search-main-filter-pane',
       }}
       id="gokb-search"
-      lookupQueryPromise={({ _ky, queryParams, endpoint }) =>
-        kyImport.get(`${endpoint}${queryParams}`).json()
+      lookupQueryPromise={({ _ky, queryParams, endpoint }) => kyImport.get(`${endpoint}${queryParams}`).json()
       }
       lookupResponseTransform={(data) => {
         const transformedData = {

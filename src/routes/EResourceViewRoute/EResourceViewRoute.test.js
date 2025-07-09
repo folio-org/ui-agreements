@@ -168,9 +168,6 @@ jest.mock('../../components/views/EResource', () => {
 const data = {
   handlers: {
     ...handlers,
-    onDelete: () => {
-      historyPushMock('/local-kb-admin/mock-id');
-    }
   },
   isSuppressFromDiscoveryEnabled: () => { },
   history: {
@@ -292,6 +289,11 @@ describe('EResourceViewRoute', () => {
       expect(getByText('PauseButton')).toBeInTheDocument();
     });
 
+    test('renders the DeleteDryRunButton button', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('DeleteDryRunButton')).toBeInTheDocument();
+    });
+
     test('triggers the DeleteDryRunButton callback', async () => {
       await waitFor(async () => {
         await ButtonInteractor('DeleteDryRunButton').click();
@@ -301,21 +303,6 @@ describe('EResourceViewRoute', () => {
         expect(historyPushMock).toHaveBeenCalled();
       });
     });
-
-    test('renders the DeleteDryRunButton button', () => {
-      const { getByText } = renderComponent;
-      expect(getByText('DeleteDryRunButton')).toBeInTheDocument();
-    });
-
-    // test('triggers the DeleteButton callback', async () => {
-    //   await waitFor(async () => {
-    //     await ButtonInteractor('DeleteButton').click();
-    //   });
-
-    //   await waitFor(async () => {
-    //     expect(historyPushMock).toHaveBeenCalled();
-    //   });
-    // });
 
     test('renders the DeleteButton button', () => {
       const { getByText } = renderComponent;
