@@ -23,7 +23,7 @@ const HideAccordions = ({ name }) => {
     <>
       <Layout className="padding-bottom-gutter padding-top-gutter" data-test-hide-accordions-description>
         <strong>
-          <FormattedMessage id="ui-agreements.settings.hideAccordions.description" />
+          <FormattedMessage id="ui-agreements.settings.general.hideAccordions.description" />
         </strong>
       </Layout>
       {hiddenAccordionsNames.map((accordion, index) => {
@@ -36,7 +36,7 @@ const HideAccordions = ({ name }) => {
               data-testid={`hide-accordions-${toLower}`}
               disabled={disabled}
               id={`hideAccordions${upperAccordion}`}
-              label={<FormattedMessage id={`ui-agreements.settings.hideAccordions.${accordion}`} />}
+              label={<FormattedMessage id={`ui-agreements.settings.general.hideAccordions.${accordion}`} />}
               name={`${name}.${accordion}`}
               type="checkbox"
             />

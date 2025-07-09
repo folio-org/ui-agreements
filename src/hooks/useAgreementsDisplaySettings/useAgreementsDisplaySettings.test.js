@@ -1,19 +1,20 @@
 import { MemoryRouter } from 'react-router-dom';
-import { invalidateQueries, setQueriesData } from 'react-query'; // We have special mocks for these already in erm-testing, so we can tweak directly, no need for spy
-
-
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { renderWithIntl } from '@folio/stripes-erm-testing';
-
+import { invalidateQueries, setQueriesData } from 'react-query';
+import { waitFor, act } from '@folio/jest-config-stripes/testing-library/react';
+import { renderWithIntl, Callout } from '@folio/stripes-erm-testing';
 import { useSettingSection } from '@k-int/stripes-kint-components';
 
 import useAgreementsDisplaySettings from './useAgreementsDisplaySettings';
 import translationsProperties from '../../../test/helpers';
 
-// Only mock what's not already mocked globally
 jest.mock('./parseAgreementsDisplaySettings', () => () => ({
-  hideAccordions: { notes: true },
-  pageSize: { resources: 25 }
+  pageSize: {
+    entitlementOptions: 10,
+    entitlements: 10
+  },
+  hideAccordions: {
+    usageData: true
+  }
 }));
 
 const HookConsumer = ({ children }) => {
@@ -23,7 +24,7 @@ const HookConsumer = ({ children }) => {
 
 let hookResult;
 describe('useAgreementsDisplaySettings', () => {
-  const mockHandleSubmit = jest.fn();
+  const mockHandleSubmit = jest.fn().mockImplementation(async update => update);
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -31,8 +32,9 @@ describe('useAgreementsDisplaySettings', () => {
     useSettingSection.mockReturnValue({
       handleSubmit: mockHandleSubmit,
       settings: [
-        { key: 'hideaccordions_notes', value: 'true', settingType: 'Boolean' },
-        { key: 'pagesize_resources', value: '25', settingType: 'Integer' }
+        { id: 'id-1', key: 'pagesize_entitlement_options', value: '10', settingType: 'Integer' },
+        { id: 'id-2', key: 'pagesize_entitlements', value: '10', settingType: 'Integer' },
+        { id: 'id-3', key: 'hideaccordions_usage_data', value: 'true', settingType: 'Boolean' }
       ]
     });
 
@@ -51,54 +53,94 @@ describe('useAgreementsDisplaySettings', () => {
 
   it('contains expected parsedSettings', () => {
     expect(hookResult.parsedSettings).toEqual({
-      hideAccordions: { notes: true },
-      pageSize: { resources: 25 }
+      pageSize: {
+        entitlementOptions: 10,
+        entitlements: 10
+      },
+      hideAccordions: {
+        usageData: true
+      }
     });
   });
 
-  describe('submitting values', () => {
+  describe('submitting values successfully', () => {
     beforeEach(async () => {
-      await waitFor(async () => {
+      await act(async () => {
         await hookResult.submitDisplaySettings({
-          hideAccordions: { notes: false }, // this is the change
-          pageSize: { resources: 25 }       // this is unchanged
+          pageSize: { entitlementOptions: 20, entitlements: 10 },
+          hideAccordions: { usageData: false }
         });
       });
     });
 
-    it('called handleSubmit once', () => {
-      expect(mockHandleSubmit).toHaveBeenCalledTimes(1);
+    it('calls handleSubmit twice', () => {
+      expect(mockHandleSubmit).toHaveBeenCalledTimes(2);
     });
 
-    it('called handleSubmit with expected values', () => {
+    it('calls handleSubmit with expected values', () => {
       expect(mockHandleSubmit).toHaveBeenCalledWith({
-        key: 'hideaccordions_notes',
-        value: 'false',
-        settingType: 'Boolean'
+        id: 'id-1',
+        key: 'pagesize_entitlement_options',
+        settingType: 'Integer',
+        value: '20'
+      });
+      expect(mockHandleSubmit).toHaveBeenCalledWith({
+        id: 'id-3',
+        key: 'hideaccordions_usage_data',
+        settingType: 'Boolean',
+        value: 'false'
       });
     });
 
-    it('called invalidateQueries with expected values', () => {
+    it('calls invalidateQueries', () => {
       expect(invalidateQueries).toHaveBeenCalledWith(['ERM', 'Settings', 'displaySettings']);
     });
 
-    let setQueriesDataCall;
-    describe('setQueriesData optimistic update', () => {
-      beforeEach(() => {
-        setQueriesDataCall = setQueriesData.mock.calls[0];
-      });
+    it('calls setQueriesData with expected parameters', () => {
+      expect(setQueriesData).toHaveBeenCalledTimes(1);
+      const [key, updater] = setQueriesData.mock.calls[0];
+      expect(key).toEqual(['ERM', 'Settings', 'displaySettings']);
+      const updated = updater([
+        { id: 'id-1', key: 'pagesize_entitlement_options', value: '10' },
+        { id: 'id-2', key: 'pagesize_entitlements', value: '10' },
+        { id: 'id-3', key: 'hideaccordions_usage_data', value: 'true' }
+      ]);
+      expect(updated).toEqual([
+        { id: 'id-1', key: 'pagesize_entitlement_options', settingType: 'Integer', value: '20' },
+        { id: 'id-2', key: 'pagesize_entitlements', value: '10' },
+        { id: 'id-3', key: 'hideaccordions_usage_data', settingType: 'Boolean', value: 'false' }
+      ]);
+    });
 
-      it('called setQueriesData once', () => {
-        expect(setQueriesData).toHaveBeenCalledTimes(1);
+    it('renders success callout for both updated settings', async () => {
+      await waitFor(async () => {
+        await Callout(
+          /Setting .*E-resource view pane > Options for acquiring e-resource.* was updated to 20.*Setting .*Hide accordions in agreement edit view for Usage data.* was updated to false/
+        ).exists();
       });
+    });
+  });
 
-      it('called setQueriesData with expected key parameter', () => {
-        expect(setQueriesDataCall[0]).toEqual(['ERM', 'Settings', 'displaySettings']);
+  describe('submitting with a failure', () => {
+    beforeEach(async () => {
+      mockHandleSubmit.mockRejectedValue(new Error('Submission failed'));
+      await act(async () => {
+        await hookResult.submitDisplaySettings({
+          pageSize: { entitlementOptions: 20, entitlements: 10 },
+          hideAccordions: { usageData: false }
+        });
       });
+    });
 
-      it('called setQueriesData with expected function parameter', () => {
-        const theFunc = setQueriesDataCall[1];
-        expect(theFunc(['testing'])).toEqual([{ key: 'hideaccordions_notes', settingType: 'Boolean', value: 'false' }]);
+    it('calls handleSubmit', () => {
+      expect(mockHandleSubmit).toHaveBeenCalled();
+    });
+
+    it('renders error callout for both failed updates', async () => {
+      await waitFor(async () => {
+        await Callout(
+          /Setting .*E-resource view pane > Options for acquiring e-resource.* could not be updated.*Setting .*Hide accordions in agreement edit view for Usage data.* could not be updated/
+        ).exists();
       });
     });
   });

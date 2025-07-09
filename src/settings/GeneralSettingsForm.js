@@ -52,7 +52,7 @@ const GeneralSettingsForm = ({
           component={Checkbox}
           disabled={disabled}
           id="hideEResourcesFunctionality"
-          label={<FormattedMessage id="ui-agreements.settings.general.hideEResourcesFunctionality.title" />}
+          label={<FormattedMessage id="ui-agreements.settings.hideEResourcesFunctionality" />}
           name="hideEResourcesFunctionality"
           type="checkbox"
         />
