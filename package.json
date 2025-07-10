@@ -306,6 +306,15 @@
         "subPermissions": [
           "erm.packages.collection.controlSync.execute"
         ]
+      },
+      {
+        "permissionName": "ui-agreements.resources.delete",
+        "displayName": "Agreements: Delete resources",
+        "description": "Grants the ability to delete resources from the local KB",
+        "visible": true,
+        "subPermissions": [
+            "erm.resources.delete"
+        ]
       }
     ],
     "icons": [

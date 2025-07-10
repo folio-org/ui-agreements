@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { MemoryRouter } from 'react-router-dom';
 
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { Button as ButtonInteractor, Callout, renderWithIntl } from '@folio/stripes-erm-testing';
+import {
+  Button as ButtonInteractor,
+  Callout,
+  renderWithIntl,
+} from '@folio/stripes-erm-testing';
 import { Button } from '@folio/stripes/components';
 
 import translationsProperties from '../../../test/helpers';
@@ -19,7 +23,7 @@ import {
   packageContentsFilter,
   query,
   settings,
-  tagsEnabled
+  tagsEnabled,
 } from './testResources';
 
 const CloseButton = (props) => {
@@ -31,36 +35,74 @@ const EditButton = (props) => {
 };
 
 const EResourceClickButton = (props) => {
-  return <Button onClick={props.handlers.onEResourceClick}>EResourceClickButton</Button>;
+  return (
+    <Button onClick={props.handlers.onEResourceClick}>
+      EResourceClickButton
+    </Button>
+  );
 };
 
 const NeedMoreEntitlementsButton = (props) => {
-  return <Button onClick={props.handlers.onNeedMoreEntitlements}>NeedMoreEntitlementsButton</Button>;
+  return (
+    <Button onClick={props.handlers.onNeedMoreEntitlements}>
+      NeedMoreEntitlementsButton
+    </Button>
+  );
 };
 
 const NeedMoreEntitlementOptionsButton = (props) => {
-  return <Button onClick={props.handlers.onNeedMoreEntitlementOptions}>NeedMoreEntitlementOptionsButton</Button>;
+  return (
+    <Button onClick={props.handlers.onNeedMoreEntitlementOptions}>
+      NeedMoreEntitlementOptionsButton
+    </Button>
+  );
 };
 
 const NeedMorePackageContentsButton = (props) => {
-  return <Button onClick={props.handlers.onNeedMorePackageContents}>NeedMorePackageContentsButton</Button>;
+  return (
+    <Button onClick={props.handlers.onNeedMorePackageContents}>
+      NeedMorePackageContentsButton
+    </Button>
+  );
 };
 
 const FilterPackageContentsButton = (props) => {
-  return <Button onClick={props.handlers.onFilterPackageContents}>FilterPackageContentsButton</Button>;
+  return (
+    <Button onClick={props.handlers.onFilterPackageContents}>
+      FilterPackageContentsButton
+    </Button>
+  );
 };
 
 const ToggleTagsButton = (props) => {
-  return <Button onClick={props.handlers.onToggleTags}>ToggleTagsButton</Button>;
+  return (
+    <Button onClick={props.handlers.onToggleTags}>ToggleTagsButton</Button>
+  );
 };
 
 const SynchronizeButton = (props) => {
-  return <Button onClick={() => props.handlers.onSynchronize('SYNCHRONIZING')}>SynchronizeButton</Button>;
+  return (
+    <Button onClick={() => props.handlers.onSynchronize('SYNCHRONIZING')}>
+      SynchronizeButton
+    </Button>
+  );
 };
 
 const PauseButton = (props) => {
-  return <Button onClick={() => props.handlers.onSynchronize('PAUSED')}>PauseButton</Button>;
+  return (
+    <Button onClick={() => props.handlers.onSynchronize('PAUSED')}>
+      PauseButton
+    </Button>
+  );
 };
+
+const DeleteDryRunButton = (props) => (
+  <Button onClick={props.handlers.onDeleteDryRun}>DeleteDryRunButton</Button>
+);
+
+const DeleteButton = (props) => (
+  <Button onClick={props.handlers.onDelete}>DeleteButton</Button>
+);
 
 CloseButton.propTypes = {
   handlers: PropTypes.shape({
@@ -122,7 +164,35 @@ PauseButton.propTypes = {
   }),
 };
 
+DeleteDryRunButton.propTypes = {
+  handlers: PropTypes.shape({
+    onDeleteDryRun: PropTypes.func,
+  }),
+};
+
+DeleteButton.propTypes = {
+  handlers: PropTypes.shape({
+    onDelete: PropTypes.func,
+  }),
+};
+
 const historyPushMock = jest.fn();
+
+// Due to the fact that we have a callout containing a link component as part of the handleDelete
+// This causes an issue in which the Link component is rendered outside the MemoryRouter, causing the test to fail.
+// A solution to this would be to add a harness level router to the CalloutHarness component whilst wiring up props etc.
+// However, for now, we can mock the Link component to avoid this issue in our tests
+// Intorduction of the Link mock is to replace the Link component with a simple span which wont throw an error
+// If this issue shows up a handleful more tiome, this should be revisited and the router at the callout harness level implemented
+jest.mock('react-router-dom', () => {
+  const { forwardRef } = jest.requireActual('react');
+  return {
+    ...jest.requireActual('react-router-dom'),
+    Link: forwardRef((props, ref) => (
+      <span ref={ref}>Link {props.to ? `to: ${props.to}` : ''}</span>
+    )),
+  };
+});
 
 jest.mock('../../components/views/EResource', () => {
   return (props) => (
@@ -138,19 +208,23 @@ jest.mock('../../components/views/EResource', () => {
       <ToggleTagsButton {...props} />
       <SynchronizeButton {...props} />
       <PauseButton {...props} />
+      <DeleteDryRunButton {...props} />
+      <DeleteButton {...props} />
     </div>
   );
 });
 
 const data = {
-  handlers,
-  isSuppressFromDiscoveryEnabled: () => { },
+  handlers: {
+    ...handlers,
+  },
+  isSuppressFromDiscoveryEnabled: () => {},
   history: {
     push: historyPushMock,
   },
   location: {
     pathname: '',
-    search: ''
+    search: '',
   },
   match,
   resources: {
@@ -161,9 +235,9 @@ const data = {
     packageContents,
     packageContentsFilter,
     query,
-    settings
+    settings,
   },
-  tagsEnabled
+  tagsEnabled,
 };
 
 describe('EResourceViewRoute', () => {
@@ -174,7 +248,7 @@ describe('EResourceViewRoute', () => {
         <MemoryRouter>
           <EResourceViewRoute {...data} />
         </MemoryRouter>,
-        translationsProperties,
+        translationsProperties
       );
     });
 
@@ -262,6 +336,37 @@ describe('EResourceViewRoute', () => {
     test('renders the PauseButton button', () => {
       const { getByText } = renderComponent;
       expect(getByText('PauseButton')).toBeInTheDocument();
+    });
+
+    test('renders the DeleteDryRunButton button', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('DeleteDryRunButton')).toBeInTheDocument();
+    });
+
+    test('triggers the DeleteDryRunButton callback', async () => {
+      await waitFor(async () => {
+        await ButtonInteractor('DeleteDryRunButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
+    });
+
+    test('renders the DeleteButton button', () => {
+      const { getByText } = renderComponent;
+      expect(getByText('DeleteButton')).toBeInTheDocument();
+    });
+
+    // The offending test requiring the Link mock
+    test('triggers the DeleteButton callback', async () => {
+      await waitFor(async () => {
+        await ButtonInteractor('DeleteButton').click();
+      });
+
+      await waitFor(async () => {
+        expect(historyPushMock).toHaveBeenCalled();
+      });
     });
 
     describe('clicking start synchronisation', () => {
