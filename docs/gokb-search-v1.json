@@ -35,7 +35,7 @@
             "value": {
               "type": "access",
               "accessType": "JSONPath",
-              "expression": "$._embedded.ids[?(@.namespace.value == 'isbn')].value"
+              "expression": "$._embedded.ids[?(@.namespace.value == 'isbn' || @.namespace.value == 'eisbn' || @.namespace.value == 'pisbn')].value"
             }
           },
           {
@@ -46,7 +46,7 @@
             "value": {
               "type": "access",
               "accessType": "JSONPath",
-              "expression": "$._embedded.ids[?(@.namespace.value == 'issn')].value"
+              "expression": "$._embedded.ids[?(@.namespace.value == 'issn' || @.namespace.value == 'eissn' || @.namespace.value == 'pissn')].value"
             }
           },
           {
@@ -69,6 +69,26 @@
               "type": "access",
               "accessType": "JSONPath",
               "expression": "$._embedded.ids[?(@.namespace.value == 'ezb')].value"
+            }
+          },
+          {
+            "name": "publicationDates",
+            "type": "DatesDisplay",
+            "value": {
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "RETURNS ARRAY/OBJECT of publication dates"
+            }
+          },
+          {
+            "name": "otherids",
+            "type": "Array",
+            "arrayType": "String",
+            "joinStrategy": "Comma",
+            "value": {
+              "type": "access",
+              "accessType": "JSONPath",
+              "expression": "$._embedded.ids[?(@.namespace.value != 'issn' && @.namespace.value != 'eissn' && @.namespace.value != 'pissn' && @.namespace.value != 'isbn' && @.namespace.value != 'eisbn' && @.namespace.value != 'pisbn' && @.namespace.value != 'zdb' && @.namespace.value != 'ezb')].value"
             }
           },
           {
