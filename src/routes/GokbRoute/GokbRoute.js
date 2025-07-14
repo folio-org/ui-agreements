@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import kyImport from 'ky';
-import { JSONPath } from 'jsonpath-plus';
 import handlebars from 'handlebars';
 
 import { AppIcon } from '@folio/stripes/core';
@@ -11,7 +10,7 @@ import { ColumnManagerMenu, useColumnManager } from '@folio/stripes/smart-compon
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
-import gokbConfig from '../../../docs/gokb-search-v1';
+import { getResultColumns, getArrayFormatter, getStringFormatter } from '../utilities/gokbConfigUtils';
 
 const GokbRoute = ({ location }) => {
   const fetchParameters = {
@@ -41,38 +40,15 @@ const GokbRoute = ({ location }) => {
   // When building the SASQ from the config file, using the results.display values
   // should construct a formatter and resultColumns object
 
-  const resultColumns = gokbConfig.configuration.results.display.columns.map(col => ({
-    propertyPath: col.name,
-    label: <FormattedMessage id={`ui-agreements.gokb.${col.name}`} />
-  }));
+  const resultColumns = getResultColumns();
 
   // EXAMPLE: Using JSONPath to format the results
   // const formatter = {
   //   name: (resource) => JSONPath({ path: '$.name', json: resource }),
   // };
 
-  const stringFormatter = Object.fromEntries(
-    gokbConfig.configuration.results.display.columns
-      .filter(col => col.type === 'String' && col.name && col.value?.expression)
-      .map(col => [
-        col.name,
-        (resource) => JSONPath({ path: col.value.expression, json: resource })
-      ])
-  );
-
-  const arrayFormatter = Object.fromEntries(
-    gokbConfig.configuration.results.display.columns
-      .filter(col => col.type === 'Array' && col.name && col.value?.expression)
-      .map(col => [
-        col.name,
-        (resource) => {
-          const result = JSONPath({ path: col.value.expression, json: resource });
-          return col.joinStrategy === 'Comma'
-            ? (result || []).filter(Boolean).join(', ')
-            : result;
-        }
-      ])
-  );
+  const stringFormatter = getStringFormatter();
+  const arrayFormatter = getArrayFormatter();
 
   const specialFormatter = {
     publicationDates: (resource) => {
