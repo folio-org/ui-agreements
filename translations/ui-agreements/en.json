@@ -26,6 +26,7 @@
   "preview" : "Preview",
   "back" : "Back",
   "search": "Search",
+  "found#Values": "Found {total} results",
   "agreementsSearch": "Agreements search",
   "localKBSearch": "Local KB search",
   "gokbSearch": "GOKb search",
