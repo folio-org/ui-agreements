@@ -88,7 +88,7 @@
             "value": {
               "type": "access",
               "accessType": "JSONPath",
-              "expression": "$._embedded.ids[?(@.namespace.value != 'issn' && @.namespace.value != 'eissn' && @.namespace.value != 'pissn' && @.namespace.value != 'isbn' && @.namespace.value != 'eisbn' && @.namespace.value != 'pisbn' && @.namespace.value != 'zdb' && @.namespace.value != 'ezb')].value"
+              "expression": "$._embedded.ids[?(@.namespace.value != 'issn' && @.namespace.value != 'eissn' && @.namespace.value != 'pissn' && @.namespace.value != 'isbn' && @.namespace.value != 'eisbn' && @.namespace.value != 'pisbn' && @.namespace.value != 'zdb' && @.namespace.value != 'ezb')]"
             }
           },
           {
@@ -138,11 +138,13 @@
           },
           {
             "name": "subjects",
-            "type": "String",
+            "type": "Array",
+            "arrayType": "String",
+            "joinStrategy": "Comma",
             "value": {
               "type": "access",
               "accessType": "JSONPath",
-              "expression": "$.subjects"
+              "expression": "$.subjects[*]"
             }
           },
           {

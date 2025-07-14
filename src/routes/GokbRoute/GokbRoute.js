@@ -5,12 +5,11 @@ import kyImport from 'ky';
 import handlebars from 'handlebars';
 
 import { AppIcon } from '@folio/stripes/core';
-import { FormattedUTCDate, Icon } from '@folio/stripes/components';
 import { ColumnManagerMenu, useColumnManager } from '@folio/stripes/smart-components';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
-import { getResultColumns, getArrayFormatter, getStringFormatter } from '../utilities/gokbConfigUtils';
+import { getResultColumns, getFormatter } from '../utilities/gokbConfigUtils';
 
 const GokbRoute = ({ location }) => {
   const fetchParameters = {
@@ -40,54 +39,13 @@ const GokbRoute = ({ location }) => {
   // When building the SASQ from the config file, using the results.display values
   // should construct a formatter and resultColumns object
 
-  const resultColumns = getResultColumns();
-
   // EXAMPLE: Using JSONPath to format the results
   // const formatter = {
   //   name: (resource) => JSONPath({ path: '$.name', json: resource }),
   // };
 
-  const stringFormatter = getStringFormatter();
-  const arrayFormatter = getArrayFormatter();
-
-  const specialFormatter = {
-    publicationDates: (resource) => {
-      const { dateFirstOnline, dateFirstInPrint, publishedFrom, publishedTo } = resource;
-
-      return (
-        <div>
-          {dateFirstOnline && (
-            <div>
-              <FormattedMessage id="ui-agreements.gokb.publicationDates.firstOnline" />:{' '}
-              <FormattedUTCDate value={dateFirstOnline} />
-            </div>
-          )}
-          {dateFirstInPrint && (
-            <div>
-              <FormattedMessage id="ui-agreements.gokb.publicationDates.firstInPrint" />:{' '}
-              <FormattedUTCDate value={dateFirstInPrint} />
-            </div>
-          )}
-          {(publishedFrom || publishedTo) && (
-            <div>
-              <FormattedMessage id="ui-agreements.gokb.publicationDates.publishedFromTo" />:{' '}
-              <span>
-                {publishedFrom ? <FormattedUTCDate value={publishedFrom} /> : '*'}{' '}
-                <Icon icon="arrow-right" size="small" />{' '}
-                {publishedTo ? <FormattedUTCDate value={publishedTo} /> : '*'}
-              </span>
-            </div>
-          )}
-        </div>
-      );
-    },
-  };
-
-  const formatter = {
-    ...stringFormatter,
-    ...arrayFormatter,
-    ...specialFormatter
-  };
+  const resultColumns = getResultColumns();
+  const formatter = getFormatter();
 
   const columnMapping = resultColumns?.length
     ? Object.fromEntries(resultColumns.map(col => [col.propertyPath, col.label]))
