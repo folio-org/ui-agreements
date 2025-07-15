@@ -32,14 +32,6 @@ const GokbRoute = ({ location }) => {
       propertyPath: 'name',
       label: 'Name',
     },
-    {
-      propertyPath: 'type',
-      label: 'Publication type',
-    },
-    {
-      propertyPath: 'uuid',
-      label: 'GOKb UUID',
-    },
   ];
 
   const formatter = {
