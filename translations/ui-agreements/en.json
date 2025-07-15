@@ -32,7 +32,7 @@
   "gokbSearch.searchIndex.keyword": "Keyword (Name, Alternative names, Identifiers)",
   "gokbSearch.searchIndex.nameAndAltNames": "Name and alternative names",
   "gokbSearch.searchIndex.name": "Name only",
-  "gokbSearch.searchIndex.altName": "Alternative names only",
+  "gokbSearch.searchIndex.altname": "Alternative names only",
   "gokbSearch.searchIndex.identifiers": "Identifiers (all)",
   "gokbSearch.searchIndex.eisbn": "eISBN",
   "gokbSearch.searchIndex.isbn": "pISBN",

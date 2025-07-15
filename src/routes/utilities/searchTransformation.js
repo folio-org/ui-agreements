@@ -62,8 +62,8 @@ export const generateGokbQuery = (params, query, searchConfig) => {
   return `?${queryParts.join('&')}`;
 };
 
-export const getSearchableIndexes = (formatMessage) => {
-  return buildSearchOptions(config.configuration.results.fetch.search, formatMessage);
+export const getSearchableIndexes = () => {
+  return buildSearchOptions(config.configuration.results.fetch.search);
 };
 
 export const searchableIndexes = getSearchableIndexes(config.configuration.results.fetch, FormattedMessage);

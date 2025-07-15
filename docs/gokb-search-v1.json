@@ -170,9 +170,9 @@
               "parameter": "name={{string}}"
             },
             {
-              "name": "altName",
+              "name": "altname",
               "type": "Handlebars",
-              "parameter": "altName={{string}}"
+              "parameter": "altname={{string}}"
             },
             {
               "name": "identifiers",
