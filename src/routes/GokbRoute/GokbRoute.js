@@ -4,17 +4,15 @@ import kyImport from 'ky';
 
 import { JSONPath } from 'jsonpath-plus';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Select } from '@folio/stripes/components';
 
-import { useIntl } from 'react-intl';
 import { SASQRoute } from '@k-int/stripes-kint-components';
 import config from '../../../docs/gokb-search-v1.json';
 
-import { getSearchableIndexes, generateGokbQuery, searchableIndexes } from '../utilities/searchTransformation';
+import { generateGokbQuery, searchableIndexes } from '../utilities/searchTransformation';
 
 const GokbRoute = ({ location }) => {
-  const intl = useIntl();
   const [searchKey, setSearchKey] = useState('keyword');
 
   const fetchParameters = {
@@ -24,11 +22,10 @@ const GokbRoute = ({ location }) => {
     },
   };
 
-  const generateQuery = (params, query) => {
-    // Include searchKey in the query generation
+  const generateQuery = useCallback((params, query) => {
     const queryWithSearchKey = { ...query, qindex: searchKey };
     return generateGokbQuery(params, queryWithSearchKey, config.configuration.results.fetch.search);
-  };
+  }, [searchKey]);
 
   const resultColumns = [
     {
@@ -54,10 +51,7 @@ const GokbRoute = ({ location }) => {
       <Select
         dataOptions={searchableIndexes}
         id="gokb-search-header-select"
-        // label="Search by"
-        // name="searchBy"
         onChange={(event) => {
-          console.log('Selected search key:', event.target.value);
           setSearchKey(event.target.value);
         }}
         options={[
