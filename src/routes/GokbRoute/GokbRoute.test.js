@@ -1,18 +1,40 @@
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter, useLocation } from 'react-router-dom';
-
+import ky from 'ky';
 import GokbRoute from './GokbRoute';
 import translationsProperties from '../../../test/helpers';
 
+let capturedProps = {};
+
 jest.mock('@k-int/stripes-kint-components', () => ({
   ...jest.requireActual('@k-int/stripes-kint-components'),
-  SASQRoute: () => <div>SASQRoute</div>,
+  SASQRoute: (props) => {
+    capturedProps = props;
+    return <div>SASQRoute</div>;
+  },
 }));
 
 jest.mock('react-router', () => ({
   ...jest.requireActual('react-router'),
   useHistory: jest.fn(),
   useLocation: jest.fn(),
+}));
+
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  Icon: () => <span>Icon</span>,
+  FormattedUTCDate: ({ value }) => <span>{value}</span>,
+}));
+
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  AppIcon: () => <span>AppIcon</span>,
+}));
+
+jest.mock('ky', () => ({
+  get: jest.fn(() => ({
+    json: jest.fn(() => Promise.resolve({ _pagination: { total: 0 }, data: [] })),
+  })),
 }));
 
 const location = {
@@ -25,6 +47,7 @@ let renderComponent;
 describe('GokbRoute', () => {
   beforeEach(() => {
     useLocation.mockClear().mockReturnValue(location);
+    capturedProps = {}; // Reset between tests
 
     renderComponent = renderWithIntl(
       <MemoryRouter>
@@ -34,8 +57,47 @@ describe('GokbRoute', () => {
     );
   });
 
-  test('renders the SASQRoute component', () => {
+  test('renders SASQRoute', () => {
     const { getByText } = renderComponent;
     expect(getByText('SASQRoute')).toBeInTheDocument();
+  });
+
+  test('lookupQueryPromise fetches correctly', async () => {
+    await capturedProps.lookupQueryPromise({
+      _ky: {},
+      queryParams: '',
+      endpoint: '',
+    });
+    expect(ky.get).toHaveBeenCalled();
+  });
+
+  test('queryParameterGenerator generates expected query', () => {
+    const result = capturedProps.queryParameterGenerator(
+      { page: 2, perPage: 10 },
+      { query: 'foo', sort: '-bar' }
+    );
+    expect(result).toContain('name=foo');
+    expect(result).toContain('offset=10');
+    expect(result).toContain('sort=bar');
+    expect(result).toContain('order=desc');
+  });
+
+  test('lookupResponseTransform transforms correctly', () => {
+    const transformed = capturedProps.lookupResponseTransform({
+      _pagination: { total: 5 },
+      data: ['test-data'],
+    });
+    expect(transformed.totalRecords).toBe(5);
+    expect(transformed.results).toEqual(['test-data']);
+  });
+
+  test('actionMenu renders ColumnManagerMenu', () => {
+    const { actionMenu } = capturedProps.mainPaneProps;
+    const { getByText } = renderWithIntl(
+      actionMenu(),
+      translationsProperties
+    );
+
+    expect(getByText('ColumnManagerMenu')).toBeInTheDocument();
   });
 });
