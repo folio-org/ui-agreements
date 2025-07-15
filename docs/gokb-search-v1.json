@@ -157,72 +157,72 @@
             {
               "name": "keyword",
               "type": "Handlebars",
-              "parameter": "q=$string"
+              "parameter": "q={{string}}"
             },
             {
               "name": "nameAndAltNames",
               "type": "Handlebars",
-              "parameter": "label=$string"
+              "parameter": "label={{string}}"
+            },
+            {
+              "name": "name",
+              "type": "Handlebars",
+              "parameter": "name={{string}}"
             },
             {
               "name": "altName",
               "type": "Handlebars",
-              "parameter": "altName=$string"
-            },
-            {
-              "name": "altName",
-              "type": "Handlebars",
-              "parameter": "altName=$string"
+              "parameter": "altName={{string}}"
             },
             {
               "name": "identifiers",
               "type": "Handlebars",
-              "parameter": "identifier=$string"
-            },
-            {
-              "name": "identifiers",
-              "type": "Handlebars",
-              "parameter": "identifier=$string"
+              "parameter": "identifier={{string}}"
             },
             {
               "name": "eisbn",
               "type": "Handlebars",
-              "parameter": "identifier=eisbn,$string"
+              "parameter": "identifier=eisbn,{{string}}"
             },
             {
               "name": "isbn",
               "type": "Handlebars",
-              "parameter": "identifier=isbn,$string"
+              "parameter": "identifier=isbn,{{string}}"
             },
             {
               "name": "eissn",
               "type": "Handlebars",
-              "parameter": "identifier=eissn,$string"
+              "parameter": "identifier=eissn,{{string}}"
             },
             {
               "name": "issn",
               "type": "Handlebars",
-              "parameter": "identifier=issn,$string"
+              "parameter": "identifier=issn,{{string}}"
             },
             {
               "name": "ezb",
               "type": "Handlebars",
-              "parameter": "identifier=ezb,$string"
+              "parameter": "identifier=ezb,{{string}}"
             },
             {
               "name": "zdb",
               "type": "Handlebars",
-              "parameter": "identifier=zdb,$string"
+              "parameter": "identifier=zdb,{{string}}"
             },
             {
-              "name": "gokbUuid",
+              "name": "uuid",
               "type": "Handlebars",
-              "parameter": "uuid=$string"
+              "parameter": "uuid={{string}}"
             },
             {
               "name": "gokbId",
               "type": "Handlebars",
-              "parameter": "id=$string"
+              "parameter": "id={{string}}"
+            },
+            {
+              "name": "authorEditor",
+              "type": "Handlebars",
+              "parameter": "q={{string}}&qfields=firstAuthor&qfields=firstEditor"
             }
           ]
         },
