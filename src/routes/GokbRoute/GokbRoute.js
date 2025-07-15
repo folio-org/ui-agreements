@@ -19,20 +19,26 @@ const GokbRoute = ({ location }) => {
     },
   };
 
+  // EXAMPLE: Using handlebars to generate the query string
+  // Namely name will be the field configured by the results.fetch.search key and its "handlebars template type"
+  // max & offset are configured by the pagination parameters
+  const template = handlebars.compile(
+    '?name={{input}}&max={{perPage}}&offset={{offset}}&es=true&sort={{sortField}}&order={{sortOrder}}'
+  );
+
   const generateQuery = (params, query) => {
     const offset = (params.page - 1) * params.perPage;
 
-    // EXAMPLE: Using handlebars to generate the query string
-    // Namely name will be the field configured by the results.fetch.search key and its "handlebars template type"
-    // max & offset are configured by the pagination parameters
-    const template = handlebars.compile(
-      '?name={{input}}&max={{perPage}}&offset={{offset}}&es=true'
-    );
+    const sortFieldRaw = query?.sort || '';
+    const sortField = sortFieldRaw.startsWith('-') ? sortFieldRaw.slice(1) : sortFieldRaw;
+    const sortOrder = sortFieldRaw.startsWith('-') ? 'desc' : 'asc';
 
     return template({
       input: query?.query || '',
       perPage: params?.perPage,
       offset,
+      sortField: sortField || undefined,
+      sortOrder: sortField ? sortOrder : undefined,
     });
   };
 
@@ -99,7 +105,9 @@ const GokbRoute = ({ location }) => {
       }}
       queryParameterGenerator={generateQuery}
       resultColumns={resultColumns}
-      sasqProps={{ initialSortState: { sort: 'name' } }}
+      sasqProps={{
+        sortableColumns: ['name']
+      }}
       searchFieldAriaLabel="input-gokb-search"
     />
   );
