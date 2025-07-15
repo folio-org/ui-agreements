@@ -72,6 +72,7 @@ const GokbRoute = ({ location }) => {
 
   return (
     <SASQRoute
+      key={searchKey}
       fetchParameters={fetchParameters}
       FilterPaneHeaderComponent={renderHeaderComponent}
       filterPaneProps={{
