@@ -31,7 +31,8 @@ export const buildSearchOptions = (searchConfig) => {
 };
 
 export const generateGokbQuery = (params, query, searchConfig) => {
-  const offset = (params.page - 1) * params.perPage;
+  const perPage = params?.perPage || 25;
+  const offset = (params.page - 1) * perPage;
   const searchString = query?.query || '';
   const searchOption = query?.qindex || 'keyword';
 
@@ -45,7 +46,7 @@ export const generateGokbQuery = (params, query, searchConfig) => {
   const componentType = query?.componentType || 'Title';
   queryParts.push(`componentType=${componentType}`);
 
-  queryParts.push(`max=${params?.perPage || 25}`);
+  queryParts.push(`max=${perPage}`);
   queryParts.push(`offset=${offset}`);
 
   if (query?.sort) {
