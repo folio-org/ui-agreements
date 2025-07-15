@@ -2,7 +2,7 @@ import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 
 import GokbRoute from './GokbRoute';
-import { translationsProperties } from '../../../test/helpers';
+import translationsProperties from '../../../test/helpers';
 
 jest.mock('@k-int/stripes-kint-components', () => ({
   ...jest.requireActual('@k-int/stripes-kint-components'),
@@ -18,8 +18,6 @@ jest.mock('react-router', () => ({
 const location = {
   pathname: '/erm/agreements/gokb',
   search: '',
-  hash: '',
-  key: 'xyz',
 };
 
 let renderComponent;
