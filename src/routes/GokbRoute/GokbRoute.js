@@ -90,9 +90,9 @@ const GokbRoute = ({ location }) => {
       }}
       mainPaneProps={{
         actionMenu: renderActionMenu,
-        appIcon: <AppIcon app="agreements" iconKey="package" size="small" />,
+        appIcon: <AppIcon app="agreements" iconKey="title" size="small" />,
         id: 'gokb-search-main-pane',
-        paneTitle: <FormattedMessage id="ui-agreements.gokb.packages" />,
+        paneTitle: <FormattedMessage id="ui-agreements.gokb.titles" />,
       }}
       mclProps={{
         columnWidths: { publicationDates: 300 },
