@@ -43,22 +43,17 @@ export const generateGokbQuery = (params, query, searchConfig) => {
     queryParts.push(searchParameter);
   }
 
-  const componentType = query?.componentType || 'Title';
-  queryParts.push(`componentType=${componentType}`);
-
+  // Basic pagination parameters
   queryParts.push(`max=${perPage}`);
   queryParts.push(`offset=${offset}`);
 
+  // Optional sorting parameters
   if (query?.sort) {
     queryParts.push(`sort=${query.sort}`);
   }
   if (query?.order) {
     queryParts.push(`order=${query.order}`);
   }
-
-  queryParts.push('status=Current');
-
-  queryParts.push('es=true');
 
   return `?${queryParts.join('&')}`;
 };
@@ -67,7 +62,7 @@ export const getSearchableIndexes = () => {
   return buildSearchOptions(config.configuration.results.fetch.search);
 };
 
-export const searchableIndexes = getSearchableIndexes(config.configuration.results.fetch, FormattedMessage);
+export const searchableIndexes = getSearchableIndexes();
 
 
 

@@ -198,7 +198,7 @@ describe('searchTransformation', () => {
 
       const result = generateGokbQuery(params, query, searchConfig);
 
-      expect(result).toBe('?componentType=Title&max=25&offset=0&status=Current&es=true');
+      expect(result).toBe('?max=25&offset=0');
     });
 
     it('should include search parameter when query string is provided', () => {
@@ -212,7 +212,7 @@ describe('searchTransformation', () => {
 
       const result = generateGokbQuery(params, query, searchConfig);
 
-      expect(result).toBe('?q=test search&componentType=Title&max=25&offset=0&status=Current&es=true');
+      expect(result).toBe('?q=test search&max=25&offset=0');
     });
 
     it('should calculate correct offset for pagination', () => {
@@ -222,7 +222,7 @@ describe('searchTransformation', () => {
 
       const result = generateGokbQuery(params, query, searchConfig);
 
-      expect(result).toBe('?componentType=Title&max=50&offset=100&status=Current&es=true');
+      expect(result).toBe('?max=50&offset=100');
     });
 
     it('should include sort parameter when provided', () => {
@@ -232,7 +232,7 @@ describe('searchTransformation', () => {
 
       const result = generateGokbQuery(params, query, searchConfig);
 
-      expect(result).toBe('?componentType=Title&max=25&offset=0&sort=name&status=Current&es=true');
+      expect(result).toBe('?max=25&offset=0&sort=name');
     });
 
     it('should include order parameter when provided', () => {
@@ -242,7 +242,7 @@ describe('searchTransformation', () => {
 
       const result = generateGokbQuery(params, query, searchConfig);
 
-      expect(result).toBe('?componentType=Title&max=25&offset=0&order=desc&status=Current&es=true');
+      expect(result).toBe('?max=25&offset=0&order=desc');
     });
 
     it('should include both sort and order parameters when provided', () => {
@@ -252,7 +252,7 @@ describe('searchTransformation', () => {
 
       const result = generateGokbQuery(params, query, searchConfig);
 
-      expect(result).toBe('?componentType=Title&max=25&offset=0&sort=name&order=desc&status=Current&es=true');
+      expect(result).toBe('?max=25&offset=0&sort=name&order=desc');
     });
 
     it('should use default perPage when not provided', () => {
@@ -262,7 +262,7 @@ describe('searchTransformation', () => {
 
       const result = generateGokbQuery(params, query, searchConfig);
 
-      expect(result).toBe('?componentType=Title&max=25&offset=0&status=Current&es=true');
+      expect(result).toBe('?max=25&offset=0');
     });
   });
 
