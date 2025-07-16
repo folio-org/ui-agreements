@@ -1,18 +1,30 @@
 import { JSONPath } from 'jsonpath-plus';
 import {
+  getEndpointData,
   getResultColumns,
   getStringFormatter,
   getArrayFormatter,
+  getArrayOfObjectsFormatter,
   getSpecialFormatter,
   getFormatter
 } from './gokbConfigUtils';
 
-
 jest.mock('jsonpath-plus', () => ({
-  JSONPath: jest.fn(() => ['mocked-result']),
+  JSONPath: jest.fn(),
 }));
 
 describe('gokbConfigUtils', () => {
+  describe('getEndpointData', () => {
+    test('returns endpoint and mapping keys', () => {
+      const data = getEndpointData();
+      expect(data).toEqual({
+        endpoint: 'https://gokbt.gbv.de/gokb/api/find',
+        results: 'records',
+        totalRecords: 'count',
+      });
+    });
+  });
+
   describe('getResultColumns', () => {
     test('returns columns with propertyPath and FormattedMessage label', () => {
       const columns = getResultColumns();
@@ -38,30 +50,42 @@ describe('gokbConfigUtils', () => {
     test('returns formatter with functions that call JSONPath and join results', () => {
       JSONPath.mockReturnValue(['one', 'two']);
       const formatter = getArrayFormatter();
-      const result = Object.values(formatter)[0]({});
+      const result = formatter.isbns({});
       expect(result).toEqual('one, two');
     });
   });
 
-  describe('getSpecialFormatter', () => {
-    test('otherids formatter formats JSONPath results', () => {
+  describe('getArrayOfObjectsFormatter', () => {
+    test('formats otherids array of objects correctly', () => {
       JSONPath.mockReturnValue([
-        { namespace: { name: 'ns1' }, value: 'val1' },
-        { namespace: { value: 'ns2' }, value: 'val2' }
+        { namespaceName: 'ns1', value: 'v1' },
+        { namespaceName: 'ns2', value: 'v2' },
       ]);
-      const formatter = getSpecialFormatter();
+
+      const formatter = getArrayOfObjectsFormatter();
       const result = formatter.otherids({});
-      expect(result).toBe('ns1: val1, ns2: val2');
+      expect(result).toBe('ns1: v1, ns2: v2');
     });
 
-    test('subjects formatter formats JSONPath results', () => {
+    test('formats subjects array of objects correctly', () => {
       JSONPath.mockReturnValue([
         { scheme: 'scheme1', heading: 'heading1' },
-        { scheme: 'scheme2', heading: 'heading2' }
+        { scheme: 'scheme2', heading: 'heading2' },
       ]);
-      const formatter = getSpecialFormatter();
+
+      const formatter = getArrayOfObjectsFormatter();
       const result = formatter.subjects({});
       expect(result).toBe('scheme1: heading1, scheme2: heading2');
+    });
+  });
+
+  describe('getSpecialFormatter', () => {
+    test('publicationType formatter removes "Instance" suffix', () => {
+      JSONPath.mockReturnValue(['BookInstance']);
+
+      const formatter = getSpecialFormatter();
+      const result = formatter.publicationType({});
+      expect(result).toEqual(['Book']);
     });
 
     test('publicationDates formatter returns a JSX element', () => {
@@ -77,7 +101,7 @@ describe('gokbConfigUtils', () => {
   });
 
   describe('getFormatter', () => {
-    test('merges string, array, and special formatters into a single object', () => {
+    test('merges string, array, array-of-objects, and special formatters into a single object', () => {
       const formatter = getFormatter();
       expect(Object.keys(formatter).length).toBeGreaterThan(0);
       expect(typeof Object.values(formatter)[0]).toBe('function');
