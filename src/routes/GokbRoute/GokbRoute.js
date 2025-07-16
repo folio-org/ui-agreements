@@ -9,11 +9,13 @@ import { ColumnManagerMenu, useColumnManager } from '@folio/stripes/smart-compon
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
-import { getResultColumns, getFormatter } from '../utilities/gokbConfigUtils';
+import { getResultColumns, getEndpointData, getFormatter } from '../utilities/gokbConfigUtils';
 
 const GokbRoute = ({ location }) => {
+  const { endpoint: gokbEndpoint, results: resultsPath, totalRecords: totalRecordsPath } = getEndpointData();
+
   const fetchParameters = {
-    endpoint: 'https://gokbt.gbv.de/gokb/rest/titles',
+    endpoint: gokbEndpoint,
     SASQ_MAP: {
       searchKey: 'uuid',
     },
@@ -23,7 +25,7 @@ const GokbRoute = ({ location }) => {
   // Namely name will be the field configured by the results.fetch.search key and its "handlebars template type"
   // max & offset are configured by the pagination parameters
   const template = handlebars.compile(
-    '?name={{input}}&max={{perPage}}&offset={{offset}}&es=true&sort={{sortField}}&order={{sortOrder}}'
+    '?name={{input}}&max={{perPage}}&offset={{offset}}&sort={{sortField}}&order={{sortOrder}}'
   );
 
   const generateQuery = (params, query) => {
@@ -83,8 +85,8 @@ const GokbRoute = ({ location }) => {
       lookupResponseTransform={(data) => {
         const transformedData = {
           ...data,
-          totalRecords: data._pagination.total,
-          results: data?.data,
+          totalRecords: data?.[totalRecordsPath],
+          results: data?.[resultsPath]
         };
         return transformedData;
       }}
