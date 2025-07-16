@@ -821,7 +821,7 @@
   "packages.alternateResourceName": "Alternative name",
   "packages.description": "Description",
   "gokb": "GOKB",
-  "gokb.packages": "GOKB titles",
+  "gokb.titles": "GOKB titles",
   "gokb.name": "Name",
   "gokb.publicationType": "Publication type",
   "gokb.isbns": "ISBNs",
