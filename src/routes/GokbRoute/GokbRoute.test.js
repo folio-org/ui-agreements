@@ -33,7 +33,10 @@ jest.mock('@folio/stripes/core', () => ({
 
 jest.mock('ky', () => ({
   get: jest.fn(() => ({
-    json: jest.fn(() => Promise.resolve({ _pagination: { total: 0 }, data: [] })),
+    json: jest.fn(() => Promise.resolve({
+      count: 5,
+      records: ['test-data'],
+    })),
   })),
 }));
 
@@ -84,8 +87,8 @@ describe('GokbRoute', () => {
 
   test('lookupResponseTransform transforms correctly', () => {
     const transformed = capturedProps.lookupResponseTransform({
-      _pagination: { total: 5 },
-      data: ['test-data'],
+      count: 5,
+      records: ['test-data'],
     });
     expect(transformed.totalRecords).toBe(5);
     expect(transformed.results).toEqual(['test-data']);
