@@ -10,7 +10,7 @@ import { SASQRoute } from '@k-int/stripes-kint-components';
 
 const GokbRoute = ({ location }) => {
   const fetchParameters = {
-    endpoint: 'https://gokbt.gbv.de/gokb/rest/titles',
+    endpoint: 'https://gokbt.gbv.de/gokb/api/find',
     SASQ_MAP: {
       searchKey: 'uuid',
     },
@@ -23,7 +23,7 @@ const GokbRoute = ({ location }) => {
     // Namely name will be the field configured by the results.fetch.search key and its "handlebars template type"
     // max & offset are configured by the pagination parameters
     const template = handlebars.compile(
-      '?name={{input}}&max={{perPage}}&offset={{offset}}&es=true'
+      '?name={{input}}&max={{perPage}}&offset={{offset}}'
     );
 
     return template({
