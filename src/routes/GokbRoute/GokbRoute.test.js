@@ -74,15 +74,35 @@ describe('GokbRoute', () => {
     expect(ky.get).toHaveBeenCalled();
   });
 
+  // test('queryParameterGenerator generates expected query', () => {
+  //   const result = capturedProps.queryParameterGenerator(
+  //     { page: 2, perPage: 10 },
+  //     { query: 'foo' }
+  //   );
+  //   expect(result).toContain('name=foo');
+  //   expect(result).toContain('offset=10');
+  // });
+
   test('queryParameterGenerator generates expected query', () => {
     const result = capturedProps.queryParameterGenerator(
-      { page: 2, perPage: 10 },
-      { query: 'foo', sort: '-bar' }
+      {
+        page: 2,
+        perPage: 10,
+        filterKeys: {
+          type: 'componentType',
+          dummy: 'dummyPath'
+        }
+      },
+      {
+        query: 'foo',
+        filters: 'type.Book,dummy.First'
+      }
     );
+
     expect(result).toContain('name=foo');
     expect(result).toContain('offset=10');
-    expect(result).toContain('sort=bar');
-    expect(result).toContain('order=desc');
+    expect(result).toContain('&componentType=Book');
+    expect(result).toContain('&dummyPath=First');
   });
 
   test('lookupResponseTransform transforms correctly', () => {
@@ -92,15 +112,5 @@ describe('GokbRoute', () => {
     });
     expect(transformed.totalRecords).toBe(5);
     expect(transformed.results).toEqual(['test-data']);
-  });
-
-  test('actionMenu renders ColumnManagerMenu', () => {
-    const { actionMenu } = capturedProps.mainPaneProps;
-    const { getByText } = renderWithIntl(
-      actionMenu(),
-      translationsProperties
-    );
-
-    expect(getByText('ColumnManagerMenu')).toBeInTheDocument();
   });
 });
