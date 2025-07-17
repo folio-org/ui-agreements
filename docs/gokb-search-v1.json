@@ -81,14 +81,18 @@
             }
           },
           {
-            "name": "otherids",
+            "name": "subjects",
             "type": "Array",
             "arrayType": "String",
             "joinStrategy": "Comma",
             "value": {
-              "type": "access",
-              "accessType": "JSONPath",
-              "expression": "$.identifiers[?(@.namespace != 'issn' && @.namespace != 'eissn' && @.namespace != 'pissn' && @.namespace != 'isbn' && @.namespace != 'eisbn' && @.namespace != 'pisbn' && @.namespace != 'zdb' && @.namespace != 'ezb')]"
+              "type": "HandlebarsEach",
+              "templateString": "{{namespaceName}}: {{value}}",
+              "values": {
+                "type": "access",
+                "accessType": "JSONPath",
+                "expression": "$.identifiers[?(@.namespace != 'issn' && @.namespace != 'eissn' && @.namespace != 'pissn' && @.namespace != 'isbn' && @.namespace != 'eisbn' && @.namespace != 'pisbn' && @.namespace != 'zdb' && @.namespace != 'ezb')]"
+              }
             }
           },
           {
@@ -142,9 +146,13 @@
             "arrayType": "String",
             "joinStrategy": "Comma",
             "value": {
-              "type": "access",
-              "accessType": "JSONPath",
-              "expression": "$.subjects[*]"
+              "type": "HandlebarsEach",
+              "templateString": "{{scheme}}: {{heading}}",
+              "values": {
+                "type": "access",
+                "accessType": "JSONPath",
+                "expression": "$.subjects[*]"
+              }
             }
           },
           {
@@ -289,28 +297,97 @@
       }
     },
     "view": {
+      "fetch": {
+        "baseUrl": "https://gokbt.gbv.de/gokb/api/find/",
+        "mapping": {
+          "data": "records"
+        }
+      },
       "display": {
-        "type": "FlexboxGrid",
-        "rows": [
+        "type": "map",
+        "values": [
           {
-            "columns": [
-              {
-                "name": "name",
-                "type": "String",
-                "value": {
-                  "type": "access",
-                  "accessType": "JSONPath",
-                  "expression": "$.name"
-                }
+            "type": "component",
+            "component": "MetaSection",
+            "props": {
+              "createdDate": {
+                "type": "access",
+                "accessType": "JSONPath",
+                "expression": "$.createdBy"
               },
+              "lastUpdated": {
+                "type": "access",
+                "accessType": "JSONPath",
+                "expression": "$.lastUpdated"
+              }
+            }
+          },
+          {
+            "type": "component",
+            "component": "Row",
+            "children": [
               {
-                "name": "publicationType",
-                "type": "String",
-                "value": {
-                  "type": "access",
-                  "accessType": "JSONPath",
-                  "expression": "$.type"
-                }
+                "type": "component",
+                "component": "Col",
+                "props": {
+                  "xs": "3"
+                },
+                "children": [
+                  {
+                    "type": "component",
+                    "component": "KeyValue",
+                    "value": {
+                      "type": "access",
+                      "accessType": "JSONPath",
+                      "expression": "$.name"
+                    },
+                    "label": "Name"
+                  },
+                  {
+                    "label": "publicationType",
+                    "type": "component",
+                    "component": "KeyValue",
+                    "value": {
+                      "type": "access",
+                      "accessType": "JSONPath",
+                      "expression": "$.componentType"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "component",
+            "component": "Row",
+            "children": [
+              {
+                "type": "component",
+                "component": "Col",
+                "props": {
+                  "xs": "3"
+                },
+                "children": [
+                  {
+                    "type": "component",
+                    "component": "KeyValue",
+                    "props": {
+                      "label": "identifiers",
+                      "value": {
+                        "type": "Array",
+                        "arrayType": "String",
+                        "renderStrategy": {
+                          "type": "unorderedList"
+                        },
+                        "values": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.identifiers[*].value"
+                        }
+                      }
+                    }
+                  }
+                ]
               }
             ]
           }
