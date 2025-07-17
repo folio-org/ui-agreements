@@ -13,11 +13,12 @@ import { getFilters } from '../../components/utilities';
 
 
 const GokbRoute = ({ location }) => {
+  const { filterMap, initialFilterState } = getFilters();
   const fetchParameters = {
     endpoint: 'https://gokbt.gbv.de/gokb/api/find',
     SASQ_MAP: {
       searchKey: 'uuid',
-      filterKeys: getFilters().filterMap,
+      filterKeys: filterMap,
     },
   };
 
@@ -104,7 +105,7 @@ const GokbRoute = ({ location }) => {
       queryParameterGenerator={generateQuery}
       resultColumns={resultColumns}
       sasqProps={{
-        initialFilterState: { type: ['Title'] },
+        initialFilterState
       }}
       searchFieldAriaLabel="input-gokb-search"
     />

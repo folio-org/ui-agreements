@@ -1,3 +1,4 @@
+import { init } from '@folio/stripes/core';
 import getFilters from './getFilters';
 
 jest.mock('jsonpath-plus', () => ({
@@ -21,7 +22,10 @@ describe('getFilters', () => {
           { label: 'journal', value: 'Journal' },
           { label: 'other', value: 'Other' },
         ]
-      }
+      },
+      initialFilterState: {
+        type: ['Title'],
+      },
     });
   });
 });

@@ -6,6 +6,7 @@ const getFilters = () => {
   const filterMap = {};
   const filterNames = [];
   const filterOptions = {};
+  const initialFilterState = {};
 
   filters.forEach((filter) => {
     if (filter.name && filter.filterPath) {
@@ -17,14 +18,20 @@ const getFilters = () => {
           label: name,
           value,
         }));
+
+        const defaultOption = filter.enumValues.find(opt => opt.default);
+        if (defaultOption) {
+          initialFilterState[filter.name] = [defaultOption.value];
+        }
       }
     }
   });
 
   return {
-    filterMap,      // e.g., { type: 'componentType', dummy: 'dummyPath' }
-    filterNames,    // e.g., ['type', 'dummy']
-    filterOptions,  // e.g., { type: [{label: 'all', value: 'Title'}, ...], dummy: [...] }
+    filterMap,
+    filterNames,
+    filterOptions,
+    initialFilterState
   };
 };
 
