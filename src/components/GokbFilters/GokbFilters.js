@@ -20,12 +20,7 @@ const propTypes = {
 };
 
 const GokbFilters = ({ activeFilters = {}, filterHandlers }) => {
-  const { filterNames, filterOptions } = getFilters();
-
-  const initialFilterState = filterNames.reduce((acc, key) => {
-    acc[key] = [];
-    return acc;
-  }, {});
+  const { filterNames, filterOptions, initialFilterState } = getFilters();
 
   const [filterState, setFilterState] = useState(initialFilterState);
 
