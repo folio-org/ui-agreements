@@ -601,8 +601,8 @@
     "packageIdentifiers.zdb": "ZDB",
     "packageIdentifiers.ezb": "EZB",
     "packageIdentifiers.eBookPool": "E-Book-Pool",
-    "packageIdentifiers.gokbId": "GOKb-ID",
-    "packageIdentifiers.gokbUUID": "GOKb-UUID",
+    "packageIdentifiers.gokbId": "GOKB-ID",
+    "packageIdentifiers.gokbUUID": "GOKB-UUID",
     "alternativeName": "Alternativer Name",
     "agreementLines": "Vereinbarungskomponenten",
     "agreementLines.note": "Bemerkung",
@@ -808,5 +808,15 @@
     "settings.displaySuppressFromDiscovery.title": "Display \"Suppress from discovery\" setting on Titles",
     "settings.hideEResourcesFunctionality": "Hide internal agreements knowledgebase",
     "settings.update.success": "Setting \"{settingLabel}\" was updated to {newValue}",
-    "settings.update.error": "Setting \"{settingLabel}\" could not be updated"
+    "settings.update.error": "Setting \"{settingLabel}\" could not be updated",
+    "okay": "Okay",
+    "eresources.deletePackageContents": "Delete package contents",
+    "eresources.deleteJob": "Create job to delete package contents",
+    "eresources.deleteConfirmationMessage.default": "<strong>{numberDeleted}</strong> out of <strong>{totalCount}</strong> e-resources will be deleted from the package <strong>{pkgName}</strong>.",
+    "eresources.deleteConfirmationMessage.information": "Related information in the knowledgebase that is no longer needed will also be deleted.",
+    "eresources.deleteConfirmationMessage.pciNotDeleted": "<strong>{numberNotDeleted}</strong> e-resources can not be deleted, most likely because they are linked directly to one or more Agreement Lines.",
+    "eresources.deleteConfirmationMessage.selectDelete": "Select \"Delete\" to create the deletion job.",
+    "eresources.deleteConfirmationMessage.noDeletion": "No e-resources can be deleted from the package <strong>{pkgName}</strong>, most likely because they are linked directly to one or more Agreement Lines.",
+    "eresources.deleteJob.success": "<strong>Package contents deletion job created:</strong> for {pkgName}. Updates will be displayed in the Local KB Admin app.",
+    "eresources.viewJobLink": "View Local KB Admin job"
 }

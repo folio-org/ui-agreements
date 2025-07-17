@@ -808,5 +808,15 @@
     "settings.displaySuppressFromDiscovery.title": "Exibir a configuração \"Ocultar da descoberta\" nos títulos",
     "settings.hideEResourcesFunctionality": "Ocultar base de conhecimento de contratos internos",
     "settings.update.success": "A configuração \"{settingLabel}\" foi atualizada para {newValue}",
-    "settings.update.error": "A configuração \"{settingLabel}\" não pôde ser atualizada"
+    "settings.update.error": "A configuração \"{settingLabel}\" não pôde ser atualizada",
+    "okay": "OK",
+    "eresources.deletePackageContents": "Excluir conteúdo do pacote",
+    "eresources.deleteJob": "Criar trabalho para excluir o conteúdo do pacote",
+    "eresources.deleteConfirmationMessage.default": "<strong>{numberDeleted}</strong> de <strong>{totalCount}</strong> recursos eletrônicos serão excluídos do pacote <strong>{pkgName}</strong>.",
+    "eresources.deleteConfirmationMessage.information": "Informações relacionadas na base de conhecimento que não forem mais necessárias também serão excluídas.",
+    "eresources.deleteConfirmationMessage.pciNotDeleted": "<strong>{numberNotDeleted}</strong> Os recursos eletrônicos não podem ser excluídos, provavelmente porque estão vinculados diretamente a uma ou mais Linhas do Contrato.",
+    "eresources.deleteConfirmationMessage.selectDelete": "Selecione \"Excluir\" para criar o trabalho de exclusão.",
+    "eresources.deleteConfirmationMessage.noDeletion": "Nenhum recurso eletrônico pode ser excluído do pacote <strong>{pkgName}</strong>, provavelmente porque eles estão vinculados diretamente a uma ou mais Linhas de Contrato.",
+    "eresources.deleteJob.success": "<strong>Trabalho de exclusão do conteúdo do pacote criado:</strong> durante {pkgName}. As atualizações serão exibidas no aplicativo Administração da Base de Conhecimento Local.",
+    "eresources.viewJobLink": "Ver trabalho de administrador da Base de conhecimento local"
 }
