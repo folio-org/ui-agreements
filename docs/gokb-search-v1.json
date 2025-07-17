@@ -146,10 +146,10 @@
         ]
       },
       "fetch": {
-        "baseUrl": "https://gokb.org/gokb/rest/titles",
+        "baseUrl": "https://gokbt.gbv.de/gokb/api/find",
         "mapping": {
-          "results": "data",
-          "totalRecords": "_pagination.total"
+          "results": "records",
+          "totalRecords": "count"
         },
         "search": {
           "type": "queryDropdown",
@@ -226,30 +226,35 @@
             }
           ]
         },
-        "filters": [
+       "filters": [
           {
             "name": "type",
-            "filterPath": "contentType",
+            "filterPath": "componentType",
             "type": "Enum",
             "enumValues": [
               {
-                "value": "book",
+                "name": "all",
+                "value": "Title",
                 "default": true
               },
               {
-                "value": "database",
+                "name": "book",
+                "value": "Book",
                 "default": false
               },
               {
-                "value": "journal",
+                "name": "database",
+                "value": "Database",
                 "default": false
               },
               {
-                "value": "other",
+                "name": "journal",
+                "value": "Journal",
                 "default": false
               },
               {
-                "value": "requested",
+                "name": "other",
+                "value": "Other",
                 "default": false
               }
             ]
