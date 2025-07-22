@@ -73,15 +73,10 @@
           },
           {
             "name": "publicationDates",
-            "type": "DatesDisplay",
-            "value": {
-              "type": "access",
-              "accessType": "JSONPath",
-              "expression": "RETURNS ARRAY/OBJECT of publication dates"
-            }
+            "type": "DatesDisplay"
           },
           {
-            "name": "subjects",
+            "name": "otherIds",
             "type": "Array",
             "arrayType": "String",
             "joinStrategy": "Comma",
@@ -304,94 +299,185 @@
         }
       },
       "display": {
-        "type": "map",
-        "values": [
-          {
-            "type": "component",
-            "component": "MetaSection",
-            "props": {
-              "createdDate": {
-                "type": "access",
-                "accessType": "JSONPath",
-                "expression": "$.createdBy"
-              },
-              "lastUpdated": {
-                "type": "access",
-                "accessType": "JSONPath",
-                "expression": "$.lastUpdated"
-              }
-            }
-          },
-          {
-            "type": "component",
-            "component": "Row",
-            "children": [
-              {
-                "type": "component",
-                "component": "Col",
-                "props": {
-                  "xs": "3"
-                },
-                "children": [
+        "title": "GOKb Search Result jsonpATH",
+        "icon": "book",
+        "renderStrategy": {
+          "type": "sections",
+          "values": [
+            {
+              "name": "info",
+              "collapsable": "false",
+              "renderStrategy": {
+                "type": "rows",
+                "values": [
                   {
-                    "type": "component",
-                    "component": "KeyValue",
-                    "value": {
-                      "type": "access",
-                      "accessType": "JSONPath",
-                      "expression": "$.name"
-                    },
-                    "label": "Name"
-                  },
-                  {
-                    "label": "publicationType",
-                    "type": "component",
-                    "component": "KeyValue",
-                    "value": {
-                      "type": "access",
-                      "accessType": "JSONPath",
-                      "expression": "$.componentType"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "component",
-            "component": "Row",
-            "children": [
-              {
-                "type": "component",
-                "component": "Col",
-                "props": {
-                  "xs": "3"
-                },
-                "children": [
-                  {
-                    "type": "component",
-                    "component": "KeyValue",
-                    "props": {
-                      "label": "identifiers",
-                      "value": {
-                        "type": "Array",
-                        "arrayType": "String",
-                        "renderStrategy": {
-                          "type": "unorderedList"
-                        },
-                        "values": {
+                    "type": "row",
+                    "colCount": "1",
+                    "values": [
+                      {
+                        "type": "heading",
+                        "value": {
                           "type": "access",
                           "accessType": "JSONPath",
-                          "expression": "$.identifiers[*].value"
+                          "expression": "$.name"
                         }
                       }
+                    ]
+                  },
+                  {
+                    "name": "metadata",
+                    "collapsable": "false",
+                    "renderStrategy": {
+                      "type": "metadata",
+                      "createdBy": {
+                        "type": "access",
+                        "accessType": "JSONPath",
+                        "expression": "$.title"
+                      },
+                      "lastUpdated": {
+                        "type": "access",
+                        "accessType": "JSONPath",
+                        "expression": "$.title"
+                      }
                     }
+                  },
+                  {
+                    "type": "row",
+                    "colCount": "3",
+                    "values": [
+                      {
+                        "type": "keyValue",
+                        "name": "publicationType",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.componentType"
+                        }
+                      },
+                      {
+                        "name": "firstAuthor",
+                        "type": "keyValue",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.firstAuthor"
+                        }
+                      },
+                      {
+                        "name": "firstEditor",
+                        "type": "keyValue",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.firstEditor"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "row",
+                    "colCount": "4",
+                    "values": [
+                      {
+                        "name": "dateFirstOnline",
+                        "type": "keyValue",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.firstAuthor"
+                        }
+                      },
+                      {
+                        "name": "dateFirstInPrint",
+                        "type": "keyValue",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.firstEditor"
+                        }
+                      },
+                      {
+                        "name": "publishedFrom",
+                        "type": "keyValue",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.firstEditor"
+                        }
+                      },
+                      {
+                        "type": "keyValue",
+                        "name": "publishedTo",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.componentType"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "row",
+                    "colCount": "3",
+                    "values": [
+                      {
+                        "name": "volume",
+                        "type": "keyValue",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.volumeNumber"
+                        }
+                      },
+                      {
+                        "name": "edition",
+                        "type": "keyValue",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.editionStatement"
+                        }
+                      },
+                      {
+                        "name": "publisher",
+                        "type": "keyValue",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.publisherName"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "row",
+                    "colCount": "2",
+                    "values": [
+                      {
+                        "name": "gokbId",
+                        "type": "keyValue",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.id"
+                        }
+                      },
+                      {
+                        "name": "gokdUuid",
+                        "type": "keyValue",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.uuid"
+                        }
+                      }
+                    ]
                   }
                 ]
               }
-            ]
-          }
-        ]
+            }
+          ]
+        }
       }
     }
   }
