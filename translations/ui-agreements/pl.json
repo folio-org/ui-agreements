@@ -808,5 +808,15 @@
     "settings.displaySuppressFromDiscovery.title": "Wyświetl ustawienie „Ukryty w katalogu WWW” w tytułach",
     "settings.hideEResourcesFunctionality": "Ukryj wewnętrzną bazę wiedzy dotyczącą umów",
     "settings.update.success": "Ustawienie „{settingLabel}” zostało zaktualizowane do {newValue}",
-    "settings.update.error": "Nie można zaktualizować ustawienia „{settingLabel}”"
+    "settings.update.error": "Nie można zaktualizować ustawienia „{settingLabel}”",
+    "okay": "Okay",
+    "eresources.deletePackageContents": "Usuń zawartość pakietu",
+    "eresources.deleteJob": "Utwórz zadanie usunięcia zawartości pakietu",
+    "eresources.deleteConfirmationMessage.default": "<strong>{numberDeleted}</strong> z <strong>{totalCount}</strong> e-zasobów zostanie usuniętych z pakietu <strong>{pkgName}</strong>.",
+    "eresources.deleteConfirmationMessage.information": "Powiązane informacje w bazie wiedzy, które nie są już potrzebne, również zostaną usunięte.",
+    "eresources.deleteConfirmationMessage.pciNotDeleted": "<strong>{numberNotDeleted}</strong> e-zasobów nie można usunąć, najprawdopodobniej dlatego, że są one bezpośrednio powiązane z jedną lub kilkoma pozycjami umowy.",
+    "eresources.deleteConfirmationMessage.selectDelete": "Wybierz „Usuń”, aby utworzyć zadanie usuwania.",
+    "eresources.deleteConfirmationMessage.noDeletion": "Nie można usunąć żadnych e-zasobów z pakietu <strong>{pkgName}</strong>, najprawdopodobniej dlatego, że są one bezpośrednio powiązane z jedną lub kilkoma pozycjami umowy.",
+    "eresources.deleteJob.success": "<strong>Utworzono zadanie usuwania zawartości pakietu:</strong> dla {pkgName}. Aktualizacje będą wyświetlane w aplikacji Lokalna Baza Wiedzy Admina.",
+    "eresources.viewJobLink": "Wyświetl zadanie Lokalnej Bazy Wiedzy Admina"
 }
