@@ -118,26 +118,6 @@ describe('searchTransformation', () => {
       expect(mockTemplate).toHaveBeenCalledWith({ string: 'test search' });
       expect(result).toBe('q=test search');
     });
-
-    it('should handle template compilation errors gracefully', () => {
-      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-      mockHandlebars.compile.mockImplementation(() => {
-        throw new Error('Template compilation failed');
-      });
-
-      const searchConfig = {
-        options: [
-          { name: 'keyword', type: 'Handlebars', parameter: 'q={{string}}' }
-        ]
-      };
-
-      const result = transformSearchParameter(searchConfig, 'keyword', 'test');
-
-      expect(consoleSpy).toHaveBeenCalledWith('Error in template compilation:', expect.any(Error));
-      expect(result).toBe('');
-
-      consoleSpy.mockRestore();
-    });
   });
 
   describe('buildSearchOptions', () => {

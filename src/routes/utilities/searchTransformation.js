@@ -2,20 +2,36 @@ import handlebars from 'handlebars';
 import { FormattedMessage } from 'react-intl';
 import config from '../../../docs/gokb-search-v1.json';
 
+export const searchParameterHandlers = {
+  'Handlebars': (parameter, searchString) => {
+    try {
+      const template = handlebars.compile(parameter);
+      return template({ string: searchString });
+    } catch (error) {
+      console.error('Error in Handlebars template compilation:', error);
+      return '';
+    }
+  },
+
+  'Static': (parameter) => parameter,
+  'JSONPath': (parameter, searchString, context) => {
+    return parameter;
+  }
+};
+
 export const transformSearchParameter = (searchConfig, searchOption, searchString) => {
   if (!searchConfig?.options || !searchString) return '';
 
   const selectedOption = searchConfig.options.find(opt => opt.name === searchOption);
-  if (!selectedOption || selectedOption.type !== 'Handlebars') return '';
+  if (!selectedOption || !selectedOption.type || !selectedOption.parameter) return '';
 
-  try {
-    const template = handlebars.compile(selectedOption.parameter);
-    const result = template({ string: searchString });
-    return result;
-  } catch (error) {
-    console.error('Error in template compilation:', error);
+  const handler = searchParameterHandlers[selectedOption.type];
+  if (!handler) {
+    console.warn(`No handler found for search parameter type: ${selectedOption.type}`);
     return '';
   }
+
+  return handler(selectedOption.parameter, searchString);
 };
 
 export const buildSearchOptions = (searchConfig) => {
@@ -36,18 +52,18 @@ export const generateGokbQuery = (params, query, searchConfig) => {
   const searchString = query?.query || '';
   const searchOption = query?.qindex || 'keyword';
 
-  const searchParameter = transformSearchParameter(searchConfig, searchOption, searchString);
-
   const queryParts = [];
-  if (searchParameter) {
-    queryParts.push(searchParameter);
+
+  if (searchString) {
+    const searchParameter = transformSearchParameter(searchConfig, searchOption, searchString);
+    if (searchParameter) {
+      queryParts.push(searchParameter);
+    }
   }
 
-  // Basic pagination parameters
   queryParts.push(`max=${perPage}`);
   queryParts.push(`offset=${offset}`);
 
-  // Optional sorting parameters
   if (query?.sort) {
     queryParts.push(`sort=${query.sort}`);
   }
@@ -56,6 +72,27 @@ export const generateGokbQuery = (params, query, searchConfig) => {
   }
 
   return `?${queryParts.join('&')}`;
+};
+
+export const generateKiwtQueryParams = (searchConfig, SASQMapFilterEntry, params, query) => {
+  if (!searchConfig || !searchConfig.type) {
+    return generateGokbQuery(params, query, searchConfig);
+  }
+
+  switch (searchConfig.type) {
+    case 'queryDropdown':
+      return generateGokbQuery(params, query, searchConfig);
+
+    case 'static': {
+      const perPage = params?.perPage || 25;
+      const offset = (params.page - 1) * perPage;
+      return `?max=${perPage}&offset=${offset}`;
+    }
+
+    default:
+      console.warn(`Unknown configuration type: ${searchConfig.type}`);
+      return generateGokbQuery(params, query, searchConfig);
+  }
 };
 
 export const getSearchableIndexes = () => {

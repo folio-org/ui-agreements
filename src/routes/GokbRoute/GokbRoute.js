@@ -4,28 +4,30 @@ import kyImport from 'ky';
 
 import { JSONPath } from 'jsonpath-plus';
 
-import { useState, useCallback } from 'react';
-import { Select } from '@folio/stripes/components';
+import { useState, useCallback, useMemo } from 'react';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
 import config from '../../../docs/gokb-search-v1.json';
 
-import { generateGokbQuery, searchableIndexes } from '../utilities/searchTransformation';
+import { generateKiwtQueryParams } from '../utilities/searchTransformation';
+import { buildSearchHeaderComponent } from '../utilities/searchComponentBuilder';
 
 const GokbRoute = ({ location }) => {
   const [searchKey, setSearchKey] = useState('keyword');
+  const [SASQMap, setSASQMap] = useState({ searchKey: 'keyword' });
+
+  // Build search configuration from the config file
+  const searchConfig = config.configuration.results.fetch.search;
 
   const fetchParameters = {
     endpoint: 'https://gokbt.gbv.de/gokb/rest/titles',
-    SASQ_MAP: {
-      searchKey: 'uuid',
-    },
+    SASQ_MAP: SASQMap,
   };
 
   const generateQuery = useCallback((params, query) => {
     const queryWithSearchKey = { ...query, qindex: searchKey };
-    return generateGokbQuery(params, queryWithSearchKey, config.configuration.results.fetch.search);
-  }, [searchKey]);
+    return generateKiwtQueryParams(searchConfig, SASQMap, params, queryWithSearchKey);
+  }, [searchKey, searchConfig, SASQMap]);
 
   const resultColumns = [
     {
@@ -38,37 +40,24 @@ const GokbRoute = ({ location }) => {
     name: (resource) => JSONPath({ path: '$.name', json: resource }),
   };
 
-  const renderHeaderComponent = () => {
-    return (
-      <Select
-        dataOptions={searchableIndexes}
-        id="gokb-search-header-select"
-        onChange={(event) => {
-          setSearchKey(event.target.value);
-        }}
-        options={[
-          { value: 'keyword', label: 'Keyword (Name, Alternative names, Identifiers)' },
-          { value: 'nameAndAltNames', label: 'Name and alternative names' },
-          { value: 'name', label: 'Name only' },
-          { value: 'altName', label: 'Alternative names only' },
-          { value: 'identifiers', label: 'Identifiers (all)' },
-          { value: 'eisbn', label: 'eISBN' },
-          { value: 'pisbn', label: 'pISBN' },
-          { value: 'eissn', label: 'eISSN' },
-          { value: 'pissn', label: 'pISSN' },
-          { value: 'issn', label: 'ISSN' },
-          { value: 'isbn', label: 'ISBN' },
-          { value: 'ezb', label: 'EZB ID' },
-          { value: 'zdb', label: 'ZDB ID' },
-          { value: 'uuid', label: 'GOKb UUID' },
-          { value: 'gokbId', label: 'GOKb ID' },
-          { value: 'authorEditor', label: 'Author/Editor' },
-        ]}
-        placeholder="Select search field"
-        value={searchKey}
-      />
-    );
-  };
+  // Build header component dynamically from config
+  const headerComponentConfig = useMemo(() => {
+    return buildSearchHeaderComponent(searchConfig, {
+      onChange: (event) => {
+        const newSearchKey = event.target.value;
+        setSearchKey(newSearchKey);
+
+        // Update SASQ map based on the selection
+        setSASQMap({ searchKey: newSearchKey });
+      },
+      value: searchKey,
+      id: 'gokb-search-header-select'
+    });
+  }, [searchConfig, searchKey]);
+
+  const renderHeaderComponent = useCallback(() => {
+    return headerComponentConfig?.component || null;
+  }, [headerComponentConfig]);
 
   return (
     <SASQRoute
