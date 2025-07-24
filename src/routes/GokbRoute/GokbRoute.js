@@ -9,14 +9,11 @@ import { ColumnManagerMenu, useColumnManager } from '@folio/stripes/smart-compon
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
-import { getResultColumns, getEndpointData, getFormatter } from '../utilities/gokbConfigUtils';
 import getResultsDisplayConfig from '../utilities/getResultsDisplayConfig';
 
 const GokbRoute = ({ location }) => {
-  // const { endpoint: gokbEndpoint, results: resultsPath, totalRecords: totalRecordsPath } = getEndpointData();
   const { endpoint: gokbEndpoint, formatter, resultColumns, results: resultsPath, totalRecords: totalRecordsPath } = getResultsDisplayConfig();
 
-  // console.log('getResultsDisplayConfig', getResultsDisplayConfig());
   const fetchParameters = {
     endpoint: gokbEndpoint,
     SASQ_MAP: {
@@ -54,9 +51,6 @@ const GokbRoute = ({ location }) => {
   // const formatter = {
   //   name: (resource) => JSONPath({ path: '$.name', json: resource }),
   // };
-
-  // const resultColumns = getResultColumns();
-  // const formatter = getFormatter();
 
   const columnMapping = resultColumns?.length
     ? Object.fromEntries(resultColumns.map(col => [col.propertyPath, col.label]))

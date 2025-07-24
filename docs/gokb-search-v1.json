@@ -22,9 +22,13 @@
             "name": "publicationType",
             "type": "String",
             "value": {
-              "type": "access",
-              "accessType": "JSONPath",
-              "expression": "$.componentType"
+              "type": "Handlebars",
+              "templateString": "{{replace value 'Instance' ''}}",
+              "value": {
+                "type": "access",
+                "accessType": "JSONPath",
+                "expression": "$.componentType"
+              }
             }
           },
           {

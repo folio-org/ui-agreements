@@ -5,19 +5,32 @@ import handlebars from 'handlebars';
 
 import gokbConfig from '../../../docs/gokb-search-v1';
 
-/* HELPERS */
+/* Register handlebar helpers */
+
+handlebars.registerHelper('replace', (text, search, replacement) => {
+  if (typeof text !== 'string') return text;
+  return text.replace(new RegExp(search, 'g'), replacement);
+});
+
+/* Other helper functions */
 
 const applyJsonPath = (expression, resource) => JSONPath({ path: expression, json: resource }) || [];
 
-// const applyPostProcessing = (value, postProcess = []) => {
-//   return postProcess.reduce((result, step) => {
-//     if (step.type === 'replace') {
-//       const [from, to] = step.args;
-//       return result.replace(new RegExp(from, 'g'), to);
-//     }
-//     return result;
-//   }, value);
-// };
+const applyRenderStrategy = (results, strategy) => {
+  const defaultSeparator = ', ';
+  if (!strategy || !strategy.type) return results.join(defaultSeparator);
+
+  switch (strategy.type) {
+    case 'joinString':
+      return results.join(strategy.seperator || defaultSeparator);
+    // case 'bulletList':
+    //   return results.map(...);
+    default:
+      return results.join(defaultSeparator);
+  }
+};
+
+/* Special formatter - not generalizeable */
 
 const formatDatesDisplay = () => {
   return (resource) => {
@@ -52,9 +65,32 @@ const formatDatesDisplay = () => {
   };
 };
 
-const getFormatterFunction = (type, col) => {
-  const { value = {}, arrayType, templateString, renderStrategy } = col;
-  const recurse = () => getFormatterFunction(value?.type, value);
+/* Recursive formatter function */
+
+const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) => {
+  const { value = {}, arrayType, templateString, renderStrategy = inheritedRenderStrategy } = col;
+  const recurse = () => getFormatterFunction(value?.type, value, renderStrategy);
+
+  const buildHandlebarsFormatter = (isEach = false) => {
+    return (resource) => {
+      const results = applyJsonPath(value.expression, resource);
+      const template = handlebars.compile(templateString);
+      const output = isEach
+        ? results.map(obj => template(obj))
+        : [template({ value: results[0] })];
+
+      const formatter = getFormatterFunction('String', {
+        value: {
+          type: 'access',
+          accessType: 'compiled',
+          expression: output
+        }
+      }, renderStrategy);
+
+      return formatter(resource);
+    };
+  };
+
   switch (type) {
     case 'String':
       if (value?.type === 'access') {
@@ -67,37 +103,27 @@ const getFormatterFunction = (type, col) => {
             results = value.expression;
           }
 
-          return results.join(', ') || '';
+          return applyRenderStrategy(results, renderStrategy) || '';
         };
       } else {
         return recurse();
       }
     case 'Array':
       if (value?.type === 'access' && arrayType === 'String') {
-        return getFormatterFunction('String', col);
+        return getFormatterFunction('String', col, renderStrategy);
       } else {
         return recurse();
       }
     case 'HandlebarsEach':
       if (value?.type === 'access' && value?.accessType === 'JSONPath') {
-        return (resource) => {
-          const results = applyJsonPath(value.expression, resource);
-          const template = handlebars.compile(templateString);
-          const stringArray = (results || []).map(obj => template(obj));
-
-          // Recursively pass array of strings
-          const arrayFormatter = getFormatterFunction('String', {
-            value: {
-              type: 'access',
-              accessType: 'compiled',
-              expression: stringArray
-            }
-          });
-
-          return arrayFormatter(resource);
-        };
+        return buildHandlebarsFormatter(true);
       } else {
-        // fallback to recursive call if shape is unexpected
+        return recurse();
+      }
+    case 'Handlebars':
+      if (value?.type === 'access' && value?.accessType === 'JSONPath') {
+        return buildHandlebarsFormatter();
+      } else {
         return recurse();
       }
     default:
@@ -105,7 +131,7 @@ const getFormatterFunction = (type, col) => {
   }
 };
 
-/* MAIN EXPORTED FUNCTION */
+/* Main exported function */
 
 const getResultsDisplayConfig = () => {
   const columns = gokbConfig.configuration.results.display.columns;
@@ -114,7 +140,6 @@ const getResultsDisplayConfig = () => {
   const formatter = {};
 
   columns.forEach(col => {
-    // const { name, type, value, arrayType, joinStrategy, renderStrategy } = col;
     const { name, type } = col;
     if (!name) return;
 
