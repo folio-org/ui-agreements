@@ -22,7 +22,7 @@ const applyRenderStrategy = (results, strategy) => {
 
   switch (strategy.type) {
     case 'joinString':
-      return results.join(strategy.seperator || defaultSeparator);
+      return results.join(strategy.separator || defaultSeparator);
     // case 'bulletList':
     //   return results.map(...);
     default:

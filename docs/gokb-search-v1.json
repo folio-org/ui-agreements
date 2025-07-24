@@ -37,7 +37,7 @@
             "arrayType": "String",
             "renderStrategy": {
               "type": "joinString",
-              "seperator": ", "
+              "separator": ", "
             },
             "value": {
               "type": "access",
@@ -51,7 +51,7 @@
             "arrayType": "String",
             "renderStrategy": {
               "type": "joinString",
-              "seperator": ", "
+              "separator": ", "
             },
             "value": {
               "type": "access",
@@ -65,7 +65,7 @@
             "arrayType": "String",
             "renderStrategy": {
               "type": "joinString",
-              "seperator": ", "
+              "separator": ", "
             },
             "value": {
               "type": "access",
@@ -79,7 +79,7 @@
             "arrayType": "String",
             "renderStrategy": {
               "type": "joinString",
-              "seperator": ", "
+              "separator": ", "
             },
             "value": {
               "type": "access",
@@ -97,7 +97,7 @@
             "arrayType": "String",
             "renderStrategy": {
               "type": "joinString",
-              "seperator": ", "
+              "separator": ", "
             },
             "value": {
               "type": "HandlebarsEach",
@@ -160,7 +160,7 @@
             "arrayType": "String",
             "renderStrategy": {
               "type": "joinString",
-              "seperator": ", "
+              "separator": ", "
             },
             "value": {
               "type": "HandlebarsEach",
