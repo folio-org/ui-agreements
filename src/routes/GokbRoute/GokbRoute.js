@@ -4,37 +4,31 @@ import kyImport from 'ky';
 
 import { JSONPath } from 'jsonpath-plus';
 
-import handlebars from 'handlebars';
+import { useState, useCallback, useMemo } from 'react';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
+import config from '../../../docs/gokb-search-v1.json';
+
+import { generateKiwtQueryParams } from '../utilities/searchTransformation';
+import { buildSearchHeaderComponent } from '../utilities/searchComponentBuilder';
 
 const GokbRoute = ({ location }) => {
+  const [searchKey, setSearchKey] = useState('keyword');
+  const [SASQMap, setSASQMap] = useState({ searchKey: 'keyword' });
+
+  // Build search configuration from the config file
+  const searchConfig = config.configuration.results.fetch.search;
+
   const fetchParameters = {
     endpoint: 'https://gokbt.gbv.de/gokb/rest/titles',
-    SASQ_MAP: {
-      searchKey: 'uuid',
-    },
+    SASQ_MAP: SASQMap,
   };
 
-  const generateQuery = (params, query) => {
-    const offset = (params.page - 1) * params.perPage;
+  const generateQuery = useCallback((params, query) => {
+    const queryWithSearchKey = { ...query, qindex: searchKey };
+    return generateKiwtQueryParams(searchConfig, SASQMap, params, queryWithSearchKey);
+  }, [searchKey, searchConfig, SASQMap]);
 
-    // EXAMPLE: Using handlebars to generate the query string
-    // Namely name will be the field configured by the results.fetch.search key and its "handlebars template type"
-    // max & offset are configured by the pagination parameters
-    const template = handlebars.compile(
-      '?name={{input}}&max={{perPage}}&offset={{offset}}&es=true'
-    );
-
-    return template({
-      input: query?.query || '',
-      perPage: params?.perPage,
-      offset,
-    });
-  };
-
-  // When building the SASQ from the config file, using the results.display values
-  // should construct a formatter and resultColumns object
   const resultColumns = [
     {
       propertyPath: 'name',
@@ -42,20 +36,39 @@ const GokbRoute = ({ location }) => {
     },
   ];
 
-  // EXAMPLE: Using JSONPath to format the results
   const formatter = {
     name: (resource) => JSONPath({ path: '$.name', json: resource }),
   };
 
+  // Build header component dynamically from config
+  const headerComponentConfig = useMemo(() => {
+    return buildSearchHeaderComponent(searchConfig, {
+      onChange: (event) => {
+        const newSearchKey = event.target.value;
+        setSearchKey(newSearchKey);
+
+        // Update SASQ map based on the selection
+        setSASQMap({ searchKey: newSearchKey });
+      },
+      value: searchKey,
+      id: 'gokb-search-header-select'
+    });
+  }, [searchConfig, searchKey]);
+
+  const renderHeaderComponent = useCallback(() => {
+    return headerComponentConfig?.component || null;
+  }, [headerComponentConfig]);
+
   return (
     <SASQRoute
+      key={searchKey}
       fetchParameters={fetchParameters}
+      FilterPaneHeaderComponent={renderHeaderComponent}
       filterPaneProps={{
         id: 'gokb-search-main-filter-pane',
       }}
       id="gokb-search"
-      lookupQueryPromise={({ _ky, queryParams, endpoint }) => kyImport.get(`${endpoint}${queryParams}`).json()
-      }
+      lookupQueryPromise={({ _ky, queryParams, endpoint }) => kyImport.get(`${endpoint}${queryParams}`).json()}
       lookupResponseTransform={(data) => {
         const transformedData = {
           ...data,
