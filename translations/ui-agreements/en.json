@@ -829,7 +829,7 @@
   "gokb.zdbids": "ZDB-IDs",
   "gokb.ezbids": "EZB-IDs",
   "gokb.publicationDates": "Publication dates",
-  "gokb.otherids": "Other IDs",
+  "gokb.otherIds": "Other IDs",
   "gokb.publisher": "Publisher",
   "gokb.firstAuthor": "First author",
   "gokb.firstEditor": "First editor",
