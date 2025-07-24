@@ -22,16 +22,23 @@
             "name": "publicationType",
             "type": "String",
             "value": {
-              "type": "access",
-              "accessType": "JSONPath",
-              "expression": "$.componentType"
+              "type": "Handlebars",
+              "templateString": "{{{replace value 'Instance' ''}}}",
+              "value": {
+                "type": "access",
+                "accessType": "JSONPath",
+                "expression": "$.componentType"
+              }
             }
           },
           {
             "name": "isbns",
             "type": "Array",
             "arrayType": "String",
-            "joinStrategy": "Comma",
+            "renderStrategy": {
+              "type": "joinString",
+              "separator": ", "
+            },
             "value": {
               "type": "access",
               "accessType": "JSONPath",
@@ -42,7 +49,10 @@
             "name": "issns",
             "type": "Array",
             "arrayType": "String",
-            "joinStrategy": "Comma",
+            "renderStrategy": {
+              "type": "joinString",
+              "separator": ", "
+            },
             "value": {
               "type": "access",
               "accessType": "JSONPath",
@@ -53,7 +63,10 @@
             "name": "zdbids",
             "type": "Array",
             "arrayType": "String",
-            "joinStrategy": "Comma",
+            "renderStrategy": {
+              "type": "joinString",
+              "separator": ", "
+            },
             "value": {
               "type": "access",
               "accessType": "JSONPath",
@@ -64,7 +77,10 @@
             "name": "ezbids",
             "type": "Array",
             "arrayType": "String",
-            "joinStrategy": "Comma",
+            "renderStrategy": {
+              "type": "joinString",
+              "separator": ", "
+            },
             "value": {
               "type": "access",
               "accessType": "JSONPath",
@@ -79,11 +95,14 @@
             "name": "otherIds",
             "type": "Array",
             "arrayType": "String",
-            "joinStrategy": "Comma",
+            "renderStrategy": {
+              "type": "joinString",
+              "separator": ", "
+            },
             "value": {
               "type": "HandlebarsEach",
-              "templateString": "{{namespaceName}}: {{value}}",
-              "values": {
+              "templateString": "{{{namespaceName}}}: {{{value}}}",
+              "value": {
                 "type": "access",
                 "accessType": "JSONPath",
                 "expression": "$.identifiers[?(@.namespace != 'issn' && @.namespace != 'eissn' && @.namespace != 'pissn' && @.namespace != 'isbn' && @.namespace != 'eisbn' && @.namespace != 'pisbn' && @.namespace != 'zdb' && @.namespace != 'ezb')]"
@@ -139,11 +158,14 @@
             "name": "subjects",
             "type": "Array",
             "arrayType": "String",
-            "joinStrategy": "Comma",
+            "renderStrategy": {
+              "type": "joinString",
+              "separator": ", "
+            },
             "value": {
               "type": "HandlebarsEach",
-              "templateString": "{{scheme}}: {{heading}}",
-              "values": {
+              "templateString": "{{{scheme}}}: {{{heading}}}",
+              "value": {
                 "type": "access",
                 "accessType": "JSONPath",
                 "expression": "$.subjects[*]"
@@ -255,7 +277,7 @@
           {
             "name": "type",
             "filterPath": "componentType",
-            "type": "Enum",
+            "type": "singleSelect",
             "enumValues": [
               {
                 "name": "all",
