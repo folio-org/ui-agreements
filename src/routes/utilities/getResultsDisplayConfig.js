@@ -18,7 +18,7 @@ const applyJsonPath = (expression, resource) => JSONPath({ path: expression, jso
 
 const applyRenderStrategy = (results, strategy) => {
   const defaultSeparator = ', ';
-  if (!strategy || !strategy.type) return results.join(defaultSeparator);
+  if (!strategy?.type) return results.join(defaultSeparator);
 
   switch (strategy.type) {
     case 'joinString':
