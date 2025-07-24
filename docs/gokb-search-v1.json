@@ -22,53 +22,91 @@
             "name": "publicationType",
             "type": "String",
             "value": {
-              "type": "access",
-              "accessType": "JSONPath",
-              "expression": "$.type"
+              "type": "Handlebars",
+              "templateString": "{{{replace value 'Instance' ''}}}",
+              "value": {
+                "type": "access",
+                "accessType": "JSONPath",
+                "expression": "$.componentType"
+              }
             }
           },
           {
             "name": "isbns",
             "type": "Array",
             "arrayType": "String",
-            "joinStrategy": "Comma",
+            "renderStrategy": {
+              "type": "joinString",
+              "separator": ", "
+            },
             "value": {
               "type": "access",
               "accessType": "JSONPath",
-              "expression": "$._embedded.ids[?(@.namespace.value == 'isbn')].value"
+              "expression": "$.identifiers[?(@.namespace == 'isbn' || @.namespace == 'eisbn' || @.namespace == 'pisbn')].value"
             }
           },
           {
             "name": "issns",
             "type": "Array",
             "arrayType": "String",
-            "joinStrategy": "Comma",
+            "renderStrategy": {
+              "type": "joinString",
+              "separator": ", "
+            },
             "value": {
               "type": "access",
               "accessType": "JSONPath",
-              "expression": "$._embedded.ids[?(@.namespace.value == 'issn')].value"
+              "expression": "$.identifiers[?(@.namespace == 'issn' || @.namespace == 'eissn' || @.namespace == 'pissn')].value"
             }
           },
           {
             "name": "zdbids",
             "type": "Array",
             "arrayType": "String",
-            "joinStrategy": "Comma",
+            "renderStrategy": {
+              "type": "joinString",
+              "separator": ", "
+            },
             "value": {
               "type": "access",
               "accessType": "JSONPath",
-              "expression": "$._embedded.ids[?(@.namespace.value == 'zdb')].value"
+              "expression": "$.identifiers[?(@.namespace == 'zdb')].value"
             }
           },
           {
             "name": "ezbids",
             "type": "Array",
             "arrayType": "String",
-            "joinStrategy": "Comma",
+            "renderStrategy": {
+              "type": "joinString",
+              "separator": ", "
+            },
             "value": {
               "type": "access",
               "accessType": "JSONPath",
-              "expression": "$._embedded.ids[?(@.namespace.value == 'ezb')].value"
+              "expression": "$.identifiers[?(@.namespace == 'ezb')].value"
+            }
+          },
+          {
+            "name": "publicationDates",
+            "type": "DatesDisplay"
+          },
+          {
+            "name": "otherIds",
+            "type": "Array",
+            "arrayType": "String",
+            "renderStrategy": {
+              "type": "joinString",
+              "separator": ", "
+            },
+            "value": {
+              "type": "HandlebarsEach",
+              "templateString": "{{{namespaceName}}}: {{{value}}}",
+              "value": {
+                "type": "access",
+                "accessType": "JSONPath",
+                "expression": "$.identifiers[?(@.namespace != 'issn' && @.namespace != 'eissn' && @.namespace != 'pissn' && @.namespace != 'isbn' && @.namespace != 'eisbn' && @.namespace != 'pisbn' && @.namespace != 'zdb' && @.namespace != 'ezb')]"
+              }
             }
           },
           {
@@ -118,11 +156,20 @@
           },
           {
             "name": "subjects",
-            "type": "String",
+            "type": "Array",
+            "arrayType": "String",
+            "renderStrategy": {
+              "type": "joinString",
+              "separator": ", "
+            },
             "value": {
-              "type": "access",
-              "accessType": "JSONPath",
-              "expression": "$.subjects"
+              "type": "HandlebarsEach",
+              "templateString": "{{{scheme}}}: {{{heading}}}",
+              "value": {
+                "type": "access",
+                "accessType": "JSONPath",
+                "expression": "$.subjects[*]"
+              }
             }
           },
           {
@@ -146,10 +193,10 @@
         ]
       },
       "fetch": {
-        "baseUrl": "https://gokb.org/gokb/rest/titles",
+        "baseUrl": "https://gokbt.gbv.de/gokb/api/find",
         "mapping": {
-          "results": "data",
-          "totalRecords": "_pagination.total"
+          "results": "records",
+          "totalRecords": "count"
         },
         "search": {
           "type": "queryDropdown",
@@ -229,27 +276,32 @@
         "filters": [
           {
             "name": "type",
-            "filterPath": "contentType",
-            "type": "Enum",
+            "filterPath": "componentType",
+            "type": "singleSelect",
             "enumValues": [
               {
-                "value": "book",
-                "default": true
-              },
-              {
-                "value": "database",
+                "name": "all",
+                "value": "Title",
                 "default": false
               },
               {
-                "value": "journal",
+                "name": "book",
+                "value": "Book",
                 "default": false
               },
               {
-                "value": "other",
+                "name": "database",
+                "value": "Database",
                 "default": false
               },
               {
-                "value": "requested",
+                "name": "journal",
+                "value": "Journal",
+                "default": false
+              },
+              {
+                "name": "other",
+                "value": "Other",
                 "default": false
               }
             ]
@@ -262,33 +314,7 @@
       }
     },
     "view": {
-      "display": {
-        "type": "FlexboxGrid",
-        "rows": [
-          {
-            "columns": [
-              {
-                "name": "name",
-                "type": "String",
-                "value": {
-                  "type": "access",
-                  "accessType": "JSONPath",
-                  "expression": "$.name"
-                }
-              },
-              {
-                "name": "publicationType",
-                "type": "String",
-                "value": {
-                  "type": "access",
-                  "accessType": "JSONPath",
-                  "expression": "$.type"
-                }
-              }
-            ]
-          }
-        ]
-      }
+      "display": {}
     }
   }
 }
