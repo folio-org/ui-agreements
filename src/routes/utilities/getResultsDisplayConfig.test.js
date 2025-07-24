@@ -1,5 +1,4 @@
 import { JSONPath } from 'jsonpath-plus';
-import handlebars from 'handlebars';
 import getResultsDisplayConfig from './getResultsDisplayConfig';
 
 jest.mock('jsonpath-plus', () => ({
