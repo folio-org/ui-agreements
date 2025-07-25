@@ -31,7 +31,7 @@ jest.mock('../../../docs/gokb-search-v1', () => ({
             type: 'String',
             value: {
               type: 'Handlebars',
-              templateString: "{{{replace value 'Instance' ''}}}",
+              templateString: "{{{replace this 'Instance' ''}}}",
               value: {
                 type: 'access',
                 accessType: 'JSONPath',
@@ -81,7 +81,7 @@ jest.mock('../../../docs/gokb-search-v1', () => ({
   },
 }));
 
-describe('gokbConfigUtils', () => {
+describe('getResultsDisplayConfig', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
