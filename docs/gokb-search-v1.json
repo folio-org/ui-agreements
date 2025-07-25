@@ -23,7 +23,7 @@
             "type": "String",
             "value": {
               "type": "Handlebars",
-              "templateString": "{{{replace value 'Instance' ''}}}",
+              "templateString": "{{{replace this 'Instance' ''}}}",
               "value": {
                 "type": "access",
                 "accessType": "JSONPath",

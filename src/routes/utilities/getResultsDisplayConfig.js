@@ -71,26 +71,6 @@ const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) =>
   const { value = {}, arrayType, templateString, renderStrategy = inheritedRenderStrategy } = col;
   const recurse = () => getFormatterFunction(value?.type, value, renderStrategy);
 
-  const buildHandlebarsFormatter = (isEach = false) => {
-    return (resource) => {
-      const results = applyJsonPath(value.expression, resource);
-      const template = handlebars.compile(templateString);
-      const output = isEach
-        ? results.map(obj => template(obj))
-        : [template({ value: results[0] })];
-
-      const formatter = getFormatterFunction('String', {
-        value: {
-          type: 'access',
-          accessType: 'compiled',
-          expression: output
-        }
-      }, renderStrategy);
-
-      return formatter(resource);
-    };
-  };
-
   switch (type) {
     case 'String':
       if (value?.type === 'access') {
@@ -114,15 +94,23 @@ const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) =>
       } else {
         return recurse();
       }
+    case 'Handlebars':
     case 'HandlebarsEach':
       if (value?.type === 'access' && value?.accessType === 'JSONPath') {
-        return buildHandlebarsFormatter(true);
-      } else {
-        return recurse();
-      }
-    case 'Handlebars':
-      if (value?.type === 'access' && value?.accessType === 'JSONPath') {
-        return buildHandlebarsFormatter();
+        return (resource) => {
+          const results = applyJsonPath(value.expression, resource);
+          const template = handlebars.compile(templateString);
+
+          const formatter = getFormatterFunction('String', {
+            value: {
+              type: 'access',
+              accessType: 'compiled',
+              expression: results.map(obj => template(obj))
+            }
+          }, renderStrategy);
+
+          return formatter(resource);
+        };
       } else {
         return recurse();
       }
