@@ -12,7 +12,7 @@ import { SASQRoute } from '@k-int/stripes-kint-components';
 import getResultsDisplayConfig from '../utilities/getResultsDisplayConfig';
 
 const GokbRoute = ({ location }) => {
-  const { endpoint: gokbEndpoint, formatter, resultColumns, results: resultsPath, totalRecords: totalRecordsPath } = getResultsDisplayConfig();
+  const { endpoint: gokbEndpoint, formatter, resultColumns, sortableColumns, results: resultsPath, totalRecords: totalRecordsPath } = getResultsDisplayConfig();
 
   const fetchParameters = {
     endpoint: gokbEndpoint,
@@ -105,7 +105,7 @@ const GokbRoute = ({ location }) => {
       queryParameterGenerator={generateQuery}
       resultColumns={resultColumns}
       sasqProps={{
-        sortableColumns: ['name']
+        sortableColumns
       }}
       searchFieldAriaLabel="input-gokb-search"
     />

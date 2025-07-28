@@ -14,6 +14,37 @@ handlebars.registerHelper('replace', (text, search, replacement) => {
 
 /* Other helper functions */
 
+const renderPublicationDates = (resource) => {
+  const { dateFirstOnline, dateFirstInPrint, publishedFrom, publishedTo } = resource;
+
+  return (
+    <div>
+      {dateFirstOnline && (
+        <div>
+          <FormattedMessage id="ui-agreements.gokb.publicationDates.firstOnline" />:{' '}
+          <FormattedUTCDate value={dateFirstOnline} />
+        </div>
+      )}
+      {dateFirstInPrint && (
+        <div>
+          <FormattedMessage id="ui-agreements.gokb.publicationDates.firstInPrint" />:{' '}
+          <FormattedUTCDate value={dateFirstInPrint} />
+        </div>
+      )}
+      {(publishedFrom || publishedTo) && (
+        <div>
+          <FormattedMessage id="ui-agreements.gokb.publicationDates.publishedFromTo" />:{' '}
+          <span>
+            {publishedFrom ? <FormattedUTCDate value={publishedFrom} /> : '*'}{' '}
+            <Icon icon="arrow-right" size="small" />{' '}
+            {publishedTo ? <FormattedUTCDate value={publishedTo} /> : '*'}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const applyJsonPath = (expression, resource) => JSONPath({ path: expression, json: resource }) || [];
 
 const applyRenderStrategy = (results, strategy) => {
@@ -23,46 +54,13 @@ const applyRenderStrategy = (results, strategy) => {
   switch (strategy.type) {
     case 'joinString':
       return results.join(strategy.separator || defaultSeparator);
+    case 'renderPublicationDates':
+      return renderPublicationDates(results);
     // case 'bulletList':
     //   return results.map(...);
     default:
       return results.join(defaultSeparator);
   }
-};
-
-/* Special formatter - not generalizeable */
-
-const formatDatesDisplay = () => {
-  return (resource) => {
-    const { dateFirstOnline, dateFirstInPrint, publishedFrom, publishedTo } = resource;
-
-    return (
-      <div>
-        {dateFirstOnline && (
-          <div>
-            <FormattedMessage id="ui-agreements.gokb.publicationDates.firstOnline" />:{' '}
-            <FormattedUTCDate value={dateFirstOnline} />
-          </div>
-        )}
-        {dateFirstInPrint && (
-          <div>
-            <FormattedMessage id="ui-agreements.gokb.publicationDates.firstInPrint" />:{' '}
-            <FormattedUTCDate value={dateFirstInPrint} />
-          </div>
-        )}
-        {(publishedFrom || publishedTo) && (
-          <div>
-            <FormattedMessage id="ui-agreements.gokb.publicationDates.publishedFromTo" />:{' '}
-            <span>
-              {publishedFrom ? <FormattedUTCDate value={publishedFrom} /> : '*'}{' '}
-              <Icon icon="arrow-right" size="small" />{' '}
-              {publishedTo ? <FormattedUTCDate value={publishedTo} /> : '*'}
-            </span>
-          </div>
-        )}
-      </div>
-    );
-  };
 };
 
 /* Recursive formatter function */
@@ -72,25 +70,34 @@ const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) =>
   const recurse = () => getFormatterFunction(value?.type, value, renderStrategy);
 
   switch (type) {
-    case 'String':
-      if (value?.type === 'access') {
-        return (resource) => {
-          let results = [];
+    case 'access':
+      return (resource) => {
+        let results = [];
 
-          if (value?.accessType === 'JSONPath') {
-            results = applyJsonPath(value.expression, resource);
-          } else if (value?.accessType === 'compiled') {
-            results = value.expression;
+        if (col.accessType === 'JSONPath') {
+          results = applyJsonPath(col.expression, resource);
+        } else if (col.accessType === 'compiled') {
+          results = col.expression;
+        }
+
+        return applyRenderStrategy(results, renderStrategy) || '';
+      };
+    case 'keyValue':
+      return (resource) => {
+        const combinedData = {};
+        value.forEach(({ key, expression }) => {
+          const jsonResult = applyJsonPath(expression, resource);
+          if (key && jsonResult?.length > 0) {
+            combinedData[key] = jsonResult[0];
           }
-
-          return applyRenderStrategy(results, renderStrategy) || '';
-        };
-      } else {
-        return recurse();
-      }
+        });
+        return applyRenderStrategy(combinedData, renderStrategy);
+      };
+    case 'String':
+      return recurse();
     case 'Array':
-      if (value?.type === 'access' && arrayType === 'String') {
-        return getFormatterFunction('String', col, renderStrategy);
+      if (value?.type === 'access') {
+        return getFormatterFunction(arrayType, col, renderStrategy);
       } else {
         return recurse();
       }
@@ -114,6 +121,8 @@ const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) =>
       } else {
         return recurse();
       }
+    case 'Object':
+      return recurse();
     default:
       return () => '';
   }
@@ -125,23 +134,21 @@ const getResultsDisplayConfig = () => {
   const columns = gokbConfig.configuration.results.display.columns;
 
   const resultColumns = [];
+  const sortableColumns = [];
   const formatter = {};
 
   columns.forEach(col => {
-    const { name, type } = col;
-    if (!name) return;
+    const { name, type, sortable } = col;
+
+    if (sortable) sortableColumns.push(name);
 
     resultColumns.push({
       propertyPath: name,
       label: <FormattedMessage id={`ui-agreements.gokb.${name}`} />
     });
 
-    if (type === 'DatesDisplay') {
-      formatter[name] = formatDatesDisplay();
-    } else {
-      const fn = getFormatterFunction(type, col);
-      if (fn) formatter[name] = fn;
-    }
+    const fn = getFormatterFunction(type, col);
+    if (fn) formatter[name] = fn;
   });
 
   const endpointData = {
@@ -151,6 +158,7 @@ const getResultsDisplayConfig = () => {
 
   return {
     resultColumns,
+    sortableColumns,
     formatter,
     ...endpointData,
   };
