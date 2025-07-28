@@ -17,6 +17,10 @@ handlebars.registerHelper('replace', (text, search, replacement) => {
 const renderPublicationDates = (resource) => {
   const { dateFirstOnline, dateFirstInPrint, publishedFrom, publishedTo } = resource;
 
+  if (!dateFirstOnline && !dateFirstInPrint && !publishedFrom && !publishedTo) {
+    return null;
+  }
+
   return (
     <div>
       {dateFirstOnline && (
@@ -137,7 +141,7 @@ const getResultsDisplayConfig = () => {
   const sortableColumns = [];
   const formatter = {};
 
-  columns.forEach(col => {
+  columns.forEach((col, index) => {
     const { name, type, sortable } = col;
 
     if (sortable) sortableColumns.push(name);
@@ -148,7 +152,27 @@ const getResultsDisplayConfig = () => {
     });
 
     const fn = getFormatterFunction(type, col);
-    if (fn) formatter[name] = fn;
+    // if (fn) formatter[name] = fn;
+    if (fn) {
+      formatter[name] = (resource) => {
+        const content = fn(resource);
+
+        if (index === 0) {
+          return (
+            <AppIcon
+              app="agreements"
+              iconAlignment="baseline"
+              iconKey="title"
+              size="small"
+            >
+              {content}
+            </AppIcon>
+          );
+        }
+
+        return content;
+      };
+    }
   });
 
   const endpointData = {
