@@ -12,54 +12,58 @@ jest.mock('../../../docs/gokb-search-v1', () => ({
         baseUrl: 'https://gokbt.gbv.de/gokb/api/find',
         mapping: {
           results: 'records',
-          totalRecords: 'count',
-        },
+          totalRecords: 'count'
+        }
       },
       display: {
         columns: [
           {
             name: 'name',
             type: 'String',
+            sortable: true,
             value: {
               type: 'access',
               accessType: 'JSONPath',
-              expression: '$.name',
-            },
+              expression: '$.name'
+            }
           },
           {
             name: 'publicationType',
             type: 'String',
+            sortable: false,
             value: {
               type: 'Handlebars',
               templateString: "{{{replace this 'Instance' ''}}}",
               value: {
                 type: 'access',
                 accessType: 'JSONPath',
-                expression: '$.componentType',
-              },
-            },
+                expression: '$.componentType'
+              }
+            }
           },
           {
             name: 'isbns',
             type: 'Array',
+            sortable: false,
             arrayType: 'String',
             renderStrategy: {
               type: 'joinString',
-              separator: ', ',
+              separator: ', '
             },
             value: {
               type: 'access',
               accessType: 'JSONPath',
-              expression: "$.identifiers[?(@.namespace == 'isbn')].value",
-            },
+              expression: "$.identifiers[?(@.namespace == 'isbn')].value"
+            }
           },
           {
             name: 'otherIds',
             type: 'Array',
+            sortable: false,
             arrayType: 'String',
             renderStrategy: {
               type: 'joinString',
-              separator: ', ',
+              separator: ', '
             },
             value: {
               type: 'HandlebarsEach',
@@ -67,19 +71,53 @@ jest.mock('../../../docs/gokb-search-v1', () => ({
               value: {
                 type: 'access',
                 accessType: 'JSONPath',
-                expression: "$.identifiers[?(@.namespace == 'doi')]",
-              },
-            },
+                expression: "$.identifiers[?(@.namespace == 'doi')]"
+              }
+            }
           },
           {
             name: 'publicationDates',
-            type: 'DatesDisplay',
-          },
-        ],
-      },
-    },
-  },
+            type: 'Object',
+            sortable: false,
+            renderStrategy: {
+              type: 'renderPublicationDates'
+            },
+            value: {
+              type: 'keyValue',
+              value: [
+                {
+                  type: 'access',
+                  accessType: 'JSONPath',
+                  expression: '$.dateFirstOnline',
+                  key: 'dateFirstOnline'
+                },
+                {
+                  type: 'access',
+                  accessType: 'JSONPath',
+                  expression: '$.dateFirstInPrint',
+                  key: 'dateFirstInPrint'
+                },
+                {
+                  type: 'access',
+                  accessType: 'JSONPath',
+                  expression: '$.publishedFrom',
+                  key: 'publishedFrom'
+                },
+                {
+                  type: 'access',
+                  accessType: 'JSONPath',
+                  expression: '$.publishedTo',
+                  key: 'publishedTo'
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
 }));
+
 
 describe('getResultsDisplayConfig', () => {
   afterEach(() => {
@@ -123,7 +161,15 @@ describe('getResultsDisplayConfig', () => {
       const { formatter } = getResultsDisplayConfig();
 
       const result = formatter.name({});
-      expect(result).toBe('Test Title');
+
+      expect(result).toBeInstanceOf(Object);
+
+      expect(result.type.displayName || result.type.name).toContain('AppIcon');
+
+      expect(result.props.children).toBe('Test Title');
+      expect(result.props.app).toBe('agreements');
+      expect(result.props.iconKey).toBe('title');
+
       expect(JSONPath).toHaveBeenCalledWith({ path: '$.name', json: {} });
     });
 
