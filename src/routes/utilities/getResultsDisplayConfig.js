@@ -1,5 +1,6 @@
 import { JSONPath } from 'jsonpath-plus';
 import { FormattedMessage } from 'react-intl';
+import { AppIcon } from '@folio/stripes/core';
 import { FormattedUTCDate, Icon } from '@folio/stripes/components';
 import handlebars from 'handlebars';
 
