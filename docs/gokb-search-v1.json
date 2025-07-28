@@ -330,7 +330,7 @@
               {
                 "name": "all",
                 "value": "Title",
-                "default": false
+                "default": true
               },
               {
                 "name": "book",
