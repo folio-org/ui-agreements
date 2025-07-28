@@ -61,8 +61,6 @@ const applyRenderStrategy = (results, strategy) => {
       return results.join(strategy.separator || defaultSeparator);
     case 'renderPublicationDates':
       return renderPublicationDates(results);
-    // case 'bulletList':
-    //   return results.map(...);
     default:
       return results.join(defaultSeparator);
   }
@@ -153,7 +151,6 @@ const getResultsDisplayConfig = () => {
     });
 
     const fn = getFormatterFunction(type, col);
-    // if (fn) formatter[name] = fn;
     if (fn) {
       formatter[name] = (resource) => {
         const content = fn(resource);
