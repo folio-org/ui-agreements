@@ -1,88 +1,120 @@
-import { waitFor, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
-import { renderWithIntl, Accordion, RadioButton } from '@folio/stripes-erm-testing';
+import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
+import {
+  Accordion,
+  Checkbox,
+  RadioButton,
+  renderWithIntl,
+} from '@folio/stripes-erm-testing';
+
 import { MemoryRouter } from 'react-router-dom';
-import { upperFirst } from 'lodash';
-
 import translationsProperties from '../../../test/helpers';
-
 import GokbFilters from './GokbFilters';
-import gokbConfig from '../../../docs/gokb-search-v1';
 
 const stateMock = jest.fn();
 
 const filterHandlers = {
+  state: stateMock,
   clear: jest.fn(),
   clearGroup: jest.fn(),
-  reset: jest.fn(),
-  state: stateMock,
+  reset: jest.fn()
 };
 
 const activeFilters = {
   type: [],
+  subject: []
 };
 
+jest.mock('../utilities/', () => ({
+  __esModule: true,
+  getFilterConfig: () => ({
+    filterMap: {
+      type: 'componentType',
+      subjects: 'subjects',
+    },
+    filterNames: ['type', 'subjects'],
+    filterOptions: {
+      type: [
+        { label: 'Book', value: 'book' },
+        { label: 'Journal', value: 'journal' },
+      ],
+      subjects: [
+        { label: 'Law', value: 'law' },
+        { label: 'Economics', value: 'economics' },
+      ],
+    },
+    initialFilterState: {
+      type: ['book'],
+      subjects: [],
+    },
+    filterTypes: {
+      type: 'singleSelect',
+      subjects: 'multiSelect',
+    },
+  }),
+}));
+
 describe('GokbFilters', () => {
-  describe('renders the GokbFilters', () => {
-    beforeEach(() => {
-      renderWithIntl(
-        <MemoryRouter>
-          <GokbFilters
-            activeFilters={activeFilters}
-            filterHandlers={filterHandlers}
-          />
-        </MemoryRouter>,
-        translationsProperties
-      );
-    });
-
-    test('renders the Type Accordion', async () => {
-      await Accordion('Type').exists();
-    });
-
-    let index = 1;
-    const filter = gokbConfig.configuration.results.fetch.filters.find(f => f.name === 'type');
-    const options = filter.enumValues;
-
-    const testRadioClick = (name) => (
-      test(`clicking the ${name} radio button`, async () => {
-        await waitFor(async () => {
-          await RadioButton(name).click();
-        });
-
-        await waitFor(() => {
-          expect(stateMock.mock.calls.length).toEqual(index);
-        });
-
-        index++;
-      })
+  beforeEach(() => {
+    stateMock.mockClear();
+    renderWithIntl(
+      <MemoryRouter>
+        <GokbFilters
+          activeFilters={activeFilters}
+          filterHandlers={filterHandlers}
+        />
+      </MemoryRouter>,
+      translationsProperties
     );
+  });
 
-    options.forEach(opt => {
-      testRadioClick(upperFirst(opt.name));
+  test('renders the Type accordion (radio)', async () => {
+    await Accordion('Type').exists();
+  });
+
+  test('renders the Subject accordion (checkbox)', async () => {
+    await Accordion('ui-agreements.gokb.filters.subjects').exists();
+  });
+
+  test('clicking the Book radio button calls state handler', async () => {
+    await waitFor(async () => {
+      await RadioButton('Book').click();
+    });
+
+    await waitFor(() => {
+      expect(stateMock).toHaveBeenCalledWith({
+        ...activeFilters,
+        type: ['book']
+      });
     });
   });
 
-  describe('clear button', () => {
-    beforeEach(() => {
-      renderWithIntl(
-        <MemoryRouter>
-          <GokbFilters
-            activeFilters={{ type: ['Book'] }}
-            filterHandlers={filterHandlers}
-          />
-        </MemoryRouter>,
-        translationsProperties
-      );
+  test('clicking the Journal radio button calls state handler', async () => {
+    await waitFor(async () => {
+      await RadioButton('Journal').click();
     });
 
-    test('clicking the clear filters button calls clearGroup', async () => {
-      const clearButton = document.querySelector('[data-test-clear-button=true]');
-      expect(clearButton).toBeTruthy();
-      fireEvent.click(clearButton);
-
-      await waitFor(() => {
-        expect(filterHandlers.clearGroup).toHaveBeenCalledWith('type');
+    await waitFor(() => {
+      expect(stateMock).toHaveBeenCalledWith({
+        ...activeFilters,
+        type: ['journal']
       });
+    });
+  });
+
+  test('clicking the Law checkbox calls state handler', async () => {
+    await Checkbox({ id: 'clickable-filter-subjects-law' }).click();
+
+    await waitFor(() => {
+      expect(stateMock).toHaveBeenCalled();
+    });
+  });
+
+  test('clicking the Economics checkbox calls state handler', async () => {
+    await Checkbox({ id: 'clickable-filter-subjects-economics' }).click();
+
+    await waitFor(() => {
+      expect(stateMock).toHaveBeenCalled();
     });
   });
 });

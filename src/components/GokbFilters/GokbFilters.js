@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import isEqual from 'lodash/isEqual';
 import { Accordion, AccordionSet, FilterAccordionHeader, RadioButton } from '@folio/stripes/components';
+import { CheckboxFilter } from '@folio/stripes/smart-components';
 
-import { getFilters } from '../utilities';
+import { getFilterConfig } from '../utilities';
 
 const propTypes = {
   activeFilters: PropTypes.shape({
@@ -20,7 +21,8 @@ const propTypes = {
 };
 
 const GokbFilters = ({ activeFilters = {}, filterHandlers }) => {
-  const { filterNames, filterOptions, initialFilterState } = getFilters();
+  const config = useMemo(() => getFilterConfig(), []);
+  const { filterNames, filterOptions, filterTypes, initialFilterState } = config;
 
   const [filterState, setFilterState] = useState(initialFilterState);
 
@@ -60,9 +62,9 @@ const GokbFilters = ({ activeFilters = {}, filterHandlers }) => {
       >
         {options.map(opt => (
           <RadioButton
-            key={opt.value}
+            key={`${name}-${opt.value}`}
             checked={selectedValue === opt.value}
-            label={<FormattedMessage id={`ui-agreements.gokb.filters.${name}.${opt.label}`} />}
+            label={opt.label}
             name={name}
             onChange={(e) => {
               filterHandlers.state({
@@ -77,9 +79,39 @@ const GokbFilters = ({ activeFilters = {}, filterHandlers }) => {
     );
   };
 
+  const renderCheckboxFilter = (name, prps) => {
+    const groupFilters = activeFilters[name] || [];
+    return (
+      <Accordion
+        {...accordionDefaultProps(name, groupFilters)}
+        {...prps}
+      >
+        <CheckboxFilter
+          dataOptions={filterState[name] || []}
+          name={name}
+          onChange={(group) => {
+            filterHandlers.state({
+              ...activeFilters,
+              [group.name]: group.values,
+            });
+          }}
+          selectedValues={groupFilters}
+        />
+      </Accordion>
+    );
+  };
+
   return (
     <AccordionSet>
-      {filterNames.map(name => renderRadioButtonFilter(name))}
+      {filterNames.map(name => {
+        const type = filterTypes[name];
+        return (
+          <div key={name}>
+            {type === 'singleSelect' && renderRadioButtonFilter(name)}
+            {type === 'multiSelect' && renderCheckboxFilter(name)}
+          </div>
+        );
+      })}
     </AccordionSet>
   );
 };

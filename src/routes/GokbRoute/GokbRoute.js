@@ -9,11 +9,11 @@ import handlebars from 'handlebars';
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
 import GokbFilters from '../../components/GokbFilters';
-import { getFilters } from '../../components/utilities';
+import { getFilterConfig } from '../../components/utilities';
 
 
 const GokbRoute = ({ location }) => {
-  const { filterMap, initialFilterState } = getFilters();
+  const { filterMap, initialFilterState } = getFilterConfig();
   const fetchParameters = {
     endpoint: 'https://gokbt.gbv.de/gokb/api/find',
     SASQ_MAP: {
