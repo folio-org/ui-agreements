@@ -69,7 +69,7 @@ const applyRenderStrategy = (results, strategy) => {
 /* Recursive formatter function */
 
 const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) => {
-  const { value = {}, arrayType, templateString, renderStrategy = inheritedRenderStrategy } = col;
+  const { value = {}, templateString, renderStrategy = inheritedRenderStrategy } = col;
   const recurse = () => getFormatterFunction(value?.type, value, renderStrategy);
 
   switch (type) {
@@ -99,11 +99,7 @@ const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) =>
     case 'String':
       return recurse();
     case 'Array':
-      if (value?.type === 'access') {
-        return getFormatterFunction(arrayType, col, renderStrategy);
-      } else {
-        return recurse();
-      }
+      return recurse();
     case 'Handlebars':
     case 'HandlebarsEach':
       if (value?.type === 'access' && value?.accessType === 'JSONPath') {
