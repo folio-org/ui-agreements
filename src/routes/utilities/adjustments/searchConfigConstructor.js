@@ -3,7 +3,6 @@ import { Select } from '@folio/stripes/components';
 import handlebars from 'handlebars';
 
 const handleBarsTransform = (searchConfig, queryString) => {
-  console.log('handleBarsTransform', searchConfig, queryString);
   const template = handlebars.compile(searchConfig.templateString);
   return template({ string: queryString });
 };
@@ -42,15 +41,11 @@ const queryDropdownConstructor = ({ options, queryState, setQueryState }) => {
 
   return {
     searchParameterParse: (selectedOption = defaultValue, searchString) => {
-      console.log('selectedOption', selectedOption);
-      console.log('searchString', searchString);
-      // Should be case based conditional
       const searchQueryString = searchConfigOptionsHandler(
         searchLookup[selectedOption]?.type,
         searchLookup[selectedOption],
         searchString
       );
-      console.log('searchQueryString', searchQueryString);
       return searchQueryString;
     },
     HeaderComponent: () => {
@@ -58,11 +53,10 @@ const queryDropdownConstructor = ({ options, queryState, setQueryState }) => {
         <Select
           dataOptions={searchOptions}
           id="search-dropdown"
-          onChange={(e) =>
-            setQueryState({
-              ...queryState,
-              searchKey: searchLookup[e.target.value]?.name,
-            })
+          onChange={(e) => setQueryState({
+            ...queryState,
+            searchKey: searchLookup[e.target.value]?.name,
+          })
           }
           placeholder={
             <FormattedMessage id="ui-agreements.gokbSearch.searchBy" />

@@ -4,29 +4,19 @@ import kyImport from 'ky';
 
 import { JSONPath } from 'jsonpath-plus';
 
-import { useState, useCallback, useMemo } from 'react';
+import { useState } from 'react';
 
-import { SASQRoute, useQIndex } from '@k-int/stripes-kint-components';
-import config from '../../../docs/gokb-search-v1.json';
+import { SASQRoute } from '@k-int/stripes-kint-components';
+import config from '../../../docs/gokb-search-v1';
 
-import { generateKiwtQueryParams } from '../utilities/searchTransformation';
-import { buildSearchHeaderComponent } from '../utilities/searchComponentBuilder';
 import { searchConfigTypeHandler } from '../utilities/adjustments/searchConfigConstructor';
 
 const GokbRoute = ({ location }) => {
-  const [searchKey, setSearchKey] = useState('');
-
   // Build search configuration from the config file
   const searchConfig = config.configuration.results.fetch.search;
 
-  const fetchParameters = {
-    endpoint: 'https://gokbt.gbv.de/gokb/api/find',
-    SASQMap: {
-      searchKey: searchKey || 'gokbuuid',
-    },
-  };
-
   const [queryState, setQueryState] = useState({});
+  console.log(queryState);
 
   const { searchParameterParse, HeaderComponent } = searchConfigTypeHandler({
     type: searchConfig.type,
@@ -35,9 +25,20 @@ const GokbRoute = ({ location }) => {
     setQueryState,
   });
 
+  const fetchParameters = {
+    endpoint: 'https://gokbt.gbv.de/gokb/api/find',
+    SASQMap: {
+      searchKey: queryState?.searchKey || '',
+    },
+  };
+
+  // Function to generate the GOKb query string based on the current state
+  // Not very happy with this at the moment,its a bit more a bespoke piece of work and doesnt adjust to the searchConfig
+  // Something to revisit in the future, once we have all the query parts in place
   const generateGokbQuery = (params, query) => {
-    // const perPage = params?.perPage || 25;
-    // const offset = (params.page - 1) * perPage;
+    // Additionally this offset handlinig work needs to be dynamically handled based on search config
+    const perPage = params?.perPage || 25;
+    const offset = (params.page - 1) * perPage;
     const searchString = query?.query || '';
 
     const queryParts = [];
@@ -52,16 +53,8 @@ const GokbRoute = ({ location }) => {
       }
     }
 
-    // queryParts.push(`max=${perPage}`);
-    // queryParts.push(`offset=${offset}`);
-
-    // if (query?.sort) {
-    //   queryParts.push(`sort=${query.sort}`);
-    // }
-    // if (query?.order) {
-    //   queryParts.push(`order=${query.order}`);
-    // }
-
+    queryParts.push(`max=${perPage}`);
+    queryParts.push(`offset=${offset}`);
     return `?${queryParts.join('&')}`;
   };
 
@@ -78,7 +71,6 @@ const GokbRoute = ({ location }) => {
 
   return (
     <SASQRoute
-      key={searchKey}
       fetchParameters={fetchParameters}
       FilterPaneHeaderComponent={HeaderComponent}
       filterPaneProps={{
@@ -91,8 +83,8 @@ const GokbRoute = ({ location }) => {
       lookupResponseTransform={(data) => {
         const transformedData = {
           ...data,
-          totalRecords: data._pagination.total,
-          results: data?.data,
+          totalRecords: data.count,
+          results: data.records,
         };
         return transformedData;
       }}
