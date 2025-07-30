@@ -8,11 +8,17 @@ import handlebars from 'handlebars';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
+import GokbFilters from '../../components/GokbFilters';
+import { getFilterConfig, transformFilterString } from '../../components/utilities';
+
+
 const GokbRoute = ({ location }) => {
+  const { filterMap, initialFilterState } = getFilterConfig();
   const fetchParameters = {
-    endpoint: 'https://gokbt.gbv.de/gokb/rest/titles',
+    endpoint: 'https://gokbt.gbv.de/gokb/api/find',
     SASQ_MAP: {
       searchKey: 'uuid',
+      filterKeys: filterMap,
     },
   };
 
@@ -23,14 +29,23 @@ const GokbRoute = ({ location }) => {
     // Namely name will be the field configured by the results.fetch.search key and its "handlebars template type"
     // max & offset are configured by the pagination parameters
     const template = handlebars.compile(
-      '?name={{input}}&max={{perPage}}&offset={{offset}}&es=true'
+      '?name={{input}}&max={{perPage}}&offset={{offset}}'
     );
 
-    return template({
+    const filterString = transformFilterString(query?.filters);
+
+    const baseQuery = template({
       input: query?.query || '',
       perPage: params?.perPage,
       offset,
     });
+
+    // Append `filterString` manually not possible with handlebar template
+    // as it does not support dynamic keys in the template
+    if (filterString) {
+      return `${baseQuery}&${filterString}`;
+    }
+    return `${baseQuery}`;
   };
 
   // When building the SASQ from the config file, using the results.display values
@@ -50,6 +65,7 @@ const GokbRoute = ({ location }) => {
   return (
     <SASQRoute
       fetchParameters={fetchParameters}
+      FilterComponent={GokbFilters}
       filterPaneProps={{
         id: 'gokb-search-main-filter-pane',
       }}
@@ -59,8 +75,8 @@ const GokbRoute = ({ location }) => {
       lookupResponseTransform={(data) => {
         const transformedData = {
           ...data,
-          totalRecords: data._pagination.total,
-          results: data?.data,
+          totalRecords: data.count,
+          results: data?.records,
         };
         return transformedData;
       }}
@@ -76,6 +92,9 @@ const GokbRoute = ({ location }) => {
       }}
       queryParameterGenerator={generateQuery}
       resultColumns={resultColumns}
+      sasqProps={{
+        initialFilterState
+      }}
       searchFieldAriaLabel="input-gokb-search"
     />
   );
