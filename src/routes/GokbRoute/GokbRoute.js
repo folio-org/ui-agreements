@@ -9,7 +9,7 @@ import handlebars from 'handlebars';
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
 import GokbFilters from '../../components/GokbFilters';
-import { getFilterConfig } from '../../components/utilities';
+import { getFilterConfig, transformFilterString } from '../../components/utilities';
 
 
 const GokbRoute = ({ location }) => {
@@ -32,22 +32,7 @@ const GokbRoute = ({ location }) => {
       '?name={{input}}&max={{perPage}}&offset={{offset}}'
     );
 
-    const filterString = Object.entries(params.filterKeys || {})
-      .map(([key, path]) => {
-        const filterValue = (query.filters || '')
-          .split(',')
-          .find(f => f.startsWith(`${key}.`))
-          ?.split('.')[1];
-        return filterValue ? `&${path}=${filterValue}` : null;
-      })
-      .filter(Boolean)
-      .join('');
-
-    // return template({
-    //   input: query?.query || '',
-    //   perPage: params?.perPage,
-    //   offset,
-    // });
+    const filterString = transformFilterString(query?.filters);
 
     const baseQuery = template({
       input: query?.query || '',
@@ -57,7 +42,10 @@ const GokbRoute = ({ location }) => {
 
     // Append `filterString` manually not possible with handlebar template
     // as it does not support dynamic keys in the template
-    return `${baseQuery}${filterString}`;
+    if (filterString) {
+      return `${baseQuery}&${filterString}`;
+    }
+    return `${baseQuery}`;
   };
 
   // When building the SASQ from the config file, using the results.display values

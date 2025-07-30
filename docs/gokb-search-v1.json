@@ -277,6 +277,11 @@
           {
             "name": "type",
             "filterPath": "componentType",
+            "filterString": {
+              "type": "Handlebars",
+              "templateString": "{{filter}}={{value}}",
+              "separator": "&"
+            },
             "type": "singleSelect",
             "enumValues": [
               {
