@@ -8,9 +8,9 @@ import { CheckboxFilter } from '@folio/stripes/smart-components';
 import { getFilterConfig } from '../utilities';
 
 const propTypes = {
-  activeFilters: PropTypes.shape({
-    type: PropTypes.arrayOf(PropTypes.string),
-  }).isRequired,
+  activeFilters: PropTypes.objectOf(
+    PropTypes.arrayOf(PropTypes.string)
+  ).isRequired,
 
   filterHandlers: PropTypes.shape({
     clear: PropTypes.func.isRequired,
