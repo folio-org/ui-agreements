@@ -74,15 +74,6 @@ describe('GokbRoute', () => {
     expect(ky.get).toHaveBeenCalled();
   });
 
-  // test('queryParameterGenerator generates expected query', () => {
-  //   const result = capturedProps.queryParameterGenerator(
-  //     { page: 2, perPage: 10 },
-  //     { query: 'foo' }
-  //   );
-  //   expect(result).toContain('name=foo');
-  //   expect(result).toContain('offset=10');
-  // });
-
   test('queryParameterGenerator generates expected query', () => {
     const result = capturedProps.queryParameterGenerator(
       {
@@ -102,7 +93,7 @@ describe('GokbRoute', () => {
     expect(result).toContain('name=foo');
     expect(result).toContain('offset=10');
     expect(result).toContain('&componentType=Book');
-    expect(result).toContain('&dummyPath=First');
+    expect(result).not.toContain('&dummyPath=First');
   });
 
   test('lookupResponseTransform transforms correctly', () => {

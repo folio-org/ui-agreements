@@ -4,28 +4,30 @@ jest.mock('../../../docs/gokb-search-v1', () => ({
   configuration: {
     results: {
       fetch: {
-        filters: [
-          {
-            name: 'type',
-            filterPath: 'componentType',
-            type: 'singleSelect',
-            enumValues: [
-              { name: 'all', value: 'Title', default: true },
-              { name: 'book', value: 'Book' },
-              { name: 'journal', value: 'Journal' }
-            ]
-          },
-          {
-            name: 'dummy',
-            filterPath: 'dummy',
-            type: 'multiSelect',
-            enumValues: [
-              { name: 'dummy1', value: 'one', default: true },
-              { name: 'dummy2', value: 'two' },
-              { name: 'dummy3', value: 'three', default: true }
-            ]
-          }
-        ]
+        filters: {
+          options: [
+            {
+              name: 'type',
+              filterPath: 'componentType',
+              type: 'singleSelect',
+              values: [
+                { name: 'all', value: 'Title', default: true },
+                { name: 'book', value: 'Book' },
+                { name: 'journal', value: 'Journal' }
+              ]
+            },
+            {
+              name: 'dummy',
+              filterPath: 'dummy',
+              type: 'multiSelect',
+              values: [
+                { name: 'dummy1', value: 'one', default: true },
+                { name: 'dummy2', value: 'two' },
+                { name: 'dummy3', value: 'three', default: true }
+              ]
+            }
+          ]
+        }
       }
     }
   }
