@@ -6,28 +6,64 @@ import { JSONPath } from 'jsonpath-plus';
 
 import { useState, useCallback, useMemo } from 'react';
 
-import { SASQRoute } from '@k-int/stripes-kint-components';
+import { SASQRoute, useQIndex } from '@k-int/stripes-kint-components';
 import config from '../../../docs/gokb-search-v1.json';
 
 import { generateKiwtQueryParams } from '../utilities/searchTransformation';
 import { buildSearchHeaderComponent } from '../utilities/searchComponentBuilder';
+import { searchConfigTypeHandler } from '../utilities/adjustments/searchConfigConstructor';
 
 const GokbRoute = ({ location }) => {
-  const [searchKey, setSearchKey] = useState('keyword');
-  const [SASQMap, setSASQMap] = useState({ searchKey: 'keyword' });
+  const [searchKey, setSearchKey] = useState('');
 
   // Build search configuration from the config file
   const searchConfig = config.configuration.results.fetch.search;
 
   const fetchParameters = {
-    endpoint: 'https://gokbt.gbv.de/gokb/rest/titles',
-    SASQ_MAP: SASQMap,
+    endpoint: 'https://gokbt.gbv.de/gokb/api/find',
+    SASQMap: {
+      searchKey: searchKey || 'gokbuuid',
+    },
   };
 
-  const generateQuery = useCallback((params, query) => {
-    const queryWithSearchKey = { ...query, qindex: searchKey };
-    return generateKiwtQueryParams(searchConfig, SASQMap, params, queryWithSearchKey);
-  }, [searchKey, searchConfig, SASQMap]);
+  const [queryState, setQueryState] = useState({});
+
+  const { searchParameterParse, HeaderComponent } = searchConfigTypeHandler({
+    type: searchConfig.type,
+    searchConfig,
+    queryState,
+    setQueryState,
+  });
+
+  const generateGokbQuery = (params, query) => {
+    // const perPage = params?.perPage || 25;
+    // const offset = (params.page - 1) * perPage;
+    const searchString = query?.query || '';
+
+    const queryParts = [];
+
+    if (searchString) {
+      const searchParameter = searchParameterParse(
+        queryState?.searchKey || '',
+        searchString
+      );
+      if (searchParameter) {
+        queryParts.push(searchParameter);
+      }
+    }
+
+    // queryParts.push(`max=${perPage}`);
+    // queryParts.push(`offset=${offset}`);
+
+    // if (query?.sort) {
+    //   queryParts.push(`sort=${query.sort}`);
+    // }
+    // if (query?.order) {
+    //   queryParts.push(`order=${query.order}`);
+    // }
+
+    return `?${queryParts.join('&')}`;
+  };
 
   const resultColumns = [
     {
@@ -40,35 +76,18 @@ const GokbRoute = ({ location }) => {
     name: (resource) => JSONPath({ path: '$.name', json: resource }),
   };
 
-  // Build header component dynamically from config
-  const headerComponentConfig = useMemo(() => {
-    return buildSearchHeaderComponent(searchConfig, {
-      onChange: (event) => {
-        const newSearchKey = event.target.value;
-        setSearchKey(newSearchKey);
-
-        // Update SASQ map based on the selection
-        setSASQMap({ searchKey: newSearchKey });
-      },
-      value: searchKey,
-      id: 'gokb-search-header-select'
-    });
-  }, [searchConfig, searchKey]);
-
-  const renderHeaderComponent = useCallback(() => {
-    return headerComponentConfig?.component || null;
-  }, [headerComponentConfig]);
-
   return (
     <SASQRoute
       key={searchKey}
       fetchParameters={fetchParameters}
-      FilterPaneHeaderComponent={renderHeaderComponent}
+      FilterPaneHeaderComponent={HeaderComponent}
       filterPaneProps={{
         id: 'gokb-search-main-filter-pane',
       }}
       id="gokb-search"
-      lookupQueryPromise={({ _ky, queryParams, endpoint }) => kyImport.get(`${endpoint}${queryParams}`).json()}
+      lookupQueryPromise={({ _ky, queryParams, endpoint }) => {
+        return kyImport.get(`${endpoint}${queryParams}`).json();
+      }}
       lookupResponseTransform={(data) => {
         const transformedData = {
           ...data,
@@ -87,7 +106,7 @@ const GokbRoute = ({ location }) => {
       persistedPanesetProps={{
         id: 'gokb-search-main-paneset',
       }}
-      queryParameterGenerator={generateQuery}
+      queryParameterGenerator={generateGokbQuery}
       resultColumns={resultColumns}
       searchFieldAriaLabel="input-gokb-search"
     />
