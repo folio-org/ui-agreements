@@ -204,72 +204,86 @@
             {
               "name": "keyword",
               "type": "Handlebars",
-              "parameter": "q={{string}}"
+              "templateString": "q={{string}}",
+              "default": true
             },
             {
               "name": "nameAndAltNames",
               "type": "Handlebars",
-              "parameter": "label={{string}}"
+              "templateString": "label={{string}}",
+              "default": false
             },
             {
               "name": "name",
               "type": "Handlebars",
-              "parameter": "name={{string}}"
+              "templateString": "name={{string}}",
+              "default": false
             },
             {
               "name": "altname",
               "type": "Handlebars",
-              "parameter": "altname={{string}}"
+              "templateString": "altname={{string}}",
+              "default": false
             },
             {
               "name": "identifiers",
               "type": "Handlebars",
-              "parameter": "identifier={{string}}"
+              "templateString": "identifier={{string}}",
+              "default": false
             },
             {
               "name": "eisbn",
               "type": "Handlebars",
-              "parameter": "identifier=eisbn,{{string}}"
+              "templateString": "identifier=eisbn,{{string}}",
+              "default": false
             },
             {
               "name": "isbn",
               "type": "Handlebars",
-              "parameter": "identifier=isbn,{{string}}"
+              "templateString": "identifier=isbn,{{string}}",
+              "default": false
             },
             {
               "name": "eissn",
               "type": "Handlebars",
-              "parameter": "identifier=eissn,{{string}}"
+              "templateString": "identifier=eissn,{{string}}",
+              "default": false
             },
             {
               "name": "issn",
               "type": "Handlebars",
-              "parameter": "identifier=issn,{{string}}"
+              "templateString": "identifier=issn,{{string}}",
+              "default": false
             },
             {
               "name": "ezb",
               "type": "Handlebars",
-              "parameter": "identifier=ezb,{{string}}"
+              "templateString": "identifier=ezb,{{string}}",
+              "default": false
             },
             {
               "name": "zdb",
               "type": "Handlebars",
-              "parameter": "identifier=zdb,{{string}}"
+              "templateString": "identifier=zdb,{{string}}",
+              "default": false
             },
             {
               "name": "uuid",
               "type": "Handlebars",
-              "parameter": "uuid={{string}}"
+              "templateString": "uuid={{string}}",
+              "default": false
             },
             {
               "name": "gokbId",
               "type": "Handlebars",
-              "parameter": "id={{string}}"
+              "templateString": "id={{string}}",
+              "default": false
             },
             {
               "name": "authorEditor",
               "type": "Handlebars",
-              "parameter": "q={{string}}&qfields=firstAuthor&qfields=firstEditor"
+              "templateString": "q={{string}}&qfields=firstAuthor&qfields=firstEditor",
+              "default": false
             }
           ]
         },
