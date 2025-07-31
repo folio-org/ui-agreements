@@ -1,6 +1,7 @@
 import { FormattedMessage } from 'react-intl';
 import { Select } from '@folio/stripes/components';
 import handlebars from 'handlebars';
+import { useState } from 'react';
 
 const handleBarsTransform = (searchConfig, queryString) => {
   const template = handlebars.compile(searchConfig.templateString);
@@ -17,7 +18,7 @@ const searchConfigOptionsHandler = (type, searchConfig, queryString) => {
   }
 };
 
-const queryDropdownConstructor = ({ options, queryState, setQueryState }) => {
+const QueryDropdown = ({ options }) => {
   const searchLookup = options.reduce(
     (acc, curr) => ({
       ...acc,
@@ -38,48 +39,43 @@ const queryDropdownConstructor = ({ options, queryState, setQueryState }) => {
   });
 
   const defaultValue = options.find((opt) => opt.default === true)?.name;
+  const [searchKey, setSearchKey] = useState(defaultValue);
 
   return {
-    searchParameterParse: (selectedOption = defaultValue, searchString) => {
+    searchParameterParse: (searchString) => {
       const searchQueryString = searchConfigOptionsHandler(
-        searchLookup[selectedOption]?.type,
-        searchLookup[selectedOption],
+        searchLookup[searchKey]?.type,
+        searchLookup[searchKey],
         searchString
       );
+
       return searchQueryString;
     },
-    HeaderComponent: () => {
-      return (
-        <Select
-          dataOptions={searchOptions}
-          id="search-dropdown"
-          onChange={(e) => setQueryState({
-            ...queryState,
-            searchKey: searchLookup[e.target.value]?.name,
-          })
-          }
-          placeholder={
-            <FormattedMessage id="ui-agreements.gokbSearch.searchBy" />
-          }
-          value={searchLookup[queryState?.searchKey]?.name || defaultValue}
-        />
-      );
-    },
+    HeaderComponent: () => (
+      <Select
+        dataOptions={searchOptions}
+        id="search-dropdown"
+        onChange={(e) => {
+          setSearchKey(searchLookup[e.target.value]?.name);
+        }}
+        placeholder={
+          <FormattedMessage id="ui-agreements.gokbSearch.searchBy" />
+        }
+        value={searchKey || defaultValue}
+      />
+    ),
   };
 };
+
 
 export const searchConfigTypeHandler = ({
   type,
   searchConfig,
-  queryState,
-  setQueryState,
 }) => {
   switch (type) {
     case 'queryDropdown':
-      return queryDropdownConstructor({
+      return QueryDropdown({
         options: searchConfig.options,
-        queryState,
-        setQueryState,
       });
     default:
       return null;

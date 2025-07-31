@@ -15,21 +15,14 @@ const GokbRoute = ({ location }) => {
   // Build search configuration from the config file
   const searchConfig = config.configuration.results.fetch.search;
 
-  const [queryState, setQueryState] = useState({});
-  console.log(queryState);
-
   const { searchParameterParse, HeaderComponent } = searchConfigTypeHandler({
     type: searchConfig.type,
     searchConfig,
-    queryState,
-    setQueryState,
   });
 
   const fetchParameters = {
     endpoint: 'https://gokbt.gbv.de/gokb/api/find',
-    SASQMap: {
-      searchKey: queryState?.searchKey || '',
-    },
+    SASQMap: {},
   };
 
   // Function to generate the GOKb query string based on the current state
@@ -44,10 +37,7 @@ const GokbRoute = ({ location }) => {
     const queryParts = [];
 
     if (searchString) {
-      const searchParameter = searchParameterParse(
-        queryState?.searchKey || '',
-        searchString
-      );
+      const searchParameter = searchParameterParse(searchString);
       if (searchParameter) {
         queryParts.push(searchParameter);
       }
