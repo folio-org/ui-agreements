@@ -12,6 +12,7 @@
           {
             "name": "name",
             "type": "String",
+            "sortable": true,
             "value": {
               "type": "access",
               "accessType": "JSONPath",
@@ -23,7 +24,7 @@
             "type": "String",
             "value": {
               "type": "Handlebars",
-              "templateString": "{{{replace value 'Instance' ''}}}",
+              "templateString": "{{{replace this 'Instance' ''}}}",
               "value": {
                 "type": "access",
                 "accessType": "JSONPath",
@@ -89,7 +90,39 @@
           },
           {
             "name": "publicationDates",
-            "type": "DatesDisplay"
+            "type": "Object",
+            "renderStrategy": {
+              "type": "renderPublicationDates"
+            },
+            "value": {
+              "type": "keyValue",
+              "value": [
+                {
+                  "type": "access",
+                  "accessType": "JSONPath",
+                  "expression": "$.dateFirstOnline",
+                  "key": "dateFirstOnline"
+                },
+                {
+                  "type": "access",
+                  "accessType": "JSONPath",
+                  "expression": "$.dateFirstInPrint",
+                  "key": "dateFirstInPrint"
+                },
+                {
+                  "type": "access",
+                  "accessType": "JSONPath",
+                  "expression": "$.publishedFrom",
+                  "key": "publishedFrom"
+                },
+                {
+                  "type": "access",
+                  "accessType": "JSONPath",
+                  "expression": "$.publishedTo",
+                  "key": "publishedTo"
+                }
+              ]
+            }
           },
           {
             "name": "otherIds",
@@ -283,7 +316,7 @@
               {
                 "name": "all",
                 "value": "Title",
-                "default": false
+                "default": true
               },
               {
                 "name": "book",

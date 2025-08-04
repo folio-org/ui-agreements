@@ -1,15 +1,38 @@
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import kyImport from 'ky';
 
-import { JSONPath } from 'jsonpath-plus';
+import { AppIcon } from '@folio/stripes/core';
+
+import {
+  ColumnManagerMenu,
+  useColumnManager,
+} from '@folio/stripes/smart-components';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
+
 import config from '../../../docs/gokb-search-v1';
 
 import { searchConfigTypeHandler } from '../utilities/adjustments/searchConfigConstructor';
 
+import getResultsDisplayConfig from '../utilities/getResultsDisplayConfig';
+
 const GokbRoute = ({ location }) => {
+  const {
+    endpoint: gokbEndpoint,
+    formatter,
+    resultColumns,
+    sortableColumns,
+    results: resultsPath,
+    totalRecords: totalRecordsPath,
+  } = getResultsDisplayConfig();
+
+  const fetchParameters = {
+    endpoint: gokbEndpoint,
+    SASQ_MAP: {},
+  };
+
   // Build search configuration from the config file
   const searchConfig = config.configuration.results.fetch.search;
 
@@ -18,19 +41,13 @@ const GokbRoute = ({ location }) => {
     searchConfig,
   });
 
-  const fetchParameters = {
-    endpoint: 'https://gokbt.gbv.de/gokb/api/find',
-    SASQMap: {},
-  };
-
   // Function to generate the GOKb query string based on the current state
   // Not very happy with this at the moment,its a bit more a bespoke piece of work and doesnt adjust to the searchConfig
   // Something to revisit in the future, once we have all the query parts in place
   const generateQuery = (params, query) => {
-    // Additionally this offset handlinig work needs to be dynamically handled based on search config
     const perPage = params?.perPage || 25;
-    const offset = (params.page - 1) * perPage;
-
+    // Offset handling should be based on config file, picking up as part of refactors
+    const offset = (params.page - 1) * params.perPage;
     const queryParts = [];
 
     if (query?.query) {
@@ -51,15 +68,27 @@ const GokbRoute = ({ location }) => {
     return `?${queryParts.join('&')}`;
   };
 
-  const resultColumns = [
-    {
-      propertyPath: 'name',
-      label: 'Name',
-    },
-  ];
+  const columnMapping = resultColumns?.length
+    ? Object.fromEntries(
+      resultColumns.map((col) => [col.propertyPath, col.label])
+    )
+    : {};
 
-  const formatter = {
-    name: (resource) => JSONPath({ path: '$.name', json: resource }),
+  const { visibleColumns, toggleColumn } = useColumnManager(
+    'gokb-search-list-column-manager',
+    columnMapping
+  );
+
+  const renderActionMenu = () => {
+    return (
+      <ColumnManagerMenu
+        columnMapping={columnMapping}
+        excludeColumns={['name']}
+        prefix="gokb-search-list"
+        toggleColumn={toggleColumn}
+        visibleColumns={visibleColumns}
+      />
+    );
   };
 
   return (
@@ -76,16 +105,21 @@ const GokbRoute = ({ location }) => {
       lookupResponseTransform={(data) => {
         const transformedData = {
           ...data,
-          totalRecords: data.count,
-          results: data.records,
+          totalRecords: data?.[totalRecordsPath],
+          results: data?.[resultsPath],
         };
         return transformedData;
       }}
       mainPaneProps={{
+        actionMenu: renderActionMenu,
+        appIcon: <AppIcon app="agreements" iconKey="title" size="small" />,
         id: 'gokb-search-main-pane',
+        paneTitle: <FormattedMessage id="ui-agreements.gokb.titles" />,
       }}
       mclProps={{
+        columnWidths: { publicationDates: 300 },
         formatter,
+        visibleColumns,
       }}
       path={location.pathname}
       persistedPanesetProps={{
@@ -93,6 +127,9 @@ const GokbRoute = ({ location }) => {
       }}
       queryParameterGenerator={generateQuery}
       resultColumns={resultColumns}
+      sasqProps={{
+        sortableColumns,
+      }}
       searchFieldAriaLabel="input-gokb-search"
     />
   );
