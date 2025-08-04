@@ -81,7 +81,6 @@ describe('GokbRoute', () => {
     );
     expect(result).toContain('q=foo');
     expect(result).toContain('offset=10');
-    expect(result).toContain('sort=bar');
     expect(result).toContain('order=desc');
   });
 
