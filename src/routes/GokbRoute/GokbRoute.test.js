@@ -79,7 +79,7 @@ describe('GokbRoute', () => {
       { page: 2, perPage: 10 },
       { query: 'foo', sort: '-bar' }
     );
-    expect(result).toContain('name=foo');
+    expect(result).toContain('q=foo');
     expect(result).toContain('offset=10');
     expect(result).toContain('sort=bar');
     expect(result).toContain('order=desc');
