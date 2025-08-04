@@ -3,16 +3,16 @@ import { Select } from '@folio/stripes/components';
 import handlebars from 'handlebars';
 import { useState } from 'react';
 
-const handleBarsTransform = (searchConfig, queryString) => {
+const handleBarsTransform = (searchConfig, query) => {
   const template = handlebars.compile(searchConfig.templateString);
-  return template({ string: queryString });
+  return template({ query });
 };
 
 // Since this is reusing handlebars logic, should 1000% be moved elsewhere
-const searchConfigOptionsHandler = (type, searchConfig, queryString) => {
+const searchConfigOptionsHandler = (type, searchConfig, query) => {
   switch (type) {
     case 'Handlebars':
-      return handleBarsTransform(searchConfig, queryString);
+      return handleBarsTransform(searchConfig, query);
     default:
       return null;
   }
@@ -41,15 +41,16 @@ const QueryDropdown = ({ options }) => {
   const defaultValue = options.find((opt) => opt.default === true)?.name;
   const [searchKey, setSearchKey] = useState(defaultValue);
 
+  // This should also potentially be returning an sasqRenderProps object
   return {
-    searchParameterParse: (searchString) => {
+    searchParameterParse: (query) => {
       const searchQueryString = searchConfigOptionsHandler(
         searchLookup[searchKey]?.type,
         searchLookup[searchKey],
-        searchString
+        query
       );
 
-      return searchQueryString;
+      return { key: searchKey, string: searchQueryString };
     },
     HeaderComponent: () => (
       <Select
@@ -58,20 +59,13 @@ const QueryDropdown = ({ options }) => {
         onChange={(e) => {
           setSearchKey(searchLookup[e.target.value]?.name);
         }}
-        placeholder={
-          <FormattedMessage id="ui-agreements.gokbSearch.searchBy" />
-        }
         value={searchKey || defaultValue}
       />
     ),
   };
 };
 
-
-export const searchConfigTypeHandler = ({
-  type,
-  searchConfig,
-}) => {
+export const searchConfigTypeHandler = ({ type, searchConfig }) => {
   switch (type) {
     case 'queryDropdown':
       return QueryDropdown({

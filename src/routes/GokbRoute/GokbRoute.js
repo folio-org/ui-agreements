@@ -4,8 +4,6 @@ import kyImport from 'ky';
 
 import { JSONPath } from 'jsonpath-plus';
 
-import { useState } from 'react';
-
 import { SASQRoute } from '@k-int/stripes-kint-components';
 import config from '../../../docs/gokb-search-v1';
 
@@ -28,18 +26,23 @@ const GokbRoute = ({ location }) => {
   // Function to generate the GOKb query string based on the current state
   // Not very happy with this at the moment,its a bit more a bespoke piece of work and doesnt adjust to the searchConfig
   // Something to revisit in the future, once we have all the query parts in place
-  const generateGokbQuery = (params, query) => {
+  const generateQuery = (params, query) => {
     // Additionally this offset handlinig work needs to be dynamically handled based on search config
     const perPage = params?.perPage || 25;
     const offset = (params.page - 1) * perPage;
-    const searchString = query?.query || '';
 
     const queryParts = [];
 
-    if (searchString) {
-      const searchParameter = searchParameterParse(searchString);
-      if (searchParameter) {
-        queryParts.push(searchParameter);
+    if (query?.query) {
+      const { key: searchKey, string: searchString } = searchParameterParse(
+        query?.query
+      );
+      if (searchString) {
+        queryParts.push(searchString);
+        fetchParameters.SASQMap = {
+          ...fetchParameters.SASQMap,
+          searchKey,
+        };
       }
     }
 
@@ -88,7 +91,7 @@ const GokbRoute = ({ location }) => {
       persistedPanesetProps={{
         id: 'gokb-search-main-paneset',
       }}
-      queryParameterGenerator={generateGokbQuery}
+      queryParameterGenerator={generateQuery}
       resultColumns={resultColumns}
       searchFieldAriaLabel="input-gokb-search"
     />
