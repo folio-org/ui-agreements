@@ -5,7 +5,10 @@ import kyImport from 'ky';
 
 import { AppIcon } from '@folio/stripes/core';
 
-import { ColumnManagerMenu, useColumnManager } from '@folio/stripes/smart-components';
+import {
+  ColumnManagerMenu,
+  useColumnManager,
+} from '@folio/stripes/smart-components';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
 
@@ -16,7 +19,14 @@ import { searchConfigTypeHandler } from '../utilities/adjustments/searchConfigCo
 import getResultsDisplayConfig from '../utilities/getResultsDisplayConfig';
 
 const GokbRoute = ({ location }) => {
-  const { endpoint: gokbEndpoint, formatter, resultColumns, sortableColumns, results: resultsPath, totalRecords: totalRecordsPath } = getResultsDisplayConfig();
+  const {
+    endpoint: gokbEndpoint,
+    formatter,
+    resultColumns,
+    sortableColumns,
+    results: resultsPath,
+    totalRecords: totalRecordsPath,
+  } = getResultsDisplayConfig();
 
   const fetchParameters = {
     endpoint: gokbEndpoint,
@@ -36,6 +46,7 @@ const GokbRoute = ({ location }) => {
   // Something to revisit in the future, once we have all the query parts in place
   const generateQuery = (params, query) => {
     const perPage = params?.perPage || 25;
+    // Offset handling should be based on config file, picking up as part of refactors
     const offset = (params.page - 1) * params.perPage;
     const queryParts = [];
 
@@ -58,10 +69,15 @@ const GokbRoute = ({ location }) => {
   };
 
   const columnMapping = resultColumns?.length
-    ? Object.fromEntries(resultColumns.map(col => [col.propertyPath, col.label]))
+    ? Object.fromEntries(
+      resultColumns.map((col) => [col.propertyPath, col.label])
+    )
     : {};
 
-  const { visibleColumns, toggleColumn } = useColumnManager('gokb-search-list-column-manager', columnMapping);
+  const { visibleColumns, toggleColumn } = useColumnManager(
+    'gokb-search-list-column-manager',
+    columnMapping
+  );
 
   const renderActionMenu = () => {
     return (
@@ -90,7 +106,7 @@ const GokbRoute = ({ location }) => {
         const transformedData = {
           ...data,
           totalRecords: data?.[totalRecordsPath],
-          results: data?.[resultsPath]
+          results: data?.[resultsPath],
         };
         return transformedData;
       }}
@@ -103,7 +119,7 @@ const GokbRoute = ({ location }) => {
       mclProps={{
         columnWidths: { publicationDates: 300 },
         formatter,
-        visibleColumns
+        visibleColumns,
       }}
       path={location.pathname}
       persistedPanesetProps={{
@@ -112,7 +128,7 @@ const GokbRoute = ({ location }) => {
       queryParameterGenerator={generateQuery}
       resultColumns={resultColumns}
       sasqProps={{
-        sortableColumns
+        sortableColumns,
       }}
       searchFieldAriaLabel="input-gokb-search"
     />

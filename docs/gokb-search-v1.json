@@ -22,7 +22,6 @@
           {
             "name": "publicationType",
             "type": "String",
-            "sortable": false,
             "value": {
               "type": "Handlebars",
               "templateString": "{{{replace this 'Instance' ''}}}",
@@ -36,7 +35,6 @@
           {
             "name": "isbns",
             "type": "Array",
-            "sortable": false,
             "arrayType": "String",
             "renderStrategy": {
               "type": "joinString",
@@ -51,7 +49,6 @@
           {
             "name": "issns",
             "type": "Array",
-            "sortable": false,
             "arrayType": "String",
             "renderStrategy": {
               "type": "joinString",
@@ -66,7 +63,6 @@
           {
             "name": "zdbids",
             "type": "Array",
-            "sortable": false,
             "arrayType": "String",
             "renderStrategy": {
               "type": "joinString",
@@ -81,7 +77,6 @@
           {
             "name": "ezbids",
             "type": "Array",
-            "sortable": false,
             "arrayType": "String",
             "renderStrategy": {
               "type": "joinString",
@@ -96,7 +91,6 @@
           {
             "name": "publicationDates",
             "type": "Object",
-            "sortable": false,
             "renderStrategy": {
               "type": "renderPublicationDates"
             },
@@ -133,7 +127,6 @@
           {
             "name": "otherIds",
             "type": "Array",
-            "sortable": false,
             "arrayType": "String",
             "renderStrategy": {
               "type": "joinString",
@@ -152,7 +145,6 @@
           {
             "name": "publisher",
             "type": "String",
-            "sortable": false,
             "value": {
               "type": "access",
               "accessType": "JSONPath",
@@ -162,7 +154,6 @@
           {
             "name": "firstAuthor",
             "type": "String",
-            "sortable": false,
             "value": {
               "type": "access",
               "accessType": "JSONPath",
@@ -172,7 +163,6 @@
           {
             "name": "firstEditor",
             "type": "String",
-            "sortable": false,
             "value": {
               "type": "access",
               "accessType": "JSONPath",
@@ -182,7 +172,6 @@
           {
             "name": "editionStatement",
             "type": "String",
-            "sortable": false,
             "value": {
               "type": "access",
               "accessType": "JSONPath",
@@ -192,7 +181,6 @@
           {
             "name": "volume",
             "type": "String",
-            "sortable": false,
             "value": {
               "type": "access",
               "accessType": "JSONPath",
@@ -203,7 +191,6 @@
             "name": "subjects",
             "type": "Array",
             "arrayType": "String",
-            "sortable": false,
             "renderStrategy": {
               "type": "joinString",
               "separator": ", "
@@ -221,7 +208,6 @@
           {
             "name": "gokbid",
             "type": "String",
-            "sortable": false,
             "value": {
               "type": "access",
               "accessType": "JSONPath",
@@ -231,7 +217,6 @@
           {
             "name": "gokbuuid",
             "type": "String",
-            "sortable": false,
             "value": {
               "type": "access",
               "accessType": "JSONPath",
