@@ -252,72 +252,73 @@
             {
               "name": "keyword",
               "type": "Handlebars",
-              "parameter": "q={{string}}"
+              "templateString": "q={{query}}",
+              "default": true
             },
             {
               "name": "nameAndAltNames",
               "type": "Handlebars",
-              "parameter": "label={{string}}"
+              "templateString": "label={{query}}"
             },
             {
               "name": "name",
               "type": "Handlebars",
-              "parameter": "name={{string}}"
+              "templateString": "name={{query}}"
             },
             {
               "name": "altname",
               "type": "Handlebars",
-              "parameter": "altname={{string}}"
+              "templateString": "altname={{query}}"
             },
             {
               "name": "identifiers",
               "type": "Handlebars",
-              "parameter": "identifier={{string}}"
+              "templateString": "identifier={{query}}"
             },
             {
               "name": "eisbn",
               "type": "Handlebars",
-              "parameter": "identifier=eisbn,{{string}}"
+              "templateString": "identifier=eisbn,{{query}}"
             },
             {
               "name": "isbn",
               "type": "Handlebars",
-              "parameter": "identifier=isbn,{{string}}"
+              "templateString": "identifier=isbn,{{query}}"
             },
             {
               "name": "eissn",
               "type": "Handlebars",
-              "parameter": "identifier=eissn,{{string}}"
+              "templateString": "identifier=eissn,{{query}}"
             },
             {
               "name": "issn",
               "type": "Handlebars",
-              "parameter": "identifier=issn,{{string}}"
+              "templateString": "identifier=issn,{{query}}"
             },
             {
               "name": "ezb",
               "type": "Handlebars",
-              "parameter": "identifier=ezb,{{string}}"
+              "templateString": "identifier=ezb,{{query}}"
             },
             {
               "name": "zdb",
               "type": "Handlebars",
-              "parameter": "identifier=zdb,{{string}}"
+              "templateString": "identifier=zdb,{{query}}"
             },
             {
               "name": "uuid",
               "type": "Handlebars",
-              "parameter": "uuid={{string}}"
+              "templateString": "uuid={{query}}"
             },
             {
               "name": "gokbId",
               "type": "Handlebars",
-              "parameter": "id={{string}}"
+              "templateString": "id={{query}}"
             },
             {
               "name": "authorEditor",
               "type": "Handlebars",
-              "parameter": "q={{string}}&qfields=firstAuthor&qfields=firstEditor"
+              "templateString": "q={{query}}&qfields=firstAuthor&qfields=firstEditor"
             }
           ]
         },
