@@ -1,12 +1,22 @@
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 import kyImport from 'ky';
 
-import { JSONPath } from 'jsonpath-plus';
+import { AppIcon } from '@folio/stripes/core';
 
-import handlebars from 'handlebars';
+import {
+  ColumnManagerMenu,
+  useColumnManager,
+} from '@folio/stripes/smart-components';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
+
+import config from '../../../docs/gokb-search-v1';
+
+import { searchConfigTypeHandler } from '../utilities/adjustments/searchConfigConstructor';
+
+import getResultsDisplayConfig from '../utilities/getResultsDisplayConfig';
 
 import GokbFilters from '../../components/GokbFilters';
 import { getFilterConfig, transformFilterString } from '../../components/utilities';
@@ -14,77 +24,116 @@ import { getFilterConfig, transformFilterString } from '../../components/utiliti
 
 const GokbRoute = ({ location }) => {
   const { filterMap, initialFilterState } = getFilterConfig();
+  console.log('filterMap', filterMap);
+  const {
+    endpoint: gokbEndpoint,
+    formatter,
+    resultColumns,
+    sortableColumns,
+    results: resultsPath,
+    totalRecords: totalRecordsPath,
+  } = getResultsDisplayConfig();
+
   const fetchParameters = {
-    endpoint: 'https://gokbt.gbv.de/gokb/api/find',
-    SASQ_MAP: {
-      searchKey: 'uuid',
-      filterKeys: filterMap,
-    },
+    endpoint: gokbEndpoint,
+    SASQ_MAP: {},
   };
 
-  const generateQuery = (params, query) => {
-    const offset = (params.page - 1) * params.perPage;
+  // Build search configuration from the config file
+  const searchConfig = config.configuration.results.fetch.search;
 
-    // EXAMPLE: Using handlebars to generate the query string
-    // Namely name will be the field configured by the results.fetch.search key and its "handlebars template type"
-    // max & offset are configured by the pagination parameters
-    const template = handlebars.compile(
-      '?name={{input}}&max={{perPage}}&offset={{offset}}'
-    );
+  const { searchParameterParse, HeaderComponent } = searchConfigTypeHandler({
+    type: searchConfig.type,
+    searchConfig,
+  });
+
+  // Function to generate the GOKb query string based on the current state
+  // Not very happy with this at the moment,its a bit more a bespoke piece of work and doesnt adjust to the searchConfig
+  // Something to revisit in the future, once we have all the query parts in place
+  const generateQuery = (params, query) => {
+    console.log('query', query);
+    console.log('params', params);
+    const perPage = params?.perPage || 25;
+    // Offset handling should be based on config file, picking up as part of refactors
+    const offset = (params.page - 1) * params.perPage;
+    const queryParts = [];
+
+    if (query?.query) {
+      const { key: searchKey, string: searchString } = searchParameterParse(
+        query?.query
+      );
+      if (searchString) {
+        queryParts.push(searchString);
+        fetchParameters.SASQMap = {
+          ...fetchParameters.SASQMap,
+          searchKey,
+          filterKeys: filterMap,
+        };
+      }
+    }
 
     const filterString = transformFilterString(query?.filters);
 
-    const baseQuery = template({
-      input: query?.query || '',
-      perPage: params?.perPage,
-      offset,
-    });
-
-    // Append `filterString` manually not possible with handlebar template
-    // as it does not support dynamic keys in the template
-    if (filterString) {
-      return `${baseQuery}&${filterString}`;
-    }
-    return `${baseQuery}`;
+    queryParts.push(`max=${perPage}`);
+    queryParts.push(`offset=${offset}`);
+    queryParts.push(filterString);
+    console.log('queryParts', queryParts);
+    return `?${queryParts.join('&')}`;
   };
 
-  // When building the SASQ from the config file, using the results.display values
-  // should construct a formatter and resultColumns object
-  const resultColumns = [
-    {
-      propertyPath: 'name',
-      label: 'Name',
-    },
-  ];
+  const columnMapping = resultColumns?.length
+    ? Object.fromEntries(
+      resultColumns.map((col) => [col.propertyPath, col.label])
+    )
+    : {};
 
-  // EXAMPLE: Using JSONPath to format the results
-  const formatter = {
-    name: (resource) => JSONPath({ path: '$.name', json: resource }),
+  const { visibleColumns, toggleColumn } = useColumnManager(
+    'gokb-search-list-column-manager',
+    columnMapping
+  );
+
+  const renderActionMenu = () => {
+    return (
+      <ColumnManagerMenu
+        columnMapping={columnMapping}
+        excludeColumns={['name']}
+        prefix="gokb-search-list"
+        toggleColumn={toggleColumn}
+        visibleColumns={visibleColumns}
+      />
+    );
   };
 
   return (
     <SASQRoute
       fetchParameters={fetchParameters}
       FilterComponent={GokbFilters}
+      FilterPaneHeaderComponent={HeaderComponent}
       filterPaneProps={{
         id: 'gokb-search-main-filter-pane',
       }}
       id="gokb-search"
-      lookupQueryPromise={({ _ky, queryParams, endpoint }) => kyImport.get(`${endpoint}${queryParams}`).json()
-      }
+      lookupQueryPromise={({ _ky, queryParams, endpoint }) => {
+        return kyImport.get(`${endpoint}${queryParams}`).json();
+      }}
       lookupResponseTransform={(data) => {
         const transformedData = {
           ...data,
-          totalRecords: data.count,
-          results: data?.records,
+          totalRecords: data?.[totalRecordsPath],
+          results: data?.[resultsPath],
         };
         return transformedData;
       }}
       mainPaneProps={{
+        actionMenu: renderActionMenu,
+        appIcon: <AppIcon app="agreements" iconKey="title" size="small" />,
         id: 'gokb-search-main-pane',
+        paneTitle: <FormattedMessage id="ui-agreements.gokb.titles" />,
       }}
       mclProps={{
+        columnWidths: { publicationDates: 300 },
         formatter,
+        visibleColumns,
       }}
       path={location.pathname}
       persistedPanesetProps={{
@@ -93,7 +142,8 @@ const GokbRoute = ({ location }) => {
       queryParameterGenerator={generateQuery}
       resultColumns={resultColumns}
       sasqProps={{
-        initialFilterState
+        initialFilterState,
+        sortableColumns
       }}
       searchFieldAriaLabel="input-gokb-search"
     />

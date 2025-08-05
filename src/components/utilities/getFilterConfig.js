@@ -2,7 +2,7 @@ import { FormattedMessage } from 'react-intl';
 import gokbConfig from '../../../docs/gokb-search-v1';
 
 const getFilterConfig = () => {
-  const filters = gokbConfig.configuration.results.fetch?.filters.options || [];
+  const filters = gokbConfig.configuration.results.fetch?.filters?.options || [];
 
   const filterMap = {};
   const filterNames = [];
