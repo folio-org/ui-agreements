@@ -5,18 +5,30 @@ import isEqual from 'lodash/isEqual';
 import { Accordion, AccordionSet, FilterAccordionHeader, RadioButton } from '@folio/stripes/components';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
 
-
 const propTypes = {
   activeFilters: PropTypes.objectOf(
     PropTypes.arrayOf(PropTypes.string)
   ).isRequired,
-
+  filterConfig: PropTypes.shape({
+    filterNames: PropTypes.arrayOf(PropTypes.string),
+    filterOptions: PropTypes.objectOf(
+      PropTypes.arrayOf(
+        PropTypes.shape({
+          label: PropTypes.node,
+          value: PropTypes.string,
+        })
+      )
+    ),
+    filterTypes: PropTypes.objectOf(PropTypes.string),
+    initialFilterState: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string))
+  }).isRequired,
   filterHandlers: PropTypes.shape({
     clear: PropTypes.func.isRequired,
     clearGroup: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
     state: PropTypes.func.isRequired,
   }).isRequired,
+  kbKey: PropTypes.string.isRequired,
 };
 
 const GokbFilters = ({ activeFilters = {}, filterHandlers, filterConfig, kbKey }) => {
