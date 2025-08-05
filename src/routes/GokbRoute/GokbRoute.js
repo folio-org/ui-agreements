@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -23,8 +24,14 @@ import { getFilterConfig, transformFilterString } from '../../components/utiliti
 
 
 const GokbRoute = ({ location }) => {
-  const { filterMap, initialFilterState } = getFilterConfig();
-  console.log('filterMap', filterMap);
+  const kbKey = 'gokb';
+  const filterConfig = useMemo(() => getFilterConfig(config, kbKey), [kbKey]);
+  const { filterMap, initialFilterState } = filterConfig;
+
+  const FilterComponent = (props) => (
+    <GokbFilters {...props} filterConfig={filterConfig} kbKey={kbKey} />
+  );
+
   const {
     endpoint: gokbEndpoint,
     formatter,
@@ -51,8 +58,6 @@ const GokbRoute = ({ location }) => {
   // Not very happy with this at the moment,its a bit more a bespoke piece of work and doesnt adjust to the searchConfig
   // Something to revisit in the future, once we have all the query parts in place
   const generateQuery = (params, query) => {
-    console.log('query', query);
-    console.log('params', params);
     const perPage = params?.perPage || 25;
     // Offset handling should be based on config file, picking up as part of refactors
     const offset = (params.page - 1) * params.perPage;
@@ -72,12 +77,11 @@ const GokbRoute = ({ location }) => {
       }
     }
 
-    const filterString = transformFilterString(query?.filters);
+    const filterString = transformFilterString(query?.filters, config);
 
     queryParts.push(`max=${perPage}`);
     queryParts.push(`offset=${offset}`);
     queryParts.push(filterString);
-    console.log('queryParts', queryParts);
     return `?${queryParts.join('&')}`;
   };
 
@@ -88,7 +92,7 @@ const GokbRoute = ({ location }) => {
     : {};
 
   const { visibleColumns, toggleColumn } = useColumnManager(
-    'gokb-search-list-column-manager',
+    `${kbKey}-search-list-column-manager`,
     columnMapping
   );
 
@@ -97,7 +101,7 @@ const GokbRoute = ({ location }) => {
       <ColumnManagerMenu
         columnMapping={columnMapping}
         excludeColumns={['name']}
-        prefix="gokb-search-list"
+        prefix={`${kbKey}-search-list`}
         toggleColumn={toggleColumn}
         visibleColumns={visibleColumns}
       />
@@ -107,12 +111,12 @@ const GokbRoute = ({ location }) => {
   return (
     <SASQRoute
       fetchParameters={fetchParameters}
-      FilterComponent={GokbFilters}
+      FilterComponent={FilterComponent}
       FilterPaneHeaderComponent={HeaderComponent}
       filterPaneProps={{
-        id: 'gokb-search-main-filter-pane',
+        id: `${kbKey}-search-main-filter-pane`,
       }}
-      id="gokb-search"
+      id={`${kbKey}-search`}
       lookupQueryPromise={({ _ky, queryParams, endpoint }) => {
         return kyImport.get(`${endpoint}${queryParams}`).json();
       }}
@@ -127,8 +131,8 @@ const GokbRoute = ({ location }) => {
       mainPaneProps={{
         actionMenu: renderActionMenu,
         appIcon: <AppIcon app="agreements" iconKey="title" size="small" />,
-        id: 'gokb-search-main-pane',
-        paneTitle: <FormattedMessage id="ui-agreements.gokb.titles" />,
+        id: `${kbKey}-search-main-pane`,
+        paneTitle: <FormattedMessage id={`ui-agreements.${kbKey}.titles`} />,
       }}
       mclProps={{
         columnWidths: { publicationDates: 300 },
@@ -137,7 +141,7 @@ const GokbRoute = ({ location }) => {
       }}
       path={location.pathname}
       persistedPanesetProps={{
-        id: 'gokb-search-main-paneset',
+        id: `${kbKey}-search-main-paneset`,
       }}
       queryParameterGenerator={generateQuery}
       resultColumns={resultColumns}
@@ -145,7 +149,7 @@ const GokbRoute = ({ location }) => {
         initialFilterState,
         sortableColumns
       }}
-      searchFieldAriaLabel="input-gokb-search"
+      searchFieldAriaLabel={`input-${kbKey}-search`}
     />
   );
 };

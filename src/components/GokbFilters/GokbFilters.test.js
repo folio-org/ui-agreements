@@ -25,34 +25,33 @@ const activeFilters = {
   subject: []
 };
 
-jest.mock('../utilities/', () => ({
-  __esModule: true,
-  getFilterConfig: () => ({
-    filterMap: {
-      type: 'componentType',
-      subjects: 'subjects',
-    },
-    filterNames: ['type', 'subjects'],
-    filterOptions: {
-      type: [
-        { label: 'Book', value: 'book' },
-        { label: 'Journal', value: 'journal' },
-      ],
-      subjects: [
-        { label: 'Law', value: 'law' },
-        { label: 'Economics', value: 'economics' },
-      ],
-    },
-    initialFilterState: {
-      type: ['book'],
-      subjects: [],
-    },
-    filterTypes: {
-      type: 'singleSelect',
-      subjects: 'multiSelect',
-    },
-  }),
-}));
+const mockConfig = {
+  filterMap: {
+    type: 'componentType',
+    subjects: 'subjects',
+  },
+  filterNames: ['type', 'subjects'],
+  filterOptions: {
+    type: [
+      { label: 'Book', value: 'book' },
+      { label: 'Journal', value: 'journal' },
+    ],
+    subjects: [
+      { label: 'Law', value: 'law' },
+      { label: 'Economics', value: 'economics' },
+    ],
+  },
+  initialFilterState: {
+    type: ['book'],
+    subjects: [],
+  },
+  filterTypes: {
+    type: 'singleSelect',
+    subjects: 'multiSelect',
+  },
+};
+
+const kbKey = 'gokb';
 
 describe('GokbFilters', () => {
   beforeEach(() => {
@@ -61,7 +60,9 @@ describe('GokbFilters', () => {
       <MemoryRouter>
         <GokbFilters
           activeFilters={activeFilters}
+          filterConfig={mockConfig}
           filterHandlers={filterHandlers}
+          kbKey={kbKey}
         />
       </MemoryRouter>,
       translationsProperties

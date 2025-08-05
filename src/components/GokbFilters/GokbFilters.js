@@ -1,11 +1,10 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import isEqual from 'lodash/isEqual';
 import { Accordion, AccordionSet, FilterAccordionHeader, RadioButton } from '@folio/stripes/components';
 import { CheckboxFilter } from '@folio/stripes/smart-components';
 
-import { getFilterConfig } from '../utilities';
 
 const propTypes = {
   activeFilters: PropTypes.objectOf(
@@ -20,10 +19,8 @@ const propTypes = {
   }).isRequired,
 };
 
-const GokbFilters = ({ activeFilters = {}, filterHandlers }) => {
-  const config = useMemo(() => getFilterConfig(), []);
-  const { filterNames, filterOptions, filterTypes, initialFilterState } = config;
-
+const GokbFilters = ({ activeFilters = {}, filterHandlers, filterConfig, kbKey }) => {
+  const { filterNames, filterOptions, filterTypes, initialFilterState } = filterConfig;
   const [filterState, setFilterState] = useState(initialFilterState);
 
   useEffect(() => {
@@ -43,8 +40,8 @@ const GokbFilters = ({ activeFilters = {}, filterHandlers }) => {
   const accordionDefaultProps = (name, groupFilters) => ({
     displayClearButton: groupFilters.length > 0,
     header: FilterAccordionHeader,
-    id: `gokb-${name}-filter-accordion`,
-    label: <FormattedMessage id={`ui-agreements.gokb.filters.${name}`} />,
+    id: `${kbKey}-${name}-filter-accordion`,
+    label: <FormattedMessage id={`ui-agreements.${kbKey}.filters.${name}`} />,
     onClearFilter: () => {
       filterHandlers.clearGroup(name);
     },

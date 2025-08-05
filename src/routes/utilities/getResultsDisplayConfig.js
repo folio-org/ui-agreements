@@ -96,9 +96,9 @@ const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) =>
         });
         return applyRenderStrategy(combinedData, renderStrategy);
       };
-    case 'String':
-      return recurse();
     case 'Array':
+    case 'Object':
+    case 'String':
       return recurse();
     case 'Handlebars':
     case 'HandlebarsEach':
@@ -117,8 +117,6 @@ const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) =>
       } else {
         return recurse();
       }
-    case 'Object':
-      return recurse();
     default:
       return () => '';
   }

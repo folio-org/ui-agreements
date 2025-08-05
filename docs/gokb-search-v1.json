@@ -307,52 +307,40 @@
             }
           ]
         },
-        "filters": {
-          "group": false,
-          "prefix": "",
-          "filterString": {
-            "type": "Handlebars",
-            "templateString": "{{filter}}={{value}}"
-          },
-          "renderStrategy": {
-            "type": "joinString",
-            "separator": "&"
-          },
-          "options": [
-            {
-              "name": "type",
-              "filterPath": "componentType",
-              "type": "singleSelect",
-              "values": [
-                {
-                  "name": "all",
-                  "value": "Title",
-                  "default": true
-                },
-                {
-                  "name": "book",
-                  "value": "Book",
-                  "default": false
-                },
-                {
-                  "name": "database",
-                  "value": "Database",
-                  "default": false
-                },
-                {
-                  "name": "journal",
-                  "value": "Journal",
-                  "default": false
-                },
-                {
-                  "name": "other",
-                  "value": "Other",
-                  "default": false
-                }
-              ]
-            }
-          ]
-        },
+        "filters": [
+          {
+            "name": "type",
+            "filterPath": "componentType",
+            "filterString": {
+              "type": "Handlebars",
+              "templateString": "{{{buildFilterString valuesArray 'componentType' '=' '&'}}}"
+            },
+            "type": "singleSelect",
+            "values": [
+              {
+                "name": "all",
+                "value": "Title",
+                "default": true
+              },
+              {
+                "name": "book",
+                "value": "Book"
+              },
+              {
+                "name": "database",
+                "value": "Database"
+              },
+              {
+                "name": "journal",
+                "value": "Journal"
+              },
+              {
+                "name": "other",
+                "value": "Other"
+              }
+            ]
+          }
+        ],
         "actions": {},
         "pagination": {
           "type": "offset"

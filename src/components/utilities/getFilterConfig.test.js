@@ -1,41 +1,42 @@
 import getFilterConfig from './getFilterConfig';
 
-jest.mock('../../../docs/gokb-search-v1', () => ({
+const mockConfig = {
   configuration: {
     results: {
       fetch: {
-        filters: {
-          options: [
-            {
-              name: 'type',
-              filterPath: 'componentType',
-              type: 'singleSelect',
-              values: [
-                { name: 'all', value: 'Title', default: true },
-                { name: 'book', value: 'Book' },
-                { name: 'journal', value: 'Journal' }
-              ]
-            },
-            {
-              name: 'dummy',
-              filterPath: 'dummy',
-              type: 'multiSelect',
-              values: [
-                { name: 'dummy1', value: 'one', default: true },
-                { name: 'dummy2', value: 'two' },
-                { name: 'dummy3', value: 'three', default: true }
-              ]
-            }
-          ]
-        }
+        filters: [
+          {
+            name: 'type',
+            filterPath: 'componentType',
+            type: 'singleSelect',
+            values: [
+              { name: 'all', value: 'Title', default: true },
+              { name: 'book', value: 'Book' },
+              { name: 'journal', value: 'Journal' }
+            ]
+          },
+          {
+            name: 'dummy',
+            filterPath: 'dummy',
+            type: 'multiSelect',
+            values: [
+              { name: 'dummy1', value: 'one', default: true },
+              { name: 'dummy2', value: 'two' },
+              { name: 'dummy3', value: 'three', default: true }
+            ]
+          }
+        ]
+
       }
     }
   }
-}));
+};
+
+const kbKey = 'gokb';
 
 describe('getFilterConfig', () => {
   test('returns correct filterMap', () => {
-    const { filterMap } = getFilterConfig();
+    const { filterMap } = getFilterConfig(mockConfig, kbKey);
 
     expect(filterMap).toEqual({
       type: 'componentType',
@@ -44,13 +45,13 @@ describe('getFilterConfig', () => {
   });
 
   test('returns correct filterNames', () => {
-    const { filterNames } = getFilterConfig();
+    const { filterNames } = getFilterConfig(mockConfig, kbKey);
 
     expect(filterNames).toEqual(['type', 'dummy']);
   });
 
   test('returns correct filterTypes', () => {
-    const { filterTypes } = getFilterConfig();
+    const { filterTypes } = getFilterConfig(mockConfig, kbKey);
 
     expect(filterTypes).toEqual({
       type: 'singleSelect',
@@ -59,7 +60,7 @@ describe('getFilterConfig', () => {
   });
 
   test('returns correct filterOptions', () => {
-    const { filterOptions } = getFilterConfig();
+    const { filterOptions } = getFilterConfig(mockConfig, kbKey);
 
     const getLabelIds = (options) => options.map(opt => opt.label.props.id);
 
@@ -77,7 +78,7 @@ describe('getFilterConfig', () => {
   });
 
   test('returns correct initialFilterState', () => {
-    const { initialFilterState } = getFilterConfig();
+    const { initialFilterState } = getFilterConfig(mockConfig, kbKey);
 
     expect(initialFilterState).toEqual({
       type: ['Title'],

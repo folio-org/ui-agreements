@@ -81,19 +81,17 @@ describe('GokbRoute', () => {
         perPage: 10,
         filterKeys: {
           type: 'componentType',
-          dummy: 'dummyPath'
         }
       },
       {
         query: 'foo',
-        filters: 'type.Book,dummy.First'
+        filters: 'type.Book'
       }
     );
 
-    expect(result).toContain('name=foo');
+    expect(result).toContain('q=foo');
     expect(result).toContain('offset=10');
-    expect(result).toContain('&componentType=Book');
-    expect(result).not.toContain('&dummyPath=First');
+    expect(result).toContain('componentType=Book');
   });
 
   test('lookupResponseTransform transforms correctly', () => {

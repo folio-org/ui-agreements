@@ -1,9 +1,7 @@
 import { FormattedMessage } from 'react-intl';
-import gokbConfig from '../../../docs/gokb-search-v1';
 
-const getFilterConfig = () => {
-  const filters = gokbConfig.configuration.results.fetch?.filters?.options || [];
-
+const getFilterConfig = (config, kbKey) => {
+  const filters = config?.configuration?.results?.fetch?.filters || [];
   const filterMap = {};
   const filterNames = [];
   const filterOptions = {};
@@ -17,7 +15,7 @@ const getFilterConfig = () => {
 
     if (Array.isArray(filter.values)) {
       filterOptions[filter.name] = filter.values.map(({ name, value }) => ({
-        label: <FormattedMessage id={`ui-agreements.gokb.filters.${filter.name}.${name}`} />,
+        label: <FormattedMessage id={`ui-agreements.${kbKey}.filters.${filter.name}.${name}`} />,
         value,
       }));
 
