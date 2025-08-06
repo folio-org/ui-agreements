@@ -1,54 +1,11 @@
 import { JSONPath } from 'jsonpath-plus';
 import { FormattedMessage } from 'react-intl';
 import { AppIcon } from '@folio/stripes/core';
-import { FormattedUTCDate, Icon } from '@folio/stripes/components';
-import handlebars from 'handlebars';
+import { handlebarsCompile, renderPublicationDates } from '../../components/utilities';
 
 import gokbConfig from '../../../docs/gokb-search-v1';
 
-/* Register handlebar helpers */
-
-handlebars.registerHelper('replace', (text, search, replacement) => {
-  if (typeof text !== 'string') return text;
-  return text.replace(new RegExp(search, 'g'), replacement);
-});
-
-/* Other helper functions */
-
-const renderPublicationDates = (resource) => {
-  const { dateFirstOnline, dateFirstInPrint, publishedFrom, publishedTo } = resource;
-
-  if (!dateFirstOnline && !dateFirstInPrint && !publishedFrom && !publishedTo) {
-    return null;
-  }
-
-  return (
-    <div>
-      {dateFirstOnline && (
-        <div>
-          <FormattedMessage id="ui-agreements.gokb.publicationDates.firstOnline" />:{' '}
-          <FormattedUTCDate value={dateFirstOnline} />
-        </div>
-      )}
-      {dateFirstInPrint && (
-        <div>
-          <FormattedMessage id="ui-agreements.gokb.publicationDates.firstInPrint" />:{' '}
-          <FormattedUTCDate value={dateFirstInPrint} />
-        </div>
-      )}
-      {(publishedFrom || publishedTo) && (
-        <div>
-          <FormattedMessage id="ui-agreements.gokb.publicationDates.publishedFromTo" />:{' '}
-          <span>
-            {publishedFrom ? <FormattedUTCDate value={publishedFrom} /> : '*'}{' '}
-            <Icon icon="arrow-right" size="small" />{' '}
-            {publishedTo ? <FormattedUTCDate value={publishedTo} /> : '*'}
-          </span>
-        </div>
-      )}
-    </div>
-  );
-};
+/* helper functions */
 
 const applyJsonPath = (expression, resource) => JSONPath({ path: expression, json: resource }) || [];
 
@@ -60,7 +17,7 @@ const applyRenderStrategy = (results, strategy) => {
     case 'joinString':
       return results.join(strategy.separator || defaultSeparator);
     case 'renderPublicationDates':
-      return renderPublicationDates(results);
+      return renderPublicationDates(results, 'gokb');
     default:
       return results.join(defaultSeparator);
   }
@@ -105,7 +62,7 @@ const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) =>
       if (value?.type === 'access' && value?.accessType === 'JSONPath') {
         return (resource) => {
           const results = applyJsonPath(value.expression, resource);
-          const template = handlebars.compile(templateString);
+          const template = handlebarsCompile(templateString);
 
           const formatter = getFormatterFunction('String', {
             value: {
