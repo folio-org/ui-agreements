@@ -88,11 +88,11 @@ describe('PackageInfo', () => {
     });
 
     test('renders the expected gokb id value', async () => {
-      await KeyValue('GOKb ID').has({ value: 'gokb-id-1' });
+      await KeyValue('GOKB ID').has({ value: 'gokb-id-1' });
     });
 
     test('renders the expected gokb uuid value', async () => {
-      await KeyValue('GOKb UUID').has({ value: 'gokb-uuid-1' });
+      await KeyValue('GOKB UUID').has({ value: 'gokb-uuid-1' });
     });
   });
 });

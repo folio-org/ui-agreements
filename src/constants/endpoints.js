@@ -23,6 +23,9 @@ export const ERESOURCE_ENTITLEMENTS_ENDPOINT = (eresourceId) => `${ERESOURCE_END
 export const ERESOURCE_RELATED_ENTITLEMENTS_ENDPOINT = (eresourceId) => `${ERESOURCE_ENDPOINT(eresourceId)}/entitlements/related`;
 export const ERESOURCE_ENTITLEMENT_OPTIONS_ENDPOINT = (eresourceId) => `${ERESOURCE_ENDPOINT(eresourceId)}/static/entitlementOptions`; // Do a straight swap for static here and use stats as before
 
+export const ERESOURCES_DRY_RUN_ENDPOINT = (resourceType) => `${ERESOURCES_ENDPOINT}/markForDelete/${resourceType}`;
+export const ERESOURCES_DELETE_ENDPOINT = (resourceType) => `${ERESOURCES_ENDPOINT}/delete/${resourceType}`;
+
 export const PCIS_ENDPOINT = 'erm/pci';
 export const PCI_ENDPOINT = (pciId) => `erm/pci/${pciId}`;
 export const TITLES_ENDPOINT = 'erm/titles';
