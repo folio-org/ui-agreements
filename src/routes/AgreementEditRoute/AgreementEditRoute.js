@@ -18,8 +18,13 @@ import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 
 import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/processRelatedAgreements';
-import { AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT } from '../../constants';
+import {
+  AGREEMENT_ENDPOINT,
+  AGREEMENT_LINES_ENDPOINT,
+  AGREEMENTS_ENDPOINT
+} from '../../constants';
 import { useAgreementsRefdata, useBasket } from '../../hooks';
+import { useClaim, usePolicies } from '../../components/AccessControl';
 
 const [
   AGREEMENT_STATUS,
@@ -98,10 +103,20 @@ const AgreementEditRoute = ({
   // Users
   const { users } = useChunkedUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user) ?? []);
 
+  const { claim } = useClaim({ resourceEndpoint: AGREEMENTS_ENDPOINT });
+
   const { mutateAsync: putAgreement } = useMutation(
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
     (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: payload }).json()
-      .then(async ({ name, linkedLicenses }) => {
+      .then(async (resp) => {
+        // Grab id from response and submit a claim ... CRUCIALLY await the response.
+        // TODO we need to think about failure cases here.
+        await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
+
+        return resp; // Allow it to continue downstream
+      })
+      .then(async (response) => {
+        const { name, linkedLicenses } = response;
         // Invalidate any linked license's linkedAgreements calls
         if (linkedLicenses?.length) {
           await Promise.all(linkedLicenses.map(linkLic => {
@@ -116,8 +131,16 @@ const AgreementEditRoute = ({
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
         history.push(`${urls.agreementView(agreementId)}${location.search}`);
+
+        return response;
       })
   );
+
+  const { policies } = usePolicies({
+    resourceEndpoint: AGREEMENTS_ENDPOINT,
+    resourceId: agreementId,
+    queryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'policies'],
+  });
 
   const getInitialValues = useCallback(() => {
     let initialValues = {};
@@ -162,11 +185,12 @@ const AgreementEditRoute = ({
           };
         })
     }));
+    initialValues.claimPolicies = policies;
 
     joinRelatedAgreements(initialValues);
 
     return initialValues;
-  }, [agreement, agreementId]);
+  }, [agreement, agreementId, policies]);
 
   const handleClose = () => {
     history.push(`${urls.agreementView(agreementId)}${location.search}`);
@@ -175,6 +199,7 @@ const AgreementEditRoute = ({
   const handleSubmit = async (values) => {
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
     splitRelatedAgreements(values, relationshipTypeValues);
+
     await putAgreement(values);
   };
 
