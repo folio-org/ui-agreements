@@ -1,11 +1,16 @@
 import { useIntl } from 'react-intl';
 
 import { Layout } from '@folio/stripes/components';
+import { highlightString } from '@k-int/stripes-kint-components';
+
 import Separator from './Separator';
+import css from '../Styles.css';
 
-import css from './Styles.css';
-
-const AcquisitionUnitPolicy = ({ policy }) => {
+const AcquisitionUnitPolicy = ({
+  isSelected,
+  policy,
+  typed,
+}) => {
   const intl = useIntl();
 
   const policyRestrictions = ['protectRead', 'protectUpdate', 'protectCreate', 'protectDelete'].map(restriction => {
@@ -15,14 +20,24 @@ const AcquisitionUnitPolicy = ({ policy }) => {
   return (
     <Layout className="display-flex">
       <Layout className="display-flex">
-        {policy.name}
+        {
+          highlightString(
+            typed,
+            policy.name,
+          )
+        }
       </Layout>
       <Separator />
-      <Layout className={`display-flex ${css.itemMargin} ${css.greyItem}`}>
-        {policy.description}
+      <Layout className={`display-flex ${css.itemMargin} ${isSelected ? '' : css.greyItem}`}>
+        {
+          highlightString(
+            typed,
+            policy.description,
+          )
+        }
       </Layout>
       <Separator />
-      <Layout className={`display-flex ${css.itemMargin} ${css.greyItem}`}>
+      <Layout className={`display-flex ${css.itemMargin} ${isSelected ? '' : css.greyItem}`}>
         {policyRestrictions.join(', ')}
       </Layout>
     </Layout>

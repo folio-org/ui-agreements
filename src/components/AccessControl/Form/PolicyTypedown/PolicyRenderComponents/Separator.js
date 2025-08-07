@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Layout } from '@folio/stripes/components';
 
-import css from './Styles.css';
+import css from '../Styles.css';
 
 // FIXME could probs move this to kint-comps, used here and in number generator
 

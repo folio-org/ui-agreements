@@ -7,25 +7,26 @@ import { ACQUISITION_UNIT_POLICY_TYPE } from '../../constants';
 import { AcquisitionUnitPolicy } from './PolicyRenderComponents';
 
 const PolicyTypedown = ({
-  input,
-  policies = []
+  policies = [],
+  ...typedownProps // Needs input, isSelected will also be useful since we're putting into a different fieldArray
 } = {}) => {
   const [typed, setTyped] = useState('');
   const [policyOptions, setPolicyOptions] = useState(policies);
 
-  const renderPolicyOption = useCallback((option, currentlyTyped, exactMatch, optionIsSelected) => {
-    console.log("RPO option: %o", option);
-    console.log("RPO currentlyTyped: %o", currentlyTyped);
-    console.log("RPO exactMatch: %o", exactMatch);
-    console.log("RPO optionIsSelected: %o", optionIsSelected);
-
+  const renderPolicyOption = useCallback((option, _currentlyTyped, _exactMatch, optionIsSelected) => {
     switch (option.type) {
       case ACQUISITION_UNIT_POLICY_TYPE:
-        return <AcquisitionUnitPolicy policy={option} />;
+        return (
+          <AcquisitionUnitPolicy
+            isSelected={optionIsSelected}
+            policy={option}
+            typed={typed}
+          />
+        );
       default:
         return `${option.type} · ${option.id}`;
     }
-  }, []);
+  }, [typed]);
 
   // The "type" logic needs to DIFFER for each policy type :(
   const onType = useCallback(e => {
@@ -57,10 +58,10 @@ const PolicyTypedown = ({
   return (
     <Typedown
       dataOptions={policyOptions}
-      input={input}
       label="Select an option" // FIXME fix the label
       onType={onType}
       renderListItem={renderPolicyOption}
+      {...typedownProps}
     />
   );
 };
