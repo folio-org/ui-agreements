@@ -178,7 +178,7 @@ const AgreementForm = ({
                       </Col>
                     </Row>
                     <AccordionSet initialStatus={initialAccordionsState}>
-                      {/* FIXME Remove from here and add back under Info */}
+                      <FormInfo {...getSectionProps('formInfo')} />
                       <FormAccessControl
                         accessControlEndpoint={AGREEMENTS_ACCESSCONTROL_ENDPOINT}
                         resourceEndpoint={AGREEMENT_ENDPOINT(id)}
@@ -186,9 +186,6 @@ const AgreementForm = ({
                         resourceType="Agreements"
                         {...getSectionProps('formAccessControl')}
                       />
-                      <FormInfo {...getSectionProps('formInfo')} />
-                      {/* FIXME This is where this should go, only up above for ease of dev */}
-                      {/* <FormAccessControl {...getSectionProps('formAccessControl')} /> */}
                       <FormLines agreementId={id} agreementLineCount={data.agreementLineCount} />
                       <CustomPropertiesEdit
                         contexts={contexts}
