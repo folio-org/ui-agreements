@@ -1,4 +1,6 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+
+import omit from 'lodash/omit';
 
 import { useForm, useFormState } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
@@ -37,8 +39,13 @@ const FormAccessControl = ({
   const { values } = useFormState();
   const { mutators } = useForm();
 
+  // When we remove a policy that has an id from the resource we can store it in state,
+  // so that if we decide to re-add it we don't lose the id/description fields
+  const [removedPolicies, setRemovedPolicies] = useState([]);
+
   // We need to fetch the policies for the resource at hand
   // TODO this hook should be separate
+  // FIXME Actually this probably belongs in the create/edit routes to build initialValues
   const { data: policies } = useQuery(
     ['ERM', resourceType, resourceId, 'policies'],
     () => ky.get(`${resourceEndpoint}/policies`).json(),
@@ -59,21 +66,34 @@ const FormAccessControl = ({
   const findMatchingPolicy = useCallback((pol, value) => {
     return !!pol &&
     !!value &&
-    pol.id === value.id &&
+    pol.policy.id === value.policy.id &&
     pol.type === value.type;
   }, []);
 
   const onPolicyChange = useCallback(policy => {
     // If selected policy already exists in the form values
     if ((values.claimPolicies ?? []).some(pol => findMatchingPolicy(pol, policy))) {
-      // Remove itfindMatchingPolicy
+      // Remove it
       const removeIndex = (values.claimPolicies ?? []).findIndex(pol => findMatchingPolicy(pol, policy));
+
+      // Store removed ones with id in state, so we can put those back if we want
+      //  If you remove then re-add a policy we shouldn't nuke the id and desc
+      if (policy.id) {
+        setRemovedPolicies([...removedPolicies, policy]); // ACK this won't work, as the change is coming from the selection. We need the full thing to be in the right shape, not transformed between
+      }
+
       mutators.remove('claimPolicies', removeIndex);
     } else {
-      // Else add it to the end of the form values
-      mutators.push('claimPolicies', policy);
+      // Else add it to the end of the form values (ensuring we either grab from removed policies or transform to the shape, see below)
+
+      const preRemovedPolicy = removedPolicies.find(pol => pol.policy.id === policy.policy.id);
+      if (preRemovedPolicy) {
+        mutators.push('claimPolicies', preRemovedPolicy);
+      } else {
+        mutators.push('claimPolicies', policy);
+      }
     }
-  }, [findMatchingPolicy, mutators, values.claimPolicies]);
+  }, [findMatchingPolicy, mutators, removedPolicies, values.claimPolicies]);
 
   return (
     <Accordion
@@ -107,7 +127,9 @@ const FormAccessControl = ({
             }}
             contentData={values.claimPolicies}
             formatter={{
-              restrictions: (rowData) => acquisitionPolicyRestrictions(rowData, intl), // TODO this will break if we have any other access controls in future
+              name: (rowData) => rowData.policy.name,
+              description: (rowData) => rowData.policy.description,
+              restrictions: (rowData) => acquisitionPolicyRestrictions(rowData.policy, intl), // TODO this will break if we have any other access controls in future
               // We can do OnPolicyChange because if it's in the table then we're definitely removing it
               remove: (rowData) => <IconButton icon="trash" onClick={() => onPolicyChange(rowData)} />
             }}

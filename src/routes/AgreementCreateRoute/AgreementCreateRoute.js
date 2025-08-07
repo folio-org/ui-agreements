@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import omit from 'lodash/omit';
+
 import { FormattedMessage } from 'react-intl';
 
 import { useMutation, useQueryClient } from 'react-query';
@@ -16,6 +18,7 @@ import { urls } from '../../components/utilities';
 
 import { AGREEMENTS_ENDPOINT } from '../../constants';
 import { useAddFromBasket, useAgreementsRefdata, useBasket } from '../../hooks';
+import { useClaim } from '../../components/AccessControl/hooks';
 
 
 const [
@@ -93,7 +96,8 @@ const AgreementCreateRoute = ({
   const { mutateAsync: postAgreement } = useMutation(
     [AGREEMENTS_ENDPOINT, 'ui-agreements', 'AgreementCreateRoute', 'createAgreement'],
     (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: payload }).json()
-      .then(({ id, name, linkedLicenses }) => {
+      .then((response) => {
+        const { id, name, linkedLicenses } = response;
         // Invalidate any linked license's linkedAgreements calls
         if (linkedLicenses?.length) {
           linkedLicenses.forEach(linkLic => {
@@ -106,15 +110,24 @@ const AgreementCreateRoute = ({
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
         handleClose(id);
+        return response;
       })
   );
 
+  const { claim } = useClaim({ resourceEndpoint: AGREEMENTS_ENDPOINT });
 
   const handleSubmit = (agreement) => {
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
     splitRelatedAgreements(agreement, relationshipTypeValues);
 
-    postAgreement(agreement);
+    const claimPolicies = agreement.claimPolicies;
+    const submitAgreement = omit(agreement, 'claimPolicies');
+
+    postAgreement(submitAgreement).then(({ id: agreementId }) => {
+      // Grab id from response and submit a claim
+      claim({ claims: claimPolicies }, agreementId);
+      // TODO we need to think about failure cases here.
+    });
   };
 
   const fetchIsPending = () => {

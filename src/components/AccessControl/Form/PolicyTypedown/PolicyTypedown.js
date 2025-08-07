@@ -44,11 +44,11 @@ const PolicyTypedown = ({
       switch (pol.type) {
         case ACQUISITION_UNIT_POLICY_TYPE:
           return (
-            pol.name.toLowerCase().includes(typed.toLowerCase()) ||
-            pol.description.toLowerCase().includes(typed.toLowerCase())
+            pol.policy.name.toLowerCase().includes(typed.toLowerCase()) ||
+            pol.policy.description.toLowerCase().includes(typed.toLowerCase())
           );
         default:
-          return pol.id.toLowerCase().includes(typed.toLowerCase());
+          return pol.policy.id.toLowerCase().includes(typed.toLowerCase());
       }
     });
 

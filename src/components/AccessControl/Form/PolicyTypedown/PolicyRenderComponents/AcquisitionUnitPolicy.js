@@ -23,7 +23,7 @@ const AcquisitionUnitPolicy = ({
         {
           highlightString(
             typed,
-            policy.name,
+            policy.policy.name,
           )
         }
       </Layout>
@@ -32,13 +32,13 @@ const AcquisitionUnitPolicy = ({
         {
           highlightString(
             typed,
-            policy.description,
+            policy.policy.description,
           )
         }
       </Layout>
       <Separator />
       <Layout className={`display-flex ${css.itemMargin} ${isSelected ? '' : css.greyItem}`}>
-        {acquisitionPolicyRestrictions(policy, intl)}
+        {acquisitionPolicyRestrictions(policy.policy, intl)}
       </Layout>
     </Layout>
   );

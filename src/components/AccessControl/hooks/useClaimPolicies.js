@@ -30,10 +30,11 @@ const useClaimPolicies = ({
     }
   );
 
-  // Also give an option flattening to list of policies with type injected
+  // Also give an option flattening to list of policies with type injected... in the same shape as the policy claim list
   const flattenedClaimPolicies = useMemo(() => {
-    const policies = claimPolicies.flatMap(claim => claim.policies.map(policy => ({ ...policy, type: claim.type })));
-    return policies.filter((policy, index, self) => index === self.findIndex(p => p.id === policy.id && p.type === policy.type));
+    const policies = claimPolicies.flatMap(claim => claim.policies.map(policy => ({ policy, type: claim.type })));
+
+    return policies.filter((policy, index, self) => index === self.findIndex(p => p.policy.id === policy.policy.id && p.type === policy.type));
   }, [claimPolicies]);
 
   return {
