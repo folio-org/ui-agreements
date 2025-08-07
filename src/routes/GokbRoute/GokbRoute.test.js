@@ -76,11 +76,22 @@ describe('GokbRoute', () => {
 
   test('queryParameterGenerator generates expected query', () => {
     const result = capturedProps.queryParameterGenerator(
-      { page: 2, perPage: 10 },
-      { query: 'foo', sort: '-bar' }
+      {
+        page: 2,
+        perPage: 10,
+        filterKeys: {
+          type: 'componentType',
+        }
+      },
+      {
+        query: 'foo',
+        filters: 'type.Book'
+      }
     );
+
     expect(result).toContain('q=foo');
     expect(result).toContain('offset=10');
+    expect(result).toContain('componentType=Book');
   });
 
   test('lookupResponseTransform transforms correctly', () => {
