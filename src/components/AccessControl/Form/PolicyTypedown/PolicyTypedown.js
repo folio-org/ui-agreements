@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import isEqual from 'lodash/isEqual';
 
 import { Typedown } from '@k-int/stripes-kint-components';
@@ -58,7 +60,7 @@ const PolicyTypedown = ({
   return (
     <Typedown
       dataOptions={policyOptions}
-      label="Select an option" // FIXME fix the label
+      label={<FormattedMessage id="ui-agreements.accesscontrol.typedown.label" />}
       onType={onType}
       renderListItem={renderPolicyOption}
       {...typedownProps}

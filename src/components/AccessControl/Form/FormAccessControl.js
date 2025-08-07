@@ -6,7 +6,7 @@ import { FieldArray } from 'react-final-form-arrays';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useQuery } from 'react-query';
 
-import { Accordion, MultiColumnList } from '@folio/stripes/components';
+import { Accordion, Badge, IconButton, MultiColumnList } from '@folio/stripes/components';
 import { useOkapiKy } from '@folio/stripes/core';
 
 import { useClaimPolicies, useEnabledEngines } from '../hooks';
@@ -35,7 +35,6 @@ const FormAccessControl = ({
   const ky = useOkapiKy();
 
   const { values } = useFormState();
-  console.log("Form values", values);
   const { mutators } = useForm();
 
   // We need to fetch the policies for the resource at hand
@@ -48,8 +47,6 @@ const FormAccessControl = ({
     }
   );
 
-  console.log("WHAT ARE POLICIES: %o", policies);
-
   // We need to fetch the claimable policies
   const { flattenedClaimPolicies: claimPolicies } = useClaimPolicies({
     endpoint: accessControlEndpoint,
@@ -57,8 +54,6 @@ const FormAccessControl = ({
       enabled: doAccessControl
     }
   });
-
-  console.log("WHAT ARE CLAIM POLICIES: %o", claimPolicies);
 
   // A policy matches if its id AND type match (And quick exit if values don't exist)
   const findMatchingPolicy = useCallback((pol, value) => {
@@ -68,32 +63,34 @@ const FormAccessControl = ({
     pol.type === value.type;
   }, []);
 
+  const onPolicyChange = useCallback(policy => {
+    // If selected policy already exists in the form values
+    if ((values.claimPolicies ?? []).some(pol => findMatchingPolicy(pol, policy))) {
+      // Remove itfindMatchingPolicy
+      const removeIndex = (values.claimPolicies ?? []).findIndex(pol => findMatchingPolicy(pol, policy));
+      mutators.remove('claimPolicies', removeIndex);
+    } else {
+      // Else add it to the end of the form values
+      mutators.push('claimPolicies', policy);
+    }
+  }, [findMatchingPolicy, mutators, values.claimPolicies]);
+
   return (
     <Accordion
-      displayWhenClosed={"FIXME REPLACE THIS"}
-      displayWhenOpen={"FIXME REPLACE THIS"}
+      displayWhenClosed={<Badge>{(values.claimPolicies ?? []).length}</Badge>}
+      displayWhenOpen={<Badge>{(values.claimPolicies ?? []).length}</Badge>}
       id="formAccessControl"
-      label={<FormattedMessage id="ui-agreements.accesscontrol.form.label" />}
+      label={<FormattedMessage id="ui-agreements.accesscontrol.label" />}
       onToggle={onToggle}
       open={open}
     >
       <PolicyTypedown
         input={{
           name: 'myField',
-          onChange: (value) => {
-            // If selected policy already exists in the form values
-            if ((values.claimPolicies ?? []).some(pol => findMatchingPolicy(pol, value))) {
-              // Remove itfindMatchingPolicy
-              const removeIndex = (values.claimPolicies ?? []).findIndex(pol => findMatchingPolicy(pol, value));
-              mutators.remove('claimPolicies', removeIndex);
-            } else {
-              // Else add it to the end of the form values
-              mutators.push('claimPolicies', value);
-            }
-          }
+          onChange: onPolicyChange
         }}
         isSelected={(_v, value) => {
-          return (values.claimPolicies ?? []).some(pol => findMatchingPolicy(pol, value))
+          return (values.claimPolicies ?? []).some(pol => findMatchingPolicy(pol, value));
         }}
         policies={claimPolicies}
       />
@@ -102,11 +99,20 @@ const FormAccessControl = ({
         name="claimPolicies"
         render={() => (
           <MultiColumnList
+            columnMapping={{
+              name: <FormattedMessage id="ui-agreements.accesscontrol.name" />,
+              description: <FormattedMessage id="ui-agreements.accesscontrol.description" />,
+              restrictions: <FormattedMessage id="ui-agreements.accesscontrol.restrictions" />,
+              remove: <FormattedMessage id="ui-agreements.accesscontrol.remove" />,
+            }}
             contentData={values.claimPolicies}
             formatter={{
-              restrictions: (rowData) => acquisitionPolicyRestrictions(rowData, intl) // TODO this will break if we have any other access controls in future
+              restrictions: (rowData) => acquisitionPolicyRestrictions(rowData, intl), // TODO this will break if we have any other access controls in future
+              // We can do OnPolicyChange because if it's in the table then we're definitely removing it
+              remove: (rowData) => <IconButton icon="trash" onClick={() => onPolicyChange(rowData)} />
             }}
-            visibleColumns={['name', 'description', 'restrictions']} // FIXME these need mappings etc
+            interactive={false}
+            visibleColumns={['name', 'description', 'restrictions', 'remove']} // FIXME these need mappings etc
           />
         )}
       />
