@@ -1,40 +1,26 @@
-import { useCallback, useMemo, useState } from 'react';
-
-import omit from 'lodash/omit';
+import { useCallback, useState } from 'react';
 
 import { useForm, useFormState } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useQuery } from 'react-query';
 
 import { Accordion, Badge, IconButton, MultiColumnList } from '@folio/stripes/components';
-import { useOkapiKy } from '@folio/stripes/core';
 
-import { useClaimPolicies, useEnabledEngines } from '../hooks';
-import { AGREEMENTS_ACCESSCONTROL_ENDPOINT } from '../../../constants';
-import { ACQUISITION_UNIT_POLICY_TYPE } from '../constants';
+import { useClaimPolicies } from '../hooks';
 
 import { PolicyTypedown } from './PolicyTypedown';
 import { acquisitionPolicyRestrictions } from './PolicyTypedown/PolicyRenderComponents';
+import useDoAccessControl from '../hooks/useDoAccessControl';
 
 // TODO This should be centralised, but we must make sure that all the endpoints etc etc are module/resource specific
 const FormAccessControl = ({
   accessControlEndpoint, // THIS MUST BE THE BASE endpoint for accessControl
-  resourceEndpoint, // THIS MUST BE THE BASE endpoint for the resource (not including id)
-  resourceId, // The resource id -- null if creating
-  resourceType, // Agreement vs Entitlement etc etc -- used for query key generation
   onToggle,
   open
 }) => {
   const intl = useIntl();
-
-  // It is up to the BACKEND to check whether or not the various interfaces etc etc are present,
-  // and to enrich with their information
-  const enabledEngines = useEnabledEngines({ endpoint: AGREEMENTS_ACCESSCONTROL_ENDPOINT });
-  const doAccessControl = useMemo(() => enabledEngines[ACQUISITION_UNIT_POLICY_TYPE] ?? false, [enabledEngines]); // For now, we only need to check acquisition units
-
-  const ky = useOkapiKy();
+  const { doAccessControl } = useDoAccessControl({ endpoint: accessControlEndpoint });
 
   const { values } = useFormState();
   const { mutators } = useForm();
@@ -42,17 +28,6 @@ const FormAccessControl = ({
   // When we remove a policy that has an id from the resource we can store it in state,
   // so that if we decide to re-add it we don't lose the id/description fields
   const [removedPolicies, setRemovedPolicies] = useState([]);
-
-  // We need to fetch the policies for the resource at hand
-  // TODO this hook should be separate
-  // FIXME Actually this probably belongs in the create/edit routes to build initialValues
-  const { data: policies } = useQuery(
-    ['ERM', resourceType, resourceId, 'policies'],
-    () => ky.get(`${resourceEndpoint}/policies`).json(),
-    {
-      enabled: doAccessControl && !!resourceId
-    }
-  );
 
   // We need to fetch the claimable policies
   const { flattenedClaimPolicies: claimPolicies } = useClaimPolicies({

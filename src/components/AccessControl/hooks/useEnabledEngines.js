@@ -7,12 +7,15 @@ const useEnabledEngines = ({
 }) => {
   const ky = useOkapiKy();
 
-  const { data = {} } = useQuery(
+  const { data = {}, ...restOfQuery } = useQuery(
     [...ENABLED_ENGINES_QUERY_KEY, endpoint],
     () => ky.get(`${endpoint}/enabledEngines`).json()
   );
 
-  return data;
+  return {
+    enabledEngines: data,
+    ...restOfQuery,
+  };
 };
 
 export default useEnabledEngines;

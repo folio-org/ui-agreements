@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import omit from 'lodash/omit';
 
 import { FormattedMessage } from 'react-intl';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
@@ -18,8 +19,14 @@ import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 
 import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/processRelatedAgreements';
-import { AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT } from '../../constants';
+import {
+  AGREEMENT_ENDPOINT,
+  AGREEMENT_LINES_ENDPOINT,
+  AGREEMENTS_ACCESSCONTROL_ENDPOINT,
+  AGREEMENTS_ENDPOINT
+} from '../../constants';
 import { useAgreementsRefdata, useBasket } from '../../hooks';
+import { useClaim, useDoAccessControl } from '../../components/AccessControl/hooks';
 
 const [
   AGREEMENT_STATUS,
@@ -58,6 +65,7 @@ const AgreementEditRoute = ({
   const stripes = useStripes();
 
   const { basket = [] } = useBasket();
+  const { doAccessControl, enabledEnginesQuery: { isLoading: areEnabledEnginesLoading } } = useDoAccessControl({ endpoint: AGREEMENTS_ACCESSCONTROL_ENDPOINT });
 
   const refdata = useAgreementsRefdata({
     desc: [
@@ -119,6 +127,18 @@ const AgreementEditRoute = ({
       })
   );
 
+  const { claim } = useClaim({ resourceEndpoint: AGREEMENTS_ENDPOINT });
+
+  // We need to fetch the policies for the resource at hand
+  // TODO this hook should be separate
+  const { data: policies, isLoading: arePoliciesLoading } = useQuery(
+    ['ERM', 'Agreements', agreementId, 'policies'],
+    () => ky.get(`${AGREEMENT_ENDPOINT(agreementId)}/policies`).json(),
+    {
+      enabled: doAccessControl && !!agreementId
+    }
+  );
+
   const getInitialValues = useCallback(() => {
     let initialValues = {};
 
@@ -162,11 +182,12 @@ const AgreementEditRoute = ({
           };
         })
     }));
+    initialValues.claimPolicies = policies;
 
     joinRelatedAgreements(initialValues);
 
     return initialValues;
-  }, [agreement, agreementId]);
+  }, [agreement, agreementId, policies]);
 
   const handleClose = () => {
     history.push(`${urls.agreementView(agreementId)}${location.search}`);
@@ -175,11 +196,20 @@ const AgreementEditRoute = ({
   const handleSubmit = async (values) => {
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
     splitRelatedAgreements(values, relationshipTypeValues);
-    await putAgreement(values);
+
+    const claimPolicies = values.claimPolicies;
+    const submitAgreement = omit(values, 'claimPolicies');
+
+    await putAgreement(submitAgreement).then(() => {
+
+      // Grab id from response and submit a claim
+      claim({ resourceId: agreementId, payload: { claims: claimPolicies ?? [] } });
+      // TODO we need to think about failure cases here.
+    });
   };
 
   const fetchIsPending = () => {
-    return isAgreementLoading;
+    return isAgreementLoading || areEnabledEnginesLoading || arePoliciesLoading;
   };
 
   if (!stripes.hasPerm('ui-agreements.agreements.edit')) return <NoPermissions />;
