@@ -857,8 +857,8 @@
   "gokb.gokbuuid": "GOKB UUID",
   "gokb.publicationDates.firstOnline":"First online",
   "gokb.publicationDates.firstInPrint": "First in print",
-  "gokb.publicationDates.publishedFromTo": "Published from/to"
-    "separator": "·",
+  "gokb.publicationDates.publishedFromTo": "Published from/to",
+  "separator": "·",
   "accesscontrol.label": "Acquisition units",
   "accesscontrol.typedown.label": "Add acquisition unit",
   "accesscontrol.name": "Name",
