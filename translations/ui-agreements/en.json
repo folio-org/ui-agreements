@@ -808,5 +808,11 @@
   "packages.name": "Name",
   "packages.identifiers": "Identifiers",
   "packages.alternateResourceName": "Alternative name",
-  "packages.description": "Description"
+  "packages.description": "Description",
+  "separator": "·",
+  "accesscontrol.form.label": "Acquisition units",
+  "accesscontrol.acquisitionunits.protectRead": "View",
+  "accesscontrol.acquisitionunits.protectUpdate": "Edit",
+  "accesscontrol.acquisitionunits.protectCreate": "Create",
+  "accesscontrol.acquisitionunits.protectDelete": "Delete"
 }

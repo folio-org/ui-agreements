@@ -1,0 +1,13 @@
+@import '@folio/stripes-components/lib/variables.css';
+
+.greyItem {
+    color: #666666; /* Needed for accessibility against grey background in striped list */
+}
+
+.boldItem {
+    font-weight: var(--text-weight-bold);
+}
+
+.itemMargin {
+    margin-left: var(--gutter-static-one-third);
+}

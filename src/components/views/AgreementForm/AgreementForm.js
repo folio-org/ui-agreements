@@ -42,8 +42,9 @@ import {
 
 import IfAccordionIsVisible from '../../IfAccordionIsVisible';
 
-import { CUSTPROP_ENDPOINT } from '../../../constants';
+import { AGREEMENT_ENDPOINT, AGREEMENTS_ACCESSCONTROL_ENDPOINT, CUSTPROP_ENDPOINT } from '../../../constants';
 import { useAgreementsContexts } from '../../../hooks';
+import { FormAccessControl } from '../../AccessControl';
 
 const AgreementForm = ({
   data = {},
@@ -177,7 +178,17 @@ const AgreementForm = ({
                       </Col>
                     </Row>
                     <AccordionSet initialStatus={initialAccordionsState}>
+                      {/* FIXME Remove from here and add back under Info */}
+                      <FormAccessControl
+                        accessControlEndpoint={AGREEMENTS_ACCESSCONTROL_ENDPOINT}
+                        resourceEndpoint={AGREEMENT_ENDPOINT(id)}
+                        resourceId={id}
+                        resourceType="Agreements"
+                        {...getSectionProps('formAccessControl')}
+                      />
                       <FormInfo {...getSectionProps('formInfo')} />
+                      {/* FIXME This is where this should go, only up above for ease of dev */}
+                      {/* <FormAccessControl {...getSectionProps('formAccessControl')} /> */}
                       <FormLines agreementId={id} agreementLineCount={data.agreementLineCount} />
                       <CustomPropertiesEdit
                         contexts={contexts}
