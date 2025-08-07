@@ -3,24 +3,20 @@ import { useCallback, useState } from 'react';
 import { useForm, useFormState } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
-import { Accordion, Badge, IconButton, MultiColumnList } from '@folio/stripes/components';
+import { Accordion, Badge, Spinner } from '@folio/stripes/components';
 
-import { useClaimPolicies } from '../hooks';
-
+import { useClaimPolicies, useDoAccessControl } from '../hooks';
 import { PolicyTypedown } from './PolicyTypedown';
-import { acquisitionPolicyRestrictions } from './PolicyTypedown/PolicyRenderComponents';
-import useDoAccessControl from '../hooks/useDoAccessControl';
+import { PoliciesTable } from '../View';
 
-// TODO This should be centralised, but we must make sure that all the endpoints etc etc are module/resource specific
 const FormAccessControl = ({
   accessControlEndpoint, // THIS MUST BE THE BASE endpoint for accessControl
   onToggle,
   open
 }) => {
-  const intl = useIntl();
-  const { doAccessControl } = useDoAccessControl({ endpoint: accessControlEndpoint });
+  const { doAccessControl, enabledEnginesQuery } = useDoAccessControl({ endpoint: accessControlEndpoint });
 
   const { values } = useFormState();
   const { mutators } = useForm();
@@ -70,6 +66,14 @@ const FormAccessControl = ({
     }
   }, [findMatchingPolicy, mutators, removedPolicies, values.claimPolicies]);
 
+  if (enabledEnginesQuery.isLoading) {
+    return (<Spinner />);
+  }
+
+  if (!doAccessControl) {
+    return null;
+  }
+
   return (
     <Accordion
       displayWhenClosed={<Badge>{(values.claimPolicies ?? []).length}</Badge>}
@@ -93,23 +97,10 @@ const FormAccessControl = ({
       <FieldArray
         name="claimPolicies"
         render={() => (
-          <MultiColumnList
-            columnMapping={{
-              name: <FormattedMessage id="ui-agreements.accesscontrol.name" />,
-              description: <FormattedMessage id="ui-agreements.accesscontrol.description" />,
-              restrictions: <FormattedMessage id="ui-agreements.accesscontrol.restrictions" />,
-              remove: <FormattedMessage id="ui-agreements.accesscontrol.remove" />,
-            }}
-            contentData={values.claimPolicies}
-            formatter={{
-              name: (rowData) => rowData.policy.name,
-              description: (rowData) => rowData.policy.description,
-              restrictions: (rowData) => acquisitionPolicyRestrictions(rowData.policy, intl), // TODO this will break if we have any other access controls in future
-              // We can do OnPolicyChange because if it's in the table then we're definitely removing it
-              remove: (rowData) => <IconButton icon="trash" onClick={() => onPolicyChange(rowData)} />
-            }}
-            interactive={false}
-            visibleColumns={['name', 'description', 'restrictions', 'remove']} // FIXME these need mappings etc
+          <PoliciesTable
+            allowRemove
+            onRemove={onPolicyChange}
+            policies={values.claimPolicies}
           />
         )}
       />

@@ -52,6 +52,7 @@ import {
   LICENSE_CUSTPROP_ENDPOINT,
   statuses
 } from '../../../constants';
+import { AccessControl } from '../../AccessControl';
 
 const Agreement = ({
   components: {
@@ -277,6 +278,7 @@ const Agreement = ({
               </Row>
               <AccordionSet initialStatus={getInitialAccordionsState()}>
                 <AllPeriods {...getSectionProps('allPeriods')} />
+                <AccessControl policies={data.policies} />
                 {data.agreement?.contacts?.length > 0 && <InternalContacts {...getSectionProps('internalContacts')} />}
                 <Lines {...getSectionProps('lines')} />
                 {controllingLicenses?.length > 0 && <ControllingLicense {...getSectionProps('controllingLicense')} />}

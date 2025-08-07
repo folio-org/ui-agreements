@@ -1,6 +1,5 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import omit from 'lodash/omit';
 
 import { FormattedMessage } from 'react-intl';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
@@ -22,11 +21,10 @@ import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/proc
 import {
   AGREEMENT_ENDPOINT,
   AGREEMENT_LINES_ENDPOINT,
-  AGREEMENTS_ACCESSCONTROL_ENDPOINT,
   AGREEMENTS_ENDPOINT
 } from '../../constants';
 import { useAgreementsRefdata, useBasket } from '../../hooks';
-import { useClaim, useDoAccessControl } from '../../components/AccessControl/hooks';
+import { useClaim, usePolicies } from '../../components/AccessControl';
 
 const [
   AGREEMENT_STATUS,
@@ -65,7 +63,6 @@ const AgreementEditRoute = ({
   const stripes = useStripes();
 
   const { basket = [] } = useBasket();
-  const { doAccessControl, enabledEnginesQuery: { isLoading: areEnabledEnginesLoading } } = useDoAccessControl({ endpoint: AGREEMENTS_ACCESSCONTROL_ENDPOINT });
 
   const refdata = useAgreementsRefdata({
     desc: [
@@ -106,10 +103,20 @@ const AgreementEditRoute = ({
   // Users
   const { users } = useChunkedUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user) ?? []);
 
+  const { claim } = useClaim({ resourceEndpoint: AGREEMENTS_ENDPOINT });
+
   const { mutateAsync: putAgreement } = useMutation(
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
     (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: payload }).json()
-      .then(async ({ name, linkedLicenses }) => {
+      .then(async (resp) => {
+        // Grab id from response and submit a claim ... CRUCIALLY await the response.
+        // TODO we need to think about failure cases here.
+        await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
+
+        return resp; // Allow it to continue downstream
+      })
+      .then(async (response) => {
+        const { name, linkedLicenses } = response;
         // Invalidate any linked license's linkedAgreements calls
         if (linkedLicenses?.length) {
           await Promise.all(linkedLicenses.map(linkLic => {
@@ -124,20 +131,16 @@ const AgreementEditRoute = ({
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
         history.push(`${urls.agreementView(agreementId)}${location.search}`);
+
+        return response;
       })
   );
 
-  const { claim } = useClaim({ resourceEndpoint: AGREEMENTS_ENDPOINT });
-
-  // We need to fetch the policies for the resource at hand
-  // TODO this hook should be separate
-  const { data: policies, isLoading: arePoliciesLoading } = useQuery(
-    ['ERM', 'Agreements', agreementId, 'policies'],
-    () => ky.get(`${AGREEMENT_ENDPOINT(agreementId)}/policies`).json(),
-    {
-      enabled: doAccessControl && !!agreementId
-    }
-  );
+  const { policies } = usePolicies({
+    resourceEndpoint: AGREEMENTS_ENDPOINT,
+    resourceId: agreementId,
+    queryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'policies'],
+  });
 
   const getInitialValues = useCallback(() => {
     let initialValues = {};
@@ -197,19 +200,11 @@ const AgreementEditRoute = ({
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
     splitRelatedAgreements(values, relationshipTypeValues);
 
-    const claimPolicies = values.claimPolicies;
-    const submitAgreement = omit(values, 'claimPolicies');
-
-    await putAgreement(submitAgreement).then(() => {
-
-      // Grab id from response and submit a claim
-      claim({ resourceId: agreementId, payload: { claims: claimPolicies ?? [] } });
-      // TODO we need to think about failure cases here.
-    });
+    await putAgreement(values);
   };
 
   const fetchIsPending = () => {
-    return isAgreementLoading || areEnabledEnginesLoading || arePoliciesLoading;
+    return isAgreementLoading;
   };
 
   if (!stripes.hasPerm('ui-agreements.agreements.edit')) return <NoPermissions />;

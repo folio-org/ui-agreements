@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import omit from 'lodash/omit';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -18,7 +17,7 @@ import { urls } from '../../components/utilities';
 
 import { AGREEMENTS_ENDPOINT } from '../../constants';
 import { useAddFromBasket, useAgreementsRefdata, useBasket } from '../../hooks';
-import { useClaim } from '../../components/AccessControl/hooks';
+import { useClaim } from '../../components/AccessControl';
 
 
 const [
@@ -93,9 +92,19 @@ const AgreementCreateRoute = ({
     }
   };
 
+  const { claim } = useClaim({ resourceEndpoint: AGREEMENTS_ENDPOINT });
+
   const { mutateAsync: postAgreement } = useMutation(
     [AGREEMENTS_ENDPOINT, 'ui-agreements', 'AgreementCreateRoute', 'createAgreement'],
     (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: payload }).json()
+      .then(async (response) => {
+        const { id: agreementId } = response;
+        // Grab id from response and submit a claim ... CRUCIALLY await the response.
+        // TODO we need to think about failure cases here.
+        await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
+
+        return response;
+      })
       .then((response) => {
         const { id, name, linkedLicenses } = response;
         // Invalidate any linked license's linkedAgreements calls
@@ -114,20 +123,11 @@ const AgreementCreateRoute = ({
       })
   );
 
-  const { claim } = useClaim({ resourceEndpoint: AGREEMENTS_ENDPOINT });
-
   const handleSubmit = (agreement) => {
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
     splitRelatedAgreements(agreement, relationshipTypeValues);
 
-    const claimPolicies = agreement.claimPolicies;
-    const submitAgreement = omit(agreement, 'claimPolicies');
-
-    postAgreement(submitAgreement).then(({ id: agreementId }) => {
-      // Grab id from response and submit a claim
-      claim({ resourceId: agreementId, payload: { claims: claimPolicies } });
-      // TODO we need to think about failure cases here.
-    });
+    postAgreement(agreement);
   };
 
   const fetchIsPending = () => {

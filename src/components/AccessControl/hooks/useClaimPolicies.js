@@ -1,7 +1,9 @@
+import { useMemo } from 'react';
+
 import { useQuery } from 'react-query';
 import omit from 'lodash/omit';
+
 import { useOkapiKy } from '@folio/stripes/core';
-import { useMemo } from 'react';
 
 const useClaimPolicies = ({
   endpoint, // This should be the base accessControl endpoint, such as erm/accessControl

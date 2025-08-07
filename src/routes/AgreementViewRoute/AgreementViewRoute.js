@@ -29,12 +29,14 @@ import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
 import {
   AGREEMENT_ENDPOINT,
   AGREEMENT_LINES_ENDPOINT,
-  AGREEMENT_LINES_PAGINATION_ID,
+  AGREEMENT_LINES_PAGINATION_ID, AGREEMENTS_ENDPOINT,
   httpStatuses,
 } from '../../constants';
 import {
   useAgreementsDisplaySettings,
 } from '../../hooks';
+
+import { usePolicies } from '../../components/AccessControl';
 
 const AgreementViewRoute = ({
   handlers = {},
@@ -230,6 +232,12 @@ const AgreementViewRoute = ({
     }
   );
 
+  const { policies } = usePolicies({
+    resourceEndpoint: AGREEMENTS_ENDPOINT,
+    resourceId: agreementId,
+    queryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'policies'],
+  });
+
   const getCompositeAgreement = () => {
     const contacts = agreement.contacts.map((c) => ({
       ...c,
@@ -349,6 +357,7 @@ const AgreementViewRoute = ({
       data={{
         agreement: getCompositeAgreement(),
         eresourcesFilterPath,
+        policies,
         searchString: location.search,
         tagsLink: agreementPath,
         tagsInvalidateLinks: [['ERM', 'Agreement', agreementId]],
