@@ -3,10 +3,10 @@ import { useCallback, useMemo } from 'react';
 import { useForm, useFormState } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useQuery } from 'react-query';
 
-import { Accordion } from '@folio/stripes/components';
+import { Accordion, MultiColumnList } from '@folio/stripes/components';
 import { useOkapiKy } from '@folio/stripes/core';
 
 import { useClaimPolicies, useEnabledEngines } from '../hooks';
@@ -14,6 +14,7 @@ import { AGREEMENTS_ACCESSCONTROL_ENDPOINT } from '../../../constants';
 import { ACQUISITION_UNIT_POLICY_TYPE } from '../constants';
 
 import { PolicyTypedown } from './PolicyTypedown';
+import { acquisitionPolicyRestrictions } from './PolicyTypedown/PolicyRenderComponents';
 
 // TODO This should be centralised, but we must make sure that all the endpoints etc etc are module/resource specific
 const FormAccessControl = ({
@@ -24,6 +25,8 @@ const FormAccessControl = ({
   onToggle,
   open
 }) => {
+  const intl = useIntl();
+
   // It is up to the BACKEND to check whether or not the various interfaces etc etc are present,
   // and to enrich with their information
   const enabledEngines = useEnabledEngines({ endpoint: AGREEMENTS_ACCESSCONTROL_ENDPOINT });
@@ -34,8 +37,6 @@ const FormAccessControl = ({
   const { values } = useFormState();
   console.log("Form values", values);
   const { mutators } = useForm();
-  console.log("Form mutators", mutators);
-
 
   // We need to fetch the policies for the resource at hand
   // TODO this hook should be separate
@@ -50,7 +51,6 @@ const FormAccessControl = ({
   console.log("WHAT ARE POLICIES: %o", policies);
 
   // We need to fetch the claimable policies
-  // TODO this hook should be separate??
   const { flattenedClaimPolicies: claimPolicies } = useClaimPolicies({
     endpoint: accessControlEndpoint,
     queryOptions: {
@@ -93,12 +93,23 @@ const FormAccessControl = ({
           }
         }}
         isSelected={(_v, value) => {
-          return (values.claimPolicies ?? []).some(pol => findMatchingPolicy(pol, value))}
-        }
+          return (values.claimPolicies ?? []).some(pol => findMatchingPolicy(pol, value))
+        }}
         policies={claimPolicies}
       />
       {/* hidden field array (for now, will eventually be an MCL) */}
-      <FieldArray name="claimPolicies" render={() => null} />
+      <FieldArray
+        name="claimPolicies"
+        render={() => (
+          <MultiColumnList
+            contentData={values.claimPolicies}
+            formatter={{
+              restrictions: (rowData) => acquisitionPolicyRestrictions(rowData, intl) // TODO this will break if we have any other access controls in future
+            }}
+            visibleColumns={['name', 'description', 'restrictions']} // FIXME these need mappings etc
+          />
+        )}
+      />
     </Accordion>
   );
 };
