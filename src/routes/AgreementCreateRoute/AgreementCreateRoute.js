@@ -125,7 +125,7 @@ const AgreementCreateRoute = ({
 
     postAgreement(submitAgreement).then(({ id: agreementId }) => {
       // Grab id from response and submit a claim
-      claim({ claims: claimPolicies }, agreementId);
+      claim({ resourceId: agreementId, payload: { claims: claimPolicies } });
       // TODO we need to think about failure cases here.
     });
   };

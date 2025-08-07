@@ -11,7 +11,9 @@ const useClaim = ({
 
   const { mutateAsync: claim } = useMutation(
     ['AccessControl', 'Claim', resourceEndpoint],
-    (payload, resourceId) => ky.post(`${resourceEndpoint}/${resourceId}/claim`, { json: payload }),
+    ({ payload, resourceId }) => {
+      return ky.post(`${resourceEndpoint}/${resourceId}/claim`, { json: payload }).json();
+    },
   );
 
   return {
