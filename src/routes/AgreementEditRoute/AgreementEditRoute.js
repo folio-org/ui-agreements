@@ -10,7 +10,7 @@ import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useAgreement, useChunkedUsers } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, useAgreement, useChunkedUsers, useClaim, usePolicies } from '@folio/stripes-erm-components';
 
 
 import View from '../../components/views/AgreementForm';
@@ -24,7 +24,6 @@ import {
   AGREEMENTS_ENDPOINT
 } from '../../constants';
 import { useAgreementsRefdata, useBasket } from '../../hooks';
-import { useClaim, usePolicies } from '../../components/AccessControl';
 
 const [
   AGREEMENT_STATUS,

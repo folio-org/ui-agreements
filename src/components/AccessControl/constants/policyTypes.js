@@ -1,1 +1,0 @@
-export const ACQUISITION_UNIT_POLICY_TYPE = 'ACQ_UNIT';

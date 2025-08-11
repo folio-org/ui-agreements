@@ -857,16 +857,5 @@
   "gokb.gokbuuid": "GOKB UUID",
   "gokb.publicationDates.firstOnline":"First online",
   "gokb.publicationDates.firstInPrint": "First in print",
-  "gokb.publicationDates.publishedFromTo": "Published from/to",
-  "separator": "·",
-  "accesscontrol.label": "Acquisition units",
-  "accesscontrol.typedown.label": "Add acquisition unit",
-  "accesscontrol.name": "Name",
-  "accesscontrol.description": "Description",
-  "accesscontrol.restrictions": "Access",
-  "accesscontrol.remove": "Remove",
-  "accesscontrol.acquisitionunits.protectRead": "View",
-  "accesscontrol.acquisitionunits.protectUpdate": "Edit",
-  "accesscontrol.acquisitionunits.protectCreate": "Create",
-  "accesscontrol.acquisitionunits.protectDelete": "Delete"
+  "gokb.publicationDates.publishedFromTo": "Published from/to"
 }

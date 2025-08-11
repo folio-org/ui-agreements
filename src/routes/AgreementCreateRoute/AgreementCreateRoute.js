@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from 'react-query';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
+import { getRefdataValuesByDesc, useClaim } from '@folio/stripes-erm-components';
 
 import queryString from 'query-string';
 import { splitRelatedAgreements } from '../utilities/processRelatedAgreements';
@@ -17,8 +17,6 @@ import { urls } from '../../components/utilities';
 
 import { AGREEMENTS_ENDPOINT } from '../../constants';
 import { useAddFromBasket, useAgreementsRefdata, useBasket } from '../../hooks';
-import { useClaim } from '../../components/AccessControl';
-
 
 const [
   AGREEMENT_STATUS,

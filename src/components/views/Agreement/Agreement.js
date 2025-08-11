@@ -22,6 +22,8 @@ import {
 import { AppIcon, TitleManager, HandlerManager, useStripes } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
+import { AccessControl } from '@folio/stripes-erm-components';
+
 import { CustomPropertiesView, useCustomProperties } from '@k-int/stripes-kint-components';
 
 import DuplicateAgreementModal from '../../DuplicateAgreementModal';
@@ -52,7 +54,6 @@ import {
   LICENSE_CUSTPROP_ENDPOINT,
   statuses
 } from '../../../constants';
-import { AccessControl } from '../../AccessControl';
 
 const Agreement = ({
   components: {

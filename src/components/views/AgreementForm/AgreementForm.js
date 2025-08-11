@@ -6,7 +6,7 @@ import setFieldData from 'final-form-set-field-data';
 
 import { CustomPropertiesEdit } from '@k-int/stripes-kint-components';
 
-import { handleSaveKeyCommand } from '@folio/stripes-erm-components';
+import { FormAccessControl, handleSaveKeyCommand } from '@folio/stripes-erm-components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 
 import {
@@ -44,7 +44,6 @@ import IfAccordionIsVisible from '../../IfAccordionIsVisible';
 
 import { AGREEMENT_ENDPOINT, AGREEMENTS_ACCESSCONTROL_ENDPOINT, CUSTPROP_ENDPOINT } from '../../../constants';
 import { useAgreementsContexts } from '../../../hooks';
-import { FormAccessControl } from '../../AccessControl';
 
 const AgreementForm = ({
   data = {},
