@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import kyImport from 'ky';
 
@@ -11,6 +12,7 @@ import {
 } from '@folio/stripes/smart-components';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
+import RemoteKbResource from '../../components/views/RemoteKbResource';
 
 import config from '../../../docs/gokb-search-v1';
 
@@ -19,6 +21,19 @@ import { searchConfigTypeHandler } from '../utilities/adjustments/searchConfigCo
 import getResultsDisplayConfig from '../utilities/getResultsDisplayConfig';
 
 const GokbRoute = ({ location }) => {
+  const kbKey = 'gokb';
+  console.log('GokbRoute location', location);
+  const hookParams = useParams();
+  // const titleId = hookParams?.id || '';
+  console.log('GokbRoute params', hookParams);
+  const history = useHistory();
+  console.log('GokbRoute history', history);
+  const { pathname } = useLocation();
+  console.log('GokbRoute pathname', pathname);
+
+  const resourcePath = config.configuration.view.fetch.mapping.data;
+  const resourceEndpoint = config.configuration.view.fetch.baseUrl;
+  console.log('GokbRoute resourcePath', resourcePath);
   const {
     endpoint: gokbEndpoint,
     formatter,
@@ -30,6 +45,7 @@ const GokbRoute = ({ location }) => {
 
   const fetchParameters = {
     endpoint: gokbEndpoint,
+    itemEndpoint: resourceEndpoint,
     SASQ_MAP: {},
   };
 
@@ -45,6 +61,7 @@ const GokbRoute = ({ location }) => {
   // Not very happy with this at the moment,its a bit more a bespoke piece of work and doesnt adjust to the searchConfig
   // Something to revisit in the future, once we have all the query parts in place
   const generateQuery = (params, query) => {
+    console.log('generateQuery', params, query);
     const perPage = params?.perPage || 25;
     // Offset handling should be based on config file, picking up as part of refactors
     const offset = (params.page - 1) * params.perPage;
@@ -58,7 +75,7 @@ const GokbRoute = ({ location }) => {
         queryParts.push(searchString);
         fetchParameters.SASQMap = {
           ...fetchParameters.SASQMap,
-          searchKey,
+          searchKey
         };
       }
     }
@@ -121,7 +138,8 @@ const GokbRoute = ({ location }) => {
         formatter,
         visibleColumns,
       }}
-      path={location.pathname}
+      // path={location.pathname}
+      path={`/erm/${kbKey}`}
       persistedPanesetProps={{
         id: 'gokb-search-main-paneset',
       }}
@@ -131,6 +149,21 @@ const GokbRoute = ({ location }) => {
         sortableColumns,
       }}
       searchFieldAriaLabel="input-gokb-search"
+      ViewComponent={RemoteKbResource}
+      viewQueryPromise={({ _ky, resourceId, endpoint }) => {
+        return kyImport.get(`${endpoint}/${resourceId}`).json();
+      }}
+      // viewResponseTransform={(data) => {
+      //   const transformedData = {
+      //     // ...data?.records[0]
+      //     ...data?.[resourcePath],
+      //   };
+      //   return transformedData;
+      // }}
+      viewResponseTransform={(data) => {
+        const raw = data?.[resourcePath];
+        return Array.isArray(raw) ? raw[0] : raw;
+      }}
     />
   );
 };
