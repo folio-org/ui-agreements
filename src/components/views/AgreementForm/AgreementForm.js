@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -6,7 +6,7 @@ import setFieldData from 'final-form-set-field-data';
 
 import { CustomPropertiesEdit } from '@k-int/stripes-kint-components';
 
-import { FormAccessControl, handleSaveKeyCommand } from '@folio/stripes-erm-components';
+import { AccessControlErrorPane, FormAccessControl, handleSaveKeyCommand } from '@folio/stripes-erm-components';
 import { AppIcon, IfPermission, TitleManager } from '@folio/stripes/core';
 
 import {
@@ -24,7 +24,8 @@ import {
   Row,
   checkScope,
   collapseAllSections,
-  expandAllSections
+  expandAllSections,
+  LoadingPane
 } from '@folio/stripes/components';
 
 import stripesFinalForm from '@folio/stripes/final-form';
@@ -46,6 +47,12 @@ import { AGREEMENT_ENDPOINT, AGREEMENTS_ACCESSCONTROL_ENDPOINT, CUSTPROP_ENDPOIN
 import { useAgreementsContexts } from '../../../hooks';
 
 const AgreementForm = ({
+  accessControlData: {
+    isAccessDenied,
+    isAccessControlLoading,
+    canApplyPolicies,
+    canApplyPoliciesLoading,
+  } = {},
   data = {},
   form,
   handlers,
@@ -148,6 +155,24 @@ const AgreementForm = ({
   const { id, name } = values;
   const hasLoaded = form.getRegisteredFields().length > 0;
 
+  const paneProps = useMemo(() => ({
+    appIcon: <AppIcon app="agreements" />,
+    centerContent: true,
+    defaultWidth: '100%',
+    firstMenu: renderFirstMenu(),
+    id: 'pane-agreement-form',
+  }), [renderFirstMenu]);
+
+  if (isAccessControlLoading) return <LoadingPane {...paneProps} />;
+
+  if (isAccessDenied) {
+    return (
+      <AccessControlErrorPane
+        {...paneProps}
+      />
+    );
+  }
+
   return (
     <HasCommand
       commands={shortcuts}
@@ -158,14 +183,10 @@ const AgreementForm = ({
         <FormattedMessage id="ui-agreements.create">
           {create => (
             <Pane
-              appIcon={<AppIcon app="agreements" />}
-              centerContent
-              defaultWidth="100%"
-              firstMenu={renderFirstMenu()}
               footer={renderPaneFooter()}
-              id="pane-agreement-form"
               paneSub={data.agreementLineCount >= 0 ? <FormattedMessage id="ui-agreements.agreementLineCountHeader" values={{ count: data.agreementLineCount }} /> : null}
               paneTitle={id ? <FormattedMessage id="ui-agreements.agreements.editAgreement.name" values={{ name }} /> : <FormattedMessage id="ui-agreements.agreements.createAgreement" />}
+              {...paneProps}
             >
               <TitleManager record={id ? name : create?.[0]}>
                 <form id="form-agreement">
@@ -180,6 +201,8 @@ const AgreementForm = ({
                       <FormInfo {...getSectionProps('formInfo')} />
                       <FormAccessControl
                         accessControlEndpoint={AGREEMENTS_ACCESSCONTROL_ENDPOINT}
+                        disabled={!canApplyPolicies}
+                        isLoading={canApplyPoliciesLoading}
                         resourceEndpoint={AGREEMENT_ENDPOINT(id)}
                         resourceId={id}
                         resourceType="Agreements"

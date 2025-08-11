@@ -10,8 +10,17 @@ import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useAgreement, useChunkedUsers, useClaim, usePolicies } from '@folio/stripes-erm-components';
-
+import {
+  APPLY_POLICIES,
+  getRefdataValuesByDesc,
+  READ,
+  UPDATE,
+  useAgreement,
+  useChunkedUsers,
+  useClaim,
+  useGetAccess,
+  usePolicies
+} from '@folio/stripes-erm-components';
 
 import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
@@ -63,6 +72,20 @@ const AgreementEditRoute = ({
 
   const { basket = [] } = useBasket();
 
+  const accessControlData = useGetAccess({
+    resourceEndpoint: AGREEMENTS_ENDPOINT,
+    resourceId: agreementId,
+    restrictions: [READ, UPDATE, APPLY_POLICIES],
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', agreementId, canDo]
+  });
+
+  const {
+    canRead,
+    canReadLoading,
+    canEdit,
+    canEditLoading,
+  } = accessControlData;
+
   const refdata = useAgreementsRefdata({
     desc: [
       AGREEMENT_STATUS,
@@ -78,7 +101,12 @@ const AgreementEditRoute = ({
     ]
   });
 
-  const { agreement, isAgreementLoading } = useAgreement({ agreementId });
+  const { agreement, isAgreementLoading = true } = useAgreement({
+    agreementId,
+    queryOptions: {
+      enabled: !canReadLoading && !!canRead
+    }
+  });
 
   /* START agreementLineCount
     the following is necessary to provide information of number of agreement lines in the edit form,
@@ -211,6 +239,11 @@ const AgreementEditRoute = ({
 
   return (
     <View
+      accessControlData={{
+        isAccessControlLoading: canEditLoading || canReadLoading, // Special prop used by AgreementForm to avoid edit/create distinctions
+        isAccessDenied: !canRead || !canEdit, // Special prop used by AgreementForm to avoid edit/create distinctions
+        ...accessControlData
+      }}
       data={{
         agreementLineCount,
         agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),

@@ -7,7 +7,12 @@ import { useMutation, useQueryClient } from 'react-query';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useClaim } from '@folio/stripes-erm-components';
+import {
+  CREATE,
+  getRefdataValuesByDesc,
+  useClaim,
+  useGetAccess
+} from '@folio/stripes-erm-components';
 
 import queryString from 'query-string';
 import { splitRelatedAgreements } from '../utilities/processRelatedAgreements';
@@ -61,6 +66,17 @@ const AgreementCreateRoute = ({
     isExternalEntitlementLoading,
     getAgreementLinesToAdd
   } = useAddFromBasket(basket);
+
+  const accessControlData = useGetAccess({
+    resourceEndpoint: AGREEMENTS_ENDPOINT,
+    restrictions: [CREATE],
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', canDo]
+  });
+
+  const {
+    canCreate,
+    canCreateLoading,
+  } = accessControlData;
 
   const refdata = useAgreementsRefdata({
     desc: [
@@ -165,6 +181,14 @@ const AgreementCreateRoute = ({
 
   return (
     <View
+      accessControlData={{
+        isAccessControlLoading: canCreateLoading, // Special prop used by AgreementForm to avoid edit/create distinctions
+        isAccessDenied: !canCreate, // Special prop used by AgreementForm to avoid edit/create distinctions
+        // Cheat these values for the sake of the form.
+        canApplyPolicies: true,
+        canApplyPoliciesLoading: false,
+        ...accessControlData
+      }}
       data={{
         agreementLines: getAgreementLinesToAdd(),
         agreementLinesToAdd: getAgreementLinesToAdd(),

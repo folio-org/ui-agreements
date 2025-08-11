@@ -10,18 +10,20 @@ import {
   downloadBlob,
   useAgreement,
   useChunkedUsers,
+  useErmHelperApp,
+  useGetAccess,
   useInterfaces,
+  usePolicies,
+  DELETE,
   INVALID_JSON_ERROR,
   JSON_ERROR,
-  useErmHelperApp,
-  AccessControlErrorPane,
-  usePolicies
+  READ,
+  UPDATE,
 } from '@folio/stripes-erm-components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 
 import {
   generateKiwtQueryParams,
-  parseErrorResponse,
   usePrevNextPagination
 } from '@k-int/stripes-kint-components';
 
@@ -72,23 +74,23 @@ const AgreementViewRoute = ({
 
   const agreementPath = AGREEMENT_ENDPOINT(agreementId);
 
-  // FIXME this state management happening for each resource screen isn't ideal
-  const [isAccessControlReadError, setIsAccessControlReadError] = useState(false);
+  const accessControlData = useGetAccess({
+    resourceEndpoint: AGREEMENTS_ENDPOINT,
+    resourceId: agreementId,
+    restrictions: [READ, UPDATE, DELETE],
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', agreementId, canDo]
+  });
+  const {
+    canRead,
+    canReadLoading,
+  } = accessControlData;
 
-  const { agreement, isAgreementLoading } = useAgreement({
-    afterQueryCall: ((resp) => {
-      if (isAgreementLoading) {
-        setIsAccessControlReadError(false); // If we've successfully fetched, we can unset the read error
-      }
-    }),
-    catchQueryCall: (async ({ response: err }) => {
-      const parsedError = await parseErrorResponse(err);
-
-      if (parsedError.message.match(/PolicyRestriction.READ/g)) {
-        setIsAccessControlReadError(true);
-      }
-    }),
-    agreementId
+  // FIXME how do we want to handle an error?
+  const { agreement, isFetching: isAgreementLoading = true } = useAgreement({
+    agreementId,
+    queryOptions: {
+      enabled: !canReadLoading && !!canRead
+    }
   });
 
   const interfaces =
@@ -365,17 +367,10 @@ const AgreementViewRoute = ({
     return agreementId !== agreement?.id && isAgreementLoading;
   };
 
-  if (isAccessControlReadError) {
-    return (
-      <AccessControlErrorPane
-        key={`agreement-view-pane-${agreementId}`}
-      />
-    );
-  }
-
   return (
     <View
       key={`agreement-view-pane-${agreementId}`}
+      accessControlData={accessControlData} // Is this a good model?
       components={{
         HelperComponent,
         TagButton,

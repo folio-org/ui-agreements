@@ -22,7 +22,7 @@ import {
 import { AppIcon, TitleManager, HandlerManager, useStripes } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
-import { AccessControl } from '@folio/stripes-erm-components';
+import { AccessControl, AccessControlErrorPane } from '@folio/stripes-erm-components';
 
 import { CustomPropertiesView, useCustomProperties } from '@k-int/stripes-kint-components';
 
@@ -56,6 +56,14 @@ import {
 } from '../../../constants';
 
 const Agreement = ({
+  accessControlData: {
+    canRead,
+    canReadLoading,
+    canEdit,
+    canEditLoading,
+    canDelete,
+    canDeleteLoading
+  } = {},
   components: {
     HelperComponent,
     TagButton
@@ -123,15 +131,16 @@ const Agreement = ({
   const getActionMenu = ({ onToggle }) => {
     const buttons = [];
 
-    if (stripes.hasPerm('ui-agreements.agreements.edit')) {
+    if (stripes.hasPerm('ui-agreements.agreements.edit') && canEdit !== false) {
       buttons.push(
         <Button
           key="clickable-dropdown-edit-agreement"
           buttonStyle="dropdownItem"
+          disabled={canEditLoading}
           id="clickable-dropdown-edit-agreement"
           onClick={handlers.onEdit}
         >
-          <Icon icon="edit">
+          <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'edit'}>
             <FormattedMessage id="ui-agreements.agreements.edit" />
           </Icon>
         </Button>
@@ -171,18 +180,19 @@ const Agreement = ({
       );
     }
 
-    if (stripes.hasPerm('ui-agreements.agreements.delete')) {
+    if (stripes.hasPerm('ui-agreements.agreements.delete') && canDelete !== false) {
       buttons.push(
         <Button
           key="clickable-dropdown-delete-agreement"
           buttonStyle="dropdownItem"
+          disabled={canDeleteLoading}
           id="clickable-dropdown-delete-agreement"
           onClick={() => {
             setShowDeleteConfirmationModal(true);
             onToggle();
           }}
         >
-          <Icon icon="trash">
+          <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'trash'}>
             <FormattedMessage id="ui-agreements.delete" />
           </Icon>
         </Button>
@@ -230,7 +240,15 @@ const Agreement = ({
     onClose: handlers.onClose,
   };
 
-  if (isLoading) return <LoadingPane data-loading {...paneProps} />;
+  if (isLoading || canReadLoading) return <LoadingPane data-loading {...paneProps} />;
+
+  if (!canRead) {
+    return (
+      <AccessControlErrorPane
+        {...paneProps}
+      />
+    );
+  }
 
   // istanbul ignore next
   const shortcuts = [
