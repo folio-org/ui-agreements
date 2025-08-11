@@ -311,8 +311,12 @@
           {
             "name": "type",
             "filterPath": "componentType",
+            "filterString": {
+              "type": "Handlebars",
+              "templateString": "{{{buildFilterString valuesArray 'componentType' '=' '&'}}}"
+            },
             "type": "singleSelect",
-            "enumValues": [
+            "values": [
               {
                 "name": "all",
                 "value": "Title",
@@ -320,23 +324,19 @@
               },
               {
                 "name": "book",
-                "value": "Book",
-                "default": false
+                "value": "Book"
               },
               {
                 "name": "database",
-                "value": "Database",
-                "default": false
+                "value": "Database"
               },
               {
                 "name": "journal",
-                "value": "Journal",
-                "default": false
+                "value": "Journal"
               },
               {
                 "name": "other",
-                "value": "Other",
-                "default": false
+                "value": "Other"
               }
             ]
           }
