@@ -184,10 +184,10 @@ const AgreementCreateRoute = ({
       accessControlData={{
         isAccessControlLoading: canCreateLoading, // Special prop used by AgreementForm to avoid edit/create distinctions
         isAccessDenied: !canCreate, // Special prop used by AgreementForm to avoid edit/create distinctions
+        ...accessControlData,
         // Cheat these values for the sake of the form.
         canApplyPolicies: true,
         canApplyPoliciesLoading: false,
-        ...accessControlData
       }}
       data={{
         agreementLines: getAgreementLinesToAdd(),
