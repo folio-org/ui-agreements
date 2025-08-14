@@ -178,16 +178,10 @@ const getResultsDisplayConfig = ({ resultsDisplayConfig }) => {
     }
   });
 
-  const endpointData = {
-    endpoint: gokbConfig.configuration.results.fetch.baseUrl,
-    ...gokbConfig.configuration.results.fetch.mapping,
-  };
-
   return {
     resultColumns,
     sortableColumns,
     formatter,
-    ...endpointData,
   };
 };
 

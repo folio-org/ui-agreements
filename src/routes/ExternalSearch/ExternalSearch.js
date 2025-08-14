@@ -25,16 +25,11 @@ import {
 const ExternalSearch = ({ location }) => {
   const kbKey = 'gokb';
 
-  const {
-    endpoint: configEndpoint,
-    formatter,
-    resultColumns,
-    sortableColumns,
-    results: resultsPath,
-    totalRecords: totalRecordsPath,
-  } = getResultsDisplayConfig({
-    resultsDisplayConfig: config.configuration.results.display,
-  });
+  const { formatter, resultColumns, sortableColumns } = getResultsDisplayConfig(
+    {
+      resultsDisplayConfig: config.configuration.results.display,
+    }
+  );
 
   const {
     initialFilterState,
@@ -52,7 +47,7 @@ const ExternalSearch = ({ location }) => {
   });
 
   const fetchParameters = {
-    endpoint: configEndpoint,
+    endpoint: config.configuration.results.fetch.baseUrl,
     SASQ_MAP: { filterKeys: filterMap },
   };
 
@@ -95,8 +90,8 @@ const ExternalSearch = ({ location }) => {
 
   const columnMapping = resultColumns?.length
     ? Object.fromEntries(
-        resultColumns.map((col) => [col.propertyPath, col.label])
-      )
+      resultColumns.map((col) => [col.propertyPath, col.label])
+    )
     : {};
 
   const { visibleColumns, toggleColumn } = useColumnManager(
@@ -131,8 +126,9 @@ const ExternalSearch = ({ location }) => {
       lookupResponseTransform={(data) => {
         const transformedData = {
           ...data,
-          totalRecords: data?.[totalRecordsPath],
-          results: data?.[resultsPath],
+          totalRecords:
+            data?.[config.configuration.results.fetch.mapping.totalRecords],
+          results: data?.[config.configuration.results.fetch.mapping.results],
         };
         return transformedData;
       }}
