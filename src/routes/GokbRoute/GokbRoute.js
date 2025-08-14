@@ -20,8 +20,11 @@ import { searchConfigTypeHandler } from '../utilities/adjustments/searchConfigCo
 import getResultsDisplayConfig from '../utilities/getResultsDisplayConfig';
 
 import GokbFilters from '../../components/GokbFilters';
-import { getFilterConfig, transformFilterString } from '../../components/utilities';
-
+import {
+  getFilterConfig,
+  transformFilterString,
+} from '../../components/utilities';
+import getSortConfig from '../utilities/getSortConfig';
 
 const GokbRoute = ({ location }) => {
   const kbKey = 'gokb';
@@ -54,6 +57,10 @@ const GokbRoute = ({ location }) => {
     searchConfig,
   });
 
+  const { sortQueryFunction } = getSortConfig(
+    config.configuration.results.fetch.sort
+  );
+
   // Function to generate the GOKb query string based on the current state
   // Not very happy with this at the moment,its a bit more a bespoke piece of work and doesnt adjust to the searchConfig
   // Something to revisit in the future, once we have all the query parts in place
@@ -77,11 +84,18 @@ const GokbRoute = ({ location }) => {
       }
     }
 
+    const sortString = sortQueryFunction(query);
+    if (sortString) {
+      queryParts.push(sortString);
+    }
+
     const filterString = transformFilterString(query?.filters, config);
+    if (filterString) {
+      queryParts.push(filterString);
+    }
 
     queryParts.push(`max=${perPage}`);
     queryParts.push(`offset=${offset}`);
-    queryParts.push(filterString);
     return `?${queryParts.join('&')}`;
   };
 
@@ -147,7 +161,7 @@ const GokbRoute = ({ location }) => {
       resultColumns={resultColumns}
       sasqProps={{
         initialFilterState,
-        sortableColumns
+        sortableColumns,
       }}
       searchFieldAriaLabel={`input-${kbKey}-search`}
     />
