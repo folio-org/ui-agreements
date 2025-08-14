@@ -14,14 +14,15 @@ import { SASQRoute } from '@k-int/stripes-kint-components';
 
 import config from '../../../docs/gokb-search-v1';
 
-import { getSearchConfig } from '../utilities/adjustments/getSearchConfig';
+import getResultsDisplayConfig from './results/display/getResultsDisplayConfig';
 
-import getResultsDisplayConfig from '../utilities/getResultsDisplayConfig';
+import {
+  getSearchConfig,
+  getFilterConfig,
+  getSortConfig,
+} from './results/fetch';
 
-import getFilterConfig from './filters';
-import getSortConfig from '../utilities/getSortConfig';
-
-const GokbRoute = ({ location }) => {
+const ExternalSearch = ({ location }) => {
   const kbKey = 'gokb';
 
   const {
@@ -161,10 +162,10 @@ const GokbRoute = ({ location }) => {
   );
 };
 
-GokbRoute.propTypes = {
+ExternalSearch.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
 };
 
-export default GokbRoute;
+export default ExternalSearch;

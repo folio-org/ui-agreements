@@ -1,7 +1,7 @@
 import { FormattedMessage } from 'react-intl';
 
-import GokbFilters from './components';
-import transformFilterString from './utilities';
+import GokbFilters from './GokbFilters';
+import transformFilterString from './transformFilterString';
 
 const getFilterConfig = (filterConfig = [], kbKey) => {
   const filterMap = {};

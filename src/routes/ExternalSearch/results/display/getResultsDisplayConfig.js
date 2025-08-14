@@ -4,7 +4,7 @@ import { AppIcon } from '@folio/stripes/core';
 import { FormattedUTCDate, Icon } from '@folio/stripes/components';
 import handlebars from 'handlebars';
 
-import gokbConfig from '../../../docs/gokb-search-v1';
+import gokbConfig from '../../../../../docs/gokb-search-v1';
 
 /* Register handlebar helpers */
 
