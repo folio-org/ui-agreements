@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -15,51 +14,46 @@ import { SASQRoute } from '@k-int/stripes-kint-components';
 
 import config from '../../../docs/gokb-search-v1';
 
-import { searchConfigTypeHandler } from '../utilities/adjustments/searchConfigConstructor';
+import { getSearchConfig } from '../utilities/adjustments/getSearchConfig';
 
 import getResultsDisplayConfig from '../utilities/getResultsDisplayConfig';
 
-import GokbFilters from '../../components/GokbFilters';
-import {
-  getFilterConfig,
-  transformFilterString,
-} from '../../components/utilities';
+import getFilterConfig from './filters';
 import getSortConfig from '../utilities/getSortConfig';
 
 const GokbRoute = ({ location }) => {
   const kbKey = 'gokb';
-  const filterConfig = useMemo(() => getFilterConfig(config, kbKey), [kbKey]);
-  const { filterMap, initialFilterState } = filterConfig;
-
-  const FilterComponent = (props) => (
-    <GokbFilters {...props} filterConfig={filterConfig} kbKey={kbKey} />
-  );
 
   const {
-    endpoint: gokbEndpoint,
+    endpoint: configEndpoint,
     formatter,
     resultColumns,
     sortableColumns,
     results: resultsPath,
     totalRecords: totalRecordsPath,
-  } = getResultsDisplayConfig();
-
-  const fetchParameters = {
-    endpoint: gokbEndpoint,
-    SASQ_MAP: {},
-  };
-
-  // Build search configuration from the config file
-  const searchConfig = config.configuration.results.fetch.search;
-
-  const { searchParameterParse, HeaderComponent } = searchConfigTypeHandler({
-    type: searchConfig.type,
-    searchConfig,
+  } = getResultsDisplayConfig({
+    resultsDisplayConfig: config.configuration.results.display,
   });
 
-  const { sortQueryFunction } = getSortConfig(
-    config.configuration.results.fetch.sort
-  );
+  const {
+    initialFilterState,
+    filterMap,
+    filterQueryFunction,
+    FilterComponent,
+  } = getFilterConfig(config.configuration.results.fetch.filters, kbKey);
+
+  const { searchQueryFunction, HeaderComponent } = getSearchConfig({
+    searchConfig: config.configuration.results.fetch.search,
+  });
+
+  const { sortQueryFunction } = getSortConfig({
+    sortConfig: config.configuration.results.fetch.sort,
+  });
+
+  const fetchParameters = {
+    endpoint: configEndpoint,
+    SASQ_MAP: { filterKeys: filterMap },
+  };
 
   // Function to generate the GOKb query string based on the current state
   // Not very happy with this at the moment,its a bit more a bespoke piece of work and doesnt adjust to the searchConfig
@@ -71,7 +65,7 @@ const GokbRoute = ({ location }) => {
     const queryParts = [];
 
     if (query?.query) {
-      const { key: searchKey, string: searchString } = searchParameterParse(
+      const { key: searchKey, string: searchString } = searchQueryFunction(
         query?.query
       );
       if (searchString) {
@@ -79,7 +73,6 @@ const GokbRoute = ({ location }) => {
         fetchParameters.SASQMap = {
           ...fetchParameters.SASQMap,
           searchKey,
-          filterKeys: filterMap,
         };
       }
     }
@@ -89,7 +82,7 @@ const GokbRoute = ({ location }) => {
       queryParts.push(sortString);
     }
 
-    const filterString = transformFilterString(query?.filters, config);
+    const filterString = filterQueryFunction(query?.filters, config);
     if (filterString) {
       queryParts.push(filterString);
     }
@@ -101,8 +94,8 @@ const GokbRoute = ({ location }) => {
 
   const columnMapping = resultColumns?.length
     ? Object.fromEntries(
-      resultColumns.map((col) => [col.propertyPath, col.label])
-    )
+        resultColumns.map((col) => [col.propertyPath, col.label])
+      )
     : {};
 
   const { visibleColumns, toggleColumn } = useColumnManager(

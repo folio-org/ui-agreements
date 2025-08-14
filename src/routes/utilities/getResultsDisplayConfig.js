@@ -16,7 +16,8 @@ handlebars.registerHelper('replace', (text, search, replacement) => {
 /* Other helper functions */
 
 const renderPublicationDates = (resource) => {
-  const { dateFirstOnline, dateFirstInPrint, publishedFrom, publishedTo } = resource;
+  const { dateFirstOnline, dateFirstInPrint, publishedFrom, publishedTo } =
+    resource;
 
   if (!dateFirstOnline && !dateFirstInPrint && !publishedFrom && !publishedTo) {
     return null;
@@ -26,19 +27,20 @@ const renderPublicationDates = (resource) => {
     <div>
       {dateFirstOnline && (
         <div>
-          <FormattedMessage id="ui-agreements.gokb.publicationDates.firstOnline" />:{' '}
-          <FormattedUTCDate value={dateFirstOnline} />
+          <FormattedMessage id="ui-agreements.gokb.publicationDates.firstOnline" />
+          : <FormattedUTCDate value={dateFirstOnline} />
         </div>
       )}
       {dateFirstInPrint && (
         <div>
-          <FormattedMessage id="ui-agreements.gokb.publicationDates.firstInPrint" />:{' '}
-          <FormattedUTCDate value={dateFirstInPrint} />
+          <FormattedMessage id="ui-agreements.gokb.publicationDates.firstInPrint" />
+          : <FormattedUTCDate value={dateFirstInPrint} />
         </div>
       )}
       {(publishedFrom || publishedTo) && (
         <div>
-          <FormattedMessage id="ui-agreements.gokb.publicationDates.publishedFromTo" />:{' '}
+          <FormattedMessage id="ui-agreements.gokb.publicationDates.publishedFromTo" />
+          :{' '}
           <span>
             {publishedFrom ? <FormattedUTCDate value={publishedFrom} /> : '*'}{' '}
             <Icon icon="arrow-right" size="small" />{' '}
@@ -68,8 +70,16 @@ const applyRenderStrategy = (results, strategy) => {
 
 /* Recursive formatter function */
 
-const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) => {
-  const { value = {}, templateString, renderStrategy = inheritedRenderStrategy } = col;
+const getFormatterFunction = (
+  type,
+  col,
+  inheritedRenderStrategy = undefined
+) => {
+  const {
+    value = {},
+    templateString,
+    renderStrategy = inheritedRenderStrategy,
+  } = col;
   const recurse = () => getFormatterFunction(value?.type, value, renderStrategy);
 
   switch (type) {
@@ -107,10 +117,14 @@ const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) =>
           const results = applyJsonPath(value.expression, resource);
           const template = handlebars.compile(templateString);
 
-          const formatter = getFormatterFunction('access', {
-            accessType: 'compiled',
-            expression: results.map(obj => template(obj))
-          }, renderStrategy);
+          const formatter = getFormatterFunction(
+            'access',
+            {
+              accessType: 'compiled',
+              expression: results.map((obj) => template(obj)),
+            },
+            renderStrategy
+          );
 
           return formatter(resource);
         };
@@ -124,8 +138,8 @@ const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) =>
 
 /* Main exported function */
 
-const getResultsDisplayConfig = () => {
-  const columns = gokbConfig.configuration.results.display.columns;
+const getResultsDisplayConfig = ({ resultsDisplayConfig }) => {
+  const columns = resultsDisplayConfig.columns;
 
   const resultColumns = [];
   const sortableColumns = [];
@@ -138,7 +152,7 @@ const getResultsDisplayConfig = () => {
 
     resultColumns.push({
       propertyPath: name,
-      label: <FormattedMessage id={`ui-agreements.gokb.${name}`} />
+      label: <FormattedMessage id={`ui-agreements.gokb.${name}`} />,
     });
 
     const fn = getFormatterFunction(type, col);
