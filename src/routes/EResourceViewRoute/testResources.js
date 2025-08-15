@@ -93,7 +93,6 @@ const settings = {
   failedMutations: [],
   pendingMutations: [],
   loadedAt: 'Tue Nov 30 2021 23:09:22 GMT+0000 (Greenwich Mean Time)',
-  url: 'https://folio-snapshot-okapi.dev.folio.org/configurations/entries?query=(module=AGREEMENTS%20and%20configName=general)',
   headers: 'Headers(undefined) {"content-type" => "application/json"}',
   httpStatus: 200,
   other: {

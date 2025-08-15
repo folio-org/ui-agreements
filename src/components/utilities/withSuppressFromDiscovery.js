@@ -11,7 +11,7 @@ export default function withSuppressFromDiscovery(WrappedComponent) {
       { ...WrappedComponent.manifest,
         settings: {
           type: 'okapi',
-          path: 'configurations/entries?query=(module=AGREEMENTS and configName=general)',
+          path: 'erm/settings/appSettings?section=agreements_display_settings',
           records: 'configs',
         } }
     );

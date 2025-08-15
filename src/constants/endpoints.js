@@ -38,7 +38,7 @@ export const PACKAGES_SYNC_ENDPOINT = 'erm/packages/controlSync';
 export const PLATFORMS_ENDPOINT = 'erm/platforms';
 export const PLATFORM_ENDPOINT = (platformId) => `${PLATFORMS_ENDPOINT}/${platformId}`;
 
-export const MOD_SETTINGS_ENDPOINT = 'configurations/entries';
+export const MOD_SETTINGS_ENDPOINT = 'erm/settings/appSettings';
 
 export const ORDER_LINES_ENDPOINT = 'orders/order-lines';
 
