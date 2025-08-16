@@ -11,5 +11,3 @@ export { default as parseMclPageSize } from './parseMclPageSize';
 export { default as getTranslatedAcqMethod } from './getTranslatedAcqMethod';
 export { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 export { filterObjectKeys, filterIgnoreObjectKeys } from './filterObjectKeys';
-export { default as getFilterConfig } from './getFilterConfig';
-export { default as transformFilterString } from './transformFilterString';

@@ -43,7 +43,7 @@ const QueryDropdown = ({ options }) => {
 
   // This should also potentially be returning an sasqRenderProps object
   return {
-    searchParameterParse: (query) => {
+    searchQueryFunction: (query) => {
       const searchQueryString = searchConfigOptionsHandler(
         searchLookup[searchKey]?.type,
         searchLookup[searchKey],
@@ -65,7 +65,8 @@ const QueryDropdown = ({ options }) => {
   };
 };
 
-export const searchConfigTypeHandler = ({ type, searchConfig }) => {
+export const getSearchConfig = ({ searchConfig }) => {
+  const { type } = searchConfig;
   switch (type) {
     case 'queryDropdown':
       return QueryDropdown({

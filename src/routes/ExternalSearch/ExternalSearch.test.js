@@ -1,7 +1,7 @@
 import { renderWithIntl } from '@folio/stripes-erm-testing';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import ky from 'ky';
-import GokbRoute from './GokbRoute';
+import ExternalSearch from './ExternalSearch';
 import translationsProperties from '../../../test/helpers';
 
 let capturedProps = {};
@@ -47,14 +47,14 @@ const location = {
 
 let renderComponent;
 
-describe('GokbRoute', () => {
+describe('ExternalSearch', () => {
   beforeEach(() => {
     useLocation.mockClear().mockReturnValue(location);
     capturedProps = {}; // Reset between tests
 
     renderComponent = renderWithIntl(
       <MemoryRouter>
-        <GokbRoute location={location} />
+        <ExternalSearch location={location} />
       </MemoryRouter>,
       translationsProperties
     );
@@ -81,11 +81,11 @@ describe('GokbRoute', () => {
         perPage: 10,
         filterKeys: {
           type: 'componentType',
-        }
+        },
       },
       {
         query: 'foo',
-        filters: 'type.Book'
+        filters: 'type.Book',
       }
     );
 
@@ -105,10 +105,7 @@ describe('GokbRoute', () => {
 
   test('actionMenu renders ColumnManagerMenu', () => {
     const { actionMenu } = capturedProps.mainPaneProps;
-    const { getByText } = renderWithIntl(
-      actionMenu(),
-      translationsProperties
-    );
+    const { getByText } = renderWithIntl(actionMenu(), translationsProperties);
 
     expect(getByText('ColumnManagerMenu')).toBeInTheDocument();
   });

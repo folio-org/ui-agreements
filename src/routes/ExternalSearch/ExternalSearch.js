@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -15,51 +14,42 @@ import { SASQRoute } from '@k-int/stripes-kint-components';
 
 import config from '../../../docs/gokb-search-v1';
 
-import { searchConfigTypeHandler } from '../utilities/adjustments/searchConfigConstructor';
+import getResultsDisplayConfig from './results/display/getResultsDisplayConfig';
 
-import getResultsDisplayConfig from '../utilities/getResultsDisplayConfig';
-
-import GokbFilters from '../../components/GokbFilters';
 import {
+  getSearchConfig,
   getFilterConfig,
-  transformFilterString,
-} from '../../components/utilities';
-import getSortConfig from '../utilities/getSortConfig';
+  getSortConfig,
+} from './results/fetch';
 
-const GokbRoute = ({ location }) => {
+const ExternalSearch = ({ location }) => {
   const kbKey = 'gokb';
-  const filterConfig = useMemo(() => getFilterConfig(config, kbKey), [kbKey]);
-  const { filterMap, initialFilterState } = filterConfig;
 
-  const FilterComponent = (props) => (
-    <GokbFilters {...props} filterConfig={filterConfig} kbKey={kbKey} />
+  const { formatter, resultColumns, sortableColumns } = getResultsDisplayConfig(
+    {
+      resultsDisplayConfig: config.configuration.results.display,
+    }
   );
 
   const {
-    endpoint: gokbEndpoint,
-    formatter,
-    resultColumns,
-    sortableColumns,
-    results: resultsPath,
-    totalRecords: totalRecordsPath,
-  } = getResultsDisplayConfig();
+    initialFilterState,
+    filterMap,
+    filterQueryFunction,
+    FilterComponent,
+  } = getFilterConfig(config.configuration.results.fetch.filters, kbKey);
 
-  const fetchParameters = {
-    endpoint: gokbEndpoint,
-    SASQ_MAP: {},
-  };
-
-  // Build search configuration from the config file
-  const searchConfig = config.configuration.results.fetch.search;
-
-  const { searchParameterParse, HeaderComponent } = searchConfigTypeHandler({
-    type: searchConfig.type,
-    searchConfig,
+  const { searchQueryFunction, HeaderComponent } = getSearchConfig({
+    searchConfig: config.configuration.results.fetch.search,
   });
 
-  const { sortQueryFunction } = getSortConfig(
-    config.configuration.results.fetch.sort
-  );
+  const { sortQueryFunction } = getSortConfig({
+    sortConfig: config.configuration.results.fetch.sort,
+  });
+
+  const fetchParameters = {
+    endpoint: config.configuration.results.fetch.baseUrl,
+    SASQ_MAP: { filterKeys: filterMap },
+  };
 
   // Function to generate the GOKb query string based on the current state
   // Not very happy with this at the moment,its a bit more a bespoke piece of work and doesnt adjust to the searchConfig
@@ -71,7 +61,7 @@ const GokbRoute = ({ location }) => {
     const queryParts = [];
 
     if (query?.query) {
-      const { key: searchKey, string: searchString } = searchParameterParse(
+      const { key: searchKey, string: searchString } = searchQueryFunction(
         query?.query
       );
       if (searchString) {
@@ -79,7 +69,6 @@ const GokbRoute = ({ location }) => {
         fetchParameters.SASQMap = {
           ...fetchParameters.SASQMap,
           searchKey,
-          filterKeys: filterMap,
         };
       }
     }
@@ -89,7 +78,7 @@ const GokbRoute = ({ location }) => {
       queryParts.push(sortString);
     }
 
-    const filterString = transformFilterString(query?.filters, config);
+    const filterString = filterQueryFunction(query?.filters, config);
     if (filterString) {
       queryParts.push(filterString);
     }
@@ -137,8 +126,9 @@ const GokbRoute = ({ location }) => {
       lookupResponseTransform={(data) => {
         const transformedData = {
           ...data,
-          totalRecords: data?.[totalRecordsPath],
-          results: data?.[resultsPath],
+          totalRecords:
+            data?.[config.configuration.results.fetch.mapping.totalRecords],
+          results: data?.[config.configuration.results.fetch.mapping.results],
         };
         return transformedData;
       }}
@@ -168,10 +158,10 @@ const GokbRoute = ({ location }) => {
   );
 };
 
-GokbRoute.propTypes = {
+ExternalSearch.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
 };
 
-export default GokbRoute;
+export default ExternalSearch;
