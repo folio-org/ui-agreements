@@ -26,7 +26,7 @@ const getSortFunction = (type, sortConfig) => {
 
 /* Main exported function */
 
-const getSortConfig = (sortConfig) => {
+const getSortConfig = ({ sortConfig }) => {
   const sortFunction = getSortFunction(sortConfig.type, sortConfig);
 
   return {
