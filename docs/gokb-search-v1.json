@@ -231,6 +231,10 @@
           "results": "records",
           "totalRecords": "count"
         },
+        "sort": {
+          "type": "Handlebars",
+          "templateString": "sort=name&{{#if (startsWith sort '-')}}order=asc{{else}}order=desc{{/if}}"
+        },
         "search": {
           "type": "queryDropdown",
           "options": [
