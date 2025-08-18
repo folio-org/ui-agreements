@@ -226,7 +226,7 @@
     "errors.overlappingPeriod": "Następujące okresy mają nakładające się daty: {fields}",
     "agreements.reasonForClosure": "Powód zamknięcia",
     "warn.clearReasonForClosure": "Ten powód zostanie usunięty, ponieważ status nie jest zamknięty",
-    "content.all": "Wszystkie",
+    "content.all": "Wszystko",
     "content.current": "Bieżący",
     "content.dropped": "Porzucone",
     "content.future": "Przyszłe",
@@ -857,5 +857,11 @@
     "gokb.gokbuuid": "UUID GOKB",
     "gokb.publicationDates.firstOnline": "First online",
     "gokb.publicationDates.firstInPrint": "First in print",
-    "gokb.publicationDates.publishedFromTo": "Opublikowano od/do"
+    "gokb.publicationDates.publishedFromTo": "Opublikowano od/do",
+    "gokb.filters.type": "Type",
+    "gokb.filters.type.all": "Wszystko",
+    "gokb.filters.type.book": "Book",
+    "gokb.filters.type.database": "Database",
+    "gokb.filters.type.journal": "Journal",
+    "gokb.filters.type.other": "Other"
 }
