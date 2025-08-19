@@ -684,7 +684,7 @@
     "customProperty.remove": "Remover propriedade suplementar {number}",
     "customProperty": "Propriedade suplementar",
     "customProperty.filtersApplied": "{count} filtros de propriedade complementares aplicados",
-    "customProperty.retiredName": "OBSOLETO: {name}",
+    "customProperty.retiredName": "DESCONTINUADO: {name}",
     "customProperty.filterIndex": "Filtro de propriedade suplementar {index}",
     "customProperty.removeFilter": "Remover o filtro de propriedade suplementar {index}",
     "customProperty.addFilter": "Adicionar filtro de propriedade suplementar",
@@ -857,5 +857,11 @@
     "gokb.gokbuuid": "UUID do GOKB",
     "gokb.publicationDates.firstOnline": "Primeiro online",
     "gokb.publicationDates.firstInPrint": "Primeira impressão",
-    "gokb.publicationDates.publishedFromTo": "Publicado de/para"
+    "gokb.publicationDates.publishedFromTo": "Publicado de/para",
+    "gokb.filters.type": "Tipo",
+    "gokb.filters.type.all": "Todos",
+    "gokb.filters.type.book": "Livro",
+    "gokb.filters.type.database": "Base de dados",
+    "gokb.filters.type.journal": "Periódico",
+    "gokb.filters.type.other": "Outro"
 }
