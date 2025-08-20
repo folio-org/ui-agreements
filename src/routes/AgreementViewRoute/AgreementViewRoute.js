@@ -10,10 +10,15 @@ import {
   downloadBlob,
   useAgreement,
   useChunkedUsers,
+  useErmHelperApp,
+  useGetAccess,
   useInterfaces,
+  usePolicies,
+  DELETE,
   INVALID_JSON_ERROR,
   JSON_ERROR,
-  useErmHelperApp
+  READ,
+  UPDATE,
 } from '@folio/stripes-erm-components';
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
 
@@ -29,7 +34,7 @@ import { joinRelatedAgreements } from '../utilities/processRelatedAgreements';
 import {
   AGREEMENT_ENDPOINT,
   AGREEMENT_LINES_ENDPOINT,
-  AGREEMENT_LINES_PAGINATION_ID,
+  AGREEMENT_LINES_PAGINATION_ID, AGREEMENTS_ENDPOINT,
   httpStatuses,
 } from '../../constants';
 import {
@@ -69,7 +74,24 @@ const AgreementViewRoute = ({
 
   const agreementPath = AGREEMENT_ENDPOINT(agreementId);
 
-  const { agreement, isAgreementLoading } = useAgreement({ agreementId });
+  const accessControlData = useGetAccess({
+    resourceEndpoint: AGREEMENTS_ENDPOINT,
+    resourceId: agreementId,
+    restrictions: [READ, UPDATE, DELETE],
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', agreementId, canDo]
+  });
+  const {
+    canRead,
+    canReadLoading,
+  } = accessControlData;
+
+  // FIXME how do we want to handle an error?
+  const { agreement, isFetching: isAgreementLoading = true } = useAgreement({
+    agreementId,
+    queryOptions: {
+      enabled: !canReadLoading && !!canRead
+    }
+  });
 
   const interfaces =
     useInterfaces({
@@ -230,6 +252,12 @@ const AgreementViewRoute = ({
     }
   );
 
+  const { policies } = usePolicies({
+    resourceEndpoint: AGREEMENTS_ENDPOINT,
+    resourceId: agreementId,
+    queryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'policies'],
+  });
+
   const getCompositeAgreement = () => {
     const contacts = agreement.contacts.map((c) => ({
       ...c,
@@ -342,6 +370,7 @@ const AgreementViewRoute = ({
   return (
     <View
       key={`agreement-view-pane-${agreementId}`}
+      accessControlData={accessControlData} // Is this a good model?
       components={{
         HelperComponent,
         TagButton,
@@ -349,6 +378,7 @@ const AgreementViewRoute = ({
       data={{
         agreement: getCompositeAgreement(),
         eresourcesFilterPath,
+        policies,
         searchString: location.search,
         tagsLink: agreementPath,
         tagsInvalidateLinks: [['ERM', 'Agreement', agreementId]],
