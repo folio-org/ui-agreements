@@ -63,7 +63,14 @@ const Agreement = ({
     canEditLoading,
     canDelete,
     canDeleteLoading
-  } = {},
+  } = {
+    canRead: true,
+    canReadLoading: false,
+    canEdit: true,
+    canEditLoading: false,
+    canDelete: true,
+    canDeleteLoading: false
+  }, // If not passed, assume everything is accessible and not loading...?
   components: {
     HelperComponent,
     TagButton
