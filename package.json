@@ -81,10 +81,10 @@
     "home": "/erm/agreements",
     "queryResource": "query",
     "okapiInterfaces": {
-      "erm": "7.0",
-      "licenses": "6.0"
+      "erm": "7.0"
     },
     "optionalOkapiInterfaces": {
+      "licenses": "6.0",
       "order-lines": "2.0 3.0 4.0",
       "organizations-storage.interfaces": "2.0",
       "users": "13.0 14.0 15.0 16.0"
