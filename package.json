@@ -81,7 +81,6 @@
     "home": "/erm/agreements",
     "queryResource": "query",
     "okapiInterfaces": {
-      "configuration": "2.0 3.0 4.0 5.0",
       "erm": "7.0"
     },
     "optionalOkapiInterfaces": {
@@ -98,7 +97,7 @@
         "permissionName": "module.agreements.enabled",
         "displayName": "UI: ui-agreements module is enabled",
         "subPermissions": [
-          "configuration.entries.collection.get",
+          "erm.settings.read",
           "tags.collection.get",
           "erm.refdata.view",
           "note.types.collection.get"
@@ -205,15 +204,14 @@
         "subPermissions": [
           "module.agreements.enabled",
           "settings.enabled",
-          "configuration.entries.collection.get"
+          "erm.settings.read"
         ]
       },
       {
         "permissionName": "settings.configuration.manage",
         "displayName": "Settings (Agreements): Can view and edit settings",
         "subPermissions": [
-          "configuration.entries.item.put",
-          "configuration.entries.item.post"
+          "erm.settings.manage"
         ]
       },
       {
