@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -43,7 +43,7 @@ import {
   UsageData,
 } from '../../AgreementSections';
 
-import { useAgreementsContexts, useChunkedOrderLines } from '../../../hooks';
+import { useAgreementsContexts, useBasket, useChunkedOrderLines } from '../../../hooks';
 
 import { urls } from '../../utilities';
 import {
@@ -82,7 +82,29 @@ const Agreement = ({
   const historicalLicenses = licenses.filter(l => l.status.value === statuses.HISTORICAL);
 
   const stripes = useStripes();
+  const [packages, setPackages] = useState([]);
 
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        // https://gokb.org/gokb/api/find?componentType=TIPP&title=b486f75d-bc3b-4f87-aedb-5f319081edbe&status=Current&max=10000
+        const response = await fetch('https://gokb.org/gokb/api/find?componentType=TIPP&max=3');
+        const pkgData = await response.json();
+        console.log('API response:', pkgData);
+        console.log('pkgData.records:', pkgData.records);
+        if (pkgData && Array.isArray(pkgData.records)) {
+          setPackages(pkgData.records);
+        } else {
+          console.warn('Unexpected response structure:', pkgData);
+        }
+      } catch (error) {
+        console.error('Error fetching packages:', error);
+      }
+    };
+
+    fetchPackages();
+  }, []);
+  console.log('Packages:', packages);
   const { data: custpropContexts = [] } = useAgreementsContexts();
   // Ensure the custprops with no contexts get rendered
   const contexts = ['isNull', ...custpropContexts];
@@ -228,6 +250,33 @@ const Agreement = ({
     onClose: handlers.onClose,
   };
 
+  // Pick a title UUID from Gokb ( use the search that already exists)
+  // fetch the package for that title using the URL https://gokb.org/gokb/api/find?componentType=TIPP&title=<b486f75d-bc3b-4f87-aedb-5f319081edbe>&status=Current&max=10000
+
+  // take list of package objects and for each, render a button
+  // once the registery function is set up, get the button from goKbPackage renderfunction instead
+
+  const { addToBasket } = useBasket();
+
+  // Temporary button component for adding GoKB package to basket
+  const GoKbPackageButton = ({ pkg }) => (
+    <Button
+      key={pkg.uuid || pkg.id}
+      buttonStyle="primary"
+      onClick={() => addToBasket({
+        id: pkg.uuid || pkg.id,
+        name: pkg.name,
+        type: 'GoKBPackage',
+      })}
+    >
+      <FormattedMessage
+        defaultMessage={'Add "{pkgName}" to basket'}
+        id="ui-agreements.gokb.addToBasket"
+        values={{ pkgName: pkg.name }}
+      />
+    </Button>
+  );
+
   if (isLoading) return <LoadingPane data-loading {...paneProps} />;
 
   // istanbul ignore next
@@ -304,6 +353,15 @@ const Agreement = ({
                   pathToNoteCreate={urls.noteCreate()}
                   pathToNoteDetails={urls.notes()}
                 />
+                {/* Render a button for each GoKB package */}
+                {packages.length === 0 && (
+                  <div>
+                    No GoKB packages found
+                  </div>
+                )}
+                {packages.map(pkg => (
+                  <GoKbPackageButton key={pkg.uuid || pkg.id} pkg={pkg} />
+                ))}
               </AccordionSet>
             </AccordionStatus>
           </TitleManager>

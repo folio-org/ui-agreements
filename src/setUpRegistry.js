@@ -2,6 +2,16 @@ import { Link } from 'react-router-dom';
 import { InternalContactsArrayDisplay, OrganizationsArrayDisplay } from '@folio/stripes-erm-components';
 import AgreementLookup from './AgreementLookup';
 
+// Temporary ButtonComponent for GoKB packages
+// const GoKBBasketButton = ({ pkg }) => {
+//   // For now, just alert on click
+//   return (
+//     <button onClick={() => alert(`hi from registry: ${pkg.name || pkg.id}`)}>
+//       Add to Basket: {pkg.name || pkg.id}
+//     </button>
+//   );
+// };
+
 const setUpRegistry = (registry) => {
   // Agreement Resource
   const agreementReg = registry.registerResource('agreement');
@@ -32,6 +42,11 @@ const setUpRegistry = (registry) => {
   // ErmPackage Resource
   const ermPkgReg = registry.registerResource('ermPackage');
   ermPkgReg.setViewResource(pkg => `/erm/packages/${pkg.id}`);
+
+  const gokbPkgResource = registry.registerResource('gokbPackage');
+  //at first make this button do the alert( 'hi from registery')
+  // gokbPkgResource.setRenderFunction('addToBasketButton', res => {...render the button} />);
+  gokbPkgResource.setRenderFunction(pkg => <GoKBBasketButton pkg={pkg} />);
 };
 
 export default setUpRegistry;
