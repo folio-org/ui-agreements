@@ -589,6 +589,120 @@
                   }
                 ]
               }
+            },
+            {
+              "name": "agreementsForThisEresource",
+              "collapsable": true,
+              "renderStrategy": {
+                "type": "rows",
+                "values": [
+                  {
+                    "type": "table",
+                    "resource": {
+                      "type": "Registry"
+                    },
+                    "columns": [
+                      {
+                        "name": "name",
+                        "type": "String",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.name"
+                        }
+                      },
+                      {
+                        "name": "status",
+                        "type": "String",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.agreementStatus.label"
+                        }
+                      },
+                      {
+                        "name": "periodStart",
+                        "type": "String",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.startDate"
+                        }
+                      },
+                      {
+                        "name": "periodEnd",
+                        "type": "String",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.endDate"
+                        }
+                      },
+                      {
+                        "name": "eResource",
+                        "type": "String",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.eresource"
+                        }
+                      },
+                      {
+                        "name": "aquisitionMethod",
+                        "type": "String",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.acquisitionMethod.label"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "name": "packageTitles",
+              "collapsable": true,
+              "renderStrategy": {
+                "type": "rows",
+                "values": [
+                  {
+                    "type": "table",
+                    "resource": {
+                      "type": "fetch",
+                      "endpoint": {
+                        "type": "Handlebars",
+                        "templateString": "https://gokb.org/gokb/api/find?componentType=TIPP&title={{uuid}}&status=Current&max=10000"
+                      }
+                    },
+                    "columns": [
+                      {
+                        "name": "packageName",
+                        "type": "String",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.name"
+                        }
+                      },
+                      {
+                        "name": "coverage",
+                        "type": "String",
+                        "value": {
+                          "type": "Handlebars",
+                          "templateString": "{{{startDate}} -> {{endDate}}",
+                          "value": {
+                            "type": "access",
+                            "accessType": "JSONPath",
+                            "expression": "$.coverages[*]"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
             }
           ]
         }
