@@ -53,9 +53,9 @@ const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) =>
         });
         return applyRenderStrategy(combinedData, renderStrategy);
       };
-    case 'String':
-      return recurse();
     case 'Array':
+    case 'Object':
+    case 'String':
       return recurse();
     case 'Handlebars':
     case 'HandlebarsEach':
@@ -64,12 +64,9 @@ const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) =>
           const results = applyJsonPath(value.expression, resource);
           const template = handlebarsCompile(templateString);
 
-          const formatter = getFormatterFunction('String', {
-            value: {
-              type: 'access',
-              accessType: 'compiled',
-              expression: results.map(obj => template(obj))
-            }
+          const formatter = getFormatterFunction('access', {
+            accessType: 'compiled',
+            expression: results.map(obj => template(obj))
           }, renderStrategy);
 
           return formatter(resource);
@@ -77,8 +74,6 @@ const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) =>
       } else {
         return recurse();
       }
-    case 'Object':
-      return recurse();
     default:
       return () => '';
   }

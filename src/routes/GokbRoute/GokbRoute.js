@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
@@ -20,8 +21,22 @@ import { searchConfigTypeHandler } from '../utilities/adjustments/searchConfigCo
 
 import getResultsDisplayConfig from '../utilities/getResultsDisplayConfig';
 
+import GokbFilters from '../../components/GokbFilters';
+import {
+  getFilterConfig,
+  transformFilterString,
+} from '../../components/utilities';
+import getSortConfig from '../utilities/getSortConfig';
+
 const GokbRoute = ({ location }) => {
   const kbKey = 'gokb';
+  const filterConfig = useMemo(() => getFilterConfig(config, kbKey), [kbKey]);
+  const { filterMap, initialFilterState } = filterConfig;
+
+  const FilterComponent = (props) => (
+    <GokbFilters {...props} filterConfig={filterConfig} kbKey={kbKey} />
+  );
+
   console.log('GokbRoute location', location);
   const hookParams = useParams();
   // const titleId = hookParams?.id || '';
@@ -34,6 +49,7 @@ const GokbRoute = ({ location }) => {
   const resourcePath = config.configuration.view.fetch.mapping.data;
   const resourceEndpoint = config.configuration.view.fetch.baseUrl;
   console.log('GokbRoute resourcePath', resourcePath);
+
   const {
     endpoint: gokbEndpoint,
     formatter,
@@ -57,6 +73,10 @@ const GokbRoute = ({ location }) => {
     searchConfig,
   });
 
+  const { sortQueryFunction } = getSortConfig(
+    config.configuration.results.fetch.sort
+  );
+
   // Function to generate the GOKb query string based on the current state
   // Not very happy with this at the moment,its a bit more a bespoke piece of work and doesnt adjust to the searchConfig
   // Something to revisit in the future, once we have all the query parts in place
@@ -75,9 +95,20 @@ const GokbRoute = ({ location }) => {
         queryParts.push(searchString);
         fetchParameters.SASQMap = {
           ...fetchParameters.SASQMap,
-          searchKey
+          searchKey,
+          filterKeys: filterMap,
         };
       }
+    }
+
+    const sortString = sortQueryFunction(query);
+    if (sortString) {
+      queryParts.push(sortString);
+    }
+
+    const filterString = transformFilterString(query?.filters, config);
+    if (filterString) {
+      queryParts.push(filterString);
     }
 
     queryParts.push(`max=${perPage}`);
@@ -92,7 +123,7 @@ const GokbRoute = ({ location }) => {
     : {};
 
   const { visibleColumns, toggleColumn } = useColumnManager(
-    'gokb-search-list-column-manager',
+    `${kbKey}-search-list-column-manager`,
     columnMapping
   );
 
@@ -101,7 +132,7 @@ const GokbRoute = ({ location }) => {
       <ColumnManagerMenu
         columnMapping={columnMapping}
         excludeColumns={['name']}
-        prefix="gokb-search-list"
+        prefix={`${kbKey}-search-list`}
         toggleColumn={toggleColumn}
         visibleColumns={visibleColumns}
       />
@@ -111,11 +142,12 @@ const GokbRoute = ({ location }) => {
   return (
     <SASQRoute
       fetchParameters={fetchParameters}
+      FilterComponent={FilterComponent}
       FilterPaneHeaderComponent={HeaderComponent}
       filterPaneProps={{
-        id: 'gokb-search-main-filter-pane',
+        id: `${kbKey}-search-main-filter-pane`,
       }}
-      id="gokb-search"
+      id={`${kbKey}-search`}
       lookupQueryPromise={({ _ky, queryParams, endpoint }) => {
         return kyImport.get(`${endpoint}${queryParams}`).json();
       }}
@@ -130,8 +162,8 @@ const GokbRoute = ({ location }) => {
       mainPaneProps={{
         actionMenu: renderActionMenu,
         appIcon: <AppIcon app="agreements" iconKey="title" size="small" />,
-        id: 'gokb-search-main-pane',
-        paneTitle: <FormattedMessage id="ui-agreements.gokb.titles" />,
+        id: `${kbKey}-search-main-pane`,
+        paneTitle: <FormattedMessage id={`ui-agreements.${kbKey}.titles`} />,
       }}
       mclProps={{
         columnWidths: { publicationDates: 300 },
@@ -141,14 +173,15 @@ const GokbRoute = ({ location }) => {
       // path={location.pathname}
       path={`/erm/${kbKey}`}
       persistedPanesetProps={{
-        id: 'gokb-search-main-paneset',
+        id: `${kbKey}-search-main-paneset`,
       }}
       queryParameterGenerator={generateQuery}
       resultColumns={resultColumns}
       sasqProps={{
+        initialFilterState,
         sortableColumns,
       }}
-      searchFieldAriaLabel="input-gokb-search"
+      searchFieldAriaLabel={`input-${kbKey}-search`}
       ViewComponent={RemoteKbResource}
       viewQueryPromise={({ _ky, resourceId, endpoint }) => {
         return kyImport.get(`${endpoint}/${resourceId}`).json();

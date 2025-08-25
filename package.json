@@ -58,7 +58,7 @@
     "react-final-form": "^6.3.0",
     "react-final-form-arrays": "^3.1.0",
     "react-router-prop-types": "^1.0.4",
-    "zustand": "^4.1.5"
+    "zustand": "^5.0.0"
   },
   "peerDependencies": {
     "@folio/stripes": "^10.0.0",
@@ -81,11 +81,10 @@
     "home": "/erm/agreements",
     "queryResource": "query",
     "okapiInterfaces": {
-      "configuration": "2.0 3.0 4.0 5.0",
-      "erm": "7.0",
-      "licenses": "6.0"
+      "erm": "7.0"
     },
     "optionalOkapiInterfaces": {
+      "licenses": "6.0",
       "order-lines": "2.0 3.0 4.0",
       "organizations-storage.interfaces": "2.0",
       "users": "13.0 14.0 15.0 16.0"
@@ -98,7 +97,7 @@
         "permissionName": "module.agreements.enabled",
         "displayName": "UI: ui-agreements module is enabled",
         "subPermissions": [
-          "configuration.entries.collection.get",
+          "erm.settings.read",
           "tags.collection.get",
           "erm.refdata.view",
           "note.types.collection.get"
@@ -205,15 +204,14 @@
         "subPermissions": [
           "module.agreements.enabled",
           "settings.enabled",
-          "configuration.entries.collection.get"
+          "erm.settings.read"
         ]
       },
       {
         "permissionName": "settings.configuration.manage",
         "displayName": "Settings (Agreements): Can view and edit settings",
         "subPermissions": [
-          "configuration.entries.item.put",
-          "configuration.entries.item.post"
+          "erm.settings.manage"
         ]
       },
       {
