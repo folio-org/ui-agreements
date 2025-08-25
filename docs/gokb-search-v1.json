@@ -362,7 +362,7 @@
         "title": {
           "type": "access",
           "accessType": "JSONPath",
-          "expression": "$.title"
+          "expression": "$.name"
         },
         "icon": "title",
         "renderStrategy": {
@@ -389,20 +389,23 @@
                     ]
                   },
                   {
-                    "name": "metadata",
-                    "renderStrategy": {
-                      "type": "metadata",
-                      "createdBy": {
-                        "type": "access",
-                        "accessType": "JSONPath",
-                        "expression": "$.title"
-                      },
-                      "lastUpdated": {
-                        "type": "access",
-                        "accessType": "JSONPath",
-                        "expression": "$.title"
+                    "type": "row",
+                    "colCount": "1",
+                    "values": [
+                      {
+                        "type": "metadata",
+                        "createdBy": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.createdBy"
+                        },
+                        "lastUpdated": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.lastUpdated"
+                        }
                       }
-                    }
+                    ]
                   },
                   {
                     "type": "row",

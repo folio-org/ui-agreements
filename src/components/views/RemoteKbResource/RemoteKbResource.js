@@ -1,6 +1,6 @@
 import { createRef } from 'react';
-
 import PropTypes from 'prop-types';
+import { JSONPath } from 'jsonpath-plus';
 import { FormattedMessage } from 'react-intl';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { AppIcon, useStripes } from '@folio/stripes/core';
@@ -16,31 +16,18 @@ import {
   expandAllSections,
   HasCommand,
   Icon,
+  LoadingPane,
   MetaSection,
   Pane,
   Row,
-  LoadingPane,
   PaneMenu,
 } from '@folio/stripes/components';
 
-// import {
-//   CorrespondingAuthor,
-//   Funding,
-//   Publication,
-//   PublicationStatus,
-//   RequestContact,
-//   RequestInfo,
-//   Correspondence,
-//   Agreement,
-//   Charges,
-// } from '../../PublicationRequestSections';
-
-// import urls from '../../../util/urls';
-// import useOAHelperApp from '../../../hooks/useOAHelperApp';
-// import { PANE_DEFAULT_WIDTH } from '../../../constants/config';
-// import { PUBLICATION_REQUEST_ENDPOINT } from '../../../constants/endpoints';
+const PANE_DEFAULT_WIDTH = '50%';
 
 const propTypes = {
+  config: PropTypes.shape({}).isRequired,
+  kbKey: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   resource: PropTypes.oneOfType([
     PropTypes.shape({}),
@@ -54,27 +41,20 @@ const propTypes = {
 const RemoteKbResource = ({
   // records: request,
   // resource: records = [],
+  config,
+  kbKey,
   resource,
   onClose,
   queryProps: { isLoading },
 }) => {
-  // if resource is an array let title be the first element
-  // const title = (Array.isArray(resource) && resource.length > 0) ? resource[0] : resource;
+  const displayConfig = config.configuration.view.display;
+  console.log('displayConfig', displayConfig);
   console.log('RemoteKbResource resource', resource);
-  // console.log('RemoteKbResource records', records);
-  // console.log('RemoteKbResource', records[0]);
-  // const title = resource?.records;
-  // console.log('RemoteKbResource title', title);
-  const history = useHistory();
-  const location = useLocation();
-  const params = useParams();
   const accordionStatusRef = createRef();
-  // const { HelperComponent, ChecklistButton, isOpen } = useOAHelperApp();
-  const stripes = useStripes();
 
-  // const handleEdit = () => {
-  //   history.push(`${urls.publicationRequestEdit(params?.id)}${location.search}`);
-  // };
+  const applyJsonPath = (expression) => JSONPath({ path: expression, json: resource }) || [];
+
+  const paneTitle = applyJsonPath(displayConfig.title?.expression, resource);
 
   const getSectionProps = (name) => {
     return {
@@ -116,7 +96,7 @@ const RemoteKbResource = ({
   if (isLoading) {
     return (
       <LoadingPane
-        // defaultWidth={PANE_DEFAULT_WIDTH}
+        defaultWidth={PANE_DEFAULT_WIDTH}
         dismissible
         onClose={onClose}
       />
@@ -131,25 +111,14 @@ const RemoteKbResource = ({
     >
       <Pane
         actionMenu={renderActionMenu}
-        appIcon={<AppIcon app="oa" iconKey="app" size="small" />}
-        // defaultWidth={PANE_DEFAULT_WIDTH}
+        appIcon={<AppIcon app="agreements" iconKey={displayConfig.icon} size="small" />}
+        defaultWidth={PANE_DEFAULT_WIDTH}
         dismissible
-        lastMenu={
-          <PaneMenu>
-            {/* <ChecklistButton /> */}
-          </PaneMenu>
-        }
         onClose={onClose}
-        paneSub={resource?.publicationTitle}
-        paneTitle={
-          <FormattedMessage
-            id="ui-oa.publicationRequest.titleTitle"
-            values={{ number: resource?.titleNumber }}
-          />
-        }
+        paneTitle={paneTitle}
       >
         <MetaSection
-          contentId="publicationRequestMetaContent"
+          contentId="remoteKbResourceMetaContent"
           createdDate={resource?.dateCreated}
           hideSource
           lastUpdatedDate={resource?.lastUpdated}
@@ -183,11 +152,6 @@ const RemoteKbResource = ({
           </AccordionSet>
         </AccordionStatus>
       </Pane>
-      {/* <HelperComponent
-        isOpen={isOpen}
-        ownerId={request?.id}
-        resourceEndpoint={PUBLICATION_REQUEST_ENDPOINT}
-      /> */}
     </HasCommand>
   );
 };

@@ -3,8 +3,6 @@ import { FormattedMessage } from 'react-intl';
 import { AppIcon } from '@folio/stripes/core';
 import { handlebarsCompile, renderPublicationDates } from '../../components/utilities';
 
-import gokbConfig from '../../../docs/gokb-search-v1';
-
 /* helper functions */
 
 const applyJsonPath = (expression, resource) => JSONPath({ path: expression, json: resource }) || [];
@@ -81,8 +79,8 @@ const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) =>
 
 /* Main exported function */
 
-const getResultsDisplayConfig = () => {
-  const columns = gokbConfig.configuration.results.display.columns;
+const getResultsDisplayConfig = (config) => {
+  const columns = config.configuration.results.display.columns;
 
   const resultColumns = [];
   const sortableColumns = [];
@@ -122,8 +120,8 @@ const getResultsDisplayConfig = () => {
   });
 
   const endpointData = {
-    endpoint: gokbConfig.configuration.results.fetch.baseUrl,
-    ...gokbConfig.configuration.results.fetch.mapping,
+    endpoint: config.configuration.results.fetch.baseUrl,
+    ...config.configuration.results.fetch.mapping,
   };
 
   return {

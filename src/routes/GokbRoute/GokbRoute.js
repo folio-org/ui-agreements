@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+// import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import kyImport from 'ky';
 
@@ -36,14 +36,18 @@ const GokbRoute = ({ location }) => {
     <GokbFilters {...props} filterConfig={filterConfig} kbKey={kbKey} />
   );
 
+  const ViewComponent = (props) => (
+    <RemoteKbResource {...props} config={config} kbKey={kbKey} />
+  );
+
   console.log('GokbRoute location', location);
-  const hookParams = useParams();
+  // const hookParams = useParams();
   // const titleId = hookParams?.id || '';
-  console.log('GokbRoute params', hookParams);
-  const history = useHistory();
-  console.log('GokbRoute history', history);
-  const { pathname } = useLocation();
-  console.log('GokbRoute pathname', pathname);
+  // console.log('GokbRoute params', hookParams);
+  // const history = useHistory();
+  // console.log('GokbRoute history', history);
+  // const { pathname } = useLocation();
+  // console.log('GokbRoute pathname', pathname);
 
   const resourcePath = config.configuration.view.fetch.mapping.data;
   const resourceEndpoint = config.configuration.view.fetch.baseUrl;
@@ -56,7 +60,7 @@ const GokbRoute = ({ location }) => {
     sortableColumns,
     results: resultsPath,
     totalRecords: totalRecordsPath,
-  } = getResultsDisplayConfig();
+  } = getResultsDisplayConfig(config);
 
   const fetchParameters = {
     endpoint: gokbEndpoint,
@@ -181,7 +185,7 @@ const GokbRoute = ({ location }) => {
         sortableColumns,
       }}
       searchFieldAriaLabel={`input-${kbKey}-search`}
-      ViewComponent={RemoteKbResource}
+      ViewComponent={ViewComponent}
       viewQueryPromise={({ _ky, resourceId, endpoint }) => {
         return kyImport.get(`${endpoint}/${resourceId}`).json();
       }}
