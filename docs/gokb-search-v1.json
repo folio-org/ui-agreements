@@ -233,7 +233,7 @@
         },
         "sort": {
           "type": "Handlebars",
-          "templateString": "sort=name&{{#if (startsWith sort '-')}}order=asc{{else}}order=desc{{/if}}"
+          "templateString": "sort=name&{{#if (startsWith sort '-')}}order=desc{{else}}order=asc{{/if}}"
         },
         "search": {
           "type": "queryDropdown",

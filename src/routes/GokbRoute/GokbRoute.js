@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
@@ -30,7 +29,7 @@ import getSortConfig from '../utilities/getSortConfig';
 
 const GokbRoute = ({ location }) => {
   const kbKey = 'gokb';
-  const filterConfig = useMemo(() => getFilterConfig(config, kbKey), [kbKey]);
+  const filterConfig = getFilterConfig(config);
   const { filterMap, initialFilterState } = filterConfig;
 
   const FilterComponent = (props) => (
@@ -163,7 +162,7 @@ const GokbRoute = ({ location }) => {
         actionMenu: renderActionMenu,
         appIcon: <AppIcon app="agreements" iconKey="title" size="small" />,
         id: `${kbKey}-search-main-pane`,
-        paneTitle: <FormattedMessage id={`ui-agreements.${kbKey}.titles`} />,
+        paneTitle: <FormattedMessage id="ui-agreements.remoteKb.gokbTitles" />,
       }}
       mclProps={{
         columnWidths: { publicationDates: 300 },

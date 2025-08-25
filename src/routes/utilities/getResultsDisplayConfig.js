@@ -17,7 +17,7 @@ const applyRenderStrategy = (results, strategy) => {
     case 'joinString':
       return results.join(strategy.separator || defaultSeparator);
     case 'renderPublicationDates':
-      return renderPublicationDates(results, 'gokb');
+      return renderPublicationDates(results);
     default:
       return results.join(defaultSeparator);
   }
@@ -95,7 +95,7 @@ const getResultsDisplayConfig = () => {
 
     resultColumns.push({
       propertyPath: name,
-      label: <FormattedMessage id={`ui-agreements.gokb.${name}`} />
+      label: <FormattedMessage id={`ui-agreements.remoteKb.${name}`} />
     });
 
     const fn = getFormatterFunction(type, col);

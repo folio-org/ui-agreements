@@ -53,7 +53,7 @@ const GokbFilters = ({ activeFilters = {}, filterHandlers, filterConfig, kbKey }
     displayClearButton: groupFilters.length > 0,
     header: FilterAccordionHeader,
     id: `${kbKey}-${name}-filter-accordion`,
-    label: <FormattedMessage id={`ui-agreements.${kbKey}.filters.${name}`} />,
+    label: <FormattedMessage id={`ui-agreements.remoteKb.filters.${name}`} />,
     onClearFilter: () => {
       filterHandlers.clearGroup(name);
     },
