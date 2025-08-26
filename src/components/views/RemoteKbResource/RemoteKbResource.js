@@ -1,5 +1,4 @@
-// import { createRef } from 'react';
-import { useRef } from 'react';
+import { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { JSONPath } from 'jsonpath-plus';
 import { FormattedMessage } from 'react-intl';
@@ -48,11 +47,8 @@ const RemoteKbResource = ({
   onClose,
   queryProps: { isLoading },
 }) => {
-  // const accordionStatusRef = createRef();
-  const accordionStatusRef = useRef(null);
-  console.log('accordionStatusRef', accordionStatusRef);
+  const accordionStatusRef = createRef();
 
-  // const displayConfig = config.configuration.view.display;
   const applyJsonPath = (expression, res = resource) => JSONPath({ path: expression, json: res }) || [];
 
   const renderValue = (value, res = resource) => {
@@ -129,7 +125,7 @@ const RemoteKbResource = ({
               contentData={resourceData}
               // id="alternate-resource-names-list"
               formatter={formatter}
-              visibleColumns={(value?.columns).map(c => c.name)}
+              visibleColumns={(value?.columns || []).map(c => c.name)}
             />
             : ''
         );
@@ -166,7 +162,6 @@ const RemoteKbResource = ({
         return (
           strategy.values?.map((section, index) => {
             if (!hasContent(section.renderStrategy)) return null;
-            console.log('accordionStatusRef in section', accordionStatusRef);
             return section.collapsable ? (
               <AccordionStatus key={section.name ?? index} ref={accordionStatusRef}>
                 {/* <AccordionStatus key={section.name ?? index} ref={accordionStatusRef}> */}
@@ -222,24 +217,6 @@ const RemoteKbResource = ({
     },
   ];
 
-  // const renderActionMenu = () => {
-  //   const buttons = [];
-  //   // if (stripes.hasPerm('ui-agreements.packages.controlSync.execute')) {
-  //   //   buttons.push(
-  //   //     <Button
-  //   //       buttonStyle="dropdownItem"
-  //   //       id="clickable-dropdown-edit-remote-kb-title"
-  //   //       onClick={handleEdit}
-  //   //     >
-  //   //       <Icon icon="edit">
-  //   //         <FormattedMessage id="ui-agreements.edit" />
-  //   //       </Icon>
-  //   //     </Button>
-  //   //   );
-  //   // }
-  //   return buttons.length ? buttons : null;
-  // };
-
   if (isLoading) {
     return (
       <LoadingPane
@@ -257,7 +234,6 @@ const RemoteKbResource = ({
       scope={document.body}
     >
       <Pane
-        // actionMenu={renderActionMenu}
         appIcon={<AppIcon app="agreements" iconKey={displayConfig.icon} size="small" />}
         defaultWidth={PANE_DEFAULT_WIDTH}
         dismissible
