@@ -864,5 +864,11 @@
   "remoteKb.gokbuuid": "GOKB UUID",
   "remoteKb.publicationDates.firstOnline":"First online",
   "remoteKb.publicationDates.firstInPrint": "First in print",
-  "remoteKb.publicationDates.publishedFromTo": "Published from/to"
+  "remoteKb.publicationDates.publishedFromTo": "Published from/to",
+  "remoteKb.extendedTitleInformation": "Extended title information",
+  "remoteKb.type": "Type",
+  "remoteKb.identifier": "Identifier",
+  "remoteKb.altNames": "Alternative names",
+  "remoteKb.scheme": "Scheme",
+  "remoteKb.heading": "Heading"
 }

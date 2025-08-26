@@ -1,6 +1,4 @@
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-// import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import kyImport from 'ky';
 
@@ -27,46 +25,34 @@ import {
 } from '../../components/utilities';
 import getSortConfig from '../utilities/getSortConfig';
 
-const GokbRoute = ({ location }) => {
+const GokbRoute = () => {
   const kbKey = 'gokb';
+  const columnsConfig = config.configuration.results.display.columns;
+  const displayConfig = config.configuration.view.display;
   const filterConfig = getFilterConfig(config);
   const { filterMap, initialFilterState } = filterConfig;
 
-  const FilterComponent = (props) => (
-    <GokbFilters {...props} filterConfig={filterConfig} kbKey={kbKey} />
-  );
-
-  const ViewComponent = (props) => (
-    <RemoteKbResource {...props} config={config} />
-  );
-
-  console.log('GokbRoute location', location);
-  // const hookParams = useParams();
-  // const titleId = hookParams?.id || '';
-  // console.log('GokbRoute params', hookParams);
-  // const history = useHistory();
-  // console.log('GokbRoute history', history);
-  // const { pathname } = useLocation();
-  // console.log('GokbRoute pathname', pathname);
-
   const resourcePath = config.configuration.view.fetch.mapping.data;
   const resourceEndpoint = config.configuration.view.fetch.baseUrl;
-  console.log('GokbRoute resourcePath', resourcePath);
 
   const endpointData = {
     endpoint: config.configuration.results.fetch.baseUrl,
     ...config.configuration.results.fetch.mapping,
   };
 
-  const columnsConfig = config.configuration.results.display.columns;
+  const FilterComponent = (props) => (
+    <GokbFilters {...props} filterConfig={filterConfig} kbKey={kbKey} />
+  );
+
+  const ViewComponent = (props) => (
+    <RemoteKbResource {...props} displayConfig={displayConfig} />
+  );
+
   const {
-    // endpoint: gokbEndpoint,
     formatter,
     resultColumns,
     sortableColumns,
-    // results: resultsPath,
-    // totalRecords: totalRecordsPath,
-  } = getResultsDisplayConfig(columnsConfig);
+  } = getResultsDisplayConfig(columnsConfig, { iconKey: displayConfig.icon });
 
   const fetchParameters = {
     endpoint: endpointData.endpoint,
@@ -90,7 +76,6 @@ const GokbRoute = ({ location }) => {
   // Not very happy with this at the moment,its a bit more a bespoke piece of work and doesnt adjust to the searchConfig
   // Something to revisit in the future, once we have all the query parts in place
   const generateQuery = (params, query) => {
-    console.log('generateQuery', params, query);
     const perPage = params?.perPage || 25;
     // Offset handling should be based on config file, picking up as part of refactors
     const offset = (params.page - 1) * params.perPage;
@@ -170,7 +155,7 @@ const GokbRoute = ({ location }) => {
       }}
       mainPaneProps={{
         actionMenu: renderActionMenu,
-        appIcon: <AppIcon app="agreements" iconKey="title" size="small" />,
+        appIcon: <AppIcon app="agreements" iconKey={displayConfig.icon} size="small" />,
         id: `${kbKey}-search-main-pane`,
         paneTitle: <FormattedMessage id="ui-agreements.remoteKb.gokbTitles" />,
       }}
@@ -179,7 +164,6 @@ const GokbRoute = ({ location }) => {
         formatter,
         visibleColumns,
       }}
-      // path={location.pathname}
       path={`/erm/${kbKey}`}
       persistedPanesetProps={{
         id: `${kbKey}-search-main-paneset`,
@@ -195,25 +179,12 @@ const GokbRoute = ({ location }) => {
       viewQueryPromise={({ _ky, resourceId, endpoint }) => {
         return kyImport.get(`${endpoint}/${resourceId}`).json();
       }}
-      // viewResponseTransform={(data) => {
-      //   const transformedData = {
-      //     // ...data?.records[0]
-      //     ...data?.[resourcePath],
-      //   };
-      //   return transformedData;
-      // }}
       viewResponseTransform={(data) => {
         const raw = data?.[resourcePath];
         return Array.isArray(raw) ? raw[0] : raw;
       }}
     />
   );
-};
-
-GokbRoute.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 export default GokbRoute;

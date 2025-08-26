@@ -1,13 +1,14 @@
-import { createRef } from 'react';
+// import { createRef } from 'react';
+import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { JSONPath } from 'jsonpath-plus';
 import { FormattedMessage } from 'react-intl';
 import { AppIcon } from '@folio/stripes/core';
 
 import {
+  Accordion,
   AccordionSet,
   AccordionStatus,
-  Button,
   checkScope,
   collapseAllSections,
   Col,
@@ -15,7 +16,6 @@ import {
   expandAllSections,
   HasCommand,
   Headline,
-  Icon,
   KeyValue,
   LoadingPane,
   MetaSection,
@@ -23,7 +23,6 @@ import {
   NoValue,
   Pane,
   Row,
-  PaneMenu,
 } from '@folio/stripes/components';
 
 import { handlebarsCompile, renderPublicationDates } from '../../utilities';
@@ -32,7 +31,7 @@ import getResultsDisplayConfig from '../../../routes/utilities/getResultsDisplay
 const PANE_DEFAULT_WIDTH = '50%';
 
 const propTypes = {
-  config: PropTypes.shape({}).isRequired,
+  displayConfig: PropTypes.shape({}).isRequired,
   onClose: PropTypes.func.isRequired,
   resource: PropTypes.oneOfType([
     PropTypes.shape({}),
@@ -44,14 +43,16 @@ const propTypes = {
 };
 
 const RemoteKbResource = ({
-  config,
+  displayConfig,
   resource,
   onClose,
   queryProps: { isLoading },
 }) => {
-  const accordionStatusRef = createRef();
+  // const accordionStatusRef = createRef();
+  const accordionStatusRef = useRef(null);
+  console.log('accordionStatusRef', accordionStatusRef);
 
-  const displayConfig = config.configuration.view.display;
+  // const displayConfig = config.configuration.view.display;
   const applyJsonPath = (expression, res = resource) => JSONPath({ path: expression, json: res }) || [];
 
   const renderValue = (value, res = resource) => {
@@ -97,7 +98,6 @@ const RemoteKbResource = ({
         );
       case 'displayDates': {
         const combinedData = {};
-        // console.log('displayDates value', value.value);
         value.value?.forEach(({ key, expression }) => {
           const jsonResult = applyJsonPath(expression);
           if (key && jsonResult?.length > 0) {
@@ -111,7 +111,7 @@ const RemoteKbResource = ({
         if (value.value?.type === 'access' && value.value?.accessType === 'JSONPath') {
           const result = applyJsonPath(value.value?.expression);
           const template = handlebarsCompile(value.templateString);
-          return result.length > 0 ? result.map(obj => template(obj)) : <NoValue />;
+          return result.length > 0 ? result.map(obj => template(obj)).join(', ') : <NoValue />;
         } else {
           return '';
         }
@@ -122,7 +122,6 @@ const RemoteKbResource = ({
         return (
           resourceData.length > 0 ?
             <MultiColumnList
-              // columnMapping={{ name: <FormattedMessage id="ui-agreements.remoteKb.${value.columns." /> }}
               columnMapping={value.columns.reduce((acc, col) => {
                 acc[col.name] = <FormattedMessage id={`ui-agreements.remoteKb.${col.name}`} />;
                 return acc;
@@ -140,40 +139,79 @@ const RemoteKbResource = ({
     }
   };
 
-  const applyRenderStrategy = (strategy) => {
-    console.log('applyRenderStrategy', strategy);
+  // helper for section rendering
+  const hasContent = (strategy) => {
+    if (!strategy) return false;
+
+    switch (strategy.type) {
+      case 'rows':
+        return Array.isArray(strategy.values) &&
+          strategy.values.some(val => {
+            const node = renderValue(val);
+            return node !== null && node !== undefined && node !== false && node !== '';
+          });
+
+      case 'sections':
+        return Array.isArray(strategy.values) &&
+          strategy.values.some(section => hasContent(section.renderStrategy));
+
+      default:
+        return false;
+    }
+  };
+
+  const applyRenderStrategy = (strategy, collapsable = false, name = '') => {
     switch (strategy.type) {
       case 'sections':
         return (
-          strategy.values?.map((section, index) => (section.collapsable ? (
-            <AccordionStatus key={index} ref={accordionStatusRef}>
-              <Row end="xs">
-                <Col xs>
-                  <ExpandAllButton />
-                </Col>
-              </Row>
-              {applyRenderStrategy(section.renderStrategy)}
-              <AccordionSet />
-            </AccordionStatus>
-          ) : (
-            applyRenderStrategy(section.renderStrategy)
-          )))
+          strategy.values?.map((section, index) => {
+            if (!hasContent(section.renderStrategy)) return null;
+            console.log('accordionStatusRef in section', accordionStatusRef);
+            return section.collapsable ? (
+              <AccordionStatus key={section.name ?? index} ref={accordionStatusRef}>
+                {/* <AccordionStatus key={section.name ?? index} ref={accordionStatusRef}> */}
+                <Row end="xs">
+                  <Col xs>
+                    <ExpandAllButton accordionStatusRef={accordionStatusRef} />
+                  </Col>
+                </Row>
+                {/* <AccordionSet initialStatus={{ [section.name]: false }}> */}
+                <AccordionSet>
+                  {applyRenderStrategy(section.renderStrategy, true, section.name)}
+                </AccordionSet>
+              </AccordionStatus>
+            ) : (
+              <div key={section.name ?? index}>
+                {applyRenderStrategy(section.renderStrategy)}
+              </div>
+            );
+          })
         );
-      case 'rows':
-        return (
-          strategy.values?.map((val, index) => (
-            <Row key={index}>
-              {renderValue(val)}
-            </Row>
-          ))
+      case 'rows': {
+        const rows = strategy.values?.map((val, index) => (
+          <Row key={index}>
+            {renderValue(val)}
+          </Row>
+        ));
+
+        return collapsable ? (
+          <Accordion
+            id={`${name}`}
+            label={<FormattedMessage id={`ui-agreements.remoteKb.${name}`} />}
+          >
+            {rows}
+          </Accordion>
+        ) : (
+          <>{rows}</>
         );
+      }
       default:
-        return '';
+        return null;
     }
   };
 
   const shortcuts = [
-    // { name: 'edit', handler: () => handleEdit() },
+    // {name: 'edit', handler: () => handleEdit() },
     {
       name: 'expandAllSections',
       handler: (e) => expandAllSections(e, accordionStatusRef),
@@ -184,23 +222,23 @@ const RemoteKbResource = ({
     },
   ];
 
-  const renderActionMenu = () => {
-    const buttons = [];
-    // if (stripes.hasPerm('ui-oa.publicationRequest.edit')) {
-    //   buttons.push(
-    //     <Button
-    //       buttonStyle="dropdownItem"
-    //       id="clickable-dropdown-edit-remote-kb-title"
-    //       onClick={handleEdit}
-    //     >
-    //       <Icon icon="edit">
-    //         <FormattedMessage id="ui-oa.publicationRequest.edit" />
-    //       </Icon>
-    //     </Button>
-    //   );
-    // }
-    return buttons.length ? buttons : null;
-  };
+  // const renderActionMenu = () => {
+  //   const buttons = [];
+  //   // if (stripes.hasPerm('ui-agreements.packages.controlSync.execute')) {
+  //   //   buttons.push(
+  //   //     <Button
+  //   //       buttonStyle="dropdownItem"
+  //   //       id="clickable-dropdown-edit-remote-kb-title"
+  //   //       onClick={handleEdit}
+  //   //     >
+  //   //       <Icon icon="edit">
+  //   //         <FormattedMessage id="ui-agreements.edit" />
+  //   //       </Icon>
+  //   //     </Button>
+  //   //   );
+  //   // }
+  //   return buttons.length ? buttons : null;
+  // };
 
   if (isLoading) {
     return (
@@ -219,20 +257,13 @@ const RemoteKbResource = ({
       scope={document.body}
     >
       <Pane
-        actionMenu={renderActionMenu}
+        // actionMenu={renderActionMenu}
         appIcon={<AppIcon app="agreements" iconKey={displayConfig.icon} size="small" />}
         defaultWidth={PANE_DEFAULT_WIDTH}
         dismissible
         onClose={onClose}
         paneTitle={renderValue(displayConfig.title)}
       >
-        {/* <MetaSection
-          contentId="remoteKbResourceMetaContent"
-          createdDate={resource?.createdBy}
-          hideSource
-          lastUpdatedDate={resource?.lastUpdated}
-        /> */}
-
         {applyRenderStrategy(displayConfig.renderStrategy)}
       </Pane>
     </HasCommand>

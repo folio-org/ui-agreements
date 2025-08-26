@@ -79,7 +79,7 @@ const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) =>
 
 /* Main exported function */
 
-const getResultsDisplayConfig = (columns) => {
+const getResultsDisplayConfig = (columns, { iconKey } = {}) => {
   const resultColumns = [];
   const sortableColumns = [];
   const formatter = {};
@@ -99,7 +99,7 @@ const getResultsDisplayConfig = (columns) => {
       formatter[name] = (resource) => {
         const content = fn(resource);
 
-        if (index === 0) {
+        if (index === 0 && iconKey) {
           return (
             <AppIcon
               app="agreements"
