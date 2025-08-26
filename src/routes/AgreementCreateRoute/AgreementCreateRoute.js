@@ -1,12 +1,18 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+
 import { FormattedMessage } from 'react-intl';
 
 import { useMutation, useQueryClient } from 'react-query';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
+import {
+  CREATE,
+  getRefdataValuesByDesc,
+  useClaim,
+  useGetAccess
+} from '@folio/stripes-erm-components';
 
 import queryString from 'query-string';
 import { splitRelatedAgreements } from '../utilities/processRelatedAgreements';
@@ -16,7 +22,6 @@ import { urls } from '../../components/utilities';
 
 import { AGREEMENTS_ENDPOINT } from '../../constants';
 import { useAddFromBasket, useAgreementsRefdata, useBasket } from '../../hooks';
-
 
 const [
   AGREEMENT_STATUS,
@@ -62,6 +67,17 @@ const AgreementCreateRoute = ({
     getAgreementLinesToAdd
   } = useAddFromBasket(basket);
 
+  const accessControlData = useGetAccess({
+    resourceEndpoint: AGREEMENTS_ENDPOINT,
+    restrictions: [CREATE],
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', canDo]
+  });
+
+  const {
+    canCreate,
+    canCreateLoading,
+  } = accessControlData;
+
   const refdata = useAgreementsRefdata({
     desc: [
       AGREEMENT_STATUS,
@@ -90,10 +106,21 @@ const AgreementCreateRoute = ({
     }
   };
 
+  const { claim } = useClaim({ resourceEndpoint: AGREEMENTS_ENDPOINT });
+
   const { mutateAsync: postAgreement } = useMutation(
     [AGREEMENTS_ENDPOINT, 'ui-agreements', 'AgreementCreateRoute', 'createAgreement'],
     (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: payload }).json()
-      .then(({ id, name, linkedLicenses }) => {
+      .then(async (response) => {
+        const { id: agreementId } = response;
+        // Grab id from response and submit a claim ... CRUCIALLY await the response.
+        // TODO we need to think about failure cases here.
+        await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
+
+        return response;
+      })
+      .then((response) => {
+        const { id, name, linkedLicenses } = response;
         // Invalidate any linked license's linkedAgreements calls
         if (linkedLicenses?.length) {
           linkedLicenses.forEach(linkLic => {
@@ -106,9 +133,9 @@ const AgreementCreateRoute = ({
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
         handleClose(id);
+        return response;
       })
   );
-
 
   const handleSubmit = (agreement) => {
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
@@ -154,6 +181,14 @@ const AgreementCreateRoute = ({
 
   return (
     <View
+      accessControlData={{
+        isAccessControlLoading: canCreateLoading, // Special prop used by AgreementForm to avoid edit/create distinctions
+        isAccessDenied: !canCreate, // Special prop used by AgreementForm to avoid edit/create distinctions
+        ...accessControlData,
+        // Cheat these values for the sake of the form.
+        canApplyPolicies: true,
+        canApplyPoliciesLoading: false,
+      }}
       data={{
         agreementLines: getAgreementLinesToAdd(),
         agreementLinesToAdd: getAgreementLinesToAdd(),

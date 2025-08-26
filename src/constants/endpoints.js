@@ -6,6 +6,8 @@ export const LICENSE_CUSTPROP_ENDPOINT = 'licenses/custprops';
 export const AGREEMENTS_ENDPOINT = 'erm/sas';
 export const AGREEMENT_ENDPOINT = (agreementId) => `${AGREEMENTS_ENDPOINT}/${agreementId}`;
 
+export const AGREEMENTS_ACCESSCONTROL_ENDPOINT = 'erm/accessControl';
+
 export const AGREEMENT_ERESOURCES_ENDPOINT = (agreementId, filterPath) => `${AGREEMENT_ENDPOINT(agreementId)}/resources/${filterPath}`;
 export const AGREEMENT_ERESOURCES_ENDPOINT_STATIC = (agreementId, filterPath) => `${AGREEMENT_ENDPOINT(agreementId)}/resources/static/${filterPath}`;
 

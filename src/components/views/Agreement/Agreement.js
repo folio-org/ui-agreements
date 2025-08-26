@@ -22,6 +22,8 @@ import {
 import { AppIcon, TitleManager, HandlerManager, useStripes } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
+import { AccessControl, AccessControlErrorPane } from '@folio/stripes-erm-components';
+
 import { CustomPropertiesView, useCustomProperties } from '@k-int/stripes-kint-components';
 
 import DuplicateAgreementModal from '../../DuplicateAgreementModal';
@@ -54,6 +56,21 @@ import {
 } from '../../../constants';
 
 const Agreement = ({
+  accessControlData: {
+    canRead,
+    canReadLoading,
+    canEdit,
+    canEditLoading,
+    canDelete,
+    canDeleteLoading
+  } = {
+    canRead: true,
+    canReadLoading: false,
+    canEdit: true,
+    canEditLoading: false,
+    canDelete: true,
+    canDeleteLoading: false
+  }, // If not passed, assume everything is accessible and not loading...?
   components: {
     HelperComponent,
     TagButton
@@ -121,15 +138,16 @@ const Agreement = ({
   const getActionMenu = ({ onToggle }) => {
     const buttons = [];
 
-    if (stripes.hasPerm('ui-agreements.agreements.edit')) {
+    if (stripes.hasPerm('ui-agreements.agreements.edit') && canEdit !== false) {
       buttons.push(
         <Button
           key="clickable-dropdown-edit-agreement"
           buttonStyle="dropdownItem"
+          disabled={canEditLoading}
           id="clickable-dropdown-edit-agreement"
           onClick={handlers.onEdit}
         >
-          <Icon icon="edit">
+          <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'edit'}>
             <FormattedMessage id="ui-agreements.agreements.edit" />
           </Icon>
         </Button>
@@ -169,18 +187,19 @@ const Agreement = ({
       );
     }
 
-    if (stripes.hasPerm('ui-agreements.agreements.delete')) {
+    if (stripes.hasPerm('ui-agreements.agreements.delete') && canDelete !== false) {
       buttons.push(
         <Button
           key="clickable-dropdown-delete-agreement"
           buttonStyle="dropdownItem"
+          disabled={canDeleteLoading}
           id="clickable-dropdown-delete-agreement"
           onClick={() => {
             setShowDeleteConfirmationModal(true);
             onToggle();
           }}
         >
-          <Icon icon="trash">
+          <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'trash'}>
             <FormattedMessage id="ui-agreements.delete" />
           </Icon>
         </Button>
@@ -228,7 +247,15 @@ const Agreement = ({
     onClose: handlers.onClose,
   };
 
-  if (isLoading) return <LoadingPane data-loading {...paneProps} />;
+  if (isLoading || canReadLoading) return <LoadingPane data-loading {...paneProps} />;
+
+  if (!canRead) {
+    return (
+      <AccessControlErrorPane
+        {...paneProps}
+      />
+    );
+  }
 
   // istanbul ignore next
   const shortcuts = [
@@ -277,6 +304,7 @@ const Agreement = ({
               </Row>
               <AccordionSet initialStatus={getInitialAccordionsState()}>
                 <AllPeriods {...getSectionProps('allPeriods')} />
+                <AccessControl policies={data.policies} />
                 {data.agreement?.contacts?.length > 0 && <InternalContacts {...getSectionProps('internalContacts')} />}
                 <Lines {...getSectionProps('lines')} />
                 {controllingLicenses?.length > 0 && <ControllingLicense {...getSectionProps('controllingLicense')} />}
