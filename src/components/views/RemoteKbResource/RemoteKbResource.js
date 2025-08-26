@@ -49,6 +49,11 @@ const RemoteKbResource = ({
 }) => {
   const accordionStatusRef = createRef();
 
+  // add "altname: ['dummy1', 'dummy2']" to resource
+  if (resource && typeof resource === 'object' && !Array.isArray(resource)) {
+    resource.altname = ['dummy1', 'dummy2'];
+  }
+
   const applyJsonPath = (expression, res = resource) => JSONPath({ path: expression, json: res }) || [];
 
   const renderValue = (value, res = resource) => {
@@ -113,7 +118,12 @@ const RemoteKbResource = ({
         }
       case 'table': {
         const { formatter } = getResultsDisplayConfig(value.columns);
-        const resourceData = applyJsonPath(value.resource?.expression);
+        // MCL expects array of objects
+        const raw = applyJsonPath(value.resource?.expression);
+        const nameKey = value.columns[0].name;
+        const resourceData = Array.isArray(raw) && raw.length > 0 && typeof raw[0] !== 'object'
+          ? raw.map(v => ({ [nameKey]: v }))   // only wrap primitives
+          : raw;                           // leave objects alone
 
         return (
           resourceData.length > 0 ?
