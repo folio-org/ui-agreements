@@ -74,7 +74,7 @@ describe('GokbFilters', () => {
   });
 
   test('renders the Subject accordion (checkbox)', async () => {
-    await Accordion('ui-agreements.gokb.filters.subjects').exists();
+    await Accordion('ui-agreements.remoteKb.filters.subjects').exists();
   });
 
   test('clicking the Book radio button calls state handler', async () => {

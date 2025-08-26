@@ -5,119 +5,114 @@ jest.mock('jsonpath-plus', () => ({
   JSONPath: jest.fn(),
 }));
 
-jest.mock('../../../docs/gokb-search-v1', () => ({
-  configuration: {
-    results: {
-      fetch: {
-        baseUrl: 'https://gokbt.gbv.de/gokb/api/find',
-        mapping: {
-          results: 'records',
-          totalRecords: 'count'
+// configuration: {
+//   results: {
+//     fetch: {
+//       baseUrl: 'https://gokbt.gbv.de/gokb/api/find',
+//       mapping: {
+//         results: 'records',
+//         totalRecords: 'count'
+//       }
+//     },
+//     display: {
+const COLUMNS =
+  [
+    {
+      name: 'name',
+      type: 'String',
+      sortable: true,
+      value: {
+        type: 'access',
+        accessType: 'JSONPath',
+        expression: '$.name'
+      }
+    },
+    {
+      name: 'publicationType',
+      type: 'String',
+      sortable: false,
+      value: {
+        type: 'Handlebars',
+        templateString: "{{{replace this 'Instance' ''}}}",
+        value: {
+          type: 'access',
+          accessType: 'JSONPath',
+          expression: '$.componentType'
         }
+      }
+    },
+    {
+      name: 'isbns',
+      type: 'Array',
+      sortable: false,
+      arrayType: 'String',
+      renderStrategy: {
+        type: 'joinString',
+        separator: ', '
       },
-      display: {
-        columns: [
+      value: {
+        type: 'access',
+        accessType: 'JSONPath',
+        expression: "$.identifiers[?(@.namespace == 'isbn')].value"
+      }
+    },
+    {
+      name: 'otherIds',
+      type: 'Array',
+      sortable: false,
+      arrayType: 'String',
+      renderStrategy: {
+        type: 'joinString',
+        separator: ', '
+      },
+      value: {
+        type: 'HandlebarsEach',
+        templateString: '{{{namespaceName}}}: {{{value}}}',
+        value: {
+          type: 'access',
+          accessType: 'JSONPath',
+          expression: "$.identifiers[?(@.namespace == 'doi')]"
+        }
+      }
+    },
+    {
+      name: 'publicationDates',
+      type: 'Object',
+      sortable: false,
+      renderStrategy: {
+        type: 'renderPublicationDates'
+      },
+      value: {
+        type: 'displayDates',
+        value: [
           {
-            name: 'name',
-            type: 'String',
-            sortable: true,
-            value: {
-              type: 'access',
-              accessType: 'JSONPath',
-              expression: '$.name'
-            }
+            type: 'access',
+            accessType: 'JSONPath',
+            expression: '$.dateFirstOnline',
+            key: 'dateFirstOnline'
           },
           {
-            name: 'publicationType',
-            type: 'String',
-            sortable: false,
-            value: {
-              type: 'Handlebars',
-              templateString: "{{{replace this 'Instance' ''}}}",
-              value: {
-                type: 'access',
-                accessType: 'JSONPath',
-                expression: '$.componentType'
-              }
-            }
+            type: 'access',
+            accessType: 'JSONPath',
+            expression: '$.dateFirstInPrint',
+            key: 'dateFirstInPrint'
           },
           {
-            name: 'isbns',
-            type: 'Array',
-            sortable: false,
-            arrayType: 'String',
-            renderStrategy: {
-              type: 'joinString',
-              separator: ', '
-            },
-            value: {
-              type: 'access',
-              accessType: 'JSONPath',
-              expression: "$.identifiers[?(@.namespace == 'isbn')].value"
-            }
+            type: 'access',
+            accessType: 'JSONPath',
+            expression: '$.publishedFrom',
+            key: 'publishedFrom'
           },
           {
-            name: 'otherIds',
-            type: 'Array',
-            sortable: false,
-            arrayType: 'String',
-            renderStrategy: {
-              type: 'joinString',
-              separator: ', '
-            },
-            value: {
-              type: 'HandlebarsEach',
-              templateString: '{{{namespaceName}}}: {{{value}}}',
-              value: {
-                type: 'access',
-                accessType: 'JSONPath',
-                expression: "$.identifiers[?(@.namespace == 'doi')]"
-              }
-            }
-          },
-          {
-            name: 'publicationDates',
-            type: 'Object',
-            sortable: false,
-            renderStrategy: {
-              type: 'renderPublicationDates'
-            },
-            value: {
-              type: 'keyValue',
-              value: [
-                {
-                  type: 'access',
-                  accessType: 'JSONPath',
-                  expression: '$.dateFirstOnline',
-                  key: 'dateFirstOnline'
-                },
-                {
-                  type: 'access',
-                  accessType: 'JSONPath',
-                  expression: '$.dateFirstInPrint',
-                  key: 'dateFirstInPrint'
-                },
-                {
-                  type: 'access',
-                  accessType: 'JSONPath',
-                  expression: '$.publishedFrom',
-                  key: 'publishedFrom'
-                },
-                {
-                  type: 'access',
-                  accessType: 'JSONPath',
-                  expression: '$.publishedTo',
-                  key: 'publishedTo'
-                }
-              ]
-            }
+            type: 'access',
+            accessType: 'JSONPath',
+            expression: '$.publishedTo',
+            key: 'publishedTo'
           }
         ]
       }
     }
-  }
-}));
-
+  ];
 
 describe('getResultsDisplayConfig', () => {
   afterEach(() => {
@@ -125,15 +120,8 @@ describe('getResultsDisplayConfig', () => {
   });
 
   describe('getResultsDisplayConfig', () => {
-    test('returns endpoint and mapping data', () => {
-      const config = getResultsDisplayConfig();
-      expect(config.endpoint).toBe('https://gokbt.gbv.de/gokb/api/find');
-      expect(config.results).toBe('records');
-      expect(config.totalRecords).toBe('count');
-    });
-
     test('returns resultColumns with propertyPath and FormattedMessage label', () => {
-      const { resultColumns } = getResultsDisplayConfig();
+      const { resultColumns } = getResultsDisplayConfig(COLUMNS, { iconKey: 'titles' });
 
       resultColumns.forEach(col => {
         expect(col).toEqual(
@@ -158,7 +146,7 @@ describe('getResultsDisplayConfig', () => {
 
     test('formats "name" field using JSONPath (String)', () => {
       JSONPath.mockReturnValue(['Test Title']);
-      const { formatter } = getResultsDisplayConfig();
+      const { formatter } = getResultsDisplayConfig(COLUMNS, { iconKey: 'titles' });
 
       const result = formatter.name({});
 
@@ -175,7 +163,7 @@ describe('getResultsDisplayConfig', () => {
 
     test('formats "publicationType" using Handlebars with replace helper', () => {
       JSONPath.mockReturnValue(['JournalInstance']);
-      const { formatter } = getResultsDisplayConfig();
+      const { formatter } = getResultsDisplayConfig(COLUMNS, { iconKey: 'titles' });
 
       const result = formatter.publicationType({});
       expect(result).toBe('Journal');
@@ -183,7 +171,7 @@ describe('getResultsDisplayConfig', () => {
 
     test('formats "isbns" field as joined string from array', () => {
       JSONPath.mockReturnValue(['978-3-16-148410-0', '978-3-16-148411-7']);
-      const { formatter } = getResultsDisplayConfig();
+      const { formatter } = getResultsDisplayConfig(COLUMNS, { iconKey: 'titles' });
 
       const result = formatter.isbns({});
       expect(result).toBe('978-3-16-148410-0, 978-3-16-148411-7');
@@ -194,14 +182,14 @@ describe('getResultsDisplayConfig', () => {
         { namespaceName: 'DOI', value: '10.1234/abc' },
         { namespaceName: 'DOI', value: '10.5678/def' },
       ]);
-      const { formatter } = getResultsDisplayConfig();
+      const { formatter } = getResultsDisplayConfig(COLUMNS, { iconKey: 'titles' });
 
       const result = formatter.otherIds({});
       expect(result).toBe('DOI: 10.1234/abc, DOI: 10.5678/def');
     });
 
     test('formats "publicationDates" returns a JSX element', () => {
-      const { formatter } = getResultsDisplayConfig();
+      const { formatter } = getResultsDisplayConfig(COLUMNS, { iconKey: 'titles' });
       const result = formatter.publicationDates({
         dateFirstOnline: '2020-01-01',
         dateFirstInPrint: '2010-01-01',
@@ -216,7 +204,7 @@ describe('getResultsDisplayConfig', () => {
     // NEW
     test('publicationType formatter handles non-string values safely', () => {
       JSONPath.mockReturnValue([123]);
-      const { formatter } = getResultsDisplayConfig();
+      const { formatter } = getResultsDisplayConfig(COLUMNS, { iconKey: 'titles' });
       const result = formatter.publicationType({});
       expect(result).toBe('123');
     });
@@ -256,25 +244,25 @@ describe('getResultsDisplayConfig', () => {
     });
 
     test('publicationDates handles only publishedFrom', () => {
-      const { formatter } = getResultsDisplayConfig();
+      const { formatter } = getResultsDisplayConfig(COLUMNS, { iconKey: 'titles' });
       const result = formatter.publicationDates({ publishedFrom: '2015-01-01' });
       expect(result).toBeInstanceOf(Object);
     });
 
     test('publicationDates handles only publishedTo', () => {
-      const { formatter } = getResultsDisplayConfig();
+      const { formatter } = getResultsDisplayConfig(COLUMNS, { iconKey: 'titles' });
       const result = formatter.publicationDates({ publishedTo: '2022-01-01' });
       expect(result).toBeInstanceOf(Object);
     });
 
     test('publicationDates handles no input gracefully', () => {
-      const { formatter } = getResultsDisplayConfig();
+      const { formatter } = getResultsDisplayConfig(COLUMNS, { iconKey: 'titles' });
       const result = formatter.publicationDates({});
       expect(result).toBeInstanceOf(Object);
     });
 
     test('columns with no name are skipped from resultColumns and formatter', () => {
-      const config = getResultsDisplayConfig();
+      const config = getResultsDisplayConfig(COLUMNS, { iconKey: 'titles' });
 
       // simulate post-condition: no undefined propertyPaths
       config.resultColumns.forEach(col => {
