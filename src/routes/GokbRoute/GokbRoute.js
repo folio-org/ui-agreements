@@ -37,7 +37,7 @@ const GokbRoute = ({ location }) => {
   );
 
   const ViewComponent = (props) => (
-    <RemoteKbResource {...props} config={config} kbKey={kbKey} />
+    <RemoteKbResource {...props} config={config} />
   );
 
   console.log('GokbRoute location', location);
@@ -53,17 +53,23 @@ const GokbRoute = ({ location }) => {
   const resourceEndpoint = config.configuration.view.fetch.baseUrl;
   console.log('GokbRoute resourcePath', resourcePath);
 
+  const endpointData = {
+    endpoint: config.configuration.results.fetch.baseUrl,
+    ...config.configuration.results.fetch.mapping,
+  };
+
+  const columnsConfig = config.configuration.results.display.columns;
   const {
-    endpoint: gokbEndpoint,
+    // endpoint: gokbEndpoint,
     formatter,
     resultColumns,
     sortableColumns,
-    results: resultsPath,
-    totalRecords: totalRecordsPath,
-  } = getResultsDisplayConfig(config);
+    // results: resultsPath,
+    // totalRecords: totalRecordsPath,
+  } = getResultsDisplayConfig(columnsConfig);
 
   const fetchParameters = {
-    endpoint: gokbEndpoint,
+    endpoint: endpointData.endpoint,
     itemEndpoint: resourceEndpoint,
     SASQ_MAP: {},
   };
@@ -157,8 +163,8 @@ const GokbRoute = ({ location }) => {
       lookupResponseTransform={(data) => {
         const transformedData = {
           ...data,
-          totalRecords: data?.[totalRecordsPath],
-          results: data?.[resultsPath],
+          totalRecords: data?.[endpointData.totalRecords],
+          results: data?.[endpointData.results],
         };
         return transformedData;
       }}

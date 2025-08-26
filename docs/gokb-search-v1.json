@@ -95,7 +95,7 @@
               "type": "renderPublicationDates"
             },
             "value": {
-              "type": "keyValue",
+              "type": "displayDates",
               "value": [
                 {
                   "type": "access",
@@ -397,12 +397,12 @@
                         "createdBy": {
                           "type": "access",
                           "accessType": "JSONPath",
-                          "expression": "$.createdBy"
+                          "expression": "$.dateCreated"
                         },
                         "lastUpdated": {
                           "type": "access",
                           "accessType": "JSONPath",
-                          "expression": "$.lastUpdated"
+                          "expression": "$.lastUpdatedDisplay"
                         }
                       }
                     ]
@@ -415,9 +415,13 @@
                         "type": "keyValue",
                         "name": "publicationType",
                         "value": {
-                          "type": "access",
-                          "accessType": "JSONPath",
-                          "expression": "$.componentType"
+                          "type": "handlebars",
+                          "templateString": "{{{replace this 'Instance' ''}}}",
+                          "value": {
+                            "type": "access",
+                            "accessType": "JSONPath",
+                            "expression": "$.componentType"
+                          }
                         }
                       },
                       {
@@ -445,12 +449,36 @@
                     "colCount": "4",
                     "values": [
                       {
-                        "name": "dateFirstOnline",
-                        "type": "DatesDisplay",
+                        "name": "publicationDates",
+                        "type": "keyValue",
                         "value": {
-                          "type": "access",
-                          "accessType": "JSONPath",
-                          "expression": "$.firstAuthor"
+                          "type": "displayDates",
+                          "value": [
+                            {
+                              "type": "access",
+                              "accessType": "JSONPath",
+                              "expression": "$.dateFirstOnline",
+                              "key": "dateFirstOnline"
+                            },
+                            {
+                              "type": "access",
+                              "accessType": "JSONPath",
+                              "expression": "$.dateFirstInPrint",
+                              "key": "dateFirstInPrint"
+                            },
+                            {
+                              "type": "access",
+                              "accessType": "JSONPath",
+                              "expression": "$.publishedFrom",
+                              "key": "publishedFrom"
+                            },
+                            {
+                              "type": "access",
+                              "accessType": "JSONPath",
+                              "expression": "$.publishedTo",
+                              "key": "publishedTo"
+                            }
+                          ]
                         }
                       },
                       {
@@ -487,7 +515,7 @@
                     "colCount": "2",
                     "values": [
                       {
-                        "name": "gokbId",
+                        "name": "gokbid",
                         "type": "keyValue",
                         "value": {
                           "type": "access",
@@ -496,7 +524,7 @@
                         }
                       },
                       {
-                        "name": "gokdUuid",
+                        "name": "gokbuuid",
                         "type": "keyValue",
                         "value": {
                           "type": "access",

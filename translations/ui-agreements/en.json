@@ -856,6 +856,7 @@
   "remoteKb.publisher": "Publisher",
   "remoteKb.firstAuthor": "First author",
   "remoteKb.firstEditor": "First editor",
+  "remoteKb.edition": "Edition",
   "remoteKb.editionStatement": "Edition statement",
   "remoteKb.volume": "Volume",
   "remoteKb.subjects": "Subjects",

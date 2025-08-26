@@ -40,7 +40,7 @@ const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) =>
 
         return applyRenderStrategy(results, renderStrategy) || '';
       };
-    case 'keyValue':
+    case 'displayDates':
       return (resource) => {
         const combinedData = {};
         value.forEach(({ key, expression }) => {
@@ -79,9 +79,7 @@ const getFormatterFunction = (type, col, inheritedRenderStrategy = undefined) =>
 
 /* Main exported function */
 
-const getResultsDisplayConfig = (config) => {
-  const columns = config.configuration.results.display.columns;
-
+const getResultsDisplayConfig = (columns) => {
   const resultColumns = [];
   const sortableColumns = [];
   const formatter = {};
@@ -119,16 +117,10 @@ const getResultsDisplayConfig = (config) => {
     }
   });
 
-  const endpointData = {
-    endpoint: config.configuration.results.fetch.baseUrl,
-    ...config.configuration.results.fetch.mapping,
-  };
-
   return {
     resultColumns,
     sortableColumns,
-    formatter,
-    ...endpointData,
+    formatter
   };
 };
 
