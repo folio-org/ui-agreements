@@ -10,15 +10,28 @@ import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import { LoadingView } from '@folio/stripes/components';
 import { CalloutContext, useOkapiKy, useStripes } from '@folio/stripes/core';
-import { getRefdataValuesByDesc, useAgreement, useChunkedUsers } from '@folio/stripes-erm-components';
-
+import {
+  APPLY_POLICIES,
+  getRefdataValuesByDesc,
+  READ,
+  UPDATE,
+  useAgreement,
+  useChunkedUsers,
+  useClaim,
+  useGetAccess,
+  usePolicies
+} from '@folio/stripes-erm-components';
 
 import View from '../../components/views/AgreementForm';
 import NoPermissions from '../../components/NoPermissions';
 import { urls } from '../../components/utilities';
 
 import { joinRelatedAgreements, splitRelatedAgreements } from '../utilities/processRelatedAgreements';
-import { AGREEMENT_ENDPOINT, AGREEMENT_LINES_ENDPOINT } from '../../constants';
+import {
+  AGREEMENT_ENDPOINT,
+  AGREEMENT_LINES_ENDPOINT,
+  AGREEMENTS_ENDPOINT
+} from '../../constants';
 import { useAgreementsRefdata, useBasket } from '../../hooks';
 
 const [
@@ -59,6 +72,20 @@ const AgreementEditRoute = ({
 
   const { basket = [] } = useBasket();
 
+  const accessControlData = useGetAccess({
+    resourceEndpoint: AGREEMENTS_ENDPOINT,
+    resourceId: agreementId,
+    restrictions: [READ, UPDATE, APPLY_POLICIES],
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', agreementId, canDo]
+  });
+
+  const {
+    canRead,
+    canReadLoading,
+    canEdit,
+    canEditLoading,
+  } = accessControlData;
+
   const refdata = useAgreementsRefdata({
     desc: [
       AGREEMENT_STATUS,
@@ -74,7 +101,12 @@ const AgreementEditRoute = ({
     ]
   });
 
-  const { agreement, isAgreementLoading } = useAgreement({ agreementId });
+  const { agreement, isAgreementLoading = true } = useAgreement({
+    agreementId,
+    queryOptions: {
+      enabled: !canReadLoading && !!canRead
+    }
+  });
 
   /* START agreementLineCount
     the following is necessary to provide information of number of agreement lines in the edit form,
@@ -98,10 +130,20 @@ const AgreementEditRoute = ({
   // Users
   const { users } = useChunkedUsers(agreement?.contacts?.filter(c => c.user)?.map(c => c.user) ?? []);
 
+  const { claim } = useClaim({ resourceEndpoint: AGREEMENTS_ENDPOINT });
+
   const { mutateAsync: putAgreement } = useMutation(
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
     (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: payload }).json()
-      .then(async ({ name, linkedLicenses }) => {
+      .then(async (resp) => {
+        // Grab id from response and submit a claim ... CRUCIALLY await the response.
+        // TODO we need to think about failure cases here.
+        await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
+
+        return resp; // Allow it to continue downstream
+      })
+      .then(async (response) => {
+        const { name, linkedLicenses } = response;
         // Invalidate any linked license's linkedAgreements calls
         if (linkedLicenses?.length) {
           await Promise.all(linkedLicenses.map(linkLic => {
@@ -116,8 +158,16 @@ const AgreementEditRoute = ({
 
         callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
         history.push(`${urls.agreementView(agreementId)}${location.search}`);
+
+        return response;
       })
   );
+
+  const { policies } = usePolicies({
+    resourceEndpoint: AGREEMENTS_ENDPOINT,
+    resourceId: agreementId,
+    queryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'policies'],
+  });
 
   const getInitialValues = useCallback(() => {
     let initialValues = {};
@@ -162,11 +212,12 @@ const AgreementEditRoute = ({
           };
         })
     }));
+    initialValues.claimPolicies = policies;
 
     joinRelatedAgreements(initialValues);
 
     return initialValues;
-  }, [agreement, agreementId]);
+  }, [agreement, agreementId, policies]);
 
   const handleClose = () => {
     history.push(`${urls.agreementView(agreementId)}${location.search}`);
@@ -175,6 +226,7 @@ const AgreementEditRoute = ({
   const handleSubmit = async (values) => {
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
     splitRelatedAgreements(values, relationshipTypeValues);
+
     await putAgreement(values);
   };
 
@@ -187,6 +239,11 @@ const AgreementEditRoute = ({
 
   return (
     <View
+      accessControlData={{
+        isAccessControlLoading: canEditLoading || canReadLoading, // Special prop used by AgreementForm to avoid edit/create distinctions
+        isAccessDenied: !canRead || !canEdit, // Special prop used by AgreementForm to avoid edit/create distinctions
+        ...accessControlData
+      }}
       data={{
         agreementLineCount,
         agreementStatusValues: getRefdataValuesByDesc(refdata, AGREEMENT_STATUS),
