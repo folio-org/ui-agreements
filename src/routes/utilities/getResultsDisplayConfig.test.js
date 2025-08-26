@@ -5,16 +5,6 @@ jest.mock('jsonpath-plus', () => ({
   JSONPath: jest.fn(),
 }));
 
-// configuration: {
-//   results: {
-//     fetch: {
-//       baseUrl: 'https://gokbt.gbv.de/gokb/api/find',
-//       mapping: {
-//         results: 'records',
-//         totalRecords: 'count'
-//       }
-//     },
-//     display: {
 const COLUMNS =
   [
     {

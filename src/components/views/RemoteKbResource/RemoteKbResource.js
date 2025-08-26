@@ -123,7 +123,6 @@ const RemoteKbResource = ({
                 return acc;
               }, {})}
               contentData={resourceData}
-              // id="alternate-resource-names-list"
               formatter={formatter}
               visibleColumns={(value?.columns || []).map(c => c.name)}
             />
@@ -206,7 +205,6 @@ const RemoteKbResource = ({
   };
 
   const shortcuts = [
-    // {name: 'edit', handler: () => handleEdit() },
     {
       name: 'expandAllSections',
       handler: (e) => expandAllSections(e, accordionStatusRef),

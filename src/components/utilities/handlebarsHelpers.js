@@ -7,6 +7,14 @@ handlebars.registerHelper('replace', (text, search, replacement) => {
   return text.replace(new RegExp(search, 'g'), replacement);
 });
 
+handlebars.registerHelper('buildFilterString', (valuesArray, fieldName, comparator, joiner) => {
+  return valuesArray.map(v => `${fieldName}${comparator}${v}`).join(joiner);
+});
+
+handlebars.registerHelper('startsWith', (text, char) => {
+  return text?.startsWith(char);
+});
+
 export const handlebarsCompile = (templateString) => {
   if (typeof templateString !== 'string') {
     throw new Error('Template string must be a valid string');
