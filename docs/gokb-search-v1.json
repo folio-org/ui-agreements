@@ -567,7 +567,7 @@
                     "resource": {
                       "type": "access",
                       "accessType": "JSONPath",
-                      "expression": "$.identifiers[*]"
+                      "expression": "$.identifiers[?(@.namespace != 'issn' && @.namespace != 'eissn' && @.namespace != 'pissn' && @.namespace != 'isbn' && @.namespace != 'eisbn' && @.namespace != 'pisbn' && @.namespace != 'zdb' && @.namespace != 'ezb')]"
                     },
                     "columns": [
                       {
