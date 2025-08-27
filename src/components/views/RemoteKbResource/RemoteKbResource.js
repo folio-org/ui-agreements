@@ -77,8 +77,8 @@ const RemoteKbResource = ({
         const colSize = value.colCount ? Math.floor(12 / Number(value.colCount)) : 12;
         return (
           <>
-            {value.values.map((val, index) => (
-              <Col key={index} xs={colSize}>
+            {value.values.map((val) => (
+              <Col xs={colSize}>
                 {renderValue(val)}
               </Col>
             ))}
@@ -196,8 +196,8 @@ const RemoteKbResource = ({
           })
         );
       case 'rows': {
-        const rows = strategy.values?.map((val, index) => (
-          <Row key={index}>
+        const rows = strategy.values?.map((val) => (
+          <Row>
             {renderValue(val)}
           </Row>
         ));
