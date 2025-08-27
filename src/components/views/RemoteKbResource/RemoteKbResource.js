@@ -63,11 +63,11 @@ const RemoteKbResource = ({
   const getInitialAccordionsState = () => {
     const initialStatus = {};
     displayConfig.renderStrategy?.values
+      .find(section => section.renderStrategy?.type === 'accordionset')?.renderStrategy?.values
       .filter(section => section.collapsable)
       .forEach(section => {
         initialStatus[section.name] = false;
       });
-
     return initialStatus;
   };
 
