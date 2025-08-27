@@ -24,7 +24,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { handlebarsCompile, renderPublicationDates } from '../../utilities';
+import { handlebarsCompile, renderPublicationDates, stableKeyFrom } from '../../utilities';
 import getResultsDisplayConfig from '../../../routes/utilities/getResultsDisplayConfig';
 
 const PANE_DEFAULT_WIDTH = '50%';
@@ -73,7 +73,7 @@ const RemoteKbResource = ({
         return (
           <>
             {value.values.map((val) => (
-              <Col xs={colSize}>
+              <Col key={stableKeyFrom(val)} xs={colSize}>
                 {renderValue(val)}
               </Col>
             ))}
@@ -168,7 +168,7 @@ const RemoteKbResource = ({
         );
       case 'rows': {
         const rows = strategy.values?.map((val) => (
-          <Row>
+          <Row key={stableKeyFrom(val)}>
             {renderValue(val)}
           </Row>
         ));

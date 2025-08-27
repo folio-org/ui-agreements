@@ -14,3 +14,4 @@ export { default as getFilterConfig } from './getFilterConfig';
 export { default as transformFilterString } from './transformFilterString';
 export * from './handlebarsHelpers';
 export * from './specialTypes';
+export { default as stableKeyFrom } from './stableKeyFrom';
