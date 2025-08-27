@@ -31,7 +31,7 @@ const propTypes = {
   kbKey: PropTypes.string.isRequired,
 };
 
-const GokbFilters = ({ activeFilters = {}, filterHandlers, filterConfig, kbKey }) => {
+const RemoteKbFilters = ({ activeFilters = {}, filterHandlers, filterConfig, kbKey }) => {
   const { filterNames, filterOptions, filterTypes, initialFilterState } = filterConfig;
   const [filterState, setFilterState] = useState(initialFilterState);
 
@@ -125,6 +125,6 @@ const GokbFilters = ({ activeFilters = {}, filterHandlers, filterConfig, kbKey }
   );
 };
 
-GokbFilters.propTypes = propTypes;
+RemoteKbFilters.propTypes = propTypes;
 
-export default GokbFilters;
+export default RemoteKbFilters;

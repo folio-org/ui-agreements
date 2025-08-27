@@ -9,7 +9,7 @@ import {
 
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../test/helpers';
-import GokbFilters from './GokbFilters';
+import RemoteKbFilters from './RemoteKbFilters';
 
 const stateMock = jest.fn();
 
@@ -53,12 +53,12 @@ const mockConfig = {
 
 const kbKey = 'gokb';
 
-describe('GokbFilters', () => {
+describe('RemoteKbFilters', () => {
   beforeEach(() => {
     stateMock.mockClear();
     renderWithIntl(
       <MemoryRouter>
-        <GokbFilters
+        <RemoteKbFilters
           activeFilters={activeFilters}
           filterConfig={mockConfig}
           filterHandlers={filterHandlers}

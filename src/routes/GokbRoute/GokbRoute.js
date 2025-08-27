@@ -18,7 +18,7 @@ import { searchConfigTypeHandler } from '../utilities/adjustments/searchConfigCo
 
 import getResultsDisplayConfig from '../utilities/getResultsDisplayConfig';
 
-import GokbFilters from '../../components/GokbFilters';
+import RemoteKbFilters from '../../components/RemoteKbFilters';
 import {
   getFilterConfig,
   transformFilterString,
@@ -41,7 +41,7 @@ const GokbRoute = () => {
   };
 
   const FilterComponent = (props) => (
-    <GokbFilters {...props} filterConfig={filterConfig} kbKey={kbKey} />
+    <RemoteKbFilters {...props} filterConfig={filterConfig} kbKey={kbKey} />
   );
 
   const ViewComponent = (props) => (
