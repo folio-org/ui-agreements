@@ -30,7 +30,11 @@ import getResultsDisplayConfig from '../../../routes/utilities/getResultsDisplay
 const PANE_DEFAULT_WIDTH = '50%';
 
 const propTypes = {
-  displayConfig: PropTypes.shape({}).isRequired,
+  displayConfig: PropTypes.shape({
+    icon: PropTypes.string,
+    title: PropTypes.objectOf(PropTypes.string),
+    renderStrategy: PropTypes.shape({}),
+  }).isRequired,
   onClose: PropTypes.func.isRequired,
   resource: PropTypes.oneOfType([
     PropTypes.shape({}),
@@ -54,13 +58,13 @@ const RemoteKbResource = ({
     resource.altname = ['dummy1', 'dummy2'];
   }
 
-  const applyJsonPath = (expression, res = resource) => JSONPath({ path: expression, json: res }) || [];
+  const applyJsonPath = (expression) => JSONPath({ path: expression, json: resource }) || [];
 
-  const renderValue = (value, res = resource) => {
+  const renderValue = (value) => {
     switch (value.type) {
       case 'access':
         if (value.accessType === 'JSONPath') {
-          const result = applyJsonPath(value.expression, res);
+          const result = applyJsonPath(value.expression);
           return result.length > 0 ? result.join(', ') : <NoValue />;
         }
         return '';

@@ -104,7 +104,7 @@ const getResultsDisplayConfig = (columns, { iconKey } = {}) => {
             <AppIcon
               app="agreements"
               iconAlignment="baseline"
-              iconKey="title"
+              iconKey={iconKey}
               size="small"
             >
               {content}
