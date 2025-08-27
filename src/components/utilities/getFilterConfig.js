@@ -1,6 +1,6 @@
 import { FormattedMessage } from 'react-intl';
 
-const getFilterConfig = (config, kbKey) => {
+const getFilterConfig = (config) => {
   const filters = config?.configuration?.results?.fetch?.filters || [];
   const filterMap = {};
   const filterNames = [];
@@ -15,7 +15,7 @@ const getFilterConfig = (config, kbKey) => {
 
     if (Array.isArray(filter.values)) {
       filterOptions[filter.name] = filter.values.map(({ name, value }) => ({
-        label: <FormattedMessage id={`ui-agreements.${kbKey}.filters.${filter.name}.${name}`} />,
+        label: <FormattedMessage id={`ui-agreements.remoteKb.filters.${filter.name}.${name}`} />,
         value,
       }));
 
