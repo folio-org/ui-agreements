@@ -1,4 +1,4 @@
-/* generate unique key from any value */
+/* generate stable key from any value */
 const stableKeyFrom = (v) => {
   const s = (v && typeof v === 'object') ? JSON.stringify(v) : String(v);
   let h1 = 7;
