@@ -33,7 +33,9 @@ const propTypes = {
   displayConfig: PropTypes.shape({
     icon: PropTypes.string,
     title: PropTypes.objectOf(PropTypes.string),
-    renderStrategy: PropTypes.shape({}),
+    renderStrategy: PropTypes.shape({
+      values: PropTypes.arrayOf({}),
+    }),
   }).isRequired,
   onClose: PropTypes.func.isRequired,
   resource: PropTypes.oneOfType([
@@ -60,8 +62,8 @@ const RemoteKbResource = ({
   */
   const getInitialAccordionsState = () => {
     const initialStatus = {};
-    displayConfig.renderStrategy.values
-      ?.filter(section => section.collapsable)
+    displayConfig.renderStrategy?.values
+      .filter(section => section.collapsable)
       .forEach(section => {
         initialStatus[section.name] = false;
       });
@@ -165,20 +167,18 @@ const RemoteKbResource = ({
         ));
       case 'accordionset':
         return (
-          <>
-            <AccordionStatus ref={accordionStatusRef}>
-              <Row end="xs">
-                <Col xs>
-                  <ExpandAllButton />
-                </Col>
-              </Row>
-              <AccordionSet initialStatus={getInitialAccordionsState()}>
-                {strategy.values?.map((section) => (
-                  applyRenderStrategy(section.renderStrategy, section?.collapsable, section.name)
-                ))}
-              </AccordionSet>
-            </AccordionStatus>
-          </>
+          <AccordionStatus ref={accordionStatusRef}>
+            <Row end="xs">
+              <Col xs>
+                <ExpandAllButton />
+              </Col>
+            </Row>
+            <AccordionSet initialStatus={getInitialAccordionsState()}>
+              {strategy.values?.map((section) => (
+                applyRenderStrategy(section.renderStrategy, section?.collapsable, section.name)
+              ))}
+            </AccordionSet>
+          </AccordionStatus>
         );
       case 'rows': {
         const rows = strategy.values?.map((val) => (
