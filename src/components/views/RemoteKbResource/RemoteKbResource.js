@@ -53,11 +53,6 @@ const RemoteKbResource = ({
 }) => {
   const accordionStatusRef = createRef();
 
-  // add "altname: ['dummy1', 'dummy2']" to resource
-  if (resource && typeof resource === 'object' && !Array.isArray(resource)) {
-    resource.altname = ['dummy1', 'dummy2'];
-  }
-
   const applyJsonPath = (expression) => JSONPath({ path: expression, json: resource }) || [];
 
   const renderValue = (value) => {
@@ -148,48 +143,24 @@ const RemoteKbResource = ({
     }
   };
 
-  // helper for section rendering
-  const hasContent = (strategy) => {
-    if (!strategy) return false;
-
-    switch (strategy.type) {
-      case 'rows':
-        return Array.isArray(strategy.values) &&
-          strategy.values.some(val => {
-            const node = renderValue(val);
-            return node !== null && node !== undefined && node !== false && node !== '';
-          });
-
-      case 'sections':
-        return Array.isArray(strategy.values) &&
-          strategy.values.some(section => hasContent(section.renderStrategy));
-
-      default:
-        return false;
-    }
-  };
-
   const applyRenderStrategy = (strategy, collapsable = false, name = '') => {
     switch (strategy.type) {
       case 'sections':
         return (
-          strategy.values?.map((section, index) => {
-            if (!hasContent(section.renderStrategy)) return null;
+          strategy.values?.map((section) => {
             return section.collapsable ? (
-              <AccordionStatus key={section.name ?? index} ref={accordionStatusRef}>
-                {/* <AccordionStatus key={section.name ?? index} ref={accordionStatusRef}> */}
+              <AccordionStatus key={section.name} ref={accordionStatusRef}>
                 <Row end="xs">
                   <Col xs>
                     <ExpandAllButton accordionStatusRef={accordionStatusRef} />
                   </Col>
                 </Row>
-                {/* <AccordionSet initialStatus={{ [section.name]: false }}> */}
-                <AccordionSet>
+                <AccordionSet initialStatus={{ [section.name]: false }}>
                   {applyRenderStrategy(section.renderStrategy, true, section.name)}
                 </AccordionSet>
               </AccordionStatus>
             ) : (
-              <div key={section.name ?? index}>
+              <div key={section.name}>
                 {applyRenderStrategy(section.renderStrategy)}
               </div>
             );

@@ -170,7 +170,7 @@
             }
           },
           {
-            "name": "editionStatement",
+            "name": "edition",
             "type": "String",
             "value": {
               "type": "access",
