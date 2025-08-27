@@ -69,7 +69,7 @@ const RemoteKbResource = ({
           value={renderValue(value.value)}
         />;
       case 'row': {
-        const colSize = value.colCount ? Math.floor(12 / Number(value.colCount)) : 12;
+        const colSize = value.colCount ? (12 / Number(value.colCount)) : 12;
         return (
           <>
             {value.values.map((val) => (
