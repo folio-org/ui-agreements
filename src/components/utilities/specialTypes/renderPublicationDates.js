@@ -12,19 +12,19 @@ const renderPublicationDates = (resource) => {
     <div>
       {dateFirstOnline && (
         <div>
-          <FormattedMessage id="ui-agreements.remoteKb.publicationDates.firstOnline" />:{' '}
+          <FormattedMessage id="ui-agreements.remoteKb.publicationDates.online" />:{' '}
           <FormattedUTCDate value={dateFirstOnline} />
         </div>
       )}
       {dateFirstInPrint && (
         <div>
-          <FormattedMessage id="ui-agreements.remoteKb.publicationDates.firstInPrint" />:{' '}
+          <FormattedMessage id="ui-agreements.remoteKb.publicationDates.print" />:{' '}
           <FormattedUTCDate value={dateFirstInPrint} />
         </div>
       )}
       {(publishedFrom || publishedTo) && (
         <div>
-          <FormattedMessage id="ui-agreements.remoteKb.publicationDates.publishedFromTo" />:{' '}
+          <FormattedMessage id="ui-agreements.remoteKb.publicationDates.coverage" />:{' '}
           <span>
             {publishedFrom ? <FormattedUTCDate value={publishedFrom} /> : '*'}{' '}
             <Icon icon="arrow-right" size="small" />{' '}

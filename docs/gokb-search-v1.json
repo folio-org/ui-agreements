@@ -536,7 +536,7 @@
                   },
                   {
                     "type": "row",
-                    "colCount": "2",
+                    "colCount": "5",
                     "values": [
                       {
                         "name": "issns",
@@ -554,6 +554,33 @@
                           "type": "access",
                           "accessType": "JSONPath",
                           "expression": "$.identifiers[?(@.namespace == 'isbn' || @.namespace == 'eisbn' || @.namespace == 'pisbn')].value"
+                        }
+                      },
+                      {
+                        "name": "zdbids",
+                        "type": "keyValue",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.identifiers[?(@.namespace == 'zdb')].value"
+                        }
+                      },
+                      {
+                        "name": "ezbids",
+                        "type": "keyValue",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.identifiers[?(@.namespace == 'ezb')].value"
+                        }
+                      },
+                      {
+                        "name": "dois",
+                        "type": "keyValue",
+                        "value": {
+                          "type": "access",
+                          "accessType": "JSONPath",
+                          "expression": "$.identifiers[?(@.namespace == 'doi')].value"
                         }
                       }
                     ]
@@ -591,7 +618,7 @@
                     "resource": {
                       "type": "access",
                       "accessType": "JSONPath",
-                      "expression": "$.identifiers[?(@.namespace != 'issn' && @.namespace != 'eissn' && @.namespace != 'pissn' && @.namespace != 'isbn' && @.namespace != 'eisbn' && @.namespace != 'pisbn' && @.namespace != 'zdb' && @.namespace != 'ezb')]"
+                      "expression": "$.identifiers[*]"
                     },
                     "columns": [
                       {
