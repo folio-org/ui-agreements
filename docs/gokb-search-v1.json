@@ -589,85 +589,94 @@
               }
             },
             {
-              "name": "extendedTitleInformation",
+              "name": "accordions",
               "collapsable": true,
               "renderStrategy": {
-                "type": "rows",
+                "type": "accordionset",
                 "values": [
                   {
-                    "type": "table",
-                    "resource": {
-                      "type": "access",
-                      "accessType": "JSONPath",
-                      "expression": "$.altname[*]"
-                    },
-                    "columns": [
-                      {
-                        "name": "altNames",
-                        "type": "String",
-                        "value": {
-                          "type": "access",
-                          "accessType": "JSONPath",
-                          "expression": "$.altNames"
+                    "name": "extendedTitleInformation",
+                    "collapsable": true,
+                    "renderStrategy": {
+                      "type": "rows",
+                      "values": [
+                        {
+                          "type": "table",
+                          "resource": {
+                            "type": "access",
+                            "accessType": "JSONPath",
+                            "expression": "$.altname[*]"
+                          },
+                          "columns": [
+                            {
+                              "name": "altNames",
+                              "type": "String",
+                              "value": {
+                                "type": "access",
+                                "accessType": "JSONPath",
+                                "expression": "$.altNames"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "table",
+                          "resource": {
+                            "type": "access",
+                            "accessType": "JSONPath",
+                            "expression": "$.identifiers[*]"
+                          },
+                          "columns": [
+                            {
+                              "name": "type",
+                              "type": "String",
+                              "value": {
+                                "type": "access",
+                                "accessType": "JSONPath",
+                                "expression": "$.namespaceName"
+                              }
+                            },
+                            {
+                              "name": "identifier",
+                              "type": "String",
+                              "value": {
+                                "type": "access",
+                                "accessType": "JSONPath",
+                                "expression": "$.value"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "table",
+                          "resource": {
+                            "type": "access",
+                            "accessType": "JSONPath",
+                            "expression": "$.subjects[*]"
+                          },
+                          "columns": [
+                            {
+                              "name": "scheme",
+                              "type": "String",
+                              "value": {
+                                "type": "access",
+                                "accessType": "JSONPath",
+                                "expression": "$.scheme"
+                              }
+                            },
+                            {
+                              "name": "heading",
+                              "type": "String",
+                              "value": {
+                                "type": "access",
+                                "accessType": "JSONPath",
+                                "expression": "$.heading"
+                              }
+                            }
+                          ]
                         }
-                      }
-                    ]
-                  },
-                  {
-                    "type": "table",
-                    "resource": {
-                      "type": "access",
-                      "accessType": "JSONPath",
-                      "expression": "$.identifiers[*]"
-                    },
-                    "columns": [
-                      {
-                        "name": "type",
-                        "type": "String",
-                        "value": {
-                          "type": "access",
-                          "accessType": "JSONPath",
-                          "expression": "$.namespaceName"
-                        }
-                      },
-                      {
-                        "name": "identifier",
-                        "type": "String",
-                        "value": {
-                          "type": "access",
-                          "accessType": "JSONPath",
-                          "expression": "$.value"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "type": "table",
-                    "resource": {
-                      "type": "access",
-                      "accessType": "JSONPath",
-                      "expression": "$.subjects[*]"
-                    },
-                    "columns": [
-                      {
-                        "name": "scheme",
-                        "type": "String",
-                        "value": {
-                          "type": "access",
-                          "accessType": "JSONPath",
-                          "expression": "$.scheme"
-                        }
-                      },
-                      {
-                        "name": "heading",
-                        "type": "String",
-                        "value": {
-                          "type": "access",
-                          "accessType": "JSONPath",
-                          "expression": "$.heading"
-                        }
-                      }
-                    ]
+                      ]
+                    }
                   }
                 ]
               }

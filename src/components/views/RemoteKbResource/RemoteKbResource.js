@@ -54,6 +54,20 @@ const RemoteKbResource = ({
   const accordionStatusRef = createRef();
 
   const applyJsonPath = (expression) => JSONPath({ path: expression, json: resource }) || [];
+  /*
+    we need the initial status for each accordion that is collapsable
+    maybe later we use a config entry for the boolean value instead of false as default
+  */
+  const getInitialAccordionsState = () => {
+    const initialStatus = {};
+    displayConfig.renderStrategy.values
+      ?.filter(section => section.collapsable)
+      .forEach(section => {
+        initialStatus[section.name] = false;
+      });
+
+    return initialStatus;
+  };
 
   const renderValue = (value) => {
     switch (value.type) {
@@ -146,25 +160,25 @@ const RemoteKbResource = ({
   const applyRenderStrategy = (strategy, collapsable = false, name = '') => {
     switch (strategy.type) {
       case 'sections':
+        return strategy.values?.map((section) => (
+          applyRenderStrategy(section.renderStrategy, section?.collapsable, section.name)
+        ));
+      case 'accordionset':
         return (
-          strategy.values?.map((section) => {
-            return section.collapsable ? (
-              <AccordionStatus key={section.name} ref={accordionStatusRef}>
-                <Row end="xs">
-                  <Col xs>
-                    <ExpandAllButton accordionStatusRef={accordionStatusRef} />
-                  </Col>
-                </Row>
-                <AccordionSet initialStatus={{ [section.name]: false }}>
-                  {applyRenderStrategy(section.renderStrategy, true, section.name)}
-                </AccordionSet>
-              </AccordionStatus>
-            ) : (
-              <div key={section.name}>
-                {applyRenderStrategy(section.renderStrategy)}
-              </div>
-            );
-          })
+          <>
+            <AccordionStatus ref={accordionStatusRef}>
+              <Row end="xs">
+                <Col xs>
+                  <ExpandAllButton />
+                </Col>
+              </Row>
+              <AccordionSet initialStatus={getInitialAccordionsState()}>
+                {strategy.values?.map((section) => (
+                  applyRenderStrategy(section.renderStrategy, section?.collapsable, section.name)
+                ))}
+              </AccordionSet>
+            </AccordionStatus>
+          </>
         );
       case 'rows': {
         const rows = strategy.values?.map((val) => (
