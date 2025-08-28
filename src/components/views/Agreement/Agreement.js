@@ -1,6 +1,11 @@
-import React, { useMemo, useRef, useState, useEffect } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
+import { useQuery } from 'react-query';
+import baseKy from 'ky'; // FIXME don't do this
+
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+
+import { Registry } from '@folio/handler-stripes-registry';
 
 import {
   AccordionSet,
@@ -82,29 +87,16 @@ const Agreement = ({
   const historicalLicenses = licenses.filter(l => l.status.value === statuses.HISTORICAL);
 
   const stripes = useStripes();
-  const [packages, setPackages] = useState([]);
 
-  useEffect(() => {
-    const fetchPackages = async () => {
-      try {
-        // https://gokb.org/gokb/api/find?componentType=TIPP&title=b486f75d-bc3b-4f87-aedb-5f319081edbe&status=Current&max=10000
-        const response = await fetch('https://gokb.org/gokb/api/find?componentType=TIPP&max=3');
-        const pkgData = await response.json();
-        console.log('API response:', pkgData);
-        console.log('pkgData.records:', pkgData.records);
-        if (pkgData && Array.isArray(pkgData.records)) {
-          setPackages(pkgData.records);
-        } else {
-          console.warn('Unexpected response structure:', pkgData);
-        }
-      } catch (error) {
-        console.error('Error fetching packages:', error);
-      }
-    };
+  // FIXME Remove this, just fetching 3 GOKB titles for testing purposes
+  const { data: { records: gokbTitles } = {} } = useQuery(
+    ['GOKB', 'fetchTIPPS'],
+    () => baseKy.get('https://gokb.org/gokb/api/find?componentType=TIPP&max=3').json()
+  );
 
-    fetchPackages();
-  }, []);
-  console.log('Packages:', packages);
+  console.log('gokbTitles:', gokbTitles);
+
+
   const { data: custpropContexts = [] } = useAgreementsContexts();
   // Ensure the custprops with no contexts get rendered
   const contexts = ['isNull', ...custpropContexts];
@@ -256,26 +248,6 @@ const Agreement = ({
   // take list of package objects and for each, render a button
   // once the registery function is set up, get the button from goKbPackage renderfunction instead
 
-  const { addToBasket } = useBasket();
-
-  // Temporary button component for adding GoKB package to basket
-  const GoKbPackageButton = ({ pkg }) => (
-    <Button
-      key={pkg.uuid || pkg.id}
-      buttonStyle="primary"
-      onClick={() => addToBasket({
-        id: pkg.uuid || pkg.id,
-        name: pkg.name,
-        type: 'GoKBPackage',
-      })}
-    >
-      <FormattedMessage
-        defaultMessage={'Add "{pkgName}" to basket'}
-        id="ui-agreements.gokb.addToBasket"
-        values={{ pkgName: pkg.name }}
-      />
-    </Button>
-  );
 
   if (isLoading) return <LoadingPane data-loading {...paneProps} />;
 
@@ -300,6 +272,8 @@ const Agreement = ({
       }
     }
   ];
+
+  const renderGokbBasketButton = Registry.getRenderFunction('gokbTIPP', 'addToBasketButton');
 
   return (
     <HasCommand
@@ -354,14 +328,12 @@ const Agreement = ({
                   pathToNoteDetails={urls.notes()}
                 />
                 {/* Render a button for each GoKB package */}
-                {packages.length === 0 && (
+                {gokbTitles.length === 0 && (
                   <div>
-                    No GoKB packages found
+                    No GoKB titles found
                   </div>
                 )}
-                {packages.map(pkg => (
-                  <GoKbPackageButton key={pkg.uuid || pkg.id} pkg={pkg} />
-                ))}
+                {gokbTitles.map(tipp => renderGokbBasketButton(tipp))}
               </AccordionSet>
             </AccordionStatus>
           </TitleManager>
