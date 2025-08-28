@@ -1,7 +1,7 @@
-import { createRef } from 'react';
+import { createRef, isValidElement, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { JSONPath } from 'jsonpath-plus';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { AppIcon } from '@folio/stripes/core';
 
 import {
@@ -34,7 +34,7 @@ const propTypes = {
     icon: PropTypes.string,
     title: PropTypes.objectOf(PropTypes.string),
     renderStrategy: PropTypes.shape({
-      values: PropTypes.arrayOf({}),
+      values: PropTypes.arrayOf(PropTypes.shape({})),
     }),
   }).isRequired,
   onClose: PropTypes.func.isRequired,
@@ -53,22 +53,37 @@ const RemoteKbResource = ({
   onClose,
   queryProps: { isLoading },
 }) => {
+  const intl = useIntl();
   const accordionStatusRef = createRef();
 
   const applyJsonPath = (expression) => JSONPath({ path: expression, json: resource }) || [];
+
   /*
-    we need the initial status for each accordion that is collapsable
+    we need the initial status for each accordion
     maybe later we use a config entry for the boolean value instead of false as default
   */
-  const getInitialAccordionsState = () => {
-    const initialStatus = {};
+  const initialAccordionsState = (
     displayConfig.renderStrategy?.values
-      .find(section => section.renderStrategy?.type === 'accordionset')?.renderStrategy?.values
-      .filter(section => section.collapsable)
-      .forEach(section => {
-        initialStatus[section.name] = false;
-      });
-    return initialStatus;
+      ?.find(s => s.renderStrategy?.type === 'accordionset')
+      ?.renderStrategy?.values
+      ?.filter(s => s.collapsable)
+      ?.reduce((acc, s) => {
+        acc[s.name] = false;
+        return acc;
+      }, {}) || {}
+  );
+
+  // treat '', null/false, empty arrays as "empty"
+  const hasVisualContent = (node) => {
+    if (node == null || node === false) return false;
+    if (typeof node === 'string') return node.trim() !== '';
+    if (Array.isArray(node)) return node.some(hasVisualContent);
+
+    if (isValidElement(node)) {
+      if ('children' in (node.props || {})) return hasVisualContent(node.props.children);
+      return true;
+    }
+    return true;
   };
 
   const renderValue = (value) => {
@@ -168,12 +183,14 @@ const RemoteKbResource = ({
       case 'accordionset':
         return (
           <AccordionStatus ref={accordionStatusRef}>
-            <Row end="xs">
-              <Col xs>
-                <ExpandAllButton />
-              </Col>
-            </Row>
-            <AccordionSet initialStatus={getInitialAccordionsState()}>
+            {Object.keys(initialAccordionsState).length > 1 &&
+              <Row end="xs">
+                <Col xs>
+                  <ExpandAllButton />
+                </Col>
+              </Row>
+            }
+            <AccordionSet initialStatus={initialAccordionsState}>
               {strategy.values?.map((section) => (
                 applyRenderStrategy(section.renderStrategy, section?.collapsable, section.name)
               ))}
@@ -181,25 +198,39 @@ const RemoteKbResource = ({
           </AccordionStatus>
         );
       case 'rows': {
-        const rows = strategy.values?.map((val) => (
-          <Row key={stableKeyFrom(val)}>
-            {renderValue(val)}
-          </Row>
-        ));
+        const rows = (strategy.values || []).reduce((acc, val) => {
+          const child = renderValue(val);
+          if (!collapsable || hasVisualContent(child)) {
+            acc.push(<Row key={stableKeyFrom(val)}>{child}</Row>);
+          }
+          return acc;
+        }, []);
 
-        return collapsable ? (
-          <Accordion
-            id={`${name}`}
-            label={<FormattedMessage id={`ui-agreements.remoteKb.${name}`} />}
-          >
-            {rows}
-          </Accordion>
-        ) : (
-          <>{rows}</>
-        );
+        if (collapsable) {
+          const accordionTitle = intl.formatMessage({ id: `ui-agreements.remoteKb.${name}` });
+          const accordion = accordionTitle.toLowerCase();
+
+          return (
+            <Accordion
+              key={name}
+              id={name}
+              label={accordionTitle}
+            >
+              {rows.length
+                ? rows
+                : (
+                  <FormattedMessage
+                    id="ui-agreements.remoteKb.noAccordionContent"
+                    values={{ accordion }}
+                  />
+                )}
+            </Accordion>
+          );
+        }
+        return <>{rows}</>;
       }
       default:
-        return null;
+        return '';
     }
   };
 
