@@ -54,20 +54,24 @@ const IconDropdown = ({
 
 // Temporary button component for adding GoKB title/package to basket FROM a TIPP resource
 const GoKbBasketButton = ({ tipp }) => {
-  // FIXME FOr PACKAGE level we need to fetch the internal package and either add it as is or not give the option
-  const { addToBasket } = useBasket();
+  // FIXME For PACKAGE level we need to fetch the internal package and either add it as is or not give the option
+  const { addToBasket, existsInBasket, removeFromBasket } = useBasket();
+
+  const tippBasketItem = {
+    id: tipp.uuid || tipp.id,
+    name: tipp.name,
+    type: 'GoKBTitle',
+  };
+  const tippInBasket = existsInBasket(tippBasketItem.id);
+  const tippBasketFuction = tippInBasket ? removeFromBasket : addToBasket;
 
   return (
     <IconDropdown
       options={[
         {
-          icon: 'plus-sign',
-          label: <FormattedMessage id="ui-agreements.gokbSearch.basket.addTitleToBasket" />,
-          onClick: () => addToBasket({
-            id: tipp.uuid || tipp.id,
-            name: tipp.name,
-            type: 'GoKBTitle',
-          })
+          icon: tippInBasket ? 'trash' : 'plus-sign',
+          label: <FormattedMessage id={`ui-agreements.gokbSearch.basket.${tippInBasket ? 'removeTitleFromBasket' : 'addTitleToBasket'}`} />,
+          onClick: () => tippBasketFuction(tippBasketItem)
         },
         {
           icon: 'plus-sign',

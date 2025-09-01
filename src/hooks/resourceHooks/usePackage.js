@@ -1,0 +1,31 @@
+import { useOkapiKy } from '@folio/stripes/core';
+import { useQuery } from 'react-query';
+import { PACKAGE_ENDPOINT } from '../../constants';
+
+export const PACKAGE_QUERY_KEY_BASE = ['ERM', 'Packages'];
+
+const usePackage = ({
+  pkgId,
+  queryNamespaceGenerator = () => [...PACKAGE_QUERY_KEY_BASE, pkgId],
+  queryOptions = {}
+}) => {
+  const ky = useOkapiKy();
+
+  const packageQuery = useQuery(
+    queryNamespaceGenerator(),
+    () => ky.get(`${PACKAGE_ENDPOINT(pkgId)}`),
+    {
+      enabled: !!pkgId,
+      ...queryOptions
+    }
+  );
+
+  const { data } = packageQuery;
+
+  return ({
+    package: data,
+    packageQuery
+  });
+};
+
+export default usePackage;
