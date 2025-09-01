@@ -1,4 +1,4 @@
-import { createRef, isValidElement, useMemo, useRef } from 'react';
+import { createRef, isValidElement } from 'react';
 import PropTypes from 'prop-types';
 import { JSONPath } from 'jsonpath-plus';
 import { FormattedMessage, useIntl } from 'react-intl';
