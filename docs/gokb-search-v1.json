@@ -394,12 +394,12 @@
                     "values": [
                       {
                         "type": "metadata",
-                        "createdBy": {
+                        "createdDate": {
                           "type": "access",
                           "accessType": "JSONPath",
                           "expression": "$.dateCreated"
                         },
-                        "lastUpdated": {
+                        "lastUpdatedDate": {
                           "type": "access",
                           "accessType": "JSONPath",
                           "expression": "$.lastUpdatedDisplay"

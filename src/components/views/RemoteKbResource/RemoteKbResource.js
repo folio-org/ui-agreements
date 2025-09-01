@@ -114,9 +114,9 @@ const RemoteKbResource = ({
       case 'metadata':
         return <MetaSection
           contentId="remoteKbResourceMetaContent"
-          createdDate={renderValue(value.createdBy)}
+          createdDate={renderValue(value.createdDate)}
           hideSource
-          lastUpdatedDate={renderValue(value.lastUpdated)}
+          lastUpdatedDate={renderValue(value.lastUpdatedDate)}
         />;
       case 'heading':
         return (
@@ -178,7 +178,9 @@ const RemoteKbResource = ({
     switch (strategy.type) {
       case 'sections':
         return strategy.values?.map((section) => (
-          applyRenderStrategy(section.renderStrategy, section?.collapsable, section.name)
+          <div key={section.name}>
+            {applyRenderStrategy(section.renderStrategy, section?.collapsable, section.name)}
+          </div>
         ));
       case 'accordionset':
         return (
@@ -192,7 +194,9 @@ const RemoteKbResource = ({
             }
             <AccordionSet initialStatus={initialAccordionsState}>
               {strategy.values?.map((section) => (
-                applyRenderStrategy(section.renderStrategy, section?.collapsable, section.name)
+                <div key={section.name}>
+                  {applyRenderStrategy(section.renderStrategy, section?.collapsable, section.name)}
+                </div>
               ))}
             </AccordionSet>
           </AccordionStatus>
@@ -213,6 +217,7 @@ const RemoteKbResource = ({
           return (
             <Accordion
               key={name}
+              closedByDefault
               id={name}
               label={accordionTitle}
             >
