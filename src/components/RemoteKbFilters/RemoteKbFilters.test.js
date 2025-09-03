@@ -9,7 +9,7 @@ import {
 
 import { MemoryRouter } from 'react-router-dom';
 import translationsProperties from '../../../test/helpers';
-import GokbFilters from './GokbFilters';
+import RemoteKbFilters from './RemoteKbFilters';
 
 const stateMock = jest.fn();
 
@@ -53,12 +53,12 @@ const mockConfig = {
 
 const kbKey = 'gokb';
 
-describe('GokbFilters', () => {
+describe('RemoteKbFilters', () => {
   beforeEach(() => {
     stateMock.mockClear();
     renderWithIntl(
       <MemoryRouter>
-        <GokbFilters
+        <RemoteKbFilters
           activeFilters={activeFilters}
           filterConfig={mockConfig}
           filterHandlers={filterHandlers}
@@ -74,7 +74,7 @@ describe('GokbFilters', () => {
   });
 
   test('renders the Subject accordion (checkbox)', async () => {
-    await Accordion('ui-agreements.gokb.filters.subjects').exists();
+    await Accordion('ui-agreements.remoteKb.filters.subjects').exists();
   });
 
   test('clicking the Book radio button calls state handler', async () => {
