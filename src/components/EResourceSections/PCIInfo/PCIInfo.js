@@ -16,6 +16,7 @@ import {
 
 import { resourceClasses } from '../../../constants';
 import AddToBasketButton from '../../AddToBasketButton';
+import { buildPackageEntitlementOption } from '../../utilities';
 
 const propTypes = {
   pci: PropTypes.shape({
@@ -46,12 +47,7 @@ const PCIInfo = ({ pci }) => {
 
   const renderAddTitleToBasketButton = () => {
     const { name: packageName } = pci;
-    const entitlementOption = {
-      class: resourceClasses.PCI,
-      id: pci.id,
-      name: pci.name,
-      _object: pci,
-    };
+    const entitlementOption = buildPackageEntitlementOption(pci);
 
     return (
       <AddToBasketButton

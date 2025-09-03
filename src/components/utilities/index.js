@@ -13,3 +13,4 @@ export { getRefdataValuesByDesc } from '@folio/stripes-erm-components';
 export { filterObjectKeys, filterIgnoreObjectKeys } from './filterObjectKeys';
 export { default as getFilterConfig } from './getFilterConfig';
 export { default as transformFilterString } from './transformFilterString';
+export * from './entitlementOptions';
