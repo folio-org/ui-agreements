@@ -11,7 +11,7 @@ const usePackage = ({
 
   const packageQuery = useQuery(
     queryNamespaceGenerator(),
-    () => ky.get(`${PACKAGE_ENDPOINT(pkgId)}`),
+    () => ky.get(`${PACKAGE_ENDPOINT(pkgId)}`).json(),
     {
       enabled: !!pkgId,
       ...queryOptions

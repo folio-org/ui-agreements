@@ -15,7 +15,7 @@ const usePackages = ({
 
   const packagesQuery = useQuery(
     queryNamespaceGenerator(queryParams),
-    () => ky.get(`${PACKAGES_ENDPOINT}${queryString}`),
+    () => ky.get(`${PACKAGES_ENDPOINT}${queryString}`).json(),
     {
       ...queryOptions
     }
