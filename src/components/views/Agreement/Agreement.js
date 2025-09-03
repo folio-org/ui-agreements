@@ -88,10 +88,13 @@ const Agreement = ({
 
   const stripes = useStripes();
 
+  //const GOKB_QUERY = 'https://gokbt.gbv.de/gokb/api/find?componentType=TIPP&pkg=67c8b9eb-586b-437a-ac3f-cd37e7ad3bc9&max=5';
+  const GOKB_QUERY = 'https://gokbt.gbv.de/gokb/api/find?componentType=TIPP&max=50';
+
   // FIXME Remove this, just fetching 3 GOKB titles for testing purposes
   const { data: { records: gokbTitles } = {} } = useQuery(
     ['GOKB', 'fetchTIPPS'],
-    () => baseKy.get('https://gokb.org/gokb/api/find?componentType=TIPP&max=3').json()
+    () => baseKy.get(GOKB_QUERY).json()
   );
 
   console.log('gokbTitles:', gokbTitles);
@@ -274,6 +277,7 @@ const Agreement = ({
   ];
 
   const renderGokbBasketButton = Registry.getRenderFunction('gokbTIPP', 'addToBasketButton');
+  const renderGOKBTipps = Registry.getRenderFunction('gokbTIPP', 'gokbTIPPTable');
 
   return (
     <HasCommand
@@ -327,13 +331,9 @@ const Agreement = ({
                   pathToNoteCreate={urls.noteCreate()}
                   pathToNoteDetails={urls.notes()}
                 />
-                {/* Render a button for each GoKB package */}
-                {gokbTitles.length === 0 && (
-                  <div>
-                    No GoKB titles found
-                  </div>
-                )}
-                {gokbTitles.map(tipp => renderGokbBasketButton(tipp))}
+                {/* FIXME this shouldn't be here long term */}
+{/*             {gokbTitles?.map(tipp => renderGokbBasketButton(tipp))}*/}
+                {renderGOKBTipps(gokbTitles)}
               </AccordionSet>
             </AccordionStatus>
           </TitleManager>
