@@ -267,12 +267,12 @@
             {
               "name": "eisbn",
               "type": "Handlebars",
-              "templateString": "identifier=eisbn,{{query}}"
+              "templateString": "identifier=isbn,{{query}}"
             },
             {
               "name": "isbn",
               "type": "Handlebars",
-              "templateString": "identifier=isbn,{{query}}"
+              "templateString": "identifier=pisbn,{{query}}"
             },
             {
               "name": "eissn",
