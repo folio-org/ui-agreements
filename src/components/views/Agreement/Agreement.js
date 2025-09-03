@@ -52,6 +52,7 @@ import {
   AGREEMENT_ENTITY_TYPE,
   CUSTPROP_ENDPOINT,
   LICENSE_CUSTPROP_ENDPOINT,
+  LICENSES_INTERFACE,
   statuses
 } from '../../../constants';
 
@@ -100,6 +101,9 @@ const Agreement = ({
 
   const stripes = useStripes();
 
+  // Check if licenses interface is present
+  const hasLicensesInterface = stripes.hasInterface(LICENSES_INTERFACE);
+
   const { data: custpropContexts = [] } = useAgreementsContexts();
   // Ensure the custprops with no contexts get rendered
   const contexts = ['isNull', ...custpropContexts];
@@ -114,7 +118,7 @@ const Agreement = ({
       ]
     },
     queryParams: {
-      enabled: licenses?.length > 0
+      enabled: licenses?.length > 0 && hasLicensesInterface
     },
     returnQueryObject: true,
   });

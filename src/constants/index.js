@@ -13,6 +13,7 @@ export { default as syncStates } from './syncStates';
 
 export * from './columnManagerMappings';
 export * from './endpoints';
+export * from './licensesInterface';
 
 export {
   defaultAgreementsQIndex,
