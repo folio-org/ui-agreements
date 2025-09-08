@@ -190,8 +190,21 @@ const GoKbTIPPTable = ({ tipps }) => {
       />;
     }
   };
+
   return (
     <MultiColumnList
+      columnMapping={{
+        pkgName: <FormattedMessage id="ui-agreements.gokbSearch.basket.pkgName" />,
+        coverage: <FormattedMessage id="ui-agreements.eresources.coverage" />,
+        platform: <FormattedMessage id="ui-agreements.eresources.platform" />,
+        syncStatus: <FormattedMessage id="ui-agreements.gokbSearch.basket.syncStatus" />,
+        titleInKB: <FormattedMessage id="ui-agreements.gokbSearch.basket.titleInKB" />,
+        actions: <FormattedMessage id="ui-agreements.actions" />,
+      }}
+      columnWidths={{ // Enforce certain widths
+        coverage: 200,
+        actions: 75
+      }}
       contentData={tipps}
       formatter={formatter}
       interactive={false}
