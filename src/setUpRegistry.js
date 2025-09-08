@@ -1,42 +1,70 @@
+import { useCallback } from 'react';
+
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import noop from 'lodash/noop';
 
 import {
+  IconButton,
+  MultiColumnList,
+  Tooltip
+} from '@folio/stripes/components';
+// import { useChunkedIdTransformFetch } from '@folio/stripes/core';
+import useChunkedIdTransformFetch from './useChunkedIdTransformFetchDONOTMERGE'; // FIXME Swap to stripes-core once merged
+
+import {
   InternalContactsArrayDisplay,
   OrganizationsArrayDisplay,
-  TitleOnPlatformLink
+  TitleOnPlatformLink,
 } from '@folio/stripes-erm-components';
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import AgreementLookup from './AgreementLookup';
-import { useBasket, usePackages } from './hooks';
+import {
+  useBasket,
+  usePackages
+} from './hooks';
 
 import IconDropdown from './components/IconDropdown';
 import { buildPackageEntitlementOption } from './components/utilities';
-import { MultiColumnList } from '@folio/stripes/components';
 import Coverage from './components/Coverage';
+
 import { PCICoverage } from './components/EResourceSections';
+import { PCIS_ENDPOINT } from './constants';
 // This should probably eventually come from kint comps
 
 // Temporary button component for adding GoKB title/package to basket FROM a TIPP resource
-const GoKbBasketButton = ({ tipp }) => {
+const GoKbBasketButton = ({
+  tipp, // The GOKB tipp record
+  pci, // The PCI in local KB (if exists)
+  pciLoading, // Is the query which fetches the PCIs still loading?
+  pkg, // The PKG in local KB (if exists)
+  pkgLoading // Is the query which fetches the PCIs still loading?
+}) => {
   // FIXME For PACKAGE level we need to fetch the internal package and either add it as is or not give the option
   const { addToBasket, existsInBasket, removeFromBasket } = useBasket();
 
-  // We have to fetch the internal package for the GOKB package, and the internal PCIs for the GOKB TIPPs
-  const packagesQueryParams = generateKiwtQueryParams({
-    filters: [{
-      value: `(identifiers.identifier.ns.value==gokb_uuid&&identifiers.identifier.value==${tipp.tippPackageUuid})`
-    }],
-    stats: false
-  }, {});
-  const { packages = [], isLoading } = usePackages({
-    queryParams: packagesQueryParams
-  });
-  console.log("TIPP: %o", tipp);
-  console.log("PACKAGES: %o", packages);
 
+  if (!pkg && !pkgLoading) {
+    // This is an iconButton so we can do a tooltip
+    return (
+      <Tooltip
+        id={`pkg-for-tipp-${tipp.uuid}-not.present`}
+        text={<FormattedMessage id="ui-agreements.gokbSearch.basket.packageNameNotInKB" values={{ name: tipp.tippPackageName }} />}
+      >
+        {({ ref, ariaIds }) => (
+          <IconButton
+            ref={ref}
+            aria-describedby={ariaIds.sub}
+            aria-labelledby={ariaIds.text}
+            icon="ellipsis"
+          />
+        )}
+      </Tooltip>
+    );
+  }
+
+  // FIXME IF TITLE IS IN KB WE SHOULD DO SOMETHING DIFFERENT OFC
   const tippBasketItem = {
     id: tipp.uuid || tipp.id,
     name: tipp.name,
@@ -48,7 +76,7 @@ const GoKbBasketButton = ({ tipp }) => {
   // TODO TIPP needs to change depending on if the title is in the KB or not
 
   const getPackageOption = () => {
-    if (isLoading) {
+    if (pkgLoading) {
       return ({
         icon: 'spinner-ellipsis',
         label: <FormattedMessage id="ui-agreements.gokbSearch.basket.addPackageToBasket" />,
@@ -57,7 +85,7 @@ const GoKbBasketButton = ({ tipp }) => {
       });
     }
 
-    if (!isLoading && packages?.length === 0) {
+    if (!pkgLoading && !pkg) {
       return (
         {
           icon: 'plus-sign',
@@ -68,18 +96,6 @@ const GoKbBasketButton = ({ tipp }) => {
       );
     }
 
-    // Handle multiple package match case
-    if (packages.length > 1) {
-      return (
-        {
-          icon: 'times',
-          label: <FormattedMessage id="ui-agreements.gokbSearch.basket.multiplePackageMatches" />,
-          disabled: true
-        }
-      );
-    }
-
-    const pkg = packages[0];
     const packageInBasket = existsInBasket(pkg.id);
     const basketPackage = buildPackageEntitlementOption(pkg);
     const packageBasketFunction = packageInBasket ? removeFromBasket : addToBasket;
@@ -102,6 +118,13 @@ const GoKbBasketButton = ({ tipp }) => {
         },
         getPackageOption()
       ]}
+      triggerProps={{
+        'aria-label': 'wibble',
+        tooltipProps: {
+          id: `manage-basket-for-${tipp.uuid}`,
+          text: <FormattedMessage id="ui-agreements.gokbSearch.basket.manageBasketForPackageName" values={{ name: tipp.tippPackageName }} />
+        }
+      }}
     />
   );
 };
@@ -131,14 +154,6 @@ const GoKbTIPPTable = ({ tipps }) => {
     queryParams: packagesQueryParams
   });
 
-  const getPackageInKb = (pkgUuid) => packages.find(p => (
-    p.identifiers.find(io => (
-      io.status?.value === 'approved' &&
-      io.identifier.ns.value === 'gokb_uuid' &&
-      io.identifier.value === pkgUuid
-    )) !== null
-  ));
-
   console.log("PACKAGES: %o", packages);
 
   // Next let's first deduplicate Title uuids
@@ -149,49 +164,138 @@ const GoKbTIPPTable = ({ tipps }) => {
     }
   });
 
+  const pciChunkedQueryIdTransform = useCallback((chunkedIds) => {
+    // We need to do funky things with the title identifiers list here because useChunkedIdTransformFetch ONLY accepts a list of string ids
+    // So we will in turn use that list to lookup in tipps again here for the titleUuid AND packageUuid -- this isn't particularly clean though
+    const queryParams = generateKiwtQueryParams({
+      filters: [{
+        value: chunkedIds.map((titleId => {
+          const relevantTipp = tipps.find(t => t.tippTitleUuid === titleId);
 
-  const pciIdentifiersQuery = titleIdentifiers.map(pid => `(pti.ti.identifiers.identifier.ns.value==gokb_uuid&&pti.ti.identifiers.identifier.value==${pid}&&pti.ti.identifiers.status.value==approved)`).join('||');
-  const pciQueryParams = generateKiwtQueryParams({
-    filters: [{
-      value: pciIdentifiersQuery
-    }],
-    stats: false
-  }, {});
-  const { pcis = [], pcisAreLoading } = usePackages({
-    queryParams: packagesQueryParams
+          return `(
+            pti.titleInstance.identifiers.identifier.ns.value==gokb_uuid&&
+            pti.titleInstance.identifiers.identifier.value==${titleId}&&
+            pti.titleInstance.identifiers.status.value==approved&&
+            pkg.identifiers.identifier.ns.value==gokb_uuid&&
+            pkg.identifiers.identifier.value==${relevantTipp.tippPackageUuid}&&
+            pkg.identifiers.status.value==approved
+          )`.replace(/[\s]/gm, ''); // Whitespace to make development easier but breaks query
+        })).join('||')
+      }],
+      stats: false
+    }, {});
+    return `?${queryParams.join('&')}`;
+  }, [tipps]);
+
+  const { items: pcis, isLoading: arePcisLoading} = useChunkedIdTransformFetch({
+    endpoint: PCIS_ENDPOINT,
+    chunkedQueryIdTransform: pciChunkedQueryIdTransform,
+    ids: titleIdentifiers,
+    reduceFunction: (queries) => (
+      queries.reduce((acc, curr) => {
+        return [...acc, ...(curr?.data ?? [])];
+      }, [])
+    ),
+    STEP_SIZE: 7 // This doesn't return 414
   });
 
-  const getPackageInKb = (pkgUuid) => packages.find(p => (
-    p.identifiers.find(io => (
-      io.status?.value === 'approved' &&
-      io.identifier.ns.value === 'gokb_uuid' &&
-      io.identifier.value === pkgUuid
-    )) !== null
-  ));
+  console.log("PCIS: %o", pcis);
+
+  const getPackageInKb = (pkgUuid) => {
+    const filteredPackages = packages.filter(p => (
+      p.identifiers.find(io => (
+        io.status?.value === 'approved' &&
+        io.identifier.ns.value === 'gokb_uuid' &&
+        io.identifier.value === pkgUuid
+      ))
+    ));
+
+    // If we find multiple packages, for now grab the first one... is this an ok pattern?
+    return filteredPackages[0];
+  };
+
+  const getPCIInKB = (titleUuid, packageUuid) => {
+    const filteredPCIs = pcis.filter(pci => (
+      pci.pti.titleInstance.identifiers.find(io => (
+        io.status?.value === 'approved' &&
+        io.identifier.ns.value === 'gokb_uuid' &&
+        io.identifier.value === titleUuid
+      )) &&
+      pci.pkg.identifiers.find(io => (
+        io.status?.value === 'approved' &&
+        io.identifier.ns.value === 'gokb_uuid' &&
+        io.identifier.value === packageUuid
+      ))
+    ));
+
+    // If we find multiple PCIs, for now grab the first one... is this an ok pattern?
+    return filteredPCIs[0];
+  };
 
   const visibleColumns = ['pkgName', 'coverage', 'platform', 'syncStatus', 'titleInKB', 'actions'];
   const formatter = {
     coverage: (rowData) => {
-      // FIXME get PCI in KB
-
-      return <Coverage pci={rowData} />;
+      const pciInKB = getPCIInKB(rowData.tippTitleUuid, rowData.tippPackageUuid);
+      return (
+        <Coverage
+          pci={pciInKB ?? rowData}
+        />
+      ); // GOKB Coverage shape happens to be similar to ours, but this feels flaky.
     },
     pkgName: (rowData) => {
       const pkgInKB = getPackageInKb(rowData.tippPackageUuid);
-      if (pkgInKB !== null) {
-        return pkgInKB.name;
+      if (pkgInKB) { // Truthy cast here :(
+        return <Link to={`/erm/packages/${pkgInKB.id}`}>{pkgInKB.name}</Link>;
       }
       return rowData.tippPackageName; // Fallback to TIPP data if pkg data doesn't exist in KB
     },
     platform: (rowData) => {
+      const pciInKB = getPCIInKB(rowData.tippTitleUuid, rowData.tippPackageUuid);
 
-      <TitleOnPlatformLink id={rowData.hostPlatformUuid} /*platform={}*/ /*name*/ url={rowData.hostPlatform} />
+      return (
+        // Use pci data from KB if it exists
+        <TitleOnPlatformLink
+          id={pciInKB?.id ?? rowData.id}
+          // THIS FEELS VERY WRONG -- BUT IS ANALAGOUS TO BACKEND?
+          name={
+            pciInKB?.pti?.name ??
+            `'${rowData.tippTitleName}' on Platform '${rowData.hostPlatformName}'`}
+          platform={pciInKB?.pti?.platform?.name ?? rowData.hostPlatformName}
+          url={pciInKB?.pti?.url ?? rowData.url}
+        />
+      );
+    },
+    syncStatus: (rowData) => {
+      const pkgInKB = getPackageInKb(rowData.tippPackageUuid);
+      return (
+        <FormattedMessage
+          id={
+            pkgInKB ?
+              `ui-agreements.eresources.syncContentsFromSource.${pkgInKB.syncContentsFromSource}` :
+              'ui-agreements.gokbSearch.basket.packageNotInKB'
+          }
+        />
+      );
     },
     titleInKB: (rowData) => {
-      const pkgInKB = getPackageInKb(rowData.tippPackageUuid);
+      const titleInKB = getPCIInKB(rowData.tippTitleUuid, rowData.tippPackageUuid);
 
-      console.log("Pkg in KB: %o", pkgInKB);
+      if (!titleInKB) {
+        return <FormattedMessage id="ui-agreements.gokbSearch.basket.titleNotInKB" />;
+      }
+
+      return <Link to={`/erm/titles/${titleInKB.id}`}><FormattedMessage id="ui-agreements.gokbSearch.basket.viewInKB" /></Link>;
     },
+    actions: (rowData) => {
+      const pkgInKB = getPackageInKb(rowData.tippPackageUuid);
+      const titleInKB = getPCIInKB(rowData.tippTitleUuid, rowData.tippPackageUuid);
+
+      return <GoKbBasketButton
+        pci={titleInKB}
+        pkg={pkgInKB}
+        tipp={rowData}
+      />;
+    }
   };
   return (
     <MultiColumnList
