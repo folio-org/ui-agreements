@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import kyImport from 'ky';
@@ -12,6 +10,7 @@ import {
 } from '@folio/stripes/smart-components';
 
 import { SASQRoute } from '@k-int/stripes-kint-components';
+import RemoteKbResource from '../../components/views/RemoteKbResource';
 
 import config from '../../../docs/gokb-search-v1';
 
@@ -19,33 +18,45 @@ import { searchConfigTypeHandler } from '../utilities/adjustments/searchConfigCo
 
 import getResultsDisplayConfig from '../utilities/getResultsDisplayConfig';
 
-import GokbFilters from '../../components/GokbFilters';
+import RemoteKbFilters from '../../components/RemoteKbFilters';
 import {
   getFilterConfig,
   transformFilterString,
 } from '../../components/utilities';
 import getSortConfig from '../utilities/getSortConfig';
 
-const GokbRoute = ({ location }) => {
+const GokbRoute = () => {
   const kbKey = 'gokb';
-  const filterConfig = useMemo(() => getFilterConfig(config, kbKey), [kbKey]);
+  const columnsConfig = config.configuration.results.display.columns;
+  const displayConfig = config.configuration.view.display;
+  const filterConfig = getFilterConfig(config);
   const { filterMap, initialFilterState } = filterConfig;
 
+  const resourcePath = config.configuration.view.fetch.mapping.data;
+  const resourceEndpoint = config.configuration.view.fetch.baseUrl;
+
+  const endpointData = {
+    endpoint: config.configuration.results.fetch.baseUrl,
+    ...config.configuration.results.fetch.mapping,
+  };
+
   const FilterComponent = (props) => (
-    <GokbFilters {...props} filterConfig={filterConfig} kbKey={kbKey} />
+    <RemoteKbFilters {...props} filterConfig={filterConfig} kbKey={kbKey} />
+  );
+
+  const ViewComponent = (props) => (
+    <RemoteKbResource {...props} displayConfig={displayConfig} />
   );
 
   const {
-    endpoint: gokbEndpoint,
     formatter,
     resultColumns,
     sortableColumns,
-    results: resultsPath,
-    totalRecords: totalRecordsPath,
-  } = getResultsDisplayConfig();
+  } = getResultsDisplayConfig(columnsConfig, { iconKey: displayConfig.icon });
 
   const fetchParameters = {
-    endpoint: gokbEndpoint,
+    endpoint: endpointData.endpoint,
+    itemEndpoint: resourceEndpoint,
     SASQ_MAP: {},
   };
 
@@ -137,23 +148,23 @@ const GokbRoute = ({ location }) => {
       lookupResponseTransform={(data) => {
         const transformedData = {
           ...data,
-          totalRecords: data?.[totalRecordsPath],
-          results: data?.[resultsPath],
+          totalRecords: data?.[endpointData.totalRecords],
+          results: data?.[endpointData.results],
         };
         return transformedData;
       }}
       mainPaneProps={{
         actionMenu: renderActionMenu,
-        appIcon: <AppIcon app="agreements" iconKey="title" size="small" />,
+        appIcon: <AppIcon app="agreements" iconKey={displayConfig.icon} size="small" />,
         id: `${kbKey}-search-main-pane`,
-        paneTitle: <FormattedMessage id={`ui-agreements.${kbKey}.titles`} />,
+        paneTitle: <FormattedMessage id="ui-agreements.remoteKb.gokbTitles" />,
       }}
       mclProps={{
         columnWidths: { publicationDates: 300 },
         formatter,
         visibleColumns,
       }}
-      path={location.pathname}
+      path={`/erm/${kbKey}`}
       persistedPanesetProps={{
         id: `${kbKey}-search-main-paneset`,
       }}
@@ -164,14 +175,16 @@ const GokbRoute = ({ location }) => {
         sortableColumns,
       }}
       searchFieldAriaLabel={`input-${kbKey}-search`}
+      ViewComponent={ViewComponent}
+      viewQueryPromise={({ _ky, resourceId, endpoint }) => {
+        return kyImport.get(`${endpoint}/${resourceId}`).json();
+      }}
+      viewResponseTransform={(data) => {
+        const raw = data?.[resourcePath];
+        return Array.isArray(raw) ? raw[0] : raw;
+      }}
     />
   );
-};
-
-GokbRoute.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 export default GokbRoute;
