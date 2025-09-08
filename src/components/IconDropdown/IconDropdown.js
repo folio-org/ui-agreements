@@ -61,10 +61,23 @@ const IconDropdown = ({
         );
 
         if (Object.keys(tooltipProps).length > 0) {
+          const {
+            text: tooltipText,
+            id: tooltipId,
+            ...tooltipRest
+          } = tooltipProps;
           return (
             <Tooltip
+              id={
+                tooltipId ?? (
+                  id ?
+                    `${id}-trigger-tooltip` :
+                    'icon-dropdown-trigger-tooltip'
+                )
+              }
+              text={tooltipText ?? ''}
               triggerRef={triggerRef}
-              {...tooltipProps}
+              {...tooltipRest}
             >
               {({ ref, ariaIds }) => (
                 renderIconButtonWithRef(
