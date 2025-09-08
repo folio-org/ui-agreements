@@ -857,5 +857,11 @@
     "gokb.gokbuuid": "GOKB UUID",
     "gokb.publicationDates.firstOnline": "First online",
     "gokb.publicationDates.firstInPrint": "First in print",
-    "gokb.publicationDates.publishedFromTo": "Published from/to"
+    "gokb.publicationDates.publishedFromTo": "Published from/to",
+    "gokb.filters.type": "Type",
+    "gokb.filters.type.all": "All",
+    "gokb.filters.type.book": "Book",
+    "gokb.filters.type.database": "Database",
+    "gokb.filters.type.journal": "Journal",
+    "gokb.filters.type.other": "Other"
 }

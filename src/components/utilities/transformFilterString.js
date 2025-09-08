@@ -1,10 +1,4 @@
-import handlebars from 'handlebars';
-
-/* Register handlebar helpers */
-
-handlebars.registerHelper('buildFilterString', (valuesArray, fieldName, comparator, joiner) => {
-  return valuesArray.map(v => `${fieldName}${comparator}${v}`).join(joiner);
-});
+import { handlebarsCompile } from './handlebarsHelpers';
 
 const transformFilterString = (queryFilterString, config) => {
   const filters = config.configuration.results.fetch?.filters || [];
@@ -26,7 +20,7 @@ const transformFilterString = (queryFilterString, config) => {
       // find filter with name key from filters array
       const { filterString: { templateString, type: stringType } = {} } = filters.find(f => f.name === key) || {};
       if (stringType === 'Handlebars') {
-        const template = handlebars.compile(templateString);
+        const template = handlebarsCompile(templateString);
         groupStrings.push(template({ valuesArray: values }));
       }
     });
