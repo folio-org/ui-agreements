@@ -95,9 +95,63 @@ describe('IconDropdown', () => {
           }
         }
       },
-      testLabel: 'testing an IconDropdown with trigger tooltip props',
+      testLabel: 'testing an IconDropdown with trigger tooltip text prop',
+    },
+    {
+      props: {
+        options: [
+          {
+            icon: 'trash',
+            label: 'Do trash',
+            onClick: func1
+          }
+        ],
+        triggerProps: {
+          tooltipProps: {
+            id: 'tooltip-id',
+            text: 'I AM A TEST'
+          }
+        }
+      },
+      testLabel: 'testing an IconDropdown with trigger tooltip id prop',
+    },
+    {
+      props: {
+        id: 'top-level-id',
+        options: [
+          {
+            icon: 'trash',
+            label: 'Do trash',
+            onClick: func1
+          }
+        ],
+        triggerProps: {
+          tooltipProps: {
+            text: 'I AM A TEST'
+          }
+        }
+      },
+      testLabel: 'testing an IconDropdown with trigger tooltip prop and top level id',
+    },
+    {
+      props: {
+        options: [
+          {
+            icon: 'trash',
+            label: 'Do trash',
+            onClick: func1
+          }
+        ],
+        triggerProps: {
+          tooltipProps: {
+            id: 'tooltip-id',
+          }
+        }
+      },
+      testLabel: 'testing an IconDropdown with trigger tooltip prop but no text',
     }
   ])('$testLabel', ({ props }) => {
+    let triggerButton;
     beforeEach(() => {
       renderWithIntl(
         <IconDropdown
@@ -105,6 +159,8 @@ describe('IconDropdown', () => {
         />,
         translationsProperties
       );
+
+      triggerButton = IconButton(props.triggerProps?.ariaLabel ?? props.icon ?? 'ellipsis');
     });
 
     test('renders a Dropdown component', async () => {
@@ -116,11 +172,11 @@ describe('IconDropdown', () => {
     });
 
     test(`renders an IconButton trigger with ${props.icon ?? 'ellipsis'} icon`, async () => {
-      await IconButton().has({ icon: props.icon ?? 'ellipsis' });
+      await triggerButton.has({ icon: props.icon ?? 'ellipsis' });
     });
 
     test(`IconButton trigger has expected ariaLabel: ${props.triggerProps?.ariaLabel ?? props.icon ?? 'ellipsis'}`, async () => {
-      await IconButton(props.triggerProps?.ariaLabel ?? props.icon ?? 'ellipsis').exists();
+      await triggerButton.exists();
     });
 
     if (Object.keys(props.triggerProps?.tooltipProps ?? {}).length > 0) {
@@ -128,6 +184,20 @@ describe('IconDropdown', () => {
         // EXAMPLE working with Tooltip interactor
         // For some reason proximity == true breaks this...
         await Tooltip(props.triggerProps?.tooltipProps?.text).has({ proximity: true });
+      });
+
+      const tooltipId = props.triggerProps?.tooltipProps?.id ?? (
+        props.id ?
+          `${props.id}-trigger-tooltip` :
+          'icon-dropdown-trigger-tooltip'
+      );
+
+      // If there's no text then ariaLabelledBy vanishes
+      const ariaLabelledBy = props.triggerProps?.tooltipProps?.text ?
+        `${tooltipId}-text` : null;
+
+      test(`IconButton trigger should be aria-labelledBy ${ariaLabelledBy}`, async () => {
+        await triggerButton.has({ ariaLabelledBy });
       });
     } else {
       test('IconButton trigger should not have a tooltip', async () => {
@@ -138,7 +208,7 @@ describe('IconDropdown', () => {
     describe('clicking the trigger', () => {
       beforeEach(async () => {
         await waitFor(async () => {
-          await IconButton().click();
+          await triggerButton.click();
         });
       });
 
