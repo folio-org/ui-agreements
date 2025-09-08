@@ -42,8 +42,8 @@ const setUpRegistry = (registry) => {
 
   // GOKB TIPP resource
   const gokbTIPPResource = registry.registerResource('gokbTIPP');
-  gokbTIPPResource.setRenderFunction('addToBasketButton', tipp => <GokbBasketButton tipp={tipp} />);
-  gokbTIPPResource.setRenderFunction('gokbTIPPTable', tipps => <GokbTIPPTable tipps={tipps} />);
+  gokbTIPPResource.setRenderFunction('addToBasketButton', ({ tipp }) => <GokbBasketButton tipp={tipp} />);
+  gokbTIPPResource.setRenderFunction('gokbTIPPTable', ({ tipps }) => <GokbTIPPTable tipps={tipps} />);
 };
 
 export default setUpRegistry;
