@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 import noop from 'lodash/noop';
 
@@ -26,10 +26,9 @@ import {
 } from './hooks';
 
 import IconDropdown from './components/IconDropdown';
-import { buildPackageEntitlementOption } from './components/utilities';
+import { buildPackageEntitlementOption, buildPCIEntitlementOption } from './components/utilities';
 import Coverage from './components/Coverage';
 
-import { PCICoverage } from './components/EResourceSections';
 import { PCIS_ENDPOINT } from './constants';
 // This should probably eventually come from kint comps
 
@@ -41,7 +40,7 @@ const GoKbBasketButton = ({
   pkg, // The PKG in local KB (if exists)
   pkgLoading // Is the query which fetches the PCIs still loading?
 }) => {
-  // FIXME For PACKAGE level we need to fetch the internal package and either add it as is or not give the option
+  const intl = useIntl();
   const { addToBasket, existsInBasket, removeFromBasket } = useBasket();
 
 
@@ -64,16 +63,6 @@ const GoKbBasketButton = ({
     );
   }
 
-  // FIXME IF TITLE IS IN KB WE SHOULD DO SOMETHING DIFFERENT OFC
-  const tippBasketItem = {
-    id: tipp.uuid || tipp.id,
-    name: tipp.name,
-    type: 'GoKBTitle',
-  };
-  const tippInBasket = existsInBasket(tippBasketItem.id);
-  const tippBasketFuction = tippInBasket ? removeFromBasket : addToBasket;
-
-  // TODO TIPP needs to change depending on if the title is in the KB or not
 
   const getPackageOption = () => {
     if (pkgLoading) {
@@ -108,21 +97,59 @@ const GoKbBasketButton = ({
     });
   };
 
+  const getTitleOption = () => {
+    if (pciLoading) {
+      return ({
+        icon: 'spinner-ellipsis',
+        label: <FormattedMessage id="ui-agreements.gokbSearch.basket.addTitleToBasket" />,
+        onClick: () => noop,
+        disabled: true
+      });
+    }
+
+    const basketTipp = pci ?
+      buildPCIEntitlementOption(pci) :
+      {
+        id: tipp.uuid || tipp.id,
+        name: tipp.name,
+        type: 'GoKBTitle',
+      };
+
+    const tippInBasket = existsInBasket(basketTipp.id);
+    const tippBasketFuction = tippInBasket ? removeFromBasket : addToBasket;
+
+    return (
+      {
+        icon: tippInBasket ? 'trash' : 'plus-sign',
+        label: <FormattedMessage id={`ui-agreements.gokbSearch.basket.${tippInBasket ? 'removeTitleFromBasket' : 'addTitleToBasket'}`} />,
+        onClick: () => tippBasketFuction(basketTipp)
+      }
+    );
+  };
+
+  const tooltipLabel = intl.formatMessage(
+    {
+      id: 'ui-agreements.gokbSearch.basket.manageBasketForPackageName'
+    },
+    {
+      name: tipp.tippPackageName
+    }
+  );
+
+  const iconButtonId = `manage-basket-for-${tipp.uuid}`;
+
   return (
     <IconDropdown
       options={[
-        {
-          icon: tippInBasket ? 'trash' : 'plus-sign',
-          label: <FormattedMessage id={`ui-agreements.gokbSearch.basket.${tippInBasket ? 'removeTitleFromBasket' : 'addTitleToBasket'}`} />,
-          onClick: () => tippBasketFuction(tippBasketItem)
-        },
+        getTitleOption(),
         getPackageOption()
       ]}
       triggerProps={{
-        'aria-label': 'wibble',
+        id: iconButtonId,
+        'aria-label': tooltipLabel,
         tooltipProps: {
-          id: `manage-basket-for-${tipp.uuid}`,
-          text: <FormattedMessage id="ui-agreements.gokbSearch.basket.manageBasketForPackageName" values={{ name: tipp.tippPackageName }} />
+          id: iconButtonId, // Point tooltip aria-labels at iconButton id
+          text: tooltipLabel
         }
       }}
     />
@@ -150,11 +177,9 @@ const GoKbTIPPTable = ({ tipps }) => {
     }],
     stats: false
   }, {});
-  const { packages = [], packagesAreLoading } = usePackages({
+  const { packages = [], arePackagesLoading } = usePackages({
     queryParams: packagesQueryParams
   });
-
-  console.log("PACKAGES: %o", packages);
 
   // Next let's first deduplicate Title uuids
   const titleIdentifiers = [];
@@ -187,7 +212,7 @@ const GoKbTIPPTable = ({ tipps }) => {
     return `?${queryParams.join('&')}`;
   }, [tipps]);
 
-  const { items: pcis, isLoading: arePcisLoading} = useChunkedIdTransformFetch({
+  const { items: pcis, isLoading: arePcisLoading } = useChunkedIdTransformFetch({
     endpoint: PCIS_ENDPOINT,
     chunkedQueryIdTransform: pciChunkedQueryIdTransform,
     ids: titleIdentifiers,
@@ -198,8 +223,6 @@ const GoKbTIPPTable = ({ tipps }) => {
     ),
     STEP_SIZE: 7 // This doesn't return 414
   });
-
-  console.log("PCIS: %o", pcis);
 
   const getPackageInKb = (pkgUuid) => {
     const filteredPackages = packages.filter(p => (
@@ -292,7 +315,9 @@ const GoKbTIPPTable = ({ tipps }) => {
 
       return <GoKbBasketButton
         pci={titleInKB}
+        pciLoading={arePcisLoading}
         pkg={pkgInKB}
+        pkgLoading={arePackagesLoading}
         tipp={rowData}
       />;
     }
