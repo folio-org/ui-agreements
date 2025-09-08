@@ -11,6 +11,7 @@ import {
 // FIXME we should add this to kint components or erm components probably
 const IconDropdown = ({
   icon = 'ellipsis',
+  id,
   options = [],
   triggerProps: {
     tooltipProps = {},
@@ -22,8 +23,16 @@ const IconDropdown = ({
       renderMenu={() => {
         return (
           <DropdownMenu>
-            {options?.map((option) => (
+            {options?.map((option, optInd) => (
               <Button
+                key={
+                  option?.key ??
+                  (
+                    id ?
+                      `${id}-option-${option?.id ?? optInd}` :
+                      `icon-dropdown-option-${option?.id ?? optInd}`
+                  )
+                }
                 buttonStyle="dropdownItem"
                 onClick={option.onClick ?? noop}
               >
@@ -58,7 +67,13 @@ const IconDropdown = ({
               {...tooltipProps}
             >
               {({ ref, ariaIds }) => (
-                renderIconButtonWithRef(ref, { ariaLabelledBy: ariaIds.text })
+                renderIconButtonWithRef(
+                  ref,
+                  {
+                    'aria-labelledby': ariaIds.text,
+                    'aria-describedby': ariaIds.sub,
+                  }
+                )
               )}
             </Tooltip>
           );
