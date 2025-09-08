@@ -1,11 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { useQuery } from 'react-query';
-import baseKy from 'ky'; // FIXME don't do this
-
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-
-import { Registry } from '@folio/handler-stripes-registry';
 
 import {
   AccordionSet,
@@ -26,6 +21,8 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon, TitleManager, HandlerManager, useStripes } from '@folio/stripes/core';
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
+
+import { AccessControl, AccessControlErrorPane } from '@folio/stripes-erm-components';
 
 import { CustomPropertiesView, useCustomProperties } from '@k-int/stripes-kint-components';
 
@@ -48,17 +45,34 @@ import {
   UsageData,
 } from '../../AgreementSections';
 
-import { useAgreementsContexts, useBasket, useChunkedOrderLines } from '../../../hooks';
+import { useAgreementsContexts, useChunkedOrderLines } from '../../../hooks';
 
 import { urls } from '../../utilities';
 import {
   AGREEMENT_ENTITY_TYPE,
   CUSTPROP_ENDPOINT,
   LICENSE_CUSTPROP_ENDPOINT,
+  LICENSES_INTERFACE,
+  LICENSES_INTERFACE_VERSION,
   statuses
 } from '../../../constants';
 
 const Agreement = ({
+  accessControlData: {
+    canRead,
+    canReadLoading,
+    canEdit,
+    canEditLoading,
+    canDelete,
+    canDeleteLoading
+  } = {
+    canRead: true,
+    canReadLoading: false,
+    canEdit: true,
+    canEditLoading: false,
+    canDelete: true,
+    canDeleteLoading: false
+  }, // If not passed, assume everything is accessible and not loading...?
   components: {
     HelperComponent,
     TagButton
@@ -88,18 +102,8 @@ const Agreement = ({
 
   const stripes = useStripes();
 
-  //const GOKB_QUERY = 'https://gokbt.gbv.de/gokb/api/find?componentType=TIPP&pkg=67c8b9eb-586b-437a-ac3f-cd37e7ad3bc9&max=5';
-  //const GOKB_QUERY = 'https://gokbt.gbv.de/gokb/api/find?componentType=TIPP&max=30';
-  const GOKB_QUERY = 'https://gokbt.gbv.de/gokb/api/find?componentType=TIPP&title=00e46664-9d3b-458e-9fff-1f800fbb707e';
-
-  // FIXME Remove this, just fetching 3 GOKB titles for testing purposes
-  const { data: { records: gokbTitles } = {} } = useQuery(
-    ['GOKB', 'fetchTIPPS'],
-    () => baseKy.get(GOKB_QUERY).json()
-  );
-
-  console.log('gokbTitles:', gokbTitles);
-
+  // Check if licenses interface is present
+  const hasLicensesInterface = stripes.hasInterface(LICENSES_INTERFACE, LICENSES_INTERFACE_VERSION);
 
   const { data: custpropContexts = [] } = useAgreementsContexts();
   // Ensure the custprops with no contexts get rendered
@@ -115,7 +119,7 @@ const Agreement = ({
       ]
     },
     queryParams: {
-      enabled: licenses?.length > 0
+      enabled: licenses?.length > 0 && hasLicensesInterface
     },
     returnQueryObject: true,
   });
@@ -139,15 +143,16 @@ const Agreement = ({
   const getActionMenu = ({ onToggle }) => {
     const buttons = [];
 
-    if (stripes.hasPerm('ui-agreements.agreements.edit')) {
+    if (stripes.hasPerm('ui-agreements.agreements.edit') && canEdit !== false) {
       buttons.push(
         <Button
           key="clickable-dropdown-edit-agreement"
           buttonStyle="dropdownItem"
+          disabled={canEditLoading}
           id="clickable-dropdown-edit-agreement"
           onClick={handlers.onEdit}
         >
-          <Icon icon="edit">
+          <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'edit'}>
             <FormattedMessage id="ui-agreements.agreements.edit" />
           </Icon>
         </Button>
@@ -187,18 +192,19 @@ const Agreement = ({
       );
     }
 
-    if (stripes.hasPerm('ui-agreements.agreements.delete')) {
+    if (stripes.hasPerm('ui-agreements.agreements.delete') && canDelete !== false) {
       buttons.push(
         <Button
           key="clickable-dropdown-delete-agreement"
           buttonStyle="dropdownItem"
+          disabled={canDeleteLoading}
           id="clickable-dropdown-delete-agreement"
           onClick={() => {
             setShowDeleteConfirmationModal(true);
             onToggle();
           }}
         >
-          <Icon icon="trash">
+          <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'trash'}>
             <FormattedMessage id="ui-agreements.delete" />
           </Icon>
         </Button>
@@ -246,14 +252,15 @@ const Agreement = ({
     onClose: handlers.onClose,
   };
 
-  // Pick a title UUID from Gokb ( use the search that already exists)
-  // fetch the package for that title using the URL https://gokb.org/gokb/api/find?componentType=TIPP&title=<b486f75d-bc3b-4f87-aedb-5f319081edbe>&status=Current&max=10000
+  if (isLoading || canReadLoading) return <LoadingPane data-loading {...paneProps} />;
 
-  // take list of package objects and for each, render a button
-  // once the registery function is set up, get the button from goKbPackage renderfunction instead
-
-
-  if (isLoading) return <LoadingPane data-loading {...paneProps} />;
+  if (!canRead) {
+    return (
+      <AccessControlErrorPane
+        {...paneProps}
+      />
+    );
+  }
 
   // istanbul ignore next
   const shortcuts = [
@@ -276,8 +283,6 @@ const Agreement = ({
       }
     }
   ];
-
-  const GOKBTipps = Registry.getRenderFunction('gokbTIPP', 'gokbTIPPTable');
 
   return (
     <HasCommand
@@ -304,6 +309,7 @@ const Agreement = ({
               </Row>
               <AccordionSet initialStatus={getInitialAccordionsState()}>
                 <AllPeriods {...getSectionProps('allPeriods')} />
+                <AccessControl policies={data.policies} />
                 {data.agreement?.contacts?.length > 0 && <InternalContacts {...getSectionProps('internalContacts')} />}
                 <Lines {...getSectionProps('lines')} />
                 {controllingLicenses?.length > 0 && <ControllingLicense {...getSectionProps('controllingLicense')} />}
@@ -331,7 +337,6 @@ const Agreement = ({
                   pathToNoteCreate={urls.noteCreate()}
                   pathToNoteDetails={urls.notes()}
                 />
-                <GOKBTipps tipps={gokbTitles} />
               </AccordionSet>
             </AccordionStatus>
           </TitleManager>
