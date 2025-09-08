@@ -94,6 +94,7 @@ const GoKbBasketButton = ({
         id: tipp.uuid || tipp.id,
         name: tipp.name,
         type: 'GoKBTitle',
+        _object: tipp
       };
 
     const tippInBasket = existsInBasket(basketTipp.id);
