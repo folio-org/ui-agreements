@@ -89,7 +89,8 @@ const Agreement = ({
   const stripes = useStripes();
 
   //const GOKB_QUERY = 'https://gokbt.gbv.de/gokb/api/find?componentType=TIPP&pkg=67c8b9eb-586b-437a-ac3f-cd37e7ad3bc9&max=5';
-  const GOKB_QUERY = 'https://gokbt.gbv.de/gokb/api/find?componentType=TIPP&max=50';
+  //const GOKB_QUERY = 'https://gokbt.gbv.de/gokb/api/find?componentType=TIPP&max=30';
+  const GOKB_QUERY = 'https://gokbt.gbv.de/gokb/api/find?componentType=TIPP&title=00e46664-9d3b-458e-9fff-1f800fbb707e';
 
   // FIXME Remove this, just fetching 3 GOKB titles for testing purposes
   const { data: { records: gokbTitles } = {} } = useQuery(
@@ -276,8 +277,7 @@ const Agreement = ({
     }
   ];
 
-  const renderGokbBasketButton = Registry.getRenderFunction('gokbTIPP', 'addToBasketButton');
-  const renderGOKBTipps = Registry.getRenderFunction('gokbTIPP', 'gokbTIPPTable');
+  const GOKBTipps = Registry.getRenderFunction('gokbTIPP', 'gokbTIPPTable');
 
   return (
     <HasCommand
@@ -331,9 +331,7 @@ const Agreement = ({
                   pathToNoteCreate={urls.noteCreate()}
                   pathToNoteDetails={urls.notes()}
                 />
-                {/* FIXME this shouldn't be here long term */}
-{/*             {gokbTitles?.map(tipp => renderGokbBasketButton(tipp))}*/}
-                {renderGOKBTipps(gokbTitles)}
+                <GOKBTipps tipps={gokbTitles} />
               </AccordionSet>
             </AccordionStatus>
           </TitleManager>
