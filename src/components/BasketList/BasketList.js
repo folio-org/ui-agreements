@@ -1,7 +1,12 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { uniqueId } from 'lodash';
+import { Link } from 'react-router-dom';
+
+
+import uniqueId from 'lodash/uniqueId';
 import { FormattedMessage } from 'react-intl';
+
+import { AppIcon } from '@folio/stripes/core';
 
 import {
   Checkbox,
@@ -13,7 +18,7 @@ import {
 import { EResourceType } from '@folio/stripes-erm-components';
 import Coverage from '../Coverage';
 import EResourceLink from '../EResourceLink';
-import { resourceClasses } from '../../constants';
+import { BASKET_TYPE_GOKB_TITLE, resourceClasses } from '../../constants';
 
 const BasketList = ({
   basket,
@@ -23,10 +28,7 @@ const BasketList = ({
   selectedItems
 }) => {
   const getTextName = useCallback((basketItem) => {
-    if (
-      basketItem.class &&
-      basketItem.class === resourceClasses.PACKAGE
-    ) {
+    if (basketItem.class === resourceClasses.PACKAGE) {
       return basketItem._object.name ?? basketItem.name;
     }
 
@@ -42,17 +44,81 @@ const BasketList = ({
 
   const renderName = useCallback((basketItem) => {
     if (
-      basketItem.class &&
-      (
-        basketItem.class === resourceClasses.PACKAGE ||
-        basketItem.class === resourceClasses.PCI
-      )
+      basketItem.class === resourceClasses.PACKAGE ||
+      basketItem.class === resourceClasses.PCI
     ) {
-      return <EResourceLink eresource={basketItem} />;
+      return (
+        <AppIcon
+          app="agreements"
+          iconKey={basketItem.class === resourceClasses.PACKAGE ? 'package' : 'title'}
+          size="small"
+        >
+          <EResourceLink eresource={basketItem} />
+        </AppIcon>
+      );
+    }
+
+    // Link direct to GOKB View if possible
+    if (basketItem.type === BASKET_TYPE_GOKB_TITLE) {
+      return (
+        <Link
+          to={`/erm/gokb/${basketItem.id}?query=${basketItem.name}`}
+        >
+          {basketItem.name}
+        </Link>
+      );
     }
 
     // If in doubt, fallback to basketItem name
     return basketItem.name;
+  }, []);
+
+  const renderPublicationType = useCallback((basketItem) => {
+    if (basketItem.type === BASKET_TYPE_GOKB_TITLE) {
+      return basketItem.tipp?.componentType;
+    }
+
+    // This defaults to "Title" in unknown circumstances
+    return <EResourceType resource={basketItem} />;
+  }, []);
+
+  const renderPackage = useCallback((basketItem) => {
+    if (basketItem.class === resourceClasses.PCI) {
+      const pkg = basketItem?._object?.pkg;
+
+      return <EResourceLink eresource={pkg} />;
+    }
+
+    if (basketItem.type === BASKET_TYPE_GOKB_TITLE) {
+      if (basketItem.pkg) {
+        return <EResourceLink eresource={basketItem.pkg} />;
+      }
+      return basketItem.tipp?.tippPackageName;
+    }
+
+    // Fallback to no package rendered
+    return null;
+  }, []);
+
+  const renderPlatform = useCallback((basketItem) => {
+    if (basketItem.class === resourceClasses.PCI) {
+      return basketItem?._object?.pti?.platform?.name ||
+        basketItem?._object?.nominalPlatform?.name;
+    }
+
+    if (basketItem.type === BASKET_TYPE_GOKB_TITLE) {
+      return basketItem.tipp?.hostPlatformName;
+    }
+
+    return null;
+  }, []);
+
+  const renderCoverage = useCallback((basketItem) => {
+    if (basketItem.class === resourceClasses.PCI) {
+      return <Coverage pci={basketItem._object} />;
+    } else if (basketItem.type === BASKET_TYPE_GOKB_TITLE) {
+      return <Coverage pci={basketItem.tipp} />;
+    }
   }, []);
 
   return (
@@ -74,7 +140,7 @@ const BasketList = ({
       }}
       columnWidths={{
         coverage: { min: 250, max: 320 },
-        name: 300,
+        name: 400,
         package: { max: 400 },
       }}
       contentData={basket}
@@ -87,19 +153,11 @@ const BasketList = ({
           />
         ),
         name: renderName,
-        publicationType: resource => <EResourceType resource={resource} />,
-        package: resource => {
-          const pkg = resource?._object?.pkg;
-          if (!pkg) return null;
-
-          return <EResourceLink eresource={pkg} />;
-        },
-        platform: resource => (
-          resource?._object?.pti?.platform?.name ||
-          resource?._object?.nominalPlatform?.name || null
-        ),
+        publicationType: renderPublicationType,
+        package: renderPackage,
+        platform: renderPlatform,
         // The resource below fits the same shape as the eresources in an agreement line, so we pass them in the eResource prop.
-        coverage: resource => <Coverage eResource={resource} />,
+        coverage: renderCoverage,
         action: resource => (
           <Tooltip
             id={uniqueId('removeBasketItemBtn')}
