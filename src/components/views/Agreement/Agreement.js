@@ -143,12 +143,12 @@ const Agreement = ({
   const getActionMenu = ({ onToggle }) => {
     const buttons = [];
 
-    if (stripes.hasPerm('ui-agreements.agreements.edit') && canEdit !== false) {
+    if (canEdit !== false) {
       buttons.push(
         <Button
           key="clickable-dropdown-edit-agreement"
           buttonStyle="dropdownItem"
-          disabled={canEditLoading}
+          disabled={!stripes.hasPerm('ui-agreements.agreements.edit') || canEditLoading}
           id="clickable-dropdown-edit-agreement"
           onClick={handlers.onEdit}
         >
@@ -192,12 +192,12 @@ const Agreement = ({
       );
     }
 
-    if (stripes.hasPerm('ui-agreements.agreements.delete') && canDelete !== false) {
+    if (canDelete !== false) {
       buttons.push(
         <Button
           key="clickable-dropdown-delete-agreement"
           buttonStyle="dropdownItem"
-          disabled={canDeleteLoading}
+          disabled={!stripes.hasPerm('ui-agreements.agreements.delete') || canDeleteLoading}
           id="clickable-dropdown-delete-agreement"
           onClick={() => {
             setShowDeleteConfirmationModal(true);
