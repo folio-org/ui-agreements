@@ -24,7 +24,7 @@ import { PCIS_ENDPOINT } from '../../constants';
 
 import GokbBasketButton from './GokbBasketButton';
 
-const GoKbTIPPTable = ({ tipps }) => {
+const GoKbTIPPTable = ({ tipps = [] }) => {
   // Shows a row per TIPP
   // IF the package is not yet in the DB, we can show the name, coverage and a warning in titleInKb?
 
@@ -202,7 +202,7 @@ const GoKbTIPPTable = ({ tipps }) => {
         actions: <FormattedMessage id="ui-agreements.actions" />,
       }}
       columnWidths={{ // Enforce certain widths
-        coverage: 200,
+        coverage: 250,
         actions: 75
       }}
       contentData={tipps}

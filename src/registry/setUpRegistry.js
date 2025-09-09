@@ -7,7 +7,7 @@ import {
 
 import AgreementLookup from '../AgreementLookup';
 
-import { GokbBasketButton, GokbTIPPTable } from './GokbTIPP';
+import { GokbBasketButton, GokbTIPPTable } from './Gokb';
 
 const setUpRegistry = (registry) => {
   // Agreement Resource
@@ -41,9 +41,9 @@ const setUpRegistry = (registry) => {
   ermPkgReg.setViewResource(pkg => `/erm/packages/${pkg.id}`);
 
   // GOKB TIPP resource
-  const gokbTIPPResource = registry.registerResource('gokbTIPP');
+  const gokbTIPPResource = registry.registerResource('gokb');
   gokbTIPPResource.setRenderFunction('addToBasketButton', ({ tipp }) => <GokbBasketButton tipp={tipp} />);
-  gokbTIPPResource.setRenderFunction('gokbTIPPTable', ({ tipps }) => <GokbTIPPTable tipps={tipps} />);
+  gokbTIPPResource.setRenderFunction('tippTable', ({ tipps }) => <GokbTIPPTable tipps={tipps} />);
 };
 
 export default setUpRegistry;
