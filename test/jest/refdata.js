@@ -495,6 +495,143 @@ const refdata = [
         label: 'Video'
       }
     ]
+  },
+  {
+    id: '2c9180a2992c287001992c32c2710065',
+    desc: 'IdentifierOccurrence.Status',
+    internal: true,
+    values: [
+      {
+        id: '2c9180a2992c287001992dc2ea7c00a5',
+        value: 'error',
+        label: 'error'
+      },
+      {
+        id: '2c9180a2992c287001992c32c2740066',
+        value: 'approved',
+        label: 'approved'
+      }
+    ]
+  },
+  {
+    id: '20e97605b341098d6afb7463852dcd08',
+    desc: 'Pkg.AvailabilityScope',
+    internal: false,
+    values: [
+      {
+        id: '2c9180a2992c287001992c3281480041',
+        value: 'global',
+        label: 'Global'
+      },
+      {
+        id: '2c9180a2992c287001992c32c4a90068',
+        value: 'consortium',
+        label: 'Consortium'
+      },
+      {
+        id: '611cd351331e1ce41bf4822497b0a92e',
+        value: 'missingavailabilityscoperefdatavalue',
+        label: 'missingAvailabilityScopeRefDataValue'
+      },
+      {
+        id: '2c9180a2992c287001992c32df43006c',
+        value: 'local',
+        label: 'Local'
+      },
+      {
+        id: '2c9180a2992c287001992c32f014006f',
+        value: 'other',
+        label: 'Other'
+      },
+      {
+        id: '2c9180a2992c287001992c32c7740069',
+        value: 'regional',
+        label: 'Regional'
+      }
+    ]
+  },
+  {
+    id: '450c36c8561f118c170437fc9ae2d5ba',
+    desc: 'Pkg.LifecycleStatus',
+    internal: false,
+    values: [
+      {
+        id: '2c9180a2992c287001992c32814c0042',
+        value: 'current',
+        label: 'Current'
+      },
+      {
+        id: '09cf96574faf7776c3970bc09968dae2',
+        value: 'missinglifecyclestatusrefdatavalue',
+        label: 'missingLifecycleStatusRefDataValue'
+      },
+      {
+        id: '2c9180a2992c287001992c3281590045',
+        value: 'deleted',
+        label: 'Deleted'
+      },
+      {
+        id: '2c9180a2992c287001992c3281550044',
+        value: 'expected',
+        label: 'Expected'
+      },
+      {
+        id: '2c9180a2992c287001992c3281510043',
+        value: 'retired',
+        label: 'Retired'
+      }
+    ]
+  },
+  {
+    id: '2c9180a2992c287001992c32811d0036',
+    desc: 'TitleInstance.SubType',
+    internal: true,
+    values: [
+      {
+        id: '2c9180a2992c287001992c32811f0037',
+        value: 'print',
+        label: 'Print'
+      },
+      {
+        id: '2c9180a2992c287001992c3281230038',
+        value: 'electronic',
+        label: 'Electronic'
+      }
+    ]
+  },
+  {
+    id: "2c9180a2992c287001992dbc9d8300a1",
+    desc: "TitleInstance.PublicationType",
+    internal: false,
+    values: [
+      {
+        id: "2c9180a2992c287001992dbc9d9100a2",
+        value: "journal",
+        label: "Journal"
+      },
+      {
+        id: "2c9180a2992c287001992dc1857000a4",
+        value: "book",
+        label: "Book"
+      }
+    ]
+  },
+  {
+    id: "2c9180a2992c287001992c3281270039",
+    desc: "TitleInstance.Type",
+    internal: true,
+    values: [
+      {
+        id: "2c9180a2992c287001992c328129003a",
+        value: "monograph",
+        label: "Monograph"
+      },
+      {
+        id: "2c9180a2992c287001992c32812e003b",
+        value: "serial",
+        label: "Serial"
+      }
+    ]
   }
 ];
 
