@@ -7,24 +7,23 @@ import {
   MultiColumnList,
 } from '@folio/stripes/components';
 // import { useChunkedIdTransformFetch } from '@folio/stripes/core';
-import useChunkedIdTransformFetch from '../../useChunkedIdTransformFetchDONOTMERGE'; // FIXME Swap to stripes-core once merged
+import useChunkedIdTransformFetch from '../../../useChunkedIdTransformFetchDONOTMERGE'; // FIXME Swap to stripes-core once merged
 
 import {
   TitleOnPlatformLink,
 } from '@folio/stripes-erm-components';
+
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
 import {
   usePackages
-} from '../../hooks';
+} from '../../../hooks';
+import Coverage from '../../../components/Coverage';
+import { PCIS_ENDPOINT } from '../../../constants';
 
-import Coverage from '../../components/Coverage';
+import GokbBasketButton from '../GokbBasketButton';
 
-import { PCIS_ENDPOINT } from '../../constants';
-
-import GokbBasketButton from './GokbBasketButton';
-
-const GoKbTIPPTable = ({ tipps = [] }) => {
+const GokbTIPPTable = ({ tipps = [] }) => {
   // Shows a row per TIPP
   // IF the package is not yet in the DB, we can show the name, coverage and a warning in titleInKb?
 
@@ -146,7 +145,7 @@ const GoKbTIPPTable = ({ tipps = [] }) => {
       return (
         // Use pci data from KB if it exists
         <TitleOnPlatformLink
-          id={pciInKB?.id ?? rowData.id}
+          id={pciInKB?.id ?? rowData.uuid}
           // THIS FEELS VERY WRONG -- BUT IS ANALAGOUS TO BACKEND?
           name={
             pciInKB?.pti?.name ??
@@ -213,4 +212,4 @@ const GoKbTIPPTable = ({ tipps = [] }) => {
   );
 };
 
-export default GoKbTIPPTable;
+export default GokbTIPPTable;

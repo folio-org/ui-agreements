@@ -1,2 +1,2 @@
-export { default as GokbTIPPTable } from './GoKbTIPPTable';
+export { default as GokbTIPPTable } from './GokbTIPPTable';
 export { default as GokbBasketButton } from './GokbBasketButton';

@@ -54,6 +54,117 @@ export const pkgs = [
       }
     ]
   },
+  {
+    id: '9bd869e3-6c3c-42d2-aaf6-96d2725e71f3',
+    availabilityScope: refdata.find(rdc => rdc.desc === 'Pkg.AvailabilityScope').values.find(rdv => rdv.value === 'global'),
+    dateCreated: '2025-09-09T02:00:42Z',
+    availabilityConstraints: [],
+    packageDescriptionUrls: [
+      {
+        id: '9866f085-3bb5-4da1-95e3-66d6720deee4',
+        url: 'https://gokbt.gbv.de/package/01de7360-8475-401e-8388-5c5c9b1186c3'
+      }
+    ],
+    lastUpdated: '2025-09-09T09:15:27Z',
+    normalizedName: 'accounting finance and economics ejournal collection',
+    vendor: {
+      id: 'cc90bb38-2445-4652-b0ed-736bd9f7579e',
+      name: 'Emerald Group Publishing Limited'
+    },
+    sourceDataUpdated: '2022-09-21T14:09:16Z',
+    source: 'GOKb',
+    syncContentsFromSource: true,
+    contentTypes: [],
+    sourceTitleCount: 11,
+    alternateResourceNames: [],
+    name: 'Accounting Finance and Economics eJournal collection',
+    lifecycleStatus: refdata.find(rdc => rdc.desc === 'Pkg.LifecycleStatus').values.find(rdv => rdv.value === 'current'),
+    suppressFromDiscovery: false,
+    sourceDataCreated: '2021-08-05T11:51:55Z',
+    reference: '01de7360-8475-401e-8388-5c5c9b1186c3',
+    resourceCount: 11,
+    class: 'org.olf.kb.Pkg',
+    identifiers: [
+      {
+        identifier: {
+          value: '5994126',
+          ns: {
+            value: 'gokb_id'
+          },
+          occurrenceCount: 1
+        },
+        status: refdata.find(rdc => rdc.desc === 'IdentifierOccurrence.Status').values.find(rdv => rdv.value === 'approved'),
+      },
+      {
+        identifier: {
+          value: '01de7360-8475-401e-8388-5c5c9b1186c3',
+          ns: {
+            value: 'gokb_uuid'
+          },
+          occurrenceCount: 1
+        },
+        status: refdata.find(rdc => rdc.desc === 'IdentifierOccurrence.Status').values.find(rdv => rdv.value === 'approved'),
+      }
+    ]
+  },
+  {
+    id: 'eab7a8ea-6665-4f06-a55a-73a5aad36215',
+    availabilityScope: refdata.find(rdc => rdc.desc === 'Pkg.AvailabilityScope').values.find(rdv => rdv.value === 'global'),
+    dateCreated: '2025-09-09T02:01:27Z',
+    availabilityConstraints: [],
+    packageDescriptionUrls: [
+      {
+        id: '6d089053-e7e0-4176-8f86-ea9fbf83aa70',
+        url: 'https://gokbt.gbv.de/package/3e19edea-95e6-47a7-acfe-a0de2bace2d2'
+      }
+    ],
+    lastUpdated: '2025-09-09T09:16:08Z',
+    normalizedName: 'emerald management 60',
+    vendor: {
+      id: 'cc90bb38-2445-4652-b0ed-736bd9f7579e',
+      name: 'Emerald Group Publishing Limited'
+    },
+    sourceDataUpdated: '2023-05-11T00:30:51Z',
+    source: 'GOKb',
+    syncContentsFromSource: false,
+    contentTypes: [
+      {
+        id: 'dc817b39-33bb-4e11-80d8-2bdb620ee6df',
+        contentType: refdata.find(rdc => rdc.desc === 'Pkg.ContentType').values.find(rdv => rdv.value === 'journal'),
+      }
+    ],
+    sourceTitleCount: 93,
+    alternateResourceNames: [],
+    name: 'Emerald Management 60',
+    lifecycleStatus: refdata.find(rdc => rdc.desc === 'Pkg.LifecycleStatus').values.find(rdv => rdv.value === 'current'),
+    suppressFromDiscovery: false,
+    sourceDataCreated: '2023-02-03T14:24:27Z',
+    reference: '3e19edea-95e6-47a7-acfe-a0de2bace2d2',
+    resourceCount: 0,
+    class: 'org.olf.kb.Pkg',
+    identifiers: [
+      {
+        identifier: {
+          value: '27311399',
+          ns: {
+            value: 'gokb_id'
+          },
+          occurrenceCount: 1
+        },
+        status: refdata.find(rdc => rdc.desc === 'IdentifierOccurrence.Status').values.find(rdv => rdv.value === 'approved'),
+      },
+      {
+        identifier: {
+          value: '3e19edea-95e6-47a7-acfe-a0de2bace2d2',
+          ns: {
+            value: 'gokb_uuid'
+          },
+          occurrenceCount: 1
+        },
+        status: refdata.find(rdc => rdc.desc === 'IdentifierOccurrence.Status').values.find(rdv => rdv.value === 'approved'),
+      }
+    ]
+  }
 ];
 
 export const platforms = [

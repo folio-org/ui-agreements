@@ -600,36 +600,63 @@ const refdata = [
     ]
   },
   {
-    id: "2c9180a2992c287001992dbc9d8300a1",
-    desc: "TitleInstance.PublicationType",
+    id: '2c9180a2992c287001992dbc9d8300a1',
+    desc: 'TitleInstance.PublicationType',
     internal: false,
     values: [
       {
-        id: "2c9180a2992c287001992dbc9d9100a2",
-        value: "journal",
-        label: "Journal"
+        id: '2c9180a2992c287001992dbc9d9100a2',
+        value: 'journal',
+        label: 'Journal'
       },
       {
-        id: "2c9180a2992c287001992dc1857000a4",
-        value: "book",
-        label: "Book"
+        id: '2c9180a2992c287001992dc1857000a4',
+        value: 'book',
+        label: 'Book'
       }
     ]
   },
   {
-    id: "2c9180a2992c287001992c3281270039",
-    desc: "TitleInstance.Type",
+    id: '2c9180a2992c287001992c3281270039',
+    desc: 'TitleInstance.Type',
     internal: true,
     values: [
       {
-        id: "2c9180a2992c287001992c328129003a",
-        value: "monograph",
-        label: "Monograph"
+        id: '2c9180a2992c287001992c328129003a',
+        value: 'monograph',
+        label: 'Monograph'
       },
       {
-        id: "2c9180a2992c287001992c32812e003b",
-        value: "serial",
-        label: "Serial"
+        id: '2c9180a2992c287001992c32812e003b',
+        value: 'serial',
+        label: 'Serial'
+      }
+    ]
+  },
+  {
+    id: '2c9180a2992c287001992c32c1f20063',
+    desc: 'Pkg.ContentType',
+    internal: false,
+    values: [
+      {
+        id: '2c9180a2992c287001992c3324370071',
+        value: 'mixed',
+        label: 'Mixed'
+      },
+      {
+        id: '2c9180a2992c287001992c32c3c00067',
+        value: 'book',
+        label: 'Book'
+      },
+      {
+        id: '2c9180a2992c287001992c32c1f70064',
+        value: 'journal',
+        label: 'Journal'
+      },
+      {
+        id: '2c9180a2992c287001992c32ea02006e',
+        value: 'database',
+        label: 'Database'
       }
     ]
   }
