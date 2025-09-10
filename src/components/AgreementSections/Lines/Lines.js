@@ -41,6 +41,8 @@ const Lines = ({
   };
 
   const getActionMenu = () => {
+    // const hasLinkedAcquisitionsUnit = agreement?.acquisitionsUnits?.length > 0;
+
     return (
       <>
         <Dropdown
@@ -52,6 +54,7 @@ const Lines = ({
             <IfPermission perm="ui-agreements.agreements.edit">
               <Button
                 buttonStyle="dropdownItem"
+                // disabled={hasLinkedAcquisitionsUnit}
                 id="add-agreement-line-button"
                 to={urls.agreementLineCreate(agreement.id)}
               >
