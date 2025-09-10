@@ -101,7 +101,9 @@
           "tags.collection.get",
           "erm.refdata.view",
           "note.types.collection.get",
-          "ui-agreements.accesspolicies.view"
+          "ui-agreements.accesspolicies.view",
+          "acquisitions-units.memberships.collection.get",
+          "acquisitions-units.units.collection.get"
         ]
       },
       {
