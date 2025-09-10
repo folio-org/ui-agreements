@@ -362,8 +362,5 @@
         "title": "Print title"
       }
     ]
-  },
-  "resolutions": {
-    "@folio/stripes-core": "11.1.10990000001079"
   }
 }

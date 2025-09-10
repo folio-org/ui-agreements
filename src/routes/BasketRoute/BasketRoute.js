@@ -7,7 +7,6 @@ import View from '../../components/views/Basket';
 const BasketRoute = ({ history }) => {
   const { basket, removeFromBasket } = useBasket();
 
-  console.log('BasketRoute', basket);
   const handleClose = () => {
     history.goBack();
   };
