@@ -23,6 +23,8 @@ import {
 
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
+import { AccessControl } from '@folio/stripes-erm-components';
+
 import { Info, POLines, Coverage, Documents } from '../../AgreementLineSections';
 
 import { isExternal, urls } from '../../utilities';
@@ -75,6 +77,15 @@ const propTypes = {
 };
 
 const AgreementLine = ({
+  accessControlData: {
+    canEditLoading,
+    canDeleteLoading
+  } = {
+    canEdit: true,
+    canEditLoading: false,
+    canDelete: true,
+    canDeleteLoading: false
+  },
   components: {
     TagButton,
     HelperComponent,
@@ -118,6 +129,7 @@ const AgreementLine = ({
     }
   ];
 
+  const hasLinkedAcquisitionsUnit = line.policies.length > 0;
   return (
     <HasCommand
       commands={shortcuts}
@@ -130,19 +142,21 @@ const AgreementLine = ({
             <>
               <Button
                 buttonStyle="dropdownItem"
+                disabled={!stripes.hasPerm('ui-agreements.agreements.edit') || canEditLoading || hasLinkedAcquisitionsUnit}
                 id="clickable-dropdown-edit-agreement-line"
                 onClick={handlers.onEdit}
               >
-                <Icon icon="edit">
+                <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'edit'}>
                   <FormattedMessage id="ui-agreements.agreements.edit" />
                 </Icon>
               </Button>
               <Button
                 buttonStyle="dropdownItem"
+                disabled={!stripes.hasPerm('ui-agreements.agreements.delete') || canDeleteLoading || hasLinkedAcquisitionsUnit}
                 id="clickable-dropdown-delete-agreement-line"
                 onClick={() => setShowDeleteConfirmationModal(true)}
               >
-                <Icon icon="trash">
+                <Icon icon={canDeleteLoading ? 'spinner-ellipsis' : 'trash'}>
                   <FormattedMessage id="ui-agreements.delete" />
                 </Icon>
               </Button>
@@ -171,6 +185,7 @@ const AgreementLine = ({
               </Col>
             </Row>
             <AccordionSet>
+              <AccessControl policies={line.policies} />
               <POLines line={line} resource={resource} />
               <Documents id={id} line={line} resource={resource} />
               <Coverage line={line} resource={resource} />
