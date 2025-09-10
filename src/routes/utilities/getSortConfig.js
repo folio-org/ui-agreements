@@ -1,22 +1,11 @@
-import handlebars from 'handlebars';
-
-/* Register handlebar helpers */
-
-handlebars.registerHelper('replace', (text, search, replacement) => {
-  if (typeof text !== 'string') return text;
-  return text.replace(new RegExp(search, 'g'), replacement);
-});
-
-handlebars.registerHelper('startsWith', (text, char) => {
-  return text?.startsWith(char);
-});
+import { handlebarsCompile } from '../../components/utilities';
 
 /* Recursive formatter function */
 
 const getSortFunction = (type, sortConfig) => {
   switch (type) {
     case 'Handlebars': {
-      const template = handlebars.compile(sortConfig.templateString);
+      const template = handlebarsCompile(sortConfig.templateString);
       return template;
     }
     default:

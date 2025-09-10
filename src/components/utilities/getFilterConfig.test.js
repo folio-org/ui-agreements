@@ -32,11 +32,9 @@ const mockConfig = {
   }
 };
 
-const kbKey = 'gokb';
-
 describe('getFilterConfig', () => {
   test('returns correct filterMap', () => {
-    const { filterMap } = getFilterConfig(mockConfig, kbKey);
+    const { filterMap } = getFilterConfig(mockConfig);
 
     expect(filterMap).toEqual({
       type: 'componentType',
@@ -45,13 +43,13 @@ describe('getFilterConfig', () => {
   });
 
   test('returns correct filterNames', () => {
-    const { filterNames } = getFilterConfig(mockConfig, kbKey);
+    const { filterNames } = getFilterConfig(mockConfig);
 
     expect(filterNames).toEqual(['type', 'dummy']);
   });
 
   test('returns correct filterTypes', () => {
-    const { filterTypes } = getFilterConfig(mockConfig, kbKey);
+    const { filterTypes } = getFilterConfig(mockConfig);
 
     expect(filterTypes).toEqual({
       type: 'singleSelect',
@@ -60,25 +58,25 @@ describe('getFilterConfig', () => {
   });
 
   test('returns correct filterOptions', () => {
-    const { filterOptions } = getFilterConfig(mockConfig, kbKey);
+    const { filterOptions } = getFilterConfig(mockConfig);
 
     const getLabelIds = (options) => options.map(opt => opt.label.props.id);
 
     expect(getLabelIds(filterOptions.type)).toEqual([
-      'ui-agreements.gokb.filters.type.all',
-      'ui-agreements.gokb.filters.type.book',
-      'ui-agreements.gokb.filters.type.journal',
+      'ui-agreements.remoteKb.filters.type.all',
+      'ui-agreements.remoteKb.filters.type.book',
+      'ui-agreements.remoteKb.filters.type.journal',
     ]);
 
     expect(getLabelIds(filterOptions.dummy)).toEqual([
-      'ui-agreements.gokb.filters.dummy.dummy1',
-      'ui-agreements.gokb.filters.dummy.dummy2',
-      'ui-agreements.gokb.filters.dummy.dummy3',
+      'ui-agreements.remoteKb.filters.dummy.dummy1',
+      'ui-agreements.remoteKb.filters.dummy.dummy2',
+      'ui-agreements.remoteKb.filters.dummy.dummy3',
     ]);
   });
 
   test('returns correct initialFilterState', () => {
-    const { initialFilterState } = getFilterConfig(mockConfig, kbKey);
+    const { initialFilterState } = getFilterConfig(mockConfig);
 
     expect(initialFilterState).toEqual({
       type: ['Title'],
