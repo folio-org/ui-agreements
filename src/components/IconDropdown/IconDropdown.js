@@ -25,6 +25,7 @@ const IconDropdown = ({
           <DropdownMenu>
             {options?.map((option, optInd) => (
               <Button
+                {...option}
                 key={
                   option?.key ??
                   (

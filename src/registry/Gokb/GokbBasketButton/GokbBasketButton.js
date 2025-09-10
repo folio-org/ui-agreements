@@ -8,11 +8,11 @@ import {
 
 import {
   useBasket,
-} from '../../hooks';
+} from '../../../hooks';
 
-import IconDropdown from '../../components/IconDropdown';
-import { buildPackageEntitlementOption, buildPCIEntitlementOption } from '../../components/utilities';
-import { BASKET_TYPE_GOKB_TITLE } from '../../constants';
+import IconDropdown from '../../../components/IconDropdown';
+import { buildPackageEntitlementOption, buildPCIEntitlementOption } from '../../../components/utilities';
+import { BASKET_TYPE_GOKB_TITLE } from '../../../constants';
 
 // Button component for adding GoKB title/package to basket FROM a TIPP resource
 const GoKbBasketButton = ({
@@ -56,16 +56,7 @@ const GoKbBasketButton = ({
       });
     }
 
-    if (!pkgLoading && !pkg) {
-      return (
-        {
-          icon: 'plus-sign',
-          label: <FormattedMessage id="ui-agreements.gokbSearch.basket.noPackageMatches" />,
-          onClick: () => noop,
-          disabled: true
-        }
-      );
-    }
+    // No pkg and pkg not loading case is dealt with at the top
 
     const packageInBasket = existsInBasket(pkg.id);
     const basketPackage = buildPackageEntitlementOption(pkg);
