@@ -100,7 +100,10 @@
           "erm.settings.read",
           "tags.collection.get",
           "erm.refdata.view",
-          "note.types.collection.get"
+          "note.types.collection.get",
+          "ui-agreements.accesspolicies.view",
+          "acquisitions-units.memberships.collection.get",
+          "acquisitions-units.units.collection.get"
         ]
       },
       {
@@ -313,7 +316,15 @@
         "subPermissions": [
             "erm.resources.delete"
         ]
-      }
+      },
+      {
+        "permissionName": "ui-agreements.accesspolicies.view",
+        "displayName": "Agreements: View access policies",
+        "visible": false,
+        "subPermissions": [
+          "erm.accesspolicies.view"
+        ]
+       }
     ],
     "icons": [
       {
