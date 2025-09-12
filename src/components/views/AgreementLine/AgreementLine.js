@@ -32,7 +32,18 @@ import DiscoverySettings from '../../DiscoverySettings';
 import { AGREEMENT_LINE_ENTITY_TYPE } from '../../../constants';
 
 const propTypes = {
-  components: PropTypes.shape({}),
+  accessControlData: PropTypes.shape({
+    canRead: PropTypes.bool,
+    canReadLoading: PropTypes.bool,
+    canEdit: PropTypes.bool,
+    canEditLoading: PropTypes.bool,
+    canDelete: PropTypes.bool,
+    canDeleteLoading: PropTypes.bool
+  }),
+  components: PropTypes.shape({
+    HelperComponent: PropTypes.elementType,
+    TagButton: PropTypes.elementType,
+  }),
   data: PropTypes.shape({
     line: PropTypes.shape({
       coverage: PropTypes.arrayOf(PropTypes.shape({})),
@@ -43,7 +54,7 @@ const propTypes = {
       owner: PropTypes.shape({
         name: PropTypes.string.isRequired,
       }),
-      policies: PropTypes.arrayOf(PropTypes.shape),
+      policies: PropTypes.arrayOf(PropTypes.shape({})),
       poLines: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.string,
@@ -51,7 +62,9 @@ const propTypes = {
           poLineNumber: PropTypes.string,
         })
       ),
-      resource: PropTypes.shape({}),
+      resource: PropTypes.shape({
+        _object: PropTypes.shape({}),
+      }),
       startDate: PropTypes.string,
       tags: PropTypes.arrayOf(
         PropTypes.shape({
@@ -224,7 +237,7 @@ const AgreementLine = ({
                     id="discoverySettings"
                     line={line}
                   />
-              )}
+                )}
             </AccordionSet>
           </AccordionStatus>
         </Pane>

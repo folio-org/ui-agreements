@@ -373,13 +373,30 @@ const Agreement = ({
 };
 
 Agreement.propTypes = {
-  components: PropTypes.shape({}),
+  components: PropTypes.shape({
+    HelperComponent: PropTypes.elementType,
+    TagButton: PropTypes.elementType,
+  }),
   data: PropTypes.shape({
-    agreement: PropTypes.shape({}).isRequired,
+    agreement: PropTypes.shape({
+      contacts: PropTypes.arrayOf(PropTypes.shape({})),
+      customProperties: PropTypes.arrayOf(PropTypes.shape({})),
+      description: PropTypes.string,
+      externalLicenseDocs: PropTypes.arrayOf(PropTypes.shape({})),
+      id: PropTypes.string,
+      linkedLicenses: PropTypes.arrayOf(PropTypes.shape({})),
+      lines: PropTypes.arrayOf(PropTypes.shape({})),
+      name: PropTypes.string,
+      orgs: PropTypes.arrayOf(PropTypes.shape({})),
+      relatedAgreements: PropTypes.arrayOf(PropTypes.shape({})),
+      supplementaryDocs: PropTypes.arrayOf(PropTypes.shape({})),
+      usageDataProviders: PropTypes.arrayOf(PropTypes.shape({})),
+    }).isRequired,
     eresourcesFilterPath: PropTypes.string,
+    policies: PropTypes.arrayOf(PropTypes.shape({})),
     searchString: PropTypes.string,
+    tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
     tagsLink: PropTypes.string,
-    tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
   }).isRequired,
   handlers: PropTypes.shape({
     onClone: PropTypes.func.isRequired,
