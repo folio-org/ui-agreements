@@ -224,7 +224,7 @@ const AgreementLine = ({
                     id="discoverySettings"
                     line={line}
                   />
-                )}
+              )}
             </AccordionSet>
           </AccordionStatus>
         </Pane>
