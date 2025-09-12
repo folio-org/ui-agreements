@@ -21,7 +21,7 @@ import {
 import { useIntlKeyStore } from '@k-int/stripes-kint-components';
 
 import css from './index.css';
-import setUpRegistry from './setUpRegistry';
+import setUpRegistry from './registry';
 
 import AgreementsRoute from './routes/AgreementsRoute';
 import AgreementCreateRoute from './routes/AgreementCreateRoute/AgreementCreateRoute';
