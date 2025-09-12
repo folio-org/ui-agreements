@@ -229,6 +229,7 @@ const Agreement = ({
       supplementaryDocs: false,
       terms: false,
       usageData: false,
+      accessControl: false
     };
   };
 
@@ -309,7 +310,7 @@ const Agreement = ({
               </Row>
               <AccordionSet initialStatus={getInitialAccordionsState()}>
                 <AllPeriods {...getSectionProps('allPeriods')} />
-                <AccessControl policies={data.policies} />
+                {data.policies?.length > 0 && <AccessControl policies={data.policies} />}
                 {data.agreement?.contacts?.length > 0 && <InternalContacts {...getSectionProps('internalContacts')} />}
                 <Lines {...getSectionProps('lines')} />
                 {controllingLicenses?.length > 0 && <ControllingLicense {...getSectionProps('controllingLicense')} />}
@@ -372,9 +373,9 @@ const Agreement = ({
 };
 
 Agreement.propTypes = {
-  components: PropTypes.object,
+  components: PropTypes.shape({}),
   data: PropTypes.shape({
-    agreement: PropTypes.object.isRequired,
+    agreement: PropTypes.shape({}).isRequired,
     eresourcesFilterPath: PropTypes.string,
     searchString: PropTypes.string,
     tagsLink: PropTypes.string,
