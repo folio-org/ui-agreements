@@ -232,12 +232,12 @@ const AgreementLine = ({
               {(handlers.isSuppressFromDiscoveryEnabled('pci') ||
                 handlers.isSuppressFromDiscoveryEnabled('title') ||
                 handlers.isSuppressFromDiscoveryEnabled('agreementLine')) && (
-                  <DiscoverySettings
-                    handlers={handlers}
-                    id="discoverySettings"
-                    line={line}
-                  />
-                )}
+                <DiscoverySettings
+                  handlers={handlers}
+                  id="discoverySettings"
+                  line={line}
+                />
+              )}
             </AccordionSet>
           </AccordionStatus>
         </Pane>

@@ -380,7 +380,7 @@ Agreement.propTypes = {
   data: PropTypes.shape({
     agreement: PropTypes.shape({
       contacts: PropTypes.arrayOf(PropTypes.shape({})),
-      customProperties: PropTypes.arrayOf(PropTypes.shape({})),
+      customProperties: PropTypes.shape({}),
       description: PropTypes.string,
       externalLicenseDocs: PropTypes.arrayOf(PropTypes.shape({})),
       id: PropTypes.string,

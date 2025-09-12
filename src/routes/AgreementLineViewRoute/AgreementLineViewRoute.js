@@ -85,7 +85,7 @@ const AgreementLineViewRoute = ({
   const { policies } = usePolicies({
     resourceEndpoint: AGREEMENT_LINES_ENDPOINT,
     resourceId: lineId,
-    queryNamespaceGenerator: () => ['ERM', 'Agreement', lineId, 'policies'],
+    queryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'linePolicies', lineId],
   });
 
   const getCompositeLine = () => {
