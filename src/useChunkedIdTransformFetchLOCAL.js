@@ -1,3 +1,6 @@
+// FIXME this is only present until such time as https://github.com/folio-org/stripes-core/pull/1653 can be successfully merged
+// Once merged, this file should be removed and all references to it pointed at stripes-core
+
 // This is analagous to useChunkedCQLFetch, but instead can do an _arbitrary_ transformation on the provided ids
 import {
   useCallback,

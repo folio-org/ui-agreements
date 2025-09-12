@@ -6,8 +6,9 @@ import { Link } from 'react-router-dom';
 import {
   MultiColumnList,
 } from '@folio/stripes/components';
+// FIXME this really needs to be imported from stripes-core -- when https://github.com/folio-org/stripes-core/pull/1653 gets merged
 // import { useChunkedIdTransformFetch } from '@folio/stripes/core';
-import useChunkedIdTransformFetch from '../../../useChunkedIdTransformFetchDONOTMERGE'; // FIXME Swap to stripes-core once merged
+import useChunkedIdTransformFetch from '../../../useChunkedIdTransformFetchLOCAL'; // FIXME Swap to stripes-core once merged
 
 import {
   TitleOnPlatformLink,
