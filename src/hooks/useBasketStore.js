@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 
 const useBasketStore = create(
   persist(
-    (set) => ({
+    (set, get) => ({
       basketStore: {},
       addToBasket: (item) => set((state) => {
         if (state.basketStore[item.id] || !item.id) {
@@ -20,6 +20,7 @@ const useBasketStore = create(
         const { [item.id]: _itemToRemove, ...newBasket } = state.basketStore;
         return { ...state, basketStore: newBasket };
       }),
+      existsInBasket: (id) => !!get().basketStore[id]
     }),
     {
       name: '@folio/agreements:basket'

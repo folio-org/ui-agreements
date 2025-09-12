@@ -18,6 +18,7 @@ import AddToBasketButton from '../../AddToBasketButton';
 import PackageIdentifiers from '../PackageIdentifiers';
 import PackageSyncronisingValue from '../PackageSyncronisingValue';
 import css from '../../styles.css';
+import { buildPackageEntitlementOption } from '../../utilities';
 
 const PackageInfo = ({
   data: {
@@ -35,12 +36,7 @@ const PackageInfo = ({
     })
   );
 
-  const entitlementOption = {
-    class: resourceClasses.PACKAGE,
-    id: eresource.id,
-    name: eresource.name,
-    _object: eresource,
-  };
+  const entitlementOption = buildPackageEntitlementOption(eresource);
 
   return (
     <div id="package-info">
