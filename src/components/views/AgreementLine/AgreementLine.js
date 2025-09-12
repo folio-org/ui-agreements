@@ -23,6 +23,8 @@ import {
 
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
+import { AccessControl, AccessControlErrorPane } from '@folio/stripes-erm-components';
+
 import { Info, POLines, Coverage, Documents } from '../../AgreementLineSections';
 
 import { isExternal, urls } from '../../utilities';
@@ -30,10 +32,10 @@ import DiscoverySettings from '../../DiscoverySettings';
 import { AGREEMENT_LINE_ENTITY_TYPE } from '../../../constants';
 
 const propTypes = {
-  components: PropTypes.object,
+  components: PropTypes.shape({}),
   data: PropTypes.shape({
     line: PropTypes.shape({
-      coverage: PropTypes.arrayOf(PropTypes.object),
+      coverage: PropTypes.arrayOf(PropTypes.shape({})),
       customCoverage: PropTypes.bool,
       endDate: PropTypes.string,
       id: PropTypes.string,
@@ -41,6 +43,7 @@ const propTypes = {
       owner: PropTypes.shape({
         name: PropTypes.string.isRequired,
       }),
+      policies: PropTypes.arrayOf(PropTypes.shape),
       poLines: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.string,
@@ -48,9 +51,7 @@ const propTypes = {
           poLineNumber: PropTypes.string,
         })
       ),
-      resource: PropTypes.shape({
-        _object: PropTypes.object,
-      }),
+      resource: PropTypes.shape({}),
       startDate: PropTypes.string,
       tags: PropTypes.arrayOf(
         PropTypes.shape({
@@ -60,7 +61,7 @@ const propTypes = {
     }).isRequired,
     tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
     tagsLink: PropTypes.string,
-    settings: PropTypes.object,
+    settings: PropTypes.shape({}),
   }),
   handlers: PropTypes.shape({
     isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
@@ -75,17 +76,31 @@ const propTypes = {
 };
 
 const AgreementLine = ({
+  accessControlData: {
+    canRead,
+    canReadLoading,
+    canEdit,
+    canEditLoading,
+    canDelete,
+    canDeleteLoading
+  } = {
+    canRead: true,
+    canReadLoading: false,
+    canEdit: true,
+    canEditLoading: false,
+    canDelete: true,
+    canDeleteLoading: false
+  }, // If not passed, assume everything is accessible and not loading...?
   components: {
     TagButton,
     HelperComponent,
   },
-  data: { line, tagsLink, tagsInvalidateLinks },
+  data: { line, policies, tagsLink, tagsInvalidateLinks },
   handlers,
   isLoading,
   id
 }) => {
   const stripes = useStripes();
-
   const paneProps = {
     defaultWidth: '55%',
     dismissible: true,
@@ -97,7 +112,15 @@ const AgreementLine = ({
 
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
 
-  if (isLoading) return <LoadingPane data-loading {...paneProps} />;
+  if (isLoading || canReadLoading) return <LoadingPane data-loading {...paneProps} />;
+
+  if (!canRead) {
+    return (
+      <AccessControlErrorPane
+        {...paneProps}
+      />
+    );
+  }
 
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
   const resourceName = resource.pti?.titleInstance.name ?? resource.reference_object?.label ?? '';
@@ -130,6 +153,7 @@ const AgreementLine = ({
             <>
               <Button
                 buttonStyle="dropdownItem"
+                disabled={canEditLoading || !canEdit}
                 id="clickable-dropdown-edit-agreement-line"
                 onClick={handlers.onEdit}
               >
@@ -139,10 +163,11 @@ const AgreementLine = ({
               </Button>
               <Button
                 buttonStyle="dropdownItem"
+                disabled={canDeleteLoading || !canDelete}
                 id="clickable-dropdown-delete-agreement-line"
                 onClick={() => setShowDeleteConfirmationModal(true)}
               >
-                <Icon icon="trash">
+                <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'trash'}>
                   <FormattedMessage id="ui-agreements.delete" />
                 </Icon>
               </Button>
@@ -170,7 +195,8 @@ const AgreementLine = ({
                 <ExpandAllButton id="clickable-expand-all" />
               </Col>
             </Row>
-            <AccordionSet>
+            <AccordionSet initialStatus={{ accessControl: false }}>
+              <AccessControl policies={policies} />
               <POLines line={line} resource={resource} />
               <Documents id={id} line={line} resource={resource} />
               <Coverage line={line} resource={resource} />
@@ -193,12 +219,12 @@ const AgreementLine = ({
               {(handlers.isSuppressFromDiscoveryEnabled('pci') ||
                 handlers.isSuppressFromDiscoveryEnabled('title') ||
                 handlers.isSuppressFromDiscoveryEnabled('agreementLine')) && (
-                <DiscoverySettings
-                  handlers={handlers}
-                  id="discoverySettings"
-                  line={line}
-                />
-              )}
+                  <DiscoverySettings
+                    handlers={handlers}
+                    id="discoverySettings"
+                    line={line}
+                  />
+                )}
             </AccordionSet>
           </AccordionStatus>
         </Pane>
