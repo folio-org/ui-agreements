@@ -229,6 +229,7 @@ const Agreement = ({
       supplementaryDocs: false,
       terms: false,
       usageData: false,
+      accessControl: false
     };
   };
 
@@ -309,7 +310,7 @@ const Agreement = ({
               </Row>
               <AccordionSet initialStatus={getInitialAccordionsState()}>
                 <AllPeriods {...getSectionProps('allPeriods')} />
-                <AccessControl policies={data.policies} />
+                {data.policies?.length > 0 && <AccessControl policies={data.policies} />}
                 {data.agreement?.contacts?.length > 0 && <InternalContacts {...getSectionProps('internalContacts')} />}
                 <Lines {...getSectionProps('lines')} />
                 {controllingLicenses?.length > 0 && <ControllingLicense {...getSectionProps('controllingLicense')} />}
@@ -372,13 +373,30 @@ const Agreement = ({
 };
 
 Agreement.propTypes = {
-  components: PropTypes.object,
+  components: PropTypes.shape({
+    HelperComponent: PropTypes.elementType,
+    TagButton: PropTypes.elementType,
+  }),
   data: PropTypes.shape({
-    agreement: PropTypes.object.isRequired,
+    agreement: PropTypes.shape({
+      contacts: PropTypes.arrayOf(PropTypes.shape({})),
+      customProperties: PropTypes.shape({}),
+      description: PropTypes.string,
+      externalLicenseDocs: PropTypes.arrayOf(PropTypes.shape({})),
+      id: PropTypes.string,
+      linkedLicenses: PropTypes.arrayOf(PropTypes.shape({})),
+      lines: PropTypes.arrayOf(PropTypes.shape({})),
+      name: PropTypes.string,
+      orgs: PropTypes.arrayOf(PropTypes.shape({})),
+      relatedAgreements: PropTypes.arrayOf(PropTypes.shape({})),
+      supplementaryDocs: PropTypes.arrayOf(PropTypes.shape({})),
+      usageDataProviders: PropTypes.arrayOf(PropTypes.shape({})),
+    }).isRequired,
     eresourcesFilterPath: PropTypes.string,
+    policies: PropTypes.arrayOf(PropTypes.shape({})),
     searchString: PropTypes.string,
+    tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
     tagsLink: PropTypes.string,
-    tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
   }).isRequired,
   handlers: PropTypes.shape({
     onClone: PropTypes.func.isRequired,
