@@ -9,7 +9,7 @@ import {
 } from '@folio/stripes-erm-testing';
 
 import GokbTIPPTable from './GokbTIPPTable';
-import { gokbTipps } from '../resources';
+import { gokbTipps } from '../../../../test/jest/GOKB';
 import translationsProperties from '../../../../test/helpers';
 import { pcis as mockPcis, pkgs as mockPkgs } from '../../../../test/jest/eresources';
 
@@ -21,7 +21,7 @@ jest.mock('../../../hooks', () => ({
 }));
 
 // FIXME this will eventually need to be stripes-core
-jest.mock('../../../useChunkedIdTransformFetchDONOTMERGE', () => () => ({
+jest.mock('../../../useChunkedIdTransformFetchLOCAL', () => () => ({
   items: mockPcis.filter(p => p.name === '\'International Journal of Managerial Finance\' on Platform \'Emerald Insight\' in Package Accounting Finance and Economics eJournal collection'),
   isLoading: false
 }));
@@ -33,10 +33,9 @@ jest.mock('@folio/stripes-erm-components', () => ({
   TitleOnPlatformLink: jest.fn(() => <div>TitleOnPlatformLink</div>),
 }));
 
-let renderComponent;
 describe('GokbTIPPTable', () => {
   beforeEach(() => {
-    renderComponent = renderWithIntl(
+    renderWithIntl(
       <MemoryRouter>
         <GokbTIPPTable tipps={gokbTipps} />
       </MemoryRouter>,

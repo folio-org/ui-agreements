@@ -8,7 +8,7 @@ import {
   Tooltip
 } from '@folio/stripes-erm-testing';
 
-import { gokbTipps } from '../resources';
+import { gokbTipps } from '../../../../test/jest/GOKB';
 import translationsProperties from '../../../../test/helpers';
 
 import { GokbBasketButton } from '../index';
