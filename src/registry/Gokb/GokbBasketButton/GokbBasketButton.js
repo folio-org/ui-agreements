@@ -12,7 +12,7 @@ import {
 
 import IconDropdown from '../../../components/IconDropdown';
 import { buildPackageEntitlementOption, buildPCIEntitlementOption } from '../../../components/utilities';
-import { BASKET_TYPE_GOKB_TITLE } from '../../../constants';
+import buildGokbTIPPEntitlementOption from '../buildGokbTIPPEntitlementOption';
 
 // Button component for adding GoKB title/package to basket FROM a TIPP resource
 const GoKbBasketButton = ({
@@ -82,14 +82,7 @@ const GoKbBasketButton = ({
 
     const basketTipp = pci ?
       buildPCIEntitlementOption(pci) :
-      {
-        id: tipp.id || tipp.uuid,
-        name: tipp.name,
-        type: BASKET_TYPE_GOKB_TITLE,
-        tipp,
-        pkg,
-        _object: tipp
-      };
+      buildGokbTIPPEntitlementOption(tipp, pkg);
 
     const tippInBasket = existsInBasket(basketTipp.id);
     const tippBasketFuction = tippInBasket ? removeFromBasket : addToBasket;
