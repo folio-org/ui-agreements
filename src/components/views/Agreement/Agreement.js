@@ -143,7 +143,7 @@ const Agreement = ({
 
   const getActionMenu = ({ onToggle }) => {
     const buttons = [];
-    const hasLinkedAcquisitionsUnit = data.policies.length > 0;
+    const hasLinkedAcquisitionsUnit = Boolean(data?.policies?.length);
     if (canEdit !== false) {
       buttons.push(
         <Button
