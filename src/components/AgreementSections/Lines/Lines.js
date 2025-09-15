@@ -45,7 +45,7 @@ const Lines = ({
     return count !== undefined ? <Badge data-test-agreement-lines-count={count}>{count}</Badge> : <Spinner />;
   };
 
-  const hasLinkedAcquisitionsUnit = Boolean(data?.policies?.length);
+  const hasLinkedAcquisitionsUnit = data?.policies?.length > 0;
 
   const getActionMenu = () => {
     return (
