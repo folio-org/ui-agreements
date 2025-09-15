@@ -12,7 +12,6 @@ import {
 } from '@folio/stripes/components';
 
 import { FormattedDateTime } from '@folio/stripes-erm-components';
-import { resourceClasses } from '../../../constants';
 
 import AddToBasketButton from '../../AddToBasketButton';
 import PackageIdentifiers from '../PackageIdentifiers';

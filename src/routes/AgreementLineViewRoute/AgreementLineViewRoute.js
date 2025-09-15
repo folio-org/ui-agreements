@@ -5,12 +5,19 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { FormattedMessage } from 'react-intl';
 
 import { CalloutContext, useOkapiKy } from '@folio/stripes/core';
-import { useErmHelperApp } from '@folio/stripes-erm-components';
+import {
+  useErmHelperApp,
+  useGetAccess,
+  usePolicies,
+  DELETE,
+  READ,
+  UPDATE,
+} from '@folio/stripes-erm-components';
 import View from '../../components/views/AgreementLine';
 import { urls } from '../../components/utilities';
 
 import { useChunkedOrderLines, useSuppressFromDiscovery } from '../../hooks';
-import { AGREEMENT_ENDPOINT, AGREEMENT_LINE_ENDPOINT } from '../../constants';
+import { AGREEMENT_ENDPOINT, AGREEMENT_LINE_ENDPOINT, AGREEMENT_LINES_ENDPOINT } from '../../constants';
 
 const AgreementLineViewRoute = ({
   handlers,
@@ -27,9 +34,21 @@ const AgreementLineViewRoute = ({
   const agreementLinePath = AGREEMENT_LINE_ENDPOINT(lineId);
   const agreementPath = AGREEMENT_ENDPOINT(agreementId);
 
+  const accessControlData = useGetAccess({
+    resourceEndpoint: AGREEMENT_LINES_ENDPOINT,
+    resourceId: lineId,
+    restrictions: [READ, UPDATE, DELETE],
+    queryNamespaceGenerator: (_restriction, canDo) => ['ERM', 'Agreement', lineId, canDo]
+  });
+  const {
+    canRead,
+    canReadLoading,
+  } = accessControlData;
+
   const { data: agreementLine = {}, isLoading: isLineQueryLoading } = useQuery(
     ['ERM', 'AgreementLine', lineId, agreementLinePath],
-    () => ky.get(agreementLinePath).json()
+    () => ky.get(agreementLinePath).json(),
+    { enabled: !canReadLoading && !!canRead }
   );
 
   const { mutateAsync: deleteAgreementLine } = useMutation(
@@ -62,6 +81,12 @@ const AgreementLineViewRoute = ({
 
   const poLineIdsArray = (agreementLine.poLines ?? []).map(poLine => poLine.poLineId).flat();
   const { orderLines, isLoading: areOrderLinesLoading } = useChunkedOrderLines(poLineIdsArray);
+
+  const { policies } = usePolicies({
+    resourceEndpoint: AGREEMENT_LINES_ENDPOINT,
+    resourceId: lineId,
+    queryNamespaceGenerator: () => ['ERM', 'Agreement', agreementId, 'linePolicies', lineId],
+  });
 
   const getCompositeLine = () => {
     const poLines = (agreementLine.poLines || [])
@@ -101,12 +126,14 @@ const AgreementLineViewRoute = ({
   return (
     <View
       key={`agreement-line-view-pane-${lineId}`}
+      accessControlData={accessControlData}
       components={{
         TagButton,
         HelperComponent
       }}
       data={{
         line: getCompositeLine(),
+        policies,
         tagsLink: agreementLinePath,
         tagsInvalidateLinks: [['ERM', 'AgreementLine', lineId]]
       }}
@@ -125,7 +152,7 @@ const AgreementLineViewRoute = ({
 };
 
 AgreementLineViewRoute.propTypes = {
-  handlers: PropTypes.object,
+  handlers: PropTypes.shape({}),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,

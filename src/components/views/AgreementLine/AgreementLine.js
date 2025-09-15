@@ -23,7 +23,7 @@ import {
 
 import { NotesSmartAccordion } from '@folio/stripes/smart-components';
 
-import { AccessControl } from '@folio/stripes-erm-components';
+import { AccessControl, AccessControlErrorPane } from '@folio/stripes-erm-components';
 
 import { Info, POLines, Coverage, Documents } from '../../AgreementLineSections';
 
@@ -32,10 +32,21 @@ import DiscoverySettings from '../../DiscoverySettings';
 import { AGREEMENT_LINE_ENTITY_TYPE } from '../../../constants';
 
 const propTypes = {
-  components: PropTypes.object,
+  accessControlData: PropTypes.shape({
+    canRead: PropTypes.bool,
+    canReadLoading: PropTypes.bool,
+    canEdit: PropTypes.bool,
+    canEditLoading: PropTypes.bool,
+    canDelete: PropTypes.bool,
+    canDeleteLoading: PropTypes.bool
+  }),
+  components: PropTypes.shape({
+    HelperComponent: PropTypes.elementType,
+    TagButton: PropTypes.elementType,
+  }),
   data: PropTypes.shape({
     line: PropTypes.shape({
-      coverage: PropTypes.arrayOf(PropTypes.object),
+      coverage: PropTypes.arrayOf(PropTypes.shape({})),
       customCoverage: PropTypes.bool,
       endDate: PropTypes.string,
       id: PropTypes.string,
@@ -43,6 +54,7 @@ const propTypes = {
       owner: PropTypes.shape({
         name: PropTypes.string.isRequired,
       }),
+      policies: PropTypes.arrayOf(PropTypes.shape({})),
       poLines: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.string,
@@ -51,7 +63,7 @@ const propTypes = {
         })
       ),
       resource: PropTypes.shape({
-        _object: PropTypes.object,
+        _object: PropTypes.shape({}),
       }),
       startDate: PropTypes.string,
       tags: PropTypes.arrayOf(
@@ -62,7 +74,7 @@ const propTypes = {
     }).isRequired,
     tagsInvalidateLinks: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
     tagsLink: PropTypes.string,
-    settings: PropTypes.object,
+    settings: PropTypes.shape({}),
   }),
   handlers: PropTypes.shape({
     isSuppressFromDiscoveryEnabled: PropTypes.func.isRequired,
@@ -78,25 +90,30 @@ const propTypes = {
 
 const AgreementLine = ({
   accessControlData: {
+    canRead,
+    canReadLoading,
+    canEdit,
     canEditLoading,
+    canDelete,
     canDeleteLoading
   } = {
+    canRead: true,
+    canReadLoading: false,
     canEdit: true,
     canEditLoading: false,
     canDelete: true,
     canDeleteLoading: false
-  },
+  }, // If not passed, assume everything is accessible and not loading...?
   components: {
     TagButton,
     HelperComponent,
   },
-  data: { line, tagsLink, tagsInvalidateLinks },
+  data: { line, policies, tagsLink, tagsInvalidateLinks },
   handlers,
   isLoading,
   id
 }) => {
   const stripes = useStripes();
-
   const paneProps = {
     defaultWidth: '55%',
     dismissible: true,
@@ -108,7 +125,15 @@ const AgreementLine = ({
 
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
 
-  if (isLoading) return <LoadingPane data-loading {...paneProps} />;
+  if (isLoading || canReadLoading) return <LoadingPane data-loading {...paneProps} />;
+
+  if (!canRead) {
+    return (
+      <AccessControlErrorPane
+        {...paneProps}
+      />
+    );
+  }
 
   const resource = isExternal(line) ? line : (line.resource?._object ?? {});
   const resourceName = resource.pti?.titleInstance.name ?? resource.reference_object?.label ?? '';
@@ -184,8 +209,8 @@ const AgreementLine = ({
                 <ExpandAllButton id="clickable-expand-all" />
               </Col>
             </Row>
-            <AccordionSet>
-              <AccessControl policies={line.policies} />
+            <AccordionSet initialStatus={{ accessControl: false }}>
+              <AccessControl policies={policies} />
               <POLines line={line} resource={resource} />
               <Documents id={id} line={line} resource={resource} />
               <Coverage line={line} resource={resource} />

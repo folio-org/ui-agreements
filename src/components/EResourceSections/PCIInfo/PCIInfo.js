@@ -14,7 +14,6 @@ import {
   MultiColumnList,
 } from '@folio/stripes/components';
 
-import { resourceClasses } from '../../../constants';
 import AddToBasketButton from '../../AddToBasketButton';
 import { buildPackageEntitlementOption } from '../../utilities';
 
