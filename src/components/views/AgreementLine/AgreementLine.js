@@ -154,6 +154,7 @@ const AgreementLine = ({
     }
   ];
 
+  const hasLinkedAcquisitionsUnit = policies?.length > 0;
   return (
     <HasCommand
       commands={shortcuts}
@@ -166,21 +167,21 @@ const AgreementLine = ({
             <>
               <Button
                 buttonStyle="dropdownItem"
-                disabled={canEditLoading || !canEdit}
+                disabled={hasLinkedAcquisitionsUnit || canEditLoading || !canEdit}
                 id="clickable-dropdown-edit-agreement-line"
                 onClick={handlers.onEdit}
               >
-                <Icon icon="edit">
+                <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'edit'}>
                   <FormattedMessage id="ui-agreements.agreements.edit" />
                 </Icon>
               </Button>
               <Button
                 buttonStyle="dropdownItem"
-                disabled={canDeleteLoading || !canDelete}
+                disabled={hasLinkedAcquisitionsUnit || canDeleteLoading || !canDelete}
                 id="clickable-dropdown-delete-agreement-line"
                 onClick={() => setShowDeleteConfirmationModal(true)}
               >
-                <Icon icon={canEditLoading ? 'spinner-ellipsis' : 'trash'}>
+                <Icon icon={canDeleteLoading ? 'spinner-ellipsis' : 'trash'}>
                   <FormattedMessage id="ui-agreements.delete" />
                 </Icon>
               </Button>
