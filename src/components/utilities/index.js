@@ -15,3 +15,4 @@ export { default as transformFilterString } from './transformFilterString';
 export * from './handlebarsHelpers';
 export * from './specialTypes';
 export { default as stableKeyFrom } from './stableKeyFrom';
+export * from './entitlementOptions';
