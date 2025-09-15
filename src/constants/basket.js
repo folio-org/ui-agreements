@@ -1,0 +1,1 @@
+export const BASKET_TYPE_GOKB_TITLE = 'GOKB_TITLE';

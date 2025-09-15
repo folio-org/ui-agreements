@@ -1,6 +1,13 @@
 import { Link } from 'react-router-dom';
-import { InternalContactsArrayDisplay, OrganizationsArrayDisplay } from '@folio/stripes-erm-components';
-import AgreementLookup from './AgreementLookup';
+
+import {
+  InternalContactsArrayDisplay,
+  OrganizationsArrayDisplay,
+} from '@folio/stripes-erm-components';
+
+import AgreementLookup from '../AgreementLookup';
+
+import { GokbBasketButton, GokbTIPPTable } from './Gokb';
 
 const setUpRegistry = (registry) => {
   // Agreement Resource
@@ -32,6 +39,11 @@ const setUpRegistry = (registry) => {
   // ErmPackage Resource
   const ermPkgReg = registry.registerResource('ermPackage');
   ermPkgReg.setViewResource(pkg => `/erm/packages/${pkg.id}`);
+
+  // GOKB TIPP resource
+  const gokbTIPPResource = registry.registerResource('gokb');
+  gokbTIPPResource.setRenderFunction('addToBasketButton', ({ tipp }) => <GokbBasketButton tipp={tipp} />);
+  gokbTIPPResource.setRenderFunction('tippTable', ({ tipps }) => <GokbTIPPTable tipps={tipps} />);
 };
 
 export default setUpRegistry;
