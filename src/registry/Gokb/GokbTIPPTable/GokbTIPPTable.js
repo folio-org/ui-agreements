@@ -8,13 +8,13 @@ import {
 } from '@folio/stripes/components';
 // FIXME this really needs to be imported from stripes-core -- when https://github.com/folio-org/stripes-core/pull/1653 gets merged
 // import { useChunkedIdTransformFetch } from '@folio/stripes/core';
-import useChunkedIdTransformFetch from '../../../useChunkedIdTransformFetchLOCAL'; // FIXME Swap to stripes-core once merged
 
 import {
   TitleOnPlatformLink,
 } from '@folio/stripes-erm-components';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
+import useChunkedIdTransformFetch from '../../../useChunkedIdTransformFetchLOCAL'; // FIXME Swap to stripes-core once merged
 
 import {
   usePackages

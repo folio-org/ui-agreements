@@ -52,6 +52,7 @@
     "final-form-set-field-data": "^1.0.2",
     "handlebars": "^4.7.8",
     "jsonpath-plus": "^10.3.0",
+    "ky": "^0.23.0",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.0",
     "query-string": "^7.1.1",
