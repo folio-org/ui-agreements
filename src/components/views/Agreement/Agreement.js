@@ -45,15 +45,17 @@ import {
   UsageData,
 } from '../../AgreementSections';
 
-import { useAgreementsContexts, useChunkedOrderLines } from '../../../hooks';
+import {
+  useAgreementsContexts,
+  useChunkedOrderLines,
+  useHasLicensesInterface
+} from '../../../hooks';
 
 import { urls } from '../../utilities';
 import {
   AGREEMENT_ENTITY_TYPE,
   CUSTPROP_ENDPOINT,
   LICENSE_CUSTPROP_ENDPOINT,
-  LICENSES_INTERFACE,
-  LICENSES_INTERFACE_VERSION,
   statuses
 } from '../../../constants';
 
@@ -102,8 +104,7 @@ const Agreement = ({
 
   const stripes = useStripes();
 
-  // Check if licenses interface is present
-  const hasLicensesInterface = stripes.hasInterface(LICENSES_INTERFACE, LICENSES_INTERFACE_VERSION);
+  const { hasLicensesInterface } = useHasLicensesInterface();
 
   const { data: custpropContexts = [] } = useAgreementsContexts();
   // Ensure the custprops with no contexts get rendered
