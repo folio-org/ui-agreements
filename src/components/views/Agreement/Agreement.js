@@ -143,13 +143,13 @@ const Agreement = ({
 
   const getActionMenu = ({ onToggle }) => {
     const buttons = [];
-
+    const hasLinkedAcquisitionsUnit = data.policies?.length > 0;
     if (stripes.hasPerm('ui-agreements.agreements.edit') && canEdit !== false) {
       buttons.push(
         <Button
           key="clickable-dropdown-edit-agreement"
           buttonStyle="dropdownItem"
-          disabled={canEditLoading}
+          disabled={canEditLoading || hasLinkedAcquisitionsUnit}
           id="clickable-dropdown-edit-agreement"
           onClick={handlers.onEdit}
         >
@@ -198,7 +198,7 @@ const Agreement = ({
         <Button
           key="clickable-dropdown-delete-agreement"
           buttonStyle="dropdownItem"
-          disabled={canDeleteLoading}
+          disabled={canDeleteLoading || hasLinkedAcquisitionsUnit}
           id="clickable-dropdown-delete-agreement"
           onClick={() => {
             setShowDeleteConfirmationModal(true);

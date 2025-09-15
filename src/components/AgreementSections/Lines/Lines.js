@@ -18,6 +18,10 @@ const propTypes = {
     lines: PropTypes.arrayOf(PropTypes.object),
     orderLines: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
+  // Access to policies to determine acquisition unit restrictions
+  data: PropTypes.shape({
+    policies: PropTypes.arrayOf(PropTypes.shape({}))
+  }),
   eresourcesFilterPath: PropTypes.string,
   handlers: PropTypes.shape({
     onExportEResourcesAsJSON: PropTypes.func.isRequired,
@@ -30,6 +34,7 @@ const propTypes = {
 
 const Lines = ({
   agreement,
+  data,
   eresourcesFilterPath,
   handlers,
   id,
@@ -39,6 +44,8 @@ const Lines = ({
     const count = agreement?.agreementLinesCount;
     return count !== undefined ? <Badge data-test-agreement-lines-count={count}>{count}</Badge> : <Spinner />;
   };
+
+  const hasLinkedAcquisitionsUnit = data?.policies?.length > 0;
 
   const getActionMenu = () => {
     return (
@@ -52,8 +59,9 @@ const Lines = ({
             <IfPermission perm="ui-agreements.agreements.edit">
               <Button
                 buttonStyle="dropdownItem"
+                disabled={hasLinkedAcquisitionsUnit}
                 id="add-agreement-line-button"
-                to={urls.agreementLineCreate(agreement.id)}
+                to={hasLinkedAcquisitionsUnit ? undefined : urls.agreementLineCreate(agreement.id)}
               >
                 <Icon icon="plus-sign">
                   <FormattedMessage id="ui-agreements.agreementLines.newLine" />
