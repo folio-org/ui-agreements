@@ -1,10 +1,15 @@
+import { MemoryRouter } from 'react-router';
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
+// EXAMPLE tweaking the default mock for mockKyJson (In this case object -> array
+import { mockKyJson } from '@folio/stripes/core';
 
 import { Button, Dropdown, MultiColumnList, renderWithIntl } from '@folio/stripes-erm-testing';
 
 import translationsProperties from '../../../../test/helpers';
 import CoveredEResourcesList from './CoveredEResourcesList';
 import agreement from './testResources';
+import { pcis } from '../../../../test/jest/eresources';
 
 // Use manual mocks set up in hooks/__mocks__ folder (small correction to the way this was done before)
 jest.mock('../../../hooks/useAgreementsDisplaySettings');
@@ -16,22 +21,21 @@ const handlers = {
   onExportEResourcesAsKBART: jest.fn().mockImplementation(() => Promise.resolve()),
 };
 
-// TODO there are 2 warnings when running this test... contentData ends up as a boolean not an array --
-// maybe needs mocking fetchMultiplePages
-// received NaN for the children attribute within PrevNextPagination, better mocking needed there too?
 describe('CoveredEResourcesList', () => {
   beforeEach(async () => {
-    // This is blowing my mind... I do not understand why this needs to be wrapped in a waitFor
-    await waitFor(() => {
-      renderWithIntl(
+    // Mock the return to simply be all the PCIs (is a bit weird wih prev and next page but hey ho)
+    mockKyJson.mockImplementation(() => Promise.resolve(pcis));
+
+    renderWithIntl(
+      <MemoryRouter>
         <CoveredEResourcesList
           agreement={agreement}
           eresourcesFilterPath="current"
           {...handlers}
-        />,
-        translationsProperties
-      );
-    });
+        />
+      </MemoryRouter>,
+      translationsProperties
+    );
   });
 
   describe.each(['Future', 'Current', 'Dropped', 'All'])('%s filter button', (filterLabel) => {
