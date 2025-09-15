@@ -119,6 +119,8 @@ const BasketList = ({
     } else if (basketItem.type === BASKET_TYPE_GOKB_TITLE) {
       return <Coverage pci={basketItem.tipp} />;
     }
+
+    return null;
   }, []);
 
   return (

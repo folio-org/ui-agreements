@@ -318,13 +318,12 @@ const Packages = ({
                     contentData={data.packages}
                     formatter={{
                       select: item => (
-                        <div onClick={(e) => e.stopPropagation()}>
-                          <Checkbox
-                            checked={selectedPackageIds.includes(item.id)}
-                            name={`select-${item.id}`}
-                            onChange={(e) => handleCheckboxClick(e, item.id)}
-                          />
-                        </div>
+                        <Checkbox
+                          checked={selectedPackageIds.includes(item.id)}
+                          name={`select-${item.id}`}
+                          onChange={(e) => handleCheckboxClick(e, item.id)}
+                          onClick={e => e.stopPropagation()}
+                        />
                       ),
                       name: e => {
                         return (

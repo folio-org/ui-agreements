@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -119,7 +119,7 @@ const AgreementForm = ({
     );
   };
 
-  const renderFirstMenu = () => {
+  const renderFirstMenu = useCallback(() => {
     return (
       <PaneMenu>
         <FormattedMessage id="ui-agreements.agreements.closeEdit">
@@ -134,7 +134,7 @@ const AgreementForm = ({
         </FormattedMessage>
       </PaneMenu>
     );
-  };
+  }, [handlers.onClose]);
 
   /* istanbul ignore next */
   const shortcuts = [
