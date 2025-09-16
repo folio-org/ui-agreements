@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import { omit } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import { useMutation, useQueryClient } from 'react-query';
@@ -111,7 +110,7 @@ const AgreementCreateRoute = ({
 
   const { mutateAsync: postAgreement } = useMutation(
     [AGREEMENTS_ENDPOINT, 'ui-agreements', 'AgreementCreateRoute', 'createAgreement'],
-    (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: omit(payload, ['claimPolicies']) }).json()
+    (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: payload }).json()
       .then(async (response) => {
         const { id: agreementId } = response;
         // Grab id from response and submit a claim ... CRUCIALLY await the response.
