@@ -112,31 +112,56 @@ const AgreementCreateRoute = ({
     [AGREEMENTS_ENDPOINT, 'ui-agreements', 'AgreementCreateRoute', 'createAgreement'],
     (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: payload }).json()
       .then(async (response) => {
-        const { id: agreementId } = response;
+        const { id: agreementId, name } = response;
         // Grab id from response and submit a claim ... CRUCIALLY await the response.
         // TODO we need to think about failure cases here.
-        await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
-
-        return response;
+        return claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } })
+          .then(() => {
+            callout.sendCallout({
+              type: 'success',
+              message: <FormattedMessage id="ui-agreements.agreements.claimPolicies.update.callout" values={{ name }} />
+            });
+            return response;
+          })
+          .catch((claimError) => {
+            callout.sendCallout({
+              type: 'error',
+              message: <FormattedMessage id="ui-agreements.agreements.claimPolicies.update.error.callout" values={{ name, error: claimError.message }} />,
+              timeout: 0,
+            });
+            return response;
+          });
       })
       .then((response) => {
         const { id, name, linkedLicenses } = response;
         // Invalidate any linked license's linkedAgreements calls
+
         if (linkedLicenses?.length) {
           linkedLicenses.forEach(linkLic => {
             // I'm still not 100% sure this is the "right" way to go about this.
-            queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
+            queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']);
           });
         }
         /* Invalidate cached queries */
         queryClient.invalidateQueries(['ERM', 'Agreements']);
 
-        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
+        callout.sendCallout({
+          type: 'success',
+          message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} />
+        });
+
         handleClose(id);
         return response;
       })
+      .catch((agreementError) => {
+        callout.sendCallout({
+          type: 'error',
+          message: <FormattedMessage id="ui-agreements.agreements.error.callout" values={{ name: payload?.name ?? '', error: agreementError.message }} />,
+          timeout: 0,
+        });
+        throw agreementError;
+      })
   );
-
   const handleSubmit = (agreement) => {
     const relationshipTypeValues = getRefdataValuesByDesc(refdata, RELATIONSHIP_TYPE);
     splitRelatedAgreements(agreement, relationshipTypeValues);
