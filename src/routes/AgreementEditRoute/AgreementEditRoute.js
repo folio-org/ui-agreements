@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 
-import { cloneDeep } from 'lodash';
+import { cloneDeep, omit } from 'lodash';
 
 import { generateKiwtQueryParams } from '@k-int/stripes-kint-components';
 
@@ -134,27 +134,33 @@ const AgreementEditRoute = ({
 
   const { mutateAsync: putAgreement } = useMutation(
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
-    async (payload) => {
-      const { claimPolicies, ...agreementPayload } = payload;
-      const resp = await ky.put(AGREEMENT_ENDPOINT(agreementId), { json: agreementPayload }).json();
+    (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: omit(payload, ['claimPolicies']) }).json()
+      .then(async (resp) => {
+        // Grab id from response and submit a claim ... CRUCIALLY await the response.
+        // TODO we need to think about failure cases here.
+        await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
 
-      await claim({ resourceId: agreementId, payload: { claims: claimPolicies ?? [] } });
+        return resp; // Allow it to continue downstream
+      })
+      .then(async (response) => {
+        const { name, linkedLicenses } = response;
+        // Invalidate any linked license's linkedAgreements calls
+        if (linkedLicenses?.length) {
+          await Promise.all(linkedLicenses.map(linkLic => {
+            // I'm still not 100% sure this is the "right" way to go about this.
+            return queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
+          }));
+        }
 
-      const { linkedLicenses } = resp;
-      if (linkedLicenses?.length) {
-        await Promise.all(linkedLicenses.map(linkLic => {
-          return queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']);
-        }));
-      }
+        /* Invalidate cached queries */
+        await queryClient.invalidateQueries(['ERM', 'Agreements']);
+        await queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
-      await queryClient.invalidateQueries(['ERM', 'Agreements']);
-      await queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
+        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
+        history.push(`${urls.agreementView(agreementId)}${location.search}`);
 
-      callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name: resp.name }} /> });
-      history.push(`${urls.agreementView(agreementId)}${location.search}`);
-
-      return resp;
-    }
+        return response;
+      })
   );
 
   const { policies } = usePolicies({
@@ -192,6 +198,10 @@ const AgreementEditRoute = ({
     initialValues.linkedLicenses = linkedLicenses.map(l => ({
       ...l,
       status: l.status.value,
+      // Init the list of amendments based on the license's amendments to ensure
+      // we display those that have been created since this agreement's license was last
+      // edited. Ensure we provide defaults via amendmentId.
+      // eslint-disable-next-line camelcase
       amendments: (l?.remoteId_object?.amendments ?? [])
         .map(a => {
           const assignedAmendment = (l.amendments || []).find(la => la.amendmentId === a.id) || {};
@@ -202,8 +212,6 @@ const AgreementEditRoute = ({
           };
         })
     }));
-
-    // Keep policies for the form, but don't send them in agreement JSON
     initialValues.claimPolicies = policies;
 
     joinRelatedAgreements(initialValues);

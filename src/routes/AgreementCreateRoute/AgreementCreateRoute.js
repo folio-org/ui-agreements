@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
+import { omit } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import { useMutation, useQueryClient } from 'react-query';
@@ -110,25 +111,31 @@ const AgreementCreateRoute = ({
 
   const { mutateAsync: postAgreement } = useMutation(
     [AGREEMENTS_ENDPOINT, 'ui-agreements', 'AgreementCreateRoute', 'createAgreement'],
-    async (payload) => {
-      const { claimPolicies, ...agreementPayload } = payload;
-      const response = await ky.post(AGREEMENTS_ENDPOINT, { json: agreementPayload }).json();
+    (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: omit(payload, ['claimPolicies']) }).json()
+      .then(async (response) => {
+        const { id: agreementId } = response;
+        // Grab id from response and submit a claim ... CRUCIALLY await the response.
+        // TODO we need to think about failure cases here.
+        await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
 
-      await claim({ resourceId: response.id, payload: { claims: claimPolicies ?? [] } });
+        return response;
+      })
+      .then((response) => {
+        const { id, name, linkedLicenses } = response;
+        // Invalidate any linked license's linkedAgreements calls
+        if (linkedLicenses?.length) {
+          linkedLicenses.forEach(linkLic => {
+            // I'm still not 100% sure this is the "right" way to go about this.
+            queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
+          });
+        }
+        /* Invalidate cached queries */
+        queryClient.invalidateQueries(['ERM', 'Agreements']);
 
-      const { id, name, linkedLicenses } = response;
-      if (linkedLicenses?.length) {
-        linkedLicenses.forEach(linkLic => {
-          queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']);
-        });
-      }
-      queryClient.invalidateQueries(['ERM', 'Agreements']);
-
-      callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
-      handleClose(id);
-
-      return response;
-    }
+        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
+        handleClose(id);
+        return response;
+      })
   );
 
   const handleSubmit = (agreement) => {
