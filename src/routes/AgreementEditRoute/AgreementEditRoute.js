@@ -136,11 +136,25 @@ const AgreementEditRoute = ({
     [AGREEMENT_ENDPOINT(agreementId), 'ui-agreements', 'AgreementEditRoute', 'editAgreement'],
     (payload) => ky.put(AGREEMENT_ENDPOINT(agreementId), { json: payload }).json()
       .then(async (resp) => {
+        const { name } = resp;
         // Grab id from response and submit a claim ... CRUCIALLY await the response.
         // TODO we need to think about failure cases here.
-        await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
-
-        return resp; // Allow it to continue downstream
+        return claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } })
+          .then(() => {
+            callout.sendCallout({
+              type: 'success',
+              message: <FormattedMessage id="ui-agreements.agreements.claimPolicies.update.callout" values={{ name }} />,
+            });
+            return resp; // Allow it to continue downstream
+          })
+          .catch((claimError) => {
+            callout.sendCallout({
+              type: 'error',
+              message: <FormattedMessage id="ui-agreements.agreements.claimPolicies.update.error.callout" values={{ name, error: claimError.message }} />,
+              timeout: 0,
+            });
+            return resp;
+          });
       })
       .then(async (response) => {
         const { name, linkedLicenses } = response;
@@ -148,7 +162,7 @@ const AgreementEditRoute = ({
         if (linkedLicenses?.length) {
           await Promise.all(linkedLicenses.map(linkLic => {
             // I'm still not 100% sure this is the "right" way to go about this.
-            return queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
+            return queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']);
           }));
         }
 
@@ -156,10 +170,22 @@ const AgreementEditRoute = ({
         await queryClient.invalidateQueries(['ERM', 'Agreements']);
         await queryClient.invalidateQueries(['ERM', 'Agreement', agreementId]);
 
-        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} /> });
+        callout.sendCallout({
+          type: 'success',
+          message: <FormattedMessage id="ui-agreements.agreements.update.callout" values={{ name }} />
+        });
+
         history.push(`${urls.agreementView(agreementId)}${location.search}`);
 
         return response;
+      })
+      .catch((agreementError) => {
+        callout.sendCallout({
+          type: 'error',
+          message: <FormattedMessage id="ui-agreements.agreements.update.error.callout" values={{ name: payload?.name ?? '', error: agreementError.message }} />,
+          timeout: 0,
+        });
+        throw agreementError;
       })
   );
 
