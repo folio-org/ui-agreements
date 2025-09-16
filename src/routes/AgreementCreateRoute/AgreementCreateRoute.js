@@ -110,31 +110,25 @@ const AgreementCreateRoute = ({
 
   const { mutateAsync: postAgreement } = useMutation(
     [AGREEMENTS_ENDPOINT, 'ui-agreements', 'AgreementCreateRoute', 'createAgreement'],
-    (payload) => ky.post(AGREEMENTS_ENDPOINT, { json: payload }).json()
-      .then(async (response) => {
-        const { id: agreementId } = response;
-        // Grab id from response and submit a claim ... CRUCIALLY await the response.
-        // TODO we need to think about failure cases here.
-        await claim({ resourceId: agreementId, payload: { claims: payload.claimPolicies ?? [] } });
+    async (payload) => {
+      const { claimPolicies, ...agreementPayload } = payload;
+      const response = await ky.post(AGREEMENTS_ENDPOINT, { json: agreementPayload }).json();
 
-        return response;
-      })
-      .then((response) => {
-        const { id, name, linkedLicenses } = response;
-        // Invalidate any linked license's linkedAgreements calls
-        if (linkedLicenses?.length) {
-          linkedLicenses.forEach(linkLic => {
-            // I'm still not 100% sure this is the "right" way to go about this.
-            queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']); // This is a convention adopted in licenses
-          });
-        }
-        /* Invalidate cached queries */
-        queryClient.invalidateQueries(['ERM', 'Agreements']);
+      await claim({ resourceId: response.id, payload: { claims: claimPolicies ?? [] } });
 
-        callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
-        handleClose(id);
-        return response;
-      })
+      const { id, name, linkedLicenses } = response;
+      if (linkedLicenses?.length) {
+        linkedLicenses.forEach(linkLic => {
+          queryClient.invalidateQueries(['ERM', 'License', linkLic?.id, 'LinkedAgreements']);
+        });
+      }
+      queryClient.invalidateQueries(['ERM', 'Agreements']);
+
+      callout.sendCallout({ message: <FormattedMessage id="ui-agreements.agreements.create.callout" values={{ name }} /> });
+      handleClose(id);
+
+      return response;
+    }
   );
 
   const handleSubmit = (agreement) => {
