@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { JSONPath } from 'jsonpath-plus';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { AppIcon } from '@folio/stripes/core';
+import { useQuery } from 'react-query';
 
 import {
   Accordion,
@@ -24,7 +25,15 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { handlebarsCompile, renderPublicationDates, stableKeyFrom } from '../../utilities';
+import { Registry } from '@folio/handler-stripes-registry';
+import baseKy from 'ky';
+
+import {
+  handlebarsCompile,
+  renderPublicationDates,
+  stableKeyFrom,
+} from '../../utilities';
+
 import getResultsDisplayConfig from '../../../routes/utilities/getResultsDisplayConfig';
 
 const PANE_DEFAULT_WIDTH = '50%';
@@ -40,7 +49,7 @@ const propTypes = {
   onClose: PropTypes.func.isRequired,
   resource: PropTypes.oneOfType([
     PropTypes.shape({}),
-    PropTypes.arrayOf(PropTypes.shape({}))
+    PropTypes.arrayOf(PropTypes.shape({})),
   ]),
   queryProps: PropTypes.shape({
     isLoading: PropTypes.bool,
@@ -56,22 +65,29 @@ const RemoteKbResource = ({
   const intl = useIntl();
   const accordionStatusRef = createRef();
 
+  const { data: { records: tipps } = {} } = useQuery(
+    ['GOKB', 'fetchTIPPS', resource?.uuid],
+    () => baseKy
+      .get(
+        `https://gokbt.gbv.de/gokb/api/find?componentType=TIPP&title=${resource?.uuid}`
+      )
+      .json()
+  );
+
   const applyJsonPath = (expression) => JSONPath({ path: expression, json: resource }) || [];
 
   /*
     we need the initial status for each accordion
     maybe later we use a config entry for the boolean value instead of false as default
   */
-  const initialAccordionsState = (
+  const initialAccordionsState =
     displayConfig.renderStrategy?.values
-      ?.find(s => s.renderStrategy?.type === 'accordionset')
-      ?.renderStrategy?.values
-      ?.filter(s => s.collapsable)
+      ?.find((s) => s.renderStrategy?.type === 'accordionset')
+      ?.renderStrategy?.values?.filter((s) => s.collapsable)
       ?.reduce((acc, s) => {
         acc[s.name] = false;
         return acc;
-      }, {}) || {}
-  );
+      }, {}) || {};
 
   // treat '', null/false, empty arrays as "empty"
   const hasVisualContent = (node) => {
@@ -95,12 +111,16 @@ const RemoteKbResource = ({
         }
         return '';
       case 'keyValue':
-        return <KeyValue
-          label={<FormattedMessage id={`ui-agreements.remoteKb.${value.name}`} />}
-          value={renderValue(value.value)}
-        />;
+        return (
+          <KeyValue
+            label={
+              <FormattedMessage id={`ui-agreements.remoteKb.${value.name}`} />
+            }
+            value={renderValue(value.value)}
+          />
+        );
       case 'row': {
-        const colSize = value.colCount ? (12 / Number(value.colCount)) : 12;
+        const colSize = value.colCount ? 12 / Number(value.colCount) : 12;
         return (
           <>
             {value.values.map((val) => (
@@ -112,18 +132,17 @@ const RemoteKbResource = ({
         );
       }
       case 'metadata':
-        return <MetaSection
-          contentId="remoteKbResourceMetaContent"
-          createdDate={renderValue(value.createdDate)}
-          hideSource
-          lastUpdatedDate={renderValue(value.lastUpdatedDate)}
-        />;
+        return (
+          <MetaSection
+            contentId="remoteKbResourceMetaContent"
+            createdDate={renderValue(value.createdDate)}
+            hideSource
+            lastUpdatedDate={renderValue(value.lastUpdatedDate)}
+          />
+        );
       case 'heading':
         return (
-          <Headline
-            size="xx-large"
-            tag="h2"
-          >
+          <Headline size="xx-large" tag="h2">
             {renderValue(value.value)}
           </Headline>
         );
@@ -139,10 +158,17 @@ const RemoteKbResource = ({
         return result || <NoValue />;
       }
       case 'handlebars':
-        if (value.value?.type === 'access' && value.value?.accessType === 'JSONPath') {
+        if (
+          value.value?.type === 'access' &&
+          value.value?.accessType === 'JSONPath'
+        ) {
           const result = applyJsonPath(value.value?.expression);
           const template = handlebarsCompile(value.templateString);
-          return result.length > 0 ? result.map(obj => template(obj)).join(', ') : <NoValue />;
+          return result.length > 0 ? (
+            result.map((obj) => template(obj)).join(', ')
+          ) : (
+            <NoValue />
+          );
         } else {
           return '';
         }
@@ -151,23 +177,36 @@ const RemoteKbResource = ({
         // MCL expects array of objects
         const raw = applyJsonPath(value.resource?.expression);
         const nameKey = value.columns[0].name;
-        const resourceData = Array.isArray(raw) && raw.length > 0 && typeof raw[0] !== 'object'
-          ? raw.map(v => ({ [nameKey]: v }))   // only wrap primitives
-          : raw;                           // leave objects alone
+        const resourceData =
+          Array.isArray(raw) && raw.length > 0 && typeof raw[0] !== 'object'
+            ? raw.map((v) => ({ [nameKey]: v })) // only wrap primitives
+            : raw; // leave objects alone
 
-        return (
-          resourceData.length > 0 ?
-            <MultiColumnList
-              columnMapping={value.columns.reduce((acc, col) => {
-                acc[col.name] = <FormattedMessage id={`ui-agreements.remoteKb.${col.name}`} />;
-                return acc;
-              }, {})}
-              contentData={resourceData}
-              formatter={formatter}
-              visibleColumns={(value?.columns || []).map(c => c.name)}
-            />
-            : ''
+        return resourceData.length > 0 ? (
+          <MultiColumnList
+            columnMapping={value.columns.reduce((acc, col) => {
+              acc[col.name] = (
+                <FormattedMessage id={`ui-agreements.remoteKb.${col.name}`} />
+              );
+              return acc;
+            }, {})}
+            contentData={resourceData}
+            formatter={formatter}
+            visibleColumns={(value?.columns || []).map((c) => c.name)}
+          />
+        ) : (
+          ''
         );
+      }
+      case 'registry': {
+        const registryResource = Registry.getResource(value.registryResource);
+        const registryRenderFunction =
+          registryResource?.getRenderFunction(value.registryRenderFunction) ??
+          null;
+
+        return registryRenderFunction
+          ? registryRenderFunction({ tipps })
+          : null;
       }
       default:
         return '';
@@ -179,23 +218,31 @@ const RemoteKbResource = ({
       case 'sections':
         return strategy.values?.map((section) => (
           <div key={section.name}>
-            {applyRenderStrategy(section.renderStrategy, section?.collapsable, section.name)}
+            {applyRenderStrategy(
+              section.renderStrategy,
+              section?.collapsable,
+              section.name
+            )}
           </div>
         ));
       case 'accordionset':
         return (
           <AccordionStatus ref={accordionStatusRef}>
-            {Object.keys(initialAccordionsState).length > 1 &&
+            {Object.keys(initialAccordionsState).length > 1 && (
               <Row end="xs">
                 <Col xs>
                   <ExpandAllButton />
                 </Col>
               </Row>
-            }
+            )}
             <AccordionSet initialStatus={initialAccordionsState}>
               {strategy.values?.map((section) => (
                 <div key={section.name}>
-                  {applyRenderStrategy(section.renderStrategy, section?.collapsable, section.name)}
+                  {applyRenderStrategy(
+                    section.renderStrategy,
+                    section?.collapsable,
+                    section.name
+                  )}
                 </div>
               ))}
             </AccordionSet>
@@ -211,7 +258,9 @@ const RemoteKbResource = ({
         }, []);
 
         if (collapsable) {
-          const accordionTitle = intl.formatMessage({ id: `ui-agreements.remoteKb.${name}` });
+          const accordionTitle = intl.formatMessage({
+            id: `ui-agreements.remoteKb.${name}`,
+          });
           const accordion = accordionTitle.toLowerCase();
 
           return (
@@ -221,14 +270,14 @@ const RemoteKbResource = ({
               id={name}
               label={accordionTitle}
             >
-              {rows.length
-                ? rows
-                : (
-                  <FormattedMessage
-                    id="ui-agreements.remoteKb.noAccordionContent"
-                    values={{ accordion }}
-                  />
-                )}
+              {rows.length ? (
+                rows
+              ) : (
+                <FormattedMessage
+                  id="ui-agreements.remoteKb.noAccordionContent"
+                  values={{ accordion }}
+                />
+              )}
             </Accordion>
           );
         }
@@ -267,7 +316,9 @@ const RemoteKbResource = ({
       scope={document.body}
     >
       <Pane
-        appIcon={<AppIcon app="agreements" iconKey={displayConfig.icon} size="small" />}
+        appIcon={
+          <AppIcon app="agreements" iconKey={displayConfig.icon} size="small" />
+        }
         defaultWidth={PANE_DEFAULT_WIDTH}
         dismissible
         onClose={onClose}
