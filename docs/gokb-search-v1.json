@@ -677,6 +677,20 @@
                         }
                       ]
                     }
+                  },
+                  {
+                    "name": "packageTitles",
+                    "collapsable": true,
+                    "renderStrategy": {
+                      "type": "rows",
+                      "values": [
+                        {
+                          "type": "registry",
+                          "registryResource": "gokb",
+                          "registryRenderFunction": "tippTable"
+                        }
+                      ]
+                    }
                   }
                 ]
               }
