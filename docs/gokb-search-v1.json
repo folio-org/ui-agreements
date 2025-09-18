@@ -677,6 +677,31 @@
                         }
                       ]
                     }
+                  },
+                  {
+                    "name": "eresourceAgreements",
+                    "collapsable": true,
+                    "badge": true,
+                    "renderStrategy": {
+                      "type": "rows",
+                      "values": [
+                        {
+                          "type": "registry",
+                          "registryResource": "remoteKbAgreements",
+                          "registryRenderFunction": "agreementsList",
+                          "props": [
+                            {
+                              "name": "remoteId",
+                              "value": {
+                                "type": "access",
+                                "accessType": "JSONPath",
+                                "expression": "$.uuid"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
                   }
                 ]
               }
